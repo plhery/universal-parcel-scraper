@@ -27,7 +27,10 @@ step; browser recognition is a separate opt-in.
 The domestic page displays `createTime`, otherwise `trackDay` with `trackTime`. An epoch or
 explicit offset keeps its instant. A clock without an offset stays local, in the carrier's
 order; the page's language does not establish its zone. Contact and recipient clauses are
-removed from scan wording. A capped history is marked incomplete so richer history can fill it.
+removed from scan wording. Wordless or contact-only rows with valid clocks are omitted;
+the remaining history is marked incomplete so enabled providers can fill it. A reply with
+no readable scans stays inconclusive. Invalid clocks and malformed rows still fail, and a
+capped history is also marked incomplete.
 
 For international history, each scan keeps its operation code as its provider code and takes its stage from it
 (`status.ts`); a scan with an unknown code is classified by its wording. An order shipped from

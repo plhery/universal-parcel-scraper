@@ -8,6 +8,7 @@ const EVENTS = new Map([
   ['[recaptcha] switched to audio challenge', 'audio_started'],
   ['[recaptcha] blocked by Google - audio challenge requires residential proxy', 'audio_blocked'],
   ['[recaptcha] audio answer refused', 'audio_refused'],
+  ['[recaptcha] audio cooldown active', 'audio_cooldown'],
   ['[recaptcha] solved via audio ✓', 'audio_verified'],
   ['[recaptcha] solver error:', 'native_failed'],
 ]);
@@ -30,6 +31,9 @@ function safeLogs(source, native) {
 
 export function dhlPolandNativeSources(recaptcha, stt) {
   let native = replaceOnce(recaptcha, 'from "../utils/deadline"', 'from "../../utils/deadline"');
+  if (native.includes('from "../utils/recaptcha-backoff.mjs"')) {
+    native = replaceOnce(native, 'from "../utils/recaptcha-backoff.mjs"', 'from "../../utils/recaptcha-backoff.mjs"');
+  }
   native = replaceOnce(native, SIGNATURE,
     SIGNATURE.replace('signal?: AbortSignal)', 'signal?: AbortSignal, report?: (event: string) => void)')
       + '\n  const reportNative = (event: string) => { try { report?.(event) } catch { /* Optional observer. */ } }');

@@ -1,5 +1,6 @@
 import { parseHTML } from 'linkedom';
 import { randomUUID } from 'node:crypto';
+import { recaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 
 const ORIGIN = 'https://sprawdz.dhl.com.pl';
 const ENDPOINT = `${ORIGIN}/`;
@@ -37,7 +38,7 @@ export function dhlPolandHistory(html) {
 
 /** DHL's own form owns the verification token and submits the verified waybill. */
 export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeout, installPolicy,
-  solveNativeCaptcha,
+  solveNativeCaptcha, audioBackoff = recaptchaAudioBackoff,
   logDiagnostic = record => console.info(JSON.stringify(record)) }) {
   const number = dhlPolandBrowserNumber(url, capture);
   if (!number) return undefined;
@@ -46,7 +47,8 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
   const nativeDiagnostics = [];
   const recordNative = event => {
     if (nativeDiagnostics.length < 16 && ['checkbox_started', 'checkbox_verified', 'challenge_missing', 'audio_started',
-      'audio_blocked', 'audio_refused', 'audio_verified', 'native_failed'].includes(event)) nativeDiagnostics.push(event);
+      'audio_blocked', 'audio_refused', 'audio_cooldown', 'audio_verified', 'native_failed'].includes(event)) nativeDiagnostics.push(event);
+    if (event === 'audio_blocked') audioBackoff.block();
   };
   let phase = 'context', outcome = 'browser_error', cleanup = 'not_created', verification = 'unverified', failure = null, widget = null;
   const httpOutcome = status => status === 429 ? 'rate_limit' : [401, 403, 428].includes(status) ? 'challenge' : 'http_error';
@@ -120,10 +122,14 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
         }
         await page.locator('#sn').fill(number, { timeout: remaining() });
         phase = solveNativeCaptcha ? 'native' : 'checkbox';
-        let checked;
-        if (solveNativeCaptcha) {
+        let checked, usedNative = false;
+        if (audioBackoff.remainingMs() > 0) {
+          recordNative('audio_cooldown');
+          checked = await page.locator('#g-recaptcha-response').inputValue({ timeout: remaining() }).then(value => value.length > 0, () => false);
+        } else if (solveNativeCaptcha) {
           // The upstream solver owns the first checkbox click and audio flow.
           // Leave time for the matching form response.
+          usedNative = true;
           await solveNativeCaptcha(page, Math.max(1, Math.min(30000, remaining() - 5000)), recordNative);
           if (expired) return result();
           checked = await page.locator('#g-recaptcha-response').inputValue({ timeout: remaining() }).then(value => value.length > 0, () => false);
@@ -133,7 +139,7 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
           checked = await page.waitForFunction(() => document.querySelector('#g-recaptcha-response')?.value.length > 0,
             null, { timeout: Math.min(5000, remaining()) }).then(() => true, () => false);
         }
-        verification = checked ? solveNativeCaptcha ? 'native' : 'checkbox' : 'unverified';
+        verification = checked ? usedNative ? 'native' : 'checkbox' : 'unverified';
         if (expired) return result();
         phase = 'verification';
         const verified = await page.locator('#g-recaptcha-response').inputValue({ timeout: remaining() }).then(value => value.length > 0, () => false);

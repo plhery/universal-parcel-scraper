@@ -71,18 +71,24 @@ export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
     throw new SchemaError(PROVIDER, 'JD domestic tracking returned an incomplete shipment');
   }
   const events: CarrierEvent[] = [];
+  let rows = 0, wordless = 0;
   for (const group of item.traceAllVoList) {
     if (!isRecord(group) || !Array.isArray(group.traceVoList) || group.traceVoList.length > 200) {
       throw new SchemaError(PROVIDER, 'JD domestic tracking returned incomplete history');
     }
     for (const row of group.traceVoList) {
-      if (!isRecord(row) || events.length >= 2000) throw new SchemaError(PROVIDER, 'JD domestic history exceeds its limits');
-      if (!clean(row.operateMessage)) throw new SchemaError(PROVIDER, 'JD domestic history has an incomplete scan');
+      if (!isRecord(row) || ++rows > 2000) throw new SchemaError(PROVIDER, 'JD domestic history exceeds its limits');
+      if (row.operateMessage != null && typeof row.operateMessage !== 'string') {
+        throw new SchemaError(PROVIDER, 'JD domestic history has an incomplete scan');
+      }
+      const time = clock(row);
       const description = jdDomesticWording(row.operateMessage);
-      if (!description) throw new SchemaError(PROVIDER, 'JD domestic history has an incomplete scan');
+      // Contact-only or wordless rows cannot describe progress. Keep the
+      // remaining verified scans, but never present the shortened list as full.
+      if (!description) { wordless++; continue; }
       const classification = classifyWording(description);
       const code = typeof row.state === 'string' || typeof row.state === 'number' ? clean(String(row.state), 40) : '';
-      events.push({ description, ...clock(row), ...(code ? { provider_code: code } : {}),
+      events.push({ description, ...time, ...(code ? { provider_code: code } : {}),
         ...(classification.source !== 'none' ? { stage: classification.stage, stage_source: classification.source } : {}) });
     }
   }
@@ -98,7 +104,7 @@ export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
     ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
-    ...(unique.length > kept.length ? { history_truncated: true } : {}), events: kept };
+    ...(wordless || unique.length > kept.length ? { history_truncated: true } : {}), events: kept };
 }
 
 export async function jdDomesticBrowser(trawl: TrawlClient, number: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {

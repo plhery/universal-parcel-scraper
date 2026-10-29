@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { stripTypeScriptTypes } from 'node:module';
 import { dhlPolandNativeSources } from './dhl-poland-native.mjs';
 import { fastRecaptchaAudio } from './recaptcha-audio.mjs';
+import { createRecaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 
 // The upstream solver's audio loop, reduced to the parts the patch replaces.
 const upstream = `import { sleep } from "../utils/deadline"
@@ -68,11 +69,14 @@ const prelude = `const sleep = (ms, signal) => new Promise((resolve, reject) => 
   signal?.addEventListener("abort", () => { clearTimeout(timer); reject(new Error("aborted")) }, { once: true })
 })
 const transcribeAudio = (...args) => globalThis.recaptchaAudioTest.transcribe(...args)
+const recaptchaAudioBackoff = globalThis.recaptchaAudioTestBackoff
 `;
 
-async function load(source) {
+let loadId = 0;
+async function load(source, backoff = createRecaptchaAudioBackoff()) {
+  globalThis.recaptchaAudioTestBackoff = backoff;
   const js = prelude + stripTypeScriptTypes(source.replace(/^import .*\n/gm, ''), { mode: 'strip' });
-  return import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`);
+  return import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}#${++loadId}`);
 }
 
 /** A page whose challenge frame changes as the solver clicks; `on` reacts to clicks. */
@@ -123,12 +127,33 @@ test('a block page in any language ends the audio solve at once', async () => {
 });
 
 test('a refused answer ends the solve without another audio request', async () => {
-  const module = await load(fastRecaptchaAudio(upstream));
+  const backoff = createRecaptchaAudioBackoff();
+  const module = await load(fastRecaptchaAudio(upstream), backoff);
   const { page, state } = challenge({ '#recaptcha-verify-button': state => { state.error = 'Több helyes megoldást kell megadni.'; } });
   state.audio = true;
   const { solved, ms } = await solve(module, page);
   assert.equal(solved, false); assert.ok(ms < 1000, `took ${ms} ms`);
   assert.equal(state.answers, 1); assert.deepEqual(state.clicks, ['#recaptcha-verify-button']);
+  assert.equal(backoff.remainingMs(), 0);
+});
+
+test('a block in the generic solver stops the scoped solver before any page access until expiry', async () => {
+  let now = 1000;
+  const backoff = createRecaptchaAudioBackoff(() => now);
+  const generic = await load(fastRecaptchaAudio(upstream), backoff);
+  const nativeSource = dhlPolandNativeSources(fastRecaptchaAudio(upstream), stt).recaptcha;
+  assert.ok(nativeSource.includes('from "../../utils/recaptcha-backoff.mjs"'));
+  const native = await load(nativeSource, backoff);
+  const blocked = challenge(); blocked.state.blocked = true;
+  assert.equal((await solve(generic, blocked.page)).solved, false);
+  const events = [];
+  assert.equal((await solve(native, {}, event => events.push(event))).solved, false);
+  assert.deepEqual(events, ['audio_cooldown']);
+  now += 6 * 60 * 60 * 1000;
+  const clear = challenge({ '#recaptcha-verify-button': state => { state.checked = true; } });
+  clear.state.audio = true;
+  assert.equal((await solve(native, clear.page)).solved, true);
+  assert.equal(clear.state.answers, 1);
 });
 
 test('an accepted answer and a late audio clip still solve', async () => {
@@ -153,11 +178,11 @@ test('an answer Google does not judge gets a fresh challenge, as upstream does',
 test('the DHL Poland copy reports blocks and refusals as fixed events', async () => {
   const native = dhlPolandNativeSources(fastRecaptchaAudio(upstream), stt);
   assert.equal(/console\./.test(native.recaptcha), false);
-  const module = await load(native.recaptcha);
   for (const [setup, expected] of [
     [state => { state.blocked = true; }, 'audio_blocked'],
     [state => { state.audio = true; }, 'audio_refused'],
   ]) {
+    const module = await load(native.recaptcha);
     const { page, state } = challenge({ '#recaptcha-verify-button': state => { state.error = 'Multiple correct solutions required'; } });
     setup(state);
     const events = [];

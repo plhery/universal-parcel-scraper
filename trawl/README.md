@@ -141,8 +141,11 @@ the replies already captured are still returned.
 
 TRAWL's reCAPTCHA audio solver stops as soon as Google's challenge frame shows its
 automated-traffic page or refuses an answer. It reads both from the frame's class names, so a
-widget in any language counts, and it requests no more audio in that solve. Nothing carries the
-refusal to the next lookup, which asks Google for audio again.
+widget in any language counts. An automated-traffic page also pauses audio for six hours
+across the service's solver copies, Poste Italiane and DHL Poland helpers. Skipped lookups
+do not extend the pause; a wrong transcription does not start it. Clear tracking replies
+and forms already verified by the page still work, while unresolved challenges stay available
+to enabled provider fallback. The pause is in memory for the service process and resets on restart.
 
 ## Tests
 

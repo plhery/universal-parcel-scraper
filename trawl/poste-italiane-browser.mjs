@@ -1,8 +1,10 @@
+import { recaptchaAudioBackoff } from './recaptcha-backoff.mjs';
+
 const ORIGIN = 'https://www.poste.it';
 const API = `${ORIGIN}/online/dovequando/DQ-REST/ricercasemplice`;
 const MAX_BODY = 1_000_000;
 const NATIVE_EVENTS = new Set(['checkbox_started', 'checkbox_verified', 'challenge_missing', 'audio_started',
-  'audio_blocked', 'audio_refused', 'audio_verified', 'native_failed']);
+  'audio_blocked', 'audio_refused', 'audio_cooldown', 'audio_verified', 'native_failed']);
 const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'poste.verification', ...fields }));
 
 export function posteItalianeBrowserNumber(rawUrl, capture = {}) {
@@ -32,7 +34,7 @@ function trackingOnly(payload) {
 
 /** Let the official page submit its issued reCAPTCHA token and capture the resulting history. */
 export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, capture, installPolicy, solveCaptcha, signal,
-  onVerification = reportVerification }) {
+  onVerification = reportVerification, audioBackoff = recaptchaAudioBackoff }) {
   const number = posteItalianeBrowserNumber(url, capture);
   if (!number) return undefined;
   const started = Date.now();
@@ -140,12 +142,19 @@ export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, c
         const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
         statusCode = navigation?.status() ?? 0;
         const gate = await Promise.race([terminal.then(() => false), challenged.then(() => true)]);
-        if (gate && solveCaptcha && remaining() > 5000) {
+        if (gate && audioBackoff.remainingMs() > 0) {
+          nativeOutcome = 'audio_cooldown';
+          waitedForRequest = pending.size > 0;
+          if (waitedForRequest) await terminal;
+        } else if (gate && solveCaptcha && remaining() > 5000) {
           await page.getByRole('button', { name: 'Non accetto', exact: true }).click({ timeout: Math.min(1000, remaining()) }).catch(() => {});
           // Success removes the widget before the solver can see its tick. The
           // bound tracking reply, not that boolean, decides completion.
           const solved = await Promise.race([terminal, solveCaptcha(page, Math.min(30000, remaining()), controller.signal,
-            event => { if (NATIVE_EVENTS.has(event)) nativeOutcome = event; }).catch(() => false)]);
+            event => {
+              if (NATIVE_EVENTS.has(event)) nativeOutcome = event;
+              if (event === 'audio_blocked') audioBackoff.block();
+            }).catch(() => false)]);
           // The callback can remove the widget before its tracking response or
           // body arrives. Finish an observed request within the same deadline.
           waitedForRequest = solved !== true && pending.size > 0;

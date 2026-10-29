@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { posteItalianeBrowserNumber, runPosteItalianeBrowser } from './poste-italiane-browser.mjs';
+import { createRecaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 const number = 'RA00000000001';
 const url = `https://www.poste.it/cerca/index.html#/risultati-spedizioni/${number}`;
 const endpoint = 'https://www.poste.it/online/dovequando/DQ-REST/ricercasemplice';
@@ -20,7 +21,7 @@ function fixture() {
   const page = { on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
     goto: async () => { handlers.response(response(400, gate)); return { status: () => 200 }; },
     getByRole: () => ({ click: async () => {} }) };
-  const options = { url, capture, tier: 3, maxTimeout: 6000,
+  const options = { url, capture, tier: 3, maxTimeout: 6000, audioBackoff: createRecaptchaAudioBackoff(),
     onVerification: fields => state.diagnostics.push(fields),
     handle: { browser: { newContext: async () => ({ newPage: async () => page, close: async () => { state.closed++; } }) } },
     installPolicy: async () => { state.policy++; },
@@ -56,6 +57,43 @@ test('does not solve on a direct result or a non-CAPTCHA error', async () => {
     await runPosteItalianeBrowser(f.options);
     assert.equal(f.state.solved, 0); assert.equal(f.state.closed, 1);
   }
+});
+test('a blocked solve suppresses later solves, preserving the observed challenge and clear histories', async () => {
+  let now = 1000;
+  const backoff = createRecaptchaAudioBackoff(() => now);
+  const first = fixture(); first.options.audioBackoff = backoff;
+  first.options.solveCaptcha = async (_page, _timeout, _signal, report) => { report('audio_blocked'); return false; };
+  assert.equal((await runPosteItalianeBrowser(first.options)).capturedResponses.at(-1).status, 400);
+  const second = fixture(); second.options.audioBackoff = backoff;
+  const result = await runPosteItalianeBrowser(second.options);
+  assert.equal(second.state.solved, 0); assert.equal(second.state.closed, 1);
+  assert.equal(result.capturedResponses.at(-1).status, 400);
+  assert.equal(second.state.diagnostics[0].nativeOutcome, 'audio_cooldown');
+  const clear = fixture(); clear.options.audioBackoff = backoff;
+  clear.page.goto = async () => { clear.handlers.response(response()); return { status: () => 200 }; };
+  assert.equal((await runPosteItalianeBrowser(clear.options)).capturedResponses.at(-1).status, 200);
+  assert.equal(clear.state.solved, 0);
+  now += 6 * 60 * 60 * 1000;
+  const retry = fixture(); retry.options.audioBackoff = backoff;
+  await runPosteItalianeBrowser(retry.options);
+  assert.equal(retry.state.solved, 1);
+});
+test('a cooldown still finishes an automatically verified tracking request already in flight', async () => {
+  const f = fixture(); f.options.audioBackoff.block();
+  let deliver;
+  f.page.goto = async () => {
+    f.handlers.response(response(400, gate));
+    const verified = response(200, history, { captcha: 'PRIVATE' });
+    f.handlers.request(verified.request());
+    deliver = setTimeout(() => f.handlers.response(verified), 10);
+    return { status: () => 200 };
+  };
+  try {
+    const result = await runPosteItalianeBrowser(f.options);
+    assert.deepEqual(result.capturedResponses.map(row => row.status), [400, 200]);
+    assert.equal(f.state.solved, 0); assert.equal(f.state.closed, 1);
+    assert.equal(f.state.diagnostics[0].waitedForRequest, true);
+  } finally { clearTimeout(deliver); }
 });
 test('waits for the final response after solver success and retains a rejected token as challenge', async () => {
   const f = fixture(); f.options.solveCaptcha = async () => { setTimeout(() => f.handlers.response(response()), 10); return true; };

@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { dhlPolandBrowserNumber, dhlPolandHistory, runDhlPolandBrowser } from './dhl-poland-browser.mjs';
+import { createRecaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 
 const number = '99999999990';
 const endpoint = 'https://sprawdz.dhl.com.pl/';
@@ -29,7 +30,7 @@ function fixture() {
       return { click: async () => { state.submitted++; handlers.response(response()); } };
     },
   };
-  const options = { url, capture, tier: 3, maxTimeout: 1000, logDiagnostic: record => diagnostics.push(record),
+  const options = { url, capture, tier: 3, maxTimeout: 1000, audioBackoff: createRecaptchaAudioBackoff(), logDiagnostic: record => diagnostics.push(record),
     handle: { browser: { newContext: async () => ({ newPage: async () => page, close: async () => { state.closed++; } }) } },
     installPolicy: async () => { state.policy++; },
   };
@@ -77,6 +78,23 @@ test('failed native solving retains a challenge without submitting the form', as
   assert.equal(active.diagnostics[0].outcome, 'challenge');
   assert.equal(active.diagnostics[0].verification, 'unverified');
   assert.deepEqual(active.diagnostics[0].native, ['audio_blocked']);
+});
+test('a shared block skips audio on later pages, retains challenge and permits an already verified form', async () => {
+  const backoff = createRecaptchaAudioBackoff(); backoff.block();
+  const active = fixture(); active.options.audioBackoff = backoff;
+  const original = active.page.locator;
+  active.page.locator = selector => selector === '#g-recaptcha-response' ? { inputValue: async () => '' } : original(selector);
+  let solves = 0;
+  active.options.solveNativeCaptcha = async () => { solves++; return true; };
+  const result = await runDhlPolandBrowser(active.options);
+  assert.equal(solves, 0); assert.equal(active.state.submitted, 0); assert.equal(active.state.closed, 1);
+  assert.equal(result.capturedResponses.length, 0);
+  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown']);
+  assert.equal(active.diagnostics[0].outcome, 'challenge');
+  const verified = fixture(); verified.options.audioBackoff = backoff;
+  verified.options.solveNativeCaptcha = async () => { solves++; return true; };
+  assert.equal((await runDhlPolandBrowser(verified.options)).capturedResponses.length, 1);
+  assert.equal(solves, 0); assert.equal(verified.diagnostics[0].verification, 'checkbox');
 });
 test('a stalled native solver is stopped by the browser deadline and closes its context', async () => {
   const active = fixture(); active.options.maxTimeout = 30;

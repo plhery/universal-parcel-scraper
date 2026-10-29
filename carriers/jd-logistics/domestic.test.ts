@@ -48,15 +48,43 @@ describe('JD domestic history', () => {
     expect(JSON.stringify(event)).not.toContain('PRIVATE');
   });
 
-  it('refuses wrong identities, multiple records and malformed or omitted rows', () => {
+  it('refuses wrong identities, multiple records and malformed clocks', () => {
     const wrong = history(); wrong.obj[0]!.rawWaybillCode = OTHER;
     expect(() => parseJdDomestic(wrong, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     const multi = history(); multi.obj.push(multi.obj[0]!);
     expect(() => parseJdDomestic(multi, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     const bad = history(); bad.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.createTime = '2026-02-30 12:00:00';
     expect(() => parseJdDomestic(bad, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
-    const blank = history(); blank.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.operateMessage = '';
-    expect(() => parseJdDomestic(blank, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('keeps usable history partial when a row is wordless or contains only private contact clauses', () => {
+    for (const message of ['', '收件人：PRIVATE', 'Recipient name: PRIVATE', undefined]) {
+      const data = history(); data.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.operateMessage = message as never;
+      const result = parseJdDomestic(data, NUMBER);
+      expect(result).toMatchObject({ history_truncated: true, current_stage: 'in_transit', events: [{ description: 'In transit' }] });
+      expect(result.events).toHaveLength(1);
+      expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    }
+  });
+
+  it('does not turn all-wordless history into not-found or silently discard malformed rows', () => {
+    const data = history();
+    for (const row of data.obj[0]!.traceAllVoList[0]!.traceVoList) row.operateMessage = '';
+    expect(() => parseJdDomestic(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    data.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.createTime = '2026-02-30 12:00:00';
+    expect(() => parseJdDomestic(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const typed = history(); typed.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.operateMessage = {} as never;
+    expect(() => parseJdDomestic(typed, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const wrong = history(); wrong.obj[0]!.rawWaybillCode = OTHER;
+    wrong.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.operateMessage = '';
+    expect(() => parseJdDomestic(wrong, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('counts omitted rows toward the history bound', () => {
+    const data = history();
+    data.obj[0]!.traceAllVoList = Array.from({ length: 11 }, () => ({ categoryName: '', traceVoList:
+      Array.from({ length: 200 }, () => ({ operateMessage: '', createTime: '2026-04-03 12:00:00' })) })) as never;
+    expect(() => parseJdDomestic(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('keeps a session error or empty result inconclusive and requires a bound explicit missing verdict', () => {
@@ -78,6 +106,14 @@ describe('JD domestic history', () => {
 });
 
 describe('JD domestic recovery boundaries', () => {
+  it('keeps the partial-history flag through tracking recovery for provider completion', async () => {
+    const data = history(); data.obj[0]!.traceAllVoList[0]!.traceVoList[0]!.operateMessage = '收件人：PRIVATE';
+    const { trawl } = client(data);
+    const result = await new JdLogisticsTracker({ trawl, fetcher: async () => empty() }).fetch(NUMBER);
+    expect(result).toMatchObject({ history_truncated: true, events: [{ description: 'In transit' }] });
+    expect(result.events).toHaveLength(1);
+  });
+
   it('uses the browser only after an inconclusive international answer for a supported domestic shape', async () => {
     const { trawl, scrape } = client();
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());

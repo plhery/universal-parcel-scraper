@@ -29,6 +29,7 @@ COPY jd-icon.mjs /app/packages/tiers/src/utils/jd-icon.mjs
 COPY jd-icon.py /app/packages/tiers/src/utils/jd-icon.py
 COPY asendia-browser.mjs /app/packages/tiers/src/utils/asendia-browser.mjs
 COPY recaptcha-audio.mjs /app/packages/tiers/src/utils/recaptcha-audio.mjs
+COPY recaptcha-backoff.mjs /app/packages/tiers/src/utils/recaptcha-backoff.mjs
 COPY dhl-poland-native.mjs /app/packages/tiers/src/utils/dhl-poland-native.mjs
 COPY dhl-poland-browser.mjs /app/packages/tiers/src/utils/dhl-poland-browser.mjs
 COPY dhl-express-browser.mjs /app/packages/tiers/src/utils/dhl-express-browser.mjs
