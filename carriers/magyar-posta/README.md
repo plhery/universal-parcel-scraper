@@ -11,8 +11,11 @@ Domestic MPL numbers are `P`, a product letter, a three-character customer code,
 and a check digit. The seven digits weigh 3 and 1 alternately from the left, and their sum mod 10
 is the check digit; the MPL API guides' examples and the public numbers pass it. Such a number is a
 suggestion led by Magyar Posta; one with a numeric customer code also fits La Poste's
-two-characters-and-eleven-digits rule. S10 items ending in `HU` stay with the generic postal
-carrier, which lists Magyar Posta first among the direct carriers.
+two-characters-and-eleven-digits rule. Each package of a shipment also has a package number:
+the shipment's number, a three-digit package index and ten more digits, 26 characters in all, as
+the MPL API guide's examples show. `magyar-posta-package` suggests Magyar Posta for it first. S10
+items ending in `HU` stay with the generic postal carrier, which lists Magyar Posta first among
+the direct carriers.
 
 The tracker names two more series. Domestic registered letters are `RL` and fourteen digits.
 The guide for identified letters' barcodes gives their `KA` sibling a four-digit customer code,

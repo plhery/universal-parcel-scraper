@@ -313,6 +313,132 @@
         ]
       },
       "note": "Magyar Posta's tracker gives it as the example of an MPL Europe Standard (DHL) parcel number; it is not described as a live shipment."
+    },
+    {
+      "number": "PIBBZ500001190019023000000",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
+    },
+    {
+      "number": "PKAAA500582060011138001500",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
+    },
+    {
+      "number": "PKBBZ500001220012801003000",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
+    },
+    {
+      "number": "PKQZ0501157850021138000000",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
+    },
+    {
+      "number": "PNAAA500000340017101000000",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
+    },
+    {
+      "number": "PNQZ0501157850011138000000",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.posta.hu/static/internet/download/MPLAPI_technical_description.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "MPL parcel",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "magyar-posta"
+        ]
+      },
+      "note": "Magyar Posta's MPL API guide in English shows it as a package tracking number of a created shipment: the shipment's number, then a three-digit package index and ten digits. It is not described as a live shipment."
     }
   ]
 }

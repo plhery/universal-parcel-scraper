@@ -206,6 +206,16 @@ describe('Magyar Posta numbers', () => {
     }
   });
 
+  it('suggests Magyar Posta first for a package number: the shipment number, a package index and ten digits', () => {
+    expect(detectCarrierMatch('PNZZZ000000130010000000000')).toEqual({
+      carrier: 'unknown', confidence: 'low', candidates: ['magyar-posta'], preferred: ['magyar-posta'],
+    });
+    expect(recognitionCandidates('PNZZZ000000130010000000000', { phase: 'browser' }).map(({ carrier }) => carrier)).toEqual(['magyar-posta']);
+    for (const number of ['PNZZZ00000013001000000000', 'PNZZZ0000001300100000000000', 'PNZZZ00000013001000000000A', 'P0ZZZ000000130010000000000']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('magyar-posta');
+    }
+  });
+
   it('keeps a Hungarian S10 number in international mail and asks Magyar Posta, whose tracker needs a solved checkbox, in the browser phase only', () => {
     expect(detectCarrierMatch('RR123456785HU')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     for (const number of ['RR123456785HU', 'PNZZZ00000013', 'PB00000000013']) {
