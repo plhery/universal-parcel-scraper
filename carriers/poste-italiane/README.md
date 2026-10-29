@@ -154,6 +154,9 @@ Italiane for a number issued abroad.
 
 - No event location for a scan at a post office's street address without its office name.
 - Day-resolution estimate only.
+- Browser recovery needs Google to serve its audio challenge. While Google shows the browser
+  service's address its automated-traffic page instead, the step fails at once and only the
+  providers can recover a challenged lookup.
 - Poste's tracker also answers those codes with other digits before the `C`. No parcel shows
   one yet, so neither detection nor the adapter takes them.
 
