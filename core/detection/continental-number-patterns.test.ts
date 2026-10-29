@@ -922,3 +922,21 @@ describe('One by Allegro CZ, Post One, FámaFutár and TAS Courier', () => {
     });
   });
 });
+
+describe('In Time Bulgaria, EMEX and Runner Express links', () => {
+  it('reads their tracking links without naming them for a bare number', () => {
+    expect(parseTrackingInput('https://intime.bg/tracking/?track_number=100000017')).toMatchObject({
+      trackingNumber: '100000017', carrier: 'intime-bg', source: 'link',
+    });
+    expect(parseTrackingInput('https://courier.intime.bg/bg/tracking/code/100000017')).toMatchObject({
+      trackingNumber: '100000017', carrier: 'intime-bg', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.emex.kz/otslezhivanie-po-kazahstanu?id=100000017')).toMatchObject({
+      trackingNumber: '100000017', carrier: 'emex', source: 'link',
+    });
+    expect(parseTrackingInput('https://runnerexpress.co.il/track/?search_query=RE100000017')).toMatchObject({
+      trackingNumber: 'RE100000017', carrier: 'runner-express', source: 'link',
+    });
+    expect(detectCarrierMatch('100000017').candidates ?? []).not.toContain('intime-bg');
+  });
+});

@@ -467,3 +467,15 @@ describe('Boyuan tracking numbers', () => {
     });
   });
 });
+
+describe('Parcel Freight Logistics numbers', () => {
+  it('suggests Parcel Freight Logistics for NEXAU, ten digits and YQ only', () => {
+    expect(detectCarrierMatch('NEXAU1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pflogistics'] });
+    for (const number of ['ABCAU1000000017YQ', 'NEXUS1000000017YQ', 'NEXAU100000017YQ', 'NEXAU1000000017YT']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('pflogistics');
+    }
+    expect(parseTrackingInput('https://pflogistics.com.au/tracking-result?tracking=NEXAU1000000017YQ')).toMatchObject({
+      trackingNumber: 'NEXAU1000000017YQ', carrier: 'pflogistics', source: 'link',
+    });
+  });
+});

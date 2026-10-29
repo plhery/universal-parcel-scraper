@@ -3023,6 +3023,12 @@
     "reason": "Three letters and seven digits are shared by Australia Post and other carriers, and Pushpak's prefixes are not published."
   },
   {
+    "carrier": "quality-post",
+    "pattern": "^[A-Z]{3}\\d{7}$",
+    "kind": "by_design",
+    "reason": "The only public Quality Post number is three letters, which look like a sender's code, and seven digits, so one sample cannot show the shape other senders get."
+  },
+  {
     "carrier": "quantium-solutions",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

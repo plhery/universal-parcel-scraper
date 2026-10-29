@@ -1,0 +1,54 @@
+{
+  "id": "pflogistics",
+  "displayName": "Parcel Freight Logistics",
+  "aliases": [
+    "PFLogistics",
+    "PFL Logistics",
+    "Parcel Freight Logistics (PFL)",
+    "Parcel Freight Logistics Pty Ltd"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#172a47"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://pflogistics.com.au/tracking-result?tracking={trackingNumber}",
+    "searchUrl": "https://pflogistics.com.au/tracking",
+    "canaryUrl": "https://pflogistics.com.au/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "pflogistics.com.au",
+        "www.pflogistics.com.au"
+      ],
+      "pathPattern": "^/tracking-result/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "pflogistics-1",
+      "pattern": "^NEXAU\\d{10}YQ$",
+      "confidence": "low"
+    }
+  ]
+}

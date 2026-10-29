@@ -479,3 +479,25 @@ describe('Polonez label numbers and Yamato Transport U.S.A. links', () => {
     expect(detectCarrierMatch('100000000017').candidates ?? []).not.toContain('yamato-america');
   });
 });
+
+describe('Costco Logistics numbers, and RXO and Quality Post links', () => {
+  it('names Costco Logistics for 1I, an order date and nine digits', () => {
+    expect(detectCarrierMatch('1I20240115000000017')).toMatchObject({ carrier: 'costco-logistics', confidence: 'high' });
+    for (const number of ['1I20241315000000017', '1I20240132000000017', '1I19240115000000017', '1I2024011500000001', 'II20240115000000017']) {
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('costco-logistics');
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('costco-logistics');
+    }
+    expect(parseTrackingInput('https://logistics.costco.com/tracking?id=1I20240115000000017')).toMatchObject({
+      trackingNumber: '1I20240115000000017', carrier: 'costco-logistics', source: 'link',
+    });
+  });
+
+  it('reads RXO and Quality Post tracking links', () => {
+    expect(parseTrackingInput('https://track.rxo.com/?trackingnumber=RXOL100000000017')).toMatchObject({
+      trackingNumber: 'RXOL100000000017', carrier: 'rxo', source: 'link',
+    });
+    expect(parseTrackingInput('https://wstracking.qualitypost.com.mx/portal_seguimiento?info=ABC1000017')).toMatchObject({
+      trackingNumber: 'ABC1000017', carrier: 'quality-post', source: 'link',
+    });
+  });
+});

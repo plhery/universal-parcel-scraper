@@ -7328,6 +7328,27 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "asigna": {
+    "displayName": "Asigna",
+    "color": "#11358b",
+    "aliases": [
+      "Asigna Logística Canaria",
+      "Comunicación y Logística Canaria"
+    ],
+    "countries": [
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Atlantic/Canary",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.asigna.es/",
+    "trackingSearchUrl": "https://web.asigna.es/apps/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "asyad-express": {
     "displayName": "Asyad Express",
     "color": "#221a37",
@@ -10478,6 +10499,44 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "costco-logistics": {
+    "displayName": "Costco Logistics",
+    "color": "#b8182b",
+    "aliases": [
+      "Costco Wholesale Logistics",
+      "Innovel Solutions",
+      "Innovel"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Chicago",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://logistics.costco.com/",
+    "trackingUrlTemplate": "https://logistics.costco.com/tracking?id={trackingNumber}",
+    "trackingSearchUrl": "https://logistics.costco.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "logistics.costco.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^1I20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{9}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "courier-center": {
     "displayName": "Courier Center",
     "color": "#f37029",
@@ -13557,6 +13616,42 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "emex": {
+    "displayName": "EMEX",
+    "color": "#0d237a",
+    "aliases": [
+      "EMEX Kazakhstan",
+      "EMEX Express",
+      "Emexnet",
+      "ТОО EMEX",
+      "ТОО «ЕМЕХ»"
+    ],
+    "countries": [
+      "KZ"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.emex.kz/",
+    "trackingUrlTemplate": "https://www.emex.kz/otslezhivanie-po-kazahstanu?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.emex.kz/otslezhivanie-po-kazahstanu",
+    "linkRules": [
+      {
+        "domains": [
+          "www.emex.kz",
+          "emex.kz"
+        ],
+        "pathPattern": "^/otslezhivanie-po-kazahstanu/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "emile": {
     "displayName": "Emile",
@@ -18663,6 +18758,29 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "interlogistica": {
+    "displayName": "Interlogistica",
+    "color": "#e31e24",
+    "aliases": [
+      "Интерлогистика",
+      "Interlogistica Courier",
+      "Интерлогистика Куриер",
+      "Интерлогистика Куриер ЕООД"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.interlogistica.bg/bg/",
+    "trackingSearchUrl": "https://tracking.interlogistica.bg/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "internet-express": {
     "displayName": "Internet Express",
     "color": "#fae80b",
@@ -18789,6 +18907,48 @@ export const CARRIER_CATALOG = {
         "params": [
           "sdnr"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "intime-bg": {
+    "displayName": "In Time Bulgaria",
+    "color": "#00ab8e",
+    "aliases": [
+      "InTime Bulgaria",
+      "ИН ТАЙМ",
+      "Ин Тайм",
+      "IN TIME OOD",
+      "UPS Ин Тайм"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://intime.bg/",
+    "trackingUrlTemplate": "https://intime.bg/tracking/?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://intime.bg/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "intime.bg",
+          "www.intime.bg"
+        ],
+        "pathPattern": "^/(?:en/)?tracking/?$",
+        "params": [
+          "track_number"
+        ]
+      },
+      {
+        "domains": [
+          "courier.intime.bg"
+        ],
+        "path": "^/(?:bg|en)/tracking/code/([^/?#]+)/?$"
       }
     ],
     "detectionRules": []
@@ -25516,6 +25676,46 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "pflogistics": {
+    "displayName": "Parcel Freight Logistics",
+    "color": "#172a47",
+    "aliases": [
+      "PFLogistics",
+      "PFL Logistics",
+      "Parcel Freight Logistics (PFL)",
+      "Parcel Freight Logistics Pty Ltd"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pflogistics.com.au/",
+    "trackingUrlTemplate": "https://pflogistics.com.au/tracking-result?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://pflogistics.com.au/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "pflogistics.com.au",
+          "www.pflogistics.com.au"
+        ],
+        "pathPattern": "^/tracking-result/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^NEXAU\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "phlpost": {
     "displayName": "PHLPost",
     "color": "#9e0000",
@@ -27150,6 +27350,48 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "quality-post": {
+    "displayName": "Quality Post",
+    "color": "#a4e000",
+    "aliases": [
+      "QualityPost",
+      "Grupo Qualitypost",
+      "QPN"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Monterrey",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.qualitypost.com.mx/",
+    "trackingUrlTemplate": "https://wstracking.qualitypost.com.mx/portal_seguimiento?info={trackingNumber}",
+    "trackingSearchUrl": "https://www.qualitypost.com.mx/",
+    "linkRules": [
+      {
+        "domains": [
+          "wstracking.qualitypost.com.mx"
+        ],
+        "pathPattern": "^/portal_seguimiento/?$",
+        "params": [
+          "info"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.qualitypost.com.mx"
+        ],
+        "pathPattern": "^/newtracking/seguimiento_envio/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "quantium-solutions": {
     "displayName": "Quantium Solutions",
     "color": "#00474f",
@@ -27884,6 +28126,40 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "runner-express": {
+    "displayName": "Runner Express",
+    "color": "#e71c22",
+    "aliases": [
+      "Runner Express Ltd",
+      "Runner Express IL",
+      "רנר אקספרס"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://runnerexpress.co.il/",
+    "trackingUrlTemplate": "https://runnerexpress.co.il/track/?search_query={trackingNumber}",
+    "trackingSearchUrl": "https://runnerexpress.co.il/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "runnerexpress.co.il",
+          "www.runnerexpress.co.il"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "search_query"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "russian-post": {
     "displayName": "Russian Post",
     "color": "#1928dc",
@@ -27912,6 +28188,43 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "rxo": {
+    "displayName": "RXO",
+    "color": "#000000",
+    "aliases": [
+      "RXO Order Number and Retailer Number tracking",
+      "RXO Inc.",
+      "RXO Last Mile",
+      "XPO Last Mile",
+      "XPO Logistics Last Mile"
+    ],
+    "countries": [
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://rxo.com/",
+    "trackingUrlTemplate": "https://track.rxo.com/?trackingnumber={trackingNumber}",
+    "trackingSearchUrl": "https://track.rxo.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.rxo.com",
+          "track.xpo.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "trackingnumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "saee": {
     "displayName": "Saee",
@@ -34990,6 +35303,7 @@ export const CARRIER_IDS = [
   "aramex-nz",
   "aras-kargo",
   "arrow-xl",
+  "asigna",
   "asyad-express",
   "atlantic-courier",
   "averitt",
@@ -35068,6 +35382,7 @@ export const CARRIER_IDS = [
   "correos-de-mexico",
   "correos-el-salvador",
   "correos-nicaragua",
+  "costco-logistics",
   "courier-center",
   "courier-it",
   "courier-plus-ng",
@@ -35140,6 +35455,7 @@ export const CARRIER_IDS = [
   "egypt-post",
   "ekart",
   "elta",
+  "emex",
   "emile",
   "emirates-post",
   "ems-vietnam",
@@ -35273,9 +35589,11 @@ export const CARRIER_IDS = [
   "intelcom",
   "inter-courier",
   "intereuropa",
+  "interlogistica",
   "internet-express",
   "interrapidisimo",
   "intex-paketdienst",
+  "intime-bg",
   "iran-post",
   "israel-post",
   "j-and-t-au",
@@ -35447,6 +35765,7 @@ export const CARRIER_IDS = [
   "pengyou",
   "peqasus-az",
   "pfc-express",
+  "pflogistics",
   "phlpost",
   "pickupp",
   "pickupp-sg",
@@ -35487,6 +35806,7 @@ export const CARRIER_IDS = [
   "ptt",
   "pullman-cargo",
   "pushpak-courier",
+  "quality-post",
   "quantium-solutions",
   "quick-rabbit",
   "quicksilver-sa",
@@ -35506,7 +35826,9 @@ export const CARRIER_IDS = [
   "rpx-hk",
   "rpx-indonesia",
   "rr-express-sg",
+  "runner-express",
   "russian-post",
+  "rxo",
   "saee",
   "sagawa",
   "sagawa-global",
@@ -35839,6 +36161,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aramex-nz": ["aramex-nz-1","aramex-nz-2"],
   "aras-kargo": ["aras-kargo-1"],
   "arrow-xl": [],
+  "asigna": [],
   "asyad-express": [],
   "atlantic-courier": [],
   "averitt": [],
@@ -35917,6 +36240,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correos-de-mexico": ["correos-de-mexico-s10"],
   "correos-el-salvador": [],
   "correos-nicaragua": [],
+  "costco-logistics": ["costco-logistics-1"],
   "courier-center": [],
   "courier-it": [],
   "courier-plus-ng": [],
@@ -35989,6 +36313,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "egypt-post": ["egypt-post-1","egypt-post-s10"],
   "ekart": ["ekart-ecommerce","ekart-merchant"],
   "elta": ["elta-s10"],
+  "emex": [],
   "emile": ["emile-1","emile-2"],
   "emirates-post": ["emirates-post-own","emirates-post-s10"],
   "ems-vietnam": ["ems-vietnam-s10"],
@@ -36122,9 +36447,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
   "inter-courier": [],
   "intereuropa": ["intereuropa-1"],
+  "interlogistica": [],
   "internet-express": [],
   "interrapidisimo": [],
   "intex-paketdienst": [],
+  "intime-bg": [],
   "iran-post": [],
   "israel-post": ["israel-post-1","israel-post-s10"],
   "j-and-t-au": ["j-and-t-au-1"],
@@ -36296,6 +36623,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pengyou": ["pengyou-1"],
   "peqasus-az": [],
   "pfc-express": ["pfc-express-1"],
+  "pflogistics": ["pflogistics-1"],
   "phlpost": ["phlpost-s10"],
   "pickupp": ["pickupp-1"],
   "pickupp-sg": ["pickupp-sg-1"],
@@ -36336,6 +36664,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ptt": ["ptt-1","ptt-s10"],
   "pullman-cargo": [],
   "pushpak-courier": [],
+  "quality-post": [],
   "quantium-solutions": [],
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2"],
   "quicksilver-sa": ["quicksilver-sa-1"],
@@ -36355,7 +36684,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rpx-hk": ["rpx-hk-1"],
   "rpx-indonesia": [],
   "rr-express-sg": [],
+  "runner-express": [],
   "russian-post": ["russian-post-1"],
+  "rxo": [],
   "saee": ["saee-1"],
   "sagawa": ["sagawa-waybill"],
   "sagawa-global": [],
