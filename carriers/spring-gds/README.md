@@ -102,6 +102,10 @@ it; everything user-facing says PostNL.
   land with the other. Shorter codes, such as the two-letter ones PostNL's barcode
   documentation shows, stay suggestions. Recognition never asks PostNL about them: its
   endpoint calls them incorrect (see Limitations).
+- The international tracker also holds parcels for Italy under `1810` and fourteen digits, a
+  series no public source shows; the corpus holds a made-up number in that shape. bpost and
+  Ecoscooting take any eighteen digits, so `spring-gds-1810` only suggests PostNL, and
+  recognition asks PostNL about that series alone. Other eighteen-digit numbers stay unasked.
 - `mailingtechnology.com/tracking?tn=` (Spring GDS) and retired `postnl.post/details/{n}`
   links are recognized when pasted. New links use `/track?barcodes=`.
 - Not used: the Spring GDS portal. It shows extra internal legs for the same barcode, but it

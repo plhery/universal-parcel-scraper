@@ -40,6 +40,10 @@
       "domestic",
       "direct"
     ],
+    "recognition": {
+      "rank": 524,
+      "pattern": "^1810\\d{14}$"
+    },
     "refresh": {
       "minMinutes": 30
     },
@@ -117,6 +121,11 @@
     {
       "id": "spring-gds-3",
       "pattern": "^(?=.{13}$|.{15}$)3S[A-Z]{1,3}\\d+$",
+      "confidence": "low"
+    },
+    {
+      "id": "spring-gds-1810",
+      "pattern": "^1810\\d{14}$",
       "confidence": "low"
     }
   ]

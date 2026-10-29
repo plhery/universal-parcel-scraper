@@ -121,6 +121,31 @@ describe('PostNL wrong-number handling', () => {
   });
 });
 
+describe('PostNL recognition', () => {
+  const SERIES = '181011000000000017';
+
+  it('asks the international tracker about the recognized series only', async () => {
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(jsonResponse({ access_token: 'visitor-token' }))
+      .mockResolvedValueOnce(jsonResponse({
+        data: { items: [{ item: SERIES, events: [{ category: 'Processing', datetime_local: '2026-08-30T12:00:00Z', country_code: 'NL' }] }] },
+      }))
+      .mockResolvedValueOnce(jsonResponse({ access_token: 'visitor-token' }))
+      .mockResolvedValueOnce(jsonResponse({
+        data: { items: [{ item: SERIES, message: 'The shipment barcode was not found.', events: [] }] },
+      }));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+
+    for (const number of [POSTNL_WRONG_NUMBER, '3SABCD000000017', '182011000000000017']) {
+      await expect(instance.recognize!(number), number).resolves.toEqual({ known: false });
+    }
+    expect(fetcher).not.toHaveBeenCalled();
+    await expect(instance.recognize!(SERIES)).resolves.toEqual({ known: true, lastActivityAt: '2026-08-30T10:00:00.000Z' });
+    await expect(instance.recognize!(SERIES)).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
+});
+
 describe('PostNL visitor token', () => {
   const tracked = () => jsonResponse({
     data: { items: [{ item: POSTNL_WRONG_NUMBER, events: [{ category: 'Processing', datetime_local: '2026-08-30T12:00:00Z', country_code: 'NL' }] }] },

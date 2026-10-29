@@ -23,7 +23,8 @@
  * delivery postcode. With a Dutch postcode, or another country's postcode
  * given with that country, that tracker is asked first.
  */
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { DateTime } from 'luxon';
 import {
   CarrierError, IndeterminateError, InputRequiredError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError,
@@ -39,6 +40,7 @@ import { isRecord, type JsonObject } from '../../core/types.js';
 import { postNLCode, postNLDomesticStage, postNLStatus } from './status.js';
 
 const PROVIDER = 'PostNL';
+const RECOGNIZED = new RegExp(CARRIER_DEFINITIONS['spring-gds']?.tracking.recognitionPattern ?? '(?!)');
 const TOKEN_URL = 'https://postnl.post/api/v1/auth/token';
 const TRACK_URL = 'https://postnl.post/api/v1/tracking-items';
 const DOMESTIC_URL = 'https://jouw.postnl.nl/track-and-trace/api/trackAndTrace';
@@ -493,5 +495,9 @@ export const adapter: AdapterFactory = (environment) => {
     // on the same host, and each replays once inside the step.
     steps: ['domestic', 'direct'],
     track: (input, context) => tracker.fetch(input.number, context, input.postcode, input.postcodeCountry),
+    // Only the series the catalog's recognition pattern names: a 3S barcode PostNL
+    // does not find may still be on the domestic tracker, behind a postcode.
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+      () => RECOGNIZED.test(comparableIdentifier(number))),
   };
 };

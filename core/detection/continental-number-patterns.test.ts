@@ -958,3 +958,16 @@ describe('JP HOME, CargoLine and Ambro Express links', () => {
     expect(detectCarrierMatch('10000017').candidates ?? []).not.toContain('jp-home');
   });
 });
+
+describe('PostNL eighteen-digit numbers for Italy', () => {
+  it('offers PostNL for 1810 and fourteen digits and asks it, and only for that series', () => {
+    for (const number of ['181011000000000017', '1810 1100 0000 0000 17']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['spring-gds']) });
+      expect(recognitionAskedCarriers(number, { countryHint: 'IT' }), number).toEqual(['spring-gds']);
+    }
+    for (const number of ['182011000000000017', '18101100000000017', '1810110000000000170']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('spring-gds');
+      expect(recognitionAskedCarriers(number), number).not.toContain('spring-gds');
+    }
+  });
+});

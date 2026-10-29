@@ -6310,5 +6310,14 @@
       "dhlink"
     ],
     "reason": "Boyuan's tracking numbers carry its initials; ParcelsApp named DHLink beside Boyuan for one on a US line. Both rules are low-confidence: recognition asks DHLink, the one with a tracker the app asks, and a provider names Boyuan for the parcels DHLink does not know."
+  },
+  {
+    "shape": "1810 and fourteen digits",
+    "carriers": [
+      "bpost",
+      "ecoscooting",
+      "spring-gds"
+    ],
+    "reason": "bpost and Ecoscooting take any eighteen digits at low confidence; spring-gds-1810 adds PostNL for the series its international tracker answered for Italy. All three stay suggestions, and recognition asks PostNL, the only one whose recognition takes the series."
   }
 ]

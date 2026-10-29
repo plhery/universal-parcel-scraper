@@ -429,6 +429,8 @@ export const CARRIER_CATALOG = {
           "autoComplete": "postal-code"
         }
       ],
+      "recognitionRank": 524,
+      "recognitionPattern": "^1810\\d{14}$",
       "refresh": {
         "minMinutes": 30
       },
@@ -477,6 +479,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^(?=.{13}$|.{15}$)3S[A-Z]{1,3}\\d+$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^1810\\d{14}$",
         "confidence": "low"
       }
     ]
@@ -36396,7 +36402,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-gfus","aliexpress-ecsc-aaro","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
-  "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3"],
+  "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],
   "dachser": [],
   "dhl": ["dhl-1","dhl-14","dhl-16","dhl-15","dhl-9","dhl-8","dhl-10","dhl-3","dhl-13","dhl-12","dhl-7"],
