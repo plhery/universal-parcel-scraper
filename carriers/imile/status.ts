@@ -61,10 +61,13 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['our delivery associate is out for delivery', 'out_for_delivery'],
   ['shipment out for delivery', 'out_for_delivery'],
   ['delivery attempt finished,return to local logistics company warehouse', 'failed_attempt'],
+  // The same return to the delivery station, as relayed to WanbExpress's tracker.
+  ['back to ds', 'failed_attempt'],
   // Drivers' reasons, each followed by the attempt's end and the return to the centre.
   ['switch off', 'failed_attempt'],
   ['customer wants to change location', 'failed_attempt'],
   ['route not completed', 'failed_attempt'],
+  ['<route not completed>', 'failed_attempt'],
   // On the delivery run only (`1003`); on the way to the delivery office (`1002`) it is a delay.
   ['traffic, strike, bad weather', 'failed_attempt'],
   ['user not at home', 'failed_attempt'],

@@ -5,6 +5,7 @@ import { TrawlClient } from '../../core/transport/trawl.js';
 import { adapter } from './adapter.js';
 import { fetchWanbInBrowser } from './browser.js';
 import { API, normalizeWanbNumber, parseWanb } from './parser.js';
+import { statusMap } from './status.js';
 
 vi.mock('./browser.js', () => ({ fetchWanbInBrowser: vi.fn() }));
 
@@ -78,6 +79,26 @@ describe('WanbExpress', () => {
     expect(() => parseWanb(other, number)).toThrow(expect.objectContaining({ kind: 'schema' }));
     const reference = found(); reference.Data.Match = 'TrackingNumber';
     expect(() => parseWanb(reference, number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+  });
+
+  it('stages the last-mile partner\'s scans by iMile\'s sentences, a run that did not deliver as a failed attempt', () => {
+    const point = (Time: string, Content: string, Status: string | null = null) => ({ Time, TimeZone: 2, Content, Status, Location: '' });
+    const result = parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null, Metadata: null, TrackPoints: [
+      point('2031-04-20T09:00:00Z', '【Sample DC】Received.'),
+      point('2031-04-20T17:00:00Z', '【Sample DS】Arrived.'),
+      point('2031-04-21T03:30:00Z', '【Sample DS】Dispatch task assigned to DA.'),
+      point('2031-04-21T12:59:00Z', '【Sample DS】Shipment out for delivery.', 'LastMileDeliveryReady'),
+      point('2031-04-21T18:48:00Z', '<Route not completed>'),
+      point('2031-04-21T19:36:00Z', '【Sample DS】 Back To DS.'),
+    ] } }, number);
+    expect(result.current_stage).toBe('failed_attempt');
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'carrier'], ['failed_attempt', 'carrier'], ['out_for_delivery', 'carrier'],
+      ['in_transit', 'carrier'], ['in_transit', 'carrier'], ['in_transit', 'carrier'],
+    ]);
+    // The app reviews stored wordings by the same map.
+    expect(statusMap.stage(null, '【sample ds】 back to ds.')).toBe('failed_attempt');
+    expect(statusMap.stage('LastMileDeliveryReady', '【sample ds】shipment out for delivery.')).toBe('out_for_delivery');
   });
 
   it('keeps verification, missing parcels and changed schemas distinct', () => {

@@ -101,6 +101,48 @@
       "language": "en",
       "stage": "delivered",
       "confirmedBy": "live"
+    },
+    {
+      "wording": "【Sample DC】Received.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "iMile's receipt at its centre in the destination country, relayed without a code."
+    },
+    {
+      "wording": "【Sample DS】Arrived.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "iMile's arrival at the delivery station, relayed without a code."
+    },
+    {
+      "wording": "【Sample DS】Dispatch task assigned to DA.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A delivery associate named hours before the run."
+    },
+    {
+      "code": "LastMileDeliveryReady",
+      "wording": "【Sample DS】Shipment out for delivery.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "<Route not completed>",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The driver's run ended without the delivery; the parcel goes back to the station."
+    },
+    {
+      "wording": "【Sample DS】 Back To DS.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Back at the delivery station after a run that did not deliver it."
     }
   ]
 }

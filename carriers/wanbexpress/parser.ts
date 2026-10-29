@@ -5,7 +5,7 @@ import { classifyWording, languageStageStatus, type Stage } from '../../core/sta
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { statusMap } from './status.js';
+import { wanbStage } from './status.js';
 
 export const PROVIDER = 'WanbExpress';
 export const ORIGIN = 'https://tracking.wanbexpress.com';
@@ -44,8 +44,8 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
     const time = explicitOffsetTime(row.Time)?.iso;
     if (!time) throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid scan clock');
     const code = typeof row.Status === 'string' ? row.Status : '';
-    const mapped = statusMap.stage(code || null, '');
-    const wording = classifyWording(row.Content);
+    const mapped = wanbStage(code || null, row.Content);
+    const wording = mapped === undefined ? classifyWording(row.Content) : null;
     return { description: clean(row.Content, 1000), time,
       ...(row.Location ? { location: clean(row.Location, 300) } : {}),
       ...(code ? { provider_code: code.slice(0, 100) } : {}),

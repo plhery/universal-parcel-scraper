@@ -26,6 +26,8 @@ A final rejection remains a challenge even when an earlier reply succeeded.
 The tracking reply must name the requested parcel and identify a parcel-ID match. Reference
 and delivery-number matches stay inconclusive. Only the explicit unknown-parcel envelope is
 not-found. Scans carry UTC instants; their display offsets are not applied a second time.
+The last-mile partner's scans, iMile's on a parcel to Germany, come in the partner's sentences
+and mostly without a code: they take the stage iMile's map gives those sentences.
 Recipient details, proofs of delivery and photographs are excluded.
 
 Verification depends on the browser and its network. A datacenter network can be rejected by
