@@ -22,9 +22,9 @@ const DIRECT_TIMEOUT_MS = 10_000;
 // channel; other clients get a captcha reply. So does fetch's default `Accept-Language: *`.
 const APP_HEADERS = { Accept: 'application/json', 'Accept-Language': 'en-AU', AP_APP_ID: 'MYPOST', AP_CHANNEL_NAME: 'ANDROID',
   'User-Agent': 'okhttp/4.12.0' };
-// fetch's `no-store` adds a browser reload's cache headers, which the gateway refuses
-// from this client. `no-cache` still takes every reply from the gateway.
-const asApp = (fetcher?: typeof fetch): typeof fetch => (input, init) => (fetcher ?? fetch)(input, { ...init, cache: 'no-cache' });
+// fetch's `no-store` adds a browser reload's cache headers and `no-cache` a `max-age=0`, which
+// the gateway refuses from this client. The app sends neither, and Node's fetch keeps no cache.
+const asApp = (fetcher?: typeof fetch): typeof fetch => (input, init) => (fetcher ?? fetch)(input, { ...init, cache: 'default' });
 
 export function normalizeAustraliaPostNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');

@@ -34,8 +34,9 @@ same gateway route as the website through OkHttp, with `AP_APP_ID: MYPOST` and
 
 The gateway's DataDome protection decides on the HTTP client name: the app's OkHttp name gets JSON,
 and any other name gets a captcha reply with HTTP 403, whatever the channel. Two defaults of
-`fetch` get the same refusal, so the adapter replaces them: `Accept-Language: *`, and the reload
-cache headers of the `no-store` mode. So does a `baggage` header, which Sentry's Node SDK adds to
+`fetch` get the same refusal, so the adapter replaces them: `Accept-Language: *`, and the cache
+headers of the `no-store` and `no-cache` modes (`Pragma`, and `Cache-Control: no-cache` or
+`max-age=0`), which the app never sends. So does a `baggage` header, which Sentry's Node SDK adds to
 every outgoing request unless the consumer sets `tracePropagationTargets: []`. The app also sends an
 `API-KEY` and carries the DataDome SDK; the gateway answers without the key or a DataDome cookie.
 

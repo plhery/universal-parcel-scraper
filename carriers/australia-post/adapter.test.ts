@@ -322,7 +322,7 @@ describe('Australia Post direct retrieval', () => {
     await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
     const [url, init] = fetcher.mock.calls[0]!;
     expect(url).toBe(australiaPostApiUrl(NUMBER));
-    expect(init!.cache).toBe('no-cache');
+    expect(init!.cache).toBe('default');
     expect(Object.fromEntries(new Headers(init!.headers))).toEqual({ accept: 'application/json', ap_app_id: 'MYPOST',
       ap_channel_name: 'ANDROID', 'user-agent': 'okhttp/4.12.0', 'accept-language': 'en-AU' });
     const unknown = empty(); unknown[0].trackingIds = [NUMBER];
