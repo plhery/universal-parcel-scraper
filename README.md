@@ -92,7 +92,9 @@ language to do so; the others answer as usual.
 
 Besides the scans, `result` carries what the carrier shows about the parcel, such as
 `expected_delivery`, `weight_kg`, `destination_country`, the shipping service in
-`service_name` or the duties and fees an import owes in `import_charges`.
+`service_name` or the duties and fees an import owes in `import_charges`. A scan whose carrier
+asks the recipient to give a tax number, pay import duties or send customs documents carries
+`recipient_action`.
 
 ### Browser
 

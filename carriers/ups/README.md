@@ -87,6 +87,8 @@ rendered status, after that wait.
   prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay.
   The receiver's delivery instructions (`L0`) are a notice, not a scan: the scan before them
   decides, so a parcel UPS has only the label for does not read in transit.
+- Duties or taxes due (`7F`) and the hold until they are paid (`OQ`) set `recipient_action`
+  to `duties` by their code, whatever words UPS adds beside it.
 - `pickup_point` names the access point only while the newest scan is `2Q` or `ZP`. Replies
   can carry an access point the parcel never reached. It is the business name, then the
   street and the town on their own lines when `upsAccessPoint.location` gives both, as the

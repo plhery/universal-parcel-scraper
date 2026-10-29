@@ -15,7 +15,7 @@ import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../.
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
-import { isUpsNotice, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsStatus, upsUncodedScanStage } from './status.js';
+import { isUpsNotice, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsRecipientAction, upsStatus, upsUncodedScanStage } from './status.js';
 import { decodeEntities } from './text.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
@@ -530,12 +530,14 @@ export function parseUPSTrackingResponse(
       if (!description) continue;
       const code = cleanScalar(raw.actCode, 8).toUpperCase();
       const stage = code ? upsActivityStage(code) : upsUncodedScanStage(description);
+      const action = upsRecipientAction(code);
       events.push({
         ...activityClock(raw, text(raw.location)),
         location: pagePlace(text(raw.location)),
         description,
         ...(/^[A-Z0-9]{1,4}$/.test(code) ? { provider_code: code } : {}),
         ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
+        ...(action ? { recipient_action: action } : {}),
       });
     }
   }
@@ -689,12 +691,14 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
     if (!description) continue;
     const code = cleanScalar(scanStatus.code, 8).toUpperCase();
     const stage = code ? upsActivityStage(code) : upsUncodedScanStage(description);
+    const action = upsRecipientAction(code);
     events.push({
       ...apiActivityClock(raw),
       location: apiPlace(raw.location),
       description,
       ...(/^[A-Z0-9]{1,4}$/.test(code) ? { provider_code: code } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
+      ...(action ? { recipient_action: action } : {}),
     });
   }
   keepNoticeStages(events);

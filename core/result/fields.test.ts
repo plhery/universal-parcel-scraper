@@ -96,6 +96,19 @@ describe('event places', () => {
   });
 });
 
+describe('recipient actions', () => {
+  it('flags a scan whose customs wording asks the recipient to act, and keeps a carrier\'s own flag', () => {
+    const events = normalizeCarrierResult({ status: 'in_transit', events: [
+      { time: '2026-01-03T10:00:00Z', description: 'Necessidade de informar CPF/CNPJ do destinatário' },
+      { time: '2026-01-03T09:00:00Z', description: 'Duties or taxes are due — pay online', recipient_action: 'duties' },
+      { time: '2026-01-03T08:00:00Z', description: 'Customs clearance', recipient_action: 'sign' },
+      { time: '2026-01-03T07:00:00Z', description: 'Awaiting payment' },
+    ] }).events!;
+    expect(events.map((event) => event.recipient_action ?? null)).toEqual(['tax_id', 'duties', null, null]);
+    expect(events[2]).not.toHaveProperty('recipient_action');
+  });
+});
+
 describe('a summary without a stage', () => {
   const scans = [
     { time: '2026-01-05T10:00:00+01:00', description: 'Synthetic customs step the carrier left unstaged' },

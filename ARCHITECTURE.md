@@ -188,6 +188,15 @@ when the carrier says; `status_code` keeps its code.
 A provider's answer that lacks them takes the carrier's. The carriers whose `capabilities` list
 `import_charges` fill it.
 
+A scan's `recipient_action` says what the carrier asks the recipient to do before the parcel can
+move on: `tax_id` give their tax number, such as Brazil's CPF or CNPJ, `duties` pay the import
+duties or taxes, `documents` send customs documents. `normalizeCarrierResult` reads it from a short
+list of whole customs wordings ([core/status/action.ts](core/status/action.ts)), so it holds for
+every carrier and provider; an adapter may also set it from a code that says so, as UPS does. A
+wording that mentions customs, a payment or a document without saying the recipient must act
+sets nothing: a false alarm costs the reader more than a missed one. The scan's own `description`
+is the carrier's request; a later scan means the carrier moved on.
+
 A result's `pickup_point` is the point the parcel waits at for collection: its name, then its
 address on the following lines. On a delivered parcel it is the point the recipient collected
 it from. A parcel brought to the door has none, although some carriers still name a point

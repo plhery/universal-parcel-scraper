@@ -811,6 +811,15 @@
                     "string",
                     "null"
                   ]
+                },
+                "recipient_action": {
+                  "type": "string",
+                  "enum": [
+                    "tax_id",
+                    "duties",
+                    "documents"
+                  ],
+                  "description": "What the scan asks the recipient to do before the parcel can move on: give their tax number, pay the import duties or taxes, or send customs documents. Set only for wordings or carrier codes that say so explicitly."
                 }
               },
               "additionalProperties": true

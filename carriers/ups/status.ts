@@ -13,7 +13,7 @@
  * unmapped, and for the rendered page, which has no scans.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
-import type { Stage } from '../../core/status/index.js';
+import type { RecipientAction, Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EXCEPTION_TERMS = [
@@ -114,6 +114,14 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['KD', 'delivered'], ['KE', 'delivered'],
   ['2W', 'delivered'], ['YC', 'delivered'],
 ]);
+
+/** Duties or taxes due, and the parcel held until the receiver pays them. */
+const DUTIES_CODES = new Set(['7F', 'OQ']);
+
+/** What a scan's `actCode` asks the receiver to do, whatever the wording beside it. */
+export function upsRecipientAction(code: string): RecipientAction | undefined {
+  return DUTIES_CODES.has(code.trim().toUpperCase()) ? 'duties' : undefined;
+}
 
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
 export function upsActivityStage(code: string): Stage | undefined {

@@ -251,6 +251,14 @@ describe('UPS API reply', () => {
     expect(rescheduled.expected_delivery).toBe('2026-08-06');
   });
 
+  it('asks the receiver to pay the duties at the codes that say they are due', () => {
+    const held = parseUPSApiResponse(apiFixture((item) => {
+      item.activity = [activity('OQ', 'Your package is being held until duties and taxes are paid.'),
+        activity('Z1', 'Your package is prepared for clearance.')];
+    }), TRACKING_NUMBER);
+    expect(held.events?.map((event) => [event.provider_code, event.recipient_action ?? null])).toEqual([['OQ', 'duties'], ['Z1', null]]);
+  });
+
   it('names the USPS number of a parcel handed to the post office, and nothing that is not one', () => {
     const handed = (alternate: Item[]) => parseUPSApiResponse(apiFixture((item) => { item.alternateTrackingNumber = alternate; }), TRACKING_NUMBER);
     expect(handed([{ type: 'USPS_PIC', number: POSTAL_PIC }])).toMatchObject({ delivery_carrier: 'usps', delivery_tracking_number: POSTAL_PIC });

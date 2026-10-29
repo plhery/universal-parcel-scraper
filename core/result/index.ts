@@ -3,8 +3,9 @@
  *
  * What it is: the shape contract between the carrier package and the host
  * (status, stage, estimate, sender/pickup names, weight, and the projected
- * events). What it is not: it does not classify wording or touch the
- * database; the host's sync does that after `normalizeCarrierResult`.
+ * events). What it is not: it does not classify wording into stages or touch
+ * the database; the host's sync does that after `normalizeCarrierResult`. It
+ * reads only the few customs wordings that ask the recipient to act.
  * An event with no `stage` means "no explicit mapping" (see
  * ARCHITECTURE.md § Status model).
  */
@@ -13,6 +14,7 @@ import { CARRIER_CATALOG, STAGES } from '../../generated/catalog.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../detection/usps.js';
 import { deliveredToDoor } from './pickup.js';
+import { isRecipientAction, recipientAction, type RecipientAction } from '../status/action.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -45,6 +47,11 @@ export interface CarrierEvent extends JsonObject {
   point?: EventPoint;
   /** When the carrier's system wrote the scan, with that system's offset, where its reply says. */
   written_at?: string;
+  /**
+   * What the scan asks the recipient to do before the parcel can move on, in a customs wording
+   * that says so explicitly (`recipientAction`) or a carrier code that does.
+   */
+  recipient_action?: RecipientAction;
 }
 
 export interface EventPoint extends JsonObject {
@@ -256,6 +263,9 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
       if (point) event.point = point;
       else delete event.point;
     }
+    const action = isRecipientAction(event.recipient_action) ? event.recipient_action : recipientAction(event.description);
+    if (action) event.recipient_action = action;
+    else delete event.recipient_action;
     return event;
   });
   // Some carriers keep naming a pickup point on a parcel the courier brought to

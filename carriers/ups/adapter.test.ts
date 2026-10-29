@@ -314,6 +314,12 @@ describe('UPS structured response', () => {
       ['OQ', 'customs', 'carrier_map'], ['7F', 'customs', 'carrier_map'], ['Z1', 'customs', 'carrier_map'],
       ['AR', 'in_transit', 'carrier_map'],
     ]);
+    // Duties to pay ask the receiver to act, whatever words UPS adds to the code.
+    expect(held.events?.map((event) => event.recipient_action ?? null)).toEqual(['duties', 'duties', null, null]);
+    const worded = parseUPSTrackingResponse(withScans([
+      { ...scan('7F', 'Des droits ou taxes sont dus', '20260807 09:12:07'), activityAdditionalDescription: 'Payez en ligne' },
+    ]), TRACKING_NUMBER, TODAY);
+    expect(worded.events?.[0]).toMatchObject({ provider_code: '7F', recipient_action: 'duties' });
   });
 
   it('reads the clearing agency\'s scan, which UPS sends without a code, as customs by its whole wording', () => {
