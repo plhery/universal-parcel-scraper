@@ -31,6 +31,12 @@ export interface CarrierInputRequirement {
   whenTrackingNumber?: string;
   /** The form may be submitted without it; a supplied value is still checked. */
   optional?: boolean;
+  /**
+   * An optional input the carrier shows more of the parcel with, whatever else answers: a
+   * parcel saved without it is worth asking for it. Unset where the carrier needs it for only
+   * some parcels of the shape and asks for those.
+   */
+  showsMore?: boolean;
   label: string;
   type: 'text' | 'url';
   placeholder?: string;

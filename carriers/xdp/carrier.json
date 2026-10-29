@@ -23,6 +23,7 @@
         "field": "postcode",
         "validator": "internationalPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery or collection postcode",
         "type": "text",
         "help": "XDP shows a consignment only with its delivery or collection postcode. Without it, other sources are asked.",

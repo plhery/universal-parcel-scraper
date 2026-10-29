@@ -28,6 +28,7 @@
         "field": "postcode",
         "validator": "internationalPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery postcode",
         "type": "text",
         "help": "Optional. Asendia's European tracker shows the scans only with the delivery postcode; without it, the current status.",

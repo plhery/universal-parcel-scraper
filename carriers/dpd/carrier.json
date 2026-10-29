@@ -23,6 +23,7 @@
         "field": "postcode",
         "validator": "internationalPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery postcode",
         "type": "text",
         "help": "Optional. DPD uses it to unlock verified scans and the delivery window.",

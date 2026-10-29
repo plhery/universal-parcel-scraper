@@ -26,6 +26,7 @@
         "field": "postcode",
         "validator": "internationalPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Sender or recipient postcode",
         "type": "text",
         "help": "Gebrüder Weiss shows a shipment only with its sender's or recipient's postcode. Without it, other sources are asked.",

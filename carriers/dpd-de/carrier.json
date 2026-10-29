@@ -29,6 +29,7 @@
       {
         "field": "postcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery postcode",
         "type": "text",
         "placeholder": "10115",

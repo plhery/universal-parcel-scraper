@@ -26,6 +26,7 @@
         "field": "postcode",
         "validator": "paackPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery postcode",
         "type": "text",
         "placeholder": "75001",

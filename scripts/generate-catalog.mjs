@@ -137,6 +137,7 @@ function validateCarrierSemantics(carrier, adapterFolders) {
       throw new Error(`${where} has an invalid input requirement`);
     }
     fields.add(requirement.field);
+    if (requirement.showsMore && !requirement.optional) throw new Error(`${where} shows more only with an optional input`);
     if (requirement.whenTrackingNumber) new RegExp(requirement.whenTrackingNumber);
     if (requirement.pattern) new RegExp(requirement.pattern);
   }

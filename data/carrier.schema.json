@@ -340,6 +340,10 @@
           "description": "The user may leave the input blank: the adapter tracks without it and uses it only to unlock extra detail. A value that is supplied is still validated.",
           "type": "boolean"
         },
+        "showsMore": {
+          "description": "With optional: the carrier shows more of the parcel with the input, whatever else answers, so a parcel saved without it is worth asking for it. Left out where the carrier needs it for only some parcels of the shape and asks for those.",
+          "const": true
+        },
         "label": {
           "type": "string",
           "minLength": 1

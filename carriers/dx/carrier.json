@@ -27,6 +27,7 @@
         "whenTrackingNumber": "^(?:[A-Z]\\d{7}|\\d{8})$",
         "validator": "internationalPostcode",
         "optional": true,
+        "showsMore": true,
         "label": "Delivery postcode",
         "type": "text",
         "placeholder": "SW1A 1AA",
