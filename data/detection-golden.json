@@ -67237,34 +67237,25 @@
   },
   {
     "input": "AP00808868960945",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "aliexpress",
+    "confidence": "high",
     "candidates": [
-      "aliexpress"
-    ],
-    "asked": [
       "aliexpress"
     ]
   },
   {
     "input": "AP00821064969338",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "aliexpress",
+    "confidence": "high",
     "candidates": [
-      "aliexpress"
-    ],
-    "asked": [
       "aliexpress"
     ]
   },
   {
     "input": "AP00822511080252",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "aliexpress",
+    "confidence": "high",
     "candidates": [
-      "aliexpress"
-    ],
-    "asked": [
       "aliexpress"
     ]
   },

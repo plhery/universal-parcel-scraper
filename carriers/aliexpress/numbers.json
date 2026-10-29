@@ -128,11 +128,8 @@
         "service": "Cainiao tracking leg"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress"
-        ]
+        "carrier": "aliexpress",
+        "confidence": "high"
       },
       "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
     },
@@ -151,11 +148,8 @@
         "service": "Cainiao tracking leg"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress"
-        ]
+        "carrier": "aliexpress",
+        "confidence": "high"
       },
       "note": "Publicly reported shipment number. Cainiao returns matching shipment activity; this does not confirm the last-mile operator."
     },

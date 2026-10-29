@@ -452,11 +452,8 @@
         "assessment": "scope_review"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress"
-        ]
+        "carrier": "aliexpress",
+        "confidence": "high"
       },
       "note": "Archived lookup on iMile's tracker; the service reply captured with it is empty, and the AP prefix is a Cainiao partner reference."
     },

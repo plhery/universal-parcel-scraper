@@ -241,7 +241,7 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^AP\\d{14}$",
-        "confidence": "low"
+        "confidence": "high"
       },
       {
         "pattern": "^CNBR\\d{11}$",

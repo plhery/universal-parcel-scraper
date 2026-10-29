@@ -7,10 +7,11 @@ publishes that partner's number when it has one. The catalog recognizes Cainiao'
 answers and no other carrier issues. It also recognizes the numbers
 [Maersk eCommerce](../maersk-ecommerce/README.md) gives Cainiao's parcels in the United States,
 `1MCAINIXX` and ten digits, which open with Maersk's code for Cainiao: Cainiao's tracker follows
-them through Maersk's leg. It suggests AliExpress for Cainiao's other references, such as
-`AP`, `CNUSUP` and numeric `LP` numbers, and suggests it first for a postal-format number ending in
-`TY`, `MI` or `XX`, suffixes that name no country and that Cainiao gives AliExpress parcels. Detection
-does not select the last-mile carrier.
+them through Maersk's leg. It recognizes `AP` and fourteen digits as well: no other carrier prints
+the layout, and every parcel seen with it was AliExpress's. Detection suggests AliExpress for
+Cainiao's other references, such as `CNUSUP` and numeric `LP` numbers, and suggests it first for a
+postal-format number ending in `TY`, `MI` or `XX`, suffixes that name no country and that Cainiao
+gives AliExpress parcels. Detection does not select the last-mile carrier.
 
 ## Partner numbers
 
