@@ -78,7 +78,7 @@ describe('GLS Italy direct tracking', () => {
     expect(railUnknown.events?.[0]).not.toHaveProperty('location');
     // A sentence the map does not hold goes to the shared wording rules.
     const worded = parseGLSItaly(shipment((row) => {
-      row.history.unshift({ time: '13:00:00', date: '2026-03-05', evtDscr: 'Consegnata.', address: { city: 'Sample Village' } });
+      row.history.unshift({ time: '13:00:00', date: '2026-03-05', evtDscr: 'Spedizione consegnata al destinatario.', address: { city: 'Sample Village' } });
     }), NUMBER);
     expect(worded.events?.[0]).toMatchObject({ stage: 'delivered', stage_source: expect.stringMatching(/^wording:/) });
     expect(worded.current_stage_source).toMatch(/^wording:/);

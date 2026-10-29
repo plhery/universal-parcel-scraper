@@ -38,7 +38,9 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   creation times, so a row dated after the lookup on Beijing time is held back too. An order
   whose rows are all held back has no history yet; one that holds rows written ahead names
   their clocks, so that a universal provider's copies of them are set aside too. The record's
-  own summary status is not read; the stage comes from the rows kept.
+  own summary status is not read; the stage comes from the rows kept. After a row a tenant's
+  map reads as returned, a move or a delivery is the parcel going, or delivered, back to the
+  sender, and is returned too.
 - Rows coded `CO_C_CR` come from the platform's custom track product (轨迹定制), which writes
   them to a script: on Tianhui Hengyuan they read like China Post's scans, all on one second of
   the minute, and on Mayi Yinfu they have the parcel abroad before it reaches the airport. They

@@ -1,8 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../app.js';
 import { adapter, JdLogisticsTracker } from './adapter.js';
 import { jdDomesticBrowser, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'JDJ146283975062', OTHER = 'JDJ257394086173';
 const history = () => ({ code: 1, obj: [{ rawWaybillCode: NUMBER, exists: true, receiverName: 'PRIVATE',
@@ -46,6 +48,28 @@ describe('JD domestic history', () => {
     const event = parseJdDomestic(data, NUMBER).events![1]!;
     expect(event.description).toBe('正在为您派送'); expect(event.stage).not.toBe('delivered');
     expect(JSON.stringify(event)).not.toContain('PRIVATE');
+  });
+
+  it('stages Chinese scans by their state, the newest one setting the status, and drops a station phone', () => {
+    const data = history();
+    data.obj[0]!.traceAllVoList[0]!.traceVoList = [
+      { operateMessage: '您的快件已送达，请开箱验视', trackDay: '2026-04-03', trackTime: '14:25', state: '10034' },
+      { operateMessage: '您的快件正在派送中，请当面签收', trackDay: '2026-04-03', trackTime: '08:15', state: '11000' },
+      { operateMessage: '您的快件已到达【示例站】，电话：PRIVATE', trackDay: '2026-04-03', trackTime: '06:47', state: '200000' },
+      { operateMessage: '京东快件已取件', trackDay: '2026-04-01', trackTime: '10:05', state: 200001 },
+      { operateMessage: '您的快件将由京东小哥PRIVATE揽收', trackDay: '2026-04-01', trackTime: '06:05', state: '200034' },
+    ] as never;
+    const result = parseJdDomestic(data, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    expect(result.events?.map(event => [event.provider_code, event.stage])).toEqual([
+      ['10034', 'delivered'], ['11000', 'out_for_delivery'], ['200000', 'in_transit'], ['200001', 'accepted'], ['200034', 'registered']]);
+    expect(result.events?.[2]?.description).toBe('您的快件已到达【示例站】');
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
+    for (const entry of statuses.entries) {
+      if (/^\d+$/.test(entry.code ?? '') && entry.code!.length > 4) {
+        expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: entry.code, description: '已到达' })).toEqual({ kind: 'mapped', stage: entry.stage });
+      }
+    }
   });
 
   it('refuses wrong identities, multiple records and malformed clocks', () => {

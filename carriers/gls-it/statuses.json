@@ -90,6 +90,70 @@
       "note": "Held at the depot after a failed attempt until the recipient books a redelivery through the link."
     },
     {
+      "wording": "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.",
+      "language": "it",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the sender's booking, before the hand-over."
+    },
+    {
+      "wording": "Partita dalla sede mittente. In transito.",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the sending depot's dispatch."
+    },
+    {
+      "wording": "In transito.",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of a hub scan between the two depots."
+    },
+    {
+      "wording": "Arrivata nella Sede GLS locale.",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the arrival at the receiving depot."
+    },
+    {
+      "wording": "Consegna prevista nel corso della giornata odierna.",
+      "language": "it",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the morning scan of the delivery round."
+    },
+    {
+      "wording": "Consegnata.",
+      "language": "it",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the delivery."
+    },
+    {
+      "wording": "Destinatario assente al primo passaggio. Prego prenotare la consegna entro 3 giorni lavorativi, seguendo le istruzioni ricevute via mail o sms.",
+      "language": "it",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of a failed attempt because nobody was in."
+    },
+    {
+      "wording": "Spedizione non in consegna. Il destinatario puo' prenotare la riconsegna tramite link presente in email / sms ricevuto",
+      "language": "it",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The Italian version of the hold until the recipient books a redelivery."
+    },
+    {
       "code": "PREADVICE",
       "stage": "registered",
       "confirmedBy": "live",

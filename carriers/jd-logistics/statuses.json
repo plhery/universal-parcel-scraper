@@ -108,6 +108,62 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-10",
       "note": "Signed for."
+    },
+    {
+      "code": "200034",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "A courier is assigned to collect the parcel (您的快件将由…). The courier's name and phone follow and are dropped."
+    },
+    {
+      "code": "200001",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Collected from the sender (京东快件已取件)."
+    },
+    {
+      "code": "200077",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "At the collecting service station, waiting to be loaded (已到达【…】，准备装车)."
+    },
+    {
+      "code": "200019",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Left the collecting service station for the next site (已离开【…】，正在发往下一站)."
+    },
+    {
+      "code": "200000",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Arrived at a sorting center or the delivery station (已到达【…】)."
+    },
+    {
+      "code": "10054",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Left a sorting center for the next site (已离开【…】，正在发往下一站)."
+    },
+    {
+      "code": "11000",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "With the courier for delivery (正在派送中)."
+    },
+    {
+      "code": "10034",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Delivered (已送达)."
     }
   ]
 }

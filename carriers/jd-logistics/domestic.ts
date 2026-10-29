@@ -7,6 +7,7 @@ import { explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { clean, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeJdNumber } from './parser.js';
+import { jdLogisticsStatus } from './status.js';
 import { withoutCourierContact } from './wording.js';
 
 const PROVIDER = 'JD Logistics';
@@ -24,7 +25,7 @@ export function jdDomesticWording(raw: unknown): string {
   const text = withoutCourierContact(clean(raw, 2000))
     .replace(/由[^，。；;]{1,100}签收/gu, '签收')
     .replace(/((?:已|成功)签收)[，,。；;].*$/u, '$1');
-  const contact = /配送员|快递员|揽收员|京东小哥|快递小哥|签收人|收件人|联系电话|联系方式|手机号码?|电话号码?|signed(?: for)? by|recipient(?: name)?\s*:|courier(?: name| phone)?\s*:/iu.exec(text);
+  const contact = /配送员|快递员|揽收员|京东小哥|快递小哥|签收人|收件人|联系电话|联系方式|手机号码?|电话(?:号码?)?|signed(?: for)? by|recipient(?: name)?\s*:|courier(?: name| phone)?\s*:/iu.exec(text);
   const head = (contact ? text.slice(0, contact.index) : text).replace(/[\s，,；;。:：]+$/u, '').trim();
   if (head) return head;
   // A courier-first sentence can still contain one unambiguous status phrase.
@@ -86,10 +87,12 @@ export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
       // Contact-only or wordless rows cannot describe progress. Keep the
       // remaining verified scans, but never present the shortened list as full.
       if (!description) { wordless++; continue; }
-      const classification = classifyWording(description);
       const code = typeof row.state === 'string' || typeof row.state === 'number' ? clean(String(row.state), 40) : '';
+      const mapped = code ? jdLogisticsStatus(code, description) : undefined;
+      const classification = classifyWording(description);
       events.push({ description, ...time, ...(code ? { provider_code: code } : {}),
-        ...(classification.source !== 'none' ? { stage: classification.stage, stage_source: classification.source } : {}) });
+        ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' }
+          : classification.source !== 'none' ? { stage: classification.stage, stage_source: classification.source } : {}) });
     }
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, 'JD domestic tracking returned a known shipment without scans');
@@ -99,8 +102,9 @@ export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
   const seen = new Set<string>();
   const unique = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
   const kept = unique.slice(0, 100), latest = kept[0]!;
+  const coded = latest.provider_code ? jdLogisticsStatus(latest.provider_code, latest.description!) : undefined;
   const classification = classifyWording(latest.description!);
-  return { status: classification.source !== 'none' ? languageStageStatus(classification.stage) : 'unknown',
+  return { status: coded?.status ?? (classification.source !== 'none' ? languageStageStatus(classification.stage) : 'unknown'),
     ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),

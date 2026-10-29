@@ -262,8 +262,28 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number)
     && repeats(entry.event.description!, other.event.description!))) : kept;
   // Rows come newest first; rows on one clock keep the reply's order.
   unique.sort((a, b) => (a.clock === b.clock ? a.index - b.index : a.clock < b.clock ? 1 : -1));
-  const events = unique.map(({ event, english }) => (english ? { ...event, description: english } : event));
+  const leg = returnLeg(unique.map(({ event }) => event));
+  const events = unique.map(({ event, english }, index) => ({ ...event, ...(english ? { description: english } : {}),
+    ...(leg[index] ? { stage: 'returned' } : {}) }));
   return { events: events.slice(0, MAX_EVENTS), truncated: events.length > MAX_EVENTS, ahead: [...ahead] };
+}
+
+const RETURN_LEG: ReadonlySet<string> = new Set(['in_transit', 'out_for_delivery', 'delivered']);
+
+/**
+ * Which scans, newest first, are on the way back: after a row the tenant's map
+ * reads as returned, a move or a delivery is the parcel going, or delivered,
+ * back to the sender. A return only the shared wording rules read starts none.
+ */
+function returnLeg(events: readonly CarrierEvent[]): boolean[] {
+  const leg = events.map(() => false);
+  let back = false;
+  for (let index = events.length - 1; index >= 0; index--) {
+    const { stage, stage_source: source } = events[index]!;
+    if (back && stage && RETURN_LEG.has(stage)) leg[index] = true;
+    else if (stage === 'returned' && source === 'carrier_map') back = true;
+  }
+  return leg;
 }
 
 interface Facts {

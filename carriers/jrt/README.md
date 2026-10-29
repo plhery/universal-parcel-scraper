@@ -33,7 +33,9 @@ browser is needed, and no portal link is published.
   Chinese is taken over by its English at the same instant and place ([identity.ts](identity.ts)).
 - Lines into Europe end with DHL. After the hand-off the tracker copies DHL's rows into its own
   history, in lower case English. The record names neither a channel nor DHL's number, so
-  nothing is handed over.
+  nothing is handed over. DHL's collection after the hand-off is transit, and its rows of a
+  return, the refusal included, are returned: the delivery that follows is the one back to the
+  sender.
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held back.
 

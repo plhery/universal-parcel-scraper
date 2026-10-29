@@ -80,6 +80,31 @@ describe('JRT tracking adapter', () => {
     expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
   });
 
+  it('reads DHL’s return as returned, the delivery back to the sender included', () => {
+    const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const rows = payload[0]!.data[0]!.trackDetails;
+    const row = (date: string, content: string) => ({ ...rows[0]!, track_content: content, track_createdate: date, track_date: date });
+    rows.unshift(
+      row('2026-03-14 18:00:00', 'returned shipment has been received by processing center'),
+      row('2026-03-14 17:30:00', 'the shipment has been successfully delivered'),
+      row('2026-03-14 17:00:00', 'loaded to movement / tour vehicle(return to sender)'),
+      row('2026-03-14 16:50:00', 'the shipment has been processed in the destination parcel center'),
+      row('2026-03-14 16:40:00', 'shipment will be returned to origin-not ordered'),
+      row('2026-03-14 16:30:00', 'held for consignee collection'),
+      row('2026-03-14 16:20:00', 'not delivered-consignee could not be reached'),
+    );
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-15T00:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map' });
+    expect(result.events?.slice(0, 8).map(({ stage }) => stage)).toEqual(['returned', 'returned', 'returned', 'returned',
+      'returned', 'ready_for_pickup', 'failed_attempt', 'in_transit']);
+    // A return the shared wording rules read alone starts no return leg.
+    rows.splice(0, 7, row('2026-03-14 17:30:00', 'the shipment has been successfully delivered'),
+      row('2026-03-14 16:40:00', 'shipment returned to sender'));
+    const worded = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-15T00:00:00Z'))!;
+    expect(worded.events?.slice(0, 2).map(({ stage, stage_source }) => [stage, stage_source]))
+      .toEqual([['delivered', 'carrier_map'], ['returned', 'wording:language']]);
+  });
+
   it('offers a UP reference to recognition, which asks the tracker', async () => {
     expect(detectCarrierMatch(UP_REFERENCE)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['jrt'] });
     expect(recognitionCandidates(UP_REFERENCE).map(({ carrier }) => carrier)).toEqual(['jrt']);
@@ -102,6 +127,7 @@ describe('JRT tracking adapter', () => {
     expect(answer('Flight is expected to take off on September 11')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('报关已放行等待3号航班起飞 Customs released,Awaiting departure on flight of the 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     for (const description of [

@@ -2,9 +2,10 @@ import { classifyWording, type ClassifiedWording, type Stage } from '../../core/
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /**
- * The tracker's scan sentences in its English locale, mapped whole. The scans
- * carry no code, only a sentence, and every network depot writes the same
- * ones.
+ * The tracker's scan sentences in its English locale, mapped whole, and their
+ * Italian versions, which the English locale sometimes answers with instead.
+ * The scans carry no code, only a sentence, and every network depot writes the
+ * same ones.
  */
 export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   // The sender booked the shipment and has not handed it over yet.
@@ -22,6 +23,14 @@ export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   'Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.': 'failed_attempt',
   // Held at the depot until the recipient answers the redelivery link.
   'Not in delivery. Awaiting instructions by link included in received email or sms': 'exception',
+  "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.": 'registered',
+  'Partita dalla sede mittente. In transito.': 'in_transit',
+  'In transito.': 'in_transit',
+  'Arrivata nella Sede GLS locale.': 'in_transit',
+  'Consegna prevista nel corso della giornata odierna.': 'out_for_delivery',
+  'Consegnata.': 'delivered',
+  'Destinatario assente al primo passaggio. Prego prenotare la consegna entro 3 giorni lavorativi, seguendo le istruzioni ricevute via mail o sms.': 'failed_attempt',
+  "Spedizione non in consegna. Il destinatario puo' prenotare la riconsegna tramite link presente in email / sms ricevuto": 'exception',
 };
 
 /**

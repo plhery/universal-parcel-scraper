@@ -1,8 +1,8 @@
 /**
  * JD Logistics international operation codes (`operationCode`), as the
- * international feed sends them on each scan. Codes not listed here leave the
- * scan to the steps JD relays from a last-mile partner, then to the shared
- * wording rules.
+ * international feed sends them on each scan, and the domestic tracker's scan
+ * states (`state`). Codes not listed here leave the scan to the steps JD relays
+ * from a last-mile partner, then to the shared wording rules.
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
@@ -27,6 +27,16 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['VUVU', MOVING],
   ['DMLMLS', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['DLV', { status: 'delivered', stage: 'delivered' }],
+  // The domestic tracker's states, whose Chinese wording the shared rules do not read.
+  // A courier is assigned to collect the parcel; the collection follows under 200001.
+  ['200034', { status: 'pending', stage: 'registered' }],
+  ['200001', { status: 'in_transit', stage: 'accepted' }],
+  ['200077', MOVING],
+  ['200019', MOVING],
+  ['200000', MOVING],
+  ['10054', MOVING],
+  ['11000', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['10034', { status: 'delivered', stage: 'delivered' }],
 ]);
 
 // A last-mile partner's step, read by its wording ahead of the code JD relays it under: GOFO's

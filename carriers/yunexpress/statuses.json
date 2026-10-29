@@ -153,6 +153,22 @@
       "note": "Relayed from GOFO in the US, as GOFO reads its own scan."
     },
     {
+      "wording": "Departed GOFO Regional Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Relayed from GOFO in the US, as GOFO reads its own scan."
+    },
+    {
+      "wording": "In Transit to Next Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Relayed from GOFO: its line haul to the next facility."
+    },
+    {
       "wording": "Loaded on Vehicle",
       "stage": "in_transit",
       "language": "en",

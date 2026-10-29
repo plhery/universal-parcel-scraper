@@ -1,41 +1,365 @@
 {
   "carrier": "jrt",
   "entries": [
-    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "note": "The platform writes this row itself for an order without scans, on its creation time. The English is the row's on BYHD's tracker."},
-    {"wording": "Shipment information received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-16"},
-    {"wording": "Shipment information sent to FedEx", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "The label's data passed to FedEx, which delivers the last leg, before JRT's first scan."},
-    {"wording": "到达收货点", "language": "zh", "english": "Arrived at the receiving point", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-16", "note": "The first scan in JRT's hands; GZYL's tenant of the same platform words it \"Arrive at the cross border receiving point\". The English is Tianhui Hengyuan's and KUN Express's for their arrival on the platform."},
-    {"wording": "货物离开操作中心", "language": "zh", "english": "Goods leave the operation center", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-16", "note": "GZYL's tenant of the same platform words it \"Goods leave the operation center\"."},
-    {"wording": "Shipment arrived at facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-16"},
-    {"wording": "The goods have been packed and sent to the airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-26"},
-    {"wording": "Arriving at the airline, in the process of booking a flight", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "At the airline while a flight is booked."},
-    {"wording": "货物已交机场,等待航班安排中 Cargo delivered to airport, pending flight arrangement", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Handed to the airport to wait for a flight. It is not a delivery to the recipient, though the translation reads \"delivered\"."},
-    {"wording": "货物已交机场,预计…号的航班 Goods delivered to airport, scheduled on flight of the …", "english": "Goods delivered to airport", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Handed to the airport, with the day of the flight booked in both halves (\"预计11号的航班\", \"of the 11rd\"); the map reads each day as an ellipsis. The flight is still to come, so the row shows its English without it."},
-    {"wording": "航班起飞，以实际抵达为准 Flight departure subject to actual arrival time", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17"},
-    {"wording": "航班落地，拆板中 Flight landing, dismantling board in progress", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Landed; the pallets are broken down before clearance."},
-    {"wording": "机场内等待提货，等待清关 Waiting for cargo pickup and customs clearance at the airport.", "language": "zh", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-17"},
-    {"wording": "已提货，清关中 The goods have been picked up and are currently undergoing customs clearance", "language": "zh", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Collected from the airport; import clearance is under way."},
-    {"wording": "清关完成，卡车发运 Customs clearance completed; truck dispatched.", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17"},
-    {"wording": "已交服务商 Delivered to service provider", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Handed to the delivering carrier. It is not a delivery to the recipient, though the translation reads \"delivered\"."},
-    {"wording": "the instruction data for this shipment have been provided by the sender to dhl electronically", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL, which delivers the last leg: the label's data has reached it. JRT copies DHL's rows in lower case."},
-    {"wording": "the shipment has been processed in the parcel center of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL's hub after the hand-off."},
-    {"wording": "unloaded from movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL."},
-    {"wording": "loaded to movement / tour vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-17", "note": "Copied from DHL."},
-    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically.", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "DHL's label data, copied with its case and full stop, before JRT's first scan."},
-    {"wording": "快件操作完成", "language": "zh", "english": "Shipment departed from facility", "stage": "in_transit", "confirmedBy": "live", "note": "The English is HuaHan's, whose API documentation gives it for this summary of the departure scan."},
-    {"wording": "Sending to the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Arriving at the airport - arranging flights", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the airport while a flight is booked."},
-    {"wording": "Flight is expected to take off on …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting at the airport for the booked flight, whose day is read as an ellipsis."},
-    {"wording": "Flight has flown", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "Dismantling and picking up goods in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Landed; the pallets are broken down and the goods collected for clearance."},
-    {"wording": "Customs clearance of the cargo is in progress", "language": "en", "stage": "customs", "confirmedBy": "live"},
-    {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "The goods have been handed over to the carrier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Handed to the carrier that delivers the last leg."},
-    {"wording": "The shipment has been posted by the sender at the retail outlet", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Copied from DHL: JRT hands the parcel in at a Deutsche Post outlet for the last leg, so the parcel is already on its way."},
-    {"wording": "The flight is expected to depart on … and land on …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting at the airport for the booked flight, whose days, month.day, are read as an ellipsis."},
-    {"wording": "The flight has departed and is expected to … land", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "In the air; the landing day, month.day, is read as an ellipsis."},
-    {"wording": "The flight has arrived and is awaiting dismantling", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "The NOA has been received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The airline's notice of arrival, after the landing and before the pickup and customs clearance."}
+    {
+      "wording": "货物电子信息已经收到",
+      "language": "zh",
+      "english": "The electronic cargo information has been received",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The platform writes this row itself for an order without scans, on its creation time. The English is the row's on BYHD's tracker."
+    },
+    {
+      "wording": "Shipment information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-16"
+    },
+    {
+      "wording": "Shipment information sent to FedEx",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "The label's data passed to FedEx, which delivers the last leg, before JRT's first scan."
+    },
+    {
+      "wording": "到达收货点",
+      "language": "zh",
+      "english": "Arrived at the receiving point",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-16",
+      "note": "The first scan in JRT's hands; GZYL's tenant of the same platform words it \"Arrive at the cross border receiving point\". The English is Tianhui Hengyuan's and KUN Express's for their arrival on the platform."
+    },
+    {
+      "wording": "货物离开操作中心",
+      "language": "zh",
+      "english": "Goods leave the operation center",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-16",
+      "note": "GZYL's tenant of the same platform words it \"Goods leave the operation center\"."
+    },
+    {
+      "wording": "Shipment arrived at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-16"
+    },
+    {
+      "wording": "The goods have been packed and sent to the airline",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26"
+    },
+    {
+      "wording": "Arriving at the airline, in the process of booking a flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-26",
+      "note": "At the airline while a flight is booked."
+    },
+    {
+      "wording": "货物已交机场,等待航班安排中 Cargo delivered to airport, pending flight arrangement",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Handed to the airport to wait for a flight. It is not a delivery to the recipient, though the translation reads \"delivered\"."
+    },
+    {
+      "wording": "货物已交机场,预计…号的航班 Goods delivered to airport, scheduled on flight of the …",
+      "english": "Goods delivered to airport",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Handed to the airport, with the day of the flight booked in both halves (\"预计11号的航班\", \"of the 11rd\"); the map reads each day as an ellipsis. The flight is still to come, so the row shows its English without it."
+    },
+    {
+      "wording": "报关已放行等待…号航班起飞 Customs released,Awaiting departure on flight of the …",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Cleared for export, waiting for the flight whose day both halves name (\"等待27号航班\", \"of the 27th\"); the map reads each day as an ellipsis."
+    },
+    {
+      "wording": "航班起飞，以实际抵达为准 Flight departure subject to actual arrival time",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17"
+    },
+    {
+      "wording": "航班落地，拆板中 Flight landing, dismantling board in progress",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Landed; the pallets are broken down before clearance."
+    },
+    {
+      "wording": "机场内等待提货，等待清关 Waiting for cargo pickup and customs clearance at the airport.",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17"
+    },
+    {
+      "wording": "已提货，清关中 The goods have been picked up and are currently undergoing customs clearance",
+      "language": "zh",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Collected from the airport; import clearance is under way."
+    },
+    {
+      "wording": "清关完成，卡车发运 Customs clearance completed; truck dispatched.",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17"
+    },
+    {
+      "wording": "已交服务商 Delivered to service provider",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Handed to the delivering carrier. It is not a delivery to the recipient, though the translation reads \"delivered\"."
+    },
+    {
+      "wording": "the instruction data for this shipment have been provided by the sender to dhl electronically",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Copied from DHL, which delivers the last leg: the label's data has reached it. JRT copies DHL's rows in lower case."
+    },
+    {
+      "wording": "the shipment has been processed in the parcel center of origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Copied from DHL's hub after the hand-off."
+    },
+    {
+      "wording": "unloaded from movement / tour vehicle",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Copied from DHL."
+    },
+    {
+      "wording": "loaded to movement / tour vehicle",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-17",
+      "note": "Copied from DHL."
+    },
+    {
+      "wording": "pick-up was successful.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL: DHL collected the parcel after JRT's hand-over, so it is already on its way."
+    },
+    {
+      "wording": "the shipment has been processed in the destination parcel center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL's hub near the recipient."
+    },
+    {
+      "wording": "movement / tour vehicle arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL."
+    },
+    {
+      "wording": "not delivered-consignee could not be reached",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL: nobody was in."
+    },
+    {
+      "wording": "held for consignee collection",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL: left at a pickup point for the recipient."
+    },
+    {
+      "wording": "shipment will be returned to origin-not ordered",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL: the recipient refused it as not ordered, and it goes back."
+    },
+    {
+      "wording": "loaded to movement / tour vehicle(return to sender)",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL, on the way back to the sender."
+    },
+    {
+      "wording": "unloaded from movement / tour vehicle(return to sender)",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL, on the way back to the sender."
+    },
+    {
+      "wording": "movement / tour vehicle arrived(return to sender)",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL, on the way back to the sender."
+    },
+    {
+      "wording": "the shipment has been successfully delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "Copied from DHL. After a return it is the delivery back to the sender, and the parser reads it as returned."
+    },
+    {
+      "wording": "returned shipment has been received by processing center",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "The returned parcel is back at JRT's center."
+    },
+    {
+      "wording": "The instruction data for this shipment have been provided by the sender to DHL electronically.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "DHL's label data, copied with its case and full stop, before JRT's first scan."
+    },
+    {
+      "wording": "快件操作完成",
+      "language": "zh",
+      "english": "Shipment departed from facility",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The English is HuaHan's, whose API documentation gives it for this summary of the departure scan."
+    },
+    {
+      "wording": "Sending to the airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arriving at the airport - arranging flights",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "At the airport while a flight is booked."
+    },
+    {
+      "wording": "Flight is expected to take off on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Waiting at the airport for the booked flight, whose day is read as an ellipsis."
+    },
+    {
+      "wording": "Flight has flown",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Flight has arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Dismantling and picking up goods in progress",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Landed; the pallets are broken down and the goods collected for clearance."
+    },
+    {
+      "wording": "Customs clearance of the cargo is in progress",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Customs clearance completed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The goods have been handed over to the carrier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Handed to the carrier that delivers the last leg."
+    },
+    {
+      "wording": "The shipment has been posted by the sender at the retail outlet",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Copied from DHL: JRT hands the parcel in at a Deutsche Post outlet for the last leg, so the parcel is already on its way."
+    },
+    {
+      "wording": "The flight is expected to depart on … and land on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Waiting at the airport for the booked flight, whose days, month.day, are read as an ellipsis."
+    },
+    {
+      "wording": "The flight has departed and is expected to … land",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "In the air; the landing day, month.day, is read as an ellipsis."
+    },
+    {
+      "wording": "The flight has arrived and is awaiting dismantling",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "The NOA has been received",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The airline's notice of arrival, after the landing and before the pickup and customs clearance."
+    }
   ]
 }
