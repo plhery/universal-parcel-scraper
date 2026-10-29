@@ -369,6 +369,15 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('suggests Xinghe Freight for GZXH, ten digits and YQ, and only that layout', () => {
+    for (const number of ['GZXH0000000017YQ', 'gzxh 0000 0000 17 yq']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['xinghe-freight'] });
+    }
+    for (const number of ['GZXH000000017YQ', 'GZXH00000000017YQ', 'GZYL0000000017YQ', 'GZXH0000000017YT']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('xinghe-freight');
+    }
+  });
+
   it('names Fastbox for FB, a date and ten digits, and only that layout', () => {
     for (const number of ['FB2610010000000017', 'fb 261001 0000 000 017', 'FB1712310000000010']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'fastbox', confidence: 'high' });

@@ -2145,6 +2145,7 @@ export const REGISTRY: RegistryDefinition = {
     "x-trac": "universal",
     "xde-logistics": "xde-logistics",
     "xdp": "xdp",
+    "xinghe-freight": "universal",
     "xlcourier": "xlcourier",
     "xpo-ltl": "xpo-ltl",
     "xpressbees": "xpressbees",

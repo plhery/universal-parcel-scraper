@@ -34694,6 +34694,35 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "xinghe-freight": {
+    "displayName": "Xinghe Freight",
+    "color": "#0e3a6b",
+    "aliases": [
+      "GZXH",
+      "Xinghe Express",
+      "星和货运",
+      "广州星和",
+      "廣州星和",
+      "广州星和货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^GZXH\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "xlcourier": {
     "displayName": "XLCourier",
     "color": "#044ad6",
@@ -36332,6 +36361,7 @@ export const CARRIER_IDS = [
   "x-trac",
   "xde-logistics",
   "xdp",
+  "xinghe-freight",
   "xlcourier",
   "xpo-ltl",
   "xpressbees",
@@ -37200,6 +37230,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "x-trac": ["x-trac-1"],
   "xde-logistics": [],
   "xdp": ["xdp-1"],
+  "xinghe-freight": ["xinghe-freight-1"],
   "xlcourier": ["xlcourier-1"],
   "xpo-ltl": ["xpo-ltl-1"],
   "xpressbees": ["xpressbees-awb"],
