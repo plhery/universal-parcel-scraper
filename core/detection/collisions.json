@@ -4297,6 +4297,14 @@
     "reason": "APC's A numbers of sixteen characters fit Royal Mail's broad low-confidence hexadecimal shape; the APC rule decides."
   },
   {
+    "shape": "Nine digits, A and six digits",
+    "carriers": [
+      "dakota-cargo",
+      "royal-mail"
+    ],
+    "reason": "Dakota Cargo's waybills of a branch code, month, year, A and a sequence fit Royal Mail's broad low-confidence hexadecimal shape; both rules are low, so recognition decides."
+  },
+  {
     "shape": "CP and fifteen letters and digits ending in a French postcode range",
     "carriers": [
       "colis-prive",

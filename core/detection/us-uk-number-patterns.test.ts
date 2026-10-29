@@ -531,3 +531,22 @@ describe('City Air Express numbers, and AmeriShip, GIO Express and Sway links', 
     expect(parseTrackingInput('https://track.shipsway.com/api').carrier).not.toBe('sway');
   });
 });
+
+describe('Obibox numbers and links', () => {
+  it('names Obibox for XP, a shipper code, the order reference and the package index', () => {
+    for (const number of ['XPABC1000000017_1', 'XPABCD10000A0017Q1']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'obibox', confidence: 'high' });
+    }
+    for (const number of ['XPAB1000000017_1', 'XPABC1000000017', 'XPABCDE1000000017_1', 'XPABC1000000017X1', 'XQABC1000000017_1']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('obibox');
+    }
+  });
+
+  it('reads Obibox and Xpedigo tracking links', () => {
+    for (const host of ['tracking.obibox.io', 'tracking.xpedigo.com']) {
+      expect(parseTrackingInput(`https://${host}/XPABC1000000017_1`)).toMatchObject({
+        trackingNumber: 'XPABC1000000017_1', carrier: 'obibox', source: 'link',
+      });
+    }
+  });
+});

@@ -7599,6 +7599,41 @@
     ],
     "detectionRules": []
   },
+  "avis-logistics": {
+    "displayName": "Avis Logistics",
+    "color": "#095fa9",
+    "aliases": [
+      "AVIS Logistics KZ",
+      "ТОО Avis Logistics",
+      "Авис Логистикс"
+    ],
+    "countries": [
+      "KZ",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://avislogistics.kz/",
+    "trackingUrlTemplate": "https://avislogistics.kz/?trace={trackingNumber}",
+    "trackingSearchUrl": "https://avislogistics.kz/",
+    "linkRules": [
+      {
+        "domains": [
+          "avislogistics.kz",
+          "www.avislogistics.kz"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "trace"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "aymakan": {
     "displayName": "AyMakan",
     "color": "#feca07",
@@ -11340,6 +11375,36 @@
     ],
     "detectionRules": []
   },
+  "dakota-cargo": {
+    "displayName": "Dakota Cargo",
+    "color": "#120f84",
+    "aliases": [
+      "Dakota Group",
+      "PT Dakota Buana Semesta",
+      "Dakota Buana Semesta",
+      "Dakota Logistik",
+      "Dakota Kurir",
+      "Dakota Courier"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dakotacargo.co.id/",
+    "trackingSearchUrl": "https://dakotacargo.co.id/#lacak-kiriman",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{3}(?:0[1-9]|1[0-2])20\\d{2}A\\d{6}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "danske-fragtmaend": {
     "displayName": "Danske Fragtmænd",
     "color": "#009ada",
@@ -11754,6 +11819,40 @@
           "delnext.com"
         ],
         "path": "^/[A-Z]{2}/track_your_parcel/tracking_code/([A-Za-z0-9]+)(?:&reloaded=[A-Z]{2})?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "depo": {
+    "displayName": "Depo",
+    "color": "#f36a10",
+    "aliases": [
+      "Depo.sk",
+      "DEPO výdajné miesta",
+      "Mediaprint-Kapa Pressegrosso"
+    ],
+    "countries": [
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bratislava",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://depo.sk/",
+    "trackingUrlTemplate": "https://depo.sk/sledovanie-zasielky/?number={trackingNumber}",
+    "trackingSearchUrl": "https://depo.sk/sledovanie-zasielky/",
+    "linkRules": [
+      {
+        "domains": [
+          "depo.sk",
+          "www.depo.sk"
+        ],
+        "pathPattern": "^/sledovanie-zasielky/?$",
+        "params": [
+          "number"
+        ]
       }
     ],
     "detectionRules": []
@@ -13013,7 +13112,8 @@
       "DPD Laser Express Logistics",
       "DPD Laser Express Logistics (Pty) Ltd",
       "DPDLaser",
-      "Dawn Wing"
+      "Dawn Wing",
+      "Fast & Furious"
     ],
     "countries": [
       "ZA"
@@ -13348,6 +13448,39 @@
     "trackingUrlTemplate": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "trackingSearchUrl": "https://track.mydynalogic.eu/track/login",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "e-cargo": {
+    "displayName": "e-Cargo",
+    "color": "#ee4037",
+    "aliases": [
+      "E-Cargo Logistics",
+      "E-Cargo Logistics Ltd",
+      "אי קרגו"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://e-cargo.co.il/",
+    "trackingUrlTemplate": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.e-cargo.co.il"
+        ],
+        "pathPattern": "^/CargoTracking/public-tracking/search/?$",
+        "params": [
+          "searchKey"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "e-commerce-international": {
@@ -18806,6 +18939,28 @@
     ],
     "detectionRules": []
   },
+  "instapack": {
+    "displayName": "Instapack",
+    "color": "#36a8dd",
+    "aliases": [
+      "Immediate Delivery S.L.",
+      "Mi Instapack"
+    ],
+    "countries": [
+      "ES",
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.instapack.es/",
+    "trackingSearchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "integral-pack": {
     "displayName": "Integral Pack",
     "color": "#004d9c",
@@ -24137,6 +24292,42 @@
     ],
     "detectionRules": []
   },
+  "obibox": {
+    "displayName": "Obibox",
+    "color": "#ec6615",
+    "aliases": [
+      "Obibox / Xpedigo",
+      "Xpedigo",
+      "Xpedigo Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://obibox.co/",
+    "trackingUrlTemplate": "https://tracking.obibox.io/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.obibox.io/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.obibox.io",
+          "tracking.xpedigo.com"
+        ],
+        "path": "^/([A-Za-z0-9_]{8,40})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^XP[A-Z]{3,4}\\d[0-9A-Z]{9,21}(?:_|Q)\\d{1,2}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "oca": {
     "displayName": "OCA",
     "color": "#592c82",
@@ -29251,6 +29442,39 @@
         "preferred": true
       }
     ]
+  },
+  "sentral-cargo": {
+    "displayName": "Sentral Cargo",
+    "color": "#e6212a",
+    "aliases": [
+      "SentralCargo",
+      "PT Aeronusa Inti Raya"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sentralcargo.co.id/",
+    "trackingUrlTemplate": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://sentralcargo.co.id/",
+    "linkRules": [
+      {
+        "domains": [
+          "sentralcargo.co.id",
+          "www.sentralcargo.co.id"
+        ],
+        "pathPattern": "^/(?:en/tracking|cekresi)/?$",
+        "params": [
+          "resi"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "serpost": {
     "displayName": "Serpost",

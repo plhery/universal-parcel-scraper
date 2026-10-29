@@ -7601,6 +7601,41 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "avis-logistics": {
+    "displayName": "Avis Logistics",
+    "color": "#095fa9",
+    "aliases": [
+      "AVIS Logistics KZ",
+      "ТОО Avis Logistics",
+      "Авис Логистикс"
+    ],
+    "countries": [
+      "KZ",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Almaty",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://avislogistics.kz/",
+    "trackingUrlTemplate": "https://avislogistics.kz/?trace={trackingNumber}",
+    "trackingSearchUrl": "https://avislogistics.kz/",
+    "linkRules": [
+      {
+        "domains": [
+          "avislogistics.kz",
+          "www.avislogistics.kz"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "trace"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "aymakan": {
     "displayName": "AyMakan",
     "color": "#feca07",
@@ -11342,6 +11377,36 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "dakota-cargo": {
+    "displayName": "Dakota Cargo",
+    "color": "#120f84",
+    "aliases": [
+      "Dakota Group",
+      "PT Dakota Buana Semesta",
+      "Dakota Buana Semesta",
+      "Dakota Logistik",
+      "Dakota Kurir",
+      "Dakota Courier"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dakotacargo.co.id/",
+    "trackingSearchUrl": "https://dakotacargo.co.id/#lacak-kiriman",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{3}(?:0[1-9]|1[0-2])20\\d{2}A\\d{6}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "danske-fragtmaend": {
     "displayName": "Danske Fragtmænd",
     "color": "#009ada",
@@ -11756,6 +11821,40 @@ export const CARRIER_CATALOG = {
           "delnext.com"
         ],
         "path": "^/[A-Z]{2}/track_your_parcel/tracking_code/([A-Za-z0-9]+)(?:&reloaded=[A-Z]{2})?/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "depo": {
+    "displayName": "Depo",
+    "color": "#f36a10",
+    "aliases": [
+      "Depo.sk",
+      "DEPO výdajné miesta",
+      "Mediaprint-Kapa Pressegrosso"
+    ],
+    "countries": [
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bratislava",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://depo.sk/",
+    "trackingUrlTemplate": "https://depo.sk/sledovanie-zasielky/?number={trackingNumber}",
+    "trackingSearchUrl": "https://depo.sk/sledovanie-zasielky/",
+    "linkRules": [
+      {
+        "domains": [
+          "depo.sk",
+          "www.depo.sk"
+        ],
+        "pathPattern": "^/sledovanie-zasielky/?$",
+        "params": [
+          "number"
+        ]
       }
     ],
     "detectionRules": []
@@ -13015,7 +13114,8 @@ export const CARRIER_CATALOG = {
       "DPD Laser Express Logistics",
       "DPD Laser Express Logistics (Pty) Ltd",
       "DPDLaser",
-      "Dawn Wing"
+      "Dawn Wing",
+      "Fast & Furious"
     ],
     "countries": [
       "ZA"
@@ -13350,6 +13450,39 @@ export const CARRIER_CATALOG = {
     "trackingUrlTemplate": "https://track.mydynalogic.eu/track/login?ordernumber={trackingNumber}",
     "trackingSearchUrl": "https://track.mydynalogic.eu/track/login",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "e-cargo": {
+    "displayName": "e-Cargo",
+    "color": "#ee4037",
+    "aliases": [
+      "E-Cargo Logistics",
+      "E-Cargo Logistics Ltd",
+      "אי קרגו"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://e-cargo.co.il/",
+    "trackingUrlTemplate": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.e-cargo.co.il"
+        ],
+        "pathPattern": "^/CargoTracking/public-tracking/search/?$",
+        "params": [
+          "searchKey"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "e-commerce-international": {
@@ -18808,6 +18941,28 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "instapack": {
+    "displayName": "Instapack",
+    "color": "#36a8dd",
+    "aliases": [
+      "Immediate Delivery S.L.",
+      "Mi Instapack"
+    ],
+    "countries": [
+      "ES",
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.instapack.es/",
+    "trackingSearchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "integral-pack": {
     "displayName": "Integral Pack",
     "color": "#004d9c",
@@ -24139,6 +24294,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "obibox": {
+    "displayName": "Obibox",
+    "color": "#ec6615",
+    "aliases": [
+      "Obibox / Xpedigo",
+      "Xpedigo",
+      "Xpedigo Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://obibox.co/",
+    "trackingUrlTemplate": "https://tracking.obibox.io/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.obibox.io/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.obibox.io",
+          "tracking.xpedigo.com"
+        ],
+        "path": "^/([A-Za-z0-9_]{8,40})/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^XP[A-Z]{3,4}\\d[0-9A-Z]{9,21}(?:_|Q)\\d{1,2}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "oca": {
     "displayName": "OCA",
     "color": "#592c82",
@@ -29253,6 +29444,39 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "sentral-cargo": {
+    "displayName": "Sentral Cargo",
+    "color": "#e6212a",
+    "aliases": [
+      "SentralCargo",
+      "PT Aeronusa Inti Raya"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sentralcargo.co.id/",
+    "trackingUrlTemplate": "https://sentralcargo.co.id/cekresi?resi={trackingNumber}",
+    "trackingSearchUrl": "https://sentralcargo.co.id/",
+    "linkRules": [
+      {
+        "domains": [
+          "sentralcargo.co.id",
+          "www.sentralcargo.co.id"
+        ],
+        "pathPattern": "^/(?:en/tracking|cekresi)/?$",
+        "params": [
+          "resi"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "serpost": {
     "displayName": "Serpost",
@@ -35689,6 +35913,7 @@ export const CARRIER_IDS = [
   "asyad-express",
   "atlantic-courier",
   "averitt",
+  "avis-logistics",
   "aymakan",
   "azerpost",
   "azul-cargo",
@@ -35783,6 +36008,7 @@ export const CARRIER_IDS = [
   "daewoo-fastex",
   "dai-post",
   "daily-xpress",
+  "dakota-cargo",
   "danske-fragtmaend",
   "dao",
   "day-ross",
@@ -35793,6 +36019,7 @@ export const CARRIER_IDS = [
   "dealersend",
   "dellin",
   "delnext",
+  "depo",
   "deppon",
   "deprisa",
   "designer-transport",
@@ -35829,6 +36056,7 @@ export const CARRIER_IDS = [
   "dsv",
   "dx",
   "dynalogic",
+  "e-cargo",
   "e-commerce-international",
   "early-bird",
   "easy-mail",
@@ -35969,6 +36197,7 @@ export const CARRIER_IDS = [
   "indah-logistik",
   "inposdom",
   "instabox",
+  "instapack",
   "integral-pack",
   "intel-valley",
   "intelcom",
@@ -36108,6 +36337,7 @@ export const CARRIER_IDS = [
   "nox",
   "nz-couriers",
   "oak-harbor",
+  "obibox",
   "oca",
   "ocasa",
   "ocs-ana",
@@ -36233,6 +36463,7 @@ export const CARRIER_IDS = [
   "sendex",
   "sending",
   "sendle",
+  "sentral-cargo",
   "serpost",
   "servientrega",
   "seven-eleven-tw",
@@ -36558,6 +36789,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "asyad-express": [],
   "atlantic-courier": [],
   "averitt": [],
+  "avis-logistics": [],
   "aymakan": ["aymakan-1"],
   "azerpost": [],
   "azul-cargo": [],
@@ -36652,6 +36884,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "daewoo-fastex": [],
   "dai-post": ["dai-post-1","dai-post-2"],
   "daily-xpress": [],
+  "dakota-cargo": ["dakota-cargo-1"],
   "danske-fragtmaend": ["danske-fragtmaend-1"],
   "dao": ["dao-1"],
   "day-ross": ["day-ross-1"],
@@ -36662,6 +36895,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dealersend": ["dealersend-1"],
   "dellin": [],
   "delnext": [],
+  "depo": [],
   "deppon": [],
   "deprisa": [],
   "designer-transport": [],
@@ -36698,6 +36932,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dsv": ["dsv-stt"],
   "dx": ["dx-1"],
   "dynalogic": [],
+  "e-cargo": [],
   "e-commerce-international": ["e-commerce-international-1"],
   "early-bird": ["early-bird-1"],
   "easy-mail": [],
@@ -36838,6 +37073,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "indah-logistik": ["indah-logistik-1"],
   "inposdom": [],
   "instabox": [],
+  "instapack": [],
   "integral-pack": [],
   "intel-valley": ["intel-valley-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
@@ -36977,6 +37213,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nox": ["nox-1"],
   "nz-couriers": [],
   "oak-harbor": [],
+  "obibox": ["obibox-1"],
   "oca": [],
   "ocasa": ["ocasa-1"],
   "ocs-ana": [],
@@ -37102,6 +37339,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sendex": [],
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
+  "sentral-cargo": [],
   "serpost": ["serpost-s10"],
   "servientrega": [],
   "seven-eleven-tw": [],

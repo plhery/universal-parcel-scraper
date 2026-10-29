@@ -2,8 +2,8 @@
 
 DPD South Africa, formerly DPD Laser, is DPD's network in South Africa, partnered with
 DPD's owner Geopost, and its site on dpd.com now presents it under that name. Dawn Wing, its
-domestic courier brand, was folded into it, and dawnwing.co.za and dpdlaser.co.za redirect to
-that site. Tracked through the lookup of the parcel tracker app its tracking page frames.
+domestic courier brand, and Fast & Furious, a courier it bought in 2021, were folded into it,
+and dawnwing.co.za and dpdlaser.co.za redirect to that site. Tracked through the lookup of the parcel tracker app its tracking page frames.
 
 ## How it works
 

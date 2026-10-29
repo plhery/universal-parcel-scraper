@@ -488,3 +488,20 @@ describe('Parcel Freight Logistics numbers', () => {
     });
   });
 });
+
+describe('Dakota Cargo numbers, and Sentral Cargo links', () => {
+  it('suggests Dakota Cargo for a branch code, month, year, A and six digits', () => {
+    const match = detectCarrierMatch('001012026A000017');
+    expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(match.candidates).toContain('dakota-cargo');
+    for (const number of ['001132026A000017', '001011926A000017', '0010120260000017', '001012026B000017', '001012026A00001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dakota-cargo');
+    }
+  });
+
+  it('reads Sentral Cargo tracking links', () => {
+    for (const link of ['https://sentralcargo.co.id/cekresi?resi=1000017', 'https://sentralcargo.co.id/en/tracking?resi=1000017']) {
+      expect(parseTrackingInput(link)).toMatchObject({ trackingNumber: '1000017', carrier: 'sentral-cargo', source: 'link' });
+    }
+  });
+});

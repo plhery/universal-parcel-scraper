@@ -971,3 +971,17 @@ describe('PostNL eighteen-digit numbers for Italy', () => {
     }
   });
 });
+
+describe('Avis Logistics, Depo and e-Cargo links', () => {
+  it('reads the number from each tracking link', () => {
+    expect(parseTrackingInput('https://avislogistics.kz/?trace=0000000000017')).toMatchObject({
+      trackingNumber: '0000000000017', carrier: 'avis-logistics', source: 'link',
+    });
+    expect(parseTrackingInput('https://depo.sk/sledovanie-zasielky/?number=2000000000017')).toMatchObject({
+      trackingNumber: '2000000000017', carrier: 'depo', source: 'link',
+    });
+    expect(parseTrackingInput('https://tracking.e-cargo.co.il/CargoTracking/public-tracking/search?searchKey=EC1000017')).toMatchObject({
+      trackingNumber: 'EC1000017', carrier: 'e-cargo', source: 'link',
+    });
+  });
+});

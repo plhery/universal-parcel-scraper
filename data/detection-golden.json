@@ -65538,6 +65538,15 @@
     ]
   },
   {
+    "input": "999092022A123456",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "royal-mail",
+      "dakota-cargo"
+    ]
+  },
+  {
     "input": "99911453",
     "carrier": "unknown",
     "confidence": "low",
@@ -95881,6 +95890,30 @@
     ],
     "asked": [
       "chronopost"
+    ]
+  },
+  {
+    "input": "XPHFRE271733CK15466Q1",
+    "carrier": "obibox",
+    "confidence": "high",
+    "candidates": [
+      "obibox"
+    ]
+  },
+  {
+    "input": "XPLOP807214725068_1",
+    "carrier": "obibox",
+    "confidence": "high",
+    "candidates": [
+      "obibox"
+    ]
+  },
+  {
+    "input": "XPSHP254130SPY680Q1",
+    "carrier": "obibox",
+    "confidence": "high",
+    "candidates": [
+      "obibox"
     ]
   },
   {
