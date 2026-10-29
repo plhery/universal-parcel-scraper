@@ -123,7 +123,7 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
         await page.locator('#sn').fill(number, { timeout: remaining() });
         phase = solveNativeCaptcha ? 'native' : 'checkbox';
         let checked, usedNative = false;
-        if (audioBackoff.remainingMs() > 0) {
+        if (await audioBackoff.remainingMs() > 0) {
           recordNative('audio_cooldown');
           checked = await page.locator('#g-recaptcha-response').inputValue({ timeout: remaining() }).then(value => value.length > 0, () => false);
         } else if (solveNativeCaptcha) {

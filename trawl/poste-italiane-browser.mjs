@@ -142,7 +142,7 @@ export async function runPosteItalianeBrowser({ url, handle, tier, maxTimeout, c
         const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
         statusCode = navigation?.status() ?? 0;
         const gate = await Promise.race([terminal.then(() => false), challenged.then(() => true)]);
-        if (gate && audioBackoff.remainingMs() > 0) {
+        if (gate && await audioBackoff.remainingMs() > 0) {
           nativeOutcome = 'audio_cooldown';
           waitedForRequest = pending.size > 0;
           if (waitedForRequest) await terminal;

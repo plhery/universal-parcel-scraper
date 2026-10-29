@@ -44,7 +44,7 @@ const FAST_AUDIO_WAIT = `      const audioWaitEnd = Math.min(deadline, Date.now(
       while (!hasAudioSrc && Date.now() < audioWaitEnd) {
         const verdict = await audioVerdict(bframe)
         if (verdict === "blocked") {
-          recaptchaAudioBackoff.block()
+          await recaptchaAudioBackoff.block()
           console.log("[recaptcha] blocked by Google - audio challenge requires residential proxy")
           return false
         }
@@ -74,7 +74,7 @@ const FAST_VERIFY = `        .locator("#recaptcha-verify-button")
         if ((await anchor.locator('#recaptcha-anchor[aria-checked="true"]').count().catch(() => 0)) > 0) break
         const verdict = await audioVerdict(bframe)
         if (verdict === "blocked") {
-          recaptchaAudioBackoff.block()
+          await recaptchaAudioBackoff.block()
           console.log("[recaptcha] blocked by Google - audio challenge requires residential proxy")
           return false
         }
@@ -97,7 +97,7 @@ export function fastRecaptchaAudio(source) {
   output = replaceOnce(output, '\nexport async function solveRecaptchaV2(', VERDICT);
   output = replaceOnce(output, AUDIO_WAIT, FAST_AUDIO_WAIT);
   output = replaceOnce(output, VERIFY, FAST_VERIFY);
-  output = replaceOnce(output, '  const deadline = Date.now() + timeoutMs', `  if (recaptchaAudioBackoff.remainingMs() > 0) {
+  output = replaceOnce(output, '  const deadline = Date.now() + timeoutMs', `  if (await recaptchaAudioBackoff.remainingMs() > 0) {
     console.log("[recaptcha] audio cooldown active")
     return false
   }

@@ -79,6 +79,15 @@ async function load(source, backoff = createRecaptchaAudioBackoff()) {
   return import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}#${++loadId}`);
 }
 
+test('the generic solver awaits the shared pause before accessing a page', async () => {
+  const backoff = createRecaptchaAudioBackoff(() => 1000, { load: async () => 21601000 });
+  const { solveRecaptchaV2 } = await load(fastRecaptchaAudio(upstream), backoff);
+  let accessed = 0;
+  const page = { frameLocator: () => { accessed++; throw new Error('Should not reach the page'); } };
+  assert.equal(await solveRecaptchaV2(page), false);
+  assert.equal(accessed, 0);
+});
+
 /** A page whose challenge frame changes as the solver clicks; `on` reacts to clicks. */
 function challenge(on = {}) {
   const state = { audio: false, blocked: false, error: '', checked: false, clicks: [], answers: 0, logs: [] };

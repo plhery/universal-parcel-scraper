@@ -95,6 +95,14 @@ test('a cooldown still finishes an automatically verified tracking request alrea
     assert.equal(f.state.diagnostics[0].waitedForRequest, true);
   } finally { clearTimeout(deliver); }
 });
+test('a restored shared pause is awaited before the Poste solver starts', async () => {
+  const f = fixture();
+  f.options.audioBackoff = createRecaptchaAudioBackoff(() => 1000, { load: async () => 21601000 });
+  const result = await runPosteItalianeBrowser(f.options);
+  assert.equal(f.state.solved, 0);
+  assert.equal(result.capturedResponses.at(-1).status, 400);
+  assert.equal(f.state.diagnostics[0].nativeOutcome, 'audio_cooldown');
+});
 test('waits for the final response after solver success and retains a rejected token as challenge', async () => {
   const f = fixture(); f.options.solveCaptcha = async () => { setTimeout(() => f.handlers.response(response()), 10); return true; };
   assert.equal((await runPosteItalianeBrowser(f.options)).capturedResponses.at(-1).status, 200);

@@ -103,6 +103,18 @@ test('a stalled native solver is stopped by the browser deadline and closes its 
   assert.equal(active.state.closed, 1); assert.equal(active.state.submitted, 0);
   assert.equal(active.diagnostics[0].outcome, 'deadline');
 });
+test('a restored shared pause is awaited before DHL Poland asks for audio', async () => {
+  const active = fixture();
+  active.options.audioBackoff = createRecaptchaAudioBackoff(() => 1000, { load: async () => 21601000 });
+  const original = active.page.locator;
+  active.page.locator = selector => selector === '#g-recaptcha-response' ? { inputValue: async () => '' } : original(selector);
+  let solves = 0;
+  active.options.solveNativeCaptcha = async () => { solves++; return true; };
+  await runDhlPolandBrowser(active.options);
+  assert.equal(solves, 0);
+  assert.equal(active.state.submitted, 0);
+  assert.deepEqual(active.diagnostics[0].native, ['audio_cooldown']);
+});
 test('extracts only safe history fields and identifies an unresolved verification form', () => {
   assert.deepEqual(dhlPolandHistory(html), { number, events: [{ date: '04.03.2026', time: '10:15',
     location: 'Example depot', description: 'Delivered to customer.' }] });

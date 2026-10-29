@@ -97,7 +97,7 @@ with at most two puzzles; verification tokens stay in that context.
 The page then posts one GraphQL query; the helper keeps
 the decoded reply only for the query naming the whole number in the page's address.
 
-Redis is optional. It stores cookies and user agents with a TTL, not tracking history, and a
+Redis is optional. It stores cookies, user agents and the audio pause deadline with a TTL, not tracking history, and a
 cached session that fails falls back to a fresh browser. Do not expose Redis.
 Keeping a browser session does not make an application CAPTCHA token reusable;
 the site can require fresh verification for each action.
@@ -148,7 +148,10 @@ widget in any language counts. An automated-traffic page also pauses audio for s
 across the service's solver copies, Poste Italiane and DHL Poland helpers. Skipped lookups
 do not extend the pause; a wrong transcription does not start it. Clear tracking replies
 and forms already verified by the page still work, while unresolved challenges stay available
-to enabled provider fallback. The pause is in memory for the service process and resets on restart.
+to enabled provider fallback. With `REDIS_URL`, the pause survives service restarts and rollouts
+in the existing Redis store. It keeps only the deadline, shared across solver copies and concurrent
+service processes. Without Redis, or while it is unavailable, the pause stays in process memory;
+an unavailable store logs a fixed warning. Each store operation is bounded to a quarter second.
 
 ## Tests
 
