@@ -95,6 +95,14 @@
     "reason": "Colis Privé accepts any 12-character alphanumeric, which takes Aramex New Zealand's MX labels; the label series is New Zealand's own, so its high-confidence rule decides."
   },
   {
+    "shape": "RMP9{9}",
+    "carriers": [
+      "colis-prive",
+      "rozetka-delivery"
+    ],
+    "reason": "Colis Privé accepts any 12-character alphanumeric, which takes ROZETKA Delivery's RMP waybills once the dash goes; both rules are low confidence, so the number stays a suggestion."
+  },
+  {
     "shape": "AA9{9}AA",
     "carriers": [
       "an-post",

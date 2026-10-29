@@ -1050,3 +1050,34 @@ describe('ACE Logistics, FOFR, AKIS Express, ColliCare, Pall-Ex and Parcel Right
     expect(carrierIdFromName('Pall-Ex')).toBe('pallex');
   });
 });
+
+describe('ROZETKA Delivery, HRX, Cargobus and Jetpak numbers and links', () => {
+  it('suggests ROZETKA Delivery for RMP and nine digits, which Purolator leaves to it', () => {
+    for (const number of ['RMP-100000017', 'rmp 100000017', 'RMP100000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('rozetka-delivery');
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('purolator');
+    }
+    for (const number of ['RMP10000017', 'RMP1000000017', 'RMQ100000017', '101000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('rozetka-delivery');
+    }
+    expect(detectCarrierMatch('RMQ100000017')).toMatchObject({ carrier: 'purolator', confidence: 'high' });
+  });
+
+  it('reads their trackers and names them', () => {
+    for (const [url, number, carrier] of [
+      ['https://rozetka.delivery/tracking?parcel_id=RMP-100000017', 'RMP-100000017', 'rozetka-delivery'],
+      ['https://rozetka.delivery/tracking?parcel_id=101000000017', '101000000017', 'rozetka-delivery'],
+      ['https://wop.hrx.eu/public/tracking/TRK1000000017', 'TRK1000000017', 'hrx'],
+      ['https://cargobusee.opter.cloud/TT?keyword=1000017', '1000017', 'cargobus'],
+      ['https://my.jetpak.com/app/en/track/awb/JET1000017', 'JET1000017', 'jetpak'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+    expect(parseTrackingInput('https://my.jetpak.com/app/sv/track/c/abcdef_S').carrier ?? 'none').not.toBe('jetpak');
+    expect(carrierIdFromName('Rozetka Delivery')).toBe('rozetka-delivery');
+    expect(carrierIdFromName('HR-Express')).toBe('hrx');
+    expect(carrierIdFromName('T Grupp')).toBe('cargobus');
+    expect(carrierIdFromName('Jetpak Group')).toBe('jetpak');
+  });
+});

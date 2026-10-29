@@ -4146,5 +4146,29 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Ten digits are shared by many carriers and nothing in a Zoom guía points to Zoom."
+  },
+  {
+    "carrier": "okaken",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Okaken's ten-digit inquiry numbers share their length with many carriers' numeric numbers, so the shape cannot name Okaken."
+  },
+  {
+    "carrier": "rozetka-delivery",
+    "pattern": "^101\\d{9}$",
+    "kind": "collision",
+    "reason": "ROZETKA Delivery's twelve-digit waybills share their length with many carriers' numeric numbers, and its tracker accepts any twelve digits, so the shape cannot name ROZETKA Delivery."
+  },
+  {
+    "carrier": "tonami",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Tonami's ten-digit inquiry numbers carry a mod-7 check digit that other Japanese carriers' numbers share, so the shape cannot name Tonami."
+  },
+  {
+    "carrier": "xgs",
+    "pattern": "^\\d{7,8}$",
+    "kind": "collision",
+    "reason": "XGS probill numbers are seven or eight digits, lengths many carriers share, so the shape cannot name XGS."
   }
 ]

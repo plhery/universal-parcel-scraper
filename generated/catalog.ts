@@ -3455,7 +3455,7 @@ export const CARRIER_CATALOG = {
         "checksum": "luhn"
       },
       {
-        "pattern": "^(?!(?:BNI|BYS|CUB|GWD|LTN|MPX|NZC|QSP|QSS|RWM|XLT))[A-Z]{3}\\d{9}$",
+        "pattern": "^(?!(?:BNI|BYS|CUB|GWD|LTN|MPX|NZC|QSP|QSS|RMP|RWM|XLT))[A-Z]{3}\\d{9}$",
         "confidence": "high"
       }
     ]
@@ -9184,6 +9184,43 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://campost.cm/",
     "trackingSearchUrl": "https://campost.cm/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "cargobus": {
+    "displayName": "Cargobus",
+    "color": "#006ade",
+    "aliases": [
+      "CargoBus",
+      "Cargobus EE",
+      "Cargobus Eesti",
+      "T Grupp",
+      "T Grupp OÜ"
+    ],
+    "countries": [
+      "EE",
+      "LV",
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://cargobusee.opter.cloud/tt",
+    "trackingUrlTemplate": "https://cargobusee.opter.cloud/TT?keyword={trackingNumber}",
+    "trackingSearchUrl": "https://cargobusee.opter.cloud/tt",
+    "linkRules": [
+      {
+        "domains": [
+          "cargobusee.opter.cloud"
+        ],
+        "pathPattern": "^/[Tt][Tt]/?$",
+        "params": [
+          "keyword"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "cargoline": {
@@ -18608,6 +18645,47 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "hrx": {
+    "displayName": "HRX",
+    "color": "#e82c2a",
+    "aliases": [
+      "HRX SIA",
+      "HRX AS",
+      "HRX UAB",
+      "HRX Finland",
+      "HRX Finland Oy",
+      "HRX Sverige",
+      "HR-Express",
+      "HR-Express Oy",
+      "HRX E-com Parcel"
+    ],
+    "countries": [
+      "FI",
+      "EE",
+      "LV",
+      "LT",
+      "PL",
+      "SE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hrx.lv/en/track-trace/",
+    "trackingUrlTemplate": "https://wop.hrx.eu/public/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.hrx.lv/en/track-trace/",
+    "linkRules": [
+      {
+        "domains": [
+          "wop.hrx.eu"
+        ],
+        "path": "^/public/tracking/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "huahan": {
     "displayName": "HuaHan Logistics",
     "color": "#0069e8",
@@ -20288,6 +20366,45 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.jetlinecouriers.in/",
     "trackingSearchUrl": "https://www.jetlinecouriers.in/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "jetpak": {
+    "displayName": "Jetpak",
+    "color": "#d60e1f",
+    "aliases": [
+      "Jetpak Group",
+      "Jetpak Group AB",
+      "Jetpak Sverige",
+      "Jetpak Norge",
+      "Jetpak Danmark",
+      "Jetpak Finland",
+      "Jetpak Air",
+      "Jetpak Road",
+      "JetPak"
+    ],
+    "countries": [
+      "SE",
+      "NO",
+      "DK",
+      "FI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Stockholm",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.jetpak.com/app/en/track",
+    "trackingUrlTemplate": "https://my.jetpak.com/app/en/track/awb/{trackingNumber}",
+    "trackingSearchUrl": "https://my.jetpak.com/app/en/track",
+    "linkRules": [
+      {
+        "domains": [
+          "my.jetpak.com"
+        ],
+        "path": "^/app/[a-z]{2}/track/awb/([^/]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "jhgj": {
@@ -24805,6 +24922,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "okaken": {
+    "displayName": "Okayamaken Freight Transportation",
+    "color": "#008041",
+    "aliases": [
+      "Okaken",
+      "OKAKEN",
+      "Okayama Ken Freight Transportation",
+      "岡山県貨物運送",
+      "岡山県貨物運送株式会社",
+      "オカケン"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.okaken.co.jp/refer/",
+    "trackingSearchUrl": "https://www.okaken.co.jp/refer/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "olva-courier": {
     "displayName": "Olva Courier",
     "color": "#fcb414",
@@ -28940,6 +29082,45 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "rozetka-delivery": {
+    "displayName": "ROZETKA Delivery",
+    "color": "#05bc52",
+    "aliases": [
+      "Rozetka Delivery",
+      "Rozetka.Delivery",
+      "rozetka.delivery"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://rozetka.delivery/tracking",
+    "trackingUrlTemplate": "https://rozetka.delivery/tracking?parcel_id={trackingNumber}",
+    "trackingSearchUrl": "https://rozetka.delivery/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "rozetka.delivery",
+          "www.rozetka.delivery"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "parcel_id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^RMP\\d{9}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "rpx-hk": {
     "displayName": "RPX Online",
     "color": "#eb1d4d",
@@ -29567,6 +29748,29 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "savar-express": {
+    "displayName": "SAVAR Express",
+    "color": "#0779ff",
+    "aliases": [
+      "Savar Express",
+      "SAVAR express",
+      "Savar",
+      "Simple Express S.A.C."
+    ],
+    "countries": [
+      "PE"
+    ],
+    "selectable": true,
+    "timezone": "America/Lima",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
+    "trackingSearchUrl": "https://www.savarexpress.com.pe/rastrea-un-envio/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "sbs-sokuhai": {
     "displayName": "SBS Sokuhai",
@@ -33245,6 +33449,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "tonami": {
+    "displayName": "Tonami Transportation",
+    "color": "#b50005",
+    "aliases": [
+      "Tonami",
+      "TONAMI",
+      "Tonami Unyu",
+      "TONAMI TRANSPORTATION CO., LTD.",
+      "トナミ運輸",
+      "トナミ運輸株式会社"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tonami.co.jp/",
+    "trackingUrlTemplate": "https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D={trackingNumber}",
+    "trackingSearchUrl": "https://trc1.tonami.co.jp/trc/search3/excSearch3",
+    "linkRules": [
+      {
+        "domains": [
+          "trc1.tonami.co.jp"
+        ],
+        "pathPattern": "^/trc/search3/excSearch3$",
+        "params": [
+          "id[0]"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "toptrans": {
     "displayName": "TOPTRANS",
     "color": "#005daa",
@@ -33778,6 +34018,38 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/?$",
         "params": [
           "orderNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "trexity": {
+    "displayName": "Trexity",
+    "color": "#4361ee",
+    "aliases": [
+      "Trexity Inc."
+    ],
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.trexity.com/",
+    "trackingUrlTemplate": "https://tracking.trexity.com/?t={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.trexity.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.trexity.com"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "t"
         ]
       }
     ],
@@ -35430,6 +35702,39 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "xgs": {
+    "displayName": "XGS",
+    "color": "#20326e",
+    "aliases": [
+      "Xpress Global Systems",
+      "Xpress Global Systems LLC",
+      "Xpress Global",
+      "XGSI"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xgsi.com/",
+    "trackingUrlTemplate": "https://www.xgsi.com/#track-shipment={trackingNumber}",
+    "trackingSearchUrl": "https://www.xgsi.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.xgsi.com",
+          "xgsi.com"
+        ],
+        "pathPattern": "^/?$",
+        "fragment": "^track-shipment=(\\d{7,8})$"
+      }
+    ],
+    "detectionRules": []
+  },
   "xinghe-freight": {
     "displayName": "Xinghe Freight",
     "color": "#0e3a6b",
@@ -36455,6 +36760,7 @@ export const CARRIER_IDS = [
   "c3x",
   "cacesa",
   "campost",
+  "cargobus",
   "cargoline",
   "cargus",
   "castle-parcels",
@@ -36691,6 +36997,7 @@ export const CARRIER_IDS = [
   "hp-mostar",
   "hr-parcel",
   "hrvatska-posta",
+  "hrx",
   "huahan",
   "huaya-express",
   "hunter-express",
@@ -36735,6 +37042,7 @@ export const CARRIER_IDS = [
   "jersey-post",
   "jet-logistic",
   "jetline-couriers",
+  "jetpak",
   "jhgj",
   "jifan",
   "jitsu",
@@ -36851,6 +37159,7 @@ export const CARRIER_IDS = [
   "oca",
   "ocasa",
   "ocs-ana",
+  "okaken",
   "olva-courier",
   "omgo",
   "omniva",
@@ -36952,6 +37261,7 @@ export const CARRIER_IDS = [
   "roadie",
   "roadrunner",
   "royal-express-mm",
+  "rozetka-delivery",
   "rpx-hk",
   "rpx-indonesia",
   "rr-express-sg",
@@ -36968,6 +37278,7 @@ export const CARRIER_IDS = [
   "sapx-express",
   "sat-ukraine",
   "saudi-post",
+  "savar-express",
   "sbs-sokuhai",
   "scg-express",
   "seino",
@@ -37061,6 +37372,7 @@ export const CARRIER_IDS = [
   "tmm-express",
   "tnt-it",
   "today-kr",
+  "tonami",
   "toptrans",
   "topyou",
   "torrestir",
@@ -37075,6 +37387,7 @@ export const CARRIER_IDS = [
   "transmission",
   "transport-rdl",
   "trendyol-express",
+  "trexity",
   "trunkrs",
   "tsjy",
   "tst-cf-express",
@@ -37117,6 +37430,7 @@ export const CARRIER_IDS = [
   "x-trac",
   "xde-logistics",
   "xdp",
+  "xgs",
   "xinghe-freight",
   "xlcourier",
   "xpo-ltl",
@@ -37344,6 +37658,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "cacesa": [],
   "campost": [],
+  "cargobus": [],
   "cargoline": [],
   "cargus": ["cargus-1","cargus-2"],
   "castle-parcels": [],
@@ -37580,6 +37895,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hp-mostar": [],
   "hr-parcel": [],
   "hrvatska-posta": ["hrvatska-posta-own","hrvatska-posta-s10"],
+  "hrx": [],
   "huahan": ["huahan-1"],
   "huaya-express": ["huaya-express-1"],
   "hunter-express": [],
@@ -37624,6 +37940,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jersey-post": ["jersey-post-s10"],
   "jet-logistic": [],
   "jetline-couriers": [],
+  "jetpak": [],
   "jhgj": ["jhgj-1"],
   "jifan": ["jifan-1"],
   "jitsu": [],
@@ -37740,6 +38057,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oca": [],
   "ocasa": ["ocasa-1"],
   "ocs-ana": [],
+  "okaken": [],
   "olva-courier": ["olva-courier-3"],
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
@@ -37841,6 +38159,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "roadie": ["roadie-1","roadie-2"],
   "roadrunner": [],
   "royal-express-mm": [],
+  "rozetka-delivery": ["rozetka-delivery-rmp"],
   "rpx-hk": ["rpx-hk-1"],
   "rpx-indonesia": [],
   "rr-express-sg": [],
@@ -37857,6 +38176,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sapx-express": [],
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
+  "savar-express": [],
   "sbs-sokuhai": [],
   "scg-express": ["scg-express-1"],
   "seino": [],
@@ -37950,6 +38270,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tmm-express": [],
   "tnt-it": ["tnt-it-1","tnt-it-check"],
   "today-kr": [],
+  "tonami": [],
   "toptrans": [],
   "topyou": ["topyou-1"],
   "torrestir": ["torrestir-1"],
@@ -37964,6 +38285,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transmission": ["transmission-1"],
   "transport-rdl": [],
   "trendyol-express": [],
+  "trexity": [],
   "trunkrs": [],
   "tsjy": ["tsjy-1"],
   "tst-cf-express": [],
@@ -38006,6 +38328,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "x-trac": ["x-trac-1"],
   "xde-logistics": [],
   "xdp": ["xdp-1"],
+  "xgs": [],
   "xinghe-freight": ["xinghe-freight-1"],
   "xlcourier": ["xlcourier-1"],
   "xpo-ltl": ["xpo-ltl-1"],

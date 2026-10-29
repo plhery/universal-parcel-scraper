@@ -1,0 +1,49 @@
+{
+  "id": "tonami",
+  "displayName": "Tonami Transportation",
+  "aliases": [
+    "Tonami",
+    "TONAMI",
+    "Tonami Unyu",
+    "TONAMI TRANSPORTATION CO., LTD.",
+    "トナミ運輸",
+    "トナミ運輸株式会社"
+  ],
+  "region": {
+    "countries": [
+      "JP"
+    ]
+  },
+  "brand": {
+    "color": "#b50005"
+  },
+  "selectable": true,
+  "timezone": "Asia/Tokyo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D={trackingNumber}",
+    "searchUrl": "https://trc1.tonami.co.jp/trc/search3/excSearch3",
+    "canaryUrl": "https://www.tonami.co.jp/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "trc1.tonami.co.jp"
+      ],
+      "pathPattern": "^/trc/search3/excSearch3$",
+      "params": [
+        "id[0]"
+      ]
+    }
+  ],
+  "detection": []
+}

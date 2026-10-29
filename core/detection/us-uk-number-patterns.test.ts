@@ -566,3 +566,14 @@ describe('Piggy Express, Islandwide Express and Trans-Ontario Express', () => {
     expect(carrierIdFromName('Trans Ontario')).toBe('trans-ontario');
   });
 });
+
+describe('Trexity, XGS and SAVAR Express links and names', () => {
+  it('reads Trexity\'s number but not its token links, and XGS\'s probill from the fragment', () => {
+    expect(parseTrackingInput('https://tracking.trexity.com/?t=AB3DE-FG7JK')).toMatchObject({ trackingNumber: 'AB3DE-FG7JK', carrier: 'trexity', source: 'link' });
+    expect(parseTrackingInput('https://tracking.trexity.com/?token=AB3DEFG7JK').carrier ?? 'none').not.toBe('trexity');
+    expect(parseTrackingInput('https://www.xgsi.com/#track-shipment=12345670')).toMatchObject({ trackingNumber: '12345670', carrier: 'xgs', source: 'link' });
+    expect(carrierIdFromName('Xpress Global Systems')).toBe('xgs');
+    expect(carrierIdFromName('Simple Express S.A.C.')).toBe('savar-express');
+    expect(carrierIdFromName('Trexity Inc.')).toBe('trexity');
+  });
+});

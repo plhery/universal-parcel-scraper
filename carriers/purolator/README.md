@@ -5,7 +5,8 @@ Detection offers a 12-digit PIN starting with 0 to 6 only when it passes the Luh
 Three letters and nine digits name Purolator outright, except prefixes other services use for
 the same shape. Among them is Cubyn's `CUB`: Cubyn was a French fulfilment service, now closed,
 whose parcels are tracked under the number of the carrier it handed them to. Postmedia Parcel
-Services' `BNI` and [Sendle](../sendle/README.md)'s `QSS` are others.
+Services' `BNI`, [Sendle](../sendle/README.md)'s `QSS` and
+[ROZETKA Delivery](../rozetka-delivery/README.md)'s `RMP` are others.
 
 ## How it works
 

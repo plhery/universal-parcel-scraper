@@ -529,3 +529,15 @@ describe('Kuayue Express waybills and links', () => {
     }
   });
 });
+
+describe('Tonami and Okaken links and names', () => {
+  it('reads Tonami\'s tracker and leaves both carriers\' ten digits unruled', () => {
+    expect(parseTrackingInput('https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D=1000000017')).toMatchObject({
+      trackingNumber: '1000000017', carrier: 'tonami', source: 'link',
+    });
+    for (const carrier of ['tonami', 'okaken']) expect(detectCarrierMatch('1000000017').candidates).not.toContain(carrier);
+    expect(carrierIdFromName('トナミ運輸')).toBe('tonami');
+    expect(carrierIdFromName('岡山県貨物運送')).toBe('okaken');
+    expect(carrierIdFromName('Okayamaken Freight Transportation')).toBe('okaken');
+  });
+});
