@@ -230,6 +230,12 @@ describe('Aramex New Zealand tracking adapter', () => {
     }
   });
 
+  it('names Aramex New Zealand for its MX labels, which Aramex Australia does not issue', () => {
+    expect(detectCarrierMatch('MX0000000017')).toMatchObject({ carrier: 'aramex-nz', confidence: 'high' });
+    expect(detectCarrierMatch('MX0000000017').candidates).not.toContain('aramex-au');
+    expect(detectCarrierMatch('MQ0000000017').candidates).toEqual(expect.arrayContaining(['aramex-au', 'aramex-nz']));
+  });
+
   it('reads tracker links on Aramex New Zealand’s and Fastway’s old hosts, and names the carrier from its home page', () => {
     for (const link of [`https://www.aramex.co.nz/tools/track?l=${DELIVERED}`, `https://www.aramex.co.nz/tools/track/?l=${DELIVERED}`,
       `https://www.fastway.co.nz/tools/track/?l=${DELIVERED}`]) {

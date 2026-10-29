@@ -101,7 +101,7 @@
   "detection": [
     {
       "id": "aramex-au-1",
-      "pattern": "^(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
+      "pattern": "^(?!MX\\d{10}$)(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
       "confidence": "low"
     }
   ]

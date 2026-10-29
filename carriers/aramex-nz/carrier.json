@@ -103,6 +103,11 @@
   ],
   "detection": [
     {
+      "id": "aramex-nz-mx",
+      "pattern": "^MX\\d{10}$",
+      "confidence": "high"
+    },
+    {
       "id": "aramex-nz-1",
       "pattern": "^[A-Z]{2}\\d{10}$",
       "confidence": "low"

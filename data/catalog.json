@@ -7433,7 +7433,7 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
+        "pattern": "^(?!MX\\d{10}$)(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
         "confidence": "low"
       }
     ]
@@ -7473,6 +7473,10 @@
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^MX\\d{10}$",
+        "confidence": "high"
+      },
       {
         "pattern": "^[A-Z]{2}\\d{10}$",
         "confidence": "low"

@@ -7435,7 +7435,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
+        "pattern": "^(?!MX\\d{10}$)(?:[A-Z]{2}|\\d[A-Z])\\d{10}$",
         "confidence": "low"
       }
     ]
@@ -7475,6 +7475,10 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^MX\\d{10}$",
+        "confidence": "high"
+      },
       {
         "pattern": "^[A-Z]{2}\\d{10}$",
         "confidence": "low"
@@ -37297,7 +37301,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apc-postal-logistics": ["apc-postal-logistics-1","apc-postal-logistics-2"],
   "apple-express": ["apple-express-1"],
   "aramex-au": ["aramex-au-1"],
-  "aramex-nz": ["aramex-nz-1","aramex-nz-2"],
+  "aramex-nz": ["aramex-nz-mx","aramex-nz-1","aramex-nz-2"],
   "aras-kargo": ["aras-kargo-1"],
   "arrow-xl": [],
   "asigna": [],

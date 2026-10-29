@@ -26,7 +26,8 @@ Aramex's own label, kept as `canonical_tracking_number`. The adapter takes those
 anything else without a request. `aramex-au-1` offers the labels with two letters, or a digit and
 a letter, at low confidence beside the other carriers whose rules take twelve characters, so
 recognition asks Aramex Australia about them. A label with a letter and a digit shares its shape
-with other networks, and an SSCC names the sender, so detection offers neither.
+with other networks, and an SSCC names the sender, so detection offers neither. `MX` labels are
+Aramex New Zealand's, so the rule leaves them out.
 
 ## Notes
 
