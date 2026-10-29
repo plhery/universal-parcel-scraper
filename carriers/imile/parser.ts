@@ -177,8 +177,8 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
 /** The status a history newest first gives: its newest staged scan's stage, and its newest scan's wording and clock. */
 export function imileSummary(events: readonly CarrierEvent[]): CarrierResult {
   const newest = events[0]!;
-  // A pending scan, such as a notice in Cainiao's leg, moves nothing.
-  const current = events.find((event) => event.stage && event.stage !== 'pending');
+  // A pending scan or a notice, which keeps the stage before it as Cainiao's do, moves nothing.
+  const current = events.find((event) => event.stage && event.stage !== 'pending' && event.stage_source !== 'none');
   const stage = current?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

@@ -26,6 +26,7 @@ import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { validTrackingNumber } from '../../core/detection/valid.js';
 import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
@@ -35,7 +36,6 @@ import {
   CAINIAO_STATUS,
   cainiaoActionCode,
   cainiaoActionStage,
-  cainiaoScanStage,
   cainiaoStageByStatus,
 } from './status.js';
 import { placedWording, placeName } from './place.js';
@@ -252,7 +252,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   const carriers = carrierNames(trackingModule, details);
   const events = details.slice(0, MAX_EVENTS_TO_RETURN).map((event): CarrierEvent => {
     const code = cainiaoActionCode(event.actionCode);
-    const stage = cainiaoScanStage(code);
+    const stage = cainiaoActionStage(code);
     const placed = placedWording(scanWording(event), carriers);
     return {
       ...scanClock(event),
@@ -264,6 +264,13 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       ...(stage ? { stage } : {}),
     };
   });
+  // Oldest first: a notice keeps the stage of the scan before it, and pending before any.
+  let previous: Stage = 'pending';
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const event = events[index]!;
+    if (CAINIAO_NOTICE_ACTIONS.has(cainiaoActionCode(details[index]!.actionCode))) Object.assign(event, { stage: previous, stage_source: 'none' });
+    else if (event.stage) previous = event.stage as Stage;
+  }
   const eta = record(trackingModule.globalEtaInfo);
   const toMillis = (value_: unknown): number | null => (
     typeof value_ === 'number' && Number.isFinite(value_) ? value_ : null

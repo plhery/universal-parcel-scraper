@@ -169,25 +169,20 @@ const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
   ['departed from destination country/region sorting center', 'GTMS_SC_DEPART'],
 ]);
 
-/** Cainiao's records that move no parcel: they read as pending, and it keeps the stage of its newest scan. */
+/** Cainiao's records that move no parcel: each keeps the stage of the scan before it. */
 const NOTICES = [
-  { code: 'GTMS_ORDER_INFO_UPDATE', note: "The order's delivery details changed, which moves no parcel." },
-  { code: 'SC_TRANS_INBOUND_FAILURE', note: 'A transit sorting center\'s inbound that did not go through, worded only "Carrier update": it names no movement and no fault, so the parcel keeps its stage.' },
-  { code: 'LAST_MILE_ASN_NOTIFY', note: 'Cainiao\'s advance notice of the parcel to the courier that delivers it, worded "Last-mile delivery forecast" or only "Carrier update": a record with no date, written after a scan, so the parcel keeps its stage.' },
+  { code: 'GTMS_ORDER_INFO_UPDATE', note: "The order's delivery details changed, which moves no parcel: it keeps the stage of the scan before it." },
+  { code: 'SC_TRANS_INBOUND_FAILURE', note: 'A transit sorting center\'s inbound that did not go through, worded only "Carrier update": it names no movement and no fault, so it keeps the stage of the scan before it.' },
+  { code: 'LAST_MILE_ASN_NOTIFY', note: 'Cainiao\'s advance notice of the parcel to the courier that delivers it, worded "Last-mile delivery forecast" or only "Carrier update": sent after a scan and carrying no date, not a forecast of one, so it keeps the stage of the scan before it.' },
 ];
 
 export const CAINIAO_NOTICE_ACTIONS: ReadonlySet<string> = new Set(NOTICES.map((notice) => notice.code));
-
-/** A scan's own stage: its milestone, or pending for a notice. */
-export function cainiaoScanStage(code: string): Stage | undefined {
-  return cainiaoActionStage(code) ?? (CAINIAO_NOTICE_ACTIONS.has(code) ? 'pending' : undefined);
-}
 
 /** The review queue uses the same per-scan mapping as the adapter. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const action = code ? cainiaoActionCode(code) : UNCODED_SCANS.get(wording.replace(/^\[[^\]]*\]\s*/, ''));
-    return action ? cainiaoScanStage(action) : undefined;
+    return action ? cainiaoActionStage(action) : undefined;
   },
-  gaps: [],
+  gaps: NOTICES.map(({ code, note }) => ({ code, note })),
 };

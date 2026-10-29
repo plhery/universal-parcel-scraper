@@ -3,10 +3,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
-import { CAINIAO_ACTION_STATUS, CAINIAO_STATUS, cainiaoActionStage, cainiaoStageByStatus, statusMap } from './status.js';
+import { CAINIAO_ACTION_STATUS, CAINIAO_NOTICE_ACTIONS, CAINIAO_STATUS, cainiaoActionStage, cainiaoStageByStatus, statusMap } from './status.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { locatePlace } from '../../places/index.js';
 
@@ -351,7 +352,7 @@ describe('Cainiao projection', () => {
     expect(time(scan('2026-06-10 07:40:16', 1781048416947, 'CET'))).toBe('2026-06-10 07:40:16');
   });
 
-  it("reads Cainiao's notice to the last-mile courier as pending, the parcel at its newest scan", () => {
+  it("keeps the stage of the scan before Cainiao's notice to the last-mile courier, the parcel at its newest scan", () => {
     const scan = (actionCode: string, timeStr: string, desc = '', standerdDesc = 'Carrier update') => ({ actionCode, timeStr, timeZone: 'GMT+8', desc, standerdDesc });
     const departed = scan('SC_OUTBOUND_SUCCESS', '2026-06-10 07:39:39', '', 'Departed from sorting center');
     const forecast = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 07:40:16', 'Last-mile delivery forecast');
@@ -361,16 +362,21 @@ describe('Cainiao projection', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Last-mile delivery forecast',
       last_update: '2026-06-10T07:40:16+08:00' });
     expect(result.events?.map((event) => [event.provider_code, event.description, event.stage])).toEqual([
-      ['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast', 'pending'],
+      ['LAST_MILE_ASN_NOTIFY', 'Last-mile delivery forecast', 'in_transit'],
       ['SC_OUTBOUND_SUCCESS', 'Departed from sorting center', 'in_transit'],
     ]);
+    expect(result.events?.[0]).toMatchObject({ stage_source: 'none' });
+    expect(result.events?.[1]).not.toHaveProperty('stage_source');
     // Worded only by the placeholder, after export customs started, it leaves the parcel in customs.
     const placeholder = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 09:00:00');
     const customs = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
       latestTrace: placeholder, detailList: [placeholder, scan('CC_EX_START', '2026-06-10 08:00:00', '', 'Export customs clearance started'), departed],
     }] }, 'LP00000000000001');
     expect(customs).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Carrier update' });
-    expect(customs.events?.[0]).toMatchObject({ stage: 'pending' });
+    expect(customs.events?.[0]).toMatchObject({ stage: 'customs', stage_source: 'none' });
+    // Before any scan, a notice leaves the parcel pending.
+    const alone = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001', latestTrace: placeholder, detailList: [placeholder] }] }, 'LP00000000000001');
+    expect(alone.events?.[0]).toMatchObject({ stage: 'pending', stage_source: 'none' });
   });
 
   it('keeps a flight out dated at midnight as its day', () => {
@@ -584,9 +590,14 @@ describe('Cainiao projection', () => {
 
   it('files every recorded code under the stage statuses.json gives it', () => {
     const recorded = JSON.parse(readFileSync(path.join(folder, 'statuses.json'), 'utf8')) as {
-      entries: Array<{ code: string; wording?: string; stage: string }>;
+      entries: Array<{ code: string; wording?: string; stage?: string }>;
     };
     for (const entry of recorded.entries) {
+      if (!entry.stage) {
+        expect(CAINIAO_NOTICE_ACTIONS.has(entry.code), entry.code).toBe(true);
+        expect(statusMapAnswer({ carrier: 'aliexpress', providerCode: entry.code, description: entry.wording ?? '' }).kind, entry.code).toBe('intentional_gap');
+        continue;
+      }
       const token = CAINIAO_STATUS.get(entry.code);
       // Parcel-level tokens stage a reply without action codes; the map answers action codes.
       const stage = token ? cainiaoStageByStatus()[token] : statusMap.stage(entry.code, normalizeStatusWording(entry.wording ?? 'Synthetic scan'));
