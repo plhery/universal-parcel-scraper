@@ -8444,6 +8444,45 @@
       }
     ]
   },
+  "boyuan": {
+    "displayName": "Boyuan Supply Chain",
+    "color": "#e60012",
+    "aliases": [
+      "Boyuan",
+      "Boyuan Logistics",
+      "博远供应链",
+      "博远物流",
+      "广东博远"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.boyuangyl.com/",
+    "trackingSearchUrl": "https://www.boyuangyl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tms.boyuangyl.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^BY\\d{14}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "bringer-parcel": {
     "displayName": "Bringer Parcel Xpress",
     "color": "#150773",
@@ -11893,6 +11932,10 @@
       },
       {
         "pattern": "^YHKJ\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^BY\\d{14}CN$",
         "confidence": "low"
       }
     ]

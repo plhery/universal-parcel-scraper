@@ -1391,6 +1391,7 @@ export const REGISTRY: RegistryDefinition = {
     "botswana-post": "universal",
     "box-now": "box-now",
     "boxtal": "boxtal",
+    "boyuan": "universal",
     "bpost": "bpost",
     "bring-posten": "bring-posten",
     "bringer-parcel": "bringer-parcel",

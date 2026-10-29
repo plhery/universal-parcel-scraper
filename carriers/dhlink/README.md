@@ -20,7 +20,8 @@ page makes.
   digits and `WL` is one; `YLUS` and ten digits, `QH`, twelve digits and `FS`, and `YF`, ten
   digits and `CN`, on US lines GOFO delivers, `EYT`, ten digits and `HZ`, and KTD's `KTDWE`
   and ten digits, on lines SwiftX delivers, and `YHKJ` and ten digits, on a line to Britain,
-  are others. Their rules are low confidence, so
+  are others. Boyuan's `BY`, fourteen digits and `CN`, which ParcelsApp attributes to DHLink
+  on a US line, is asked too. Their rules are low confidence, so
   DHLink is asked before it is named. Providers name XZG for its numbers, so XZG is an
   alias and their hint asks DHLink.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:

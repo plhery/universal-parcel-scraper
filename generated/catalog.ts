@@ -8446,6 +8446,45 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "boyuan": {
+    "displayName": "Boyuan Supply Chain",
+    "color": "#e60012",
+    "aliases": [
+      "Boyuan",
+      "Boyuan Logistics",
+      "博远供应链",
+      "博远物流",
+      "广东博远"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.boyuangyl.com/",
+    "trackingSearchUrl": "https://www.boyuangyl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tms.boyuangyl.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^BY\\d{14}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "bringer-parcel": {
     "displayName": "Bringer Parcel Xpress",
     "color": "#150773",
@@ -11895,6 +11934,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^YHKJ\\d{10}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^BY\\d{14}CN$",
         "confidence": "low"
       }
     ]
@@ -34973,6 +35016,7 @@ export const CARRIER_IDS = [
   "botswana-post",
   "box-now",
   "boxtal",
+  "boyuan",
   "bringer-parcel",
   "bts-uz",
   "budbee",
@@ -35821,6 +35865,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "botswana-post": [],
   "box-now": ["box-now-1"],
   "boxtal": ["boxtal-1"],
+  "boyuan": ["boyuan-1"],
   "bringer-parcel": ["bringer-parcel-1"],
   "bts-uz": [],
   "budbee": [],
@@ -35907,7 +35952,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill","dhl-express-piece","dhl-express-piece-label","dhl-express-piece-label-after"],
   "dhl-freight": ["dhl-freight-2"],
-  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj"],
+  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by"],
   "direct-couriers": [],
   "direct-freight-express": [],
   "direx": [],

@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { carrierIdFromName } from '../catalog/hints.js';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
 
@@ -440,6 +441,29 @@ describe('First Flight (Middle East) and DD Express links', () => {
   it('reads a DD Express tracking id from its tracker query', () => {
     expect(parseTrackingInput('https://tracking.dd.express/?tracking_ids=DD100000017')).toMatchObject({
       trackingNumber: 'DD100000017', carrier: 'dd-express', source: 'link',
+    });
+  });
+});
+
+describe('Boyuan tracking numbers', () => {
+  it('suggests Boyuan and DHLink for BY, fourteen digits and CN, and only that layout', () => {
+    for (const number of ['BY10000000000017CN', 'by 10000000000017 cn']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['boyuan', 'dhlink'] });
+    }
+    for (const number of ['BY1000000000017CN', 'BY100000000000017CN', 'BY10000000000017US', 'BX10000000000017CN', 'BYHD100000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('boyuan');
+    }
+  });
+
+  it('asks DHLink about the number and names Boyuan from a provider', () => {
+    expect(recognitionAskedCarriers('BY10000000000017CN')).toEqual(['dhlink']);
+    expect(carrierIdFromName('Boyuan')).toBe('boyuan');
+    expect(carrierIdFromName('博远供应链')).toBe('boyuan');
+  });
+
+  it('reads Boyuan tracker links', () => {
+    expect(parseTrackingInput('https://tms.boyuangyl.com/trackIndex.htm?documentCode=BY10000000000017CN')).toMatchObject({
+      trackingNumber: 'BY10000000000017CN', carrier: 'boyuan', source: 'link',
     });
   });
 });

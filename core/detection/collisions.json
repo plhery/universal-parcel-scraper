@@ -6291,5 +6291,13 @@
       "post-one"
     ],
     "reason": "GLS Italy's low-confidence rule takes any letter and ten digits, so it overlaps Post One's R and ten digits; both stay suggestions."
+  },
+  {
+    "shape": "BY, fourteen digits and CN",
+    "carriers": [
+      "boyuan",
+      "dhlink"
+    ],
+    "reason": "Boyuan's tracking numbers carry its initials; ParcelsApp named DHLink beside Boyuan for one on a US line. Both rules are low-confidence: recognition asks DHLink, the one with a tracker the app asks, and a provider names Boyuan for the parcels DHLink does not know."
   }
 ]

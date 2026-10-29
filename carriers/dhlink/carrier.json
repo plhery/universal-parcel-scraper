@@ -123,6 +123,11 @@
       "id": "dhlink-yhkj",
       "pattern": "^YHKJ\\d{10}$",
       "confidence": "low"
+    },
+    {
+      "id": "dhlink-by",
+      "pattern": "^BY\\d{14}CN$",
+      "confidence": "low"
     }
   ]
 }
