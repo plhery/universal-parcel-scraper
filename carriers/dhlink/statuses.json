@@ -86,6 +86,11 @@
     {"wording": "No Access to Delivery Location", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "USPS's attempt, relayed after the post office's place and ZIP code; the adapter drops the ZIP code."},
     {"wording": "SHIPMENT RECEIVED IN DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The last-mile partner's depot, after the line handed the parcel over at its destination warehouse."},
     {"wording": "出口申报完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "China's export declaration is done, before the flight."},
-    {"wording": "Package arrived at destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The flight landed in the destination country."}
+    {"wording": "Package arrived at destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The flight landed in the destination country."},
+    {"wording": "您的物品已到达华东仓", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "Arrived at DHLink's East China warehouse, a day after its warehouse receipt and departure; any warehouse."},
+    {"wording": "您的物品已离开华东仓", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "Left that warehouse, before the hand-over to the airline; any warehouse."},
+    {"wording": "Your item arrived at US IL FRANKLIN PARK Chicago warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "DHLink's US warehouse after import clearance, before the hand-over to the last-mile carrier; any warehouse."},
+    {"wording": "Package picked up by last-mile carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "The last-mile carrier's pickup on a row without DHLink's TQ001 node."},
+    {"wording": "Parcel received by local Facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "The last-mile carrier's local facility, an hour before the delivery round."}
   ]
 }
