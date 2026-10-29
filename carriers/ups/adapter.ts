@@ -329,7 +329,6 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
   };
 }
 
-/** A provider string with its HTML entities decoded, then cleaned. */
 /**
  * A notice keeps the stage of the scan before it, which UPS lists after it
  * (newest first), so the parcel app stores it as no step forward. A notice
@@ -346,6 +345,7 @@ function keepNoticeStages(events: CarrierEvent[]): void {
   }
 }
 
+/** A provider string with its HTML entities decoded, then cleaned. */
 function text(value: unknown, maxLength?: number): string {
   return clean(typeof value === 'string' ? decodeEntities(value) : value, maxLength);
 }
