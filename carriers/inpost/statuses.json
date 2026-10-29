@@ -19,6 +19,7 @@
     { "code": "LMD.9001", "language": "en", "wording": "Reminder of a waiting parcel", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Awaiting collection." },
     { "code": "LMD.9002", "language": "en", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "" },
     { "code": "LMD.9006", "language": "en", "wording": "Acceptance refusal", "stage": "failed_attempt", "confirmedBy": "live", "note": "The recipient refused the parcel." },
+    { "code": "LMD.9015", "language": "pl", "wording": "Brak możliwości doręczenia", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "Delivery not possible: it came while the courier had the parcel, which went back to a logistics centre and out for delivery again." },
     { "code": "LMD.9014", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "" },
     { "code": "LMD.9012", "language": "en", "wording": "Stored Parcel - Temporary Parcel Locker", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "Its locker was full, so it waits in a nearby one for the same collection code." },
     { "code": "LMD.3009", "language": "en", "wording": "The storage period has expired", "stage": "in_transit", "confirmedBy": "live", "note": "Not collected from the temporary locker in time: InPost takes it on to the chosen locker." },

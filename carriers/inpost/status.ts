@@ -38,6 +38,8 @@ const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
   'LMD.9002': { status: 'exception', stage: 'failed_attempt' },
   // The recipient refused the parcel.
   'LMD.9006': { status: 'exception', stage: 'failed_attempt' },
+  // The courier could not deliver the parcel and takes it back.
+  'LMD.9015': { status: 'exception', stage: 'failed_attempt' },
   'LMD.9014': { status: 'exception', stage: 'returned' },
   // A parcel whose locker is full waits in a nearby one for the same code
   // (LMD.9012). Once that storage expires (LMD.3009), InPost takes it back to

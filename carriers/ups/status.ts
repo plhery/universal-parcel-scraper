@@ -111,7 +111,7 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['2Q', 'ready_for_pickup'], ['ZP', 'ready_for_pickup'],
   // Delivered, including collection from an access point and delivery by the
   // post office after a hand-off.
-  ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['KE', 'delivered'],
+  ['9E', 'delivered'], ['FS', 'delivered'], ['KB', 'delivered'], ['KD', 'delivered'], ['KE', 'delivered'],
   ['2W', 'delivered'], ['YC', 'delivered'],
 ]);
 

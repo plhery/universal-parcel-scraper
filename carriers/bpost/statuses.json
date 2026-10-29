@@ -195,6 +195,13 @@
       "firstSeen": "2026-10-22"
     },
     {
+      "wording": "Item delivered at safeplace",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29"
+    },
+    {
       "wording": "Awaiting presentation to Customs",
       "language": "en",
       "stage": "customs",

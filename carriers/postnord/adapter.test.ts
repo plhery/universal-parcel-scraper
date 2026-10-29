@@ -181,6 +181,7 @@ describe('PostNord direct tracking', () => {
       'Information to the driver added by the recipient.',
       'A text message notification has been delivered to the recipient.',
       'A text message notification has been sent to the recipient.',
+      'A letter notification has been sent to the recipient.',
       'E-mail notification has been sent to the recipient.',
       'Notification sent via APP.',
       'Pick-up at servicepoint, selected by the receiver.',

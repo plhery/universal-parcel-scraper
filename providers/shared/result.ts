@@ -346,6 +346,10 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^item sent[.!]?$|^item received in destination country[.!]?$/i.test(value)) return 'in_transit';
   // Its office of exchange taking in an item from abroad, as ParcelsApp relays it.
   if (/^item received at exchange office[.!]?$/i.test(value)) return 'in_transit';
+  // Poste Italiane's intake at a post office or Punto Poste and its delivery round in an aggregator's English,
+  // as its own map reads "presa in carico presso il Punto Poste" and "la spedizione è in consegna".
+  if (/^the shipment was taken care of at the post office[.!]?$/i.test(value)) return 'accepted';
+  if (/^the shipment is on delivery[.!]?$/i.test(value)) return 'out_for_delivery';
   // An Post's item waiting at the post office it names (code 52), and GLS Italy's delivery round, as their own maps read them.
   if (/^your delivery is in [^,]{1,60}, post office[.!]?$/i.test(value)) return 'ready_for_pickup';
   if (/^delivery scheduled during the day[.!]?$/i.test(value)) return 'out_for_delivery';

@@ -18,9 +18,10 @@ const CODES: Readonly<Record<string, Stage>> = {
   EMB: 'in_transit',
   EMC: 'in_transit',
   // UPU's events at the destination's inward office of exchange: the item arrived from abroad,
-  // then left it on its way to delivery.
+  // then left it on its way to delivery, and its arrival at the delivery office.
   EMD: 'in_transit',
   EMF: 'in_transit',
+  EMG: 'in_transit',
   // "Pošiljka bo predvidoma dostavljena danes": with the postman, on its way to the address.
   N: 'out_for_delivery',
   // On its way to the parcel locker the recipient chose.

@@ -55,6 +55,7 @@
     { "code": "9E", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"DELIVERED\"." },
     { "code": "FS", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"DELIVERED\"." },
     { "code": "KB", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"DELIVERED\"." },
+    { "code": "KD", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "actCode: \"DELIVERED\"." },
     { "code": "KE", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "actCode: \"DELIVERED\", seen on a Ground Saver parcel UPS delivered itself." },
     { "code": "2W", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"DELIVERED\" after the receiver collected the parcel from an access point." },
     { "code": "YC", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "actCode: \"Package delivered by local post office\", USPS's delivery after LX." },

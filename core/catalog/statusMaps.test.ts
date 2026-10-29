@@ -1701,6 +1701,8 @@ describe("universal providers' answers", () => {
       ['Objeto recebido pelos Correios do Brasil', 'in_transit'], ['Necessidade de informar CPF/CNPJ do destinatário', 'customs'],
       ['Received by carrier', 'in_transit'],
       ['Cambio disposizioni di consegna', 'in_transit'],
+      // Poste Italiane's intake and delivery round in an aggregator's English.
+      ['The shipment was taken care of at the post office', 'accepted'], ['The shipment is on delivery', 'out_for_delivery'],
       ['Shipment expected, but not yet arrived or processed at PostNL', 'registered'],
       ['Parcel linked to packaging tool', 'in_transit'], ['Your parcel has crossed the border', 'in_transit'],
     ] as const) expect(answer('unknown', null, wording), wording).toEqual(mapped(stage));
@@ -1726,7 +1728,8 @@ describe("universal providers' answers", () => {
       'Parcel was dropped off at the locker by the courier', 'International shipment release pending', 'Package is received at a station',
       "Package received at the carrier's local warehouse for return", 'Take off the label', 'Export declaration completed for the return',
       // A store receipt that is a drop-off or a collection, and a retailer's order sent to its store.
-      'Received at Example Store', 'Your order has been shipped from Example center to the store']) {
+      'Received at Example Store', 'Your order has been shipped from Example center to the store',
+      'The shipment was taken care of at the post office by the sender', 'The shipment is on delivery hold']) {
       expect(answer('unknown', null, wording), wording).toEqual(unknown);
     }
   });
