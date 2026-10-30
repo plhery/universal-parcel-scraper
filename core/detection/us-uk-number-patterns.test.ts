@@ -680,3 +680,31 @@ describe('Linear Logistics and DeliverDirect', () => {
   });
 });
 
+describe('SkyBox, Délivro, TForce Integrated Solutions, UBX UK and TTK Europe', () => {
+  it('reads their trackers\' links', () => {
+    for (const [url, trackingNumber, carrier] of [
+      ['https://www.skybox.net/TrackingInformation/IndexPublic?tracking=005100000001', '005100000001', 'skybox'],
+      ['https://delivro.dsapp.io/customer/ZZ00000001', 'ZZ00000001', 'delivro'],
+      ['https://tforce-solutions.com/quick-tracking/?tracking=100000001', '100000001', 'tforce-integrated-solutions'],
+      ['https://www.ubx.uk.net/tracking/?consign_note=100000001', '100000001', 'ubx-uk'],
+      ['https://ubx.couriernavigator-secure.com/tracking?consign_note=100000001', '100000001', 'ubx-uk'],
+      ['https://ttkeu.com/tracking/tracking-detail/?id=TE000000001GB', 'TE000000001GB', 'ttk-europe'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber, carrier, source: 'link' });
+    }
+  });
+
+  it('names them from their names, and keeps the other TForce companies apart', () => {
+    expect(carrierIdFromName('SkyBOX')).toBe('skybox');
+    expect(carrierIdFromName('Delivero')).toBe('delivro');
+    expect(carrierIdFromName('TForce Solutions')).toBe('tforce-integrated-solutions');
+    expect(carrierIdFromName('TForce Logistics')).toBe('tforce-logistics');
+    expect(carrierIdFromName('United Business Xpress')).toBe('ubx-uk');
+    expect(carrierIdFromName('天天欧洲物流')).toBe('ttk-europe');
+  });
+
+  it('leaves their bare numbers to other carriers\' rules', () => {
+    expect(detectCarrierMatch('005100000001').candidates ?? []).not.toContain('skybox');
+    expect(detectCarrierMatch('100000001').candidates ?? []).not.toContain('tforce-integrated-solutions');
+  });
+});

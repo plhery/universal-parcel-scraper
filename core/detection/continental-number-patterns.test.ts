@@ -1111,3 +1111,11 @@ describe('TransNatur, Rhenus Italia, Rhenus Germany, Emons and Noerpel', () => {
     expect(detectCarrierMatch('I100000017').candidates ?? []).not.toContain('rhenus-it');
   });
 });
+
+describe('Inntralog and DG Transporte', () => {
+  it('names them apart from Rhenus Germany', () => {
+    expect(carrierIdFromName('Inntralog GmbH')).toBe('inntralog');
+    expect(carrierIdFromName('Rhenus Home Delivery GmbH')).toBe('rhenus-de');
+    expect(carrierIdFromName('DG Transporte GmbH')).toBe('dg-transporte');
+  });
+});

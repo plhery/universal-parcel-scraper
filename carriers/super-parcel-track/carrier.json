@@ -3,7 +3,9 @@
   "displayName": "Super Parcel Track",
   "aliases": [
     "Super Parcel",
-    "SP Track"
+    "SP Track",
+    "Ant Parcel",
+    "Ant Parcel Track"
   ],
   "region": {
     "countries": [
@@ -27,8 +29,37 @@
     "shows": [],
     "scraped": [],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [],
+    "url": "https://track-sp.com/tracking/detail?tracking_num={trackingNumber}"
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "track-sp.com",
+        "www.track-sp.com"
+      ],
+      "pathPattern": "^/tracking/detail/?$",
+      "params": [
+        "tracking_num"
+      ]
+    },
+    {
+      "domains": [
+        "ant-parcel.com",
+        "www.ant-parcel.com"
+      ],
+      "pathPattern": "^/tracking/detail/?$",
+      "params": [
+        "tracking_num"
+      ]
+    },
+    {
+      "domains": [
+        "ant-parcel.com",
+        "www.ant-parcel.com"
+      ],
+      "path": "^/tracking/detail/([^/?#]+)/?$"
+    }
+  ],
   "detection": []
 }

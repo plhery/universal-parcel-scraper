@@ -1,0 +1,50 @@
+{
+  "id": "skybox",
+  "displayName": "SkyBox",
+  "aliases": [
+    "SkyBOX",
+    "SkyBox.net",
+    "SkyBOX de Venezuela"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CL",
+      "BR",
+      "VE"
+    ]
+  },
+  "brand": {
+    "color": "#3c59a8"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.skybox.net/TrackingInformation/IndexPublic?tracking={trackingNumber}",
+    "searchUrl": "https://www.skybox.net/TrackingInformation/IndexPublic",
+    "canaryUrl": "https://www.skybox.net/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.skybox.net",
+        "skybox.net"
+      ],
+      "pathPattern": "^/TrackingInformation/IndexPublic/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

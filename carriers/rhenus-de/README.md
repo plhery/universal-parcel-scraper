@@ -2,7 +2,8 @@
 
 Rhenus Germany parcels use enabled universal providers. There is no dedicated adapter.
 
-Rhenus Home Delivery is the Rhenus group's two-person and bulky-item home delivery company in Germany.
+Rhenus Home Delivery is the Rhenus group's two-person and bulky-item home delivery company in Germany. Inntralog, its
+two-man delivery company for furniture and large appliances, has its own tracker and entry.
 
 ## Numbers
 

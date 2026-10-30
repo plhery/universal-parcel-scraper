@@ -4230,5 +4230,35 @@
     "pattern": "^8\\d{8}$",
     "kind": "collision",
     "reason": "Hart2Hart Express job numbers are nine digits starting with 8, a shape TNT, XPO, R+L Carriers and Cargus numbers share, so the shape cannot name Hart2Hart Express."
+  },
+  {
+    "carrier": "holisol",
+    "pattern": "^HL\\d{11}$",
+    "kind": "by_design",
+    "reason": "Holisol's one public airway bill comes from an archived tracker address whose capture holds no result, too little to claim the layout."
+  },
+  {
+    "carrier": "skybox",
+    "pattern": "^0051\\d{8}$",
+    "kind": "by_design",
+    "reason": "SkyBox numbers are twelve digits, a run many carriers print, and one public example is too little to claim its prefix."
+  },
+  {
+    "carrier": "tforce-integrated-solutions",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "TForce Integrated Solutions numbers are nine digits, a run other carriers print, so no rule claims them."
+  },
+  {
+    "carrier": "vt-freight-express",
+    "pattern": "^[A-Z]{4}\\d{7}$",
+    "kind": "by_design",
+    "reason": "VT Freight Express consignment numbers open with a prefix set per sender, which names the sender rather than the carrier."
+  },
+  {
+    "carrier": "vt-freight-express",
+    "pattern": "^[A-Z]{3}\\d{11}$",
+    "kind": "by_design",
+    "reason": "VT Freight Express consignment numbers open with a prefix set per sender, which names the sender rather than the carrier."
   }
 ]

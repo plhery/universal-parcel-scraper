@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers, recognitionCandidates } from '../catalog/recognition.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
-import { checksumRejections, detectCarrierMatch } from './index.js';
+import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './index.js';
+import { carrierIdFromName } from '../catalog/hints.js';
 
 describe('S10-shaped numbers', () => {
   it.each(['RR123456785TY', 'RR123456785MI', 'RR123456785XX', 'RR123456785YW', 'RR123456785CS', 'RR123456785EN'])(
@@ -410,5 +411,27 @@ describe('Singapore Post and Canada Post numbers beyond the S10 form', () => {
   it('asks Canada Post first for sixteen digits passing the GS1 check in Canada, and among the first without a hint', () => {
     expect(recognitionAskedCarriers('7000000000000016', { countryHint: 'CA' })[0]).toBe('canada-post');
     expect(recognitionAskedCarriers('7000000000000016')).toContain('canada-post');
+  });
+});
+
+describe('Åland, Aruba, Gibraltar, Samoa, Burundi and Paraguay posts', () => {
+  it('leaves their S10 numbers to postal detection', () => {
+    for (const code of ['AX', 'AW', 'GI', 'WS', 'BI', 'PY']) {
+      expect(detectCarrierMatch(`RR000000005${code}`), code).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    }
+  });
+
+  it('reads the Åland and Aruba trackers\' links', () => {
+    expect(parseTrackingInput('https://www.alandpost.ax/en/track?shipmentid=RR000000005AX'))
+      .toMatchObject({ trackingNumber: 'RR000000005AX', carrier: 'aland-post', source: 'link' });
+    expect(parseTrackingInput('https://cds.postaruba.com/ipswt/IPSWeb_item_events.aspx?itemid=RR000000005AW'))
+      .toMatchObject({ trackingNumber: 'RR000000005AW', carrier: 'aruba-post', source: 'link' });
+  });
+
+  it('names them from their names', () => {
+    for (const [name, carrier] of [['Posten Åland', 'aland-post'], ['Aruba Post', 'aruba-post'], ['Gibraltar Post', 'gibraltar-post'],
+      ['Samoa Post Ltd', 'samoa-post'], ['Poste du Burundi', 'burundi-post'], ['DINACOPA', 'correo-paraguayo']] as const) {
+      expect(carrierIdFromName(name), name).toBe(carrier);
+    }
   });
 });

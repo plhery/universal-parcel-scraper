@@ -720,6 +720,14 @@ describe('Shipter, Tonda Global, Liuchen, EAC and LBTX', () => {
 });
 
 describe('Super Parcel Track, Ural Express, Onex, GCX, Tusou and Wise Express', () => {
+  it('reads Super Parcel Track\'s and Ant Parcel\'s tracker links, and names Ant Parcel as Super Parcel Track', () => {
+    for (const url of ['https://track-sp.com/tracking/detail?tracking_num=AP0000000001', 'https://ant-parcel.com/tracking/detail?tracking_num=AP0000000001',
+      'https://ant-parcel.com/tracking/detail/AP0000000001']) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'AP0000000001', carrier: 'super-parcel-track', source: 'link' });
+    }
+    expect(carrierIdFromName('Ant Parcel')).toBe('super-parcel-track');
+  });
+
   it('reads their names and Tusou\'s tracker links', () => {
     expect(parseTrackingInput('https://tusou.kingtrans.net/WebTrack?action=list&language=en&istrack=false&bills=TS1000000017'))
       .toMatchObject({ trackingNumber: 'TS1000000017', carrier: 'tusou', source: 'link' });
@@ -748,5 +756,26 @@ describe('Morning Global waybills', () => {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('morning-global');
       expect(detectCarrierMatch(number).carrier, number).not.toBe('morning-global');
     }
+  });
+});
+
+describe('Holisol, and four Australian couriers', () => {
+  it('reads their trackers\' links', () => {
+    for (const [url, trackingNumber, carrier] of [
+      ['https://www.holisoldelivery.com/api/tracking/TrackAwb?awb=HL00000000001', 'HL00000000001', 'holisol'],
+      ['https://online.amaldist.com.au/track/?item=1000001', '1000001', 'amalgamated-distribution'],
+      ['https://web.victorianfreight.com.au/webconsignment/FTSSearch-v2.aspx?connum=1000001', '1000001', 'victorian-freight-specialists'],
+      ['https://portal.vtfe.com.au/Track/VTFE/ZZZZ0000001', 'ZZZZ0000001', 'vt-freight-express'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber, carrier, source: 'link' });
+    }
+  });
+
+  it('names them from their names', () => {
+    expect(carrierIdFromName('Holisol Logistics')).toBe('holisol');
+    expect(carrierIdFromName('Bonds Transport Group')).toBe('bonds-couriers');
+    expect(carrierIdFromName('Amaldist')).toBe('amalgamated-distribution');
+    expect(carrierIdFromName('Victorian Freight Specialists')).toBe('victorian-freight-specialists');
+    expect(carrierIdFromName('VicTas Freight Express')).toBe('vt-freight-express');
   });
 });

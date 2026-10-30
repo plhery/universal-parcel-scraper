@@ -3,7 +3,8 @@
 Super Parcel Track parcels use enabled universal providers. There is no dedicated adapter.
 
 Super Parcel Track is a Chinese parcel line shipping web shop orders from China to Europe, duties unpaid.
-Its tracker is track-sp.com.
+Its tracker is track-sp.com; Ant Parcel, at ant-parcel.com, is the same line under another name
+and reads the same tracker.
 
 ## Numbers
 
@@ -16,7 +17,8 @@ answers an unknown number with not found. No public number is known to see a fou
 
 ## Links
 
-Its tracker has no address for a single number, so no link names it.
+The tracker opens numbers from its `tracking_num` parameter. Ant Parcel's page takes the number from
+the same parameter or from its path.
 
 ## Testing
 
