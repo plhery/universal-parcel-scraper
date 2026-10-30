@@ -505,6 +505,24 @@
       "note": ""
     },
     {
+      "code": "PUDO_DELIVERY",
+      "wording": "Delivered to PUDO",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-23",
+      "note": "The pickup point signed for the parcel, not the recipient: it waits there."
+    },
+    {
+      "code": "PUDO_DELIVERY_FAILURE",
+      "wording": "Delivered to PUDO Failure",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-23",
+      "note": "The courier could not leave the parcel at the pickup point (closed); Ecoscooting words the same scan as a failed delivery to the parcelshop."
+    },
+    {
       "code": "GSTA_INBOUND",
       "wording": "Arrived at pick-up point. Package available for collection.",
       "language": "en",

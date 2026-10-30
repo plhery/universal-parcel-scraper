@@ -35,6 +35,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['LM_SIGN_SUCCESS', DELIVERED],
   ['PUDO_SIGN_SUCCESS', DELIVERED],
   ['PUDO_DELIVERY', AT_PICKUP_POINT],
+  // The courier could not leave the parcel at the parcelshop (closed): a failed attempt, not a parcel waiting there.
+  ['PUDO_DELIVERY_FAILURE', { status: 'exception', stage: 'failed_attempt' }],
   ['PUDO_INBOUND', AT_PICKUP_POINT],
   ['PUDO_OVERDUE', RETURNED],
   ['LM_UNREACHABLE_RETURN', RETURNED],

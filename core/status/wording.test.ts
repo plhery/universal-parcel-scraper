@@ -107,6 +107,8 @@ describe('classifyWording', () => {
       // DHL's failed round as a universal provider relays it in English.
       'Delivery not possible. Pickup information will follow by mail', 'Delivery not possible. Forwarding in postal retail outlet',
       'Delivery was not possible', 'Delivery impossible',
+      // Cainiao's last mile when the pickup point would not take the parcel in (closed).
+      'Delivered to PUDO Failure', 'Your shipment has been failed to be delivered to the parcelshop [parcelshop closed]',
     ]) expect(classifyWording(wording)).toEqual({ stage: 'failed_attempt', source: 'wording:language' });
     // A scheduled attempt, a sender pickup attempt or a hypothetical absence is not a missed round.
     for (const wording of [
@@ -256,6 +258,8 @@ describe('classifyWording', () => {
       'Le message de mise à disposition en point relais a été reçu par le destinataire.',
       '5 jours restants pour retirer le colis en Locker',
       'Delivered to an access point location and awaiting customer pickup.',
+      // A pick-up/drop-off point (PUDO) signing for the parcel, in Cainiao's last mile.
+      'Delivered to PUDO',
     ]) expect(classifyWording(wording)).toEqual({ stage: 'ready_for_pickup', source: 'wording:language' });
     // An order ready for the courier to collect from its sender is a registration.
     expect(classifyWording('Order information has been received and ready for pickup')).toEqual({ stage: 'registered', source: 'wording:language' });

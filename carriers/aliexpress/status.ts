@@ -111,12 +111,16 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GTMS_WAIT_SELF_PICK', 'out_for_delivery'],
   // Station signed, not the recipient — must never read as delivered.
   ['GTMS_STA_SIGNED', 'out_for_delivery'],
+  // "Delivered to PUDO": the pickup point took the parcel in, so it waits there, not delivered.
+  ['PUDO_DELIVERY', 'out_for_delivery'],
   ['GTMS_SIGNED', 'delivered'],
   ['LM_SIGN_SUCCESS', 'delivered'],
   // The recipient collected the parcel from the pickup point.
   ['GSTA_SIGN', 'delivered'],
   // The courier could not deliver and tries again: a failed attempt, below.
   ['GTMS_DEL_FAILURE', 'exception'],
+  // "Delivered to PUDO Failure": the courier could not leave it at the pickup point (closed): a failed attempt, below.
+  ['PUDO_DELIVERY_FAILURE', 'exception'],
   // The delivery closed as failed after its attempts.
   ['GTMS_SIGN_FAILURE', 'exception'],
   ['GTMS_STA_SIGN_FAILURE', 'exception'],
@@ -126,7 +130,7 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
 ]);
 
 /** Out-for-delivery actions that mean "waiting at a pickup point", not "on the van". */
-export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INBOUND', 'GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED']);
+export const CAINIAO_PICKUP_ACTIONS = new Set(['GSTA_INBOUND', 'GSTA_INFORM_BUYER', 'GTMS_WAIT_SELF_PICK', 'GTMS_STA_SIGNED', 'PUDO_DELIVERY']);
 
 /** Normalize an action code: Cainiao has been seen spelling them with spaces and in lower case. */
 export function cainiaoActionCode(value: unknown): string {
@@ -151,7 +155,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
-  if (code === 'GTMS_DEL_FAILURE') return 'failed_attempt';
+  if (code === 'GTMS_DEL_FAILURE' || code === 'PUDO_DELIVERY_FAILURE') return 'failed_attempt';
   if (code === 'RT_INBOUND') return 'returned';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;
