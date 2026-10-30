@@ -49,10 +49,10 @@
     },
     {
       "wording": "Carrier received the shipment",
-      "stage": "in_transit",
+      "stage": "registered",
       "language": "en",
       "confirmedBy": "live",
-      "note": "A handover scan of trace type TRACE_TYPE_TAIL. The page's In Transit status starts at the handover to a carrier, and the parcel's status was In Transit with it."
+      "note": "Written two hours to the second after the order data on every parcel, days before the first facility scan: no one has the parcel yet, though the page's status turns In Transit with it."
     },
     {
       "wording": "Arrival processing center",

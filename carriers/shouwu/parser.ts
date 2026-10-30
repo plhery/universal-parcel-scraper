@@ -163,7 +163,10 @@ export function parseShouwu(payload: unknown, raw: string): CarrierResult {
   const scanned = events.find((event) => event.stage && event.stage !== 'registered') ?? events.find((event) => event.stage);
   // The tracker's status decides, as on the page; a scan refines it within what the status covers, and
   // a status the map does not know leaves the newest staged scan.
-  const refined = summary && scanned && REFINES[summary]?.has(scanned.stage!) ? scanned : undefined;
+  // In Transit on the order data alone rests on the row Shouwu writes two hours after it, before
+  // anyone has the parcel, so the order data's stage stands.
+  const ordered = summary === 'in_transit' && events.every((event) => event.stage === 'registered');
+  const refined = summary && scanned && (ordered || REFINES[summary]?.has(scanned.stage!)) ? scanned : undefined;
   const stage = (refined?.stage ?? summary ?? scanned?.stage) as Stage | undefined;
   const source = refined?.stage_source ?? (summary ? 'carrier_map' : scanned?.stage_source);
   const destination = country ? { destination_country: country } : {};

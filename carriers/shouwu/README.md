@@ -32,8 +32,10 @@ numbers `shouwu-1` offers.
   at the warehouse and In Transit as anything from the handover to delivery in the destination
   country, so the newest staged scan refines a status within what it covers. A status without
   scans is a summary. Scans have no code; the status map stages the wording seen on them, such as
-  the warehouse's intake and processing as accepted and a handover to a carrier as in transit,
-  and the shared rules stage the rest.
+  the warehouse's intake and processing as accepted, and the shared rules stage the rest.
+- Shouwu writes "Carrier received the shipment" two hours to the second after the order data, and
+  the page's status turns In Transit with it, days before the first facility scan. The row is
+  part of the registration, and In Transit on registration rows alone stays registered.
 - `traceTime` is epoch seconds, which the page shows in the visitor's zone without naming one.
   Shouwu's back office reads every scan's wall clock on Beijing time, a scan abroad's too, so a
   flight out of Shanghai reads hours shorter than it is. Each scan keeps the wall clock its epoch
