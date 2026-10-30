@@ -77,6 +77,22 @@ test('abstention closes immediately without a click, refresh, tracking request o
   assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
 });
 
+test('foreground abstention logs only its rejected count without a tracking request', async () => {
+  for (const count of [0, 59, 901, 3888, -1, 1.5, 60, 900, 3889, '901', undefined]) {
+    const active = fixture({ plan: null });
+    active.options.locate = async (_input, _signal, _budget, report) => { report('foreground', count); return null; };
+    await runJdDomestic(active.options);
+    const event = active.state.captures[0];
+    assert.equal(event.analysis, 'foreground');
+    if ([0, 59, 901, 3888].includes(count)) assert.equal(event.foregroundPixels, count);
+    else assert.equal('foregroundPixels' in event, false);
+    assert.equal(active.state.clicks, 0); assert.equal(active.state.requests, 0);
+    assert.equal(active.state.refreshes, 0); assert.equal(active.state.closed, 1);
+    assert.equal(JSON.stringify(event).includes('PRIVATE'), false);
+    assert.equal(JSON.stringify(event).includes('image'), false);
+  }
+});
+
 test('accepted original-session verification retains only the whole-bound tracking fields', async () => {
   const active = fixture(), result = await runJdDomestic(active.options);
   assert.equal(active.state.requests, 1); assert.equal(active.state.clicks, 1); assert.equal(active.state.closed, 1);

@@ -46,6 +46,26 @@ test('a decline names only its known reason', async t => {
   }
 });
 
+test('only a foreground decline reports its bounded rejected count', async t => {
+  for (const count of [0, 59, 901, 3888]) {
+    worker(t, JSON.stringify({ failure: 'foreground', foregroundPixels: count, image: 'PRIVATE', token: 'PRIVATE' }));
+    const diagnostics = [];
+    assert.equal(await locateJdIcon(challenge, new AbortController().signal, 1000,
+      (label, pixels) => diagnostics.push({ label, pixels })), null);
+    assert.deepEqual(diagnostics, [{ label: 'foreground', pixels: count }]);
+    t.mock.restoreAll(); syncBuiltinESMExports();
+  }
+  for (const reply of [
+    ...[-1, 1.5, 60, 900, 3889, '901', null].map(count => ({ failure: 'foreground', foregroundPixels: count })),
+    { failure: 'ambiguous', foregroundPixels: 901 }, { x: 40, y: 50, foregroundPixels: 901 },
+  ]) {
+    worker(t, JSON.stringify(reply)); const diagnostics = [];
+    await locateJdIcon(challenge, new AbortController().signal, 1000, (_label, pixels) => diagnostics.push(pixels));
+    assert.deepEqual(diagnostics, [undefined]);
+    t.mock.restoreAll(); syncBuiltinESMExports();
+  }
+});
+
 test('the official jpg data-URL spelling reaches the image decoder without relaxing byte validation', async t => {
   const { inputs } = worker(t, '{"x":40,"y":50}');
   const jpg = { scene: challenge.scene.replace('/png;', '/jpg;'), tip: challenge.tip.replace('/png;', '/jpg;') };

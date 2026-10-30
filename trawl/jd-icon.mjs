@@ -10,7 +10,7 @@ const image = value => typeof value === 'string' && value.length <= 200_000
 
 /** A bounded offline plan, not proof that the official widget accepted it. */
 export function locateJdIcon(challenge, signal, timeoutMs, onAnalysis = () => {}) {
-  const report = value => { try { onAnalysis(value); } catch { /* Diagnostics cannot change the plan. */ } };
+  const report = (value, count) => { try { onAnalysis(value, count); } catch { /* Diagnostics cannot change the plan. */ } };
   if (signal.aborted || !Number.isFinite(timeoutMs) || timeoutMs < 100 || active >= 2
     || !image(challenge?.scene) || !image(challenge?.tip)) {
     report(signal.aborted ? 'cancelled' : active >= 2 ? 'capacity' : 'input_or_budget');
@@ -35,7 +35,11 @@ export function locateJdIcon(challenge, signal, timeoutMs, onAnalysis = () => {}
         const valid = Number.isFinite(plan?.x) && Number.isFinite(plan?.y)
           && plan.x > 0 && plan.x < 275 && plan.y > 0 && plan.y < 170;
         const declined = DECLINES.has(plan?.failure) ? plan.failure : 'unreadable';
-        report(valid ? 'planned' : failure ?? (code === 0 ? declined : 'worker_error'));
+        const count = plan?.foregroundPixels;
+        const foregroundPixels = !invalid && code === 0 && !valid && declined === 'foreground'
+          && Number.isSafeInteger(count) && count >= 0 && count <= 108 * 36 && (count < 60 || count > 900)
+          ? count : undefined;
+        report(valid ? 'planned' : failure ?? (code === 0 ? declined : 'worker_error'), foregroundPixels);
         resolve(valid ? { x: plan.x, y: plan.y } : null);
       } catch { report('unreadable'); resolve(null); }
     });

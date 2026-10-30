@@ -104,10 +104,10 @@ class IconTests(unittest.TestCase):
         resized["scene"] = png(np.zeros((171, 275, 3), np.uint8))
         blank = puzzle()
         blank["tip"] = png(np.full((36, 108, 3), 100, np.uint8))
-        for data, failure in [
-            (puzzle(duplicate=True), "ambiguous"),
-            (resized, "geometry"),
-            (blank, "foreground"),
+        for data, expected in [
+            (puzzle(duplicate=True), {"failure": "ambiguous"}),
+            (resized, {"failure": "geometry"}),
+            (blank, {"failure": "foreground", "foregroundPixels": 0}),
         ]:
             result = subprocess.run(
                 [sys.executable, worker],
@@ -117,7 +117,16 @@ class IconTests(unittest.TestCase):
                 timeout=3,
                 check=True,
             )
-            self.assertEqual(json.loads(result.stdout), {"failure": failure})
+            self.assertEqual(json.loads(result.stdout), expected)
+
+    def test_dense_prompt_records_only_rejected_foreground_count(self):
+        data = puzzle()
+        tip = np.full((36, 108, 3), (175, 105, 45), np.uint8)
+        tip[:, 36:72] = (20, 190, 245)
+        data["tip"] = png(tip)
+        self.assertEqual(
+            icon.reply(data), {"failure": "foreground", "foregroundPixels": 1296}
+        )
 
 
 if __name__ == "__main__":

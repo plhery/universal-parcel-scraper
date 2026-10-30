@@ -17,6 +17,8 @@ bounded attempt. An uncertain match stops without clicking, refreshing the puzzl
 a history request. Accepted verification must still belong to the original guest session;
 only then may the page query `trackNoPin`. The helper also permits the normal proxy request
 when the service itself selects the branch without verification.
+When a prompt mask falls outside the accepted foreground size, verification diagnostics
+keep only its pixel count; puzzle images and mask data are not logged.
 
 Domestic replies require exactly one matching `rawWaybillCode` and an explicit `exists`.
 Only a bound `exists:false` is not found. Empty or refused replies stay inconclusive, and

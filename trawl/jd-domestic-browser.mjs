@@ -81,6 +81,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   const entries = [], pending = new Set(), allowed = new WeakSet();
   let context, page, timer, navigationStatus = 0, needVerify, session = '', sessionCount = 0;
   let accepting = true, requests = 0, blocked = 0, clicked = false, analysis = 'not_started', outcome = 'unprepared', lastResponse = 0;
+  let foregroundPixels;
   const marker = () => ({ url: PAGE, status: navigationStatus, body: null, headers: {}, truncated: false,
     base64Encoded: false, error: `jd-domestic-${outcome}` });
   const result = () => ({ tier, status: 'success', statusCode: navigationStatus, effectiveUrl: url,
@@ -185,9 +186,13 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         await pause(80, combined);
       }
       if (!puzzle || sessionCount !== 1) { outcome = 'unreadable'; return result(); }
-      const point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), value => {
+      const point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), (value, count) => {
         if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable',
-          'geometry', 'image', 'foreground', 'matching', 'ambiguous'].includes(value)) analysis = value;
+          'geometry', 'image', 'foreground', 'matching', 'ambiguous'].includes(value)) {
+          analysis = value;
+          foregroundPixels = value === 'foreground' && Number.isSafeInteger(count)
+            && count >= 0 && count <= 108 * 36 && (count < 60 || count > 900) ? count : undefined;
+        }
       });
       if (!point || combined.aborted) { outcome = combined.aborted ? 'budget' : 'unreadable'; return result(); }
       const geometry = await during(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));
@@ -212,7 +217,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       await within(() => context.close().then(() => { closed = true; }), 1000);
       if (!closed) handle.requestBrowserReplacement?.('JD domestic context cleanup failed');
     }
-    try { onVerification({ outcome, analysis, clicked, trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
+    try { onVerification({ outcome, analysis, ...(foregroundPixels === undefined ? {} : { foregroundPixels }),
+      clicked, trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
     catch { /* Telemetry cannot change the result. */ }
   }
 }

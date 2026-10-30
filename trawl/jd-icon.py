@@ -165,7 +165,11 @@ def reply(payload):
         return {"failure": "geometry" if str(error) == "geometry" else "image"}
     if result.get("acceptedPlan"):
         return {key: result[key] for key in ("x", "y")}
-    return {"failure": result.get("failure", "ambiguous")}
+    failure = result.get("failure", "ambiguous")
+    return {
+        "failure": failure,
+        **({"foregroundPixels": result["foregroundPixels"]} if failure == "foreground" else {}),
+    }
 
 
 if __name__ == "__main__":
