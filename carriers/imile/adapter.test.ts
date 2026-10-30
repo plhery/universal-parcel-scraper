@@ -398,13 +398,16 @@ describe('iMile HTTP adapter', () => {
     for (const number of ['6010123000001', '3010124000001']) expect(detectCarrierMatch(number).preferred ?? [], number).not.toContain('imile');
   });
 
-  it('suggests iMile for 49 and twelve digits, which its tracker answered for Italian parcels, beside the other fourteen-digit carriers', () => {
+  it('lists iMile first for 49 and twelve digits, which its tracker answered for Italian parcels, beside the other fourteen-digit carriers', () => {
     for (const number of ['49000000000017', '49 0000 0000 0017']) {
-      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low',
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['imile'],
         candidates: expect.arrayContaining(['imile', 'brt', 'dpd']) });
-      expect(detectCarrierMatch(number).preferred ?? [], number).not.toContain('imile');
+      expect(detectCarrierMatch(number).candidates?.[0], number).toBe('imile');
     }
-    expect(recognitionAskedCarriers('49000000000017', { countryHint: 'IT' }).slice(0, 2)).toEqual(['brt', 'imile']);
+    // Every parcel the app tracked in the layout was iMile's, so it is asked before the hinted country's carriers.
+    for (const [countryHint, next] of [[undefined, 'dpd-be'], ['IT', 'brt'], ['DE', 'dpd-de']] as const) {
+      expect(recognitionAskedCarriers('49000000000017', { countryHint }).slice(0, 2), countryHint ?? 'no hint').toEqual(['imile', next]);
+    }
     for (const number of ['48000000000017', '4900000000017', '490000000000017']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('imile');
     }

@@ -99,15 +99,17 @@ after its date. `imile-2` suggests iMile for that layout, with years from 24, at
 Other carriers' thirteen digits are a bare counter that can fit it, Korea Post's domestic
 parcels among them, so the tracker has to confirm the number. Every parcel seen in the layout
 was iMile's, so detection lists iMile first, ahead of the country hint, and keeps the others as
-candidates. The waybills that start with 3
-show no such date, and no rule claims them. Its Italian parcels also carry `IM` and fourteen
+candidates. The waybills that start with 3 show no such date, and no rule claims them. Its
+Italian parcels also carry `IM` and fourteen
 digits, which iMile calls their waybill number. Every sample starts `IM0601`, so `imile-3`
 names iMile for that prefix. No other carrier's rule takes the layout, and `imile-1` suggests
 iMile with low confidence for other prefixes. Other Italian parcels carry 49 and twelve digits:
-iMile's own tracker answered two of them with their history, though no public page shows a
-whole number in that layout. Fourteen digits are shared with DPD, BRT and others, so `imile-4`
-only suggests iMile, and with an Italian hint recognition asks it after BRT. The samples and
-their sources are in [`numbers.json`](numbers.json).
+iMile's own tracker answered two of them with their history, though no public page shows a whole
+number in that layout. Fourteen digits are shared with DPD, BRT and others, and Turkish
+carriers' numbers can start with 49 too, so `imile-4` only suggests iMile. Every parcel the app
+tracked in that layout was iMile's, so detection lists iMile first, ahead of the country hint,
+and keeps the others as candidates. The samples and their sources are in
+[`numbers.json`](numbers.json).
 
 ## Links
 

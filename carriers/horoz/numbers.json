@@ -51,6 +51,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
+          "imile",
           "dpd",
           "ciblex",
           "seur",
@@ -61,8 +62,7 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk",
-          "imile"
+          "dpd-uk"
         ]
       },
       "note": "Archived lookup on Horoz's own tracker; the opened capture shows the delivery note with its movements up to delivery."
