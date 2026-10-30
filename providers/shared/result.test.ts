@@ -87,6 +87,17 @@ describe('shared provider result', () => {
     expect(order([history[3]!, history[1]!], true)).toEqual(['Shipment information sent', 'Picked up']);
   });
 
+  it('keeps scans of one instant in the order the provider listed them, oldest or newest first', () => {
+    const scan = (time: string, description: string) => ({ time, description, stage: 'in_transit', stage_source: 'carrier_map' });
+    const oldestFirst = [
+      scan('2026-01-05T09:00:00Z', 'Accepted at sorting center'), scan('2026-01-05T20:41:00Z', 'Arrived at sorting center'),
+      scan('2026-01-05T20:41:00Z', 'Departed sorting center'), scan('2026-01-06T09:00:00Z', 'Arrived at delivery depot'),
+    ];
+    const newest = ['Arrived at delivery depot', 'Departed sorting center', 'Arrived at sorting center', 'Accepted at sorting center'];
+    expect(result(oldestFirst, 'ParcelsApp').events?.map(({ description }) => description)).toEqual(newest);
+    expect(result([...oldestFirst].reverse(), 'ParcelsApp').events?.map(({ description }) => description)).toEqual(newest);
+  });
+
   it("reads a copy of SunYou's departure without the last-mile number, as SunYou's own result does", () => {
     expect(event('2026-01-07T12:45:00+08:00', 'Departed Sunyou Facility, Carrier Tracking Number:  ZZ000000005GB'))
       .toMatchObject({ description: 'Departed Sunyou Facility' });

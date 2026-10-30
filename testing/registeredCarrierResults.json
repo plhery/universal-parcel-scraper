@@ -1239,25 +1239,29 @@
           "local_time": "2026-09-02T01:37:00",
           "description": "Departed from export office",
           "location": "Example exchange office",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 1
         },
         {
           "local_time": "2026-09-02T01:37:00",
           "description": "Released from export customs and security",
           "location": "Example customs office",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 0
         },
         {
           "local_time": "2026-09-01T23:05:00",
           "description": "Presented to export customs and security",
           "location": "Example customs office",
-          "stage": "customs"
+          "stage": "customs",
+          "tie_order": 1
         },
         {
           "local_time": "2026-09-01T23:05:00",
           "description": "Arrived at export office",
           "location": "Example exchange office",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 0
         },
         {
           "local_time": "2026-09-01T10:48:00",
@@ -1328,14 +1332,16 @@
           "stage": "delivered",
           "time": "2026-01-05T16:00:00-05:00",
           "time_zone": "America/New_York",
-          "time_zone_basis": "destination"
+          "time_zone_basis": "destination",
+          "tie_order": 1
         },
         {
           "description": "Out for delivery",
           "provider_code": "202",
           "time": "2026-01-05T15:00:00Z",
           "location": "Example City, EX",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "tie_order": 0
         },
         {
           "description": "Failed delivery attempt, returning to the warehouse",
@@ -1844,7 +1850,8 @@
           "stage": "delivered",
           "time": "2026-01-05T10:00:00+13:00",
           "time_zone": "Pacific/Auckland",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "carrier",
+          "tie_order": 1
         },
         {
           "time": "2026-01-06T08:00:00Z",
@@ -1865,7 +1872,8 @@
           "description": "Collected from sender",
           "provider_code": "13",
           "location": "Example Depot",
-          "stage": "accepted"
+          "stage": "accepted",
+          "tie_order": 0
         },
         {
           "time": "2026-01-04T08:00:00Z",
@@ -2151,94 +2159,108 @@
           "description": "Delivered",
           "provider_status": "Entregado",
           "local_time": "2026-01-16",
-          "stage": "delivered"
+          "stage": "delivered",
+          "tie_order": 3
         },
         {
           "description": "En reparto",
           "provider_status": "En reparto",
           "local_time": "2026-01-16",
           "location": "TEST LOCALITY",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "tie_order": 2
         },
         {
           "description": "Disponible en punto NACEX",
           "provider_status": "Disponible en punto NACEX",
           "local_time": "2026-01-16",
           "location": "TEST LOCALITY",
-          "stage": "ready_for_pickup"
+          "stage": "ready_for_pickup",
+          "tie_order": 1
         },
         {
           "description": "En reparto",
           "provider_status": "En reparto",
           "local_time": "2026-01-16",
           "location": "TEST LOCALITY",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "tie_order": 0
         },
         {
           "description": "Cambio de dirección",
           "provider_status": "Cambio de dirección",
           "local_time": "2026-01-15",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 4
         },
         {
           "description": "Solución de entrega concertada",
           "provider_status": "Solución de entrega concertada",
           "local_time": "2026-01-15",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 3
         },
         {
           "description": "Ausente",
           "provider_status": "Ausente",
           "local_time": "2026-01-15",
-          "stage": "failed_attempt"
+          "stage": "failed_attempt",
+          "tie_order": 2
         },
         {
           "description": "En reparto",
           "provider_status": "En reparto",
           "local_time": "2026-01-15",
           "location": "TEST LOCALITY",
-          "stage": "out_for_delivery"
+          "stage": "out_for_delivery",
+          "tie_order": 1
         },
         {
           "description": "En tránsito",
           "provider_status": "En tránsito",
           "local_time": "2026-01-15",
           "location": "TEST DEPOT",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 0
         },
         {
           "description": "En tránsito",
           "provider_status": "En tránsito",
           "local_time": "2026-01-14",
           "location": "TEST ORIGIN",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 4
         },
         {
           "description": "En tránsito",
           "provider_status": "En tránsito",
           "local_time": "2026-01-14",
           "location": "TEST ORIGIN",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 3
         },
         {
           "description": "Notificado",
           "provider_status": "Notificado",
           "local_time": "2026-01-14",
           "stage": "accepted",
-          "stage_source": "none"
+          "stage_source": "none",
+          "tie_order": 2
         },
         {
           "description": "Aceptada",
           "provider_status": "Aceptada",
           "local_time": "2026-01-14",
           "location": "TEST ORIGIN",
-          "stage": "accepted"
+          "stage": "accepted",
+          "tie_order": 1
         },
         {
           "description": "Notificado",
           "provider_status": "Notificado",
           "local_time": "2026-01-14",
-          "stage": "registered"
+          "stage": "registered",
+          "tie_order": 0
         }
       ]
     }
@@ -2962,25 +2984,29 @@
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
           "location": "TEST DEPOT 99 (99)",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 1
         },
         {
           "time": "2026-01-10T06:02:00+01:00",
           "description": "Ciblex tracking update",
           "provider_status": "Acheminement contractuel du colis en 48h00",
-          "location": "TEST DEPOT 99 (99)"
+          "location": "TEST DEPOT 99 (99)",
+          "tie_order": 0
         },
         {
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 1
         },
         {
           "time": "2026-01-09T15:37:00+01:00",
           "description": "Parcel processed at Ciblex facility",
           "provider_status": "Colis Contrôle",
-          "stage": "in_transit"
+          "stage": "in_transit",
+          "tie_order": 0
         },
         {
           "time": "2026-01-09T08:17:00+01:00",

@@ -820,6 +820,11 @@
                     "documents"
                   ],
                   "description": "What the scan asks the recipient to do before the parcel can move on: give their tax number, pay the import duties or taxes, or send customs documents. Set only for wordings or carrier codes that say so explicitly."
+                },
+                "tie_order": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "The scan's place among the answer's scans at its instant, from the oldest, in the carrier's order. Set only on scans that share their instant with another."
                 }
               },
               "additionalProperties": true

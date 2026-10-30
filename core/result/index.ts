@@ -15,6 +15,7 @@ import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../detection/usps.js';
 import { deliveredToDoor } from './pickup.js';
 import { isRecipientAction, recipientAction, type RecipientAction } from '../status/action.js';
+import { withTieOrder } from './order.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -52,6 +53,11 @@ export interface CarrierEvent extends JsonObject {
    * that says so explicitly (`recipientAction`) or a carrier code that does.
    */
   recipient_action?: RecipientAction;
+  /**
+   * The scan's place among the answer's scans at its instant, from the oldest: the carrier's
+   * own order of scans it dates alike (`withTieOrder`).
+   */
+  tie_order?: number;
 }
 
 export interface EventPoint extends JsonObject {
@@ -268,6 +274,7 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
     else delete event.recipient_action;
     return event;
   });
+  withTieOrder(normalized.events);
   // Some carriers keep naming a pickup point on a parcel the courier brought to
   // the door: the one it waited at before going back out, or the one it would
   // have gone to.

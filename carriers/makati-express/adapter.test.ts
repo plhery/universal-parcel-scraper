@@ -32,8 +32,8 @@ describe('Makati Express direct tracking', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'DELIVERED', last_update: null, last_update_local: '2026-03-08', expected_delivery: null });
     expect(result.events).toEqual([
-      { local_time: '2026-03-08', description: 'DELIVERED', stage: 'delivered', stage_source: 'carrier_map' },
-      { local_time: '2026-03-08', description: 'OUT FOR DELIVERY', stage: 'out_for_delivery', stage_source: 'carrier_map' },
+      { local_time: '2026-03-08', description: 'DELIVERED', stage: 'delivered', stage_source: 'carrier_map', tie_order: 1 },
+      { local_time: '2026-03-08', description: 'OUT FOR DELIVERY', stage: 'out_for_delivery', stage_source: 'carrier_map', tie_order: 0 },
       { local_time: '2026-03-05', description: 'RECEIVED BY MAKATI EXPRESS CARGO (Cavite Office)', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-03-03', description: 'DEPARTURE DATE', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-03-02', description: 'SHIPMENT HANDED OVER TO THE AIRLINES', stage: 'in_transit', stage_source: 'carrier_map' },

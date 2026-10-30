@@ -32,7 +32,8 @@ describe('NACEX direct tracking', () => {
     expect(result.events?.[0]!.location).toBeUndefined();
     expect(result.events?.[1]).toMatchObject({ stage: 'out_for_delivery', location: 'TEST LOCALITY' });
     expect(result.events?.[2]!.stage).toBe('ready_for_pickup');
-    expect(result.events?.[1]).toEqual(result.events?.[3]);
+    // The same scan again, but for its place among the day's scans.
+    expect({ ...result.events?.[1], tie_order: 0 }).toEqual({ ...result.events?.[3], tie_order: 0 });
     expect(result.events?.[4]).toMatchObject({ description: 'Cambio de dirección', local_time: '2026-01-15', stage: 'in_transit' });
     expect(result.events?.[5]).toMatchObject({ description: 'Solución de entrega concertada', stage: 'in_transit' });
     expect(result.events?.[5]!.location).toBeUndefined();

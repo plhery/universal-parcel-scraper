@@ -15,6 +15,7 @@ import { CHINESE_CITIES, CHINESE_PROVINCES } from './china.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import { PROGRESS } from '../../core/result/partial.js';
 import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
@@ -584,12 +585,13 @@ function moment(value: CarrierEvent): string {
 const dayAlone = (value: CarrierEvent) => !value.time && typeof value.local_time === 'string' && value.local_time.length === 10;
 
 /**
- * Newest first. A step dated by its day alone, sorted below its day's timed
- * scans, could be any time that day: it goes above the newest of them at an
- * earlier stage, as FedEx's pickup above the shipment information sent that
- * morning.
+ * Newest first, scans of one instant in the order the provider listed them. A
+ * step dated by its day alone, sorted below its day's timed scans, could be any
+ * time that day: it goes above the newest of them at an earlier stage, as
+ * FedEx's pickup above the shipment information sent that morning.
  */
 function newestFirst(events: CarrierEvent[]): CarrierEvent[] {
+  if (listsNewestFirst(events) === false) events.reverse();
   const sorted = events.sort((a, b) => moment(b).localeCompare(moment(a)));
   for (const step of sorted.filter(dayAlone)) {
     const rank = PROGRESS[step.stage as Stage];

@@ -197,6 +197,13 @@ wording that mentions customs, a payment or a document without saying the recipi
 sets nothing: a false alarm costs the reader more than a missed one. The scan's own `description`
 is the carrier's request; a later scan means the carrier moved on.
 
+Scans dated alike, to the second or by the same day alone, carry `tie_order`, their place among
+them from the oldest: a carrier lists two scans of one second in the order they happened, which
+their times cannot tell. `normalizeCarrierResult` reads it from the order of the answer's scans, newest first or
+last as its other scans show, so an adapter that sorts scans keeps a tie in the carrier's
+order, reversing an oldest-first list rather than sorting it; the shared provider result does.
+An answer that dates every scan alike numbers none.
+
 A result's `pickup_point` is the point the parcel waits at for collection: its name, then its
 address on the following lines. On a delivered parcel it is the point the recipient collected
 it from. A parcel brought to the door has none, although some carriers still name a point

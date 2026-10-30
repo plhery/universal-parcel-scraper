@@ -182,3 +182,30 @@ describe('the pickup point of a delivered parcel', () => {
       events: [scan('out_for_delivery', '2026-03-04T08:00:00+01:00'), scan('ready_for_pickup', '2026-03-02T10:00:00+01:00')] }).pickup_point).toBe(POINT);
   });
 });
+
+describe('scans dated alike', () => {
+  const at = (time: string, description: string) => ({ time, description });
+  const orders = (...events: Array<{ time: string; description: string }>) =>
+    normalizeCarrierResult({ events }).events!.map((event) => [event.description, event.tie_order ?? null]);
+
+  it('are numbered from the oldest in the order the answer lists them, newest first or last', () => {
+    expect(orders(at('2026-03-04T10:00:00Z', 'Out'), at('2026-03-03T17:52:00Z', 'Departed'), at('2026-03-03T17:52:00.000Z', 'Arrived'),
+      at('2026-03-02T08:00:00Z', 'Posted'))).toEqual([['Out', null], ['Departed', 1], ['Arrived', 0], ['Posted', null]]);
+    expect(orders(at('2026-03-02T08:00:00Z', 'Posted'), at('2026-03-03T17:52:00Z', 'Arrived'), at('2026-03-03T17:52:00Z', 'Departed'),
+      at('2026-03-04T10:00:00Z', 'Out'))).toEqual([['Posted', null], ['Arrived', 0], ['Departed', 1], ['Out', null]]);
+    // A wall clock without a zone compares with the answer's other wall clocks.
+    expect(orders(at('2026-03-04T10:00:00', 'Out'), at('2026-03-03T17:52:00', 'Departed'), at('2026-03-03T17:52:00', 'Arrived')))
+      .toEqual([['Out', null], ['Departed', 1], ['Arrived', 0]]);
+  });
+
+  it('are not numbered when the answer does not say which way it lists its scans', () => {
+    expect(orders(at('2026-03-03T17:52:00Z', 'Departed'), at('2026-03-03T17:52:00Z', 'Arrived'))).toEqual([['Departed', null], ['Arrived', null]]);
+    expect(orders(at('2026-03-02T08:00:00Z', 'A'), at('2026-03-03T17:52:00Z', 'B'), at('2026-03-03T17:52:00Z', 'C'), at('2026-03-01T08:00:00Z', 'D')))
+      .toEqual([['A', null], ['B', null], ['C', null], ['D', null]]);
+  });
+
+  it('take no number an adapter gave', () => {
+    const events = normalizeCarrierResult({ events: [{ time: '2026-03-04T10:00:00Z', tie_order: 3 }, { time: '2026-03-03T10:00:00Z' }] }).events!;
+    expect(events.map((event) => event.tie_order ?? null)).toEqual([null, null]);
+  });
+});

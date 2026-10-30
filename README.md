@@ -94,7 +94,7 @@ Besides the scans, `result` carries what the carrier shows about the parcel, suc
 `expected_delivery`, `weight_kg`, `destination_country`, the shipping service in
 `service_name` or the duties and fees an import owes in `import_charges`. A scan whose carrier
 asks the recipient to give a tax number, pay import duties or send customs documents carries
-`recipient_action`.
+`recipient_action`, and scans dated alike carry `tie_order`, their order from the oldest.
 
 ### Browser
 
