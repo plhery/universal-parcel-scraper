@@ -1,6 +1,6 @@
 import { ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
-import { API, MAX_BYTES, ORIGIN, parseWanb, PROVIDER } from './parser.js';
+import { API, MAX_BYTES, ORIGIN, PROVIDER } from './parser.js';
 
 interface Reply { url: string; status: number; retryAfter: string | null; body: string | null; truncated: boolean }
 interface GuestResult { replies: Reply[]; verification?: { status: number; retryAfter: string | null } }
@@ -80,7 +80,8 @@ function checkStatus(status: number, retryAfter: string | null): void {
   if (status >= 400) throw new TransportError(PROVIDER, 'WanbExpress browser endpoint is unavailable', { status });
 }
 
-export function fetchWanbInBrowser(number: string, endpoint: string, signal: AbortSignal, timeoutMs: number) {
+/** The final tracking reply for the requested parcel, after the page's verification; the adapter parses it. */
+export function fetchWanbInBrowser(number: string, endpoint: string, signal: AbortSignal, timeoutMs: number): Promise<unknown> {
   return withRemoteBrowser({ provider: PROVIDER, endpoint, signal, timeoutMs }, async ({ browser, signal: stopped, remainingMs }) => {
     const context = await browser.newContext({ acceptDownloads: false });
     const page = await context.newPage();
@@ -96,8 +97,6 @@ export function fetchWanbInBrowser(number: string, endpoint: string, signal: Abo
     checkStatus(reply.status, reply.retryAfter);
     if (reply.truncated || reply.body === null) throw new TransportError(PROVIDER, 'WanbExpress returned an incomplete browser response');
     if (reply.status !== 200) throw new SchemaError(PROVIDER);
-    let payload: unknown;
-    try { payload = JSON.parse(reply.body); } catch { throw new SchemaError(PROVIDER, 'WanbExpress returned invalid browser JSON'); }
-    return parseWanb(payload, number);
+    try { return JSON.parse(reply.body) as unknown; } catch { throw new SchemaError(PROVIDER, 'WanbExpress returned invalid browser JSON'); }
   });
 }

@@ -3,7 +3,7 @@ import { BudgetExceededError, ChallengeError, RateLimitedError, SchemaError, Tra
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { API, MAX_BYTES, normalizeWanbNumber, ORIGIN, parseWanb, PROVIDER } from './parser.js';
+import { API, COURIER_API, MAX_BYTES, normalizeWanbNumber, ORIGIN, parseWanb, PROVIDER, wanbShippingService, withWanbCourier } from './parser.js';
 import { fetchWanbInBrowser } from './browser.js';
 
 export class WanbTracker {
@@ -13,31 +13,55 @@ export class WanbTracker {
 
   browserSteps(number: string) {
     return [
-      { id: 'browser', enabled: !!this.endpoint, run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) =>
-        fetchWanbInBrowser(number, this.endpoint!, signal, Math.max(1, Math.min(20_000, remainingMs - 2000))) },
+      { id: 'browser', enabled: !!this.endpoint, run: async ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => {
+        const deadline = performance.now() + remainingMs;
+        const payload = await fetchWanbInBrowser(number, this.endpoint!, signal, Math.max(1, Math.min(20_000, remainingMs - 2000)));
+        return this.read(payload, number, signal, deadline);
+      } },
       { id: 'trawl', enabled: !!this.environment.trawl, run: ({ signal, remainingMs }: { signal: AbortSignal; remainingMs: number }) => this.browser(number, signal, remainingMs) },
     ];
   }
 
   async direct(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeWanbNumber(raw);
+    const deadline = performance.now() + (context.budgetMs ?? 5000);
     // Node's fetch sends `Accept-Language: *` unless told otherwise, and the
     // tracker fails on it with HTTP 500, often after several seconds.
     const { bytes } = await fetchBounded(`${API}?TrackingNumber=${number}`, { signal: context.signal,
       headers: { Accept: 'application/json', 'Accept-Language': 'en', 'User-Agent': userAgentOf(this.environment.userAgent) } },
     { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(context.budgetMs ?? 5000)), maxBytes: MAX_BYTES, fetcher: this.environment.fetcher });
-    return this.parse(decodeText(bytes), number);
+    return this.read(this.decode(decodeText(bytes)), number, context.signal, deadline);
   }
 
-  private parse(body: string, number: string): CarrierResult {
+  private decode(body: string): unknown {
     if (/^\s*</.test(body)) throw new ChallengeError(PROVIDER, 'WanbExpress returned a browser challenge');
-    let payload: unknown;
-    try { payload = JSON.parse(body); } catch { throw new SchemaError(PROVIDER, 'WanbExpress returned invalid JSON'); }
-    return parseWanb(payload, number);
+    try { return JSON.parse(body); } catch { throw new SchemaError(PROVIDER, 'WanbExpress returned invalid JSON'); }
+  }
+
+  /**
+   * Parses the tracking reply, then asks the last-mile panel for the courier of its shipping
+   * service within the lookup's deadline. The panel needs no verification; without its answer
+   * the courier's number stays unattributed.
+   */
+  private async read(payload: unknown, number: string, signal: AbortSignal | undefined, deadline: number): Promise<CarrierResult> {
+    const result = parseWanb(payload, number);
+    const service = wanbShippingService(payload);
+    const timeoutMs = Math.min(3000, Math.floor(deadline - performance.now() - 500));
+    if (!result.delivery_tracking_number || !service || timeoutMs < 500) return result;
+    try {
+      const { bytes } = await fetchBounded(`${COURIER_API}?shippingServiceId=${encodeURIComponent(service)}&trackingNumber=${result.delivery_tracking_number}`, { signal,
+        headers: { Accept: 'application/json', 'Accept-Language': 'en', 'User-Agent': userAgentOf(this.environment.userAgent) } },
+      { provider: PROVIDER, timeoutMs, maxBytes: 20_000, fetcher: this.environment.fetcher });
+      return withWanbCourier(result, JSON.parse(decodeText(bytes)));
+    } catch {
+      signal?.throwIfAborted();
+      return result;
+    }
   }
 
   async browser(raw: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
     const number = normalizeWanbNumber(raw);
+    const deadline = performance.now() + remainingMs;
     if (!this.environment.trawl) throw new ChallengeError(PROVIDER, 'WanbExpress requires the browser tracking service');
     const timeoutMs = Math.floor(remainingMs - 2000);
     if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
@@ -56,7 +80,7 @@ export class WanbTracker {
     if (response.status >= 400) throw new UpstreamHttpError(PROVIDER, response.status);
     if (response.error || response.truncated || response.base64Encoded || response.body === null) throw new TransportError(PROVIDER, 'WanbExpress returned an incomplete browser response');
     if (response.status !== 200 || Buffer.byteLength(response.body) > MAX_BYTES) throw new SchemaError(PROVIDER, 'WanbExpress returned invalid browser data');
-    return this.parse(response.body, number);
+    return this.read(this.decode(response.body), number, signal, deadline);
   }
 
   fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {

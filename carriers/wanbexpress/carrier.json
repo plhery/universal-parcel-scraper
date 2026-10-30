@@ -37,7 +37,9 @@
     "location",
     "provider_code",
     "origin_country",
-    "destination_country"
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
   ],
   "portal": {
     "canaryUrl": "https://tracking.wanbexpress.com/",

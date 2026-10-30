@@ -4,7 +4,7 @@ import { ChallengeError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/trawl.js';
 import { adapter } from './adapter.js';
 import { fetchWanbInBrowser } from './browser.js';
-import { API, normalizeWanbNumber, parseWanb } from './parser.js';
+import { API, COURIER_API, normalizeWanbNumber, parseWanb } from './parser.js';
 import { statusMap, wanbStage } from './status.js';
 
 vi.mock('./browser.js', () => ({ fetchWanbInBrowser: vi.fn() }));
@@ -25,7 +25,7 @@ const capture = (value: unknown, status = 200, id = number) => ({ url: `${API}?T
 
 describe('WanbExpress', () => {
   it('tracks in the optional private browser without the plain request it refuses, and recognizes over HTTP first', async () => {
-    vi.mocked(fetchWanbInBrowser).mockClear().mockResolvedValue(parseWanb(found(), number));
+    vi.mocked(fetchWanbInBrowser).mockClear().mockResolvedValue(found());
     const recorded: unknown[] = [];
     const fetcher = vi.fn<typeof fetch>(async () => reply(challenge));
     const carrier = adapter({ env: { WANBEXPRESS_BROWSER_WS_ENDPOINT: 'ws://browser.test/synthetic' },
@@ -102,6 +102,47 @@ describe('WanbExpress', () => {
     expect(statusMap.stage(null, '【sample ds】 back to ds.')).toBe('failed_attempt');
     expect(statusMap.stage('LastMileDeliveryReady', '【sample ds】shipment out for delivery.')).toBe('out_for_delivery');
     expect(wanbStage(null, 'scheduled to <2031-04-23> .')).toBeNull();
+  });
+
+  it('keeps the courier\'s number and names the courier the last-mile panel gives for the shipping service', async () => {
+    const courierNumber = '0082800082801234567890';
+    const relabelled = () => { const value = found(); Object.assign(value.Data.Metadata, { TrackingNumber: courierNumber, ShippingServiceId: 'SAMPLE_ES_48H' }); return value; };
+    const courier = (Name: string, OfficialWebSite = '') => ({ Succeeded: true, Data: { Id: 'SAMPLE', Name, Tel: '0000', OfficialWebSite }, Error: null });
+    const track = async (panel: () => Promise<Response>, payload: unknown = relabelled()) => {
+      const fetcher = vi.fn<typeof fetch>(panel);
+      const trawl = new TrawlClient('http://browser.test', async () => reply({ tier: 3, statusCode: 200, html: '', capturedResponses: [capture(payload)] }));
+      const result = await adapter({ env: {}, fetcher, trawl, browserExecutablePath: null, recorder: NOOP_RECORDER }).track({ number }, { budgetMs: 8000 });
+      return { result, fetcher };
+    };
+    const named = await track(async () => reply(courier('CTT Express', 'https://www.cttexpress.com/')));
+    expect(named.result).toMatchObject({ delivery_carrier: 'ctt-express', delivery_tracking_number: courierNumber });
+    expect(String(named.fetcher.mock.calls[0]![0])).toBe(`${COURIER_API}?shippingServiceId=SAMPLE_ES_48H&trackingNumber=${courierNumber}`);
+    // A courier the catalog does not know, or whose rules refuse the number, stays unnamed.
+    for (const name of ['Sample Courier', 'Royal Mail']) {
+      const { result } = await track(async () => reply(courier(name)));
+      expect(result.delivery_tracking_number).toBe(courierNumber);
+      expect(result).not.toHaveProperty('delivery_carrier');
+    }
+    // The panel only adds the courier: its failure or an empty answer leaves the tracking.
+    for (const panel of [async () => new Response('', { status: 500 }), async () => reply({ Succeeded: true, Data: null }), async () => { throw new TypeError('offline'); }]) {
+      const { result } = await track(panel);
+      expect(result).toMatchObject({ current_stage: 'delivered', delivery_tracking_number: courierNumber });
+      expect(result).not.toHaveProperty('delivery_carrier');
+    }
+    // Without a service, or with the parcel's own number shown, there is no panel to ask.
+    const own = found(); Object.assign(own.Data.Metadata, { TrackingNumber: number, ShippingServiceId: 'SAMPLE_ES_48H' });
+    expect(parseWanb(own, number)).not.toHaveProperty('delivery_tracking_number');
+    const unnamed = relabelled(); delete (unnamed.Data.Metadata as Record<string, unknown>).ShippingServiceId;
+    const { result, fetcher } = await track(async () => reply(courier('CTT Express')), unnamed);
+    expect(result.delivery_tracking_number).toBe(courierNumber);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('numbers scans at one instant in the order the tracker lists them, oldest first', () => {
+    const value = found();
+    value.Data.TrackPoints.splice(1, 0, { Time: '2031-04-17T08:00:00Z', TimeZone: 8, Content: 'Departed origin facility', Status: 'Departed', Location: '' },
+      { Time: '2031-04-17T08:00:00Z', TimeZone: 8, Content: 'Flight departed', Status: 'FlightDeparted', Location: '' });
+    expect(parseWanb(value, number).events?.map(event => event.description)).toEqual(['Parcel has been delivered.', 'Flight departed', 'Departed origin facility', 'Parcel Data Received']);
   });
 
   it('keeps verification, missing parcels and changed schemas distinct', () => {

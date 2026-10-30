@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
 import { fetchWanbInBrowser, wanbGuestFlow } from './browser.js';
-import { API, MAX_BYTES, ORIGIN } from './parser.js';
+import { API, MAX_BYTES, ORIGIN, parseWanb } from './parser.js';
 
 vi.mock('../../core/transport/localBrowser.js', () => ({ withRemoteBrowser: vi.fn() }));
 const number = 'WNBZZ9990000001YQ';
@@ -33,7 +33,7 @@ function harness(options: { version?: string; verification?: unknown; status?: n
     evaluate: vi.fn(async (fn: typeof wanbGuestFlow, args: Parameters<typeof wanbGuestFlow>[0]) => fn(args)) };
   vi.mocked(withRemoteBrowser).mockImplementation(async (opts, run) => run({ browser: { newContext: async () => ({ newPage: async () => page }) } as never,
     signal: opts.signal!, remainingMs: () => 3000 }));
-  return { fetcher, execute, page, run: () => fetchWanbInBrowser(number, 'ws://browser.test/synthetic', new AbortController().signal, 5000) };
+  return { fetcher, execute, page, run: async () => parseWanb(await fetchWanbInBrowser(number, 'ws://browser.test/synthetic', new AbortController().signal, 5000), number) };
 }
 
 afterEach(() => { vi.unstubAllGlobals(); vi.clearAllMocks(); });

@@ -28,6 +28,13 @@ and delivery-number matches stay inconclusive. Only the explicit unknown-parcel 
 not-found. Scans carry UTC instants; their display offsets are not applied a second time.
 The last-mile partner's scans, iMile's on a parcel to Germany, come in the partner's sentences
 and mostly without a code: they take the stage iMile's map gives those sentences.
+Once WanbExpress has relabelled the parcel for its courier, the reply's metadata carries the
+courier's number, which the tracker shows as `TrackingNo`, and the shipping service. The
+tracker's last-mile panel names that service's courier from
+`/Common/TrackLastMileCarrier?shippingServiceId=…&trackingNumber=…`, a plain request without
+verification, which the adapter makes within the lookup's deadline after any retrieval path. The
+courier is named only when the catalog knows it and its rules fit the number; without the
+panel's answer the number stays unattributed.
 Recipient details, proofs of delivery and photographs are excluded.
 
 Verification depends on the browser and its network. A datacenter network can be rejected by
