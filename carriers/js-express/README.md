@@ -59,7 +59,8 @@ delivers them. Tracked through the lookup its English tracking page makes.
   no stage.
 - A courier's announced return, such as Colissimo's "Il va être retourné à l'expéditeur", is an
   exception: the parcel is returned only once a scan has it back with its sender.
-- A delivery loses a clause naming who took the parcel, and every row loses phone numbers.
+- A delivery loses a clause naming who took the parcel, and every row loses phone numbers and
+  the label left before them, as JS Express's "当地电话：" (local phone).
 
 ## Limitations
 

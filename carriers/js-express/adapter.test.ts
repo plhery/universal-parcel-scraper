@@ -205,6 +205,10 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressScan('Delivered - received by A SAMPLE PERSON (Sample Town, ON)', 'Sample Town').description).toBe('Delivered');
     expect(jsExpressScan('Delivered Signature: SAMPLE', 'Sample Town').description).toBe('Delivered');
     expect(jsExpressScan('Delivery attempted, call +1 555 000 0000', 'Sample Town').description).toBe('Delivery attempted, call');
+    // JS Express's own notice loses the label of the local office's number with it.
+    expect(jsExpressScan('收件人地址不详或有误，派送失败，麻烦让收件人联系下当地，当地电话：555 0000 0000', 'US').description)
+      .toBe('收件人地址不详或有误，派送失败，麻烦让收件人联系下当地');
+    expect(jsExpressScan('Delivery failed. Phone: +1 555 000 0000', 'Sample Town').description).toBe('Delivery failed.');
     // Only a delivery's wording loses a "by" clause.
     expect(jsExpressScan('Picked up by the airline', 'HKG').description).toBe('Picked up by the airline');
   });

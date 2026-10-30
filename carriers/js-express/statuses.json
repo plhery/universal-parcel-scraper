@@ -27,6 +27,17 @@
     {"wording": "Delivery to local courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Handed to the destination courier."},
     {"wording": "Package Received with Origin Scan warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination courier's first scan; the adapter moves the place the courier appends into the location."},
     {"wording": "Package is received at a Straightship station", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A Canadian courier's depot scan, with its place moved into the location."},
+    {"wording": "Arrived at sorting center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's sorting scan in the United States, after the hand-off to the local courier."},
+    {"wording": "Package departed from sorting center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at GOFO Regional Destination Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Preparing for delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's step at the delivering facility, before the courier takes the parcel out."},
+    {"wording": "Courier is out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Delivery failed, type: Recipient absent or address unreachable. We will redeliver as soon as possible. Please be patient and keep in touch.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "GOFO's failed attempt, with another one to come."},
+    {"wording": "DESPATCHED AND ON ROUTE TO YODEL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's record of the parcel on its way to it, written while JS Express's warehouse in China sent it out."},
+    {"wording": "PARCEL PICKED UP", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's record of its partner collecting the parcel from JS Express's warehouse in China, which accepted it the day before."},
+    {"wording": "COLLECTED FROM AIRPORT TERMINAL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's agent taking the shipment from the destination airport."},
+    {"wording": "ARRIVED AT DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's depot scan after the hand-off to the local courier."},
+    {"wording": "SORT - LOADED TO TRAILER", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The destination courier's delivery, with its place moved into the location."},
     {"wording": "Accepted at USPS Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS's first scan after the hand-off to the local courier; JS Express accepted the parcel in China."},
     {"wording": "Arrived at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
@@ -50,6 +61,7 @@
     {"wording": "Votre Colissimo n'a pas pu vous être livré en raison d'un problème d'adresse. Il va être retourné à l'expéditeur.", "stage": "exception", "language": "fr", "confirmedBy": "live", "note": "A return announced: the parcel is not back with its sender yet."},
     {"wording": "Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "note": "Colissimo's sort into the delivery round, as La Poste reads its code MD1."},
     {"wording": "Votre colis est livré à son expéditeur à la suite d'un retour.", "stage": "returned", "language": "fr", "confirmedBy": "live"},
-    {"wording": "到达待取", "stage": "ready_for_pickup", "english": "Arrived, awaiting collection", "language": "zh", "confirmedBy": "live", "note": "JS Express's own status in Chinese, arrived and awaiting collection, with the country for its place."}
+    {"wording": "到达待取", "stage": "ready_for_pickup", "english": "Arrived, awaiting collection", "language": "zh", "confirmedBy": "live", "note": "JS Express's own status in Chinese, arrived and awaiting collection, with the country for its place."},
+    {"wording": "收件人地址不详或有误，派送失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系下当地", "stage": "failed_attempt", "english": "The recipient's address is unclear or wrong and the delivery failed. Charges for a return or disposal after the deadline follow the bill; the recipient should contact the local office", "language": "zh", "confirmedBy": "live", "note": "JS Express's own notice after the destination courier's failed attempt, its local office's number cut: the parcel waits for the recipient's answer before it is returned or disposed of."}
   ]
 }
