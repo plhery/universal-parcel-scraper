@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import {
   ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError,
@@ -167,6 +168,20 @@ describe('Hualei track interface', () => {
     expect(hualeiScanText('Where is it? Arrived')).toBe('Where is it? Arrived');
     // Longer runs, codes and clocks are not postcodes.
     expect(hualeiScanText('Flight CA123 at 10:30, bag 1234567')).toBe('Flight CA123 at 10:30, bag 1234567');
+    // A delivery row's place written with a postcode of another form.
+    for (const place of ['EXAMPLETOWN 999 99', 'EXAMPLETOWN 99-999', 'EXAMPLETOWN 9999-999', 'EXAMPLETOWN Z9Z 9Z9', 'EXAMPLETOWN ZZ9 9ZZ', 'EXAMPLETOWN 9999 ZZ']) {
+      expect(hualeiScanText(place), place).toBe('EXAMPLETOWN');
+    }
+    expect(hualeiScanText('Z9Z9Z9')).toBe('');
+  });
+
+  it('lets a delivery row stored with a postcode in its place take the place without it, or none', () => {
+    const policy = sameInstantIdentityPolicy('gzyl', { supportsScanMatching: true });
+    const stored = { stage: 'delivered', description: 'Delivered', location: 'EXAMPLETOWN 99-999', providerCode: '' };
+    expect(policy?.matches?.({ ...stored, location: 'EXAMPLETOWN' }, stored)).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'Z9Z9Z9' })).toBe(true);
+    expect(policy?.matches?.({ ...stored, location: 'OTHERTOWN' }, stored)).toBe(false);
+    expect(policy?.matches?.({ ...stored, location: '' }, { ...stored, location: 'EXAMPLETOWN' })).toBe(false);
   });
 });
 

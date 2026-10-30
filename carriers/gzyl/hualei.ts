@@ -24,6 +24,9 @@ import { isoTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import type { CarrierId } from '../../generated/catalog.js';
+import { hualeiScanText } from './text.js';
+
+export { hualeiScanText };
 
 /** One carrier's tenant on the platform. */
 export interface HualeiTenant {
@@ -169,19 +172,6 @@ function wallClock(value: string, provider: string): string {
   return local;
 }
 
-// Four to six digits standing alone in scan text are a postcode far more often than anything else.
-const POSTCODE_RUN = /(^|[^\p{L}\p{N}])\d{4,6}(?![\p{L}\p{N}])/gu;
-// A signatory's name follows these markers.
-const SIGNATORY = /(?:签收人|signed (?:for )?by|signatory)[\s\S]*$/i;
-
-// The interface replies in GBK, which has no room for some spaces: one between two words arrives as `?`.
-const LOST_SPACE = /(?<=\p{L})\?(?=\p{L})/gu;
-
-/** Scan text without a signatory or a postcode. */
-export function hualeiScanText(value: string, maxLength = 500): string {
-  return clean(value.replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_RUN, '$1'), maxLength)
-    .replace(/^[\s,，:：;；/]+|[\s,，:：;；/]+$/g, '');
-}
 
 /**
  * One row as the reply gives it: its wall clock, text, place and kind code, and

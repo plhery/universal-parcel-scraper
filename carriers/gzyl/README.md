@@ -63,7 +63,9 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   number and it serves the destination. The table holds Swiss Post's labels, the destination of
   every record seen; no live record has named a channel yet. The page names no channel or service.
 - Recipient, sender, address, postcode, weight, fee, signature, signatory and delivery photo
-  fields are never read; postcodes and signatories are cut from scan text.
+  fields are never read; postcodes and signatories are cut from scan text, including a delivery
+  row's place, which can carry the recipient's postcode. A row stored with one takes the place
+  without it ([identity.ts](identity.ts)).
 - GBK has no room for some spaces, so a space between two words can arrive as `?`; scan text reads
   it as the space it was.
 
