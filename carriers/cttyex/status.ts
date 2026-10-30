@@ -32,6 +32,7 @@ const ABROAD: readonly (readonly [RegExp, Stage])[] = [
   [/^(?:.+ )?accepted at logistics carrier regional destination facility$/, 'in_transit'],
   [/^(?:.+ )?arrive at the last mile sorting and distribution center$/, 'in_transit'],
   [/^(?:.+ )?leaving the sorting center$/, 'in_transit'],
+  [/^delivered$/, 'delivered'],
 ];
 
 /** The summary's status over the scans, in Chinese, or in English when the tracker is asked in English. */

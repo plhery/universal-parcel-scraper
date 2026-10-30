@@ -69,13 +69,13 @@ describe('CTTYEX HTTP adapter', () => {
 
   it('reads a wording the map does not list on Beijing time too', () => {
     const result = parseCttyex(changed('in-transit', (item) => {
-      item.details.unshift({ create_time: '2026-03-23 09:45:00', content: 'Delivered' }, { create_time: '2026-03-22 18:00:00', content: 'Synthetic note' });
+      item.details.unshift({ create_time: '2026-03-23 09:45:00', content: 'Package delivered to the recipient' }, { create_time: '2026-03-22 18:00:00', content: 'Synthetic note' });
     }), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'wording:language',
       last_update: '2026-03-23T09:45:00+08:00' });
     expect(result).not.toHaveProperty('last_update_local');
     expect(result.events!.slice(0, 3)).toEqual([
-      { time: '2026-03-23T09:45:00+08:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:language' },
+      { time: '2026-03-23T09:45:00+08:00', description: 'Package delivered to the recipient', stage: 'delivered', stage_source: 'wording:language' },
       { time: '2026-03-22T18:00:00+08:00', description: 'Synthetic note' },
       expect.objectContaining({ time: '2026-03-21T01:10:20+08:00' }),
     ]);
@@ -285,7 +285,8 @@ describe('CTTYEX status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'cttyex', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A wording the map does not know falls to the shared wording rules.
-    expect(cttyexStage('Delivered')).toEqual({ stage: 'delivered', source: 'wording:language' });
+    expect(cttyexStage('Package delivered to the recipient')).toEqual({ stage: 'delivered', source: 'wording:language' });
+    expect(cttyexStage('Delivered')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(cttyexStage('Synthetic note')).toBeNull();
   });
 });

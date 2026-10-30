@@ -441,6 +441,10 @@ describe('DHLink status vocabulary', () => {
     // Nor is the collection at the destination port.
     expect(dhlinkStage('', '', '目的港已提货 Delivery has been made at the destination port')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'dhlink', providerCode: 'SYNTHETIC', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
+    for (const description of ['预计配载航班时间：10-23；Estimated loading flight time:10-23', '预计配载航班1月2日,Expected flight on January 2nd']) {
+      expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    }
     expect(statusMapAnswer({ carrier: 'dhlink', providerCode: 'J014', description: 'Shipment has delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
   });
 });

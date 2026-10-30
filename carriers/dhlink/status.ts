@@ -195,4 +195,6 @@ export function dhlinkStage(code: string, name: string, wording: string): Classi
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? NODE_CODES.get(code) : undefined) ?? wordingStage(wording),
   gaps: [],
+  gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
+    ? 'The flight the parcel is booked on, any date, not a movement: the adapter drops the row and the parcel keeps the stage it had.' : undefined),
 };

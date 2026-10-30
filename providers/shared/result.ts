@@ -343,8 +343,19 @@ function providerWordingStage(description: string): Stage | undefined {
   // the final-mile label at the hub's processing scan and hands the parcel to the destination's postal company.
   if (/^tracking details uploaded[.!]?$/i.test(value)) return 'registered';
   if (/^(?:first|second) dimension event[.!]?$|^processing at (?:the )?(?:global )?shipping cent(?:er|re)[.!]?$|^parcel documentation and labell?ing[.!]?$|^container (?:assignment|closed)[.!]?$|^shipped from (?:the )?(?:global )?shipping cent(?:er|re) to (?:international )?destination[.!]?$|^ready to ship\. fml label requested[.!]?$|^interpost handed item over to postal company[.!]?$/i.test(value)) return 'in_transit';
-  // Austrian Post's hand-over to its partner on the way abroad, "Übergabe an Kooperationspartner" in its own map.
+  // Austrian Post's hand-over to its partner on the way abroad, "Übergabe an Kooperationspartner" in its own map, and an
+  // item from abroad posted in its country and sent on to Austria, "Postaufgabe im Ausland" and "Sendung ins Zielland
+  // unterwegs", in ParcelsApp's English.
   if (/^item handed over to subcontractor[.!]?$/i.test(value)) return 'in_transit';
+  if (/^item posted abroad[.!]?$/i.test(value)) return 'accepted';
+  if (/^item forwarded to destination country[.!]?$/i.test(value)) return 'in_transit';
+  // Huahan's hand-over to the delivering carrier, as its own map reads it.
+  if (/^has been given to local carrier[.!]?$/i.test(value)) return 'in_transit';
+  // InPost Spain's labels, as Mondial Relay's map reads them by their codes: the label registered, collected, and at
+  // the last depot before the Punto Pack or locker shows it ready.
+  if (/^en preparacion[.!]?$/iu.test(value)) return 'registered';
+  if (/^recogido por el mensajero[.!]?$/iu.test(value)) return 'accepted';
+  if (/^paquete en el destino[.!]?$/iu.test(value)) return 'in_transit';
   // USPS's status for incoming international mail before it scans the item, from the origin post's electronic notice,
   // as its own map reads it.
   if (/^origin post is preparing shipment[.!]?$/i.test(value)) return 'registered';
