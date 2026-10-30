@@ -51,6 +51,20 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Paper Work Inscan",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Between a hub's arrival and its onward connection."
+    },
+    {
+      "wording": "Delivery Scheduled For Next Working Day",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "At the delivery office after its cut-off, before the next day's round."
+    },
+    {
       "wording": "Delivery Delayed",
       "language": "en",
       "stage": "exception",

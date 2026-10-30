@@ -11,6 +11,10 @@ const vocabulary: Record<string, ClassifiedStatus> = {
   'shipment arrived at hub': { status: 'in_transit', stage: 'in_transit' },
   'shipment further connected': { status: 'in_transit', stage: 'in_transit' },
   'clubbed canvas bag scan': { status: 'in_transit', stage: 'in_transit' },
+  // Between a hub's arrival and its onward connection.
+  'paper work inscan': { status: 'in_transit', stage: 'in_transit' },
+  // At the delivery office after its cut-off, before the next day's round.
+  'delivery scheduled for next working day': { status: 'in_transit', stage: 'in_transit' },
   'delivery delayed': { status: 'exception', stage: 'exception' },
   'delay caused beyond control': { status: 'exception', stage: 'exception' },
   'cnee refused id/otp not shared-incorrect': { status: 'exception', stage: 'failed_attempt' },

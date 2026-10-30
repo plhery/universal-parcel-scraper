@@ -1621,6 +1621,8 @@ describe("universal providers' answers", () => {
       ['Package finished', 'registered'], ['Package is ready for shipping from the warehouse', 'registered'],
       ["Your package will be in good hands with Intelcom! Good news! We've received your shipment details, but the package is still with your merchant.", 'registered'],
       ['Your package will be in good hands with Dragonfly!', 'registered'],
+      ["Intelcom has your package! Your merchant has handed us your package at our station. We'll make sure to keep you posted as it makes its way to you.", 'accepted'],
+      ['Dragonfly has your package!', 'accepted'],
       ['Created. Parcel created by Example Shop at EXA', 'registered'], ['create. Shipment order created', 'registered'],
       ['Pre-Shipment Info Sent To Spain', 'registered'],
       ['The order has information pending customer confirmation.', 'registered'],

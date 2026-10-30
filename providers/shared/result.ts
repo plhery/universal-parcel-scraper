@@ -246,8 +246,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // BRT's English status for a parcel on its delivery round reads "FOR DELIVERY" alone.
   if (/^for delivery[.!]?$|^delivery in progress, (?:first|second|third|\d+(?:st|nd|rd|th)) attempt\b|scanned for delivery[;,] ?the courier is\b|^delivery branch\. in the hands of the mailman[.!]?$|^przesyłka wydana do doreczenia kurierowi \w{2,20}[.!]?$|派送员派送途中/i.test(value)) return 'out_for_delivery';
   if (/^order confirmed[.!]?$|^order received(?: successfully)?[.!]?$|^creat(?:e|ed)\. (?:parcel|shipment(?: order)?) created\b|^pre-shipment info sent to\b|^the order has information pending customer confirmation[.!]?$|^waiting for (?:the )?carrier to collect the order[.!]?$|^registered in the system[.!]?$|^your order has been received[.!]?$|^tracking number assigned[.!]?$/i.test(value)) return 'registered';
-  // Intelcom's first status, its code 0 as its own map reads it, with the explanation providers relay after it.
+  // Intelcom's first status and its pickup at the merchant, codes 0 and 105 as its own map reads them, with
+  // the explanation providers relay after them.
   if (/^your package will be in good hands with (?:intelcom|dragonfly)!(?:\s|$)/i.test(value)) return 'registered';
+  if (/^(?:intelcom|dragonfly) has your package!(?:\s|$)/i.test(value)) return 'accepted';
   // Cainiao's warehouse packing the order, between the order it received and the parcel leaving it, in
   // ParcelsApp's words and in Postal Ninja's.
   if (/^package finished[.!]?$|^package is ready for shipping from the warehouse[.!]?$/i.test(value)) return 'registered';
