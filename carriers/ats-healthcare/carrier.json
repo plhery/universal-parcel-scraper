@@ -18,18 +18,43 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ats-healthcare",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 103,
+      "servedCountriesOnly": true
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "provider_code"
+  ],
   "portal": {
     "url": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",
     "searchUrl": "https://www.atshealthcare.ca/ShipTracking-en",
     "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "progress_rail"
+    ],
+    "discarded": [
+      "signatory"
+    ],
+    "unavailable": [
+      "history",
+      "location",
+      "eta",
+      "offset_timestamps",
+      "weight"
+    ]
   },
   "links": [
     {

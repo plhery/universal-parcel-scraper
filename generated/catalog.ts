@@ -7851,7 +7851,10 @@ export const CARRIER_CATALOG = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ats-healthcare",
+      "recognitionRank": 103,
+      "recognitionServedCountriesOnly": true,
+      "localClocks": true
     },
     "canaryUrl": "https://www.atshealthcare.ca/ShipTracking-en",
     "trackingUrlTemplate": "https://www.atshealthcare.ca/quickTrackResult?ship={trackingNumber}",

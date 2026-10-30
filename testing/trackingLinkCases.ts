@@ -1985,6 +1985,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'whiz-delivery', number: 'SW0000000000',
     route: /^https:\/\/track\.whizdelivery\.ca\/track\/SW0000000000$/,
     marker: /We couldn't find that shipment|Tracking History/ },
+  // The server renders the shipment's row, or a placeholder row for a number it does not hold.
+  { carrier: 'ats-healthcare', number: '000000017',
+    route: /^https:\/\/www\.atshealthcare\.ca\/quickTrackResult\?ship=000000017$/,
+    marker: /No detail for shipment 000000017|lstProgressDescr/ },
   // The server renders the list row for the number: the shipment's state, or that it holds none.
   { carrier: 'tonami', number: '0000000011',
     route: /^https:\/\/trc1\.tonami\.co\.jp\/trc\/search3\/excSearch3\?id%5B0%5D=0000000011$/,

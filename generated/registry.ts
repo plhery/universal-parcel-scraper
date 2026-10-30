@@ -42,6 +42,7 @@ import { adapter as arasKargo } from '../carriers/aras-kargo/adapter.js';
 import { adapter as arrowXl } from '../carriers/arrow-xl/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
 import { adapter as atlanticCourier } from '../carriers/atlantic-courier/adapter.js';
+import { adapter as atsHealthcare } from '../carriers/ats-healthcare/adapter.js';
 import { adapter as australiaPost } from '../carriers/australia-post/adapter.js';
 import { adapter as austrianPost } from '../carriers/austrian-post/adapter.js';
 import { adapter as averitt } from '../carriers/averitt/adapter.js';
@@ -701,6 +702,7 @@ export const REGISTRY: RegistryDefinition = {
     "arrow-xl": arrowXl,
     "asendia": asendia,
     "atlantic-courier": atlanticCourier,
+    "ats-healthcare": atsHealthcare,
     "australia-post": australiaPost,
     "austrian-post": austrianPost,
     "averitt": averitt,
@@ -1385,7 +1387,7 @@ export const REGISTRY: RegistryDefinition = {
     "asigna": "universal",
     "asyad-express": "universal",
     "atlantic-courier": "atlantic-courier",
-    "ats-healthcare": "universal",
+    "ats-healthcare": "ats-healthcare",
     "australia-post": "australia-post",
     "austrian-post": "austrian-post",
     "averitt": "averitt",

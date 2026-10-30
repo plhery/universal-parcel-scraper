@@ -33,6 +33,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "aramex-nz": 444,
   "aras-kargo": 420,
   "asendia": 675,
+  "ats-healthcare": 103,
   "australia-post": 500,
   "austrian-post": 830,
   "averitt": 921,
