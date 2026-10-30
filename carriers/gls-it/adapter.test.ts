@@ -5,7 +5,7 @@ import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/ind
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { adapter, GLSItalyTracker, glsItalyLookupUrl } from './adapter.js';
 import { normalizeGLSItalyNumber, parseGLSItaly, parseGLSItalyReply } from './parser.js';
-import { glsItalyScanStage } from './status.js';
+import { glsItalyEnglish, glsItalyScanStage } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const NUMBER = 'ZZ900000001';
@@ -104,6 +104,23 @@ describe('GLS Italy direct tracking', () => {
     expect(statusMapAnswer({ carrier: 'gls-it', providerCode: 'DELIVERED', description: 'Delivered.' })).toEqual({ kind: 'unknown' });
     expect(statusMapAnswer({ carrier: 'gls-it', description: 'Delivered' })).toEqual({ kind: 'unknown' });
     for (const wording of ['constructor', 'toString', 'Zxq.']) expect(glsItalyScanStage(wording), wording).toBeNull();
+  });
+
+  it('shows the English locale sentence for an Italian one', () => {
+    const italian = parseGLSItaly(shipment((row) => {
+      row.history[0]!.evtDscr = 'Consegnata.';
+      row.history[1]!.evtDscr = 'In transito.';
+    }), NUMBER);
+    expect(italian.events![0]).toMatchObject({ description: 'Delivered.', stage: 'delivered', stage_source: 'carrier_map' });
+    expect(italian.events![1]).toMatchObject({ description: 'Shipment in transit.', stage: 'in_transit' });
+    expect(italian.last_status_text).toBe('Delivered.');
+    for (const entry of statuses.entries) {
+      if (!('wording' in entry) || entry.language !== 'it') continue;
+      expect(glsItalyEnglish(entry.wording), entry.wording).toBe(entry.english);
+      const shown = parseGLSItaly(shipment((row) => { row.history[0]!.evtDscr = entry.wording; }), NUMBER).events![0]!;
+      expect(shown.description, entry.wording).not.toBe(entry.wording);
+      expect(glsItalyScanStage(shown.description!), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
+    }
   });
 
   it('binds the reply to the whole shipment number', () => {

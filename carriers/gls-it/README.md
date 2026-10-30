@@ -27,8 +27,9 @@ numbers, so this adapter does not share their route.
 
 - Scans carry a sentence and no code. The sentences are mapped whole in [status.ts](status.ts);
   others go to the shared wording rules. The English locale sometimes answers with the Italian
-  sentences, which are mapped too; a request that names a language with `Accept-Language`
-  gets an internal error instead. When the newest sentence gives no stage, the
+  sentences. Each is shown in the English locale's words for that scan, which take over a row
+  stored in Italian at the same instant and place. A request that names a language with
+  `Accept-Language` gets an internal error instead. When the newest sentence gives no stage, the
   current step of the page's progress rail stands in. GLS's return flag makes the shipment
   returned.
 - The national search only answers for shipments inside GLS Italy's network, so a timed scan

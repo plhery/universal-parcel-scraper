@@ -7,7 +7,7 @@ import { languageStageStatus, type ClassifiedWording } from '../../core/status/i
 import { zonedTime } from '../../core/time/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { glsItalyRailStage, glsItalyScanStage } from './status.js';
+import { glsItalyEnglish, glsItalyRailStage, glsItalyScanStage } from './status.js';
 
 export const PROVIDER = 'GLS Italy';
 const ZONE = 'Europe/Rome';
@@ -105,8 +105,10 @@ export function parseGLSItaly(payload: unknown, raw: string): CarrierResult {
   const seen = new Set<string>();
   for (const scan of row.history) {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'GLS Italy returned an invalid scan');
-    const description = textFromHtml(scan.evtDscr, 500);
-    if (!description) throw new SchemaError(PROVIDER, 'GLS Italy returned a scan without wording');
+    const sentence = textFromHtml(scan.evtDscr, 500);
+    if (!sentence) throw new SchemaError(PROVIDER, 'GLS Italy returned a scan without wording');
+    // The English locale was asked: an Italian sentence shows the English one.
+    const description = glsItalyEnglish(sentence) ?? sentence;
     const clock = scanClock(scan);
     // The town of the depot, the hub or the delivery; the street and the note are not read.
     const location = isRecord(scan.address) ? textFromHtml(scan.address.city, 120) : '';

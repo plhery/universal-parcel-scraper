@@ -2,10 +2,8 @@ import { classifyWording, type ClassifiedWording, type Stage } from '../../core/
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 /**
- * The tracker's scan sentences in its English locale, mapped whole, and their
- * Italian versions, which the English locale sometimes answers with instead.
- * The scans carry no code, only a sentence, and every network depot writes the
- * same ones.
+ * The tracker's scan sentences in its English locale, mapped whole. The scans
+ * carry no code, only a sentence, and every network depot writes the same ones.
  */
 export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   // The sender booked the shipment and has not handed it over yet.
@@ -23,14 +21,24 @@ export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   'Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.': 'failed_attempt',
   // Held at the depot until the recipient answers the redelivery link.
   'Not in delivery. Awaiting instructions by link included in received email or sms': 'exception',
-  "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.": 'registered',
-  'Partita dalla sede mittente. In transito.': 'in_transit',
-  'In transito.': 'in_transit',
-  'Arrivata nella Sede GLS locale.': 'in_transit',
-  'Consegna prevista nel corso della giornata odierna.': 'out_for_delivery',
-  'Consegnata.': 'delivered',
-  'Destinatario assente al primo passaggio. Prego prenotare la consegna entro 3 giorni lavorativi, seguendo le istruzioni ricevute via mail o sms.': 'failed_attempt',
-  "Spedizione non in consegna. Il destinatario puo' prenotare la riconsegna tramite link presente in email / sms ricevuto": 'exception',
+};
+
+/**
+ * The Italian sentences the English locale sometimes answers with instead, and
+ * the English the Italian page's scan has in the English locale.
+ */
+const GLS_ITALY_ITALIAN: Readonly<Record<string, string>> = {
+  "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.":
+    'The shipment has been created by the sender, we are waiting for it to be entrusted to us for dispatch to its destination.',
+  'Partita dalla sede mittente. In transito.': 'Shipped from sending Depot. In transit.',
+  'In transito.': 'Shipment in transit.',
+  'Arrivata nella Sede GLS locale.': 'Arrived at final Depot.',
+  'Consegna prevista nel corso della giornata odierna.': 'Delivery scheduled during the day.',
+  'Consegnata.': 'Delivered.',
+  'Destinatario assente al primo passaggio. Prego prenotare la consegna entro 3 giorni lavorativi, seguendo le istruzioni ricevute via mail o sms.':
+    'Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.',
+  "Spedizione non in consegna. Il destinatario puo' prenotare la riconsegna tramite link presente in email / sms ricevuto":
+    'Not in delivery. Awaiting instructions by link included in received email or sms',
 };
 
 /**
@@ -46,7 +54,15 @@ export const GLS_ITALY_RAIL: Readonly<Record<string, Stage>> = {
   DELIVERED: 'delivered',
 };
 
+// All by `normalizeStatusWording` form. An Italian sentence has its English's stage.
+const ENGLISH = new Map(Object.entries(GLS_ITALY_ITALIAN).map(([italian, english]) => [normalizeStatusWording(italian), english]));
 const SCANS = new Map(Object.entries(GLS_ITALY_SCANS).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
+for (const [italian, english] of ENGLISH) SCANS.set(italian, SCANS.get(normalizeStatusWording(english))!);
+
+/** The English locale's sentence for an Italian one. */
+export function glsItalyEnglish(sentence: string): string | undefined {
+  return ENGLISH.get(normalizeStatusWording(sentence));
+}
 
 /** The stage a scan's sentence gives it: the map first, then the shared wording rules. */
 export function glsItalyScanStage(sentence: string): ClassifiedWording | null {

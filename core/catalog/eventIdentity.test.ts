@@ -540,6 +540,18 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(english, english)).toBe(false);
   });
 
+  it('lets a GLS Italy scan shown in English take over the row stored with its Italian sentence', () => {
+    const policy = sameInstantIdentityPolicy('gls-it', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ storedSources: ['gls-it'], requireProviderCode: false, matchEachScan: true });
+    const english = { stage: 'in_transit', description: 'Shipment in transit.', location: 'Example Town', providerCode: '' };
+    const italian = { ...english, description: 'In transito.' };
+    expect(policy?.matches?.(english, italian)).toBe(true);
+    for (const different of [{ ...italian, description: 'Arrivata nella Sede GLS locale.' }, { ...italian, location: 'Another Town' }]) {
+      expect(policy?.matches?.(english, different)).toBe(false);
+    }
+    expect(policy?.matches?.(english, english)).toBe(false);
+  });
+
   it('lets a Posti scan whose status now ends with a full stop take over the row stored without it', () => {
     const policy = sameInstantIdentityPolicy('posti', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'Item has been registered The item can be registered several times.', location: 'EXAMPLE CITY', providerCode: '' };

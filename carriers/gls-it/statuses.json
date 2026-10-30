@@ -92,6 +92,7 @@
     {
       "wording": "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.",
       "language": "it",
+      "english": "The shipment has been created by the sender, we are waiting for it to be entrusted to us for dispatch to its destination.",
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -100,6 +101,7 @@
     {
       "wording": "Partita dalla sede mittente. In transito.",
       "language": "it",
+      "english": "Shipped from sending Depot. In transit.",
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -108,6 +110,7 @@
     {
       "wording": "In transito.",
       "language": "it",
+      "english": "Shipment in transit.",
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -116,6 +119,7 @@
     {
       "wording": "Arrivata nella Sede GLS locale.",
       "language": "it",
+      "english": "Arrived at final Depot.",
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -124,6 +128,7 @@
     {
       "wording": "Consegna prevista nel corso della giornata odierna.",
       "language": "it",
+      "english": "Delivery scheduled during the day.",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -132,6 +137,7 @@
     {
       "wording": "Consegnata.",
       "language": "it",
+      "english": "Delivered.",
       "stage": "delivered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -140,6 +146,7 @@
     {
       "wording": "Destinatario assente al primo passaggio. Prego prenotare la consegna entro 3 giorni lavorativi, seguendo le istruzioni ricevute via mail o sms.",
       "language": "it",
+      "english": "Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.",
       "stage": "failed_attempt",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
@@ -148,6 +155,7 @@
     {
       "wording": "Spedizione non in consegna. Il destinatario puo' prenotare la riconsegna tramite link presente in email / sms ricevuto",
       "language": "it",
+      "english": "Not in delivery. Awaiting instructions by link included in received email or sms",
       "stage": "exception",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
