@@ -6806,6 +6806,52 @@
       }
     ]
   },
+  "alljoy": {
+    "displayName": "AllJoy",
+    "color": "#004899",
+    "aliases": [
+      "ALLJOY SUPPLY CHAIN CO.,LTD",
+      "Alljoy Supply Chain",
+      "Alljoy Logistics",
+      "全和悦",
+      "全和悦供应链",
+      "深圳市全和悦供应链管理有限公司",
+      "深圳市全和悦国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://web.alljoylogistics.com/",
+    "trackingUrlTemplate": "https://web.alljoylogistics.com/track?order={trackingNumber}",
+    "trackingSearchUrl": "https://web.alljoylogistics.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "web.alljoylogistics.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "order"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ALJTR\\d{13}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^ALJ[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "am-home-delivery": {
     "displayName": "AM Home Delivery",
     "color": "#013e81",
@@ -13574,6 +13620,31 @@
     ],
     "detectionRules": []
   },
+  "dpe-express": {
+    "displayName": "DPE Express",
+    "color": "#4f3282",
+    "aliases": [
+      "递必易",
+      "递必易国际货运代理有限公司",
+      "广州递必易国际货运代理有限公司",
+      "Delivery Perfect Express",
+      "Delivery Perfect Express Co., Ltd."
+    ],
+    "countries": [
+      "CN",
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dpe.net.my/",
+    "trackingSearchUrl": "https://www.dpe.net.my/tracking.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dpex": {
     "displayName": "DPEX Worldwide",
     "color": "#ec3a43",
@@ -17907,6 +17978,34 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "goodmaji": {
+    "displayName": "Goodmaji",
+    "color": "#2dbbec",
+    "aliases": [
+      "GoodMaji",
+      "Good Maji",
+      "好馬吉",
+      "好马吉",
+      "好馬吉物流",
+      "好馬吉股份有限公司",
+      "Goodmaji.com"
+    ],
+    "countries": [
+      "TW",
+      "MY",
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Taipei",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.goodmaji.com/",
+    "trackingSearchUrl": "https://system.goodmaji.com/web/shipmenthistory.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "grand-slam-express": {
@@ -28616,6 +28715,48 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "profit-fields": {
+    "displayName": "Profit Fields",
+    "color": "#009844",
+    "aliases": [
+      "8DT",
+      "EWS Profit Fields",
+      "Profit Fields (8DT)",
+      "永利八达通",
+      "永利八达通物流",
+      "深圳永利八达通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.8dt.com/",
+    "trackingUrlTemplate": "https://www.8dt.com/tracking?track={trackingNumber}",
+    "trackingSearchUrl": "https://www.8dt.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "8dt.com",
+          "www.8dt.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^EWS[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "prompt-xpress": {
     "displayName": "Prompt Xpress",
     "color": "#24408f",
@@ -37058,6 +37199,38 @@
       {
         "pattern": "^[0-9A-F]{8}\\d{9}[A-Z]$",
         "confidence": "high"
+      }
+    ]
+  },
+  "zes-express": {
+    "displayName": "ZES Express",
+    "color": "#102a83",
+    "aliases": [
+      "Eshun",
+      "Eshun International Logistics",
+      "Eshun (ZES Express)",
+      "俄顺国际物流",
+      "俄顺国际",
+      "俄顺物流",
+      "Эшун"
+    ],
+    "countries": [
+      "CN",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.zes-express.com/",
+    "trackingSearchUrl": "https://www.zes-express.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ZESZE\\d{10}YQ$",
+        "confidence": "low"
       }
     ]
   },

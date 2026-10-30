@@ -6808,6 +6808,52 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "alljoy": {
+    "displayName": "AllJoy",
+    "color": "#004899",
+    "aliases": [
+      "ALLJOY SUPPLY CHAIN CO.,LTD",
+      "Alljoy Supply Chain",
+      "Alljoy Logistics",
+      "全和悦",
+      "全和悦供应链",
+      "深圳市全和悦供应链管理有限公司",
+      "深圳市全和悦国际货运代理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://web.alljoylogistics.com/",
+    "trackingUrlTemplate": "https://web.alljoylogistics.com/track?order={trackingNumber}",
+    "trackingSearchUrl": "https://web.alljoylogistics.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "web.alljoylogistics.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "order"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ALJTR\\d{13}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^ALJ[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "am-home-delivery": {
     "displayName": "AM Home Delivery",
     "color": "#013e81",
@@ -13576,6 +13622,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "dpe-express": {
+    "displayName": "DPE Express",
+    "color": "#4f3282",
+    "aliases": [
+      "递必易",
+      "递必易国际货运代理有限公司",
+      "广州递必易国际货运代理有限公司",
+      "Delivery Perfect Express",
+      "Delivery Perfect Express Co., Ltd."
+    ],
+    "countries": [
+      "CN",
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dpe.net.my/",
+    "trackingSearchUrl": "https://www.dpe.net.my/tracking.php",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dpex": {
     "displayName": "DPEX Worldwide",
     "color": "#ec3a43",
@@ -17909,6 +17980,34 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "goodmaji": {
+    "displayName": "Goodmaji",
+    "color": "#2dbbec",
+    "aliases": [
+      "GoodMaji",
+      "Good Maji",
+      "好馬吉",
+      "好马吉",
+      "好馬吉物流",
+      "好馬吉股份有限公司",
+      "Goodmaji.com"
+    ],
+    "countries": [
+      "TW",
+      "MY",
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Taipei",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.goodmaji.com/",
+    "trackingSearchUrl": "https://system.goodmaji.com/web/shipmenthistory.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "grand-slam-express": {
@@ -28618,6 +28717,48 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "profit-fields": {
+    "displayName": "Profit Fields",
+    "color": "#009844",
+    "aliases": [
+      "8DT",
+      "EWS Profit Fields",
+      "Profit Fields (8DT)",
+      "永利八达通",
+      "永利八达通物流",
+      "深圳永利八达通物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.8dt.com/",
+    "trackingUrlTemplate": "https://www.8dt.com/tracking?track={trackingNumber}",
+    "trackingSearchUrl": "https://www.8dt.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "8dt.com",
+          "www.8dt.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^EWS[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "prompt-xpress": {
     "displayName": "Prompt Xpress",
     "color": "#24408f",
@@ -37063,6 +37204,38 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "zes-express": {
+    "displayName": "ZES Express",
+    "color": "#102a83",
+    "aliases": [
+      "Eshun",
+      "Eshun International Logistics",
+      "Eshun (ZES Express)",
+      "俄顺国际物流",
+      "俄顺国际",
+      "俄顺物流",
+      "Эшун"
+    ],
+    "countries": [
+      "CN",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.zes-express.com/",
+    "trackingSearchUrl": "https://www.zes-express.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^ZESZE\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "zheldor": {
     "displayName": "Zheldorexpeditsia",
     "color": "#e6332a",
@@ -37375,6 +37548,7 @@ export const CARRIER_IDS = [
   "alem-tat",
   "algerie-poste",
   "allegro-one",
+  "alljoy",
   "am-home-delivery",
   "ambro-express",
   "ameex",
@@ -37542,6 +37716,7 @@ export const CARRIER_IDS = [
   "dpd-ro",
   "dpd-uk",
   "dpd-za",
+  "dpe-express",
   "dpex",
   "dragon-star-curier",
   "drop2shop",
@@ -37650,6 +37825,7 @@ export const CARRIER_IDS = [
   "gofo-nl",
   "gogo-xpress",
   "goodluck-courier",
+  "goodmaji",
   "grand-slam-express",
   "groupe-guilbault",
   "gs-postbox",
@@ -37924,6 +38100,7 @@ export const CARRIER_IDS = [
   "precision-deliveries",
   "pro-carrier",
   "professional-couriers",
+  "profit-fields",
   "prompt-xpress",
   "pronto-lanka",
   "proships",
@@ -38143,6 +38320,7 @@ export const CARRIER_IDS = [
   "z-leading",
   "zajil",
   "zeleris",
+  "zes-express",
   "zheldor",
   "zoom-ve",
   "zr-express",
@@ -38292,6 +38470,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alem-tat": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
   "allegro-one": ["allegro-one-1","allegro-one-2"],
+  "alljoy": ["alljoy-1","alljoy-2"],
   "am-home-delivery": [],
   "ambro-express": [],
   "ameex": [],
@@ -38459,6 +38638,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-ro": ["dpd-ro-1"],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "dpd-za": [],
+  "dpe-express": [],
   "dpex": [],
   "dragon-star-curier": [],
   "drop2shop": ["drop2shop-1"],
@@ -38567,6 +38747,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gofo-nl": ["gofo-nl-1"],
   "gogo-xpress": ["gogo-xpress-1"],
   "goodluck-courier": [],
+  "goodmaji": [],
   "grand-slam-express": [],
   "groupe-guilbault": [],
   "gs-postbox": [],
@@ -38841,6 +39022,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "precision-deliveries": ["precision-deliveries-1"],
   "pro-carrier": ["pro-carrier-1"],
   "professional-couriers": [],
+  "profit-fields": ["profit-fields-1"],
   "prompt-xpress": ["prompt-xpress-1"],
   "pronto-lanka": [],
   "proships": [],
@@ -39060,6 +39242,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "z-leading": ["z-leading-1"],
   "zajil": [],
   "zeleris": ["zeleris-1"],
+  "zes-express": ["zes-express-1"],
   "zheldor": [],
   "zoom-ve": [],
   "zr-express": ["zr-express-1"],

@@ -625,3 +625,34 @@ describe('KEC eCommerce and TheLorry', () => {
     expect(carrierIdFromName('The Lorry')).toBe('thelorry');
   });
 });
+
+describe('ZES Express, Profit Fields, AllJoy, DPE Express and Goodmaji', () => {
+  it('suggests each forwarder for its own prefix only', () => {
+    expect(detectCarrierMatch('ZESZE1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['zes-express'] });
+    expect(detectCarrierMatch('EWSUS1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['profit-fields'] });
+    expect(detectCarrierMatch('ALJTR2601010000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['alljoy'] });
+    expect(detectCarrierMatch('ALJCD1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['alljoy'] });
+    for (const number of ['ZESZE100000017YQ', 'ZESXX1000000017YQ', 'EWSUS1000000017', 'EWS1000000017YQ', 'ALJTR260101000017', 'ALJCD1000000017']) {
+      const candidates = detectCarrierMatch(number).candidates ?? [];
+      for (const carrier of ['zes-express', 'profit-fields', 'alljoy']) expect(candidates, number).not.toContain(carrier);
+    }
+  });
+
+  it('leaves DPE Express waybills to the carriers that share eleven digits', () => {
+    expect(detectCarrierMatch('10000000017').candidates ?? []).not.toContain('dpe-express');
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://www.8dt.com/tracking?track=EWSUS1000000017YQ'))
+      .toMatchObject({ trackingNumber: 'EWSUS1000000017YQ', carrier: 'profit-fields', source: 'link' });
+    expect(parseTrackingInput('https://web.alljoylogistics.com/track?order=ALJTR2601010000017'))
+      .toMatchObject({ trackingNumber: 'ALJTR2601010000017', carrier: 'alljoy', source: 'link' });
+    expect(carrierIdFromName('Eshun International Logistics')).toBe('zes-express');
+    expect(carrierIdFromName('俄顺国际物流')).toBe('zes-express');
+    expect(carrierIdFromName('EWS Profit Fields')).toBe('profit-fields');
+    expect(carrierIdFromName('8DT')).toBe('profit-fields');
+    expect(carrierIdFromName('全和悦')).toBe('alljoy');
+    expect(carrierIdFromName('递必易')).toBe('dpe-express');
+    expect(carrierIdFromName('好馬吉')).toBe('goodmaji');
+  });
+});

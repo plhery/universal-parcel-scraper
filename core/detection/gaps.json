@@ -4218,5 +4218,11 @@
     "pattern": "^YT\\d{16}$",
     "kind": "by_design",
     "reason": "KEC eCommerce also carries YunExpress parcels under YunExpress's own numbers, which belong to YunExpress."
+  },
+  {
+    "carrier": "dpe-express",
+    "pattern": "^\\d{11}$",
+    "kind": "collision",
+    "reason": "DPE Express waybills are eleven digits, a length many carriers' rules accept, so the shape cannot name DPE Express."
   }
 ]
