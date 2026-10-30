@@ -46,12 +46,14 @@ through the lookup its tracker page makes.
 ## Numbers
 
 Two layouts were seen on the carrier's own tracker. The older tracker page shows two letters,
-nine digits, a two-letter code and a two-digit counter. The current tracker shows two letters,
-nine digits and MG: the UPU S10 form with Madagascar's code, which the Morning Global waybill
-fails on the check digit. One example of each is too little to tell how the carrier numbers
-parcels, so no rule claims either layout and both are declared gaps. Without a rule of its own,
-Morning Global is not asked during recognition. The adapter sends eight to forty letters and
-digits. The samples and their sources are in [`numbers.json`](numbers.json).
+nine digits, a two-letter code and a two-digit counter. One example is too little to tell how
+the carrier numbered those parcels, so no rule claims that layout and it is a declared gap. The
+current tracker shows `BR`, nine digits and `MG`: the UPU S10 form with Madagascar's code, which
+Morning Global's waybills fail on the check digit. A low-confidence rule offers Morning Global for
+that layout, and recognition asks it. A number of that form that passes the check is detected as
+postal, and recognition asks Morning Global about it too.
+The adapter sends eight to forty letters and digits. The samples and their sources are in
+[`numbers.json`](numbers.json).
 
 ## Links
 

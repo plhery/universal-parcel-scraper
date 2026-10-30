@@ -19309,7 +19309,8 @@ export const CARRIER_CATALOG = {
     "aliases": [
       "HuaHan Express",
       "华翰速递",
-      "华翰物流"
+      "华翰物流",
+      "Huanhan Logistics"
     ],
     "countries": [
       "CN"
@@ -24657,7 +24658,12 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^BR\\d{9}MG$",
+        "confidence": "low"
+      }
+    ]
   },
   "mrl-global": {
     "displayName": "MRL Global",
@@ -30879,6 +30885,10 @@ export const CARRIER_CATALOG = {
       },
       {
         "pattern": "^1[A-Z][A-Z0-9]{2}L[LN]\\d{9,12}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^1XL\\d{11}$",
         "confidence": "low"
       }
     ]
@@ -39849,7 +39859,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mng-kargo": [],
   "mongol-infinity-post": [],
   "montenegro-post": [],
-  "morning-global": [],
+  "morning-global": ["morning-global-1"],
   "mrl-global": [],
   "mtscn": ["mtscn-1"],
   "mylerz": ["mylerz-1"],
@@ -40005,7 +40015,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sahara-express": [],
   "saia": ["saia-1"],
   "sailpost": [],
-  "sameday": ["sameday-1","sameday-2"],
+  "sameday": ["sameday-1","sameday-2","sameday-3"],
   "sapx-express": [],
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],

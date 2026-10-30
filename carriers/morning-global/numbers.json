@@ -35,7 +35,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "morning-global"
+        ]
       },
       "note": "The archived reply of Morning Global's tracking API, captured with the tracker page's lookup of this number, shows its history from order creation in Hong Kong to out for delivery in Canada."
     }

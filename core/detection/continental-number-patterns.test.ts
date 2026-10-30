@@ -770,6 +770,7 @@ describe('wave eight courier rules', () => {
 
   it('names HuaHan for HHW, two letters, ten digits and YQ', () => {
     expect(detectCarrierMatch('HHWAB0000000001YQ')).toMatchObject({ carrier: 'huahan', confidence: 'high' });
+    expect(carrierIdFromName('Huanhan Logistics')).toBe('huahan');
     for (const number of ['HHWAB000000001YQ', 'HHWA0000000001YQ', 'HHXAB0000000001YQ', 'HHWAB0000000001YX']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('huahan');
       expect(detectCarrierMatch(number).carrier, number).not.toBe('huahan');
@@ -842,6 +843,14 @@ describe('Sameday tracker links', () => {
       expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: '1ZZZ000000001', carrier: 'sameday', source: 'link' });
     }
     expect(parseTrackingInput('https://sameday.ro/easybox/').source).toBe('none');
+  });
+
+  it('suggests Sameday for client XL and eleven digits, not for the prefixes of First Line or OnTrac', () => {
+    expect(detectCarrierMatch('1XL00000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['sameday'] });
+    for (const number of ['1XL0000000001', '1XL000000000001', '1XM00000000001', '1ST00000000001', '1LS000000000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('sameday');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('sameday');
+    }
   });
 });
 

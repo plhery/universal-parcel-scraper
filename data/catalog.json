@@ -19307,7 +19307,8 @@
     "aliases": [
       "HuaHan Express",
       "华翰速递",
-      "华翰物流"
+      "华翰物流",
+      "Huanhan Logistics"
     ],
     "countries": [
       "CN"
@@ -24655,7 +24656,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^BR\\d{9}MG$",
+        "confidence": "low"
+      }
+    ]
   },
   "mrl-global": {
     "displayName": "MRL Global",
@@ -30877,6 +30883,10 @@
       },
       {
         "pattern": "^1[A-Z][A-Z0-9]{2}L[LN]\\d{9,12}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^1XL\\d{11}$",
         "confidence": "low"
       }
     ]

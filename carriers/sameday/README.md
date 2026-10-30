@@ -28,7 +28,9 @@ HTML, 403 and 429 replies and malformed JSON are never read as not found.
   `#` dropped. A number without a digit is refused before any request.
 - An AWB starts with `1` and a three-character client code. Detection offers Sameday when the
   code is letters, or when it holds a digit and `LN` or `LL` follows, with nine to twelve digits
-  as after a code of letters. Neither shape carries a check, so both stay low confidence.
+  as after a code of letters. A code of two letters and a digit is only offered as `XL`, a client
+  seen on a Sameday parcel, with eleven digits: First Line and OnTrac print other two letters
+  and digits that way. None of these shapes carries a check, so all stay low confidence.
 - The reply holds the AWB's own history, newest first, and each parcel's scans, oldest
   first. A parcel number (the AWB and a three-digit suffix) is answered with the whole AWB:
   the adapter reads that parcel's scans and reports the AWB as `canonical_tracking_number`.

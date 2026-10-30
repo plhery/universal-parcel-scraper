@@ -2407,12 +2407,6 @@
     "reason": "One Morning Global waybill from the older tracker page has this layout, too little to tell how the carrier numbers parcels, so detection leaves it unclaimed."
   },
   {
-    "carrier": "morning-global",
-    "pattern": "^[A-Z]{2}\\d{9}MG$",
-    "kind": "by_design",
-    "reason": "This is the UPU S10 form with Madagascar's code; the one Morning Global waybill seen fails the check digit, too little to take the layout from postal detection."
-  },
-  {
     "carrier": "mrl-global",
     "pattern": "^C[A-Z]{3}\\d{6}$",
     "kind": "collision",

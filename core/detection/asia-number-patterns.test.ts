@@ -739,3 +739,14 @@ describe('Super Parcel Track, Ural Express, Onex, GCX, Tusou and Wise Express', 
   });
 });
 
+describe('Morning Global waybills', () => {
+  it('suggests Morning Global for BR, nine digits and MG that fail the S10 check, and asks it', () => {
+    expect(detectCarrierMatch('BR000000017MG')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['morning-global'] });
+    expect(recognitionAskedCarriers('BR000000017MG')).toEqual(['morning-global']);
+    expect(detectCarrierMatch('BR000000014MG').carrier).toBe('intl-post');
+    for (const number of ['BR00000017MG', 'BR0000000017MG', 'BX000000017MG', 'BR000000017MX', 'HK000000017PH01']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('morning-global');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('morning-global');
+    }
+  });
+});

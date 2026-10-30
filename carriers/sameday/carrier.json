@@ -81,6 +81,11 @@
       "id": "sameday-2",
       "pattern": "^1[A-Z][A-Z0-9]{2}L[LN]\\d{9,12}$",
       "confidence": "low"
+    },
+    {
+      "id": "sameday-3",
+      "pattern": "^1XL\\d{11}$",
+      "confidence": "low"
     }
   ]
 }

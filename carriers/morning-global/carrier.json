@@ -101,5 +101,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "morning-global-1",
+      "pattern": "^BR\\d{9}MG$",
+      "confidence": "low"
+    }
+  ]
 }
