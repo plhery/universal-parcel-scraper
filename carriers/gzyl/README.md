@@ -28,7 +28,8 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
 
 - The service matches a number exactly as written: the order's tracking number, the shipper's
   reference, the waybill code or the channel's transfer number, dashes included. A record counts
-  only when one of those is the whole number asked. Two orders under one reference stay
+  only when one of those is the whole number asked; otherwise the error names the record's
+  fields that hold the number, without their values. Two orders under one reference stay
   inconclusive. [BYHD's](../byhd/README.md) page hides the number it found an order by, so there
   a lone record counts for the one number the page's form echoes back.
 - GZYL writes a shipment's timeline ahead: every row carries the same creation time, days before

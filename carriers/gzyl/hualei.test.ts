@@ -49,6 +49,12 @@ describe('Hualei track interface', () => {
     expect(parseHualeiTrack(fixture('track'), 'SHOP-REF-0001', GZYL, READ_AT)?.canonical_tracking_number).toBe(NUMBER);
     expect(parseHualeiTrack(fixture('track'), NUMBER, GZYL, READ_AT)?.canonical_tracking_number).toBeUndefined();
     expect(() => parseHualeiTrack(fixture('track'), 'GZTEST00000009', GZYL, READ_AT)).toThrow(IndeterminateError);
+    // A record that carries the number only in another field, or within one, is no answer; the error names the fields.
+    const moved = fixture('track');
+    Object.assign(moved[0].data[0], { trackingNumber: `${NUMBER}-1`, customerOrderNumber: NUMBER.toLowerCase() });
+    expect(() => parseHualeiTrack(moved, NUMBER, GZYL, READ_AT))
+      .toThrow(`GZYL answered with another shipment; its trackingNumber, customerOrderNumber holds the number`);
+    expect(() => parseHualeiTrack(fixture('track'), 'GZTEST00000009', GZYL, READ_AT)).toThrow(/^GZYL answered with another shipment$/);
     // Two orders that share a reference are no answer.
     const shared = fixture('track');
     shared[0].data.push({ ...shared[0].data[0], trackingNumber: 'GZTEST00000002' });
