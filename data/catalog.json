@@ -17074,6 +17074,27 @@
     ],
     "detectionRules": []
   },
+  "gcx": {
+    "displayName": "GCX",
+    "color": "#ed1c24",
+    "aliases": [
+      "GCX Israel",
+      "Global Courier Express"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gcx.co.il/",
+    "trackingSearchUrl": "https://gcx.co.il/%d7%9e%d7%a2%d7%a7%d7%91-%d7%9e%d7%a9%d7%9c%d7%95%d7%97%d7%99%d7%9d/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gdex": {
     "displayName": "GDEX",
     "color": "#d71921",
@@ -26022,6 +26043,30 @@
       }
     ]
   },
+  "onex": {
+    "displayName": "Onex",
+    "color": "#5dba2f",
+    "aliases": [
+      "ONEX LTD",
+      "Onex Armenia",
+      "Onex.am"
+    ],
+    "countries": [
+      "AM",
+      "GE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Yerevan",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://onex.am/",
+    "trackingUrlTemplate": "https://onex.am/en/onextrack?track={trackingNumber}",
+    "trackingSearchUrl": "https://onex.am/en/onextrack",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "opt-nc": {
     "displayName": "OPT-NC",
     "color": "#28347c",
@@ -29971,6 +30016,26 @@
       }
     ]
   },
+  "rhenus-de": {
+    "displayName": "Rhenus Germany",
+    "color": "#00499a",
+    "aliases": [
+      "Rhenus Home Delivery GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rhenus.group/de/de/",
+    "trackingSearchUrl": "https://rhenusmydelivery.com/de",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rhenus-it": {
     "displayName": "Rhenus Italia",
     "color": "#00499a",
@@ -33607,6 +33672,27 @@
     ],
     "detectionRules": []
   },
+  "super-parcel-track": {
+    "displayName": "Super Parcel Track",
+    "color": "#d71920",
+    "aliases": [
+      "Super Parcel",
+      "SP Track"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track-sp.com/tracking/detail",
+    "trackingSearchUrl": "https://track-sp.com/tracking/detail",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "surat-kargo": {
     "displayName": "Sürat Kargo",
     "color": "#03387b",
@@ -35728,6 +35814,39 @@
       }
     ]
   },
+  "tusou": {
+    "displayName": "Tusou",
+    "color": "#003e8d",
+    "aliases": [
+      "图搜网络科技",
+      "合肥图搜网络科技有限公司",
+      "Tusou Keji"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tusoukeji.cn/",
+    "trackingUrlTemplate": "https://tusou.kingtrans.net/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
+    "trackingSearchUrl": "https://tusou.kingtrans.net/tracken.jsp",
+    "linkRules": [
+      {
+        "domains": [
+          "tusou.kingtrans.net"
+        ],
+        "pathPattern": "^/WebTrack$",
+        "params": [
+          "bills"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "tws-express": {
     "displayName": "TWS Express Courier",
     "color": "#FFED00",
@@ -35958,6 +36077,31 @@
         "rawPattern": "^[A-Z]{6}\\d{4,5}-\\d{7}$"
       }
     ]
+  },
+  "ural-express": {
+    "displayName": "Ural Express",
+    "color": "#22a2c3",
+    "aliases": [
+      "URAL",
+      "乌拉尔国际物流",
+      "Ural优拉国际物流",
+      "优拉国际物流"
+    ],
+    "countries": [
+      "CN",
+      "RU",
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.uralsvip.com/",
+    "trackingSearchUrl": "https://tmsplus.ilinexpress.com/#/track",
+    "linkRules": [],
+    "detectionRules": []
   },
   "urbano": {
     "displayName": "Urbano",
@@ -37052,6 +37196,28 @@
         "confidence": "high"
       }
     ]
+  },
+  "wise-express": {
+    "displayName": "Wise Express",
+    "color": "#0662a0",
+    "aliases": [
+      "万色速递",
+      "上海万色速递有限公司",
+      "Shanghai Wise Express"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shwise.cn/home/",
+    "trackingSearchUrl": "https://www.shwise.cn/home/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "wizmo": {
     "displayName": "Wizmo",

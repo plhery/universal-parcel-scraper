@@ -17076,6 +17076,27 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "gcx": {
+    "displayName": "GCX",
+    "color": "#ed1c24",
+    "aliases": [
+      "GCX Israel",
+      "Global Courier Express"
+    ],
+    "countries": [
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jerusalem",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gcx.co.il/",
+    "trackingSearchUrl": "https://gcx.co.il/%d7%9e%d7%a2%d7%a7%d7%91-%d7%9e%d7%a9%d7%9c%d7%95%d7%97%d7%99%d7%9d/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gdex": {
     "displayName": "GDEX",
     "color": "#d71921",
@@ -26024,6 +26045,30 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "onex": {
+    "displayName": "Onex",
+    "color": "#5dba2f",
+    "aliases": [
+      "ONEX LTD",
+      "Onex Armenia",
+      "Onex.am"
+    ],
+    "countries": [
+      "AM",
+      "GE"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Yerevan",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://onex.am/",
+    "trackingUrlTemplate": "https://onex.am/en/onextrack?track={trackingNumber}",
+    "trackingSearchUrl": "https://onex.am/en/onextrack",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "opt-nc": {
     "displayName": "OPT-NC",
     "color": "#28347c",
@@ -29973,6 +30018,26 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "rhenus-de": {
+    "displayName": "Rhenus Germany",
+    "color": "#00499a",
+    "aliases": [
+      "Rhenus Home Delivery GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rhenus.group/de/de/",
+    "trackingSearchUrl": "https://rhenusmydelivery.com/de",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "rhenus-it": {
     "displayName": "Rhenus Italia",
     "color": "#00499a",
@@ -33609,6 +33674,27 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "super-parcel-track": {
+    "displayName": "Super Parcel Track",
+    "color": "#d71920",
+    "aliases": [
+      "Super Parcel",
+      "SP Track"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track-sp.com/tracking/detail",
+    "trackingSearchUrl": "https://track-sp.com/tracking/detail",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "surat-kargo": {
     "displayName": "Sürat Kargo",
     "color": "#03387b",
@@ -35730,6 +35816,39 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "tusou": {
+    "displayName": "Tusou",
+    "color": "#003e8d",
+    "aliases": [
+      "图搜网络科技",
+      "合肥图搜网络科技有限公司",
+      "Tusou Keji"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tusoukeji.cn/",
+    "trackingUrlTemplate": "https://tusou.kingtrans.net/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
+    "trackingSearchUrl": "https://tusou.kingtrans.net/tracken.jsp",
+    "linkRules": [
+      {
+        "domains": [
+          "tusou.kingtrans.net"
+        ],
+        "pathPattern": "^/WebTrack$",
+        "params": [
+          "bills"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "tws-express": {
     "displayName": "TWS Express Courier",
     "color": "#FFED00",
@@ -35960,6 +36079,31 @@ export const CARRIER_CATALOG = {
         "rawPattern": "^[A-Z]{6}\\d{4,5}-\\d{7}$"
       }
     ]
+  },
+  "ural-express": {
+    "displayName": "Ural Express",
+    "color": "#22a2c3",
+    "aliases": [
+      "URAL",
+      "乌拉尔国际物流",
+      "Ural优拉国际物流",
+      "优拉国际物流"
+    ],
+    "countries": [
+      "CN",
+      "RU",
+      "IL"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.uralsvip.com/",
+    "trackingSearchUrl": "https://tmsplus.ilinexpress.com/#/track",
+    "linkRules": [],
+    "detectionRules": []
   },
   "urbano": {
     "displayName": "Urbano",
@@ -37054,6 +37198,28 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "wise-express": {
+    "displayName": "Wise Express",
+    "color": "#0662a0",
+    "aliases": [
+      "万色速递",
+      "上海万色速递有限公司",
+      "Shanghai Wise Express"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shwise.cn/home/",
+    "trackingSearchUrl": "https://www.shwise.cn/home/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "wizmo": {
     "displayName": "Wizmo",
@@ -38535,6 +38701,7 @@ export const CARRIER_IDS = [
   "fukuyama",
   "gaash",
   "gati",
+  "gcx",
   "gdex",
   "gebrueder-weiss",
   "geis",
@@ -38768,6 +38935,7 @@ export const CARRIER_IDS = [
   "omgo",
   "omniva",
   "one-world-express",
+  "onex",
   "opt-nc",
   "optima-overnight",
   "orian",
@@ -38865,6 +39033,7 @@ export const CARRIER_IDS = [
   "redur",
   "redx",
   "relaytech",
+  "rhenus-de",
   "rhenus-it",
   "rincos",
   "rivigo",
@@ -38955,6 +39124,7 @@ export const CARRIER_IDS = [
   "stone3pl",
   "straightship",
   "sundarban-courier",
+  "super-parcel-track",
   "surat-kargo",
   "sway",
   "swiftx",
@@ -39013,12 +39183,14 @@ export const CARRIER_IDS = [
   "tufesa",
   "tusass",
   "tusk-logistics",
+  "tusou",
   "tws-express",
   "ubi-smart-parcel",
   "ues-uy",
   "united-delivery-service",
   "united-worldwide-couriers",
   "upaya",
+  "ural-express",
   "urbano",
   "urvaam",
   "uzbekistan-post",
@@ -39046,6 +39218,7 @@ export const CARRIER_IDS = [
   "whiz-delivery",
   "winion-logis",
   "winit",
+  "wise-express",
   "wizmo",
   "x-express-ba",
   "x-trac",
@@ -39478,6 +39651,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fukuyama": [],
   "gaash": [],
   "gati": [],
+  "gcx": [],
   "gdex": ["gdex-1"],
   "gebrueder-weiss": [],
   "geis": [],
@@ -39711,6 +39885,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
   "one-world-express": ["one-world-express-1"],
+  "onex": [],
   "opt-nc": [],
   "optima-overnight": ["optima-overnight-1"],
   "orian": [],
@@ -39808,6 +39983,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "redur": [],
   "redx": ["redx-1"],
   "relaytech": ["relaytech-1"],
+  "rhenus-de": [],
   "rhenus-it": [],
   "rincos": [],
   "rivigo": [],
@@ -39898,6 +40074,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stone3pl": ["stone3pl-s18"],
   "straightship": ["straightship-1","straightship-2"],
   "sundarban-courier": [],
+  "super-parcel-track": [],
   "surat-kargo": [],
   "sway": [],
   "swiftx": ["swiftx-1"],
@@ -39956,12 +40133,14 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tufesa": [],
   "tusass": [],
   "tusk-logistics": ["tusk-logistics-1"],
+  "tusou": [],
   "tws-express": ["tws-express-1"],
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
   "ues-uy": ["ues-uy-1"],
   "united-delivery-service": ["united-delivery-service-1"],
   "united-worldwide-couriers": [],
   "upaya": ["upaya-1"],
+  "ural-express": [],
   "urbano": ["urbano-1"],
   "urvaam": [],
   "uzbekistan-post": ["uzbekistan-post-s10"],
@@ -39989,6 +40168,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "whiz-delivery": ["whiz-delivery-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
+  "wise-express": [],
   "wizmo": ["wizmo-1"],
   "x-express-ba": [],
   "x-trac": ["x-trac-1"],

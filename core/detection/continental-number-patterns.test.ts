@@ -1081,7 +1081,7 @@ describe('ROZETKA Delivery, HRX, Cargobus and Jetpak numbers and links', () => {
   });
 });
 
-describe('TransNatur, Rhenus Italia, Emons and Noerpel', () => {
+describe('TransNatur, Rhenus Italia, Rhenus Germany, Emons and Noerpel', () => {
   it('reads their tracker links and names', () => {
     expect(parseTrackingInput('https://portal.transnatur.com/crm/track/TN10000017/'))
       .toMatchObject({ trackingNumber: 'TN10000017', carrier: 'transnatur', source: 'link' });
@@ -1091,6 +1091,8 @@ describe('TransNatur, Rhenus Italia, Emons and Noerpel', () => {
     expect(carrierIdFromName('Rhenus Italia')).toBe('rhenus-it');
     expect(carrierIdFromName('Emons Spedition')).toBe('emons');
     expect(carrierIdFromName('C.E. Noerpel')).toBe('noerpel');
+    expect(carrierIdFromName('Rhenus Germany')).toBe('rhenus-de');
+    expect(carrierIdFromName('Rhenus Home Delivery GmbH')).toBe('rhenus-de');
     // Rhenus runs separate networks in each country.
     expect(carrierIdFromName('Rhenus')).toBeUndefined();
   });

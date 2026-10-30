@@ -719,3 +719,23 @@ describe('Shipter, Tonda Global, Liuchen, EAC and LBTX', () => {
   });
 });
 
+describe('Super Parcel Track, Ural Express, Onex, GCX, Tusou and Wise Express', () => {
+  it('reads their names and Tusou\'s tracker links', () => {
+    expect(parseTrackingInput('https://tusou.kingtrans.net/WebTrack?action=list&language=en&istrack=false&bills=TS1000000017'))
+      .toMatchObject({ trackingNumber: 'TS1000000017', carrier: 'tusou', source: 'link' });
+    expect(carrierIdFromName('Super Parcel')).toBe('super-parcel-track');
+    expect(carrierIdFromName('乌拉尔国际物流')).toBe('ural-express');
+    expect(carrierIdFromName('Onex Armenia')).toBe('onex');
+    expect(carrierIdFromName('Global Courier Express')).toBe('gcx');
+    expect(carrierIdFromName('图搜网络科技')).toBe('tusou');
+    expect(carrierIdFromName('万色速递')).toBe('wise-express');
+    // WanB Express is a different company.
+    expect(carrierIdFromName('WanB Express')).not.toBe('wise-express');
+  });
+
+  it('leaves the inbound carrier\'s number on an Onex tracker link to that carrier', () => {
+    // Onex tracks parcels by the number of the carrier that brought them to its warehouse.
+    expect(parseTrackingInput('https://onex.am/en/onextrack?track=RR100000017AM').carrier).not.toBe('onex');
+  });
+});
+
