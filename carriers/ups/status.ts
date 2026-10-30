@@ -86,8 +86,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // A notice that the package is on its way, without a facility.
   ['DA', 'in_transit'],
   // Delays and new delivery plans: a late flight, a possible delay, a new
-  // plan, a delivery a day early, a Saturday delivery requested.
+  // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather.
   ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'], ['RF', 'in_transit'],
+  ['DJ', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
   // one to the receiver's address instead of the access point.

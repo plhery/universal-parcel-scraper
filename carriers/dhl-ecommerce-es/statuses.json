@@ -28,6 +28,7 @@
     {"code": "FA", "wording": "Shipment with incidence If you are the sender, please contact DHL Parcel, if you are the recipient please contact the sender", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "RT", "wording": "Shipment being returned to sender", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "The return is under way; movement scans follow it."},
     {"code": "AS", "wording": "Parcel will be delivered to a DHL ServicePoint", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "SPO", "wording": "Delivery at DHL ServicePoint requested", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The recipient's request for a ServicePoint, written at the same minute as AS and staged like it."},
     {"code": "ES", "wording": "Parcel is on it's way to our DHL ServicePoint", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "IS", "wording": "Delivered to DHL ServicePoint, ready for collection by the recipient", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live"},
     {"code": "RS", "wording": "Parcel picked up by recipient", "language": "en", "stage": "delivered", "confirmedBy": "live"},
