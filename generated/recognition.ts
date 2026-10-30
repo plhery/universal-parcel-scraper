@@ -310,6 +310,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "omniva": 300,
   "one-world-express": 846,
   "ontrac": 650,
+  "optima-overnight": 53,
   "orlen-paczka": 495,
   "osm-worldwide": 75,
   "pack-man": 862,

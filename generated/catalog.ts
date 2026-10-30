@@ -25850,7 +25850,9 @@ export const CARRIER_CATALOG = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "optima-overnight",
+      "recognitionRank": 53,
+      "localClocks": true
     },
     "canaryUrl": "https://www.shipoptima.com/pages/tracking",
     "trackingUrlTemplate": "https://www.shipoptima.com/pages/tracking?tracking={trackingNumber}",
