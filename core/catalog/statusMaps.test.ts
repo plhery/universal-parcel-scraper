@@ -1444,6 +1444,13 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'DEPOSITADO PELO CLIENTE/EXPEDIDOR')).toEqual(mapped('accepted'));
     expect(answer('unknown', null, 'ENCOMENDA RECOLHIDA')).toEqual(mapped('accepted'));
     expect(answer('unknown', null, 'ENTRADA EM ARMAZÉM')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', null, 'Die Sendung ist im Zielland/Zielgebiet eingetroffen')).toEqual(mapped('in_transit'));
+    // Wording the carriers' own maps now read.
+    expect(answer('bpost', null, 'Your parcel was delivered at one of your neighbours. You can find all delivery details in your mailbox.'))
+      .toEqual(mapped('delivered'));
+    expect(answer('yanwen', null, 'Departure Scan')).toEqual(mapped('in_transit'));
+    expect(answer('postnord', 'OTHER', 'A letter notification has been sent to the recipient.'))
+      .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('keeps the stage of the scan before it') });
     expect(answer('unknown', null, 'Item prepared for pick-up')).not.toEqual(mapped('ready_for_pickup'));
     expect(answer('unknown', null, 'Delivery not successful due to locker not available. The shipment will be delivered on the next business day.'))
       .toEqual(mapped('failed_attempt'));

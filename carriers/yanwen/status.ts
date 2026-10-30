@@ -55,6 +55,8 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Out customs authorities', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at destination', { status: 'in_transit', stage: 'in_transit' }],
   ['Handled by local carrier', { status: 'in_transit', stage: 'in_transit' }],
+  // The destination partner's departure from its hub after the batch handover, as DPD Romania words it.
+  ['Departure Scan', { status: 'in_transit', stage: 'in_transit' }],
   ['Transport to delivery centre', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at delivery centre', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has been processed at sorting center and ready for shipping', { status: 'in_transit', stage: 'in_transit' }],

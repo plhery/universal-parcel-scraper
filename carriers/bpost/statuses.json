@@ -218,6 +218,14 @@
       "firstSeen": "2026-10-29"
     },
     {
+      "wording": "Your parcel was delivered at one of your neighbours. You can find all delivery details in your mailbox.",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Left with a neighbour; the notice in the mailbox names them."
+    },
+    {
       "wording": "Awaiting presentation to Customs",
       "language": "en",
       "stage": "customs",

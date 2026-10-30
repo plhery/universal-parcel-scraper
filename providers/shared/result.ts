@@ -374,6 +374,8 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^邮件已乘机由.{1,60}飞往|^您的邮件正途经|^邮件到达[^，,]{1,60}[，,]\s*准备发往|^预计【[^】]{1,20}】到达.{1,60}两地距离/u.test(value)) return 'in_transit';
   // ECMS's pre-alert, in English then Chinese: the parcel has yet to reach its origin warehouse.
   if (/^virtual manifest has been received[.!]?(?:\s*发货预报已收到[，,]?\s*正在等待货物到达我们的始发站仓库[。.]?)?$/iu.test(value)) return 'registered';
+  // DHL's arrival in the destination country, relayed in German, as DHL's own map reads it.
+  if (/^die sendung ist im zielland\/zielgebiet eingetroffen[.!]?$/i.test(value)) return 'in_transit';
   // InPost's refusal at the door (LMD.9006), as InPost's own map reads it.
   if (/^acceptance refusal[.!]?$/i.test(value)) return 'failed_attempt';
   // A postal item accepted abroad as the receiving post's map reads the UPU event (Canada Post's 4000), and

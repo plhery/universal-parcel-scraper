@@ -48,17 +48,20 @@ const holds = byWording({
   'The shipment item is being held at a distribution terminal awaiting the booked delivery date or, awaiting an agreement of delivery with the recipient.': moving,
 });
 
+/** OTHER wordings for a notice to the recipient or the driver rather than a scan. */
+const ADMINISTRATIVE = [
+  'Suggested delivery time.',
+  'Information to the driver added by the recipient.',
+  'A text message notification has been delivered to the recipient.',
+  'A text message notification has been sent to the recipient.',
+  'A letter notification has been sent to the recipient.',
+  'E-mail notification has been sent to the recipient.',
+  'Notification sent via APP.',
+  'Pick-up at servicepoint, selected by the receiver.',
+];
+
 export function isPostnordAdministrativeEvent(code: string, description: string): boolean {
-  return code === 'OTHER' && [
-    'Suggested delivery time.',
-    'Information to the driver added by the recipient.',
-    'A text message notification has been delivered to the recipient.',
-    'A text message notification has been sent to the recipient.',
-    'A letter notification has been sent to the recipient.',
-    'E-mail notification has been sent to the recipient.',
-    'Notification sent via APP.',
-    'Pick-up at servicepoint, selected by the receiver.',
-  ].includes(description);
+  return code === 'OTHER' && ADMINISTRATIVE.includes(description);
 }
 
 export function classifyPostnordStatus(code: string, description = ''): ClassifiedStatus | undefined {
@@ -75,5 +78,6 @@ export function classifyPostnordStatus(code: string, description = ''): Classifi
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? classifyPostnordStatus(code, wording) : milestones.get(wording) ?? holds.get(wording))?.stage,
-  gaps: [],
+  gaps: ADMINISTRATIVE.map((wording) => ({ code: 'OTHER', wording: normalizeStatusWording(wording),
+    note: 'A notice to the recipient or the driver, not a scan: the parser drops it, and a stored copy keeps the stage of the scan before it.' })),
 };

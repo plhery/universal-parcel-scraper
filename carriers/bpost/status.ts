@@ -6,6 +6,8 @@ const WORDINGS: Record<string, ClassifiedStatus> = {
   'Item delivered in mailbox': { status: 'delivered', stage: 'delivered' },
   // Left at the safe place the recipient chose.
   'Item delivered at safeplace': { status: 'delivered', stage: 'delivered' },
+  // Left with a neighbour, whose name and address the notice in the mailbox gives.
+  'Your parcel was delivered at one of your neighbours. You can find all delivery details in your mailbox.': { status: 'delivered', stage: 'delivered' },
   'Item available at Pick-up point': { status: 'in_transit', stage: 'ready_for_pickup' },
   // On its way to a locker, then waiting in it, with the brand the parser puts in place of
   // bpost's placeholder.

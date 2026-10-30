@@ -342,6 +342,14 @@
       "note": "The destination post's intake after the release from customs."
     },
     {
+      "wording": "Departure Scan",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "The destination partner's departure from its hub, minutes after Yanwen's batch handover, as DPD Romania words it."
+    },
+    {
       "wording": "Transport to delivery centre",
       "language": "en",
       "stage": "in_transit",
