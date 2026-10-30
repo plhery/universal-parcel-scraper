@@ -196,6 +196,9 @@ describe('scans dated alike', () => {
     // A wall clock without a zone compares with the answer's other wall clocks.
     expect(orders(at('2026-03-04T10:00:00', 'Out'), at('2026-03-03T17:52:00', 'Departed'), at('2026-03-03T17:52:00', 'Arrived')))
       .toEqual([['Out', null], ['Departed', 1], ['Arrived', 0]]);
+    // It never ties with an instant, whatever the host's zone.
+    expect(orders(at('2026-03-04T10:00:00Z', 'Out'), at('2026-03-03T17:52:00', 'Departed'), at('2026-03-03T17:52:00Z', 'Arrived')))
+      .toEqual([['Out', null], ['Departed', null], ['Arrived', null]]);
   });
 
   it('are not numbered when the answer does not say which way it lists its scans', () => {

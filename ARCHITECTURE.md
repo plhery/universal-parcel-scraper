@@ -202,7 +202,8 @@ them from the oldest: a carrier lists two scans of one second in the order they 
 their times cannot tell. `normalizeCarrierResult` reads it from the order of the answer's scans, newest first or
 last as its other scans show, so an adapter that sorts scans keeps a tie in the carrier's
 order, reversing an oldest-first list rather than sorting it; the shared provider result does.
-An answer that dates every scan alike numbers none.
+An answer that dates every scan alike numbers none. A wall clock without a zone is compared only
+with the answer's other wall clocks, read the same whatever the host's zone.
 
 A result's `pickup_point` is the point the parcel waits at for collection: its name, then its
 address on the following lines. On a delivered parcel it is the point the recipient collected

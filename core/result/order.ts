@@ -1,10 +1,21 @@
 import type { CarrierEvent } from './index.js';
 
-/** When a scan happened, as a number its answer's other scans compare with; null when it has no time. */
-function scanInstant(event: CarrierEvent): number | null {
+// A time that names its offset is an instant; one without is a wall clock.
+const OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
+
+interface ScanTime { wall: boolean; at: number }
+
+/**
+ * When a scan happened, as its answer's other scans compare with it: an instant, or a wall clock
+ * without a zone, read the same whatever the host's zone and compared only with the answer's other
+ * wall clocks; null when it has no time.
+ */
+function scanTime(event: CarrierEvent): ScanTime | null {
   for (const time of [event.time, event.local_time]) {
-    const at = typeof time === 'string' && time ? Date.parse(time) : Number.NaN;
-    if (Number.isFinite(at)) return at;
+    if (typeof time !== 'string' || !time) continue;
+    const wall = !OFFSET.test(time);
+    const at = Date.parse(wall && time.includes('T') ? `${time}Z` : time);
+    if (Number.isFinite(at)) return { wall, at };
   }
   return null;
 }
@@ -15,14 +26,15 @@ function scanInstant(event: CarrierEvent): number | null {
  */
 export function listsNewestFirst(events: CarrierEvent[]): boolean | null {
   let [later, earlier] = [0, 0];
-  let previous: number | null = null;
-  for (const at of events.map(scanInstant)) {
-    if (at === null) continue;
-    if (previous !== null && at !== previous) {
-      if (at > previous) later += 1;
+  const previous = new Map<boolean, number>();
+  for (const time of events.map(scanTime)) {
+    if (time === null) continue;
+    const before = previous.get(time.wall);
+    if (before !== undefined && time.at !== before) {
+      if (time.at > before) later += 1;
       else earlier += 1;
     }
-    previous = at;
+    previous.set(time.wall, time.at);
   }
   return later === earlier ? null : earlier > later;
 }
@@ -38,10 +50,12 @@ export function withTieOrder(events: CarrierEvent[]): void {
   for (const event of events) delete event.tie_order;
   const newestFirst = listsNewestFirst(events);
   if (newestFirst === null) return;
-  const ties = new Map<number, CarrierEvent[]>();
+  const ties = new Map<string, CarrierEvent[]>();
   for (const event of events) {
-    const at = scanInstant(event);
-    if (at !== null) ties.set(at, [...ties.get(at) ?? [], event]);
+    const time = scanTime(event);
+    if (time === null) continue;
+    const key = `${time.wall ? 'wall' : 'instant'} ${time.at}`;
+    ties.set(key, [...ties.get(key) ?? [], event]);
   }
   for (const tie of ties.values()) {
     if (tie.length < 2) continue;

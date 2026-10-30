@@ -1332,16 +1332,14 @@
           "stage": "delivered",
           "time": "2026-01-05T16:00:00-05:00",
           "time_zone": "America/New_York",
-          "time_zone_basis": "destination",
-          "tie_order": 1
+          "time_zone_basis": "destination"
         },
         {
           "description": "Out for delivery",
           "provider_code": "202",
           "time": "2026-01-05T15:00:00Z",
           "location": "Example City, EX",
-          "stage": "out_for_delivery",
-          "tie_order": 0
+          "stage": "out_for_delivery"
         },
         {
           "description": "Failed delivery attempt, returning to the warehouse",
@@ -1850,8 +1848,7 @@
           "stage": "delivered",
           "time": "2026-01-05T10:00:00+13:00",
           "time_zone": "Pacific/Auckland",
-          "time_zone_basis": "carrier",
-          "tie_order": 1
+          "time_zone_basis": "carrier"
         },
         {
           "time": "2026-01-06T08:00:00Z",
@@ -1872,8 +1869,7 @@
           "description": "Collected from sender",
           "provider_code": "13",
           "location": "Example Depot",
-          "stage": "accepted",
-          "tie_order": 0
+          "stage": "accepted"
         },
         {
           "time": "2026-01-04T08:00:00Z",
