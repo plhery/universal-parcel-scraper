@@ -133,6 +133,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "tforce-freight",
           "xpo-ltl"
         ]
       },
@@ -194,6 +195,7 @@
         "confidence": "low",
         "candidates": [
           "tnt",
+          "tforce-freight",
           "xpo-ltl"
         ]
       },

@@ -3675,12 +3675,6 @@
     "reason": "TFM Express airwaybills are twelve digits, a plain run FedEx and other carriers share, so no rule claims them."
   },
   {
-    "carrier": "tforce-freight",
-    "pattern": "^\\d{9}$",
-    "kind": "by_design",
-    "reason": "Nine digits are shared by several carriers and nothing in the number points to TForce Freight."
-  },
-  {
     "carrier": "tforce-logistics",
     "pattern": "^\\d{20}$",
     "kind": "by_design",

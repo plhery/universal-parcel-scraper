@@ -35614,7 +35614,13 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{9}$",
+        "confidence": "low",
+        "checksum": "mod7"
+      }
+    ]
   },
   "tforce-integrated-solutions": {
     "displayName": "TForce Integrated Solutions",

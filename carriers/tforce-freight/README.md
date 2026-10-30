@@ -55,8 +55,10 @@ TForce Freight tracks LTL shipments by nine-digit PRO numbers, as its tracking A
 states. The tracker's own check takes nine digits whose last is the first eight modulo 7, or
 eight digits, which it reads with a leading zero; the adapter applies the same check. Lookups
 archived from its tracker and from the former UPS Freight tracker give samples. Nine digits are
-shared by many carriers, XPO's PRO numbers among them with the same check digit, so no rule
-claims them. The samples and their sources are in [`numbers.json`](numbers.json).
+shared by many carriers, XPO's PRO numbers among them with the same check digit, so a
+low-confidence rule takes nine digits that pass the check: preflight asks TForce Freight beside
+XPO and TNT, and none of them is chosen from the number alone. The samples and their sources are
+in [`numbers.json`](numbers.json).
 
 ## Links
 

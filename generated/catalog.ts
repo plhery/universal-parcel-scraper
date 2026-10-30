@@ -35616,7 +35616,13 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{9}$",
+        "confidence": "low",
+        "checksum": "mod7"
+      }
+    ]
   },
   "tforce-integrated-solutions": {
     "displayName": "TForce Integrated Solutions",
@@ -41474,7 +41480,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tej-couriers": [],
   "teleship": ["teleship-ts"],
   "tfm-express": [],
-  "tforce-freight": [],
+  "tforce-freight": ["tforce-freight-1"],
   "tforce-integrated-solutions": [],
   "tforce-logistics": ["tforce-logistics-1"],
   "thelorry": ["thelorry-1"],

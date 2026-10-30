@@ -109,5 +109,12 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "tforce-freight-1",
+      "pattern": "^\\d{9}$",
+      "confidence": "low",
+      "checksum": "mod7"
+    }
+  ]
 }

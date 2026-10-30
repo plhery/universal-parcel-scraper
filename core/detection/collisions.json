@@ -4436,10 +4436,11 @@
   {
     "shape": "Nine digits that pass the mod 7 check",
     "carriers": [
+      "tforce-freight",
       "tnt",
       "xpo-ltl"
     ],
-    "reason": "XPO's PRO numbers end in the remainder of their first eight digits divided by seven, a check TNT's nine-digit consignment numbers can also carry. Both rules are low-confidence, so the number stays a suggestion, TNT first."
+    "reason": "XPO's and TForce Freight's PRO numbers end in the remainder of their first eight digits divided by seven, a check TNT's nine-digit consignment numbers can also carry. All three rules are low-confidence, so the number stays a suggestion, TNT first."
   },
   {
     "shape": "Two letters, or a digit and a letter, followed by ten digits",

@@ -1,7 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { load, type CheerioAPI } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -263,6 +265,17 @@ describe('TForce Freight tracking page', () => {
     const unused = vi.fn<typeof fetch>();
     await expect(carrier(unused).recognize!('222222222')).resolves.toEqual({ known: false });
     expect(unused).not.toHaveBeenCalled();
+  });
+
+  it('is asked, with XPO and TNT, about nine digits that pass its check', () => {
+    for (const number of [DELIVERED, IN_TRANSIT]) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['tnt', 'tforce-freight', 'xpo-ltl'] });
+      expect(recognitionAskedCarriers(number, { countryHint: 'US' }), number).toContain('tforce-freight');
+    }
+    for (const number of ['222222222', '11111111', '1111111114']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('tforce-freight');
+      expect(recognitionAskedCarriers(number), number).not.toContain('tforce-freight');
+    }
   });
 
   it('tries once more in a new session after a network failure', async () => {
