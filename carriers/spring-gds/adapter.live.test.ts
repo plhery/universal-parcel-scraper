@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { AdapterRegistry, REGISTRY, UniversalTracker, trackCarrier } from '../../node.js';
-import { UpstreamHttpError } from '../../core/errors/index.js';
+import { RateLimitedError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { fetchPostNL } from './adapter.js';
 
@@ -22,7 +22,7 @@ describe('PostNL live tracking', () => {
   it('maps the official barcode-not-found result to a clean 404', async (context) => {
     const answer = fetchPostNL(POSTNL_WRONG_NUMBER);
     // PostNL's token endpoint rate-limits a shared runner's address; the adapter reports that as it is.
-    const limited = await answer.then(() => null, (error: unknown) => error instanceof UpstreamHttpError && error.status === 429 ? error : null);
+    const limited = await answer.then(() => null, (error: unknown) => error instanceof RateLimitedError && error.status === 429 ? error : null);
     if (limited) return context.skip('PostNL answered HTTP 429 to this network: the not-found mapping remains unverified');
     await expect(answer).rejects.toMatchObject({
       name: 'NotFoundError',
@@ -33,14 +33,14 @@ describe('PostNL live tracking', () => {
 
   it('maps a 3S barcode PostNL did not issue to not found, or asks its postcode', async (context) => {
     const answer = fetchPostNL(POSTNL_FOREIGN_BARCODE);
-    const limited = await answer.then(() => null, (error: unknown) => error instanceof UpstreamHttpError && error.status === 429 ? error : null);
+    const limited = await answer.then(() => null, (error: unknown) => error instanceof RateLimitedError && error.status === 429 ? error : null);
     if (limited) return context.skip('PostNL answered HTTP 429 to this network: the not-found mapping remains unverified');
     await expect(answer).rejects.toMatchObject({ kind: expect.stringMatching(/^(?:not_found|input_required)$/) });
   });
 
   it('leaves a thirteen-character 3S barcode inconclusive', async (context) => {
     const answer = fetchPostNL(POSTNL_SHORT_BARCODE);
-    const limited = await answer.then(() => null, (error: unknown) => error instanceof UpstreamHttpError && error.status === 429 ? error : null);
+    const limited = await answer.then(() => null, (error: unknown) => error instanceof RateLimitedError && error.status === 429 ? error : null);
     if (limited) return context.skip('PostNL answered HTTP 429 to this network: the incorrect-barcode reading remains unverified');
     await expect(answer).rejects.toMatchObject({ kind: 'indeterminate' });
   });
