@@ -1,0 +1,54 @@
+{
+  "id": "shipglobal-in",
+  "displayName": "ShipGlobal India",
+  "aliases": [
+    "ShipGlobal.in",
+    "Ship Global Express",
+    "Ship Global Express Private Limited",
+    "Ship Global Express Pvt. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#214a9c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://shipglobal.in/tracking/?awb={trackingNumber}",
+    "searchUrl": "https://shipglobal.in/tracking/",
+    "canaryUrl": "https://shipglobal.in/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "shipglobal.in",
+        "www.shipglobal.in"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "shipglobal-in-1",
+      "pattern": "^SG3\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{7}$",
+      "confidence": "low"
+    }
+  ]
+}

@@ -4224,5 +4224,11 @@
     "pattern": "^\\d{11}$",
     "kind": "collision",
     "reason": "DPE Express waybills are eleven digits, a length many carriers' rules accept, so the shape cannot name DPE Express."
+  },
+  {
+    "carrier": "hart2hart-express",
+    "pattern": "^8\\d{8}$",
+    "kind": "collision",
+    "reason": "Hart2Hart Express job numbers are nine digits starting with 8, a shape TNT, XPO, R+L Carriers and Cargus numbers share, so the shape cannot name Hart2Hart Express."
   }
 ]

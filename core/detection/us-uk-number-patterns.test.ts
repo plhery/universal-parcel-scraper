@@ -643,3 +643,22 @@ describe('Wizmo, toyou, APG eCommerce Solutions and AMS eGroup', () => {
     expect(carrierIdFromName('eRetail Logistics')).toBe('ams-egroup');
   });
 });
+
+describe('Hart2Hart Express, Kart2Door and Top Logistics Australia', () => {
+  it('leaves Hart2Hart job numbers to the carriers that share nine digits', () => {
+    expect(detectCarrierMatch('800000017').candidates ?? []).not.toContain('hart2hart-express');
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://harttohart.couriernavigator-secure.com/tracking?consign_note=800000017'))
+      .toMatchObject({ trackingNumber: '800000017', carrier: 'hart2hart-express', source: 'link' });
+    expect(parseTrackingInput('https://www.kart2door.com/EcomTracking?axb=XYZ10000017'))
+      .toMatchObject({ trackingNumber: 'XYZ10000017', carrier: 'kart2door', source: 'link' });
+    expect(parseTrackingInput('https://toplogistics.com.au/?s=TLA10000017'))
+      .toMatchObject({ trackingNumber: 'TLA10000017', carrier: 'top-logistics-au', source: 'link' });
+    expect(carrierIdFromName('Hart 2 Hart Express')).toBe('hart2hart-express');
+    expect(carrierIdFromName('Kart 2 Door')).toBe('kart2door');
+    expect(carrierIdFromName('Top Logistics Australia')).toBe('top-logistics-au');
+    expect(carrierIdFromName('ISS Parcels')).toBe('elta');
+  });
+});

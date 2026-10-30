@@ -12398,6 +12398,43 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "dex-pk": {
+    "displayName": "DEX Pakistan",
+    "color": "#f85606",
+    "aliases": [
+      "Daraz Express Pakistan",
+      "DEX PK"
+    ],
+    "countries": [
+      "PK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Karachi",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dex.com.pk/",
+    "trackingSearchUrl": "https://www.dex.com.pk/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.dex.com.pk",
+          "dex.com.pk"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "references"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^PKDEX\\d{9}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "dhl-ecommerce-es": {
     "displayName": "DHL eCommerce Iberia",
     "color": "#ffcc00",
@@ -14295,6 +14332,40 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "efs-asia": {
+    "displayName": "EFS Asia",
+    "color": "#224f8c",
+    "aliases": [
+      "EFS Co., Ltd.",
+      "이에프에스",
+      "주식회사 이에프에스",
+      "EFS Korea"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://efs.asia/",
+    "trackingUrlTemplate": "https://web.efs.asia/script/users/tracking.php?search_no={trackingNumber}&mode=search&lang=",
+    "trackingSearchUrl": "https://web.efs.asia/script/users/tracking.php",
+    "linkRules": [
+      {
+        "domains": [
+          "web.efs.asia"
+        ],
+        "pathPattern": "^/script/users/tracking\\.php$",
+        "params": [
+          "search_no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "egypt-post": {
     "displayName": "Egypt Post",
     "color": "#007f3e",
@@ -14387,7 +14458,9 @@ export const CARRIER_CATALOG = {
       "Hellenic Post",
       "Ελληνικά Ταχυδρομεία",
       "ELTA Courier",
-      "ΕΛΤΑ Courier"
+      "ΕΛΤΑ Courier",
+      "ISS Parcels",
+      "IS&S Parcels"
     ],
     "countries": [
       "GR"
@@ -15825,6 +15898,55 @@ export const CARRIER_CATALOG = {
           "booking.fastdrop.mt"
         ],
         "path": "^/package-tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "faster-ae": {
+    "displayName": "Faster Express & Cargo",
+    "color": "#004497",
+    "aliases": [
+      "Faster Express",
+      "Faster.ae",
+      "Faster Express Logistics",
+      "迅捷中东物流",
+      "Faster International Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "AE",
+      "SA",
+      "KW",
+      "QA",
+      "OM",
+      "BH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Dubai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://faster.ae/",
+    "trackingUrlTemplate": "https://faster.ae/track?no={trackingNumber}",
+    "trackingSearchUrl": "https://faster.ae/track",
+    "linkRules": [
+      {
+        "domains": [
+          "faster.ae"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "no"
+        ]
+      },
+      {
+        "domains": [
+          "op.faster.ae"
+        ],
+        "pathPattern": "^/webTrack/?$",
+        "params": [
+          "ids"
+        ]
       }
     ],
     "detectionRules": []
@@ -18411,6 +18533,41 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/track/?$",
         "params": [
           "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "hart2hart-express": {
+    "displayName": "Hart2Hart Express",
+    "color": "#ed1c24",
+    "aliases": [
+      "Hart 2 Hart Express",
+      "Hart 2 Hart",
+      "Hart2Hart",
+      "Hart 2 Hart Express Limited"
+    ],
+    "countries": [
+      "GB",
+      "MT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://hart2hartexpress.co.uk/",
+    "trackingUrlTemplate": "https://harttohart.couriernavigator-secure.com/tracking?consign_note={trackingNumber}",
+    "trackingSearchUrl": "https://harttohart.couriernavigator-secure.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "harttohart.couriernavigator-secure.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "consign_note"
         ]
       }
     ],
@@ -21245,6 +21402,39 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "kart2door": {
+    "displayName": "Kart2Door",
+    "color": "#f36c09",
+    "aliases": [
+      "Kart 2 Door",
+      "Kart2Door/SmartKargo"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.kart2door.com/",
+    "trackingUrlTemplate": "https://www.kart2door.com/EcomTracking?axb={trackingNumber}",
+    "trackingSearchUrl": "https://www.kart2door.com/EcomTracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.kart2door.com",
+          "kart2door.com"
+        ],
+        "pathPattern": "^/EcomTracking/?$",
+        "params": [
+          "axb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "kazpost": {
     "displayName": "Kazpost",
     "color": "#fed201",
@@ -22351,6 +22541,44 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": []
+  },
+  "lex-my": {
+    "displayName": "LEX Malaysia",
+    "color": "#1076ff",
+    "aliases": [
+      "Lazada Express Malaysia",
+      "LEX MY",
+      "Lazada Express (Malaysia) Sdn Bhd"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://lex.com.my/",
+    "trackingUrlTemplate": "https://lex.com.my/tracking?references={trackingNumber}",
+    "trackingSearchUrl": "https://lex.com.my/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "lex.com.my"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "references"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TMYLE\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "libanpost": {
     "displayName": "LibanPost",
@@ -26487,6 +26715,36 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "parxl": {
+    "displayName": "Parxl",
+    "color": "#129bb0",
+    "aliases": [
+      "Parxl by Singapore Airlines",
+      "SIA Parxl",
+      "Singapore Airlines Parxl"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://parxl.com/",
+    "trackingUrlTemplate": "https://track.parxl.com/{trackingNumber}",
+    "trackingSearchUrl": "https://track.parxl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.parxl.com"
+        ],
+        "path": "^/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "passport": {
     "displayName": "Passport",
@@ -31068,6 +31326,46 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "shipglobal-in": {
+    "displayName": "ShipGlobal India",
+    "color": "#214a9c",
+    "aliases": [
+      "ShipGlobal.in",
+      "Ship Global Express",
+      "Ship Global Express Private Limited",
+      "Ship Global Express Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://shipglobal.in/",
+    "trackingUrlTemplate": "https://shipglobal.in/tracking/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://shipglobal.in/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "shipglobal.in",
+          "www.shipglobal.in"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SG3\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{7}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "shiprocket": {
     "displayName": "Shiprocket",
     "color": "#735ae5",
@@ -34191,6 +34489,38 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/trc/search3/excSearch3$",
         "params": [
           "id[0]"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "top-logistics-au": {
+    "displayName": "Top Logistics Australia",
+    "color": "#193064",
+    "aliases": [
+      "Top Logistics Australia Pty Ltd",
+      "Top Logistics Australia (TLA)"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://toplogistics.com.au/",
+    "trackingUrlTemplate": "https://toplogistics.com.au/?s={trackingNumber}",
+    "trackingSearchUrl": "https://toplogistics.com.au/",
+    "linkRules": [
+      {
+        "domains": [
+          "toplogistics.com.au"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "s"
         ]
       }
     ],
@@ -37692,6 +38022,7 @@ export const CARRIER_IDS = [
   "deppon",
   "deprisa",
   "designer-transport",
+  "dex-pk",
   "dhl-ecommerce-es",
   "dhl-ecommerce-nl",
   "dhl-ecommerce-pl",
@@ -37734,6 +38065,7 @@ export const CARRIER_IDS = [
   "eco-express-ae",
   "econt",
   "ecourier",
+  "efs-asia",
   "egypt-post",
   "ekart",
   "elta",
@@ -37772,6 +38104,7 @@ export const CARRIER_IDS = [
   "fargo-uz",
   "fastbox",
   "fastdrop",
+  "faster-ae",
   "fastfrate",
   "fedex-freight",
   "fedex-international-connect",
@@ -37839,6 +38172,7 @@ export const CARRIER_IDS = [
   "hanjin",
   "hapdong",
   "happy-post",
+  "hart2hart-express",
   "haypost",
   "hct-logistics",
   "helthjem",
@@ -37916,6 +38250,7 @@ export const CARRIER_IDS = [
   "jumppoint",
   "juxi-express",
   "kargoist",
+  "kart2door",
   "kazpost",
   "kec-ecommerce",
   "kerry-tj",
@@ -37945,6 +38280,7 @@ export const CARRIER_IDS = [
   "latvijas-pasts",
   "lbc-express",
   "leopards-courier",
+  "lex-my",
   "libanpost",
   "liccardi",
   "lietuvos-pastas",
@@ -38049,6 +38385,7 @@ export const CARRIER_IDS = [
   "parcel-one",
   "parcelpoint",
   "pargo",
+  "parxl",
   "passport",
   "pathao-courier",
   "pavan-courier",
@@ -38164,6 +38501,7 @@ export const CARRIER_IDS = [
   "shipa",
   "shipblu",
   "shipentegra",
+  "shipglobal-in",
   "shiprocket",
   "shouwu",
   "shree-anjani",
@@ -38242,6 +38580,7 @@ export const CARRIER_IDS = [
   "tnt-it",
   "today-kr",
   "tonami",
+  "top-logistics-au",
   "toptrans",
   "topyou",
   "torrestir",
@@ -38614,6 +38953,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "deppon": [],
   "deprisa": [],
   "designer-transport": [],
+  "dex-pk": ["dex-pk-1"],
   "dhl-ecommerce-es": ["dhl-ecommerce-es-1","dhl-ecommerce-es-2"],
   "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1","dhl-ecommerce-nl-2","dhl-ecommerce-nl-3"],
   "dhl-ecommerce-pl": ["dhl-ecommerce-pl-1"],
@@ -38656,6 +38996,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "eco-express-ae": [],
   "econt": [],
   "ecourier": ["ecourier-1"],
+  "efs-asia": [],
   "egypt-post": ["egypt-post-1","egypt-post-s10"],
   "ekart": ["ekart-ecommerce","ekart-merchant"],
   "elta": ["elta-s10"],
@@ -38694,6 +39035,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fargo-uz": [],
   "fastbox": ["fastbox-1"],
   "fastdrop": [],
+  "faster-ae": [],
   "fastfrate": [],
   "fedex-freight": [],
   "fedex-international-connect": ["fedex-international-connect-1"],
@@ -38761,6 +39103,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hanjin": [],
   "hapdong": [],
   "happy-post": [],
+  "hart2hart-express": [],
   "haypost": ["haypost-s10"],
   "hct-logistics": [],
   "helthjem": ["helthjem-1","helthjem-2"],
@@ -38838,6 +39181,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jumppoint": ["jumppoint-1"],
   "juxi-express": ["juxi-express-1"],
   "kargoist": ["kargoist-1"],
+  "kart2door": [],
   "kazpost": ["kazpost-s10"],
   "kec-ecommerce": [],
   "kerry-tj": [],
@@ -38867,6 +39211,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "latvijas-pasts": ["latvijas-pasts-own","latvijas-pasts-s10"],
   "lbc-express": ["lbc-domestic"],
   "leopards-courier": [],
+  "lex-my": ["lex-my-1"],
   "libanpost": [],
   "liccardi": [],
   "lietuvos-pastas": ["lietuvos-pastas-own","lietuvos-pastas-1","lietuvos-pastas-s10"],
@@ -38971,6 +39316,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "parcel-one": [],
   "parcelpoint": [],
   "pargo": ["pargo-1"],
+  "parxl": [],
   "passport": ["passport-1"],
   "pathao-courier": ["pathao-courier-1"],
   "pavan-courier": [],
@@ -39086,6 +39432,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shipa": ["shipa-1"],
   "shipblu": [],
   "shipentegra": ["shipentegra-1"],
+  "shipglobal-in": ["shipglobal-in-1"],
   "shiprocket": ["shiprocket-1"],
   "shouwu": ["shouwu-1"],
   "shree-anjani": [],
@@ -39164,6 +39511,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tnt-it": ["tnt-it-1","tnt-it-check"],
   "today-kr": [],
   "tonami": [],
+  "top-logistics-au": [],
   "toptrans": [],
   "topyou": ["topyou-1"],
   "torrestir": ["torrestir-1"],

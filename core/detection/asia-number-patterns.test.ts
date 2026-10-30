@@ -656,3 +656,40 @@ describe('ZES Express, Profit Fields, AllJoy, DPE Express and Goodmaji', () => {
     expect(carrierIdFromName('好馬吉')).toBe('goodmaji');
   });
 });
+
+describe('LEX Malaysia, DEX Pakistan, ShipGlobal India, Parxl, EFS Asia and Faster Express', () => {
+  it('names DEX Pakistan from its hyphenated prefix and suggests LEX and ShipGlobal for their own layouts', () => {
+    for (const number of ['PK-DEX100000017', 'pk DEX 100000017', 'PKDEX100000017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'dex-pk', confidence: 'high' });
+    }
+    expect(detectCarrierMatch('TMYLE100000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['lex-my'] });
+    expect(detectCarrierMatch('SG32610010000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['shipglobal-in'] });
+    for (const number of ['PK-DEX10000017', 'LK-DEX-100000017', 'TMYLE10000017', 'TMYSU100000017', 'SG32613010000017', 'SG32610320000017', 'SG3261001000017']) {
+      const candidates = detectCarrierMatch(number).candidates ?? [];
+      for (const carrier of ['dex-pk', 'lex-my', 'shipglobal-in']) expect(candidates, number).not.toContain(carrier);
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://lex.com.my/tracking?references=TMYLE100000017'))
+      .toMatchObject({ trackingNumber: 'TMYLE100000017', carrier: 'lex-my', source: 'link' });
+    expect(parseTrackingInput('https://www.dex.com.pk/tracking?references=PK-DEX100000017'))
+      .toMatchObject({ carrier: 'dex-pk', source: 'link' });
+    expect(parseTrackingInput('https://shipglobal.in/tracking/?awb=SG32610010000017'))
+      .toMatchObject({ trackingNumber: 'SG32610010000017', carrier: 'shipglobal-in', source: 'link' });
+    expect(parseTrackingInput('https://track.parxl.com/PX10000017')).toMatchObject({ trackingNumber: 'PX10000017', carrier: 'parxl', source: 'link' });
+    expect(parseTrackingInput('https://web.efs.asia/script/users/tracking.php?search_no=EFS10000017&mode=search&lang='))
+      .toMatchObject({ trackingNumber: 'EFS10000017', carrier: 'efs-asia', source: 'link' });
+    expect(parseTrackingInput('https://faster.ae/track?no=FST10000000017')).toMatchObject({ trackingNumber: 'FST10000000017', carrier: 'faster-ae', source: 'link' });
+    expect(carrierIdFromName('Lazada Express Malaysia')).toBe('lex-my');
+    expect(carrierIdFromName('Daraz Express Pakistan')).toBe('dex-pk');
+    expect(carrierIdFromName('DEX PK')).toBe('dex-pk');
+    expect(carrierIdFromName('Ship Global Express')).toBe('shipglobal-in');
+    expect(carrierIdFromName('SIA Parxl')).toBe('parxl');
+    expect(carrierIdFromName('이에프에스')).toBe('efs-asia');
+    expect(carrierIdFromName('迅捷中东物流')).toBe('faster-ae');
+    // Lazada and Daraz run their networks in several countries on separate sites.
+    expect(carrierIdFromName('Lazada Express')).toBeUndefined();
+    expect(carrierIdFromName('Daraz Express')).toBeUndefined();
+  });
+});
