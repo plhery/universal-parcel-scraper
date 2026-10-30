@@ -693,3 +693,29 @@ describe('LEX Malaysia, DEX Pakistan, ShipGlobal India, Parxl, EFS Asia and Fast
     expect(carrierIdFromName('Daraz Express')).toBeUndefined();
   });
 });
+
+describe('Shipter, Tonda Global, Liuchen, EAC and LBTX', () => {
+  it('suggests Shipter for its own layout beside the broad Colis Privé shape', () => {
+    expect(detectCarrierMatch('H3AU100017KR')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['shipter']) });
+    for (const number of ['H3AU10017KR', 'H3AU1000017KR', 'H3A1100017KR', 'H4AU100017KR', 'H3AU100017CN']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('shipter');
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://www.shipter.kr/tracking/H3AU100017KR'))
+      .toMatchObject({ trackingNumber: 'H3AU100017KR', carrier: 'shipter', source: 'link' });
+    expect(parseTrackingInput('https://shiptertracking.com/trackingResult/H3AU100017KR'))
+      .toMatchObject({ trackingNumber: 'H3AU100017KR', carrier: 'shipter', source: 'link' });
+    expect(parseTrackingInput('https://www.tarrive.com/track?q=TD1000000017'))
+      .toMatchObject({ trackingNumber: 'TD1000000017', carrier: 'tonda-global', source: 'link' });
+    expect(parseTrackingInput('https://www.liuchenwl.com/index/tracknumber/track?nos=LC1000000017'))
+      .toMatchObject({ trackingNumber: 'LC1000000017', carrier: 'liuchen', source: 'link' });
+    expect(carrierIdFromName('H3 Networks')).toBe('shipter');
+    expect(carrierIdFromName('通达全球')).toBe('tonda-global');
+    expect(carrierIdFromName('六尘物流')).toBe('liuchen');
+    expect(carrierIdFromName('富皇美运')).toBe('eac-cn');
+    expect(carrierIdFromName('龙本天下')).toBe('lbtx');
+  });
+});
+

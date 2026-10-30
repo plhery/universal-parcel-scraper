@@ -6009,6 +6009,37 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ace-ee": {
+    "displayName": "ACE Logistics Estonia",
+    "color": "#004f7c",
+    "aliases": [
+      "ACE Logistics Estonia AS",
+      "ACE EE"
+    ],
+    "countries": [
+      "EE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.acelogistics.eu/ee/en/service/cargo-tracking/",
+    "trackingUrlTemplate": "https://www.acelogistics.eu/tracker/tracker_en.php?office=EE&cc=EE&ref={trackingNumber}",
+    "trackingSearchUrl": "https://www.acelogistics.eu/ee/en/service/cargo-tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.acelogistics.eu",
+          "acelogistics.eu"
+        ],
+        "pathPattern": "^/tracker/tracker(?:_[a-z]{2})?\\.php$",
+        "query": "^(?=(?:.*&)?office=EE(?:&|$))(?:.*&)?ref=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "ace-lt": {
     "displayName": "ACE Logistics Lithuania",
     "color": "#004f7c",
@@ -12209,6 +12240,40 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "deliverdirect": {
+    "displayName": "DeliverDirect",
+    "color": "#041c2c",
+    "aliases": [
+      "Deliver Direct",
+      "Delta DeliverDirect",
+      "Delta Cargo DeliverDirect"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.deliverdirect.com/",
+    "trackingUrlTemplate": "https://www.deliverdirect.com/EcomTracking?axb={trackingNumber}",
+    "trackingSearchUrl": "https://www.deliverdirect.com/EcomTracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.deliverdirect.com",
+          "deliverdirect.com"
+        ],
+        "pathPattern": "^/EcomTracking/?$",
+        "params": [
+          "axb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dellin": {
     "displayName": "Delovye Linii",
     "color": "#fcaf17",
@@ -14053,6 +14118,29 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "eac-cn": {
+    "displayName": "EAC",
+    "color": "#e56b07",
+    "aliases": [
+      "富皇美运",
+      "富皇美運",
+      "Fuhuang Meiyun",
+      "深圳市富皇美运国际商贸物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.szeac.com/",
+    "trackingSearchUrl": "https://www.szeac.com/track.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "early-bird": {
     "displayName": "Early Bird",
     "color": "#dd7f4a",
@@ -14657,6 +14745,29 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "emons": {
+    "displayName": "Emons",
+    "color": "#c00719",
+    "aliases": [
+      "Emons Spedition",
+      "Emons Spedition GmbH",
+      "Emons Logistik",
+      "myEmons"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.emons.de/",
+    "trackingSearchUrl": "https://tracking.myemons.de/public.html",
+    "linkRules": [],
+    "detectionRules": []
   },
   "ems-vietnam": {
     "displayName": "EMS Vietnam",
@@ -22510,6 +22621,29 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "lbtx": {
+    "displayName": "LBTX",
+    "color": "#20c5cb",
+    "aliases": [
+      "龙本天下",
+      "龙本天下供应链",
+      "Longben Tianxia",
+      "深圳市龙本天下供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.lbtxkd.com/",
+    "trackingSearchUrl": "https://www.lbtxkd.com/search_kj.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "leopards-courier": {
     "displayName": "Leopards Courier",
     "color": "#ffcb05",
@@ -22793,6 +22927,48 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "linear-logistics": {
+    "displayName": "Linear Logistics",
+    "color": "#003d6a",
+    "aliases": [
+      "Linear Logistics Ltd",
+      "Parcelink Logistics"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://linearlogistics.co.uk/",
+    "trackingUrlTemplate": "https://linearlogistics.co.uk/tracking?q={trackingNumber}",
+    "trackingSearchUrl": "https://linearlogistics.co.uk/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "linearlogistics.co.uk",
+          "www.linearlogistics.co.uk"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "q"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.linearlogistics.co.uk"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "lingdong": {
     "displayName": "Lingdong International",
     "color": "#0171bb",
@@ -22910,6 +23086,42 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "liuchen": {
+    "displayName": "Liuchen",
+    "color": "#b81c25",
+    "aliases": [
+      "六尘",
+      "六尘物流",
+      "六尘国际物流",
+      "Liuchen Logistics",
+      "Liuchen International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.liuchenwl.com/",
+    "trackingUrlTemplate": "https://www.liuchenwl.com/index/tracknumber/track?nos={trackingNumber}",
+    "trackingSearchUrl": "https://www.liuchenwl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.liuchenwl.com",
+          "liuchenwl.com"
+        ],
+        "pathPattern": "^/index/tracknumber/track/?$",
+        "params": [
+          "nos"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "logen": {
     "displayName": "Logen",
@@ -24958,6 +25170,30 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "noerpel": {
+    "displayName": "Noerpel",
+    "color": "#ffa900",
+    "aliases": [
+      "C.E. Noerpel",
+      "C.E. Noerpel GmbH",
+      "Noerpel SE",
+      "Noerpel Gruppe"
+    ],
+    "countries": [
+      "DE",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://noerpel.de/",
+    "trackingSearchUrl": "https://portal.noerpel.de/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
   },
   "noest": {
     "displayName": "NOEST Express",
@@ -29737,6 +29973,38 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "rhenus-it": {
+    "displayName": "Rhenus Italia",
+    "color": "#00499a",
+    "aliases": [
+      "Rhenus Italy",
+      "Rhenus Logistics S.p.A."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.rhenus.group/it/it/",
+    "trackingUrlTemplate": "https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.rhenusitalia.it/rhenus/track.jsf",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.rhenusitalia.it"
+        ],
+        "pathPattern": "^/rhenus/tracking\\.jsf$",
+        "params": [
+          "s"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rincos": {
     "displayName": "Rincos",
     "color": "#f37022",
@@ -31406,6 +31674,48 @@ export const CARRIER_CATALOG = {
         "pattern": "^832\\d{10}$",
         "confidence": "low",
         "preferred": true
+      }
+    ]
+  },
+  "shipter": {
+    "displayName": "Shipter",
+    "color": "#005eff",
+    "aliases": [
+      "쉽터",
+      "H3 Networks",
+      "H3 NETWORKS Co., Ltd."
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.shipter.kr/",
+    "trackingUrlTemplate": "https://www.shipter.kr/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.shipter.kr/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.shipter.kr",
+          "shipter.kr"
+        ],
+        "path": "^/tracking/([A-Za-z0-9]+)/?$"
+      },
+      {
+        "domains": [
+          "shiptertracking.com"
+        ],
+        "path": "^/trackingResult/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^H3[A-Z]{2}\\d{6}KR$",
+        "confidence": "low"
       }
     ]
   },
@@ -34512,6 +34822,44 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "tonda-global": {
+    "displayName": "Tonda Global",
+    "color": "#144f93",
+    "aliases": [
+      "TONDA GLOBAL",
+      "通达全球",
+      "Tarrive",
+      "青岛通达全球供应链管理有限公司",
+      "Qingdao Tonda Global Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "CN",
+      "KR",
+      "MN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tarrive.com/",
+    "trackingUrlTemplate": "https://www.tarrive.com/track?q={trackingNumber}",
+    "trackingSearchUrl": "https://www.tarrive.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "www.tarrive.com",
+          "tarrive.com"
+        ],
+        "pathPattern": "^/(?:en/)?track/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "top-logistics-au": {
     "displayName": "Top Logistics Australia",
     "color": "#193064",
@@ -35046,6 +35394,36 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "transnatur": {
+    "displayName": "TransNatur",
+    "color": "#1699cb",
+    "aliases": [
+      "Transnatur S.A.",
+      "Transnatur Norte"
+    ],
+    "countries": [
+      "ES",
+      "PT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Madrid",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.transnatur.com/",
+    "trackingUrlTemplate": "https://portal.transnatur.com/crm/track/{trackingNumber}/",
+    "trackingSearchUrl": "https://www.transnatur.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.transnatur.com"
+        ],
+        "path": "^/crm/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "transport-rdl": {
     "displayName": "Transport RDL",
@@ -37880,6 +38258,7 @@ export const CARRIER_IDS = [
   "aaa-cooper",
   "ab-courier",
   "abf-freight",
+  "ace-ee",
   "ace-lt",
   "ace-lv",
   "aci-express-kr",
@@ -38036,6 +38415,7 @@ export const CARRIER_IDS = [
   "dayton-freight",
   "dd-express",
   "dealersend",
+  "deliverdirect",
   "dellin",
   "delnext",
   "depo",
@@ -38079,6 +38459,7 @@ export const CARRIER_IDS = [
   "dynalogic",
   "e-cargo",
   "e-commerce-international",
+  "eac-cn",
   "early-bird",
   "easy-mail",
   "ecms-express",
@@ -38092,6 +38473,7 @@ export const CARRIER_IDS = [
   "emex",
   "emile",
   "emirates-post",
+  "emons",
   "ems-vietnam",
   "energia-tk",
   "energo",
@@ -38299,6 +38681,7 @@ export const CARRIER_IDS = [
   "last-one-mile-coop",
   "latvijas-pasts",
   "lbc-express",
+  "lbtx",
   "leopards-courier",
   "lex-my",
   "libanpost",
@@ -38306,9 +38689,11 @@ export const CARRIER_IDS = [
   "lietuvos-pastas",
   "lightning-express",
   "line-clear",
+  "linear-logistics",
   "lingdong",
   "linhan",
   "lion-parcel",
+  "liuchen",
   "logen",
   "loggi",
   "logisimple",
@@ -38363,6 +38748,7 @@ export const CARRIER_IDS = [
   "nipost",
   "nippon-express",
   "no-limit",
+  "noerpel",
   "noest",
   "nord-wheel",
   "norsk-global",
@@ -38479,6 +38865,7 @@ export const CARRIER_IDS = [
   "redur",
   "redx",
   "relaytech",
+  "rhenus-it",
   "rincos",
   "rivigo",
   "rl-carriers",
@@ -38523,6 +38910,7 @@ export const CARRIER_IDS = [
   "shipentegra",
   "shipglobal-in",
   "shiprocket",
+  "shipter",
   "shouwu",
   "shree-anjani",
   "shree-mahabali-express",
@@ -38600,6 +38988,7 @@ export const CARRIER_IDS = [
   "tnt-it",
   "today-kr",
   "tonami",
+  "tonda-global",
   "top-logistics-au",
   "toptrans",
   "topyou",
@@ -38614,6 +39003,7 @@ export const CARRIER_IDS = [
   "transaher",
   "transcorp",
   "transmission",
+  "transnatur",
   "transport-rdl",
   "trendyol-express",
   "trexity",
@@ -38811,6 +39201,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aaa-cooper": [],
   "ab-courier": [],
   "abf-freight": [],
+  "ace-ee": [],
   "ace-lt": [],
   "ace-lv": [],
   "aci-express-kr": [],
@@ -38967,6 +39358,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dayton-freight": [],
   "dd-express": [],
   "dealersend": ["dealersend-1"],
+  "deliverdirect": [],
   "dellin": [],
   "delnext": [],
   "depo": [],
@@ -39010,6 +39402,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dynalogic": [],
   "e-cargo": [],
   "e-commerce-international": ["e-commerce-international-1"],
+  "eac-cn": [],
   "early-bird": ["early-bird-1"],
   "easy-mail": [],
   "ecms-express": ["ecms-express-1"],
@@ -39023,6 +39416,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "emex": [],
   "emile": ["emile-1","emile-2"],
   "emirates-post": ["emirates-post-own","emirates-post-s10"],
+  "emons": [],
   "ems-vietnam": ["ems-vietnam-s10"],
   "energia-tk": [],
   "energo": ["energo-1"],
@@ -39230,6 +39624,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "last-one-mile-coop": [],
   "latvijas-pasts": ["latvijas-pasts-own","latvijas-pasts-s10"],
   "lbc-express": ["lbc-domestic"],
+  "lbtx": [],
   "leopards-courier": [],
   "lex-my": ["lex-my-1"],
   "libanpost": [],
@@ -39237,9 +39632,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lietuvos-pastas": ["lietuvos-pastas-own","lietuvos-pastas-1","lietuvos-pastas-s10"],
   "lightning-express": [],
   "line-clear": [],
+  "linear-logistics": [],
   "lingdong": ["lingdong-1"],
   "linhan": ["linhan-1"],
   "lion-parcel": ["lion-parcel-1"],
+  "liuchen": [],
   "logen": [],
   "loggi": ["loggi-1"],
   "logisimple": [],
@@ -39294,6 +39691,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nipost": ["nipost-s10"],
   "nippon-express": [],
   "no-limit": ["no-limit-1"],
+  "noerpel": [],
   "noest": [],
   "nord-wheel": [],
   "norsk-global": ["norsk-global-pkg"],
@@ -39410,6 +39808,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "redur": [],
   "redx": ["redx-1"],
   "relaytech": ["relaytech-1"],
+  "rhenus-it": [],
   "rincos": [],
   "rivigo": [],
   "rl-carriers": ["rl-carriers-1","rl-carriers-2"],
@@ -39454,6 +39853,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shipentegra": ["shipentegra-1"],
   "shipglobal-in": ["shipglobal-in-1"],
   "shiprocket": ["shiprocket-1"],
+  "shipter": ["shipter-1"],
   "shouwu": ["shouwu-1"],
   "shree-anjani": [],
   "shree-mahabali-express": [],
@@ -39531,6 +39931,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tnt-it": ["tnt-it-1","tnt-it-check"],
   "today-kr": [],
   "tonami": [],
+  "tonda-global": [],
   "top-logistics-au": [],
   "toptrans": [],
   "topyou": ["topyou-1"],
@@ -39545,6 +39946,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transaher": ["transaher-1"],
   "transcorp": [],
   "transmission": ["transmission-1"],
+  "transnatur": [],
   "transport-rdl": [],
   "trendyol-express": [],
   "trexity": [],

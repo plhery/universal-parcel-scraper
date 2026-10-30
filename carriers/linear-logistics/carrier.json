@@ -1,0 +1,55 @@
+{
+  "id": "linear-logistics",
+  "displayName": "Linear Logistics",
+  "aliases": [
+    "Linear Logistics Ltd",
+    "Parcelink Logistics"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#003d6a"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://linearlogistics.co.uk/tracking?q={trackingNumber}",
+    "searchUrl": "https://linearlogistics.co.uk/tracking",
+    "canaryUrl": "https://linearlogistics.co.uk/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "linearlogistics.co.uk",
+        "www.linearlogistics.co.uk"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "q"
+      ]
+    },
+    {
+      "domains": [
+        "tracking.linearlogistics.co.uk"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "q"
+      ]
+    }
+  ],
+  "detection": []
+}

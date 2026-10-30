@@ -6476,5 +6476,13 @@
       "whiz-delivery"
     ],
     "reason": "Colis Privé accepts any twelve-character alphanumeric, which takes Whiz Delivery's SW numbers; both rules are low confidence, so the number stays a suggestion."
+  },
+  {
+    "shape": "H3, two letters, six digits and KR",
+    "carriers": [
+      "colis-prive",
+      "shipter"
+    ],
+    "reason": "Colis Privé accepts generic twelve-character composites; Shipter's layout is the only other rule, and both are low-confidence suggestions."
   }
 ]

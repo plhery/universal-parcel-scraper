@@ -1025,12 +1025,12 @@ describe('Western Bid numbers and links', () => {
 
 describe('ACE Logistics, FOFR, AKIS Express, ColliCare, Pall-Ex and Parcel Right links', () => {
   it('files an ACE tracker address under its office', () => {
-    for (const [office, carrier] of [['LT', 'ace-lt'], ['LV', 'ace-lv']] as const) {
+    for (const [office, carrier] of [['LT', 'ace-lt'], ['LV', 'ace-lv'], ['EE', 'ace-ee']] as const) {
       expect(parseTrackingInput(`https://www.acelogistics.eu/tracker/tracker_en.php?office=${office}&cc=${office}&ref=1234567`)).toMatchObject({
         trackingNumber: '1234567', carrier, source: 'link',
       });
     }
-    expect(parseTrackingInput('https://www.acelogistics.eu/tracker/tracker_en.php?office=EE&ref=1234567').carrier ?? 'none').not.toMatch(/^ace-/);
+    expect(parseTrackingInput('https://www.acelogistics.eu/tracker/tracker_en.php?office=FI&ref=1234567').carrier ?? 'none').not.toMatch(/^ace-/);
   });
 
   it('reads the other trackers', () => {
@@ -1078,5 +1078,25 @@ describe('ROZETKA Delivery, HRX, Cargobus and Jetpak numbers and links', () => {
     expect(carrierIdFromName('HR-Express')).toBe('hrx');
     expect(carrierIdFromName('T Grupp')).toBe('cargobus');
     expect(carrierIdFromName('Jetpak Group')).toBe('jetpak');
+  });
+});
+
+describe('TransNatur, Rhenus Italia, Emons and Noerpel', () => {
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://portal.transnatur.com/crm/track/TN10000017/'))
+      .toMatchObject({ trackingNumber: 'TN10000017', carrier: 'transnatur', source: 'link' });
+    expect(parseTrackingInput('https://tracking.rhenusitalia.it/rhenus/tracking.jsf?s=I100000017'))
+      .toMatchObject({ trackingNumber: 'I100000017', carrier: 'rhenus-it', source: 'link' });
+    expect(carrierIdFromName('Transnatur S.A.')).toBe('transnatur');
+    expect(carrierIdFromName('Rhenus Italia')).toBe('rhenus-it');
+    expect(carrierIdFromName('Emons Spedition')).toBe('emons');
+    expect(carrierIdFromName('C.E. Noerpel')).toBe('noerpel');
+    // Rhenus runs separate networks in each country.
+    expect(carrierIdFromName('Rhenus')).toBeUndefined();
+  });
+
+  it('leaves the numbers they print to the carriers that claim the shapes', () => {
+    // Rhenus Italia's placeholder shape is another carrier's rule; no number names it.
+    expect(detectCarrierMatch('I100000017').candidates ?? []).not.toContain('rhenus-it');
   });
 });

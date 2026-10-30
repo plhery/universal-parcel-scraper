@@ -662,3 +662,21 @@ describe('Hart2Hart Express, Kart2Door and Top Logistics Australia', () => {
     expect(carrierIdFromName('ISS Parcels')).toBe('elta');
   });
 });
+
+describe('Linear Logistics and DeliverDirect', () => {
+  it('reads their tracker links and names', () => {
+    for (const url of ['https://linearlogistics.co.uk/tracking?q=7000000017', 'https://tracking.linearlogistics.co.uk/?q=7000000017']) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: '7000000017', carrier: 'linear-logistics', source: 'link' });
+    }
+    expect(parseTrackingInput('https://www.deliverdirect.com/EcomTracking?axb=DD10000017'))
+      .toMatchObject({ trackingNumber: 'DD10000017', carrier: 'deliverdirect', source: 'link' });
+    expect(carrierIdFromName('Parcelink Logistics')).toBe('linear-logistics');
+    expect(carrierIdFromName('Delta DeliverDirect')).toBe('deliverdirect');
+  });
+
+  it('leaves Linear Logistics numbers to the carriers that claim ten digits', () => {
+    // Its numbers are DX's secure-delivery references.
+    expect(detectCarrierMatch('7000000017').candidates ?? []).not.toContain('linear-logistics');
+  });
+});
+

@@ -2227,6 +2227,12 @@
     "reason": "A V and fifteen digits comes from an aggregator's sample that Line Clear's tracker knows; no Line Clear source ties the layout to Line Clear alone."
   },
   {
+    "carrier": "linear-logistics",
+    "pattern": "^70\\d{8}$",
+    "kind": "collision",
+    "reason": "Linear Logistics numbers are DX's ten-digit secure-delivery references, and ten digits are shared by many carriers, so no rule claims them."
+  },
+  {
     "carrier": "logen",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
