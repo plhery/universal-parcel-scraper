@@ -14,7 +14,12 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   // An outbound item at the exchange office, sent abroad, and received by the post abroad.
   ['item received at exchange office', 'in_transit'],
   ['item sent', 'in_transit'],
+  ['item sent abroad', 'in_transit'],
   ['item received in destination country', 'in_transit'],
+  // The post abroad, relayed: its office of exchange sending the item on, and the delivering office
+  // holding it before the delivery round.
+  ['item sent from exchange office', 'in_transit'],
+  ['item held at post office', 'in_transit'],
   // The destination's customs, relayed: the item presented to customs and handed back after it.
   ['item sent to customs', 'customs'],
   ['item returned from customs', 'in_transit'],

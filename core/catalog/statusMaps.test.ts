@@ -1678,6 +1678,7 @@ describe("universal providers' answers", () => {
       ['Export Scan', 'in_transit'],
       ['Received in warehouse', 'accepted'], ['Item deposited to local postal operator', 'in_transit'],
       ['Item handed over to subcontractor', 'in_transit'], ['Item announced', 'registered'], ['Item sent', 'in_transit'],
+      ['Origin Post is Preparing Shipment', 'registered'],
       ['Item received in destination country', 'in_transit'],
       ['Item posted / received from customer Customer centre: Example', 'accepted'],
       ['International item mailed in originating country', 'accepted'],

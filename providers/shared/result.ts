@@ -345,6 +345,9 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^(?:first|second) dimension event[.!]?$|^processing at (?:the )?(?:global )?shipping cent(?:er|re)[.!]?$|^parcel documentation and labell?ing[.!]?$|^container (?:assignment|closed)[.!]?$|^shipped from (?:the )?(?:global )?shipping cent(?:er|re) to (?:international )?destination[.!]?$|^ready to ship\. fml label requested[.!]?$|^interpost handed item over to postal company[.!]?$/i.test(value)) return 'in_transit';
   // Austrian Post's hand-over to its partner on the way abroad, "Übergabe an Kooperationspartner" in its own map.
   if (/^item handed over to subcontractor[.!]?$/i.test(value)) return 'in_transit';
+  // USPS's status for incoming international mail before it scans the item, from the origin post's electronic notice,
+  // as its own map reads it.
+  if (/^origin post is preparing shipment[.!]?$/i.test(value)) return 'registered';
   // Hrvatska pošta's scans as its own map reads them: the sender's announcement, then the item
   // sent on and received by the post abroad.
   if (/^item announced[.!]?$/i.test(value)) return 'registered';
