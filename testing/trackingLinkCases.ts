@@ -1985,6 +1985,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'whiz-delivery', number: 'SW0000000000',
     route: /^https:\/\/track\.whizdelivery\.ca\/track\/SW0000000000$/,
     marker: /We couldn't find that shipment|Tracking History/ },
+  // The server renders the list row for the number: the shipment's state, or that it holds none.
+  { carrier: 'tonami', number: '0000000011',
+    route: /^https:\/\/trc1\.tonami\.co\.jp\/trc\/search3\/excSearch3\?id%5B0%5D=0000000011$/,
+    marker: /該当伝票番号なし|詳細1/ },
   // The portal renders the shipment's card, or says it has none, with HTTP 200.
   { carrier: 'logisimple', number: '000000000017',
     route: /^https:\/\/portal\.logisimple\.pt\/pt\/tracking\?tracking=000000000017$/,

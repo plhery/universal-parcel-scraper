@@ -34488,7 +34488,10 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Tokyo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tonami",
+      "recognitionRank": 791,
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.tonami.co.jp/",
     "trackingUrlTemplate": "https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D={trackingNumber}",

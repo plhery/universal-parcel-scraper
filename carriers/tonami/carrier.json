@@ -21,18 +21,64 @@
   "timezone": "Asia/Tokyo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tonami",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 791
+    },
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "weight",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://trc1.tonami.co.jp/trc/search3/excSearch3?id%5B0%5D={trackingNumber}",
     "searchUrl": "https://trc1.tonami.co.jp/trc/search3/excSearch3",
     "canaryUrl": "https://www.tonami.co.jp/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "volume",
+      "parcel_count",
+      "delivered_at",
+      "delivery_partner",
+      "delivery_partner_reference",
+      "office_contact_details",
+      "office_addresses"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "delivered_at"
+    ],
+    "discarded": [
+      "volume",
+      "parcel_count",
+      "delivery_partner",
+      "delivery_partner_reference",
+      "office_contact_details",
+      "office_addresses"
+    ],
+    "unavailable": [
+      "provider_code",
+      "eta",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
