@@ -1,7 +1,7 @@
 import type { CarrierStatus } from '../../core/result/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
-import { chinaPostEnglish } from '../china-post/status.js';
+import { chinaPostEnglish, chinaPostRelayedStage } from '../china-post/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const FAILED_ATTEMPT: ClassifiedStatus = { status: 'exception', stage: 'failed_attempt' };
@@ -132,13 +132,6 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^\d+ items? (?:has|have) been transferred to \S.* card left$/, FAILED_ATTEMPT],
   [/^\d+ items? (?:has|have) been transferred to run \S+ depot collection$/, { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
-  // China Post's offices and flights, named in 【】: an arrival or a departure, whether its office
-  // is still in the wording or has become the scan's place, a sorting, a flight between two
-  // cities and the closing of an export dispatch.
-  [/^邮件(?:到达|离开)(?:$|[【，])/, { status: 'in_transit', stage: 'in_transit' }],
-  [/^邮件已在【[^【】]+】完成分拣，准备发出$/, { status: 'in_transit', stage: 'in_transit' }],
-  [/^邮件已乘机由【[^【】]+】飞往【[^【】]+】$/, { status: 'in_transit', stage: 'in_transit' }],
-  [/^【[^【】]+】已出口直封$/, { status: 'in_transit', stage: 'in_transit' }],
   // Import customs abroad holding the item for inspection, with what it waits for in brackets.
   [/^境外进口海关留存待验(?:[（(][^（）()]{1,60}[）)])?$/, { status: 'in_transit', stage: 'customs' }],
   // The departure from a processing centre abroad, its country in 【】.
@@ -193,8 +186,12 @@ export function isYunExpressNotice(description: string): boolean {
 
 /** Yuntrack's scan wording, compared without case or repeated spaces. */
 const WORDING = new Map(ENTRIES.map(([text, status]) => [normalizeStatusWording(text), status]));
-const worded = (wording: string): ClassifiedStatus | undefined =>
-  WORDING.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1];
+// China Post's offices and flights, named in 【】, read as China Post's relayed scans.
+const worded = (wording: string): ClassifiedStatus | undefined => {
+  const relayed = chinaPostRelayedStage(wording);
+  return WORDING.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1]
+    ?? (relayed ? { status: 'in_transit', stage: relayed } : undefined);
+};
 
 // China Post's relayed scans show in English, which stages as their Chinese.
 const RELAYED = new Map(statuses.entries.flatMap(({ wording }) => {

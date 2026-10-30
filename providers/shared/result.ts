@@ -21,6 +21,7 @@ import { PROGRESS } from '../../core/result/partial.js';
 import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { anPostWordingStage } from '../../carriers/an-post/status.js';
 import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
+import { chinaPostRelayedStage } from '../../carriers/china-post/status.js';
 import { sunYouWording } from '../../carriers/sunyou/identity.js';
 import { ESTIMATE as FLIGHT_ESTIMATE } from '../../carriers/tsjy/status.js';
 import { FLIGHT_BOOKED as DHLINK_FLIGHT } from '../../carriers/dhlink/status.js';
@@ -245,6 +246,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // BRT's English status for a parcel on its delivery round reads "FOR DELIVERY" alone.
   if (/^for delivery[.!]?$|^delivery in progress, (?:first|second|third|\d+(?:st|nd|rd|th)) attempt\b|scanned for delivery[;,] ?the courier is\b|^delivery branch\. in the hands of the mailman[.!]?$|^przesyłka wydana do doreczenia kurierowi \w{2,20}[.!]?$|派送员派送途中/i.test(value)) return 'out_for_delivery';
   if (/^order confirmed[.!]?$|^order received(?: successfully)?[.!]?$|^creat(?:e|ed)\. (?:parcel|shipment(?: order)?) created\b|^pre-shipment info sent to\b|^the order has information pending customer confirmation[.!]?$|^waiting for (?:the )?carrier to collect the order[.!]?$|^registered in the system[.!]?$|^your order has been received[.!]?$|^tracking number assigned[.!]?$/i.test(value)) return 'registered';
+  // Intelcom's first status, its code 0 as its own map reads it, with the explanation providers relay after it.
+  if (/^your package will be in good hands with (?:intelcom|dragonfly)!(?:\s|$)/i.test(value)) return 'registered';
   // Cainiao's warehouse packing the order, between the order it received and the parcel leaving it, in
   // ParcelsApp's words and in Postal Ninja's.
   if (/^package finished[.!]?$|^package is ready for shipping from the warehouse[.!]?$/i.test(value)) return 'registered';
@@ -444,7 +447,7 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^pakken (?:din )?behandles for sending til (?:et )?hentested[.!]?$|^pakken sorteres pa nytt før den sendes til (?:et )?hentested[.!]?$/i.test(value)) return 'in_transit';
   if (/^warehouse receipt[.!]?$|^(?:package |parcel )?received by (?:the )?warehouse[.!]?$|^received in warehouse[.!]?$|^(?:package|parcel) (?:bulk )?received(?: (?:and|&) scanned)? at (?:the )?warehouse[.!]?$|^we['’]ve got it[.!]?$|^received at evri[.!]?$|^received by our network[.!]?$|^acceptance, sent to [a-z ]+$|^china post has received the mail\b|^envio recogido en origen[.!]?$|^first parcel scan along poste italiane['’]s logistic network\b|已收寄|^仓库收货$|^rfid confirmed pick-?up$|^usps in possession of (?:the )?item\b/i.test(value)) return 'accepted';
   if (/^goods leave the operation cent(?:er|re)[.!]?$|^the shipment has left (?:the )?origin country[.!]?$|^(?:delivery\. )?your order has been shipped from (?:\d\) )?[a-z ]{1,40} cent(?:er|re)[.!]?$|^nuevo reparto(?:\. concertacion entrega flexible)?[.!]?$|^new delivery, flexible delivery arrangement[.!]?$|^inventory in a warehouse[.!]?$|^hand over to airline[.!]?$|^in lavorazione[.!]?$|^uscita centro postale[.!]?$|^przesyłka w oddziale \w{2,20}[.!]?$|^(?:package |parcel )?(?:left|leaves?|shipped from) the warehouse[.!]?$|^we['’]re processing your parcel at our hub\b|^warehouse\. (?:inbound warehouse|delivery in last mile facilities|ready to hand over to last-mile supplier)[.!]?$|^hand over to last mile[.!]?$|^at destination country\/region[.!]?$|^(?:beladung|entladung)$|^entrance to the terminal from the driver$|^outbou?n?d from pickup terminal to the line ?h[ao]u?l$|^inbound from l?ine ?h[ao]u?l to (?:the )?terminal$|^[\w ]+ warehouse, .{1,80}? processing,? (?:order has been (?:in|out)bounded|assembling operation)$|^received in site[- ]|^exported[.!]?$|^(?:the )?plane has landed[.!]?$|^received by (?:the )?airline[.!]?$|^flight delay(?:ed)?[.!](?:$| the flight scheduled\b)|^wi\s*[–-]\s*intermediate warehouse\. (?:container received|package received at intermediate warehouse)[.!]?$|^delivery branch\. received at distribution branch[.!]?$|^receiving destination mail\. received by distributor[.!]?$|^container reception[.!]?$|(?:邮件|快件)(?:到达|离开)处理中心|航空公司接收|已交承运商运输|已完成分拣|^出口海关\/放行|^启运|^干线中转/i.test(value)) return 'in_transit';
-  return undefined;
+  return chinaPostRelayedStage(value);
 }
 
 export function eventStage(description: string): Stage | undefined {

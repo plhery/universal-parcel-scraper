@@ -1,6 +1,7 @@
 import { statusWordings } from '../../core/status/english.js';
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { chinaPostRelayedStage } from '../china-post/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 interface Entry { readonly wording: string; readonly stage?: string; readonly english?: string; readonly unmapped?: boolean; readonly note?: string }
@@ -11,8 +12,9 @@ const ENTRIES: readonly Entry[] = statuses.entries;
  * then those of the partners that fly, clear and deliver the parcel, in their
  * words. The map is the wording recorded in `statuses.json`, by its
  * `normalizeStatusWording` form, and the English an entry shows for its
- * Chinese. The shared rules read a destination agent's pickup at the airport,
- * or a courier's receipt, as an acceptance.
+ * Chinese, then China Post's domestic scans as JS Express relays them. The
+ * shared rules read a destination agent's pickup at the airport, or a
+ * courier's receipt, as an acceptance.
  */
 const WORDINGS = statusWordings(ENTRIES.flatMap(({ wording, stage, english }) => stage ? [{ wording, stage, english }] : []));
 
@@ -23,7 +25,8 @@ const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 
 /** The stage JS Express's map gives a row's wording. */
 export function jsExpressMappedStage(wording: string): Stage | undefined {
-  return WORDINGS.stage(normalizeStatusWording(wording));
+  const normalized = normalizeStatusWording(wording);
+  return WORDINGS.stage(normalized) ?? chinaPostRelayedStage(normalized);
 }
 
 /** The English shown for a row's wording in Chinese, or undefined. */
@@ -39,6 +42,6 @@ export function jsExpressStage(wording: string): ClassifiedWording | null {
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? undefined : WORDINGS.stage(wording)),
+  stage: (code, wording) => (code ? undefined : WORDINGS.stage(wording) ?? chinaPostRelayedStage(wording)),
   gaps: GAPS,
 };

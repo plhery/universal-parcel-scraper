@@ -1,4 +1,4 @@
-import type { ClassifiedStatus } from '../../core/status/index.js';
+import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 import { statusWordings, type WordedStatus } from '../../core/status/english.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { countryCode } from '../../core/time/index.js';
@@ -191,6 +191,25 @@ export function chinaPostEnglish(wording: string): string | undefined {
   return estimate(wording) ?? ENGLISH.get(label) ?? ENGLISH.get(bare) ?? ENGLISH.get(`${label}…`)
     ?? WORDINGS.english(normalizeStatusWording(label)) ?? WORDINGS.english(normalizeStatusWording(bare))
     ?? (OFFICE_ACCEPTED.test(bare) ? 'Accepted' : undefined);
+}
+
+// China Post's domestic scans as a forwarder or a provider relays them in Chinese: an arrival at an
+// office or a departure from one, whether its office is still in the wording or has become the scan's
+// place, a sorting, a flight between two cities, the closing of an export dispatch, and export
+// customs' presentation and release.
+const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
+  [/^邮件(?:到达|离开)(?:$|[【，])/u, 'in_transit'],
+  [/^邮件已在【[^【】]+】完成分拣，准备发出$/u, 'in_transit'],
+  [/^邮件已乘机由【[^【】]+】飞往【[^【】]+】$/u, 'in_transit'],
+  [/^【[^【】]+】已出口直封$/u, 'in_transit'],
+  [/^送交出口海关$/u, 'customs'],
+  [/^出口海关\/放行$/u, 'in_transit'],
+];
+
+/** The stage of one of China Post's scans relayed in Chinese, or undefined for other wording. */
+export function chinaPostRelayedStage(wording: string): Stage | undefined {
+  const text = wording.trim();
+  return RELAYED_STAGES.find(([pattern]) => pattern.test(text))?.[1];
 }
 
 // The destination post's own scans, which China Post copies on that post's wall

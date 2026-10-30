@@ -173,6 +173,15 @@ describe('status map answers', () => {
     expect(answer('byhd', 'ARRIVAL', 'Synthetic arrival')).toEqual(unknown);
     // A courier's record of the parcel's data moves nothing.
     expect(answer('js-express', null, 'Your package is being prepared by the sender and will be handed over to us soon')).toEqual(gap);
+    // China Post's domestic scans as JS Express and the providers relay them, any office in 【】.
+    for (const carrier of ['js-express', 'unknown']) {
+      for (const wording of ['邮件到达【示例市国际互换局】', '邮件离开【示例揽投部】，正在发往【示例市】', '邮件已在【示例揽投部】完成分拣，准备发出',
+        '【示例市国际互换局】已出口直封', '出口海关/放行']) {
+        expect(answer(carrier, null, wording), `${carrier} ${wording}`).toEqual(mapped('in_transit'));
+      }
+      expect(answer(carrier, null, '送交出口海关')).toEqual(mapped('customs'));
+      expect(answer(carrier, null, '邮件已在【示例揽投部】完成分拣')).toEqual(unknown);
+    }
   });
 
   it("answers La Poste by the group and code it reads, for every carrier its adapter serves", () => {
@@ -198,6 +207,10 @@ describe('status map answers', () => {
     expect(answer('chronopost', 'SM', 'Destinataire informé par SMS ou mail')).toEqual(gap);
     expect(answer('chronopost', 'CL', 'Instruction de livraison reçue')).toEqual(gap);
     expect(answer('chronopost', 'SM', 'Autre message')).toEqual(unknown);
+    // A partner's missed round under N, as its postponement is.
+    expect(answer('chronopost', 'N', 'Colis non livré : client absent')).toEqual(mapped('failed_attempt'));
+    expect(answer('chronopost', 'N', 'Livraison reportée')).toEqual(mapped('in_transit'));
+    expect(answer('chronopost', 'P', 'Colis non livré')).toEqual(unknown);
   });
 
   it('reads the last segment of a Swiss Post code, and a revoked scan has no stage', () => {
@@ -1606,6 +1619,8 @@ describe("universal providers' answers", () => {
       ['Pakken din behandles for sending til hentested.', 'in_transit'], ['Pakken sorteres på nytt før den sendes til et hentested.', 'in_transit'],
       ['Instruction data transmitted to DPD', 'registered'], ['Order confirmed.', 'registered'], ['Order received successfully', 'registered'],
       ['Package finished', 'registered'], ['Package is ready for shipping from the warehouse', 'registered'],
+      ["Your package will be in good hands with Intelcom! Good news! We've received your shipment details, but the package is still with your merchant.", 'registered'],
+      ['Your package will be in good hands with Dragonfly!', 'registered'],
       ['Created. Parcel created by Example Shop at EXA', 'registered'], ['create. Shipment order created', 'registered'],
       ['Pre-Shipment Info Sent To Spain', 'registered'],
       ['The order has information pending customer confirmation.', 'registered'],
