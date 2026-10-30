@@ -44,7 +44,9 @@ and time alone, with no label from its codes, so it keeps its code but gets
 no stage, and the status text comes from the newest scan with wording. `IMP`
 is the exception: its code alone is the arrival in the destination country,
 so it is in transit with or without wording, unless the wording names a
-return or a delivery round. A scan with neither wording nor a code is skipped.
+return or a delivery round. Without wording it takes Austrian Post's own
+wording for that arrival, "Sendung im Zielland angekommen", rather than leave
+the host a blank step. A scan with neither wording nor a code is skipped.
 
 The query also asks for the measured size, in whole centimetres. It never
 asks for the shipper, which the public page shows only after sign-in, or

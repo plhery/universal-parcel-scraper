@@ -15,6 +15,8 @@ const PROVIDER = 'Austrian Post';
 // the official client calls this read without the optional account token.
 const ENDPOINT = 'https://api.post.at/sendungen/sv/graphqlPublic';
 const ZONE = 'Europe/Vienna';
+// Austrian Post's wording for an arrival in the destination country (IMP).
+const ARRIVED = 'Sendung im Zielland angekommen';
 
 type Estimate = Pick<CarrierResult, 'expected_delivery' | 'expected_delivery_from'> & { end: number };
 
@@ -87,16 +89,18 @@ export function parseAustrianPostResponse(payload: unknown, rawNumber: string): 
     newestReason = reason;
     const time = explicitOffsetTime(raw.timestamp);
     if (!time) throw new SchemaError(PROVIDER, 'Austrian Post returned an incomplete scan');
-    const description = clean(raw.trackingDesc, 500);
+    const wording = clean(raw.trackingDesc, 500);
     const code = clean(raw.status, 32);
     const providerCode = /^[A-Z0-9]{1,8}$/.test(code) ? code : '';
     // The tracking page lists a scan without wording under its date and time
     // alone, with no label from its codes. It keeps its code but no stage,
     // except the arrival in the destination country (IMP), which its code
-    // names; one without a code is skipped.
+    // names: it takes Austrian Post's wording for that arrival. One without a
+    // code is skipped.
+    const description = wording || (providerCode === 'IMP' ? ARRIVED : '');
     if (!description && !providerCode) return;
     const location = austrianPostPlace(clean(raw.eventPlaceName, 200));
-    const mapped = description ? austrianPostEventStatus(code, reason, description)
+    const mapped = wording ? austrianPostEventStatus(code, reason, wording)
       : code === 'IMP' ? austrianPostSummaryStatus('IV') : undefined;
     const key = JSON.stringify([time.iso, location, description, description ? '' : providerCode]);
     if (seen.has(key)) return;
