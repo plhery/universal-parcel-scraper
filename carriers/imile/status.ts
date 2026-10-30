@@ -94,7 +94,7 @@ const OPENINGS: readonly (readonly [RegExp, Stage | null])[] = [
   // The origin airport's warehouse took the parcel in; the flight it books follows.
   [/^origin port warehouse receive\b/, 'in_transit'],
   [/^flight schedule etd\b/, null],
-  [/^shipment is scheduled to\b/, null],
+  [/^(?:shipment is )?scheduled to\b/, null],
   [/^the driver failed to deliver\b/, 'failed_attempt'],
 ];
 

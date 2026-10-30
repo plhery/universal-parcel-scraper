@@ -130,6 +130,14 @@
       "firstSeen": "2026-10-04"
     },
     {
+      "wording": "Package departed from sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "GOFO's departure from its sorting center in English, relayed beside its Italian twin."
+    },
+    {
       "wording": "Arrived at GOFO Regional Destination Facility",
       "stage": "in_transit",
       "language": "en",

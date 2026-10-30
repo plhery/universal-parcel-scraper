@@ -10,6 +10,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['order created', 'registered'],
   ['collection', 'accepted'],
   ['arrive hub', 'in_transit'],
+  ['depart origin', 'in_transit'],
   ['depart hub', 'in_transit'], // On the former tracker page.
   ['ready for departure', 'in_transit'],
   ['flight departure to destination', 'in_transit'],

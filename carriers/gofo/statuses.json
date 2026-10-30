@@ -132,6 +132,15 @@
       "firstSeen": "2026-10-14"
     },
     {
+      "code": "820",
+      "wording": "Processing at GOFO Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "A sort at a GOFO facility after the parcel's arrival at its regional hub."
+    },
+    {
       "code": "208",
       "wording": "Out for Delivery",
       "language": "en",

@@ -350,6 +350,14 @@
       "note": "The destination partner's departure from its hub, minutes after Yanwen's batch handover, as DPD Romania words it."
     },
     {
+      "wording": "Arrival Scan",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "The destination partner's arrival at its next depot, after its departure scan, as DPD Romania words it."
+    },
+    {
       "wording": "Transport to delivery centre",
       "language": "en",
       "stage": "in_transit",

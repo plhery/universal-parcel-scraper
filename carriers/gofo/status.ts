@@ -10,7 +10,7 @@ const CODES = new Map<string, ClassifiedStatus>([
   // GOFO's driver has set out to collect the parcel from the sender, then has it.
   ['216', { status: 'pending', stage: 'registered' }],
   ['801', { status: 'in_transit', stage: 'accepted' }],
-  ...['200', '201', '202', '203', '411', '412', '414', '612', '810'].map(code => [code, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
+  ...['200', '201', '202', '203', '411', '412', '414', '612', '810', '820'].map(code => [code, { status: 'in_transit', stage: 'in_transit' }] as [string, ClassifiedStatus]),
   ['208', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // A delivery attempt that failed, whatever reason follows the comma.
   ['206', { status: 'exception', stage: 'failed_attempt' }],

@@ -143,6 +143,13 @@
       "stage": "failed_attempt",
       "confirmedBy": "live",
       "note": "Back at the delivery station after a run that did not deliver it."
+    },
+    {
+      "wording": "Scheduled to <2026-11-02> .",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "note": "The day booked for the next run after the parcel came back to the station, as iMile writes its \"Shipment is scheduled to\" line: moves nothing, so the failed attempt stands."
     }
   ]
 }

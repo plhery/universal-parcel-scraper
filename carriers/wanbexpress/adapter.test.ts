@@ -5,7 +5,7 @@ import { TrawlClient } from '../../core/transport/trawl.js';
 import { adapter } from './adapter.js';
 import { fetchWanbInBrowser } from './browser.js';
 import { API, normalizeWanbNumber, parseWanb } from './parser.js';
-import { statusMap } from './status.js';
+import { statusMap, wanbStage } from './status.js';
 
 vi.mock('./browser.js', () => ({ fetchWanbInBrowser: vi.fn() }));
 
@@ -90,15 +90,18 @@ describe('WanbExpress', () => {
       point('2031-04-21T12:59:00Z', '【Sample DS】Shipment out for delivery.', 'LastMileDeliveryReady'),
       point('2031-04-21T18:48:00Z', '<Route not completed>'),
       point('2031-04-21T19:36:00Z', '【Sample DS】 Back To DS.'),
+      point('2031-04-21T19:46:00Z', 'Scheduled to <2031-04-23> .'),
     ] } }, number);
+    // The day booked for the next run moves nothing: the failed attempt stands.
     expect(result.current_stage).toBe('failed_attempt');
     expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
-      ['failed_attempt', 'carrier'], ['failed_attempt', 'carrier'], ['out_for_delivery', 'carrier'],
+      [undefined, undefined], ['failed_attempt', 'carrier'], ['failed_attempt', 'carrier'], ['out_for_delivery', 'carrier'],
       ['in_transit', 'carrier'], ['in_transit', 'carrier'], ['in_transit', 'carrier'],
     ]);
     // The app reviews stored wordings by the same map.
     expect(statusMap.stage(null, '【sample ds】 back to ds.')).toBe('failed_attempt');
     expect(statusMap.stage('LastMileDeliveryReady', '【sample ds】shipment out for delivery.')).toBe('out_for_delivery');
+    expect(wanbStage(null, 'scheduled to <2031-04-23> .')).toBeNull();
   });
 
   it('keeps verification, missing parcels and changed schemas distinct', () => {
