@@ -38,7 +38,8 @@ The reply has the shape of Speedy's. Each scan carries an operation code from DP
 [API documentation](https://api.dpd.ro/api/docs/), whose list is Speedy's, so the adapter
 stages scans with [Speedy's map](../speedy/status.ts). It keeps the reply's English wording and
 the code; the documentation's wording stands in for an empty one. A reply without scans falls
-back to the shipment's phase. Scan clocks carry their own offset.
+back to the shipment's phase. Scan clocks carry their own offset. A place drops the site type
+before the town, such as `or.`, as Speedy's do.
 
 MySpeedy's endpoint does not know DPD Romania waybills and MyDPD's does not know domestic Speedy
 shipments, so each carrier asks its own host.

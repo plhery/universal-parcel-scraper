@@ -7,6 +7,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { speedyPlace } from './place.js';
 import { CONTENTS_CHECK_CODES, speedyOperation, speedyPhase } from './status.js';
 
 export const PROVIDER = 'Speedy';
@@ -46,9 +47,6 @@ export function parseSpeedyReply(status: number, body: string, rawNumber: string
   }
   return parseSpeedy(payload, rawNumber);
 }
-
-/** A partner's scan can open its place with a numeric site code; the town and country are kept. */
-const place = (value: unknown) => clean(value, 160).replace(/^\d+\s*-\s*/, '');
 
 const comments = (row: Record<string, unknown>) =>
   (Array.isArray(row.comments) ? row.comments.slice(0, 20) : []).filter(isRecord);
@@ -96,7 +94,7 @@ export function parseSpeedy(payload: unknown, rawNumber: string): CarrierResult 
     const at = explicitOffsetTime(row.dateTime);
     if (!code || !at) throw new SchemaError(PROVIDER, 'Speedy returned a scan without a code or clock');
     const { wording, stage } = speedyOperation(code);
-    const location = place(row.place);
+    const location = speedyPlace(row.place);
     const event: CarrierEvent = { time: at.iso, description: clean(row.description, 200) || wording, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);

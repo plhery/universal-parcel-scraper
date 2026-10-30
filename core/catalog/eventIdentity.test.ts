@@ -301,6 +301,17 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'TESTVILLE' }, { ...stored, location: 'TESTVILLE' })).toBe(false);
   });
 
+  it('lets a Speedy or DPD Romania scan whose town lost its site type take over its stored row', () => {
+    for (const [carrier, type] of [['speedy', 'gr.'], ['dpd-ro', 'or.']]) {
+      const policy = sameInstantIdentityPolicy(carrier!, { supportsScanMatching: true });
+      const stored = { stage: 'in_transit', description: 'Arrival Scan', location: `${type} Example City`, providerCode: '1' };
+      expect(policy?.matches?.({ ...stored, location: 'Example City' }, stored)).toBe(true);
+      expect(policy?.matches?.({ ...stored, location: 'Other City' }, stored)).toBe(false);
+      expect(policy?.matches?.({ ...stored, location: 'Example City', description: 'Departure Scan' }, stored)).toBe(false);
+      expect(policy?.matches?.({ ...stored, location: 'Example City' }, { ...stored, location: 'Example City' })).toBe(false);
+    }
+  });
+
   it('lets a Vinted Go scan whose town lost a space before its comma take over its stored row', () => {
     const policy = sameInstantIdentityPolicy('vinted-go', { supportsScanMatching: true });
     const stored = { stage: 'in_transit', description: 'At sorting center in Example Town , FR', location: 'Example Town , FR', providerCode: 'delivery/in_transit' };

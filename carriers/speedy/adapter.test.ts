@@ -38,14 +38,14 @@ describe('Speedy HTTP adapter', () => {
       last_status_text: 'Delivered', last_update: '2026-03-04T17:01:30+02:00', delivered_at: '2026-03-04T17:01:30+02:00',
       expected_delivery: null, pickup_point: '999 - SAMPLE TOWN - EXAMPLE SQUARE' });
     expect(result.events!.map(event => [event.time, event.provider_code, event.stage ?? null, event.location ?? null])).toEqual([
-      ['2026-03-04T17:01:30+02:00', '-14', 'delivered', 'gr. Example City'],
+      ['2026-03-04T17:01:30+02:00', '-14', 'delivered', 'Example City'],
       ['2026-03-04T17:01:00+02:00', '195', null, null],
       ['2026-03-03T08:22:00+02:00', '1134', 'ready_for_pickup', null],
-      ['2026-03-03T08:20:00+02:00', '134', 'ready_for_pickup', 'gr. Example City'],
-      ['2026-03-03T04:10:00+02:00', '1', 'in_transit', 'gr. Example City'],
-      ['2026-03-02T22:30:00+02:00', '2', 'in_transit', 'gr. Sample Town'],
-      ['2026-03-02T18:05:00+02:00', '11', 'in_transit', 'gr. Sample Town'],
-      ['2026-03-02T16:40:00+02:00', '39', 'accepted', 'gr. Sample Town'],
+      ['2026-03-03T08:20:00+02:00', '134', 'ready_for_pickup', 'Example City'],
+      ['2026-03-03T04:10:00+02:00', '1', 'in_transit', 'Example City'],
+      ['2026-03-02T22:30:00+02:00', '2', 'in_transit', 'Sample Town'],
+      ['2026-03-02T18:05:00+02:00', '11', 'in_transit', 'Sample Town'],
+      ['2026-03-02T16:40:00+02:00', '39', 'accepted', 'Sample Town'],
       ['2026-03-02T09:15:00+02:00', '148', 'registered', null],
     ]);
     expect(result.events![1]).toEqual({ time: '2026-03-04T17:01:00+02:00', description: 'Refuse contents check/test', provider_code: '195' });

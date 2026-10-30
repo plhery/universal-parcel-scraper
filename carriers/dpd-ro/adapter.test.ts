@@ -40,13 +40,13 @@ describe('DPD Romania HTTP adapter', () => {
       last_status_text: 'Delivered', last_update: '2026-03-04T11:20:30+02:00', delivered_at: '2026-03-04T11:20:30+02:00',
       expected_delivery: null });
     expect(result.events!.map(event => [event.time, event.provider_code, event.stage ?? null, event.location ?? null])).toEqual([
-      ['2026-03-04T11:20:30+02:00', '-14', 'delivered', 'or. Example City'],
-      ['2026-03-04T08:05:00+02:00', '12', 'out_for_delivery', 'or. Example City'],
+      ['2026-03-04T11:20:30+02:00', '-14', 'delivered', 'Example City'],
+      ['2026-03-04T08:05:00+02:00', '12', 'out_for_delivery', 'Example City'],
       ['2026-03-04T07:30:00+02:00', '175', null, null],
-      ['2026-03-03T04:10:00+02:00', '1', 'in_transit', 'or. Example City'],
-      ['2026-03-02T22:30:00+02:00', '2', 'in_transit', 'or. Sample Town'],
-      ['2026-03-02T18:05:00+02:00', '11', 'in_transit', 'or. Sample Town'],
-      ['2026-03-02T16:40:00+02:00', '39', 'accepted', 'or. Sample Town'],
+      ['2026-03-03T04:10:00+02:00', '1', 'in_transit', 'Example City'],
+      ['2026-03-02T22:30:00+02:00', '2', 'in_transit', 'Sample Town'],
+      ['2026-03-02T18:05:00+02:00', '11', 'in_transit', 'Sample Town'],
+      ['2026-03-02T16:40:00+02:00', '39', 'accepted', 'Sample Town'],
       ['2026-03-02T09:15:00+02:00', '148', 'registered', null],
     ]);
     expect(result.events![2]).toEqual({ time: '2026-03-04T07:30:00+02:00', description: 'Predict', provider_code: '175' });
@@ -61,7 +61,7 @@ describe('DPD Romania HTTP adapter', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Arrival Scan',
       last_update: '2026-03-11T07:50:00+01:00', expected_delivery: '2026-03-13' });
     expect(result.events!.map(event => [event.provider_code, event.location ?? null])).toEqual([
-      ['1', 'SAMPLEDORF, Germany'], ['176', 'or. Sample Town'], ['39', 'or. Sample Town'], ['148', null]]);
+      ['1', 'SAMPLEDORF, Germany'], ['176', 'Sample Town'], ['39', 'Sample Town'], ['148', null]]);
     expect(result.delivered_at).toBeUndefined();
     expect(result.delivery_carrier).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/00000000000000|example\.com|99-/);
@@ -82,7 +82,7 @@ describe('DPD Romania HTTP adapter', () => {
   it('reads a cancelled waybill as an exception without an estimate', () => {
     expect(parseDpdRo(fixture('cancelled'), CANCELLED)).toMatchObject({ status: 'exception', current_stage: 'exception',
       last_status_text: 'Canceled', last_update: '2026-08-03T15:08:23+03:00', expected_delivery: null,
-      events: [{ provider_code: '128', stage: 'exception', location: 'or. Sample Town' }, { provider_code: '148', stage: 'registered' }] });
+      events: [{ provider_code: '128', stage: 'exception', location: 'Sample Town' }, { provider_code: '148', stage: 'registered' }] });
   });
 
   it('keeps unknown codes visible without a stage and answers a reply without scans from its phase', () => {

@@ -6,6 +6,7 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { speedyDeliveryPartner } from '../speedy/parser.js';
+import { speedyPlace } from '../speedy/place.js';
 import { dpdRoOperation, dpdRoPhase } from './status.js';
 
 export const PROVIDER = 'DPD Romania';
@@ -44,9 +45,6 @@ export function parseDpdRoReply(status: number, body: string, rawNumber: string)
   return parseDpdRo(payload, rawNumber);
 }
 
-/** A partner's scan can open its place with a numeric site code; the town and country are kept. */
-const place = (value: unknown) => clean(value, 160).replace(/^\d+\s*-\s*/, '');
-
 /** The "Expected Delivery Date: DD.MM.YYYY" note on a scan, as an ISO day. Other notes are dropped. */
 function estimateOf(row: Record<string, unknown>): string | null {
   for (const comment of (Array.isArray(row.comments) ? row.comments.slice(0, 20) : []).filter(isRecord)) {
@@ -70,7 +68,7 @@ export function parseDpdRo(payload: unknown, rawNumber: string): CarrierResult {
     const at = explicitOffsetTime(row.dateTime);
     if (!code || !at) throw new SchemaError(PROVIDER, 'DPD Romania returned a scan without a code or clock');
     const { wording, stage } = dpdRoOperation(code);
-    const location = place(row.place);
+    const location = speedyPlace(row.place);
     const event: CarrierEvent = { time: at.iso, description: clean(row.description, 200) || wording, provider_code: code,
       ...(location ? { location } : {}), ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(event);

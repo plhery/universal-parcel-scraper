@@ -33,7 +33,8 @@ consignment IDs.
 Each scan carries an operation code. The adapter keeps the reply's English wording and the
 code, and sets the stage from the code list in Speedy's
 [API documentation](https://api.speedy.bg/api/docs/). A reply without scans falls back to the
-shipment's phase. Scan clocks carry their own offset.
+shipment's phase. Scan clocks carry their own offset. A place drops the site type Speedy writes
+before the town, `gr.` in Bulgaria and `or.` in Romania, and a partner's numeric site code.
 
 The estimate is the expected delivery day on the shipment-data scan, kept while the shipment is
 on its way. The pickup point is the name of the office or locker Speedy prepared the shipment
