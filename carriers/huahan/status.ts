@@ -11,9 +11,20 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['QF', 'in_transit'], ['QG', 'customs'], ['LD', 'in_transit'], ['YG', 'in_transit'], ['JY', 'in_transit'],
   ['CB', 'out_for_delivery'], ['PB', 'ready_for_pickup'], ['CC', 'delivered'],
 ]);
-// Scans under IA, or relayed without a code: "Data processed" comes between departures from the
-// origin facility; the rest are the destination carrier's, after the hand-off, in its words.
+// Scans under IA, relayed without a code or under a tracking provider's own code: HuaHan's
+// milestones in its English words, "Data processed" between departures from the origin
+// facility, then the destination carrier's scans, after the hand-off, in its words.
 const WORDINGS: ReadonlyMap<string, Stage> = new Map([
+  ['shipment information received', 'registered'],
+  ['arrived at origin facility', 'accepted'],
+  ['departed from origin facility', 'in_transit'],
+  ['transfer to origin airport', 'in_transit'],
+  ['export customs clearance completed', 'in_transit'],
+  ['departed from airport of origin', 'in_transit'],
+  ['import customs clearance started', 'customs'],
+  ['arrived at destination airport', 'in_transit'],
+  ['import customs clearance completed', 'in_transit'],
+  ['has been given to local carrier', 'in_transit'],
   ['data processed', 'in_transit'],
   ['we will pick up your parcel from the sender soon.', 'registered'],
   ['ready to ship, parcel received and processed', 'in_transit'],
@@ -32,8 +43,11 @@ const GAPS = [{
 }];
 const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 
+// HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
+const OWN_CODE = /^[A-Z]{2}$/;
+
 function mappedStage(code: string, wording: string): Stage | undefined {
-  return CODES.get(code) ?? (!code || code === 'IA' ? WORDINGS.get(wording) : undefined);
+  return CODES.get(code) ?? (!OWN_CODE.test(code) || code === 'IA' ? WORDINGS.get(wording) : undefined);
 }
 
 /** A scan's stage: its code or wording in the map, else the shared rules, else nothing. A recorded gap has none. */

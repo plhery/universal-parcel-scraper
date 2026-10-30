@@ -29,6 +29,8 @@ to the destination carrier's scans.
 - The reply can list a destination carrier's scan twice at the same minute: in that carrier's
   words at its place, and in HuaHan's generic words without one. The placed line stays, with
   the generic line's code when it came without one, so it keeps the code's stage.
+- HuaHan's codes are two capitals. A tracking provider relays its scans in HuaHan's words
+  under the provider's own codes, so the status map reads those scans by their words.
 
 ## Numbers
 

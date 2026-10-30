@@ -1,4 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import type { Stage } from '../../core/status/index.js';
 import { HuahanTracker, solveHuahanQuestion } from './adapter.js';
 import { parseHuahan } from './parser.js';
 
@@ -195,5 +197,27 @@ describe('HuaHan guest tracking', () => {
     await expect(tracker.fetch('HHWAA0000000001YQ,HHWAA0000000002YQ')).rejects.toMatchObject({ kind: 'invalid_input' });
     await expect(tracker.fetch(NUMBER, { signal: AbortSignal.abort() })).rejects.toThrow();
     expect(fetch).not.toHaveBeenCalled();
+  });
+});
+
+describe('HuaHan status map', () => {
+  it('reads its milestones a tracking provider relays under the provider\'s own codes by their words', () => {
+    const relayed: [string, string, Stage][] = [
+      ['InfoReceived', 'Shipment information received', 'registered'],
+      ['InTransit_PickedUp', 'Arrived at origin facility', 'accepted'],
+      ['InTransit_Other', 'Departed from origin facility', 'in_transit'],
+      ['InTransit_Other', 'Transfer to Origin airport', 'in_transit'],
+      ['InTransit_Other', 'Export customs clearance completed', 'in_transit'],
+      ['InTransit_Departure', 'Departed from airport of Origin', 'in_transit'],
+      ['InTransit_CustomsProcessing', 'Import Customs clearance started', 'customs'],
+      ['InTransit_CustomsReleased', 'Import Customs clearance completed', 'in_transit'],
+      ['InTransit_Other', 'Has been given to local carrier', 'in_transit'],
+    ];
+    for (const [code, wording, stage] of relayed) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description: wording }), wording).toEqual({ kind: 'mapped', stage });
+    }
+    // HuaHan's own codes give the stage; one the map does not list is not read by its words.
+    expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'DF', description: 'Departed from origin facility' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'ZZ', description: 'Departed from origin facility' })).toEqual({ kind: 'unknown' });
   });
 });
