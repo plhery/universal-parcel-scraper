@@ -27,6 +27,11 @@ the latest actual scan. The legacy estimate field is excluded because the
 current page uses a separate service with an explicit enabled flag. Detailed delivery prose, addresses,
 coordinates, operators and proof images are excluded.
 
+A scan's place is its city and province, UniUni's only field for where it was scanned. They
+can name a gateway or a hub's region rather than the warehouse that scanned, so an arrival
+scan can sit hundreds of miles from the delivery round that starts minutes later. The other
+place fields name the destination or the recipient.
+
 After a handover, a partner courier's scans arrive without UniUni's English
 summary, as does a Uni Store drop-off, which also has no status code. Their own
 short scan text is kept as the description; they carry no corrected seconds.
