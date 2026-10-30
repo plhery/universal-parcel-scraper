@@ -479,7 +479,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "A GLS parcel number from a public Paketda question. GLS's group tracking overview returned its status history without a postcode."

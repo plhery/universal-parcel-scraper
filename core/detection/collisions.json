@@ -1349,6 +1349,26 @@
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
+    "shape": "Eleven digits in Speedy's 6 series that pass the mod 7 check, passing DHL eCommerce Poland's check",
+    "carriers": [
+      "aramex",
+      "blue-dart",
+      "coordinadora",
+      "dhl-ecommerce-pl",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "japan-post",
+      "mainfreight",
+      "postlogistics",
+      "ppl",
+      "speedy"
+    ],
+    "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
+  },
+  {
     "shape": "Eleven digits starting 2 to 9 that pass the mod 7 check, failing DHL eCommerce Poland's check",
     "carriers": [
       "aramex",
@@ -1365,6 +1385,25 @@
       "ppl"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
+  },
+  {
+    "shape": "Eleven digits in Speedy's 6 series that pass the mod 7 check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "aramex",
+      "blue-dart",
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "japan-post",
+      "mainfreight",
+      "postlogistics",
+      "ppl",
+      "speedy"
+    ],
+    "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
   {
     "shape": "Eleven digits starting 0 or 1 that pass the mod 7 check, passing DHL eCommerce Poland's check",
@@ -1484,6 +1523,26 @@
       "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
+  },
+  {
+    "shape": "9{11} in Speedy's 6 series that passes the mod 7 and Luhn checks, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "aramex",
+      "blue-dart",
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "japan-post",
+      "mainfreight",
+      "old-dominion",
+      "postlogistics",
+      "ppl",
+      "speedy"
+    ],
+    "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
   {
     "shape": "9{11} starting 0 or 1 that passes the mod 7 and Luhn checks, failing DHL eCommerce Poland's check",
@@ -2650,6 +2709,22 @@
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
   {
+    "shape": "9{11} in Speedy's 6 series that fails the mod 7 check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "postlogistics",
+      "ppl",
+      "speedy"
+    ],
+    "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
+  },
+  {
     "shape": "9{11} starting 0 or 1 that fails the mod 7 check, passing DHL eCommerce Poland's check",
     "carriers": [
       "coordinadora",
@@ -3260,6 +3335,23 @@
       "ppl"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
+  },
+  {
+    "shape": "9{11} in Speedy's 6 series that fails the mod 7 check and passes the Luhn check, failing DHL eCommerce Poland's check",
+    "carriers": [
+      "coordinadora",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "mainfreight",
+      "old-dominion",
+      "postlogistics",
+      "ppl",
+      "speedy"
+    ],
+    "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
   {
     "shape": "9{11} starting 0 or 1 that fails the mod 7 check and passes the Luhn check, passing DHL eCommerce Poland's check",

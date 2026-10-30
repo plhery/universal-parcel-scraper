@@ -3449,9 +3449,9 @@
   },
   {
     "carrier": "speedy",
-    "pattern": "^\\d{11}$",
+    "pattern": "^[0-57-9]\\d{10}$",
     "kind": "by_design",
-    "reason": "Eleven digits are shared by several carriers and nothing in the number points to Speedy."
+    "reason": "Speedy's eleven digits outside its 6 series, such as its routing-label specification's example, are shared by several carriers and nothing in them points to Speedy."
   },
   {
     "carrier": "spring-gds",

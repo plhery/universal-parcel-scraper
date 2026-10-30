@@ -32489,7 +32489,17 @@ export const CARRIER_CATALOG = {
         "path": "^/pub/tracking/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^63\\d{9}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^6(?:0[1-9]|[1-9]\\d)\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "spx-br": {
     "displayName": "SPX Express Brazil",
@@ -39460,7 +39470,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "speedaf": ["speedaf-12","speedaf-r"],
   "speedex": [],
   "speedpak": ["speedpak-1"],
-  "speedy": [],
+  "speedy": ["speedy-1","speedy-2"],
   "spx-br": ["spx-br-1"],
   "spx-id": ["spx-id-1","spx-id-2"],
   "spx-my": ["spx-my-1","spx-my-2"],

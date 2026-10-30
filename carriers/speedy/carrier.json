@@ -104,5 +104,17 @@
       "path": "^/pub/tracking/([^/?#]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "speedy-1",
+      "pattern": "^63\\d{9}$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
+      "id": "speedy-2",
+      "pattern": "^6(?:0[1-9]|[1-9]\\d)\\d{8}$",
+      "confidence": "low"
+    }
+  ]
 }

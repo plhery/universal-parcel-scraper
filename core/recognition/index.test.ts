@@ -185,6 +185,23 @@ describe('recognition candidates', () => {
     }
   });
 
+  it('asks Speedy first for its 63 series and in Bulgaria for the rest of its 6 series', () => {
+    // No other carrier's public eleven digits start 63, so Speedy leads wherever the lookup comes from.
+    expect(detectCarrierMatch('63000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['speedy'] });
+    for (const countryHint of [undefined, 'BG', 'DE', 'CZ', 'GB']) {
+      expect(recognitionCandidates('63000000001', { countryHint })[0]?.carrier, countryHint).toBe('speedy');
+    }
+    // GLS, PPL and Japan Post numbers appear elsewhere in the 6 series, where Speedy is only a suggestion.
+    expect(detectCarrierMatch('60600000001')).toMatchObject({ confidence: 'low', preferred: [] });
+    expect(recognitionCandidates('60600000001', { countryHint: 'BG' })[0]?.carrier).toBe('speedy');
+    expect(recognitionCandidates('68200000001', { countryHint: 'DE' })[0]?.carrier).toBe('gls-de');
+    expect(recognitionCandidates('60100000001', { countryHint: 'CZ' })[0]?.carrier).toBe('ppl');
+    // Palletways' consignment IDs run in the 600 series, and Speedy's other first digits stay unclaimed.
+    for (const number of ['60000000001', '51900000001', '73000000001']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('speedy');
+    }
+  });
+
   it('can ask bpost about an ambiguous numeric barcode without a recipient postcode', () => {
     expect(recognitionCandidates('323200000000000000000001')).toEqual(expect.arrayContaining([
       { carrier: 'bpost', needsInput: null, preferred: true },

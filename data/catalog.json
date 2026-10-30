@@ -32487,7 +32487,17 @@
         "path": "^/pub/tracking/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^63\\d{9}$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
+        "pattern": "^6(?:0[1-9]|[1-9]\\d)\\d{8}$",
+        "confidence": "low"
+      }
+    ]
   },
   "spx-br": {
     "displayName": "SPX Express Brazil",

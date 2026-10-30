@@ -451,7 +451,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "An archived lookup on DPD Romania's own tracker shows a shipment registered in Bucharest and collected in Sofia; it has the layout of Speedy's waybills, so it may be Speedy's own."

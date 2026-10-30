@@ -130,7 +130,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "A Voxya complaint against ST Courier gives it as the AWB consignment marked delivered but not received."
@@ -163,7 +164,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "A Voxya complaint against ST Courier gives it as the AWB number of a delayed parcel."
@@ -196,7 +198,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "A Voxya complaint against ST Courier gives it as the AWB number of a parcel not delivered within Chennai."
@@ -261,7 +264,8 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
-          "ppl"
+          "ppl",
+          "speedy"
         ]
       },
       "note": "A complaint against ST Courier names it as the AWB number of a parcel held at its Guindy hub in Chennai; the number is in the complaint's address."

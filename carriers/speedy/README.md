@@ -20,8 +20,13 @@ lookup.
 ## Numbers
 
 Speedy shipment and parcel numbers are eleven digits, so other inputs are invalid without a
-request. Eleven digits are shared with several carriers and nothing in the number points to
-Speedy, so no detection rule claims them and preflight does not ask this adapter.
+request. Speedy's API documentation and public reports show them starting with 6, mostly 63.
+Eleven digits are shared with several carriers, so both rules are low confidence. `speedy-1`
+prefers Speedy for the 63 series, which no other carrier's public numbers show, so recognition
+asks it first wherever the lookup comes from. `speedy-2` only suggests Speedy for the rest of
+the 6 series, where GLS, PPL and Japan Post numbers appear too: recognition asks it first when
+the lookup's country is Bulgaria or Romania. It leaves out 600, the series of Palletways'
+consignment IDs.
 
 ## Notes
 
