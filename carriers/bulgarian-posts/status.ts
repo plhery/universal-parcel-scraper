@@ -51,6 +51,8 @@ const BULGARIAN: ReadonlyMap<string, Stage> = new Map([
   ['доставена пратка', 'delivered'],
   // Taken in at an office or sorting centre along the way.
   ['приемане', 'in_transit'],
+  // The first visit, which left a notice: the item goes to the post office for collection.
+  ['първо посещение', 'failed_attempt'],
   ['за получаване в пс', 'ready_for_pickup'],
   ['доставена', 'delivered'],
   // The former tracker's domestic scans, with a Latin e in the first.

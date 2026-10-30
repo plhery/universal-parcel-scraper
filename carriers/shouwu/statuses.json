@@ -231,6 +231,13 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Shipment completed the customs clearance process at destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Released by customs in the destination country."
+    },
+    {
       "wording": "Shipment arrived in the destination country",
       "stage": "in_transit",
       "language": "en",

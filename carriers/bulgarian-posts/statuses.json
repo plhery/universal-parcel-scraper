@@ -23,6 +23,7 @@
     {"wording": "Receive item at collection point for pick-up (Inb)", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Waiting at the post office for collection."},
     {"wording": "Deliver item (Inb)", "stage": "delivered", "language": "en", "confirmedBy": "live"},
     {"wording": "Приемане", "stage": "in_transit", "language": "bg", "confirmedBy": "live", "note": "Taken in at an office or sorting centre along the way; a domestic scan, in Bulgarian whatever language the page asks for."},
+    {"wording": "Първо посещение", "stage": "failed_attempt", "language": "bg", "confirmedBy": "live", "note": "The postman's first visit, which leaves a notice when the item cannot be handed over; the item was at the post office for collection ten minutes later. A domestic scan."},
     {"wording": "За получаване в ПС", "stage": "ready_for_pickup", "language": "bg", "confirmedBy": "live", "note": "Waiting at the post office for collection; a domestic scan."},
     {"wording": "Доставена", "stage": "delivered", "language": "bg", "confirmedBy": "live", "note": "Delivered; a domestic scan."},
     {"wording": "Получаване пратка от клиент (А10)", "stage": "accepted", "language": "bg", "confirmedBy": "live", "note": "The Bulgarian page's name for \"Receive item from customer (Otb)\"."},

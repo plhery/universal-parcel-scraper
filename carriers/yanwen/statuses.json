@@ -358,6 +358,14 @@
       "note": "The destination partner's arrival at its next depot, after its departure scan, as DPD Romania words it."
     },
     {
+      "wording": "Prepared for Self-collecting by Consignee",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "The destination partner's post office holding the parcel for collection, minutes after its arrival scan there, as seen on a parcel to Cyprus."
+    },
+    {
       "wording": "Transport to delivery centre",
       "language": "en",
       "stage": "in_transit",
