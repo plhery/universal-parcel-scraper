@@ -2,6 +2,9 @@ import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 let active = 0;
+// Why the worker declined: a prompt or scene in another layout, an unreadable image, no icon in
+// the prompt, no pose, or no clear winner.
+const DECLINES = new Set(['geometry', 'image', 'foreground', 'matching', 'ambiguous']);
 const image = value => typeof value === 'string' && value.length <= 200_000
   && /^data:image\/(?:png|jpeg|jpg);base64,[A-Za-z0-9+/=]+$/.test(value);
 
@@ -31,7 +34,8 @@ export function locateJdIcon(challenge, signal, timeoutMs, onAnalysis = () => {}
         const plan = !invalid && code === 0 ? JSON.parse(output) : null;
         const valid = Number.isFinite(plan?.x) && Number.isFinite(plan?.y)
           && plan.x > 0 && plan.x < 275 && plan.y > 0 && plan.y < 170;
-        report(valid ? 'planned' : failure ?? (code === 0 ? 'unreadable' : 'worker_error'));
+        const declined = DECLINES.has(plan?.failure) ? plan.failure : 'unreadable';
+        report(valid ? 'planned' : failure ?? (code === 0 ? declined : 'worker_error'));
         resolve(valid ? { x: plan.x, y: plan.y } : null);
       } catch { report('unreadable'); resolve(null); }
     });

@@ -156,12 +156,24 @@ def locate(payload):
     )
 
 
+def reply(payload):
+    """A point, or only why the matcher declined: a prompt or scene in another layout,
+    an unreadable image, no icon in the prompt, no pose, or no clear winner."""
+    try:
+        result = solve(payload)
+    except ValueError as error:
+        return {"failure": "geometry" if str(error) == "geometry" else "image"}
+    if result.get("acceptedPlan"):
+        return {key: result[key] for key in ("x", "y")}
+    return {"failure": result.get("failure", "ambiguous")}
+
+
 if __name__ == "__main__":
     try:
         raw = sys.stdin.buffer.read(500_001)
         if len(raw) > 500_000:
             raise ValueError("Image input too large")
-        print(json.dumps(locate(json.loads(raw))))
+        print(json.dumps(reply(json.loads(raw))))
     except (
         ValueError,
         TypeError,

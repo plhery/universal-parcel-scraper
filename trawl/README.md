@@ -56,8 +56,10 @@ a bound scan reply arrived, without identifiers or page content. Its two-scan gu
 incomplete; the helper enters no phone digits and signs into no account.
 JD's domestic single-icon helper segments the opaque prompt and requires shape
 and colour to match in the same rotated pose, with a margin over other locations.
-It declines ambiguous images and layouts outside its supported geometry. Its worker
-has a deadline and concurrency limit; click geometry binds both displayed images.
+It declines ambiguous images and layouts outside its supported geometry, and its
+`jd.verification` line names which (`geometry`, `image`, `foreground`, `matching` or
+`ambiguous`). Its worker has a deadline and concurrency limit; click geometry binds both
+displayed images.
 Its official page retains the original guest session and submits tracking only after
 accepted verification. The helper makes one puzzle attempt; abstention closes the context
 without a click, refresh or tracking request. Both the request and response bind the whole

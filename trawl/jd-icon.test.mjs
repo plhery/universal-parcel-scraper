@@ -36,6 +36,16 @@ test('the worker receives only images and returns a bounded point without arbitr
   assert.deepEqual(outcomes, ['planned']);
 });
 
+test('a decline names only its known reason', async t => {
+  for (const [reply, outcome] of [['{"failure":"ambiguous"}', 'ambiguous'], ['{"failure":"geometry"}', 'geometry'],
+    ['{"failure":"PRIVATE"}', 'unreadable'], ['null', 'unreadable']]) {
+    worker(t, reply); const outcomes = [];
+    assert.equal(await locateJdIcon(challenge, new AbortController().signal, 1000, x => outcomes.push(x)), null);
+    assert.deepEqual(outcomes, [outcome]);
+    t.mock.restoreAll(); syncBuiltinESMExports();
+  }
+});
+
 test('the official jpg data-URL spelling reaches the image decoder without relaxing byte validation', async t => {
   const { inputs } = worker(t, '{"x":40,"y":50}');
   const jpg = { scene: challenge.scene.replace('/png;', '/jpg;'), tip: challenge.tip.replace('/png;', '/jpg;') };

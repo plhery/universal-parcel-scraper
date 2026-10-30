@@ -98,6 +98,27 @@ class IconTests(unittest.TestCase):
                 self.assertAlmostEqual(value["x"], 170, delta=4)
                 self.assertAlmostEqual(value["y"], 100, delta=4)
 
+    def test_worker_says_only_why_it_declined(self):
+        worker = str(Path(__file__).with_name("jd-icon.py"))
+        resized = puzzle()
+        resized["scene"] = png(np.zeros((171, 275, 3), np.uint8))
+        blank = puzzle()
+        blank["tip"] = png(np.full((36, 108, 3), 100, np.uint8))
+        for data, failure in [
+            (puzzle(duplicate=True), "ambiguous"),
+            (resized, "geometry"),
+            (blank, "foreground"),
+        ]:
+            result = subprocess.run(
+                [sys.executable, worker],
+                input=json.dumps(data),
+                text=True,
+                capture_output=True,
+                timeout=3,
+                check=True,
+            )
+            self.assertEqual(json.loads(result.stdout), {"failure": failure})
+
 
 if __name__ == "__main__":
     unittest.main()

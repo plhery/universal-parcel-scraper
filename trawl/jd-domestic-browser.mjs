@@ -186,7 +186,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       }
       if (!puzzle || sessionCount !== 1) { outcome = 'unreadable'; return result(); }
       const point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), value => {
-        if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable'].includes(value)) analysis = value;
+        if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable',
+          'geometry', 'image', 'foreground', 'matching', 'ambiguous'].includes(value)) analysis = value;
       });
       if (!point || combined.aborted) { outcome = combined.aborted ? 'budget' : 'unreadable'; return result(); }
       const geometry = await during(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));
