@@ -4,7 +4,7 @@ import { EventEmitter } from 'node:events';
 import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { SfExpressSessions, sfExpressSessionNumber, sfExpressImageUrl, sfExpressPngSize,
+import { SfExpressSessions, sfExpressSessionNumber, sfExpressImageUrl, sfExpressImagePair, sfExpressPngSize,
   sfExpressDragPlan, decodeSfExpressPng } from './sf-express-session.mjs';
 
 const NUMBER = 'SF0000000000001';
@@ -162,6 +162,18 @@ test('asset allowlist rejects alternative hosts, redirects, credentials, types a
   }
 });
 
+test("a puzzle's piece sits beside its background, in the picture store or the policy store", () => {
+  const picture = 'https://static.geetest.com/pictures/v4_pic/slide_2024_09_02/group/bg/00000000000000000000000000000000.png';
+  const policy = 'https://static.geetest.com/captcha_v4/policy/11111111111111111111111111111111/slide/123456/2030-01-02T03/bg/00000000000000000000000000000000.png';
+  assert.deepEqual(sfExpressImagePair(picture, picture.replace('/bg/', '/slide/')), { bg: picture, piece: picture.replace('/bg/', '/slide/') });
+  assert.deepEqual(sfExpressImagePair(policy, policy.replace('/bg/', '/slice/')), { bg: policy, piece: policy.replace('/bg/', '/slice/') });
+  for (const [bg, piece] of [[picture, picture.replace('/bg/', '/slice/')], [policy, policy.replace('/bg/', '/slide/')],
+    [policy, policy.replace('/bg/', '/slice/').replace(/0{32}\.png$/, `${'2'.repeat(32)}.png`)], [policy, picture.replace('/bg/', '/slide/')],
+    [policy.replace('T03/', '/'), policy.replace('T03/', '/').replace('/bg/', '/slice/')], [policy + '?x=1', policy.replace('/bg/', '/slice/')]]) {
+    assert.equal(sfExpressImagePair(bg, piece), null, `${bg} ${piece}`);
+  }
+});
+
 test('PNG dimensions are bounded before invoking any decoder', () => {
   const png = Buffer.alloc(33);Buffer.from([137,80,78,71,13,10,26,10]).copy(png);png.write('IHDR', 12);
   png.writeUInt32BE(300, 16);png.writeUInt32BE(200, 20);assert.deepEqual(sfExpressPngSize(png), { width: 300, height: 200 });
@@ -179,14 +191,15 @@ test('drag plan uses rendered image scale and whole tile origin, never alpha ins
 });
 
 // A widget showing synthetic puzzle `n`, with its refresh button.
-function puzzleWidget(n) {
-  const image = kind => `https://static.geetest.com/pictures/v4_pic/slide_2024_09_02/group/${kind}/${String(n).repeat(32)}.png`;
+function puzzleWidget(n, store = 'picture') {
+  const image = kind => store === 'picture' ? `https://static.geetest.com/pictures/v4_pic/slide_2024_09_02/group/${kind}/${String(n).repeat(32)}.png`
+    : `https://static.geetest.com/captcha_v4/policy/${'a'.repeat(32)}/slide/331067/2030-01-02T03/${kind}/${String(n).repeat(32)}.png`;
   const rect = (x, y, width, height) => ({ x, y, width, height, cssWidth: width, borderLeft: 0, borderTop: 0 });
-  return { background: { ...rect(0, 0, 300, 200), image: image('bg') }, piece: { ...rect(0, 50, 60, 60), image: image('slide') },
+  return { background: { ...rect(0, 0, 300, 200), image: image('bg') }, piece: { ...rect(0, 50, 60, 60), image: image(store === 'picture' ? 'slide' : 'slice') },
     slice: rect(0, 50, 60, 60), handle: rect(10, 250, 40, 40), handleReady: true, refresh: { x: 280, y: 260, width: 20, height: 20 } };
 }
 
-function solverFixture(readable) {
+function solverFixture(readable, store) {
   const page = new EventEmitter(), clicks = [], drags = [], read = [];
   let puzzle = 1, pointer;
   const reply = () => {
@@ -197,7 +210,7 @@ function solverFixture(readable) {
   };
   page.goto = async () => ({ status: () => 200 });
   page.content = async () => '<html>Official tracking page</html>';
-  page.evaluate = async () => puzzleWidget(puzzle);
+  page.evaluate = async () => puzzleWidget(puzzle, store);
   page.mouse = { async move(x, y) { pointer = { x, y }; }, async down() { drags.push({ from: pointer }); },
     async up() { drags.at(-1).to = pointer; reply(); }, async click(x, y) { clicks.push([x, y]); puzzle++; } };
   const sessions = new SfExpressSessions({ closeMs: 10, fetchImage: async url => url,
@@ -218,6 +231,14 @@ test('an unreadable puzzle is replaced through the refresh button and the new on
   assert.deepEqual(f.clicks, [[290, 270]]);
   assert.equal(f.read.length, 2); assert.notEqual(f.read[0], f.read[1]);
   assert.deepEqual(f.drags, [{ from: { x: 30, y: 270 }, to: { x: 180, y: 270.6 } }]);
+});
+
+test("the solver reads a puzzle from GeeTest's policy store", async () => {
+  const f = solverFixture(() => true, 'policy');
+  const result = await f.run();
+  assert.equal(result.status, 'success');
+  assert.equal(f.read.length, 1); assert.match(f.read[0], /\/captcha_v4\/policy\//);
+  assert.equal(f.drags.length, 1);
 });
 
 test('the solver asks for at most two other puzzles and never drags an unreadable one', async () => {

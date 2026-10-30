@@ -19,12 +19,30 @@ export function sfExpressSessionNumber(url, capture = {}) {
   return number;
 }
 
+// GeeTest's stores of puzzle images: its picture store, and its policy store, which files a puzzle under the hour
+// it was made. Each names the piece's folder in its own way.
+const STORES = [
+  { piece: 'slide', path: kind => new RegExp(`^/pictures/v4_pic/[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/${kind}/[a-f0-9]{32}\\.png$`) },
+  { piece: 'slice', path: kind => new RegExp(`^/captcha_v4/policy/[a-f0-9]{32}/slide/\\d{1,12}/\\d{4}-\\d{2}-\\d{2}T\\d{2}/${kind}/[a-f0-9]{32}\\.png$`) },
+];
+
 export function sfExpressImageUrl(value, kind) {
   let url;
   try { url = new URL(value); } catch { return null; }
   return url.origin === 'https://static.geetest.com' && !url.username && !url.password && !url.search && !url.hash
-    && new RegExp(`^/pictures/v4_pic/[A-Za-z0-9_-]+/[A-Za-z0-9_-]+/${kind}/[a-f0-9]{32}\\.png$`).test(url.pathname)
+    && STORES.some(store => (kind === 'bg' || kind === store.piece) && store.path(kind).test(url.pathname))
     ? url.href : null;
+}
+
+/** A puzzle's background and piece, when both are GeeTest's images of one puzzle, side by side in one store. */
+export function sfExpressImagePair(background, piece) {
+  const bg = sfExpressImageUrl(background, 'bg');
+  if (!bg) return null;
+  for (const store of STORES) {
+    const pieceUrl = sfExpressImageUrl(piece, store.piece);
+    if (pieceUrl && bg.replace(/\/bg\/(?=[a-f0-9]{32}\.png$)/, `/${store.piece}/`) === pieceUrl) return { bg, piece: pieceUrl };
+  }
+  return null;
 }
 
 export function sfExpressPngSize(bytes) {
@@ -344,10 +362,9 @@ export class SfExpressSessions {
 
   // The drag for a settled widget, or null when its puzzle cannot be read.
   async #plan(widget, signal) {
-    const bgUrl = sfExpressImageUrl(widget.background.image, 'bg');
-    const pieceUrl = sfExpressImageUrl(widget.piece.image, 'slide');
-    if (!bgUrl || !pieceUrl || bgUrl.replace('/bg/', '/slide/') !== pieceUrl) throw new Error('Challenge images changed');
-    const [background, piece] = await abortable(Promise.all([bgUrl, pieceUrl].map(async url =>
+    const images = sfExpressImagePair(widget.background.image, widget.piece.image);
+    if (!images) throw new Error('Challenge images changed');
+    const [background, piece] = await abortable(Promise.all([images.bg, images.piece].map(async url =>
       this.decodeImage(await this.fetchImage(url, signal), signal))), signal);
     signal.throwIfAborted();
     if (piece.width > 256 || piece.height > 256) throw new Error('Challenge piece is too large');
