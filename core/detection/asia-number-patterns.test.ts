@@ -593,3 +593,35 @@ describe('ETS Express and Rincos', () => {
     expect(carrierIdFromName('Globegistics Inc.')).toBe('asendia');
   });
 });
+
+describe('KEC eCommerce and TheLorry', () => {
+  it('suggests TheLorry for TLZ and seven digits only', () => {
+    expect(detectCarrierMatch('TLZ1000007').candidates).toContain('thelorry');
+    for (const number of ['TLZ100007', 'TLZ10000007', 'TLX1000007']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('thelorry');
+    }
+  });
+
+  it('leaves the numbers KEC eCommerce tracks to their own carriers', () => {
+    expect(detectCarrierMatch('KECID10000007').candidates ?? []).not.toContain('kec-ecommerce');
+    expect(detectCarrierMatch('YT2532100000000017')).toMatchObject({ carrier: 'yunexpress', confidence: 'high' });
+  });
+
+  it('reads their tracker links and names', () => {
+    for (const url of [
+      'https://kec.kln.com/en/logistics-tracking/?tracking=KECID10000007',
+      'https://kec.kln.com/hk/track-trace/?tracking=KECID10000007',
+    ]) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'KECID10000007', carrier: 'kec-ecommerce', source: 'link' });
+    }
+    for (const url of [
+      'https://tracking.thelorry.com/parcel/tracking/TLZ1000007',
+      'https://bookings.thelorry.com/my/web/tracking/TLZ1000007',
+    ]) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'TLZ1000007', carrier: 'thelorry', source: 'link' });
+    }
+    expect(carrierIdFromName('Kerry eCommerce')).toBe('kec-ecommerce');
+    expect(carrierIdFromName('嘉順達')).toBe('kec-ecommerce');
+    expect(carrierIdFromName('The Lorry')).toBe('thelorry');
+  });
+});

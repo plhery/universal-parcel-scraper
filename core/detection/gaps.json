@@ -4194,5 +4194,29 @@
     "pattern": "^(?!IEL)[A-Z]{3}\\d{10}$",
     "kind": "open",
     "reason": "IEL numbers under prefixes other than its own appear to start with a customer's code; one archived number is too few to give them a rule."
+  },
+  {
+    "carrier": "apg-ecommerce",
+    "pattern": "^(?:\\d{11}|\\d{14})$",
+    "kind": "collision",
+    "reason": "APG references are plain eleven- or fourteen-digit numbers, lengths many carriers' rules accept, and its tracker also takes retailers' order numbers, so the shape cannot name APG."
+  },
+  {
+    "carrier": "toyou",
+    "pattern": "^[A-Z]{4}\\d{9}$",
+    "kind": "collision",
+    "reason": "toyou parcel IDs are a four-letter retailer code and nine digits, the layout of Sunyou, BYHD and Z-Leading numbers, so the shape cannot name toyou."
+  },
+  {
+    "carrier": "kec-ecommerce",
+    "pattern": "^KECID\\d{8}$",
+    "kind": "open",
+    "reason": "A single KECID number is public and the tracker no longer answers it, so its layout has no rule yet."
+  },
+  {
+    "carrier": "kec-ecommerce",
+    "pattern": "^YT\\d{16}$",
+    "kind": "by_design",
+    "reason": "KEC eCommerce also carries YunExpress parcels under YunExpress's own numbers, which belong to YunExpress."
   }
 ]

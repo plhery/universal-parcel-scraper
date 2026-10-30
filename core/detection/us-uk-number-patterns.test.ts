@@ -617,3 +617,29 @@ describe('Optima Overnight, Whiz Delivery and four other North American carriers
     expect(carrierIdFromName('Andlauer Transportation Services')).toBe('ats-healthcare');
   });
 });
+
+describe('Wizmo, toyou, APG eCommerce Solutions and AMS eGroup', () => {
+  it('suggests Wizmo for WD and ten digits only', () => {
+    expect(detectCarrierMatch('WD1000000017')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('WD1000000017').candidates).toContain('wizmo');
+    for (const number of ['WD100000017', 'WD10000000017', 'WA1000000017', 'WZM1000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('wizmo');
+    }
+  });
+
+  it('leaves toyou parcel IDs to the carriers that share their layout', () => {
+    expect(detectCarrierMatch('MMAP100000017').candidates ?? []).not.toContain('toyou');
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://shipwizmo.com/tracking/WD1000000017')).toMatchObject({ trackingNumber: 'WD1000000017', carrier: 'wizmo', source: 'link' });
+    expect(parseTrackingInput('https://www.toyou.co.uk/track/MMAP100000017')).toMatchObject({ trackingNumber: 'MMAP100000017', carrier: 'toyou', source: 'link' });
+    expect(parseTrackingInput('https://apgecommerce.com/track-result/?track_sequenceNo=10000000017'))
+      .toMatchObject({ trackingNumber: '10000000017', carrier: 'apg-ecommerce', source: 'link' });
+    expect(carrierIdFromName('Wizmo Solutions Inc.')).toBe('wizmo');
+    expect(carrierIdFromName('toYou by ASDA')).toBe('toyou');
+    expect(carrierIdFromName('APG eCommerce Solutions')).toBe('apg-ecommerce');
+    expect(carrierIdFromName('Aramex Global Solutions')).toBe('apg-ecommerce');
+    expect(carrierIdFromName('eRetail Logistics')).toBe('ams-egroup');
+  });
+});

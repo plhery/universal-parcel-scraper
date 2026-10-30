@@ -130,8 +130,11 @@ function partner(shipment: Record<string, unknown>, number: string): Pick<Carrie
   if (!delivery) return {};
   const service = part(shipment, 'partner_service');
   const name = service ? text(service, 'display_name', 80) : '';
-  // A link alone does not name the partner: Direx links USPS parcels to its consolidator's tracker.
-  const carrier = name && carrierIdFromName(name) ? carrierIdFromPartner(name, service ? text(service, 'tracking_link', 300) : '') : undefined;
+  // A link alone does not name the partner: Direx links USPS parcels to the tracker of APG
+  // eCommerce Solutions, the consolidator that hands them on, which is not the partner's own.
+  const link = service ? text(service, 'tracking_link', 300) : '';
+  const own = carrierIdFromPartner('', link) === 'apg-ecommerce' ? '' : link;
+  const carrier = name && carrierIdFromName(name) ? carrierIdFromPartner(name, own) : undefined;
   return { ...(carrier && carrier !== 'direx' ? { delivery_carrier: carrier } : {}), delivery_tracking_number: delivery };
 }
 

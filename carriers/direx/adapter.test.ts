@@ -162,6 +162,9 @@ describe('Direx HTTP adapter', () => {
     // A known name with another carrier's link names nobody.
     expect(handed(partner('UPS', 'https://www.royalmail.com/track-your-item#/tracking-results/[TRACKING_NUMBER]')))
       .toEqual({ delivery_carrier: undefined, delivery_tracking_number: '1Z999AA10123456784' });
+    // The consolidator's tracker is not another carrier's link.
+    expect(handed(partner('UPS', 'https://apgecommerce.com/track-result/?track_sequenceNo=[TRACKING_NUMBER]')))
+      .toEqual({ delivery_carrier: 'ups', delivery_tracking_number: '1Z999AA10123456784' });
     expect(handed((shipment) => set(shipment, 'partner_service', null)))
       .toEqual({ delivery_carrier: undefined, delivery_tracking_number: '1Z999AA10123456784' });
     // The label's number is read whole, and Direx's own number or no number hands nothing on.

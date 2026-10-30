@@ -7057,6 +7057,29 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ams-egroup": {
+    "displayName": "AMS eGroup",
+    "color": "#234d9b",
+    "aliases": [
+      "eRetail Logistics",
+      "AMS etrack",
+      "Australasian Mail Services"
+    ],
+    "countries": [
+      "AU",
+      "NZ"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.amsegroup.com.au/track-trace/",
+    "trackingSearchUrl": "https://www.amsegroup.com.au/track-trace/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "andreani": {
     "displayName": "Andreani",
     "color": "#d71920",
@@ -7376,6 +7399,44 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "apg-ecommerce": {
+    "displayName": "APG eCommerce Solutions",
+    "color": "#d62d2d",
+    "aliases": [
+      "APG eCommerce",
+      "Australia Post Global eCommerce Solutions",
+      "Australia Post Global eCommerce Solutions (UK) Limited",
+      "Aramex Global Solutions",
+      "Aramex Global Solutions (UK) Limited",
+      "StarTrack International"
+    ],
+    "countries": [
+      "GB",
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://apgecommerce.com/track/",
+    "trackingUrlTemplate": "https://apgecommerce.com/track-result/?track_sequenceNo={trackingNumber}",
+    "trackingSearchUrl": "https://apgecommerce.com/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "apgecommerce.com",
+          "www.apgecommerce.com"
+        ],
+        "pathPattern": "^/track-result/?$",
+        "params": [
+          "track_sequenceNo"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "apple-express": {
     "displayName": "Apple Express",
@@ -21134,6 +21195,43 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "kec-ecommerce": {
+    "displayName": "KEC eCommerce",
+    "color": "#f26f20",
+    "aliases": [
+      "Kerry eCommerce",
+      "Kerry E-Commerce",
+      "Kerry Ecommerce Limited",
+      "KEC嘉顺达",
+      "嘉顺达",
+      "嘉順達"
+    ],
+    "countries": [
+      "HK",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kec.kln.com/en/logistics-tracking/",
+    "trackingUrlTemplate": "https://kec.kln.com/en/logistics-tracking/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://kec.kln.com/en/logistics-tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "kec.kln.com"
+        ],
+        "pathPattern": "^/(?:en|cn|hk)/(?:logistics-tracking|track-trace)/?$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "kerry-tj": {
     "displayName": "Kerry TJ",
     "color": "#ec6900",
@@ -33618,6 +33716,51 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "thelorry": {
+    "displayName": "TheLorry",
+    "color": "#0a214f",
+    "aliases": [
+      "The Lorry",
+      "TheLorry Malaysia",
+      "TheLorry Bulky Express",
+      "The Lorry Online Sdn Bhd",
+      "Beyond by TheLorry"
+    ],
+    "countries": [
+      "MY",
+      "SG",
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.thelorry.com/parcel",
+    "trackingUrlTemplate": "https://tracking.thelorry.com/parcel/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.thelorry.com/parcel",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.thelorry.com"
+        ],
+        "path": "^/parcel/tracking/([A-Za-z0-9]+)/?$"
+      },
+      {
+        "domains": [
+          "bookings.thelorry.com"
+        ],
+        "path": "^/my/web/tracking/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TLZ\\d{7}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "thhy": {
     "displayName": "Tianhui Hengyuan",
     "color": "#00a2e9",
@@ -34061,6 +34204,37 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "toyou": {
+    "displayName": "toyou",
+    "color": "#007481",
+    "aliases": [
+      "toYou by ASDA",
+      "Asda toyou",
+      "Asda ToYou"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.toyou.co.uk/",
+    "trackingUrlTemplate": "https://www.toyou.co.uk/track/{trackingNumber}",
+    "trackingSearchUrl": "https://www.toyou.co.uk/track",
+    "linkRules": [
+      {
+        "domains": [
+          "www.toyou.co.uk",
+          "toyou.co.uk"
+        ],
+        "path": "^/track/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "tp-logistics-th": {
     "displayName": "TP Logistics",
@@ -36012,6 +36186,45 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "wizmo": {
+    "displayName": "Wizmo",
+    "color": "#34a5d5",
+    "aliases": [
+      "WIZMO Solutions",
+      "Wizmo Solutions Inc.",
+      "Wizmo Inc.",
+      "Ship Wizmo",
+      "shipwizmo"
+    ],
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://shipwizmo.com/",
+    "trackingUrlTemplate": "https://shipwizmo.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://shipwizmo.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "shipwizmo.com",
+          "www.shipwizmo.com"
+        ],
+        "path": "^/tracking/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^WD\\d{10}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "x-express-ba": {
     "displayName": "X Express",
     "color": "#f15921",
@@ -37169,6 +37382,7 @@ export const CARRIER_IDS = [
   "amerijet",
   "ameriship",
   "ampm",
+  "ams-egroup",
   "andreani",
   "anjun",
   "anousith",
@@ -37177,6 +37391,7 @@ export const CARRIER_IDS = [
   "ap-cargo",
   "apc-overnight",
   "apc-postal-logistics",
+  "apg-ecommerce",
   "apple-express",
   "aramex-au",
   "aramex-nz",
@@ -37524,6 +37739,7 @@ export const CARRIER_IDS = [
   "juxi-express",
   "kargoist",
   "kazpost",
+  "kec-ecommerce",
   "kerry-tj",
   "kex",
   "kex-express-hk",
@@ -37838,6 +38054,7 @@ export const CARRIER_IDS = [
   "tfm-express",
   "tforce-freight",
   "tforce-logistics",
+  "thelorry",
   "thhy",
   "tiki",
   "timely-titan",
@@ -37850,6 +38067,7 @@ export const CARRIER_IDS = [
   "topyou",
   "torrestir",
   "total-express",
+  "toyou",
   "tp-logistics-th",
   "trackon",
   "tracx-logis",
@@ -37900,6 +38118,7 @@ export const CARRIER_IDS = [
   "whiz-delivery",
   "winion-logis",
   "winit",
+  "wizmo",
   "x-express-ba",
   "x-trac",
   "xde-logistics",
@@ -38080,6 +38299,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "amerijet": ["amerijet-1"],
   "ameriship": [],
   "ampm": [],
+  "ams-egroup": [],
   "andreani": [],
   "anjun": ["anjun-aj"],
   "anousith": [],
@@ -38088,6 +38308,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ap-cargo": [],
   "apc-overnight": ["apc-overnight-1"],
   "apc-postal-logistics": ["apc-postal-logistics-1","apc-postal-logistics-2"],
+  "apg-ecommerce": [],
   "apple-express": ["apple-express-1"],
   "aramex-au": ["aramex-au-1"],
   "aramex-nz": ["aramex-nz-mx","aramex-nz-1","aramex-nz-2"],
@@ -38435,6 +38656,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "juxi-express": ["juxi-express-1"],
   "kargoist": ["kargoist-1"],
   "kazpost": ["kazpost-s10"],
+  "kec-ecommerce": [],
   "kerry-tj": [],
   "kex": [],
   "kex-express-hk": [],
@@ -38749,6 +38971,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tfm-express": [],
   "tforce-freight": [],
   "tforce-logistics": ["tforce-logistics-1"],
+  "thelorry": ["thelorry-1"],
   "thhy": ["thhy-1"],
   "tiki": [],
   "timely-titan": ["timely-titan-1"],
@@ -38761,6 +38984,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "topyou": ["topyou-1"],
   "torrestir": ["torrestir-1"],
   "total-express": ["total-express-awb"],
+  "toyou": [],
   "tp-logistics-th": ["tp-logistics-th-1"],
   "trackon": [],
   "tracx-logis": ["tracx-logis-1"],
@@ -38811,6 +39035,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "whiz-delivery": ["whiz-delivery-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
+  "wizmo": ["wizmo-1"],
   "x-express-ba": [],
   "x-trac": ["x-trac-1"],
   "xde-logistics": [],

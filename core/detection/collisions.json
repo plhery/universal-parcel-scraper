@@ -5298,6 +5298,14 @@
     "reason": "Both rules are low confidence: Kargoist's Amazon numbers and Australia Post's ten-character consignments share the shape, so direct tracking must confirm the carrier."
   },
   {
+    "shape": "TLZ followed by seven digits",
+    "carriers": [
+      "australia-post",
+      "thelorry"
+    ],
+    "reason": "TheLorry's parcel numbers and Australia Post's ten-character consignments share the shape; both rules are low confidence, so the number stays a suggestion."
+  },
+  {
     "shape": "MPX and nine digits",
     "carriers": [
       "colis-prive",
@@ -5330,6 +5338,16 @@
       "colis-prive"
     ],
     "reason": "bussgods numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
+  },
+  {
+    "shape": "WD and ten digits",
+    "carriers": [
+      "aramex-au",
+      "aramex-nz",
+      "colis-prive",
+      "wizmo"
+    ],
+    "reason": "Wizmo's WD references fall in the Aramex rules for two letters and ten digits and in Colis Privé's generic rule; recognition asks them in turn."
   },
   {
     "shape": "ESUS and nine digits",
