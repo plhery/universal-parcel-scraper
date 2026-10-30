@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, GeodisPlTracker, geodisPlHistoryUrl, geodisPlSearchUrl } from './adapter.js';
@@ -223,6 +224,13 @@ describe('GEODIS Poland HTTP adapter', () => {
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: NUMBER, carrier: 'geodis-pl' }, { budgetMs: 3000 });
     expect(answer).toMatchObject({ carrier: 'geodis-pl', source: 'geodis-pl', result: { current_stage: 'delivered' } });
     expect(fetcher.mock.calls.some(([url]) => String(url) === geodisPlHistoryUrl(NUMBER))).toBe(true);
+  });
+
+  it('reads the number from a link to its customer zone, with or without the language', () => {
+    for (const path of ['/', '/en/', '/pl']) {
+      expect(parseTrackingInput(`https://strefaklienta.pekaes.geodis.pl${path}?ShNumber=${NUMBER}`), path).toMatchObject({ trackingNumber: NUMBER, carrier: 'geodis-pl' });
+    }
+    expect(parseTrackingInput(`https://strefaklienta.pekaes.geodis.pl/en/other?ShNumber=${NUMBER}`).carrier).not.toBe('geodis-pl');
   });
 
   it('keeps its aggregator names apart from GEODIS France', () => {

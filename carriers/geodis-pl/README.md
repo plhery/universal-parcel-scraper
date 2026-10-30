@@ -53,6 +53,11 @@ Shipment numbers are PL and sixteen digits, the number the tracker shows as the 
 sellers give as its waybill. PL is the country, not the carrier, so the rule has low confidence
 and recognition asks the tracker.
 
+## Links
+
+The tracker opens one shipment at `strefaklienta.pekaes.geodis.pl/?ShNumber={number}`, with or
+without a language such as `/en/` in the path. The library reads the number from those links.
+
 ## Testing
 
 `GEODIS_PL_TRACKING_NUMBER=... GEODIS_PL_UNKNOWN_NUMBER=... npm run test:carriers:live -- carriers/geodis-pl`

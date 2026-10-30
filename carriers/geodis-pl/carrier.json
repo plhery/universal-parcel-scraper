@@ -82,7 +82,17 @@
       "proof_of_delivery"
     ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "strefaklienta.pekaes.geodis.pl"
+      ],
+      "pathPattern": "^/(?:[a-z]{2}/?)?$",
+      "params": [
+        "ShNumber"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "geodis-pl-1",

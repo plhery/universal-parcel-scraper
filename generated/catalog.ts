@@ -17589,7 +17589,17 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://strefaklienta.pekaes.geodis.pl/en/",
     "trackingUrlTemplate": "https://strefaklienta.pekaes.geodis.pl/en/?ShNumber={trackingNumber}",
     "trackingSearchUrl": "https://strefaklienta.pekaes.geodis.pl/en/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "strefaklienta.pekaes.geodis.pl"
+        ],
+        "pathPattern": "^/(?:[a-z]{2}/?)?$",
+        "params": [
+          "ShNumber"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^PL\\d{16}$",
