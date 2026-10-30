@@ -114,6 +114,21 @@
       "note": "Customer reports an AliExpress tracking reference and linehaul history; the format does not select a delivery carrier."
     },
     {
+      "number": "LP00000000000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-10-30",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "aliexpress"
+        ]
+      },
+      "note": "Made-up number in the shape of an AliExpress parcel that Cainiao's tracker answered with its own scans and its hand-over to the local delivery company, while no universal provider knew it. Cainiao's numeric LP references usually carry fourteen digits and no public page shows this longer series, so the shape only suggests AliExpress."
+    },
+    {
       "number": "AP00821064969338",
       "role": "shipment",
       "evidence": "public_shipment_report",

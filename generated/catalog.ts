@@ -240,6 +240,10 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       },
       {
+        "pattern": "^LP\\d{17}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^AP\\d{14}$",
         "confidence": "high"
       },
@@ -39853,7 +39857,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiss-post-cargo": ["swiss-post-cargo-sscc","swiss-post-cargo-pl-reference"],
   "quickpac": ["quickpac-1"],
   "planzer": ["planzer-1","planzer-2"],
-  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-gfus","aliexpress-ecsc-aaro","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx"],
+  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-gfus","aliexpress-ecsc-aaro","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
   "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],

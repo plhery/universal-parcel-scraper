@@ -27,6 +27,7 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
 
   it.each([
     ['LP00000000000001', 'aliexpress'],
+    ['LP00000000000000001', 'aliexpress'],
     ['LP0000000000001CN', 'four-px'],
     ['1000000000016', 'delhivery'],
     ['10000000000016', 'delhivery'],
@@ -37,7 +38,7 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
   });
 
   it('anchors the two LP reference families independently of postal suffixes', () => {
-    for (const number of ['LP0000000000001', 'XLP00000000000001', 'LP00000000000001CN']) {
+    for (const number of ['LP0000000000001', 'LP000000000000001', 'LP0000000000000001', 'LP000000000000000001', 'XLP00000000000001', 'LP00000000000001CN']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('aliexpress');
     }
     for (const number of ['LP000000000001CN', 'LP00000000000001CN', 'LP0000000000001SG']) {
@@ -47,6 +48,7 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
 
   it('includes the LP and thirteen-digit Delhivery candidates within bounded HTTP preflight', () => {
     expect(recognitionAskedCarriers('LP00000000000001')).toContain('aliexpress');
+    expect(recognitionAskedCarriers('LP00000000000000001')).toContain('aliexpress');
     expect(recognitionAskedCarriers('LP0000000000001CN')).toContain('four-px');
     expect(recognitionAskedCarriers('2820000000001')).toContain('delhivery');
   });

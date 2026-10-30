@@ -90,6 +90,11 @@
       "confidence": "low"
     },
     {
+      "id": "aliexpress-lp-17",
+      "pattern": "^LP\\d{17}$",
+      "confidence": "low"
+    },
+    {
       "id": "aliexpress-ap-reference",
       "pattern": "^AP\\d{14}$",
       "confidence": "high"

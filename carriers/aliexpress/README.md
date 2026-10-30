@@ -9,7 +9,7 @@ answers and no other carrier issues. It also recognizes the numbers
 `1MCAINIXX` and ten digits, which open with Maersk's code for Cainiao: Cainiao's tracker follows
 them through Maersk's leg. It recognizes `AP` and fourteen digits as well: no other carrier prints
 the layout, and every parcel seen with it was AliExpress's. Detection suggests AliExpress for
-Cainiao's other references, such as `CNUSUP` and numeric `LP` numbers, and suggests it first for a
+Cainiao's other references, such as `CNUSUP` and `LP` with fourteen or seventeen digits, and suggests it first for a
 postal-format number ending in `TY`, `MI` or `XX`, suffixes that name no country and that Cainiao
 gives AliExpress parcels. Detection does not select the last-mile carrier.
 
