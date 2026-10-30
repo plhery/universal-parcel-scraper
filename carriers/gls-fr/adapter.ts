@@ -430,6 +430,8 @@ export const adapter: AdapterFactory = (environment) => {
   const tracker = new GLSFranceTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
   return {
     id: 'gls-fr',
+    // A departure can be entered at its planned time, such as the coming midnight.
+    plannedScans: true,
     steps: ['direct'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(

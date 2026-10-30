@@ -256,6 +256,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // and for its pickup from the sender still to come, as MRW's own map reads them.
   if (/^depositado en punto mrw[.!]?$/i.test(value)) return 'ready_for_pickup';
   if (/^pendiente de recoger[.!]?$/i.test(value)) return 'registered';
+  // DPD Portugal's own wording, relayed by ParcelsApp without its code, as DPD Portugal's map reads
+  // it: the sender's drop-off at a pickup point, the courier's collection, and a depot's intake.
+  if (/^depositado pelo cliente\/expedidor[.!]?$|^encomenda recolhida[.!]?$/i.test(value)) return 'accepted';
+  if (/^entrada em armaz[ée]m[.!]?$/i.test(value)) return 'in_transit';
   // Sameday's Bulgarian network before it has the parcel, as ParcelsApp relays it: a courier will collect the
   // parcel from the sender soon, as Sameday's own map reads its English, and the sender did not hand it over,
   // which stops the parcel.

@@ -51,6 +51,9 @@ this confirmation before they can identify the French network.
   offset, SQL-style wall clock, bare day. An explicit offset is honoured;
   everything else is read in `Europe/Paris`. Empty values arrive as year `0001`
   and are dropped. No single `core/time` policy covers this, so parsing is local.
+- GLS France can enter a departure at its planned time, such as an evening dispatch dated the
+  coming midnight. A scan dated more than five minutes after the lookup is held back until it
+  is due (`plannedScans`).
 - Locations are GLS facility codes (`FR0012`), not resolved to cities.
 - The estimate is the day part of `dateTheoriqueLivraison`. It is dropped once the
   parcel is delivered, waiting for collection, or in exception: the portal then

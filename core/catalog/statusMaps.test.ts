@@ -1441,6 +1441,9 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, "  Colis en préparation chez l'expéditeur ")).toEqual(mapped('registered'));
     expect(answer('unknown', null, 'Delivered')).toEqual(mapped('delivered'));
     expect(answer('unknown', null, 'Item prepared for pick-up at the post office.')).toEqual(mapped('ready_for_pickup'));
+    expect(answer('unknown', null, 'DEPOSITADO PELO CLIENTE/EXPEDIDOR')).toEqual(mapped('accepted'));
+    expect(answer('unknown', null, 'ENCOMENDA RECOLHIDA')).toEqual(mapped('accepted'));
+    expect(answer('unknown', null, 'ENTRADA EM ARMAZÉM')).toEqual(mapped('in_transit'));
     expect(answer('unknown', null, 'Item prepared for pick-up')).not.toEqual(mapped('ready_for_pickup'));
     expect(answer('unknown', null, 'Delivery not successful due to locker not available. The shipment will be delivered on the next business day.'))
       .toEqual(mapped('failed_attempt'));

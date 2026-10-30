@@ -161,6 +161,10 @@ describe('GLS France HTTP recognition', () => {
     recorder: { step() {}, lookup() {} },
   });
 
+  it('holds back a scan entered at its planned time until it is due', () => {
+    expect(createAdapter(vi.fn<typeof fetch>()).plannedScans).toBe(true);
+  });
+
   it('confirms the requested parcel through the French endpoint and reports its scan clock', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(deliveredFixture())));
     await expect(createAdapter(fetcher).recognize!(TRACKING_NUMBER, { budgetMs: 1_000 })).resolves.toEqual({
