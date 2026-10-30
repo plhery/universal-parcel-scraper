@@ -185,5 +185,6 @@ export function parseDealerSend(payload: unknown, raw: string, readAt = Date.now
     ...partnerOf(shipment.externalTrackingNumbers, number, wording),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
+    ...(ahead.length ? { written_ahead: [...new Set(ahead.map(({ local }) => local))] } : {}),
   };
 }

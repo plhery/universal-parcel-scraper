@@ -80,6 +80,15 @@ describe('rows a carrier wrote ahead', () => {
     expect(withoutWrittenAhead(relayed, ahead.slice(1))).toMatchObject({ current_stage: 'customs', events: [customs, arrived] });
   });
 
+  it('are set aside from a fallback that fills a carrier\'s partial answer that names them', () => {
+    const direct = { ...summary, last_update: '2026-01-01T00:00:00Z', written_ahead: ahead };
+    expect(fillPartialAnswer('ups', NUMBER, direct, relayed)?.events).toEqual([arrived]);
+    // A fallback left with nothing, or no fuller than the carrier, leaves the carrier's answer.
+    expect(fillPartialAnswer('ups', NUMBER, direct, { ...relayed, events: [customs, departed] })).toBeNull();
+    expect(fillPartialAnswer('ups', NUMBER, { ...direct, events: [{ ...arrived, time: '2026-01-02T18:30:00Z' }], summary_only: false,
+      history_truncated: true }, { ...relayed, events: [customs, { ...arrived, time: '2026-01-02T18:31:00Z' }, departed] })).toBeNull();
+  });
+
   it('leave nothing of an answer made only of them, and an answer without them as it came', () => {
     expect(withoutWrittenAhead({ ...relayed, events: [departed], last_update: departed.time }, ahead)).toBeNull();
     expect(withoutWrittenAhead({ ...summary, last_update: '2026-01-03T01:00:40Z' }, ahead)).toBeNull();

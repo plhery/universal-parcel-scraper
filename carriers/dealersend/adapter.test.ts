@@ -188,6 +188,7 @@ describe('DealerSend HTTP adapter', () => {
     const early = Date.parse('2026-06-08T20:00:00Z');
     const result = parseDealerSend(reply('in-transit-canada.json'), CANADA_PARCEL, early);
     expect(result).toMatchObject({ last_status_text: 'Item is ready for departure.', last_update_local: '2026-06-09T02:13:00' });
+    expect(result.written_ahead).toContain('2026-06-16T11:51:00');
     let error: unknown;
     try {
       parseDealerSend(reply('in-transit-canada.json'), CANADA_PARCEL, Date.parse('2026-06-01T00:00:00Z'));

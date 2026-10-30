@@ -295,5 +295,6 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
     ...(/^[A-Z]{2}$/.test(destination) && countryCode(destination) ? { destination_country: destination } : {}),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
+    ...(ahead.length ? { written_ahead: [...new Set(ahead.map(({ event }) => event.time ?? event.local_time!))] } : {}),
   };
 }

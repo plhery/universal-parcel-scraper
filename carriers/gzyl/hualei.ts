@@ -302,8 +302,8 @@ interface Facts {
  */
 function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, readAt: number): CarrierResult {
   const { events, truncated, ahead } = scans(rows, tenant, readAt);
-  // The order exists, but nothing it holds is due yet. Rows written ahead are named, so that
-  // a provider's copies of them are not taken for scans.
+  // The order exists, but nothing it holds is due yet. Rows written ahead are named, here and
+  // beside the scans kept, so that a provider's copies of them are not taken for scans.
   if (!events.length) {
     throw new NoHistoryError(tenant.provider, `${tenant.provider} has no scans for the shipment yet`,
       ahead.length ? { reason: 'written_ahead', writtenAhead: ahead } : undefined);
@@ -330,6 +330,7 @@ function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, 
       : facts.downstream && facts.downstream !== identity(facts.number) ? { delivery_tracking_number: facts.downstream } : {}),
     events,
     ...(truncated ? { history_truncated: true } : {}),
+    ...(ahead.length ? { written_ahead: ahead } : {}),
   };
 }
 

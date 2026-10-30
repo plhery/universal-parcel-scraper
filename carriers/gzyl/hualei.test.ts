@@ -94,6 +94,9 @@ describe('Hualei track interface', () => {
     const after = Date.parse('2026-03-10T00:00:00Z');
     // The first row, four hours after the order, is kept; the rest, a day and more ahead, are not.
     expect(parseHualeiTrack(script(), NUMBER, GZYL, after)?.events?.map((event) => event.description)).toEqual(['Order information received']);
+    // Beside the rows kept, those written ahead are named too.
+    expect(parseHualeiTrack(script(), NUMBER, GZYL, after)?.written_ahead).toEqual(expect.arrayContaining(['2026-03-06T15:10:42+08:00']));
+    expect(parseHualeiTrack(fixture('track'), NUMBER, GZYL, after)).not.toHaveProperty('written_ahead');
     expect(parseHualeiTrack(script('2026-03-07 18:30:00'), NUMBER, GZYL, after)).toMatchObject({ current_stage: 'delivered',
       events: [expect.objectContaining({ description: 'Delivered' }), expect.objectContaining({ description: 'Order information received' })] });
     // A destination clock up to twelve hours ahead of the platform's is still a scan written as it happened.

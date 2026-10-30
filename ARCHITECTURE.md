@@ -146,6 +146,8 @@ without history, with the reason `written_ahead` and their clocks in `writtenAhe
 fallback's rows at those clocks, the same instant within a minute or the same wall time, are
 copies of them and are set aside; a fallback left with nothing has no history either. Hosts
 apply `writtenAheadClocks` to the carrier's error and `withoutWrittenAhead` to each fallback.
+A carrier that keeps other rows names those clocks in the result's `written_ahead`, and
+`fillPartialAnswer` sets a fallback's copies of them aside before comparing histories.
 The `countryHint` input is still accepted but no longer affects a lookup.
 The `language` input, the reader's language as a BCP 47 tag, goes to the carrier's adapter
 (`readerLanguage`). An adapter whose tracker words its scans in that language asks in it, and

@@ -166,14 +166,17 @@ export function isPartialAnswer(result: CarrierResult): boolean {
  * the fallback lacks, or null when the carrier's answer stands. The fallback must hold more scans,
  * name no carrier other than `carrier`, the one the carrier hands the parcel to or the partner it
  * names, or another network of their brand, and not be behind the carrier's state. A checksum-valid S10 number is one postal item for
- * every operator that carries it, so a fallback for it may name any of them.
+ * every operator that carries it, so a fallback for it may name any of them. Its copies of the
+ * rows the carrier holds back as written ahead (`written_ahead`) are no scans and are set aside.
  */
 export function fillPartialAnswer<T extends CarrierResult>(carrier: string, number: string, direct: CarrierResult, answer: T): T | null {
+  const relayed = withoutWrittenAhead(answer, direct.written_ahead ?? []);
+  if (!relayed) return null;
   const ours = resolveResult(direct);
-  const theirs = resolveResult(answer);
+  const theirs = resolveResult(relayed);
   const owners = isValidS10TrackingNumber(number) ? null
     : [carrier, ours.delivery_carrier, deliveryHandoff(carrier, number, ours)?.carrier].filter((id): id is string => typeof id === 'string');
-  return fuller(theirs, ours, owners) ? withCarrierFacts(answer, theirs, ours) : null;
+  return fuller(theirs, ours, owners) ? withCarrierFacts(relayed, theirs, ours) : null;
 }
 
 /** A clock's wall time, its minute and its seconds when it states them, or null without a date and a time of day. */

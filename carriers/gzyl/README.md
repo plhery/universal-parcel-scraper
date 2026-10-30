@@ -36,8 +36,10 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   before its own clock is a forecast, not a scan, and is held back on every tenant; the margin
   leaves room for a destination's clock, up to six hours ahead of Beijing's. The page shows no
   creation times, so a row dated after the lookup on Beijing time is held back too. An order
-  whose rows are all held back has no history yet; one that holds rows written ahead names
-  their clocks, so that a universal provider's copies of them are set aside too. The record's
+  whose rows are all held back has no history yet. Either way the clocks of the rows written
+  ahead are named, in `written_ahead` or the error, so that a universal provider's copies of
+  them are set aside too: GZYL's order row alone is kept while the script fills a provider's
+  history. The record's
   own summary status is not read; the stage comes from the rows kept. After a row a tenant's
   map reads as returned, a move or a delivery is the parcel going, or delivered, back to the
   sender, and is returned too.

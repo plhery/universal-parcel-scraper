@@ -781,6 +781,13 @@
             "type": "boolean",
             "description": "Only part of a longer scan history, such as its newest scans."
           },
+          "written_ahead": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The clocks of rows the carrier holds back as written ahead of them, which a provider relaying them shows as scans."
+          },
           "events": {
             "type": "array",
             "items": {

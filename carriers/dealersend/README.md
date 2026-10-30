@@ -28,8 +28,8 @@ the lookup its tracking page makes.
   partners' rows are on their facilities' clocks. They stay in `local_time`, and Node lookups
   date them by their place or leg. As on the tracking page, rows are listed by wall clock, and a
   row without one is left out.
-- A row whose wall clock is ahead of the read even at UTC+14 is held back. With nothing else left,
-  the parcel has no history yet, and the held rows are named as written ahead.
+- A row whose wall clock is ahead of the read even at UTC+14 is held back and named in
+  `written_ahead`. With nothing else left, the parcel has no history yet, and its error names them.
 - DealerSend's own rows carry a GUID status. The rows it relays keep the partner's numeric code,
   and those codes repeat with other meanings across partners (30 is processing in Canada and out
   for delivery in the United States), so the map reads both by their wording. "Arrived at origin

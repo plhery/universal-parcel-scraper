@@ -84,6 +84,16 @@ describe('result completeness flags', () => {
   });
 });
 
+describe('rows written ahead', () => {
+  it('keeps the clocks of the rows a carrier holds back, and drops anything else', () => {
+    const written_ahead = ['2026-01-03T09:00:17+08:00', '2026-01-04T10:06:28', '2026-01-05T11:00:00.000Z', '2026-01-06T12:30'];
+    expect(normalizeCarrierResult({ written_ahead, events: [] })).toMatchObject({ written_ahead });
+    for (const value of [[], ['soon'], ['2026-01-03'], [7], '2026-01-03T09:00:17Z', {}, null]) {
+      expect(normalizeCarrierResult({ written_ahead: value, events: [] })).not.toHaveProperty('written_ahead');
+    }
+  });
+});
+
 describe('event places', () => {
   it('drop a blank place and keep a named one', () => {
     const events = normalizeCarrierResult({ status: 'in_transit', events: [

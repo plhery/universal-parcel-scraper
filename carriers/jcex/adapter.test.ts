@@ -224,7 +224,8 @@ describe('JCEX HTTP adapter', () => {
     const result = parseJcex(changed('delivered', (content) => {
       content.trackDetails.splice(9, 3, ...rows(content));
     }), NUMBER, Date.parse('2026-04-13T00:00:00Z'));
-    expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Arrive at the delivery point', last_update: '2026-04-11T01:09:38+08:00' });
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Arrive at the delivery point', last_update: '2026-04-11T01:09:38+08:00',
+      written_ahead: expect.arrayContaining(['2026-04-11T01:09:45+08:00', '2026-04-11T13:45:45+08:00', '2026-04-12T03:15:45+08:00']) });
     // Two such rows, or rows whose spacing breaks the six minutes, stay.
     const kept = parseJcex(changed('delivered', (content) => {
       content.trackDetails.splice(9, 3, ...rows(content).slice(1, 3), { ...rows(content)[3]!, eventTime: '2026-04-12 03:16:45' });

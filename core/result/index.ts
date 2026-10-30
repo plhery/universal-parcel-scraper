@@ -127,8 +127,17 @@ export interface CarrierResult extends JsonObject {
   summary_only?: boolean;
   /** The carrier returned only part of a longer scan history, such as its newest scans. */
   history_truncated?: boolean;
+  /**
+   * The clocks of rows the carrier holds back as written ahead of them, which a provider
+   * relaying them shows as scans: an instant with its offset, or a wall clock.
+   */
+  written_ahead?: string[];
   events?: CarrierEvent[];
 }
+
+// A clock of a row written ahead: a date and a time of day, with or without seconds and an offset.
+const WRITTEN_AHEAD_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d{1,3})?)?(?:Z|[+-]\d{2}:\d{2})?$/;
+const MAX_WRITTEN_AHEAD = 200;
 
 const STATUSES = new Set<CarrierStatus>([
   'pending',
@@ -246,6 +255,9 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   for (const flag of ['summary_only', 'history_truncated'] as const) {
     if (typeof normalized[flag] !== 'boolean') delete normalized[flag];
   }
+  const ahead = normalized.written_ahead;
+  if (!Array.isArray(ahead) || !ahead.length || ahead.length > MAX_WRITTEN_AHEAD
+    || !ahead.every((clock) => typeof clock === 'string' && WRITTEN_AHEAD_CLOCK.test(clock))) delete normalized.written_ahead;
 
   const rawEvents = normalized.events ?? [];
   if (!Array.isArray(rawEvents)) {
