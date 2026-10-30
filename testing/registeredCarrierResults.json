@@ -1414,12 +1414,6 @@
         {
           "provider_code": "2400",
           "description": "Nuevo reparto",
-          "time": "2026-01-03T12:00:01.017Z",
-          "stage": "out_for_delivery"
-        },
-        {
-          "provider_code": "2400",
-          "description": "Nuevo reparto",
           "time": "2026-01-03T12:00:00.970Z",
           "stage": "out_for_delivery"
         },
@@ -2989,13 +2983,6 @@
           "provider_status": "Acheminement contractuel du colis en 48h00",
           "location": "TEST DEPOT 99 (99)",
           "tie_order": 0
-        },
-        {
-          "time": "2026-01-09T15:37:00+01:00",
-          "description": "Parcel processed at Ciblex facility",
-          "provider_status": "Colis Contrôle",
-          "stage": "in_transit",
-          "tie_order": 1
         },
         {
           "time": "2026-01-09T15:37:00+01:00",

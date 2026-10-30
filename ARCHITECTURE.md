@@ -357,6 +357,12 @@ Scans are compared by their instants, or by wall clocks in a history with no ins
 filing, a problem or a scan no rule read is not a movement. A result whose current stage is
 registered for its newest scan, read so, takes that scan's stage.
 
+A step a carrier records again within minutes is read once: every adapter's and provider's
+result leaves out a scan with an earlier scan's wording, place and stage at most ten minutes
+after it, as a gateway that scans one departure several times writes, unless a scan of another
+stage came between them ([repeats.ts](core/result/repeats.ts)). The first record stays, so a
+stored scan keeps its identity as the carrier adds copies.
+
 Each carrier's `statuses.json` records the codes and wordings seen from that carrier and the
 stage each one means. [CORPUS.md](CORPUS.md) describes those records.
 

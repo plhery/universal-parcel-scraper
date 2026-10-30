@@ -37,7 +37,8 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
   offsets. The newest one is the estimate; a scan with both counts as its
   window, as on the tracking page. A delivery, a parcel waiting at a
   ServicePoint or a later scan clears it.
-- The feed repeats a scan it received from two systems; one is kept.
+- The feed repeats a scan it received from two systems; one is kept. A gateway records one
+  departure several times within minutes, on two networks; the shared reading keeps the first.
 - The gateway also follows parcels of DHL's European road network that enter
   the Benelux, including German `JJD` numbers. Detection leaves those with DHL
   Paket; the adapter accepts them when the carrier is named.

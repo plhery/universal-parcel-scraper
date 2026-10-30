@@ -3,6 +3,7 @@ import { BudgetExceededError } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import { dueScans } from '../result/due.js';
 import { readLateRegistrations } from '../result/registration.js';
+import { withoutRepeatedScans } from '../result/repeats.js';
 import { runSteps } from '../runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
@@ -34,7 +35,8 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
           recorder: options.recorder ?? NOOP_RECORDER }, [{ id: registered.steps[0] ?? 'direct',
           run: ({ signal, remainingMs }) => registered.track(input, ...(options.signal || options.budgetMs !== undefined ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs) }] as const : [])) }]);
       const answer = normalizeCarrierResult(result);
-      return readLateRegistrations(dateLocalClocks(carrier, restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer)));
+      return readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
+        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer))));
     } catch (error) {
       // A caller's cancellation is the caller's reason, not a carrier failure.
       if (options.signal?.aborted) throw options.signal.reason;

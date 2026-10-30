@@ -14,7 +14,7 @@ const MOVED = new Set<Stage>(['accepted', 'in_transit', 'out_for_delivery', 'fai
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 
 /** The stage a scan is read in, as the consumer reads it: declared, else by its wording. Null when no map or rule read it. */
-function reading(event: unknown): Stage | null {
+export function reading(event: unknown): Stage | null {
   if (!isRecord(event)) return null;
   const declared = typeof event.stage === 'string' && stages.has(event.stage) ? event.stage as Stage : undefined;
   if (declared) return event.stage_source === 'none' ? null : declared;
@@ -26,7 +26,7 @@ function reading(event: unknown): Stage | null {
  * Each scan's instant, or, in a history with none, its wall clock. A scan with neither,
  * or with a wall clock among instants, is not ordered.
  */
-function clocks(events: readonly unknown[]): (number | null)[] {
+export function clocks(events: readonly unknown[]): (number | null)[] {
   const field = (event: unknown, key: 'time' | 'local_time') => isRecord(event) && typeof event[key] === 'string' ? event[key] : '';
   const instants = events.map(event => explicitOffsetTime(field(event, 'time'))?.timestamp ?? null);
   if (instants.some(at => at !== null)) return instants;
