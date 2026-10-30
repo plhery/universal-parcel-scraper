@@ -23,10 +23,16 @@ const GAPS = ENTRIES.filter((entry) => entry.unmapped)
   .map((entry) => ({ wording: normalizeStatusWording(entry.wording), note: entry.note ?? '' }));
 const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 
+// USPS's forwarding alert as JS Express relays it, with the time, day and town it names: the parcel goes on to another
+// address, as USPS's own map reads its "Forwarded".
+const FORWARDED = /^alert, forwarded -> your item was forwarded to a different address\b/;
+
+const mappedStage = (normalized: string): Stage | undefined =>
+  WORDINGS.stage(normalized) ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined) ?? chinaPostRelayedStage(normalized);
+
 /** The stage JS Express's map gives a row's wording. */
 export function jsExpressMappedStage(wording: string): Stage | undefined {
-  const normalized = normalizeStatusWording(wording);
-  return WORDINGS.stage(normalized) ?? chinaPostRelayedStage(normalized);
+  return mappedStage(normalizeStatusWording(wording));
 }
 
 /** The English shown for a row's wording in Chinese, or undefined. */
@@ -42,6 +48,6 @@ export function jsExpressStage(wording: string): ClassifiedWording | null {
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? undefined : WORDINGS.stage(wording) ?? chinaPostRelayedStage(wording)),
+  stage: (code, wording) => (code ? undefined : mappedStage(wording)),
   gaps: GAPS,
 };

@@ -1810,10 +1810,12 @@ describe("universal providers' answers", () => {
   it('leave out notices, detail lines, headings and scans whose wording cannot settle a step, each with its reason', () => {
     expect(universal.gaps.slice(0, 6).map((gap) => gap.wording)).toEqual(['destinataire informé par sms ou mail',
       'destinataire informé par sms ou mail. type du message : retard média utilisé : e-mail', 'estimated delivery',
-      'recipient information updated', 'last-mile delivery forecast',
-      'en demora - el envío ha sufrido un retraso provocando una posible demora en la entrega.']);
+      'recipient information updated', 'change of delivery address', 'last-mile delivery forecast']);
     expect(answer('unknown', null, 'EN DEMORA - EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA.')).toEqual(gap);
     expect(answer('unknown', null, 'Last-mile delivery forecast')).toEqual(gap);
+    // An address change as ParcelsApp relays Huahan's; Huahan's own map stages it after the hand-off.
+    expect(answer('unknown', null, 'Change of delivery address')).toEqual(gap);
+    expect(answer('huahan', null, 'Change of delivery address')).toEqual(mapped('in_transit'));
     expect(answer('unknown', null, 'Forecast of last-mile delivery by carrier')).toEqual(gap);
     // The same notice relayed with Cainiao's code, whatever its words.
     for (const wording of ['Last-mile delivery forecast', 'Carrier update']) expect(answer('unknown', 'LAST_MILE_ASN_NOTIFY', wording), wording).toEqual(gap);

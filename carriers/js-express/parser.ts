@@ -29,8 +29,8 @@ const CAPTCHA = /验证码/;
 const BLOCKED = /_cf_chl_opt|cf-turnstile|<title>\s*(?:Just a moment|Attention Required|Access denied)|g-recaptcha|geetest/i;
 // A run of nine or more digits, with the separators phone numbers are written with; a date stays.
 const PHONE = /(?<![A-Z\d])(?!\d{4}-\d{2}-\d{2}(?!\d))\+?\d(?:[\s().-]{0,2}\d){8,}(?![A-Z\d])/gi;
-// The label a phone number followed, left at the end without it: "，当地电话：" (local phone).
-const PHONE_LABEL = /[\s,，;；]*(?:(?:当地|联系)?电话|tel(?:ephone)?|phone(?:\s+number)?)\s*[:：]\s*$/i;
+// The label a phone number followed, left at the end without it: "，当地电话：" (local phone), or "Local phone number:/".
+const PHONE_LABEL = /[\s,，;；]*(?:(?:当地|联系)?电话|(?:local\s+)?(?:tel(?:ephone)?|phone(?:\s+number)?))\s*[:：]\s*\/?\s*$/i;
 // Who took a delivered parcel, as a courier's delivery line can name them.
 const RECEIVER = /\s*[,;:.\-–]?\s*\b(?:(?:signed|received|collected|accepted)(?:\s+for)?\s+by|signed|signatory|signature)\b.*$/i;
 // The place a destination courier's wording ends with, as "Delivered (Sample Town, ON)".

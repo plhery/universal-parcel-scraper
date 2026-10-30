@@ -244,6 +244,13 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Shipment has been sorted at the carrier facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A sort in the destination country after customs released the parcel."
+    },
+    {
       "wording": "Your parcel has been prepared by your web merchant. It will soon be delivered to Colis Privé.",
       "stage": "registered",
       "language": "en",

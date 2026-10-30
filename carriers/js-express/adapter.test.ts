@@ -208,6 +208,11 @@ describe('JS Express tracking adapter', () => {
     // JS Express's own notice loses the label of the local office's number with it.
     expect(jsExpressScan('收件人地址不详或有误，派送失败，麻烦让收件人联系下当地，当地电话：555 0000 0000', 'US').description)
       .toBe('收件人地址不详或有误，派送失败，麻烦让收件人联系下当地');
+    // Its English, the number gone and a slash left after the label.
+    const notice = 'The delivery address is incorrect. Please ask the recipient to contact their local area? Local phone number:/';
+    expect(jsExpressScan(notice, 'US').description).toBe('The delivery address is incorrect. Please ask the recipient to contact their local area?');
+    expect(jsExpressScan(notice.replace(':/', ':/555 0000 0000'), 'US').description)
+      .toBe('The delivery address is incorrect. Please ask the recipient to contact their local area?');
     expect(jsExpressScan('Delivery failed. Phone: +1 555 000 0000', 'Sample Town').description).toBe('Delivery failed.');
     // Only a delivery's wording loses a "by" clause.
     expect(jsExpressScan('Picked up by the airline', 'HKG').description).toBe('Picked up by the airline');
@@ -239,6 +244,14 @@ describe('JS Express tracking adapter', () => {
     expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'Arrived, awaiting collection' });
     expect(waiting.events).toMatchObject([{ description: 'Arrived, awaiting collection', stage: 'ready_for_pickup', stage_source: 'carrier_map' }]);
     expect(statusMap.stage(null, normalizeStatusWording('Arrived, awaiting collection'))).toBe('ready_for_pickup');
+  });
+
+  it("reads USPS's forwarding alert, which names its time, day and town, as the parcel going on", () => {
+    const alert = 'Alert, Forwarded -> Your item was forwarded to a different address at 7:00 am on January 2, 2030 in SAMPLE TOWN, MA. '
+      + 'This was because of forwarding instructions or because the address or ZIP Code on the label was incorrect.';
+    expect(jsExpressMappedStage(alert)).toBe('in_transit');
+    expect(statusMapAnswer({ carrier: 'js-express', description: alert })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(jsExpressMappedStage('Alert, Forwarded')).toBeUndefined();
   });
 
   it("keeps a Colissimo leg's announced return open until the parcel is back with its sender", () => {

@@ -78,6 +78,9 @@ export const statusMap: CarrierStatusMap = {
     wording: 'recipient information updated',
     note: "A note that the recipient's details changed, after the local carrier's receipt: not a scan, so it keeps the stage the parcel already had.",
   }, {
+    wording: 'change of delivery address',
+    note: "A new delivery address recorded, as ParcelsApp relays Huahan's: an address change moves nothing, so it keeps the stage the parcel already had.",
+  }, {
     wording: 'last-mile delivery forecast',
     note: "Cainiao's order data sent ahead to the last-mile carrier, between its origin sorting scans: not a scan, so it keeps the stage the parcel already had.",
   }, {

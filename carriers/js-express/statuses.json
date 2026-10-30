@@ -38,11 +38,18 @@
     {"wording": "COLLECTED FROM AIRPORT TERMINAL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's agent taking the shipment from the destination airport."},
     {"wording": "ARRIVED AT DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's depot scan after the hand-off to the local courier."},
     {"wording": "SORT - LOADED TO TRAILER", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "collection by overseas warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "JS Express's warehouse in the destination country taking the parcel after customs."},
+    {"wording": "Load cargo overseas", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "That warehouse loading the parcel for the destination courier."},
+    {"wording": "Vehicles depart from", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The truck leaving that warehouse; the place follows as the row's location."},
+    {"wording": "Last Mile Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The hand-over to the destination courier, before its first scan."},
     {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The destination courier's delivery, with its place moved into the location."},
     {"wording": "Accepted at USPS Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS's first scan after the hand-off to the local courier; JS Express accepted the parcel in China."},
     {"wording": "Arrived at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Departed USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Arrived at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Processing at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Forwarded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS sends the parcel on to another address, as its own map reads it. Its forwarding alert, which names the time, day and town, is read by a rule in status.ts."},
     {"wording": "Arrived at Post Office", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering post office's arrival scan, before the parcel goes out for delivery."},
     {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
     {"wording": "Delivered, Front Door/Porch", "stage": "delivered", "language": "en", "confirmedBy": "live"},
@@ -62,6 +69,7 @@
     {"wording": "Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "note": "Colissimo's sort into the delivery round, as La Poste reads its code MD1."},
     {"wording": "Votre colis est livré à son expéditeur à la suite d'un retour.", "stage": "returned", "language": "fr", "confirmedBy": "live"},
     {"wording": "到达待取", "stage": "ready_for_pickup", "english": "Arrived, awaiting collection", "language": "zh", "confirmedBy": "live", "note": "JS Express's own status in Chinese, arrived and awaiting collection, with the country for its place."},
-    {"wording": "收件人地址不详或有误，派送失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系下当地", "stage": "failed_attempt", "english": "The recipient's address is unclear or wrong and the delivery failed. Charges for a return or disposal after the deadline follow the bill; the recipient should contact the local office", "language": "zh", "confirmedBy": "live", "note": "JS Express's own notice after the destination courier's failed attempt, its local office's number cut: the parcel waits for the recipient's answer before it is returned or disposed of."}
+    {"wording": "收件人地址不详或有误，派送失败，逾期退回或销毁的具体费用以账单为准，麻烦让收件人联系下当地", "stage": "failed_attempt", "english": "The recipient's address is unclear or wrong and the delivery failed. Charges for a return or disposal after the deadline follow the bill; the recipient should contact the local office", "language": "zh", "confirmedBy": "live", "note": "JS Express's own notice after the destination courier's failed attempt, its local office's number cut: the parcel waits for the recipient's answer before it is returned or disposed of."},
+    {"wording": "The delivery address is incorrect. Please ask the recipient to contact their local area?", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The English of JS Express's own notice after the destination courier's failed attempt, its local office's number cut."}
   ]
 }
