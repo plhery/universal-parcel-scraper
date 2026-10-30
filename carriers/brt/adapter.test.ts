@@ -414,6 +414,11 @@ describe('BRT direct tracking', () => {
     // While its tracker is down, BRT sends every page to a notice.
     const notice = vi.fn<typeof fetch>().mockResolvedValue(new Response(null, { status: 302, headers: { Location: 'manutenzione_new.htm' } }));
     await expect(new BrtTracker({ fetcher: notice }).fetch(NUMBER)).rejects.toBeInstanceOf(MaintenanceError);
+    // Another redirect names its page, not its query, so an outage's notice can be told from a missing page.
+    const moved = vi.fn<typeof fetch>().mockResolvedValue(new Response(null, { status: 302, headers: { Location: '/web/avviso.htm?brtCode=1' } }));
+    await expect(new BrtTracker({ fetcher: moved }).fetch(NUMBER)).rejects.toThrow('HTTP 302 to vas.brt.it/web/avviso.htm');
+    const missing = vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status: 404 }));
+    await expect(new BrtTracker({ fetcher: missing }).fetch(NUMBER)).rejects.toThrow(/unavailable: HTTP 404$/);
     const oversized = vi.fn<typeof fetch>().mockResolvedValue(new Response(new Uint8Array(1_000_001)));
     await expect(new BrtTracker({ fetcher: oversized }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
     expect(oversized).toHaveBeenCalledTimes(1);

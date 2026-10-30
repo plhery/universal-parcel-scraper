@@ -51,7 +51,15 @@ export class BrtTracker {
         if (response.status === 302 && /manutenzione/i.test(response.headers.get('location') ?? '')) {
           throw new MaintenanceError('BRT', "BRT's tracker is down for maintenance");
         }
-        if (response.status !== 200) throw new IndeterminateError('BRT', 'BRT tracking endpoint is unavailable');
+        if (response.status !== 200) {
+          // The status and a redirect's page, without its query, tell another notice from a missing page.
+          const location = response.headers.get('location');
+          let target = '';
+          if (location) {
+            try { const { host, pathname } = new URL(location, url); target = ` to ${host}${pathname}`; } catch { target = ' to an unreadable address'; }
+          }
+          throw new IndeterminateError('BRT', `BRT tracking endpoint is unavailable: HTTP ${response.status}${target}`);
+        }
         const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]!.toLowerCase();
         if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('BRT', 'BRT response encoding changed');
         return decodeText(bytes, charset?.startsWith('utf') ? 'utf-8' : 'windows-1252');
