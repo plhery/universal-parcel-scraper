@@ -5,6 +5,8 @@
     {"code": "SHIPMENT", "wording": "Shipment departed from facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "预计…航班/Flight scheduled for …", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight it is booked on, after leaving the warehouse; the flight's day, month.day and in English, is read as an ellipsis."},
     {"wording": "航班已启运/Package in transit to destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
+    {"wording": "航班已落地，拆板中/Package arrived at destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed and its pallets are being broken down."},
+    {"wording": "货物已清关完成/Import customs clearance complete", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination's customs, the day after the landing."},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]
 }

@@ -141,6 +141,14 @@
       "note": "A clearance step without its outcome; the parcel is still in customs. The unified feed codes it CD, which stages it in any wording."
     },
     {
+      "wording": "On hold awaiting for payment of shipment related fees",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The recipient owes duties or fees: the delivery facility holds the parcel until they are paid, and the payment row follows. A hold waiting on the recipient's payment is customs at work, not a problem."
+    },
+    {
       "code": "PY",
       "wording": "Payment is received and recorded for shipment related fees",
       "language": "en",

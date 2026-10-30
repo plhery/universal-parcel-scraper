@@ -15,7 +15,9 @@ const EXACT: ReadonlyMap<string, Stage> = new Map([
   ['shipment accepted', 'accepted'],
   // A clearance step without its outcome: the parcel is still in customs.
   ['clearance event', 'customs'],
-  // The recipient's duties or fees are paid; the clearance they held up completes next.
+  // The recipient owes duties or fees, which hold the parcel until they are paid; then they are paid,
+  // and the clearance they held up completes next.
+  ['on hold awaiting for payment of shipment related fees', 'customs'],
   ['payment is received and recorded for shipment related fees', 'customs'],
   ['shipment is in transit to destination', 'in_transit'],
   // Waiting at a facility for the next linehaul or flight: on its way, not held.

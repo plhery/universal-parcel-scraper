@@ -239,6 +239,7 @@ describe('Chronopost direct tracking', () => {
     ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
     ['S', 'Colis bloqué : colis endommagé ou emballage insuffisant', 'exception'],
     ['R', 'Colis en retour expéditeur', 'exception'],
+    ['RO', "Colis reconditionné pendant l'acheminement", 'in_transit'],
   ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
     expect(chronopostStage(code, label)).toEqual({ stage, source: 'carrier_map' });
     expect(chronopostStage(code, 'Unmapped carrier message')).toEqual({ stage: 'pending', source: 'none' });

@@ -57,7 +57,8 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   its clock, so stored rows show which clock a destination's rows are on.
 - GZYL leaves a row's place empty and writes the town after some wordings, as in "Leaving the
   sorting center" followed by the town. The adapter reads that town as the place, so a wording
-  reads the same for every town.
+  reads the same for every town. A row can also name its city after the wording, in brackets;
+  the status map reads the wording without it, and the row keeps it as written.
 - A record that names its channel and the channel's transfer number hands the parcel over when
   the channel label is in the platform's table, the delivery carrier's own detection offers the
   number and it serves the destination. The table holds Swiss Post's labels, the destination of

@@ -81,6 +81,8 @@ describe('DHL Express projection', () => {
         .toEqual({ stage: 'customs', source: 'carrier_map' });
     }
     expect(dhlExpressStage('Synthetic payment wording', 'PY')).toEqual({ stage: 'customs', source: 'carrier_map' });
+    // So does the hold that waits for them until the recipient pays.
+    expect(dhlExpressStage('On hold awaiting for payment of shipment related fees')).toEqual({ stage: 'customs', source: 'carrier_map' });
     // The shipper's further data registers the shipment, coded or not.
     for (const code of ['EM', null]) {
       expect(dhlExpressStage('Supplementary information has been received and merged with applicable shipment data', code))

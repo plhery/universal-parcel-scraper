@@ -287,6 +287,15 @@
       "language": "fr"
     },
     {
+      "code": "RO",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A depot repacked the parcel, a minute after its sort, and sent it on.",
+      "wording": "Colis reconditionné pendant l'acheminement",
+      "language": "fr"
+    },
+    {
       "code": "AN",
       "stage": "exception",
       "confirmedBy": "live",

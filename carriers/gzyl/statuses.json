@@ -12,6 +12,7 @@
     {"wording": "Customs clearance completed", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Internationaliy Package received at processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's processing centre takes the cleared parcel; it was accepted long before."},
     {"wording": "Leave the email processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Los Angeles Processing Center has received it", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A processing centre in the United States takes the parcel on its way to the destination, with its city after the wording in brackets."},
     {"wording": "Arrival sorting, distribution center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination network sorts the parcel at a town's distribution centre. GZYL writes the town after the wording; it is read as the place."},
     {"wording": "Leaving the sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel leaves a town's sorting centre for its next stop. GZYL writes the town after the wording; it is read as the place."},
     {"wording": "Package is on the way", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-20", "note": "GZYL writes a town in the destination country after the wording; it is read as the place."},

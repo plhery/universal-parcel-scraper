@@ -10,16 +10,18 @@ const PLACED = PLACED_WORDINGS.map((wording) => `${normalizeStatusWording(wordin
 // A town: a letter, then letters, digits, spaces, dots, apostrophes or hyphens,
 // but not a phrase such as "to the neighbour" that goes on the wording.
 export const TOWN = /^(?!(?:to|at|in|on|by|with|from|for)\b)\p{L}[\p{L}\p{N} .'-]*$/iu;
+// The city some rows name after the wording, in brackets: "[Los Angeles]".
+const PLACE_TAIL = / \[[^\]]+\]$/;
 
 /**
  * The stage GZYL's map gives a row, by its `normalizeStatusWording` wording.
  * A row's kind code, when it has one, groups many wordings and decides nothing.
- * A placed wording that still carries its town, as a provider relays it, reads
- * as the wording alone.
+ * A placed wording that still carries its town, as a provider relays it, and a
+ * wording with its city in brackets, read as the wording alone.
  */
 export function gzylStage(_code: string | null, wording: string): Stage | undefined {
   const prefix = PLACED.find((placed) => wording.startsWith(placed) && TOWN.test(wording.slice(placed.length)));
-  return WORDINGS.get(wording) ?? (prefix ? WORDINGS.get(prefix.trimEnd()) : undefined);
+  return WORDINGS.get(wording) ?? (prefix ? WORDINGS.get(prefix.trimEnd()) : undefined) ?? WORDINGS.get(wording.replace(PLACE_TAIL, ''));
 }
 
 export const statusMap: CarrierStatusMap = { stage: gzylStage, gaps: [] };
