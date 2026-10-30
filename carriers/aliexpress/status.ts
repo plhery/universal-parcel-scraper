@@ -40,6 +40,8 @@ export const CAINIAO_STATUS = new Map<string, CarrierStatus>([
 // statuses.json records every code Cainiao's own replies have shown.
 export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GWMS_ACCEPT', 'pending'],
+  // "Order Created": the last-mile gateway's order for the parcel, before anyone has it.
+  ['CREATE_ORDER_CES', 'pending'],
   ['GWMS_PACKAGE', 'pending'],
   ['PRE_READY_TO_SHIP', 'pending'],
   ['CONSIGN', 'pending'],
@@ -121,6 +123,8 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GTMS_DEL_FAILURE', 'exception'],
   // "Delivered to PUDO Failure": the courier could not leave it at the pickup point (closed): a failed attempt, below.
   ['PUDO_DELIVERY_FAILURE', 'exception'],
+  // "Delivery Failed": the last-mile gateway's failed round, with the reason in its longer wording: a failed attempt, below.
+  ['LM_DELIVERY_FAILURE', 'exception'],
   // The delivery closed as failed after its attempts.
   ['GTMS_SIGN_FAILURE', 'exception'],
   ['GTMS_STA_SIGN_FAILURE', 'exception'],
@@ -155,7 +159,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
-  if (code === 'GTMS_DEL_FAILURE' || code === 'PUDO_DELIVERY_FAILURE') return 'failed_attempt';
+  if (['GTMS_DEL_FAILURE', 'LM_DELIVERY_FAILURE', 'PUDO_DELIVERY_FAILURE'].includes(code)) return 'failed_attempt';
   if (code === 'RT_INBOUND') return 'returned';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;

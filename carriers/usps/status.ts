@@ -30,7 +30,7 @@ const READY_FOR_PICKUP_TERMS = ['available for pickup', 'available for pick-up',
 // A label printed at the counter is dated by its day alone; the item's acceptance is the scan of it that follows.
 const REGISTERED_TERMS = [
   'pre-shipment', 'preshipment', 'shipping label created', 'label created', 'shipping label printed',
-  'acceptance pending', 'usps awaiting item', 'awaiting item', 'order received',
+  'acceptance pending', 'usps awaiting item', 'awaiting item', 'order received', 'origin post is preparing',
 ];
 // A facility arrival ("Arrived at USPS Facility") follows acceptance: it is transit. Incoming
 // international mail shows the origin post's posting as "Acceptance".

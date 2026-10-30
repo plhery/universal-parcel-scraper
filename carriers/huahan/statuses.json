@@ -23,6 +23,7 @@
     {"wording": "The parcel was redirected. As soon as it is in the couriers possession, it will be processed as requested.", "unmapped": true, "language": "en", "confirmedBy": "live", "note": "The destination carrier's record of the recipient's redirection, written while the parcel was still in China: it moves nothing."},
     {"code": "IA", "wording": "Ready to Ship, Parcel received and processed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination carrier's receipt after the hand-off; HuaHan accepted the parcel in China."},
     {"wording": "Shipped", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed without a code after the destination carrier's receipt."},
+    {"wording": "Change of delivery address", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination carrier's record of a new delivery address, relayed without a code after the hand-off; the parcel is still on its way."},
     {"code": "IA", "wording": "The parcel is in the central warehouse waiting to be processed.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "IA", "wording": "In Transit, Shipment arrived to sorting centre / Shipment in the sorting centre", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "IA", "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

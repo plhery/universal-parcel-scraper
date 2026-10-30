@@ -132,6 +132,130 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "The local post's delivery to the recipient."
+    },
+    {
+      "wording": "Shipment arrived at facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The first scan in the hands of the forwarder that takes the parcel to the flight, after the order data."
+    },
+    {
+      "wording": "Shipment departed from facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "arrived at the distribution center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Depart from the sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Export customs declaration completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "China's export declaration done before the flight; the parcel is not held in customs."
+    },
+    {
+      "wording": "Flight departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Flight arrival",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Customs clearance has been completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Released by customs in the destination country."
+    },
+    {
+      "wording": "Shipment in transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Abnormal delivery",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The local courier's round that did not deliver, after its out-for-delivery scan; the reason follows as its own scan."
+    },
+    {
+      "wording": "<Incorrect address.>",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The local courier's reason for a failed round, in angle brackets; the parcel went on in transit after it."
+    },
+    {
+      "wording": "Shipment arrived at a carrier facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "After the handover to the carrier that flies the parcel."
+    },
+    {
+      "wording": "Shipment arrived at an air hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment started the customs clearance process at origin",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Export clearance in China."
+    },
+    {
+      "wording": "Shipment departed from a carrier facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Shipment arrived in the destination country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Your parcel has been prepared by your web merchant. It will soon be delivered to Colis Privé.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Colis Privé's notice of the parcel's data, relayed before Shouwu's own scans; nothing has moved."
+    },
+    {
+      "wording": "Your parcel arrived at the shipping partner. It will be sent to Colis Privé.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Colis Privé's record of the parcel reaching the partner that brings it to France, relayed."
+    },
+    {
+      "wording": "Your package is in transit to Colis Privé",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Relayed from Colis Privé before it has the parcel."
     }
   ]
 }

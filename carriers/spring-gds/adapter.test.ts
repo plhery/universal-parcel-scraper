@@ -613,6 +613,7 @@ describe('PostNL domestic tracker', () => {
     expect(statusMap.stage('J06', 'shipment sorted in sorting centre')).toBe('in_transit');
     expect(statusMap.stage('J01', 'Shipment has been sorted')).toBe('in_transit');
     expect(statusMap.stage('M02', 'Not yet processed by PostNL')).toBe('registered');
+    expect(statusMap.stage('X01', 'Shipment is ready for transport to the country of destination')).toBe('in_transit');
   });
 
   it('dates the delivery the observations leave out, and only when PostNL says it happened', () => {

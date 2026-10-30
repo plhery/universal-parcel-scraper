@@ -220,5 +220,7 @@ describe('HuaHan status map', () => {
     // HuaHan's own codes give the stage; one the map does not list is not read by its words.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'DF', description: 'Departed from origin facility' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'ZZ', description: 'Departed from origin facility' })).toEqual({ kind: 'unknown' });
+    // The destination carrier's address change, relayed without a code after the hand-off.
+    expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Change of delivery address' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 });

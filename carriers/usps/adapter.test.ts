@@ -216,7 +216,8 @@ describe('USPS rendered page', () => {
       step('Acceptance', 'October 19, 2026, 6:07 pm')), 'CW000000005NL');
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Processed Through Facility' });
     expect(result.events?.map(({ description }) => description)).toEqual(['Processed Through Facility', 'Acceptance']);
-    expect(parseUSPSTrackingHtml(page(), 'CW000000005NL').last_status_text).toBe('Origin Post is Preparing Shipment');
+    // Before USPS dates a scan, the notice is the item's data from the origin post.
+    expect(parseUSPSTrackingHtml(page(), 'CW000000005NL')).toMatchObject({ last_status_text: 'Origin Post is Preparing Shipment', current_stage: 'registered' });
   });
 
   it('reads the estimate banner, whose date parts sit apart, and not its tooltips as the verdict', () => {

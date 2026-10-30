@@ -29,6 +29,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['we will pick up your parcel from the sender soon.', 'registered'],
   ['ready to ship, parcel received and processed', 'in_transit'],
   ['shipped', 'in_transit'],
+  ['change of delivery address', 'in_transit'],
   ['the parcel is in the central warehouse waiting to be processed.', 'in_transit'],
   ['in transit, shipment arrived to sorting centre / shipment in the sorting centre', 'in_transit'],
   ['in transit', 'in_transit'],

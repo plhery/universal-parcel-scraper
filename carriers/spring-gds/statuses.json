@@ -271,6 +271,13 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
       "note": "A label of PostNL's domestic tracker, with observation code J01: sorted after PostNL received the parcel, before the driver set out."
+    },
+    {
+      "wording": "Shipment is ready for transport to the country of destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A label of PostNL's domestic tracker, with observation code X01: sorted for export after PostNL received the parcel."
     }
   ]
 }

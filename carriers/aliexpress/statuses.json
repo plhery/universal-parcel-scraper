@@ -595,6 +595,22 @@
       "note": ""
     },
     {
+      "code": "LM_DELIVERY_FAILURE",
+      "wording": "Delivery Failed",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The last-mile gateway's failed round; the courier went out again. Its longer wording gives the reason, such as the recipient not at home."
+    },
+    {
+      "code": "CREATE_ORDER_CES",
+      "wording": "Order Created",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The last-mile gateway's order for the parcel, the first scan, before its pickup."
+    },
+    {
       "code": "LM_SIGN_SUCCESS",
       "wording": "Delivery Successful",
       "language": "en",
