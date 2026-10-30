@@ -55,6 +55,11 @@ describe('Hualei track interface', () => {
     expect(() => parseHualeiTrack(moved, NUMBER, GZYL, READ_AT))
       .toThrow(`GZYL answered with another shipment; its trackingNumber, customerOrderNumber holds the number`);
     expect(() => parseHualeiTrack(fixture('track'), 'GZTEST00000009', GZYL, READ_AT)).toThrow(/^GZYL answered with another shipment$/);
+    // Or a shorter form of it, eight characters or more.
+    const shorter = fixture('track');
+    Object.assign(shorter[0].data[0], { trackingNumber: 'OTHER0001', customerOrderNumber: NUMBER.slice(2, 10), referenceNumber: NUMBER.slice(0, 7) });
+    expect(() => parseHualeiTrack(shorter, NUMBER, GZYL, READ_AT))
+      .toThrow(/^GZYL answered with another shipment; its customerOrderNumber holds part of the number$/);
     // Two orders that share a reference are no answer.
     const shared = fixture('track');
     shared[0].data.push({ ...shared[0].data[0], trackingNumber: 'GZTEST00000002' });
