@@ -128,10 +128,51 @@ describe('Raben tracking adapter', () => {
       rows(payload)[0]!.DisplayShipmentStatus = { value: 'E98_sample' };
     }), IN_TRANSIT);
     expect(worded).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'wording:language' });
-    const pickup = parseRaben(edited('in-transit', payload => {
-      rows(payload)[0]!.DisplayShipmentStatus = { value: 'E07_The_shipment_is_awaiting_for_own_pick_up_by_consginee' };
-    }), IN_TRANSIT);
+  });
+
+  it('reads self collection as held at the depot for the recipient, and a round after it as a change of plan', () => {
+    const SELF = 'E07_The_shipment_is_awaiting_for_own_pick_up_by_consginee';
+    const pickup = parseRaben(edited('in-transit', payload => { rows(payload)[0]!.DisplayShipmentStatus = { value: SELF }; }), IN_TRANSIT);
     expect(pickup).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'not delivered - self collection' });
+    const round = parseRaben(edited('in-transit', payload => {
+      rows(payload)[0]!.DisplayShipmentStatus = { value: 'E05_The_shipment_in_delivery' };
+      rows(payload)[1]!.DisplayShipmentStatus = { value: SELF };
+    }), IN_TRANSIT);
+    expect(round).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'in delivery' });
+    expect(round.events!.slice(0, 2).map(event => [event.provider_code, event.stage])).toEqual([['E05', 'out_for_delivery'], ['E07', 'ready_for_pickup']]);
+  });
+
+  it('reads the ETA slot of a delivery round as the expected window, until the round is over or the shipment settled', async () => {
+    // A slot of four hours from 11:00 UTC, after the newest row at 09:05 UTC in Lithuania.
+    const FROM = 1773140400000;
+    const TO = 1773154800000;
+    const eta = (name: string, from: unknown, to: unknown, change: (payload: Reply) => void = () => {}) => edited(name, payload => {
+      shipment(payload).EtaFrom = { value: from };
+      shipment(payload).EtaTo = { value: to };
+      change(payload);
+    });
+    const onRound = (payload: Reply) => { rows(payload)[0]!.DisplayShipmentStatus = { value: 'E05_The_shipment_in_delivery' }; };
+    const answer = await carrier(site(JSON.stringify(eta('in-transit', FROM, TO, onRound)))).track({ number: IN_TRANSIT });
+    expect(answer).toMatchObject({ current_stage: 'out_for_delivery',
+      expected_delivery_from: '2026-03-10T13:00:00+02:00', expected_delivery: '2026-03-10T17:00:00+02:00' });
+    // A slot of one instant is that instant.
+    const instant = parseRaben(eta('in-transit', TO, TO), IN_TRANSIT);
+    expect(instant).toMatchObject({ expected_delivery: '2026-03-10T17:00:00+02:00' });
+    expect(instant).not.toHaveProperty('expected_delivery_from');
+    // A slot that ended before the newest row, or without both ends in order, leaves the planned day.
+    for (const [from, to] of [[1773129600000, 1773133200000], [FROM, null], [null, TO], [TO, FROM]]) {
+      const planned = parseRaben(eta('in-transit', from, to), IN_TRANSIT);
+      expect(planned, `${from} ${to}`).toMatchObject({ expected_delivery: '2026-03-11' });
+      expect(planned).not.toHaveProperty('expected_delivery_from');
+    }
+    // A shipment without rows writes the slot in UTC; a delivered one expects nothing.
+    const summary = parseRaben(eta('in-transit', FROM, TO, payload => {
+      payload.objects = payload.objects.filter(object => object.objectType !== 'Anonymous.StatusHistory');
+    }), IN_TRANSIT);
+    expect(summary).toMatchObject({ summary_only: true, expected_delivery_from: '2026-03-10T11:00:00Z', expected_delivery: '2026-03-10T15:00:00Z' });
+    const delivered = parseRaben(eta('delivered', 1779262200000, 1779276600000), DELIVERED);
+    expect(delivered).toMatchObject({ current_stage: 'delivered', expected_delivery: null });
+    expect(delivered).not.toHaveProperty('expected_delivery_from');
   });
 
   it('reads a shipment without status rows from its own status, and one without either as having no history yet', () => {
@@ -193,6 +234,8 @@ describe('Raben tracking adapter', () => {
       edited('delivered', reply => { shipment(reply).GrossWeight = { value: 412.5 }; }),
       edited('delivered', reply => { shipment(reply).GrossWeight = { value: '-1' }; }),
       edited('delivered', reply => { shipment(reply).DeliveryDate = { value: '2026-05-20' }; }),
+      edited('delivered', reply => { shipment(reply).EtaFrom = { value: '2026-05-20T10:00' }; }),
+      edited('delivered', reply => { shipment(reply).EtaTo = { value: -1 }; }),
       edited('delivered', reply => { rows(reply)[1]!.TimeStamp = { value: null }; }),
       edited('delivered', reply => { rows(reply)[1]!.TimeStamp = { value: '1779250920000' }; }),
       edited('delivered', reply => { rows(reply)[1]!.TimeStamp = { value: 1.5 }; }),
@@ -305,9 +348,7 @@ describe('Raben status vocabulary', () => {
   });
 
   it('maps every code it recorded to the stage recorded for it', () => {
-    for (const entry of statuses.entries as { code?: string; wording: string; stage?: string; unmapped?: boolean }[]) {
-      // Wording quoted from reviews comes without its code; the adapter reads English captions by code.
-      if (!entry.code) continue;
+    for (const entry of statuses.entries as { code: string; wording: string; stage?: string; unmapped?: boolean }[]) {
       if (entry.unmapped) {
         expect(statusMap.stage(entry.code, entry.wording), entry.code).toBeUndefined();
         expect(statusMapAnswer({ carrier: 'raben', providerCode: entry.code, description: entry.wording }), entry.code)

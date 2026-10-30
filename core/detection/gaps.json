@@ -3053,12 +3053,6 @@
     "reason": "Quiqup's seven- and eight-digit order numbers are bare digit runs many carriers share."
   },
   {
-    "carrier": "raben",
-    "pattern": "^\\d{15}$",
-    "kind": "by_design",
-    "reason": "Raben shipment numbers are bare fifteen-digit runs that several carriers also print."
-  },
-  {
     "carrier": "ram-hand-to-hand",
     "pattern": "^[A-Za-z]\\d{7}$",
     "kind": "by_design",

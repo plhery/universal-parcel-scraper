@@ -37,22 +37,27 @@ across Central and Eastern Europe. Tracked through the lookup its myRaben tracki
   A new delivery or collection day, a booked collection and updated shipment data move nothing.
   A failed delivery at the address is a failed attempt; a failed collection, or a delay on the
   road, is an exception.
-- The planned delivery day is a date without a time. It is read as a calendar day in Warsaw and
-  dropped once the shipment is delivered.
+- Self collection (`E07`) is ready for pickup: Raben's key says the shipment awaits the
+  recipient's own pick-up, and its short status in German calls it ready for collection. A
+  delivery round after it is a change of plan, staged by its own rows.
+- The ETA, a slot of two hours either way that the driver's position on the delivery round sets,
+  gives `expected_delivery_from` and `expected_delivery`. Its ends are instants, written in the
+  zone of the newest row. A slot that ended before the newest row belongs to a round already
+  gone and is not read. Without a slot, the planned delivery day, a date without a time, is read
+  as a calendar day in Warsaw. Neither is kept once the shipment is delivered.
 - The gross weight is kept. Colli, volume, the progress rail, remarks and the customer-service
   depot with its phone numbers are not.
 
 ## Limitations
 
 - No sender, recipient, address, service or proof of delivery.
-- The reply's delivery window, `EtaFrom` and `EtaTo`, is not read.
 - Older shipments drop out of myRaben and then read as not found.
 
 ## Numbers
 
-Raben's tracking box asks for the shipment number. Lookups archived from its myRaben shipment
-page and Raben's own customer guides show fifteen-digit numbers, most of them opening with 27.
-Fifteen-digit runs are printed by several parcel carriers, BRT's parcel IDs among them, so
+Raben's tracking box asks for the shipment number. Raben Austria's customer guide shows
+fifteen-digit shipment numbers opening with 27, and myRaben finds shipments under numbers of that
+shape. Fifteen-digit runs are printed by several parcel carriers, BRT's parcel IDs among them, so
 `raben-1` claims only 27 and thirteen digits, with low confidence, and recognition asks myRaben
 about them. Other fifteen-digit numbers are not offered to Raben. The samples and their sources
 are in [`numbers.json`](numbers.json).
@@ -61,7 +66,7 @@ are in [`numbers.json`](numbers.json).
 
 The tracking box on Raben's site sends the number as `ShipmentNumber` to
 `/link/ShipmentInformation` on `oftc.myraben.com`, which opens one shipment without an account.
-Archived lookups and shop integrations use the same path on `myraben.com`.
+The same path on `myraben.com` forwards there.
 
 ## Testing
 

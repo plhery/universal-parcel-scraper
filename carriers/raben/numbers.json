@@ -2,55 +2,6 @@
   "carrier": "raben",
   "records": [
     {
-      "number": "276634000122953",
-      "role": "shipment",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://web.archive.org/web/20240424120611/https://myraben.com/link/ShipmentInformation?ShipmentNumber=276634000122953&Language=EN",
-        "date": "2024-04-24",
-        "dateKind": "capture",
-        "access": "indexed_excerpt"
-      },
-      "context": {
-        "assessment": "candidate"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "fedex",
-          "brt",
-          "yunda",
-          "raben"
-        ]
-      },
-      "note": "Looked up on Raben's own myRaben shipment page, as an archived address shows; the capture was not opened and only records a redirect."
-    },
-    {
-      "number": "276634000129494",
-      "role": "shipment",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://web.archive.org/web/20240610140643/https://myraben.com/link/ShipmentInformation?ShipmentNumber=276634000129494&Language=EN",
-        "date": "2024-06-10",
-        "dateKind": "capture",
-        "access": "indexed_excerpt"
-      },
-      "context": {
-        "assessment": "candidate"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "brt",
-          "yunda",
-          "raben"
-        ]
-      },
-      "note": "Looked up on Raben's own myRaben shipment page, as an archived address shows; the capture was not opened and only records a redirect."
-    },
-    {
       "number": "276574000140793",
       "role": "shipment",
       "evidence": "official_documentation_example",
@@ -97,29 +48,6 @@
       "note": "A shipment number in the sample invoice specification of Raben Austria's customer guide, beside a separate reference column."
     },
     {
-      "number": "528234000006530",
-      "role": "shipment",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://www.joesandbox.com/analysis/1311408/0/html",
-        "date": "2023-09-20",
-        "dateKind": "capture",
-        "access": "full_page"
-      },
-      "context": {
-        "assessment": "candidate"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "brt",
-          "yunda"
-        ]
-      },
-      "note": "The address of a myRaben shipment page, analysed in a public sandbox report."
-    },
-    {
       "number": "271234567890123",
       "role": "shipment",
       "evidence": "synthetic",
@@ -135,6 +63,24 @@
         ]
       },
       "note": "Made-up number in the shape of a shipment number Raben's own tracker finds: 27 and thirteen digits."
+    },
+    {
+      "number": "279182736455120",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-10-30",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "brt",
+          "yunda",
+          "raben"
+        ]
+      },
+      "note": "Made-up number in the shape of the shipment numbers in Raben Austria's customer guide, 27 and thirteen digits, whose last digit happens to pass the GS1 check, as about one Raben number in ten does, so FedEx is suggested too."
     }
   ]
 }

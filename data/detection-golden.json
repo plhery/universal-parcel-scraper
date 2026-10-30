@@ -31349,38 +31349,6 @@
     ]
   },
   {
-    "input": "276634000122953",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "fedex",
-      "brt",
-      "yunda",
-      "raben"
-    ],
-    "preferred": [
-      "fedex"
-    ],
-    "asked": [
-      "raben",
-      "brt"
-    ]
-  },
-  {
-    "input": "276634000129494",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "brt",
-      "yunda",
-      "raben"
-    ],
-    "asked": [
-      "raben",
-      "brt"
-    ]
-  },
-  {
     "input": "277113023235",
     "carrier": "unknown",
     "confidence": "low",
@@ -31580,6 +31548,24 @@
     "asked": [
       "tnt",
       "dhl-ecommerce"
+    ]
+  },
+  {
+    "input": "279182736455120",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "brt",
+      "yunda",
+      "raben"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "raben",
+      "brt"
     ]
   },
   {
@@ -46056,18 +46042,6 @@
       "dpd-nl",
       "dpd-de",
       "seur"
-    ]
-  },
-  {
-    "input": "528234000006530",
-    "carrier": "unknown",
-    "confidence": "low",
-    "candidates": [
-      "brt",
-      "yunda"
-    ],
-    "asked": [
-      "brt"
     ]
   },
   {
@@ -96265,10 +96239,13 @@
   },
   {
     "input": "UH000000005TW",
-    "carrier": "chunghwa-post",
+    "carrier": "intl-post",
     "confidence": "high",
     "candidates": [
-      "chunghwa-post"
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
     ]
   },
   {

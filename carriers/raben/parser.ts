@@ -140,7 +140,7 @@ function wordsOf(key: string): string {
   return key.replace(CODE, '').replaceAll('_', ' ').trim() || key;
 }
 
-interface Scan { event: CarrierEvent; at: number; sequence: number; index: number }
+interface Scan { event: CarrierEvent; at: number; zone: string; sequence: number; index: number }
 
 interface Vocabulary { statuses: Map<string, string>; countries: Map<string, string> }
 
@@ -165,22 +165,47 @@ function scanOf(row: Entity, index: number, vocabulary: Vocabulary): Scan {
   const country = enumKey(row, 'Country');
   const countryName = country ? vocabulary.countries.get(country) || country.replaceAll('_', ' ').trim() : '';
   const iso = countryCode(countryName);
-  const zone = iso ? countryTimeZone(iso) : null;
+  const zone = (iso ? countryTimeZone(iso) : null) ?? 'utc';
   const location = [text(row, 'City', 80), iso ?? countryName].filter(Boolean).join(', ');
   const event: CarrierEvent = {
-    time: DateTime.fromMillis(at, { zone: zone ?? 'utc' }).toISO({ suppressMilliseconds: true })!,
+    time: instant(at, zone),
     ...(location ? { location } : {}),
     description,
     provider_code: code,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, at, sequence: integer(row, 'Sequence'), index };
+  return { event, at, zone, sequence: integer(row, 'Sequence'), index };
+}
+
+function instant(at: number, zone: string): string {
+  return DateTime.fromMillis(at, { zone }).toISO({ suppressMilliseconds: true })!;
 }
 
 /** The planned delivery day, as the page shows it: a calendar day, without a time. */
 function plannedDay(shipment: Entity): string | null {
   const planned = epoch(shipment, 'DeliveryDate');
   return planned === null ? null : DateTime.fromMillis(planned, { zone: ZONE }).toISODate();
+}
+
+type Estimate = Pick<CarrierResult, 'expected_delivery' | 'expected_delivery_from'>;
+
+/**
+ * The page's ETA, a slot from `EtaFrom` to `EtaTo` that the driver's position on the
+ * delivery round sets, else the planned delivery day; nothing once the shipment is settled.
+ * The slot's ends are instants, written in the zone of the newest row. A slot that ends
+ * before that row is a round already gone, and one without both ends in order is not read.
+ */
+function estimate(shipment: Entity, stage: Stage | undefined, newest: Scan | undefined): Estimate {
+  // Each field is read first, so a changed reply fails even for a settled shipment.
+  const from = epoch(shipment, 'EtaFrom');
+  const to = epoch(shipment, 'EtaTo');
+  const planned = plannedDay(shipment);
+  if (stage && SETTLED.has(stage)) return { expected_delivery: null };
+  if (from !== null && to !== null && from <= to && to >= (newest?.at ?? 0)) {
+    const zone = newest?.zone ?? 'utc';
+    return { expected_delivery: instant(to, zone), ...(from < to ? { expected_delivery_from: instant(from, zone) } : {}) };
+  }
+  return { expected_delivery: planned };
 }
 
 /**
@@ -228,7 +253,6 @@ export function parseRaben(payload: unknown, raw: string): CarrierResult {
   scans.sort((left, right) => right.at - left.at || right.sequence - left.sequence || left.index - right.index);
   const events = scans.map(({ event }) => event);
   const weight = decimal(shipment, 'GrossWeight');
-  const planned = plannedDay(shipment);
 
   if (!events.length) {
     // A shipment without rows still has the page's status.
@@ -241,7 +265,7 @@ export function parseRaben(payload: unknown, raw: string): CarrierResult {
       last_status_text: description,
       provider_code: code,
       last_update: null,
-      expected_delivery: staged && SETTLED.has(staged.stage) ? null : planned,
+      ...estimate(shipment, staged?.stage, undefined),
       ...(weight ? { weight_kg: weight } : {}),
       summary_only: true,
       events: [],
@@ -256,7 +280,7 @@ export function parseRaben(payload: unknown, raw: string): CarrierResult {
     ...(stage ? { current_stage: stage, current_stage_source: decider!.stage_source } : {}),
     last_status_text: newest.description!,
     last_update: newest.time!,
-    expected_delivery: stage && SETTLED.has(stage) ? null : planned,
+    ...estimate(shipment, stage, scans[0]),
     ...(stage === 'delivered' ? { delivered_at: decider!.time! } : {}),
     ...(weight ? { weight_kg: weight } : {}),
     events,

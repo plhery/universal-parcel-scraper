@@ -4,7 +4,9 @@
     {"code": "E02", "wording": "collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Collected from the sender, at the collecting depot."},
     {"code": "E03", "wording": "delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Delivered."},
     {"code": "E05", "wording": "in delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "On the delivery round."},
-    {"code": "E07", "wording": "not delivered - self collection", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Waiting at the depot for the recipient to collect it; in the history seen, a delivery round followed."},
+    {"code": "E07", "wording": "not delivered - self collection", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "Held at the depot for the recipient to collect: the status key reads that the shipment awaits its own pick-up by the consignee. In one history a delivery round followed, a change of plan that the newer rows stage."},
+    {"code": "E07", "wording": "Nicht zugestellt - Selbstabholer", "stage": "ready_for_pickup", "language": "de", "confirmedBy": "portal", "note": "The page's German caption. Its list of short statuses words own pick-up as Selbstabholung - Steht zur Abholung bereit, ready for collection."},
+    {"code": "E07", "wording": "oczekująca na podjęcie przez Klienta", "stage": "ready_for_pickup", "language": "pl", "confirmedBy": "portal", "note": "The page's Polish caption: awaiting collection by the customer."},
     {"code": "E08", "wording": "loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded onto a truck: the linehaul at the collecting depot, and the delivery truck at the same minute as the round."},
     {"code": "E21", "wording": "registered in the system", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The first row of a shipment: Raben has the order."},
     {"code": "E22", "wording": "unloaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Unloaded at the next depot."},
@@ -74,7 +76,7 @@
     {"code": "E70", "wording": "advised for collection", "language": "en", "confirmedBy": "portal", "unmapped": true, "note": "A notice that a collection was booked; the goods have not moved."},
     {"code": "E71", "wording": "customer-related collection delay", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
     {"code": "E72", "wording": "not delivered - at sender disposal", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
-    {"wording": "not delivered - delivery refused", "stage": "failed_attempt", "language": "en", "confirmedBy": "source", "note": "The recipient refused the delivery. Quoted from the tracker in a Trustpilot review."},
-    {"wording": "nie dostarczono - odbiorca nieosiagalny", "stage": "failed_attempt", "language": "pl", "confirmedBy": "source", "note": "Not delivered, recipient unreachable. Quoted from the tracker in a Polish Trustpilot review."}
+    {"code": "E13", "wording": "niedostarczona - Odbiorca nieobecny", "stage": "failed_attempt", "language": "pl", "confirmedBy": "portal", "note": "The page's Polish caption: not delivered, the recipient was not there."},
+    {"code": "E14", "wording": "niedostarczona - odmowa przyjęcia", "stage": "failed_attempt", "language": "pl", "confirmedBy": "portal", "note": "The page's Polish caption: not delivered, the recipient refused it."}
   ]
 }

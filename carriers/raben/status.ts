@@ -30,7 +30,9 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['E65', 'exception'], // The transit document expired.
   ['E05', 'out_for_delivery'], // On the delivery round.
   ['E56', 'out_for_delivery'], // The truck reached the delivery address.
-  ['E07', 'ready_for_pickup'], // Waiting at the depot for the recipient to collect it.
+  // Not delivered because the recipient collects it: held at the depot, ready for collection. A
+  // round that follows is a change of plan, which its own rows stage.
+  ['E07', 'ready_for_pickup'],
   ['E03', 'delivered'],
   ['E04', 'delivered'], // With remarks.
   ['E24', 'delivered'], // Part of the goods came back.
