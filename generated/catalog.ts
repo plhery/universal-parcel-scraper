@@ -4192,6 +4192,10 @@ export const CARRIER_CATALOG = {
         "pattern": "^[A-Z]{2}\\d{9}SG$",
         "confidence": "high",
         "checksum": "s10"
+      },
+      {
+        "pattern": "^CNSGS\\d{10}$",
+        "confidence": "low"
       }
     ]
   },
@@ -39342,7 +39346,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "blue-dart": ["blue-dart-1"],
   "delhivery": ["delhivery-1"],
   "nz-post": ["nz-post-1","nz-post-2","nz-post-3"],
-  "singapore-post": ["singapore-post-1"],
+  "singapore-post": ["singapore-post-1","singapore-post-2"],
   "japan-post": ["japan-post-1","japan-post-domestic","japan-post-registered"],
   "sf-express": ["sf-express-3","sf-express-1","sf-express-2","sf-express-4"],
   "sto": ["sto-1","sto-2"],

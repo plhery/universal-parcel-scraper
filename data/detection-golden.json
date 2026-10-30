@@ -71658,6 +71658,14 @@
     ]
   },
   {
+    "input": "CNSGS0000000002",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "singapore-post"
+    ]
+  },
+  {
     "input": "CNUSUP00035889455",
     "carrier": "unknown",
     "confidence": "low",

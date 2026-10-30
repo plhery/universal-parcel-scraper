@@ -397,3 +397,18 @@ describe('Russian Post domestic numbers', () => {
     }
   });
 });
+
+describe('Singapore Post and Canada Post numbers beyond the S10 form', () => {
+  it('suggests Singapore Post for CNSGS and ten digits', () => {
+    expect(detectCarrierMatch('CNSGS0000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['singapore-post'] });
+    for (const number of ['CNSGS000000001', 'CNSGS00000000001', 'CNSGA0000000001', 'CNSGS0000000001SG']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('singapore-post');
+      expect(detectCarrierMatch(number).carrier, number).not.toBe('singapore-post');
+    }
+  });
+
+  it('asks Canada Post first for sixteen digits passing the GS1 check in Canada, and among the first without a hint', () => {
+    expect(recognitionAskedCarriers('7000000000000016', { countryHint: 'CA' })[0]).toBe('canada-post');
+    expect(recognitionAskedCarriers('7000000000000016')).toContain('canada-post');
+  });
+});

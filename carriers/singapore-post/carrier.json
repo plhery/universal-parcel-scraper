@@ -61,6 +61,11 @@
       "pattern": "^[A-Z]{2}\\d{9}SG$",
       "confidence": "high",
       "checksum": "s10"
+    },
+    {
+      "id": "singapore-post-2",
+      "pattern": "^CNSGS\\d{10}$",
+      "confidence": "low"
     }
   ]
 }
