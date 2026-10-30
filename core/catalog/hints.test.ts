@@ -355,6 +355,8 @@ describe('zones implied by carrier names', () => {
     expect(carrierIdFromName('DHL Parcel Spain')).toBe('dhl-ecommerce-es');
     expect(carrierIdFromName('DHL Parcel UK')).toBe('dhl-ecommerce-uk');
     expect(carrierIdFromName('DHL Parcel Poland')).toBe('dhl-ecommerce-pl');
+    // 17TRACK names DHL's Polish parcel network with the country code in brackets.
+    expect(carrierIdFromName('DHL Parcel (PL)')).toBe('dhl-ecommerce-pl');
     expect(carrierIdFromName('GLS Italy')).toBe('gls-it');
     expect(carrierIdFromName('GLS Poland')).toBe('gls-pl');
     expect(carrierIdFromName('Correos Chile')).toBe('correos-chile');

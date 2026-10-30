@@ -12497,7 +12497,8 @@ export const CARRIER_CATALOG = {
       "DHL Parcel Poland",
       "DHL Parcel Polska",
       "DHL eCommerce Polska",
-      "DHL Poland"
+      "DHL Poland",
+      "DHL Parcel (PL)"
     ],
     "countries": [
       "PL"
