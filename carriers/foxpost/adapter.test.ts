@@ -149,6 +149,12 @@ describe('Foxpost direct tracking', () => {
     expect(shuffled.last_update_local).toBe('2026-07-03T09:00:00');
   });
 
+  it('keeps scans of one minute in the order of a page listed oldest first', () => {
+    const result = parseFoxpost(history(['2026.07.01 12:00', 'Csomagod elkészült', CREATE], ['2026.07.02 21:00', 'Raktárban', SORTIN],
+      ['2026.07.02 21:00', 'Úton', SORTOUT], ['2026.07.03 09:00', 'Automatában', OPERIN]), NUMBER, WINTER);
+    expect(result.events?.map(event => event.description)).toEqual([OPERIN, SORTOUT, SORTIN, CREATE]);
+  });
+
   it('names the pickup point only while the parcel goes to it or was collected there', () => {
     const rows = [['2026.07.03 09:00', 'Úton', SORTOUT], ['2026.07.02 21:00', 'Raktárban', SORTIN]] as const;
     expect(parseFoxpost(history(...rows), NUMBER).pickup_point).toBe('FOXPOST A-BOX Minta Bevásárlóközpont');

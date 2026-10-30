@@ -114,6 +114,15 @@ describe('Swiss Post historical event codes', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup' });
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const result = parseSwissPostShipment({ globalStatus: 'TO_BE_DELIVERED' }, [
+      { eventCode: 'PARCEL.*.1.3700', timestamp: '2026-09-08T10:55:00+02:00' },
+      { eventCode: 'PARCEL.*.1.1001', timestamp: '2026-09-10T16:34:21+02:00' },
+      { eventCode: 'PARCEL.*.1.9400', timestamp: '2026-09-10T16:34:21+02:00' },
+    ]);
+    expect(result.events?.map((event) => event.provider_code)).toEqual(['PARCEL.*.1.9400', 'PARCEL.*.1.1001', 'PARCEL.*.1.3700']);
+  });
+
   it('never takes a stage from a revoked scan', () => {
     expect(swissPostEventStage('PARCEL.*.2.4000', 'CANPDS')).toBeUndefined();
     expect(swissPostEventStage('LETTER.*.1.4000', 'CAN1')).toBeUndefined();

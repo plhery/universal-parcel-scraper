@@ -5,6 +5,7 @@ import { amazonShippingOrigin, amazonShippingUrl } from '../../core/catalog/inde
 import { isAmazonTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { classifyStatus, statusKey, type ClassifiedStatus } from './status.js';
@@ -28,7 +29,6 @@ interface ParsedEvent {
   event: CarrierEvent;
   classified: ClassifiedStatus;
   timestamp: number;
-  sourceIndex: number;
   /** A facility departure, by its event code or string id. */
   departure: boolean;
 }
@@ -157,7 +157,7 @@ function eventRecords(value: JsonObject | null): JsonObject[] {
   return Array.isArray(events) ? events.filter(isRecord) : [];
 }
 
-function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
+function parseEvent(raw: JsonObject): ParsedEvent | null {
   const summary = isRecord(raw.statusSummary) ? raw.statusSummary : {};
   const classified = classifyStatus(
     summary.localisedStringId,
@@ -173,7 +173,6 @@ function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
   return {
     classified,
     timestamp: time?.timestamp ?? Number.NEGATIVE_INFINITY,
-    sourceIndex,
     departure: classified.stage === 'in_transit' && key.includes('departed'),
     event: {
       ...(time ? { time: time.iso } : clockText ? { provider_time_text: clockText } : {}),
@@ -261,8 +260,8 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   const history = optionalSerializedRecord(payload.eventHistory, 'event history');
   const seen = new Set<string>();
   const parsedEvents: ParsedEvent[] = [];
-  eventRecords(history).slice(0, MAX_EVENTS_TO_INSPECT).forEach((raw, index) => {
-    const parsed = parseEvent(raw, index);
+  eventRecords(history).slice(0, MAX_EVENTS_TO_INSPECT).forEach((raw) => {
+    const parsed = parseEvent(raw);
     if (!parsed) return;
     const identity = JSON.stringify([
       parsed.event.time ?? parsed.event.provider_time_text ?? '',
@@ -274,9 +273,8 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
     seen.add(identity);
     parsedEvents.push(parsed);
   });
-  parsedEvents.sort((left, right) => (
-    right.timestamp - left.timestamp || right.sourceIndex - left.sourceIndex
-  ));
+  if (listsNewestFirst(parsedEvents.map(({ event }) => event)) === false) parsedEvents.reverse();
+  parsedEvents.sort((left, right) => right.timestamp - left.timestamp);
   restageVanDepartures(parsedEvents);
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
 

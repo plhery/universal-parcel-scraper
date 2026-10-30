@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -65,9 +66,9 @@ export function xdeLogisticsLocation(status: string, reference: string): string 
   return /[A-Z]/i.test(place) ? place : '';
 }
 
-interface Scan { millis: number; index: number; event: CarrierEvent }
+interface Scan { millis: number; event: CarrierEvent }
 
-function projectRow(row: unknown, index: number): Scan | null {
+function projectRow(row: unknown): Scan | null {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'XDE Logistics returned an invalid scan');
   // The page leaves out a scan without a status.
   if (row.status === null) return null;
@@ -77,7 +78,7 @@ function projectRow(row: unknown, index: number): Scan | null {
   const { time, millis } = scanTime(row.created_at);
   const location = xdeLogisticsLocation(status, text(row, 'reference', 200));
   const staged = xdeLogisticsStage(status);
-  return { millis, index, event: {
+  return { millis, event: {
     time, ...(location ? { location } : {}), description: status,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   } };
@@ -102,8 +103,8 @@ export function parseXdeLogistics(payload: unknown, requested: string): CarrierR
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, index) => {
-    const scan = projectRow(row, index);
+  rows.forEach((row) => {
+    const scan = projectRow(row);
     if (!scan) return;
     const key = JSON.stringify([scan.event.time, scan.event.description, scan.event.location ?? '']);
     if (seen.has(key)) return;
@@ -126,8 +127,9 @@ export function parseXdeLogistics(payload: unknown, requested: string): CarrierR
     };
   }
 
-  // Newest first; scans of the same second keep the reply's order.
-  const events = scans.sort((left, right) => right.millis - left.millis || left.index - right.index).map(({ event }) => event);
+  // Newest first, as the reply lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.millis - left.millis).map(({ event }) => event);
   const newest = events[0]!;
   const scanned = events.find((event) => event.stage);
   // The current status settles a journey that ended, should its scan be missing.

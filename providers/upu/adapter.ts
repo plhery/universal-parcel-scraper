@@ -4,6 +4,7 @@ import type { AdapterFactory } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { Stage } from '../../core/status/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { isoTime, postalOfficeZone } from '../../core/time/index.js';
@@ -102,7 +103,9 @@ export function parseUpuResponse(payload: unknown, trackingNumber: string): Carr
   // wall times with another provider's instants. Numeric State is not a scan.
   const unique = [...new Map(events.map((event) => [JSON.stringify([
     event.local_time, event.provider_code, event.location, event.description,
-  ]), event])).values()].sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
+  ]), event])).values()];
+  if (listsNewestFirst(unique) === false) unique.reverse();
+  unique.sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
   const projected = { ...result(unique, SOURCE, true), events: unique };
   return { ...projected, last_update_local: projected.events?.[0]?.local_time,
     tracking_source: 'structured-web-response' };

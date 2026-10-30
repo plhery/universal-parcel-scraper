@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -111,9 +112,9 @@ export function parseProships(payload: unknown, raw: string): CarrierResult {
 
   const rows = containers.find('.tracking-events .tracking-event');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'ProShips returned too many scans');
-  const scans: { event: CarrierEvent; local: string; index: number }[] = [];
+  const scans: { event: CarrierEvent; local: string }[] = [];
   const seen = new Set<string>();
-  rows.each((index, node) => {
+  rows.each((_, node) => {
     const row = $(node);
     const date = row.find('.event-date');
     const title = row.find('.event-title');
@@ -126,10 +127,11 @@ export function parseProships(payload: unknown, raw: string): CarrierResult {
     if (seen.has(identity)) return;
     seen.add(identity);
     const stage = proshipsStage(description);
-    scans.push({ index, local, event: { local_time: local, description, ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) } });
+    scans.push({ local, event: { local_time: local, description, ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) } });
   });
-  // Newest first; equal clocks keep the page's order.
-  scans.sort((left, right) => right.local.localeCompare(left.local) || left.index - right.index);
+  // Newest first; equal clocks keep the page's order, turned round when it lists the oldest first.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => right.local.localeCompare(left.local));
   const events = scans.map(({ event }) => event);
 
   const ended = headlineStage(headline);

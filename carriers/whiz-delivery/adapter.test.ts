@@ -80,6 +80,14 @@ describe('Whiz Delivery tracking', () => {
     expect(result.events![0]).toMatchObject({ provider_code: '50' });
   });
 
+  it('keeps events of one instant in the reply’s order, reversed when it lists them oldest first', () => {
+    const result = parseWhiz(edited((reply) => {
+      reply.events[2]!.timestamp = reply.events[1]!.timestamp;
+      reply.events.reverse();
+    }), NUMBER);
+    expect(result.events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['50', '40', '30']);
+  });
+
   it('reads a missed delivery awaiting another attempt as a failed attempt', () => {
     const result = parseWhiz(edited((reply) => {
       reply.events.splice(0, 1, { timestamp: '2026-03-10T20:20:00Z', status_id: 53, description: 'Synthetic missed delivery' });

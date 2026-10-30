@@ -38,6 +38,13 @@ describe('UPU postal tracking', () => {
     expect(parseUpuResponse(payload([scan('EDC', 'Item returned from Customs (import)')]), number).current_stage).toBe('in_transit');
   });
 
+  it('keeps scans of one wall time in the feed’s order, reversed as it lists them oldest first', () => {
+    const departed = '/Date(1789210080000+0200)/';
+    const value = parseUpuResponse(payload([scan(), scan('EMB', 'Arrival at outward office of exchange', departed),
+      scan('EMC', 'Departure from outward office of exchange', departed)]), number);
+    expect(value.events?.map((event) => event.provider_code)).toEqual(['EMC', 'EMB', 'EMA']);
+  });
+
   it('distinguishes known postal codes from wording and unresolved codes', () => {
     const value = parseUpuResponse(payload([
       scan('EDC', 'Item held by Customs', '2026-01-01T10:00:00'),

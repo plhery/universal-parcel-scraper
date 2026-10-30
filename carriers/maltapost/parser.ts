@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { isoTime } from '../../core/time/index.js';
@@ -76,12 +77,11 @@ interface Scan {
   readonly event: CarrierEvent;
   readonly key: string;
   readonly foreign: boolean;
-  readonly index: number;
   /** The scan whose code gave this one its stage. */
   origin?: Scan;
 }
 
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'MaltaPost returned an invalid scan');
   const code = cleanScalar(row.code, 24);
   const clock = clockOf(row.date);
@@ -93,7 +93,7 @@ function scanOf(row: unknown, index: number): Scan {
   const foreign = row.isForeignMovement === true;
   const event: CarrierEvent = { ...scanClock(clock.wall, foreign), description: wordingOf(row) || code, provider_code: providerCode,
     ...(location ? { location } : {}) };
-  return { event, key: clock.key, foreign, index };
+  return { event, key: clock.key, foreign };
 }
 
 /**
@@ -125,8 +125,8 @@ export function parseMaltaPost(payload: unknown, rawNumber: string): CarrierResu
 
   const scans: Scan[] = [];
   const seen = new Set<string>();
-  rows.forEach((row, index) => {
-    const scan = scanOf(row, index);
+  rows.forEach(row => {
+    const scan = scanOf(row);
     // A scan repeated within the second would read as the same scan twice.
     const identity = JSON.stringify(scan.event);
     if (seen.has(identity)) return;
@@ -134,7 +134,8 @@ export function parseMaltaPost(payload: unknown, rawNumber: string): CarrierResu
     scans.push(scan);
   });
   // Newest first; scans at the same clock keep the reply's order.
-  scans.sort((left, right) => (right.key > left.key ? 1 : right.key < left.key ? -1 : left.index - right.index));
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => (right.key > left.key ? 1 : right.key < left.key ? -1 : 0));
 
   // Oldest first: a notice, a hold or a forwarding keeps the stage of the scan
   // before it, and a delivery after the item was sent back reaches the sender.

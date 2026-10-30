@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -135,10 +136,9 @@ export function parseUrvaam(payload: unknown, raw: string): CarrierResult {
     events.push(scan.event);
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
-  // Newest first, as the page lists them; scans on the same second keep the reply's order.
-  const newestFirst = events.map((event, index) => ({ event, index }))
-    .sort((left, right) => String(right.event.local_time).localeCompare(String(left.event.local_time)) || left.index - right.index)
-    .map(({ event }) => event);
+  // Newest first, as the page lists them.
+  if (listsNewestFirst(events) === false) events.reverse();
+  const newestFirst = events.sort((left, right) => String(right.local_time).localeCompare(String(left.local_time)));
 
   const newest = newestFirst[0]!;
   const scanned = newestFirst.find((event) => event.stage);

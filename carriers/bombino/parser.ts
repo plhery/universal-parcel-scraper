@@ -3,6 +3,7 @@ import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { clean, escapeRegExp } from '../../core/transport/text.js';
@@ -149,19 +150,19 @@ export function parseBombino(payload: unknown, raw: string): CarrierResult {
     .map((name) => new RegExp(`(?<![\\p{L}\\p{N}])${escapeRegExp(name)}(?![\\p{L}\\p{N}])`, 'giu'));
 
   const seen = new Set<string>();
-  const scans: { event: CarrierEvent; index: number }[] = [];
+  const scans: CarrierEvent[] = [];
   for (const row of rows) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Bombino Express returned an invalid scan');
     const scan = projectRow(row, names);
     if (seen.has(scan.key)) continue;
     seen.add(scan.key);
-    scans.push({ event: scan.event, index: scans.length });
+    scans.push(scan.event);
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first by wall clock, as the page sorts them; scans of the same second keep the reply's order.
-  const clock = (scan: { event: CarrierEvent }) => scan.event.local_time as string;
-  const events = scans.sort((left, right) => (clock(left) === clock(right) ? left.index - right.index : clock(left) < clock(right) ? 1 : -1))
-    .map(({ event }) => event);
+  if (listsNewestFirst(scans) === false) scans.reverse();
+  const clock = (event: CarrierEvent) => event.local_time as string;
+  const events = scans.sort((left, right) => (clock(left) === clock(right) ? 0 : clock(left) < clock(right) ? 1 : -1));
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

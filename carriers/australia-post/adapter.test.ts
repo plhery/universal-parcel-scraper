@@ -200,6 +200,17 @@ describe('Australia Post status codes and places', () => {
     }
   });
 
+  it('keeps scans of one instant in the reply\'s order, whichever way it lists them', () => {
+    const events = [
+      scan('DD-ER13', 'Delivered', 'EXAMPLE VIC', '2026-06-12T14:00:00+10:00', 'Delivered'),
+      scan('AFP-ER13', 'Onboard for delivery', 'EXAMPLE VIC', '2026-06-12T08:00:00+10:00', "It's coming today"),
+      scan('TTP-ER81', 'Processed at facility', 'EXAMPLE VIC', '2026-06-12T08:00:00+10:00'),
+    ];
+    for (const listed of [events, [...events].reverse()]) {
+      expect(journey('AU', listed).events?.map((event) => event.description)).toEqual(['Delivered', 'Onboard for delivery', 'Processed at facility']);
+    }
+  });
+
   it('reads the post abroad on its own clock and files its scans by code', () => {
     const events = [
       scan('INT-0037', 'Delivered', 'EXAMPLE CITY CA', '2026-06-12T11:22:00Z', 'Delivered'),

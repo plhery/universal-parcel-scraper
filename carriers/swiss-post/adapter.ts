@@ -4,6 +4,7 @@ import { CookieJar } from 'tough-cookie';
 import { lookupBudget, readerLanguage, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { Stage } from '../../generated/catalog.js';
 import { countryCode, countryTimeZone, isoTime } from '../../core/time/index.js';
 import { withNetworkRetry } from '../../core/runner/networkRetry.js';
@@ -322,6 +323,7 @@ export function parseSwissPostShipment(
     if (stage) event.stage = stage;
     events.push(event);
   }
+  if (listsNewestFirst(events) === false) events.reverse();
   events.sort((left, right) => timestamp(right.time ?? '') - timestamp(left.time ?? ''));
   // The newest scan's own stage leads; the shipment summary fills in when that
   // scan has none (an enquiry note, an unmapped code, or no scans at all).

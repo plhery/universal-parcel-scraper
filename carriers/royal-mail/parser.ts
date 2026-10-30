@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { load } from 'cheerio';
 import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
@@ -214,6 +215,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   // clocks. Preserve provider order unless every scan denotes an instant.
   let receiptAccepted = false;
   if (events.every(event => event.time)) {
+    if (listsNewestFirst(events) === false) events.reverse();
     events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
     // Mail a sender hands in at a parcel hub or a mail centre, or a collection
     // one of them receives first, has no acceptance scan before that receipt,

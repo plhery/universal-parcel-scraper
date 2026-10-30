@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -188,9 +189,9 @@ export function parsePitneyBowes(payload: unknown, raw: string): CarrierResult {
   const kept = withoutCopies(scans);
   if (!kept.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; scans of one minute keep the reply's order.
-  const events = kept.map((scan, index) => ({ event: onPlatformClock(withoutDeclarationCountry(scan.event)), index }))
-    .sort((a, b) => String(b.event.local_time).localeCompare(String(a.event.local_time)) || a.index - b.index)
-    .map((scan) => scan.event);
+  const events = kept.map((scan) => onPlatformClock(withoutDeclarationCountry(scan.event)));
+  if (listsNewestFirst(events) === false) events.reverse();
+  events.sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
 
   const newest = events[0]!;
   const scanned = events.find((event) => event.stage);

@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type ClassifiedWording } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -73,7 +74,7 @@ function namedNumber(row: Record<string, unknown>): string {
   return named.slice(named.lastIndexOf('-') + 1).trim();
 }
 
-interface Scan { at: number; index: number; key: string; event: CarrierEvent; staged: ClassifiedWording | null }
+interface Scan { at: number; key: string; event: CarrierEvent; staged: ClassifiedWording | null }
 
 /**
  * One row of the history. A dispatch (`M`) goes from `source` to `dest` and an
@@ -82,7 +83,7 @@ interface Scan { at: number; index: number; key: string; event: CarrierEvent; st
  * delivery (`O`) or delivery (`D`) row is at its `source` branch: its `dest`
  * is the delivery's area. The branch's phone and the remarks are not read.
  */
-function projectRow(row: unknown, index: number, number: string): Scan {
+function projectRow(row: unknown, number: string): Scan {
   if (!isRecord(row)) invalid('Gokulam Speed & Safe returned an invalid scan');
   if (namedNumber(row) !== number) throw new IndeterminateError(PROVIDER, 'Gokulam Speed & Safe answered for another consignment');
   const { time, at } = scanTime(row.processdate);
@@ -102,7 +103,7 @@ function projectRow(row: unknown, index: number, number: string): Scan {
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { at, index, key: JSON.stringify([time, code, description, location]), event, staged };
+  return { at, key: JSON.stringify([time, code, description, location]), event, staged };
 }
 
 /**
@@ -124,15 +125,16 @@ export function parseSpeedAndSafe(reply: unknown, raw: string): CarrierResult {
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row: unknown, index) => {
-    const scan = projectRow(row, index, number);
+  rows.forEach((row: unknown) => {
+    const scan = projectRow(row, number);
     if (seen.has(scan.key)) return;
     seen.add(scan.key);
     scans.push(scan);
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first; of two scans at one instant, the earlier row is the newer, as the reply lists them.
-  scans.sort((a, b) => b.at - a.at || a.index - b.index);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((a, b) => b.at - a.at);
   const events = scans.map((scan) => scan.event);
 
   const newest = events[0]!;

@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
@@ -118,14 +119,15 @@ export function parseCitymail(html: string, rawNumber: string): CarrierResult {
 
   const rows = form.find('table tr').toArray().filter((row) => $(row).children('td').length > 0);
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'CityMail returned an oversized history');
-  const scans = rows.map((row, index) => {
+  const scans = rows.map((row) => {
     const cells = $(row).children('td');
     if (cells.length !== 3) throw new SchemaError(PROVIDER, 'CityMail returned an invalid scan');
     const event = scan(clean(cells.eq(0).text(), 200), clean(cells.eq(1).text(), 32), cells.eq(2).text());
-    return { event, index, at: DateTime.fromISO(event.time!).toMillis() };
+    return { event, at: DateTime.fromISO(event.time!).toMillis() };
   });
   // Newest first, as the page lists them; scans of the same minute keep the page's order.
-  const events = scans.sort((left, right) => right.at - left.at || left.index - right.index).map(({ event }) => event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.at - left.at).map(({ event }) => event);
   // A parcel without scans still has its current status and when it was set.
   const summaryOnly = !events.length;
   if (summaryOnly) events.push(scan(current, fields.get('Tidpunkt') ?? ''));

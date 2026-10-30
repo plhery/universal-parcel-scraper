@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -163,6 +164,7 @@ export function parseChronodiali(payload: unknown, raw: string): CarrierResult {
     scans.push(scan);
   }
   // Newest first, as the reply lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => b.timestamp - a.timestamp);
   const events = scans.map((scan) => scan.event);
 

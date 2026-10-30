@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -140,7 +141,8 @@ export function parseShipblu(payload: unknown, raw: string): CarrierResult {
     scans.push(scan);
   }
   // Newest first; scans at the same instant keep the reverse of the order they were recorded in.
-  scans.reverse().sort((a, b) => b.timestamp - a.timestamp);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((a, b) => b.timestamp - a.timestamp);
   const events = scans.map((scan) => scan.event);
 
   // The page shows an order held for the merchant on the step it waits at.

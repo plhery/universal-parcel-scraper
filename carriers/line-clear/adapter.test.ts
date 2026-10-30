@@ -102,6 +102,15 @@ describe('Line Clear HTTP adapter', () => {
     expect(parseLineClear(changed('in-transit', (body) => { body[0]!.reverse(); }), IN_TRANSIT)).toEqual(result);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const rows = [
+      scan(IN_TRANSIT, 'WB024', 'Awaiting Shipment Handover', '12:00:00'),
+      scan(IN_TRANSIT, 'WB027', 'Order Picked Up from Station/Platform/Hotspot', '13:00:00'),
+      scan(IN_TRANSIT, 'WB051', 'Manifest Out Scan Completed', '13:00:00'),
+    ];
+    expect(parseLineClear([rows], IN_TRANSIT).events!.map((event) => event.provider_code)).toEqual(['WB051', 'WB027', 'WB024']);
+  });
+
   it('leaves out the scans the page hides and words the rest as the page does', () => {
     const rows = [
       scan(IN_TRANSIT, 'WB055', 'Delivery Run Sheet', '18:00:00', { UndelCode: 'DD012V001', UndelReason: 'SYNTHETIC' }),

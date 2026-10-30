@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryTimeZone, explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -137,6 +138,7 @@ export function parseBosta(payload: unknown, raw: string): CarrierResult {
     scans.push(scan);
   }
   // Newest first, as the page sorts them by their instants.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => b.timestamp - a.timestamp);
 
   const country = text(payload, 'deliveryCountryCode', 8).toUpperCase();

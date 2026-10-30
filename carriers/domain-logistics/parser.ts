@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { textFromHtml } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -99,6 +100,7 @@ export function parseDomainLogistics(payload: unknown): CarrierResult {
     rows.push(row);
   }
   // Newest first, as the page lists them; a row keeps its place before an older one at the same minute.
+  if (listsNewestFirst(rows.map(({ event }) => event)) === false) rows.reverse();
   rows.sort((a, b) => b.local.localeCompare(a.local));
 
   const newest = rows[0]!;

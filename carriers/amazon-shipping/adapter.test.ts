@@ -250,6 +250,16 @@ describe('Amazon Shipping France response normalization', () => {
       .toMatchObject({ provider_code: 'Departed', stage: 'in_transit' });
   });
 
+  it('keeps scans of one instant in the tracker\'s order, whichever way it lists them', () => {
+    const tied = outForDeliveryWith({ status: 'Departed', metadata: {} },
+      scan('Received', 'swa_rex_arrived_at_sort_center', 'Aug 11, 2026, 6:10:00 PM'),
+      scan('Departed', 'swa_rex_detail_departed', 'Aug 11, 2026, 6:10:00 PM'));
+    const reversed = { ...tied, eventHistory: JSON.stringify({ eventHistory: (JSON.parse(String(tied.eventHistory)) as { eventHistory: unknown[] }).eventHistory.reverse() }) };
+    for (const value of [tied, reversed]) {
+      expect(parseAmazonShippingTrackingResponse(value).events?.slice(0, 2).map((event) => event.provider_code)).toEqual(['Departed', 'Received']);
+    }
+  });
+
   it('takes a delivered summary only when a scan says delivered', () => {
     const summary = {
       status: 'Delivered', metadata: { trackingStatus: { stringValue: 'DELIVERED' } }, containerStatusTags: ['DELIVERED'],

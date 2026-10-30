@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
 import { starexStage } from './status.js';
@@ -79,6 +80,7 @@ export function parseStarex(payload: unknown, raw: string): CarrierResult {
   if (!events.length) throw new NoHistoryError(PROVIDER);
 
   // Newest first, as the tracking page sorts them; scans on one clock keep the reply's order.
+  if (listsNewestFirst(events) === false) events.reverse();
   events.sort((a, b) => String(b.local_time).localeCompare(String(a.local_time)));
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

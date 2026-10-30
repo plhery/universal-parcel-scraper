@@ -15,6 +15,7 @@ import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type 
 import { isValidGlsParcelNumber } from '../../core/detection/index.js';
 import { InvalidInputError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { EXPLICIT_OFFSET_PATTERN, firstOccurrence, type ParsedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -128,12 +129,11 @@ function responseIdentifiers(parcel: JsonObject): string[] {
 interface ParsedEvent {
   event: CarrierEvent;
   timestamp: number;
-  sourceIndex: number;
   typeCode: string;
   metadata: GLSFranceStatusMetadata | null;
 }
 
-function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
+function parseEvent(raw: JsonObject): ParsedEvent | null {
   const eventStatusCode = glsFranceStatusCode(raw.statutEvenement);
   const typeCode = glsFranceStatusCode(raw.typeEvenement);
   const code = eventStatusCode || typeCode;
@@ -145,7 +145,6 @@ function parseEvent(raw: JsonObject, sourceIndex: number): ParsedEvent | null {
   const location = locationCode(raw.codelieuEvenement);
   return {
     timestamp: time?.timestamp ?? Number.NEGATIVE_INFINITY,
-    sourceIndex,
     typeCode,
     metadata,
     event: {
@@ -252,8 +251,8 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
 
   const seen = new Set<string>();
   const parsedEvents: ParsedEvent[] = [];
-  records(payload.evenements).slice(0, MAX_EVENTS_TO_INSPECT).forEach((raw, index) => {
-    const parsed = parseEvent(raw, index);
+  records(payload.evenements).slice(0, MAX_EVENTS_TO_INSPECT).forEach((raw) => {
+    const parsed = parseEvent(raw);
     if (!parsed) return;
     const identity = JSON.stringify([
       parsed.event.time ?? '',
@@ -264,9 +263,8 @@ function parseTracking(payload: unknown, trackingNumber: string): ParsedTracking
     seen.add(identity);
     parsedEvents.push(parsed);
   });
-  parsedEvents.sort((left, right) => (
-    right.timestamp - left.timestamp || left.sourceIndex - right.sourceIndex
-  ));
+  if (listsNewestFirst(parsedEvents.map(({ event }) => event)) === false) parsedEvents.reverse();
+  parsedEvents.sort((left, right) => right.timestamp - left.timestamp);
   // Oldest first: a depot receives the parcel on its way in and again when a
   // round brings it back, so a receipt after the parcel moved on is in transit.
   let moved = false;

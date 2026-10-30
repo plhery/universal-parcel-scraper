@@ -97,6 +97,14 @@ describe('Thailand Post history', () => {
     expect(rows(result)).toEqual(rows(parseThailandPostReply(DELIVERED, DOMESTIC)));
   });
 
+  it('keeps scans of one instant in the site’s order, reversed when it lists them oldest first', () => {
+    const tied = scans(DELIVERED, DOMESTIC).slice(2).map((scan, index, all) => index === 0 ? { ...scan, createDate: all[1]!.createDate } : scan);
+    for (const listed of [tied, [...tied].reverse()]) {
+      expect(parseThailandPostReply(reply(DOMESTIC, listed), DOMESTIC).events?.map((event) => event.provider_code))
+        .toEqual(['31', '25', '24', '25', '27', '3']);
+    }
+  });
+
   it("keeps a foreign post's EDI wall clocks without an offset, in the server's order", () => {
     const result = normalizeCarrierResult(parseThailandPostReply(ABROAD, INTERNATIONAL));
     // The delivery abroad has only the destination post's wall clock: no instant, no delivery time.

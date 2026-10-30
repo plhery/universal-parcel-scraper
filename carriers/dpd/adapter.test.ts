@@ -502,6 +502,12 @@ describe('DPD delivery notices', () => {
     expect(result.last_status_text).toBe(OUT[3]);
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    expect(notices([DEPOT, OUT, EMAILED]).events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['MSDLO', 'out_for_delivery'], ['DLO', 'out_for_delivery'], ['ORI', undefined],
+    ]);
+  });
+
   it('reads the email window as a 24-hour wall clock', () => {
     expect(notices([DEPOT, CHANGED, OUT, EMAILED]).expected_delivery).toBe('2026-07-16 12:32–13:32');
     const window = (text: string) => notices([DEPOT, [...EMAILED.slice(0, 3), text] as Scan]).expected_delivery;

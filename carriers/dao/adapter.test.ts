@@ -97,15 +97,15 @@ describe('DAO tracking adapter', () => {
     }
   });
 
-  it('sorts scans by clock, keeps the reply’s order for one second and reads a repeated scan once', () => {
+  it('sorts scans by clock, keeps scans of one second in the order of a reply listed oldest first and reads a repeated scan once', () => {
     const shuffled = parseDao(edited('shop', parcel => {
       parcel.events.reverse();
       parcel.events.push({ ...parcel.events[0]! });
     }), SHOP);
     expect(shuffled.events).toHaveLength(9);
     expect(shuffled.events![0]!.provider_code).toBe('Shop/32');
-    // Reversed, the reply puts Home 61 before Home 64 at the same second.
-    expect(shuffled.events!.slice(4, 6).map(event => event.provider_code)).toEqual(['Home/61', 'Home/64']);
+    // Reversed, the reply lists Home 64 after Home 61 at the same second: the later one.
+    expect(shuffled.events!.slice(4, 6).map(event => event.provider_code)).toEqual(['Home/64', 'Home/61']);
   });
 
   it('keeps a new event visible without a stage', () => {

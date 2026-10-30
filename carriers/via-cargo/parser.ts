@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -52,14 +53,14 @@ function scanTime(value: string): string {
   return firstOccurrence(DateTime.fromISO(wall, { zone: ZONE })).toISO({ suppressMilliseconds: true })!;
 }
 
-interface Scan { event: CarrierEvent; at: number; order: number }
+interface Scan { event: CarrierEvent; at: number }
 
 /**
  * One event of `listaEventos`: its type, its wording, the branch and its
  * clock. `fechaEvento` is when it happened; `fechaAlta`, which the page shows,
  * is when it was entered, which can be hours later.
  */
-function readEvent(row: unknown, order: number): Scan {
+function readEvent(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Via Cargo returned an invalid scan');
   const code = text(row, 'tipoEvento', 16).toUpperCase();
   const description = text(row, 'descripcion', 200);
@@ -74,7 +75,7 @@ function readEvent(row: unknown, order: number): Scan {
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, at: DateTime.fromISO(time).toMillis(), order };
+  return { event, at: DateTime.fromISO(time).toMillis() };
 }
 
 /** The weight the page shows in kilograms; none when the reply has none. */
@@ -122,13 +123,15 @@ export function parseViaCargo(payload: unknown, raw: string): CarrierResult {
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Via Cargo returned a shipment with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Via Cargo returned an oversized history');
   const seen = new Set<string>();
-  // Newest first, as the reply lists them; equal clocks keep the reply's order.
-  const events = rows.map(readEvent).filter(({ event }) => {
+  const scans = rows.map(readEvent).filter(({ event }) => {
     const identity = JSON.stringify([event.time, event.provider_code, event.description, event.location]);
     if (seen.has(identity)) return false;
     seen.add(identity);
     return true;
-  }).sort((a, b) => b.at - a.at || a.order - b.order).map(({ event }) => event);
+  });
+  // Newest first, as the reply lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.at - a.at).map(({ event }) => event);
   if (!events.length) throw new NoHistoryError(PROVIDER);
 
   const newest = events[0]!;

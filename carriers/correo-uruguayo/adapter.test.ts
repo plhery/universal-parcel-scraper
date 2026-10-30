@@ -120,6 +120,14 @@ describe('Correo Uruguayo tracking adapter', () => {
     expect(unknown.events![0]).toEqual({ local_time: '2026-05-13T08:00:00', description: 'EVENTO DE MUESTRA', provider_code: '99' });
   });
 
+  it('keeps scans of one minute in the reply’s order, whichever way it lists them', () => {
+    const tied = (reversed: boolean) => parseCorreoUruguayo(edited('delivered', (item) => {
+      item.eventos.splice(2, 0, { ...item.eventos[2]!, evento: 'EVENTO DE MUESTRA', codigoevento: 99 });
+      if (reversed) item.eventos.reverse();
+    }), DELIVERED).events!.map((event) => event.description);
+    expect(tied(true)).toEqual(tied(false));
+  });
+
   it('takes the progress bar’s delivered step over the scans, and its other steps only when no scan has a stage', () => {
     const delivered = parseCorreoUruguayo(edited('in-transit', (item) => { item.codigoEtapaEntrega = 'ENTREGADO'; }), IN_TRANSIT);
     expect(delivered).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

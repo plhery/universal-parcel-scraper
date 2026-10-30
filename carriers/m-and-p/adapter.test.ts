@@ -90,6 +90,13 @@ describe('M&P HTTP adapter', () => {
     expect(shuffled.events!.map((event) => event.provider_code)).toEqual(['Delivered', 'Reached at Destination', 'Arrived at OPS Facility', 'Booked']);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const html = fixture('delivered');
+    const steps = stepsOf(html);
+    const oldestFirst = withSteps(html, [steps[6]!, steps[5]!, steps[4]!.replace('08:15 pm', '06:30 pm')]);
+    expect(parseMAndP(oldestFirst, DELIVERED).events!.map((event) => event.provider_code)).toEqual(['In-transit', 'Arrived at OPS Facility', 'Booked']);
+  });
+
   it('stages a label the map does not know by its wording, else leaves it without a stage', () => {
     const returned = fixture('in-transit').replace('<p class="order-track-text-stat status">In-transit</p>', '<p class="order-track-text-stat status">Returned to Shipper</p>')
       .replace('The shipment has been dispatched and is on its way to the  destination city', 'The shipment has been returned to the shipper');

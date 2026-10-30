@@ -117,6 +117,13 @@ describe('Hermes Germany', () => {
       .toEqual(['DELIVERY_TOUR_STARTED', 'HANDED_OVER', 'ANNOUNCED']);
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const payload = [{ barcode: NUMBER, parcelProgress: [{ parcelStatus: 'SORTED', timestamp: '2026-09-02T09:00:00Z' },
+      { parcelStatus: 'HANDED_OVER', timestamp: '2026-09-03T07:00:00Z' }, { parcelStatus: 'DELIVERY_TOUR_STARTED', timestamp: '2026-09-03T07:00:00Z' }] }];
+    expect(parseHermesGermanyResponse(payload, NUMBER).events?.map((event) => event.provider_code))
+      .toEqual(['DELIVERY_TOUR_STARTED', 'HANDED_OVER', 'SORTED']);
+  });
+
   it.each([
     ['ATG_OUT_OF_WAREHOUSE', 'registered'],
     ['PARCELSHOP_DROP_OFF', 'accepted'],

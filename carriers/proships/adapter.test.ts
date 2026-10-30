@@ -80,7 +80,7 @@ describe('ProShips HTTP adapter', () => {
       last_status_text: 'Recepción en aduana', last_update_local: '2026-05-20T17:45:00', events: [{ stage: 'customs' }, { stage: 'registered' }] });
   });
 
-  it('reads a history listed oldest first newest first, keeping the page’s order for equal clocks', () => {
+  it('reads a history listed oldest first newest first', () => {
     const reversed = changed('delivered', (body) => {
       const [head, ...rows] = body.split('<div class="tracking-event">');
       const [last, tail] = rows.pop()!.split(/(?=\s*<\/div>\s*<\/div>\s*$)/);
@@ -89,6 +89,13 @@ describe('ProShips HTTP adapter', () => {
     const result = parseProships(reversed, DELIVERED);
     expect(result).toMatchObject({ last_update_local: '2026-03-14T15:20:00', current_stage: 'delivered' });
     expect(result.events!.at(-1)).toMatchObject({ description: 'Orden generada' });
+  });
+
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const row = (date: string, title: string) => `<div class="tracking-event"><div class="event-date">${date}</div><div class="event-title">${title}</div></div>`;
+    const reply = { success: true, data: `<div class="tracking-container"><div class="tracking-header"><h3>${CUSTOMS}</h3></div><div class="tracking-events">${
+      row('18-05-2026 21:12', 'Orden generada')}${row('20-05-2026 17:45', 'Envío en tránsito a destino')}${row('20-05-2026 17:45', 'Recepción en aduana')}</div></div>` };
+    expect(parseProships(reply, CUSTOMS).events!.map((event) => event.description)).toEqual(['Recepción en aduana', 'Envío en tránsito a destino', 'Orden generada']);
   });
 
   it('takes the current status’s word for a parcel held, delivered or returned when the scans have not caught up', () => {

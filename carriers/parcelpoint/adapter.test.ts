@@ -87,6 +87,14 @@ describe('ParcelPoint HTTP adapter', () => {
     }
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parseParcelpoint(changed('collected', (body) => {
+      body.events.reverse();
+      body.events[1]!.date = body.events[0]!.date;
+    }), CONSIGNMENT);
+    expect(result.events!.map((event) => event.provider_code)).toEqual(['CHECKED_OUT', 'CHECKED_IN', 'BOOKED']);
+  });
+
   it('stages by the summary, else by the newest staged event, and keeps the point only after a check-in', () => {
     const ready = (change: (body: Reply) => void) => parseParcelpoint(changed('ready', change), BOOKING);
     // An unknown code with wording the shared rules read.

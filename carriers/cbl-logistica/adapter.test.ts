@@ -84,6 +84,11 @@ describe('CBL Logística HTTP adapter', () => {
     ]);
   });
 
+  it('keeps scans of one clock in the reply’s order, whichever way it lists them', () => {
+    const descriptions = (payload: ReturnType<typeof fixture>) => parseCbl(payload, IN_TRANSIT).events!.map((event) => event.description);
+    expect(descriptions(changed('in-transit', (data) => { data.eventos.reverse(); }))).toEqual(descriptions(fixture('in-transit')));
+  });
+
   it('reads the incident flag as the page does, over every situation but a delivery', () => {
     const flagged = changed('in-transit', (data) => { data.datos_expedicion.HAY_INCIDENCIA = 1; });
     expect(parseCbl(flagged, IN_TRANSIT)).toMatchObject({ status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map' });

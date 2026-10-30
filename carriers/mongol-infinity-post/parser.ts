@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -70,8 +71,8 @@ function result(scans: readonly Scan[], extra: Partial<CarrierResult> = {}): Car
     return true;
   });
   if (!unique.length) throw new NoHistoryError(PROVIDER);
-  const events = unique.map((scan, index) => ({ ...scan, index }))
-    .sort((left, right) => right.at - left.at || left.index - right.index).map(({ event }) => event);
+  if (listsNewestFirst(unique.map(({ event }) => event)) === false) unique.reverse();
+  const events = unique.sort((left, right) => right.at - left.at).map(({ event }) => event);
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;

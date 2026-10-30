@@ -46,8 +46,8 @@ describe('Aras Kargo direct tracking', () => {
       ['2026-01-11', 'UĞRAMA NOTU BIRAKILDI (1-2)', undefined, 'failed_attempt'],
       ['2026-01-11T08:30:12', 'ŞUBEDE ARAÇ İNDİRME', 'ÖRNEK, ÖRNEKİL', 'in_transit'],
       ['2026-01-10T23:00:00', 'AKTARMADA SUBE ARACI YUKLEME', 'ÖRNEKİL TRANSFER', 'in_transit'],
-      ['2026-01-10T06:40:00', 'AKTARMADA HAT ARACI İNDİRME', 'ÖRNEKİL TRANSFER', 'in_transit'],
       ['2026-01-10T06:40:00', 'AKTARMADA TORBA DOLDURMA', 'ÖRNEKİL TRANSFER', 'in_transit'],
+      ['2026-01-10T06:40:00', 'AKTARMADA HAT ARACI İNDİRME', 'ÖRNEKİL TRANSFER', 'in_transit'],
       ['2026-01-09T23:05:44', 'AKTARMADA HAT ARACI YÜKLEME', 'TESTİL TRANSFER', 'in_transit'],
       ['2026-01-09T21:30:00', 'AKTARMADA SUBE ARACI INDIRME', 'TESTİL TRANSFER', 'in_transit'],
       ['2026-01-09T17:10:05', 'ŞUBEDE ARAÇ YÜKLEME', 'DENEME, TESTİL', 'in_transit'],
@@ -151,8 +151,8 @@ describe('Aras Kargo direct tracking', () => {
       row('10.01.2026', 'NORMAL', 'YÖNLENDİRİLDİ', '', 'ÖRNEK', '')));
     const events = parseAras(summary, redirected, NUMBER).events!;
     expect(events.slice(3, 6)).toEqual([
-      { local_time: '2026-01-10', description: 'YÖNLENDİRİLDİ (VARIŞ MERKEZİ HATASI)', location: 'ÖRNEKİL TRANSFER', stage: 'in_transit', stage_source: 'carrier_map' },
       { local_time: '2026-01-10', description: 'YÖNLENDİRİLDİ', stage: 'in_transit', stage_source: 'carrier_map' },
+      { local_time: '2026-01-10', description: 'YÖNLENDİRİLDİ (VARIŞ MERKEZİ HATASI)', location: 'ÖRNEKİL TRANSFER', stage: 'in_transit', stage_source: 'carrier_map' },
       expect.objectContaining({ local_time: '2026-01-10T23:00:00' }),
     ]);
     expect(events).toHaveLength(11);

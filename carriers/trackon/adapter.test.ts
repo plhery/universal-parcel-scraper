@@ -118,6 +118,15 @@ describe('Trackon HTTP adapter', () => {
     expect(long.events).toHaveLength(100);
   });
 
+  it('keeps scans of one second in the reply’s order, reversed when it lists them oldest first', () => {
+    const codes = (reverse: boolean) => parseTrackon(edited('delivered', (reply) => {
+      reply.lstDetails![0]!.EVENTTIME = '09:52:00';
+      if (reverse) reply.lstDetails!.reverse();
+    }), DELIVERED).events!.map((event) => event.provider_code);
+    expect(codes(false)).toEqual(['DDUF', 'DRBG', 'BOKN', 'FMDT']);
+    expect(codes(true)).toEqual(['DDUF', 'DRBG', 'BOKN', 'FMDT']);
+  });
+
   it('reads the service’s own answers: not found, a number outside Trackon’s series, a placeholder and an unfinished lookup', () => {
     expect(() => parseTrackon(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseTrackon(fixture('not-trackon'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));

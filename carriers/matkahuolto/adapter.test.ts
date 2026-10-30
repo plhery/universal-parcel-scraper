@@ -94,9 +94,6 @@ describe('Matkahuolto tracking adapter', () => {
     const shuffled = edited('collected', payload => {
       payload.trackingEvents.reverse();
       payload.trackingEvents.push(payload.trackingEvents[0]!);
-      // The tracker lists the notice after the scan it follows when both share a minute.
-      const [ready, notice] = [payload.trackingEvents.findIndex(scan => scan.officeCode), payload.trackingEvents.findIndex(scan => /\(sms\)/.test(scan.description))];
-      [payload.trackingEvents[ready], payload.trackingEvents[notice]] = [payload.trackingEvents[notice]!, payload.trackingEvents[ready]!];
     });
     expect(parseMatkahuolto(shuffled, COLLECTED).events!.map(event => [event.local_time, event.description]))
       .toEqual(result.events!.map(event => [event.local_time, event.description]));

@@ -284,6 +284,16 @@ describe('DHL public tracking normalization', () => {
     expect(result.current_stage).toBe('accepted');
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const result = parseDHLTrackingResponse(shipment({ sendungsverlauf: { status: 'Pick-up was successful.', fortschritt: 2, events: [
+      { datum: '2026-08-09T20:00:00+02:00', status: 'The instruction data for this shipment have been provided by the sender to DHL electronically' },
+      { datum: '2026-08-10T09:58:52+02:00', status: 'Pick-up was successful.' },
+      { datum: '2026-08-10T09:58:52+02:00', status: 'The shipment has been posted by the sender at the retail outlet' },
+    ] } }), NUMBER);
+    expect(result.events?.map((event) => event.description)).toEqual(['The shipment has been posted by the sender at the retail outlet',
+      'Pick-up was successful.', 'The instruction data for this shipment have been provided by the sender to DHL electronically']);
+  });
+
   it('accepts only an explicit no-data result for the requested number', () => {
     const payload = { sendungen: [{ id: NUMBER, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] };
     expect(parseDHLTrackingResponse(payload, NUMBER)).toMatchObject({ status: 'unknown', events: [] });

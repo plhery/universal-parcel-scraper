@@ -6,6 +6,7 @@ import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/post
 import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
 import { ChallengeError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
@@ -52,7 +53,6 @@ interface ParsedEvent {
   event: CarrierEvent;
   classified: ClassifiedStatus;
   timestamp: number;
-  index: number;
   /** The relay or locker the scan names, as a pickup point. */
   relay: string;
 }
@@ -224,7 +224,7 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
   const outForDelivery = outForDeliveryInstants(expedition);
-  expedition.Evenements.forEach((rawEvent, index) => {
+  expedition.Evenements.forEach((rawEvent) => {
     if (!isRecord(rawEvent)) return;
     const time = eventTime(rawEvent.Date);
     const description = plainText(rawEvent.Libelle);
@@ -242,11 +242,11 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
       },
       classified,
       timestamp: time.timestamp,
-      index,
       relay: relayPoint(rawEvent.DetailPointRelais),
     });
   });
-  parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
+  parsed.sort((left, right) => right.timestamp - left.timestamp);
   return parsed.slice(0, 100);
 }
 

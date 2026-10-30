@@ -88,12 +88,12 @@ describe('Slovak Parcel Service HTTP adapter', () => {
     expect(parseSpsShipment(back, RETURNED)).toMatchObject({ current_stage: 'returned', last_status_text: 'Doručenie' });
   });
 
-  it('orders scans of one second by their fraction and keeps the reply’s order for equal clocks', () => {
+  it('orders scans of one second by their fraction and keeps the carrier’s order for equal clocks', () => {
     const payload = fixture('returned');
     rows(payload).reverse();
     rows(payload)[0] = { ...rows(payload)[0], date: '2026-09-20', time: '14:26:16.100' };
     rows(payload).push({ ...rows(payload)[1], date: '2026-09-20', time: '14:26:16.100', statusCodeX: 20, status: 'Vstup' });
-    expect(parseSpsShipment(payload, RETURNED).events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['260', '8', '20']);
+    expect(parseSpsShipment(payload, RETURNED).events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['260', '20', '8']);
   });
 
   it('binds the reply to the requested parcel through its barcode and its short forms only', () => {

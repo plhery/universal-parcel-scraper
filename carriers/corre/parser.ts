@@ -2,6 +2,7 @@ import { load } from 'cheerio';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -43,14 +44,12 @@ function localTime(value: string): string {
   return `${day}T${match[4]}:${match[5]}:00`;
 }
 
-interface Scan { event: CarrierEvent; index: number }
-
 /**
  * One record's table: its wording beside the item's code, then the labelled
  * cells after it. Only `DATA`, the clock, is kept; `NO`, the system's name for
  * the counter, and `USER`, the clerk's login, are not.
  */
-function recordOf(cells: string[], number: string, index: number): Scan {
+function recordOf(cells: string[], number: string): CarrierEvent {
   if (cells.length < 4 || cells.length > MAX_FIELDS * 2 || cells.length % 2) {
     throw new SchemaError(PROVIDER, 'CORRE returned a record of an unexpected shape');
   }
@@ -62,12 +61,11 @@ function recordOf(cells: string[], number: string, index: number): Scan {
   const clock = fields.get('DATA');
   if (clock === undefined) throw new SchemaError(PROVIDER, 'CORRE returned a record without its time');
   const staged = correStage(description);
-  const event: CarrierEvent = {
+  return {
     local_time: localTime(clock),
     description,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, index };
 }
 
 /**
@@ -92,23 +90,23 @@ export function parseCorre(html: string, rawNumber: string): CarrierResult {
   }
 
   const seen = new Set<string>();
-  const scans: Scan[] = [];
-  tables.forEach((table, index) => {
+  const events: CarrierEvent[] = [];
+  tables.forEach((table) => {
     const cells = $(table).find('td').toArray().map((cell) => clean($(cell).text(), 200));
-    const scan = recordOf(cells, number, index);
+    const event = recordOf(cells, number);
     // A record the page lists twice is kept once.
-    const identity = JSON.stringify([scan.event.local_time, scan.event.description]);
+    const identity = JSON.stringify([event.local_time, event.description]);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push(scan);
+    events.push(event);
   });
   // Newest first by clock; records with the same clock keep the page's order.
-  scans.sort((left, right) => {
-    const a = String(left.event.local_time);
-    const b = String(right.event.local_time);
-    return a < b ? 1 : a > b ? -1 : left.index - right.index;
+  if (listsNewestFirst(events) === false) events.reverse();
+  events.sort((left, right) => {
+    const a = String(left.local_time);
+    const b = String(right.local_time);
+    return a < b ? 1 : a > b ? -1 : 0;
   });
-  const events = scans.map(({ event }) => event);
 
   const latest = events[0]!;
   // A record without a stage keeps the newest staged record's stage.

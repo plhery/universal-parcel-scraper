@@ -5,6 +5,7 @@ import { carrierLinkRules, matchesDomain } from '../../core/catalog/linkRules.js
 import { isValidHermesParcelNumber, normalizeTrackingNumber, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -188,6 +189,7 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
       },
     });
   }
+  if (listsNewestFirst(events.map(({ event }) => event)) === false) events.reverse();
   events.sort((a, b) => b.timestamp - a.timestamp);
   let uncollected = false;
   for (const entry of [...events].reverse()) {

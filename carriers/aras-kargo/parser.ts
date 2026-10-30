@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { arasStage } from './status.js';
@@ -168,6 +169,7 @@ export function parseAras(waybillHtml: string, movementsHtml: string, raw: strin
   }
 
   // Newest first. The movement list comes sorted as text, not by time.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   const day = (scan: Scan) => scan.local.slice(0, 10);
   scans.sort((left, right) => day(left) !== day(right) ? (day(left) < day(right) ? 1 : -1)
     : left.order !== right.order ? right.order - left.order

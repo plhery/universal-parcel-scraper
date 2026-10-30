@@ -9,6 +9,7 @@
 import { DateTime, FixedOffsetZone } from 'luxon';
 import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -77,10 +78,12 @@ export function scanWording(raw: string): string {
   return clean(raw.replace(DRIVER, '$1').replace(PHONE, '')).replace(/\s+([,;:.])/g, '$1');
 }
 
-/** Newest first; scans on one clock keep their order. */
+/** Newest first; scans on one clock keep their order, read in the direction the reply lists them. */
 export function newestFirst(events: readonly CarrierEvent[], clock: (event: CarrierEvent) => number): CarrierEvent[] {
-  return events.map((event, index) => ({ event, index, key: clock(event) }))
-    .sort((a, b) => (a.key === b.key ? a.index - b.index : b.key - a.key))
+  const listed = [...events];
+  if (listsNewestFirst(listed) === false) listed.reverse();
+  return listed.map((event) => ({ event, key: clock(event) }))
+    .sort((a, b) => b.key - a.key)
     .map(({ event }) => event);
 }
 

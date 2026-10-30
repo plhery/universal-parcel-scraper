@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -244,9 +245,9 @@ export function parseTracx(payload: unknown, raw: string): CarrierResult {
     scans.push(scan);
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first, as the page lists them; scans at one instant keep the reply's order.
-  const events = scans.map((scan, index) => ({ ...scan, index }))
-    .sort((left, right) => right.timestamp - left.timestamp || left.index - right.index).map(scan => scan.event);
+  // Newest first, as the page lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.timestamp - left.timestamp).map(scan => scan.event);
 
   const newest = events[0]!;
   const staged = events.find(event => event.stage);

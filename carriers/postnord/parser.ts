@@ -1,6 +1,7 @@
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { countryTimeZone, explicitOffsetTime, mislabeledLocalTime, mislabeledWallTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -129,6 +130,7 @@ export function parsePostnord(payload: unknown, number: string): CarrierResult {
   if (!scans.length) throw new IndeterminateError('PostNord', 'PostNord returned no shipment history');
   // The endpoint's ascending history is displayed newest first by the widget.
   // Compare instants rather than ISO text so mixed offsets stay in order.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => b.timestamp - a.timestamp);
   const events = scans.map((scan) => scan.event);
   const code = clean(item.status.code, 64);

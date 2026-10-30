@@ -168,6 +168,19 @@ describe('Delhivery direct tracking', () => {
     expect(rows).toHaveLength(2);
     expect(rows?.map(event => event.stage)).toEqual(['delivered', 'returned']);
   });
+  it('keeps scans of one instant in the carrier\'s order, after the status snapshot', () => {
+    const value = payload();
+    value.data[0].trackingStates = [{ label: 'In Transit', scans: [
+      { scan: 'Manifested', scanType: 'UD', scanDateTime: '2026-01-02T06:00:00', cityLocation: 'Example City' },
+      { scan: 'Picked Up', scanType: 'UD', scanDateTime: '2026-01-02T08:00:00', cityLocation: 'Example City' },
+      { scan: 'In Transit', scanType: 'UD', scanDateTime: '2026-01-02T10:00:00', cityLocation: 'Example Hub' },
+      { scan: 'Dispatched', scanType: 'UD', scanDateTime: '2026-01-02T10:00:00', cityLocation: 'Example Hub' },
+    ] }];
+    const scans = ['Dispatched', 'In Transit', 'Picked Up', 'Manifested'];
+    expect(parseDelhivery(value, NUMBER).events?.map(event => event.description)).toEqual(['DELIVERED', ...scans]);
+    value.data[0].status.statusDateTime = '2026-01-02T10:00:00';
+    expect(parseDelhivery(value, NUMBER).events?.map(event => event.description)).toEqual(['DELIVERED', ...scans]);
+  });
   it('distinguishes future rail states from malformed completed history', () => {
     for (const state of [null, { scans: {} }, { scans: [null] }, { scans: [{}] }]) {
       const value = payload(); value.data[0].trackingStates = [state];

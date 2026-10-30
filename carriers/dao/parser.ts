@@ -3,6 +3,7 @@ import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import { isValidSscc, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -57,7 +58,7 @@ function wallClock(value: unknown): string | null {
   return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
 }
 
-interface Scan { readonly event: CarrierEvent; readonly local: string; readonly index: number }
+interface Scan { readonly event: CarrierEvent; readonly local: string }
 
 /**
  * One row of the parcel's history, from the `raw` record the page's service
@@ -65,7 +66,7 @@ interface Scan { readonly event: CarrierEvent; readonly local: string; readonly 
  * place. A home delivery's scan has no wording of its own: the delivered text
  * is in its place field.
  */
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): Scan {
   const raw = isRecord(row) ? row.raw : undefined;
   if (!isRecord(raw)) throw new SchemaError(PROVIDER, 'DAO returned a scan without its record');
   const local = wallClock(raw.tidspunkt);
@@ -81,7 +82,6 @@ function scanOf(row: unknown, index: number): Scan {
   const stage = daoStage(code);
   return {
     local,
-    index,
     event: { local_time: local, description, ...(wording && place ? { location: place } : {}), provider_code: code,
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) },
   };
@@ -125,8 +125,9 @@ export function parseDao(payload: unknown, raw: string): CarrierResult {
     return true;
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first; equal clocks keep the reply's order, which is newest first too.
-  scans.sort((left, right) => (left.local < right.local ? 1 : left.local > right.local ? -1 : left.index - right.index));
+  // Newest first, as the reply lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => (left.local < right.local ? 1 : left.local > right.local ? -1 : 0));
   const events = scans.map(({ event }) => event);
   const newest = events[0]!;
   const stage = newest.stage as Stage | undefined;

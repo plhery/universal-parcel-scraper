@@ -136,6 +136,14 @@ describe('EWE HTTP adapter', () => {
     }
   });
 
+  it('keeps scans of one clock in the order of a reply listed oldest first', () => {
+    const result = parseEweLookup(lookup('lookup-relayed', (entry) => {
+      entry.Details.splice(2, 0, { DateString: '2026-08-11 02:12', Place: '', Message: 'Parcel sorted at warehouse BNEDC-1.', PositionCode: 4 });
+    }), DELIVERED);
+    expect(result.events!.slice(2, 5).map((event) => event.description)).toEqual(['Parcel has left warehouse BNEDC-1. Our driver will deliver your parcel to you.',
+      'Parcel sorted at warehouse BNEDC-1.', 'Parcel arrived at warehouse BNEDC-1.']);
+  });
+
   it('reads the tracking page’s answer for an unknown number as not found, whatever the trace tracker says', async () => {
     for (const traced of [trace('trace-not-found'), status(500), status(429), 'not json']) {
       await expect(carrier(routed(traced, lookup('lookup-not-found'))).track({ number: UNKNOWN }))

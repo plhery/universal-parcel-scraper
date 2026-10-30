@@ -3,6 +3,7 @@ import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -75,8 +76,8 @@ export function parseBurd(payload: unknown, raw: string): CarrierResult {
   // The page reads an empty list as no parcel, but the service did not say so.
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page sorts them; statuses of one second keep the reply's order.
-  const events = scans.map((scan, index) => ({ ...scan, index }))
-    .sort((a, b) => b.timestamp - a.timestamp || a.index - b.index).map((scan) => scan.event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.timestamp - a.timestamp).map((scan) => scan.event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

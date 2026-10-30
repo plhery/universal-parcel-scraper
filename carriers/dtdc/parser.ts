@@ -1,6 +1,7 @@
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -57,7 +58,7 @@ export function parseDtdc(payload: unknown, trackingNumber: string): CarrierResu
   const returnAliases = new Set(forwardAliases);
   if (typeof data.rto_awb_num === 'string' && data.rto_awb_num) returnAliases.add(normalizeTrackingNumber(data.rto_awb_num));
   const snapshot = event(data, true);
-  const events: CarrierEvent[] = [snapshot];
+  const events: CarrierEvent[] = [];
   const seen = new Set([JSON.stringify(snapshot)]);
   for (const scan of data.tracking) {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'DTDC returned an incomplete history row');
@@ -68,6 +69,9 @@ export function parseDtdc(payload: unknown, trackingNumber: string): CarrierResu
     const key = JSON.stringify(parsed);
     if (!seen.has(key)) { seen.add(key); events.push(parsed); }
   }
+  if (listsNewestFirst(events) === false) events.reverse();
+  // The snapshot stays ahead of a scan at its instant.
+  events.unshift(snapshot);
   events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const wording = snapshot.description!;
   const mapped = dtdcStatus(clean(data.status_external, 200)) ?? dtdcStatus(wording);

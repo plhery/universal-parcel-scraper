@@ -87,6 +87,11 @@ describe('Belpost tracking adapter', () => {
     expect(result.events!.every(event => event.time === undefined)).toBe(true);
   });
 
+  it('keeps scans of one instant in the reply’s order, whichever way it lists them', () => {
+    const codes = (payload: Reply) => parseBelpost(payload, INBOUND).events!.map(event => event.provider_code);
+    expect(codes(edited('inbound', payload => { payload.data[0]!.steps = steps(payload).reverse(); }))).toEqual(codes(fixture('inbound')));
+  });
+
   it('turns an oldest-first history round, keeps a repeated scan once and keeps the newest stage under an unknown wording', () => {
     const reversed = parseBelpost(edited('delivered', payload => { payload.data[0]!.steps = steps(payload).reverse(); }), DELIVERED);
     expect(reversed.events!.map(event => event.local_time)).toEqual(parseBelpost(fixture('delivered'), DELIVERED).events!.map(event => event.local_time));

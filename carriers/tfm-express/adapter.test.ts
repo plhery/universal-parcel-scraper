@@ -94,12 +94,12 @@ describe('TFM Express HTTP adapter', () => {
     }
   });
 
-  it('sorts a history listed oldest first, and keeps the page’s order within a minute', () => {
+  it('sorts a history listed oldest first, reversing the page’s order within a minute', () => {
     const html = rows(row('04 September 2026', '10:00 AM', 'Shipment Created'), row('04 September 2026', '02:00 PM', 'Picked up'),
       row('04 September 2026', '02:00 PM', 'Received at HUB'));
     expect(timeline(html, IN_TRANSIT).map(([time, code]) => [time, code])).toEqual([
-      ['2026-09-04T18:00:00+04:00', 'Picked up'],
       ['2026-09-04T18:00:00+04:00', 'Received at HUB'],
+      ['2026-09-04T18:00:00+04:00', 'Picked up'],
       ['2026-09-04T14:00:00+04:00', 'Shipment Created'],
     ]);
   });

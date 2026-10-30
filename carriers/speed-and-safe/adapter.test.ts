@@ -105,6 +105,14 @@ describe('Gokulam Speed & Safe tracking adapter', () => {
       last_update: '2026-09-14T04:00:00+05:30' });
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const result = parseSpeedAndSafe(changed('in-transit', (rows) => {
+      rows.reverse();
+      rows.push({ ...rows.at(-1)!, id: 2004, transit: 'O', status: 'Out for Delivery- ' });
+    }), NUMBER);
+    expect(result.events!.slice(0, 2).map((event) => event.provider_code)).toEqual(['O', 'I']);
+  });
+
   it('drops what the ERP writes after a status’s dash, and stages other wordings by the shared rules', () => {
     expect(speedAndSafeWording('Delivered- ')).toBe('Delivered');
     expect(speedAndSafeWording('Delivered- Sample Person')).toBe('Delivered');

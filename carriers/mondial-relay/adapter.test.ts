@@ -513,8 +513,8 @@ describe('Mondial Relay response normalization', () => {
       { Date: '2026-08-29T11:42:00', Libelle: 'Colis livré au destinataire' },
     ], '2026-08-29T08:10:11')).toEqual([
       ['Colis livré au destinataire', 'delivered'],
-      ['Colis expédié depuis le site EXAMPLE TOWN', 'in_transit'],
       ['Colis en route vers le point de livraison', 'out_for_delivery'],
+      ['Colis expédié depuis le site EXAMPLE TOWN', 'in_transit'],
     ]);
     expect(stages([
       { Date: '2026-08-29T08:10:11', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' },

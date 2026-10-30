@@ -2,6 +2,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError,
   TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
@@ -137,7 +138,9 @@ function shipment(payload: Record<string, unknown>, pro: string, number: string)
   if (!Array.isArray(details) || details.length > MAX_EVENTS) throw new SchemaError(PROVIDER, 'Old Dominion returned an invalid history');
   if (!details.length) throw new IndeterminateError(PROVIDER, 'Old Dominion returned the shipment without a history');
   // Newest first; the sort is stable, so equal clocks keep the service's order.
-  const scans = details.map(scan).sort((a, b) => b.timestamp - a.timestamp);
+  const scans = details.map(scan);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((a, b) => b.timestamp - a.timestamp);
   const latest = scans[0]!;
   const current = oldDominionStatus(latest.key);
   const delivered = current?.stage === 'delivered';

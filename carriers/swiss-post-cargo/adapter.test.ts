@@ -190,6 +190,21 @@ describe('Swiss Post Cargo tracking', () => {
     expect(photoOnly).toMatchObject({ status: 'delivered', last_status_text: 'SIGNATURE' });
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const result = parseSwissPostCargoResponse({
+      Type: 1,
+      Data: [{
+        Identifier: '1234ABC789',
+        History: [
+          { TimeStamp: '2026-08-29T07:15:00', City: 'Zürich', Status: 'RFS', Description: 'Received' },
+          { TimeStamp: '2026-08-30T07:16:23', City: 'Zürich', Status: 'TOV', Description: 'Sorted' },
+          { TimeStamp: '2026-08-30T07:16:23', City: '', Status: 'SCA', Description: 'Loaded for Delivery' },
+        ],
+      }],
+    }, '1234ABC789');
+    expect(result.events?.map((event) => event.provider_code)).toEqual(['SCA', 'TOV', 'RFS']);
+  });
+
   it('classifies negative delivery wording before the delivered substring', () => {
     expect(statusFor('ERR', 'Not delivered')).toEqual({ status: 'exception', stage: 'failed_attempt' });
     expect(parseSwissPostCargoResponse({

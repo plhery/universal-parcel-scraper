@@ -202,6 +202,13 @@ describe('SkyNet South Africa page', () => {
     expect(unworded.events![0]).not.toHaveProperty('stage');
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const row = (time: string, description: string) => `<tr><td>01/03/2026</td><td>${time}</td><td>${description}</td><td>Sampleton</td></tr>`;
+    const listed = parseSkynetSa(page((html) => html.replace(/(<tbody>)[\s\S]*(<\/tbody>)/,
+      `$1${row('09:00:00', 'Created waybill')}${row('12:00:00', 'Scan into branch')}${row('12:00:00', 'Parcel out for delivery')}$2`)), DELIVERED);
+    expect(listed.events!.map((event) => event.description)).toEqual(['Parcel out for delivery', 'Scan into branch', 'Created waybill']);
+  });
+
   it('keeps a waybill listed twice with the same scans, and refuses one listed with different scans', () => {
     const block = (html: string) => /<hr[\s\S]*<\/table>\s*<\/div>\n/.exec(html)![0];
     const twice = page((html) => html.replace(block(html), block(html) + block(html)));

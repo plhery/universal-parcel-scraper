@@ -2,6 +2,7 @@ import { DateTime, IANAZone } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -198,6 +199,7 @@ export function parseSpeedx(body: string, contentType: string | null, raw: strin
     scans.push(scan);
   }
   // The page lists scans newest first. Instants order them; equal ones keep the page's order.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.timestamp - left.timestamp);
   const newest = scans[0]!;
   const current = newest.status;

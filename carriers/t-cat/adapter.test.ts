@@ -98,6 +98,14 @@ describe('T-CAT HTTP adapter', () => {
     expect(shuffled).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-03-12T14:07:00+08:00' });
   });
 
+  it('keeps scans of one minute in the page’s order, reversed when it lists them oldest first', () => {
+    const descriptions = (scans: Scan[]) => parseTcat(page(parcel(DELIVERED, scans)), DELIVERED).events!.map((event) => event.description);
+    expect(descriptions([['配送中', '2026/03/12 08:21'], ['轉運中', '2026/03/12 08:21'], ['已集貨', '2026/03/10 17:46']]))
+      .toEqual(['配送中', '轉運中', '已集貨']);
+    expect(descriptions([['已集貨', '2026/03/10 17:46'], ['轉運中', '2026/03/12 08:21'], ['配送中', '2026/03/12 08:21']]))
+      .toEqual(['配送中', '轉運中', '已集貨']);
+  });
+
   it('caps a long history at its newest scans', () => {
     const scans = Array.from({ length: 120 }, (_, index): Scan => ['轉運中', `2026/03/${String(1 + Math.floor(index / 24)).padStart(2, '0')} ${String(index % 24).padStart(2, '0')}:00`]);
     const result = parseTcat(page(parcel(DELIVERED, scans)), DELIVERED);

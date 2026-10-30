@@ -93,6 +93,13 @@ describe('Drop2Shop HTTP adapter', () => {
     ]);
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const result = parseDrop2Shop(changed('delivered', (rows) => {
+      rows.splice(5, 0, { ...rows[4]!, eventCode: 'D2MS005', description: 'Your parcel is with the driver' });
+    }), DELIVERED);
+    expect(result.events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['D2MD001', 'D2MS005', 'D2MS004']);
+  });
+
   it('reads an archived clock’s fraction of a second, a stated offset, and the repeated hour as its first occurrence', () => {
     const result = parseDrop2Shop(changed('delivered', (rows) => {
       rows[0]!.eventDateTime = '2026-07-06T10:20:31.52';

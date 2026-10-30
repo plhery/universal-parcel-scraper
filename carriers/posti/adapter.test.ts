@@ -27,6 +27,14 @@ describe('Posti projection', () => {
     expect(result.events?.every((event) => event.description && event.time)).toBe(true);
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const data = fixture();
+    const scan = (eventDescription: string, timestamp: string) => ({ eventDescription, city: 'EXAMPLE CITY', timestamp });
+    hit(data).events = [scan('Item is in sorting', '2026-01-11T09:00:00Z'), scan('Item has arrived', '2026-01-12T09:00:00Z'),
+      scan('Item is in transport', '2026-01-12T09:00:00Z')];
+    expect(parse(data, NUMBER).events?.map((event) => event.description)).toEqual(['Item is in transport', 'Item has arrived', 'Item is in sorting']);
+  });
+
   it('ends the status before its explanation', () => {
     const descriptions = parse(fixture(), NUMBER).events?.map((event) => event.description);
     expect(descriptions).toContain('Item is ready for a pick up. Pickup details are available in the arrival notice.');

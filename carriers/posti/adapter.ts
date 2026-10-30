@@ -5,6 +5,7 @@ import { isValidS10TrackingNumber } from '../../core/detection/index.js';
 import { CarrierError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -145,7 +146,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   if (packages.some((item) => !isRecord(item) || clean(item.trackingNumber, 64).toUpperCase() !== requested)) {
     throw new SchemaError('Posti', 'Posti returned a multi-parcel overview');
   }
-  const events: CarrierEvent[] = hit.events.map((event): CarrierEvent => {
+  const scans: CarrierEvent[] = hit.events.map((event): CarrierEvent => {
     if (!isRecord(event) || typeof event.eventDescription !== 'string') throw new SchemaError('Posti');
     const description = clean(event.eventDescription);
     const reason = clean(event.reasonDescription);
@@ -158,7 +159,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       location,
       stage: postiEventStage(description),
     };
-  }).sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);
+  });
+  if (listsNewestFirst(scans) === false) scans.reverse();
+  const events = scans.sort((left, right) => (Date.parse(right.time || '') || 0) - (Date.parse(left.time || '') || 0)).slice(0, 100);
   const current = currentStatus(postiStatus(hit.status.main, hit.status.subStatus), hit.status.main, events);
   const measurements = isRecord(hit.measurements) ? hit.measurements : {};
   const dimensions = ['length', 'width', 'height'].map((field) => measurement(measurements[field], { cm: 1, mm: 0.1, m: 100 }));

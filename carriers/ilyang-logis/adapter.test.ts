@@ -86,6 +86,13 @@ describe('Ilyang Logis HTTP adapter', () => {
     expect(parseIlyang(changed('in-transit', (parcel) => { parcel.tracking.reverse(); }), IN_TRANSIT)).toEqual(result);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parseIlyang(changed('in-transit', (parcel) => { parcel.tracking[2]!.actTime = '0002'; }), IN_TRANSIT);
+    expect(result.events!.map((event) => [event.time, event.provider_code])).toEqual([
+      ['2026-10-13T21:49:00Z', '20'], ['2026-10-13T15:02:00Z', '40'], ['2026-10-13T15:02:00Z', '20'], ['2026-10-13T06:39:00Z', '40'],
+    ]);
+  });
+
   it('names CJ Logistics and its waybill for a parcel handed over, and a late acceptance does not take it back', () => {
     const result = parseIlyang(fixture('handed-over'), HANDED_OVER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: '미배달(인계): CJ 1111-2222-3333',

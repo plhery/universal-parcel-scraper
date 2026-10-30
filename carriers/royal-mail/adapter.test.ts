@@ -255,6 +255,16 @@ describe('Royal Mail structured response', () => {
     ]);
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER, summary: { statusDescription: 'In transit' },
+      events: [
+        { eventCode: 'AC', eventName: 'Item received', eventDateTime: '2026-03-12T09:30:00Z' },
+        { eventCode: 'AR', eventName: 'Arrived at delivery office', eventDateTime: '2026-03-13T18:15:00Z' },
+        { eventCode: 'OD', eventName: 'Out for delivery', eventDateTime: '2026-03-13T18:15:00Z' },
+      ] } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => event.provider_code)).toEqual(['OD', 'AR', 'AC']);
+  });
+
   it('reads a parcel hub receipt without an earlier acceptance as the acceptance', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,

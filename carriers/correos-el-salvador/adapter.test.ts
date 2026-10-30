@@ -119,6 +119,15 @@ describe('Correos de El Salvador tracking adapter', () => {
     expect(unknown.events![0]).toEqual({ local_time: '2026-05-13T08:00:00', description: 'Evento de muestra', provider_code: '99' });
   });
 
+  it('keeps scans of one clock in the reply’s order, whichever way it lists them', () => {
+    const tied = (reversed: boolean) => parseCorreosElSalvador(edited('in-transit', (payload) => {
+      const scan = (descripcion: string) => ({ ...payload.eventos[0]!, fecha: '2026-05-13T08:00:00', descripcion });
+      payload.eventos.unshift(scan('Evento de muestra B'), scan('Evento de muestra A'));
+      if (reversed) payload.eventos.reverse();
+    }), IN_TRANSIT).events!.map((event) => event.description);
+    expect(tied(true)).toEqual(tied(false));
+  });
+
   it('takes the summary message’s stage only when no scan has one', () => {
     const unstaged = (message: unknown) => parseCorreosElSalvador(edited('in-transit', (payload) => {
       payload.eventos = [{ idEvento: 99, fecha: '2026-05-13T08:00:00', descripcion: 'Evento de muestra', oficina: 'CENTRO DE EJEMPLO' }];

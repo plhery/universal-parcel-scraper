@@ -153,6 +153,17 @@ describe('Correos Spain response parsing', () => {
       last_status_text: 'At recipient’s disposal', pickup_point: 'OFICINA EXAMPLE' });
   });
 
+  it('keeps scans of one instant in the localizador’s order', () => {
+    const result = parseCorreosSpainTrackingResponse([envelope({
+      eventos: [
+        event('A010000V', '27/04/2026', '23:03:58', 'Admitido'),
+        event('P040000V', '28/04/2026', '15:52:17', 'Clasificado'),
+        event('H020000V', '28/04/2026', '15:52:17', 'En reparto'),
+      ],
+    })], TRACKING_NUMBER);
+    expect(result.events?.map((item) => item.provider_code)).toEqual(['H020000V', 'P040000V', 'A010000V']);
+  });
+
   it('rewords a scan stored in another language in place, matched by its instant and code', () => {
     // The localizador's replies in every language carry the same codes and clocks.
     expect(sameInstantIdentityPolicy('correos-spain', { supportsScanMatching: true }))

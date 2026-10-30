@@ -2,6 +2,7 @@ import { DateTime, FixedOffsetZone } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -79,8 +80,8 @@ export function parseYwe(payload: unknown, raw: string): CarrierResult {
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'YWE returned an oversized history');
 
   const seen = new Set<string>();
-  const scans: { event: CarrierEvent; timestamp: number; index: number }[] = [];
-  rows.forEach((row: unknown, index) => {
+  const scans: { event: CarrierEvent; timestamp: number }[] = [];
+  rows.forEach((row: unknown) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'YWE returned an invalid scan');
     const time = scanTime(row);
     const wording = text(row, 'message');
@@ -93,7 +94,7 @@ export function parseYwe(payload: unknown, raw: string): CarrierResult {
     const key = JSON.stringify([time.timestamp, location, description]);
     if (seen.has(key)) return;
     seen.add(key);
-    scans.push({ timestamp: time.timestamp, index, event: {
+    scans.push({ timestamp: time.timestamp, event: {
       time: time.iso,
       ...(location ? { location } : {}),
       description,
@@ -103,8 +104,9 @@ export function parseYwe(payload: unknown, raw: string): CarrierResult {
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
 
-  // Newest first, as the tracker lists them; equal clocks keep its order.
-  scans.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  // Newest first, as the tracker lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => right.timestamp - left.timestamp);
   const events = scans.map((scan) => scan.event);
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);

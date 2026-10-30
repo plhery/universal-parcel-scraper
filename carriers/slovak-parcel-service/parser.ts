@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -75,14 +76,13 @@ interface Scan {
   readonly stage?: Stage;
   /** The wall clock with its fraction, which orders scans of the same second. */
   readonly order: string;
-  readonly index: number;
 }
 
 /**
  * One row of `statuses`. Its remark, event remark, references and the
  * handheld's coordinates are never read.
  */
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): Scan {
   if (!isRecord(row)) invalid();
   const day = DAY.exec(text(row, 'date', 32));
   const clock = CLOCK.exec(text(row, 'time', 32));
@@ -104,7 +104,6 @@ function scanOf(row: unknown, index: number): Scan {
     parcel: idOf(row, 'parcelNumber'),
     ...(stage ? { stage } : {}),
     order: `${local}.${(clock[4] ?? '').padEnd(7, '0')}`,
-    index,
   };
 }
 
@@ -175,7 +174,8 @@ export function parseSpsShipment(payload: unknown, raw: string, rows?: readonly 
     return seen.has(key) ? false : (seen.add(key), true);
   });
   // The service lists scans newest first; equal clocks keep its order.
-  scans.sort((left, right) => (left.order === right.order ? left.index - right.index : left.order < right.order ? 1 : -1));
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => (left.order === right.order ? 0 : left.order < right.order ? 1 : -1));
 
   const weight = shipment.weight;
   const weightKg = typeof weight === 'number' && Number.isFinite(weight) && weight > 0 && weight < 10_000 ? { weight_kg: weight } : {};

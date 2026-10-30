@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -65,9 +66,9 @@ function instantOf(stamp: string, utc: boolean): { time: string; at: number } {
   return { time: parsed.toISO({ suppressMilliseconds: true })!, at: parsed.toMillis() };
 }
 
-interface Scan { at: number; index: number; event: CarrierEvent; partner: string; reference: string }
+interface Scan { at: number; event: CarrierEvent; partner: string; reference: string }
 
-function projectRow(row: unknown, number: string, index: number): Scan {
+function projectRow(row: unknown, number: string): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Drop2Shop returned an invalid scan');
   const parcel = text(row, 'packageTrackingNumber', 64).toUpperCase();
   if (!parcel) throw new SchemaError(PROVIDER, 'Drop2Shop returned a scan without its parcel');
@@ -83,7 +84,7 @@ function projectRow(row: unknown, number: string, index: number): Scan {
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { at, index, event, partner: text(row, 'odaCarrier', 40), reference: text(row, 'odaTrackingNumber', 64) };
+  return { at, event, partner: text(row, 'odaCarrier', 40), reference: text(row, 'odaTrackingNumber', 64) };
 }
 
 /**
@@ -116,13 +117,15 @@ export function parseDrop2Shop(payload: unknown, raw: string): CarrierResult {
 
   // Each package repeats the shipment's scans; one scan is kept once.
   const scans = new Map<string, Scan>();
-  rows.forEach((row, index) => {
-    const scan = projectRow(row, number, index);
+  rows.forEach((row) => {
+    const scan = projectRow(row, number);
     const key = JSON.stringify([scan.at, scan.event.provider_code, scan.event.description]);
     if (!scans.has(key)) scans.set(key, scan);
   });
   // Newest first, as the page lists them; scans at the same instant keep the reply's order.
-  const ordered = [...scans.values()].sort((left, right) => right.at - left.at || left.index - right.index);
+  const ordered = [...scans.values()];
+  if (listsNewestFirst(ordered.map(({ event }) => event)) === false) ordered.reverse();
+  ordered.sort((left, right) => right.at - left.at);
   const events = ordered.map((scan) => scan.event);
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

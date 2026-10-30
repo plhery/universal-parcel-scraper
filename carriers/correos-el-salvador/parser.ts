@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -74,10 +75,10 @@ function wallClock(value: string): { local: string; order: string } {
   return { local, order: `${local}.${fraction.padEnd(7, '0')}` };
 }
 
-interface Scan { event: CarrierEvent; order: string; index: number }
+interface Scan { event: CarrierEvent; order: string }
 
 /** A scan's clock, office, wording and code; its reason and action are left out. */
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Correos de El Salvador returned an invalid scan');
   const description = text(row, 'descripcion', 200);
   if (!description) throw new SchemaError(PROVIDER, 'Correos de El Salvador returned a scan without wording');
@@ -92,7 +93,7 @@ function scanOf(row: unknown, index: number): Scan {
     ...(provider ? { provider_code: provider } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, order: clock.order, index };
+  return { event, order: clock.order };
 }
 
 /** The item's weight in kilograms, when the reply gives one. */
@@ -128,8 +129,8 @@ export function parseCorreosElSalvador(payload: unknown, rawNumber: string): Car
   if (rows.length > MAX_SCANS) throw new SchemaError(PROVIDER, 'Correos de El Salvador returned an oversized history');
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, index) => {
-    const scan = scanOf(row, index);
+  rows.forEach((row) => {
+    const scan = scanOf(row);
     // A scan the reply lists twice is kept once.
     const identity = JSON.stringify([scan.order, scan.event.description, scan.event.location ?? '', scan.event.provider_code ?? '']);
     if (seen.has(identity)) return;
@@ -141,7 +142,8 @@ export function parseCorreosElSalvador(payload: unknown, rawNumber: string): Car
   const kilograms = weight(item);
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first by clock, as the reply lists them; scans with the same clock keep the reply's order.
-  scans.sort((left, right) => right.order > left.order ? 1 : right.order < left.order ? -1 : left.index - right.index);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => right.order > left.order ? 1 : right.order < left.order ? -1 : 0);
   const events = scans.map(({ event }) => event);
 
   const latest = events[0]!;

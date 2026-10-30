@@ -9,6 +9,7 @@ import {
   SchemaError,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -103,10 +104,10 @@ function wording(status: string, details: string, delivered: boolean): string {
   return status ? `${status}: ${details}` : details;
 }
 
-interface Row { event: CarrierEvent; timestamp: number; order: number }
+interface Row { event: CarrierEvent; timestamp: number }
 
 /** One scan: its clock, wording, code and the terminal's or customer's town. The signee is never read. */
-function rowOf(scan: unknown, order: number): Row {
+function rowOf(scan: unknown): Row {
   if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'FedEx Freight returned an invalid scan');
   const code = text(scan, 'statusCD', 8).toUpperCase();
   const exceptionCode = text(scan, 'statusExceptionCode', 16);
@@ -122,7 +123,6 @@ function rowOf(scan: unknown, order: number): Row {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     },
     timestamp,
-    order,
   };
 }
 
@@ -197,15 +197,16 @@ export function parseFedexFreight(payload: unknown, raw: string): CarrierResult 
 
   const rows: Row[] = [];
   const seen = new Set<string>();
-  list(shipment, 'scanEventList', MAX_ROWS).forEach((scan, order) => {
-    const row = rowOf(scan, order);
+  list(shipment, 'scanEventList', MAX_ROWS).forEach((scan) => {
+    const row = rowOf(scan);
     const key = JSON.stringify(row.event);
     if (seen.has(key)) return;
     seen.add(key);
     rows.push(row);
   });
   // Newest first by clock; scans stamped alike keep the reply's order.
-  rows.sort((left, right) => right.timestamp - left.timestamp || left.order - right.order);
+  if (listsNewestFirst(rows.map(({ event }) => event)) === false) rows.reverse();
+  rows.sort((left, right) => right.timestamp - left.timestamp);
   const events = rows.map((row) => row.event);
 
   const summaryCode = text(shipment, 'keyStatusCD', 8).toUpperCase();

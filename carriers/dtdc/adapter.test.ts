@@ -102,6 +102,14 @@ describe('DTDC parser', () => {
     expect(() => parseDtdc(payload, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('keeps scans of one instant in the order of a history listed oldest first', () => {
+    const payload = fixture();
+    const tracking = payload.data.tracking.reverse();
+    tracking.splice(3, 0, { ...tracking[2], status_external: 'Reached Destination', event_description: 'Reached Destination' });
+    expect(parseDtdc(payload, NUMBER).events?.map(event => event.description))
+      .toEqual(['Delivered', 'Out For Delivery', 'Reached Destination', 'In Transit', 'Picked Up', 'Booked']);
+  });
+
   it('preserves an unknown return scan label without claiming recipient delivery', () => {
     const payload = fixture();
     Object.assign(payload.data, { type: 'rto', status_external: 'New return state', current_event_description: 'New return state' });

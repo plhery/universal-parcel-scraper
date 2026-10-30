@@ -88,12 +88,12 @@ describe('SLGTrax HTTP adapter', () => {
       '2026-06-02T06:50:00+05:00', '2026-06-01T23:05:00+05:00', '2026-06-01T17:35:00+05:00', '2026-06-01T12:20:58+05:00']);
   });
 
-  it('orders scans by their instants and keeps the reply’s order within a second', () => {
+  it('orders scans by their instants and keeps the carrier’s order within a second', () => {
     const result = parseSlgtrax(changed('in-transit', (shipment) => {
       shipment.tracking_history.reverse();
       shipment.tracking_history.push({ ...shipment.tracking_history.at(-1)!, status: 'Shipment - Out for Delivery' });
     }), IN_TRANSIT);
-    expect(result.events!.map((event) => event.provider_code)).toEqual(['Shipment - Arrived at Destination', 'Shipment - Out for Delivery',
+    expect(result.events!.map((event) => event.provider_code)).toEqual(['Shipment - Out for Delivery', 'Shipment - Arrived at Destination',
       'Shipment - In Transit', 'Shipment - Arrived at Origin', 'Shipment - Booked']);
   });
 

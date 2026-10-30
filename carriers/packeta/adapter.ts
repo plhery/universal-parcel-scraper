@@ -4,6 +4,7 @@ import { carrierIdsFromPartnerLinks } from '../../core/catalog/hints.js';
 import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
@@ -97,9 +98,9 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
   if (rawDetails !== undefined && !Array.isArray(rawDetails)) {
     throw new SchemaError('Packeta', 'Packeta returned invalid tracking history');
   }
-  const parsed: Array<{ event: CarrierEvent; links: PacketaEventLink[]; timestamp: number; index: number }> = [];
+  const parsed: Array<{ event: CarrierEvent; links: PacketaEventLink[]; timestamp: number }> = [];
   const seen = new Set<string>();
-  (Array.isArray(rawDetails) ? rawDetails : []).filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
+  (Array.isArray(rawDetails) ? rawDetails : []).filter(isRecord).slice(0, 500).forEach((rawEvent) => {
     const time = parsedTime(rawEvent.time);
     // A hand-off sentence links the partner's number to its tracker. The
     // number stays in the wording; the link names the partner.
@@ -117,10 +118,10 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
       event: { time: time.iso, location, description, ...(stage ? { stage } : {}) },
       links: packetaEventLinks(raw),
       timestamp: time.timestamp,
-      index,
     });
   });
-  parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
+  parsed.sort((left, right) => right.timestamp - left.timestamp);
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   const partner = deliveryPartner(parsed.flatMap(({ links }) => links));
   // Sender (merchant) and branchAddress (Z-BOX/partner shop) carry no

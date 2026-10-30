@@ -151,6 +151,14 @@ describe('Uzbekistan Post tracking adapter', () => {
     expect(unnamed.events![0]).not.toHaveProperty('stage');
   });
 
+  it('keeps IPS scans of one instant in its order, reversed as it lists them oldest first', () => {
+    const tied = parseUzbekistanPost(edited(ips, payload => {
+      const [same, moved] = [scans(payload)[4]!, scans(payload)[5]!];
+      Object.assign(moved, { LocalDateTime: same.LocalDateTime, GmtDateTime: same.GmtDateTime });
+    }), EMS);
+    expect(tied.events!.slice(0, 4).map(event => event.provider_code)).toEqual(['37', '32', '35', '38']);
+  });
+
   it('keeps a repeated scan once, keeps the newest stage under an unknown code and says when the history is cut short', () => {
     const repeated = parseUzbekistanPost(edited(() => shipox('delivered'), payload => {
       list(payload).splice(1, 0, { ...list(payload)[1]!, id: 1 });

@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -70,9 +71,9 @@ export function parseElta(payload: unknown, rawNumber: string): CarrierResult {
     throw new SchemaError(PROVIDER, 'ELTA returned an invalid item history');
   }
 
-  const scans: { event: CarrierEvent; index: number }[] = [];
+  const events: CarrierEvent[] = [];
   const seen = new Set<string>();
-  slots.slice(0, count).forEach((slot, index) => {
+  slots.slice(0, count).forEach((slot) => {
     if (!isRecord(slot)) throw new SchemaError(PROVIDER, 'ELTA returned an invalid scan');
     const day = clean(slot.out_date, 16);
     // The tracker skips a slot without a date.
@@ -85,13 +86,12 @@ export function parseElta(payload: unknown, rawNumber: string): CarrierResult {
     const identity = JSON.stringify(event);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push({ event, index });
+    events.push(event);
   });
-  if (!scans.length) throw new IndeterminateError(PROVIDER, 'ELTA returned no scans');
+  if (!events.length) throw new IndeterminateError(PROVIDER, 'ELTA returned no scans');
   // Newest first, as the tracker lists them; equal clocks keep its order.
-  scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
-    : right.event.local_time! < left.event.local_time! ? -1 : left.index - right.index);
-  const events = scans.map(({ event }) => event);
+  if (listsNewestFirst(events) === false) events.reverse();
+  events.sort((left, right) => right.local_time! > left.local_time! ? 1 : right.local_time! < left.local_time! ? -1 : 0);
 
   // Oldest first: a notice keeps the stage of the scan before it.
   let previous: Stage | undefined;

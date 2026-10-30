@@ -78,12 +78,12 @@ describe('Via Cargo HTTP adapter', () => {
       shipment.listaEventos.push({ descripcion: 'EN REPARTO', tipoEvento: 'SYNT', deleNombre: 'CIUDAD EJEMPLO', fechaEvento: '17/04/2026 08:00' });
       shipment.listaEventos.push({ descripcion: 'NOTA DE EJEMPLO', tipoEvento: '', deleNombre: '', fechaEvento: '17/04/2026 08:00' });
     }), NUMBER);
-    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'EN REPARTO' });
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'NOTA DE EJEMPLO' });
     expect(result.events!.slice(0, 2)).toEqual([
+      // Equal clocks of a reply listed oldest first come out reversed; a scan without a type or a place keeps its wording.
+      { time: '2026-04-17T08:00:00-03:00', description: 'NOTA DE EJEMPLO' },
       { time: '2026-04-17T08:00:00-03:00', location: 'CIUDAD EJEMPLO', description: 'EN REPARTO', provider_code: 'SYNT',
         stage: 'out_for_delivery', stage_source: 'wording:language' },
-      // Equal clocks keep the reply's order; a scan without a type or a place keeps its wording.
-      { time: '2026-04-17T08:00:00-03:00', description: 'NOTA DE EJEMPLO' },
     ]);
     // The departure without its event time takes the minute it was entered.
     expect(result.events![2]).toMatchObject({ provider_code: 'CPCE', time: '2026-04-16T06:39:00-03:00' });

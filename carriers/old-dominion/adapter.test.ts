@@ -95,6 +95,14 @@ describe('Old Dominion trace replies', () => {
     expect(parse(line(payload)).expected_delivery).toBeNull();
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const payload = delivered();
+    const info = payload.body.traceInfo[0]!;
+    info.trackTraceDetail = info.trackTraceDetail.slice(-3).reverse();
+    info.trackTraceDetail[2]!.dateTime = info.trackTraceDetail[1]!.dateTime;
+    expect(parse(line(payload)).events?.map(event => event.provider_code)).toEqual(['In Transit', 'Pickup Completed', 'Pickup Requested']);
+  });
+
   it('prefers a confirmed delivery appointment, as a local window within one day', () => {
     const payload = delivered();
     const info = payload.body.traceInfo[0]!;

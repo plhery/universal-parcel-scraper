@@ -102,6 +102,18 @@ describe('Bringer Parcel Xpress HTTP adapter', () => {
     expect(offset.events![0]).toMatchObject({ time: '2026-06-09T09:45:00-05:00', provider_code: 'BPS-0700' });
   });
 
+  it('keeps scans of one instant in the reply’s order, whichever way it lists them', () => {
+    const scan = (bpxEventCode: string, bpxEventDescription: string) => ({ id: '27', status: 'in_transit', location: '', bpxEventCode,
+      bpxEventDescription, createdAt: '2026-06-20T10:00:00.000Z' });
+    for (const reversed of [false, true]) {
+      const result = parseBringerParcel(changed('in-transit', (parcel) => {
+        parcel.events.unshift(scan('BPS-0800', 'Handed to the delivery partner'), scan('BPS-0710', 'Released from customs'));
+        if (reversed) parcel.events.reverse();
+      }), IN_TRANSIT);
+      expect(result.events!.slice(0, 2).map((event) => event.description)).toEqual(['Handed to the delivery partner', 'Released from customs']);
+    }
+  });
+
   it('shows a status without a label as it comes, and leaves an error creating the label without a stage', () => {
     const result = parseBringerParcel(changed('in-transit', (parcel) => {
       parcel.events.unshift({ id: '27', status: 'synthetic_state', location: '', bpxEventCode: null, bpxEventDescription: null,

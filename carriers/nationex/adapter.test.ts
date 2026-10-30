@@ -91,6 +91,13 @@ describe('Nationex tracking adapter', () => {
     expect(parseNationex(french, DELIVERED).events![1]).toMatchObject({ description: 'Livraison complétée - Colis laissé à la porte avant', stage: 'delivered' });
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const shipment = fixture('transit');
+    const history = shipment.Parcels[0].History.reverse();
+    history[2].ProcessedDate = history[1].ProcessedDate;
+    expect(parseNationex(shipment, TRANSIT).events!.map((event) => event.provider_code)).toEqual(['901', '903', '52', '910', '538']);
+  });
+
   it('shows the expected day only while the parcel is on its way and the day has not passed', () => {
     expect(parseNationex(fixture('transit'), TRANSIT)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
       current_stage_source: 'carrier_map', last_status_text: 'Parcel scanned', last_update_local: '2026-03-11T03:22:51', expected_delivery: '2026-03-12' });

@@ -90,6 +90,15 @@ describe('Domain Logistics HTTP adapter', () => {
     expect(shuffled.current_stage).toBe('delivered');
   });
 
+  it('keeps rows of one minute in the order of a reply listed oldest first', () => {
+    const result = parseDomainLogistics(changed('delivered', (rows) => {
+      rows.reverse();
+      rows.splice(2, 0, { ...rows[1]!, Status: 'Arrived at the delivery depot' });
+    }));
+    expect(result.events!.map((event) => event.description)).toEqual(['Your order has been delivered!', 'Arrived at the delivery depot',
+      'Out for Delivery', 'Your order has been shipped!']);
+  });
+
   it('stages another wording by the shared rules, keeps an unread one without a stage, and strips markup', () => {
     const newest = (Status: unknown) => parseDomainLogistics(changed('in-transit', (rows) => {
       rows.unshift({ ...rows[0]!, Status, Date: '2026-03-13<br/>06:00 PM', Estimated: '2026-03-14' });

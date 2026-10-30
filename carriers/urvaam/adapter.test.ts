@@ -82,6 +82,11 @@ describe('Urvaam HTTP adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ provider_code: '0' });
   });
 
+  it('keeps scans of one second in the page’s order, reversed when it lists them oldest first', () => {
+    const result = parseUrvaam(changed('in-transit', (shipment) => { shipment.data.reverse(); }), IN_TRANSIT);
+    expect(result.events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['9', '15', '8']);
+  });
+
   it('keeps the pickup point the page shows under a scan, without its opening hours', () => {
     const result = parseUrvaam(changed('in-transit', (shipment) => {
       shipment.data.unshift(scan({ update_time: '2026-04-22 10:15:00', status: '5', track_status: 6, caption: '自提点签收',

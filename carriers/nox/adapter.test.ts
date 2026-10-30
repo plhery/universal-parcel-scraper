@@ -96,6 +96,15 @@ describe('nox tracking adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/Musterstadt|Musterfrau|99999|GKS_90|4711/);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parseNox(edited('in-transit', (rows) => {
+      rows.reverse();
+      rows[1]!.scanZeit = rows[0]!.scanZeit;
+    }), IN_TRANSIT);
+    expect(result.events!.map((event) => event.description)).toEqual(['Collo in der nox Niederlassung eingetroffen',
+      'Collo von der nox Niederlassung weiterverladen', 'Collo durch Versender bereitgestellt zur Abholung']);
+  });
+
   it('leaves a scan whose wording it does not know without a stage', () => {
     const result = parseNox(edited('in-transit', (rows) => { rows[0]!.status = 'Synthetischer Scan'; }), IN_TRANSIT);
     expect(result.events![0]).toEqual({ time: '2026-10-25T02:30:15+02:00', description: 'Synthetischer Scan' });

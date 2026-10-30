@@ -118,6 +118,14 @@ describe('FedEx Freight tracking adapter', () => {
       'Delivered', 'At delivery: Arrived at customer location for delivery', 'Out for delivery', 'At local facility', 'Synthetic note', 'Picked up']);
   });
 
+  it('keeps scans of one instant in the order of a reply listed oldest first', () => {
+    const result = parseFedexFreight(delivered((payload) => {
+      const list = scans(payload).reverse();
+      list[6] = { ...list[6], status: 'Synthetic note', statusCD: 'ZZ' };
+    }), DELIVERED);
+    expect(result.events!.slice(3, 6).map((event) => event.description)).toEqual(['At local facility', 'Synthetic note', 'On the way']);
+  });
+
   it('stages scans by code, the arrival at the consignee by its exception code, then the shared wording rules', () => {
     const stageOf = (row: Reply) => parseFedexFreight(delivered((payload) => {
       scans(payload)[0] = { ...scans(payload)[0], recipientSignee: '', delivered: false, ...row };

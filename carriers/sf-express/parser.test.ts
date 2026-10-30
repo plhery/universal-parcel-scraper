@@ -44,6 +44,12 @@ describe('SF Express public route parsing', () => {
     expect(later).toMatchObject({ last_update: '2026-01-09T08:00:00+08:00', delivered_at: '2026-01-08T11:20:00+08:00' });
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const value = copy(); const routes = value.result[0]!.routes;
+    routes[3]!.scanDateTime = routes[2]!.scanDateTime;
+    expect(parse(value, NUMBER).events!.map((event) => event.provider_code)).toEqual(['80', '204', '14', '106', '30', '950']);
+  });
+
   it('dates no delivery before the parcel is delivered', () => {
     const value = copy(); value.result[0]!.signed = false; value.result[0]!.routes.pop();
     expect(parse(value, NUMBER)).toMatchObject({ status: 'out_for_delivery', last_update: '2026-01-08T07:50:00+08:00' });

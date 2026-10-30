@@ -156,6 +156,14 @@ describe('YWE HTTP adapter', () => {
     expect(result).toMatchObject({ history_truncated: true, last_update: '2026-05-09T18:59:00-07:00' });
   });
 
+  it('keeps scans of one second in the tracker’s order, reversed when it lists them oldest first', () => {
+    const result = parseYwe(changed((entry) => {
+      entry.events[1]!.timestamp = entry.events[0]!.timestamp;
+      entry.events.reverse();
+    }), PARCEL);
+    expect(result.events!.slice(0, 3).map((event) => event.provider_code)).toEqual(['18', '17', '08']);
+  });
+
   it('keeps a moved route, a browser check and a broken reply apart', async () => {
     const lookup = (body: string, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body, init))).track({ number: UNKNOWN });
     await expect(lookup(text('no-history'))).rejects.toMatchObject({ kind: 'indeterminate' });

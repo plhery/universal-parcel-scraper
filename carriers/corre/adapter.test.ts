@@ -78,6 +78,11 @@ describe('CORRE tracking adapter', () => {
     expect(unstaged.events![0]).toEqual({ local_time: '2026-05-06T11:02:00', description: 'Registo de amostra' });
   });
 
+  it('keeps records of one clock in the page’s order', () => {
+    const page = text('history').replace('202605041630', '202605061102');
+    expect(parseCorre(page, HISTORY).events!.map((event) => event.description)).toEqual(['OBJECTO ENTREGUE', 'OBJECTO EXPEDIDO', 'GUIA RECEBIDA']);
+  });
+
   it('reads a search that listed nothing as not found, and a record for another code as inconclusive', async () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(text('not-found')))).track({ number: UNKNOWN }))
       .rejects.toMatchObject({ kind: 'not_found' });

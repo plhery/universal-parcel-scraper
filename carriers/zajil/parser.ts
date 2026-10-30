@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -115,10 +116,9 @@ export function parseZajil(payload: unknown, raw: string): CarrierResult {
     seen.add(scan.key);
     scans.push(scan.event);
   }
-  // Newest first by wall clock; statuses on one clock keep the reply's order.
-  const events = scans.map((event, index) => ({ event, index }))
-    .sort((left, right) => (right.event.local_time as string).localeCompare(left.event.local_time as string) || left.index - right.index)
-    .map(({ event }) => event);
+  // Newest first by wall clock.
+  if (listsNewestFirst(scans) === false) scans.reverse();
+  const events = scans.sort((left, right) => (right.local_time as string).localeCompare(left.local_time as string));
 
   // The shipment's own update is the current status, which the page's rail shows.
   const update = cleanScalar(payload.website_update, 40);

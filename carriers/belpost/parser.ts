@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -57,9 +58,7 @@ function wallClock(value: string): string {
   return local;
 }
 
-interface Scan { event: CarrierEvent; index: number }
-
-function scanOf(step: unknown, index: number): Scan {
+function scanOf(step: unknown): CarrierEvent {
   if (!isRecord(step)) throw new SchemaError(PROVIDER, 'Belpost returned an invalid scan');
   const description = text(step, 'event', 200);
   if (!description) throw new SchemaError(PROVIDER, 'Belpost returned a scan without wording');
@@ -67,14 +66,13 @@ function scanOf(step: unknown, index: number): Scan {
   const location = text(step, 'place', 120);
   const provider = code(step);
   const staged = belpostStage(description);
-  const event: CarrierEvent = {
+  return {
     local_time: local,
     ...(location ? { location } : {}),
     description,
     ...(provider ? { provider_code: provider } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, index };
 }
 
 /**
@@ -96,19 +94,18 @@ export function parseBelpost(payload: unknown, rawNumber: string): CarrierResult
   if (item.steps.length > MAX_STEPS) throw new SchemaError(PROVIDER, 'Belpost returned an oversized history');
 
   const seen = new Set<string>();
-  const scans: Scan[] = [];
-  item.steps.forEach((step, index) => {
-    const scan = scanOf(step, index);
+  const events: CarrierEvent[] = [];
+  item.steps.forEach((step) => {
+    const event = scanOf(step);
     // A scan the reply lists twice is kept once.
-    const identity = JSON.stringify(scan.event);
+    const identity = JSON.stringify(event);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push(scan);
+    events.push(event);
   });
   // Newest first by wall clock, as the page lists them; scans at the same second keep the reply's order.
-  scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
-    : right.event.local_time! < left.event.local_time! ? -1 : left.index - right.index);
-  const events = scans.map(({ event }) => event);
+  if (listsNewestFirst(events) === false) events.reverse();
+  events.sort((left, right) => right.local_time! > left.local_time! ? 1 : right.local_time! < left.local_time! ? -1 : 0);
 
   const latest = events[0]!;
   const current = events.find(event => event.stage);

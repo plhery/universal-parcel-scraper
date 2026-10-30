@@ -251,6 +251,18 @@ describe('CTT Express direct tracking', () => {
     expect(result.events?.map((event) => event.provider_code)).toEqual(['1500', '1600']);
   });
 
+  it('keeps scans of one instant in the order of a reply listed newest first', () => {
+    const payload = clone();
+    const row = payload.data.shipping_history.events[0]!;
+    payload.data.shipping_history.events = [
+      { ...row, code: '2400', description: 'Nuevo reparto', event_date: '2026-01-03T12:00:00Z' },
+      { ...row, code: '1600', description: 'Incidencia en el reparto', event_date: '2026-01-03T10:00:00Z' },
+      { ...row, code: '1500', description: 'En reparto', event_date: '2026-01-03T10:00:00Z' },
+      { ...row, code: '1000', description: 'Enviado', event_date: '2026-01-02T10:00:00Z' },
+    ];
+    expect(parseCttExpress(payload, NUMBER).events?.map((event) => event.provider_code)).toEqual(['2400', '1600', '1500', '1000']);
+  });
+
   it('reads the delivery steps CTT Express relays from CTT Portugal on Lisbon\'s clock, and its own scans as given', () => {
     // CTT Portugal's own rows of the same scans are an hour after the instants CTT Express gives, to the second.
     const payload = clone();

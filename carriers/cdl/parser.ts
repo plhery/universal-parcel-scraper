@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -91,6 +92,7 @@ export function parseCdl(payload: unknown, raw: string): CarrierResult {
     seen.add(identity);
     return true;
   });
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => orderOf(b) - orderOf(a));
   const events = scans.map(({ event }) => event);
   const newest = events[0]!;

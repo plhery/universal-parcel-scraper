@@ -147,11 +147,17 @@ describe('TracX Logis tracking adapter', () => {
     expect(codeless).toMatchObject({ status: 'unknown', last_status_text: 'Sample note' });
     expect(codeless.current_stage).toBeUndefined();
     expect(codeless.events![0]).not.toHaveProperty('provider_code');
-    // Scans at one instant keep the reply's order, as the page lists them.
-    const tied = parse(edited('in-transit.rsc', (_summary, history) => { history.unshift({ ...history[0]!, Status: 'M80', StatusDesc: 'Customs Clearance Completed in Destination Country' }); }), IN_TRANSIT);
-    expect(tied.events!.slice(0, 2).map(event => event.provider_code)).toEqual(['M80', 'M50']);
     const precise = parse(edited('in-transit.rsc', (_summary, history) => { history[0]!.UTCDate = '2026-05-06T09:12:30.1234567Z'; history[0]!.ReasonDesc = 'Held<br/>for &amp; checks<br/>'; }), IN_TRANSIT);
     expect(precise).toMatchObject({ last_update: '2026-05-06T09:12:30.123Z', last_status_text: 'Arrival in Destination Country: Held. for & checks' });
+  });
+
+  it('keeps scans of one instant in the reply’s order, reversed when it lists them oldest first', () => {
+    const codes = (reverse: boolean) => parse(edited('in-transit.rsc', (_summary, history) => {
+      history.unshift({ ...history[0]!, Status: 'M80', StatusDesc: 'Customs Clearance Completed in Destination Country' });
+      if (reverse) history.reverse();
+    }), IN_TRANSIT).events!.slice(0, 2).map(event => event.provider_code);
+    expect(codes(false)).toEqual(['M80', 'M50']);
+    expect(codes(true)).toEqual(['M80', 'M50']);
   });
 
   it('reads text rows and escaped strings in the result', () => {

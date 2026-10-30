@@ -72,6 +72,11 @@ describe('Fastdrop HTTP adapter', () => {
     expect(parseFastdrop(changed('in-transit', (pkg) => { pkg.status = 'delivered'; }), IN_TRANSIT)).toMatchObject({ expected_delivery: null });
   });
 
+  it('keeps stops of one instant in the order of a reply listed oldest first', () => {
+    const result = parseFastdrop(changed('in-transit', (pkg) => { pkg.journey[2]!.resolved_at = pkg.journey[1]!.resolved_at; }), IN_TRANSIT);
+    expect(result.events!.map((event) => event.description)).toEqual(['Left the hub', 'Arrived at the hub', 'Picked up from the sender']);
+  });
+
   it('takes the package status for the stage, a missed stop’s stage when it failed, and moves a waiting package on after a stop', () => {
     const status = (value: string, change: (pkg: Package) => void = () => {}) =>
       parseFastdrop(changed('in-transit', (pkg) => { pkg.status = value; change(pkg); }), IN_TRANSIT);

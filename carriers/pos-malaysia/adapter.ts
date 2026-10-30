@@ -4,6 +4,7 @@ import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.j
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -73,9 +74,9 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
   const rawDetails = item.tracking_data;
   if (rawDetails !== null && !Array.isArray(rawDetails)) throw new SchemaError('Pos Malaysia', 'Pos Malaysia returned invalid tracking history');
   if (Array.isArray(rawDetails) && rawDetails.length > 500) throw new SchemaError('Pos Malaysia', 'Pos Malaysia returned oversized tracking history');
-  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | null; timestamp: number | null; index: number }> = [];
+  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | null; timestamp: number | null }> = [];
   const seen = new Set<string>();
-  (rawDetails ?? []).forEach((rawEvent, index) => {
+  (rawDetails ?? []).forEach((rawEvent) => {
     if (!isRecord(rawEvent)) throw new SchemaError('Pos Malaysia', 'Pos Malaysia returned an invalid scan');
     // The official client treats Error rows as response messages, not scans.
     if (rawEvent.type === 'Error') throw new IndeterminateError('Pos Malaysia', 'Pos Malaysia returned a tracking error');
@@ -106,13 +107,13 @@ export function parsePosMalaysiaTrackingResponse(payload: unknown, trackingNumbe
       },
       classified,
       timestamp: time?.timestamp ?? null,
-      index,
     });
   });
   // The source supplies current-first history. Sorting a malformed clock among
   // valid rows would promote an older scan; keep source order in that case.
   if (parsed.every(row => row.timestamp !== null)) {
-    parsed.sort((left, right) => right.timestamp! - left.timestamp! || left.index - right.index);
+    if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
+    parsed.sort((left, right) => right.timestamp! - left.timestamp!);
   }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   if (clean(item.process_status, 32).toLocaleUpperCase('en-US') === 'DELIVERED') {

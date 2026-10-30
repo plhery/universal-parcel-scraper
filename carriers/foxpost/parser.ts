@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
@@ -104,9 +105,9 @@ export function parseFoxpost(html: string, raw: string, readAt = new Date()): Ca
   if (!rows.length) throw new NoHistoryError(PROVIDER);
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Foxpost returned too many scans');
 
-  const scans: { event: CarrierEvent; index: number }[] = [];
+  const scans: CarrierEvent[] = [];
   const seen = new Set<string>();
-  rows.each((index, row) => {
+  rows.each((_, row) => {
     const node = $(row);
     const time = wallClock(clean(node.find('.parcel-status-items__list-item-date').first().text(), 32));
     if (!time) throw new SchemaError(PROVIDER, 'Foxpost returned an invalid scan time');
@@ -116,12 +117,12 @@ export function parseFoxpost(html: string, raw: string, readAt = new Date()): Ca
     if (seen.has(identity)) return;
     seen.add(identity);
     const stage = foxpostScanStage(description);
-    scans.push({ event: { local_time: time, description, ...(stage ? { stage, stage_source: 'carrier_map' } : {}) }, index });
+    scans.push({ local_time: time, description, ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
   });
   // Newest first, as the page lists them; equal clocks keep the page's order.
-  scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
-    : right.event.local_time! < left.event.local_time! ? -1 : left.index - right.index);
-  const events = scans.map(({ event }) => {
+  if (listsNewestFirst(scans) === false) scans.reverse();
+  scans.sort((left, right) => right.local_time! > left.local_time! ? 1 : right.local_time! < left.local_time! ? -1 : 0);
+  const events = scans.map((event) => {
     const time = typeof event.local_time === 'string' ? scanInstant(event.local_time, readAt) : null;
     if (!time) return event;
     const dated: CarrierEvent = { time, ...event };

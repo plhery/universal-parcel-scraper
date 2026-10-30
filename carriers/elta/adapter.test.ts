@@ -73,13 +73,13 @@ describe('ELTA tracking adapter', () => {
       ['2026-03-10T05:27:00', 'Arrival in SAMPLE HUB DELIVERY', 'in_transit'],
       ['2026-03-09T23:55:00', 'Shipment in transit', 'in_transit'],
     ]);
-    // Out of order in the reply, newest first in the result.
+    // Listed oldest first, newest first in the result, scans of one minute too.
     const shuffled = edited('attempted', payload => {
       const slots = payload[0].response.out_status;
       slots.splice(0, payload[0].response.out_counter, ...slots.slice(0, payload[0].response.out_counter).reverse());
     });
-    expect(parseElta(shuffled, ATTEMPTED).events!.map(event => event.local_time))
-      .toEqual(result.events!.map(event => event.local_time));
+    expect(parseElta(shuffled, ATTEMPTED).events!.map(event => [event.local_time, event.description]))
+      .toEqual(result.events!.map(event => [event.local_time, event.description]));
   });
 
   it('names no pickup point for an item the recipient will collect elsewhere or that was brought to the door', () => {

@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { tfmExpressStage } from './status.js';
@@ -56,9 +57,9 @@ function activityOf(text: string): string {
   return clean(clean(text, 400).replace(PHONE, '').replace(/\s+([,;:.])/g, '$1')).replace(/^[\s,;:.\-–]+|[\s,;:\-–]+$/g, '');
 }
 
-interface Row { event: CarrierEvent; timestamp: number; index: number }
+interface Row { event: CarrierEvent; timestamp: number }
 
-function rowOf(cells: Cheerio<AnyNode>, index: number): Row {
+function rowOf(cells: Cheerio<AnyNode>): Row {
   if (cells.length !== COLUMNS.length) throw new SchemaError(PROVIDER, 'TFM Express returned an invalid history row');
   const cell = (at: number, length: number) => clean(cells.eq(at).text(), length);
   const clock = instant(cell(0, 60));
@@ -66,7 +67,7 @@ function rowOf(cells: Cheerio<AnyNode>, index: number): Row {
   if (!status) throw new SchemaError(PROVIDER, 'TFM Express returned a history row without its status');
   const activity = activityOf(cell(2, 400));
   const staged = tfmExpressStage(status, activity);
-  return { timestamp: clock.timestamp, index, event: {
+  return { timestamp: clock.timestamp, event: {
     time: clock.iso,
     description: activity || status,
     provider_code: status,
@@ -110,8 +111,8 @@ export function parseTfmExpress(html: string, raw: string): CarrierResult {
 
   const seen = new Set<string>();
   const rows: Row[] = [];
-  lines.each((index, node) => {
-    const row = rowOf($(node).children('td'), index);
+  lines.each((_, node) => {
+    const row = rowOf($(node).children('td'));
     const key = JSON.stringify([row.timestamp, row.event.provider_code, row.event.description]);
     if (seen.has(key)) return;
     seen.add(key);
@@ -119,8 +120,9 @@ export function parseTfmExpress(html: string, raw: string): CarrierResult {
   });
   if (!rows.length) throw new NoHistoryError(PROVIDER);
 
-  // Newest first, as the page lists them; rows of one minute keep the page's order.
-  rows.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index);
+  // Newest first, as the page lists them.
+  if (listsNewestFirst(rows.map(({ event }) => event)) === false) rows.reverse();
+  rows.sort((a, b) => b.timestamp - a.timestamp);
   const events = rows.map((row) => row.event);
   const newest = events[0]!;
   const decider = events.find((event) => event.stage);

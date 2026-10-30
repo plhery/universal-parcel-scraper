@@ -29,6 +29,7 @@ import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { carrierErrorKind, IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs } from '../../core/runner/networkRetry.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
@@ -235,10 +236,14 @@ function happenedSteps(route: JsonObject): JsonObject[] {
   const steps = new Map<string, JsonObject>();
   for (const list of [route.eventList, route.triggeredEventList]) {
     if (!Array.isArray(list)) continue;
-    for (const step of list.slice(0, 500)) {
-      if (!isRecord(step)) continue;
+    const timed = list.slice(0, 500).flatMap((step) => {
+      if (!isRecord(step)) return [];
       const time = normalizedTimestamp(step.timestamp ?? step.time);
-      if (!time) continue;
+      return time ? [{ step, time }] : [];
+    });
+    // The timeline runs oldest first and the history newest first; each is read newest first.
+    if (listsNewestFirst(timed.map(({ time }) => ({ time: time.iso }))) === false) timed.reverse();
+    for (const { step, time } of timed) {
       const key = typeof step.uniq_id === 'string' && step.uniq_id
         ? step.uniq_id
         : `${String(step.id)}|${time.timestamp}`;

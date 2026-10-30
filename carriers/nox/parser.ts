@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -93,6 +94,7 @@ export function parseNox(payload: unknown, raw: string): CarrierResult {
     scans.push(event);
   }
   // Newest first; scans on the same clock keep the reply's order, which is newest first too.
+  if (listsNewestFirst(scans) === false) scans.reverse();
   const events = scans.sort((left, right) => Date.parse(right.time!) - Date.parse(left.time!));
 
   const latest = events[0]!;

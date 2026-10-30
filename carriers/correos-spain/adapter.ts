@@ -3,6 +3,7 @@ import { lookupBudget, readerLanguage, type AdapterFactory, type TrackingContext
 import { isCorreosSpainExpeditionCode } from '../../core/detection/correosSpain.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { classifyWording, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, cleanScalar, fetchBounded, parseJsonBytes, UpstreamHttpError, userAgentOf } from '../../core/transport/index.js';
@@ -151,14 +152,14 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
   if (rawEvents !== undefined && !Array.isArray(rawEvents)) {
     throw new SchemaError('Correos', 'Correos returned invalid tracking history');
   }
-  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
+  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number }> = [];
   const seen = new Set<string>();
   const rows = (Array.isArray(rawEvents) ? rawEvents : []).filter(isRecord).slice(0, 500);
   const codes = rows.map((rawEvent) => clean(rawEvent.codEvento, 32).toLocaleUpperCase('en-US')).filter(Boolean);
   // codired is the unit holding the parcel, whose address the office locator gives.
   const officeCode = cleanScalar(envelope.codired, 16);
   const unitZone = correosUnitZone(officeCode, codes);
-  rows.forEach((rawEvent, index) => {
+  rows.forEach((rawEvent) => {
     const code = clean(rawEvent.codEvento, 32).toLocaleUpperCase('en-US');
     // desTextoResumen is worded in the language codIdioma names. A code the
     // reply leaves without one, as the English does HI10002V, takes its English.
@@ -183,7 +184,6 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
       },
       classified,
       timestamp: time.timestamp,
-      index,
     });
   });
   // The localizador serves the whole Correos group. Correos's own codes carry letters: an
@@ -192,7 +192,8 @@ function parseTracking(payload: unknown, trackingNumber: string, expeditionCode?
     throw new InvalidInputError('Correos', 'Correos Express tracks this shipment');
   }
   // The localizador lists oldest first; the parcel state is the latest entry.
-  parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
+  parsed.sort((left, right) => right.timestamp - left.timestamp);
   // Oldest first, a notice keeps the stage of the scan before it, read as the sync reads
   // that scan. It never becomes the summary.
   let previous: Stage = 'registered';

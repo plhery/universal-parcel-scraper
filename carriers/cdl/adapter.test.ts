@@ -103,6 +103,17 @@ describe('CDL tracking adapter', () => {
     expect(parseCdl(waiting, ORDER)).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Awaiting Package From Shipper' });
   });
 
+  it('keeps scans of one instant in the reply’s order, whichever way it lists them', () => {
+    for (const reversed of [false, true]) {
+      const payload = fixture('in-transit');
+      const scan = (trackingEvent: string) => ({ ...payload.trackingEvents[0], trackingEvent, trackingEventTimestamp: '2026-07-08T07:00:00' });
+      payload.trackingEvents.unshift(scan('Package Out For Delivery'), scan('Package Scanned at Local Delivery Center'));
+      if (reversed) payload.trackingEvents.reverse();
+      expect(parseCdl(payload, ORDER).events!.slice(0, 2).map(event => event.description))
+        .toEqual(['Package Out For Delivery', 'Package Scanned at Local Delivery Center']);
+    }
+  });
+
   it('reads other flagged wording as a problem and leaves unknown unflagged wording without a stage', () => {
     expect(parseCdl(newest({ trackingEvent: 'DELAYED- Wrong Address', isException: true }), ORDER))
       .toMatchObject({ status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map' });

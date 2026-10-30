@@ -16,6 +16,7 @@ import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { cleanScalar, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
@@ -116,10 +117,12 @@ export function parseSunYouTrackingResponse(value: unknown, trackingNumber: stri
   if (displayStatus === '0') throw new NotFoundError(PROVIDER);
   if (item.has !== true) throw new NotFoundError(PROVIDER);
   const result = record(item.result);
-  const allEvents = [
+  const legs = [
     ...recordArray(record(result.origin).items),
     ...recordArray(record(result.destination).items),
-  ].sort((left, right) => sunYouEventInstant(right) - sunYouEventInstant(left));
+  ];
+  if (listsNewestFirst(legs.map((event) => ({ time: sunYouEventTime(event) }))) === false) legs.reverse();
+  const allEvents = legs.sort((left, right) => sunYouEventInstant(right) - sunYouEventInstant(left));
   const displayed = sunYouStatus(displayStatus);
   const events = allEvents.slice(0, MAX_EVENTS_TO_RETURN).map((event, index): CarrierEvent => {
     const code = cleanScalar(event.eventCode, 64);

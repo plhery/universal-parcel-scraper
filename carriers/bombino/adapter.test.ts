@@ -127,7 +127,7 @@ describe('Bombino Express HTTP adapter', () => {
       body.docket_events.push(scan('manifest', '2026-05-02 02:15:00', 'SHIPMENT BAGGED FOR DEPARTURE'));
     }), IN_TRANSIT);
     expect(result.last_status_text).toBe('SHIPMENT FORWARDED TO FEDEX');
-    expect(result.events!.slice(2, 4).map((event) => event.description)).toEqual(['FLIGHT DEPARTED', 'SHIPMENT BAGGED FOR DEPARTURE']);
+    expect(result.events!.slice(2, 4).map((event) => event.description)).toEqual(['SHIPMENT BAGGED FOR DEPARTURE', 'FLIGHT DEPARTED']);
     expect(result.events!.at(-1)).toMatchObject({ provider_code: 'entry' });
   });
 

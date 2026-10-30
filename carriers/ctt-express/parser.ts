@@ -3,6 +3,7 @@ import { isCttExpressTrackingNumber } from '../../core/detection/cttExpress.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { calendarDay, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -74,9 +75,9 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
   const portugal = postal && prime.endsWith('PT');
   const events: CarrierEvent[] = [];
   const rows: unknown[] = history.events;
-  // Newest provider positions win equal-clock ties. Preserve duplicates until
-  // their chronological leg is known so an earlier return start is not lost.
-  for (const row of [...rows].reverse()) {
+  // Preserve duplicates until their chronological leg is known so an earlier
+  // return start is not lost.
+  for (const row of rows) {
     // Customer service cases (a new date or address) are not scans and carry
     // the recipient's contact details.
     if (isRecord(row) && row.type === 'MANAGEMENTS' && clean(row.source, 64) === 'CASE_V1') continue;
@@ -91,6 +92,8 @@ export function parseCttExpress(payload: unknown, number: string): CarrierResult
     events.push({ provider_code: code, description, ...clock, ...(mapped ? { stage: mapped.stage } : {}) });
   }
   if (!events.length) throw new IndeterminateError('CTT Express', 'CTT Express returned no tracking scans');
+  // The feed lists scans oldest first unless its clocks say otherwise; newest provider positions win equal-clock ties.
+  if (listsNewestFirst(events) !== true) events.reverse();
   // An unresolved newest scan must not yield to an older instant.
   if (events.every((event) => event.time)) events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   // 2500 explicitly starts delivery back to the sender. Apply that evidence

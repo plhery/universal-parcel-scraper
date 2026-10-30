@@ -2,6 +2,7 @@ import { DateTime, FixedOffsetZone } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -71,7 +72,7 @@ function wallClock(digits: string | undefined): DateTime {
   return parsed;
 }
 
-interface Scan { event: CarrierEvent; order: number; index: number }
+interface Scan { event: CarrierEvent; order: number }
 
 /**
  * A scan from Uzbekistan Post's delivery system. Its `date` is an instant in
@@ -80,7 +81,7 @@ interface Scan { event: CarrierEvent; order: number; index: number }
  * from the sending post's data: its clock may be that post's wall clock, and its
  * office is the one that took the data in, so it keeps only the wall clock.
  */
-function shipoxScan(row: unknown, index: number): Scan {
+function shipoxScan(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Uzbekistan Post returned an invalid scan');
   const code = text(row, 'status', 64);
   if (!CODE.test(code)) throw new SchemaError(PROVIDER, 'Uzbekistan Post returned a scan without a status');
@@ -102,7 +103,7 @@ function shipoxScan(row: unknown, index: number): Scan {
     provider_code: code,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, order: DateTime.fromISO(raw).toMillis(), index };
+  return { event, order: DateTime.fromISO(raw).toMillis() };
 }
 
 /** An office's name without its postcode: "Примерск ОПС - Примерск - 999999" becomes "Примерск ОПС - Примерск". */
@@ -132,7 +133,7 @@ function ipsClock(row: Record<string, unknown>): { clock: { time: string } | { l
 }
 
 /** A scan from the UPU's IPS, which the tracker reads for EMS items. */
-function ipsScan(row: unknown, index: number): Scan {
+function ipsScan(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Uzbekistan Post returned an invalid scan');
   const type = part(row, 'IPSEventType');
   const rawCode = type.Code;
@@ -159,16 +160,16 @@ function ipsScan(row: unknown, index: number): Scan {
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, order, index };
+  return { event, order };
 }
 
-function scansOf(rows: unknown, read: (row: unknown, index: number) => Scan): Scan[] {
+function scansOf(rows: unknown, read: (row: unknown) => Scan): Scan[] {
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Uzbekistan Post returned an item with invalid scans');
   if (rows.length > MAX_SCANS) throw new SchemaError(PROVIDER, 'Uzbekistan Post returned an oversized history');
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, index) => {
-    const scan = read(row, index);
+  rows.forEach((row) => {
+    const scan = read(row);
     // A scan the reply lists twice is kept once.
     const identity = JSON.stringify(scan.event);
     if (seen.has(identity)) return;
@@ -180,8 +181,9 @@ function scansOf(rows: unknown, read: (row: unknown, index: number) => Scan): Sc
 
 function resultOf(scans: Scan[], destination: string, truncated: boolean): CarrierResult {
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first, as the page lists them; scans at the same moment keep the reply's order.
-  const events = [...scans].sort((left, right) => right.order - left.order || left.index - right.index).map(({ event }) => event);
+  // Newest first, as the page lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.order - left.order).map(({ event }) => event);
   const latest = events[0]!;
   const current = events.find(event => event.stage);
   const stage = current?.stage as Stage | undefined;

@@ -126,6 +126,14 @@ describe('FedEx Poland HTTP adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ provider_code: 'PKL' });
   });
 
+  it('keeps scans of one second in the order of a history listed oldest first', () => {
+    const result = parseFedexPl(changed('in-transit', (shipment) => {
+      shipment.events.reverse();
+      shipment.events[4]!.eventDate = shipment.events[3]!.eventDate;
+    }), IN_TRANSIT);
+    expect(result.events!.slice(0, 2).map((event) => event.provider_code)).toEqual(['WE', 'WG.S']);
+  });
+
   it('reads a record without scans as no history', () => {
     expect(() => parseFedexPl(changed('in-transit', (shipment) => { shipment.events = []; }), IN_TRANSIT))
       .toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));

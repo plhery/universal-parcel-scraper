@@ -93,8 +93,8 @@ describe('Starex HTTP adapter', () => {
     const result = parseStarex(shuffled, DELIVERED);
     expect(result.events).toHaveLength(11);
     expect(result.events!.map((event) => event.provider_code).slice(0, 2)).toEqual(['delivered', 'ready_for_pickup']);
-    // Scans on one clock keep the reply's order, reversed here.
-    expect(result.events!.map((event) => event.provider_code).slice(3, 5)).toEqual(['import_customs_released', 'sorting']);
+    // Scans on one clock keep the carrier's order, whichever way the reply lists them.
+    expect(result.events!.map((event) => event.provider_code).slice(3, 5)).toEqual(['sorting', 'import_customs_released']);
   });
 
   it('reads the courier route, a failed attempt and a return', () => {

@@ -167,6 +167,18 @@ describe('Packeta response parsing', () => {
     expect(sparse.events).toHaveLength(1);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parsePacketaTrackingResponse({ item: packet({
+      trackingDetails: [
+        { text: 'We have successfully received the parcel for transport. Example Depot', time: '2026-07-05 09:00:00' },
+        { text: 'The parcel is currently on its way to the depot.', time: '2026-07-06 08:00:00' },
+        { text: 'The parcel is on its way to you.', time: '2026-07-06 08:00:00' },
+      ],
+    }) }, TRACKING_NUMBER);
+    expect(result.events?.slice(0, 2).map((event) => event.description))
+      .toEqual(['The parcel is on its way to you.', 'The parcel is currently on its way to the depot.']);
+  });
+
   it('retains operational sender and pickup-point names', () => {
     const result = parsePacketaTrackingResponse({ item: packet() }, TRACKING_NUMBER);
     expect(result).toMatchObject({

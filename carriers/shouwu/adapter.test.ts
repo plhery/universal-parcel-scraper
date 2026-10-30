@@ -97,6 +97,13 @@ describe('Shouwu International HTTP adapter', () => {
     }
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const result = parseShouwu(changed((traces) => {
+      traces.splice(0, traces.length, trace(1776290728, 'Arrived at Sorting Facility'), trace(1776327314, 'Out for Delivery'), trace(1776327314, 'Delivered'));
+    }), DELIVERED);
+    expect(result.events!.map((event) => event.description)).toEqual(['Delivered', 'Out for Delivery', 'Arrived at Sorting Facility']);
+  });
+
   it('lets the tracker’s status decide, refined by the newest staged scan within what the status covers', () => {
     const staged = (status: unknown, traces: Row[]) => parseShouwu(changed((rows, order) => {
       order.traceStatus = status;

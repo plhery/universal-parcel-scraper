@@ -119,7 +119,7 @@ describe('PostNord direct tracking', () => {
     value.items[0].events.push({ ...value.items[0].events[1], status: 'OTHER', eventDescription: 'The shipment item has been loaded.', eventTime: '2026-01-04T12:00:00Z' });
     value.items[0].events.push(structuredClone(value.items[0].events[4]));
     expect(parsePostnord(value, NUMBER).events).toHaveLength(6);
-    expect(parsePostnord(value, NUMBER).events?.slice(0, 2).map((event) => event.provider_code)).toEqual(['DELIVERED', 'OTHER']);
+    expect(parsePostnord(value, NUMBER).events?.slice(0, 2).map((event) => event.provider_code)).toEqual(['OTHER', 'DELIVERED']);
   });
 
   it('reads a relayed scan without a place on its country\'s wall clock, unless a post delivering abroad relays it', () => {

@@ -162,6 +162,13 @@ describe('Mongol Infinity Post HTTP adapter', () => {
     for (const reference of ['SYNTHETIC-MAIL', 'SYNTHETIC-ORDER', 'SYNTHETICBAG', 'SYNTHETICBL']) expect(text).not.toContain(reference);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const body = fixture<Customs>('customs');
+    body.result.item.STATUS_LIST[2]!.CREATED_DATE = body.result.item.STATUS_LIST[1]!.CREATED_DATE;
+    expect(parseMongolInfinityPostCustoms(body, CUSTOMS).events!.map((event) => event.provider_code))
+      .toEqual(['CUSTOMS_RELEASED', 'CUSTOMS_CLEARANCE_CHECKED', 'CUSTOMS_CLEARANCE_STARTED', 'CUSTOMS_PICK_UP_BY_PROVIDER']);
+  });
+
   it('reads the customs lookup’s own 404 as not found, binds its item to the number and rejects a changed one', async () => {
     const lookup = (body: unknown, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body, init))).track({ number: CUSTOMS_UNKNOWN });
     await expect(lookup(fixture('customs-not-found'), { status: 404 })).rejects.toMatchObject({ kind: 'not_found' });

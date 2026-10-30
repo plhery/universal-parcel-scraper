@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -85,9 +86,9 @@ function wording(row: Record<string, unknown>, code: string): string {
   return scrubbed(`${own}: ${reason.charAt(0).toUpperCase()}${reason.slice(1).toLowerCase()}`);
 }
 
-interface Scan { event: CarrierEvent; at: number; order: number }
+interface Scan { event: CarrierEvent; at: number }
 
-function scanOf(row: Record<string, unknown>, number: string, order: number): Scan | null {
+function scanOf(row: Record<string, unknown>, number: string): Scan | null {
   const waybill = text(row, 'WayBillNumber', 64);
   if (!waybill) throw new SchemaError(PROVIDER, 'Line Clear returned a scan without its waybill number');
   if (normalizeTrackingNumber(waybill) !== number) throw new IndeterminateError(PROVIDER, 'Line Clear answered for another waybill');
@@ -106,7 +107,7 @@ function scanOf(row: Record<string, unknown>, number: string, order: number): Sc
       ...(code ? { provider_code: code } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     },
-    at: when.at, order,
+    at: when.at,
   };
 }
 
@@ -150,9 +151,9 @@ export function parseLineClear(payload: unknown, raw: string): CarrierResult {
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  for (const [order, row] of rows.entries()) {
+  for (const row of rows) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Line Clear returned an invalid scan');
-    const scan = scanOf(row, number, order);
+    const scan = scanOf(row, number);
     if (!scan) continue;
     const { time, provider_code: code, description, location } = scan.event;
     const key = JSON.stringify([time, code, description, location]);
@@ -163,7 +164,8 @@ export function parseLineClear(payload: unknown, raw: string): CarrierResult {
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // The reply lists scans roughly newest first; they are put in clock order, newest
   // first, and scans sharing a second keep the reply's order.
-  const events = scans.sort((a, b) => b.at - a.at || a.order - b.order).map(({ event }) => event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.at - a.at).map(({ event }) => event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

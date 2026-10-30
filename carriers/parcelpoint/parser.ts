@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -85,6 +86,7 @@ function eventsOf(rows: readonly unknown[]): CarrierEvent[] {
     events.push(event);
   }
   // Every clock is an instant in one format, so the text sorts them; sort keeps ties in reply order.
+  if (listsNewestFirst(events) === false) events.reverse();
   return events.sort((a, b) => (a.time === b.time ? 0 : a.time! < b.time! ? 1 : -1));
 }
 

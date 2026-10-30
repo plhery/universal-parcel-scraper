@@ -184,6 +184,16 @@ describe('TIKI tracking adapter', () => {
     expect(long).toMatchObject({ current_stage: 'delivered', history_truncated: true });
   });
 
+  it('keeps scans of one second in the reply’s order, reversed when it lists them oldest first', () => {
+    for (const reverse of [false, true]) {
+      const result = parseTiki(answer('delivered', events => {
+        events[1]!.entry_date = events[0]!.entry_date;
+        if (reverse) events.reverse();
+      }), DELIVERED);
+      expect(result.events!.slice(0, 3).map(event => event.provider_code), String(reverse)).toEqual(['POD 01', 'DEL 01', 'DEX 03']);
+    }
+  });
+
   it('keeps new codes visible and stages them by their wording when it can', () => {
     const result = parseTiki(answer('delivered', events => {
       events.unshift({ ...events[0]!, entry_date: '2026-07-05 09:00:00', status: 'XYZ 01', noted: 'Sesuatu yang baru' });

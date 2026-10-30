@@ -87,6 +87,14 @@ describe('PostEx HTTP adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ provider_code: '0001' });
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parsePostex(changed('in-transit', (shipment) => {
+      const rows = shipment.transactionStatusHistory.reverse();
+      rows[2]!.modifiedDatetime = rows[1]!.modifiedDatetime;
+    }), IN_TRANSIT);
+    expect(result.events!.map((event) => event.provider_code)).toEqual(['0038', '0035', '0033', '0003', '0031', '0001']);
+  });
+
   it('stages a code the map does not know by its wording, and leaves wording no rule knows without a stage', () => {
     const result = parsePostex(changed('delivered', (shipment) => {
       shipment.transactionStatusHistory.unshift(

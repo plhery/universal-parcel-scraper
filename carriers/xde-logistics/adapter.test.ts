@@ -87,6 +87,14 @@ describe('XDE Logistics HTTP adapter', () => {
     expect(unmapped).toMatchObject({ current_stage: 'accepted', last_status_text: 'Synthetic note' });
   });
 
+  it('keeps scans of one second in the reply’s order, reversed when it lists them oldest first', () => {
+    const tied = parseXdeLogistics(changed('delivered', (body) => {
+      body.history[1]!.created_at = body.history[0]!.created_at;
+      body.history.reverse();
+    }), DELIVERED);
+    expect(tied.events!.map((event) => event.description)).toEqual(['Delivery successful', 'First delivery attempt', 'Received at hub', 'Picked at warehouse']);
+  });
+
   it('keeps a hub receipt’s facility as the location, and no other scan’s reference', () => {
     expect(xdeLogisticsLocation('Received at hub', ' Sample North Hub ')).toBe('Sample North Hub');
     expect(xdeLogisticsLocation('Arrived at warehouse', 'Sample Warehouse, 0000 000 0001')).toBe('Sample Warehouse');

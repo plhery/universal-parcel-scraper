@@ -84,6 +84,17 @@ describe('Burd Delivery HTTP adapter', () => {
     expect(result).toMatchObject({ last_status_text: 'sampleStatus', current_stage: 'in_transit' });
   });
 
+  it('keeps statuses of one second in the reply’s order, whichever way it lists them', () => {
+    for (const reversed of [false, true]) {
+      const result = parseBurd(changed('in-transit', (rows) => {
+        const status = (statusType: string) => ({ ...rows[0]!, statusType, created: '2026-06-03T08:00:00Z' });
+        rows.unshift(status('deliveryOnTheWay'), status('sampleStatus'));
+        if (reversed) rows.reverse();
+      }), IN_TRANSIT);
+      expect(result.events!.slice(0, 2).map((event) => event.provider_code)).toEqual(['deliveryOnTheWay', 'sampleStatus']);
+    }
+  });
+
   it('counts a history only when every status names the number asked', () => {
     expect(() => parseBurd(fixture('in-transit'), DELIVERED))
       .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'Burd answered for another parcel' }));

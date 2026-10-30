@@ -203,6 +203,17 @@ describe('Pitney Bowes HTTP adapter', () => {
       .toMatchObject({ weight_kg: 0.907 });
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const hub = 'Sample Hub, Sampleshire, GB';
+    const result = parsePitneyBowes(changed('in-transit', (body) => {
+      body.trackingEventsModule.trackingEvents = [scan('Processing at Shipping Center', 'May 29, 2026', '09:00 AM', hub),
+        scan('Parcel Documentation and Labeling', 'May 29, 2026', '10:00 AM', hub),
+        scan('Shipped from Global Shipping Center to Destination', 'May 29, 2026', '10:00 AM', hub)];
+    }), IN_TRANSIT);
+    expect(result.events!.map((event) => event.description))
+      .toEqual(['Shipped from Global Shipping Center to Destination', 'Parcel Documentation and Labeling', 'Processing at Shipping Center']);
+  });
+
   it('reads the platform’s failure, which it gives for unknown numbers too, as inconclusive and only its own not-found as not found', () => {
     expect(() => parsePitneyBowes(fixture('unknown'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parsePitneyBowes(changed('unknown', (body) => { body.trackingPackageStatus = 'Timeout'; }), UNKNOWN))

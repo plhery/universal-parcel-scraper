@@ -7,6 +7,7 @@ import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/post
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { runSteps } from '../../core/runner/index.js';
 import { classifyWording, type Stage } from '../../core/status/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -417,12 +418,13 @@ function noticeEstimate(text: string): string | null {
 /**
  * Newest scan first. The guest API has listed a parcel's scans oldest first,
  * and the summary and freshness watermark read the first event. Equal or
- * unreadable times keep the payload's order.
+ * unreadable times keep the payload's order, read newest first.
  */
 function newestFirst(events: CarrierEvent[]): CarrierEvent[] {
+  if (listsNewestFirst(events) === false) events.reverse();
   return events
-    .map((event, index) => ({ event, index, timestamp: Date.parse(event.time ?? '') || 0 }))
-    .sort((left, right) => right.timestamp - left.timestamp || left.index - right.index)
+    .map((event) => ({ event, timestamp: Date.parse(event.time ?? '') || 0 }))
+    .sort((left, right) => right.timestamp - left.timestamp)
     .map(({ event }) => event);
 }
 

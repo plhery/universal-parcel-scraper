@@ -112,8 +112,7 @@ describe('Quiqup HTTP adapter', () => {
   it('reads a history listed newest first as one listed oldest first', () => {
     const result = parseQuiqup(changed('delivered', (order) => { order.state_changes.reverse(); }), DELIVERED);
     expect(result).toMatchObject({ last_update: '2026-05-12T14:33:20+04:00', delivered_at: '2026-05-12T14:33:20+04:00' });
-    expect(result.events).toHaveLength(11);
-    expect(result.events!.at(-1)).toMatchObject({ provider_code: 'ready_for_collection' });
+    expect(result.events).toEqual(parseQuiqup(fixture('delivered'), DELIVERED).events);
   });
 
   it('counts an order only when it is the one asked', () => {

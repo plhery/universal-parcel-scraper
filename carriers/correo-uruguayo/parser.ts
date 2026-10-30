@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -71,10 +72,8 @@ function wording(value: string): string {
   return colon < 0 ? clean(value, 200) : clean(value.slice(0, colon), 200).replace(/\s+A$/i, '');
 }
 
-interface Scan { event: CarrierEvent; index: number }
-
 /** A scan's clock, office, wording and code; its office code, source, operator, round and delivery note are left out. */
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): CarrierEvent {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Correo Uruguayo returned an invalid scan');
   const description = wording(text(row, 'evento', 2_000));
   if (!description) throw new SchemaError(PROVIDER, 'Correo Uruguayo returned a scan without wording');
@@ -82,14 +81,13 @@ function scanOf(row: unknown, index: number): Scan {
   const location = office(text(row, 'ubicacion', 160));
   const provider = code(row);
   const staged = correoUruguayoStage(description);
-  const event: CarrierEvent = {
+  return {
     local_time: local,
     ...(location ? { location } : {}),
     description,
     ...(provider ? { provider_code: provider } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, index };
 }
 
 /** The item's codes: `idNacional`, the post's own, and `idInternacional`, the one it came with. */
@@ -134,21 +132,20 @@ export function parseCorreoUruguayo(payload: unknown, rawNumber: string): Carrie
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Correo Uruguayo returned an item with invalid scans');
   if (rows.length > MAX_SCANS) throw new SchemaError(PROVIDER, 'Correo Uruguayo returned an oversized history');
   const seen = new Set<string>();
-  const scans: Scan[] = [];
-  rows.forEach((row, index) => {
-    const scan = scanOf(row, index);
+  const events: CarrierEvent[] = [];
+  rows.forEach((row) => {
+    const event = scanOf(row);
     // A scan the reply lists twice is kept once, as is a delivery the office and
     // the international exchange both report in the same minute under their own codes.
-    const identity = JSON.stringify([scan.event.local_time, scan.event.description]);
+    const identity = JSON.stringify([event.local_time, event.description]);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push(scan);
+    events.push(event);
   });
-  if (!scans.length) throw new NoHistoryError(PROVIDER);
+  if (!events.length) throw new NoHistoryError(PROVIDER);
   // Newest first by wall clock, as the page lists them; scans in the same minute keep the reply's order.
-  scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
-    : right.event.local_time! < left.event.local_time! ? -1 : left.index - right.index);
-  const events = scans.map(({ event }) => event);
+  if (listsNewestFirst(events) === false) events.reverse();
+  events.sort((left, right) => right.local_time! > left.local_time! ? 1 : right.local_time! < left.local_time! ? -1 : 0);
 
   const latest = events[0]!;
   const current = events.find((event) => event.stage);

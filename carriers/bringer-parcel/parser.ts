@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -50,11 +51,10 @@ function statusLabel(value: string): string {
 
 interface Scan {
   at: number;
-  index: number;
   event: CarrierEvent;
 }
 
-function projectRow(row: Record<string, unknown>, index: number): { key: string; scan: Scan } {
+function projectRow(row: Record<string, unknown>): { key: string; scan: Scan } {
   const parcelStatus = status(row);
   const code = text(row, 'bpxEventCode', 24).toUpperCase();
   if (code && !CODE.test(code)) throw new SchemaError(PROVIDER, 'BPX returned an invalid event code');
@@ -75,7 +75,7 @@ function projectRow(row: Record<string, unknown>, index: number): { key: string;
     provider_code: providerCode,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { key: JSON.stringify([time.timestamp, providerCode, description, location]), scan: { at: time.timestamp, index, event } };
+  return { key: JSON.stringify([time.timestamp, providerCode, description, location]), scan: { at: time.timestamp, event } };
 }
 
 /** The parcel's own status where it ends the journey, which the page shows when the newest scan has no wording. */
@@ -120,16 +120,17 @@ export function parseBringerParcel(payload: unknown, raw: string): CarrierResult
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, index) => {
+  rows.forEach((row) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'BPX returned an invalid scan');
-    const { key, scan } = projectRow(row, index);
+    const { key, scan } = projectRow(row);
     if (seen.has(key)) return;
     seen.add(key);
     scans.push(scan);
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; scans with one instant keep the reply's order.
-  scans.sort((left, right) => right.at - left.at || left.index - right.index);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => right.at - left.at);
   const events = scans.map((scan) => scan.event);
 
   const newest = events[0]!;

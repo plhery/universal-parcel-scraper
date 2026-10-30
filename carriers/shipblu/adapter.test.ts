@@ -100,6 +100,13 @@ describe('ShipBlu HTTP adapter', () => {
     expect(parseShipblu(changed('in-transit', (body) => { body.tracking_events.reverse(); }), IN_TRANSIT)).toEqual(result);
   });
 
+  it('keeps scans of one instant in the carrier\'s order, whichever way it lists them', () => {
+    const tied = (body: Reply) => { body.tracking_events[3]!.created = body.tracking_events[2]!.created; };
+    const result = parseShipblu(changed('in-transit', tied), IN_TRANSIT);
+    expect(result.events!.slice(-4, -2).map((event) => event.provider_code)).toEqual(['in_transit', 'picked_up']);
+    expect(parseShipblu(changed('in-transit', (body) => { tied(body); body.tracking_events.reverse(); }), IN_TRANSIT)).toEqual(result);
+  });
+
   it('promises the day the page does: none before pickup or at the end, the chosen day, and a return’s estimate', () => {
     const estimate = (change: (body: Reply) => void, number = IN_TRANSIT) =>
       parseShipblu(changed('in-transit', (body) => { body.tracking_number = number; change(body); }), number).expected_delivery;

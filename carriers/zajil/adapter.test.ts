@@ -82,6 +82,16 @@ describe('Zajil HTTP adapter', () => {
     ]);
   });
 
+  it('keeps statuses of one second in the reply’s order, reversed when it lists them oldest first', () => {
+    const result = parseZajil(changed('delivered', (shipment) => {
+      shipment.history.unshift(
+        status(shipment, 'processing', 'تم استلام الطلب', '2026-03-07T10:00:00.000', 'Abha'),
+        status(shipment, 'out_for_delviery', 'خرجت للتوصيل', '2026-03-09T14:21:05.000', 'Dammam'),
+      );
+    }), DELIVERED);
+    expect(result.events!.map((event) => event.provider_code)).toEqual(['delivered', 'out_for_delviery', 'processing']);
+  });
+
   it('takes the shipment’s own update over its newest status, and words a status without its Arabic line by its update', () => {
     const ahead = parseZajil(changed('in-transit', (shipment) => { shipment.website_update = 'undelivered'; }), IN_TRANSIT);
     expect(ahead).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map',

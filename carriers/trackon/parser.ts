@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -69,9 +70,9 @@ function branch(value: string): string {
   return clean(value.replace(BRANCH_CODE, ''), 120);
 }
 
-interface Scan { event: CarrierEvent; at: string; index: number }
+interface Scan { event: CarrierEvent; at: string }
 
-function projectRow(row: unknown, index: number): (Scan & { key: string }) | null {
+function projectRow(row: unknown): (Scan & { key: string }) | null {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Trackon returned an invalid scan');
   const status = text(row, 'CURRENT_STATUS');
   const code = text(row, 'TRACKING_CODE', 16).toUpperCase();
@@ -91,7 +92,7 @@ function projectRow(row: unknown, index: number): (Scan & { key: string }) | nul
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, at: time, index, key: JSON.stringify([time, code, description, location]) };
+  return { event, at: time, key: JSON.stringify([time, code, description, location]) };
 }
 
 /**
@@ -123,15 +124,16 @@ export function parseTrackon(payload: unknown, raw: string): CarrierResult {
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, index) => {
-    const scan = projectRow(row, index);
+  rows.forEach((row) => {
+    const scan = projectRow(row);
     if (!scan || seen.has(scan.key)) return;
     seen.add(scan.key);
     scans.push(scan);
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first; of two scans on one second, the one listed first is newer, as the reply lists them.
-  const events = scans.sort((a, b) => (a.at === b.at ? a.index - b.index : a.at < b.at ? 1 : -1)).map(({ event }) => event);
+  // Newest first, as the reply lists them.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => (a.at === b.at ? 0 : a.at < b.at ? 1 : -1)).map(({ event }) => event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

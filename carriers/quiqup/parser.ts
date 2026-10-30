@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -107,8 +108,9 @@ export function parseQuiqup(payload: unknown, raw: string): CarrierResult {
     scans.push(scan);
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first, as the page sorts them; the stable sort keeps the reply's order, turned round, within a second.
-  scans.reverse().sort((a, b) => b.timestamp - a.timestamp);
+  // Newest first, as the page sorts them; within a second the reply's order, turned round when it lists the oldest first.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((a, b) => b.timestamp - a.timestamp);
 
   const events = scans.map((scan) => scan.event);
   const newest = events[0]!;

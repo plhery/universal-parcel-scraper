@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
@@ -151,7 +152,8 @@ export function parseDpdZa(body: string, raw: string): CarrierResult {
     });
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
-  // Newest first, as the page lists them; scans of the same second keep the reply's order.
+  // Newest first, as the page lists them; the reply lists them oldest first.
+  if (listsNewestFirst(events) === false) events.reverse();
   events.sort((a, b) => (a.local_time! < b.local_time! ? 1 : a.local_time! > b.local_time! ? -1 : 0));
 
   const ops = payload.opsStatusId ?? null;

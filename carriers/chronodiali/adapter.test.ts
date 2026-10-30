@@ -88,6 +88,11 @@ describe('Chronodiali HTTP adapter', () => {
     expect(reversed.events!.at(-1)).toMatchObject({ provider_code: 'softdata_upload' });
   });
 
+  it('keeps scans of one instant in the reply’s order, whichever way it lists them', () => {
+    const codes = (shipment: Shipment) => parseChronodiali(shipment, IN_TRANSIT).events!.map((event) => event.provider_code);
+    expect(codes(changed('in-transit', (shipment) => { shipment.events.reverse(); }))).toEqual(codes(fixture('in-transit')));
+  });
+
   it('reads a shipment without scans from its own status, and one without either as no history', () => {
     const created = parseChronodiali(changed('in-transit', (shipment) => { shipment.events = []; shipment.status = 'softdata_upload'; }), IN_TRANSIT);
     expect(created).toMatchObject({ status: 'pending', current_stage: 'registered', summary_only: true, provider_code: 'softdata_upload',

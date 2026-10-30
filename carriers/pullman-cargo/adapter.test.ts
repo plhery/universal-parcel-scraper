@@ -96,6 +96,12 @@ describe('Pullman Cargo HTTP adapter', () => {
     expect(repeated.events).toHaveLength(6);
   });
 
+  it('keeps scans of one instant in the carrier\'s order when it lists them oldest first', () => {
+    const tied = parsePullmanCargo(changed('in-transit', (values) => { row(values, 2).fecha = row(values, 1).fecha; rowRefs(values).reverse(); }), IN_TRANSIT);
+    expect(tied.events!.slice(1, 3).map((event) => event.description))
+      .toEqual(['Encomienda viajando entre agencias', 'Encomienda recibida en agencia de destino']);
+  });
+
   it('stages a scan the map does not know by the shared rules, and the newest staged scan stands', () => {
     const result = parsePullmanCargo(changed('in-transit', (values) => { setField(values, 0, 'estadoWeb', 'Xyzzy'); }), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Xyzzy' });

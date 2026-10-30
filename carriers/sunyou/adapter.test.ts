@@ -150,6 +150,16 @@ describe('SunYou event timezones', () => {
     ]);
   });
 
+  it('keeps scans of one instant in the carrier\'s order', async () => {
+    vi.spyOn(globalThis, 'fetch').mockResolvedValue(sunYouResponse(
+      [{ createTime: '2021-07-06 01:43:13', timeZone: '+08:00', content: 'Origin scan' }],
+      [{ createTime: '2021-07-08 09:00:00', timeZone: '+02:00', content: 'Arrived' }, { createTime: '2021-07-08 09:00:00', timeZone: '+02:00', content: 'Sorted' }],
+    ));
+
+    const result = await fetchSunYou(SUNYOU_WRONG_NUMBER);
+    expect(result.events?.map((event) => event.description)).toEqual(['Sorted', 'Arrived', 'Origin scan']);
+  });
+
   it('keeps provider text when no usable offset exists', async () => {
     vi.spyOn(globalThis, 'fetch').mockResolvedValue(sunYouResponse(
       [

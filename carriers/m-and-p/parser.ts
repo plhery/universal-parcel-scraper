@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -79,7 +80,7 @@ function clock(text: string): { time: string; at: number } {
   return { time: zoned.toISO({ suppressMilliseconds: true })!, at: zoned.toMillis() };
 }
 
-interface Scan { event: CarrierEvent; at: number; order: number }
+interface Scan { event: CarrierEvent; at: number }
 
 /**
  * The tracker's page for one consignment, which the server renders: a form
@@ -110,7 +111,7 @@ export function parseMAndP(html: string, rawNumber: string): CarrierResult {
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  steps.each((order, node) => {
+  steps.each((_, node) => {
     const step = $(node);
     const date = step.find('.order-track-text-sub');
     const label = step.find('.order-track-text-stat.status');
@@ -134,10 +135,11 @@ export function parseMAndP(html: string, rawNumber: string): CarrierResult {
     const identity = JSON.stringify([event.time, status, description, location]);
     if (seen.has(identity)) return;
     seen.add(identity);
-    scans.push({ event, at: when.at, order });
+    scans.push({ event, at: when.at });
   });
   // Newest first; scans at the same minute keep the page's order, which is newest first.
-  const events = scans.sort((a, b) => b.at - a.at || a.order - b.order).map(({ event }) => event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.at - a.at).map(({ event }) => event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

@@ -3,6 +3,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -133,6 +134,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   if (!scans.length) throw new SchemaError(PROVIDER, 'SF Express returned no historical scans');
   // The official frontend orders by these same wall clocks, which share one zone.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((a, b) => b.local.localeCompare(a.local));
   const latest = scans[0]!;
   const state = clean(shipment.expressState, 64);

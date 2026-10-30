@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type ClassifiedWording } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -134,7 +135,10 @@ export function parseThailandPostReply(text: string, requested: string): Carrier
   const scans = history.map((raw) => scan(raw, number));
   // The site lists scans newest first. Thai scans are instants and can be
   // ordered; a foreign post's wall clock cannot be compared with them.
-  if (scans.every((row) => row.instant !== null)) scans.sort((left, right) => right.instant! - left.instant!);
+  if (scans.every((row) => row.instant !== null)) {
+    if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+    scans.sort((left, right) => right.instant! - left.instant!);
+  }
   const seen = new Set<string>();
   const unique = scans.filter(({ event }) => {
     const key = JSON.stringify([event.time ?? event.local_time, event.description, event.location, event.provider_code]);

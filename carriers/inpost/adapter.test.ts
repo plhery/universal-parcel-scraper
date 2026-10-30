@@ -92,6 +92,13 @@ describe('InPost response parsing', () => {
     expect(result).toMatchObject({ delivered_at: '2026-05-04T10:00:00+02:00', destination_country: 'DE' });
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const trackingDetails = (DELIVERED.trackingDetails as Record<string, unknown>[])
+      .map((scan) => (scan.status === 'LMD.1004' ? { ...scan, datetime: '2026-05-02T12:00:00+02:00' } : scan));
+    expect(parseInpostTrackingResponse(parcel({ trackingDetails }), TRACKING_NUMBER).events?.map((event) => event.description))
+      .toEqual(['Delivered', 'Ready for pickup', 'Moving', 'Registered']);
+  });
+
   it('keeps no delivery time for a returned parcel and leaves out a place without a town', () => {
     const result = parseInpostTrackingResponse(parcel({
       status: 'RTS.1002',

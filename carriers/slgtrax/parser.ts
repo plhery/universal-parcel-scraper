@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -79,9 +80,9 @@ function instantOf(row: Record<string, unknown>): { time: string; at: number } {
   return { time: instant.toISO({ suppressMilliseconds: true })!, at: instant.toMillis() };
 }
 
-interface Scan { event: CarrierEvent; at: number; order: number }
+interface Scan { event: CarrierEvent; at: number }
 
-function projectRow(row: Record<string, unknown>, order: number): Scan {
+function projectRow(row: Record<string, unknown>): Scan {
   const status = text(row, 'status', 120);
   if (!status) throw new SchemaError(PROVIDER, 'SLGTrax returned a scan without a status');
   const reason = slgtraxReason(text(row, 'status_reason', 300));
@@ -93,7 +94,7 @@ function projectRow(row: Record<string, unknown>, order: number): Scan {
     provider_code: status,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, at, order };
+  return { event, at };
 }
 
 /** The one shipment of a reply that is for the number asked. */
@@ -138,9 +139,9 @@ export function parseSlgtrax(payload: unknown, raw: string): CarrierResult {
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((row, order) => {
+  rows.forEach((row) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'SLGTrax returned an invalid scan');
-    const scan = projectRow(row, order);
+    const scan = projectRow(row);
     const identity = JSON.stringify([scan.at, scan.event.description]);
     if (seen.has(identity)) return;
     seen.add(identity);
@@ -148,7 +149,8 @@ export function parseSlgtrax(payload: unknown, raw: string): CarrierResult {
   });
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first; scans of the same second keep the reply's order, which is newest first.
-  const events = scans.sort((left, right) => right.at - left.at || left.order - right.order).map(({ event }) => event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.at - left.at).map(({ event }) => event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

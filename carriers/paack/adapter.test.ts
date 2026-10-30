@@ -569,6 +569,16 @@ describe('Paack history beside the timeline', () => {
     });
     expect(result.events?.map((event) => event.stage)).toEqual(['registered', 'accepted', 'registered']);
   });
+
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const scannedAtOnce = step('SM002', 'scannedAtOrigin', manifested.timestamp, true);
+    const timeline = parsePaackTrackingResponse({ ...labelRoute(), eventList: [manifested, scannedAtOnce, inDelivery], triggeredEventList: [] },
+      LABEL_POSTCODE);
+    expect(timeline.events?.map((event) => event.description)).toEqual(['Out for delivery', 'Shipment accepted', 'Shipment registered']);
+    const rescheduledAtOnce = step('SA015', 'additionalDeliveryAttemptScheduled', failed.timestamp, false);
+    const history = parsePaackTrackingResponse(failedAttemptRoute([rescheduledAtOnce, failed, inDelivery, scanned, manifested]), LABEL_POSTCODE);
+    expect(history.events?.map((event) => event.description).slice(0, 2)).toEqual(['New delivery attempt scheduled', 'Delivery attempt failed']);
+  });
 });
 
 describe('Paack delivery window', () => {

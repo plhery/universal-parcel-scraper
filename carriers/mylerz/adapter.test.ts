@@ -87,6 +87,14 @@ describe('Mylerz HTTP adapter', () => {
     expect(result.events!.map((event) => event.provider_code)).toEqual(['2', '4', '3', '7', '12']);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parseMylerz(changed('in-transit', (value) => {
+      value.PackageStatusLog.reverse();
+      value.PackageStatusLog[1]!.ChangedDate = value.PackageStatusLog[0]!.ChangedDate;
+    }), IN_TRANSIT);
+    expect(result.events!.map((event) => event.provider_code)).toEqual(['3', '7', '12']);
+  });
+
   it('stages a status the map does not know by its wording, else leaves it without a stage', () => {
     const unknown = parseMylerz(changed('in-transit', (value) => {
       Object.assign(value.PackageStatusLog[0]!, { StatusBusId: 99, StatusBusEnName: 'Synthetic note' });

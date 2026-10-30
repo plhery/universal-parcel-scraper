@@ -3,6 +3,7 @@ import { isValidS10TrackingNumber, isValidSscc, normalizeTrackingNumber } from '
 import { returnedTrackingNumber } from '../../core/detection/returned.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -102,17 +103,16 @@ interface Scan {
   readonly event: CarrierEvent;
   readonly point?: string;
   readonly notice: boolean;
-  readonly index: number;
 }
 
-function scanOf(row: unknown, index: number): Scan {
+function scanOf(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Matkahuolto returned an invalid scan');
   const time = wallClock(clean(row.date, 16), clean(row.time, 8));
   const description = clean(row.description, 1000);
   if (!time || !description) throw new SchemaError(PROVIDER, 'Matkahuolto returned a scan without a clock or wording');
   const { location, point } = placeOf(clean(row.place, 200));
   return { event: { local_time: time, description, ...(location ? { location } : {}) },
-    ...(point ? { point } : {}), notice: isMatkahuoltoNotice(description), index };
+    ...(point ? { point } : {}), notice: isMatkahuoltoNotice(description) };
 }
 
 /**
@@ -137,16 +137,17 @@ export function parseMatkahuolto(reply: unknown, raw: string): CarrierResult {
 
   const scans: Scan[] = [];
   const seen = new Set<string>();
-  rows.forEach((row, index) => {
-    const scan = scanOf(row, index);
+  rows.forEach(row => {
+    const scan = scanOf(row);
     const identity = JSON.stringify([scan.event, scan.point ?? '']);
     if (seen.has(identity)) return;
     seen.add(identity);
     scans.push(scan);
   });
   // Newest first, as the tracker lists them; equal clocks keep its order.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.event.local_time! > left.event.local_time! ? 1
-    : right.event.local_time! < left.event.local_time! ? -1 : left.index - right.index);
+    : right.event.local_time! < left.event.local_time! ? -1 : 0);
 
   // Oldest first: a notice keeps the stage of the scan before it.
   let previous: Stage | undefined;

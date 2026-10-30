@@ -171,6 +171,16 @@ describe('AJEX HTTP adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ provider_code: '100' });
   });
 
+  it('keeps scans of one instant in the reply’s order, whichever way it lists them', () => {
+    const tied = (newestFirst: boolean) => parseAjex(changed('in-transit', (shipment) => {
+      const row = (eventCode: string, status: string) => ({ ...shipment.orderTrackingHistory.at(-1), actionTime: Date.UTC(2026, 4, 13, 7), eventCode, status, note: '' });
+      shipment.orderTrackingHistory.push(row('AJ0015', 'DeliverySheet Created'), row('AJ0019', 'Out For Delivery'));
+      if (newestFirst) shipment.orderTrackingHistory.reverse();
+    }), IN_TRANSIT).events!.slice(0, 2).map((event) => event.provider_code);
+    expect(tied(false)).toEqual(['AJ0019', 'AJ0015']);
+    expect(tied(true)).toEqual(['AJ0019', 'AJ0015']);
+  });
+
   it('stages a code the map does not know by its wording, and leaves an unclear one without a stage', () => {
     const worded = parseAjex(changed('delivered', (shipment) => {
       Object.assign(shipment.orderTrackingHistory.at(-1)!, { statusCode: 999, status: 'Returned to shipper' });

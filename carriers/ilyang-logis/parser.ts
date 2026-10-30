@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { hasMod7CheckDigit } from '../../core/detection/numericChecksums.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -156,7 +157,8 @@ export function parseIlyang(payload: unknown, raw: string): CarrierResult {
     seen.add(key);
     projected.push(scan);
   }
-  // Newest first; the reply lists the checkpoints oldest first. The sort is stable.
+  // Newest first; the reply lists the checkpoints oldest first.
+  if (listsNewestFirst(projected.map(({ event }) => event)) === false) projected.reverse();
   const newestFirst = projected.sort((left, right) => right.event.time!.localeCompare(left.event.time!));
   const events = newestFirst.map((scan) => scan.event);
 

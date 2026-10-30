@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError,
   SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -95,7 +96,7 @@ function scanOf(row: unknown): CarrierEvent {
 
 interface Piece { readonly scans: Array<{ event: CarrierEvent; order: number }>; readonly record: Record<string, unknown> }
 
-/** Newest first by wall clock; of scans made the same second, the one the reply lists first. */
+/** Newest first by wall clock; of scans made the same second, the one the reply lists as newer. */
 function newestFirst<T extends { event: CarrierEvent; order: number }>(scans: T[]): T[] {
   return scans.sort((a, b) => String(b.event.local_time).localeCompare(String(a.event.local_time)) || a.order - b.order);
 }
@@ -109,7 +110,9 @@ function pieceOf(value: unknown, number: string, offset: number): Piece {
   const rows = value.history ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'TIKI returned a shipment with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'TIKI returned an oversized history');
-  return { record: value, scans: newestFirst(rows.map((row, index) => ({ event: scanOf(row), order: offset + index }))) };
+  const events = rows.map(scanOf);
+  if (listsNewestFirst(events) === false) events.reverse();
+  return { record: value, scans: newestFirst(events.map((event, index) => ({ event, order: offset + index }))) };
 }
 
 /** The delivery estimate, a calendar day, or nothing. */

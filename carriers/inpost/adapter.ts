@@ -2,6 +2,7 @@
 import { accepted, lookupBudget, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -81,9 +82,9 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
   if (rawDetails !== undefined && !Array.isArray(rawDetails)) {
     throw new SchemaError('InPost', 'InPost returned invalid tracking history');
   }
-  const parsed: Array<{ event: CarrierEvent; code: string; classified?: ClassifiedStatus; timestamp: number; index: number }> = [];
+  const parsed: Array<{ event: CarrierEvent; code: string; classified?: ClassifiedStatus; timestamp: number }> = [];
   const seen = new Set<string>();
-  (Array.isArray(rawDetails) ? rawDetails : []).filter(isRecord).slice(0, 500).forEach((rawEvent, index) => {
+  (Array.isArray(rawDetails) ? rawDetails : []).filter(isRecord).slice(0, 500).forEach((rawEvent) => {
     const eventCode = statusCode(rawEvent.status);
     const eventClassified = classifyInpostStatus(eventCode);
     // Observed event datetimes carry explicit offsets; require them rather than
@@ -111,10 +112,10 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
       code: eventCode,
       ...(eventClassified ? { classified: eventClassified } : {}),
       timestamp: time.timestamp,
-      index,
     });
   });
-  parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
+  parsed.sort((left, right) => right.timestamp - left.timestamp);
   // A redirect or a delay notice keeps the stage the parcel had before it.
   let before: ClassifiedStatus | undefined;
   for (const entry of [...parsed].reverse()) {

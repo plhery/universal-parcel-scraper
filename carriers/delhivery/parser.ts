@@ -1,5 +1,6 @@
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { isoTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -119,7 +120,10 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
     events.unshift({ description: snapshotDescription, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
       ...(mapped ? { stage: mapped.stage } : {}), ...(returning ? { provider_leg: 'return' } : {}), summary_snapshot: true });
   }
-  const dated = events.filter(event => event.time).sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
+  const dated = events.filter(event => event.time);
+  if (listsNewestFirst(dated) === false) dated.reverse();
+  // The status snapshot stays ahead of a scan at its instant.
+  dated.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!) || Number(Boolean(b.summary_snapshot)) - Number(Boolean(a.summary_snapshot)));
   const undated = events.filter(event => !event.time);
   // A freight status can date a later proof-of-delivery audit: its delivered milestone dates the delivery.
   const deliveryTime = deliveredAt ?? updated;

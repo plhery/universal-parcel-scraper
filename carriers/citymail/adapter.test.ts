@@ -103,6 +103,14 @@ describe('CityMail HTTP adapter', () => {
       events: [{ time: '2026-03-10T06:48:00+01:00', description: 'Paketet förbereds för leverans' }] });
   });
 
+  it('keeps scans of one minute in the page’s order, whichever way it lists them', () => {
+    const page = fixture('in-transit').replace('2026-03-09 18:12', '2026-03-10 06:48');
+    const rows = page.match(/<tr>\s*<td>[\s\S]*?<\/tr>/g)!;
+    const block = page.slice(page.indexOf(rows[0]), page.lastIndexOf(rows.at(-1)!) + rows.at(-1)!.length);
+    const descriptions = (body: string) => parseCitymail(body, IN_TRANSIT).events!.map((event) => event.description);
+    expect(descriptions(page.replace(block, [...rows].reverse().join('\n')))).toEqual(descriptions(page));
+  });
+
   it('reads the tracker’s notice for the reference asked as not found', async () => {
     expect(() => parseCitymail(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     await expect(carrier(answering(() => html(fixture('not-found')))).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });

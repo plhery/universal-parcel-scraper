@@ -122,7 +122,7 @@ describe('SpeedX tracking page', () => {
     expect(result).toMatchObject({ last_update: '2026-03-19T20:14:05Z', delivered_at: '2026-03-19T20:14:05Z' });
   });
 
-  it('orders scans by instant, keeps equal ones in page order and drops repeated event ids', () => {
+  it('orders scans by instant, keeps equal ones in the carrier\'s order and drops repeated event ids', () => {
     const result = parse(withData((data, events) => {
       const [delivered, out, ...rest] = events;
       const returned = { ...delivered!, eventId: 'b0000000000000000000000000000001', eventCode: '59999', category: 'LAST_MILE_RETURNS',
@@ -135,8 +135,8 @@ describe('SpeedX tracking page', () => {
     expect(result.events?.map(({ time, description, location }) => [time, description, location])).toEqual([
       ['2026-03-19T13:14:05-07:00', 'Returned to sender. At the depot', 'Example City, EX'],
       ['2026-03-19T08:02:40-07:00', 'Out for Delivery', 'Example City, EX'],
-      ['2026-03-18T19:45:11-07:00', 'Processing at Designated Facility', 'Sample Hub, EX'],
       ['2026-03-18T19:45:11-07:00', 'Second scan', 'Sample Hub, EX'],
+      ['2026-03-18T19:45:11-07:00', 'Processing at Designated Facility', 'Sample Hub, EX'],
       ['2026-03-18T18:10:30-07:00', 'Arrival at Destination Facility', 'Sample Hub, EX'],
       ['2026-03-17T17:20:08-05:00', 'Processing at Transit Facility', 'Transit Town, EX'],
       ['2026-03-16T09:05:15-04:00', 'Processing at Origin Facility', 'Origin Town, EX'],

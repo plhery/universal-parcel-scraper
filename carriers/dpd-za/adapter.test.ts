@@ -60,9 +60,9 @@ describe('DPD South Africa HTTP adapter', () => {
       ['2026-03-09T20:40:42', '26', 'in_transit', 'SAMPLE CITY ZA'],
       ['2026-03-09T17:17:32', '49', 'in_transit', 'SAMPLE CITY ZA'],
       ['2026-03-09T17:05:43', '1', 'in_transit', 'SAMPLE CITY ZA'],
-      // Scans of one second keep the reply's order; the copies without the branch are dropped.
-      ['2026-03-09T16:25:34', '27', 'accepted', null],
+      // Scans of one second come in the reply's order reversed, newest first; the copies without the branch are dropped.
       ['2026-03-09T16:25:34', '30', 'in_transit', 'SAMPLE CITY ZA'],
+      ['2026-03-09T16:25:34', '27', 'accepted', null],
       ['2026-03-09T10:09:08', '52', 'registered', null],
       ['2026-03-09T10:09:07', '32', 'registered', 'SAMPLE CITY ZA'],
     ]);

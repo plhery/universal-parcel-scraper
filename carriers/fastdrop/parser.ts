@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { EXPLICIT_OFFSET_PATTERN, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
@@ -87,8 +88,8 @@ function journey(pkg: Record<string, unknown>): CarrierEvent[] {
   const stops = pkg.journey;
   if (!Array.isArray(stops) || stops.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Fastdrop returned an invalid journey');
   const seen = new Set<string>();
-  const rows: { event: CarrierEvent; at: number; index: number }[] = [];
-  stops.forEach((stop: unknown, index) => {
+  const rows: { event: CarrierEvent; at: number }[] = [];
+  stops.forEach((stop: unknown) => {
     if (!isRecord(stop) || (stop.type !== 'pickup' && stop.type !== 'dropoff')) throw new SchemaError(PROVIDER, 'Fastdrop returned an invalid stop');
     if (stop.outcome === 'none') return;
     if (stop.outcome !== 'success' && stop.outcome !== 'failure') throw new SchemaError(PROVIDER, 'Fastdrop returned a stop with an invalid outcome');
@@ -101,10 +102,11 @@ function journey(pkg: Record<string, unknown>): CarrierEvent[] {
     const key = JSON.stringify(event);
     if (seen.has(key)) return;
     seen.add(key);
-    rows.push({ event, at, index });
+    rows.push({ event, at });
   });
   // The platform documents the stops newest first; the clocks decide, and the reply's order breaks a tie.
-  return rows.sort((left, right) => right.at - left.at || left.index - right.index).map((row) => row.event);
+  if (listsNewestFirst(rows.map(({ event }) => event)) === false) rows.reverse();
+  return rows.sort((left, right) => right.at - left.at).map((row) => row.event);
 }
 
 /**

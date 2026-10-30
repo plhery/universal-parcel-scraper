@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { skynetSaStage } from './status.js';
@@ -109,6 +110,7 @@ function scans($: CheerioAPI, tables: readonly Element[]): Scan[] {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
   }
   // Newest first, as the page lists them; scans of one second keep its order.
+  if (listsNewestFirst(events) === false) events.reverse();
   return events.sort((left, right) => right.local_time.localeCompare(left.local_time));
 }
 

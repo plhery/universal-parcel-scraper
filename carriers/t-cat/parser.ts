@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -42,10 +43,10 @@ function scanTime(text: string): { time: string; at: number } {
   return { time: zoned.toISO({ suppressMilliseconds: true }), at: zoned.toMillis() };
 }
 
-interface Row { event: CarrierEvent; at: number; order: number }
+interface Row { event: CarrierEvent; at: number }
 
 /** One row's cells: the label, the clock and the branch or centre in charge. */
-function readRow(cells: Cheerio<Element>, order: number): Row {
+function readRow(cells: Cheerio<Element>): Row {
   const cell = (index: number) => {
     const node = cells.eq(index).clone();
     node.find('br').replaceWith(' ');
@@ -62,7 +63,7 @@ function readRow(cells: Cheerio<Element>, order: number): Row {
     description,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { event, at, order };
+  return { event, at };
 }
 
 /**
@@ -75,16 +76,16 @@ function readTable($: CheerioAPI): Map<string, Row[]> {
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'T-CAT returned an oversized history');
   const parcels = new Map<string, Row[]>();
   let current: Row[] | undefined;
-  rows.each((order, element) => {
+  rows.each((_, element) => {
     const cells = $(element).children('td');
     if (cells.length === 4) {
       const number = clean(cells.first().text(), 64);
       if (!number || parcels.has(number)) throw new SchemaError(PROVIDER, 'T-CAT returned a parcel without its number');
       current = [];
       parcels.set(number, current);
-      current.push(readRow(cells.slice(1), order));
+      current.push(readRow(cells.slice(1)));
     } else if (cells.length === 3 && current) {
-      current.push(readRow(cells, order));
+      current.push(readRow(cells));
     } else {
       throw new SchemaError(PROVIDER, 'T-CAT returned an invalid scan row');
     }
@@ -120,7 +121,8 @@ export function parseTcat(html: string, raw: string): CarrierResult {
 
   // Newest first, as the page lists them; rows the page lists twice are kept once.
   const seen = new Set<string>();
-  const events = [...rows].sort((a, b) => b.at - a.at || a.order - b.order)
+  if (listsNewestFirst(rows.map(({ event }) => event)) === false) rows.reverse();
+  const events = rows.sort((a, b) => b.at - a.at)
     .filter(({ event }) => {
       const identity = JSON.stringify([event.time, event.description, event.location]);
       if (seen.has(identity)) return false;

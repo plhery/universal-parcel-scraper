@@ -2,6 +2,7 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { furtherAlong } from '../../core/status/progress.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
@@ -198,6 +199,7 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   for (const entry of keeping ? events : []) {
     if (typeof entry.event.local_time === 'string') entry.timestamp = isoTime(entry.event.local_time, keeping!)?.timestamp ?? entry.timestamp;
   }
+  if (listsNewestFirst(events.map(({ event }) => event)) === false) events.reverse();
   events.sort((a, b) => b.timestamp - a.timestamp);
   const summary = clean(selected.trackStatusOfArticle)
     || (isRecord(selected.status) ? clean(selected.status.statusAttributeValue) : '');

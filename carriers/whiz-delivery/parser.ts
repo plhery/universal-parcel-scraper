@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
 import { whizMappedStage } from './status.js';
@@ -45,16 +46,16 @@ function instant(value: unknown): string {
   return `${new Date(time).toISOString().slice(0, 19)}Z`;
 }
 
-interface Scan { time: string; index: number; event: CarrierEvent }
+interface Scan { time: string; event: CarrierEvent }
 
-function scan(row: unknown, index: number): Scan {
+function scan(row: unknown): Scan {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Whiz Delivery returned an invalid event');
   const description = text(row.description);
   if (!description) throw new SchemaError(PROVIDER, 'Whiz Delivery returned an event without a description');
   const code = Number.isInteger(row.status_id) ? String(row.status_id) : null;
   const stage = whizMappedStage(code);
   const time = instant(row.timestamp);
-  return { time, index, event: {
+  return { time, event: {
     time,
     description,
     ...(code ? { provider_code: code } : {}),
@@ -78,8 +79,9 @@ export function parseWhiz(payload: unknown, raw: string): CarrierResult {
   if (!payload.events.length) throw new NoHistoryError(PROVIDER);
 
   // Newest first, as the reply lists them.
-  const events = payload.events.map(scan).sort((left, right) => right.time.localeCompare(left.time) || left.index - right.index)
-    .map(({ event }) => event);
+  const scans = payload.events.map(scan);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((left, right) => right.time.localeCompare(left.time)).map(({ event }) => event);
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;

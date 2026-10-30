@@ -2,6 +2,7 @@
 import { lookupBudget, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { explicitOffsetTime, isoTime, zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -124,10 +125,8 @@ export function parseSwissPostCargoResponse(
     status: CarrierStatus;
     timestamp: number;
     proof: boolean;
-    index: number;
   }> = [];
   const seen = new Set<string>();
-  let index = 0;
   for (const shipment of shipments.slice(0, 100)) {
     if (!Array.isArray(shipment.History)) continue;
     const rows = [];
@@ -142,6 +141,7 @@ export function parseSwissPostCargoResponse(
         classified: statusFor(code, description), proof: DELIVERY_PROOF_CODES.has(code),
       });
     }
+    if (listsNewestFirst(rows.map(({ time }) => ({ time: time.iso }))) === false) rows.reverse();
     // A barcode's photo and signature are part of its delivery scan: folded
     // into it, they never stand on top of it.
     const deliveryScan = rows.some((row) => !row.proof && row.classified.stage === 'delivered');
@@ -161,15 +161,12 @@ export function parseSwissPostCargoResponse(
         status: classified.status,
         timestamp: time.timestamp,
         proof,
-        index,
       });
-      index += 1;
     }
   }
   // Ties keep the carrier's order, except that a photo or signature never
   // passes a scan made at the same instant.
-  parsedEvents.sort((left, right) => right.timestamp - left.timestamp
-    || Number(left.proof) - Number(right.proof) || left.index - right.index);
+  parsedEvents.sort((left, right) => right.timestamp - left.timestamp || Number(left.proof) - Number(right.proof));
   const events = parsedEvents.slice(0, 100);
   if (events.length === 0) {
     throw new SchemaError(PROVIDER, 'Swiss Post Cargo returned no usable tracking events');

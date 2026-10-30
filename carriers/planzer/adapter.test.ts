@@ -287,6 +287,14 @@ describe('Planzer declared capabilities and privacy', () => {
     ]);
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const reply = fixture('delivered.json') as { transportPositions: Array<{ positionEvents: Array<{ createdAt: string }> }> };
+    const [recorded, transferred] = reply.transportPositions[0]!.positionEvents;
+    transferred!.createdAt = recorded!.createdAt;
+    expect(parsePlanzerTrackingResponse(reply, QUICKPAC_NUMBER).events?.map((event) => event.description))
+      .toEqual(['Delivered', 'In delivery', 'Transferred', 'Recorded']);
+  });
+
   it('reads the parcel\'s weight, measurements and destination country, and the estimate while it moves', () => {
     expect(delivered).toMatchObject({ weight_kg: 3.6, dimensions_text: '61 × 41 × 18 cm', destination_country: 'CH' });
     expect(outForDelivery).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-09-01', weight_kg: 3.6 });

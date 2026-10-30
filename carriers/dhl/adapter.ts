@@ -29,6 +29,7 @@ import {
   type CarrierErrorOptions,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
@@ -190,11 +191,13 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   // identity; the host still confirms progress through that operator's adapter.
   // The reader sees the notice without the link.
   const deliveryCarrier = carrierIdFromPartnerLinks(rows.map((event) => clean(event.status)), 'dhl');
-  const events: CarrierEvent[] = rows.flatMap((event) => {
+  const scans = rows.flatMap((event) => {
     const description = withoutPartnerLink(clean(event.status));
     if (!description) return [];
     return [{ time: date(event.datum), location: clean(event.ort, 160), description, stage: stageForText(description) }];
-  }).sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100)
+  });
+  if (listsNewestFirst(scans) === false) scans.reverse();
+  const events: CarrierEvent[] = scans.sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100)
     .map(({ time, ...event }) => ({ ...event, ...clock(time, event.location) }));
   const summary = withoutPartnerLink(clean(timeline.status));
   if (!events.length && !summary && details.istZugestellt !== true) {

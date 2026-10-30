@@ -146,6 +146,14 @@ describe('MaltaPost tracking adapter', () => {
     expect(rows(parseMaltaPost(shuffled, CHARGES))).toEqual(rows(result));
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const oldestFirst = edited('charges', payload => {
+      payload.movements!.find(row => row.code === 'EME')!.date = '2026-02-20T14:24:02.61';
+      payload.movements!.reverse();
+    });
+    expect(parseMaltaPost(oldestFirst, CHARGES).events!.slice(0, 4).map(event => event.provider_code)).toEqual(['EDA/C', 'EDC', 'EME', 'EDB']);
+  });
+
   it('stages new codes through the shared wording rules and keeps the rest visible', () => {
     const relayed = edited('charges', payload => {
       payload.movements!.unshift({ code: 'EXZ', description: 'Item returned to sender', location: 'MaltaPost', date: '2026-02-23T08:00:00' });

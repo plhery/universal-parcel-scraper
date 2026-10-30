@@ -313,6 +313,13 @@ describe('GLS France response normalization', () => {
     ]);
   });
 
+  it('keeps scans of one instant in the carrier\'s order', () => {
+    const fixture = deliveredFixture();
+    const scan = (code: string) => ({ datereference: '2026-08-29 08:00:00.0', statutEvenement: code, typeEvenement: code, codelieuEvenement: DEPOT_CODE });
+    fixture.evenements = [fixture.evenements[0]!, scan('REC'), scan('TRV')];
+    expect(parseGLSFranceTrackingResponse(fixture, TRACKING_NUMBER).events!.map((event) => event.provider_code)).toEqual(['TRV', 'REC', 'CON']);
+  });
+
   it('dates the delivery only once the parcel is delivered', () => {
     expect(parseGLSFranceTrackingResponse(outForDeliveryFixture(), TRACKING_NUMBER)).not.toHaveProperty('delivered_at');
   });

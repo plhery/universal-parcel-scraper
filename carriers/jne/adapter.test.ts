@@ -96,6 +96,14 @@ describe('JNE HTTP adapter', () => {
       .toEqual({ wording: 'DELIVERED TO', location: 'DENPASAR' });
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parseJne(changed('in-transit', (body) => { body.history[2]!.date = '01-03-2026 15:30'; }), IN_TRANSIT);
+    expect(result.events!.map((event) => [event.local_time, event.description])).toEqual([
+      ['2026-03-02T20:45:00', 'RECEIVED AT WAREHOUSE'], ['2026-03-01T15:30:00', 'DEPARTED FROM TRANSIT'],
+      ['2026-03-01T15:30:00', 'RECEIVED AT SORTING CENTER'], ['2026-03-01T13:00:00', 'SHIPMENT RECEIVED BY JNE COUNTER OFFICER AT'],
+    ]);
+  });
+
   it('reorders a history given newest first', () => {
     const result = parseJne(changed('in-transit', (body) => { body.history.reverse(); }), IN_TRANSIT);
     expect(result).toMatchObject({ last_update_local: '2026-03-02T20:45:00', current_stage: 'in_transit' });

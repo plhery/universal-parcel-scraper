@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -159,7 +160,8 @@ export function parseAjex(payload: unknown, raw: string): CarrierResult {
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; the reply lists them oldest first.
-  const events = scans.reverse().sort((a, b) => b.millis - a.millis).map((scan) => scan.event);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.millis - a.millis).map((scan) => scan.event);
 
   const newest = events[0]!;
   const scanned = events.find((event) => event.stage);

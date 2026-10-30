@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -77,9 +78,9 @@ function scanTime(raw: string): { time: string; at: number } {
   return { time: `${match[1]}Z`, at: second.toMillis() + fraction };
 }
 
-interface Scan { at: number; index: number; key: string; event: CarrierEvent }
+interface Scan { at: number; key: string; event: CarrierEvent }
 
-function projectRow(values: readonly unknown[], ref: unknown, number: string, index: number): Scan {
+function projectRow(values: readonly unknown[], ref: unknown, number: string): Scan {
   const row = at(values, ref);
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Pullman Cargo returned an invalid scan');
   const shipment = at(values, row.numeroODT);
@@ -96,7 +97,7 @@ function projectRow(values: readonly unknown[], ref: unknown, number: string, in
     description,
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
   };
-  return { at: instant, index, key: JSON.stringify([instant, description, location]), event };
+  return { at: instant, key: JSON.stringify([instant, description, location]), event };
 }
 
 /**
@@ -121,14 +122,15 @@ export function parsePullmanCargo(payload: unknown, raw: string): CarrierResult 
 
   const seen = new Set<string>();
   const scans: Scan[] = [];
-  rows.forEach((ref, index) => {
-    const scan = projectRow(values, ref, number, index);
+  rows.forEach((ref) => {
+    const scan = projectRow(values, ref, number);
     if (seen.has(scan.key)) return;
     seen.add(scan.key);
     scans.push(scan);
   });
-  // Newest first; scans on one clock keep the reply's order.
-  const events = scans.sort((a, b) => (a.at === b.at ? a.index - b.index : b.at - a.at)).map((scan) => scan.event);
+  // Newest first; scans on one clock keep the reply's order, turned round when it lists the oldest first.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  const events = scans.sort((a, b) => b.at - a.at).map((scan) => scan.event);
 
   const newest = events[0]!;
   const current = events.find((event) => event.stage);

@@ -128,6 +128,18 @@ describe('Pos Malaysia response parsing', () => {
     expect(pickup).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
   });
 
+  it('keeps scans of one instant in the carrier’s order', () => {
+    const result = parsePosMalaysiaTrackingResponse(payload([item({
+      process_status: 'IN TRANSIT',
+      tracking_data: [
+        detail('Item dispatched', 'Dispatched', '21 Feb 2026, 08:00:00 AM', 'EM003'),
+        detail('Item processed', 'Processed', '22 Feb 2026, 05:34:58 PM', 'EM004'),
+        detail('On the way', 'Moving', '22 Feb 2026, 05:34:58 PM', 'EM005'),
+      ],
+    })]), TRACKING_NUMBER);
+    expect(result.events?.map((event) => event.provider_code)).toEqual(['EM005', 'EM004', 'EM003']);
+  });
+
   it('requires one exact identity and distinguishes absent schema from empty history', () => {
     expect(() => parsePosMalaysiaTrackingResponse(payload([item({ connote_id: 'MYPM00000000017' })]), TRACKING_NUMBER))
       .toThrow(SchemaError);

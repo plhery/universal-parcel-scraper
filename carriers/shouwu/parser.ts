@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -89,7 +90,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Shouwu returned a parcel with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Shouwu returned an oversized history');
   const seen = new Set<string>();
-  const scans: { event: CarrierEvent; timestamp: number; index: number }[] = [];
+  const scans: { event: CarrierEvent; timestamp: number }[] = [];
   for (const row of rows) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Shouwu returned an invalid scan');
     const clock = scanClock(row);
@@ -101,7 +102,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     if (seen.has(key)) continue;
     seen.add(key);
     const staged = shouwuStage(description);
-    scans.push({ timestamp: clock.seconds, index: scans.length, event: {
+    scans.push({ timestamp: clock.seconds, event: {
       local_time: clock.wall,
       ...(location ? { location } : {}),
       description,
@@ -109,7 +110,8 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     } });
   }
   // Newest first; equal instants keep the reply's order, which lists the newest first.
-  scans.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
+  scans.sort((left, right) => right.timestamp - left.timestamp);
   return { status, country: COUNTRY.test(country) ? country : '', events: scans.map((scan) => scan.event), newest: scans[0]?.timestamp ?? -Infinity };
 }
 

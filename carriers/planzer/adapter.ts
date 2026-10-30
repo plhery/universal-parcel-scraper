@@ -19,6 +19,7 @@
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { countryCode } from '../../core/time/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
@@ -158,6 +159,7 @@ export function parsePlanzerTrackingResponse(value: unknown, shipmentNumber: str
     }
   }
   if (matchingPositions.length > 1) events = mergeParcelMilestones(events);
+  if (listsNewestFirst(events) === false) events.reverse();
   events.sort((left, right) => text(right.time).localeCompare(text(left.time)));
   const status = PLANZER_STATUS.get(statusText) ?? (statusText ? 'in_transit' : 'unknown');
   const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;

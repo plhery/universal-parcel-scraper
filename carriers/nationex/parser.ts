@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -65,7 +66,6 @@ function wallClock(value: string): string | null {
 interface Scan {
   readonly event: CarrierEvent & { local_time: string; description: string };
   readonly code: string;
-  readonly index: number;
 }
 
 /**
@@ -74,7 +74,7 @@ interface Scan {
  * the parcel over, and the photo and signature ids on the same rows are never
  * read.
  */
-function parcelScans(parcel: Record<string, unknown>): Omit<Scan, 'index'>[] {
+function parcelScans(parcel: Record<string, unknown>): Scan[] {
   const rows = parcel.History;
   if (rows === null || rows === undefined) return [];
   if (!Array.isArray(rows) || rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Nationex returned an invalid parcel history');
@@ -168,13 +168,14 @@ export function parseNationex(payload: unknown, raw: string): CarrierResult {
       seen.add(key);
       const stage = nationexStage(code, event.description);
       if (stage) Object.assign(event, { stage: stage.stage, stage_source: stage.source });
-      scans.push({ event, code, index: scans.length });
+      scans.push({ event, code });
     }
     if (scans.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Nationex returned too many scans');
   }
   // Newest first; equal clocks keep the reply's order.
+  if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.event.local_time > left.event.local_time ? 1
-    : right.event.local_time < left.event.local_time ? -1 : left.index - right.index);
+    : right.event.local_time < left.event.local_time ? -1 : 0);
 
   // The state Nationex keeps for the shipment, or for the parcel asked for, is
   // the step its tracker shows; for a shipment of several parcels it says when

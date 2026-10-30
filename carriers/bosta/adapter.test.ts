@@ -84,6 +84,14 @@ describe('Bosta HTTP adapter', () => {
     expect(parseBosta(changed('in-transit', (body) => { body.TransitEvents.reverse(); }), IN_TRANSIT)).toEqual(result);
   });
 
+  it('keeps scans of one instant in the reply’s order', () => {
+    const result = parseBosta(changed('in-transit', (body) => {
+      const [out, missed] = body.TransitEvents.slice(3, 5);
+      body.TransitEvents.push({ ...out, timestamp: '2026-05-07T07:30:12.000Z' }, { ...missed, timestamp: '2026-05-07T07:30:12.000Z' });
+    }), IN_TRANSIT);
+    expect(result.events!.slice(0, 2).map((event) => event.provider_code)).toEqual(['47', '41']);
+  });
+
   it('stages the scans of a return by their wording, whatever leg their code belongs to', () => {
     const result = parseBosta(fixture('returned'), RETURNED);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map',
