@@ -6,11 +6,11 @@ import { normalizeCarrierResult, type CarrierEvent, type CarrierResult } from '.
 import { BrtTracker, adapter, type BrtOriginLookup } from './adapter.js';
 import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { isBrtCarrierDepot } from './depot.js';
-import { normalizeBrtNumber, parseBrt, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg } from './parser.js';
+import { groupShipment, normalizeBrtNumber, parseBrt, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg } from './parser.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { classifyBrtStatus, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
-import { IndeterminateError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, MaintenanceError, NoHistoryError } from '../../core/errors/index.js';
 
 const NUMBER = '99000000000002';
 const OTHER = '99000000000003';
@@ -411,6 +411,9 @@ describe('BRT direct tracking', () => {
       await expect(new BrtTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind });
       expect(fetcher).toHaveBeenCalledTimes(1);
     }
+    // While its tracker is down, BRT sends every page to a notice.
+    const notice = vi.fn<typeof fetch>().mockResolvedValue(new Response(null, { status: 302, headers: { Location: 'manutenzione_new.htm' } }));
+    await expect(new BrtTracker({ fetcher: notice }).fetch(NUMBER)).rejects.toBeInstanceOf(MaintenanceError);
     const oversized = vi.fn<typeof fetch>().mockResolvedValue(new Response(new Uint8Array(1_000_001)));
     await expect(new BrtTracker({ fetcher: oversized }).fetch(NUMBER)).rejects.toThrow('unexpectedly large');
     expect(oversized).toHaveBeenCalledTimes(1);
@@ -749,5 +752,72 @@ describe('BRT origin legs', () => {
     const [url, init] = fetcher.mock.calls[2]!;
     expect(String(url)).toBe('https://ws.chronopost.fr/tracking-cxf/TrackingServiceWS');
     expect(String(init?.body)).toContain(`<skybillNumber>${NUMBER}</skybillNumber>`);
+  });
+});
+
+describe('BRT through the DPD group while its tracker is down', () => {
+  const MAINTENANCE = () => new Response(null, { status: 302, headers: { Location: 'manutenzione_new.htm' } });
+  const reply = () => JSON.parse(readFileSync(new URL('./fixtures/group-out-for-delivery.json', import.meta.url), 'utf8')) as
+    Record<string, unknown> & { status: Record<string, unknown>; parcelHistory: Record<string, unknown>[] };
+  const milestone = (code: string, description: string, time: string, stage?: string): CarrierEvent =>
+    ({ time, location: '', description, provider_code: code, ...(stage ? { stage } : {}) });
+  const answer = (...events: CarrierEvent[]): CarrierResult => ({ status: 'in_transit', last_status_text: events[0]!.description,
+    last_update: events[0]!.time ?? null, history_truncated: true, events });
+
+  it('stages each milestone as in DPD\'s leg, and names BRT as the one the parcel was handed to', () => {
+    const handed = milestone('PARCEL_HANDED', 'Parcel handed to DPD', '2026-01-12T18:38:11+01:00');
+    const result = groupShipment(answer(milestone('PARCEL_OUT_FOR_DELIVERY', 'Parcel out for delivery', '2026-01-14T08:50:13+01:00', 'out_for_delivery'),
+      milestone('AT_DELIVERY_CENTER', 'At delivery center', '2026-01-14T07:43:09+01:00'),
+      milestone('IN_TRANSIT', 'Your parcel is on its way', '2026-01-12T22:56:06+01:00'), handed));
+    expect(result.events!.map(event => [event.description, event.stage])).toEqual([['Parcel out for delivery', 'out_for_delivery'],
+      ['At delivery center', 'in_transit'], ['Your parcel is on its way', 'in_transit'], ['Parcel handed to BRT', 'accepted']]);
+    expect(result).toMatchObject({ last_status_text: 'Parcel out for delivery', history_truncated: true });
+    expect(groupShipment(answer(handed))).toMatchObject({ last_status_text: 'Parcel handed to BRT', events: [{ description: 'Parcel handed to BRT', stage: 'accepted' }] });
+  });
+
+  it('asks the group about a BRTcode only while BRT\'s tracker is down, and keeps the outage when the group cannot answer', async () => {
+    const group = vi.fn<BrtOriginLookup>(async () => answer(milestone('IN_TRANSIT', 'Your parcel is on its way', '2026-01-12T22:56:06+01:00'),
+      milestone('PARCEL_HANDED', 'Parcel handed to DPD', '2026-01-12T18:38:11+01:00')));
+    const tracker = (reply = MAINTENANCE) => new BrtTracker({ fetcher: vi.fn<typeof fetch>(async () => reply()), group });
+    const result = await tracker().fetch(NUMBER, { budgetMs: 10_000 });
+    expect(group).toHaveBeenCalledTimes(1);
+    expect(group.mock.calls[0]![0]).toBe(NUMBER);
+    expect(group.mock.calls[0]![1].budgetMs).toBeLessThan(10_000);
+    expect(result.events!.map(event => [event.description, event.stage])).toEqual([['Your parcel is on its way', 'in_transit'], ['Parcel handed to BRT', 'accepted']]);
+    group.mockRejectedValueOnce(new IndeterminateError('BRT', 'DPD returned no Italian country evidence'));
+    await expect(tracker().fetch(NUMBER)).rejects.toBeInstanceOf(MaintenanceError);
+    // Shipment numbers, BRT's own answers and its other failures ask no one.
+    group.mockClear();
+    await expect(tracker().fetch(SHIPMENT)).rejects.toBeInstanceOf(MaintenanceError);
+    expect(await tracker(() => response()).fetch(NUMBER)).toEqual(parseBrt(html, NUMBER));
+    await expect(tracker(() => new Response('', { status: 404 })).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(group).not.toHaveBeenCalled();
+  });
+
+  it('reads the guest service as BRT\'s unit for a parcel DPD places in Italy, and nowhere else', async () => {
+    const routed = (details: () => Response) => vi.fn<typeof fetch>(async (input) => {
+      const url = String(input);
+      if (url.startsWith('https://vas.brt.it/')) return MAINTENANCE();
+      if (url.includes('firebaseinstallations')) return Response.json({ fid: 'synthetic-fid', authToken: { token: 'synthetic-installation', expiresIn: '604800s' } });
+      if (url.includes('firebaseremoteconfig')) return Response.json({ entries: { basic_dpd_token: 'c3ludGhldGljOnRva2Vu' } }); // gitleaks:allow
+      if (url.includes('/oauth/token')) return Response.json({ access_token: 'synthetic-access', expires_in: 3600 });
+      return details();
+    });
+    const fetcher = routed(() => Response.json(reply()));
+    const result = await adapter(environment(fetcher)).track({ number: NUMBER, postcode: null });
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: '2026-10-30T08:50:13+01:00',
+      expected_delivery: '2026-10-30', history_truncated: true, tracking_url: `https://www.mybrt.it/it/mybrt/my-parcels/search?parcelNumber=${NUMBER}` });
+    expect(result.events!.map(event => [event.provider_code, event.stage])).toEqual([['PARCEL_OUT_FOR_DELIVERY', 'out_for_delivery'],
+      ['AT_DELIVERY_CENTER', 'in_transit'], ['IN_TRANSIT', 'in_transit'], ['PARCEL_HANDED', 'accepted']]);
+    const details = new URL(String(fetcher.mock.calls.at(-1)![0]));
+    expect(details.pathname).toBe(`/concept/webservice/v10/parcels/details/${NUMBER}`);
+    expect(details.searchParams.get('businessUnit')).toBe('DPD-IT');
+    // Placed in another country or in none, the parcel can be another unit's: BRT's outage stands.
+    for (const countryCode of ['DE', null]) {
+      const elsewhere = routed(() => Response.json({ ...reply(), status: { ...reply().status, countryCode } }));
+      await expect(adapter(environment(elsewhere)).track({ number: NUMBER, postcode: null }), String(countryCode)).rejects.toBeInstanceOf(MaintenanceError);
+    }
+    // Recognition reads BRT alone.
+    await expect(adapter(environment(routed(() => Response.json(reply())))).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' });
   });
 });

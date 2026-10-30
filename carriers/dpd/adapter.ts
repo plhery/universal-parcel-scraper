@@ -55,7 +55,7 @@ const REMOTE_CONFIG_URL = `https://firebaseremoteconfig.googleapis.com/v1/projec
 const TIMEZONE = 'Europe/Zurich';
 
 /** A guest business unit: `businessUnit=DPD-<country>`. */
-export type DPDCountry = 'CH' | 'DE' | 'BE' | 'NL' | 'HU';
+export type DPDCountry = 'CH' | 'DE' | 'BE' | 'NL' | 'HU' | 'IT';
 
 /**
  * What the unit changes beyond its selector: the carrier a lookup is filed
@@ -74,9 +74,11 @@ const UNITS: Readonly<Record<DPDCountry, { carrier: string; name: string; adject
   BE: { carrier: 'dpd-be', name: 'DPD Belgium', adjective: 'Belgian', zone: 'Europe/Brussels', sender: '034' },
   NL: { carrier: 'dpd-nl', name: 'DPD Netherlands', adjective: 'Dutch', zone: 'Europe/Amsterdam' },
   HU: { carrier: 'dpd-hu', name: 'DPD Hungary', adjective: 'Hungarian', zone: 'Europe/Budapest' },
+  // The group's network in Italy is BRT's, whose BRTcodes the guest service reads.
+  IT: { carrier: 'brt', name: 'BRT', adjective: 'Italian', zone: 'Europe/Rome' },
 };
 /** Units read through the guest API alone, with no page or app tier after it. */
-const GUEST_ONLY: ReadonlySet<DPDCountry> = new Set(['BE', 'NL', 'HU']);
+const GUEST_ONLY: ReadonlySet<DPDCountry> = new Set(['BE', 'NL', 'HU', 'IT']);
 /** Guest statuses at the delivery depot or after it. Before it, the status's country can be the sender's. */
 const DELIVERY_SIDE: ReadonlySet<string> = new Set([
   'AT_DELIVERY_CENTER', 'PARCEL_OUT_FOR_DELIVERY', 'AVAILABLE_FOR_COLLECTION', 'UNSUCCESSFUL_DELIVERY_ATTEMPT', 'DELIVERED',
@@ -341,7 +343,7 @@ function storedTime(value: string, zoneId: unknown, unitZone: string): ParsedTim
 /**
  * Guest API timestamps: an explicit offset wins, then the zone DPD names for
  * that scan, then the unit's zone (Swiss time but for Belgium, the
- * Netherlands and Hungary). Unparsable values keep their raw text.
+ * Netherlands, Hungary and Italy). Unparsable values keep their raw text.
  *
  * The sync keys stored events on this exact string. When the instant is the
  * one the adapter read before (with `storedZoneId`, the unit's zone for
@@ -581,7 +583,7 @@ export function parseDPDTrackingApi(
   return result;
 }
 
-/** Guard automatic scope confirmation and the German, Belgian, Dutch and Hungarian direct services. */
+/** Guard automatic scope confirmation and the German, Belgian, Dutch, Hungarian and Italian direct services. */
 function requireGuestActivity(payload: JsonObject, result: CarrierResult): void {
   if (!isRecord(payload.status) || !known(payload.status.description)) {
     throw new SchemaError('DPD', 'DPD returned no usable shipment status');
@@ -870,7 +872,9 @@ export class DPDTracker {
         ? `https://www.dpdgroup.com/be/mydpd/my-parcels/track?parcelNumber=${trackingNumber}`
         : this.country === 'NL' || this.country === 'HU'
           ? `https://www.dpdgroup.com/${this.country.toLowerCase()}/mydpd/my-parcels/search?parcelNumber=${trackingNumber}`
-          : dpdTrackingUrl(trackingNumber);
+          : this.country === 'IT'
+            ? `https://www.mybrt.it/it/mybrt/my-parcels/search?parcelNumber=${trackingNumber}`
+            : dpdTrackingUrl(trackingNumber);
     return result;
   }
 
@@ -916,7 +920,7 @@ export class DPDTracker {
   /**
    * The Swiss page and the German app can answer after Cloudflare's challenge
    * or DPD's rate limit, so those stay inconclusive for them. Belgium, the
-   * Netherlands and Hungary have no tier after the guest API, and report them as what they are.
+   * Netherlands, Hungary and Italy have no tier after the guest API, and report them as what they are.
    */
   private reported(error: unknown): unknown {
     if (!GUEST_ONLY.has(this.country) || !(error instanceof Error)) return error;
@@ -955,6 +959,10 @@ export class DPDTracker {
       if (/^[A-Z]{2}$/.test(country) && country !== 'DE') {
         throw new DpdOtherCountryError(country);
       }
+    }
+    // BRT's unit reads a parcel once DPD places it in Italy: before that it can be another unit's.
+    if (this.country === 'IT' && known(isRecord(payload.status) ? payload.status.countryCode : undefined).toUpperCase() !== 'IT') {
+      throw new IndeterminateError(UNITS.IT.name, 'DPD returned no Italian country evidence');
     }
     if (this.country !== 'CH') requireGuestActivity(payload, result);
     const current = isRecord(payload.status) ? payload.status : {};

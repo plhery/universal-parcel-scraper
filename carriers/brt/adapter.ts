@@ -1,12 +1,12 @@
 import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, MaintenanceError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { ChronopostTracker } from '../chronopost/adapter.js';
 import { DPDTracker } from '../dpd/adapter.js';
-import { brtParcelListPath, normalizeBrtNumber, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
+import { brtParcelListPath, groupShipment, normalizeBrtNumber, partnerShipment, readBrt, stagedDpdLeg, withOriginLeg, type BrtOriginPartner } from './parser.js';
 import { brtEnglishLabel } from './status.js';
 
 const BASE = 'https://vas.brt.it/vas/';
@@ -22,7 +22,9 @@ export type BrtLanguage = 'en' | 'it';
 export class BrtTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string;
     /** The lookups of partners that bring parcels from abroad, by the BRTcode they share. */
-    origins?: Partial<Record<BrtOriginPartner, BrtOriginLookup>> } = {}) {}
+    origins?: Partial<Record<BrtOriginPartner, BrtOriginLookup>>;
+    /** The DPD group's guest service, read while BRT's tracker is down. */
+    group?: BrtOriginLookup } = {}) {}
 
   /**
    * `language` labels the scans. A page in Italian with a label the map has no
@@ -45,6 +47,10 @@ export class BrtTracker {
             redirect: 'manual', allowHttpStatuses: [302, 404, 410], fetcher: this.options.fetcher });
         if (performance.now() >= deadline) throw new BudgetExceededError('BRT', budgetMs);
         signal.throwIfAborted();
+        // While its tracker is down, BRT sends every page to a notice.
+        if (response.status === 302 && /manutenzione/i.test(response.headers.get('location') ?? '')) {
+          throw new MaintenanceError('BRT', "BRT's tracker is down for maintenance");
+        }
         if (response.status !== 200) throw new IndeterminateError('BRT', 'BRT tracking endpoint is unavailable');
         const charset = /charset\s*=\s*["']?([A-Za-z0-9_-]+)/i.exec(response.headers.get('content-type') ?? '')?.[1]!.toLowerCase();
         if (charset && !['utf-8', 'utf8', 'iso-8859-1', 'windows-1252'].includes(charset)) throw new SchemaError('BRT', 'BRT response encoding changed');
@@ -102,6 +108,20 @@ export class BrtTracker {
         }
         throw previousError;
       },
+    }, {
+      id: 'group',
+      // While BRT's tracker is down, the DPD group's guest service reads a BRTcode DPD places in
+      // Italy, each milestone once and without places. Any other answer leaves the outage.
+      enabled: number.length === 14 && Boolean(this.options.group),
+      recovers: (error) => error instanceof MaintenanceError,
+      run: async ({ signal, remainingMs, previousError }) => {
+        const answer = await this.options.group!(number, { signal, budgetMs: remainingMs }).catch(() => {
+          context.signal?.throwIfAborted();
+          return null;
+        });
+        if (!answer) throw previousError;
+        return groupShipment(answer);
+      },
     }]);
   }
 }
@@ -111,13 +131,14 @@ export const adapter: AdapterFactory = environment => {
   const chronopost = new ChronopostTracker(transport);
   // DPD's guest service answers for the whole group; Belgium's unit asks it alone.
   const dpd = new DPDTracker({ ...transport, country: 'BE' });
+  const group = new DPDTracker({ ...transport, country: 'IT' });
   const tracker = new BrtTracker({ ...transport, recorder: environment.recorder });
   // Recognition reads BRT alone.
   const tracking = new BrtTracker({ ...transport, recorder: environment.recorder, origins: {
     chronopost: (number, context) => chronopost.fetch(number, context),
     dpd: (number, context) => dpd.fetch(number, '', context).then(stagedDpdLeg),
-  } });
-  return { id: 'brt', recordsSteps: true, steps: ['direct', 'partner'],
+  }, group: (number, context) => group.fetch(number, '', context) });
+  return { id: 'brt', recordsSteps: true, steps: ['direct', 'partner', 'group'],
     track: (input, context) => tracking.fetch(input.number, context, readerLanguage(input, ['it']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeBrtNumber(number))) };
 };

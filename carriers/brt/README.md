@@ -66,6 +66,15 @@ shows the parcel bound for Italy: an Italian destination or a scan placed in
 Italy. Otherwise BRT's inconclusive answer stands and none of the partner's
 scans become BRT's. DPD's guest answer, which names no places, seldom shows it.
 
+While its tracker is down for maintenance, BRT redirects every page to a notice and the
+lookup fails as maintenance. BRT's own site then sends a BRTcode to mybrt.it, the DPD group's
+consumer portal, whose milestones the group's guest service gives too: each once, at its
+newest date and without a place. A BRTcode is asked there, and its answer
+stands for BRT's when DPD places the parcel in Italy. The milestones are staged as in DPD's
+leg, and the hand-over is to BRT. The portal archives a parcel after thirty days. Any other
+answer leaves the outage, so enabled providers answer. Shipment numbers and parcel IDs have
+no such route.
+
 BRT also sends parcels abroad through the DPD network. For a shipment of one
 parcel that started at one of BRT's depots and names no delivering depot in
 Italy, the detail gives the parcel's DPD number ("Parcel number dpd"). Once the

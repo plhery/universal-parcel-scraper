@@ -9,6 +9,7 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { calendarDay, countryCode, countryTimeZone, isoTime, sharedClockZone } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { API_LABELS } from '../dpd/status.js';
 import { DEPOT, isBrtCarrierDepot } from './depot.js';
 import { brtEnglishLabel, classifyBrtStatus, DPD_INTAKE, DPD_TRANSIT } from './status.js';
 
@@ -370,6 +371,19 @@ export function partnerShipment(partner: CarrierResult): CarrierResult | null {
     && !events.some((event) => ITALIAN_PLACE.test(event.location ?? '')))) return null;
   return { ...Object.fromEntries(STATUS_FIELDS.flatMap((field) => partner[field] === undefined ? [] : [[field, partner[field]]])),
     destination_country: 'IT', events: events.slice(0, 100) };
+}
+
+/**
+ * The DPD group's guest reply for a BRTcode it places in Italy, where the group's network is BRT:
+ * each milestone once, staged as in DPD's leg. The hand-over is to BRT, as myBRT says.
+ */
+export function groupShipment(result: CarrierResult): CarrierResult {
+  const staged = stagedDpdLeg(result);
+  const handed = (text: string) => (text === API_LABELS.PARCEL_HANDED ? 'Parcel handed to BRT' : text);
+  return { ...staged,
+    ...(staged.last_status_text ? { last_status_text: handed(staged.last_status_text) } : {}),
+    events: staged.events?.map((event) => (event.provider_code === 'PARCEL_HANDED' && event.description
+      ? { ...event, description: handed(event.description) } : event)) };
 }
 
 /**
