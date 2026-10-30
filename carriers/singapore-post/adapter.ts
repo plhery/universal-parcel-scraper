@@ -33,7 +33,8 @@ function eventTime(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
 }
 
 function isPlaceholderScan(raw: unknown): boolean {
-  return isRecord(raw) && [raw.statusDescription, raw.date, raw.location].every((value) => clean(value, 8) === '-');
+  return isRecord(raw) && ['', '-'].includes(clean(raw.statusDescription, 8))
+    && [raw.date, raw.location].every((value) => clean(value, 8) === '-');
 }
 
 export function parse(payload: unknown, trackingNumber: string): CarrierResult {
@@ -42,7 +43,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   const matches = payload.items.filter((item) => isRecord(item) && clean(item.trackingNumber, 64).toUpperCase() === number);
   if (matches.length !== 1 || !isRecord(matches[0])) throw new SchemaError('Singapore Post', 'Singapore Post returned a different or ambiguous shipment');
   const item = matches[0];
-  // Speedpost answers a missing item with one row of dashes instead of no rows.
+  // Speedpost answers a missing item with one row of dashes, its status dashed or empty, instead of no rows.
   if (item.trackingNumberFound === 'false' && Array.isArray(item.events) && item.events.length <= 1
     && item.events.every(isPlaceholderScan)) throw new NotFoundError('Singapore Post');
   if (item.trackingNumberFound !== 'true' || !Array.isArray(item.events)) throw new SchemaError('Singapore Post');

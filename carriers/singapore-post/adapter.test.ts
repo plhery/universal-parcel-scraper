@@ -62,11 +62,13 @@ describe('Singapore Post result projection', () => {
     expect(normalizeCarrierResult(parse(fixture(), NUMBER)).delivered_at).toBeUndefined();
   });
 
-  it('reads the Speedpost row of dashes as a missing item only when the marker says so', () => {
+  it('reads the Speedpost row of dashes, its status dashed or empty, as a missing item only when the marker says so', () => {
     const dashes = { statusDescription: '-', date: '-', location: '-', beatNo: '', details: '', aceStatusCode: '-' };
     const missing = fixture('not-found');
     Object.assign(missing.items[0], { itemType: 'Speedpost', events: [dashes] });
     expect(() => parse(missing, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+    const blank = structuredClone(missing); blank.items[0].events[0].statusDescription = '';
+    expect(() => parse(blank, NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const found = structuredClone(missing); found.items[0].trackingNumberFound = 'true';
     const mixed = structuredClone(missing); mixed.items[0].events.push(fixture().items[0].events[0]);
     const dated = structuredClone(missing); dated.items[0].events[0].date = '2026-03-12T14:30:03';
