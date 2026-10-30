@@ -1,0 +1,69 @@
+{
+  "id": "taqbin-hk",
+  "displayName": "TA-Q-BIN Hong Kong",
+  "aliases": [
+    "TA-Q-BIN HK",
+    "Yamato Logistics (HK) Ltd.",
+    "Yamato Logistics Hong Kong",
+    "Yamato HK",
+    "雅瑪多運輸(香港)有限公司",
+    "雅瑪多運輸",
+    "香港宅急便",
+    "宅急便 (香港)"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#fdd000"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://app01.yamatohk.com.hk/spds-track-and-trace/TrackAndTrace?trackingNo={trackingNumber}",
+    "searchUrl": "https://www.yamatohk.com.hk/",
+    "canaryUrl": "https://www.yamatohk.com.hk/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "app01.yamatohk.com.hk"
+      ],
+      "pathPattern": "^/spds-track-and-trace/TrackAndTrace/?$",
+      "params": [
+        "trackingNo"
+      ]
+    },
+    {
+      "domains": [
+        "pms.yamatohk.com.hk"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "track"
+      ]
+    },
+    {
+      "domains": [
+        "delivery.message.sg"
+      ],
+      "pathPattern": "^/YTHKtracking/?$",
+      "params": [
+        "a"
+      ]
+    }
+  ],
+  "detection": []
+}

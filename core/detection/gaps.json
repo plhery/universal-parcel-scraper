@@ -4260,5 +4260,56 @@
     "pattern": "^[A-Z]{3}\\d{11}$",
     "kind": "by_design",
     "reason": "VT Freight Express consignment numbers open with a prefix set per sender, which names the sender rather than the carrier."
+  },
+  {
+    "carrier": "airspeed",
+    "kind": "by_design",
+    "reason": "Airspeed's waybills are nine digits, a run other carriers print, and one public example is too little to claim a layout."
+  },
+  {
+    "carrier": "ase-express",
+    "kind": "by_design",
+    "reason": "ASE's public numbers are runs of digits, some after one or two letters, that other carriers print, and AJEX's numbers share its A1 start, so no rule claims them."
+  },
+  {
+    "carrier": "egxpress",
+    "pattern": "^\\d{9}$",
+    "kind": "by_design",
+    "reason": "EGXPRESS's older nine-digit label numbers are a run other carriers print, so only its FED waybills have a rule."
+  },
+  {
+    "carrier": "maple-logistics",
+    "kind": "by_design",
+    "reason": "Maple Logistics prints ten digits and its barcode twelve; other carriers print both runs, and its check digit would first need a port to the app."
+  },
+  {
+    "carrier": "safexpress",
+    "kind": "by_design",
+    "reason": "Safexpress waybills are eight or twelve digits; other carriers' public numbers share both runs and its 1000 start, so no rule claims them."
+  },
+  {
+    "carrier": "seino-super-express",
+    "kind": "by_design",
+    "reason": "Seino Super Express numbers are bare runs of digits, ten of them shared with Seino Transportation and other carriers, so no rule claims them."
+  },
+  {
+    "carrier": "taqbin-hk",
+    "kind": "by_design",
+    "reason": "TA-Q-BIN Hong Kong prints Yamato's twelve-digit waybills with their mod 7 check digit, which the yamato rule and other carriers' rules take, so no rule names TA-Q-BIN Hong Kong."
+  },
+  {
+    "carrier": "tcc-co",
+    "kind": "by_design",
+    "reason": "TCC's guías are nine digits, a run other carriers print, so no rule claims them."
+  },
+  {
+    "carrier": "xcargo",
+    "kind": "by_design",
+    "reason": "X-Cargo's numbers are sixteen digits, a run other carriers' rules take, so no rule claims them."
+  },
+  {
+    "carrier": "zimpost",
+    "kind": "by_design",
+    "reason": "Zimpost's tracker also reads other posts' items, which their own rules name, and its own ZP reference has one example; no public item ends in ZW yet."
   }
 ]

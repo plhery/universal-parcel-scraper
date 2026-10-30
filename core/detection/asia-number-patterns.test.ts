@@ -781,3 +781,62 @@ describe('Holisol, and four Australian couriers', () => {
     expect(carrierIdFromName('VicTas Freight Express')).toBe('vt-freight-express');
   });
 });
+
+describe('FM Transportes, Fez Delivery, LEX Vietnam, BEST Express Thailand, J&T Express Egypt, EGXPRESS and fourteen more', () => {
+  it('names FM Transportes from its dated codes and suggests the others for their own layouts', () => {
+    for (const number of ['010125A00000000001', '311224ZZ0000000001', '290226000000000A01']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'fm-transportes', confidence: 'high' });
+    }
+    // Zeleris keeps its own layout inside the dated shape.
+    expect(detectCarrierMatch('010125AB000000000Z')).toMatchObject({ carrier: 'zeleris', confidence: 'high' });
+    for (const [number, carrier] of [
+      ['0AAA01012501', 'fez-delivery'], ['AAAA31122401', 'fez-delivery'],
+      ['LMP0000000001VNA', 'lex-vn'], ['LEXST0000000001VN', 'lex-vn'], ['LEXRT0000000001VNA', 'lex-vn'],
+      ['66850000000001', 'best-express-th'], ['JEG000000000001', 'j-and-t-eg'],
+      ['FED2026010100000001', 'egxpress'], ['FED2025123100000002', 'egxpress'],
+    ] as const) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining([carrier]) });
+    }
+    for (const number of [
+      '010125000000000001', '320125A00000000001', '011325A00000000001', '010119A00000000001', '010125A0000000001',
+      'AB0001012501', 'ABC001012501', '1G0A01012501', 'ASE001012501', '0AAA32012501', '0AAA01132501', '0AAA01011901',
+      'LMP000000001VNA', 'LMP0000000001VN', 'LMP0000000001MYA', 'LEXST0000000001VNA', 'LEXRT0000000001VN',
+      '6685000000001', '668500000000001', '66820000000001', 'JEG00000000001', 'JEG0000000000001', 'JTE000000000001',
+      'FED2026130100000001', 'FED2026013200000001', 'FED1926010100000001', 'FED202601010000001',
+    ]) {
+      const { carrier, candidates = [] } = detectCarrierMatch(number);
+      for (const id of ['fm-transportes', 'fez-delivery', 'lex-vn', 'best-express-th', 'j-and-t-eg', 'egxpress']) {
+        expect([carrier, ...candidates], number).not.toContain(id);
+      }
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    expect(parseTrackingInput('https://rastreio.fmtransportes.com.br/#/010125A00000000001'))
+      .toMatchObject({ trackingNumber: '010125A00000000001', carrier: 'fm-transportes', source: 'link' });
+    expect(parseTrackingInput('https://web.fezdelivery.co/track-delivery/0AAA01012501'))
+      .toMatchObject({ trackingNumber: '0AAA01012501', carrier: 'fez-delivery', source: 'link' });
+    expect(parseTrackingInput('https://logistics.lazada.vn/tracking?references=LMP0000000001VNA'))
+      .toMatchObject({ trackingNumber: 'LMP0000000001VNA', carrier: 'lex-vn', source: 'link' });
+    expect(parseTrackingInput('https://www.best-inc.co.th/wapp/track?waybill=66850000000001'))
+      .toMatchObject({ trackingNumber: '66850000000001', carrier: 'best-express-th', source: 'link' });
+    expect(parseTrackingInput('https://www.jtexpress-eg.com/trajectoryQuery?waybillNo=JEG000000000001'))
+      .toMatchObject({ trackingNumber: 'JEG000000000001', carrier: 'j-and-t-eg', source: 'link' });
+    expect(parseTrackingInput('https://tcc.com.co/rastreo/?documento=000000001'))
+      .toMatchObject({ trackingNumber: '000000001', carrier: 'tcc-co', source: 'link' });
+    expect(parseTrackingInput('https://tcc.com.co/rastreo/?tipo=PE&documento=000000001').carrier).not.toBe('tcc-co');
+    expect(parseTrackingInput('https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill=000000001'))
+      .toMatchObject({ trackingNumber: '000000001', carrier: 'airspeed', source: 'link' });
+    for (const [name, id] of [
+      ['TCC', 'tcc-co'], ['FM Transportes', 'fm-transportes'], ['X-Cargo', 'xcargo'], ['Paket Chile', 'paket-cl'],
+      ['Fez Delivery', 'fez-delivery'], ['FamiPort', 'famiport'], ['全統物流', 'ctc-express'], ['便利帶', 'maple-logistics'],
+      ['Seino Super Express', 'seino-super-express'], ['TA-Q-BIN Hong Kong', 'taqbin-hk'], ['Safexpress', 'safexpress'],
+      ['MOVIN Express', 'movin'], ['Lazada Express Vietnam', 'lex-vn'], ['BEST Express Thailand', 'best-express-th'],
+      ['Airspeed', 'airspeed'], ['J&T Express Egypt', 'j-and-t-eg'], ['Egypt Express', 'egxpress'], ['Tawssil', 'tawssil'],
+      ['ASE Express', 'ase-express'], ['Zimbabwe Post', 'zimpost'],
+    ] as const) expect(carrierIdFromName(name), name).toBe(id);
+    // Seino Super Express and TA-Q-BIN Hong Kong keep their own names apart from Seino Transportation's and Yamato's.
+    expect(carrierIdFromName('Seino')).not.toBe('seino-super-express');
+    expect(carrierIdFromName('Yamato')).not.toBe('taqbin-hk');
+  });
+});

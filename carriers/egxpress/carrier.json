@@ -1,0 +1,54 @@
+{
+  "id": "egxpress",
+  "displayName": "EGXPRESS",
+  "aliases": [
+    "Egypt Express",
+    "EG Express",
+    "Egypt Express Corporation",
+    "إيجي اكسبريس"
+  ],
+  "region": {
+    "countries": [
+      "EG"
+    ]
+  },
+  "brand": {
+    "color": "#ff5200"
+  },
+  "selectable": true,
+  "timezone": "Africa/Cairo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/?trackingID={trackingNumber}",
+    "searchUrl": "https://www.egyptexpress.com.eg/en-us/tracking-shipment/",
+    "canaryUrl": "https://www.egyptexpress.com.eg/en-us/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.egyptexpress.com.eg",
+        "egyptexpress.com.eg"
+      ],
+      "pathPattern": "^/(?:en-us|ar-eg)/tracking-shipment/?$",
+      "params": [
+        "trackingID"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "egxpress-1",
+      "pattern": "^FED20\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{8}$",
+      "confidence": "low"
+    }
+  ]
+}

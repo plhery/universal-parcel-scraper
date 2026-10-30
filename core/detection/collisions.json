@@ -135,6 +135,15 @@
     "reason": "Australia Post consignment numbers have twelve characters, which Colis Privé's rule for any 12-character alphanumeric also takes. The Australia Post rule follows the consignment layout, which no Colis Privé record has, so it is preferred; the number stays a suggestion, Australia Post first."
   },
   {
+    "shape": "99 then a three-character location ID with a letter, then 9{7}",
+    "carriers": [
+      "australia-post",
+      "colis-prive",
+      "fez-delivery"
+    ],
+    "reason": "Australia Post consignment numbers have twelve characters, which Colis Privé's rule for any 12-character alphanumeric also takes. The Australia Post rule follows the consignment layout, which no Colis Privé record has, so it is preferred; the number stays a suggestion, Australia Post first."
+  },
+  {
     "shape": "9{23} with 000 after the fourteenth digit and a GS1 check digit",
     "carriers": [
       "australia-post",
@@ -1839,6 +1848,25 @@
     "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "best-express-th"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
     "shape": "14 digits, ending 7, 8 or 9",
     "carriers": [
       "brt",
@@ -1852,6 +1880,24 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "best-express-th"
     ],
     "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
@@ -4396,6 +4442,16 @@
     "reason": "Aramex Australia and Aramex New Zealand print the same twelve-character labels on one platform, each with its own database, and Colis Privé's rule takes any twelve letters or digits. All three are low-confidence: the label names neither network, so direct tracking must find it on one of them."
   },
   {
+    "shape": "Two letters, or a digit and a letter, followed by ten digits",
+    "carriers": [
+      "colis-prive",
+      "aramex-au",
+      "aramex-nz",
+      "fez-delivery"
+    ],
+    "reason": "Aramex Australia and Aramex New Zealand print the same twelve-character labels on one platform, each with its own database, and Colis Privé's rule takes any twelve letters or digits. All three are low-confidence: the label names neither network, so direct tracking must find it on one of them."
+  },
+  {
     "shape": "Five digits, A and ten digits",
     "carriers": [
       "apc-postal-logistics",
@@ -6484,5 +6540,43 @@
       "shipter"
     ],
     "reason": "Colis Privé accepts generic twelve-character composites; Shipter's layout is the only other rule, and both are low-confidence suggestions."
+  },
+  {
+    "shape": "SP followed by nine digits",
+    "carriers": [
+      "gls-it",
+      "prompt-xpress"
+    ],
+    "reason": "GLS Italy's low rule takes any two letters and nine digits, which includes Prompt Xpress's SP and nine digits; both stay low suggestions."
+  },
+  {
+    "shape": "Four letters or digits with a letter, then a day, a month and four digits",
+    "carriers": [
+      "colis-prive",
+      "fez-delivery"
+    ],
+    "reason": "Colis Privé's rule takes any twelve letters or digits, which includes Fez Delivery's dated order numbers; both are low-confidence, so direct tracking must find the number."
+  },
+  {
+    "shape": "Twelve digits starting with 0, 1 or 250 that pass the Identcode and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "dpd-fr",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending"
+    ],
+    "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   }
 ]
