@@ -185,6 +185,8 @@ export const statusMap: CarrierStatusMap = {
     { code: 'MIDLI', note: "The recipient's delivery instruction, not a scan: the parcel keeps the stage it had." },
     { code: 'MIA', note: "The receipt of the recipient's delivery instruction, not a scan: the parcel keeps the stage it had." },
     { code: 'MII', note: "The recipient's delivery instruction, as MIDLI words it, not a scan: the parcel keeps the stage it had." },
+    { wording: 'your parcel will be delivered to a safe place according to your instructions', note: "The label of MII and MIDLI, the recipient's delivery instruction: the parcel keeps the stage it had." },
+    { wording: 'we received your delivery instructions', note: "The label of MIA, the receipt of the recipient's delivery instruction: the parcel keeps the stage it had." },
     { code: 'ENA', note: "A data exchange inside DPD's systems before the parcel reaches the origin depot, not a scan: the parcel keeps the stage it had." },
     { code: 'DEYY', note: 'The proof of delivery, paperwork after the delivery scan: dropped beside it, delivered alone only when the enumeration says so.' },
     { code: 'DODEYY', note: 'The proof of delivery after a collection from a pickup point, read like DEYY.' },

@@ -42,6 +42,13 @@ describe('status map answers', () => {
     expect(answer('dpd', null, '  Your parcel is ON its way')).toEqual({
       kind: 'intentional_gap', note: "The label of IN_TRANSIT, which DPD's map leaves unmapped on purpose.",
     });
+    // The recipient's delivery instruction and its receipt keep the stage wherever they come without their codes.
+    expect(answer('dpd', null, 'Your parcel will be delivered to a safe place according to your instructions')).toEqual({
+      kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/),
+    });
+    expect(answer('dpd', null, 'We received your delivery instructions')).toEqual({
+      kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/),
+    });
     expect(answer('dpd', 'ZZZ', 'Your parcel is on its way')).toEqual(unknown);
     // A code gap covers no wording that came without the code.
     expect(answer('dpd', null, 'Your parcel arrived at our depot')).toEqual(unknown);
