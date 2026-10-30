@@ -34,8 +34,10 @@ const ORIGIN_OFFICES: ReadonlyArray<readonly [RegExp, string]> = [[/^LON [A-Z]\b
  * a sender abroad, Chinese consolidators posting their letters in Switzerland through their
  * European hubs, and carries the sending system's Beijing wall clock under Swiss Post's offset:
  * Cainiao's notice on a letter from its Dutch hub read 18:12 +01:00 in a reply Swiss Post gave
- * at 13:58 its own time, hours before it, and on Beijing's clock it is 11:12. Parcels give their
- * notice another code (600), on Swiss Post's clock, half an hour after their arrival scan.
+ * at 13:58 its own time, hours before it, and on Beijing's clock it is 11:12. Until the letter
+ * arrives, the reply may name no sender: only a sender in Switzerland keeps Swiss Post's clock.
+ * Parcels give their notice another code (600), on Swiss Post's clock, half an hour after their
+ * arrival scan.
  */
 export const PRE_ADVICE = '859';
 export const PRE_ADVICE_ZONE = 'Asia/Shanghai';

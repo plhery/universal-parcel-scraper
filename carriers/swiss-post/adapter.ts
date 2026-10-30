@@ -268,8 +268,8 @@ function originClock(event: JsonObject, time: string, imported: boolean): string
 /** A sender abroad's notice that its letter will shortly be handed over, on its system's clock ([clock.ts](clock.ts)). */
 function preAdviceClock(event: JsonObject, time: string, sender: string): string {
   const wall = WALL_CLOCK.exec(time)?.[1];
-  const abroad = /^[A-Z]{2}$/.test(sender) && sender !== 'CH';
-  if (!abroad || !wall || text(event.eventCode, 100).split('.').at(-1) !== PRE_ADVICE) return time;
+  // Before the letter arrives, the reply may name no sender yet.
+  if (sender === 'CH' || !wall || text(event.eventCode, 100).split('.').at(-1) !== PRE_ADVICE) return time;
   return isoTime(wall, PRE_ADVICE_ZONE)?.iso ?? time;
 }
 
