@@ -67,6 +67,10 @@ Tracked through the lookup its tracking page makes.
   destination's on Beijing's wall clock. The app's scan-identity policy lets that scan take the
   copy's row over once JCEX lists it.
 - Other JCEX number layouts are not looked up until one is seen.
+- `track.jcex.com` and `www.jcex.com` go through one CDN edge, which can stop answering outside
+  China while JCEX's origin still serves the tracker under the same name. No other public
+  hostname reaches the API, and the supplied transport cannot pin an address, so lookups then
+  fail as network errors and enabled providers answer.
 
 ## Numbers
 
