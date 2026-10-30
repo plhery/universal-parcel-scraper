@@ -172,11 +172,13 @@ step exists for future protocol changes.
   other scan with its offset and time. Read at midnight on the pickup's clock, it took a
   time FedEx never gives. It stays a scan, so when it is the latest one `last_update` is
   null. BRT's "FOR DELIVERY" at 00:00 keeps its day the same way: BRT's page gives that
-  step a date and no time. A pickup at another time, another FedEx or BRT scan at 00:00
-  and other carriers' midnight scans keep their instants. Such a step is left out when a
-  timed scan of the reply shows the same stage that day, as DPD Germany's "Parcel out for
-  delivery" does BRT's "FOR DELIVERY" on a parcel BRT hands to it: without a time, the
-  copy has no place among that day's scans.
+  step a date and no time. So do USPS's pre-shipment notice and its place-less "In Transit
+  to Next Facility", which USPS dates by the day alone: read on the clock of a placed scan
+  near them, they came at a US midnight. A pickup at another time, another FedEx, BRT or
+  USPS scan at 00:00 and other carriers' midnight scans keep their instants. Such a step is
+  left out when a timed scan of another network shows the same stage that day, as DPD
+  Germany's "Parcel out for delivery" does BRT's "FOR DELIVERY" on a parcel BRT hands to
+  it: without a time, the copy has no place among that day's scans.
 - A network whose every scan in the reply is at 00:00, at least three of them over two
   days or more, keeps their days in `local_time` the same way. ParcelsApp writes
   Shiprocket's scans so, while Shiprocket's own tracker gives each its minute. So does a

@@ -139,11 +139,15 @@ const UNLOCATED_LOCAL_CLOCKS = new Set(['ups', 'fedex']);
  * ParcelsApp words it "Picked Up", with a no-break space. Read at midnight on
  * the pickup's clock, it took a time FedEx never gives; it keeps its day in
  * `local_time` instead. BRT's page gives its "FOR DELIVERY" step a date and
- * no time, and ParcelsApp writes it at 00:00 too.
+ * no time, and ParcelsApp writes it at 00:00 too. So does USPS's for its
+ * pre-shipment notice and its place-less "In Transit to Next Facility" (worded
+ * "In Transit, Arriving On Time" or "Arriving Late" while it is the newest):
+ * read on the clock of a placed scan near it, it came at a US midnight.
  */
+const USPS_UNTIMED = /^(?:in\s+transit(?:\s+to\s+next\s+facility|,\s*arriving\s+(?:on\s+time|late))|pre-shipment\s+info\s+sent\s+to\s+usps(?:,\s*usps\s+awaiting\s+item)?)$/i;
 function datedOnly(name: unknown, status: string, date: unknown): string | null {
   const wall = mislabeledWallTime(date);
-  const step = nameKey(name) === 'fedex' ? /^picked\s+up$/i
+  const step = nameKey(name) === 'fedex' ? /^picked\s+up$/i : nameKey(name) === 'usps' ? USPS_UNTIMED
     : typeof name === 'string' && carrierIdFromName(name) === 'brt' ? /^for\s+delivery$/i : null;
   return step?.test(status.trim()) && wall && /T00:00:00(?:\.0+)?$/.test(wall) ? wall.slice(0, 10) : null;
 }
@@ -1334,14 +1338,17 @@ function passedDeliveries(events: readonly CarrierEvent[]): CarrierEvent[] {
 }
 
 /**
- * The steps dated by their day alone (`datedOnly`) that a timed scan of the
- * reply shows at the same stage that day: BRT's "FOR DELIVERY" on a parcel DPD
- * Germany delivers, whose "Parcel out for delivery" ParcelsApp has at its
- * minute. With no time, the copy has no place among the day's scans.
+ * The steps dated by their day alone (`datedOnly`) that a timed scan of
+ * another network shows at the same stage that day: BRT's "FOR DELIVERY" on a
+ * parcel DPD Germany delivers, whose "Parcel out for delivery" ParcelsApp has
+ * at its minute. With no time, the copy has no place among the day's scans. A
+ * network's own scans are not copies of its step: USPS's "In Transit to Next
+ * Facility" stays beside the day's facility scans.
  */
-function timedTwins(events: readonly CarrierEvent[], days: ReadonlySet<CarrierEvent>): CarrierEvent[] {
-  return [...days].filter((day) => day.stage_source !== 'none' && events.some((other) => !days.has(other) && other.stage === day.stage
-    && other.stage_source !== 'none' && clockOf(other).slice(0, 10) === day.local_time));
+function timedTwins(carried: readonly { event: CarrierEvent; carrier: string }[], days: ReadonlySet<CarrierEvent>): CarrierEvent[] {
+  return carried.filter(({ event: day, carrier }) => days.has(day) && day.stage_source !== 'none'
+    && carried.some(({ event: other, carrier: network }) => network !== carrier && !days.has(other) && other.stage === day.stage
+      && other.stage_source !== 'none' && clockOf(other).slice(0, 10) === day.local_time)).map(({ event }) => event);
 }
 
 // Russian Post's summary of a delivery, "Вручено 22 октября" (delivered on 22 October).
@@ -1362,8 +1369,8 @@ function dropRussianPostSummaries(events: CarrierEvent[], summaries: ReadonlySet
 }
 
 /** Leaves out the passed deliveries and the timed steps' untimed twins. */
-function dropPassed(events: CarrierEvent[], steps: ReadonlySet<CarrierEvent>): void {
-  const dropped = new Set([...passedDeliveries(events), ...timedTwins(events, steps)]);
+function dropPassed(events: CarrierEvent[], carried: readonly { event: CarrierEvent; carrier: string }[], steps: ReadonlySet<CarrierEvent>): void {
+  const dropped = new Set([...passedDeliveries(events), ...timedTwins(carried, steps)]);
   for (let index = events.length; index--;) if (dropped.has(events[index]!)) events.splice(index, 1);
 }
 
@@ -1635,7 +1642,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   markReturnLeg(scans);
   markLaterReceipts(scans);
   markHandovers(carried);
-  dropPassed(events, steps);
+  dropPassed(events, carried, steps);
   dropRussianPostSummaries(events, summaries);
   latest.check();
   if (!events.length) {
@@ -1779,7 +1786,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
   markReturnLeg(scans);
   markLaterReceipts(scans);
   markHandovers(carried);
-  dropPassed(events, steps);
+  dropPassed(events, carried, steps);
   latest.check();
   return { ...result(events, SOURCE), ...(undated ? { undated_event_count: undated } : {}),
     ...universalCarrierHints(carriers.slice(0, 20), numberOf(trackingNumber)) };

@@ -1130,6 +1130,37 @@ describe('ParcelsApp result parsing', () => {
     expect(parseParcelsAppHtml(rendered(carrierRow('11 Aug 2026', '00:00', 'Picked Up', 'FedEx')), number).events?.[0]?.time).toBeUndefined();
   });
 
+  it('keeps the day of the steps USPS dates without a time, instead of a US midnight', () => {
+    const read = (states: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['USPS'], states }, number, identity())
+      .events?.map(({ description, time, local_time }) => [description, time ?? local_time]);
+    // Live shape: ParcelsApp writes them at 00:00 with no place, and a placed
+    // scan's Pacific clock read them at 07:00 UTC. The facility scan of the
+    // evening before keeps the next day's step.
+    const facility = 'EXAMPLE CITY CA DISTRIBUTION CENTER';
+    expect(read([
+      { date: '2026-10-26T00:00:00Z', status: 'In Transit to Next Facility', carrier: 0 },
+      { date: '2026-10-24T00:00:00Z', status: 'In Transit to Next Facility', carrier: 0 },
+      { date: '2026-10-23T19:42:00Z', status: 'Arrived at USPS Regional Facility', carrier: 0, location: facility },
+      { date: '2026-10-13T00:00:00Z', status: 'Pre-Shipment Info Sent to USPS, USPS Awaiting Item', carrier: 0 },
+    ])).toEqual([
+      ['In Transit to Next Facility', '2026-10-26'],
+      ['Arrived at USPS Regional Facility', '2026-10-24T02:42:00.000Z'],
+      ['In Transit to Next Facility', '2026-10-24'],
+      ['Pre-Shipment Info Sent to USPS, USPS Awaiting Item', '2026-10-13'],
+    ]);
+    // The step at another time, and another USPS scan at 00:00, keep their instants.
+    expect(read([
+      { date: '2026-10-25T18:24:00Z', status: 'In Transit to Next Facility', carrier: 0 },
+      { date: '2026-10-25T00:00:00Z', status: 'Departed USPS Regional Facility', carrier: 0, location: facility },
+    ])).toEqual([
+      ['In Transit to Next Facility', '2026-10-26T01:24:00.000Z'],
+      ['Departed USPS Regional Facility', '2026-10-25T07:00:00.000Z'],
+    ]);
+    // The rendered page gives the same day.
+    expect(parseParcelsAppHtml(rendered(carrierRow('24 Oct 2026', '00:00', 'In Transit to Next Facility', 'USPS')), number).events
+      ?.map(({ time, local_time }) => [time, local_time])).toEqual([[undefined, '2026-10-24']]);
+  });
+
   it('keeps the days of a network whose every scan the reply writes at 00:00', () => {
     const scan = (date: string, status: string, carrier = 0) => ({ date, status, carrier, location: 'Example_Hub (Example State)' });
     const read = (carriers: string[], states: Record<string, unknown>[]) =>
