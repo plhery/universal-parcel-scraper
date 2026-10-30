@@ -16,6 +16,7 @@
     { "wording": "The parcel has now cleared customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "The parcel has arrived at the delivery depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your delivery has been cancelled", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "Goes on to ask the recipient to contact the named sender." },
+    { "wording": "As requested, your parcel will now be delivered on Thu 05 November 2026 at 11:00", "language": "en", "unmapped": true, "confirmedBy": "live", "firstSeen": "2026-10-30", "note": "The day and hour the recipient chose, after the depot scan: a notice, so the scan before it keeps its stage." },
     { "wording": "Your parcel will be with you today", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your parcel will be with you today between 14:18 and 15:18", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "The round's notice with its delivery hour; any hours." },
     { "wording": "We missed you. Your driver won't be back today but we'll be back Wed 28 October with your parcel", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "A round that missed the recipient, with the day of the next; any day. The driver's name the sentence gives is left out." },

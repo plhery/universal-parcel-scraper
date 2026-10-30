@@ -374,8 +374,9 @@ reads a scan without one by its wording or as in transit. [statusMaps.ts](core/c
 adapter, so Delivengo reads La Poste's. `statusMapAnswer()` in the app entry asks them the
 way the app keys the wording it reviews: carrier, provider code, and the wording in
 `normalizeStatusWording()` form. It answers `mapped` with the stage, `intentional_gap` with
-the note, or `unknown`. A gap without a code covers only wording that came without one, and
-a gap without wording covers every wording of its code. The answer reads the code and
+the note, or `unknown`. A gap without a code covers only wording that came without one, a
+gap without wording covers every wording of its code, and the map's `gapNote` names the gaps
+it cannot list one by one, such as notices that carry a date. The answer reads the code and
 wording alone: a stage that depends on the rest of the reply, such as a DPD scan staged by
 its enumeration twin, is `unknown`, and so is every scan of a carrier without a declaration.
 The app files the scans a universal provider relays under the carrier `unknown`. Their map is

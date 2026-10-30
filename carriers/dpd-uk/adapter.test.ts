@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, DpdUkTracker } from './adapter.js';
 import { classifyDpdUkWording, normalizeDpdUkNumber, parseDpdUkHistory, parseDpdUkReference } from './parser.js';
@@ -110,8 +111,13 @@ describe('DPD UK public history projection', () => {
     expect(project(payload).sender_name).toBe('Example Merchant');
   });
 
-  it('files every recorded wording under its stage', () => {
+  it('files every recorded wording under its stage, and its notices as gaps', () => {
     for (const entry of statuses.entries) {
+      const answer = statusMapAnswer({ carrier: 'dpd-uk', providerCode: null, description: entry.wording });
+      if ('unmapped' in entry) {
+        expect(answer.kind).toBe('intentional_gap');
+        continue;
+      }
       expect(classifyDpdUkWording(entry.wording)).toEqual({ stage: entry.stage, source: 'carrier_map' });
     }
     expect(classifyDpdUkWording('constructor').source).not.toBe('carrier_map');
@@ -130,8 +136,17 @@ describe('DPD UK public history projection', () => {
   });
 
   it.each(['A notification has been sent to advise you when the delivery will take place',
-    'As requested, your parcel will now be left in your selected safe place'])('gives the notice %s no mapped stage', text => {
+    'As requested, your parcel will now be left in your selected safe place',
+    'As requested, your parcel will now be delivered on Mon 2 November 2026 at 9:30.',
+    'As requested, your parcel will now be delivered on Mon 2 November 2026'])('gives the notice %s no mapped stage', text => {
     expect(classifyDpdUkWording(text).source).not.toBe('carrier_map');
+    expect(statusMapAnswer({ carrier: 'dpd-uk', providerCode: null, description: text }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+  });
+
+  it('leaves a delivery wording that names a day without a request open', () => {
+    expect(statusMapAnswer({ carrier: 'dpd-uk', providerCode: null, description: 'Your parcel will now be delivered on Mon 2 November 2026' }).kind)
+      .toBe('unknown');
   });
 
   it.each(['different', 'missing', 'malformed', 'ambiguous', 'unsafe-handle'])('rejects a %s reference lookup', mode => {

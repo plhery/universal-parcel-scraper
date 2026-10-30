@@ -22,4 +22,6 @@ export function wanbStage(code: string | null, wording: string): Stage | null | 
 
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => wanbStage(code, wording) ?? undefined, gaps: [],
+  gapNote: (code, wording) => (wanbStage(code, wording) === null
+    ? 'A line that moves nothing, such as a booked flight or delivery day: the parcel keeps the stage it had.' : undefined),
 };

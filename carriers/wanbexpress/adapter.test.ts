@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { ChallengeError } from '../../core/errors/index.js';
 import { TrawlClient } from '../../core/transport/trawl.js';
@@ -102,6 +103,10 @@ describe('WanbExpress', () => {
     expect(statusMap.stage(null, '【sample ds】 back to ds.')).toBe('failed_attempt');
     expect(statusMap.stage('LastMileDeliveryReady', '【sample ds】shipment out for delivery.')).toBe('out_for_delivery');
     expect(wanbStage(null, 'scheduled to <2031-04-23> .')).toBeNull();
+    // And closes it as a gap that keeps the stage before it, whatever day it names.
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Scheduled to <2031-04-23> .' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Sample wording' }).kind).toBe('unknown');
   });
 
   it('keeps the courier\'s number and names the courier the last-mile panel gives for the shipping service', async () => {

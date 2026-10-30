@@ -797,9 +797,10 @@ function carrierStatusMap(carrier: string): CarrierStatusMap | undefined {
  * What the carrier's map says about one observed scan, keyed as the app keys
  * its observations: carrier, provider code and `normalizeStatusWording`
  * wording. A gap without a code covers only wording that came without one; a
- * gap without wording covers every wording of its code. A scan a universal
- * provider relayed is `mapped` with the stage the providers' reading gives it,
- * as the sync does, and `unknown` when neither its code nor a rule stages it.
+ * gap without wording covers every wording of its code; the map's `gapNote`
+ * names the gaps it cannot list. A scan a universal provider relayed is
+ * `mapped` with the stage the providers' reading gives it, as the sync does,
+ * and `unknown` when neither its code nor a rule stages it.
  */
 export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
   const map = carrierStatusMap(observed.carrier);
@@ -811,5 +812,6 @@ export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
   const key = code === null ? null : map.codeKey?.(code) ?? code;
   const gap = map.gaps.find((candidate) => (candidate.code ?? null) === key
     && (candidate.wording === undefined || candidate.wording === wording));
-  return gap ? { kind: 'intentional_gap', note: gap.note } : UNKNOWN;
+  const note = gap?.note ?? map.gapNote?.(code, wording);
+  return note ? { kind: 'intentional_gap', note } : UNKNOWN;
 }

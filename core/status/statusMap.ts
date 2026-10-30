@@ -30,6 +30,12 @@ export interface CarrierStatusMap {
    */
   readonly stage: (code: string | null, wording: string) => Stage | undefined;
   readonly gaps: readonly IntentionalStatusGap[];
+  /**
+   * Why the map leaves a scan without a stage on purpose, by the same code and
+   * wording, for gaps `gaps` cannot list one by one, such as a notice that
+   * carries a date; undefined for any other scan.
+   */
+  readonly gapNote?: (code: string | null, wording: string) => string | undefined;
 }
 
 /** Lower case, single spaces and at most 500 characters: the form the app keys its observations on. */

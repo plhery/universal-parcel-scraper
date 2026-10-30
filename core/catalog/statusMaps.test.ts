@@ -835,8 +835,11 @@ describe('status map answers', () => {
     expect(answer('dpd-uk', null, 'Your parcel is waiting for you at home (left in safe place)')).toEqual(mapped('delivered'));
     expect(answer('dpd-uk', null, 'Your delivery has been cancelled, please contact Example Merchant for further details')).toEqual(mapped('exception'));
     expect(answer('dpd-uk', null, 'The parcel has been delivered back to the sender')).toEqual(mapped('returned'));
-    // Its notices keep no stage.
-    expect(answer('dpd-uk', null, 'A notification has been sent to advise you when the delivery will take place')).toEqual(unknown);
+    // Its notices get no stage: gaps, the dated ones too, that keep the stage before them.
+    for (const notice of ['A notification has been sent to advise you when the delivery will take place',
+      'As requested, your parcel will now be delivered on Thu 05 November 2026 at 11:00']) {
+      expect(answer('dpd-uk', null, notice)).toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    }
   });
 
   it("answers Packeta by its event sentences, and not by the parcel's status wording", () => {
