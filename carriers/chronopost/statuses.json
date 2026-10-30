@@ -235,6 +235,33 @@
       "language": "fr"
     },
     {
+      "code": "N",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A delivery partner's missed round, with or without its reason; the reason is restated when the recipient's instruction asks for another address, and a postponement follows.",
+      "wording": "Colis non livré",
+      "language": "fr"
+    },
+    {
+      "code": "N",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A delivery partner's missed round, with or without its reason; the reason is restated when the recipient's instruction asks for another address, and a postponement follows.",
+      "wording": "Colis non livré : client absent",
+      "language": "fr"
+    },
+    {
+      "code": "N",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A delivery partner's missed round, with or without its reason; the reason is restated when the recipient's instruction asks for another address, and a postponement follows.",
+      "wording": "Colis non livré : changement d'adresse nécessaire",
+      "language": "fr"
+    },
+    {
       "code": "TA",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
