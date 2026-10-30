@@ -36883,7 +36883,9 @@ export const CARRIER_CATALOG = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xgs",
+      "recognitionRank": 102,
+      "localClocks": true
     },
     "canaryUrl": "https://www.xgsi.com/",
     "trackingUrlTemplate": "https://www.xgsi.com/#track-shipment={trackingNumber}",

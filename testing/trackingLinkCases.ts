@@ -1993,6 +1993,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tonami', number: '0000000011',
     route: /^https:\/\/trc1\.tonami\.co\.jp\/trc\/search3\/excSearch3\?id%5B0%5D=0000000011$/,
     marker: /該当伝票番号なし|詳細1/ },
+  // The site's tracking widget reads the probill from the address fragment and asks its API.
+  { carrier: 'xgs', number: '00000017',
+    route: /^https:\/\/www\.xgsi\.com\/#track-shipment=00000017$/,
+    marker: /No data was found for the specified criteria|Detail Information/ },
   // The portal renders the shipment's card, or says it has none, with HTTP 200.
   { carrier: 'logisimple', number: '000000000017',
     route: /^https:\/\/portal\.logisimple\.pt\/pt\/tracking\?tracking=000000000017$/,

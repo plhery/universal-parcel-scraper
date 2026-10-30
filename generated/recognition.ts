@@ -465,6 +465,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "whistl": 320,
   "whiz-delivery": 104,
   "winit": 855,
+  "xgs": 102,
   "xlcourier": 841,
   "xpo-ltl": 25,
   "ycs-logistics": 718,
