@@ -7,9 +7,9 @@ const WORDINGS = new Map<string, Stage>(statuses.entries.map((entry) => [normali
 /** Wordings GZYL writes a town after, leaving the row's own place empty. */
 export const PLACED_WORDINGS: readonly string[] = ['Arrival sorting, distribution center', 'Leaving the sorting center', 'Package is on the way', 'Delivered'];
 const PLACED = PLACED_WORDINGS.map((wording) => `${normalizeStatusWording(wording)} `);
-// A town: a letter, then letters, digits, spaces, dots, apostrophes or hyphens,
-// but not a phrase such as "to the neighbour" that goes on the wording.
-export const TOWN = /^(?!(?:to|at|in|on|by|with|from|for)\b)\p{L}[\p{L}\p{N} .'-]*$/iu;
+// A town: a letter, then letters, digits, spaces, dots, apostrophes, hyphens or the question
+// marks GZYL writes for letters it lost, but not a phrase such as "to the neighbour" that goes on the wording.
+export const TOWN = /^(?!(?:to|at|in|on|by|with|from|for)\b)\p{L}[\p{L}\p{N} .'?-]*$/iu;
 // The city some rows name after the wording, in brackets: "[Los Angeles]".
 const PLACE_TAIL = / \[[^\]]+\]$/;
 

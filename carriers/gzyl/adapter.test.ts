@@ -78,6 +78,7 @@ describe('GZYL tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Leaving the sorting center Sampletown' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Package is on the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Delivered Sampletown' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Delivered Sample ?own 00-000' })).toEqual({ kind: 'mapped', stage: 'delivered' });
     expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Delivered to the parcel locker' })).toEqual({ kind: 'unknown' });
     // Or its city after the wording, in brackets.
     expect(statusMapAnswer({ carrier: 'gzyl', providerCode: null, description: 'Los Angeles Processing Center has received it [Los Angeles]' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
@@ -92,6 +93,7 @@ describe('GZYL tracking adapter', () => {
     expect(splitGzylRow('Package is on the way, see the partner', '')).toEqual({ content: 'Package is on the way, see the partner', location: '' });
     expect(splitGzylRow('Goods leave the operation center', '')).toEqual({ content: 'Goods leave the operation center', location: '' });
     expect(splitGzylRow('Delivered Sampletown', '')).toEqual({ content: 'Delivered', location: 'Sampletown' });
+    expect(splitGzylRow('Delivered Sample ?own 00-000', '')).toEqual({ content: 'Delivered', location: 'Sample ?own 00-000' });
     expect(splitGzylRow('Delivered to the neighbour', '')).toEqual({ content: 'Delivered to the neighbour', location: '' });
 
     const reply = structuredClone(fixture('track')) as [{ data: [{ trackDetails: Record<string, string>[] }] }];
