@@ -2,6 +2,7 @@ const ORIGIN = 'https://rastreamento.correios.com.br';
 const PAGE = `${ORIGIN}/app/index.php`;
 const API = `${ORIGIN}/app/resultado.php`;
 const MAX_BODY = 1_000_000;
+const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'correios.verification', ...fields }));
 
 const isObject = value => !!value && typeof value === 'object' && !Array.isArray(value);
 const pick = (row, keys) => Object.fromEntries(keys.filter(key => Object.hasOwn(row, key)).map(key => [key, row[key]]));
@@ -35,13 +36,13 @@ export function correiosBrowserNumber(rawUrl, capture = {}) {
 }
 
 /** Search through the tracker's form once Turnstile has given the page its token. */
-export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeout, installPolicy }) {
+export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeout, installPolicy, onVerification = reportVerification }) {
   const number = correiosBrowserNumber(url, capture);
   if (!number) return undefined;
   const start = Date.now();
   let context, page, timer, onResponse;
-  let expired = false, accepting = true, statusCode = 0, widget = false, searched = false;
-  let responseCount = 0, totalBytes = 0, lastClick = 0;
+  let expired = false, accepting = true, statusCode = 0, widget = false, searched = false, tokenReceived = false, timedOut = false;
+  let responseCount = 0, totalBytes = 0, lastClick = 0, pendingBodies = 0;
   const entries = [];
   const remaining = () => Math.max(1, maxTimeout - (Date.now() - start));
   const close = async target => {
@@ -108,13 +109,15 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
           if (!Number.isSafeInteger(length) || length < 0 || length > MAX_BODY || totalBytes >= 3 * MAX_BODY) {
             entry.truncated = true; finish(); return;
           }
+          pendingBodies++;
           void response.body().then(bytes => {
             if (!accepting) return;
             totalBytes += bytes.length;
             if (bytes.length > MAX_BODY || totalBytes > 3 * MAX_BODY) entry.truncated = true;
             else entry.body = trackingData(bytes);
             finish();
-          }).catch(() => { if (accepting) { entry.error = 'Correios tracking response could not be read'; finish(); } });
+          }).catch(() => { if (accepting) { entry.error = 'Correios tracking response could not be read'; finish(); } })
+            .finally(() => { pendingBodies--; });
         };
         page.on('response', onResponse);
         const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
@@ -125,6 +128,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
           widget ||= await page.locator('#form-rastreamento .cf-turnstile').count().catch(() => 0) > 0;
           const token = widget ? await page.locator('#form-rastreamento [name="cf-turnstile-response"]').inputValue().catch(() => '') : '';
           if (token) {
+            tokenReceived = true;
             if (await field.inputValue().catch(() => '') !== number) await field.fill(number, { timeout: Math.min(5000, remaining()) });
             await page.locator('#b-pesquisar').click({ timeout: Math.min(5000, remaining()) });
             searched = true;
@@ -139,7 +143,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
         await page.waitForTimeout(Math.min(300, remaining()));
         return result();
       })(),
-      new Promise((_, reject) => { timer = setTimeout(() => { expired = true; reject(new Error('Browser deadline')); }, maxTimeout); }),
+      new Promise((_, reject) => { timer = setTimeout(() => { timedOut = expired = true; reject(new Error('Browser deadline')); }, maxTimeout); }),
     ]);
   } catch {
     // An unresolved widget or a refused reply is a challenge for the adapter, not a missing parcel.
@@ -151,5 +155,16 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
     clearTimeout(timer);
     if (page && onResponse) page.off('response', onResponse);
     if (context) await close(context);
+    const last = entries.at(-1);
+    try {
+      onVerification({ nativeOutcome: tokenReceived ? 'token_received' : widget ? 'waiting' : 'not_started',
+        searched, responses: entries.length, pending: pendingBodies,
+        pageStatus: Number.isInteger(statusCode) && statusCode >= 100 && statusCode <= 599 ? statusCode : 0,
+        apiStatus: Number.isInteger(last?.status) && last.status >= 100 && last.status <= 599 ? last.status : 0,
+        outcome: !last ? timedOut ? 'timeout' : 'not_submitted'
+          : [400, 401, 403].includes(last.status) ? 'challenge' : last.status === 429 ? 'rate_limited'
+            : last.error || last.truncated || last.status === 200 && (!last.body || last.body === 'null') ? 'incomplete' : 'http_response',
+        durationMs: Date.now() - start });
+    } catch { /* Diagnostics must not change the tracking result or cleanup. */ }
   }
 }

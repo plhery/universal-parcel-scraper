@@ -16,7 +16,7 @@ const response = (status = 200, value = body, sent = form()) => ({ url: () => en
   request: () => ({ method: () => 'POST', postData: () => sent }),
   headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }), body: async () => Buffer.from(value) });
 function fixture() {
-  const handlers = {}, state = { closed: 0, clicked: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1 };
+  const handlers = {}, state = { closed: 0, clicked: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1, diagnostics: [] };
   const page = { on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
     goto: async () => ({ status: () => 200 }),
     locator: selector => ({
@@ -27,7 +27,7 @@ function fixture() {
     }),
     frames: () => [], waitForTimeout: async () => {},
   };
-  const options = { url, capture, tier: 3, maxTimeout: 1000,
+  const options = { url, capture, tier: 3, maxTimeout: 1000, onVerification: fields => state.diagnostics.push(fields),
     handle: { browser: { newContext: async () => ({ newPage: async () => page, close: async () => { state.closed++; } }) } },
     installPolicy: async () => { state.policy++; },
   };
@@ -61,6 +61,9 @@ test('searches once the token is there, binds the request and keeps only the fie
   assert.equal(active.state.clicked, 1); assert.deepEqual(active.state.filled, []);
   assert.equal(active.state.closed, 1); assert.equal(active.state.policy, 1);
   assert.deepEqual(active.handlers, {});
+  assert.equal(active.state.diagnostics.length, 1);
+  assert.deepEqual({ ...active.state.diagnostics[0], durationMs: 0 }, { nativeOutcome: 'token_received', searched: true,
+    responses: 1, pending: 0, pageStatus: 200, apiStatus: 200, outcome: 'http_response', durationMs: 0 });
 });
 
 test('fills the field when the page did not, and ignores replies for another number', async () => {
@@ -85,6 +88,8 @@ test('keeps a refused check as its status and never searches without a token', a
   } }))(refused.page.locator);
   const result = await runCorreiosBrowser(refused.options);
   assert.deepEqual(result.capturedResponses.map(row => [row.status, row.body]), [[403, null]]);
+  assert.equal(refused.state.diagnostics[0].outcome, 'challenge');
+  assert.equal(refused.state.diagnostics[0].apiStatus, 403);
 
   const waiting = fixture();
   waiting.state.token = ''; waiting.options.maxTimeout = 20;
@@ -92,6 +97,9 @@ test('keeps a refused check as its status and never searches without a token', a
   const unresolved = await runCorreiosBrowser(waiting.options);
   assert.equal(unresolved.status, 'success'); assert.deepEqual(unresolved.capturedResponses, []);
   assert.equal(waiting.state.clicked, 0); assert.equal(waiting.state.closed, 1);
+  assert.equal(waiting.state.diagnostics[0].nativeOutcome, 'waiting');
+  assert.equal(waiting.state.diagnostics[0].searched, false);
+  assert.equal(waiting.state.diagnostics[0].outcome, 'timeout');
 });
 
 test('returns a refused page at once and fails without a widget', async () => {
@@ -126,5 +134,43 @@ test('bounds bodies, malformed JSON and repeated requests', async () => {
 });
 
 test('ignores other URLs and lookups it does not own', async () => {
-  assert.equal(await runCorreiosBrowser({ ...fixture().options, url: url.replace(number, 'AA00000000BR') }), undefined);
+  const active = fixture();
+  assert.equal(await runCorreiosBrowser({ ...active.options, url: url.replace(number, 'AA00000000BR') }), undefined);
+  assert.equal(active.state.diagnostics.length, 0);
+});
+
+test('reports throttles and unreadable captures without claiming a verified history', async () => {
+  for (const [status, value, outcome] of [[429, body, 'rate_limited'], [200, 'not JSON PRIVATE', 'incomplete']]) {
+    const active = fixture();
+    active.page.locator = (locator => selector => ({ ...locator(selector), click: async () => {
+      active.handlers.response(response(status, value));
+    } }))(active.page.locator);
+    await runCorreiosBrowser(active.options);
+    assert.equal(active.state.diagnostics[0].outcome, outcome);
+    assert.equal(active.state.diagnostics[0].apiStatus, status);
+  }
+});
+
+test('default diagnostics contain only fixed labels, counts and statuses', async t => {
+  const logs = [];
+  t.mock.method(console, 'warn', text => logs.push(text));
+  const active = fixture();
+  delete active.options.onVerification;
+  await runCorreiosBrowser(active.options);
+  assert.equal(logs.length, 1);
+  const diagnostic = JSON.parse(logs[0]);
+  assert.equal(diagnostic.event, 'correios.verification');
+  assert.equal(diagnostic.level, 'warn');
+  assert.equal(diagnostic.outcome, 'http_response');
+  assert.equal(typeof diagnostic.durationMs, 'number');
+  for (const privateValue of [number, 'PRIVATE', 'Sampletown', endpoint]) assert.equal(logs[0].includes(privateValue), false);
+});
+
+test('a failed diagnostic sink cannot change the answer or cleanup', async () => {
+  const active = fixture();
+  active.options.onVerification = () => { throw new Error('PRIVATE'); };
+  const result = await runCorreiosBrowser(active.options);
+  assert.equal(result.capturedResponses.length, 1);
+  assert.equal(active.state.closed, 1);
+  assert.deepEqual(active.handlers, {});
 });

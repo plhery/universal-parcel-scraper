@@ -79,7 +79,8 @@ Asendia waits for its own Turnstile callback to enable search and binds the capt
 to one whole identifier. Given a delivery postcode in the fragment, it opens the scans through the page's dialog; otherwise recipient verification leaves the current status only.
 Correios Brazil opens its tracker's share link, waits for the page's Turnstile token and searches through
 the form, keeping the reply whose POST carried the whole S10 number without locker codes, receipts or
-recipient fields. XPO scopes the checkbox
+recipient fields. Its `correios.verification` warning counts token receipt, submission and bound
+responses with HTTP statuses, without identifiers, tokens or page content. XPO scopes the checkbox
 solver to its visible widget while the public client completes verification and tracking.
 Magyar Posta renders the Posta app's invisible reCAPTCHA Enterprise widget on the app's WebView
 origin, answers its audio challenge with TRAWL's speech-to-text and posts one number to the app's

@@ -242,8 +242,12 @@ describe('Correios session and transport', () => {
       capturedResponses: captured.map((row) => ({ url: API, status: 200, headers: {}, body: JSON.stringify(fixture), truncated: false,
         base64Encoded: false, error: null, trackingNumberSubmitted: NUMBER, ...row })) })) });
     const answered = browser({});
-    const result = await new CorreiosTracker({ fetcher: turnstile(), trawl: answered as unknown as TrawlClient }).fetch(NUMBER);
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const result = await new CorreiosTracker({ fetcher: turnstile(), trawl: answered as unknown as TrawlClient, recorder }).fetch(NUMBER);
     expect(result.status).toBe('delivered');
+    expect(recorder.step.mock.calls.map(([step]) => [step.step, step.outcome])).toEqual([['direct', 'challenge'], ['trawl', 'ok']]);
+    expect(recorder.lookup).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ carrier: 'correios-br',
+      finalStep: 'trawl', outcome: 'ok', errorType: null, attempts: 2 }));
     expect(answered.scrape).toHaveBeenCalledWith(expect.objectContaining({ url: `${HOME}?objetos=${NUMBER}`, captureResponses: [API], skipHttp: true }),
       expect.objectContaining({ provider: 'Correios', requireSolved: false }));
     for (const [captured, kind] of [[[], 'challenge'], [[{ trackingNumberSubmitted: 'BB000000005BR' }], 'challenge'],
