@@ -13,8 +13,10 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['PO', { status: 'in_transit', stage: 'accepted' }],
   ['PL', { status: 'in_transit', stage: 'in_transit' }],
   ['DP', { status: 'in_transit', stage: 'accepted' }],
+  ['HQ', { status: 'in_transit', stage: 'in_transit' }],
   ['IR', { status: 'pending', stage: 'registered' }],
   ['AL', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['UA', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['FD', { status: 'delivered', stage: 'delivered' }],
 ]);
 

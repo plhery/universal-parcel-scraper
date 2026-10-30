@@ -110,6 +110,27 @@
       "language": "en",
       "stage": "delivered",
       "confirmedBy": "live"
+    },
+    {
+      "code": "HQ",
+      "wording": "Item is with SingPost (Singapore) for processing.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "HQ",
+      "wording": "Item Received at Sorting Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "UA",
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
     }
   ]
 }
