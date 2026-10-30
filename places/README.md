@@ -281,6 +281,8 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
   on Anglesey) count on Royal Mail and Parcelforce parcels, and on any parcel with MC after
   the name. China Post's exchange offices go by the initials of their Chinese names
   ("BJGJHHJ" is Beijing's 国际互换局, its international exchange office), placed at their city.
+  A carrier's site named after the country it serves, without a town, is in that country on
+  that carrier's parcels: Mondial Relay's "MR Pays Bas" is its Dutch network.
 - A carrier's own coordinates, supplied through the `points` option, move a scan
   to the facility when they are within 30 km of the town its text names. Scans with the same
   text share a point, so a carrier that places some scans of an office keeps them together.

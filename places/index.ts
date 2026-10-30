@@ -177,7 +177,8 @@ const FACILITIES = new Map(facilityList.map((facility) => [`${facility.country}:
 interface Hub {
   country: string;
   names: string[];
-  town: string;
+  /** Absent for a carrier's site named after the country it serves, which places a scan in that country alone. */
+  town?: string;
   /** The state, province or canton, where carriers write one after the town. */
   admin1?: string;
   /** The facility's own name, when the carrier's words are not the town's. */
@@ -642,7 +643,7 @@ function candidates(data: Gazetteer, key: string, carriers: readonly string[]): 
   if (!hub || !point) return towns;
   return [...towns, {
     country: hub.country, admin1: hub.admin1 ?? '', admin2: '', latitude: point.latitude, longitude: point.longitude,
-    thousands: HUB_THOUSANDS, alternate: false, name: hub.town, hub: true,
+    thousands: HUB_THOUSANDS, alternate: false, name: hub.town ?? '', hub: true,
     ...(airport ? { site: airport.name } : hub.site ? { site: hub.site, named: true } : {}),
     ...(hub.carriers ? { own: true } : {}),
   }];
@@ -743,6 +744,9 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   let rest = explicit.country ? explicit.place : text;
   const context = hints.countries ?? [];
   const carriers = hints.carriers ?? [];
+  // A carrier's site named after the country it serves ("MR Pays Bas", Mondial Relay's Dutch network): that country.
+  const site = HUBS.get(nameKey(text))?.find((hub) => !hub.town && hub.carriers?.some((carrier) => carriers.includes(carrier)));
+  if (site) return countryPlace(data, site.country, true);
   const station = stationPlace(data, text, context, carriers);
   if (station) return station;
   // "CAN" on a parcel to Canada: a country's three-letter code, where the parcel is, is that country.

@@ -289,6 +289,10 @@ describe('locatePlace', () => {
     // DHL's parcel centre is in Staufenberg in Lower Saxony, not the town in Hesse.
     expect(locatePlace('Staufenberg', { countries: ['DE'], carriers: ['dhl-ecommerce'] })).toMatchObject({ country: 'DE', latitude: 51.372, longitude: 9.634 });
     expect(place('Staufenberg', ['DE'])).toMatchObject({ country: 'DE', latitude: 50.662, longitude: 8.732 });
+    // Mondial Relay's Dutch network, named after its country: there on Mondial Relay's parcels, nowhere on others.
+    expect(locatePlace('MR Pays Bas', { carriers: ['mondial-relay'] })).toEqual({ precision: 'country', country: 'NL', name: 'Netherlands', latitude: 52.42, longitude: 5.61 });
+    expect(placesForEvents(['HUB LYON', 'MR Pays Bas'], { carriers: ['mondial-relay'] }).map((found) => found?.country)).toEqual(['FR', 'NL']);
+    expect(locatePlace('MR Pays Bas', { carriers: ['dpd'] })).toBeNull();
   });
 
   it('reads Chinese, Japanese and Korean names', () => {
