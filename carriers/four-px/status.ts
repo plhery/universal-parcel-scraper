@@ -41,9 +41,10 @@ const WORDED = new Set(['FPX_O_IR', 'FPX_O_IRI']);
 // waybill: "Waybill generated for …", as Emile words it, and its order data
 // the partner it went to: "Order information has been transmitted to DPD."
 // Asendia Hong Kong, which flies parcels for 4PX, relays its label, then the
-// manifest it makes once the parcel has left 4PX's facility.
+// manifest it makes once the parcel has left 4PX's facility. Helthjem's notice that
+// the shop announced the parcel is relayed as "Parcel arrival notified".
 const WORDING: ReadonlyMap<string, Stage> = new Map([['waybill generated', 'registered'], ['order data transmitted', 'registered'],
-  ['label creation', 'registered'], ['manifest created', 'in_transit']]);
+  ['label creation', 'registered'], ['manifest created', 'in_transit'], ['parcel arrival notified', 'registered']]);
 const LABEL_FOR = /^waybill generated for [a-z0-9]+$|^order information has been transmitted to [a-z][a-z .-]{0,30}$/;
 // Scans a partner relays without a code, by `normalizeStatusWording` wording.
 // A partner's order made before it has the parcel is a label, not a receipt.

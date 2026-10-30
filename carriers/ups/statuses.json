@@ -26,6 +26,7 @@
     { "code": "Q5", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"We're sorry this package may experience a temporary delay.\"" },
     { "code": "E3", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"We’re sorry your package was delayed. We are adjusting delivery plans as quickly as possible.\"" },
     { "code": "2U", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "actCode: \"UPS will be in your area and will deliver your package a day early.\"" },
+    { "code": "RF", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-30", "note": "actCode: \"Saturday Delivery has been requested. / Delivery will be rescheduled for Saturday.\" A new delivery plan; the parcel continues." },
     { "code": "AL", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: UPS corrected the postal code and the parcel continues." },
     { "code": "HM", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"The package has been redirected and forwarded to the delivery center.\"" },
     { "code": "H6", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: a delivery change request, processed once the parcel is back at the facility." },

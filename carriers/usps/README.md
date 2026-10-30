@@ -84,6 +84,10 @@ Parsing, in order:
 - USPS enters some departures at their scheduled time, before they happen. A scan dated more
   than five minutes after the lookup is held back until it is due (`plannedScans`).
 - Delivered lines are rewritten to "Delivered" because USPS names the signatory.
+- Incoming international mail shows "Origin Post is Preparing Shipment", undated, from the
+  origin post's electronic notice until USPS scans the item, past the origin post's later
+  scans abroad and sometimes after the item arrives. While a scan is dated, the newest
+  scan's wording is the status instead.
 - USPS rewords scans it already shows: an out-for-delivery scan's delivery window changes,
   and the newest place-less step's "In Transit, Arriving On Time" reads "In Transit to Next
   Facility" once a later step comes. The identity policy lets such a scan take over the row

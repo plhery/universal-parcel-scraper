@@ -279,6 +279,11 @@ describe('UPS structured response', () => {
       .toEqual([['L0', 'registered', 'none'], ['MP', 'registered', 'carrier_map']]);
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'L0', description: 'delivery instructions have been provided by the receiver.' }))
       .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('keeps the stage of the scan before it') });
+    // A receiver's Saturday delivery, and a delivery home rather than to the access point, are new plans.
+    for (const [code, description] of [['RF', 'Saturday Delivery has been requested. / Delivery will be rescheduled for Saturday.'],
+      ['VM', "We will deliver the package to the original receiver's address as the receiver requested."]]) {
+      expect(statusMapAnswer({ carrier: 'ups', providerCode: code!, description: description! })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // On a moving parcel the scan before it keeps the parcel in transit.
     const moving = parseUPSTrackingResponse(withScans([
       scan('L0', 'Delivery instructions have been provided by the receiver.', '20260806 18:00:00'),

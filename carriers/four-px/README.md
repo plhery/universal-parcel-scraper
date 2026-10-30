@@ -38,6 +38,8 @@ left out; a scan without such a twin keeps its offset.
 
 Event codes map to stages. `FPX_O_IR` and `FPX_O_IRI` relay whatever step a
 partner reported, from a label to an arrival abroad, so their wording decides.
+"Parcel arrival notified" is Helthjem's notice that the shop announced the parcel, a
+label rather than an arrival.
 A partner's transit scans relayed without a code are staged by their whole
 wording. A partner's "In transit" under the delivery code `FPX_D_SD` is a move
 toward the office that delivers, days before the round, so it reads as in

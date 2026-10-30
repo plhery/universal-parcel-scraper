@@ -205,6 +205,20 @@ describe('USPS rendered page', () => {
     expect(result.events).toHaveLength(3);
   });
 
+  it('names the newest scan, not the origin post’s undated notice, as the status of incoming mail', () => {
+    const step = (detail: string, date = '') => `<div class="tb-step"><p class="tb-status-detail">${detail}</p>`
+      + `<p class="tb-location">NETHERLANDS</p><p class="tb-date">${date}</p></div>`;
+    const page = (...steps: string[]) => '<html><head><title>USPS Tracking</title></head><body><div class="track-bar-container">'
+      + '<span id="trackingNum">CW000000005NL</span><div class="latest-update-banner-wrapper"><div class="banner-header">Moving Through Network</div></div>'
+      + '<div class="current-tracking-status-wrapper"><div class="tb-step current-step"><p class="tb-status">Moving Through Network</p>'
+      + `<p class="tb-status-detail">Origin Post is Preparing Shipment</p></div>${steps.join('')}</div></div></body></html>`;
+    const result = parseUSPSTrackingHtml(page(step('Processed Through Facility', 'October 21, 2026, 10:12 am'),
+      step('Acceptance', 'October 19, 2026, 6:07 pm')), 'CW000000005NL');
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Processed Through Facility' });
+    expect(result.events?.map(({ description }) => description)).toEqual(['Processed Through Facility', 'Acceptance']);
+    expect(parseUSPSTrackingHtml(page(), 'CW000000005NL').last_status_text).toBe('Origin Post is Preparing Shipment');
+  });
+
   it('reads the estimate banner, whose date parts sit apart, and not its tooltips as the verdict', () => {
     const result = parseUSPSTrackingHtml(ESTIMATE_PAGE, IN_TRANSIT_NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In Transit, Arriving On Time',

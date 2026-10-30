@@ -61,6 +61,10 @@ export function uspsTrackingUrl(trackingNumber: string): string {
 const MONTHS = '(January|February|March|April|May|June|July|August|September|October|November|December)';
 const DATE_PATTERN = new RegExp(`${MONTHS}\\s+\\d{1,2},?\\s+\\d{4}`, 'i');
 const TIME_PATTERN = /\d{1,2}:\d{2}(?::\d{2})?\s*[ap]\.?m\.?/i;
+// Incoming international mail shows this undated from the origin post's electronic notice
+// until USPS scans the item, past the origin post's later scans abroad and sometimes after
+// the item arrives, so it cannot stand for the item's status while a scan is dated.
+const ORIGIN_POST_NOTICE = /^origin post is preparing shipment\b/i;
 
 function eventTime(dateText: string, timeText: string, location: string): { iso: string; timestamp: number } | null {
   const dateMatch = DATE_PATTERN.exec(dateText);
@@ -237,7 +241,9 @@ export function parseUSPSTrackingHtml(page: string, trackingNumber: string): Car
   // have no resolvable timezone; sorting those behind dated scans loses meaning.
   const events = handoffsInTransit(timeline.length ? timeline.slice(0, MAX_EVENTS_TO_RETURN)
     : rows.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event));
-  const statusText = statusArea || banner || events[0]?.description || 'Tracking information received';
+  const summary = statusArea || banner;
+  const statusText = (ORIGIN_POST_NOTICE.test(summary) ? events[0]?.description : undefined) || summary
+    || events[0]?.description || 'Tracking information received';
   const reported = uspsStage(`${statusText} ${banner}`)
     ?? events.map((event) => event.stage).find((value): value is NonNullable<typeof value> => value !== undefined);
   const stage = reported === 'accepted' && events.some((event) => event.stage === 'in_transit') ? 'in_transit' : reported;

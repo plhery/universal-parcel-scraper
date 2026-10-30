@@ -311,6 +311,15 @@
       "note": "A partner's order-data step naming the partner, relayed; other partners' names are staged the same."
     },
     {
+      "code": "FPX_O_IR",
+      "wording": "Parcel arrival notified",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Helthjem's notice that the shop announced the parcel, relayed in English once 4PX hands it over; the shared rules read the arrival as transit."
+    },
+    {
       "code": "FPX_D_DDRH",
       "wording": "Unfortunately, consignee not present. notification was left._nabn",
       "language": "en",
