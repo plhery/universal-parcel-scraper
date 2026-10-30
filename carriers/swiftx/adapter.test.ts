@@ -34,6 +34,21 @@ describe('SwiftX numbers', () => {
 });
 
 describe('SwiftX tracking reply', () => {
+  it('keeps a bound BASIC summary without scans as recipient input, not a challenge or missing parcel', () => {
+    const basic = fixture('delivered');
+    Object.assign(answer(basic), { unlockStatus: 'BASIC', trackingEventList: [] });
+    expect(() => parseSwiftx(basic, DELIVERED, READ_AT)).toThrow(expect.objectContaining({ kind: 'input_required', field: 'recipient verification' }));
+    expect(() => parseSwiftx(basic, MOVING, READ_AT)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    answer(basic).trackingEventList = null as unknown as Record<string, unknown>[];
+    expect(() => parseSwiftx(basic, DELIVERED, READ_AT)).toThrow(expect.objectContaining({ kind: 'input_required' }));
+    const partial = fixture('delivered');
+    answer(partial).unlockStatus = 'BASIC';
+    expect(parseSwiftx(partial, DELIVERED, READ_AT)).toMatchObject({ history_truncated: true });
+    const missing = fixture('not-found');
+    answer(missing).unlockStatus = 'BASIC';
+    expect(() => parseSwiftx(missing, UNKNOWN, READ_AT)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+  });
+
   it('reads a delivered parcel newest first on each site\'s own offset, with towns only at SwiftX sites', () => {
     const result = parseSwiftx(fixture('delivered'), DELIVERED, READ_AT);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',

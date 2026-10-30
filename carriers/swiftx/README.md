@@ -13,6 +13,11 @@ tracking page. Shippers and forwarders hand parcels to SwiftX for the last mile.
    pointer controls. The page verifies the answer and submits tracking. At most two
    puzzles are attempted, with a refresh through the official control when a puzzle
    cannot be read. Ambiguous puzzles keep provider fallback.
+   After verification, the page can ask for recipient phone digits. The helper chooses its
+   public Skip control for the same number, without supplying a phone or an unlock token.
+   A BASIC summary without scans remains recipient verification required, so providers
+   can supply history; it is not another CAPTCHA failure or a missing parcel. BASIC replies
+   with scans stay partial. Unlock credentials in the reply remain inside the browser.
    Icon matching preserves proportions when stretching silhouettes to a square makes them ambiguous;
    both comparisons must support the match, with a distinct proportional match required.
    The page then posts one
@@ -62,6 +67,7 @@ page in place of the reply, rate limits and incomplete captures keep their own f
 - SwiftX's shipper API at `prod.open.swiftx-express.com` needs a partner's key and a signature on
   each request, and its Android app is for staff and contractors.
 - The reply names no sender, service, weight or delivery estimate.
+- Full history can require recipient phone verification. The adapter accepts no phone input.
 
 ## Numbers
 

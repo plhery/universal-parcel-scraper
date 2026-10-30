@@ -120,7 +120,9 @@ const SITES = [
         const body = request.postDataJSON();
         const input = body?.variables?.input;
         return typeof body?.query === 'string' && /\bgetOfficialWebsiteTrackingInfoBatch\b/.test(body.query)
-          && input && typeof input === 'object' && Object.keys(input).every(key => ['trackingNos', 'humanToken', 'sliderToken'].includes(key))
+          && input && typeof input === 'object' && Object.keys(input).every(key => ['trackingNos', 'humanToken', 'sliderToken',
+            'phoneLast4', 'unlockToken', 'unlockScope'].includes(key))
+          && ['phoneLast4', 'unlockToken', 'unlockScope'].every(key => input[key] == null)
           && Array.isArray(input.trackingNos) && input.trackingNos.length === 1 && input.trackingNos[0] === number;
       } catch { return false; }
     },
@@ -128,6 +130,13 @@ const SITES = [
       // One query, one final reply. The adapter binds the returned number and
       // reads the not-found notice itself.
       return true;
+    },
+    sanitize(data) {
+      const batch = data?.data?.getOfficialWebsiteTrackingInfoBatch;
+      if (batch && typeof batch === 'object') {
+        delete batch.unlockToken;
+        delete batch.unlockTokenExpiresInSeconds;
+      }
     },
     setup(page, number, state, options) { state.slider = attachSwiftxSlider(page, number, { signal: options.budget?.signal }); },
     async prepare(page, number, budgetMs, { state, hasTrackingRequest, refuse }) {
@@ -429,6 +438,7 @@ export async function attachTrackingCapture(page, url, options) {
       entry.body = body.toString('utf8');
       if (site.allowTextResponse && /^\s*</.test(entry.body)) { finish(); return; }
       const data = JSON.parse(entry.body);
+      if (site.sanitize) { site.sanitize(data); entry.body = JSON.stringify(data); }
       // Preserve intermediate replies for diagnosis, but let the website carry
       // on until it holds a final reply for exactly the requested number.
       if (site.settled(data, number, state, entry.status)) finish();

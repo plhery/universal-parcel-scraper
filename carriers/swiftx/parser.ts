@@ -1,5 +1,5 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
@@ -106,6 +106,9 @@ export function parseSwiftx(payload: unknown, raw: string, readAt = Date.now()):
   if (!isRecord(info) || typeof info.success !== 'boolean') throw new SchemaError(PROVIDER);
   if (clean(info.trackingNo, 64).toUpperCase() !== number) throw new SchemaError(PROVIDER, 'SwiftX returned a different shipment');
   const list = info.trackingEventList;
+  if (info.success && info.unlockStatus === 'BASIC' && (list === null || (Array.isArray(list) && list.length === 0))) {
+    throw new InputRequiredError(PROVIDER, 'recipient verification', 'SwiftX withholds tracking history without recipient phone verification');
+  }
   if (!info.success) {
     if (info.message === NOT_FOUND && (list === null || (Array.isArray(list) && list.length === 0))) throw new NotFoundError(PROVIDER);
     if (info.message === VERIFICATION) throw new ChallengeError(PROVIDER, 'SwiftX asked for its tracking page\'s verification');
@@ -151,6 +154,6 @@ export function parseSwiftx(payload: unknown, raw: string, readAt = Date.now()):
     last_update: newest.event.time,
     ...(stage === 'delivered' && decider!.event.provider_code === 'DELIVERED' ? { delivered_at: decider!.event.time } : {}),
     events: events.slice(0, MAX_EVENTS),
-    ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
+    ...(events.length > MAX_EVENTS || info.unlockStatus === 'BASIC' ? { history_truncated: true } : {}),
   };
 }

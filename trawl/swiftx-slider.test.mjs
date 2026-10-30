@@ -5,7 +5,8 @@ import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { attachSwiftxSlider, locateSwiftxSlider, swiftxSliderDrag, swiftxIconClicks } from './swiftx-slider.mjs';
+import { runInNewContext } from 'node:vm';
+import { attachSwiftxSlider, locateSwiftxSlider, swiftxSliderDrag, swiftxIconClicks, swiftxSkipPhonePrompt } from './swiftx-slider.mjs';
 
 const API = 'https://swiftx-express.com/api/graphql';
 const NUMBER = 'SWX000000000000000001';
@@ -23,7 +24,7 @@ function fixture(options = {}) {
   let refreshes = 0, moves = 0, downs = 0, ups = 0;
   const clicks = [];
   const geometry = { x: 30, y: 100, scale: 320 / 600, maxKnob: 276, maxImage: 261 };
-  page.evaluate = async () => options.geometry ?? geometry;
+  page.evaluate = async fn => fn === swiftxSkipPhonePrompt ? (options.skipPhone?.() ?? false) : (options.geometry ?? geometry);
   page.getByRole = () => ({ locator: () => ({ first: () => ({ evaluate: async () => { refreshes++; await options.refresh?.(); } }) }) });
   page.mouse = { move: async () => { moves++; await options.move?.(); }, down: async () => { downs++; }, up: async () => { ups++; await options.up?.(); } };
   page.mouse.click = async (x, y) => { clicks.push({ x, y }); await options.click?.(clicks.length); };
@@ -35,6 +36,36 @@ function fixture(options = {}) {
   };
   return { page, controller, respond, clicks, stats: () => ({ refreshes, moves, downs, ups }) };
 }
+
+test('only skips an empty optional phone prompt for the same whole number', () => {
+  for (const invalid of [null, 'number', 'page', 'query', 'filled', 'disabled', 'hidden', 'duplicate', 'label']) {
+    let clicks = 0;
+    const button = { textContent: invalid === 'label' ? 'Continue' : 'Skip, show parcel status', disabled: invalid === 'disabled',
+      getBoundingClientRect: () => ({ width: invalid === 'hidden' ? 0 : 100 }), click: () => { clicks++; } };
+    const document = { body: { innerText: 'Enter the last four digits of the recipient phone number' },
+      querySelectorAll: selector => selector === 'textarea' ? [{ value: invalid === 'number' ? 'SWX000000000000000002' : NUMBER }]
+        : selector === 'input[maxlength="4"]' ? [{ value: invalid === 'filled' ? '1234' : '', disabled: false,
+          getBoundingClientRect: () => ({ width: 100 }) }] : invalid === 'duplicate' ? [button, button] : [button] };
+    const href = `https://${invalid === 'page' ? 'other.test' : 'swiftx-express.com'}/track?trackingNumber=${NUMBER}${invalid === 'query' ? '&other=1' : ''}`;
+    const result = runInNewContext(`(${swiftxSkipPhonePrompt})({number})`, { URL, location: { href }, document, number: NUMBER });
+    assert.equal(result, invalid === null, invalid);
+    assert.equal(clicks, invalid === null ? 1 : 0, invalid);
+  }
+});
+
+test('uses the optional Skip only after bound verification and never repeats it', async () => {
+  let f, skips = 0;
+  f = fixture({ solve: async () => ({ x: 200 }), skipPhone: () => { skips++; return true; },
+    up: () => f.respond({ verifyOfficialTrackingSlider: { success: true, sliderToken: 'PRIVATE_TOKEN' } }, verifyQuery()) });
+  await f.respond({ getOfficialTrackingSliderCaptcha: challenge() });
+  await f.controller.prepare(6000);
+  await f.controller.prepare(6000);
+  f.controller.dispose();
+  assert.equal(skips, 1);
+  const refused = fixture({ skipPhone: () => { throw new Error('must not skip without verification'); } });
+  await refused.controller.prepare(0);
+  refused.controller.dispose();
+});
 
 test('maps each icon through the rendered image and refuses incomplete or repeated answers', () => {
   const geometry = { x: 20, y: 50, width: 300, height: 180, scaleX: .5, scaleY: .5 };

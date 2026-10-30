@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter as chinaPostAdapter } from '../carriers/china-post/adapter.js';
 import { CHINA_POST_CHECK_PATH } from '../carriers/china-post/app.js';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
-import { InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
+import { InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { resolveResult } from '../core/result/resolve.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -38,6 +38,17 @@ function recognizers(recognize: Record<string, NonNullable<CarrierAdapter['recog
 }
 
 describe('standalone tracker', () => {
+  it('keeps provider fallback after a native recipient-verification gate', async () => {
+    const lookup = vi.fn().mockRejectedValue(new InputRequiredError('UPS', 'recipient verification'));
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({
+      carriers: ['Universal Postal Union'], states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered', carrier: 0 }] }));
+    const tracker = createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] });
+    await expect(tracker.track({ number, carrier: 'ups' })).resolves.toMatchObject({ source: 'ParcelsApp',
+      attempts: [{ source: 'ups', kind: 'input_required' }, { source: 'ParcelsApp', kind: 'ok' }] });
+    expect(lookup).toHaveBeenCalledOnce();
+    expect(fetcher).toHaveBeenCalled();
+  });
+
   it('detects locally and resolves stages without inventing local-clock instants', async () => {
     const lookup = vi.fn().mockResolvedValue({ status: 'delivered', events: [
       { time: '2026-01-02T12:00:00Z', description: 'Delivered', stage: 'delivered' },

@@ -125,6 +125,23 @@ export function swiftxIconClicks(geometry, plan, count) {
   return points.map(point => ({ x: geometry.x + point.x, y: geometry.y + point.y }));
 }
 
+/** Choose the public summary rather than supplying recipient verification. */
+export function swiftxSkipPhonePrompt({ number }) {
+  const url = new URL(location.href);
+  if (url.origin !== 'https://swiftx-express.com' || url.pathname !== '/track' || url.hash
+    || [...url.searchParams].length !== 1 || url.searchParams.get('trackingNumber') !== number) return false;
+  const visible = element => element.getBoundingClientRect().width > 0;
+  const numbers = [...document.querySelectorAll('textarea')];
+  const inputs = [...document.querySelectorAll('input[maxlength="4"]')].filter(visible);
+  const skip = [...document.querySelectorAll('button')].filter(button => visible(button) && !button.disabled
+    && /^skip, show parcel status$/i.test(button.textContent.trim()));
+  if (numbers.length !== 1 || numbers[0].value.trim().toUpperCase() !== number
+    || inputs.length !== 1 || inputs[0].value !== '' || inputs[0].disabled || skip.length !== 1
+    || !/phone/i.test(document.body.innerText)) return false;
+  skip[0].click();
+  return true;
+}
+
 /** Observe before navigation; only the official UI obtains and submits verification. */
 export function attachSwiftxSlider(page, number, { signal: parent, solve = locateSwiftxSlider, onVerification = reportVerification } = {}) {
   const stopped = new AbortController();
@@ -133,7 +150,7 @@ export function attachSwiftxSlider(page, number, { signal: parent, solve = locat
   let current, generation = 0, verified = false, refusal, disposed = false, reads = 0;
   let deadline = 0, attempted = 0, seen = 0, running, hasRequest = () => false, onRefusal;
   const started = Date.now();
-  let sawImage = false, prepared = false, puzzleType = 'none', outcome = 'not_seen', analysisOutcome = 'not_started';
+  let sawImage = false, prepared = false, phonePromptSkipped = false, puzzleType = 'none', outcome = 'not_seen', analysisOutcome = 'not_started';
   const remaining = () => Math.max(0, deadline - Date.now());
   const refused = value => { refusal = value; onRefusal?.(value); };
   const pending = new Set();
@@ -190,6 +207,7 @@ export function attachSwiftxSlider(page, number, { signal: parent, solve = locat
     try {
       const trackingRequested = prepared ? Boolean(hasRequest()) : null;
       if (sawImage || (prepared && !trackingRequested)) onVerification({ host: 'swiftx-express.com', puzzleType, outcome, analysisOutcome, prepared,
+        ...(phonePromptSkipped ? { phonePromptSkipped: true } : {}),
         attempts: attempted, generations: generation, verified, trackingRequested, pendingReads: pending.size,
         cancelled: parent?.aborted === true, timedOut: deadline > 0 && remaining() === 0, durationMs: Date.now() - started });
     } catch { /* Diagnostics cannot affect cleanup or tracking. */ }
@@ -202,7 +220,18 @@ export function attachSwiftxSlider(page, number, { signal: parent, solve = locat
   }
   async function drive() {
     const pause = () => new Promise(resolve => setTimeout(resolve, Math.min(100, remaining())));
-    while (!disposed && !signal.aborted && remaining() > 0 && !hasRequest() && !verified && !refusal) {
+    let phoneDeadline;
+    while (!disposed && !signal.aborted && remaining() > 0 && !hasRequest() && !refusal) {
+      if (verified) {
+        // The current page waits for an optional phone prompt after a solve.
+        // Its Skip control sends a public BASIC reply; never fill the field,
+        // replay the verification token or submit another tracking form.
+        phoneDeadline ??= Date.now() + Math.min(1500, remaining());
+        if (phonePromptSkipped || Date.now() >= phoneDeadline) break;
+        if (await page.evaluate(swiftxSkipPhonePrompt, { number }) === true) { phonePromptSkipped = true; break; }
+        await pause();
+        continue;
+      }
       if (!current || generation === seen) { await pause(); continue; }
       if (attempted >= 2 || remaining() < 3500) break;
       seen = generation; attempted++;

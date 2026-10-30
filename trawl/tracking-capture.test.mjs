@@ -296,6 +296,24 @@ test('SwiftX captures a slider-verified single-number query without retaining it
   assert.doesNotMatch(JSON.stringify(rows), /SYNTHETIC_SLIDER_TOKEN/);
 });
 
+test('SwiftX captures the public phone-skip query but refuses supplied phone and unlock credentials', async () => {
+  const input = { trackingNos: [swiftxNumber], sliderToken: 'PRIVATE_SLIDER', phoneLast4: null, unlockToken: null, unlockScope: null };
+  const { capture, respond } = await fixture(swiftxUrl, swiftxApi);
+  for (const changed of [{ phoneLast4: '1234' }, { phoneLast4: '' }, { unlockToken: 'PRIVATE_UNLOCK' }, { unlockScope: [] },
+    { unlockScope: [swiftxNumber] }, { trackingNos: ['SWX000000000000000002'] }]) {
+    await respond(swiftxReply(), { method: 'POST', requestBody: swiftxRequest({ ...input, ...changed }) });
+  }
+  assert.equal(capture.hasResponse(), false);
+  const body = JSON.parse(swiftxReply());
+  Object.assign(body.data.getOfficialWebsiteTrackingInfoBatch, { unlockToken: 'PRIVATE_CAPABILITY', unlockTokenExpiresInSeconds: 300 });
+  await respond(JSON.stringify(body), { method: 'POST', requestBody: swiftxRequest(input) });
+  assert.equal(capture.hasResponse(), true);
+  const rows = (await capture.drain()).capturedResponses;
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].body, swiftxReply());
+  assert.doesNotMatch(JSON.stringify(rows), /PRIVATE_|unlockToken/);
+});
+
 test('SwiftX reports a page that never asked for the number and a failed query', async () => {
   const silent = await fixture(swiftxUrl, swiftxApi);
   await silent.capture.settle(1);
