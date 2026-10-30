@@ -63,7 +63,7 @@ export class HuahanTracker {
         const answer = solveHuahanQuestion(challenge.question);
         const verified = decodeText(await request('check.php?' + new URLSearchParams({ token: init.token, answer }).toString(), 4096));
         if (verified.trim() !== 'ok') throw new ChallengeError(PROVIDER, 'HuaHan refused arithmetic verification');
-        return parseHuahan(json(await request('CargoTrackActiona.php', 1_000_000, new URLSearchParams({ ordernumber: number }))), number);
+        return parseHuahan(json(await request('CargoTrackAction.php', 1_000_000, new URLSearchParams({ ordernumber: number }))), number);
       } catch (error) {
         // Verification URLs and session cookies must not enter transport diagnostics.
         if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);

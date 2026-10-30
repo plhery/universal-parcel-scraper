@@ -8,7 +8,7 @@ China to destination delivery partners.
 The [public form](https://www.hh-exp.cn/WebTrack/CargoTrack.html) opens verification through
 `init.php`, reads a plain arithmetic question from `textcode.php`, and submits its answer to
 `check.php`. After an explicit acceptance, the adapter posts one complete waybill to
-`CargoTrackActiona.php` in the same cookie session. Each lookup opens a fresh session and
+`CargoTrackAction.php` in the same cookie session. Each lookup opens a fresh session and
 shares one deadline across the four requests. No account, browser or external solver is needed.
 
 The reply must repeat the requested waybill and confirm success. An explicit absence is

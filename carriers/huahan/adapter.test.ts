@@ -35,6 +35,7 @@ describe('HuaHan guest tracking', () => {
     const verify = new URL(String(fetch.mock.calls[2]![0]));
     expect(verify.searchParams.get('token')).toBe('synthetic-token');
     expect(verify.searchParams.get('answer')).toBe('8');
+    expect(String(fetch.mock.calls[3]![0])).toBe('https://www.hh-exp.cn/WebTrack/CargoTrackAction.php');
     const request = fetch.mock.calls[3]![1]!;
     expect(request.method).toBe('POST');
     expect(new URLSearchParams(String(request.body)).get('ordernumber')).toBe(NUMBER);
