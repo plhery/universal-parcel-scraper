@@ -631,6 +631,7 @@ import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
+import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
@@ -1287,6 +1288,7 @@ export const REGISTRY: RegistryDefinition = {
     "vrl-logistics": vrlLogistics,
     "wanbexpress": wanbexpress,
     "whistl": whistl,
+    "whiz-delivery": whizDelivery,
     "winit": winit,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
@@ -2190,7 +2192,7 @@ export const REGISTRY: RegistryDefinition = {
     "wedo": "universal",
     "western-bid": "universal",
     "whistl": "whistl",
-    "whiz-delivery": "universal",
+    "whiz-delivery": "whiz-delivery",
     "winion-logis": "universal",
     "winit": "winit",
     "wizmo": "universal",

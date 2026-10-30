@@ -460,6 +460,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "vrl-logistics": 935,
   "wanbexpress": 33,
   "whistl": 320,
+  "whiz-delivery": 104,
   "winit": 855,
   "xlcourier": 841,
   "xpo-ltl": 25,

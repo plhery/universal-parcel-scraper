@@ -36195,7 +36195,8 @@ export const CARRIER_CATALOG = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "whiz-delivery",
+      "recognitionRank": 104
     },
     "canaryUrl": "https://track.whizdelivery.ca/track",
     "trackingUrlTemplate": "https://track.whizdelivery.ca/track/{trackingNumber}",

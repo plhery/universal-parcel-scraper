@@ -1977,6 +1977,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'pactic', number: 'C0001260302091512000017',
     route: /^https:\/\/dashboard\.pactic\.com\/tracking\?waybill=C0001260302091512000017$/,
     marker: /No such tracking ID can be found in our system|Eine solche Sendungsnummer ist in unserem System nicht vorhanden/ },
+  // The page renders the shipment, or says no shipment matches the number, with HTTP 200.
+  { carrier: 'whiz-delivery', number: 'SW0000000000',
+    route: /^https:\/\/track\.whizdelivery\.ca\/track\/SW0000000000$/,
+    marker: /We couldn't find that shipment|Tracking History/ },
   // The portal renders the shipment's card, or says it has none, with HTTP 200.
   { carrier: 'logisimple', number: '000000000017',
     route: /^https:\/\/portal\.logisimple\.pt\/pt\/tracking\?tracking=000000000017$/,
