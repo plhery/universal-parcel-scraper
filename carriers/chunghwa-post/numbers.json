@@ -222,10 +222,10 @@
       "derivedFrom": "donated_real",
       "shapeConfirmed": "2026-10-21",
       "expect": {
-        "carrier": "chunghwa-post",
+        "carrier": "intl-post",
         "confidence": "high"
       },
-      "note": "Made-up number in the shape of Taiwan-issued letter post that Chunghwa Post's tracker answered."
+      "note": "Made-up number in the shape of Taiwan-issued UH letter post. The tracker's notes say U letter post cannot be followed online, though the tracker answered one such item with the scan a universal provider had."
     }
   ]
 }

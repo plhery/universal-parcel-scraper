@@ -10,7 +10,7 @@ import { chunghwaPostStage } from './status.js';
 
 export const PROVIDER = 'Chunghwa Post';
 const TAIWAN = 'Asia/Taipei';
-export const isSupportedChunghwaPostNumber = (number: string): boolean => /^(?:[CELR][A-Z]\d{9}[A-Z]{2}|UH\d{9}TW)$/.test(number);
+export const isSupportedChunghwaPostNumber = (number: string): boolean => /^(?:[CELR][A-Z]\d{9}[A-Z]{2}|(?:F[TZ]|UH)\d{9}TW)$/.test(number);
 export function normalizeChunghwaPostNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
   if (!isSupportedChunghwaPostNumber(number)) {

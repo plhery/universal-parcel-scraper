@@ -69,13 +69,13 @@ describe('Chronopost numbers with an S10 check digit', () => {
 });
 
 describe('Taiwanese S10 items', () => {
-  it.each(['CP123456785TW', 'EE123456785TW', 'LX123456785TW', 'RR123456785TW', 'UH123456785TW'])('names Chunghwa Post, which tracks %s', (number) => {
+  it.each(['CP123456785TW', 'EE123456785TW', 'FT123456785TW', 'FZ123456785TW', 'LX123456785TW', 'RR123456785TW'])('names Chunghwa Post, which tracks %s', (number) => {
     expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'chunghwa-post', confidence: 'high', candidates: ['chunghwa-post'] });
     expect(recognitionAskedCarriers(number)).toEqual([]);
   });
 
-  it('leaves the letter-post series its tracker does not read to international mail', () => {
-    for (const number of ['UA123456785TW', 'UX123456785TW']) {
+  it('leaves letter post, which its tracker does not follow online, to international mail', () => {
+    for (const number of ['UA123456785TW', 'UH123456785TW', 'UX123456785TW']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'intl-post', confidence: 'high', candidates: ['intl-post'] });
     }
     expect(detectCarrierMatch('UH123456785CN').candidates).not.toContain('chunghwa-post');

@@ -28,15 +28,17 @@ form.
 ## Numbers
 
 Detection names Chunghwa Post for the EMS, parcel, registered and tracked-letter S10 items it
-issues, C, E, L or R first, and for its UH letter post: TW last and a passing check digit. Its
-tracker answered a UH item with the scan a universal provider had, so UH items go to it too.
-A successful reply must confirm the whole item. Other U series stay with international mail
-and remain unsupported.
+issues, C, E, L or R first, and for its express items to mainland China, which the tracker's
+notes number FT or FZ beside EE and EZ: TW last and a passing check digit. No public FT or FZ
+number is known, so that suffix and check digit follow its other series.
+The tracker's notes say U letter post cannot be followed online, so detection leaves UH items
+with international mail and its UH rule is low-confidence. The adapter still takes them when
+Chunghwa Post is named: the tracker answered one with the scan a universal provider had. A
+successful reply must confirm the whole item. Other U series remain unsupported.
 
 Mail from abroad keeps the sending post's number. Chunghwa Post's
 [ePacket page](https://www.post.gov.tw/post/internet/Postal/index.jsp?ID=1499060698896) says
-tracked letters imported into Taiwan are followed on its tracker, whose notes leave out those
-from France, and [Taipei Customs](https://web.customs.gov.tw/taipei/singlehtml/3130?cntId=cus2_164078_3130)
+tracked letters imported into Taiwan are followed on its tracker, and [Taipei Customs](https://web.customs.gov.tw/taipei/singlehtml/3130?cntId=cus2_164078_3130)
 sends the recipients of registered parcels from abroad there with the parcel's own number. So
 Chunghwa Post is the destination post an item for Taiwan is handed to, except a `U` customs
 label, which its tracker cannot read.
@@ -44,10 +46,14 @@ label, which its tracker cannot read.
 ## Limitations
 
 The direct path supports international EMS, parcel, registered and tracked-letter S10 items,
-and Taiwan-issued UH letter post.
+and Taiwan-issued FT and FZ express items and UH letter post.
 It refuses other postal services, numeric domestic references and proprietary mainland
 formats as invalid input before any request; enabled universal providers follow them.
-The tracker retains six months of history, and destination posts can withhold scans.
+The tracker retains six months of history, and destination posts can withhold scans. Its
+notes say thirteen posts, the United States', the United Kingdom's and France's among them,
+no longer give online tracking of registered letters.
+A return to the sender shows only in the remark of an unsuccessful delivery, which the adapter
+discards.
 Scans abroad have no instant, so an item that has left Taiwan has a wall clock as its last update.
 No cheap HTTP recognition is declared. Changed image geometry remains a challenge.
 

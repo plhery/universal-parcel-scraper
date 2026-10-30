@@ -76,8 +76,11 @@ const CATALOG_NAMES = new Set([
 // country's clock when that country keeps one zone, and their own on theirs.
 // Česká pošta dates its rows to the day, and ELTA's clocks name no zone.
 // PostNord's and Bring's carry offsets. Chunghwa Post follows mail from abroad
-// under the sending post's number for six months, though not tracked letters
-// from France, and dates its own scans on Taiwan time. Pošta Srbije, Pošta
+// under the sending post's number for six months and dates its own scans on
+// Taiwan time; its notes say the posts of the United States, Canada, Australia,
+// Denmark, South Africa, the Netherlands, Italy, the United Kingdom, Bahrain,
+// Yemen, Romania, Brazil and France no longer give online tracking of
+// registered letters. Pošta Srbije, Pošta
 // Slovenije, Cyprus Post, MaltaPost, POST Luxembourg and Magyar Posta follow mail
 // from abroad under the sending post's number; Magyar Posta's lookup opens a
 // browser. Omniva's tracker carries the scans in Estonia of mail from abroad,

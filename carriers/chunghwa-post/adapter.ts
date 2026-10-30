@@ -22,7 +22,7 @@ export class ChunghwaPostTracker {
     const normalized = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
     // Domestic, proprietary and other S10 services' references are refused before any request:
     // the international gateway cannot read them, and enabled universal providers follow them.
-    if (/^(?:\d{14}|\d{20}|(?:PB|FT|FZ)[A-Z0-9]{11})$/.test(normalized)
+    if (/^(?:\d{14}|\d{20}|PB[A-Z0-9]{11})$/.test(normalized)
       || /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(normalized) && !isSupportedChunghwaPostNumber(normalized)) {
       throw new InvalidInputError(PROVIDER, 'This Chunghwa Post reference uses another tracking service');
     }

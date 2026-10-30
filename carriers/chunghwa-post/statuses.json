@@ -89,6 +89,34 @@
       "language": "zh-Hant",
       "confirmedBy": "live",
       "note": "International tracking scan from the public EB500200 query."
+    },
+    {
+      "wording": "離開寄達國互換局",
+      "stage": "in_transit",
+      "language": "zh-Hant",
+      "confirmedBy": "source",
+      "note": "Left the inward office of exchange. Quoted from the international tracker by customers."
+    },
+    {
+      "wording": "到達寄達國投遞局",
+      "stage": "in_transit",
+      "language": "zh-Hant",
+      "confirmedBy": "source",
+      "note": "Reached the delivery office. Quoted from the international tracker by customers."
+    },
+    {
+      "wording": "投遞不成功",
+      "stage": "failed_attempt",
+      "language": "zh-Hant",
+      "confirmedBy": "bundle",
+      "note": "The former tracker's script names its H scan so, and customers quote it from the international tracker. The reason and the next step, such as a return to the sender, come as remarks the adapter discards."
+    },
+    {
+      "wording": "投遞成功",
+      "stage": "delivered",
+      "language": "zh-Hant",
+      "confirmedBy": "portal",
+      "note": "Seen in archived replies of the former tracker; customers quote it from the international tracker, whose script gives this scan a signatory."
     }
   ]
 }

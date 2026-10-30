@@ -62,6 +62,19 @@ describe('Chunghwa Post international tracking', () => {
     expect(statusMap.stage('6', '離開進口局')).toBe('in_transit');
   });
 
+  it('stages delivery, an unsuccessful attempt and the steps before them in the destination country', () => {
+    const payload = fixture();
+    (payload[0]!.body.host_rs as { ITEM: unknown[] }).ITEM = [
+      { EVCODE: 'I', STATUS: '投遞成功', DATIME: '20260108101500', BRHNAT: '德國' },
+      { EVCODE: 'H', STATUS: '投遞不成功', DATIME: '20260107101500', BRHNAT: '德國' },
+      { EVCODE: 'G', STATUS: '到達寄達國投遞局', DATIME: '20260106101500', BRHNAT: '德國' },
+      { EVCODE: 'F', STATUS: '離開寄達國互換局', DATIME: '20260105101500', BRHNAT: '德國' },
+    ];
+    const result = parseChunghwaPost(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
+    expect(result.events!.map((event) => event.stage)).toEqual(['delivered', 'failed_attempt', 'in_transit', 'in_transit']);
+  });
+
   it('requires accepted verification and repeated identity, and recognizes only the matching absence message', () => {
     expect(() => parseChunghwaPost(unknown(), NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseChunghwaPost(unknown('EA000000005TW'), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
@@ -79,7 +92,7 @@ describe('Chunghwa Post international tracking', () => {
   it('refuses domestic, proprietary and other S10 references before any request, even when already cancelled', async () => {
     const fetcher = vi.fn<typeof fetch>();
     const carrier = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
-    for (const number of ['00000000000001', '00000000000000000001', 'PB00000000000', 'FT000000005TW', 'VA000000005TW', 'UA000000005TW', 'UH000000005CN']) {
+    for (const number of ['00000000000001', '00000000000000000001', 'PB00000000000', 'FT000000005CN', 'VA000000005TW', 'UA000000005TW', 'UH000000005CN']) {
       const refusal = { kind: 'invalid_input', message: expect.stringContaining('another tracking service') };
       await expect(new ChunghwaPostTracker({ fetcher }).fetch(number)).rejects.toMatchObject(refusal);
       await expect(carrier.track({ number }, { signal: AbortSignal.abort(), budgetMs: 1 })).rejects.toMatchObject(refusal);
@@ -87,8 +100,7 @@ describe('Chunghwa Post international tracking', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
-  it('queries UH items issued in Taiwan through the same verified and identity-bound flow', async () => {
-    const number = 'UH000000005TW';
+  it.each(['UH000000005TW', 'FT000000005TW', 'FZ000000005TW'])('queries %s, issued in Taiwan, through the same verified and identity-bound flow', async (number) => {
     const payload = fixture(); payload[0]!.body.host_rs.MAILNO = number;
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('')).mockResolvedValueOnce(new Response('image'))
       .mockResolvedValueOnce(Response.json(payload));
