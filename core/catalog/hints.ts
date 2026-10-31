@@ -88,7 +88,9 @@ const CATALOG_NAMES = new Set([
 // sending post's number and relay that post's scans on its clocks beside their
 // own; no clock names a zone. Serpost shows only its own scans of such mail,
 // and Pos Indonesia its scans once it handles the item, on clocks in three zones
-// that name none. The host also checks adapter availability and required inputs before
+// that name none. NZ Post follows mail from abroad under the sending post's
+// number; its own scans carry UTC instants, and it relays the origin post's on
+// Auckland's reading, which its adapter gives back. The host also checks adapter availability and required inputs before
 // making a request.
 const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
   ['AM', 'haypost'], ['AR', 'correo-argentino'], ['AT', 'austrian-post'], ['AU', 'australia-post'], ['BD', 'bangladesh-post'],
@@ -99,7 +101,7 @@ const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
   ['IT', 'poste-italiane'], ['JO', 'jordan-post'], ['JP', 'japan-post'], ['KE', 'posta-kenya'], ['KG', 'kyrgyz-post'], ['LT', 'lietuvos-pastas'],
   ['LU', 'post-luxembourg'], ['LV', 'latvijas-pasts'], ['MA', 'barid-al-maghrib'], ['MK', 'posta-north-macedonia'], ['MT', 'maltapost'],
   ['NL', 'spring-gds'],
-  ['NO', 'bring-posten'], ['PE', 'serpost'], ['PH', 'phlpost'], ['PK', 'pakistan-post'], ['PL', 'poczta-polska'], ['PT', 'ctt'], ['RO', 'posta-romana'], ['RS', 'posta-srbije'],
+  ['NO', 'bring-posten'], ['NZ', 'nz-post'], ['PE', 'serpost'], ['PH', 'phlpost'], ['PK', 'pakistan-post'], ['PL', 'poczta-polska'], ['PT', 'ctt'], ['RO', 'posta-romana'], ['RS', 'posta-srbije'],
   ['SA', 'saudi-post'], ['SE', 'postnord'], ['SI', 'posta-slovenije'], ['SK', 'slovenska-posta'], ['SV', 'correos-el-salvador'], ['TW', 'chunghwa-post'], ['UA', 'ukrposhta'],
   ['US', 'usps'], ['UY', 'correo-uruguayo'], ['UZ', 'uzbekistan-post'], ['ZA', 'south-african-post-office'],
 ]);

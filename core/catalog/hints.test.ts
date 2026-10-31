@@ -98,6 +98,7 @@ describe('national postal lookup candidates', () => {
     ['LU', 'post-luxembourg'], ['Luxembourg', 'post-luxembourg'], ['HU', 'magyar-posta'], ['Hungary', 'magyar-posta'],
     ['KG', 'kyrgyz-post'], ['Kyrgyzstan', 'kyrgyz-post'], ['PK', 'pakistan-post'], ['Pakistan', 'pakistan-post'],
     ['PE', 'serpost'], ['Peru', 'serpost'], ['ID', 'pos-indonesia'], ['Indonesia', 'pos-indonesia'],
+    ['NZ', 'nz-post'], ['New Zealand', 'nz-post'],
   ])('suggests one operator for destination %s', (country, expected) => {
     expect(nationalPostCandidate(country)).toBe(expected);
   });

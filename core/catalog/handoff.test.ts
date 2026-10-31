@@ -85,6 +85,12 @@ describe('general delivery handoff candidates', () => {
     expect(deliveryHandoff('japan-post', 'RA123456785JP', { destination_country: 'GB' }))
       .toEqual({ carrier: 'royal-mail', number: 'RA123456785JP', basis: 'destination' });
   });
+  it('hands mail from abroad to New Zealand to NZ Post', () => {
+    expect(deliveryHandoff('japan-post', 'RA123456785JP', {}, 'NZ'))
+      .toEqual({ carrier: 'nz-post', number: 'RA123456785JP', basis: 'destination' });
+    expect(deliveryHandoff('japan-post', 'EA123456785JP', { destination_country: 'New Zealand' }))
+      .toEqual({ carrier: 'nz-post', number: 'EA123456785JP', basis: 'destination' });
+  });
   it.each(['LX123456789NL', '1234567890', '3SABC12345678', 'LP00000000000001'])(
     'does not try a national post for a non-postal or invalid reference: %s', (number) => {
       expect(deliveryHandoff('spring-gds', number, { destination_country: 'CH' })).toBeNull();
