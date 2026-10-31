@@ -77,6 +77,14 @@ describe('general delivery handoff candidates', () => {
     expect(deliveryHandoff('aliexpress', 'UA123456785CN', { destination_country: 'FR' }))
       .toEqual({ carrier: 'la-poste', number: 'UA123456785CN', basis: 'destination' });
   });
+  it('hands EMS from abroad to Parcelforce, the UK EMS operator, and other mail to Royal Mail', () => {
+    expect(deliveryHandoff('japan-post', 'EA123456785JP', { destination_country: 'GB' }))
+      .toEqual({ carrier: 'parcelforce', number: 'EA123456785JP', basis: 'destination' });
+    expect(deliveryHandoff('japan-post', 'EA123456785JP', {}, 'GB'))
+      .toEqual({ carrier: 'parcelforce', number: 'EA123456785JP', basis: 'destination' });
+    expect(deliveryHandoff('japan-post', 'RA123456785JP', { destination_country: 'GB' }))
+      .toEqual({ carrier: 'royal-mail', number: 'RA123456785JP', basis: 'destination' });
+  });
   it.each(['LX123456789NL', '1234567890', '3SABC12345678', 'LP00000000000001'])(
     'does not try a national post for a non-postal or invalid reference: %s', (number) => {
       expect(deliveryHandoff('spring-gds', number, { destination_country: 'CH' })).toBeNull();

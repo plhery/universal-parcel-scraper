@@ -4,8 +4,8 @@ Japan Post items, tracked through the anonymous [English tracking portal](https:
 Accepts checksum-valid S10 references and 11–13 digit domestic numbers.
 Detection offers a 12-digit domestic number or an 11-digit registered mail number among other
 carriers only when the digits before the last, divided by seven, leave the last digit.
-Recognition asks Japan Post about twelve-digit ones with the same lookup, first when the number
-is looked up from Japan.
+Recognition asks Japan Post about both with the same lookup, first when the number is looked up
+from Japan. Detection leaves `U`-prefixed numbers ending `JP` out.
 
 ## How it works
 

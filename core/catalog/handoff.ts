@@ -78,6 +78,9 @@ export function deliveryHandoff(carrier: string, number: string, result: Carrier
     target = carrier === 'dhl' && /^C[A-Z]\d{9}DE$/.test(reference) && country && Object.hasOwn(DHL_PARCEL_PARTNERS, country)
       ? DHL_PARCEL_PARTNERS[country] ?? undefined : nationalPostCandidate(destination ?? looked);
     if ((target === 'japan-post' || target === 'chunghwa-post') && reference.startsWith('U')) target = undefined;
+    // Parcelforce is the United Kingdom's EMS operator (https://www.ems.post/en/global-network/ems-operators/ems-uk):
+    // EMS from abroad is its to deliver, not Royal Mail's.
+    if (target === 'royal-mail' && reference.startsWith('E')) target = 'parcelforce';
     if (target) basis = 'destination';
   }
   // A downstream reference binds the two identities, but does not prove its

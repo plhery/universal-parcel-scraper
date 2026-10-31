@@ -4246,7 +4246,7 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": [
       {
-        "pattern": "^[A-Z]{2}\\d{9}JP$",
+        "pattern": "^[A-TV-Z][A-Z]\\d{9}JP$",
         "confidence": "high",
         "checksum": "s10"
       },
