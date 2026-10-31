@@ -1166,12 +1166,31 @@
     "reason": "A passing GS1 check digit adds FedEx to BRT and Yunda, which accept any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Fifteen digits starting 36000, 31000 or 30000 that pass the GS1 check",
+    "carriers": [
+      "andreani",
+      "brt",
+      "fedex",
+      "yunda"
+    ],
+    "reason": "Andreani's shipment numbers start 36000, 31000 or 30000, and BRT and Yunda accept any fifteen digits; a passing GS1 check digit adds FedEx. Every rule is low confidence and Andreani's is preferred, so the number stays a suggestion, Andreani first."
+  },
+  {
     "shape": "Fifteen digits outside DPD France's 0/1 prefixes and STO's 77 range that fail the GS1 check",
     "carriers": [
       "brt",
       "yunda"
     ],
     "reason": "BRT parcel IDs and Yunda's fifteen-digit rule both accept any fifteen digits and neither carries a check digit, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Fifteen digits starting 36000, 31000 or 30000 that fail the GS1 check",
+    "carriers": [
+      "andreani",
+      "brt",
+      "yunda"
+    ],
+    "reason": "Andreani's shipment numbers start 36000, 31000 or 30000, and BRT and Yunda accept any fifteen digits. Every rule is low confidence and Andreani's is preferred, so the number stays a suggestion, Andreani first."
   },
   {
     "shape": "Fifteen digits starting with 27 that pass the GS1 check",

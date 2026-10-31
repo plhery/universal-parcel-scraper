@@ -49,10 +49,11 @@ lookup its tracking page makes.
 ## Numbers
 
 Andreani shipment numbers are fifteen digits starting `36000`, `31000` or `30000`. Lookups
-archived from Andreani's tracker and from the tracking service behind it show all three. No
-rule claims them: detection compares numbers with spaces and hyphens stripped, and fifteen
-digits are then a plain digit run other carriers print too. Older lookups also show fifteen
-digits starting `90000` and lettered references of merchants, which stay unclaimed as well.
+archived from Andreani's tracker and from the tracking service behind it show all three, and no
+other carrier's known numbers start that way, so `andreani-1` suggests Andreani for them at low
+confidence: BRT and Yunda print fifteen digits too, and recognition asks the candidates. Older
+lookups also show fifteen digits starting `90000` and lettered references of merchants, which
+stay unclaimed.
 The tracker also knows numbers of a `G` and fourteen digits and of a `U` and eight digits.
 
 ## Links

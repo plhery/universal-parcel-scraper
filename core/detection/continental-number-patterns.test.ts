@@ -1119,3 +1119,15 @@ describe('Inntralog and DG Transporte', () => {
     expect(carrierIdFromName('DG Transporte GmbH')).toBe('dg-transporte');
   });
 });
+
+describe('Andreani shipment numbers', () => {
+  it('suggests Andreani first for its fifteen-digit prefixes and leaves other fifteen-digit runs alone', () => {
+    for (const number of ['360000000000001', '310000000000002', '300000000000001']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: expect.arrayContaining(['andreani']) });
+      expect(recognitionAskedCarriers(number), number).toContain('andreani');
+    }
+    for (const number of ['320000000000001', '360010000000001', '900000000000001', '36000000000001', '3600000000000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('andreani');
+    }
+  });
+});

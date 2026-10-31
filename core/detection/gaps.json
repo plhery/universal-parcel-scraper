@@ -233,12 +233,6 @@
     "reason": "One archived guía is too few to tie the IDTS layout to Grupo ampm alone."
   },
   {
-    "carrier": "andreani",
-    "pattern": "^\\d{15}$",
-    "kind": "by_design",
-    "reason": "This layout is shared with other carriers or too plain to claim, so detection leaves it unclaimed."
-  },
-  {
     "carrier": "anousith",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

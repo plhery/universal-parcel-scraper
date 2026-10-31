@@ -7339,7 +7339,13 @@ export const CARRIER_CATALOG = {
         "path": "^/envio/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^(?:36000|31000|30000)\\d{10}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
   },
   "anjun": {
     "displayName": "Anjun Logistics",
@@ -41988,7 +41994,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ameriship": [],
   "ampm": [],
   "ams-egroup": [],
-  "andreani": [],
+  "andreani": ["andreani-1"],
   "anjun": ["anjun-aj"],
   "anousith": [],
   "anserx": ["anserx-1"],

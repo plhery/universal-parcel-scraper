@@ -79,5 +79,12 @@
       "path": "^/envio/([^/?#]+)/?$"
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "andreani-1",
+      "pattern": "^(?:36000|31000|30000)\\d{10}$",
+      "confidence": "low",
+      "preferred": true
+    }
+  ]
 }
