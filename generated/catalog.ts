@@ -4713,6 +4713,13 @@ export const CARRIER_CATALOG = {
           "auspost.com.au"
         ],
         "path": "^/mypost/track/details/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "auspost.com.au"
+        ],
+        "pathPattern": "^/mypost/track/?$",
+        "fragment": "^/search\\?(?:[^#]*&)?id=([^&]+)"
       }
     ],
     "detectionRules": [

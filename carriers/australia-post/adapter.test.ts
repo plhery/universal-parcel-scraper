@@ -4,6 +4,7 @@ import { adapter, AustraliaPostTracker, australiaPostApiUrl, australiaPostTracki
 import { TrawlClient } from '../../core/transport/index.js';
 import { NoHistoryError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { parseTrackingInput } from '../../core/detection/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { australiaPostStatus } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -399,6 +400,18 @@ describe('Australia Post recognition', () => {
     fetcher.mockClear();
     await expect(instance.recognize!('ABC123')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
+  });
+
+  it('names itself for any number in its tracking links, including the search route in the fragment', () => {
+    // A consignment detection does not name on its own: only the link says whose it is.
+    const consignment = '33ZZZ0000001';
+    for (const number of [NUMBER, consignment]) {
+      for (const link of [
+        `https://auspost.com.au/mypost/track/details/${number}`,
+        `https://auspost.com.au/mypost/track/#/search?id=${number}`,
+        `https://auspost.com.au/mypost/track#/search?lang=en&id=${number}`,
+      ]) expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: number, carrier: 'australia-post', confidence: 'high', source: 'link' });
+    }
   });
 });
 
