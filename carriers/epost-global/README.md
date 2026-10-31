@@ -2,7 +2,8 @@
 
 ePost Global ships US online sellers' parcels abroad: its processing centers sort them and hand
 them to a delivering partner such as Spring's PostNL service, GLS, Royal Mail or DAI Post.
-Tracked through the lookup its tracking page makes.
+Tracked through the lookup its tracking page makes. Its tracker runs on PPX Track, which also serves
+it on ppxtrack.com, so that name counts as ePost Global's.
 
 ## How it works
 
@@ -57,7 +58,8 @@ the label of one USPS was already moving. The adapter takes any code ending in `
 ## Links
 
 The tracking page reads a number from its path or its `id` parameter and looks it up at once, so
-`epgtrack.com/{number}` opens one shipment.
+`epgtrack.com/{number}` opens one shipment. On ppxtrack.com it reads the `id` parameter, or the
+number at the end of a shop's `/t/{shop}/{number}` page.
 
 ## Limitations
 

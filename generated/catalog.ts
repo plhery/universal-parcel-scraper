@@ -13139,6 +13139,45 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "dex-i": {
+    "displayName": "DEX-I",
+    "color": "#3b2280",
+    "aliases": [
+      "Dex-i",
+      "DEXI",
+      "Destinations Express",
+      "递壹时",
+      "递壹时国际物流",
+      "广州递壹时国际货物代理有限公司"
+    ],
+    "countries": [
+      "CN",
+      "SG",
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dex-i.com/",
+    "trackingUrlTemplate": "https://www.dex-i.com/site/tracking?trackingNums={trackingNumber}",
+    "trackingSearchUrl": "https://www.dex-i.com/site/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.dex-i.com",
+          "dex-i.com"
+        ],
+        "pathPattern": "^/site/tracking$",
+        "params": [
+          "trackingNums"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dex-pk": {
     "displayName": "DEX Pakistan",
     "color": "#f85606",
@@ -15784,7 +15823,9 @@ export const CARRIER_CATALOG = {
     "color": "#27967a",
     "aliases": [
       "ePostGlobal",
-      "EPG"
+      "EPG",
+      "PPX Track",
+      "PPXTrack"
     ],
     "countries": [
       "US"
@@ -15816,6 +15857,23 @@ export const CARRIER_CATALOG = {
         "params": [
           "id"
         ]
+      },
+      {
+        "domains": [
+          "ppxtrack.com",
+          "www.ppxtrack.com"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "id"
+        ]
+      },
+      {
+        "domains": [
+          "ppxtrack.com",
+          "www.ppxtrack.com"
+        ],
+        "path": "^/t/[^/?#]+/(EPG\\d{10,15})/?$"
       }
     ],
     "detectionRules": [
@@ -22765,6 +22823,29 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       }
     ]
+  },
+  "jy-express": {
+    "displayName": "JY Express",
+    "color": "#005aa0",
+    "aliases": [
+      "JY-EXP",
+      "捷优国际",
+      "广东捷优国际供应链有限公司",
+      "Guangdong Jieyou International Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jieyou.nextsls.com/tracking/app",
+    "trackingSearchUrl": "https://jieyou.nextsls.com/tracking/app#/tracking",
+    "linkRules": [],
+    "detectionRules": []
   },
   "kargoist": {
     "displayName": "Kargoist",
@@ -38470,6 +38551,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "utec-logistics": {
+    "displayName": "UTEC Logistics",
+    "color": "#014886",
+    "aliases": [
+      "UTEC",
+      "UTEC Express",
+      "UTEC Group"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://utec.ua/",
+    "trackingUrlTemplate": "https://utec.ua/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://utec.ua/",
+    "linkRules": [
+      {
+        "domains": [
+          "utec.ua",
+          "www.utec.ua"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^UTECP\\d{10}[A-Z]{2}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "uzbekistan-post": {
     "displayName": "Uzbekistan Post",
     "color": "#183e98",
@@ -41166,6 +41283,7 @@ export const CARRIER_IDS = [
   "deppon",
   "deprisa",
   "designer-transport",
+  "dex-i",
   "dex-pk",
   "dg-transporte",
   "dhl-ecommerce-es",
@@ -41412,6 +41530,7 @@ export const CARRIER_IDS = [
   "js-express",
   "jumppoint",
   "juxi-express",
+  "jy-express",
   "kargoist",
   "kart2door",
   "kazpost",
@@ -41816,6 +41935,7 @@ export const CARRIER_IDS = [
   "urbano",
   "urvaam",
   "usasd",
+  "utec-logistics",
   "uzbekistan-post",
   "v-xpress",
   "valmo",
@@ -42189,6 +42309,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "deppon": [],
   "deprisa": [],
   "designer-transport": [],
+  "dex-i": [],
   "dex-pk": ["dex-pk-1"],
   "dg-transporte": [],
   "dhl-ecommerce-es": ["dhl-ecommerce-es-1","dhl-ecommerce-es-2"],
@@ -42435,6 +42556,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "js-express": ["js-express-1"],
   "jumppoint": ["jumppoint-1"],
   "juxi-express": ["juxi-express-1"],
+  "jy-express": [],
   "kargoist": ["kargoist-1"],
   "kart2door": [],
   "kazpost": ["kazpost-s10"],
@@ -42839,6 +42961,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "urbano": ["urbano-1"],
   "urvaam": [],
   "usasd": [],
+  "utec-logistics": ["utec-logistics-1"],
   "uzbekistan-post": ["uzbekistan-post-s10"],
   "v-xpress": [],
   "valmo": ["valmo-1"],

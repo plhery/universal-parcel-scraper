@@ -500,6 +500,33 @@ describe('Tuodatong tracking numbers', () => {
   });
 });
 
+describe('UTEC Logistics, DEX-I, JY Express and PPX Track', () => {
+  it('suggests UTEC Logistics for UTECP, ten digits and two letters only', () => {
+    expect(detectCarrierMatch('UTECP1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['utec-logistics'] });
+    for (const number of ['UTECP100000017YQ', 'UTECP10000000017YQ', 'UTEC1000000017YQ', 'UTECX1000000017YQ', 'UTECP1000000017Y']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('utec-logistics');
+    }
+  });
+
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['UTEC', 'utec-logistics'], ['UTEC Express', 'utec-logistics'], ['DEX-I', 'dex-i'], ['递壹时', 'dex-i'],
+      ['JY Express', 'jy-express'], ['JY-EXP', 'jy-express'], ['捷优国际', 'jy-express'], ['PPX Track', 'epost-global']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    // DEX Pakistan and a China to Russia line also go by these short names.
+    for (const name of ['DEX', 'JY']) expect(carrierIdFromName(name), name).toBeUndefined();
+    expect(parseTrackingInput('https://utec.ua/tracking/UTECP1000000017YQ')).toMatchObject({
+      trackingNumber: 'UTECP1000000017YQ', carrier: 'utec-logistics', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.dex-i.com/site/tracking?trackingNums=DX1000000017')).toMatchObject({
+      trackingNumber: 'DX1000000017', carrier: 'dex-i', source: 'link',
+    });
+    for (const link of ['https://ppxtrack.com/?id=EPG100000000000017', 'https://www.ppxtrack.com/t/shop/EPG100000000000017']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: 'EPG100000000000017', carrier: 'epost-global', source: 'link' });
+    }
+  });
+});
+
 describe('Parcel Freight Logistics numbers', () => {
   it('suggests Parcel Freight Logistics for NEXAU, ten digits and YQ only', () => {
     expect(detectCarrierMatch('NEXAU1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pflogistics'] });

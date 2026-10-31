@@ -3,7 +3,9 @@
   "displayName": "ePost Global",
   "aliases": [
     "ePostGlobal",
-    "EPG"
+    "EPG",
+    "PPX Track",
+    "PPXTrack"
   ],
   "region": {
     "countries": [
@@ -91,6 +93,23 @@
       "params": [
         "id"
       ]
+    },
+    {
+      "domains": [
+        "ppxtrack.com",
+        "www.ppxtrack.com"
+      ],
+      "pathPattern": "^/$",
+      "params": [
+        "id"
+      ]
+    },
+    {
+      "domains": [
+        "ppxtrack.com",
+        "www.ppxtrack.com"
+      ],
+      "path": "^/t/[^/?#]+/(EPG\\d{10,15})/?$"
     }
   ],
   "detection": [
