@@ -56,7 +56,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['pickup document attached', 'A document attached to a collection, before or after it: no step of its own.'],
   ['delivery branch. rescheduling', 'A delivery rescheduled at the branch, before a new round or a collection: the wording does not say which.'],
   ['parcel to be taken to a yodel store', "A Yodel store hand-over that can be the sender's drop-off or a parcel sent for collection."],
-  ['the parcel has reached the parcelshop', "GLS's ParcelShop scan as Postal Ninja relays it: the sender's drop-off or a parcel waiting for collection."],
+  ['the parcel has reached the parcelshop', "GLS's ParcelShop scan as Postal Ninja relays it: the sender's drop-off or a parcel waiting for collection. A provider's result reads it by the carrier scans around it."],
   ['barcode scanning', "A Shenzhen forwarder's warehouse scan that First Line reads as its intake and PFC Express as transit: the wording names neither."],
   ['packaged', "A forwarder's packing, or a seller's: the wording does not say whose."],
 ];

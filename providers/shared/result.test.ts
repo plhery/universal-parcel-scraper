@@ -68,6 +68,21 @@ describe('shared provider result', () => {
     expect(result([event(at(22 * 3_600_000), 'Arrived at sorting center')!], 'ParcelsApp').events?.[0]?.time).toBe(at(22 * 3_600_000));
   });
 
+  it("reads GLS's ParcelShop scan by the carrier scans around it", () => {
+    const shop = 'The parcel has reached the ParcelShop';
+    const stageOf = (events: (ReturnType<typeof event>)[]) => result(events.map((entry) => entry!), 'Postal Ninja').events
+      ?.find(({ description }) => description === shop)?.stage;
+    // The sender's drop-off, before GLS has the parcel.
+    expect(stageOf([event('2026-03-02T16:01:10Z', shop), event('2026-03-04T16:43:41Z', 'The parcel was handed over to GLS'),
+      event('2026-03-05T11:30:00Z', 'Delivered')])).toBe('accepted');
+    // The parcel waiting for collection, after GLS carried it.
+    expect(stageOf([event('2026-03-02T16:43:41Z', 'The parcel was handed over to GLS'),
+      event('2026-03-03T09:00:00Z', 'The parcel has left the parcel center'), event('2026-03-04T10:00:00Z', shop)])).toBe('ready_for_pickup');
+    // Alone, or after the label alone, the wording does not say which.
+    expect(stageOf([event('2026-03-02T16:01:10Z', shop)])).toBe('pending');
+    expect(stageOf([event('2026-03-01T08:00:00Z', 'Shipment information received', 'registered'), event('2026-03-02T16:01:10Z', shop)])).toBe('pending');
+  });
+
   it('puts a step dated by its day alone above the newest scan of its day at an earlier stage', () => {
     const scan = (clock: string, description: string, stage: string) => ({
       ...(clock.length === 10 ? { local_time: clock } : { time: clock }), description, stage, stage_source: 'carrier_map',

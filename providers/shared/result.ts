@@ -588,6 +588,25 @@ function aheadStep(value: CarrierEvent, now: number): CarrierEvent {
   return undated;
 }
 
+// GLS's ParcelShop scan as Postal Ninja relays it, which the wording alone leaves open.
+const PARCELSHOP_SCAN = /^the parcel has reached the parcelshop[.!]?$/i;
+const PAST_LABEL = (stage: Stage | undefined) => !!stage && stage !== 'pending' && stage !== 'registered';
+
+/**
+ * GLS's ParcelShop scan read by the scans around it: after a carrier scan, the parcel waits for
+ * collection; before one, with none earlier, it is the sender's drop-off. Alone it stays unread.
+ */
+function parcelShopScan(value: CarrierEvent, events: readonly CarrierEvent[]): CarrierEvent {
+  const at = instantOf(value);
+  if (value.stage_source !== 'none' || !PARCELSHOP_SCAN.test(value.description ?? '') || at === null) return value;
+  const carried = (before: boolean) => events.some((other) => {
+    const when = instantOf(other);
+    return when !== null && (before ? when < at : when > at) && PAST_LABEL(other.stage as Stage | undefined);
+  });
+  const stage: Stage | undefined = carried(true) ? 'ready_for_pickup' : carried(false) ? 'accepted' : undefined;
+  return stage ? { ...value, stage, stage_source: 'wording:provider' } : value;
+}
+
 // A timeline written to a schedule rather than scanned: rows a fixed time apart, each to within a
 // second of the one before, four or more. The step is an hour or more and not a whole number of
 // hours, which a copy of one scan read on other clocks, or a row written at one time each day,
@@ -671,7 +690,8 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
   const specific = new Set([...scans.values()].filter((event) => !GENERIC_TRANSIT.test(event.description ?? '')).map(at));
   const kept = [...scans.values()].filter((event) => !written.has(instantOf(event) ?? NaN)
     && !(GENERIC_TRANSIT.test(event.description ?? '') && specific.has(at(event))));
-  const unique = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
+  const ordered = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
+  const unique = ordered.map((event) => parcelShopScan(event, ordered));
   if (!unique.length && written.size) {
     throw new NoHistoryError(source, `${source} relays only a timeline written to a schedule`, { reason: 'written_ahead' });
   }

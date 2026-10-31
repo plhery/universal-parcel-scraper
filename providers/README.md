@@ -83,7 +83,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   or no place. A place loses a country given twice, and the destination's country a line
   appends to its warehouse in China ("Shanghai, United States").
 - One wording-to-stage vocabulary serves all providers. Unmatched wording stays
-  `pending` and never inherits the shipment's stage. [status.ts](status.ts) declares it,
+  `pending` and never inherits the shipment's stage. GLS's "The parcel has reached the
+  ParcelShop" is read by the scans around it: after a carrier scan the parcel waits for
+  collection, before one it is the sender's drop-off. [status.ts](status.ts) declares it,
   with 17TRACK's sub-statuses, as the status map `statusMapAnswer()` asks for the scans the
   parcel app files under the carrier `unknown`.
 - English return instructions and a return in progress remain exceptions. Completed
