@@ -99,8 +99,9 @@ const OPENINGS: readonly (readonly [RegExp, Stage | null])[] = [
   [/^flight schedule etd\b/, null],
   [/^(?:shipment is )?scheduled to\b/, null],
   [/^the driver failed to deliver\b/, 'failed_attempt'],
-  // The parcel waits at a pickup point the sentence names, for the recipient's code.
-  [/^the parcel has been delivered to .+\. please collect your parcel .+ using your pickup code$/, 'ready_for_pickup'],
+  // The parcel waits at a pickup point the sentence names, for the recipient's code. The page writes
+  // the point and its address in 【】, which the phrase leaves out; a stored wording keeps them.
+  [/^the parcel has been delivered to\b.*\. please collect your parcel\b.* using your pickup code$/, 'ready_for_pickup'],
 ];
 
 /** A wording as the phrases list it: lower case, without the 【】 names, single spaces, no closing full stop. */

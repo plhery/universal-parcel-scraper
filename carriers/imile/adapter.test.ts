@@ -197,6 +197,15 @@ describe('iMile HTTP adapter', () => {
     expect(signed).toMatchObject({ current_stage: 'returned' });
   });
 
+  it('reads a pickup point notice, its names in 【】 as the page writes them, as waiting there', () => {
+    const waiting = parseImile(changed('delivered', (shipment) => {
+      Object.assign(shipment.trackInfos[0]!, { trackStage: 1003,
+        content: 'The parcel has been delivered to 【Sample Shop】. Please collect your parcel promptly at 【Sample Street 1】 using your pickup code.' });
+    }), DELIVERED);
+    expect(waiting).toMatchObject({ current_stage: 'ready_for_pickup', current_stage_source: 'carrier_map',
+      last_status_text: 'The parcel has been delivered to Sample Shop. Please collect your parcel promptly at Sample Street 1 using your pickup code.' });
+  });
+
   it('reads a history listed oldest first newest first, as the page shows it', () => {
     const result = parseImile(changed('in-transit', (shipment) => { shipment.trackInfos.reverse(); }), IN_TRANSIT);
     expect(result).toMatchObject({ last_update: '2026-06-04T02:15:00-05:00', current_stage: 'customs' });
