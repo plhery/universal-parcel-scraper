@@ -71,6 +71,7 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // On the delivery run only (`1003`); on the way to the delivery office (`1002`) it is a delay.
   ['traffic, strike, bad weather', 'failed_attempt'],
   ['user not at home', 'failed_attempt'],
+  ['consignee not at home', 'failed_attempt'],
   ['wrong address', 'failed_attempt'],
   ['<bad address>', 'failed_attempt'],
   // The recipient refused the parcel at the door.
@@ -78,6 +79,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // A recipient iMile cannot reach, on the delivery run before the return starts.
   ['need to return', 'exception'],
   ['lost order', null],
+  // After a failed attempt the recipient chose to collect the parcel; the drop-off at a pickup point follows.
+  ['the delivery method has been confirmed with the recipient as self-pickup', null],
   ['inventory count scan', null],
   ['your order has been delivered successfully', 'delivered'],
   ['your package was received', 'delivered'],
@@ -96,6 +99,8 @@ const OPENINGS: readonly (readonly [RegExp, Stage | null])[] = [
   [/^flight schedule etd\b/, null],
   [/^(?:shipment is )?scheduled to\b/, null],
   [/^the driver failed to deliver\b/, 'failed_attempt'],
+  // The parcel waits at a pickup point the sentence names, for the recipient's code.
+  [/^the parcel has been delivered to .+\. please collect your parcel .+ using your pickup code$/, 'ready_for_pickup'],
 ];
 
 /** A wording as the phrases list it: lower case, without the 【】 names, single spaces, no closing full stop. */
@@ -152,6 +157,7 @@ export const statusMap: CarrierStatusMap = {
     : imileMappedStage(code ?? '', wording) ?? undefined),
   gaps: [
     { code: DELIVERY, wording: 'lost order', note: 'A driver\'s reason during a delivery run, followed by the attempt\'s end; the parcel it was seen on went out again and was delivered, so it does not establish a loss.' },
+    { code: DELIVERY, wording: 'the delivery method has been confirmed with the recipient as self-pickup.', note: 'The recipient chose to collect the parcel after a failed attempt; it keeps the stage of the scan before it until the pickup point has the parcel.' },
     ...cainiaoStatusMap.gaps,
   ],
 };

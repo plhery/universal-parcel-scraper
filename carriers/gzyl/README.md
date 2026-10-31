@@ -51,7 +51,8 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   are held back on every tenant and named like rows written ahead.
 - Rows carry wall clocks without an offset, abroad too, on the trackers' Beijing clock: rows
   at the destination were shown up to seven hours before their clock read as UTC, earlier than
-  the destination's own clock allows. Every row is read on Beijing time, as on the other tenants
+  the destination's own clock allows, and on the destination's clock some delivery rows would be
+  written before they happened. Every row is read on Beijing time, as on the other tenants
   except Mayi Yinfu, where a row copied from the delivering carrier without a place can come on
   that carrier's clock, and [Kun Express](../kun-express/README.md), whose rows copied from USPS
   are on the facility's clock. Each scan keeps the platform's clock when its row was written as
@@ -74,6 +75,9 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   it as the space it was.
 
 ## Limitations
+
+No proof of delivery: GZYL writes its delivery row in an evening batch, in the order's town as its
+rows written ahead are, and the record names no delivering carrier or number.
 
 A reference stored without its dashes is not found. A record with the delivery carrier's number
 but no channel label hands nothing over, except on a tenant that names the carriers it hands

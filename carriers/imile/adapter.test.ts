@@ -559,6 +559,12 @@ describe('iMile status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Lost order' })).toMatchObject({ kind: 'intentional_gap' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'User not at home' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'The delivery method has been confirmed with the recipient as Self-Pickup.' }))
+      .toMatchObject({ kind: 'intentional_gap' });
+    // The pickup point and its address vary; the parcel waits there for the recipient.
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003',
+      description: 'The parcel has been delivered to Sample Shop. Please collect your parcel promptly at Sample Street 1 using your pickup code.' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '9999', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
     // A delivery-stage sentence the map does not know is read by the shared rules, else stays in transit.
     expect(imileStage('1003', 'Synthetic note')).toEqual({ stage: 'in_transit', source: expect.any(String) });
