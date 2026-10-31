@@ -165,6 +165,11 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+03:00', 'Tracking number assigned')).toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
   });
 
+  it("reads Yanwen's scan after its pickup, as ParcelsApp relays it", () => {
+    expect(event('2026-01-07T12:45:00+08:00', 'Processing information input'))
+      .toMatchObject({ stage: 'accepted', stage_source: 'wording:provider' });
+  });
+
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
     expect(event('2026-01-07T12:45:00+01:00', 'B2C Clearance 4. Customs Import cleared'))
       .toMatchObject({ description: 'Customs Import cleared', stage: 'in_transit' });

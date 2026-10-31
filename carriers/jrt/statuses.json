@@ -43,6 +43,24 @@
       "note": "GZYL's tenant of the same platform words it \"Goods leave the operation center\"."
     },
     {
+      "wording": "货物打包完成，已发往航司",
+      "language": "zh",
+      "english": "Goods packed and sent to the airline",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "After the parcel left the operation center, before its flight."
+    },
+    {
+      "wording": "抵达航司已起飞",
+      "language": "zh",
+      "english": "Arrived at the airline, flight departed",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The flight left the airport the row names."
+    },
+    {
       "wording": "Shipment arrived at facility",
       "language": "en",
       "stage": "in_transit",

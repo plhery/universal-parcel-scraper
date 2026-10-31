@@ -326,6 +326,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // the sender's confirmation that the shipment is being prepared.
   if (/^item has passed a checkpoint[.!]?$/i.test(value)) return 'in_transit';
   if (/^confirmation of preparation of the shipment received[.!]?$/i.test(value)) return 'registered';
+  // Yanwen's scan after its pickup, as its own map reads it.
+  if (/^processing information input[.!]?$/i.test(value)) return 'accepted';
   // Landmark Global's hand-over to the postal operator that carries the parcel on, as its own map reads it:
   // the shared rules would read "deposited" as a delivery.
   if (/^item deposited to (?:the )?local postal operator[.!]?$/i.test(value)) return 'in_transit';

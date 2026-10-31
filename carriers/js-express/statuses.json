@@ -38,6 +38,7 @@
     {"wording": "COLLECTED FROM AIRPORT TERMINAL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's agent taking the shipment from the destination airport."},
     {"wording": "ARRIVED AT DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's depot scan after the hand-off to the local courier."},
     {"wording": "SORT - LOADED TO TRAILER", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "IN TRANSIT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's scan between its depots."},
     {"wording": "collection by overseas warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "JS Express's warehouse in the destination country taking the parcel after customs."},
     {"wording": "Load cargo overseas", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "That warehouse loading the parcel for the destination courier."},
     {"wording": "Vehicles depart from", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The truck leaving that warehouse; the place follows as the row's location."},
