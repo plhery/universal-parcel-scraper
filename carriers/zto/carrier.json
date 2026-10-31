@@ -1,7 +1,9 @@
 {
   "id": "zto",
   "displayName": "ZTO Express",
-  "aliases": [],
+  "aliases": [
+    "中通快递"
+  ],
   "region": {
     "countries": [
       "CN"

@@ -4433,6 +4433,9 @@ export const CARRIER_CATALOG = {
   "zto": {
     "displayName": "ZTO Express",
     "color": "#0279ff",
+    "aliases": [
+      "中通快递"
+    ],
     "countries": [
       "CN"
     ],
