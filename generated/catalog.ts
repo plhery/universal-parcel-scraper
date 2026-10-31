@@ -11613,7 +11613,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "consegnia",
+      "recognitionRank": 57,
+      "localClocks": true
     },
     "canaryUrl": "https://clc-express.com/",
     "trackingUrlTemplate": "https://clc-express.com/track-delivery?awb={trackingNumber}",
@@ -18130,7 +18132,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Kuala_Lumpur",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fmx",
+      "recognitionRank": 147,
+      "localClocks": true
     },
     "canaryUrl": "https://www.fmx.asia/",
     "trackingUrlTemplate": "https://www.fmx.asia/result_detail.php?p=1&conno={trackingNumber}",
@@ -20579,7 +20583,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hitch",
+      "recognitionRank": 117,
+      "localClocks": true
     },
     "canaryUrl": "https://hitch.com.ph/",
     "trackingUrlTemplate": "https://hitch.com.ph/tracking?no={trackingNumber}",

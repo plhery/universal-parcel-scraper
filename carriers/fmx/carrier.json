@@ -18,18 +18,54 @@
   "timezone": "Asia/Kuala_Lumpur",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fmx",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 147
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.fmx.asia/result_detail.php?p=1&conno={trackingNumber}",
     "searchUrl": "https://www.fmx.asia/",
     "canaryUrl": "https://www.fmx.asia/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "progress_rail",
+      "history",
+      "location",
+      "destination",
+      "customer_reference",
+      "departure_date",
+      "delivered_at",
+      "signatory"
+    ],
+    "scraped": [
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "progress_rail",
+      "destination",
+      "customer_reference",
+      "departure_date",
+      "delivered_at",
+      "signatory"
+    ],
+    "unavailable": [
+      "provider_code",
+      "eta",
+      "offset_timestamps",
+      "weight",
+      "service_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

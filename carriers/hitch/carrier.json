@@ -21,18 +21,54 @@
   "timezone": "Asia/Manila",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hitch",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 117
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "canonical_tracking_number"
+  ],
   "portal": {
     "url": "https://hitch.com.ph/tracking?no={trackingNumber}",
     "searchUrl": "https://hitch.com.ph/tracking",
     "canaryUrl": "https://hitch.com.ph/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "canonical_tracking_number",
+      "order_reference",
+      "order_date",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "order_reference",
+      "order_date",
+      "remarks"
+    ],
+    "unavailable": [
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "delivered_at",
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

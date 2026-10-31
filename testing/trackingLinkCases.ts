@@ -1981,6 +1981,19 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'optima-overnight', number: 'P00000000000017',
     route: /^https:\/\/www\.shipoptima\.com\/pages\/tracking\?tracking=P00000000000017$/,
     marker: /No shipment found for tracking number/ },
+  // The page looks the number up from its script and says when it holds no package under it.
+  { carrier: 'consegnia', number: 'CLC999999917',
+    route: /^https:\/\/clc-express\.com\/track-delivery\?awb=CLC999999917$/,
+    marker: /No information about your package|Enter your tracking number or order number/ },
+  // The server renders the booking's timeline, or says it holds none, with HTTP 200.
+  { carrier: 'hitch', number: 'ZIP0SYNTHETIC01',
+    route: /^https:\/\/hitch\.com\.ph\/tracking\?no=ZIP0SYNTHETIC01$/,
+    marker: /we couldn't find any bookings\/results matching|Tracking Details/ },
+  // The server renders the consignment's card, or a placeholder heading for a number it has no data for, with HTTP 200.
+  { carrier: 'fmx', number: 'MYX0000000017',
+    route: /^https:\/\/www\.fmx\.asia\/result_detail\.php\?p=1&conno=MYX0000000017$/,
+    marker: /Consignment Data Generated, Awaiting for Handover|Tracking Number:/,
+    forwarding: { notFound: /Consignment Data Generated, Awaiting for Handover/ } },
   // The page renders the shipment, or says no shipment matches the number, with HTTP 200.
   { carrier: 'whiz-delivery', number: 'SW0000000000',
     route: /^https:\/\/track\.whizdelivery\.ca\/track\/SW0000000000$/,

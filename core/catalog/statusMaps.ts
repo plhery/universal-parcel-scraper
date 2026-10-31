@@ -116,6 +116,7 @@ import { statusMap as cne } from '../../carriers/cne/status.js';
 import { statusMap as colisPrive } from '../../carriers/colis-prive/status.js';
 import { statusMap as colisweb } from '../../carriers/colisweb/status.js';
 import { statusMap as connectCouriers } from '../../carriers/connect-couriers/status.js';
+import { statusMap as consegnia } from '../../carriers/consegnia/status.js';
 import { statusMap as coordinadora } from '../../carriers/coordinadora/status.js';
 import { statusMap as copaCourier } from '../../carriers/copa-courier/status.js';
 import { statusMap as corre } from '../../carriers/corre/status.js';
@@ -240,6 +241,7 @@ import { statusMap as flashExpressPh } from '../../carriers/flash-express-ph/sta
 import { statusMap as fleetex } from '../../carriers/fleetex/status.js';
 import { statusMap as fleetoptics } from '../../carriers/fleetoptics/status.js';
 import { statusMap as flippost } from '../../carriers/flippost/status.js';
+import { statusMap as fmx } from '../../carriers/fmx/status.js';
 import { statusMap as followmont } from '../../carriers/followmont/status.js';
 import { statusMap as forwardAir } from '../../carriers/forward-air/status.js';
 import { statusMap as forzaDelivery } from '../../carriers/forza-delivery/status.js';
@@ -290,6 +292,7 @@ import { statusMap as hepsijet } from '../../carriers/hepsijet/status.js';
 import { statusMap as hermes } from '../../carriers/hermes/status.js';
 import { statusMap as hermesAt } from '../../carriers/hermes-at/status.js';
 import { statusMap as hermesDe } from '../../carriers/hermes-de/status.js';
+import { statusMap as hitch } from '../../carriers/hitch/status.js';
 import { statusMap as hispapost } from '../../carriers/hispapost/status.js';
 import { statusMap as homexpress } from '../../carriers/homexpress/status.js';
 import { statusMap as hongkongPost } from '../../carriers/hongkong-post/status.js';
@@ -687,7 +690,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,
   'chit-chats': chitChats, chronodiali, chronopost, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
-  'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, cne, 'colis-prive': colisPrive, colisweb, 'connect-couriers': connectCouriers, coordinadora,
+  'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, cne, 'colis-prive': colisPrive, colisweb, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, corre,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
   'courier-center': courierCenter, couriersplease: couriersPlease, 'cruz-del-sur': cruzDelSur, 'cse-russia': cseRussia, ctt, 'ctt-express': cttExpress, cttyex,
@@ -704,11 +707,11 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   fastfrate, fedex, 'fedex-freight': fedexFreight, 'fedex-international-connect': fedexInternationalConnect, 'fedex-pl': fedexPl, fermopoint, 'fg-delivery': fgDelivery, 'first-line': firstLine,
   'flash-express': flashExpress,
   'flash-express-ph': flashExpressPh,
-  fleetex, fleetoptics, flippost, followmont, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, gati, gdex,
+  fleetex, fleetoptics, flippost, fmx, followmont, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, gati, gdex,
   'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
-  hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hispapost, homexpress, 'hongkong-post': hongkongPost,
+  hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
   horoz, 'houng-ah-loun': houngAhLoun, hovership, 'hr-parcel': hrParcel, 'hrvatska-posta': hrvatskaPosta, huahan, 'huaya-express': huayaExpress, 'hunter-express': hunterExpress, hywl,
   'icc-worldwide': iccWorldwide, 'ics-courier': icsCourier, 'ids-logistik': idsLogistik, 'ilyang-logis': ilyangLogis, imile,
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,

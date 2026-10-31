@@ -107,6 +107,7 @@ import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
 import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter.js';
+import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
 import { adapter as coordinadora } from '../carriers/coordinadora/adapter.js';
 import { adapter as copaCourier } from '../carriers/copa-courier/adapter.js';
 import { adapter as corre } from '../carriers/corre/adapter.js';
@@ -231,6 +232,7 @@ import { adapter as flashExpressPh } from '../carriers/flash-express-ph/adapter.
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
+import { adapter as fmx } from '../carriers/fmx/adapter.js';
 import { adapter as followmont } from '../carriers/followmont/adapter.js';
 import { adapter as forwardAir } from '../carriers/forward-air/adapter.js';
 import { adapter as forzaDelivery } from '../carriers/forza-delivery/adapter.js';
@@ -282,6 +284,7 @@ import { adapter as hermes } from '../carriers/hermes/adapter.js';
 import { adapter as hermesAt } from '../carriers/hermes-at/adapter.js';
 import { adapter as hermesDe } from '../carriers/hermes-de/adapter.js';
 import { adapter as hispapost } from '../carriers/hispapost/adapter.js';
+import { adapter as hitch } from '../carriers/hitch/adapter.js';
 import { adapter as homexpress } from '../carriers/homexpress/adapter.js';
 import { adapter as hongkongPost } from '../carriers/hongkong-post/adapter.js';
 import { adapter as horoz } from '../carriers/horoz/adapter.js';
@@ -768,6 +771,7 @@ export const REGISTRY: RegistryDefinition = {
     "colis-prive": colisPrive,
     "colisweb": colisweb,
     "connect-couriers": connectCouriers,
+    "consegnia": consegnia,
     "coordinadora": coordinadora,
     "copa-courier": copaCourier,
     "corre": corre,
@@ -892,6 +896,7 @@ export const REGISTRY: RegistryDefinition = {
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
     "flippost": flippost,
+    "fmx": fmx,
     "followmont": followmont,
     "forward-air": forwardAir,
     "forza-delivery": forzaDelivery,
@@ -943,6 +948,7 @@ export const REGISTRY: RegistryDefinition = {
     "hermes-at": hermesAt,
     "hermes-de": hermesDe,
     "hispapost": hispapost,
+    "hitch": hitch,
     "homexpress": homexpress,
     "hongkong-post": hongkongPost,
     "horoz": horoz,
@@ -1498,7 +1504,7 @@ export const REGISTRY: RegistryDefinition = {
     "collicare": "universal",
     "comone-express": "universal",
     "connect-couriers": "connect-couriers",
-    "consegnia": "universal",
+    "consegnia": "consegnia",
     "coordinadora": "coordinadora",
     "copa-courier": "copa-courier",
     "cope-sensitive-freight": "universal",
@@ -1681,7 +1687,7 @@ export const REGISTRY: RegistryDefinition = {
     "flyking": "universal",
     "flyt-express": "universal",
     "fm-transportes": "universal",
-    "fmx": "universal",
+    "fmx": "fmx",
     "fofr": "universal",
     "followmont": "followmont",
     "forward-air": "forward-air",
@@ -1754,7 +1760,7 @@ export const REGISTRY: RegistryDefinition = {
     "hfd": "universal",
     "hi-trans": "universal",
     "hispapost": "hispapost",
-    "hitch": "universal",
+    "hitch": "hitch",
     "hkd-express": "universal",
     "holisol": "universal",
     "homexpress": "homexpress",
