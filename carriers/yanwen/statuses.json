@@ -550,6 +550,14 @@
       "note": "The delivering carrier's terminal scans."
     },
     {
+      "wording": "Loaded on Truck",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The delivering carrier's driver has the parcel, hours after its terminal scan, and Yanwen files the parcel as Out_For_Delivery. Intelcom words its loading this way, as Stallion Express relays it."
+    },
+    {
       "wording": "UA.",
       "language": "en",
       "confirmedBy": "live",

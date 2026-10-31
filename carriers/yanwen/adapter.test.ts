@@ -267,6 +267,17 @@ describe('Yanwen result projection', () => {
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
   });
 
+  it("stages the delivering carrier's loading in Canada on the scan itself, as the category files it", () => {
+    const result = history([
+      ['2026-03-10', '07:43:04 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Loaded on Truck'],
+      ['2026-03-10', '03:37:32 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Arrived at Terminal Location'],
+      ['2026-03-09', '21:14:42 [GMT-04]', 'EXAMPLE CITY, ZZ', 'Received from Prior Carrier'],
+      ['2026-03-09', '12:45:00 [GMT-04]', '', 'Scanned arrived at FB Canada'],
+    ], '正在派送', 'CA');
+    expect(result.events?.map((event) => event.stage)).toEqual(['out_for_delivery', 'in_transit', 'in_transit', 'in_transit']);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: '2026-03-10T07:43:04-04:00' });
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);
