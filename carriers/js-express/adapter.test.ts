@@ -53,8 +53,8 @@ describe('JS Express tracking adapter', () => {
     expect(result.events!.map(event => [event.time ?? event.local_time, event.location, event.description, event.stage])).toEqual([
       // Straightship's rows, on the UTC clock of its own page.
       ['2026-03-12T20:41:05Z', 'Sample Town, ON', 'Delivered', 'delivered'],
-      // A forecast is no scan.
-      ['2026-03-12T11:20:44Z', 'Sample Town, ON', 'Package will be delivered before 9:00pm', undefined],
+      // Straightship's round: the delivery follows the same day.
+      ['2026-03-12T11:20:44Z', 'Sample Town, ON', 'Package will be delivered before 9:00pm', 'out_for_delivery'],
       ['2026-03-12T08:02:13Z', 'Sample City, ON', 'Package is received at a Straightship station', 'in_transit'],
       ['2026-03-11T17:45:30Z', 'Sample Hub, ON', 'Package is received at a Straightship station', 'in_transit'],
       ['2026-03-11T17:45:30Z', 'Sample Hub, ON', 'Package Received with Origin Scan warehouse', 'in_transit'],
@@ -76,8 +76,8 @@ describe('JS Express tracking adapter', () => {
       ['2026-03-04T15:01:22+08:00', 'Dongguan General Warehouse-Operation Center', 'Item outbound in sorting center.', 'in_transit'],
       ['2026-03-04T03:22:05+08:00', 'Dongguan General Warehouse-Operation Center', 'Item inbound in sorting center.', 'in_transit'],
       ['2026-03-04T03:10:47+08:00', 'Dongguan General Warehouse-Operation Center', 'Item has been collected', 'accepted'],
-      // A partner's record of the data moves nothing; an empty 【】 names no place, and the row keeps its wall clock.
-      ['2026-03-03T19:40:02', undefined, 'Package information is created in the system', undefined],
+      // Straightship's record of the data moves nothing; an empty 【】 names no place, and the row is on Straightship's UTC.
+      ['2026-03-03T19:40:02Z', undefined, 'Package information is created in the system', undefined],
       ['2026-03-03T08:15:33+08:00', 'Dongguan General Warehouse-Operation Center', 'Electronic notification of order creation received.', 'registered'],
     ]);
     expect(result.events!.every(event => Boolean(event.time) !== Boolean(event.local_time))).toBe(true);
@@ -154,9 +154,10 @@ describe('JS Express tracking adapter', () => {
       // An attempt without a place names Straightship.
       row('2026-05-02 20:00:00', '', attempt),
       row('2026-05-02 08:00:00', 'Sample City', 'Package is received at a Straightship station (Sample City, BC)'),
-      // A town of a US state, an airport's code and Straightship's record of the data keep their wall clocks.
+      // A town of a US state and an airport's code keep their wall clocks.
       row('2026-05-01 12:00:00', 'Sample Port', 'Delivered (Sample Port, WA)'),
       row('2026-05-01 10:00:00', 'YVR', 'Delivery to local courier'),
+      // Straightship's record of the data, as its own page dates it.
       row('2026-04-28 19:00:00', '', 'Package information is created in the system'),
     )).toEqual([
       ['2026-05-03T21:10:00Z', 'Sample Town, BC'],
@@ -164,12 +165,13 @@ describe('JS Express tracking adapter', () => {
       ['2026-05-02T08:00:00Z', 'Sample City, BC'],
       ['2026-05-01T12:00:00', 'Sample Port, WA'],
       ['2026-05-01T10:00:00', 'YVR'],
-      ['2026-04-28T19:00:00', undefined],
+      ['2026-04-28T19:00:00Z', undefined],
     ]);
-    // Without a row naming Straightship, a courier's town and province are no clock.
+    // Without a row naming Straightship, a courier's town and province and a record of the data are no clock.
     expect(clocks(row('2026-05-03 21:10:00', 'Sample Town', 'Delivered (Sample Town, BC)'),
-      row('2026-05-02 08:00:00', 'Sample City', 'Package arrived at transit station (Sample City, BC)')))
-      .toEqual([['2026-05-03T21:10:00', 'Sample Town, BC'], ['2026-05-02T08:00:00', 'Sample City, BC']]);
+      row('2026-05-02 08:00:00', 'Sample City', 'Package arrived at transit station (Sample City, BC)'),
+      row('2026-04-28 19:00:00', '', 'Package information is created in the system')))
+      .toEqual([['2026-05-03T21:10:00', 'Sample Town, BC'], ['2026-05-02T08:00:00', 'Sample City, BC'], ['2026-04-28T19:00:00', undefined]]);
   });
 
   it('follows the newest row\'s instant with the last update, and a dated delivery\'s with the delivery time', () => {

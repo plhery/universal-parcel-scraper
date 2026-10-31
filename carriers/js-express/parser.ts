@@ -37,6 +37,8 @@ const RECEIVER = /\s*[,;:.\-–]?\s*\b(?:(?:signed|received|collected|accepted)(
 const PLACE = /\s*\(([^()]{1,120})\)$/;
 // Straightship, the Canadian courier, names itself in its station rows and its delivery attempts.
 const STRAIGHTSHIP = /straightship/i;
+// Straightship's record of the parcel's data, its first row on its own page, in the same words and without a place.
+const STRAIGHTSHIP_RECORD = /^package information is created in the system$/i;
 // A town and the code of its province or state, as a courier's wording ends with them.
 const PROVINCE = /,\s*([A-Z]{2})$/;
 const MAX_ROWS = 500;
@@ -92,12 +94,14 @@ function canadianTown(location: string, label: string): boolean {
  * place in mainland China is on Beijing time, JS Express's and its line's
  * warehouse, sorting and export rows alike; a flight's departure filed there
  * keeps its wall clock. In a history that names Straightship, its rows are on
- * UTC, as its own page writes them: those that name it and those whose
- * wording ended with a town and a Canadian province. Null otherwise: airports'
- * codes, rows without a place and other couriers' rows.
+ * UTC, as its own page writes them: those that name it, those whose wording
+ * ended with a town and a Canadian province, and its record of the parcel's
+ * data. Null otherwise: airports' codes, other rows without a place and other
+ * couriers' rows.
  */
 function scanZone(description: string, location: string, label: string, straightship: boolean): string | null {
-  if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label))) return 'UTC';
+  if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label)
+    || (!location && STRAIGHTSHIP_RECORD.test(description)))) return 'UTC';
   return jsExpressChinaClock(description, location) ?? null;
 }
 

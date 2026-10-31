@@ -41,8 +41,10 @@ delivers them. Tracked through the lookup its English tracking page makes.
   province or a city, or written in Chinese other than Hong Kong's, Macau's or Taiwan's, is on
   Beijing time. A flight's departure filed there keeps its wall clock:
   one has come hours after its flight could have left, given the landing that followed.
-- In a history that names Straightship, its rows, those that name it and those whose wording
-  ends with a town and a Canadian province, are on UTC, the clock of Straightship's own page.
+- In a history that names Straightship, its rows are on UTC, the clock of Straightship's own
+  page: those that name it, those whose wording ends with a town and a Canadian province, and its
+  placeless "Package information is created in the system", which its page shows on the same wall
+  clock.
   Straightship's record of the parcel's data comes within a minute of the Chinese warehouse's
   inbound scan only when the one is read on UTC and the other on Beijing time, and its
   deliveries then come before the 9 pm its round promises.
@@ -55,8 +57,9 @@ delivers them. Tracked through the lookup its English tracking page makes.
   ON)": the adapter moves it into the location, so the wording stays the same from town to town.
   JS Express's own status in Chinese shows the English its entry in
   [statuses.json](statuses.json) gives, and takes over the row stored in Chinese.
-- Partners' records of the parcel's data and a courier's delivery forecast move nothing and have
-  no stage.
+- Partners' records of the parcel's data move nothing and have no stage. Straightship's "Package
+  will be delivered before 9:00pm" is its driver's round, out for delivery, as Straightship's own
+  map reads it.
 - A courier's announced return, such as Colissimo's "Il va être retourné à l'expéditeur", is an
   exception: the parcel is returned only once a scan has it back with its sender.
 - A delivery loses a clause naming who took the parcel, and every row loses phone numbers and

@@ -18,7 +18,7 @@ const ENTRIES: readonly Entry[] = statuses.entries;
  */
 const WORDINGS = statusWordings(ENTRIES.flatMap(({ wording, stage, english }) => stage ? [{ wording, stage, english }] : []));
 
-/** A partner's record of the parcel's data or a delivery forecast: no scan, so no stage. */
+/** A partner's record of the parcel's data: no scan, so no stage. */
 const GAPS = ENTRIES.filter((entry) => entry.unmapped)
   .map((entry) => ({ wording: normalizeStatusWording(entry.wording), note: entry.note ?? '' }));
 const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
