@@ -24,6 +24,8 @@ others. The site has commented the last two out, none of the three answers, Hual
 does not hold Juxi Express waybills, and the service terms send customers to 17TRACK. So Juxi
 Express stays on universal providers.
 
+ParcelsApp and 17TRACK answer its parcels, so its demand needs no adapter until Juxi Express publishes a tracker of its own.
+
 ## Testing
 
 Provider live-test inputs and commands are in the

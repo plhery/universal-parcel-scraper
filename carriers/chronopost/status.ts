@@ -21,7 +21,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['O', "Colis en cours d'acheminement", 'in_transit'],
   ['TP', "Colis en cours d'acheminement", 'in_transit'],
   ['T', "Entrée dans l'agence", 'in_transit'],
-  ['TT', 'Colis remis par le relais Pickup au chauffeur', 'in_transit'],
+  // The pickup point hands the courier the parcel the sender dropped there; the courier's take-over follows.
+  ['TT', 'Colis remis par le relais Pickup au chauffeur', 'accepted'],
   ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
   ['SJ', "Problème douanier résolu, colis en cours d'acheminement", 'in_transit'],
   // The delivery depot's sort, ahead of its round.

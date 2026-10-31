@@ -216,7 +216,7 @@ describe('Chronopost direct tracking', () => {
     ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
     ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
     ['T', "Entrée dans l'agence", 'in_transit'],
-    ['TT', 'Colis remis par le relais Pickup au chauffeur', 'in_transit'],
+    ['TT', 'Colis remis par le relais Pickup au chauffeur', 'accepted'],
     ['EI', 'Colis entré dans le pays de destination', 'in_transit'],
     ['SJ', "Problème douanier résolu, colis en cours d'acheminement", 'in_transit'],
     ['SD', "Tri effectué dans l'agence de distribution", 'in_transit'],
@@ -378,10 +378,10 @@ describe('Chronopost direct tracking', () => {
     const otherPoint = (at: string) => scan('AB', at, 'Colis mis à disposition dans un point de retrait différent de celui prévu', relay);
     const toCourier = scan('TT', '2026-06-27T10:59:06+02:00', 'Colis remis par le relais Pickup au chauffeur');
     const result = parseChronopostTrackingXml(history(prepared, dropped, otherPoint('2026-06-27T10:59:02+02:00'), toCourier), number);
-    expect(result).toMatchObject({ current_stage: 'in_transit' });
+    expect(result).toMatchObject({ current_stage: 'accepted' });
     expect(result.pickup_point).toBeUndefined();
     expect(result.events?.slice(0, 2)).toMatchObject([
-      { provider_code: 'TT', stage: 'in_transit' }, { provider_code: 'AB', stage: 'accepted', stage_source: 'carrier_map' }]);
+      { provider_code: 'TT', stage: 'accepted' }, { provider_code: 'AB', stage: 'accepted', stage_source: 'carrier_map' }]);
     // On its way to the recipient, the parcel waits there.
     const sorted = scan('SD', '2026-06-28T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
     expect(parseChronopostTrackingXml(history(prepared, dropped, toCourier, sorted, otherPoint('2026-06-28T11:07:04+02:00')), number))

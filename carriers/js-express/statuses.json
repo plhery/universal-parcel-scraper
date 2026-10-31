@@ -2,6 +2,7 @@
   "carrier": "js-express",
   "entries": [
     {"wording": "Electronic notification of order creation received.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "JS Express's first row: the shop's order data, before its warehouse has the parcel."},
+    {"wording": "PRE-ADVICE", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A partner's advice of the parcel's data, after the order and before JS Express's warehouse collects the parcel."},
     {"wording": "Item has been collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "JS Express's warehouse took the parcel."},
     {"wording": "Item inbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Item outbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

@@ -66,7 +66,8 @@ without changing the last established shipment stage, and neither does a
 courier's drop-off scan that follows the pickup point's arrival scan. Before the parcel
 has moved, a pickup point's scan of it at another point than the one planned is the
 sender's drop-off there, which the point hands to the courier next: it accepts the
-parcel, which does not wait for the recipient. Observed
+parcel, which does not wait for the recipient. The point's hand-over to the courier
+(TT) is part of that acceptance too, a minute before the courier's take-over (PC). Observed
 codes are used only when their wording agrees, because partner scans can reuse
 codes; a code can carry several wordings, each read on its own. Chronopost can write
 a scan twice, such as the arrival at a pickup point under two of its codes or a depot's

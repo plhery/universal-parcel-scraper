@@ -143,9 +143,9 @@
     },
     {
       "code": "TT",
-      "stage": "in_transit",
+      "stage": "accepted",
       "confirmedBy": "live",
-      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The pickup point hands the courier the parcel the sender dropped there, after the drop-off scan and a minute before the courier's take-over (PC).",
       "wording": "Colis remis par le relais Pickup au chauffeur",
       "language": "fr"
     },
