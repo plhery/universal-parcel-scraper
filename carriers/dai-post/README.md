@@ -53,13 +53,14 @@ Recognition uses the same lookup.
 
 ## Numbers
 
-DAI Post tracks the numbers its shippers print: SSCCs behind the `00` identifier with
-extension digit 3 and the GS1 prefix 9358094 for Australia, `NZC` and nine digits for New
-Zealand, and shippers' own references. `dai-post-1` claims `NZC` and nine digits; Purolator's
-three-letter rule excludes `NZC`. `dai-post-2` lists the SSCCs first among the SSCC
-candidates, so preflight asks this adapter. Shippers' references have no rule. Inputs other
-than 8 to 40 letters and digits, with a digit, are invalid without a request, so a list of
-numbers is never sent.
+DAI Post tracks the numbers its shippers print: SSCCs behind the `00` identifier with extension
+digit 3 and the GS1 prefix 9358094 for Australia, `NZC` and nine digits for New Zealand, and
+shippers' own references. `dai-post-1` claims `NZC` and nine digits; Purolator's three-letter rule
+excludes `NZC`. [Freightways Global](../freightways-global/README.md), which delivers them in New
+Zealand, shows the same numbers on its own tracker. `dai-post-2` lists the SSCCs first among the
+SSCC candidates, so preflight asks this adapter. Shippers' references have no rule. Inputs other
+than 8 to 40 letters and digits, with a digit, are invalid without a request, so a list of numbers
+is never sent.
 
 ## Limitations
 

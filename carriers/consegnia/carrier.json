@@ -1,0 +1,53 @@
+{
+  "id": "consegnia",
+  "displayName": "Consegnia Logistics",
+  "aliases": [
+    "Consegnia",
+    "Consegnia Logistics Corp.",
+    "Consegnia Logistics Corporation"
+  ],
+  "region": {
+    "countries": [
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#ff352e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://clc-express.com/track-delivery?awb={trackingNumber}",
+    "searchUrl": "https://clc-express.com/track-delivery",
+    "canaryUrl": "https://clc-express.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "clc-express.com",
+        "www.clc-express.com"
+      ],
+      "pathPattern": "^/track-delivery/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "consegnia-1",
+      "pattern": "^CLC\\d{9}$",
+      "confidence": "high"
+    }
+  ]
+}

@@ -4299,5 +4299,31 @@
     "carrier": "zimpost",
     "kind": "by_design",
     "reason": "Zimpost's tracker also reads other posts' items, which their own rules name, and its own ZP reference has one example; no public item ends in ZW yet."
+  },
+  {
+    "carrier": "citi-sprint",
+    "kind": "by_design",
+    "reason": "Citi-Sprint's portal references open with a prefix each client account sets and its paper waybills carry six pre-printed digits; neither layout is Citi-Sprint's alone, so no rule claims them."
+  },
+  {
+    "carrier": "freightways-global",
+    "kind": "by_design",
+    "reason": "Freightways Global's NZC imports are DAI Post's labels, which dai-post-1 names, its GSS numbers belong to the GoSweetSpot platform, and its older exports carried layouts other carriers print, so no rule names Freightways Global."
+  },
+  {
+    "carrier": "hitch",
+    "pattern": "^B\\d{7}$",
+    "kind": "by_design",
+    "reason": "Hitch's booking references are B and seven digits, a shape other carriers' rules share, so only its ZIP tracking numbers have a rule."
+  },
+  {
+    "carrier": "mark-express",
+    "kind": "by_design",
+    "reason": "Mark Express air waybills are runs of digits other carriers print, and one public example is too little to claim a layout."
+  },
+  {
+    "carrier": "v-xpress",
+    "kind": "by_design",
+    "reason": "V-Xpress dockets are seven digits, a run other carriers print, so no rule claims them."
   }
 ]

@@ -83,7 +83,7 @@
     },
     {
       "id": "purolator-2",
-      "pattern": "^(?!(?:BNI|BYS|CUB|GWD|LTN|MPX|NZC|QSP|QSS|RMP|RWM|XLT))[A-Z]{3}\\d{9}$",
+      "pattern": "^(?!(?:BNI|BYS|CLC|CUB|GWD|LTN|MPX|NZC|QSP|QSS|RMP|RWM|XLT))[A-Z]{3}\\d{9}$",
       "confidence": "high"
     }
   ]

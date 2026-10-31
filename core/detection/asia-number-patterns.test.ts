@@ -840,3 +840,76 @@ describe('FM Transportes, Fez Delivery, LEX Vietnam, BEST Express Thailand, J&T 
     expect(carrierIdFromName('Yamato')).not.toBe('taqbin-hk');
   });
 });
+
+describe('SPT Express, Hitch, Consegnia, FMX, JANCO Express, ARK Express, Fastgo and twenty-seven more', () => {
+  it('names Consegnia from its CLC numbers and suggests the others for their own layouts', () => {
+    expect(detectCarrierMatch('CLC000000001')).toMatchObject({ carrier: 'consegnia', confidence: 'high', candidates: ['consegnia'] });
+    for (const [number, carrier] of [
+      ['SPT000000000001YQ', 'sptexp'], ['ZIP000000000001', 'hitch'], ['ZIPA0000000000B', 'hitch'],
+      ['MYX0000000001', 'fmx'], ['JEAA00000001', 'janco-express'], ['JEZY00000001', 'janco-express'],
+      ['AP0000001AU', 'ark-express'], ['AU000000001SG', 'fastgo'],
+    ] as const) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining([carrier]) });
+    }
+    // Huahan keeps its own YQ layout, StarTrack its Z fourth letter, and Singapore Post its valid S10 numbers.
+    expect(detectCarrierMatch('HHWAA0000000001YQ')).toMatchObject({ carrier: 'huahan', confidence: 'high' });
+    expect(detectCarrierMatch('AU000000005SG')).toMatchObject({ carrier: 'singapore-post', confidence: 'high' });
+    for (const number of [
+      'SPT00000000001YQ', 'SPT0000000000001YQ', 'SPX000000000001YQ', 'SPT000000000001YX', 'HHWAA0000000001YQ',
+      'ZIP00000000001', 'ZIP0000000000001', 'ZIQ000000000001', 'CLC00000001', 'CLC0000000001', 'CLD000000001',
+      'MYX000000001', 'MYX00000000001', 'MYY0000000001', 'JEAZ00000001', 'JEA000000001', 'JEAA0000001', 'JEAA000000001',
+      'AP00000001AU', 'AP000000005AU', 'AP000001AU', 'AU000000005SG', 'AU00000001SG', 'AU0000000001SG', 'AV000000001SG',
+    ]) {
+      const { carrier, candidates = [] } = detectCarrierMatch(number);
+      for (const id of ['sptexp', 'hitch', 'consegnia', 'fmx', 'janco-express', 'ark-express', 'fastgo']) {
+        expect([carrier, ...candidates], number).not.toContain(id);
+      }
+    }
+  });
+
+  it('reads their tracker links and names', () => {
+    for (const [url, trackingNumber, carrier] of [
+      ['https://www.sst.lt/en/sekti/000000001/', '000000001', 'nege'],
+      ['https://spt-de.eu/status/index.html?key=000000001', '000000001', 'spt-logistics'],
+      ['https://wpl-uk.couriernavigator-secure.com/tracking?consign_note=000000001', '000000001', 'world-package'],
+      ['https://www.elog-luxembourg.com/tracking?q=000000001', '000000001', 'elog-luxembourg'],
+      ['https://webtrackingprod.laposte.tg/WebTracking/IPSWeb_item_events.aspx?itemid=RR000000005TG', 'RR000000005TG', 'togo-post'],
+      ['https://post.tm/tracking?q=RR000000005TM', 'RR000000005TM', 'turkmenpost'],
+      ['https://thabit-logistics.com/track-shipment/000000001', '000000001', 'thabit-logistics'],
+      ['https://portal.citisprint.co.za/track?ref=000000001', '000000001', 'citi-sprint'],
+      ['https://hitch.com.ph/tracking?no=ZIP000000000001', 'ZIP000000000001', 'hitch'],
+      ['https://clc-express.com/track-delivery?awb=CLC000000001', 'CLC000000001', 'consegnia'],
+      ['https://www.fmx.asia/cn/result_detail.php?conno=MYX0000000001', 'MYX0000000001', 'fmx'],
+      ['https://track.fgmailconnect.co.nz/GSS000000001', 'GSS000000001', 'freightways-global'],
+      ['https://track.jancoexpress.com/cargotracking_xp/itxp/xpop/xpordertrack?as_order_no=JEAA00000001', 'JEAA00000001', 'janco-express'],
+      ['https://corporate.apxlog.com/trc/tracking.php?id=000000001', '000000001', 'apx-logistics'],
+      ['https://www.usasd.com/index.php?sn=000000001', '000000001', 'usasd'],
+      ['https://jcwexpress.com/tracking?codes=000000001', '000000001', 'jcw-express'],
+      ['https://myxmiles.com/?tracking_number=000000001', '000000001', 'xlmiles'],
+      ['https://www.superb-express.com/site/searchview?tracking_code=000000001', '000000001', 'superb-express'],
+      ['https://express.arkexpress.com.au/q?s=AP0000001AU', 'AP0000001AU', 'ark-express'],
+      ['https://www.fastgo.com.au/WaybillQuery/?bill=AU000000001SG', 'AU000000001SG', 'fastgo'],
+      ['https://www.parcelmate.co.nz/track?keywords=000000001', '000000001', 'chinz-logistics'],
+      ['https://www.airwingsindia.com/tracking.html?awbno=000000001', '000000001', 'airwings-india'],
+      ['https://crm.markerp.in/Frm_DocTrackWeb.aspx?docno=000000001', '000000001', 'mark-express'],
+      ['https://shipx.asia/vi/toolkit/shipment-tracker?trackingNumber=000000001', '000000001', 'shipx-asia'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber, carrier, source: 'link' });
+    }
+    for (const [name, id] of [
+      ['SPT', 'sptexp'], ['速派通', 'sptexp'], ['SST Express', 'nege'], ['SPT Furniture Logistics', 'spt-logistics'],
+      ['World Package Logistics', 'world-package'], ['eLOG Luxembourg', 'elog-luxembourg'], ['La Poste du Togo', 'togo-post'],
+      ['Türkmenpoçta', 'turkmenpost'], ['Thabit Logistics', 'thabit-logistics'], ['Citi-Sprint', 'citi-sprint'],
+      ['Zip PH', 'hitch'], ['Consegnia', 'consegnia'], ['Freight Mark Express', 'fmx'], ['Sure-Reach', 'm-xpress'],
+      ['Freightways Global', 'freightways-global'], ['JANCO Express', 'janco-express'], ['V-Xpress', 'v-xpress'],
+      ['Tapuz', 'tapuz-delivery'], ['APX Logistics', 'apx-logistics'], ['S & D Logistics', 'usasd'], ['玥玛速运', 'yuema-express'],
+      ['Yoseus', 'yoseus'], ['JCW Express', 'jcw-express'], ['Xmiles', 'xlmiles'], ['派通国际物流', 'patuen'],
+      ['Superb Express', 'superb-express'], ['ProMed Delivery', 'promed-delivery'], ['XD Express', 'xd-express'],
+      ['方舟速递', 'ark-express'], ['速派快递', 'fastgo'], ['Parcelmate', 'chinz-logistics'], ['Airwings India', 'airwings-india'],
+      ['Mark Express', 'mark-express'], ['CityMail Pakistan', 'citymail-pk'], ['SG LINK', 'shipx-asia'],
+    ] as const) expect(carrierIdFromName(name), name).toBe(id);
+    // A bare 派通 names neither SPT Express nor Patuen, and Sweden's CityMail keeps its own name.
+    expect(carrierIdFromName('派通')).toBeUndefined();
+    expect(carrierIdFromName('CityMail')).toBe('citymail');
+  });
+});

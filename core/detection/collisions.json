@@ -1096,6 +1096,22 @@
     "reason": "DAI Post's New Zealand numbers overlap Colis Privé's broad twelve-character rule; the specific DAI Post rule decides, and Purolator excludes the NZC prefix."
   },
   {
+    "shape": "CLC9{9}",
+    "carriers": [
+      "colis-prive",
+      "consegnia"
+    ],
+    "reason": "Consegnia's CLC waybills overlap Colis Privé's broad twelve-character rule; the specific Consegnia rule decides, and Purolator excludes the CLC prefix."
+  },
+  {
+    "shape": "JE, a letter, a letter other than Z, then 9{8}",
+    "carriers": [
+      "colis-prive",
+      "janco-express"
+    ],
+    "reason": "JANCO Express waybills are twelve characters, which Colis Privé's rule for any 12-character alphanumeric also takes; both rules are low confidence, so the number stays a suggestion and leaves StarTrack's Z fourth letter alone."
+  },
+  {
     "shape": "A{3}9{9}",
     "carriers": [
       "colis-prive",
