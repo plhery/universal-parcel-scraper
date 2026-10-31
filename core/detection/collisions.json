@@ -6631,5 +6631,30 @@
       "sending"
     ],
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the GLS, mod 7 and Poste Italiane checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "j-and-t",
+      "j-and-t-cargo",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "poste-italiane",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending"
+    ],
+    "reason": "Passing check digits add GLS and Poste Italiane's registered mail, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   }
 ]

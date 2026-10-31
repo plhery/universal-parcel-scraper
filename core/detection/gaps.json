@@ -4319,5 +4319,23 @@
     "carrier": "v-xpress",
     "kind": "by_design",
     "reason": "V-Xpress dockets are seven digits, a run other carriers print, so no rule claims them."
+  },
+  {
+    "carrier": "citilogistics",
+    "pattern": "^\\d{11}$",
+    "kind": "collision",
+    "reason": "Eleven-digit Citilogistics consignment codes share their shape with other carriers' numeric numbers, so the shape cannot name Citilogistics."
+  },
+  {
+    "carrier": "citilogistics",
+    "pattern": "^CAM\\d{9}$",
+    "kind": "collision",
+    "reason": "Citilogistics's older CAM codes have the three letters and nine digits of Purolator's rule, so the shape cannot name Citilogistics."
+  },
+  {
+    "carrier": "dpx-logistics",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "DPX Logistics air waybills are twelve digits with the mod 7 check that Japan Post, Sagawa and Yamato share, so the shape cannot name DPX Logistics."
   }
 ]

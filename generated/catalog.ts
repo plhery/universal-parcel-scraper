@@ -7950,6 +7950,28 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "arrow-express": {
+    "displayName": "Arrow Express",
+    "color": "#014fb1",
+    "aliases": [
+      "Arrow Express Ltd",
+      "Arrow Express Malta",
+      "arrowEXPRESS"
+    ],
+    "countries": [
+      "MT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Malta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://arrow-express.eu/",
+    "trackingSearchUrl": "https://arrow-express.eu/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "arrow-xl": {
     "displayName": "ArrowXL",
     "color": "#57328a",
@@ -10826,6 +10848,28 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "citilogistics": {
+    "displayName": "Citilogistics",
+    "color": "#ed1b2e",
+    "aliases": [
+      "Citi Logistics",
+      "CitiLogistics",
+      "Citilogistics Inc."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.citilogistics.ca/",
+    "trackingSearchUrl": "https://tracking.citilogistics.ca/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "city-air-express": {
     "displayName": "City Air Express",
     "color": "#ff0114",
@@ -11280,6 +11324,46 @@ export const CARRIER_CATALOG = {
         ],
         "pathPattern": "^/track-and-trace/?$",
         "fragment": "^/s/([^/?&]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "comone-express": {
+    "displayName": "ComOne Express",
+    "color": "#29166f",
+    "aliases": [
+      "Com1 Express",
+      "Com1 Logistics",
+      "ComOne Int'l Logistics",
+      "ComOne International Logistics",
+      "商壹国际",
+      "商壹国际物流",
+      "商壹国际物流有限公司"
+    ],
+    "countries": [
+      "CN",
+      "MY",
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.com1logistics.com/",
+    "trackingUrlTemplate": "https://www.com1logistics.com/tracking.html?trackNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.com1logistics.com/tracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "www.com1logistics.com",
+          "com1logistics.com"
+        ],
+        "pathPattern": "^/tracking\\.html$",
+        "params": [
+          "trackNo"
+        ]
       }
     ],
     "detectionRules": []
@@ -14551,6 +14635,39 @@ export const CARRIER_CATALOG = {
         "params": [
           "id"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "dpx-logistics": {
+    "displayName": "DPX Logistics",
+    "color": "#003b66",
+    "aliases": [
+      "Document Parcel Express",
+      "Document Parcel Express Co., Ltd.",
+      "DPX eCommerce",
+      "บริษัท ดอคคิวเมนท์ พาร์เซล เอ็กซ์เพรส จำกัด"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dpxlogistics.com/en/",
+    "trackingUrlTemplate": "https://dpxlogistics.com/en/track/index.html#{trackingNumber}",
+    "trackingSearchUrl": "https://dpxlogistics.com/en/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "dpxlogistics.com",
+          "www.dpxlogistics.com"
+        ],
+        "pathPattern": "^/(?:en|th)/track/(?:index\\.html)?$",
+        "fragment": "^(\\d{12})$"
       }
     ],
     "detectionRules": []
@@ -18451,6 +18568,45 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "geswl": {
+    "displayName": "GESWL Express",
+    "color": "#01419a",
+    "aliases": [
+      "ZCE",
+      "ZCE - Geswl Express",
+      "GESWL",
+      "GESWL Global Express",
+      "Shanghai Yisu International Logistics",
+      "翼速国际物流",
+      "翼速國際物流",
+      "上海翼速国际物流有限公司"
+    ],
+    "countries": [
+      "CN",
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.geswl.com/",
+    "trackingUrlTemplate": "https://www.geswl.com:8088/ld_express//businessExpressController.do?gotrack&ids={trackingNumber}",
+    "trackingSearchUrl": "https://www.geswl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.geswl.com"
+        ],
+        "pathPattern": "^/ld_express//?businessExpressController\\.do$",
+        "params": [
+          "ids"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "ghana-post": {
     "displayName": "Ghana Post",
@@ -41150,6 +41306,7 @@ export const CARRIER_IDS = [
   "aramex-nz",
   "aras-kargo",
   "ark-express",
+  "arrow-express",
   "arrow-xl",
   "aruba-post",
   "ase-express",
@@ -41221,6 +41378,7 @@ export const CARRIER_IDS = [
   "chunghwa-post",
   "chunil",
   "citi-sprint",
+  "citilogistics",
   "city-air-express",
   "city-express-rs",
   "citylink-express",
@@ -41233,6 +41391,7 @@ export const CARRIER_IDS = [
   "cne",
   "codexpress",
   "collicare",
+  "comone-express",
   "connect-couriers",
   "consegnia",
   "coordinadora",
@@ -41314,6 +41473,7 @@ export const CARRIER_IDS = [
   "dpd-za",
   "dpe-express",
   "dpex",
+  "dpx-logistics",
   "dragon-star-curier",
   "drop2shop",
   "dropp",
@@ -41413,6 +41573,7 @@ export const CARRIER_IDS = [
   "gel-express",
   "geniki-taxydromiki",
   "geodis-pl",
+  "geswl",
   "ghana-post",
   "ghn",
   "ghtk",
@@ -42176,6 +42337,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aramex-nz": ["aramex-nz-mx","aramex-nz-1","aramex-nz-2"],
   "aras-kargo": ["aras-kargo-1"],
   "ark-express": ["ark-express-1"],
+  "arrow-express": [],
   "arrow-xl": [],
   "aruba-post": [],
   "ase-express": [],
@@ -42247,6 +42409,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chunghwa-post": ["chunghwa-post-1","chunghwa-post-2"],
   "chunil": [],
   "citi-sprint": [],
+  "citilogistics": [],
   "city-air-express": ["city-air-express-1"],
   "city-express-rs": ["city-express-rs-1"],
   "citylink-express": [],
@@ -42259,6 +42422,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cne": ["cne-1"],
   "codexpress": [],
   "collicare": [],
+  "comone-express": [],
   "connect-couriers": [],
   "consegnia": ["consegnia-1"],
   "coordinadora": ["coordinadora-1"],
@@ -42340,6 +42504,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-za": [],
   "dpe-express": [],
   "dpex": [],
+  "dpx-logistics": [],
   "dragon-star-curier": [],
   "drop2shop": ["drop2shop-1"],
   "dropp": [],
@@ -42439,6 +42604,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gel-express": [],
   "geniki-taxydromiki": ["geniki-taxydromiki-1"],
   "geodis-pl": ["geodis-pl-1"],
+  "geswl": [],
   "ghana-post": [],
   "ghn": [],
   "ghtk": ["ghtk-1"],

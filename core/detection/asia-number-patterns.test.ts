@@ -527,6 +527,27 @@ describe('UTEC Logistics, DEX-I, JY Express and PPX Track', () => {
   });
 });
 
+describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow Express', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['ComOne Express', 'comone-express'], ['商壹国际', 'comone-express'], ['ZCE', 'geswl'],
+      ['ZCE - Geswl Express', 'geswl'], ['翼速国际物流', 'geswl'], ['DPX Logistics', 'dpx-logistics'],
+      ['Document Parcel Express', 'dpx-logistics'], ['Citilogistics', 'citilogistics'], ['Arrow Express', 'arrow-express']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    // DPX Express and Arrow XL also go by these short names.
+    for (const name of ['DPX', 'Arrow']) expect(carrierIdFromName(name), name).toBeUndefined();
+    expect(parseTrackingInput('https://www.com1logistics.com/tracking.html?trackNo=CM1000000017')).toMatchObject({
+      trackingNumber: 'CM1000000017', carrier: 'comone-express', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.geswl.com:8088/ld_express//businessExpressController.do?gotrack&ids=100000000017')).toMatchObject({
+      trackingNumber: '100000000017', carrier: 'geswl', source: 'link',
+    });
+    expect(parseTrackingInput('https://dpxlogistics.com/en/track/index.html#100000000017')).toMatchObject({
+      trackingNumber: '100000000017', carrier: 'dpx-logistics', source: 'link',
+    });
+  });
+});
+
 describe('Parcel Freight Logistics numbers', () => {
   it('suggests Parcel Freight Logistics for NEXAU, ten digits and YQ only', () => {
     expect(detectCarrierMatch('NEXAU1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pflogistics'] });
