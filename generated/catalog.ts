@@ -15111,7 +15111,7 @@ export const CARRIER_CATALOG = {
       "localClocks": true
     },
     "canaryUrl": "https://www.ecmsglobal.com/en-us/tracking.html",
-    "trackingUrlTemplate": "https://www.ecmsglobal.com/en-us/tracking.html?orderNumber={trackingNumber}",
+    "trackingUrlTemplate": "https://www.ecmsglobal.com/en-us/tracking.html?number={trackingNumber}",
     "trackingSearchUrl": "https://www.ecmsglobal.com/en-us/tracking.html",
     "helpUrl": "https://www.ecmsglobal.com/en-us/contact-us.html",
     "linkRules": [
@@ -15122,6 +15122,7 @@ export const CARRIER_CATALOG = {
         ],
         "pathPattern": "^/(?:en-us|en-uk|zh-cn|ko-kr)/tracking\\.html$",
         "params": [
+          "number",
           "orderNumber"
         ]
       },
@@ -33129,7 +33130,9 @@ export const CARRIER_CATALOG = {
       "Sending by InPost"
     ],
     "countries": [
-      "ES"
+      "ES",
+      "PT",
+      "AD"
     ],
     "selectable": true,
     "timezone": "Europe/Madrid",
@@ -33141,8 +33144,19 @@ export const CARRIER_CATALOG = {
       "localClocks": true
     },
     "canaryUrl": "https://www.sending.es/localiza-tu-envio/",
+    "trackingUrlTemplate": "https://info.sending.es/fgts/pub/locNumSeguimiento.seam?web=S&localizador={trackingNumber}",
     "trackingSearchUrl": "https://www.sending.es/localiza-tu-envio/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "info.sending.es"
+        ],
+        "pathPattern": "^/fgts/pub/locNumSeguimiento\\.seam$",
+        "params": [
+          "localizador"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^\\d{12}$",
@@ -40774,7 +40788,8 @@ export const CARRIER_CATALOG = {
         "pathPattern": "^/tracking\\.html$",
         "params": [
           "label"
-        ]
+        ],
+        "ownNumbersOnly": true
       }
     ],
     "detectionRules": [

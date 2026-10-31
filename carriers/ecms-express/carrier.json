@@ -43,7 +43,7 @@
     "delivery_tracking_number"
   ],
   "portal": {
-    "url": "https://www.ecmsglobal.com/en-us/tracking.html?orderNumber={trackingNumber}",
+    "url": "https://www.ecmsglobal.com/en-us/tracking.html?number={trackingNumber}",
     "searchUrl": "https://www.ecmsglobal.com/en-us/tracking.html",
     "helpUrl": "https://www.ecmsglobal.com/en-us/contact-us.html",
     "canaryUrl": "https://www.ecmsglobal.com/en-us/tracking.html",
@@ -79,6 +79,7 @@
       ],
       "pathPattern": "^/(?:en-us|en-uk|zh-cn|ko-kr)/tracking\\.html$",
       "params": [
+        "number",
         "orderNumber"
       ]
     },

@@ -46,13 +46,15 @@ Tracks Sending shipments through the lookup the search page on sending.es makes.
 Customers quote twelve-digit shipment numbers (número de expedición or de seguimiento) in
 public complaints addressed to Sending, leading zeros included. Twelve digits are shared by
 many carriers and nothing in the number points to Sending, so a low rule only offers them:
-recognition asks Sending about them for a lookup in Spain alone. The adapter takes twelve
-digits and refuses anything else without a request.
+recognition asks Sending about them for a lookup from a country it delivers in, Spain,
+Portugal or Andorra. The adapter takes twelve digits and refuses anything else without a
+request.
 
 ## Links
 
-Sending's search page posts the number to its tracker as a form, so no address opens one
-parcel.
+Sending's search page posts the number to its tracker as a form, but the tracker takes the
+same `localizador` in a GET too and redirects to the shipment's page. That address is the
+tracking link and the link rule.
 
 ## Testing
 

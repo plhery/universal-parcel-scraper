@@ -221,11 +221,13 @@ describe('Sending tracking adapter', () => {
 });
 
 describe('Sending numbers', () => {
-  it('suggests twelve digits and is asked about them only for a lookup in Spain', () => {
+  it('suggests twelve digits and is asked about them only for a lookup in Spain, Portugal or Andorra', () => {
     expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'unknown' });
     expect(detectCarrierMatch(DELIVERED).candidates).toContain('sending');
-    expect(recognitionAskedCarriers(DELIVERED, { countryHint: 'ES' })[0]).toBe('sending');
-    for (const countryHint of [undefined, 'FR', 'IT', 'PT', 'US']) {
+    for (const countryHint of ['ES', 'PT', 'AD']) {
+      expect(recognitionAskedCarriers(DELIVERED, { countryHint })[0], countryHint).toBe('sending');
+    }
+    for (const countryHint of [undefined, 'FR', 'IT', 'US']) {
       expect(recognitionAskedCarriers(DELIVERED, { countryHint }), `${countryHint}`).not.toContain('sending');
     }
     for (const other of ['12340000001', '1234000000111', 'ES1234000000']) {

@@ -78,7 +78,8 @@
       "pathPattern": "^/tracking\\.html$",
       "params": [
         "label"
-      ]
+      ],
+      "ownNumbersOnly": true
     }
   ],
   "detection": [

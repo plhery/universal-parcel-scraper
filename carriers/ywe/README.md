@@ -39,7 +39,9 @@ archived number; Yanwen's US last-mile numbers of `YW`, a hub code and twelve di
 
 ## Links
 
-`www.yanwenexpress.com/tracking.html?label=` followed by the number opens a parcel.
+`www.yanwenexpress.com/tracking.html?label=` followed by the number opens a parcel. Such links
+also turn up holding Yanwen's `YW` numbers, which YWE's tracker does not take, so the link
+names YWE only for its own layout and any other number is detected on its own.
 
 ## Testing
 

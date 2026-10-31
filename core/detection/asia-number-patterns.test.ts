@@ -548,6 +548,30 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('Sending, YWE and ECMS Express links', () => {
+  it('reads Sending\'s tracker link', () => {
+    expect(parseTrackingInput('https://info.sending.es/fgts/pub/locNumSeguimiento.seam?web=S&localizador=100000000017')).toMatchObject({
+      trackingNumber: '100000000017', carrier: 'sending', source: 'link',
+    });
+  });
+
+  it('names YWE from its tracker link only for its own numbers', () => {
+    expect(parseTrackingInput('https://www.yanwenexpress.com/tracking.html?label=YWE10000000000017')).toMatchObject({
+      trackingNumber: 'YWE10000000000017', carrier: 'ywe', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.yanwenexpress.com/tracking.html?label=YWABC100000000017')).toMatchObject({
+      trackingNumber: 'YWABC100000000017', carrier: 'yanwen', source: 'link',
+    });
+  });
+
+  it('reads both query names of ECMS tracking pages', () => {
+    for (const url of ['https://www.ecmsglobal.com/en-us/tracking.html?number=ECABC10000000017',
+      'https://www.ecmsglobal.com/en-uk/tracking.html?orderNumber=ECABC10000000017']) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: 'ECABC10000000017', carrier: 'ecms-express', source: 'link' });
+    }
+  });
+});
+
 describe('Parcel Freight Logistics numbers', () => {
   it('suggests Parcel Freight Logistics for NEXAU, ten digits and YQ only', () => {
     expect(detectCarrierMatch('NEXAU1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pflogistics'] });

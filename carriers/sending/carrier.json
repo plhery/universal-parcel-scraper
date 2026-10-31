@@ -8,7 +8,9 @@
   ],
   "region": {
     "countries": [
-      "ES"
+      "ES",
+      "PT",
+      "AD"
     ]
   },
   "brand": {
@@ -34,6 +36,7 @@
     "location"
   ],
   "portal": {
+    "url": "https://info.sending.es/fgts/pub/locNumSeguimiento.seam?web=S&localizador={trackingNumber}",
     "searchUrl": "https://www.sending.es/localiza-tu-envio/",
     "canaryUrl": "https://www.sending.es/localiza-tu-envio/",
     "shows": [
@@ -76,7 +79,17 @@
       "offset_timestamps"
     ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "info.sending.es"
+      ],
+      "pathPattern": "^/fgts/pub/locNumSeguimiento\\.seam$",
+      "params": [
+        "localizador"
+      ]
+    }
+  ],
   "detection": [
     {
       "id": "sending-1",

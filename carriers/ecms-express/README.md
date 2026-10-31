@@ -25,6 +25,10 @@ API records them, also where the offset is not the place's civil one. Zero is al
 used on unzoned partner scans, so it does not establish UTC. The API's ingestion clock
 is not a scan timestamp.
 
+The US tracking page, `/en-us/tracking.html`, opens a parcel from `?number=`; the other
+locales' pages still read `?orderNumber=`. Links in either form, and the former trackers'
+links, name ECMS.
+
 The former consignee and OMS trackers no longer supply guest history. The ESE
 customer event API requires login, and freight tracking uses different references.
 

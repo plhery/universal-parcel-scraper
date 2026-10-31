@@ -2077,6 +2077,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   trackon: 'the page answers an unknown number with its empty search form, without the number or a notice, and shows only consignments of the last 75 days, so only a recent real consignment verifies the link',
   'tst-cf-express': 'the results page shows any PRO it holds to anyone, and a synthetic PRO can belong to another shipment, so only a known PRO verifies the link',
   sagawa: 'the inquiry page the link opens answers Access Denied while Sagawa keeps its inquiry service suspended after unauthorized access',
+  sending: 'Sending\'s tracker gives the same not-found notice, without the number, for an unknown number and for an address with none, so only a real shipment verifies the link',
   servientrega: 'the tracker shows its result in a frame from mobile.servientrega.com, which does not answer connections from Europe, North America or Asia, so number forwarding cannot be verified daily',
   slgtrax: 'sonic.pk drops connections from the daily check\'s network and some others, so number forwarding cannot be verified daily; the page looks up the number in its address as it opens',
   shiprocket: 'shiprocket.co answers an AWB it does not know with HTTP 400 and a not-found page that does not show the number, so only a real AWB verifies the link',
