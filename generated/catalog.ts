@@ -29439,7 +29439,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "parcelabc",
+      "localClocks": true
     },
     "canaryUrl": "https://www.parcelabc.com/content/tracking",
     "trackingSearchUrl": "https://www.parcelabc.com/content/tracking",

@@ -23,17 +23,38 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "parcelabc",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://www.parcelabc.com/content/tracking",
     "canaryUrl": "https://www.parcelabc.com/content/tracking",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "history",
+      "location"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "status",
+      "eta",
+      "offset_timestamps",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "weight",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

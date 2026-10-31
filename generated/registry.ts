@@ -445,6 +445,7 @@ import { adapter as palletways } from '../carriers/palletways/adapter.js';
 import { adapter as panduLogistics } from '../carriers/pandu-logistics/adapter.js';
 import { adapter as paperfly } from '../carriers/paperfly/adapter.js';
 import { adapter as paquetexpress } from '../carriers/paquetexpress/adapter.js';
+import { adapter as parcelabc } from '../carriers/parcelabc/adapter.js';
 import { adapter as parcelpoint } from '../carriers/parcelpoint/adapter.js';
 import { adapter as passport } from '../carriers/passport/adapter.js';
 import { adapter as pathaoCourier } from '../carriers/pathao-courier/adapter.js';
@@ -1114,6 +1115,7 @@ export const REGISTRY: RegistryDefinition = {
     "pandu-logistics": panduLogistics,
     "paperfly": paperfly,
     "paquetexpress": paquetexpress,
+    "parcelabc": parcelabc,
     "parcelpoint": parcelpoint,
     "passport": passport,
     "pathao-courier": pathaoCourier,
@@ -2023,7 +2025,7 @@ export const REGISTRY: RegistryDefinition = {
     "paperfly": "paperfly",
     "paquetexpress": "paquetexpress",
     "parcel-one": "universal",
-    "parcelabc": "universal",
+    "parcelabc": "parcelabc",
     "parcelforce": "royal-mail",
     "parceljet": "universal",
     "parcelpoint": "parcelpoint",
