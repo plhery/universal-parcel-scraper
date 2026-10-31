@@ -112,9 +112,14 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const parcel = own !== number && /^[A-Z0-9]{8,40}$/.test(own) && $('.ny_cxjg > input').filter((_, element) =>
     $(element).attr('name') === `wcdhB${own}` && $(element).attr('value') === number).length === 1 ? own : number;
   const identities = pages.filter((_, element) => $(element).attr('value') === parcel);
-  if (identities.length !== 1) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
+  // Which check failed tells a page without any shipment from one naming another.
+  if (identities.length !== 1) {
+    throw new SchemaError('Yanwen', `Yanwen returned a different or ambiguous shipment (${pages.length} listed, ${identities.length} matching)`);
+  }
   const resultBlocks = $('.cx_lb').filter((_, element) => clean($(element).find('.cx_bt_xx > h5').text()) === parcel);
-  if (resultBlocks.length < 1 || resultBlocks.length > 2) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
+  if (resultBlocks.length < 1 || resultBlocks.length > 2) {
+    throw new SchemaError('Yanwen', `Yanwen returned a different or ambiguous shipment (${resultBlocks.length} result blocks for it)`);
+  }
   const results: CarrierResult[] = [];
   for (const element of resultBlocks.toArray()) {
     const block = $(element);
@@ -162,7 +167,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const stage = scan?.stage ?? category?.stage;
     const delivery = status === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
     const deliveryNumber = clean(columns.eq(1).text(), 64).toUpperCase();
-    if (parcel !== number && deliveryNumber !== number) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment');
+    if (parcel !== number && deliveryNumber !== number) throw new SchemaError('Yanwen', 'Yanwen returned a different or ambiguous shipment (another last-mile number)');
     const handoff = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
     const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
     const partner = handoff ? distributor(notes, handoff) : undefined;

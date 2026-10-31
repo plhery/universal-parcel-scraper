@@ -58,6 +58,8 @@ describe('Yanwen result projection', () => {
 
   it('requires actual result identity and rejects disagreeing responsive copies', () => {
     expect(() => parse(`<input value="${NUMBER}">${fixture().replaceAll(NUMBER, 'UK000000014YP')}`, NUMBER)).toThrow('different or ambiguous');
+    expect(() => parse(fixture().replaceAll(NUMBER, 'UK000000014YP'), NUMBER)).toThrow('different or ambiguous shipment (1 listed, 0 matching)');
+    expect(() => parse('<html><body></body></html>', NUMBER)).toThrow('different or ambiguous shipment (0 listed, 0 matching)');
     const $ = load(fixture());
     $('.cx_lb').last().find('.cz_r h6').last().text('Different history');
     expect(() => parse($.html(), NUMBER)).toThrow('inconsistent');
@@ -94,7 +96,7 @@ describe('Yanwen result projection', () => {
     expect(() => parse(page(LAST_MILE, 'YWABC000000000002'), LAST_MILE)).toThrow('different or ambiguous');
     const $ = load(page());
     $('.cx_top_nr').last().children('.colFlex').eq(1).html('YWABC000000000002<a></a>');
-    expect(() => parse($.html(), LAST_MILE)).toThrow('different or ambiguous');
+    expect(() => parse($.html(), LAST_MILE)).toThrow('different or ambiguous shipment (another last-mile number)');
   });
 
   it.each(['date', 'offset', 'empty', 'missing-timeline'])('rejects invalid %s instead of promoting earlier scans', (mode) => {
