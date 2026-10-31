@@ -4483,7 +4483,7 @@ export const CARRIER_CATALOG = {
     "detectionRules": [
       {
         "pattern": "^VG\\d{11}$",
-        "confidence": "high"
+        "confidence": "low"
       },
       {
         "pattern": "^JD(?:\\d{13}|[A-Z]\\d{12}|[A-Z]{2}\\d{11})$",

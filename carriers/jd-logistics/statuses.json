@@ -61,6 +61,14 @@
       "note": "GOFO's label, relayed under SRRF3P. Read by its wording: the code has been seen with this step alone."
     },
     {
+      "wording": "Loaded on Vehicle",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-24",
+      "note": "GOFO's loading at a hub, relayed under DMLMLS. Read by its wording: the code is otherwise JD's courier out with the parcel."
+    },
+    {
       "code": "CCL",
       "stage": "customs",
       "confirmedBy": "live",

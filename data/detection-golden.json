@@ -98342,10 +98342,14 @@
   },
   {
     "input": "VG05778167021",
-    "carrier": "jd-logistics",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
+      "la-poste",
       "jd-logistics"
+    ],
+    "asked": [
+      "la-poste"
     ]
   },
   {

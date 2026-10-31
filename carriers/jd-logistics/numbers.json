@@ -10,8 +10,12 @@
         "date": "2015-08-29"
       },
       "expect": {
-        "carrier": "jd-logistics",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste",
+          "jd-logistics"
+        ]
       },
       "note": "Open-source project example, not a real shipment."
     },
