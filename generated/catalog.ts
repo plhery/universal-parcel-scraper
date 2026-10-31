@@ -24096,7 +24096,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "komon-express",
+      "recognitionRank": 76,
+      "localClocks": true
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],

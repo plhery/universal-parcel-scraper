@@ -18,7 +18,8 @@ export const RTB56_REDIRECTS = [301, 302, 303, 307, 308];
 const CHALLENGE = /_cf_chl_opt|cf-turnstile|<title>\s*Just a moment|acw_sc__v2|aliyun_waf|_____tmd_____|waf\.tencent|<title>\s*(?:滑动验证|验证码|安全验证|访问受限|访问被拒绝)/i;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const OFFSET = /^[+-](?:0\d|1[0-4]):[0-5]\d$/;
-const CODE = /^[A-Z]{1,8}$/;
+// A tenant's own codes can number its milestones after its letters.
+const CODE = /^[A-Z]{1,8}\d{0,3}$/;
 const MAX_ROWS = 500;
 // Four to six digits standing alone in a place are a postcode.
 const POSTCODE_RUN = /(^|[^\p{L}\p{N}])\d{4,6}(?![\p{L}\p{N}])/gu;

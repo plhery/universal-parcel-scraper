@@ -348,6 +348,7 @@ import { statusMap as kazpost } from '../../carriers/kazpost/status.js';
 import { statusMap as kex } from '../../carriers/kex/status.js';
 import { statusMap as kexExpressHk } from '../../carriers/kex-express-hk/status.js';
 import { statusMap as kitTk } from '../../carriers/kit-tk/status.js';
+import { statusMap as komonExpress } from '../../carriers/komon-express/status.js';
 import { statusMap as koreaPost } from '../../carriers/korea-post/status.js';
 import { statusMap as kuehneNagel } from '../../carriers/kuehne-nagel/status.js';
 import { statusMap as kunExpress } from '../../carriers/kun-express/status.js';
@@ -722,7 +723,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,
   'j-and-t-middle-east': jAndTMiddleEast, janio, 'japan-post': japanPost, jcex, 'jd-logistics': jdLogistics, jeebly, 'jersey-post': jerseyPost, 'jet-logistic': jetLogistic, 'jetline-couriers': jetlineCouriers,
   jhgj, jifan, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, kazpost, kex, 'kex-express-hk': kexExpressHk,
-  'kit-tk': kitTk, 'korea-post': koreaPost, 'kuehne-nagel': kuehneNagel, 'kun-express': kunExpress, kunyoung, kyoungdong, 'kyrgyz-post': kyrgyzPost, 'l-post': lPost, 'la-poste': laPoste,
+  'kit-tk': kitTk, 'komon-express': komonExpress, 'korea-post': koreaPost, 'kuehne-nagel': kuehneNagel, 'kun-express': kunExpress, kunyoung, kyoungdong, 'kyrgyz-post': kyrgyzPost, 'l-post': lPost, 'la-poste': laPoste,
   'la-poste-burkina-faso': laPosteBurkinaFaso, 'la-poste-senegal': laPosteSenegal, 'laar-courier': laarCourier, labaih,
   'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'leopards-courier': leopardsCourier, liccardi,
   'lietuvos-pastas': lietuvosPastas, 'lightning-express': lightningExpress,
