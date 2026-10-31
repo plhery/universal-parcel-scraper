@@ -54,7 +54,14 @@ describe('Hualei track interface', () => {
     Object.assign(moved[0].data[0], { trackingNumber: `${NUMBER}-1`, customerOrderNumber: NUMBER.toLowerCase() });
     expect(() => parseHualeiTrack(moved, NUMBER, GZYL, READ_AT))
       .toThrow(`GZYL answered with another shipment; its trackingNumber, customerOrderNumber holds the number`);
-    expect(() => parseHualeiTrack(fixture('track'), 'GZTEST00000009', GZYL, READ_AT)).toThrow(/^GZYL answered with another shipment$/);
+    // A child parcel's number, in its list.
+    const child = fixture('track');
+    Object.assign(child[0].data[0], { trackingNumber: 'GZTEST00000002', childrenTrackDetails: [{ trackingNumber: NUMBER }] });
+    expect(() => parseHualeiTrack(child, NUMBER, GZYL, READ_AT))
+      .toThrow(/^GZYL answered with another shipment; its childrenTrackDetails holds the number$/);
+    // Otherwise the shapes of the record's own numbers, without their characters.
+    expect(() => parseHualeiTrack(fixture('track'), 'GZTEST00000009', GZYL, READ_AT)).toThrow(new RegExp('^GZYL answered with another shipment; '
+      + 'its numbers read trackingNumber A6D8, referenceNumber A7D4, business_seqinvoicecode A8D6$'));
     // Or a shorter form of it, eight characters or more.
     const shorter = fixture('track');
     Object.assign(shorter[0].data[0], { trackingNumber: 'OTHER0001', customerOrderNumber: NUMBER.slice(2, 10), referenceNumber: NUMBER.slice(0, 7) });

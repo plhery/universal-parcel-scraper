@@ -145,6 +145,10 @@ export function normalizeHualeiNumber(raw: string, provider: string): string {
 /** A number as identities are compared: the tracker's own numbers can carry dashes. */
 const identity = (value: string) => value.toUpperCase().replace(/[\s-]+/g, '');
 
+/** A number's shape with none of its characters: its runs of letters, digits and other signs counted, as "A3D10A2". */
+const numberShape = (value: string) => (identity(value).match(/[A-Z]+|\d+|[^A-Z\d]+/g) ?? [])
+  .map((run) => `${/^[A-Z]/.test(run) ? 'A' : /^\d/.test(run) ? 'D' : 'X'}${run.length}`).join('');
+
 /** The address of the track interface for one number. */
 export function hualeiTrackUrl(tenant: HualeiTenant, raw: string): string {
   const url = new URL(HUALEI_TRACK_PATH, tenant.origin);
@@ -383,15 +387,21 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   // The service matches a number in any of the record's own fields; a reference two orders share is no answer.
   const bound = records.filter((record) => IDENTITY_FIELDS.some((key) => identity(text(record, key, provider, 64)) === identity(number)));
   if (!bound.length) {
-    // The names of the fields that still carry the number, or eight characters or more of it, never their values,
-    // tell a number the platform moved from another shipment or wrote shorter.
-    const fields = (holds: (value: string) => boolean) => [...new Set(records.flatMap((record) => Object.entries(record)
-      .filter(([, value]) => typeof value === 'string' && holds(identity(value)))
+    // The names of the fields that still carry the number, a list such as a child parcel's included, or eight
+    // characters or more of it, never their values, tell a number the platform moved from another shipment or wrote
+    // shorter. Failing both, the shapes of the record's own numbers tell a re-issued order from a hand-off.
+    const fields = (holds: (value: string) => boolean, nested = false) => [...new Set(records.flatMap((record) => Object.entries(record)
+      .filter(([, value]) => typeof value === 'string' ? holds(identity(value))
+        : nested && typeof value === 'object' && value !== null && holds(identity(JSON.stringify(value))))
       .map(([key]) => key.slice(0, 40))))].slice(0, 4);
-    const whole = fields((value) => value.includes(identity(number)));
+    const whole = fields((value) => value.includes(identity(number)), true);
     const part = whole.length ? [] : fields((value) => value.length >= 8 && identity(number).includes(value));
+    const shapes = whole.length || part.length ? [] : [...new Set(records.flatMap((record) => IDENTITY_FIELDS
+      .map((key) => [key, text(record, key, provider, 64)] as const)
+      .filter(([, value]) => value)
+      .map(([key, value]) => `${key} ${numberShape(value)}`)))].slice(0, 4);
     throw new IndeterminateError(provider, `${provider} answered with another shipment${whole.length ? `; its ${whole.join(', ')} holds the number`
-      : part.length ? `; its ${part.join(', ')} holds part of the number` : ''}`);
+      : part.length ? `; its ${part.join(', ')} holds part of the number` : shapes.length ? `; its numbers read ${shapes.join(', ')}` : ''}`);
   }
   if (new Set(bound.map((record) => identity(text(record, 'trackingNumber', provider, 64)))).size > 1) {
     throw new IndeterminateError(provider, `${provider} holds several shipments under the number`);
