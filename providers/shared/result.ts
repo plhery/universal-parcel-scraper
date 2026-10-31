@@ -572,13 +572,14 @@ function lookupNotice(value: CarrierEvent, now: number): boolean {
     && Math.abs(Date.parse(value.time) - now) <= NOTICE_WINDOW_MS;
 }
 
-// Cainiao's "Pending shipping by the seller" can come dated after the lookup, by
-// its look the time the seller has to ship by. Nothing has happened then, so the
-// entry keeps no time.
-const SELLER_PENDING = /^pending shipping by the seller[.!]?$/i;
+// Steps that can come dated after the lookup, when nothing has happened yet, so the entry
+// keeps no time: Cainiao's "Pending shipping by the seller", by its look the time the seller
+// has to ship by, and the sentence of GLS's progress bar that points to the detailed tracking
+// below, dated by GLS's delivery estimate.
+const AHEAD_STEPS = [/^pending shipping by the seller[.!]?$/i, /\bplease see the detailed shipment tracking below[.!]?$/i];
 
-function sellerStep(value: CarrierEvent, now: number): CarrierEvent {
-  if (!SELLER_PENDING.test(value.description ?? '') || typeof value.time !== 'string'
+function aheadStep(value: CarrierEvent, now: number): CarrierEvent {
+  if (!AHEAD_STEPS.some((step) => step.test(value.description ?? '')) || typeof value.time !== 'string'
     || Date.parse(value.time) - now <= NOTICE_WINDOW_MS) return value;
   const undated = { ...value };
   delete undated.time;
@@ -654,7 +655,7 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
   const scans = new Map<string, CarrierEvent>();
   const now = Date.now();
   for (const entry of events) {
-    const event = sellerStep(entry, now);
+    const event = aheadStep(entry, now);
     if (lookupNotice(event, now)) continue;
     const key = `${moment(event)}|${event.description}`;
     const earlier = scans.get(key);

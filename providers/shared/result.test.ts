@@ -51,7 +51,7 @@ describe('shared provider result', () => {
     ]);
   });
 
-  it("keeps no time for the seller's step when it is dated after the lookup", () => {
+  it("keeps no time for the seller's step or GLS's progress sentence when dated after the lookup", () => {
     const now = Date.now();
     const at = (offset: number) => new Date(now + offset).toISOString();
     const ahead = result([event(at(22 * 3_600_000), 'Pending shipping by the seller')!], 'ParcelsApp');
@@ -60,6 +60,10 @@ describe('shared provider result', () => {
     expect(ahead.events?.[0]).not.toHaveProperty('time');
     // Dated before the lookup, it is the moment of the step.
     expect(result([event(at(-3_600_000), 'Pending shipping by the seller')!], 'ParcelsApp').events?.[0]?.time).toBe(at(-3_600_000));
+    // So does GLS's progress bar sentence, dated by GLS's delivery estimate.
+    const summary = 'The parcel is on its way to the final parcel center. For more information, please see the detailed shipment tracking below.';
+    expect(result([event(at(60 * 3_600_000), summary, 'in_transit')!], 'ParcelsApp').events?.[0]).not.toHaveProperty('time');
+    expect(result([event(at(-3_600_000), summary, 'in_transit')!], 'ParcelsApp').events?.[0]?.time).toBe(at(-3_600_000));
     // Another scan dated ahead keeps its time, for the parcel app to flag.
     expect(result([event(at(22 * 3_600_000), 'Arrived at sorting center')!], 'ParcelsApp').events?.[0]?.time).toBe(at(22 * 3_600_000));
   });
