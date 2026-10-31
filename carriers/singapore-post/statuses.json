@@ -112,6 +112,20 @@
       "confirmedBy": "live"
     },
     {
+      "code": "FD",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "FD",
+      "wording": "Item Delivered to Doorstep",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
       "code": "HQ",
       "wording": "Item is with SingPost (Singapore) for processing.",
       "language": "en",
