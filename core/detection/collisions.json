@@ -6546,6 +6546,14 @@
     "reason": "Boyuan's tracking numbers carry its initials; ParcelsApp named DHLink beside Boyuan for one on a US line. Both rules are low-confidence: recognition asks DHLink, the one with a tracker the app asks, and a provider names Boyuan for the parcels DHLink does not know."
   },
   {
+    "shape": "TDT, ten digits and CN",
+    "carriers": [
+      "dhlink",
+      "tuodatong"
+    ],
+    "reason": "Tuodatong's tracking numbers carry its initials; ParcelsApp named DHLink beside Tuodatong for one on an air line from China. Both rules are low-confidence: recognition asks DHLink, the one with a tracker the app asks, and a provider names Tuodatong for the parcels DHLink does not know."
+  },
+  {
     "shape": "1810 and fourteen digits",
     "carriers": [
       "bpost",

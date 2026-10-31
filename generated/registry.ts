@@ -2247,6 +2247,7 @@ export const REGISTRY: RegistryDefinition = {
     "tst-cf-express": "tst-cf-express",
     "ttk-europe": "universal",
     "tufesa": "tufesa",
+    "tuodatong": "universal",
     "turkmenpost": "universal",
     "tusass": "universal",
     "tusk-logistics": "universal",

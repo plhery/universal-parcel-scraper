@@ -13564,6 +13564,10 @@
       {
         "pattern": "^BY\\d{14}CN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^TDT\\d{10}CN$",
+        "confidence": "low"
       }
     ]
   },
@@ -37867,6 +37871,48 @@
       }
     ],
     "detectionRules": []
+  },
+  "tuodatong": {
+    "displayName": "Tuodatong",
+    "color": "#2ab727",
+    "aliases": [
+      "Tuodatong Logistics",
+      "TDTWL",
+      "拓达通物流",
+      "拓達通物流",
+      "拓达通国际物流",
+      "深圳市拓达通国际物流服务有限公司",
+      "Shenzhen Tuodatong International Logistics Service Co., Ltd"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tuodatong56.com/",
+    "trackingSearchUrl": "https://www.tuodatong56.com/tms/trackIndex.htm",
+    "linkRules": [
+      {
+        "domains": [
+          "www.tuodatong56.com",
+          "tuodatong56.com"
+        ],
+        "pathPattern": "^/tms/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TDT\\d{10}CN$",
+        "confidence": "low"
+      }
+    ]
   },
   "turkmenpost": {
     "displayName": "Turkmenpost",

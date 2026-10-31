@@ -13566,6 +13566,10 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^BY\\d{14}CN$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^TDT\\d{10}CN$",
+        "confidence": "low"
       }
     ]
   },
@@ -37870,6 +37874,48 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "tuodatong": {
+    "displayName": "Tuodatong",
+    "color": "#2ab727",
+    "aliases": [
+      "Tuodatong Logistics",
+      "TDTWL",
+      "拓达通物流",
+      "拓達通物流",
+      "拓达通国际物流",
+      "深圳市拓达通国际物流服务有限公司",
+      "Shenzhen Tuodatong International Logistics Service Co., Ltd"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tuodatong56.com/",
+    "trackingSearchUrl": "https://www.tuodatong56.com/tms/trackIndex.htm",
+    "linkRules": [
+      {
+        "domains": [
+          "www.tuodatong56.com",
+          "tuodatong56.com"
+        ],
+        "pathPattern": "^/tms/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^TDT\\d{10}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "turkmenpost": {
     "displayName": "Turkmenpost",
     "color": "#0198ff",
@@ -41754,6 +41800,7 @@ export const CARRIER_IDS = [
   "tst-cf-express",
   "ttk-europe",
   "tufesa",
+  "tuodatong",
   "turkmenpost",
   "tusass",
   "tusk-logistics",
@@ -42150,7 +42197,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill","dhl-express-piece","dhl-express-piece-label","dhl-express-piece-label-after"],
   "dhl-freight": ["dhl-freight-2"],
-  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by"],
+  "dhlink": ["dhlink-1","dhlink-xzg","dhlink-ylus","dhlink-eyt","dhlink-qh","dhlink-yf","dhlink-ktdwe","dhlink-yhkj","dhlink-by","dhlink-tdt"],
   "direct-couriers": [],
   "direct-freight-express": [],
   "direx": [],
@@ -42776,6 +42823,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tst-cf-express": [],
   "ttk-europe": [],
   "tufesa": [],
+  "tuodatong": ["tuodatong-1"],
   "turkmenpost": [],
   "tusass": [],
   "tusk-logistics": ["tusk-logistics-1"],

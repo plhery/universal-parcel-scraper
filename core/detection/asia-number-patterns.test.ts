@@ -479,6 +479,27 @@ describe('Boyuan tracking numbers', () => {
   });
 });
 
+describe('Tuodatong tracking numbers', () => {
+  it('suggests DHLink and Tuodatong for TDT, ten digits and CN, and only that layout', () => {
+    for (const number of ['TDT1000000017CN', 'tdt 1000000017 cn']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'tuodatong'] });
+    }
+    for (const number of ['TDT100000017CN', 'TDT10000000017CN', 'TDT1000000017US', 'TDX1000000017CN', 'TD1000000017CN']) {
+      const { carrier, candidates = [] } = detectCarrierMatch(number);
+      expect([carrier, ...candidates], number).not.toContain('tuodatong');
+      expect([carrier, ...candidates], number).not.toContain('dhlink');
+    }
+  });
+
+  it('asks DHLink about the number, names Tuodatong from a provider and reads its tracker links', () => {
+    expect(recognitionAskedCarriers('TDT1000000017CN')).toEqual(['dhlink']);
+    for (const name of ['Tuodatong', 'TDTWL', '拓达通物流']) expect(carrierIdFromName(name), name).toBe('tuodatong');
+    expect(parseTrackingInput('https://www.tuodatong56.com/tms/trackIndex.htm?documentCode=TDT1000000017CN')).toMatchObject({
+      trackingNumber: 'TDT1000000017CN', carrier: 'tuodatong', source: 'link',
+    });
+  });
+});
+
 describe('Parcel Freight Logistics numbers', () => {
   it('suggests Parcel Freight Logistics for NEXAU, ten digits and YQ only', () => {
     expect(detectCarrierMatch('NEXAU1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pflogistics'] });

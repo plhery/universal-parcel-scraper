@@ -96175,6 +96175,30 @@
     "candidates": []
   },
   {
+    "input": "TDT1000000017CN",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhlink",
+      "tuodatong"
+    ],
+    "asked": [
+      "dhlink"
+    ]
+  },
+  {
+    "input": "TDT1000000025CN",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhlink",
+      "tuodatong"
+    ],
+    "asked": [
+      "dhlink"
+    ]
+  },
+  {
     "input": "TE1000000010936808NGUS",
     "carrier": "unknown",
     "confidence": "none",
