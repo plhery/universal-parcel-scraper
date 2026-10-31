@@ -51,9 +51,10 @@ GB). Tracked through the keyless `inposteasy.com` hub API; no postcode or link n
   DHL and needs a domain hint or an explicit pick. `JJD` and sixteen digits is the plate
   Yodel, InPost's UK network, prints, and no DHL sample has that length, so `inpost-2` puts
   InPost first for it, with DHL beside it.
-- bpost, Ciblex and Austrian Post print 24 digits too. Detection lists InPost first, ahead of
-  the country hint, for the leading digits its tracker has answered, and keeps the others as
-  candidates.
+- bpost, Ciblex, Austrian Post, Express One and Iran Post print 24 digits too. Express One's
+  can open with 60, as InPost's do, and Iran Post's leading digits vary, so a bare 24-digit
+  number stays low confidence. Detection lists InPost first, ahead of the country hint, for the
+  leading digits its tracker has answered, and keeps the others as candidates.
 - Yodel, InPost's UK network, also prints two digits, three letters, seven digits, `A` and
   three digits. Nothing in that layout names InPost, and ArrowXL's references share it, so it
   is low confidence too.
