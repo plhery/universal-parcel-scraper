@@ -10,6 +10,7 @@
     {"wording": "航班抵达【Flight arrival】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed."},
     {"wording": "航班已启运/Package in transit to destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
     {"wording": "航班已落地，拆板中/Package arrived at destination country", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed and its pallets are being broken down."},
+    {"wording": "已完成国内报关手续【Domestic customs clearance procedures have been completed.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared after the landing, before the delivery."},
     {"wording": "货物已清关完成/Import customs clearance complete", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination's customs, the day after the landing."},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]

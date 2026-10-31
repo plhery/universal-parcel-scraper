@@ -5,6 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
 import { statusMap } from './status.js';
@@ -80,6 +81,36 @@ describe('JRT tracking adapter', () => {
     expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
   });
 
+  it('reads UPS’s rows on the line into the United States on UPS’s wall clock, in UPS’s English', () => {
+    const result = dateLocalClocks('jrt', parseJrtTrack(fixture('track-ups'), 'UP0000000000000003', Date.parse('2026-03-22T00:00:00Z'))!);
+    expect(result).toMatchObject({
+      status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Delivered', last_update: '2026-03-20T16:02:46-04:00', canonical_tracking_number: 'JRT0000000003ZZ',
+    });
+    expect(result.events?.map(({ time, time_zone_basis, description, stage }) => [time, time_zone_basis, description, stage])).toEqual([
+      ['2026-03-20T16:02:46-04:00', 'place', 'Delivered', 'delivered'],
+      ['2026-03-20T09:31:18-04:00', 'place', 'Out For Delivery Today', 'out_for_delivery'],
+      ['2026-03-20T06:29:43-04:00', 'place', 'Loaded on Delivery Vehicle', 'out_for_delivery'],
+      ['2026-03-20T06:24:07-04:00', 'place', 'Processing at UPS Facility', 'in_transit'],
+      ['2026-03-20T05:27:00-04:00', 'place', 'Arrived at Facility', 'in_transit'],
+      ['2026-03-19T15:40:00-04:00', 'place', 'Departed from Facility', 'in_transit'],
+      ['2026-03-19T05:38:00-04:00', 'place', 'Arrived at Facility', 'in_transit'],
+      // UPS's row without a place takes the clock of the facility before it.
+      ['2026-03-18T10:27:31-05:00', 'neighbour', 'Picked Up', 'in_transit'],
+      ['2026-03-18T07:08:00-05:00', 'place', 'Departed from Facility', 'in_transit'],
+      ['2026-03-17T17:42:11-05:00', 'place', 'Arrived at Facility', 'in_transit'],
+      // JRT's own rows stay on the platform's clock.
+      ['2026-03-17T08:20:04+08:00', undefined, 'Handed over to the warehouse', 'in_transit'],
+      ['2026-03-16T07:30:50+08:00', undefined, 'Customs clearance completed, goods picked up, awaiting hand-over to the warehouse', 'in_transit'],
+      ['2026-03-15T06:25:35+08:00', undefined, 'Picking up the goods', 'in_transit'],
+      ['2026-03-14T05:20:26+08:00', undefined, 'Flight has arrived', 'in_transit'],
+      ['2026-03-13T22:44:52+08:00', undefined, 'Flight has flown', 'in_transit'],
+      ['2026-03-12T19:23:51+08:00', undefined, 'Booked on a flight', 'in_transit'],
+      ['2026-03-10T01:03:15-04:00', 'place', 'Shipper created a label, UPS has not received the package yet.', 'registered'],
+      ['2026-03-07T17:57:36+08:00', undefined, 'The electronic cargo information has been received', 'registered'],
+    ]);
+  });
+
   it('reads DHL’s return as returned, the delivery back to the sender included', () => {
     const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
     const rows = payload[0]!.data[0]!.trackDetails;
@@ -128,6 +159,7 @@ describe('JRT tracking adapter', () => {
     expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('报关已放行等待3号航班起飞 Customs released,Awaiting departure on flight of the 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('10/22号航班')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     for (const description of [
@@ -137,6 +169,7 @@ describe('JRT tracking adapter', () => {
       '货物已交机场,预计号的航班 Goods delivered to airport, scheduled on flight of the th',
       'loaded to movement / tour vehicle again',
       'The flight is expected to depart on soon and land on 10.27',
+      '10/22号航班 CA000',
     ]) expect(answer(description), description).toEqual({ kind: 'unknown' });
   });
 

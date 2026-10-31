@@ -360,6 +360,129 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "The airline's notice of arrival, after the landing and before the pickup and customs clearance."
+    },
+    {
+      "wording": "…号航班",
+      "language": "zh",
+      "english": "Booked on a flight",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "JRT's own row on its line into the United States, naming the flight's month and day, read as an ellipsis."
+    },
+    {
+      "wording": "航班已飞",
+      "language": "zh",
+      "english": "Flight has flown",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30"
+    },
+    {
+      "wording": "航班抵达",
+      "language": "zh",
+      "english": "Flight has arrived",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30"
+    },
+    {
+      "wording": "提货中",
+      "language": "zh",
+      "english": "Picking up the goods",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "At the destination airport after the landing, before the clearance."
+    },
+    {
+      "wording": "清关完成，已提货，待交仓",
+      "language": "zh",
+      "english": "Customs clearance completed, goods picked up, awaiting hand-over to the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30"
+    },
+    {
+      "wording": "已交仓",
+      "language": "zh",
+      "english": "Handed over to the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "The hand-over to the delivering carrier's warehouse, before UPS's first facility scan."
+    },
+    {
+      "wording": "发件人已创建标签，但是 UPS 尚未收到包裹。",
+      "language": "zh",
+      "english": "Shipper created a label, UPS has not received the package yet.",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "UPS's label row. On the line into the United States the tracker copies UPS's rows in Chinese, on UPS's wall clock at the scan's place; the English is UPS's."
+    },
+    {
+      "wording": "抵达设施",
+      "language": "zh",
+      "english": "Arrived at Facility",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS."
+    },
+    {
+      "wording": "离开设施",
+      "language": "zh",
+      "english": "Departed from Facility",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS."
+    },
+    {
+      "wording": "已提取",
+      "language": "zh",
+      "english": "Picked Up",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS without a place, between its facility scans; the parcel is already on its way."
+    },
+    {
+      "wording": "UPS 设施处理",
+      "language": "zh",
+      "english": "Processing at UPS Facility",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS."
+    },
+    {
+      "wording": "已装上递送车辆",
+      "language": "zh",
+      "english": "Loaded on Delivery Vehicle",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS, whose own map gives its code OF out for delivery."
+    },
+    {
+      "wording": "准备今天递送",
+      "language": "zh",
+      "english": "Out For Delivery Today",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS, whose own map gives its code OT out for delivery."
+    },
+    {
+      "wording": "已递送",
+      "language": "zh",
+      "english": "Delivered",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-30",
+      "note": "Copied from UPS."
     }
   ]
 }

@@ -176,7 +176,7 @@ describe('status map answers', () => {
     // China Post's domestic scans as JS Express and the providers relay them, any office in 【】.
     for (const carrier of ['js-express', 'unknown']) {
       for (const wording of ['邮件到达【示例市国际互换局】', '邮件离开【示例揽投部】，正在发往【示例市】', '邮件已在【示例揽投部】完成分拣，准备发出',
-        '【示例市国际互换局】已出口直封', '已交承运商运输', '航空公司接收', '航空公司启运', '出口海关/放行']) {
+        '【示例市国际互换局】已出口直封', '已交承运商运输', '揽投配发', '航空公司接收', '航空公司启运', '出口海关/放行']) {
         expect(answer(carrier, null, wording), `${carrier} ${wording}`).toEqual(mapped('in_transit'));
       }
       expect(answer(carrier, null, '送交出口海关')).toEqual(mapped('customs'));
@@ -1631,6 +1631,8 @@ describe("universal providers' answers", () => {
       ['Export declaration in progress., OTHER', 'customs'], ['Flight delayed., OTHER', 'in_transit'],
       ['Flight delay. The flight scheduled for the 7th is expected to be delayed', 'in_transit'],
       ['Airline delay', 'in_transit'], ['Flight delay', 'in_transit'], ['Parcel shipped', 'in_transit'], ['Customer information manifested', 'registered'],
+      ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
+      ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'],
       ['Shipment under processing at origin hub', 'in_transit'], ['Shipment despatched to transshipment hub', 'in_transit'],
       ['Shipment received at transshipment hub', 'in_transit'], ['Shipment despatched to overseas', 'in_transit'],
       ['Shipment received at delivery branch', 'in_transit'],
@@ -1829,7 +1831,7 @@ describe("universal providers' answers", () => {
     // DPD Poland's messages to the recipient as ParcelsApp relays them.
     for (const wording of ['Email notification', 'SMS notification']) expect(answer('unknown', null, wording)).toEqual(gap);
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
-      'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Received.', 'Shipped', 'Driver assigned',
+      'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Package received', 'Received.', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',
       'Parcel to be taken to a Yodel Store', 'The parcel has reached the ParcelShop', 'Barcode scanning', 'Packaged']) expect(answer('unknown', null, wording), wording).toEqual(gap);
     // Only the whole wording: a receipt that names its receiver, or another number, is not left out.

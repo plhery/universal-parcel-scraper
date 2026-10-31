@@ -448,6 +448,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // A consolidator's steps as aggregators relay them: the customer's data on its manifest, its origin
   // hub taking the parcel in, the parcel sent on, and a flight held up, for which results carry no delay flag.
   if (/^customer information manifested[.!]?$/i.test(value)) return 'registered';
+  // A booking before any carrier has the parcel: a collection requested or booked, or a carrier still waiting for it.
+  if (/^(?:pickup requested|booked|waiting for (?:the )?parcel)[.!]?$/i.test(value)) return 'registered';
+  // A forwarder's warehouse scanning the parcel in or out, as aggregators relay SPT Express's rows.
+  if (/^item (?:in|out)bound scanning[.!]?$/i.test(value)) return 'in_transit';
   if (/^checked in at origin hub[.!]?$|^parcel received and processing[.!]?$/i.test(value)) return 'accepted';
   if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$/i.test(value)) return 'in_transit';
   // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them.

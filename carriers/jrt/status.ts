@@ -1,6 +1,6 @@
 import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
@@ -17,10 +17,13 @@ const TAKE_OFF_DAY = /^(flight is expected to take off on )[a-z]+ \d{1,2}$/;
 const FLIGHT_DATES = /^(the flight is expected to depart on )\d{1,2}\.\d{1,2}( and land on )\d{1,2}\.\d{1,2}$/;
 const LANDING_DATE = /^(the flight has departed and is expected to )\d{1,2}\.\d{1,2}( land)$/;
 
+// On the line into the United States JRT books the flight by its month and day alone: "10/22号航班".
+const BOOKED_FLIGHT = /^\d{1,2}\/\d{1,2}(号航班)$/;
+
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
 export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
-  .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2');
+  .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1');
 
 /**
  * The stage JRT's map gives a row, by its whole `normalizeStatusWording` wording:
@@ -37,5 +40,13 @@ export function jrtStage(_code: string | null, wording: string): Stage | undefin
  * flight it books, which is still to come.
  */
 export const jrtEnglish = (_code: string | null, wording: string): string | undefined => WORDINGS.english(jrtScanKey(wording));
+
+// UPS's rows, which the tracker copies in Chinese on UPS's wall clock on the line into the United States.
+const UPS_ROWS = new Set(['发件人已创建标签，但是 UPS 尚未收到包裹。', '抵达设施', '离开设施', '已提取', 'UPS 设施处理', '已装上递送车辆',
+  '准备今天递送', '已递送'].map(normalizeStatusWording));
+
+/** Whether a row is one UPS wrote, by its wording or its place in the United States: it is on UPS's wall clock. */
+export const isJrtUpsRow = (wording: string, place: string): boolean =>
+  UPS_ROWS.has(normalizeStatusWording(wording)) || /(?:^|,)\s*US$/.test(place.trim());
 
 export const statusMap: CarrierStatusMap = { stage: jrtStage, gaps: [] };
