@@ -17138,6 +17138,39 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "fastwl": {
+    "displayName": "Fast World Logistic",
+    "color": "#f1592a",
+    "aliases": [
+      "Fast World Logistic - FWL",
+      "FastWL"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "trackingUrlTemplate": "https://www.fastwl.com/suivre-un-colis/?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.fastwl.com",
+          "fastwl.com"
+        ],
+        "pathPattern": "^/suivre-un-colis/?$",
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "fedex-freight": {
     "displayName": "FedEx Freight",
     "color": "#de002e",
@@ -22772,7 +22805,8 @@ export const CARRIER_CATALOG = {
       "Agediss by JP",
       "AB Home",
       "VIR by JP",
-      "JP Home Jacky Perrenot"
+      "JP Home Jacky Perrenot",
+      "VIR Transport"
     ],
     "countries": [
       "FR",
@@ -29229,7 +29263,9 @@ export const CARRIER_CATALOG = {
       "PEK",
       "Pecom",
       "ТК ПЭК",
-      "Первая экспедиционная компания"
+      "Первая экспедиционная компания",
+      "Easyway PEK",
+      "ПЭК: EASYWAY"
     ],
     "countries": [
       "RU",
@@ -36945,6 +36981,36 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "tig-freight": {
+    "displayName": "TIG Freight",
+    "color": "#17479e",
+    "aliases": [
+      "TIG Freight Management",
+      "TIG Freight Management Pty Ltd"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tigfreight.com/",
+    "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.open360.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.open360.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$",
+        "detectFromNumber": true
+      }
+    ],
+    "detectionRules": []
+  },
   "tiki": {
     "displayName": "TIKI",
     "color": "#0033ab",
@@ -38757,6 +38823,31 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "uvan": {
+    "displayName": "UVAN",
+    "color": "#0269b8",
+    "aliases": [
+      "UVAN Express",
+      "宇环国际",
+      "宇环国际物流",
+      "深圳市宇环国际物流有限公司",
+      "Shenzhen Yuhuan International Logistics",
+      "Yuhuan International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://uvan.itdida.com/",
+    "trackingSearchUrl": "https://uvan.itdida.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "uzbekistan-post": {
     "displayName": "Uzbekistan Post",
     "color": "#183e98",
@@ -40568,6 +40659,42 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "yha": {
+    "displayName": "YHA Logistics",
+    "color": "#e83e17",
+    "aliases": [
+      "YHA",
+      "YHA LOGISTICS",
+      "越航物流",
+      "越航国际物流"
+    ],
+    "countries": [
+      "CN",
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.yha56.com/",
+    "trackingUrlTemplate": "https://www.yha56.com/page/indexDetail/indexDetail2.html?manifestId={trackingNumber}",
+    "trackingSearchUrl": "https://www.yha56.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.yha56.com",
+          "yha56.com"
+        ],
+        "pathPattern": "^/page/indexDetail/indexDetail2\\.html$",
+        "params": [
+          "manifestId"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yilong-logistics": {
     "displayName": "Yilong Logistics",
     "color": "#ec0307",
@@ -41550,6 +41677,7 @@ export const CARRIER_IDS = [
   "faster-ae",
   "fastfrate",
   "fastgo",
+  "fastwl",
   "fedex-freight",
   "fedex-international-connect",
   "fedex-pl",
@@ -42063,6 +42191,7 @@ export const CARRIER_IDS = [
   "thabit-logistics",
   "thelorry",
   "thhy",
+  "tig-freight",
   "tiki",
   "timely-titan",
   "tirupati-courier",
@@ -42112,6 +42241,7 @@ export const CARRIER_IDS = [
   "urvaam",
   "usasd",
   "utec-logistics",
+  "uvan",
   "uzbekistan-post",
   "v-xpress",
   "valmo",
@@ -42161,6 +42291,7 @@ export const CARRIER_IDS = [
   "ycs-logistics",
   "ydh",
   "yfhex",
+  "yha",
   "yilong-logistics",
   "yimidida",
   "yoseus",
@@ -42581,6 +42712,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "faster-ae": [],
   "fastfrate": [],
   "fastgo": ["fastgo-1"],
+  "fastwl": [],
   "fedex-freight": [],
   "fedex-international-connect": ["fedex-international-connect-1"],
   "fedex-pl": ["fedex-pl-2","fedex-pl-1"],
@@ -43094,6 +43226,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "thabit-logistics": [],
   "thelorry": ["thelorry-1"],
   "thhy": ["thhy-1"],
+  "tig-freight": [],
   "tiki": [],
   "timely-titan": ["timely-titan-1"],
   "tirupati-courier": [],
@@ -43143,6 +43276,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "urvaam": [],
   "usasd": [],
   "utec-logistics": ["utec-logistics-1"],
+  "uvan": [],
   "uzbekistan-post": ["uzbekistan-post-s10"],
   "v-xpress": [],
   "valmo": ["valmo-1"],
@@ -43192,6 +43326,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ycs-logistics": [],
   "ydh": ["ydh-1"],
   "yfhex": [],
+  "yha": [],
   "yilong-logistics": ["yilong-logistics-1"],
   "yimidida": [],
   "yoseus": [],

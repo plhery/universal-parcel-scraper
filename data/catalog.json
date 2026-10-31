@@ -17136,6 +17136,39 @@
       }
     ]
   },
+  "fastwl": {
+    "displayName": "Fast World Logistic",
+    "color": "#f1592a",
+    "aliases": [
+      "Fast World Logistic - FWL",
+      "FastWL"
+    ],
+    "countries": [
+      "FR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Paris",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "trackingUrlTemplate": "https://www.fastwl.com/suivre-un-colis/?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://www.fastwl.com/suivre-un-colis/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.fastwl.com",
+          "fastwl.com"
+        ],
+        "pathPattern": "^/suivre-un-colis/?$",
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "fedex-freight": {
     "displayName": "FedEx Freight",
     "color": "#de002e",
@@ -22770,7 +22803,8 @@
       "Agediss by JP",
       "AB Home",
       "VIR by JP",
-      "JP Home Jacky Perrenot"
+      "JP Home Jacky Perrenot",
+      "VIR Transport"
     ],
     "countries": [
       "FR",
@@ -29227,7 +29261,9 @@
       "PEK",
       "Pecom",
       "ТК ПЭК",
-      "Первая экспедиционная компания"
+      "Первая экспедиционная компания",
+      "Easyway PEK",
+      "ПЭК: EASYWAY"
     ],
     "countries": [
       "RU",
@@ -36943,6 +36979,36 @@
       }
     ]
   },
+  "tig-freight": {
+    "displayName": "TIG Freight",
+    "color": "#17479e",
+    "aliases": [
+      "TIG Freight Management",
+      "TIG Freight Management Pty Ltd"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tigfreight.com/",
+    "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.open360.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.open360.com"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$",
+        "detectFromNumber": true
+      }
+    ],
+    "detectionRules": []
+  },
   "tiki": {
     "displayName": "TIKI",
     "color": "#0033ab",
@@ -38755,6 +38821,31 @@
       }
     ]
   },
+  "uvan": {
+    "displayName": "UVAN",
+    "color": "#0269b8",
+    "aliases": [
+      "UVAN Express",
+      "宇环国际",
+      "宇环国际物流",
+      "深圳市宇环国际物流有限公司",
+      "Shenzhen Yuhuan International Logistics",
+      "Yuhuan International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://uvan.itdida.com/",
+    "trackingSearchUrl": "https://uvan.itdida.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "uzbekistan-post": {
     "displayName": "Uzbekistan Post",
     "color": "#183e98",
@@ -40561,6 +40652,42 @@
         "pathPattern": "^/track_query_c\\.aspx$",
         "params": [
           "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "yha": {
+    "displayName": "YHA Logistics",
+    "color": "#e83e17",
+    "aliases": [
+      "YHA",
+      "YHA LOGISTICS",
+      "越航物流",
+      "越航国际物流"
+    ],
+    "countries": [
+      "CN",
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.yha56.com/",
+    "trackingUrlTemplate": "https://www.yha56.com/page/indexDetail/indexDetail2.html?manifestId={trackingNumber}",
+    "trackingSearchUrl": "https://www.yha56.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.yha56.com",
+          "yha56.com"
+        ],
+        "pathPattern": "^/page/indexDetail/indexDetail2\\.html$",
+        "params": [
+          "manifestId"
         ]
       }
     ],

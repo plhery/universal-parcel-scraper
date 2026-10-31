@@ -548,6 +548,32 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('UVAN, Fast World Logistic, TIG Freight and YHA Logistics', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['UVAN', 'uvan'], ['宇环国际物流', 'uvan'], ['Fast World Logistic - FWL', 'fastwl'], ['FastWL', 'fastwl'],
+      ['TIG Freight', 'tig-freight'], ['YHA', 'yha'], ['越航物流', 'yha'], ['Easyway PEK', 'pecom'], ['ПЭК: EASYWAY', 'pecom'],
+      ['VIR Transport', 'jp-home']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    for (const name of ['FWL', 'TIG']) expect(carrierIdFromName(name), name).toBeUndefined();
+    expect(parseTrackingInput('https://www.fastwl.com/suivre-un-colis/?trackingNumber=FW1000000017')).toMatchObject({
+      trackingNumber: 'FW1000000017', carrier: 'fastwl', source: 'link',
+    });
+    expect(parseTrackingInput('https://www.yha56.com/page/indexDetail/indexDetail2.html?manifestId=YH100000017')).toMatchObject({
+      trackingNumber: 'YH100000017', carrier: 'yha', source: 'link',
+    });
+  });
+
+  it('keeps a partner carrier\'s number on a TIG Freight link with that carrier', () => {
+    expect(parseTrackingInput('https://tracking.open360.com/tracking/ABC1000000017')).toMatchObject({
+      trackingNumber: 'ABC1000000017', carrier: 'tig-freight', source: 'link',
+    });
+    expect(parseTrackingInput('https://tracking.open360.com/tracking/1Z999AA10123456784')).toMatchObject({
+      trackingNumber: '1Z999AA10123456784', carrier: 'ups', source: 'link',
+    });
+  });
+});
+
 describe('Sending, YWE and ECMS Express links', () => {
   it('reads Sending\'s tracker link', () => {
     expect(parseTrackingInput('https://info.sending.es/fgts/pub/locNumSeguimiento.seam?web=S&localizador=100000000017')).toMatchObject({
