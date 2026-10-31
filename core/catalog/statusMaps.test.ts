@@ -1488,6 +1488,9 @@ describe("universal providers' answers", () => {
     // Nor is a bare delivery estimate, or a note that the recipient's details changed.
     expect(answer('unknown', null, 'Estimated delivery')).toEqual(gap);
     expect(answer('unknown', null, 'Recipient information updated')).toEqual(gap);
+    // Posti's notification tool, as providers relay it beside Posti's scans.
+    expect(answer('unknown', null, 'We have not received the recipient’s phone number')).toEqual(gap);
+    expect(answer('unknown', null, 'We sent the recipient a letter about the item')).toEqual(gap);
   });
 
   it("answer by the providers' own reading, not the generic classifier's keyword rules", () => {
@@ -1754,6 +1757,9 @@ describe("universal providers' answers", () => {
       ['The shipment was taken care of at the post office', 'accepted'], ['The shipment is on delivery', 'out_for_delivery'],
       ['Shipment expected, but not yet arrived or processed at PostNL', 'registered'],
       ['Parcel linked to packaging tool', 'in_transit'], ['Your parcel has crossed the border', 'in_transit'],
+      ['Shipment received from sender', 'accepted'],
+      // Posta Shqiptare's Albanian rows relayed with an empty English half, as its own map reads them.
+      ['Objekti u pranua ne zyren e shkembimit /', 'in_transit'], ['Regjistrimi i informacionit doganor te objektit /', 'customs'],
     ] as const) expect(answer('unknown', null, wording), wording).toEqual(mapped(stage));
     // Each is matched whole: the same words in another scan, and the report's open wording, stay unread.
     for (const wording of ['Sending the package to the sender', 'Item held at outward office of exchange for inspection', 'Virtual Manifest pending',

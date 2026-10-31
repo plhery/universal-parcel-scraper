@@ -126,6 +126,8 @@ describe('UPS status vocabulary', () => {
     expect(UPS_PROGRESS_STATUS.manifestupload).toBe('pending');
     expect(upsStatus('Returned to Sender')).toBe('exception');
     expect(upsStatus('Your package was left at the front door')).toBe('delivered');
+    // A delivery still to come is none.
+    expect(upsStatus('Your package will be delivered one business day later than expected.', true)).toBe('in_transit');
     expect(upsStatus('Label Created')).toBe('pending');
     // Unrecognized wording only means "moving" once the shipment has scans.
     expect(upsStatus('Wording UPS has not used before')).toBe('unknown');

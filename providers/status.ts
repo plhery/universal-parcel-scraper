@@ -36,6 +36,8 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['in progress', 'A heading that names no step.'],
   ['sms alert for the addressee - consignment delivery date.', "Česká pošta's text message to the recipient, as aggregators relay it: not a scan."],
   ['email alert for the addressee - consignment delivery date.', "Česká pošta's email to the recipient, as aggregators relay it: not a scan."],
+  ['we have not received the recipient’s phone number', "Posti's notification tool noting it has no phone number to notify the recipient by: not a scan."],
+  ['we sent the recipient a letter about the item', "Posti's notification tool noting it wrote to the recipient: not a scan."],
   ['delivery cannot be changed', "PostNL's note, as ParcelsApp relays it, that the delivery can no longer be changed: not a scan."],
   ['pios notice', "PostNL's notice, as ParcelsApp relays it beside its receipt of the shipment, without its content: no step of its own."],
   ['update on your parcel', 'A heading that names no step.'],

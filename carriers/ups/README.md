@@ -84,7 +84,8 @@ rendered status, after that wait.
   A scan UPS sends with an empty code, like the clearing agency's customs note, is read only
   by its whole wording as the map records it.
 - The newest scan's code sets the current stage and status. `progressBarType`, then the
-  prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay.
+  prose, decide only when that code is unmapped. The token reads `Exception` for a mere delay,
+  and the prose's "will be delivered" is a delivery still to come, not one.
   The receiver's delivery instructions (`L0`) are a notice, not a scan: the scan before them
   decides, so a parcel UPS has only the label for does not read in transit. An acceptance
   code after the delivery leg, such as the "Pickup Scan" when UPS collects a parcel from the

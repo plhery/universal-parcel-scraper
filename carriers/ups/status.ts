@@ -26,6 +26,8 @@ const IN_TRANSIT_TERMS = [
   'departed', 'arrived', 'processing at ups facility',
 ];
 const PENDING_TERMS = ['label created', 'manifest upload', 'shipment ready for ups'];
+// A delivery still to come, as in "Your package will be delivered one business day later than expected."
+const FUTURE_DELIVERY = /\b(?:will|to) be delivered\b/g;
 
 /**
  * Classify UPS status prose. `hasEvents` reports that the shipment already has
@@ -33,7 +35,7 @@ const PENDING_TERMS = ['label created', 'manifest upload', 'shipment ready for u
  * than "unknown"; without it an unmapped phrase stays `unknown` on purpose.
  */
 export function upsStatus(text: string, hasEvents = false): CarrierStatus {
-  const value = text.toLocaleLowerCase('en-US');
+  const value = text.toLocaleLowerCase('en-US').replace(FUTURE_DELIVERY, ' ');
   if (EXCEPTION_TERMS.some((term) => value.includes(term))) return 'exception';
   if (DELIVERED_TERMS.some((term) => value.includes(term))) return 'delivered';
   if (value.includes('out for delivery')) return 'out_for_delivery';
@@ -86,9 +88,10 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // A notice that the package is on its way, without a facility.
   ['DA', 'in_transit'],
   // Delays and new delivery plans: a late flight, a possible delay, a new
-  // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather.
+  // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather,
+  // and a delivery a business day later than expected.
   ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'], ['RF', 'in_transit'],
-  ['DJ', 'in_transit'],
+  ['DJ', 'in_transit'], ['8Y', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
   // one to the receiver's address instead of the access point.
