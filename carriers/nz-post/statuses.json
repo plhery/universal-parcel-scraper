@@ -101,6 +101,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "5002",
+      "wording": "Processed at outbound depot",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The origin post's depot on an item from abroad, before its departure."
+    },
+    {
       "code": "5007",
       "wording": "International departure",
       "language": "en",
@@ -120,6 +129,15 @@
       "language": "en",
       "stage": "customs",
       "confirmedBy": "live"
+    },
+    {
+      "code": "5057",
+      "wording": "Pending border clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "An item from abroad unloaded at Auckland's international gateway for border clearance."
     },
     {
       "code": "5017",

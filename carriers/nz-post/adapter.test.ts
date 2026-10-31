@@ -114,6 +114,31 @@ describe('NZ Post exact-reference projection', () => {
       .events?.[0]?.time).toBe('2026-08-14T00:47:00Z');
   });
 
+  it("takes back the Auckland clock NZ Post reads the origin post's scans on, until an item from abroad leaves", () => {
+    const scan = (date_time: string, edifact_code: string, status: string, depot_name?: string) =>
+      ({ date_time, edifact_code, status, ...(depot_name ? { depot_name } : {}), source: 'IPS' });
+    const events = [
+      scan('2026-10-01T01:51:00Z', '5000', 'Picked up/Collected'),
+      scan('2026-10-08T20:34:00Z', '5002', 'Processed at outbound depot', 'EXAMPLE CITY'),
+      scan('2026-10-08T20:57:00Z', '5007', 'International departure', 'EXAMPLE CITY'),
+      scan('2026-10-12T00:07:13Z', '5057', 'Pending border clearance', 'AUCKLAND'),
+      scan('2026-10-12T05:38:00Z', '5015', 'International arrival', 'AUCKLAND'),
+      scan('2026-10-13T23:50:32Z', '5022', 'Delivered'),
+    ];
+    const parse = (item: string, scans = events) =>
+      parseNzPost({ success: true, status_code: 1, results: [{ tracking_reference: item, tracking_events: scans }] }, item);
+    // NZ Post read 14:51 at the origin post as 14:51 in Auckland (+13:00). The issuer's country gives the clock back.
+    expect(parse('ZZ123456785CN').events?.map(event => [event.time, event.stage])).toEqual([
+      ['2026-10-13T23:50:32Z', 'delivered'], ['2026-10-12T05:38:00Z', 'in_transit'], ['2026-10-12T00:07:13Z', 'customs'],
+      ['2026-10-09T09:57:00+08:00', 'in_transit'], ['2026-10-09T09:34:00+08:00', 'in_transit'], ['2026-10-01T14:51:00+08:00', 'accepted']]);
+    // A depot naming its country outranks the issuer, and a country of several clocks keeps the Auckland reading.
+    const named = parse('ZZ123456785CN', events.map(event => event.edifact_code === '5002' ? { ...event, depot_name: 'Japan' } : event));
+    expect(named.events?.slice(3).map(event => event.time)).toEqual(['2026-10-09T09:57:00+09:00', '2026-10-09T09:34:00+09:00', '2026-10-01T14:51:00+09:00']);
+    expect(parse('ZZ123456785US').events?.slice(3).map(event => event.time)).toEqual(['2026-10-08T20:57:00Z', '2026-10-08T20:34:00Z', '2026-10-01T01:51:00Z']);
+    // Without a departure, the origin's leg ends where New Zealand's scans begin.
+    expect(parse('ZZ123456785CN', events.filter(event => event.edifact_code !== '5007')).events?.[2]?.time).toBe('2026-10-12T00:07:13Z');
+  });
+
   it('distinguishes pre-advice, pickup availability, failed attempts and unknown codes', () => {
     for (const code of ['205', '206', '997']) expect(classifyNzPostStatus(code)).toMatchObject({ status: 'pending', stage: 'registered' });
     expect(classifyNzPostStatus('141')).toMatchObject({ status: 'in_transit', stage: 'ready_for_pickup' });

@@ -38,15 +38,19 @@ function clock(value: unknown): Pick<CarrierEvent, 'time'> & Record<string, stri
 const INTERNATIONAL_DEPARTURE = '5007';
 /** An airline's scan, "In transit with airline": 5064, or a 528x code (5280 to 5285 seen on an EMS item). */
 const AIRLINE = /^(?:5064|528\d)$/;
+/** An item from abroad in New Zealand: its arrival, the border clearance pending, the border agency and its hold. */
+const ARRIVED = new Set(['5015', '5057', '5016', '5019']);
 
-/** A scan after the departure: its index in the source and the country its depot names, if any but New Zealand. */
-interface AfterDeparture { index: number; country: string | null; wall: string | null }
+/** A scan abroad: its index in the source and the country its depot names, if any but New Zealand. */
+interface Abroad { index: number; country: string | null; wall: string | null }
 
 /**
  * NZ Post reads the wall clock of a scan abroad as New Zealand's: a Guangzhou
  * customs scan at 12:47 local came as 00:47Z, 12:47 in Auckland, and UPU
- * dates it 12:47 at the Guangzhou office of exchange (checked 2026-10-10). Its
- * own scans are right: an Auckland departure at 13:55 local came as 01:55Z.
+ * dates it 12:47 at the Guangzhou office of exchange (checked 2026-10-10). So
+ * does the posting it relays on an item from abroad: China Post's acceptance
+ * at 14:51 in Guiyang came as 01:51Z, 14:51 in Auckland (checked 2026-10-31).
+ * Its own scans are right: an Auckland departure at 13:55 local came as 01:55Z.
  * So a scan abroad gets its wall clock back on Auckland's.
  */
 function abroadWall(clocked: ReturnType<typeof clock>): string | null {
@@ -56,16 +60,18 @@ function abroadWall(clocked: ReturnType<typeof clock>): string | null {
 
 /**
  * The clock of a scan abroad: that of the country its depot names, else, a
- * guess, of the country the nearest earlier scan after the departure names,
- * an airline's included ("China"), else the nearest later one's. All of them
- * are the destination post's or the flight's to it; a transit hub's country
- * can be wrong, but Hong Kong, Singapore and China keep one clock. Null when
- * that country has several clocks or none is named: the scan keeps NZ Post's
- * Auckland reading, the last guess.
+ * guess, of the country the nearest earlier scan on the same leg names, an
+ * airline's included ("China"), else the nearest later one's, else the
+ * fallback's. After an item's departure from New Zealand all of them are the
+ * destination post's or the flight's to it; a transit hub's country can be
+ * wrong, but Hong Kong, Singapore and China keep one clock. Before an item
+ * from abroad leaves its origin, the fallback is the post that issued its
+ * number. Null when that country has several clocks or none is named: the
+ * scan keeps NZ Post's Auckland reading, the last guess.
  */
-function abroadZone(scans: readonly AfterDeparture[], position: number): string | null {
+function abroadZone(scans: readonly Abroad[], position: number, fallback: string | null = null): string | null {
   const country = scans[position]!.country ?? scans.slice(0, position).reverse().find(other => other.country)?.country
-    ?? scans.slice(position + 1).find(other => other.country)?.country;
+    ?? scans.slice(position + 1).find(other => other.country)?.country ?? fallback;
   return country ? countryTimeZone(country) : null;
 }
 
@@ -94,10 +100,15 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
   if (!Array.isArray(item.tracking_events) || item.tracking_events.length > 500) throw new SchemaError('nz-post');
   // On an item NZ Post sends abroad, the scans after its international
   // departure happen abroad, but for an airline's, whose clock was not checked,
-  // and one whose depot names New Zealand. The source lists the oldest first.
+  // and one whose depot names New Zealand. On an item from abroad, so do the
+  // origin post's scans until its international departure, unless the item is
+  // already in New Zealand. The source lists the oldest first.
   const outbound = /^[A-Z]{2}\d{9}NZ$/.test(requested);
+  const issuer = !outbound && /^[A-Z]{2}\d{9}[A-Z]{2}$/.test(requested) ? requested.slice(-2) : null;
   let departed = false;
-  const afterDeparture: AfterDeparture[] = [];
+  let leaving = issuer !== null;
+  const afterDeparture: Abroad[] = [];
+  const beforeDeparture: Abroad[] = [];
   const projected = item.tracking_events.map((raw, index): CarrierEvent => {
     if (!isRecord(raw)) throw new SchemaError('nz-post');
     const description = clean(raw.status, 300);
@@ -114,20 +125,25 @@ export function parseNzPost(payload: unknown, number: string): CarrierResult {
       afterDeparture.push({ index, country, wall: AIRLINE.test(code) ? null : abroadWall(clocked) });
     }
     if (outbound && code === INTERNATIONAL_DEPARTURE) departed = true;
+    if (leaving && (country === 'NZ' || ARRIVED.has(code))) leaving = false;
+    if (leaving) beforeDeparture.push({ index, country, wall: AIRLINE.test(code) ? null : abroadWall(clocked) });
+    if (code === INTERNATIONAL_DEPARTURE) leaving = false;
     return { ...clocked, description, provider_code: code,
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage } : {}) };
   });
   // A scan nothing places keeps NZ Post's Auckland reading, the last guess:
   // hours off, but the reply keeps its instant.
   let guessed = false;
-  afterDeparture.forEach((scan, position) => {
-    // An airline's scan only lends its country: its clock was not checked.
-    if (!scan.wall) return;
-    const zone = abroadZone(afterDeparture, position);
-    const placed = zone ? isoTime(scan.wall, zone) : null;
-    if (placed) projected[scan.index] = { ...projected[scan.index]!, time: placed.iso };
-    else guessed = true;
-  });
+  for (const [leg, fallback] of [[afterDeparture, null], [beforeDeparture, issuer]] as const) {
+    leg.forEach((scan, position) => {
+      // An airline's scan only lends its country: its clock was not checked.
+      if (!scan.wall) return;
+      const zone = abroadZone(leg, position, fallback);
+      const placed = zone ? isoTime(scan.wall, zone) : null;
+      if (placed) projected[scan.index] = { ...projected[scan.index]!, time: placed.iso };
+      else guessed = true;
+    });
+  }
   if (!projected.length) throw new IndeterminateError('nz-post', 'NZ Post returned no parcel history');
   // The consumer client treats the last source row as current. Preserve that
   // order if any clock is unresolved, or only guessed, instead of promoting an

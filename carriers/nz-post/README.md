@@ -40,7 +40,16 @@ the guess beats Auckland's clock, 4 to 17 hours off abroad. When the country
 has several clocks, or none is named, the scan keeps NZ Post's Auckland
 reading, the last guess: hours off, but the reply keeps its instant, and the
 history keeps NZ Post's order. Airline scans ("In transit with airline") are
-taken as sent: their clocks were not checked. The app identity policy in
+taken as sent: their clocks were not checked.
+
+On an item from abroad (an S10 number another post issued), NZ Post relays the
+origin post's scans on the same Auckland reading: China Post's acceptance at
+14:51 in Guiyang came as `01:51Z`. Each scan before the item's international
+departure gets its wall clock back, unless the item is already in New Zealand
+(a depot there, its arrival or its border clearance). It is read on the clock
+of the country its depot names, else of the nearest scan before the departure
+that names one, else of the post that issued the number. A country with several
+clocks keeps the Auckland reading. The app identity policy in
 [identity.ts](identity.ts) (`relabelledFrom: 'Pacific/Auckland'`) lets a scan
 on its own clock take over the row stored under Auckland's reading, by wall
 clock, provider code and location.

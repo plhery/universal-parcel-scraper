@@ -20,10 +20,10 @@ const COLLECTION = new Set(['141', '6003', '5351', '99', '1099', '2099']);
 // International mail codes. A release from the border agency resumes transit;
 // 144 hands a carded parcel over before it is ready for collection.
 const REGISTERED = new Set(['5303', '6908']);
-const MOVEMENT = new Set(['144', '591', '595', '5007', '5015', '5017', '5020', '5023', '5041', '5042',
+const MOVEMENT = new Set(['144', '591', '595', '5002', '5007', '5015', '5017', '5020', '5023', '5041', '5042',
   '5064', '5199', '5213', '5280', '5282', '5283', '5284', '5285', '5292', '5360', '6025', '6028', '6049',
   '6054', '6063', '6068', '6069', '6071']);
-const BORDER = new Set(['5016', '5019']);
+const BORDER = new Set(['5016', '5019', '5057']);
 
 export function classifyNzPostStatus(code: string): ClassifiedStatus | undefined {
   if (Object.hasOwn(CODES, code)) return CODES[code];
