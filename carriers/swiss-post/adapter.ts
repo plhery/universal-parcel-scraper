@@ -265,11 +265,10 @@ function originClock(event: JsonObject, time: string, imported: boolean): string
   return (zone && wall ? isoTime(wall, zone)?.iso : null) ?? time;
 }
 
-/** A sender abroad's notice that its letter will shortly be handed over, on its system's clock ([clock.ts](clock.ts)). */
-function preAdviceClock(event: JsonObject, time: string, sender: string): string {
+/** A consolidator's notice that its letter will shortly be handed over, on its system's clock ([clock.ts](clock.ts)). */
+function preAdviceClock(event: JsonObject, time: string): string {
   const wall = WALL_CLOCK.exec(time)?.[1];
-  // Before the letter arrives, the reply may name no sender yet.
-  if (sender === 'CH' || !wall || text(event.eventCode, 100).split('.').at(-1) !== PRE_ADVICE) return time;
+  if (!wall || text(event.eventCode, 100).split('.').at(-1) !== PRE_ADVICE) return time;
   return isoTime(wall, PRE_ADVICE_ZONE)?.iso ?? time;
 }
 
@@ -306,7 +305,6 @@ export function parseSwissPostShipment(
   const destination = text(item.recipientCountry, 10).toUpperCase();
   const abroad = item.internationalExport === true && !item.internationalImport && /^[A-Z]{2}$/.test(destination)
     && destination !== 'CH' ? destination : null;
-  const sender = text(item.senderCountry, 10).toUpperCase();
   const events: CarrierEvent[] = [];
   for (const rawEvent of rawEvents.slice(0, 100)) {
     if (!isRecord(rawEvent)) continue;
@@ -314,7 +312,7 @@ export function parseSwissPostShipment(
     const eventCode = text(rawEvent.eventCode, 100);
     if (!time || !eventCode) continue;
     const event: CarrierEvent = {
-      time: preAdviceClock(rawEvent, originClock(rawEvent, destinationClock(rawEvent, time, abroad), item.internationalImport === true), sender),
+      time: preAdviceClock(rawEvent, originClock(rawEvent, destinationClock(rawEvent, time, abroad), item.internationalImport === true)),
       location: eventLocation(rawEvent),
       description: eventDescription(rawEvent, translations, internationalType),
       provider_code: eventCode,

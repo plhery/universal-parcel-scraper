@@ -195,7 +195,7 @@ describe('Swiss Post historical event codes', () => {
     expect(clocks({ recipientCountry: 'CH' })).toEqual(history.map((event) => event.timestamp));
   });
 
-  it("reads a sender abroad's notice that its letter will shortly be handed over on Beijing's clock", () => {
+  it("reads a consolidator's notice that its letter will shortly be handed over on Beijing's clock", () => {
     const history = [
       { eventCode: 'LETTER.*.106.818', timestamp: '2026-10-27T09:06:11+01:00' },
       { eventCode: 'LETTER.*.106.859', timestamp: '2026-10-26T18:12:57+01:00' },
@@ -207,11 +207,17 @@ describe('Swiss Post historical event codes', () => {
       .toMatchObject({ last_update: '2026-10-26T18:12:57+08:00', current_stage: 'registered' });
     // Before the arrival scan the reply may name no sender yet.
     expect(parseSwissPostShipment({ globalStatus: 'REPORTED' }, history.slice(1)).events?.[0]?.time).toBe('2026-10-26T18:12:57+08:00');
-    // A sender in Switzerland keeps Swiss Post's offset; so does a parcel's notice under its own code.
-    expect(clocks({ senderCountry: 'CH' })).toEqual(history.map((event) => event.timestamp));
-    expect(parseSwissPostShipment({ globalStatus: 'REPORTED', senderCountry: 'NL' }, [
-      { eventCode: 'PARCEL.*.2.600', timestamp: '2026-10-23T17:42:40+02:00' },
-    ]).events?.[0]?.time).toBe('2026-10-23T17:42:40+02:00');
+    // A reply naming Switzerland as the sender, after the hub's deposit, had the notice hours ahead of it.
+    expect(parseSwissPostShipment({ globalStatus: 'TO_BE_DELIVERED', senderCountry: 'CH', recipientCountry: 'CH' }, [
+      { eventCode: 'LETTER.*.106.912', timestamp: '2026-10-30T10:56:57+01:00' },
+      { eventCode: 'LETTER.*.106.859', timestamp: '2026-10-30T19:16:41+01:00' },
+    ]).events?.map((event) => event.time)).toEqual(['2026-10-30T19:16:41+08:00', '2026-10-30T10:56:57+01:00']);
+    // Senders in Switzerland give their notice under another code, on Swiss Post's clock, as parcels do.
+    for (const eventCode of ['LETTER.*.20.600', 'PARCEL.*.2.600']) {
+      expect(parseSwissPostShipment({ globalStatus: 'REPORTED', senderCountry: 'CH' }, [
+        { eventCode, timestamp: '2026-10-23T17:42:40+02:00' },
+      ]).events?.[0]?.time).toBe('2026-10-23T17:42:40+02:00');
+    }
   });
 
   it('falls back to the shipment summary when the newest scan has no stage', () => {

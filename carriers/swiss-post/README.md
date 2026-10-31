@@ -116,9 +116,9 @@ row by provider code, instant and location, unless one of the two is revoked.
 - A letter's pre-advice (`859`, "will shortly be handed over") is the notice of a Chinese
   consolidator posting letters in Switzerland through its European hub, on its system's
   Beijing wall clock under Swiss Post's offset: one came at `18:12+01:00` in a reply given at
-  13:58 Swiss time. It is read on Beijing's clock unless `senderCountry` is `CH`: before the
-  letter's arrival scan the reply can name no sender, and once it names one it is abroad. A
-  parcel's pre-advice (`600`) keeps Swiss Post's offset.
+  13:58 Swiss time. It is read on Beijing's clock whatever `senderCountry` says: the reply can
+  name no sender, the hub's country or Switzerland. Senders in Switzerland, for letters and
+  parcels alike, give their pre-advice as `600`, which keeps Swiss Post's offset.
 - Wording is only trimmed, not whitespace-collapsed, so `core/transport`'s
   `clean()` is not used.
 - Scan locations keep the facility's name and number as sent ("Zürich
