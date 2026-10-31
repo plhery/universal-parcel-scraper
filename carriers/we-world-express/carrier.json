@@ -1,0 +1,42 @@
+{
+  "id": "we-world-express",
+  "displayName": "We World Express",
+  "aliases": [
+    "WeWorld Express",
+    "We World Express Limited"
+  ],
+  "region": {
+    "countries": [
+      "HK",
+      "CN",
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#2d2a77"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.weworldexpress.com/wwe/track",
+    "canaryUrl": "https://www.weworldexpress.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "we-world-express-1",
+      "pattern": "^WWE[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low"
+    }
+  ]
+}

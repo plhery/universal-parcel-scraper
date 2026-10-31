@@ -108,7 +108,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "360lion"
+        ]
       },
       "note": "Named in the title of a complaint against ProShips about a SHEIN parcel; the complaint was marked solved the next day after ProShips answered and the parcel arrived. Kept in the complaint title's case."
     },

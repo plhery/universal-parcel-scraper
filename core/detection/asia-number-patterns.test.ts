@@ -548,6 +548,39 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('Asiafly, ShunBang Express, Topex Logistics, 360Lion, Cititrans, SYD Express, We World Express, Vnlin and XingYunYi', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['ASIAFLY', 'asiafly'], ['亚翔国际', 'asiafly'], ['KJY', 'shunbang-express'], ['ShunBang', 'shunbang-express'],
+      ['顺邦科技物流', 'shunbang-express'], ['迅派物流', 'topex-logistics'], ['Topex Logistics', 'topex-logistics'], ['WSH', '360lion'],
+      ['360 Lion', '360lion'], ['纬狮物流', '360lion'], ['Wish Global Logistics', '360lion'], ['CITITRANS', 'cititrans'], ['亦邦物流', 'cititrans'],
+      ['SYD', 'syd'], ['速邮达物流', 'syd'], ['We World Express', 'we-world-express'], ['WeWorld Express', 'we-world-express'],
+      ['Vnlin', 'vnlin'], ['合聯國際', 'vnlin'], ['Winlink Logistics', 'vnlin'], ['XYY / XingYunYi', 'xingyunyi'], ['行运易物流', 'xingyunyi']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    for (const name of ['TOPEX', '速邮达']) expect(carrierIdFromName(name), name).toBeUndefined();
+    expect(carrierIdFromName('WWE')).not.toBe('we-world-express');
+    for (const [url, number, carrier] of [
+      ['https://www.asiaflyexp.com/order-search.html?no=AF1000000017', 'AF1000000017', 'asiafly'],
+      ['https://toms.360lion.com/track?trackNumber=LN1000000017', 'LN1000000017', '360lion'],
+      ['https://sud.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills=SY1000000017', 'SY1000000017', 'syd'],
+      ['https://www.xingyunyi.com/tracking?nums=XY1000000017', 'XY1000000017', 'xingyunyi'],
+      ['https://www.xingyunyi.cn/cn/tracking?nums=XY1000000017', 'XY1000000017', 'xingyunyi'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+  });
+
+  it('suggests 360Lion and We World Express for their prefixes, two letters, ten digits and YQ', () => {
+    expect(detectCarrierMatch('WSHMX1234567890YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['360lion'] });
+    expect(detectCarrierMatch('WWETA1234567890YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['we-world-express'] });
+    for (const number of ['WSHM11234567890YQ', 'WSHMX123456789YQ', 'WSHMX1234567890YZ', 'WWETA12345678901YQ', 'WWET11234567890YQ', 'WWXTA1234567890YQ']) {
+      const candidates = detectCarrierMatch(number).candidates ?? [];
+      expect(candidates, number).not.toContain('360lion');
+      expect(candidates, number).not.toContain('we-world-express');
+    }
+  });
+});
+
 describe('Ecom Logistics, FragilePAK, HKD Express, Canada Air Express, Bombax and SM Express', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['Ecom Logistics', 'ecom-logistics'], ['ShipEcom', 'ecom-logistics'], ['FragilePAK', 'fragilepak'],

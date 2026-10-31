@@ -42,9 +42,9 @@ tracking page makes.
 ## Numbers
 
 ProShips delivers parcels under the numbers their senders gave them: S10 numbers, MailAmericas
-numbers and a SHEIN parcel's number. No rule claims them for ProShips: S10 numbers belong to
-the issuing network, MailAmericas' rule claims MailAmericas numbers, and no number shape of
-ProShips' own is known. The adapter sends eight to forty letters and digits. The samples and
+numbers and a SHEIN parcel's 360Lion number. No rule claims them for ProShips: S10 numbers belong
+to the issuing network, MailAmericas' and 360Lion's rules claim their own numbers, and no number
+shape of ProShips' own is known. The adapter sends eight to forty letters and digits. The samples and
 their sources are in [`numbers.json`](numbers.json).
 
 ## Links
