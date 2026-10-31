@@ -13,11 +13,15 @@
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import { trackingLanguageStage, type Stage } from '../../core/status/index.js';
+import { nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase();
-  if (/return(?:ed|ing)? to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
+  // A return still to come or under way, such as a parcel left uncollected past its storage period:
+  // the parcel is not back yet, so it is an exception, never its acceptance or the final return.
+  if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
+  if (/returned to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
   // "Delivery not possible" comes after the loading onto the delivery vehicle, before the parcel
   // waits at a retail outlet: a failed attempt, as the partner posts' copies of the scan read it.
   if (/not delivered|could not be delivered|unable to deliver|delivery attempt|delivery (?:was )?not possible|nicht.*zugestellt|zustellversuch|nicht angetroffen/.test(value)) return 'failed_attempt';
@@ -46,7 +50,7 @@ export function statusForStage(stage: string): CarrierStatus {
   if (stage === 'registered' || stage === 'pending') return 'pending';
   if (stage === 'delivered') return 'delivered';
   if (stage === 'out_for_delivery' || stage === 'ready_for_pickup') return 'out_for_delivery';
-  if (stage === 'failed_attempt' || stage === 'returned') return 'exception';
+  if (stage === 'failed_attempt' || stage === 'returned' || stage === 'exception') return 'exception';
   return 'in_transit';
 }
 
