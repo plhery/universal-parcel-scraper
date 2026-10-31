@@ -64,6 +64,12 @@ export interface HualeiTenant {
    */
   readonly unlabelledPartners?: readonly CarrierId[];
   /**
+   * Carriers a product name names, as JRT's line to Ireland names FedEx: on a
+   * record of that product without a channel, the delivery carrier's number is
+   * the named carrier's when it takes the number.
+   */
+  readonly productPartners?: readonly (readonly [RegExp, CarrierId])[];
+  /**
    * The tracking page finds an order by the tenant's own number without showing
    * it, only the delivery carrier's number and the shipper's reference: a lone
    * record then answers the one number the page's form echoes back, and the
@@ -137,10 +143,15 @@ const PARTNERS: Readonly<Record<string, CarrierId>> = {
 export function hualeiPartner(label: string, number: string, destination = ''): CarrierId | undefined {
   const key = normalizeStatusWording(label);
   const carrier = Object.hasOwn(PARTNERS, key) ? PARTNERS[key] : undefined;
-  if (!carrier || !/^[A-Z0-9]{4,40}$/.test(number)) return undefined;
-  if (!(detectCarrierMatch(number).candidates as string[]).includes(carrier)) return undefined;
+  return carrier && takes(carrier, number, destination) ? carrier : undefined;
+}
+
+/** Whether a carrier's own detection offers the number and it serves the destination; a carrier listing no country serves all. */
+function takes(carrier: CarrierId, number: string, destination: string): boolean {
+  if (!/^[A-Z0-9]{4,40}$/.test(number)) return false;
+  if (!(detectCarrierMatch(number).candidates as string[]).includes(carrier)) return false;
   const countries: readonly string[] = CARRIER_DEFINITIONS[carrier]?.countries ?? [];
-  return !destination || countries.includes(destination) ? carrier : undefined;
+  return !destination || !countries.length || countries.includes(destination);
 }
 
 /** A number or reference the tracker can be asked for, upper case; anything else is never sent. */
@@ -350,7 +361,8 @@ function trackRow(raw: unknown, provider: string): HualeiRow {
  * The delivery carrier and its number: the channel's transfer number, else the
  * tracking number, which some lines fill with the delivery carrier's. Without
  * a channel, only the transfer number, or the tracking number a tenant's own
- * number shape marks as the delivery carrier's, of a carrier the tenant hands to.
+ * number shape marks as the delivery carrier's, of a carrier the tenant hands to
+ * or the record's product names.
  */
 function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant, downstream = ''): Facts['partner'] {
   const { provider } = tenant;
@@ -361,7 +373,9 @@ function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant
       const carrier = detected?.confidence === 'high' ? detected.carrier : undefined;
       if (carrier && tenant.unlabelledPartners?.includes(carrier)) return { carrier, number };
     }
-    return undefined;
+    const product = downstream ? text(record, 'productKindName', provider, 100) : '';
+    const named = product ? tenant.productPartners?.find(([pattern]) => pattern.test(product))?.[1] : undefined;
+    return named && takes(named, downstream, destination) ? { carrier: named, number: downstream } : undefined;
   }
   for (const key of ['business_channeltransfercode', 'trackingNumber']) {
     const number = identity(text(record, key, provider, 64));

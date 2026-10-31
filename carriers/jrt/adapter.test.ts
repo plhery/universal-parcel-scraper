@@ -81,11 +81,11 @@ describe('JRT tracking adapter', () => {
     expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
   });
 
-  it('reads an order handed over by JRT’s own number, which the record no longer holds, and hands it to DHL', () => {
+  it('reads an order handed over by JRT’s own number, which the record no longer holds, and hands it to DHL or FedEx', () => {
     const readAt = Date.parse('2026-03-15T00:00:00Z');
-    const handed = (trackingNumber: string, extra: Record<string, unknown>[] = []) => {
+    const handed = (trackingNumber: string, extra: Record<string, unknown>[] = [], fields: Record<string, unknown> = {}) => {
       const payload = fixture('track-dhl') as { data: Record<string, unknown>[] }[];
-      Object.assign(payload[0]!.data[0]!, { trackingNumber });
+      Object.assign(payload[0]!.data[0]!, { trackingNumber, ...fields });
       payload[0]!.data.push(...extra);
       return payload;
     };
@@ -99,6 +99,11 @@ describe('JRT tracking adapter', () => {
     const other = parseJrtTrack(handed('000000000012'), 'JRT0000000002ZZ', readAt)!;
     expect(other).toMatchObject({ delivery_tracking_number: '000000000012' });
     expect(other).not.toHaveProperty('delivery_carrier');
+    // The line to Ireland names FedEx in its product: FedEx takes a number its detection offers it.
+    const ireland = { productKindName: '爱尔兰合成FEDEX-A', consigneeCountry: 'IE' };
+    expect(parseJrtTrack(handed('000000000011', [], ireland), 'JRT0000000002ZZ', readAt))
+      .toMatchObject({ delivery_carrier: 'fedex', delivery_tracking_number: '000000000011', destination_country: 'IE' });
+    expect(parseJrtTrack(handed('000000000012', [], ireland), 'JRT0000000002ZZ', readAt)).not.toHaveProperty('delivery_carrier');
     // Another JRT number, a second record or a reference the record does not hold is still another shipment.
     expect(() => parseJrtTrack(handed('JRT0000000009ZZ'), 'JRT0000000002ZZ', readAt)).toThrow('another shipment');
     expect(() => parseJrtTrack(handed('CJ000000005DE', [{ trackingNumber: 'CJ000000004DE' }]), 'JRT0000000002ZZ', readAt)).toThrow('another shipment');

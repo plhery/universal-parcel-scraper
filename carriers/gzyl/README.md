@@ -83,7 +83,8 @@ rows written ahead are, and the record names no delivering carrier or number.
 
 A reference stored without its dashes is not found. A record with the delivery carrier's number
 but no channel label hands nothing over, except on a tenant that names the carriers it hands
-records to, as [Mayi Yinfu](../mayiyinfu/README.md) does.
+records to, as [Mayi Yinfu](../mayiyinfu/README.md) does, or the carrier a product names, as
+[JRT's](../jrt/README.md) line to Ireland names FedEx.
 
 ## Numbers
 

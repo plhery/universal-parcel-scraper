@@ -38,8 +38,9 @@ browser is needed, and no portal link is published.
 - Lines into Europe end with DHL. After the hand-off the tracker copies DHL's rows into its own
   history, in lower case English, and the record's tracking number is DHL's. It names no
   channel, so the parcel goes to DHL when DHL's own rule claims the number whole. The line into
-  Ireland ends with FedEx, whose twelve digits no rule claims: they are shown, and nothing is
-  handed over. DHL's collection after the hand-off is transit, and its rows of a
+  Ireland ends with FedEx, whose twelve digits no rule claims alone; its product names FedEx, so
+  the parcel goes to FedEx when FedEx's detection offers the number. DHL's collection after the
+  hand-off is transit, and its rows of a
   return, the refusal included, are returned: the delivery that follows is the one back to the
   sender.
 - The line into the United States ends with UPS. The tracker copies UPS's rows in Chinese, and
