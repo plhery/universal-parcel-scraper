@@ -70,6 +70,14 @@ export interface HualeiTenant {
    * tracking number it shows is the delivery carrier's.
    */
   readonly pageEcho?: true;
+  /**
+   * The tenant's own numbers. Once the delivery carrier's number has taken
+   * `trackingNumber`, the track interface still finds an order by its own
+   * number but returns it in no field: a lone record that holds none of the
+   * number then answers it, unless its tracking number is another of the
+   * tenant's own. A tracking number of another shape is the delivery carrier's.
+   */
+  readonly ownNumber?: RegExp;
 }
 
 /**
@@ -341,16 +349,19 @@ function trackRow(raw: unknown, provider: string): HualeiRow {
 /**
  * The delivery carrier and its number: the channel's transfer number, else the
  * tracking number, which some lines fill with the delivery carrier's. Without
- * a channel, only the transfer number of a carrier the tenant hands to.
+ * a channel, only the transfer number, or the tracking number a tenant's own
+ * number shape marks as the delivery carrier's, of a carrier the tenant hands to.
  */
-function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant): Facts['partner'] {
+function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant, downstream = ''): Facts['partner'] {
   const { provider } = tenant;
   const label = text(record, 'channel_name', provider, 100);
   if (!label) {
-    const number = identity(text(record, 'business_channeltransfercode', provider, 64));
-    const detected = number ? detectCarrierMatch(number) : undefined;
-    const carrier = detected?.confidence === 'high' ? detected.carrier : undefined;
-    return carrier && tenant.unlabelledPartners?.includes(carrier) ? { carrier, number } : undefined;
+    for (const number of [identity(text(record, 'business_channeltransfercode', provider, 64)), downstream]) {
+      const detected = number ? detectCarrierMatch(number) : undefined;
+      const carrier = detected?.confidence === 'high' ? detected.carrier : undefined;
+      if (carrier && tenant.unlabelledPartners?.includes(carrier)) return { carrier, number };
+    }
+    return undefined;
   }
   for (const key of ['business_channeltransfercode', 'trackingNumber']) {
     const number = identity(text(record, key, provider, 64));
@@ -386,6 +397,8 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   });
   // The service matches a number in any of the record's own fields; a reference two orders share is no answer.
   const bound = records.filter((record) => IDENTITY_FIELDS.some((key) => identity(text(record, key, provider, 64)) === identity(number)));
+  const own = (value: string) => Boolean(tenant.ownNumber?.test(value));
+  const trackingOf = (record: JsonObject) => identity(text(record, 'trackingNumber', provider, 64));
   if (!bound.length) {
     // The names of the fields that still carry the number, a list such as a child parcel's included, or eight
     // characters or more of it, never their values, tell a number the platform moved from another shipment or wrote
@@ -396,23 +409,32 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
       .map(([key]) => key.slice(0, 40))))].slice(0, 4);
     const whole = fields((value) => value.includes(identity(number)), true);
     const part = whole.length ? [] : fields((value) => value.length >= 8 && identity(number).includes(value));
-    const shapes = whole.length || part.length ? [] : [...new Set(records.flatMap((record) => IDENTITY_FIELDS
-      .map((key) => [key, text(record, key, provider, 64)] as const)
-      .filter(([, value]) => value)
-      .map(([key, value]) => `${key} ${numberShape(value)}`)))].slice(0, 4);
-    throw new IndeterminateError(provider, `${provider} answered with another shipment${whole.length ? `; its ${whole.join(', ')} holds the number`
-      : part.length ? `; its ${part.join(', ')} holds part of the number` : shapes.length ? `; its numbers read ${shapes.join(', ')}` : ''}`);
+    // A tenant's own number the record holds nowhere is the one the interface found it by, once the delivery
+    // carrier's number has taken its tracking number.
+    if (own(number) && records.length === 1 && !whole.length && !part.length && !own(trackingOf(records[0]!))) {
+      bound.push(records[0]!);
+    } else {
+      const shapes = whole.length || part.length ? [] : [...new Set(records.flatMap((record) => IDENTITY_FIELDS
+        .map((key) => [key, text(record, key, provider, 64)] as const)
+        .filter(([, value]) => value)
+        .map(([key, value]) => `${key} ${numberShape(value)}`)))].slice(0, 4);
+      throw new IndeterminateError(provider, `${provider} answered with another shipment${whole.length ? `; its ${whole.join(', ')} holds the number`
+        : part.length ? `; its ${part.join(', ')} holds part of the number` : shapes.length ? `; its numbers read ${shapes.join(', ')}` : ''}`);
+    }
   }
-  if (new Set(bound.map((record) => identity(text(record, 'trackingNumber', provider, 64)))).size > 1) {
+  if (new Set(bound.map(trackingOf)).size > 1) {
     throw new IndeterminateError(provider, `${provider} holds several shipments under the number`);
   }
   const record = bound[0]!;
   const details = record.trackDetails ?? [];
   if (!Array.isArray(details) || details.length > MAX_ROWS) throw new SchemaError(provider, `${provider} returned an invalid history`);
   const destination = text(record, 'consigneeCountry', provider, 8).toUpperCase();
+  const tracking = trackingOf(record);
+  // On a tenant that names its own numbers, a tracking number of another shape is the delivery carrier's.
+  const downstream = tenant.ownNumber && tracking && !own(tracking) ? tracking : '';
   return result(details.map((row) => trackRow(row, provider)), {
-    number, destination, partner: partnerOf(record, destination, tenant),
-    tracking: identity(text(record, 'trackingNumber', provider, 64)),
+    number, destination, partner: partnerOf(record, destination, tenant, downstream),
+    tracking: downstream ? '' : tracking, ...(downstream ? { downstream } : {}),
     service: text(record, 'productKindName', provider, 100) || undefined,
   }, tenant, readAt);
 }

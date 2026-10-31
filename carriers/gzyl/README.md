@@ -32,7 +32,9 @@ link would leave the number in the clear, and the canary checks 17TRACK instead.
   fields that hold the number, a child parcel's list included, without their values, or failing
   that the shapes of the record's own numbers, letters and digits counted. Two orders under one reference stay
   inconclusive. [BYHD's](../byhd/README.md) page hides the number it found an order by, so there
-  a lone record counts for the one number the page's form echoes back.
+  a lone record counts for the one number the page's form echoes back. [JRT's](../jrt/README.md)
+  interface stops returning JRT's own number once the delivering carrier's takes the tracking
+  number, so there a lone record holding none of a JRT number counts for it.
 - GZYL writes a shipment's timeline ahead: every row carries the same creation time, days before
   most of the scan times. A row the track interface says was written more than twelve hours
   before its own clock is a forecast, not a scan, and is held back on every tenant; the margin

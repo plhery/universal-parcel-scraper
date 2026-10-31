@@ -56,7 +56,7 @@ describe('JRT tracking adapter', () => {
       last_status_text: 'loaded to movement / tour vehicle', last_update: '2026-03-14T16:11:00+08:00',
       destination_country: 'SE', service_name: '欧洲合成专线-A', canonical_tracking_number: 'JRT0000000002ZZ',
     });
-    // The record names neither a channel nor DHL's number, so nothing is handed over.
+    // Before the hand-off the record names neither a channel nor DHL's number, so nothing is handed over.
     expect(result).not.toHaveProperty('delivery_carrier');
     expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(result.events?.map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
@@ -79,6 +79,30 @@ describe('JRT tracking adapter', () => {
       ['The electronic cargo information has been received', 'registered', 'carrier_map'],
     ]);
     expect(JSON.stringify(result)).not.toContain('Synthetic Recipient');
+  });
+
+  it('reads an order handed over by JRT’s own number, which the record no longer holds, and hands it to DHL', () => {
+    const readAt = Date.parse('2026-03-15T00:00:00Z');
+    const handed = (trackingNumber: string, extra: Record<string, unknown>[] = []) => {
+      const payload = fixture('track-dhl') as { data: Record<string, unknown>[] }[];
+      Object.assign(payload[0]!.data[0]!, { trackingNumber });
+      payload[0]!.data.push(...extra);
+      return payload;
+    };
+    const dhl = parseJrtTrack(handed('CJ000000005DE'), 'JRT0000000002ZZ', readAt)!;
+    expect(dhl).toMatchObject({ status: 'in_transit', delivery_carrier: 'dhl', delivery_tracking_number: 'CJ000000005DE' });
+    expect(dhl.events).toHaveLength(15);
+    expect(dhl).not.toHaveProperty('canonical_tracking_number');
+    // Asked by the shipper's reference, the delivery carrier's number is no JRT number either.
+    expect(parseJrtTrack(handed('CJ000000005DE'), UP_REFERENCE, readAt)).not.toHaveProperty('canonical_tracking_number');
+    // A number no rule claims for DHL is shown, and handed to no one.
+    const other = parseJrtTrack(handed('000000000012'), 'JRT0000000002ZZ', readAt)!;
+    expect(other).toMatchObject({ delivery_tracking_number: '000000000012' });
+    expect(other).not.toHaveProperty('delivery_carrier');
+    // Another JRT number, a second record or a reference the record does not hold is still another shipment.
+    expect(() => parseJrtTrack(handed('JRT0000000009ZZ'), 'JRT0000000002ZZ', readAt)).toThrow('another shipment');
+    expect(() => parseJrtTrack(handed('CJ000000005DE', [{ trackingNumber: 'CJ000000004DE' }]), 'JRT0000000002ZZ', readAt)).toThrow('another shipment');
+    expect(() => parseJrtTrack(handed('CJ000000005DE'), 'UP0000000000000009', readAt)).toThrow('another shipment');
   });
 
   it('reads UPS’s rows on the line into the United States on UPS’s wall clock, in UPS’s English', () => {

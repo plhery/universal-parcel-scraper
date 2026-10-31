@@ -19,6 +19,10 @@ browser is needed, and no portal link is published.
 
 - JRT's own numbers and shippers' references both find an order. Asked by reference, the result
   carries JRT's number as `canonical_tracking_number`.
+- Once JRT hands a parcel over, the record's tracking number is the delivering carrier's, and
+  JRT's number, which still finds the order, is in none of its fields. A lone record then answers
+  a JRT number, unless it carries another JRT number. The delivering carrier's number is the
+  delivery number, never the canonical one.
 - JRT's interface lists no row for an order without scans, under either number. The page shows
   the platform's own row, `货物电子信息已经收到`, on the order's creation time: the order is
   registered.
@@ -32,8 +36,10 @@ browser is needed, and no portal link is published.
   [statuses.json](statuses.json), and the map stages them by either wording. A row stored in
   Chinese is taken over by its English at the same instant and place ([identity.ts](identity.ts)).
 - Lines into Europe end with DHL. After the hand-off the tracker copies DHL's rows into its own
-  history, in lower case English. The record names neither a channel nor DHL's number, so
-  nothing is handed over. DHL's collection after the hand-off is transit, and its rows of a
+  history, in lower case English, and the record's tracking number is DHL's. It names no
+  channel, so the parcel goes to DHL when DHL's own rule claims the number whole. The line into
+  Ireland ends with FedEx, whose twelve digits no rule claims: they are shown, and nothing is
+  handed over. DHL's collection after the hand-off is transit, and its rows of a
   return, the refusal included, are returned: the delivery that follows is the one back to the
   sender.
 - The line into the United States ends with UPS. The tracker copies UPS's rows in Chinese, and
@@ -47,8 +53,8 @@ browser is needed, and no portal link is published.
 ## Limitations
 
 A reference stored without its dashes is not found. A wording the map does not hold falls back to
-the shared wording rules. Without DHL's number, DHL's own tracker cannot follow the parcel to its
-delivery.
+the shared wording rules. Before the hand-off the record has no DHL number, so DHL's own tracker
+cannot follow the parcel yet.
 
 ## Numbers
 

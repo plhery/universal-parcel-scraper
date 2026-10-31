@@ -4,9 +4,12 @@ import { isJrtUpsRow, jrtEnglish, jrtStage } from './status.js';
 
 export const PROVIDER = 'JRT';
 export const JRT_ORIGIN = 'http://106.53.64.22:8082';
+// Once JRT hands a parcel over, the record's tracking number is the delivering carrier's, as
+// DHL's into Europe, and JRT's own number, which still finds the order, is in no field.
 export const JRT: HualeiTenant = {
   carrier: 'jrt', provider: PROVIDER, origin: JRT_ORIGIN, stage: jrtStage, english: jrtEnglish,
   clock: ({ content, location }) => (isJrtUpsRow(content, location) ? 'wall' : 'platform'),
+  ownNumber: /^JRT\d{10}[A-Z]{2}$/, unlabelledPartners: ['dhl'],
 };
 
 export const normalizeJrtNumber = (raw: string): string => normalizeHualeiNumber(raw, PROVIDER);
