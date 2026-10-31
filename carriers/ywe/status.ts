@@ -6,11 +6,14 @@ interface Entry { readonly wording?: string; readonly stage?: string }
 const ENTRIES: readonly Entry[] = statuses.entries;
 
 // A hub's code ("LAX01"), a failed delivery's reason ("[Restricted Address]") and the place a
-// delivery was left ("(Front door)") vary within one wording.
+// delivery was left ("(Front door)") vary within one wording, and a failed delivery's second
+// sentence follows its full stop with or without a space.
 const HUB = /\b[a-z]{3}\d{2}\b/g;
 const REASON = /\[[^\]]{1,80}\]/g;
 const PLACE = /\([^)]{1,80}\)/g;
-const key = (normalized: string) => normalized.replace(HUB, '<hub>').replace(REASON, '[<reason>]').replace(PLACE, '(<place>)');
+const SENTENCE = /\.\s+(?=\S)/g;
+const key = (normalized: string) => normalized.replace(HUB, '<hub>').replace(REASON, '[<reason>]').replace(PLACE, '(<place>)')
+  .replace(SENTENCE, '.');
 
 /**
  * YWE's scans are English wording from its US hubs and delivery stations.

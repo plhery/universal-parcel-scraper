@@ -81,8 +81,14 @@ describe('YWE HTTP adapter', () => {
   it('maps the recorded wording whatever hub, reason or place it names, and stages new wording through the shared rules', () => {
     expect(yweStage('Container picked up by YWE,JFK02 Awaiting Item.')).toEqual({ stage: 'accepted', source: 'carrier_map' });
     expect(yweStage('Parcel received by in ORD01.')).toEqual({ stage: 'accepted', source: 'carrier_map' });
-    expect(yweStage('Parcel delivery abnormal [Business Closed].Parcel will be returned to the warehouse.'))
-      .toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    // A failed delivery goes back to YWE's warehouse, not to the sender, with or without a space after its full stop.
+    for (const wording of ['Parcel delivery abnormal [Business Closed].Parcel will be returned to the warehouse.',
+      'Parcel delivery abnormal [No Access]. Parcel will be returned to the warehouse.',
+      'Parcel delivery failed [Rejected Package]. Parcel will be returned to the warehouse.',
+      'Parcel delivery failed [Sample Reason].Parcel will be returned to the warehouse.']) {
+      expect(yweStage(wording), wording).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('failed_attempt');
+    }
     expect(yweStage('Parcel has been delivered.(Sample Place)')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     for (const wording of ['Parcel received by transit facility.', 'In processing at transit facility.', 'In transit to next facility.']) {
       expect(yweStage(wording)).toEqual({ stage: 'in_transit', source: 'carrier_map' });
