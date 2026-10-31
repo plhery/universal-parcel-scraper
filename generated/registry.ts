@@ -1700,6 +1700,7 @@ export const REGISTRY: RegistryDefinition = {
     "first-line": "first-line",
     "flash-express": "flash-express",
     "flash-express-ph": "flash-express-ph",
+    "flashbird-ca": "universal",
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
     "flippost": "flippost",

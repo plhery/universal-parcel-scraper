@@ -4349,5 +4349,11 @@
     "pattern": "^\\d{8}$",
     "kind": "collision",
     "reason": "Frontier Courier shipment numbers are eight digits, a shape many freight and courier networks use, so the shape cannot name Frontier."
+  },
+  {
+    "carrier": "flashbird-ca",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "FlashBird parcel numbers are twelve digits, a shape Sending, BRT, Colis Privé and other networks print, FedEx's with the same leading digits, so the shape cannot name FlashBird."
   }
 ]

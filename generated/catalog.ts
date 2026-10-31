@@ -18103,6 +18103,32 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "flashbird-ca": {
+    "displayName": "FlashBird",
+    "color": "#0e6ba8",
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://flashbird.ca/tracking",
+    "trackingUrlTemplate": "https://flashbird.ca/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://flashbird.ca/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "flashbird.ca",
+          "www.flashbird.ca"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fleetex": {
     "displayName": "FleetExpress",
     "color": "#572aee",
@@ -43010,6 +43036,7 @@ export const CARRIER_IDS = [
   "first-line",
   "flash-express",
   "flash-express-ph",
+  "flashbird-ca",
   "fleetex",
   "fleetoptics",
   "flippost",
@@ -44082,6 +44109,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "first-line": ["first-line-1"],
   "flash-express": ["flash-express-1"],
   "flash-express-ph": ["flash-express-ph-1"],
+  "flashbird-ca": [],
   "fleetex": [],
   "fleetoptics": ["fleetoptics-1"],
   "flippost": [],

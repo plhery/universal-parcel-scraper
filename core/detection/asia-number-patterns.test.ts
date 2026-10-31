@@ -590,6 +590,15 @@ describe('QLS, HSD Express, Expedico, PasarEX, Parceljet, LetterTrack, Frontier 
   });
 });
 
+describe('FlashBird', () => {
+  it('names FlashBird and reads its tracker links', () => {
+    expect(carrierIdFromName('FlashBird')).toBe('flashbird-ca');
+    for (const url of ['https://flashbird.ca/tracking/123456789012', 'https://www.flashbird.ca/tracking/123456789012/']) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: '123456789012', carrier: 'flashbird-ca', source: 'link' });
+    }
+  });
+});
+
 describe('Komon Express, BEL, ParcelABC, PAGO Logistics, Safe Way Express Cargo, W Express and Ecohai', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['Komon Express', 'komon-express'], ['可蒙快运', 'komon-express'], ['BEL', 'bel'], ['北俄国际', 'bel'],

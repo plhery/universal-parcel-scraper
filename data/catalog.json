@@ -18101,6 +18101,32 @@
       }
     ]
   },
+  "flashbird-ca": {
+    "displayName": "FlashBird",
+    "color": "#0e6ba8",
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://flashbird.ca/tracking",
+    "trackingUrlTemplate": "https://flashbird.ca/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://flashbird.ca/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "flashbird.ca",
+          "www.flashbird.ca"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fleetex": {
     "displayName": "FleetExpress",
     "color": "#572aee",

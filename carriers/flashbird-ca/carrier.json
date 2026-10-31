@@ -1,0 +1,40 @@
+{
+  "id": "flashbird-ca",
+  "displayName": "FlashBird",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#0e6ba8"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://flashbird.ca/tracking/{trackingNumber}",
+    "searchUrl": "https://flashbird.ca/tracking",
+    "canaryUrl": "https://flashbird.ca/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "flashbird.ca",
+        "www.flashbird.ca"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}
