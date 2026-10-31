@@ -63,9 +63,17 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     for (const number of ['FMPP0000000001', 'MYSR0000000001', 'BSIC0000000001', 'SRTP0000000001', 'fmpp 0000000001']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'ekart', confidence: 'high' });
     }
-    expect(detectCarrierMatch('HRBC0123456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ekart'] });
+    expect(detectCarrierMatch('QXRC0123456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ekart'] });
     for (const number of ['PBXC0000000001', 'FMPX0000000001', 'FMPP000000001', 'FMPP00000000001', 'FM1P0000000001']) {
       expect(detectCarrierMatch(number).candidates ?? []).not.toContain('ekart');
+    }
+  });
+
+  it('suggests Cainiao first for HRBC and ten digits, which its tracker answered', () => {
+    expect(detectCarrierMatch('HRBC0123456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['aliexpress', 'ekart'] });
+    expect(recognitionCandidates('HRBC0123456789')[0]!.carrier).toBe('aliexpress');
+    for (const number of ['HRBC012345678', 'HRBC01234567890', 'HRBX0123456789']) {
+      expect(detectCarrierMatch(number).candidates ?? []).not.toContain('aliexpress');
     }
   });
 

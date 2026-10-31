@@ -8,7 +8,9 @@ cross-border forwarder whose site is yfhex.com. Universal providers name it YFH.
 ## Numbers
 
 No public page shows a whole YFHEX number, so there is no detection rule. Parcels reach it
-through a universal provider's carrier name.
+through a universal provider's carrier name. Providers name YFH for `HRBC` and ten digits too,
+but YFH's tracker did not know such a parcel and Cainiao's answered it, so detection suggests
+AliExpress for them.
 
 ## Tracker
 

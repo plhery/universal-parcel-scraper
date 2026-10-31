@@ -168,12 +168,6 @@
     "reason": "Eight digits are printed by many carriers and nothing in the number points to Alem TAT."
   },
   {
-    "carrier": "aliexpress",
-    "pattern": "^[A-Z]{3}[CPR]\\d{10}$",
-    "kind": "open",
-    "reason": "Cainiao tracks a Chinese forwarder's parcel numbered like an Ekart tracking ID under letters Ekart is not known to use. One parcel is too few to name Cainiao for the shape, so it only suggests Ekart."
-  },
-  {
     "carrier": "allegro-one",
     "pattern": "^ALE\\d{12}$",
     "kind": "by_design",

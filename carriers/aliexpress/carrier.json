@@ -135,6 +135,11 @@
       "confidence": "low"
     },
     {
+      "id": "aliexpress-hrbc",
+      "pattern": "^HRBC\\d{10}$",
+      "confidence": "low"
+    },
+    {
       "id": "aliexpress-ecsc-aaro",
       "pattern": "^ECSC00AARO\\d{8}$",
       "confidence": "low"

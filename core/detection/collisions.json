@@ -6679,5 +6679,13 @@
       "tnt-it"
     ],
     "reason": "Safe Way Express Cargo's Bahrain numbers have the shape of TNT Italy's national waybills, two letters and eight digits; both stay low-confidence suggestions."
+  },
+  {
+    "shape": "HRBC and ten digits",
+    "carriers": [
+      "aliexpress",
+      "ekart"
+    ],
+    "reason": "A forwarder's HRBC numbers, which Cainiao's tracker follows, have the shape of Ekart's tracking IDs under letters Ekart is not known to use; both stay low-confidence suggestions, Cainiao first."
   }
 ]
