@@ -1085,11 +1085,10 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress",
-          "ekart"
+          "aliexpress"
         ]
       },
-      "note": "Made-up number in the shape of two parcels from China, ten days apart, that a universal provider followed under Cainiao and YFH. Cainiao's tracker answered the first; Ekart's and YFH's did not know it. HRBC is no merchant code Ekart is known to use."
+      "note": "Made-up number in the shape of two parcels from China, ten days apart, that a universal provider followed under Cainiao and YFH. Cainiao's tracker answered the first; Ekart's and YFH's did not know it, and Ekart's did not know the second, delivered in Canada. HRBC is no merchant code Ekart is known to use."
     },
     {
       "number": "RTZ5P00D00000001",

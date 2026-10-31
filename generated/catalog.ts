@@ -15843,7 +15843,7 @@ export const CARRIER_CATALOG = {
         "confidence": "high"
       },
       {
-        "pattern": "^(?!PB)[A-Z]{3}[CPR]\\d{10}$",
+        "pattern": "^(?!PB|HRBC)[A-Z]{3}[CPR]\\d{10}$",
         "confidence": "low"
       }
     ]

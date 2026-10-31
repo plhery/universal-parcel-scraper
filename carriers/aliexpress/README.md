@@ -21,8 +21,8 @@ number. Detection suggests AliExpress for the partner shapes with such a lookup 
 example SDA's thirteen-character waybills in Italy or GOFO's `GFUS` waybills in the United
 States, and recognition asks Cainiao beside the partner. It also suggests AliExpress for `HRBC`
 and ten digits, numbers universal providers file under YFH and Cainiao: Cainiao's tracker answered
-one and YFH's did not. The rules are in [`carrier.json`](carrier.json) and their evidence in
-[`numbers.json`](numbers.json).
+one, YFH's did not know it and Ekart's knew neither. The rules are in [`carrier.json`](carrier.json)
+and their evidence in [`numbers.json`](numbers.json).
 
 Once the parcel has crossed the border both know the number. It is one journey, so recognition
 files it under AliExpress, which holds the scans from before the border, instead of leaving the

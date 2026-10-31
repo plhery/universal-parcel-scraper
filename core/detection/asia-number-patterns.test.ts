@@ -69,8 +69,8 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
-  it('suggests Cainiao first for HRBC and ten digits, which its tracker answered', () => {
-    expect(detectCarrierMatch('HRBC0123456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['aliexpress', 'ekart'] });
+  it('suggests Cainiao alone for HRBC and ten digits, which its tracker answered and Ekart\'s did not know', () => {
+    expect(detectCarrierMatch('HRBC0123456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['aliexpress'] });
     expect(recognitionCandidates('HRBC0123456789')[0]!.carrier).toBe('aliexpress');
     for (const number of ['HRBC012345678', 'HRBC01234567890', 'HRBX0123456789']) {
       expect(detectCarrierMatch(number).candidates ?? []).not.toContain('aliexpress');
