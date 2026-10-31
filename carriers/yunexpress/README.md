@@ -85,7 +85,8 @@ dates its own scans abroad on Beijing time, and the feed states +08:00 for its
 arrival at the destination (到达寄达地). The destination post's own scans, from
 its processing centre's arrival through import customs to the delivery, carry
 that post's wall clock, as in China Post's adapter: they take the destination's
-clock where it keeps one, else the scans around them date them. A line with kana
+clock where it keeps one, else the scans around them date them. The latest-scan
+record states China's offset for them too, so it is not read for them. A line with kana
 or hangul is a partner's. Other clocks are dated on the feed's places first. [`identity.ts`](identity.ts)
 lets such a row take over the one stored with the office in its wording, in
 Chinese or at the airline.

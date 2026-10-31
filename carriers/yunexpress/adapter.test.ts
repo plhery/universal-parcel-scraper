@@ -336,6 +336,20 @@ describe('YunExpress captured response projection', () => {
     expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+08:00', time_zone_basis: 'carrier' });
   });
 
+  it("dates the destination post's latest scan on its clock, though the record states China's", () => {
+    const payload = fixture();
+    const item = payload.ResultList[0];
+    const rows = item.TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    rows[0].ProcessContent = '【日本】已妥投----日本';
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: '【日本】已妥投', ProcessLocation: '日本', GmtProcessTimezone: 'GMT+08:00' });
+    item.TrackInfo.DestinationCountryCode = 'JP';
+    expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ time: '2026-03-20T13:39:00+09:00', time_zone: 'Asia/Tokyo', time_zone_basis: 'destination' });
+    // China Post's own latest scan keeps the stated offset.
+    rows[0].ProcessContent = '到达寄达地----日本';
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessContent: '到达寄达地' });
+    expect(parse(payload, NUMBER).events?.[0]!.time).toBe('2026-03-20T13:39:00+08:00');
+  });
+
   it('dates a parcel sent within its destination country as one leg', () => {
     const payload = placing(Object.fromEntries(Array.from({ length: 14 }, (_, at) => [at, ''])));
     const item = payload.ResultList[0];

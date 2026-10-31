@@ -46,6 +46,8 @@ function eventClock(raw: string, offset?: string): Pick<CarrierEvent, 'time'> & 
 const wording = (event: CarrierEvent) => (event.description ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
 const IN_CHINA = /(?:^|[\s,])(?:CN|China)$/i;
 const ORIGIN_ZONE = 'Asia/Shanghai';
+/** The offset the latest-scan record states for China Post's scans. */
+const CHINA_OFFSET = '+08:00';
 const ARRIVAL = 'international flight has arrived';
 // A hand-over to the last-mile carrier, which relays what follows.
 const HANDOVER = /^shipment (?:is )?in transit to (?:carrier|dhl)$/;
@@ -85,6 +87,11 @@ function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
   });
 }
 
+/** A scan China Post relays in Chinese; a line with kana or hangul is a partner's. */
+function chinaPostRelay(description: string): boolean {
+  return /\p{Script=Han}/u.test(description) && !/[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(description);
+}
+
 /**
  * Dates China Post's scans, which the feed relays in Chinese, on China's clock
  * wherever they happen: China Post dates its own scans abroad on Beijing time,
@@ -96,8 +103,7 @@ function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
 function dateChinaPostScans(events: CarrierEvent[], destination: string): CarrierEvent[] {
   const zone = /^[A-Z]{2}$/.test(destination) && !hasSeveralClocks(destination) ? mainZone(destination) : null;
   return events.map((event) => {
-    if (event.time || !event.local_time || !/\p{Script=Han}/u.test(event.description ?? '')
-      || /[\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/u.test(event.description ?? '')) return event;
+    if (event.time || !event.local_time || !chinaPostRelay(event.description ?? '')) return event;
     if (!chinaPostDestinationScan(event.description ?? '')) {
       return { ...event, time: eventClock(event.local_time, '+08:00').time, time_zone: ORIGIN_ZONE, time_zone_basis: 'carrier' };
     }
@@ -239,7 +245,10 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       if (!description) throw new SchemaError('YunExpress', 'YunExpress returned an empty scan');
       const exactLast = isLast({ fullDescription, fullLocation });
       const utc = laPosteRelay && LA_POSTE_UTC.has(description.replace(/\s+/g, ' ').trim().toLowerCase());
-      const clock = eventClock(rawTime, utc ? '+00:00' : exactLast ? lastOffset : undefined);
+      // The record states China's offset for China Post's latest scan, also when it is the
+      // destination post's, which keeps that post's clock (dateChinaPostScans).
+      const abroad = lastOffset === CHINA_OFFSET && chinaPostRelay(description) && chinaPostDestinationScan(description);
+      const clock = eventClock(rawTime, utc ? '+00:00' : exactLast && !abroad ? lastOffset : undefined);
       if (events.length === 0 && !exactLast) throw new IndeterminateError('YunExpress', 'YunExpress latest summary does not match its first scan');
       const key = JSON.stringify([clock, description, location]);
       if (seen.has(key)) continue;
