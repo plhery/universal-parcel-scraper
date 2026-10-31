@@ -120,6 +120,15 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['BRT Bartolini (Parcel ID)', 'DPD France'], '012000000000001').discovered_carrier).toBeUndefined();
   });
 
+  it('names the network of a brand the number points to when the one named has no rule for it', () => {
+    // A DPD UK depot's number with its check character, which DPD France's numbers never carry.
+    expect(universalCarrierHints(['DPD France'], '15501000324679R')).toEqual({ reported_carriers: ['DPD France'], discovered_carrier: 'dpd-uk' });
+    // Without the check character DPD France's rule fits the number too, so its name stands.
+    expect(universalCarrierHints(['DPD France'], '15501000324679').discovered_carrier).toBe('dpd-fr');
+    // A network whose rule fits keeps its name.
+    expect(universalCarrierHints(['DPD Germany'], '15501000324679R').discovered_carrier).toBe('dpd-de');
+  });
+
   it('names the carrier beside Cainiao for a number no rule of either fits', () => {
     // Cainiao follows a parcel under its delivery carrier's number, here one only postal
     // detection takes.

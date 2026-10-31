@@ -10,7 +10,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { followsPartnerNumbers, partnerNumberOwner, tracksPartnerNumbers } from '../../core/catalog/partners.js';
-import { brandCarrierIds, brandTimeZones, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
+import { brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
 import { checksumFailures } from '../../core/detection/detect.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { sharedClockZone } from '../../core/time/index.js';
@@ -97,13 +97,19 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
   for (const name of names) {
     const own = carrierIdFromName(name);
     const named = own ?? (trackingNumber ? brandCarrierForNumber(name, trackingNumber, leg) : undefined);
-    const carrier = named && trackingNumber ? partnerNumberOwner(named, trackingNumber) ?? named : named;
+    const partner = named && trackingNumber ? partnerNumberOwner(named, trackingNumber) : undefined;
+    // A brand's network none of whose rules fits the number names the network of the
+    // brand the number points to: ParcelsApp files DPD UK's depot numbers under DPD France.
+    const brand = own ? carrierBrand(own) : undefined;
+    const sibling = !partner && brand && trackingNumber && !fitting.includes(own!)
+      ? brandCarrierForNumber(brand, trackingNumber, leg) : undefined;
+    const carrier = partner ?? sibling ?? named;
     const networks = carrier || !trackingNumber ? [] : brandCarrierIds(name);
     if (networks.length && !networks.some((id) => fitting.includes(id))) group = true;
     else if (!carrier) unmapped = true;
     else if (!refused.has(carrier)) {
       detected.add(carrier);
-      if (own) inFull.add(carrier);
+      if (own && !sibling) inFull.add(carrier);
     }
   }
   // A name outside the catalog may be the number's owner, so it leaves no hint.

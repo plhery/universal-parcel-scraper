@@ -120,6 +120,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   that carrier's hint; a name outside the catalog still leaves none. When a carrier named in
   full and a network the bare brand leaves to the number both fit, and no preferred rule
   backs either, the carrier named in full is the hint.
+- A brand's network none of whose rules fits the number names the brand's network the
+  number points to, as a bare brand would: ParcelsApp names DPD France for DPD UK's depot
+  numbers with their check character, which DPD France's adapter refuses.
 - The names `Ship24`, `ParcelsApp`, `17TRACK`, `Postal Ninja` and `UPU` are public, and
   consumers store them. Don't rename them.
 
