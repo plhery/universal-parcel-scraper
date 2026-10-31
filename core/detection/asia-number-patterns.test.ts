@@ -556,6 +556,40 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('QLS, HSD Express, Expedico, PasarEX, Parceljet, LetterTrack, Frontier Courier, E24, Hecny E-com and Jaskipin', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['QLS Quince', 'qls-quince'], ['Quince Logistics Services', 'qls-quince'], ['HongSuDa', 'hongsuda'],
+      ['鸿速达', 'hongsuda'], ['SW Express', 'shouwu'], ['Expedico', 'expedico'], ['Vinteco', 'expedico'], ['PasarEx', 'pasarex'],
+      ['Pasar Express', 'pasarex'], ['Parceljet', 'parceljet'], ['派速捷', 'parceljet'], ['Letter Track', 'letter-track'],
+      ['Frontier', 'frontier-ca'], ['Frontier Supply Chain Solutions', 'frontier-ca'], ['E24', 'e24metro-ca'],
+      ['Metro Supply Chain', 'e24metro-ca'], ['Hecny E-com', 'hecny-ecom'], ['Хекни Групп СНГ', 'hecny-ecom'],
+      ['Jaskipin', 'jaskipin'], ['Parcll', 'gofo'], ['PARCLL', 'gofo'], ['CIRRO Parcel Netherlands', 'gofo-nl'], ['YY Postal', 'yypost']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    expect(carrierIdFromName('CIRRO E-Commerce')).not.toBe('gofo-nl');
+    for (const [url, number, carrier] of [
+      ['https://qls.quince.com/qls/track/QL0123456789', 'QL0123456789', 'qls-quince'],
+      ['https://qls.quince.com/quince/track/QL0123456789/', 'QL0123456789', 'qls-quince'],
+      ['https://expedico.eu/tracking?code=0123456789012', '0123456789012', 'expedico'],
+      ['https://tracking.pasarex.com/?awb=AMZPSR012345678', 'AMZPSR012345678', 'pasarex'],
+      ['https://tracking.carrierlogistics.com/scripts/fscf.pol/boldetail.htm?wbtn=PRO&wpro1=10123456', '10123456', 'frontier-ca'],
+      ['https://ecom.yolka.io/parcels/2000012345678901', '2000012345678901', 'hecny-ecom'],
+      ['https://e-com.hecny.ru/ru/parcels/2000012345678901', '2000012345678901', 'hecny-ecom'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+    expect(parseTrackingInput('https://tracking.carrierlogistics.com/scripts/rxic.pol/boldetail.htm?wbtn=PRO&wpro1=10123456').carrier)
+      .not.toBe('frontier-ca');
+  });
+
+  it('suggests PasarEX for AMZPSR and nine digits', () => {
+    expect(detectCarrierMatch('AMZPSR012345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pasarex'] });
+    for (const number of ['AMZPSR01234567', 'AMZPSR0123456789', 'AMZPSX012345678', 'XAMZPSR012345678']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('pasarex');
+    }
+  });
+});
+
 describe('Komon Express, BEL, ParcelABC, PAGO Logistics, Safe Way Express Cargo, W Express and Ecohai', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['Komon Express', 'komon-express'], ['可蒙快运', 'komon-express'], ['BEL', 'bel'], ['北俄国际', 'bel'],

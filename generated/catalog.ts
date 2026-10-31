@@ -3817,6 +3817,9 @@ export const CARRIER_CATALOG = {
   "gofo": {
     "displayName": "GOFO Express",
     "color": "#fc4c02",
+    "aliases": [
+      "Parcll"
+    ],
     "countries": [
       "US"
     ],
@@ -15299,6 +15302,29 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "e24metro-ca": {
+    "displayName": "E24",
+    "color": "#545859",
+    "aliases": [
+      "Metro E24",
+      "Metro E24 Solutions",
+      "e24 Metro",
+      "Metro Supply Chain",
+      "Metro Supply Chain Group"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.metroscg.com/contact-us/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "eac-cn": {
     "displayName": "EAC",
     "color": "#e56b07",
@@ -16979,6 +17005,56 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "expedico": {
+    "displayName": "Expedico",
+    "color": "#0074e4",
+    "aliases": [
+      "expedico.eu",
+      "Vinteco",
+      "Vinteco s.r.o."
+    ],
+    "countries": [
+      "CZ",
+      "SK",
+      "HU",
+      "BG",
+      "HR",
+      "GR",
+      "PL",
+      "LT",
+      "EE",
+      "LV",
+      "SI",
+      "RO",
+      "IT",
+      "ES",
+      "PT",
+      "DE",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://expedico.eu/tracking",
+    "trackingUrlTemplate": "https://expedico.eu/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://expedico.eu/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "expedico.eu",
+          "www.expedico.eu"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "express-one": {
     "displayName": "Express One",
     "color": "#ec6500",
@@ -18610,6 +18686,51 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "frontier-ca": {
+    "displayName": "Frontier Courier",
+    "color": "#e56119",
+    "aliases": [
+      "Frontier",
+      "Frontier Supply Chain Solutions",
+      "Frontier SCS",
+      "Frontier Same Day",
+      "Frontier Saskatchewan",
+      "FrontShip"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Winnipeg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.frontiercourier.com/",
+    "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/fscf.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.carrierlogistics.com/scripts/fscf.pol/facts.htm",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/fscf\\.pol/boldetail\\.htm$",
+        "params": [
+          "wpro1"
+        ]
+      },
+      {
+        "domains": [
+          "tracking.carrierlogistics.com"
+        ],
+        "pathPattern": "^/scripts/fscf\\.pol/facts\\.htm$",
+        "params": [
+          "pronum"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "fukuyama": {
     "displayName": "Fukuyama Transporting",
     "color": "#e70128",
@@ -19860,7 +19981,7 @@ export const CARRIER_CATALOG = {
     "color": "#fc4c02",
     "aliases": [
       "GOFO NL",
-      "CIRRO E-Commerce"
+      "CIRRO Parcel Netherlands"
     ],
     "countries": [
       "NL"
@@ -20490,6 +20611,44 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hecny-ecom": {
+    "displayName": "Hecny E-com",
+    "color": "#8328fc",
+    "aliases": [
+      "Hecny Group CIS",
+      "Хекни Групп СНГ",
+      "Hecny Logistic",
+      "Yolka Ecom"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ecom.yolka.io/tracknumber",
+    "trackingUrlTemplate": "https://ecom.yolka.io/parcels/{trackingNumber}",
+    "trackingSearchUrl": "https://ecom.yolka.io/tracknumber",
+    "linkRules": [
+      {
+        "domains": [
+          "ecom.yolka.io"
+        ],
+        "path": "^/parcels/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "e-com.hecny.ru",
+          "ecom.hecny.ru"
+        ],
+        "path": "^/(?:(?:ru|en|tr|cn)/)?parcels/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "helthjem": {
     "displayName": "Helthjem",
     "color": "#ffb202",
@@ -20838,6 +20997,31 @@ export const CARRIER_CATALOG = {
     },
     "canaryUrl": "https://www.homexpress.com.au/",
     "trackingSearchUrl": "https://www.homexpress.com.au/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "hongsuda": {
+    "displayName": "HSD Express",
+    "color": "#fdaa05",
+    "aliases": [
+      "HongSuDa",
+      "HongSuDa Logistics",
+      "鸿速达",
+      "鸿速达国际物流",
+      "深圳市鸿速达国际物流有限公司",
+      "Shenzhen HongSuDa International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hsd-express.cn/",
+    "trackingSearchUrl": "https://www.hsd-express.cn/en",
     "linkRules": [],
     "detectionRules": []
   },
@@ -22789,6 +22973,27 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "jaskipin": {
+    "displayName": "Jaskipin Express",
+    "color": "#0843ad",
+    "aliases": [
+      "Jaskipin",
+      "PT Jaskipin Express Indonesia"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jaskipin.co.id/",
+    "trackingSearchUrl": "https://jaskipin.co.id/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jcex": {
     "displayName": "JCEX",
     "color": "#0080cc",
@@ -24722,6 +24927,26 @@ export const CARRIER_CATALOG = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "letter-track": {
+    "displayName": "LetterTrack",
+    "color": "#6c9dce",
+    "aliases": [
+      "LetterTrack Pro"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.letter-track.com/",
+    "trackingSearchUrl": "https://www.lettertrackpro.com/uspstracking/",
+    "linkRules": [],
     "detectionRules": []
   },
   "lex-my": {
@@ -29227,6 +29452,31 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "parceljet": {
+    "displayName": "Parceljet",
+    "color": "#16489d",
+    "aliases": [
+      "派速捷",
+      "派速捷供应链",
+      "PJ Supply Chain",
+      "PJサプライチェーン",
+      "广州派速捷信息科技有限公司",
+      "Guangzhou Paisujie Information Technology"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.parceljet.com/",
+    "trackingSearchUrl": "https://www.parceljet.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "parcelpoint": {
     "displayName": "ParcelPoint",
     "color": "#000000",
@@ -29360,6 +29610,47 @@ export const CARRIER_CATALOG = {
       }
     ],
     "detectionRules": []
+  },
+  "pasarex": {
+    "displayName": "PasarEX",
+    "color": "#124381",
+    "aliases": [
+      "Pasar Express",
+      "PASAR EXPRESS SAS",
+      "Pasar Express S.A."
+    ],
+    "countries": [
+      "CO",
+      "CL",
+      "PA",
+      "BB"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://pasarex.com/co/",
+    "trackingUrlTemplate": "https://tracking.pasarex.com/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.pasarex.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.pasarex.com"
+        ],
+        "pathPattern": "^/(?:tracking)?/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^AMZPSR\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "passport": {
     "displayName": "Passport",
@@ -31909,6 +32200,36 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "qls-quince": {
+    "displayName": "QLS",
+    "color": "#0a1e3d",
+    "aliases": [
+      "QLS Quince",
+      "Quince Logistics Services",
+      "Quince Logistics"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://qls.quince.com/qls/track",
+    "trackingUrlTemplate": "https://qls.quince.com/qls/track/{trackingNumber}",
+    "trackingSearchUrl": "https://qls.quince.com/qls/track",
+    "linkRules": [
+      {
+        "domains": [
+          "qls.quince.com"
+        ],
+        "path": "^/[a-z0-9-]+/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "quality-post": {
     "displayName": "Quality Post",
     "color": "#a4e000",
@@ -34347,7 +34668,9 @@ export const CARRIER_CATALOG = {
       "守务国际",
       "上海守务国际",
       "Shanghai Shouwu International",
-      "Shouwu Express"
+      "Shouwu Express",
+      "SW Express",
+      "守务国际物流"
     ],
     "countries": [
       "CN"
@@ -41911,7 +42234,8 @@ export const CARRIER_CATALOG = {
       "远邮",
       "远邮国际",
       "深圳市远邮国际物流有限公司",
-      "Shenzhen Yuanyou International Logistics"
+      "Shenzhen Yuanyou International Logistics",
+      "YY Postal"
     ],
     "countries": [
       "CN"
@@ -42608,6 +42932,7 @@ export const CARRIER_IDS = [
   "dynalogic",
   "e-cargo",
   "e-commerce-international",
+  "e24metro-ca",
   "eac-cn",
   "early-bird",
   "easy-mail",
@@ -42650,6 +42975,7 @@ export const CARRIER_IDS = [
   "exelot",
   "exline-kz",
   "exmate",
+  "expedico",
   "express-one",
   "express-one-bg",
   "famafutar",
@@ -42693,6 +43019,7 @@ export const CARRIER_IDS = [
   "fragilepak",
   "franch-express",
   "freightways-global",
+  "frontier-ca",
   "fukuyama",
   "gaash",
   "gati",
@@ -42741,6 +43068,7 @@ export const CARRIER_IDS = [
   "hart2hart-express",
   "haypost",
   "hct-logistics",
+  "hecny-ecom",
   "helthjem",
   "hepsijet",
   "hercules-freight",
@@ -42752,6 +43080,7 @@ export const CARRIER_IDS = [
   "hkd-express",
   "holisol",
   "homexpress",
+  "hongsuda",
   "horoz",
   "hound-express",
   "houng-ah-loun",
@@ -42803,6 +43132,7 @@ export const CARRIER_IDS = [
   "jamaica-post",
   "janco-express",
   "janio",
+  "jaskipin",
   "jcex",
   "jcw-express",
   "jeebly",
@@ -42856,6 +43186,7 @@ export const CARRIER_IDS = [
   "lbc-express",
   "lbtx",
   "leopards-courier",
+  "letter-track",
   "lex-my",
   "lex-vn",
   "libanpost",
@@ -42972,9 +43303,11 @@ export const CARRIER_IDS = [
   "paquetexpress",
   "parcel-one",
   "parcelabc",
+  "parceljet",
   "parcelpoint",
   "pargo",
   "parxl",
+  "pasarex",
   "passport",
   "pathao-courier",
   "patuen",
@@ -43038,6 +43371,7 @@ export const CARRIER_IDS = [
   "ptt",
   "pullman-cargo",
   "pushpak-courier",
+  "qls-quince",
   "quality-post",
   "quantium-solutions",
   "quick-rabbit",
@@ -43670,6 +44004,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dynalogic": [],
   "e-cargo": [],
   "e-commerce-international": ["e-commerce-international-1"],
+  "e24metro-ca": [],
   "eac-cn": [],
   "early-bird": ["early-bird-1"],
   "easy-mail": [],
@@ -43712,6 +44047,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "exelot": ["exelot-1"],
   "exline-kz": [],
   "exmate": ["exmate-1"],
+  "expedico": [],
   "express-one": [],
   "express-one-bg": [],
   "famafutar": [],
@@ -43755,6 +44091,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fragilepak": ["fragilepak-1"],
   "franch-express": [],
   "freightways-global": [],
+  "frontier-ca": [],
   "fukuyama": [],
   "gaash": [],
   "gati": [],
@@ -43803,6 +44140,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hart2hart-express": [],
   "haypost": ["haypost-s10"],
   "hct-logistics": [],
+  "hecny-ecom": [],
   "helthjem": ["helthjem-1","helthjem-2"],
   "hepsijet": [],
   "hercules-freight": [],
@@ -43814,6 +44152,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hkd-express": [],
   "holisol": [],
   "homexpress": [],
+  "hongsuda": [],
   "horoz": [],
   "hound-express": [],
   "houng-ah-loun": [],
@@ -43865,6 +44204,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jamaica-post": [],
   "janco-express": ["janco-express-1"],
   "janio": ["janio-1"],
+  "jaskipin": [],
   "jcex": ["jcex-1"],
   "jcw-express": [],
   "jeebly": ["jeebly-1"],
@@ -43918,6 +44258,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lbc-express": ["lbc-domestic"],
   "lbtx": [],
   "leopards-courier": [],
+  "letter-track": [],
   "lex-my": ["lex-my-1"],
   "lex-vn": ["lex-vn-1","lex-vn-2"],
   "libanpost": [],
@@ -44034,9 +44375,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paquetexpress": ["paquetexpress-1"],
   "parcel-one": [],
   "parcelabc": [],
+  "parceljet": [],
   "parcelpoint": [],
   "pargo": ["pargo-1"],
   "parxl": [],
+  "pasarex": ["pasarex-1"],
   "passport": ["passport-1"],
   "pathao-courier": ["pathao-courier-1"],
   "patuen": [],
@@ -44100,6 +44443,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ptt": ["ptt-1","ptt-s10"],
   "pullman-cargo": [],
   "pushpak-courier": [],
+  "qls-quince": [],
   "quality-post": [],
   "quantium-solutions": [],
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],

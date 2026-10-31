@@ -4337,5 +4337,17 @@
     "pattern": "^[A-Z]{4}\\d{9}$",
     "kind": "collision",
     "reason": "ParcelABC order codes are two country codes and nine digits once the hyphen is dropped, a shape Sunyou, Z-Leading and other networks use, so the shape cannot name ParcelABC."
+  },
+  {
+    "carrier": "expedico",
+    "pattern": "^\\d{13}$",
+    "kind": "collision",
+    "reason": "Expedico parcel ids are thirteen digits, the shape of La Poste's, FAN Courier's, Yunda's and other networks' numbers, so the shape cannot name Expedico."
+  },
+  {
+    "carrier": "frontier-ca",
+    "pattern": "^\\d{8}$",
+    "kind": "collision",
+    "reason": "Frontier Courier shipment numbers are eight digits, a shape many freight and courier networks use, so the shape cannot name Frontier."
   }
 ]

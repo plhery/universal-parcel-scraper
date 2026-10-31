@@ -342,6 +342,121 @@
         "confidence": "high"
       },
       "note": "A YunExpress number archived from a GOFO tracking link. GOFO's tracking returned the parcel's US history under this same number, with GOFO's own service name."
+    },
+    {
+      "number": "CR000471872667",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260222212423/https://www.cirrotrack.com/parcelTracking?id=CR000471872667",
+        "date": "2026-02-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CIRRO Regional",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
+    },
+    {
+      "number": "CR000478228622",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260228193935/https://www.cirrotrack.com/parcelTracking?id=CR000478228622",
+        "date": "2026-02-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CIRRO Regional",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
+    },
+    {
+      "number": "CR010112295671",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260706223158/https://www.cirrotrack.com/parcelTracking?id=CR010112295671",
+        "date": "2026-07-06",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CIRRO Regional",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
+    },
+    {
+      "number": "CR010154282837",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260617011848/https://www.cirrotrack.com/parcelTracking?id=CR010154282837",
+        "date": "2026-06-17",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CIRRO Regional",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
+    },
+    {
+      "number": "CR010781027246",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260310031435/https://www.cirrotrack.com/parcelTracking?id=CR010781027246",
+        "date": "2026-03-10",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "CIRRO Regional",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
     }
   ]
 }

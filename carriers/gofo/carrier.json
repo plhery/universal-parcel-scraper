@@ -1,7 +1,9 @@
 {
   "id": "gofo",
   "displayName": "GOFO Express",
-  "aliases": [],
+  "aliases": [
+    "Parcll"
+  ],
   "region": {
     "countries": [
       "US"

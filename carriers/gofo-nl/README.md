@@ -1,6 +1,6 @@
 # GOFO Netherlands
 
-Tracks the Dutch GOFO network, formerly CIRRO E-Commerce, through the official
+Tracks the Dutch GOFO network, formerly CIRRO Parcel, through the official
 anonymous JSON service. Other GOFO national services have separate carrier ids.
 
 ## How it works

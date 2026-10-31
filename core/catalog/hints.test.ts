@@ -13,7 +13,7 @@ describe('brand networks', () => {
     expect(carrierIdFromName('GOFO France')).toBe('gofo-fr');
     expect(carrierIdFromName('GOFO Italy')).toBe('gofo-it');
     expect(carrierIdFromName('GOFO Netherlands')).toBe('gofo-nl');
-    expect(carrierIdFromName('CIRRO E-Commerce')).toBe('gofo-nl');
+    expect(carrierIdFromName('CIRRO Parcel Netherlands')).toBe('gofo-nl');
     expect(carrierIdFromName('GOFO Spain')).toBe('gofo-es');
     // Early Bird's former name, and the 3PL brand that tracks through Shree Maruti's tracker.
     expect(carrierIdFromName('Morgontidig Distribution')).toBe('early-bird');
@@ -288,7 +288,8 @@ describe('carrier names reported by universal providers', () => {
   it('knows plain Cirro without naming one of its networks', () => {
     expect(carrierIdFromName('Cirro')).toBeUndefined();
     expect(carrierIdFromName('CIRRO Parcel France')).toBe('gofo-fr');
-    expect(carrierIdFromName('CIRRO E-Commerce')).toBe('gofo-nl');
+    // CIRRO E-Commerce names both the US company GOFO bought and Cirro's cross-border line.
+    expect(carrierIdFromName('CIRRO E-Commerce')).toBeUndefined();
   });
 
   it('reads a name typed without its accents as the accented catalog name', () => {
