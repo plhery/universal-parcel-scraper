@@ -563,7 +563,7 @@ describe('QLS, HSD Express, Expedico, PasarEX, Parceljet, LetterTrack, Frontier 
       ['Pasar Express', 'pasarex'], ['Parceljet', 'parceljet'], ['派速捷', 'parceljet'], ['Letter Track', 'letter-track'],
       ['Frontier', 'frontier-ca'], ['Frontier Supply Chain Solutions', 'frontier-ca'], ['E24', 'e24metro-ca'],
       ['Metro Supply Chain', 'e24metro-ca'], ['Hecny E-com', 'hecny-ecom'], ['Хекни Групп СНГ', 'hecny-ecom'],
-      ['Jaskipin', 'jaskipin'], ['Parcll', 'gofo'], ['PARCLL', 'gofo'], ['CIRRO Parcel Netherlands', 'gofo-nl'], ['YY Postal', 'yypost']] as const) {
+      ['Jaskipin', 'jaskipin'], ['Parcll', 'gofo'], ['PARCLL', 'gofo'], ['CIRRO Parcel Netherlands', 'gofo-nl'], ['YY Postal', 'yypost'], ['ECO Freight', 'eco-express-ae']] as const) {
       expect(carrierIdFromName(name), name).toBe(id);
     }
     expect(carrierIdFromName('CIRRO E-Commerce')).not.toBe('gofo-nl');

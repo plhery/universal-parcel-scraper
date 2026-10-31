@@ -15520,7 +15520,8 @@ export const CARRIER_CATALOG = {
     "displayName": "Eco Express",
     "color": "#1d447d",
     "aliases": [
-      "ECO EXPRESS"
+      "ECO EXPRESS",
+      "ECO Freight"
     ],
     "countries": [
       "AE"
