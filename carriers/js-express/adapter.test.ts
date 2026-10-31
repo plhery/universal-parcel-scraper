@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
@@ -216,6 +217,19 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressScan(notice.replace(':/', ':/555 0000 0000'), 'US').description)
       .toBe('The delivery address is incorrect. Please ask the recipient to contact their local area?');
     expect(jsExpressScan('Delivery failed. Phone: +1 555 000 0000', 'Sample Town').description).toBe('Delivery failed.');
+    // A label without a letter names no place, and the row reads as it would without one.
+    expect(jsExpressScan(notice, '1')).toEqual({ description: 'The delivery address is incorrect. Please ask the recipient to contact their local area?', location: '' });
+    const history = (label: string) => parseJsExpress(withList([
+      row('2026-05-03 10:20:00', label, notice),
+      row('2026-05-02 09:00:00', 'Sample Town, NY', 'Departed USPS Facility'),
+    ]), DELIVERED).events?.[0];
+    expect(history('1')).toEqual(history(''));
+    expect(history('1')).not.toHaveProperty('location');
+    // The row stored with it is taken over by the row without it, and only such a row.
+    const policy = sameInstantIdentityPolicy('js-express', { supportsScanMatching: true });
+    const scan = { stage: 'failed_attempt', description: history('')!.description!, location: '', providerCode: '' };
+    expect(policy?.matches?.(scan, { ...scan, location: '1' })).toBe(true);
+    expect(policy?.matches?.(scan, { ...scan, location: 'Sample Town, NY' })).toBe(false);
     // Only a delivery's wording loses a "by" clause.
     expect(jsExpressScan('Picked up by the airline', 'HKG').description).toBe('Picked up by the airline');
   });

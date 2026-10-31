@@ -55,6 +55,7 @@ delivers them. Tracked through the lookup its English tracking page makes.
 - JS Express's own rows and its partners' share the history in their partners' words. A
   destination courier's wording repeats the place with its province, as "Delivered (Sample Town,
   ON)": the adapter moves it into the location, so the wording stays the same from town to town.
+  A place without a letter, such as "1", names no place and is left out.
   JS Express's own status in Chinese shows the English its entry in
   [statuses.json](statuses.json) gives, and takes over the row stored in Chinese.
 - Partners' records of the parcel's data move nothing and have no stage. Straightship's "Package

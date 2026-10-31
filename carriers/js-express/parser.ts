@@ -54,9 +54,9 @@ export function normalizeJsExpressNumber(raw: string): string {
 /**
  * A row's wording and place. The place is the page's 【…】 label, which a
  * destination courier's wording repeats with its province, "(Sample Town,
- * ON)": the wording then loses it and the place takes it. A delivery loses a
- * clause naming who took it, and every row loses phone numbers and the label
- * left before them.
+ * ON)": the wording then loses it and the place takes it. A label without a
+ * letter, such as "1", names no place. A delivery loses a clause naming who
+ * took it, and every row loses phone numbers and the label left before them.
  */
 export function jsExpressScan(status: string, address: string): { description: string; location: string } {
   let description = clean(status, 300);
@@ -67,8 +67,9 @@ export function jsExpressScan(status: string, address: string): { description: s
     location = clean(place[1], 120);
   }
   if (/^delivered\b/i.test(description)) description = description.replace(RECEIVER, '');
+  const site = clean(location.replace(PHONE, ''));
   return { description: clean(description.replace(PHONE, '')).replace(PHONE_LABEL, '').replace(/[\s,，;；:：-]+$/, ''),
-    location: clean(location.replace(PHONE, '')) };
+    location: /\p{L}/u.test(site) ? site : '' };
 }
 
 /** A row's clock: the scanning site's wall clock to the second, with no zone. */
