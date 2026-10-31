@@ -198,6 +198,10 @@ describe('Hualei track interface', () => {
       expect(hualeiScanText(place), place).toBe('EXAMPLETOWN');
     }
     expect(hualeiScanText('Z9Z9Z9')).toBe('');
+    // With its country's letters before it, or in brackets after the town.
+    for (const place of ['ZZ-9999 EXAMPLETOWN', 'Z-99999 EXAMPLETOWN', 'ZZ-9999 ZZ EXAMPLETOWN', 'ZZ-99-999 EXAMPLETOWN', 'EXAMPLETOWN(9999)', 'EXAMPLETOWN （99999）']) {
+      expect(hualeiScanText(place), place).toBe('EXAMPLETOWN');
+    }
   });
 
   it('lets a delivery row stored with a postcode in its place take the place without it, or none', () => {

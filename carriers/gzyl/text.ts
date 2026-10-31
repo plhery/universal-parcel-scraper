@@ -7,6 +7,10 @@ const POSTCODE_RUN = /(^|[^\p{L}\p{N}])(?<!\d{1,2}[-/.]\d{1,2}[-/.]|\b(?:jan(?:u
 // Slovakia, Sweden), two and three or four and three with a dash (Poland, Portugal), letters and digits
 // (Canada, the United Kingdom) and four digits and two letters (the Netherlands).
 const POSTCODE_FORM = /(^|[^\p{L}\p{N}])(?:\d{3} \d{2}|\d{2}-\d{3}|\d{4}-\d{3}|[A-Z]\d[A-Z] ?\d[A-Z]\d|[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}|\d{4} ?[A-Z]{2})(?![\p{L}\p{N}])/gu;
+// A country's letters before a postcode, as in "CH-8001" or "NL-1012 AB", go with it.
+const POSTCODE_COUNTRY = /(^|[^\p{L}\p{N}])[A-Z]{1,2}-(?=(?:\d{2}-\d{3}|\d{4} ?[A-Z]{2}|\d{4,6})(?![\p{L}\p{N}]))/gu;
+// Brackets a postcode leaves empty.
+const EMPTY_BRACKETS = /\(\s*\)|（\s*）/g;
 // A signatory's name follows these markers.
 const SIGNATORY = /(?:签收人|signed (?:for )?by|signatory)[\s\S]*$/i;
 
@@ -15,6 +19,7 @@ const LOST_SPACE = /(?<=\p{L})\?(?=\p{L})/gu;
 
 /** Scan text without a signatory or a postcode. */
 export function hualeiScanText(value: string, maxLength = 500): string {
-  return clean(value.replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_FORM, '$1').replace(POSTCODE_RUN, '$1'), maxLength)
+  return clean(value.replace(LOST_SPACE, ' ').replace(SIGNATORY, '').replace(POSTCODE_COUNTRY, '$1').replace(POSTCODE_FORM, '$1')
+    .replace(POSTCODE_RUN, '$1').replace(EMPTY_BRACKETS, ''), maxLength)
     .replace(/^[\s,，:：;；/]+|[\s,，:：;；/]+$/g, '');
 }
