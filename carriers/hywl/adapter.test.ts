@@ -4,7 +4,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, HYWL_API, HywlTracker } from './adapter.js';
-import { hywlPlace, hywlWording, normalizeHywlNumber, parseHywl } from './parser.js';
+import { hywlEnglishHalf, hywlPlace, hywlWording, normalizeHywlNumber, parseHywl } from './parser.js';
 import { hywlStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -68,10 +68,10 @@ describe('Huiyi Logistics HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/\d{4,}(?![-:T\d])|UTC|\+00:00/);
   });
 
-  it('reads the bilingual rows without the destination’s postcode and drops a repeated row', () => {
+  it('reads the bilingual rows in English without the destination’s postcode and drops a repeated row', () => {
     const result = parseHywl(fixture('delivered'), DELIVERED, LATER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Delivered【Villefixe】, 已妥投【Villefixe】', last_update_local: '2026-01-29T14:17:09', destination_country: 'FR' });
+      last_status_text: 'Delivered [Villefixe]', last_update_local: '2026-01-29T14:17:09', destination_country: 'FR' });
     expect(result.events).toHaveLength(14);
     expect(result.events!.map((event) => [event.stage, event.location])).toEqual([
       ['delivered', 'Villefixe'], ['out_for_delivery', 'Villefixe'], ['in_transit', 'Villefixe'], ['in_transit', 'Villefixe'],
@@ -79,7 +79,11 @@ describe('Huiyi Logistics HTTP adapter', () => {
       ['in_transit', '东莞'], ['in_transit', '东莞'], ['in_transit', '东莞'], ['accepted', '东莞市'],
     ]);
     expect(result.events!.at(-1)!.description).toBe('东莞市, SZHYWL已收取邮件');
-    expect(result.events![3]!.description).toBe('Arrival at Processing Center【Villefixe】, 邮件到达处理中心【Villefixe】');
+    expect(result.events!.slice(3, 10).map((event) => event.description)).toEqual([
+      'Arrival at Processing Center [Villefixe]', 'In Transit [FR]', 'Arrival at [FR]', 'Customs Clearance Completed [惠州]',
+      'In Transit [惠州]', 'Departure from [惠州]', 'Received by Carrier [惠州]',
+    ]);
+    expect(result.events![10]!.description).toBe('东莞, 邮件离开处理中心【东莞】');
     expect(JSON.stringify(result)).not.toMatch(/00000|UTC/);
   });
 
@@ -90,6 +94,17 @@ describe('Huiyi Logistics HTTP adapter', () => {
     expect(hywlWording('Delivered [Villefixe], signed by Sample Person', 'Villefixe', 'Villefixe')).toBe('Delivered [Villefixe]');
     expect(hywlWording('已妥投【样本市】，签收人：样本', '样本市', '样本市')).toBe('已妥投【样本市】');
     expect(hywlWording('Arrived at the hub serving 00000', '', '')).toBe('Arrived at the hub serving');
+  });
+
+  it('keeps the English half of a bilingual row only when the Chinese half adds no place or Latin text', () => {
+    expect(hywlEnglishHalf('Delivered【Sampletown, NC】, 已妥投【Sampletown, NC】')).toBe('Delivered [Sampletown, NC]');
+    expect(hywlEnglishHalf('In Transit【样本市】, 快件在该国内转运中, 干线中转')).toBe('In Transit [样本市]');
+    expect(hywlEnglishHalf('Arrival, 抵达')).toBe('Arrival');
+    for (const wording of ['Delivered【Sampletown】, 已妥投【Exampleton】', 'Delivered【Sampletown】, SZHYWL已妥投【Sampletown】',
+      'Delivered【Sampletown】, Delivered【Sampletown】', '样本市, 邮件到达处理中心【样本市】', 'Shipment accepted [Sampletown], received by SZHYWL',
+      'Delivered [Sampletown]']) {
+      expect(hywlEnglishHalf(wording)).toBe(wording);
+    }
   });
 
   it('holds back rows dated after the read and does not take the summary status', () => {

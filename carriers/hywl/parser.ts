@@ -75,6 +75,22 @@ export function hywlWording(description: string, location: string, place: string
     .replace(/^[,，\s]+|[,，\s]+$/g, '');
 }
 
+/**
+ * The English half of a bilingual row, "Delivered【Town】, 已妥投【Town】": the
+ * Chinese half translates it, and the rows of the English wording carry it
+ * alone, with the place in square brackets ("Delivered [Town]"). A row is kept
+ * whole when its Chinese half names another place or holds Latin text.
+ */
+export function hywlEnglishHalf(wording: string): string {
+  const match = /^([A-Za-z][^【】[\]\p{Script=Han},，]*?)\s*(?:【([^】]*)】)?[,，]\s*(.+)$/u.exec(wording);
+  if (!match) return wording;
+  const [, english, place = '', chinese] = match;
+  const outside = chinese!.replace(/【[^】]*】|\[[^\]]*\]/g, '');
+  if (!/\p{Script=Han}/u.test(outside) || /[A-Za-z]/.test(outside)) return wording;
+  if ([...chinese!.matchAll(/【([^】]*)】|\[([^\]]*)\]/g)].some((named) => (named[1] ?? named[2]) !== place)) return wording;
+  return place ? `${english!.trim()} [${place}]` : english!.trim();
+}
+
 /** A row's wall clock. Its `+00:00` and `UTC` are not kept: see the README. */
 function wallClock(stamp: string): string {
   const match = STAMP.exec(stamp);
@@ -93,7 +109,7 @@ function projectRow(row: unknown, readAt: number): { key: string; clock: string;
   const code = text(row, 'status_code', 64);
   const location = text(row, 'location', 200);
   const place = hywlPlace(location);
-  const description = hywlWording(text(row, 'description'), location, place) || code;
+  const description = hywlEnglishHalf(hywlWording(text(row, 'description'), location, place)) || code;
   if (!stamp || !description) throw new SchemaError(PROVIDER, 'Huiyi Logistics returned a scan without a time or wording');
   const local = wallClock(stamp);
   // A row in China is on Beijing's clock; any other keeps its wall clock.

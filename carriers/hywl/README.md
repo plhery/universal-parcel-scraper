@@ -35,6 +35,9 @@ sellers. Tracked through the lookup its tracking page makes.
   return the same rows. A row dated after the read is held back, a row in China by its Beijing
   instant and any other as the reply labels it, so the status comes from the rows returned,
   never from the summary.
+- A bilingual row keeps its English half, written as the English rows write it
+  ("Delivered [Town]"): the Chinese half translates it and names the same place. A row whose
+  Chinese half names another place or holds Latin text is kept whole.
 - The status code stages each row. `Customs` rows reporting the export clearance completed put
   the parcel back in transit.
 - Destination rows name the recipient's town and postcode, and the first row a town and an
