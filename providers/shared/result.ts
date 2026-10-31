@@ -452,6 +452,8 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^(?:pickup requested|booked|waiting for (?:the )?parcel)[.!]?$/i.test(value)) return 'registered';
   // A forwarder's warehouse scanning the parcel in or out, as aggregators relay SPT Express's rows.
   if (/^item (?:in|out)bound scanning[.!]?$/i.test(value)) return 'in_transit';
+  // FedEx's scan status for a parcel it has taken in, with the details aggregators join to it, as FedEx's own map reads it.
+  if (/^in fedex possession(?:[.!]?$|\s*[-—–:]\s)/i.test(value)) return 'accepted';
   if (/^checked in at origin hub[.!]?$|^parcel received and processing[.!]?$/i.test(value)) return 'accepted';
   if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$/i.test(value)) return 'in_transit';
   // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them.

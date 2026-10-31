@@ -1633,6 +1633,8 @@ describe("universal providers' answers", () => {
       ['Airline delay', 'in_transit'], ['Flight delay', 'in_transit'], ['Parcel shipped', 'in_transit'], ['Customer information manifested', 'registered'],
       ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
       ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'],
+      ['In FedEx possession - Package received after final location pickup has occurred. Scheduled for pickup next business day', 'accepted'],
+      ['In FedEx possession — At FedEx location', 'accepted'],
       ['Shipment under processing at origin hub', 'in_transit'], ['Shipment despatched to transshipment hub', 'in_transit'],
       ['Shipment received at transshipment hub', 'in_transit'], ['Shipment despatched to overseas', 'in_transit'],
       ['Shipment received at delivery branch', 'in_transit'],
