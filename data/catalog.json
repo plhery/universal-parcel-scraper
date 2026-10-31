@@ -9050,6 +9050,38 @@
     ],
     "detectionRules": []
   },
+  "bombax": {
+    "displayName": "Bombax",
+    "color": "#ed1849",
+    "aliases": [
+      "Bombax Logistics",
+      "Bombax Logistics Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bombax.in/",
+    "trackingUrlTemplate": "https://book.bombax.in/booking/Tracking?OrderNo={trackingNumber}",
+    "trackingSearchUrl": "https://book.bombax.in/Booking/Track",
+    "linkRules": [
+      {
+        "domains": [
+          "book.bombax.in"
+        ],
+        "pathPattern": "^/booking/tracking$",
+        "params": [
+          "OrderNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "bombino": {
     "displayName": "Bombino Express",
     "color": "#06567f",
@@ -9834,6 +9866,41 @@
     "canaryUrl": "https://campost.cm/",
     "trackingSearchUrl": "https://campost.cm/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "canada-air-express": {
+    "displayName": "Canada Air Express",
+    "color": "#b1272d",
+    "aliases": [
+      "Canada GTL Express",
+      "加拿大民航快递",
+      "民航快递",
+      "Golden Territory Logistic"
+    ],
+    "countries": [
+      "CA",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.air-gtc.com/",
+    "trackingUrlTemplate": "https://main.air-gtc.cn/WaybillInfo.aspx?KeyWord={trackingNumber}",
+    "trackingSearchUrl": "https://www.air-gtc.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "main.air-gtc.cn"
+        ],
+        "pathPattern": "^/WaybillInfo\\.aspx$",
+        "params": [
+          "KeyWord"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "cargobus": {
@@ -15189,6 +15256,43 @@
     ],
     "detectionRules": []
   },
+  "ecom-logistics": {
+    "displayName": "Ecom Logistics",
+    "color": "#3598dd",
+    "aliases": [
+      "Ecom Logistics Inc.",
+      "EcomLogistics",
+      "ShipEcom"
+    ],
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://shipecom.com/track",
+    "trackingUrlTemplate": "https://shipecom.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://shipecom.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "shipecom.com",
+          "www.shipecom.com"
+        ],
+        "path": "^/(?:(?:fr|es)/)?track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^E\\d{2}[A-Z]\\d{7}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "econt": {
     "displayName": "Econt",
     "color": "#234182",
@@ -18110,6 +18214,44 @@
       }
     ]
   },
+  "fragilepak": {
+    "displayName": "FragilePAK",
+    "color": "#e65525",
+    "aliases": [
+      "FragilePak",
+      "Fragile Pak",
+      "Progistics Distribution"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "trackingUrlTemplate": "https://tracking.agentgrid.net/progistics/?id={trackingNumber}",
+    "trackingSearchUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.agentgrid.net"
+        ],
+        "pathPattern": "^/progistics/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^902\\d{6}[\\dX]$",
+        "confidence": "low"
+      }
+    ]
+  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -18931,7 +19073,9 @@
       "ASM Transporte Urgente",
       "General Logistics Systems Spain",
       "GLS Portugal",
-      "General Logistics Systems Portugal"
+      "General Logistics Systems Portugal",
+      "GLOBALTRANS",
+      "GlobalTrans Toledo"
     ],
     "countries": [
       "ES",
@@ -20329,6 +20473,29 @@
         "confidence": "low"
       }
     ]
+  },
+  "hkd-express": {
+    "displayName": "HKD Express",
+    "color": "#140b68",
+    "aliases": [
+      "Hkdexpress",
+      "昊坤达",
+      "昊坤达国际物流"
+    ],
+    "countries": [
+      "CN",
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hkdexpress.net/track",
+    "trackingSearchUrl": "https://www.hkdexpress.net/track",
+    "linkRules": [],
+    "detectionRules": []
   },
   "holisol": {
     "displayName": "Holisol",
@@ -34454,6 +34621,28 @@
         "preferred": true
       }
     ]
+  },
+  "sm-express": {
+    "displayName": "SM Express",
+    "color": "#d32028",
+    "aliases": [
+      "SM Express Cargo",
+      "SM Express Cargo Pvt Ltd",
+      "SM Express Cargo Private Limited"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.smexpress.in/",
+    "trackingSearchUrl": "https://www.smexpress.in/Home/track",
+    "linkRules": [],
+    "detectionRules": []
   },
   "smsa-express": {
     "displayName": "SMSA Express",

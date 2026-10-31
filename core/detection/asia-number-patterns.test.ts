@@ -548,6 +548,39 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('Ecom Logistics, FragilePAK, HKD Express, Canada Air Express, Bombax and SM Express', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['Ecom Logistics', 'ecom-logistics'], ['ShipEcom', 'ecom-logistics'], ['FragilePAK', 'fragilepak'],
+      ['Hkdexpress', 'hkd-express'], ['昊坤达国际物流', 'hkd-express'], ['Canada Air Express', 'canada-air-express'],
+      ['加拿大民航快递', 'canada-air-express'], ['bombax', 'bombax'], ['SM Express', 'sm-express'], ['GLOBALTRANS', 'gls-es']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    for (const [url, number, carrier] of [
+      ['https://shipecom.com/fr/track/E12A3456789', 'E12A3456789', 'ecom-logistics'],
+      ['https://tracking.agentgrid.net/progistics/?id=ZZ1000000017', 'ZZ1000000017', 'fragilepak'],
+      ['https://main.air-gtc.cn/WaybillInfo.aspx?KeyWord=GT1000000017', 'GT1000000017', 'canada-air-express'],
+      ['https://book.bombax.in/booking/Tracking?OrderNo=BX1000000017', 'BX1000000017', 'bombax'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+  });
+
+  it('suggests Ecom Logistics for E, two digits, a letter and seven digits only', () => {
+    expect(detectCarrierMatch('E12A3456789')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['ecom-logistics'] });
+    for (const number of ['E1A23456789', 'F12A3456789', 'E12A345678', 'E12A34567890', 'E123456789A']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('ecom-logistics');
+    }
+  });
+
+  it('suggests FragilePAK for 902, six digits and a digit or X', () => {
+    expect(detectCarrierMatch('902123463X')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['fragilepak'] });
+    expect(detectCarrierMatch('9021234563').candidates).toContain('fragilepak');
+    for (const number of ['9031234565', '902123463Y', '90212345656', '902123456']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fragilepak');
+    }
+  });
+});
+
 describe('UVAN, Fast World Logistic, TIG Freight and YHA Logistics', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['UVAN', 'uvan'], ['宇环国际物流', 'uvan'], ['Fast World Logistic - FWL', 'fastwl'], ['FastWL', 'fastwl'],

@@ -9052,6 +9052,38 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "bombax": {
+    "displayName": "Bombax",
+    "color": "#ed1849",
+    "aliases": [
+      "Bombax Logistics",
+      "Bombax Logistics Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bombax.in/",
+    "trackingUrlTemplate": "https://book.bombax.in/booking/Tracking?OrderNo={trackingNumber}",
+    "trackingSearchUrl": "https://book.bombax.in/Booking/Track",
+    "linkRules": [
+      {
+        "domains": [
+          "book.bombax.in"
+        ],
+        "pathPattern": "^/booking/tracking$",
+        "params": [
+          "OrderNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "bombino": {
     "displayName": "Bombino Express",
     "color": "#06567f",
@@ -9836,6 +9868,41 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://campost.cm/",
     "trackingSearchUrl": "https://campost.cm/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "canada-air-express": {
+    "displayName": "Canada Air Express",
+    "color": "#b1272d",
+    "aliases": [
+      "Canada GTL Express",
+      "加拿大民航快递",
+      "民航快递",
+      "Golden Territory Logistic"
+    ],
+    "countries": [
+      "CA",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.air-gtc.com/",
+    "trackingUrlTemplate": "https://main.air-gtc.cn/WaybillInfo.aspx?KeyWord={trackingNumber}",
+    "trackingSearchUrl": "https://www.air-gtc.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "main.air-gtc.cn"
+        ],
+        "pathPattern": "^/WaybillInfo\\.aspx$",
+        "params": [
+          "KeyWord"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "cargobus": {
@@ -15191,6 +15258,43 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "ecom-logistics": {
+    "displayName": "Ecom Logistics",
+    "color": "#3598dd",
+    "aliases": [
+      "Ecom Logistics Inc.",
+      "EcomLogistics",
+      "ShipEcom"
+    ],
+    "countries": [
+      "CA",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Toronto",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://shipecom.com/track",
+    "trackingUrlTemplate": "https://shipecom.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://shipecom.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "shipecom.com",
+          "www.shipecom.com"
+        ],
+        "path": "^/(?:(?:fr|es)/)?track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^E\\d{2}[A-Z]\\d{7}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "econt": {
     "displayName": "Econt",
     "color": "#234182",
@@ -18112,6 +18216,44 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "fragilepak": {
+    "displayName": "FragilePAK",
+    "color": "#e65525",
+    "aliases": [
+      "FragilePak",
+      "Fragile Pak",
+      "Progistics Distribution"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "trackingUrlTemplate": "https://tracking.agentgrid.net/progistics/?id={trackingNumber}",
+    "trackingSearchUrl": "https://fragilepak.com/expecting-a-delivery/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.agentgrid.net"
+        ],
+        "pathPattern": "^/progistics/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^902\\d{6}[\\dX]$",
+        "confidence": "low"
+      }
+    ]
+  },
   "franch-express": {
     "displayName": "Franch Express",
     "color": "#ec1b24",
@@ -18933,7 +19075,9 @@ export const CARRIER_CATALOG = {
       "ASM Transporte Urgente",
       "General Logistics Systems Spain",
       "GLS Portugal",
-      "General Logistics Systems Portugal"
+      "General Logistics Systems Portugal",
+      "GLOBALTRANS",
+      "GlobalTrans Toledo"
     ],
     "countries": [
       "ES",
@@ -20331,6 +20475,29 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "hkd-express": {
+    "displayName": "HKD Express",
+    "color": "#140b68",
+    "aliases": [
+      "Hkdexpress",
+      "昊坤达",
+      "昊坤达国际物流"
+    ],
+    "countries": [
+      "CN",
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hkdexpress.net/track",
+    "trackingSearchUrl": "https://www.hkdexpress.net/track",
+    "linkRules": [],
+    "detectionRules": []
   },
   "holisol": {
     "displayName": "Holisol",
@@ -34457,6 +34624,28 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "sm-express": {
+    "displayName": "SM Express",
+    "color": "#d32028",
+    "aliases": [
+      "SM Express Cargo",
+      "SM Express Cargo Pvt Ltd",
+      "SM Express Cargo Private Limited"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.smexpress.in/",
+    "trackingSearchUrl": "https://www.smexpress.in/Home/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "smsa-express": {
     "displayName": "SMSA Express",
     "color": "#fc671a",
@@ -41475,6 +41664,7 @@ export const CARRIER_IDS = [
   "bjs-home-delivery",
   "blue-express",
   "blueex",
+  "bombax",
   "bombino",
   "bonds-couriers",
   "bookurier",
@@ -41496,6 +41686,7 @@ export const CARRIER_IDS = [
   "c3x",
   "cacesa",
   "campost",
+  "canada-air-express",
   "cargobus",
   "cargoline",
   "cargus",
@@ -41629,6 +41820,7 @@ export const CARRIER_IDS = [
   "easy-mail",
   "ecms-express",
   "eco-express-ae",
+  "ecom-logistics",
   "econt",
   "ecourier",
   "efs-asia",
@@ -41704,6 +41896,7 @@ export const CARRIER_IDS = [
   "forward-air",
   "forza-delivery",
   "foxpost",
+  "fragilepak",
   "franch-express",
   "freightways-global",
   "fukuyama",
@@ -41762,6 +41955,7 @@ export const CARRIER_IDS = [
   "hi-trans",
   "hispapost",
   "hitch",
+  "hkd-express",
   "holisol",
   "homexpress",
   "horoz",
@@ -42127,6 +42321,7 @@ export const CARRIER_IDS = [
   "slgtrax",
   "slovak-parcel-service",
   "slovenska-posta",
+  "sm-express",
   "smsa-express",
   "south-african-post-office",
   "southeastern-freight-lines",
@@ -42510,6 +42705,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "blue-express": [],
   "blueex": [],
+  "bombax": [],
   "bombino": [],
   "bonds-couriers": [],
   "bookurier": ["bookurier-1"],
@@ -42531,6 +42727,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "cacesa": [],
   "campost": [],
+  "canada-air-express": [],
   "cargobus": [],
   "cargoline": [],
   "cargus": ["cargus-1","cargus-2"],
@@ -42664,6 +42861,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "easy-mail": [],
   "ecms-express": ["ecms-express-1"],
   "eco-express-ae": [],
+  "ecom-logistics": ["ecom-logistics-1"],
   "econt": [],
   "ecourier": ["ecourier-1"],
   "efs-asia": [],
@@ -42739,6 +42937,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "forward-air": [],
   "forza-delivery": ["forza-delivery-1"],
   "foxpost": ["foxpost-1","foxpost-home-delivery"],
+  "fragilepak": ["fragilepak-1"],
   "franch-express": [],
   "freightways-global": [],
   "fukuyama": [],
@@ -42797,6 +42996,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hi-trans": [],
   "hispapost": [],
   "hitch": ["hitch-1"],
+  "hkd-express": [],
   "holisol": [],
   "homexpress": [],
   "horoz": [],
@@ -43162,6 +43362,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "slgtrax": [],
   "slovak-parcel-service": ["slovak-parcel-service-1"],
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
+  "sm-express": [],
   "smsa-express": [],
   "south-african-post-office": ["south-african-post-office-s10"],
   "southeastern-freight-lines": [],

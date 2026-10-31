@@ -14,6 +14,21 @@
     "reason": "These carriers accept the same numeric length without a DHL Express checksum, and Packeta's packet ID is ten digits without its Z. Direct tracking must confirm the carrier."
   },
   {
+    "shape": "Ten digits starting 902 that fail the DHL Express waybill check",
+    "carriers": [
+      "dhl",
+      "estafeta",
+      "mondial-relay",
+      "packeta",
+      "relais-colis",
+      "tipsa",
+      "dhl-ecommerce-es",
+      "box-now",
+      "fragilepak"
+    ],
+    "reason": "FragilePAK's waybill is 902, six digits and a check digit or X, inside the numeric length several carriers accept without a DHL Express checksum. Direct tracking must confirm the carrier."
+  },
+  {
     "shape": "Ten digits starting 0, or with separators Packeta does not print, that fail the DHL Express waybill check",
     "carriers": [
       "dhl",
