@@ -88,6 +88,14 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Unsolicited shipment', { status: 'exception', stage: 'exception' }],
   ['Delivery is not possible', { status: 'exception', stage: 'failed_attempt' }],
   ['Parcel accepted in the unclaimed cargo area', { status: 'exception', stage: 'exception' }],
+  // A leg into Canada. Yanwen's terminal tenders the parcel to the line-haul minutes after its
+  // outbound scan, before the export release, so the tender is no delivery round. Then the
+  // release from customs, the partner's arrival and the delivering carrier's intake and terminals.
+  ['Tendered for Delivery', { status: 'in_transit', stage: 'in_transit' }],
+  ['Cleared Customs', { status: 'in_transit', stage: 'in_transit' }],
+  ['Scanned arrived at FB Canada', { status: 'in_transit', stage: 'in_transit' }],
+  ['Received from Prior Carrier', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at Terminal Location', { status: 'in_transit', stage: 'in_transit' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:

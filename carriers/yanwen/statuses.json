@@ -510,6 +510,46 @@
       "note": "Relayed from Nova Poshta: the unclaimed parcel taken into its unclaimed cargo area, not an acceptance."
     },
     {
+      "wording": "Tendered for Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "Written at Yanwen's terminal minutes after its outbound scan, before the export release: the hand-over to the line-haul, not a delivery round."
+    },
+    {
+      "wording": "Cleared Customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "Customs released the parcel."
+    },
+    {
+      "wording": "Scanned arrived at FB Canada",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The destination partner's arrival scan in Canada, before the batch hand-over to the delivering carrier."
+    },
+    {
+      "wording": "Received from Prior Carrier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The delivering carrier's intake after the batch hand-over."
+    },
+    {
+      "wording": "Arrived at Terminal Location",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The delivering carrier's terminal scans."
+    },
+    {
       "wording": "UA.",
       "language": "en",
       "confirmedBy": "live",
