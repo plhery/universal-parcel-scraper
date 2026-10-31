@@ -1,0 +1,57 @@
+{
+  "id": "safeway-express-cargo",
+  "displayName": "Safe Way Express Cargo",
+  "aliases": [
+    "Safeway Express Cargo",
+    "Safe Way Express Cargo W.L.L",
+    "Safe Way Express Cargo L.L.C",
+    "Safe Way International"
+  ],
+  "region": {
+    "countries": [
+      "BH",
+      "SA",
+      "AE",
+      "OM"
+    ]
+  },
+  "brand": {
+    "color": "#15375b"
+  },
+  "selectable": true,
+  "timezone": "Asia/Bahrain",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.safewayxp.com/track.php?awb={trackingNumber}",
+    "searchUrl": "https://www.safewayxp.com/en/track/",
+    "canaryUrl": "https://www.safewayxp.com/en/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.safewayxp.com",
+        "safewayxp.com"
+      ],
+      "pathPattern": "^/track\\.php$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "safeway-express-cargo-1",
+      "pattern": "^BH\\d{8}$",
+      "confidence": "low"
+    }
+  ]
+}

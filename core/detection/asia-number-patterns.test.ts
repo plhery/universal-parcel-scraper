@@ -548,6 +548,40 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('Komon Express, BEL, ParcelABC, PAGO Logistics, Safe Way Express Cargo, W Express and Ecohai', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['Komon Express', 'komon-express'], ['可蒙快运', 'komon-express'], ['BEL', 'bel'], ['北俄国际', 'bel'],
+      ['Parcelabc', 'parcelabc'], ['Parcel ABC', 'parcelabc'], ['Pago', 'pago'], ['派格国际物流', 'pago'],
+      ['Safeway Express Cargo', 'safeway-express-cargo'], ['W Express Cargo Philippines', 'w-express-ph'], ['WWWExpress', 'w-express-ph'],
+      ['Ecohai', 'ecohai'], ['エコ配', 'ecohai'], ['Dognposten', 'postnord'], ['Døgnposten', 'postnord']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    expect(carrierIdFromName('DHL Philippines')).not.toBe('w-express-ph');
+    for (const [url, number, carrier] of [
+      ['https://8256.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills=BE1000000017', 'BE1000000017', 'bel'],
+      ['https://www.parcelabc.com/track/GBUS-123456789', 'GBUS-123456789', 'parcelabc'],
+      ['https://www.szpago.com/?number=PG1000000017', 'PG1000000017', 'pago'],
+      ['https://www.safewayxp.com/track.php?awb=BH12345678', 'BH12345678', 'safeway-express-cargo'],
+      ['https://www.wwwexpress.com.ph/track-and-trace/?trackingNo=1234567890', '1234567890', 'w-express-ph'],
+      ['https://track.wwwexpress.com.ph/WExTrackAndTrace/trackAndTrace/trackAndTraceClient.htm?trackingNo=1234567890', '1234567890', 'w-express-ph'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+  });
+
+  it('suggests Komon Express for KOMON, ten digits and YQ, and Safe Way for BH and eight digits', () => {
+    expect(detectCarrierMatch('KOMON1234567890YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['komon-express'] });
+    expect(detectCarrierMatch('BH12345678')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['safeway-express-cargo', 'tnt-it'] });
+    for (const number of ['KOMON123456789YQ', 'KOMON12345678901YQ', 'KOMAN1234567890YQ', 'KOMON1234567890YZ']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('komon-express');
+    }
+    for (const number of ['BH1234567', 'BH123456789', 'BA12345678']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('safeway-express-cargo');
+    }
+    expect(detectCarrierMatch('GBUS123456789').candidates ?? []).not.toContain('parcelabc');
+  });
+});
+
 describe('Aquiline, Wiio, UKP Worldwide, BTD and XYL', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['Aquiline', 'aquiline'], ['AQ Tracking', 'aquiline'], ['Wiio', 'wiio'], ['PD Express', 'wiio'],

@@ -1,6 +1,7 @@
 # PostNord
 
 Tracks individual parcels through the anonymous JSON service used by PostNord's official tracking widget.
+Døgnposten, Post Danmark's parcel-locker brand, carried PostNord numbers, so its name counts as PostNord's.
 
 An SSCC typed with its 00 identifier is suggested with PostNord first when it
 carries a Danish (57) or Swedish (73) GS1 prefix and its check digit passes.

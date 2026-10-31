@@ -4337,5 +4337,11 @@
     "pattern": "^\\d{12}$",
     "kind": "collision",
     "reason": "DPX Logistics air waybills are twelve digits with the mod 7 check that Japan Post, Sagawa and Yamato share, so the shape cannot name DPX Logistics."
+  },
+  {
+    "carrier": "parcelabc",
+    "pattern": "^[A-Z]{4}\\d{9}$",
+    "kind": "collision",
+    "reason": "ParcelABC order codes are two country codes and nine digits once the hyphen is dropped, a shape Sunyou, Z-Leading and other networks use, so the shape cannot name ParcelABC."
   }
 ]

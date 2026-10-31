@@ -2582,7 +2582,9 @@ export const CARRIER_CATALOG = {
       "PostNord Danmark",
       "PostNord Denmark",
       "Direct Link",
-      "Direct Link Worldwide"
+      "Direct Link Worldwide",
+      "Døgnposten",
+      "Dognposten"
     ],
     "countries": [
       "SE",
@@ -8692,6 +8694,42 @@ export const CARRIER_CATALOG = {
         "preferred": true
       }
     ]
+  },
+  "bel": {
+    "displayName": "BEL",
+    "color": "#293e86",
+    "aliases": [
+      "BEL北俄国际",
+      "北俄国际",
+      "北俄物流",
+      "北俄供应链",
+      "北俄供应链（深圳）有限公司"
+    ],
+    "countries": [
+      "CN",
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.8256ru.com/",
+    "trackingUrlTemplate": "https://8256.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
+    "trackingSearchUrl": "https://www.8256ru.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "8256.kingtrans.cn"
+        ],
+        "pathPattern": "^/WebTrack$",
+        "params": [
+          "bills"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "belpost": {
     "displayName": "Belpost",
@@ -15463,6 +15501,28 @@ export const CARRIER_CATALOG = {
         "path": "^/en/tracking/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "ecohai": {
+    "displayName": "Ecohai",
+    "color": "#00a73c",
+    "aliases": [
+      "エコ配",
+      "株式会社エコ配",
+      "ecohai Co., Ltd."
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://service.ecohai.co.jp/",
+    "trackingSearchUrl": "https://client.ecohai.co.jp/tracking",
+    "linkRules": [],
     "detectionRules": []
   },
   "ecom-logistics": {
@@ -23798,6 +23858,35 @@ export const CARRIER_CATALOG = {
     "linkRules": [],
     "detectionRules": []
   },
+  "komon-express": {
+    "displayName": "Komon Express",
+    "color": "#bf1a20",
+    "aliases": [
+      "Komon",
+      "可蒙",
+      "可蒙快运",
+      "可蒙国际",
+      "深圳市可蒙国际物流有限公司",
+      "Shenzhen Komon International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^KOMON\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "kronos-express": {
     "displayName": "Kronos Express",
     "color": "#24297a",
@@ -28753,6 +28842,43 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "pago": {
+    "displayName": "PAGO Logistics",
+    "color": "#d8242b",
+    "aliases": [
+      "Pago",
+      "PAGO International Logistics",
+      "派格国际物流",
+      "派格物流",
+      "深圳市派格通运货运代理有限公司"
+    ],
+    "countries": [
+      "CN",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.szpago.com/",
+    "trackingUrlTemplate": "https://www.szpago.com/?number={trackingNumber}",
+    "trackingSearchUrl": "https://www.szpago.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.szpago.com",
+          "szpago.com"
+        ],
+        "pathPattern": "^/(?:en/)?$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "paket-cl": {
     "displayName": "Paket",
     "color": "#614de2",
@@ -29047,6 +29173,41 @@ export const CARRIER_CATALOG = {
         "params": [
           "trackno"
         ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "parcelabc": {
+    "displayName": "ParcelABC",
+    "color": "#8ec642",
+    "aliases": [
+      "Parcel ABC",
+      "Parcel ABC Limited"
+    ],
+    "countries": [
+      "GB",
+      "ES",
+      "FR",
+      "IT",
+      "DE",
+      "PL",
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.parcelabc.com/content/tracking",
+    "trackingSearchUrl": "https://www.parcelabc.com/content/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.parcelabc.com",
+          "parcelabc.com"
+        ],
+        "path": "^/track/([A-Za-z]{4}-?\\d{9})/?$"
       }
     ],
     "detectionRules": []
@@ -32831,6 +32992,49 @@ export const CARRIER_CATALOG = {
       {
         "pattern": "^OS\\d{8}KS$",
         "confidence": "high"
+      }
+    ]
+  },
+  "safeway-express-cargo": {
+    "displayName": "Safe Way Express Cargo",
+    "color": "#15375b",
+    "aliases": [
+      "Safeway Express Cargo",
+      "Safe Way Express Cargo W.L.L",
+      "Safe Way Express Cargo L.L.C",
+      "Safe Way International"
+    ],
+    "countries": [
+      "BH",
+      "SA",
+      "AE",
+      "OM"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bahrain",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.safewayxp.com/en/track/",
+    "trackingUrlTemplate": "https://www.safewayxp.com/track.php?awb={trackingNumber}",
+    "trackingSearchUrl": "https://www.safewayxp.com/en/track/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.safewayxp.com",
+          "safewayxp.com"
+        ],
+        "pathPattern": "^/track\\.php$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^BH\\d{8}$",
+        "confidence": "low"
       }
     ]
   },
@@ -40110,6 +40314,52 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "w-express-ph": {
+    "displayName": "W Express",
+    "color": "#1e62af",
+    "aliases": [
+      "W Express Cargo Philippines",
+      "WExpress",
+      "WWWExpress",
+      "WWW Express",
+      "Wide Wide World Express",
+      "Wide Wide World Express Corporation"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
+    "trackingUrlTemplate": "https://www.wwwexpress.com.ph/track-and-trace/?trackingNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.wwwexpress.com.ph/track-and-trace/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.wwwexpress.com.ph",
+          "wwwexpress.com.ph"
+        ],
+        "pathPattern": "^/track-and-trace/?$",
+        "params": [
+          "trackingNo"
+        ]
+      },
+      {
+        "domains": [
+          "track.wwwexpress.com.ph"
+        ],
+        "pathPattern": "^/WExTrackAndTrace/trackAndTrace/trackAndTraceClient\\.htm$",
+        "params": [
+          "trackingNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "wahana": {
     "displayName": "Wahana Express",
     "color": "#1e4eb8",
@@ -42176,6 +42426,7 @@ export const CARRIER_IDS = [
   "azul-cargo",
   "bangladesh-post",
   "barid-al-maghrib",
+  "bel",
   "belpost",
   "best-express-my",
   "best-express-th",
@@ -42346,6 +42597,7 @@ export const CARRIER_IDS = [
   "easy-mail",
   "ecms-express",
   "eco-express-ae",
+  "ecohai",
   "ecom-logistics",
   "econt",
   "ecourier",
@@ -42565,6 +42817,7 @@ export const CARRIER_IDS = [
   "kit-tk",
   "kiwi-express",
   "kolay-gelsin",
+  "komon-express",
   "kronos-express",
   "ktd",
   "kuayue-express",
@@ -42692,6 +42945,7 @@ export const CARRIER_IDS = [
   "packlink",
   "packs",
   "pactic",
+  "pago",
   "paket-cl",
   "pakistan-post",
   "palletways",
@@ -42701,6 +42955,7 @@ export const CARRIER_IDS = [
   "paperfly",
   "paquetexpress",
   "parcel-one",
+  "parcelabc",
   "parcelpoint",
   "pargo",
   "parxl",
@@ -42796,6 +43051,7 @@ export const CARRIER_IDS = [
   "russian-post",
   "rxo",
   "saee",
+  "safeway-express-cargo",
   "safexpress",
   "sagawa",
   "sagawa-global",
@@ -42987,6 +43243,7 @@ export const CARRIER_IDS = [
   "vozovoz",
   "vrl-logistics",
   "vt-freight-express",
+  "w-express-ph",
   "wahana",
   "wanbexpress",
   "ward-trucking",
@@ -43231,6 +43488,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "azul-cargo": [],
   "bangladesh-post": ["bangladesh-post-s10"],
   "barid-al-maghrib": ["barid-al-maghrib-s10"],
+  "bel": [],
   "belpost": ["belpost-s10"],
   "best-express-my": ["best-express-my-1"],
   "best-express-th": ["best-express-th-1"],
@@ -43401,6 +43659,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "easy-mail": [],
   "ecms-express": ["ecms-express-1"],
   "eco-express-ae": [],
+  "ecohai": [],
   "ecom-logistics": ["ecom-logistics-1"],
   "econt": [],
   "ecourier": ["ecourier-1"],
@@ -43620,6 +43879,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kit-tk": [],
   "kiwi-express": [],
   "kolay-gelsin": [],
+  "komon-express": ["komon-express-1"],
   "kronos-express": [],
   "ktd": ["ktd-1"],
   "kuayue-express": ["kuayue-express-1"],
@@ -43747,6 +44007,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "packlink": ["packlink-1"],
   "packs": [],
   "pactic": ["pactic-1"],
+  "pago": [],
   "paket-cl": [],
   "pakistan-post": ["pakistan-post-1","pakistan-post-s10"],
   "palletways": [],
@@ -43756,6 +44017,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
   "paquetexpress": ["paquetexpress-1"],
   "parcel-one": [],
+  "parcelabc": [],
   "parcelpoint": [],
   "pargo": ["pargo-1"],
   "parxl": [],
@@ -43851,6 +44113,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "russian-post": ["russian-post-1"],
   "rxo": [],
   "saee": ["saee-1"],
+  "safeway-express-cargo": ["safeway-express-cargo-1"],
   "safexpress": [],
   "sagawa": ["sagawa-waybill"],
   "sagawa-global": [],
@@ -44042,6 +44305,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "vozovoz": [],
   "vrl-logistics": [],
   "vt-freight-express": [],
+  "w-express-ph": [],
   "wahana": [],
   "wanbexpress": ["wanbexpress-1"],
   "ward-trucking": [],

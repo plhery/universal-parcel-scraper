@@ -6671,5 +6671,13 @@
       "sending"
     ],
     "reason": "Passing check digits add GLS and Poste Italiane's registered mail, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "BH and eight digits",
+    "carriers": [
+      "safeway-express-cargo",
+      "tnt-it"
+    ],
+    "reason": "Safe Way Express Cargo's Bahrain numbers have the shape of TNT Italy's national waybills, two letters and eight digits; both stay low-confidence suggestions."
   }
 ]

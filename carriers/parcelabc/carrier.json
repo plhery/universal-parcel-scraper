@@ -1,0 +1,48 @@
+{
+  "id": "parcelabc",
+  "displayName": "ParcelABC",
+  "aliases": [
+    "Parcel ABC",
+    "Parcel ABC Limited"
+  ],
+  "region": {
+    "countries": [
+      "GB",
+      "ES",
+      "FR",
+      "IT",
+      "DE",
+      "PL",
+      "LT"
+    ]
+  },
+  "brand": {
+    "color": "#8ec642"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.parcelabc.com/content/tracking",
+    "canaryUrl": "https://www.parcelabc.com/content/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.parcelabc.com",
+        "parcelabc.com"
+      ],
+      "path": "^/track/([A-Za-z]{4}-?\\d{9})/?$"
+    }
+  ],
+  "detection": []
+}

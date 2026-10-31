@@ -1,0 +1,43 @@
+{
+  "id": "komon-express",
+  "displayName": "Komon Express",
+  "aliases": [
+    "Komon",
+    "可蒙",
+    "可蒙快运",
+    "可蒙国际",
+    "深圳市可蒙国际物流有限公司",
+    "Shenzhen Komon International Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#bf1a20"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "komon-express-1",
+      "pattern": "^KOMON\\d{10}YQ$",
+      "confidence": "low"
+    }
+  ]
+}
