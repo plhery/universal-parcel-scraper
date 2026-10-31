@@ -25,6 +25,8 @@ const WORDING: Readonly<Record<string, Stage>> = {
   'Your shipment has arrived at sorting center': 'in_transit', 'Your shipment is in process at sorting center': 'in_transit',
   // Arrival in the destination country, before its sorting and customs, not at the delivery office.
   'Arrived at destination': 'in_transit',
+  // CNE's hand-over to the destination network, before that network's own acceptance.
+  'Handled by local carrier': 'in_transit',
 };
 // CNE capitalises the same labels differently ("Arrived At" and "Arrived at").
 const WORDING_ANY_CASE: ReadonlyMap<string, Stage> = new Map(Object.entries(WORDING).map(([wording, stage]) => [wording.toLowerCase(), stage]));
@@ -37,7 +39,7 @@ const CODES: Readonly<Record<string, Stage>> = {
 };
 // Last-mile suppliers, by CNE's code, that the catalog tracks directly.
 const PARTNERS: Readonly<Record<string, string>> = {
-  'DE DHL': 'dhl', 'Royal Mail': 'royal-mail', 'US SPX': 'speedx', USPS: 'usps',
+  'DE DHL': 'dhl', 'Royal Mail': 'royal-mail', USPS: 'usps',
 };
 // CNE's own labels for the destination network's arrival and hand-over, which it
 // writes on Beijing time: read so, they fall in the minute of that network's own
@@ -136,12 +138,13 @@ export function parseCne(payload: unknown, raw: string): CarrierResult {
   const supplier = isRecord(payload.lastMileSupplier) ? clean(payload.lastMileSupplier.code, 64) : '';
   const partner = supplier ? PARTNERS[supplier] : undefined;
   const handoff = supplier && echoed === transfer && transfer !== number && /^[A-Z0-9]{4,40}$/.test(transfer) ? transfer : '';
+  // The supplier tracks its transfer number, not CNE's: without one, nobody is named to ask.
   return { status: stage ? languageStageStatus(stage as Stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null,
     ...(typeof latest.local_time === 'string' ? { last_update_local: latest.local_time } : {}),
     ...(stage === 'delivered' && latest.stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),
-    ...(partner ? { delivery_carrier: partner } : {}), ...(handoff ? { delivery_tracking_number: handoff } : {}),
+    ...(partner && handoff ? { delivery_carrier: partner } : {}), ...(handoff ? { delivery_tracking_number: handoff } : {}),
     events: events.slice(0, 100) };
 }

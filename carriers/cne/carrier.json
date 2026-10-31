@@ -33,6 +33,7 @@
   "portal": {
     "url": "https://www.cne.com/en/track?no={trackingNumber}",
     "searchUrl": "https://www.cne.com/en/track",
+    "helpUrl": "https://www.cne.com/en/about/contact",
     "canaryUrl": "https://www.cne.com/track",
     "shows": [
       "status",

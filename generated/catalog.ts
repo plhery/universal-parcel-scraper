@@ -11558,6 +11558,7 @@ export const CARRIER_CATALOG = {
     "canaryUrl": "https://www.cne.com/track",
     "trackingUrlTemplate": "https://www.cne.com/en/track?no={trackingNumber}",
     "trackingSearchUrl": "https://www.cne.com/en/track",
+    "helpUrl": "https://www.cne.com/en/about/contact",
     "linkRules": [
       {
         "domains": [

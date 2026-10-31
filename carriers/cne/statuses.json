@@ -118,6 +118,13 @@
       "note": "Arrival in the destination country, coded 2 (Shipping), not at the delivery office: the destination network's sorting and customs clearance can still follow."
     },
     {
+      "wording": "Handled by local carrier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "CNE's own hand-over to the destination network, written on Beijing time, coded 2 (Shipping); the network's acceptance follows."
+    },
+    {
       "wording": "The shipment is picked up by customs broker",
       "language": "en",
       "stage": "customs",

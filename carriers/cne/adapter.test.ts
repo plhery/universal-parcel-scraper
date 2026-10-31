@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { carrierDefinition } from '../../core/catalog/index.js';
+import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/index.js';
 import { adapter, CneTracker } from './adapter.js';
@@ -94,7 +95,7 @@ describe('CNE response projection', () => {
 
   it('reads its own labels in any capitalisation, the arrival in the destination country and at its sorting centre as transit', () => {
     for (const details of ['Arrived at destination', 'Arrived At Destination', 'ARRIVED AT CNE FACILITY', 'your shipment has arrived at sorting center',
-      'Your shipment is in process at sorting center']) {
+      'Your shipment is in process at sorting center', 'Handled by local carrier']) {
       const payload = handoffFixture();
       payload.trackingEventList.push({ date: '2026-02-11 09:00:00', details, place: 'Example City', state: '2' });
       expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
@@ -130,6 +131,13 @@ describe('CNE response projection', () => {
     payload.trackingEventList.pop();
     expect(parseCne(payload, HANDOFF_NUMBER)).toMatchObject({ last_update: '2026-02-06T04:14:00+08:00' });
     expect(parseCne(payload, HANDOFF_NUMBER)).not.toHaveProperty('last_update_local');
+  });
+
+  it('names a supplier only with the transfer number it tracks', () => {
+    const payload = handoffFixture(); payload.Response_Info.Number_t = HANDOFF_NUMBER; delete payload.Response_Info.transNbr;
+    const result = parseCne(payload, HANDOFF_NUMBER);
+    expect(result.delivery_carrier).toBeUndefined(); expect(result.delivery_tracking_number).toBeUndefined();
+    expect(deliveryHandoff('cne', HANDOFF_NUMBER, result)).toBeNull();
   });
 
   it('names no carrier for a supplier outside the catalog and follows no unnamed transfer', () => {
