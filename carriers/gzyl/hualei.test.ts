@@ -186,6 +186,13 @@ describe('Hualei track interface', () => {
     expect(hualeiScanText('Where is it? Arrived')).toBe('Where is it? Arrived');
     // Longer runs, codes and clocks are not postcodes.
     expect(hualeiScanText('Flight CA123 at 10:30, bag 1234567')).toBe('Flight CA123 at 10:30, bag 1234567');
+    // Nor is a date's year.
+    for (const text of ['Expected on 2026-10-24', 'Delivered on 24/10/2026 at 10:00', 'Delivered at 11:55 am on March 10, 2026 in EXAMPLETOWN']) {
+      expect(hualeiScanText(text), text).toBe(text);
+    }
+    expect(hualeiScanText('Delivered on 24.10.2026 in EXAMPLETOWN 99999')).toBe('Delivered on 24.10.2026 in EXAMPLETOWN');
+    expect(hualeiScanText('Delivered Dec 5 2026 in EXAMPLETOWN 9999')).toBe('Delivered Dec 5 2026 in EXAMPLETOWN');
+    expect(hualeiScanText('Delivered EXAMPLETOWN 13, 99999')).toBe('Delivered EXAMPLETOWN 13');
     // A delivery row's place written with a postcode of another form.
     for (const place of ['EXAMPLETOWN 999 99', 'EXAMPLETOWN 99-999', 'EXAMPLETOWN 9999-999', 'EXAMPLETOWN Z9Z 9Z9', 'EXAMPLETOWN ZZ9 9ZZ', 'EXAMPLETOWN 9999 ZZ']) {
       expect(hualeiScanText(place), place).toBe('EXAMPLETOWN');

@@ -1,7 +1,8 @@
 import { clean } from '../../core/transport/text.js';
 
-// Four to six digits standing alone in scan text are a postcode far more often than anything else.
-const POSTCODE_RUN = /(^|[^\p{L}\p{N}])\d{4,6}(?![\p{L}\p{N}])/gu;
+// Four to six digits standing alone in scan text are a postcode far more often than anything else,
+// except a date's year, as in "2026-10-24", "24/10/2026" or "March 10, 2026".
+const POSTCODE_RUN = /(^|[^\p{L}\p{N}])(?<!\d{1,2}[-/.]\d{1,2}[-/.]|\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|june?|july?|aug(?:ust)?|sep(?:t(?:ember)?)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?)\.? \d{1,2},? ?)(?!\d{4}[-/.]\d{1,2}[-/.]\d{1,2}(?!\d))\d{4,6}(?![\p{L}\p{N}])/giu;
 // The postcodes written otherwise in a delivery row's place: three and two digits (Greece, Czechia,
 // Slovakia, Sweden), two and three or four and three with a dash (Poland, Portugal), letters and digits
 // (Canada, the United Kingdom) and four digits and two letters (the Netherlands).
