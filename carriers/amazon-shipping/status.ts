@@ -27,6 +27,13 @@ export const UNKNOWN_STATUS: ClassifiedStatus = {
   description: 'Amazon Shipping update',
 };
 
+/** A late delivery: no exception, and no movement of its own. */
+export const DELAYED: ClassifiedStatus = {
+  status: 'in_transit',
+  stage: 'in_transit',
+  description: 'Delivery delayed',
+};
+
 /** Fold any provider signal into the comparison key: lower case, letters and digits only. */
 export function statusKey(value: unknown): string {
   if (typeof value !== 'string' && typeof value !== 'number') return '';
@@ -73,9 +80,7 @@ export function classifyStatus(...values: unknown[]): ClassifiedStatus {
   ])) {
     return { status: 'exception', stage: 'failed_attempt', description: 'Delivery issue' };
   }
-  if (includesAny(key, ['delayed', 'late'])) {
-    return { status: 'in_transit', stage: 'in_transit', description: 'Delivery delayed' };
-  }
+  if (includesAny(key, ['delayed', 'late'])) return DELAYED;
   if (includesAny(key, ['delivered'])) {
     return { status: 'delivered', stage: 'delivered', description: 'Delivered' };
   }

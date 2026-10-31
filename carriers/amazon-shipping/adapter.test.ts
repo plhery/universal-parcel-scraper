@@ -280,6 +280,23 @@ describe('Amazon Shipping France response normalization', () => {
     expect(parseAmazonShippingTrackingResponse(scanless)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
   });
 
+  it('keeps a delayed parcel whose scans show only its label registered', () => {
+    const delayed = (eventCodes: string[]) => {
+      const value = deliveredFixture();
+      value.progressTracker = JSON.stringify({
+        summary: { status: 'Delayed', metadata: { trackingStatus: { stringValue: 'DELAYED' } }, containerStatusTags: ['DELAYED'] },
+        trackerSource: 'SWA',
+      });
+      value.eventHistory = JSON.stringify({ trackerSource: 'SWA', eventHistory: eventCodes.map((eventCode, index) => ({
+        eventCode, statusSummary: {}, eventTime: `Aug ${7 + index}, 2026, 11:51:15 PM`, location: {},
+      })) });
+      return parseAmazonShippingTrackingResponse(value);
+    };
+    expect(delayed(['CreationConfirmed'])).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Delivery delayed' });
+    // Once a scan has moved the parcel, the delay reads as transit, as before.
+    expect(delayed(['CreationConfirmed', 'PickupDone'])).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Delivery delayed' });
+  });
+
   it('uses event history when the summary status is absent', () => {
     const fixtureWithoutSummary = deliveredFixture();
     fixtureWithoutSummary.progressTracker = JSON.stringify({

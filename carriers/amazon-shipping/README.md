@@ -63,7 +63,9 @@ Checks, before any history is read:
   stays out for delivery, so the newest scan does not step back to in transit.
 - Dates mix ISO-8601, RFC 2822 and US long form ("Aug 11, 2026, 4:31:56 PM"), so the adapter
   uses its own parser instead of a `core/time` helper.
-- `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception.
+- `DELAYED` / `LATE` map to `in_transit`: a delay is not an exception. Nor is it movement: a
+  delayed parcel whose scans show only its label stays registered, with the delay as its status
+  text.
 - Events are deduplicated on (clock, location, code, description), sorted newest first and
   capped at 100. Shipment status comes from the summary's `trackingStatus`, `status` and
   tags, else from the newest event that classifies. A summary whose only signal is a

@@ -8,7 +8,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { cleanScalar, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { classifyStatus, statusKey, type ClassifiedStatus } from './status.js';
+import { classifyStatus, DELAYED, statusKey, type ClassifiedStatus } from './status.js';
 
 const PROVIDER = 'Amazon Shipping';
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -295,7 +295,10 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   // that had just left their pickup site and went on being scanned for another day.
   const unscannedDelivery = current.stage === 'delivered' && latestKnown !== undefined
     && !parsedEvents.some((item) => item.classified.stage === 'delivered');
-  const active = current.status !== 'unknown' && !echoesNewest && !unscannedDelivery ? current : latestKnown?.classified;
+  // A delay moves nothing: a parcel whose scans show only its label keeps that stage, with the delay as its text.
+  const unmovedDelay = current === DELAYED && latestKnown?.classified.stage === 'registered';
+  const active = unmovedDelay ? { ...latestKnown.classified, description: DELAYED.description }
+    : current.status !== 'unknown' && !echoesNewest && !unscannedDelivery ? current : latestKnown?.classified;
   if (!active) {
     throw new SchemaError(PROVIDER, 'Amazon Shipping returned incomplete tracking details');
   }
