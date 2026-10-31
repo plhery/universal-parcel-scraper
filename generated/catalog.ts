@@ -40472,7 +40472,8 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "we-world-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.weworldexpress.com/",
     "trackingSearchUrl": "https://www.weworldexpress.com/wwe/track",

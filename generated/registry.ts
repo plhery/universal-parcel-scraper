@@ -638,6 +638,7 @@ import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
+import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
@@ -1305,6 +1306,7 @@ export const REGISTRY: RegistryDefinition = {
     "vozovoz": vozovoz,
     "vrl-logistics": vrlLogistics,
     "wanbexpress": wanbexpress,
+    "we-world-express": weWorldExpress,
     "whistl": whistl,
     "whiz-delivery": whizDelivery,
     "wiio": wiio,
@@ -2336,7 +2338,7 @@ export const REGISTRY: RegistryDefinition = {
     "wahana": "universal",
     "wanbexpress": "wanbexpress",
     "ward-trucking": "universal",
-    "we-world-express": "universal",
+    "we-world-express": "we-world-express",
     "wedo": "universal",
     "western-bid": "universal",
     "whistl": "whistl",
