@@ -131,6 +131,12 @@ describe('GEODIS Poland HTTP adapter', () => {
     ]) expect(() => parseGeodisPlHistory(rows, summary, LATER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('names what a history other than rows holds, without its values', () => {
+    for (const [reply, kind] of [[false, 'false'], ['rows', 'a string'], [{ rows: [] }, 'an object keyed rows'], [{ 0: {}, 2: {} }, 'an object keyed 0, 2']] as const) {
+      expect(() => parseGeodisPlHistory(reply, summary, LATER)).toThrow(`GEODIS Poland returned an invalid history (${kind})`);
+    }
+  });
+
   it('binds the search page to the number asked', () => {
     // The page answers another shipment, or links another shipment’s history.
     expect(() => parseGeodisPlSummary(search(OTHER), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));

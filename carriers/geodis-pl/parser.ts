@@ -165,6 +165,14 @@ function summaryOnly(summary: GeodisPlSummary): CarrierResult {
   };
 }
 
+/** What a reply other than rows holds, without its values: `false`, a string, or an object and its first keys. */
+function jsonKind(value: unknown): string {
+  if (typeof value === 'boolean') return String(value);
+  if (!isRecord(value)) return `a ${typeof value}`;
+  const keys = Object.keys(value);
+  return `an object${keys.length ? ` keyed ${keys.slice(0, 4).map((key) => key.slice(0, 20)).join(', ')}${keys.length > 4 ? ', …' : ''}` : ''}`;
+}
+
 /**
  * The shipment's history (`GET /en/?ltlHistory=`): JSON rows oldest first, or
  * `null` when it holds none. It does not echo the number; the search page,
@@ -174,7 +182,7 @@ function summaryOnly(summary: GeodisPlSummary): CarrierResult {
  */
 export function parseGeodisPlHistory(payload: unknown, summary: GeodisPlSummary, readAt = Date.now()): CarrierResult {
   if (payload === null) return summaryOnly(summary);
-  if (!Array.isArray(payload)) throw new SchemaError(PROVIDER, 'GEODIS Poland returned an invalid history');
+  if (!Array.isArray(payload)) throw new SchemaError(PROVIDER, `GEODIS Poland returned an invalid history (${jsonKind(payload)})`);
   if (payload.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'GEODIS Poland returned an oversized history');
 
   const seen = new Set<string>();
