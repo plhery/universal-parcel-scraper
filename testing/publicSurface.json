@@ -49,6 +49,7 @@
       "classifyStage",
       "classifyWording",
       "countryCode",
+      "countryKeepsOffset",
       "countryTimeZone",
       "deliveryHandoff",
       "detectCarrier",

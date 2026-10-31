@@ -252,6 +252,19 @@ describe('17TRACK result parsing', () => {
       .toEqual([['Airline received【Example Port】', undefined]]);
   });
 
+  it("reads JCEX's places 17TRACK gives with their row's offset, without the offset or a postcode", () => {
+    const located = (location: string) => parse17TrackResponse({ ...postalHistory([]), shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key: 190120, name: 'JCEX' }, events: [{ ...postalScan('InTransit_Other', 'In transit'), location }] }] },
+    } }] }, number).events?.[0]?.location;
+    expect(located('Example Town;CA;;-07:00')).toBe('Example Town, CA');
+    expect(located('Example Town;CA;99999;-07:00')).toBe('Example Town, CA');
+    // The destination JCEX files a row under is no place under a clock it never keeps: a row in China at +08:00.
+    expect(located('US-07:00')).toBe('US');
+    expect(located('US+08:00')).toBeUndefined();
+    expect(located('The carrier')).toBeUndefined();
+  });
+
   it('does not convert stale tracking or unknown codes into shipment progress', () => {
     expect(parse17TrackResponse(postalHistory([postalScan('Future_Unknown')]), number).current_stage).toBe('pending');
     expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other')]), number).status).toBe('in_transit');

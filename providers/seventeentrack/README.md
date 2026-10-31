@@ -235,7 +235,10 @@ carrier.
   ("Departure from【Example】") or before its airport ("Arrival at Example Airport"); the scan
   keeps only that place, without a full Canadian or British postcode, or none. A town loses the
   eight-digit code of the China Post office that follows it, and a copy stored with the code
-  takes the new form in place.
+  takes the new form in place. JCEX's places come with the row's offset after them: a US town
+  as "TOWN;ST;POSTCODE;-07:00", kept as the town and state, or the destination JCEX files the
+  row under, "US+08:00", which names no place under an offset the country never keeps (JCEX's
+  rows in China). JCEX's "The carrier" names none either.
 - At most 20 carrier legs and 1000 events. Per-event `address` is never read, and of
   `shipping_info` only the recipient's country, for an NZ Post, Poland Post or Swiss Post leg: the
   address can be the recipient's street.

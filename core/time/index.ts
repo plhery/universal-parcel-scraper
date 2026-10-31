@@ -301,6 +301,22 @@ export function usStateTimeZone(state: unknown): string | null {
   return Object.hasOwn(US_STATE_ZONES, code) ? US_STATE_ZONES[code]! : null;
 }
 
+/**
+ * Whether a country's clocks show a UTC offset ("+08:00") in winter or summer:
+ * the United States' by its states' zones, another country's by its one zone.
+ * Null for an offset it cannot read or a country on several clocks it does not know.
+ */
+export function countryKeepsOffset(country: unknown, offset: string): boolean | null {
+  const code = countryCode(country);
+  const zones = code === 'US' ? [...new Set(Object.values(US_STATE_ZONES))]
+    : code && Object.hasOwn(COUNTRY_ZONES, code) ? [COUNTRY_ZONES[code]!] : [];
+  const parts = /^([+-])(\d{2}):(\d{2})$/.exec(offset);
+  if (!zones.length || !parts) return null;
+  const minutes = (parts[1] === '-' ? -1 : 1) * (Number(parts[2]) * 60 + Number(parts[3]));
+  const { year } = DateTime.utc();
+  return zones.some((zone) => [1, 7].some((month) => DateTime.fromObject({ year, month, day: 1 }, { zone }).offset === minutes));
+}
+
 // Three-digit ZIP prefixes by state, from the Census Bureau's 2020 ZCTA-to-county file: each
 // prefix goes to the state holding most of its ZCTAs. A prefix without ZCTAs, a post office box
 // or single-company one, is filled only inside one state's run. 055 (Massachusetts) and 733

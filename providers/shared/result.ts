@@ -10,7 +10,7 @@
  */
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
-import { countryCode } from '../../core/time/index.js';
+import { countryCode, countryKeepsOffset } from '../../core/time/index.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from './china.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
 import type { Stage } from '../../generated/catalog.js';
@@ -62,7 +62,11 @@ export function hasPrivateDeliveryDetails(description: string): boolean {
 // an order system's data centre, a line-haul agent, GLS Italy's unnamed sorting hub, Poczta
 // Polska's "International Postal System" for a scan relayed from abroad and China Post's "目的国"
 // ("destination country"), which its feed gives an airline's arrival where it names no country's code.
-const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*|(?:uni )?data cent(?:er|re)|linehaul agent|centro di smistamento(?: - hub)?|international postal system|目的国)$/i;
+const NOT_PLACES = /^(?:(?:[A-Z]{2}, )?system(?:, system)*|(?:uni )?data cent(?:er|re)|linehaul agent|centro di smistamento(?: - hub)?|international postal system|the carrier|目的国)$/i;
+// JCEX's places as 17TRACK relays them, followed by the row's UTC offset: a town in the United
+// States with its state and postcode, "Example Town;CA;99999;-07:00", or the country JCEX files
+// the row under, "US+08:00".
+const OFFSET_PLACE = /^(?:([^;]{1,80});([A-Z]{2})?;[A-Z\d -]{0,10};|([A-Z]{2}))([+-]\d{2}:\d{2})$/;
 // Poste Italiane delivers "dalla sede operativa di" the depot's town, which providers also translate.
 const DEPOT_PREFIX = /^(?:dalla sede operativa di|from the operational headquarters in)\s+/i;
 // Royal Mail appends a Post Office branch's postcode in brackets ("Example Post Office [ZZ9 9ZZ]"), which providers copy.
@@ -123,16 +127,30 @@ function statusPlace(location: string): string | undefined {
 }
 
 /**
+ * A place given with its row's offset, as 17TRACK relays JCEX's: the town and state, without the
+ * postcode; or the country the row is filed under, the destination, which names no place under an
+ * offset that country never keeps (JCEX's rows in China at +08:00). Undefined for any other location.
+ */
+function offsetPlace(location: string): string | undefined {
+  const match = OFFSET_PLACE.exec(location);
+  if (!match) return undefined;
+  const [, town, state, country, offset] = match;
+  if (country) return countryKeepsOffset(country, offset!) === false ? '' : country;
+  return [town!.trim(), state].filter(Boolean).join(', ');
+}
+
+/**
  * The place a provider reports for a scan, without the words before a depot's
  * town, a branch's postcode, which can narrow down a sender's or recipient's
  * area, a "Country" label or a status given before the place, unless it is a
  * label or placeholder ("--") that names no place, holds private delivery
  * details or is Posti's "abroad" label. A postcode given alone is the country
- * its code names, if any. A country a feed added goes (`withoutAddedCountry`).
+ * its code names, if any. A place with its row's offset after it is read without
+ * it (`offsetPlace`). A country a feed added goes (`withoutAddedCountry`).
  */
 export function place(value: unknown): string {
   const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, '');
-  const location = statusPlace(read) ?? postcodeCountry(read) ?? withoutAddedCountry(read);
+  const location = statusPlace(read) ?? offsetPlace(read) ?? postcodeCountry(read) ?? withoutAddedCountry(read);
   return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !hasPrivateDeliveryDetails(location) && !isPostiAbroadLabel(location)
     ? location : '';
 }

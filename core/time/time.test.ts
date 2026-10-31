@@ -1,7 +1,7 @@
 import { DateTime, Settings } from 'luxon';
 import { describe, expect, it } from 'vitest';
 import {
-  calendarDay, countryCode, countryTimeZone, epochMillisTime, epochSecondsTime, explicitOffsetTime, firstOccurrence, isoTime, mislabeledLocalTime,
+  calendarDay, countryCode, countryKeepsOffset, countryTimeZone, epochMillisTime, epochSecondsTime, explicitOffsetTime, firstOccurrence, isoTime, mislabeledLocalTime,
   mislabeledWallTime, canadaProvinceTimeZone, postalOfficeZone, regionHasTown, settleGuessedClocks, sharedClockZone, timeZoneCountry, townKey,
   usStateTimeZone, usZipState, zonedTime,
 } from './index.js';
@@ -108,6 +108,17 @@ describe('time policies', () => {
     // Nothing known around it: only the lookup bounds a guess, with an hour of skew.
     expect(settleGuessedClocks([{ guesses: [at('2026-09-10T13:00:00Z')] }], readAt)[0]?.iso).toBe('2026-09-10T13:00:00Z');
     expect(settleGuessedClocks([{ guesses: [at('2026-09-10T13:00:01Z')] }], readAt)[0]).toBeNull();
+  });
+
+  it("tells whether a country's clocks show an offset, in winter or summer", () => {
+    expect(countryKeepsOffset('US', '-07:00')).toBe(true);
+    expect(countryKeepsOffset('US', '-05:00')).toBe(true);
+    expect(countryKeepsOffset('US', '+08:00')).toBe(false);
+    expect(countryKeepsOffset('Switzerland', '+02:00')).toBe(true);
+    expect(countryKeepsOffset('CH', '+03:00')).toBe(false);
+    expect(countryKeepsOffset('CN', '+08:00')).toBe(true);
+    expect(countryKeepsOffset('Canada', '-05:00')).toBeNull();
+    expect(countryKeepsOffset('US', '+8')).toBeNull();
   });
 
   it('maps single-zone countries by code or name', () => {
