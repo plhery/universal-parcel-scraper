@@ -1986,6 +1986,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.ukpworldwide\.com\/tracking\/\?x=WHISU990000001$/,
     marker: /Nothing found|Tracking results/,
     forwarding: { notFound: /Nothing found/ } },
+  // The server renders the shipment, or says it found none under the number its search field repeats, with HTTP 200.
+  { carrier: 'safeway-express-cargo', number: 'BH99000025',
+    route: /^https:\/\/www\.safewayxp\.com\/track\.php\?awb=BH99000025$/,
+    marker: /Tracking Information Not Found|Shipment Information/ },
   // The app asks the tracker's function for the number in its path and shows it over its scans, or over none.
   { carrier: 'aquiline', number: 'AQUAA9900000009YQ',
     route: /^https:\/\/aq-track\.com\/app\/track\/AQUAA9900000009YQ$/,

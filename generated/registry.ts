@@ -509,6 +509,7 @@ import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as royalExpressMm } from '../carriers/royal-express-mm/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
 import { adapter as rpxIndonesia } from '../carriers/rpx-indonesia/adapter.js';
+import { adapter as safewayExpressCargo } from '../carriers/safeway-express-cargo/adapter.js';
 import { adapter as sagawa } from '../carriers/sagawa/adapter.js';
 import { adapter as sagawaGlobal } from '../carriers/sagawa-global/adapter.js';
 import { adapter as saia } from '../carriers/saia/adapter.js';
@@ -1179,6 +1180,7 @@ export const REGISTRY: RegistryDefinition = {
     "royal-express-mm": royalExpressMm,
     "royal-mail": royalMail,
     "rpx-indonesia": rpxIndonesia,
+    "safeway-express-cargo": safewayExpressCargo,
     "sagawa": sagawa,
     "sagawa-global": sagawaGlobal,
     "saia": saia,
@@ -2136,7 +2138,7 @@ export const REGISTRY: RegistryDefinition = {
     "russian-post": "universal",
     "rxo": "universal",
     "saee": "universal",
-    "safeway-express-cargo": "universal",
+    "safeway-express-cargo": "safeway-express-cargo",
     "safexpress": "universal",
     "sagawa": "sagawa",
     "sagawa-global": "sagawa-global",

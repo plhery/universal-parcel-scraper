@@ -33353,7 +33353,10 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Bahrain",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "safeway-express-cargo",
+      "recognitionRank": 77,
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.safewayxp.com/en/track/",
     "trackingUrlTemplate": "https://www.safewayxp.com/track.php?awb={trackingNumber}",

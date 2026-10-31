@@ -377,6 +377,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "roadrunner": 733,
   "royal-express-mm": 723,
   "rpx-indonesia": 947,
+  "safeway-express-cargo": 77,
   "sagawa-global": 749,
   "saia": 12,
   "sameday": 370,

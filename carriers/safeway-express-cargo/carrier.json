@@ -22,18 +22,42 @@
   "timezone": "Asia/Bahrain",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "safeway-express-cargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 77
+    },
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.safewayxp.com/track.php?awb={trackingNumber}",
     "searchUrl": "https://www.safewayxp.com/en/track/",
     "canaryUrl": "https://www.safewayxp.com/en/track/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "departure_date",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "departure_date",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [
     {
