@@ -405,6 +405,33 @@
       "firstSeen": "2026-10-30"
     },
     {
+      "wording": "航班已抵达",
+      "language": "zh",
+      "english": "Flight has arrived",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "The flight's landing at the European airport the row names."
+    },
+    {
+      "wording": "清关完成，中转德国中",
+      "language": "zh",
+      "english": "Customs cleared, in transit to Germany",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "Cleared at the airport of arrival and on its way to the hand-over in Germany."
+    },
+    {
+      "wording": "抵达德国，已交服务商",
+      "language": "zh",
+      "english": "Arrived in Germany, handed to the delivering carrier",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "Handed to the delivering carrier, such as DHL. It is not a delivery to the recipient."
+    },
+    {
       "wording": "提货中",
       "language": "zh",
       "english": "Picking up the goods",

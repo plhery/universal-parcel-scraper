@@ -105,6 +105,26 @@ describe('JRT tracking adapter', () => {
     expect(() => parseJrtTrack(handed('CJ000000005DE'), 'UP0000000000000009', readAt)).toThrow('another shipment');
   });
 
+  it('reads the landing, the clearance and the hand-over in Germany after DHL’s label data as transit', () => {
+    const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const record = payload[0]!.data[0]!;
+    const row = (track_date: string, track_content: string) => ({ ...record.trackDetails.at(-1)!, track_date, track_createdate: track_date, track_content, track_location: 'AMS' });
+    // The rows JRT writes once the flight lands, newest first, above DHL's label data.
+    record.trackDetails = [
+      row('2026-03-07 10:00:00', '抵达德国，已交服务商'),
+      row('2026-03-06 18:00:00', '清关完成，中转德国中'),
+      row('2026-03-06 09:00:00', '航班已抵达'),
+      ...record.trackDetails.slice(record.trackDetails.findIndex(({ track_content }) => track_content?.startsWith('the instruction data'))),
+    ];
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-08T00:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Arrived in Germany, handed to the delivering carrier' });
+    expect(result.events?.slice(0, 3).map(({ description, stage }) => [description, stage])).toEqual([
+      ['Arrived in Germany, handed to the delivering carrier', 'in_transit'],
+      ['Customs cleared, in transit to Germany', 'in_transit'],
+      ['Flight has arrived', 'in_transit'],
+    ]);
+  });
+
   it('reads UPS’s rows on the line into the United States on UPS’s wall clock, in UPS’s English', () => {
     const result = dateLocalClocks('jrt', parseJrtTrack(fixture('track-ups'), 'UP0000000000000003', Date.parse('2026-03-22T00:00:00Z'))!);
     expect(result).toMatchObject({
