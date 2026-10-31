@@ -17,7 +17,13 @@ An interactive verification remains a challenge and falls back to the providers.
 
 The response's latest-event record supplies an offset for that exact scan.
 Earlier scans often contain only local wall clocks, retained as `local_time`
-in portal order. Storage timezone fields never supply scan offsets. China's
+in portal order. In France, when the reference is La Poste's, the scans
+La Poste's sorting platforms relay ("Arrived at destination", "Handled by
+local carrier", "Transport to delivery centre") come on UTC, newest or not:
+the arrival La Poste dates 18:08:37+02:00 came as 16:08:37, and 14:21:33+01:00
+in winter as 13:21:33. Read on Paris time, they showed twice beside La Poste's
+own. The record states Paris's offset for them as well, but its delivery
+office's scans keep the office's clock. Storage timezone fields never supply scan offsets. China's
 rows name only the country, so a row without a place on China's leg, up to the
 flight out, is dated on China's clock when the nearest row with a place, the
 older one first, is in China: a departure given as the latest scan carries

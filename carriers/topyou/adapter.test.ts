@@ -73,6 +73,23 @@ describe('TopYou HTTP adapter', () => {
     expect(result.events!.map((event) => event.description).slice(4, 6)).toEqual(['Departed from customs', 'Arrived at destination airport']);
   });
 
+  it('reads the delivery carrier’s scans stated at a European offset on UTC wall clocks, and the hand-over to it as transit', () => {
+    // GOFO dates its arrival at a French sorting centre 06:23:17+01:00; TopYou relays it as 05:23:17 "+01:00".
+    const result = parseTopyou(fixture('relayed-europe'), 'TYZRZ0000000003YQ');
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: '2026-10-30T18:54:09Z',
+      destination_country: 'FR', delivery_tracking_number: 'GFFR0000000000000001' });
+    expect(scans(result).slice(0, 7)).toEqual([
+      ['2026-10-30T18:54:09Z', '20', 'out_for_delivery'],
+      ['2026-10-30T11:58:12Z', '20', 'in_transit'],
+      ['2026-10-30T05:23:17Z', '20', 'in_transit'],
+      ['2026-10-29T18:18:07Z', '20', 'in_transit'],
+      // GOFO's first sorting scan, days before its delivery round.
+      ['2026-10-28T18:41:08Z', '20', 'in_transit'],
+      ['2026-10-28T16:28:50', '20', 'in_transit'],
+      ['2026-10-26T21:26:40+08:00', '20', 'customs'],
+    ]);
+  });
+
   it('reads a newest-first reply the same, and dates a delivery TopYou scans itself', () => {
     const newestFirst = changed('delivered', (track) => { track.trackInfo!.reverse(); });
     expect(parseTopyou(newestFirst, DELIVERED)).toEqual(parseTopyou(fixture('delivered'), DELIVERED));

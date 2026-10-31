@@ -13,6 +13,7 @@
     {"code": "15", "wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Export clearance before the flight."},
     {"code": "20", "wording": "Shipment arrived in the destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "20", "wording": "Shipment started the customs clearance process at destination", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance, under the code for arriving in the destination country."},
-    {"code": "20", "wording": "Shipment completed the customs clearance process at destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared and on its way to the delivery carrier, not held in customs."}
+    {"code": "20", "wording": "Shipment completed the customs clearance process at destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Cleared and on its way to the delivery carrier, not held in customs."},
+    {"code": "20", "wording": "Shipment is out for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The hand-over to GOFO in France and Italy: it comes at GOFO's first sorting-centre scan, days before GOFO's delivery round (\"The driver is out for delivery\")."}
   ]
 }

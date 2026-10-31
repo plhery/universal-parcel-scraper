@@ -88,7 +88,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     if (typeof raw.dt !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?/.test(raw.dt)
       || !DateTime.fromISO(raw.dt, { zone: 'UTC' }).isValid) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event date');
     const service = text(raw.ds);
-    const wall = wallClock(service, raw.dt);
+    const wall = wallClock(service, raw.dt, text(raw.loc));
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description);
       if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: parsed });

@@ -21,7 +21,10 @@ code and an English wording. The adapter sends the waybill in capitals, since th
 it case for case, and reads the entry that echoes it.
 
 TopYou's own scans carry `+08:00`. The delivery carrier's scans it relays, USPS's in the United
-States, come without an offset and keep their wall clock, which their place dates. A reply with no
+States, come without an offset and keep their wall clock, which their place dates. GOFO's in France
+and Italy come with the destination's offset on a UTC wall clock: stated `+01:00`, each came an hour
+before GOFO's own instant for it and showed twice beside GOFO's scan, so a relayed scan's clock
+other than `+08:00` is read as UTC. A reply with no
 scans and no destination is the page's "查询不到" (not found); one with a destination and no scans
 is an order announced but not received, and `success: "false"` is the page's "暂无轨迹信息" (no
 tracking yet): both are known numbers without history.
@@ -29,7 +32,9 @@ tracking yet): both are known numbers without history.
 A scan's wording in [statuses.json](statuses.json) gives its stage first; a delivered (30) or
 returned (40) code settles it next, then the shared wording rules, then the code. Code 15 covers
 the delivery carrier's scans up to the delivery, out for delivery included, so it says only that
-the parcel moves, and USPS's acceptance after the flight is no first acceptance. The tracker's
+the parcel moves, and USPS's acceptance after the flight is no first acceptance. "Shipment is out
+for delivery" is the hand-over to GOFO, at GOFO's first sorting-centre scan days before its
+delivery round, so it is transit. The tracker's
 summary code settles a delivered or returned parcel.
 
 TopYou's own scans name the destination country even at the origin airport, so a place that is

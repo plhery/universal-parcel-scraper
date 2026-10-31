@@ -13,7 +13,8 @@ import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { canadaProvinceTimeZone, countryCode, countryTimeZone, sharedClockZone, usStateTimeZone } from '../../core/time/index.js';
+import { DateTime } from 'luxon';
+import { canadaProvinceTimeZone, countryCode, countryTimeZone, postalOfficeZone, sharedClockZone, usStateTimeZone } from '../../core/time/index.js';
 import { courierZone } from '../shared/hints.js';
 
 /** Services whose every scan is at one clock, wherever it happened and whatever other services the history names. */
@@ -51,8 +52,33 @@ const SUFFIXED_WALL_CLOCKS: ReadonlySet<string> = new Set(['russian-post']);
 /** A UTC suffix on a `dt`. */
 const UTC_SUFFIX = /(?:Z|[+-]00:?00)$/i;
 
-/** A scan's `dt` without the UTC suffix Postal Ninja writes on its service's wall clock; the `dt` itself otherwise. */
-export function wallClock(service: string, dt: string): string {
+/**
+ * DHL Germany's copies of the postal union's records at a European office,
+ * which name it by its UPU code: their `dt` is the office's wall clock read on
+ * Berlin's and written in UTC. Royal Mail's customs scans in Milan at 00:01
+ * and 23:06 came at 22:01 and 21:06, its departure from Belfast at 00:11
+ * British summer time at 22:11, and Swiss Post's posting at 10:05 Zurich time
+ * at 08:05.
+ */
+const BERLIN_UTC_COPIES = 'DHL Germany';
+const BERLIN = 'Europe/Berlin';
+
+/** The zone of the European office a scan of DHL Germany's copies names. */
+function berlinCopyZone(service: string, location: string): string | null {
+  const zone = service === BERLIN_UTC_COPIES ? postalOfficeZone(location) : null;
+  return zone?.startsWith('Europe/') ? zone : null;
+}
+
+/**
+ * A scan's `dt` as its service's wall clock: without the UTC suffix Postal
+ * Ninja writes on some, and DHL Germany's copies at a European office back on
+ * that office's clock; the `dt` itself otherwise.
+ */
+export function wallClock(service: string, dt: string, location = ''): string {
+  if (berlinCopyZone(service, location)) {
+    const written = DateTime.fromISO(dt, { zone: 'UTC' });
+    if (written.isValid) return written.setZone(BERLIN).toFormat("yyyy-MM-dd'T'HH:mm:ss");
+  }
   return SUFFIXED_WALL_CLOCKS.has(carrierIdFromName(service) ?? '') ? dt.replace(UTC_SUFFIX, '') : dt;
 }
 
@@ -163,7 +189,8 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
 
 /**
  * The established zone of a scan's wall time, from the service that reported
- * it: the destination post's clock for a scan Swiss Post relays from it, a UTC
+ * it: the destination post's clock for a scan Swiss Post relays from it, the
+ * office's for DHL Germany's copies at a European one, a UTC
  * post's or the origin's that an S10 suffix names for its copies, its fixed
  * or network clock in any history, China's for Cainiao's steps in China, else
  * in a history it reports alone its location's clock, or a local clock's
@@ -175,7 +202,8 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
  */
 export function serviceZone(scan: Scan, journey: Journey): string | null | false {
   const { service, description, wall, location, delivered } = scan;
-  const relayed = service === 'Swiss Post' ? swissPostDestinationZone(description, location, journey.destination) : null;
+  const relayed = service === 'Swiss Post' ? swissPostDestinationZone(description, location, journey.destination)
+    : berlinCopyZone(service, location);
   if (relayed) return relayed;
   if (UTC_POSTS.has(service)) {
     if (!originLeg(scan)) return 'UTC';

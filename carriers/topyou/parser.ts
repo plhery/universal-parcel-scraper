@@ -33,9 +33,15 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
   return clean(value, maxLength);
 }
 
+// The offset TopYou states for its own scans, on China's clock.
+const OWN_OFFSET = '+08:00';
+
 /**
- * A scan's clock. TopYou's own scans state their offset; the delivery
- * carrier's come as a wall clock without one, which their place dates.
+ * A scan's clock. TopYou's own scans state +08:00. The delivery carrier's
+ * come either as a wall clock without an offset, which their place dates
+ * (USPS's), or with the destination's offset on a UTC wall clock: GOFO's
+ * scans in France and Italy, stated +01:00, came an hour before GOFO's own
+ * instants for them.
  */
 function scanClock(row: Record<string, unknown>): { time: string } | { local_time: string } {
   const match = CLOCK.exec(text(row, 'changeDate', 32));
@@ -47,7 +53,7 @@ function scanClock(row: Record<string, unknown>): { time: string } | { local_tim
     throw new SchemaError(PROVIDER, 'TopYou returned an invalid scan time');
   }
   if (!zone) return { local_time: local };
-  const instant = explicitOffsetTime(`${local}${zone}`);
+  const instant = explicitOffsetTime(`${local}${zone === OWN_OFFSET ? zone : '+00:00'}`);
   if (!instant) throw new SchemaError(PROVIDER, 'TopYou returned an invalid scan time');
   return { time: instant.iso };
 }

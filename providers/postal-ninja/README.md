@@ -90,6 +90,12 @@ numbers or handles cannot end the lookup.
   Correos de España's copies of an origin post's scans are at that post's clock too
   ([Correos](../../carriers/correos-spain/README.md)), but Postal Ninja translates their
   wording, so they cannot be told apart and are read like its own scans.
+  DHL Germany's copies of the postal union's records at a European office, which name it by its
+  UPU code (`ITMILR`), give the office's wall clock read on Berlin's and written in UTC: Royal
+  Mail's customs scans in Milan at 00:01 and 23:06 came at 22:01 and 21:06, its departure from
+  Belfast at 00:11 British summer time at 22:11, and Swiss Post's posting at 10:05 Zurich time at
+  08:05. They are placed on the office's clock in any history. Read on a carrier's zone they
+  borrowed, Royal Mail's London time, they came hours early and showed beside Royal Mail's own.
   Cainiao's scans keep its feed's wall clock, each at its site's, as Cainiao's own offsets
   showed on two parcels. Its steps in China, from the seller's to the departing flight, are
   read on China's clock by their wording ([shared with ParcelsApp](../../carriers/aliexpress/clock.ts)),

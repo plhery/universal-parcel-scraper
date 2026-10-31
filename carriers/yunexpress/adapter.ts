@@ -51,6 +51,15 @@ const ARRIVAL = 'international flight has arrived';
 const HANDOVER = /^shipment (?:is )?in transit to (?:carrier|dhl)$/;
 // GOFO names its own facilities on its scans after the flight in.
 const GOFO_FACILITY = /^arrived at gofo\b/;
+/**
+ * La Poste's scans at its sorting platforms, as the feed relays them in
+ * France: their wall clocks are UTC, whatever offset the latest-scan record
+ * states. Its arrival in France at 13:21:33 is La Poste's 14:21:33+01:00, and
+ * 16:08:37 in summer its 18:08:37+02:00; a departure to the delivery centre
+ * follows the platform's scan only on UTC. Its delivery office's scans keep
+ * the office's clock.
+ */
+const LA_POSTE_UTC = new Set(['arrived at destination', 'handled by local carrier', 'transport to delivery centre']);
 
 /**
  * Dates the rows without a place that China's leg holds, up to the flight
@@ -189,6 +198,10 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   if (groups.length > 500) throw new SchemaError('YunExpress');
   const last = isRecord(info.LastTrackEvent) ? info.LastTrackEvent : {};
   const lastOffset = /^GMT([+-]\d{2}:\d{2})$/.exec(clean(last.GmtProcessTimezone, 32))?.[1];
+  const country = clean(info.DestinationCountryCode, 8).toUpperCase();
+  const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();
+  const declared = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
+  const laPosteRelay = country === 'FR' && declared !== '' && (detectCarrierMatch(declared).candidates as string[]).includes('la-poste');
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   const contents: string[] = [];
@@ -225,7 +238,8 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
       if (!description && events.length) continue;
       if (!description) throw new SchemaError('YunExpress', 'YunExpress returned an empty scan');
       const exactLast = isLast({ fullDescription, fullLocation });
-      const clock = eventClock(rawTime, exactLast ? lastOffset : undefined);
+      const utc = laPosteRelay && LA_POSTE_UTC.has(description.replace(/\s+/g, ' ').trim().toLowerCase());
+      const clock = eventClock(rawTime, utc ? '+00:00' : exactLast ? lastOffset : undefined);
       if (events.length === 0 && !exactLast) throw new IndeterminateError('YunExpress', 'YunExpress latest summary does not match its first scan');
       const key = JSON.stringify([clock, description, location]);
       if (seen.has(key)) continue;
@@ -244,13 +258,10 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   if (Array.isArray(info.TrackEventDetails) && info.TrackEventDetails.length > scans) {
     throw new IndeterminateError('YunExpress', 'YunExpress returned incomplete parcel history');
   }
-  const country = clean(info.DestinationCountryCode, 8).toUpperCase();
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
   const dated = officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(events), country), lastOffset, domestic));
   const latest = dated[0]!;
   const classified = current;
-  const deliveryNumber = clean(info.TrackingNumber, 64).toUpperCase();
-  const declared = deliveryNumber !== number && /^[A-Z0-9]{4,40}$/.test(deliveryNumber) ? deliveryNumber : '';
   // A partner's relayed row can link its contact page with its own reference,
   // the only place the reply gives it; it counts once a carrier owns it.
   const linked = declared ? undefined : contactReference(contents);

@@ -133,6 +133,24 @@ describe('Postal Ninja result parsing', () => {
     ]), us, 'America/New_York'))).toEqual(['2026-09-24T21:30:17.000Z', '2026-09-03T16:20:00.000Z']);
   });
 
+  it('reads DHL Germany\'s copies at a European office as its wall clock written in UTC on Berlin\'s clock', () => {
+    // Royal Mail's own scans: leaving Belfast at 00:11 summer time, with customs in Milan at 00:01 and 23:06.
+    const item = 'RR123456785GB';
+    const reply = postal(item, 'IT', [
+      { ds: 'DHL Germany', dt: '2026-10-05T22:11:00', dsc: 'Departure from outward office of exchange', loc: 'GBBELC' },
+      { ds: 'DHL Germany', dt: '2026-10-12T22:01:00', dsc: 'Held by customs', loc: 'ITMILR' },
+      { ds: 'DHL Germany', dt: '2026-10-14T21:06:00', dsc: 'Held by customs', loc: 'ITMILR' },
+    ]);
+    // Neither the carrier's zone nor its absence moves them.
+    for (const zone of ['Europe/London', null]) {
+      expect(times(parsePostalNinjaResponse(reply, item, zone))).toEqual(['2026-10-14T21:06:00.000Z',
+        '2026-10-12T22:01:00.000Z', '2026-10-05T23:11:00.000Z']);
+    }
+    // An office outside Europe, or a copy that names none, is not placed this way.
+    const abroad = postal(item, 'IT', [{ ds: 'DHL Germany', dt: '2026-10-05T22:11:00', dsc: 'Departure from outward office of exchange', loc: 'CNBJSA' }]);
+    expect(times(parsePostalNinjaResponse(abroad, item))).toEqual(['local 2026-10-05T22:11:00']);
+  });
+
   it('reads Cainiao\'s steps in China on China\'s clock, and lends it to none of its later scans', () => {
     // Cainiao's own feed dates these steps +08:00 at the same digits. On the Zurich
     // clock routing passes for a Swiss Post item they came six hours late.

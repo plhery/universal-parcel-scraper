@@ -273,6 +273,30 @@ describe('YunExpress captured response projection', () => {
       '2026-03-19T13:39:00-05:00', '2026-03-18T13:39:00-05:00', undefined, undefined]);
   });
 
+  it("reads La Poste's platform scans in France on UTC, and its delivery office's on the office's clock", () => {
+    // Against La Poste's own instants: its arrival in France at 18:08:37+02:00 came as 16:08:37.
+    const relay = () => fixture('la-poste-relay');
+    const delivered = parse(relay(), NUMBER);
+    expect(delivered).toMatchObject({ status: 'delivered', delivered_at: '2026-07-08T10:27:08+02:00' });
+    expect(delivered.events?.slice(0, 8).map((event) => event.time ?? `local ${event.local_time}`)).toEqual([
+      '2026-07-08T10:27:08+02:00', 'local 2026-07-08T08:56:20', 'local 2026-07-08T08:37:13', '2026-07-07T03:52:00Z',
+      '2026-07-06T21:07:00Z', '2026-07-06T19:58:00Z', '2026-07-06T19:09:03Z', '2026-07-06T16:08:37Z']);
+    expect(delivered.events?.[8]!.time).toBeUndefined();
+    // Newest, the platform's scan disregards the offset its record states.
+    const payload = relay();
+    const item = payload.ResultList[0];
+    item.TrackData.ProcessGroupList.shift();
+    item.TrackInfo.TrackEventDetails.splice(0, 3);
+    Object.assign(item.TrackInfo.LastTrackEvent, { ProcessDate: '2026-07-07T03:52:00', ProcessContent: 'Transport to delivery centre', TrackingStatus: 20 });
+    expect(parse(payload, NUMBER)).toMatchObject({ status: 'in_transit', last_update: '2026-07-07T03:52:00Z' });
+    // Another partner's reference, or another destination, keeps the wall clocks.
+    for (const change of [{ TrackingNumber: '9000000000000000000001' }, { DestinationCountryCode: 'BE' }]) {
+      const other = relay();
+      Object.assign(other.ResultList[0].TrackInfo, change);
+      expect(parse(other, NUMBER).events?.slice(1, 8).every((event) => !event.time)).toBe(true);
+    }
+  });
+
   it("dates China Post's relayed scans on China's clock, abroad too", () => {
     const payload = fixture();
     const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
