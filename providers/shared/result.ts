@@ -119,6 +119,17 @@ function withoutAddedCountry(location: string): string {
   return doubled || chinese ? parts.slice(0, -1).join(', ') : location;
 }
 
+/**
+ * A place with each part given once in a row ("SH,SH,CN"), except a country
+ * after a town of its name ("Mexico, Mexico").
+ */
+function withoutRepeatedParts(location: string): string {
+  const parts = location.split(',').map((part) => part.trim());
+  const repeated = (part: string, at: number) => part !== '' && part.toLowerCase() === parts[at - 1]?.toLowerCase()
+    && !(at === parts.length - 1 && countryCode(part));
+  return parts.some(repeated) ? parts.filter((part, at) => !repeated(part, at)).join(', ') : location;
+}
+
 /** The place a status given as a location names in 【】 or before its airport, '' when it names none, or undefined for any other location. */
 function statusPlace(location: string): string | undefined {
   const status = STATUS_PLACE.exec(location);
@@ -147,10 +158,11 @@ function offsetPlace(location: string): string | undefined {
  * label or placeholder ("--") that names no place, holds private delivery
  * details or is Posti's "abroad" label. A postcode given alone is the country
  * its code names, if any. A place with its row's offset after it is read without
- * it (`offsetPlace`). A country a feed added goes (`withoutAddedCountry`).
+ * it (`offsetPlace`). A part given twice in a row is read once (`withoutRepeatedParts`)
+ * and a country a feed added goes (`withoutAddedCountry`).
  */
 export function place(value: unknown): string {
-  const read = text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, '');
+  const read = withoutRepeatedParts(text(value).slice(0, 200).replace(DEPOT_PREFIX, '').replace(BRACKETED_POSTCODE, '').replace(OFFICE_CODE, '').replace(COUNTRY_LABEL, ''));
   const location = statusPlace(read) ?? offsetPlace(read) ?? postcodeCountry(read) ?? withoutAddedCountry(read);
   return /[\p{L}\p{N}]/u.test(location) && !NOT_PLACES.test(location) && !hasPrivateDeliveryDetails(location) && !isPostiAbroadLabel(location)
     ? location : '';

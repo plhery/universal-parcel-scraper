@@ -63,6 +63,11 @@ it('keeps scan locations from the API while excluding a delivery-service label a
   for (const location of ['Shanghai, China', '示例市,TW', '東京, JP', 'Example City,UNITED STATES', 'Luxembourg, Luxembourg', 'Example City, IN, US']) {
     expect(parse(location)?.location).toBe(location);
   }
+  // A part given twice in a row, read once, unless it is the country after a town of its name.
+  expect(parse('SH,SH,CN')?.location).toBe('SH, CN');
+  expect(parse('EXAMPLE TOWN, Example Town, DE')?.location).toBe('EXAMPLE TOWN, DE');
+  expect(parse('Mexico, Mexico')?.location).toBe('Mexico, Mexico');
+  expect(parse('00000,00000')).not.toHaveProperty('location');
 });
 
 it('keeps the reported place when another carrier repeats a delivery without a location', () => {
