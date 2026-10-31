@@ -1700,6 +1700,8 @@ describe("universal providers' answers", () => {
       // 17FEIA's customs broker, as Ship24 relays it with 17FEIA's label or "OTHER".
       ['Broker picked up Shipment and delivered to warehouse., OTHER', 'customs'],
       ['Broker picked up Shipment and delivered to warehouse., 清关行提货到仓', 'customs'],
+      // A customs agent's step, as ParcelsApp relays it after PostNL's pre-advice: the parcel waits for the agent.
+      ['customs agent: ready for pickup', 'customs'], ['customs agent: item received in warehouse', 'customs'],
       ['Manifested - Out for Pickup', 'registered'], ['Manifested', 'registered'],
       ['Awaiting your Vinted parcel', 'registered'], ['Expecting Your Parcel', 'registered'],
       ['Parcel received by Relay', 'accepted'], ['Received Your Parcel', 'accepted'], ['Collection Complete', 'delivered'],

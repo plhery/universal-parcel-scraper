@@ -238,6 +238,8 @@ describe('classifyWording', () => {
     ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'in_transit', source: 'wording:language' });
     // Held at a counter for the recipient to collect.
     expect(wordingStage('Held at Post Office, At Customer Request')).toBe('ready_for_pickup');
+    // Ready for the customs agent, as DealerSend words it, is customs at work.
+    expect(wordingStage('Customs Agent: Ready For Pickup')).toBe('customs');
     expect(wordingStage('Fermo in ufficio postale su richiesta del destinatario')).toBe('ready_for_pickup');
     // A hold nobody asked for, or a missed attempt, keeps its own stage.
     for (const wording of ['Shipment on hold', 'Shipment held, awaiting instructions', 'Colis retenu', 'Sendung zurückgehalten']) {

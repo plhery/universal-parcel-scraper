@@ -225,10 +225,12 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // the language rules instead of reading as a delivery.
   if (/\bdelivered\b|delivery completed/i.test(description)
     && [undefined, 'delivered'].includes(trackingLanguageStage(description))) return 'delivered';
-  // An order ready for the courier to collect from its sender is a registration, as the shared
-  // rules read it, whatever transit code a provider files it under.
+  // An order ready for the courier to collect from its sender is a registration, and a parcel
+  // ready for the customs agent is at customs, as the shared rules read them, whatever transit
+  // code a provider files them under.
   if (/ready for (?:pickup|collection)|available for (?:pickup|collection)/i.test(description)) {
-    return trackingLanguageStage(description) === 'registered' ? 'registered' : 'ready_for_pickup';
+    const read = trackingLanguageStage(description);
+    return read === 'registered' || read === 'customs' ? read : 'ready_for_pickup';
   }
   // Correos Express's way to the destination town, as Ship24 words it: "now out for delivery to
   // the destination facilities on one of our vehicles". Its own map reads it as transit.

@@ -312,6 +312,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/customs (?:issue|problem)|probleme de douane|zollproblem|problema doganale|problema de aduana|problema (?:alfandegario|na alfandega)|problem celny/.test(text)) return 'exception';
   // So are import charges the recipient still owes: customs keeps the parcel until they are paid.
   if (CUSTOMS_HOLD.test(text) || DUTIES_DUE.test(text)) return 'customs';
+  // A customs agent's step relayed under its name ("Customs agent: ready for pickup"): the parcel
+  // waits for the agent at the airport, not for the recipient.
+  if (/^customs (?:agent|broker)\s*:\s*ready (?:for|to be) (?:pick ?up|picked up|collect)/.test(text)) return 'customs';
   if (/(?:shipment|parcel|package) (?:is )?(?:held|blocked|on hold)|held pending|awaiting (?:your )?instructions|action required|(?:colis|envoi|pli) (?:bloque|retenu)|en attente d'instructions|action requise|sendung (?:blockiert|zuruckgehalten|angehalten)|wartet auf anweisungen|handlung erforderlich|spedizione (?:bloccata|trattenuta)|in attesa di istruzioni|envio (?:bloqueado|retenido)|en espera de instrucciones|accion requerida|encomenda (?:bloqueada|retida)|aguarda instrucoes|acao necessaria|przesylka (?:zatrzymana|wstrzymana)|oczekuje na instrukcje/.test(text)) return 'exception';
   if (/\bincident\b|\banomal(?:y|ie|ia)\b|delivery exception|shipment exception|irregularit|unregelmassigkeit|storung|vorfall|inconveniente|incidencia|nieprawidlowosc/.test(text)) return 'exception';
   // Carriers' own codes file a cancellation as an exception (17TRACK's
