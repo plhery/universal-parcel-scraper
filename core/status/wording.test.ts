@@ -22,6 +22,25 @@ describe('classifyWording', () => {
     },
   );
 
+  it('never reads a pickup that did not happen, or is still to come, as the acceptance', () => {
+    for (const wording of ['Not picked up', 'Parcel not picked up by the recipient', "Parcel wasn't picked up",
+      'The recipient has not picked up the shipment from the retail outlet within the seven-day storage period',
+      'Consignment has not been picked up', 'Shipment(s) not picked up due to backlog, pickup order cancelled', 'Item not collected',
+      'Uncollected parcel', 'Die Sendung wurde nicht abgeholt', "Le colis n'a pas été retiré", 'Il pacco non è stato ritirato',
+      'No se ha recogido el envío']) expect(trackingLanguageStage(wording), wording).toBe('exception');
+    // One yet to be made waits for whoever the scan names.
+    for (const wording of ['Shipment not yet picked up by the courier', 'Label created, not yet picked up',
+      'Not yet picked up by the last-mile carrier']) expect(trackingLanguageStage(wording), wording).toBe('registered');
+    expect(trackingLanguageStage('Parcel not yet collected by the recipient')).toBe('ready_for_pickup');
+    for (const wording of ['If not picked up within 7 days the parcel returns', 'Shipment will be picked up as scheduled', 'To be picked up by courier']) {
+      expect(trackingLanguageStage(wording), wording).toBeUndefined();
+    }
+    for (const wording of ['Picked up', 'Shipment has been picked up by the courier']) expect(trackingLanguageStage(wording), wording).toBe('accepted');
+    // One the recipient can make now is the parcel waiting for them, unless the courier is to make it.
+    expect(trackingLanguageStage('Item can be picked up at the Post Office')).toBe('ready_for_pickup');
+    expect(trackingLanguageStage('Parcel can be collected by the courier')).toBeUndefined();
+  });
+
   it.each(["Il va être retourné à l'expéditeur", "Retour à l'expéditeur en cours", "Votre colis est en cours de retour vers l'expéditeur",
     "Le colis sera livré à son expéditeur", 'Die Sendung wird an den Absender zurückgesendet', 'Die Sendung ist auf dem Rückweg zum Absender',
     'Sendung wird retourniert', 'Il pacco sarà restituito al mittente', 'In restituzione al mittente',
