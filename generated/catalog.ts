@@ -7848,7 +7848,8 @@ export const CARRIER_CATALOG = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "aquiline",
+      "recognitionRank": 74
     },
     "canaryUrl": "https://aq-track.com/",
     "trackingUrlTemplate": "https://aq-track.com/app/track/{trackingNumber}",
@@ -39028,7 +39029,10 @@ export const CARRIER_CATALOG = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ukp-worldwide",
+      "recognitionRank": 73,
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.ukpworldwide.com/",
     "trackingUrlTemplate": "https://www.ukpworldwide.com/tracking/?x={trackingNumber}",
@@ -40431,7 +40435,9 @@ export const CARRIER_CATALOG = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "wiio",
+      "recognitionRank": 61,
+      "localClocks": true
     },
     "canaryUrl": "https://wiio.com/",
     "trackingSearchUrl": "https://wiio.com/",

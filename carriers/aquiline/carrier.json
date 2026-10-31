@@ -19,18 +19,49 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "aquiline",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 74
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://aq-track.com/app/track/{trackingNumber}",
     "searchUrl": "https://aq-track.com/",
     "canaryUrl": "https://aq-track.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin_country",
+      "destination_country",
+      "eta"
+    ],
+    "scraped": [
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "status",
+      "origin_country",
+      "eta"
+    ],
+    "unavailable": [
+      "provider_code",
+      "service_name",
+      "delivery_tracking_number",
+      "weight",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

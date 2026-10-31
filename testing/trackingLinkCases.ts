@@ -1981,6 +1981,15 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'optima-overnight', number: 'P00000000000017',
     route: /^https:\/\/www\.shipoptima\.com\/pages\/tracking\?tracking=P00000000000017$/,
     marker: /No shipment found for tracking number/ },
+  // The server renders the parcel's scans, or says it does not recognise the number, with HTTP 200.
+  { carrier: 'ukp-worldwide', number: 'WHISU990000001',
+    route: /^https:\/\/www\.ukpworldwide\.com\/tracking\/\?x=WHISU990000001$/,
+    marker: /Nothing found|Tracking results/,
+    forwarding: { notFound: /Nothing found/ } },
+  // The app asks the tracker's function for the number in its path and shows it over its scans, or over none.
+  { carrier: 'aquiline', number: 'AQUAA9900000009YQ',
+    route: /^https:\/\/aq-track\.com\/app\/track\/AQUAA9900000009YQ$/,
+    marker: /Tracking History|No tracking events available/ },
   // The page looks the number up from its script and says when it holds no package under it.
   { carrier: 'consegnia', number: 'CLC999999917',
     route: /^https:\/\/clc-express\.com\/track-delivery\?awb=CLC999999917$/,

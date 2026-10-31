@@ -35,6 +35,7 @@ import { adapter as anteraja } from '../carriers/anteraja/adapter.js';
 import { adapter as apcOvernight } from '../carriers/apc-overnight/adapter.js';
 import { adapter as apcPostalLogistics } from '../carriers/apc-postal-logistics/adapter.js';
 import { adapter as appleExpress } from '../carriers/apple-express/adapter.js';
+import { adapter as aquiline } from '../carriers/aquiline/adapter.js';
 import { adapter as aramex } from '../carriers/aramex/adapter.js';
 import { adapter as aramexAu } from '../carriers/aramex-au/adapter.js';
 import { adapter as aramexNz } from '../carriers/aramex-nz/adapter.js';
@@ -615,6 +616,7 @@ import { adapter as tstCfExpress } from '../carriers/tst-cf-express/adapter.js';
 import { adapter as tufesa } from '../carriers/tufesa/adapter.js';
 import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
+import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
 import { adapter as ukrposhta } from '../carriers/ukrposhta/adapter.js';
 import { adapter as unitedDeliveryService } from '../carriers/united-delivery-service/adapter.js';
 import { adapter as uniuni } from '../carriers/uniuni/adapter.js';
@@ -638,6 +640,7 @@ import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
+import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
@@ -699,6 +702,7 @@ export const REGISTRY: RegistryDefinition = {
     "apc-overnight": apcOvernight,
     "apc-postal-logistics": apcPostalLogistics,
     "apple-express": appleExpress,
+    "aquiline": aquiline,
     "aramex": aramex,
     "aramex-au": aramexAu,
     "aramex-nz": aramexNz,
@@ -1279,6 +1283,7 @@ export const REGISTRY: RegistryDefinition = {
     "tufesa": tufesa,
     "tws-express": twsExpress,
     "ubi-smart-parcel": ubiSmartParcel,
+    "ukp-worldwide": ukpWorldwide,
     "ukrposhta": ukrposhta,
     "united-delivery-service": unitedDeliveryService,
     "uniuni": uniuni,
@@ -1302,6 +1307,7 @@ export const REGISTRY: RegistryDefinition = {
     "wanbexpress": wanbexpress,
     "whistl": whistl,
     "whiz-delivery": whizDelivery,
+    "wiio": wiio,
     "winit": winit,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
@@ -1393,7 +1399,7 @@ export const REGISTRY: RegistryDefinition = {
     "apg-ecommerce": "universal",
     "apple-express": "apple-express",
     "apx-logistics": "universal",
-    "aquiline": "universal",
+    "aquiline": "aquiline",
     "aramex": "aramex",
     "aramex-au": "aramex-au",
     "aramex-nz": "aramex-nz",
@@ -2285,7 +2291,7 @@ export const REGISTRY: RegistryDefinition = {
     "ubi-smart-parcel": "ubi-smart-parcel",
     "ubx-uk": "universal",
     "ues-uy": "universal",
-    "ukp-worldwide": "universal",
+    "ukp-worldwide": "ukp-worldwide",
     "ukrposhta": "ukrposhta",
     "united-delivery-service": "united-delivery-service",
     "united-worldwide-couriers": "universal",
@@ -2328,7 +2334,7 @@ export const REGISTRY: RegistryDefinition = {
     "western-bid": "universal",
     "whistl": "whistl",
     "whiz-delivery": "whiz-delivery",
-    "wiio": "universal",
+    "wiio": "wiio",
     "winion-logis": "universal",
     "winit": "winit",
     "wise-express": "universal",
