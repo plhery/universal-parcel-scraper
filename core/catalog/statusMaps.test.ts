@@ -176,7 +176,7 @@ describe('status map answers', () => {
     // China Post's domestic scans as JS Express and the providers relay them, any office in 【】.
     for (const carrier of ['js-express', 'unknown']) {
       for (const wording of ['邮件到达【示例市国际互换局】', '邮件离开【示例揽投部】，正在发往【示例市】', '邮件已在【示例揽投部】完成分拣，准备发出',
-        '【示例市国际互换局】已出口直封', '出口海关/放行']) {
+        '【示例市国际互换局】已出口直封', '已交承运商运输', '航空公司接收', '航空公司启运', '出口海关/放行']) {
         expect(answer(carrier, null, wording), `${carrier} ${wording}`).toEqual(mapped('in_transit'));
       }
       expect(answer(carrier, null, '送交出口海关')).toEqual(mapped('customs'));
