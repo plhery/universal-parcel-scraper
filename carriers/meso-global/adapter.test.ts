@@ -77,11 +77,13 @@ describe('Meso-global tracking adapter', () => {
     expect(() => parseMesoGlobalPage(page('page-unknown'), UNKNOWN, READ_AT)).toThrow('could not locate');
   });
 
-  it('maps every wording it lists by wording alone, a flight row whatever day it names, and the app reads the map', () => {
+  it('maps every wording it lists by wording alone, a flight or hand-over row whatever day it names, and the app reads the map', () => {
     for (const entry of statuses.entries) {
       expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
-      expect(statusMap.stage(null, normalizeStatusWording(entry.english)), entry.english).toBe(entry.stage);
+      if (entry.english) expect(statusMap.stage(null, normalizeStatusWording(entry.english)), entry.english).toBe(entry.stage);
     }
+    expect(statusMap.stage(null, '10-31 已交仓 留意官网更新')).toBe('in_transit');
+    expect(mesoGlobalEnglish(null, '1-5 已交仓 留意官网更新')).toBe("Handed over to the delivery carrier's depot; watch its website for updates");
     for (const wording of ['预计10-22飞', '预计1-5飞']) {
       expect(statusMap.stage(null, wording), wording).toBe('in_transit');
       expect(mesoGlobalEnglish(null, wording), wording).toBe('Flight booked');

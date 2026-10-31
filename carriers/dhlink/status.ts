@@ -134,7 +134,7 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^送交出口海关$/, 'customs'],
   // A line's own rows in Chinese, most with its English after them: the collection point and the
   // operation centre, the warehouse's intake and customs' release before the flight, the flight,
-  // import clearance once the dispatch is unpacked, then the destination warehouse and the
+  // the dispatch unpacked and collected, import clearance, then the destination warehouse and the
   // hand-over to the local carrier.
   [/^到达收货点$/, 'accepted'],
   // DHLink's warehouses after its receipt: one in China before export ("您的物品已到达华东仓"), and one in
@@ -146,6 +146,7 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^通关放行[;；]/, 'in_transit'],
   [/^航班起飞[,，]/, 'in_transit'],
   [/^航班已落地[;；]/, 'in_transit'],
+  [/^拆板提货中[;；]/, 'in_transit'],
   [/^拆板清关中[;；]/, 'customs'],
   [/^清关完成[,，]交仓中/, 'in_transit'],
   [/^货物已交仓[,，]/, 'in_transit'],

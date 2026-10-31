@@ -19,9 +19,10 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 ## Notes
 
 - The status map lists the Chinese rows universal providers relay from the tracker, from the
-  shipment data to the import clearance, with the English the adapter shows for them. Flight
-  rows name the day they expect the flight as month-day; the map reads them without it, and the
-  English leaves it out, since it is still to come.
+  shipment data to the hand-over at the delivery carrier's depot, with the English the adapter
+  shows for them, and DHL Germany's English rows that follow. Flight rows name the day they
+  expect the flight as month-day; the map reads them without it, and the English leaves it out,
+  since it is still to come. The hand-over row starts with a month-day too, read the same way.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder Meso-global, and its Chinese name 中际跨境; both are names here.
