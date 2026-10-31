@@ -1,0 +1,61 @@
+{
+  "id": "aquiline",
+  "displayName": "Aquiline",
+  "aliases": [
+    "Aquiline Tracking",
+    "AQ Tracking",
+    "AQ Track",
+    "Aquiline Shipping"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#5e60eb"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://aq-track.com/app/track/{trackingNumber}",
+    "searchUrl": "https://aq-track.com/",
+    "canaryUrl": "https://aq-track.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "aq-track.com",
+        "aquiline-tracking.com"
+      ],
+      "path": "^/app/track/([^/?#]+)/?$"
+    },
+    {
+      "domains": [
+        "aq-track.com",
+        "aquiline-tracking.com"
+      ],
+      "pathPattern": "^/app/?$",
+      "params": [
+        "track"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "aquiline-1",
+      "pattern": "^AQUAA\\d{10}YQ$",
+      "confidence": "low"
+    }
+  ]
+}

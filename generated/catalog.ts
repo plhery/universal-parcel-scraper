@@ -3690,7 +3690,12 @@ export const CARRIER_CATALOG = {
     "color": "#e62337",
     "aliases": [
       "IMX France",
-      "IMX Postal"
+      "IMX Postal",
+      "FDM",
+      "FDM Logistics",
+      "Freight Distribution Management",
+      "Landmark Global Australia",
+      "Landmark Global – Australia"
     ],
     "selectable": true,
     "timezone": "UTC",
@@ -7827,6 +7832,53 @@ export const CARRIER_CATALOG = {
     ],
     "detectionRules": []
   },
+  "aquiline": {
+    "displayName": "Aquiline",
+    "color": "#5e60eb",
+    "aliases": [
+      "Aquiline Tracking",
+      "AQ Tracking",
+      "AQ Track",
+      "Aquiline Shipping"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://aq-track.com/",
+    "trackingUrlTemplate": "https://aq-track.com/app/track/{trackingNumber}",
+    "trackingSearchUrl": "https://aq-track.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "aq-track.com",
+          "aquiline-tracking.com"
+        ],
+        "path": "^/app/track/([^/?#]+)/?$"
+      },
+      {
+        "domains": [
+          "aq-track.com",
+          "aquiline-tracking.com"
+        ],
+        "pathPattern": "^/app/?$",
+        "params": [
+          "track"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^AQUAA\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "aramex-au": {
     "displayName": "Aramex Australia",
     "color": "#dc291e",
@@ -9598,6 +9650,31 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "btd": {
+    "displayName": "BTD",
+    "color": "#1d2088",
+    "aliases": [
+      "宝通达",
+      "宝通达国际",
+      "深圳市宝通达国际货运代理有限公司",
+      "Shenzhen Bao Tongda International Freight Forwarding Co., Ltd.",
+      "Bao Tongda",
+      "Baotongda"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.btdair.com/",
+    "trackingSearchUrl": "https://www.btdair.com/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "bts-uz": {
     "displayName": "BTS Express",
@@ -38934,6 +39011,47 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "ukp-worldwide": {
+    "displayName": "UKP Worldwide",
+    "color": "#2eb1dd",
+    "aliases": [
+      "UKPW",
+      "UK Postings",
+      "UK Postings Ltd",
+      "UK Postings Limited",
+      "Mail Right International"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.ukpworldwide.com/",
+    "trackingUrlTemplate": "https://www.ukpworldwide.com/tracking/?x={trackingNumber}",
+    "trackingSearchUrl": "https://www.ukpworldwide.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ukpworldwide.com",
+          "ukpworldwide.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "x"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^WHISU\\d{9}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "united-delivery-service": {
     "displayName": "United Delivery Service",
     "color": "#1e4691",
@@ -40293,6 +40411,48 @@ export const CARRIER_CATALOG = {
       }
     ]
   },
+  "wiio": {
+    "displayName": "Wiio",
+    "color": "#e9556e",
+    "aliases": [
+      "Wiio Pengda Logistics",
+      "Wiio Limited",
+      "PD Express",
+      "蓬达",
+      "蓬达物流",
+      "Pengda Logistics",
+      "杭州蓬达科技有限公司",
+      "Hangzhou Pengda Technology Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://wiio.com/",
+    "trackingSearchUrl": "https://wiio.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.hzpdex.com"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ZLX[A-Z]{2}\\d{10}[A-Z]{2}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "winion-logis": {
     "displayName": "WINION LOGIS",
     "color": "#006ecd",
@@ -40975,6 +41135,42 @@ export const CARRIER_CATALOG = {
         "confidence": "low"
       }
     ]
+  },
+  "xyl": {
+    "displayName": "XYL",
+    "color": "#d0b692",
+    "aliases": [
+      "XYL 816Kapro",
+      "816Kapro",
+      "兴远国际",
+      "兴远国际物流",
+      "广州市兴远国际物流有限公司",
+      "Xingyuan International Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.816kf.com/",
+    "trackingUrlTemplate": "https://816kf.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills={trackingNumber}",
+    "trackingSearchUrl": "https://www.816kf.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "816kf.kingtrans.cn"
+        ],
+        "pathPattern": "^/WebTrack$",
+        "params": [
+          "bills"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "yalidine": {
     "displayName": "Yalidine",
@@ -41953,6 +42149,7 @@ export const CARRIER_IDS = [
   "apg-ecommerce",
   "apple-express",
   "apx-logistics",
+  "aquiline",
   "aramex-au",
   "aramex-nz",
   "aras-kargo",
@@ -41996,6 +42193,7 @@ export const CARRIER_IDS = [
   "boxtal",
   "boyuan",
   "bringer-parcel",
+  "btd",
   "bts-uz",
   "budbee",
   "buffalo-ex",
@@ -42753,6 +42951,7 @@ export const CARRIER_IDS = [
   "ubi-smart-parcel",
   "ubx-uk",
   "ues-uy",
+  "ukp-worldwide",
   "united-delivery-service",
   "united-worldwide-couriers",
   "upaya",
@@ -42790,6 +42989,7 @@ export const CARRIER_IDS = [
   "western-bid",
   "whistl",
   "whiz-delivery",
+  "wiio",
   "winion-logis",
   "winit",
   "wise-express",
@@ -42808,6 +43008,7 @@ export const CARRIER_IDS = [
   "xlmiles",
   "xpo-ltl",
   "xpressbees",
+  "xyl",
   "yalidine",
   "yamato-america",
   "yc-delivery",
@@ -43003,6 +43204,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "apg-ecommerce": [],
   "apple-express": ["apple-express-1"],
   "apx-logistics": [],
+  "aquiline": ["aquiline-1"],
   "aramex-au": ["aramex-au-1"],
   "aramex-nz": ["aramex-nz-mx","aramex-nz-1","aramex-nz-2"],
   "aras-kargo": ["aras-kargo-1"],
@@ -43046,6 +43248,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "boxtal": ["boxtal-1"],
   "boyuan": ["boyuan-1"],
   "bringer-parcel": ["bringer-parcel-1"],
+  "btd": [],
   "bts-uz": [],
   "budbee": [],
   "buffalo-ex": ["buffalo-ex-1"],
@@ -43803,6 +44006,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
   "ubx-uk": [],
   "ues-uy": ["ues-uy-1"],
+  "ukp-worldwide": ["ukp-worldwide-1"],
   "united-delivery-service": ["united-delivery-service-1"],
   "united-worldwide-couriers": [],
   "upaya": ["upaya-1"],
@@ -43840,6 +44044,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "western-bid": ["western-bid-1"],
   "whistl": ["whistl-1"],
   "whiz-delivery": ["whiz-delivery-1"],
+  "wiio": ["wiio-1"],
   "winion-logis": [],
   "winit": ["winit-1","winit-2","winit-3"],
   "wise-express": [],
@@ -43858,6 +44063,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xlmiles": [],
   "xpo-ltl": ["xpo-ltl-1"],
   "xpressbees": ["xpressbees-awb"],
+  "xyl": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yc-delivery": [],

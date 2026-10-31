@@ -1,0 +1,55 @@
+{
+  "id": "ukp-worldwide",
+  "displayName": "UKP Worldwide",
+  "aliases": [
+    "UKPW",
+    "UK Postings",
+    "UK Postings Ltd",
+    "UK Postings Limited",
+    "Mail Right International"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#2eb1dd"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.ukpworldwide.com/tracking/?x={trackingNumber}",
+    "searchUrl": "https://www.ukpworldwide.com/tracking/",
+    "canaryUrl": "https://www.ukpworldwide.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.ukpworldwide.com",
+        "ukpworldwide.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "x"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "ukp-worldwide-1",
+      "pattern": "^WHISU\\d{9}$",
+      "confidence": "low"
+    }
+  ]
+}

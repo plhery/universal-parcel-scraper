@@ -548,6 +548,37 @@ describe('ComOne Express, GESWL Express, DPX Logistics, Citilogistics and Arrow 
   });
 });
 
+describe('Aquiline, Wiio, UKP Worldwide, BTD and XYL', () => {
+  it('names the carriers from providers and reads their tracker links', () => {
+    for (const [name, id] of [['Aquiline', 'aquiline'], ['AQ Tracking', 'aquiline'], ['Wiio', 'wiio'], ['PD Express', 'wiio'],
+      ['蓬达物流', 'wiio'], ['UKP Worldwide', 'ukp-worldwide'], ['UK Postings', 'ukp-worldwide'], ['BTD', 'btd'], ['宝通达', 'btd'],
+      ['XYL', 'xyl'], ['兴远国际', 'xyl'], ['FDM', 'landmark-global'], ['Freight Distribution Management', 'landmark-global']] as const) {
+      expect(carrierIdFromName(name), name).toBe(id);
+    }
+    for (const name of ['UKP', 'Xingyuan']) expect(carrierIdFromName(name), name).toBeUndefined();
+    for (const [url, number, carrier] of [
+      ['https://aq-track.com/app/track/AQUAA1234567890YQ', 'AQUAA1234567890YQ', 'aquiline'],
+      ['https://aquiline-tracking.com/app/?track=AQUAA1234567890YQ', 'AQUAA1234567890YQ', 'aquiline'],
+      ['http://www.hzpdex.com:8082/trackIndex.htm?documentCode=ZLXAB1234567890CD', 'ZLXAB1234567890CD', 'wiio'],
+      ['https://www.ukpworldwide.com/tracking/?x=WHISU123456789', 'WHISU123456789', 'ukp-worldwide'],
+      ['https://816kf.kingtrans.cn/WebTrack?action=list&language=en&istrack=false&bills=XY1000000017', 'XY1000000017', 'xyl'],
+    ] as const) {
+      expect(parseTrackingInput(url), url).toMatchObject({ trackingNumber: number, carrier, source: 'link' });
+    }
+  });
+
+  it('suggests Aquiline, Wiio and UKP Worldwide for their own prefixes only', () => {
+    for (const [number, carrier] of [['AQUAA1234567890YQ', 'aquiline'], ['ZLXAB1234567890CD', 'wiio'], ['WHISU123456789', 'ukp-worldwide']] as const) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: [carrier] });
+    }
+    for (const number of ['AQUAB1234567890YQ', 'AQUAA123456789YQ', 'AQUAA1234567890YZ', 'ZLXA11234567890CD', 'ZLXAB123456789CD',
+      'ZLYAB1234567890CD', 'WHISU12345678', 'WHISU1234567890', 'WHISA123456789']) {
+      const candidates = detectCarrierMatch(number).candidates ?? [];
+      for (const carrier of ['aquiline', 'wiio', 'ukp-worldwide']) expect(candidates, number).not.toContain(carrier);
+    }
+  });
+});
+
 describe('Asiafly, ShunBang Express, Topex Logistics, 360Lion, Cititrans, SYD Express, We World Express, Vnlin and XingYunYi', () => {
   it('names the carriers from providers and reads their tracker links', () => {
     for (const [name, id] of [['ASIAFLY', 'asiafly'], ['亚翔国际', 'asiafly'], ['KJY', 'shunbang-express'], ['ShunBang', 'shunbang-express'],

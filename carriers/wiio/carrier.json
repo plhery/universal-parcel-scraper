@@ -1,0 +1,56 @@
+{
+  "id": "wiio",
+  "displayName": "Wiio",
+  "aliases": [
+    "Wiio Pengda Logistics",
+    "Wiio Limited",
+    "PD Express",
+    "蓬达",
+    "蓬达物流",
+    "Pengda Logistics",
+    "杭州蓬达科技有限公司",
+    "Hangzhou Pengda Technology Co., Ltd."
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e9556e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://wiio.com/",
+    "canaryUrl": "https://wiio.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.hzpdex.com"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "wiio-1",
+      "pattern": "^ZLX[A-Z]{2}\\d{10}[A-Z]{2}$",
+      "confidence": "low"
+    }
+  ]
+}

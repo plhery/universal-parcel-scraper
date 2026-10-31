@@ -4,7 +4,10 @@ Tracks individual LTN references through the official anonymous portal,
 including the portal's canonical identity for references ending in N1. When the
 user picks Landmark, or opens a Landmark link carrying one, it also takes the merchant
 references the portal finds. IMX France, which sold as IMX Postal, belongs to Landmark Global
-and its tracker now sends visitors to Landmark's, so those names count as Landmark's.
+and its tracker now sends visitors to Landmark's, so those names count as Landmark's. FDM
+Logistics (Freight Distribution Management) became Landmark Global – Australia, so its names
+count as Landmark's too. Its former tracker still answers, but no public number shows that
+Landmark's page knows FDM's references, so links to it are not read.
 
 ## How it works
 
