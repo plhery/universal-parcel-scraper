@@ -1180,7 +1180,9 @@ describe('LEX Malaysia, DEX Pakistan, ShipGlobal India, Parxl, EFS Asia and Fast
 describe('Shipter, Tonda Global, Liuchen, EAC and LBTX', () => {
   it('suggests Shipter for its own layout beside the broad Colis Privé shape', () => {
     expect(detectCarrierMatch('H3AU100017KR')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['shipter']) });
-    for (const number of ['H3AU10017KR', 'H3AU1000017KR', 'H3A1100017KR', 'H4AU100017KR', 'H3AU100017CN']) {
+    // A five-digit serial, as on a parcel whose Shipter rows 17TRACK read.
+    expect(detectCarrierMatch('H3FR10017KR')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['shipter'] });
+    for (const number of ['H3AU1017KR', 'H3AU1000017KR', 'H3A1100017KR', 'H3A110017KR', 'H4AU10017KR', 'H3AU10017CN']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('shipter');
     }
   });

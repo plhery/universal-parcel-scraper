@@ -23,6 +23,21 @@
         ]
       },
       "note": "Looked up on Shipter's own tracker, as an archived page shows; the tracker still finds it, delivered abroad by a partner."
+    },
+    {
+      "number": "H3FR10017KR",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-04",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "shipter"
+        ]
+      },
+      "note": "Made-up number in the layout of a parcel with a five-digit serial whose rows 17TRACK read from Shipter."
     }
   ]
 }

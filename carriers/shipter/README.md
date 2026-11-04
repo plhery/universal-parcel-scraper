@@ -7,9 +7,10 @@ the destination country. Its site is shipter.kr.
 
 ## Numbers
 
-Its numbers are `H3`, the destination's country code, six digits and `KR`, which `shipter-1` suggests at
-low confidence; the only public example is an archived lookup on its own tracker. The delivery carrier's
-number stays with that carrier.
+Its numbers are `H3`, the destination's country code, five or six digits and `KR`, which `shipter-1`
+suggests at low confidence. The only public example is an archived lookup on its own tracker, with six
+digits; a parcel whose Shipter rows 17TRACK read had five. The delivery carrier's number stays with that
+carrier.
 
 ## Why there is no adapter
 

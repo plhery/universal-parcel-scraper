@@ -40788,7 +40788,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^H3[A-Z]{2}\\d{6}KR$",
+        "pattern": "^H3[A-Z]{2}\\d{5,6}KR$",
         "confidence": "low"
       }
     ]
