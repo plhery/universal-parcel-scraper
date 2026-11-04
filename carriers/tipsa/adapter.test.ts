@@ -101,7 +101,7 @@ describe('TIPSA shipment page', () => {
     ]);
   });
 
-  it("keeps the round's stage on the agency's reads as it loads the van, minutes after the round", () => {
+  it("reads the agency's reads as it loads the van, minutes after the round, as out for delivery", () => {
     const loading = (minute: string, description: string) => `<tr><td class="mdl-data-table__cell--non-numeric">30/03/26 09:${minute}</td>`
       + `<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_des_0">${description}</span></td>`
       + '<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_pob_0">VILLA EJEMPLO</span></td></tr>';
@@ -109,8 +109,8 @@ describe('TIPSA shipment page', () => {
     const read = parseTipsaDetail(page(loading('06', 'LEIDO EN DESTINO'), loading('06', 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')), NUMBER);
     expect(read).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'LEIDO EN DESTINO' });
     expect(read.events?.slice(0, 4).map(({ description, stage, stage_source }) => [description, stage, stage_source])).toEqual([
-      ['LEIDO EN DESTINO', 'out_for_delivery', 'none'],
-      ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'out_for_delivery', 'none'],
+      ['LEIDO EN DESTINO', 'out_for_delivery', undefined],
+      ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'out_for_delivery', undefined],
       ['REPARTO', 'out_for_delivery', undefined],
       ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'in_transit', undefined],
     ]);

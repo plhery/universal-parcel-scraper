@@ -565,6 +565,54 @@
       "note": "The delivering carrier's driver has the parcel, hours after its terminal scan, and Yanwen files the parcel as Out_For_Delivery. Intelcom words its loading this way, as Stallion Express relays it."
     },
     {
+      "wording": "Shipment sent from destination transit centre,Despatched to overseas (Country code: TR)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "A leg into Turkey: the dispatch on to the destination, each line a scan and the postal event it records."
+    },
+    {
+      "wording": "Shipment received at Post Office,Arrival at Destination Post (Country: TR)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The destination post's receipt, two days after the dispatch."
+    },
+    {
+      "wording": "Shipment arrived at overseas hub/ branch,Arrival at Processing Center (Country code: TR)",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Arrival at the destination's processing centre, minutes before import customs."
+    },
+    {
+      "wording": "IN TRANSIT,Present to Import Customs",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Presented to import customs."
+    },
+    {
+      "wording": "Shipment released from customs/ government check point,Released from Custom",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Customs released the parcel, at the minute the collection point's hold begins."
+    },
+    {
+      "wording": "Shipment hold for collection,Receive item at collection point for pick-up (Country: TR)",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The collection point holds the parcel for the recipient to pick up, after its release from customs."
+    },
+    {
       "wording": "UA.",
       "language": "en",
       "confirmedBy": "live",

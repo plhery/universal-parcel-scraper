@@ -6,6 +6,10 @@ export function comparable(value: string): string {
   return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toUpperCase().replace(/\s+/g, ' ').trim();
 }
 
+// The destination agency's reads: on arrival, and again as it loads the van for the round:
+// "LECTURA EN AGENCIA DESTINO …" or "LEIDO EN DESTINO".
+export const AGENCY_READ = /^(?:LECTURA EN AGENCIA DESTINO\b|LEIDO EN DESTINO$)/;
+
 // TIPSA's history labels, as the shipment page lists them.
 const LABELS = new Map<string, ClassifiedStatus>([
   ['PENDIENTE DE ENTREGAR A TIPSA', { status: 'pending', stage: 'registered' }],
@@ -38,9 +42,11 @@ export function tipsaStatus(label: string): ClassifiedStatus | undefined {
 
 /**
  * What the map says about one history label, the only key a scan has: TIPSA's
- * own labels, else the shared wording rules the adapter reads them with.
+ * own labels, else the shared wording rules the adapter reads them with. An
+ * agency read is in transit, or out for delivery right after the round, so its
+ * stage depends on the scan before it and the map gives none.
  */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? undefined : tipsaStatus(wording)?.stage),
+  stage: (code, wording) => (code || AGENCY_READ.test(comparable(wording)) ? undefined : tipsaStatus(wording)?.stage),
   gaps: [],
 };

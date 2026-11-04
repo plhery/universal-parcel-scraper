@@ -101,6 +101,14 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Received from Prior Carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Terminal Location', { status: 'in_transit', stage: 'in_transit' }],
   ['Loaded on Truck', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  // A leg into Turkey, each line a scan in plain words and the postal event it records, from the dispatch
+  // through the destination post and import customs to the collection point that holds the parcel for pickup.
+  ['Shipment sent from destination transit centre,Despatched to overseas', { status: 'in_transit', stage: 'in_transit' }],
+  ['Shipment received at Post Office,Arrival at Destination Post', { status: 'in_transit', stage: 'in_transit' }],
+  ['Shipment arrived at overseas hub/ branch,Arrival at Processing Center', { status: 'in_transit', stage: 'in_transit' }],
+  ['IN TRANSIT,Present to Import Customs', { status: 'in_transit', stage: 'customs' }],
+  ['Shipment released from customs/ government check point,Released from Custom', { status: 'in_transit', stage: 'in_transit' }],
+  ['Shipment hold for collection,Receive item at collection point for pick-up', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:
@@ -130,6 +138,9 @@ const DELIVERY_ICON = 'LM40';
 // only the code keeps it.
 const withoutPrefix = (description: string) => description.replace(/^【[^】]*】\s*/, '').replace(/^[a-z]{2}\.(?=\S)/i, '').trim();
 
+// A partner's postal event can end with its country's code: "Arrival at Destination Post (Country: TR)".
+const bare = (description: string) => withoutPrefix(description).replace(/\s*\(Country(?: code)?: [a-z]{2}\)$/i, '');
+
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
 // map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception.
 function relayedStatus(description: string): ClassifiedStatus | undefined {
@@ -139,7 +150,7 @@ function relayedStatus(description: string): ClassifiedStatus | undefined {
 
 export function yanwenStatus(description: string, code?: string): ClassifiedStatus | undefined {
   if (code === DELIVERY_ICON) return { status: 'delivered', stage: 'delivered' };
-  return WORDING.get(withoutPrefix(description)) ?? relayedStatus(description);
+  return WORDING.get(bare(description)) ?? relayedStatus(description);
 }
 
 const STAGE_BY_WORDING = new Map([...WORDING].map(([wording, { stage }]) => [normalizeStatusWording(wording), stage]));
@@ -155,7 +166,7 @@ export const yanwenNotice = (description: string): boolean => NOTICES.has(normal
 
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(withoutPrefix(wording)) ?? chinaPostRelayedStage(wording)),
+  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(bare(wording)) ?? chinaPostRelayedStage(wording)),
   gaps: [
     { wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." },
     ...[...NOTICES].map(([wording, note]) => ({ wording, note })),

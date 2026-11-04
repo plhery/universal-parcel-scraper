@@ -712,7 +712,9 @@ describe('status map answers', () => {
 
   it('answers TIPSA by its labels and the Spanish wording rules it reads them with', () => {
     expect(answer('tipsa', null, 'PENDIENTE DE ENTREGAR A TIPSA')).toEqual(mapped('registered'));
-    expect(answer('tipsa', null, 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')).toEqual(mapped('in_transit'));
+    // The destination agency's reads are in transit, or out for delivery as it loads the van: the scan before decides.
+    expect(answer('tipsa', null, 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')).toEqual(unknown);
+    expect(answer('tipsa', null, 'LEIDO EN DESTINO')).toEqual(unknown);
     expect(answer('tipsa', null, 'Ausente')).toEqual(mapped('failed_attempt'));
     expect(answer('tipsa', null, 'ENTREGADO')).toEqual(mapped('delivered'));
     expect(answer('tipsa', null, 'EL ENVÍO ESTÁ EN REPARTO.')).toEqual(mapped('out_for_delivery'));

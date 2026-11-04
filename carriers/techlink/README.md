@@ -20,7 +20,9 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
   the wall clock in `actual_time`, a place given as a country code, both countries and the
   last-mile number.
 - Techlink's own records are on Beijing's clock: the order's electronic information, which has
-  no place, and the warehouse scans in China. Any other scan keeps `local_time`.
+  no place, and the warehouse scans in China. So is a scan abroad worded with its centre in
+  brackets (`【…】Received.`): read on the destination's clock, one came hours after the lookup
+  that returned it. Any other scan keeps `local_time`.
 - The last-mile number is returned as `delivery_tracking_number` with the destination country.
   The reply does not name the carrier; the shared hand-off proposes the destination's post or
   the carrier whose numbers have that shape.
@@ -28,7 +30,7 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
 ## Limitations
 
 - No estimated delivery, weight or service name.
-- No scan after the hand-off has been seen in a reply, so the zone of such a scan is unknown.
+- The zone of a partner's scan abroad in plain words is unknown, and it keeps its wall clock.
 
 ## Numbers
 

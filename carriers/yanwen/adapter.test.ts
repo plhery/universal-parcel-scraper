@@ -324,6 +324,27 @@ describe('Yanwen result projection', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: '2026-03-10T07:43:04-04:00' });
   });
 
+  it("reads a Turkish leg's postal events through customs to the collection point's hold, whatever country they name", () => {
+    for (const [wording, stage] of [
+      ['Shipment sent from destination transit centre,Despatched to overseas (Country code: TR)', 'in_transit'],
+      ['Shipment received at Post Office,Arrival at Destination Post (Country: TR)', 'in_transit'],
+      ['Shipment arrived at overseas hub/ branch,Arrival at Processing Center (Country code: GR)', 'in_transit'],
+      ['IN TRANSIT,Present to Import Customs', 'customs'],
+      ['Shipment released from customs/ government check point,Released from Custom', 'in_transit'],
+      ['Shipment hold for collection,Receive item at collection point for pick-up (Country: TR)', 'ready_for_pickup'],
+    ] as const) {
+      expect(yanwenStatus(wording)?.stage, wording).toBe(stage);
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
+    }
+    const result = history([
+      ['2026-03-12', '13:53:00 [GMT+03]', '', 'Shipment hold for collection,Receive item at collection point for pick-up (Country: TR)'],
+      ['2026-03-12', '13:53:00 [GMT+03]', '', 'Shipment released from customs/ government check point,Released from Custom'],
+      ['2026-03-12', '11:40:00 [GMT+03]', '', 'IN TRANSIT,Present to Import Customs'],
+    ], '运输途中', 'TR');
+    expect(result.events?.map((event) => event.stage)).toEqual(['ready_for_pickup', 'in_transit', 'customs']);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);

@@ -75,6 +75,17 @@ describe('Techlink HTTP adapter', () => {
     expect(result.events!.map((event) => event.provider_code)).toEqual(['Delivered', 'Warehousing_Packed', 'Warehousing_Received', 'InfoReceived']);
   });
 
+  it('dates a scan abroad that names its centre in brackets on Beijing’s clock', () => {
+    const relayed = changed((scans) => {
+      scans.unshift({ ...scans[0], track_code: 'InfoReceived', track_sub_code: 'InfoReceived_Online', track_name: '',
+        actual_time: '2026-01-09 22:31:10', create_date: '2026-01-09 22:31:10', location: 'Example center', description: '【Example center】Received.' });
+    });
+    const result = normalizeCarrierResult(parseTechlink(relayed, IN_TRANSIT));
+    expect(result).toMatchObject({ last_update: '2026-01-09T22:31:10+08:00' });
+    expect(result.events![0]).toMatchObject({ time: '2026-01-09T22:31:10+08:00', location: 'Example center', description: '【Example center】Received.' });
+    expect(result.events![0]!.local_time).toBeUndefined();
+  });
+
   it('falls back to the Chinese wording and leaves out a last-mile number that is missing or not one', () => {
     const result = parseTechlink(changed((scans) => {
       for (const scan of scans) Object.assign(scan, { description: '', lm_track_num: '' });

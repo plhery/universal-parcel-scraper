@@ -31,9 +31,9 @@ not ask.
 - Labels map through `status.ts`; others fall to the shared Spanish wording rules, and
   stay unmapped when those don't know them either.
 - The destination agency reads the parcel again as it loads the van, at the round's
-  (`REPARTO`) minute or the next. A read within ten minutes after the round keeps the round's
-  stage with no stage of its own (`stage_source` `none`), so the parcel stays out for delivery
-  until the round's outcome.
+  (`REPARTO`) minute or the next. A read within ten minutes after the round is part of it and
+  out for delivery, so the parcel stays out for delivery until the round's outcome. The status
+  map gives the agency's reads no stage, since the scan before them decides it.
 - A row's place (`POBLACIÓN`) is the town of the agency that recorded it. Hub reads name
   their hub ("LECTURA EN HUB BAILEN"). TIPSA's central agency is at San Fernando de
   Henares, where the Madrid hub's reads are placed, and reads of other hubs, Bailén's and

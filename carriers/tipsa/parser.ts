@@ -3,7 +3,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } fr
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
-import { comparable, tipsaStatus } from './status.js';
+import { AGENCY_READ, comparable, tipsaStatus } from './status.js';
 
 const PROVIDER = 'TIPSA';
 const DETAIL_ORIGIN = 'https://dinapaqweb.tipsa-dinapaq.com';
@@ -17,9 +17,7 @@ const HUB_READ = /^LECTURA EN HUB ([A-Z][A-Z .'-]{0,40})$/;
 const CENTRAL_TOWN = 'SAN FERNANDO DE HENARES';
 // A hub whose name in a read is not its town's whole name.
 const HUB_TOWNS = new Map([['BARBERA', 'BARBERA DEL VALLES']]);
-// The destination agency reads the parcel again as it loads the van, at the round's minute or
-// the next: "LECTURA EN AGENCIA DESTINO …" or "LEIDO EN DESTINO".
-const AGENCY_READ = /^(?:LECTURA EN AGENCIA DESTINO\b|LEIDO EN DESTINO$)/;
+// The destination agency reads the parcel again as it loads the van, at the round's minute or the next.
 const LOADING_MS = 10 * 60_000;
 
 /**
@@ -123,18 +121,21 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
   const weight = /^\d{1,6}(?:[.,]\d{1,3})?$/.test(kilos) ? Number(kilos.replace(',', '.')) : 0;
   // Newest first, as the page lists them; rows of one minute keep the page's order.
   events.sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
-  // An agency read within minutes after the round (REPARTO) is the van's loading: it keeps the
-  // round's stage, with no stage of its own, rather than putting the parcel back in transit.
+  // An agency read within minutes after the round (REPARTO) is the van's loading, part of the
+  // round: out for delivery, rather than the parcel back in transit.
+  const loading = new Set<CarrierEvent>();
   let round: number | undefined;
   for (const event of [...events].reverse()) {
     const at = Date.parse(event.time);
     const key = comparable(event.description!);
     if (key === 'REPARTO') round = at;
-    else if (round !== undefined && AGENCY_READ.test(key) && at - round <= LOADING_MS) Object.assign(event, { stage: 'out_for_delivery', stage_source: 'none' });
-    else if (event.stage) round = undefined;
+    else if (round !== undefined && AGENCY_READ.test(key) && at - round <= LOADING_MS) {
+      event.stage = 'out_for_delivery';
+      loading.add(event);
+    } else if (event.stage) round = undefined;
   }
   const newest = events[0]!;
-  const current = newest.stage_source === 'none' ? tipsaStatus('REPARTO') : tipsaStatus(newest.description!);
+  const current = tipsaStatus(loading.has(newest) ? 'REPARTO' : newest.description!);
   return {
     status: current?.status ?? 'unknown',
     ...(current ? { current_stage: current.stage } : {}),
