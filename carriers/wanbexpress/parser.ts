@@ -24,6 +24,17 @@ export function normalizeWanbNumber(raw: string): string {
 
 const CURRENT: Readonly<Record<string, Stage>> = { Delivered: 'delivered', InTransit: 'in_transit', OutForDelivery: 'out_for_delivery' };
 
+/**
+ * A scan's place. The linehaul agent's departure names its role, and order data a partner relays
+ * before the parcel is handed over, such as the sender still preparing it, names only a country,
+ * the destination's: neither is where the parcel was.
+ */
+function wanbPlace(location: string, stage: Stage | null | undefined): string | undefined {
+  const place = clean(location, 300);
+  if (!place || /^linehaul agent$/i.test(place) || (stage === 'registered' && /^[A-Z]{2}$/.test(place))) return undefined;
+  return place;
+}
+
 export function parseWanb(payload: unknown, raw: string): CarrierResult {
   const number = normalizeWanbNumber(raw);
   if (!isRecord(payload) || typeof payload.Succeeded !== 'boolean') throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid envelope');
@@ -50,8 +61,9 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
     const code = typeof row.Status === 'string' ? row.Status : '';
     const mapped = wanbStage(code || null, row.Content);
     const wording = mapped === undefined ? classifyWording(row.Content) : null;
+    const location = row.Location ? wanbPlace(row.Location, mapped ?? wording?.stage) : undefined;
     return { description: clean(row.Content, 1000), time,
-      ...(row.Location ? { location: clean(row.Location, 300) } : {}),
+      ...(location ? { location } : {}),
       ...(code ? { provider_code: code.slice(0, 100) } : {}),
       ...(mapped ? { stage: mapped, stage_source: 'carrier' as const } : wording?.stage ? { stage: wording.stage, stage_source: wording.source } : {}) };
   });

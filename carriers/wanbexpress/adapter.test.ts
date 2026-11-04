@@ -159,6 +159,16 @@ describe('WanbExpress', () => {
     expect(parseWanb(value, number).events?.map(event => event.description)).toEqual(['Parcel has been delivered.', 'Flight departed', 'Departed origin facility', 'Parcel Data Received']);
   });
 
+  it('leaves out the linehaul agent and the country a partner names before the parcel is handed over, which are not places', () => {
+    const value = found();
+    value.Data.TrackPoints.splice(1, 0,
+      { Time: '2031-04-16T11:00:00Z', TimeZone: 8, Content: 'Your package is being prepared by the sender and will be handed over to us soon', Status: '', Location: 'US' },
+      { Time: '2031-04-17T08:00:00Z', TimeZone: 8, Content: 'Parcel departure in Yiwu Sorting Centre.', Status: 'OriginalWarehouseDeparture', Location: 'Yiwu' },
+      { Time: '2031-04-17T20:00:00Z', TimeZone: 8, Content: 'Parcel departure in Transit Facility, Parcel Departure', Status: 'LinehaulAgencyDeparture', Location: 'Linehaul Agent' });
+    expect(parseWanb(value, number).events?.map(event => [event.stage, event.location])).toEqual([
+      ['delivered', 'Example City'], ['in_transit', undefined], ['in_transit', 'Yiwu'], ['registered', undefined], ['registered', undefined]]);
+  });
+
   it('keeps verification, missing parcels and changed schemas distinct', () => {
     expect(() => parseWanb(challenge, number)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     expect(() => parseWanb(missing, unknown)).toThrow(expect.objectContaining({ kind: 'not_found' }));
