@@ -21,7 +21,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "fan-courier"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker; the opened capture names the number, but the history loaded by script and is not in it."
@@ -47,7 +48,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "fan-courier"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."

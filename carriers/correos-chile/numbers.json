@@ -16,7 +16,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "fan-courier"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Correos de Chile, which stays one candidate among several."

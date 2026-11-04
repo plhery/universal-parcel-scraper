@@ -100,6 +100,11 @@
       "id": "total-express-awb",
       "pattern": "^(?:TX[A-Z]{2}|AMZB)\\d{9}TX$",
       "confidence": "high"
+    },
+    {
+      "id": "total-express-client",
+      "pattern": "^[A-Z]{4}\\d{9}TX$",
+      "confidence": "low"
     }
   ]
 }

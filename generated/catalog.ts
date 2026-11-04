@@ -12266,7 +12266,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "中華郵政",
       "Taiwan Post",
       "郵局",
-      "Chunghwa Post Co."
+      "Chunghwa Post Co.",
+      "Taiwan Post - Chunghwa Post"
     ],
     "countries": [
       "TW"
@@ -19712,7 +19713,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
-        "pattern": "^(?:[24]\\d{12}|7000\\d{9})$",
+        "pattern": "^(?:[2-5]\\d{12}|7000\\d{9})$",
         "confidence": "low"
       }
     ]
@@ -41620,7 +41621,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#f9bb00",
     "aliases": [
       "Slovak Post",
-      "Slovenska posta"
+      "Slovenska posta",
+      "Slovakia Post"
     ],
     "countries": [
       "SK"
@@ -45529,6 +45531,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^(?:TX[A-Z]{2}|AMZB)\\d{9}TX$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^[A-Z]{4}\\d{9}TX$",
+        "confidence": "low"
       }
     ]
   },
@@ -53026,7 +53032,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "toptrans": [],
   "topyou": ["topyou-1","topyou-2"],
   "torrestir": ["torrestir-1"],
-  "total-express": ["total-express-awb"],
+  "total-express": ["total-express-awb","total-express-client"],
   "toyou": [],
   "tp-logistics-th": ["tp-logistics-th-1"],
   "tpl-rider": [],

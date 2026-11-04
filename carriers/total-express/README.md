@@ -57,6 +57,10 @@ itself, or hands some to Correios. Tracked through the API its tracking page rea
 Total Express AWBs are four letters, nine digits and `TX`, which the tracker writes in lower
 case: `TXAQ` and `TXAS` for most shops, and `AMZB` for Amazon. No other carrier's numbers have
 this shape, so `total-express-awb` claims `TX` with two letters, and `AMZB`, before the digits.
+A shop that prints its own labels sets its four letters, as the AWB settings of
+[Senior's warehouse software](https://documentacao.senior.com.br/gestaodearmazenagemwms/8.12/manuais-wms/manuais-operacionais/expedicao/rastr-padr-awb-total-express.htm)
+show, so `total-express-client` suggests Total Express for any four letters at low confidence
+and the tracker confirms the parcel.
 The former tracker used ten digits, as in the example of an open-source scraper of it. Ten
 digits are shared by DHL and several other carriers, so no rule claims them, and the adapter
 does not take them. The samples and their sources are in [`numbers.json`](numbers.json).

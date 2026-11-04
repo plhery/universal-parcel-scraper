@@ -1715,7 +1715,7 @@
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the four carriers already sharing that length; the number stays a suggestion."
   },
   {
-    "shape": "9{13} starting with 2 to 6, outside 250",
+    "shape": "9{13} starting with 6",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -1724,7 +1724,7 @@
       "yunda",
       "econt"
     ],
-    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by six carriers; the number stays a low-confidence suggestion."
+    "reason": "13-digit numbers starting with 6, Korea Post's domestic parcels and registered letters among them, are shared by six carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{13} starting with 60 or 65",
@@ -1740,15 +1740,16 @@
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
   {
-    "shape": "9{13} starting with 2 to 6, outside 250, ending 7, 8 or 9",
+    "shape": "13 digits starting with 2 to 5 that pass the Ukrposhta check, ending 7, 8 or 9",
     "carriers": [
       "correos-chile",
       "korea-post",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
-    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by five carriers; the number stays a low-confidence suggestion."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
     "shape": "9{13} starting with 2 to 6, outside 250, ending 7, 8 or 9",
@@ -3205,7 +3206,7 @@
     "reason": "Passing check digits add FedEx and DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
-    "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check",
+    "shape": "9{13} starting with 6 that fails the Ukrposhta check",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -3213,7 +3214,7 @@
       "yunda",
       "econt"
     ],
-    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by five carriers; the number stays a low-confidence suggestion."
+    "reason": "13-digit numbers starting with 6, Korea Post's domestic parcels and registered letters among them, are shared by five carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check",
@@ -3238,16 +3239,6 @@
       "econt"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
-  },
-  {
-    "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check, ending 7, 8 or 9",
-    "carriers": [
-      "correos-chile",
-      "korea-post",
-      "yunda",
-      "econt"
-    ],
-    "reason": "13-digit numbers starting with 2 to 6, Korea Post's domestic parcels and registered letters among them, are shared by four carriers; the number stays a low-confidence suggestion."
   },
   {
     "shape": "9{13} starting with 2 to 6, outside 250, that fails the Ukrposhta check, ending 7, 8 or 9",
@@ -6614,7 +6605,7 @@
     "reason": "Colis Privé's low-confidence rule takes any twelve letters and digits; Sendle's own QSS prefix is preferred."
   },
   {
-    "shape": "13 digits starting with 2 or 4",
+    "shape": "13 digits starting with 2 to 5",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -6623,7 +6614,7 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
     "shape": "2205 and nine digits",
@@ -6639,7 +6630,7 @@
     "reason": "TForce Freight's PARS numbers for the Canadian border are its carrier code 2205 and a PRO, inside the thirteen-digit space these carriers match broadly; its preferred low rule puts it first when the PRO's check passes, and recognition asks it first from Canada."
   },
   {
-    "shape": "13 digits starting with 2 or 4, ending 7, 8 or 9",
+    "shape": "13 digits starting with 2 to 5, ending 7, 8 or 9",
     "carriers": [
       "correos-chile",
       "korea-post",
@@ -6647,7 +6638,7 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
     "shape": "13 digits starting with 250",
@@ -6660,10 +6651,10 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
-    "shape": "13 digits starting with 2 or 4 that pass the Ukrposhta check",
+    "shape": "13 digits starting with 2 to 5 that pass the Ukrposhta check",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -6673,7 +6664,7 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
     "shape": "7000 and nine digits",
@@ -6684,10 +6675,10 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
-    "shape": "eight digits starting with 2 or 4, four digits and one digit joined by hyphens",
+    "shape": "eight digits starting with 2 to 5, four digits and one digit joined by hyphens",
     "carriers": [
       "correos-chile",
       "delhivery",
@@ -6697,7 +6688,7 @@
       "fan-courier",
       "econt"
     ],
-    "reason": "FAN Courier's AWBs are thirteen digits starting with 2, 4 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
+    "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7000, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
   {
     "shape": "810, a dash and eight digits",

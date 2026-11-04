@@ -15,12 +15,12 @@ Courier's own AWB tracker.
 
 Every AWB found has thirteen digits: in FAN Courier's API 2.0 documentation, in an
 open-source client, in lookups archived from its tracker and in the tracker's own replies.
-They start with `2`, `4` or `7000`, but FAN publishes no length, prefix or check-digit rule.
-Thirteen digits are shared with several posts and couriers, so a low-confidence rule offers
-FAN Courier for those starts alongside them, and recognition asks it first for a parcel from
-Romania. No other carrier's sample starts with `70`, so `fan-courier-2` puts FAN Courier first
-for the `7000` series wherever the parcel comes from. The adapter refuses any other shape
-without a request.
+They start with `2`, `3`, `4`, `5` or `7000`, but FAN publishes no length, prefix or
+check-digit rule. Thirteen digits are shared with several posts and couriers, so a
+low-confidence rule offers FAN Courier for those starts alongside them, and recognition
+asks it first for a parcel from Romania. No other carrier's sample starts with `70`, so
+`fan-courier-2` puts FAN Courier first for the `7000` series wherever the parcel comes
+from. The adapter refuses any other shape without a request.
 
 ## Notes
 

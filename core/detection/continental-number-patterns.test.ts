@@ -858,23 +858,23 @@ describe('wave eight courier rules', () => {
 
 describe('FAN Courier AWBs', () => {
   // Synthetic AWBs in FAN Courier's layout; none is a real parcel.
-  it('suggests FAN Courier for thirteen digits starting with 2, 4 or 7000, and asks it first in Romania', () => {
-    for (const number of ['2012345678901', '4098765432104', '7000123456785']) {
+  it('suggests FAN Courier for thirteen digits starting with 2 to 5 or 7000, and asks it first in Romania', () => {
+    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100', '7000123456785']) {
       expect(detectCarrierMatch(number).candidates, number).toContain('fan-courier');
       expect(detectCarrierMatch(number).confidence, number).toBe('low');
       expect(recognitionAskedCarriers(number, { countryHint: 'RO' })[0], number).toBe('fan-courier');
     }
-    for (const number of ['3012345678901', '7001123456785', '201234567890', '20123456789012']) {
+    for (const number of ['1012345678901', '6012345678901', '7001123456785', '201234567890', '20123456789012']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fan-courier');
     }
   });
 
-  it('suggests FAN Courier first for its 7000 series wherever the parcel comes from, but not for 2 and 4', () => {
+  it('suggests FAN Courier first for its 7000 series wherever the parcel comes from, but not for its other starts', () => {
     const detected = detectCarrierMatch('7000123456785');
     expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fan-courier'] });
     expect(detected.candidates[0]).toBe('fan-courier');
     expect(recognitionAskedCarriers('7000123456785')[0]).toBe('fan-courier');
-    for (const number of ['2012345678901', '4098765432104']) {
+    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100']) {
       expect(detectCarrierMatch(number).preferred, number).not.toContain('fan-courier');
     }
   });
@@ -1210,6 +1210,19 @@ describe('DPD Greece and Logistics Solution', () => {
 
   it('offers DPD Greece for no number shape', () => {
     expect(detectCarrierMatch('60000100017').candidates ?? []).not.toContain('dpd-gr');
+  });
+});
+
+describe('Total Express AWBs with a shop\'s own letters', () => {
+  // Synthetic AWBs in Total Express's layout; none is a real parcel.
+  it('suggests Total Express alone at low confidence for any four letters, nine digits and TX', () => {
+    for (const number of ['LOJA000000018TX', 'ABCD123456782TX']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['total-express'] });
+      expect(recognitionAskedCarriers(number)[0], number).toBe('total-express');
+    }
+    for (const number of ['LOJA00000018TX', 'LOJA0000000188TX', 'LOJ000000018TX', 'LOJA000000018BR']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('total-express');
+    }
   });
 });
 

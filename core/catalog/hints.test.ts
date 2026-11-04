@@ -35,6 +35,9 @@ describe('brand networks', () => {
     expect(carrierIdFromName('FASTBOX')).toBe('fastbox');
     // ParcelsApp and Ship24 name North Macedonia's post as Macedonia Post.
     expect(carrierIdFromName('Macedonia Post')).toBe('posta-north-macedonia');
+    // ParcelsApp names Chunghwa Post after both its names, and Slovak Post after the country.
+    expect(carrierIdFromName('Taiwan Post - Chunghwa Post')).toBe('chunghwa-post');
+    expect(carrierIdFromName('Slovakia Post')).toBe('slovenska-posta');
     // ParcelsApp names MHI by its tracker, Mondial Relay's Spanish network by its shop
     // brand, and JD Logistics and Sky Express International by their other names.
     expect(carrierIdFromName('Trackmail')).toBe('mhi');
