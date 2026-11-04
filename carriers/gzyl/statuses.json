@@ -4,6 +4,7 @@
     {"wording": "Order information received", "language": "en", "stage": "registered", "confirmedBy": "live"},
     {"wording": "Arrive at the cross border receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in GZYL's hands."},
     {"wording": "广州处理中心已收寄", "language": "zh", "stage": "accepted", "confirmedBy": "live", "note": "China Post's acceptance at its Guangzhou processing centre, which GZYL relays in Chinese with the city after it in brackets."},
+    {"wording": "香港处理中心已收寄", "language": "zh", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The same acceptance at the Hong Kong processing centre, with the city after it in brackets, as Xinghe Freight's records on GZYL's tenant relay it."},
     {"wording": "Goods leave the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Arrive at the international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Departing from the airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},

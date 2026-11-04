@@ -47,6 +47,8 @@ Tracked through the lookup its tracking page makes.
 - The estimated departure is written before the flight and is no scan: the adapter drops it.
   Rows dated after the read are dropped too. A delayed flight is no movement: the row keeps the
   stage of the row before it.
+- Some orders go to Europe by truck, through Kazakhstan, Russia and Belarus. The row for the road
+  leg to the border names an estimated arrival at the exit port in its wording, not as its time.
 - The partner is handed over from an explicit table of 17FEIA's names: `DPD-DE` to `dpd-de`,
   `DE-DHL` to `dhl` and `FEDEX-GROUND` to `fedex`, and only when the partner's detection accepts
   the number. A DPD number is passed as the fourteen digits DPD's tracking takes, without a

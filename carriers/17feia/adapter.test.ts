@@ -74,6 +74,29 @@ describe('17FEIA HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/0000000000000000000000000000000|1\.2|上海/);
   });
 
+  it('reads the road to Europe by truck in transit, and the estimate in a row’s wording never as its time', () => {
+    const row = (createTime: string, status: string, description: string) => ({ id: null, createTime, status, description, location: '',
+      timeZone: '', country: '', state: '', city: '', postalCode: '', code: '' });
+    const result = parseSeventeenFeia(changed('dpd-at-warehouse', (order) => {
+      order.currentOrderTrackInfos.unshift(
+        row('2026-02-14 17:59:00', '卡车进入欧盟境内', 'Entered the EU.'),
+        row('2026-02-13 23:35:00', '卡车到达白俄', 'Arrived in Belarus'),
+        row('2026-02-11 09:48:00', '卡车到达俄罗斯', 'Arrived in Russia'),
+        row('2026-02-08 20:00:00', '卡车到达哈萨克斯坦', 'Arrived in Kazakhstan'),
+        row('2026-02-08 17:18:00', '卡车已出境', 'Truck has departed the country.'),
+        row('2026-02-08 14:34:00', '出口报关放行', 'Export cleared & released. 2026-02-08 14:34:00'),
+        row('2026-02-07 14:30:00', '到达出境口岸', 'Arrived at exit port.'),
+        row('2026-02-05 19:05:33', '国内运输中，预计到达出境口岸时间', 'Domestic transit in progress; estimated arrival at exit port on: 2026-02-07 18:00:00'));
+    }), WAREHOUSE, LATER);
+    expect(result).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Entered the EU.' });
+    expect(result.events!.slice(0, 8).map((event) => [event.time ?? event.local_time, event.stage, event.stage_source])).toEqual([
+      ['2026-02-14T17:59:00', 'in_transit', 'carrier_map'], ['2026-02-13T23:35:00', 'in_transit', 'carrier_map'],
+      ['2026-02-11T09:48:00', 'in_transit', 'carrier_map'], ['2026-02-08T20:00:00', 'in_transit', 'carrier_map'],
+      ['2026-02-08T17:18:00', 'in_transit', 'carrier_map'], ['2026-02-08T14:34:00', 'in_transit', 'carrier_map'],
+      ['2026-02-07T14:30:00', 'in_transit', 'carrier_map'], ['2026-02-05T19:05:33', 'in_transit', 'carrier_map'],
+    ]);
+  });
+
   it('dates the warehouse’s receipt on Beijing time without its country or offset', () => {
     const result = parseSeventeenFeia(changed('dpd-at-warehouse', (order) => {
       const receipt = order.currentOrderTrackInfos.find((row) => row.status === '仓库收货')!;
