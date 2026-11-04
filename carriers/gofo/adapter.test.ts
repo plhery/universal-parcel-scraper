@@ -1,9 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { AdapterRegistry } from '../../core/adapter/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { createTracker } from '../../facade/index.js';
 import { adapter, GofoTracker } from './adapter.js';
-import { normalizeGofoNumber, parseGofo } from './parser.js';
+import { GOFO_CANADA, GOFO_US, normalizeGofoNumber, parseGofo } from './parser.js';
 import { gofoStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
@@ -162,11 +164,31 @@ describe('GOFO US history', () => {
       .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'GOFO returned an inconclusive lookup' }));
     // Its message is shown beside the code, unless it is long or quotes a number.
     expect(() => parseGofo({ ...fixture(), success: 0, code: 20002, msg: ' Too many\nrequests ' }, NUMBER))
-      .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'GOFO returned an inconclusive lookup (code 20002): Too many requests' }));
+      .toThrow(expect.objectContaining({ kind: 'rate_limited', message: 'GOFO rate limited the lookup (code 20002): Too many requests' }));
     for (const msg of [`No record for ${NUMBER}`, 'Order 12345 failed', 'x'.repeat(121), 7]) {
       expect(() => parseGofo({ ...fixture(), success: 0, code: 20002, msg }, NUMBER))
         .toThrow(expect.objectContaining({ kind: 'indeterminate', message: 'GOFO returned an inconclusive lookup (code 20002)' }));
     }
+  });
+
+  it('requires the rate-limit wording as well as its failed envelope and leaves the retry delay unknown', () => {
+    for (const [site, number] of [[GOFO_US, NUMBER], [GOFO_CANADA, 'GFCA00000000000001']] as const) {
+      for (const msg of ['Rate limit exceeded', 'RATE-LIMITED', 'Too many requests']) {
+        expect(() => parseGofo({ success: 0, code: 20002, msg }, number, site))
+          .toThrow(expect.objectContaining({ name: 'RateLimitedError', provider: site.provider, kind: 'rate_limited', retryAfterMs: undefined, status: 429 }));
+      }
+      for (const msg of [`Rate limit for ${number}`, 'Rate limit for order 12345', `Rate limit ${'x'.repeat(121)}`]) {
+        expect(() => parseGofo({ success: 0, code: 20002, msg }, number, site))
+          .toThrow(expect.objectContaining({ kind: 'rate_limited', message: 'GOFO rate limited the lookup (code 20002)' }));
+      }
+      for (const value of [{ success: 0, code: 20002 }, { success: 0, code: 20002, msg: 'Service unavailable' },
+        { success: 0, code: '20002', msg: 'Rate limit exceeded' }, { success: 0, code: 20003, msg: 'Rate limit exceeded' },
+        { success: 0, code: 200, msg: 'Rate limit exceeded' }]) {
+        expect(() => parseGofo(value, number, site)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+      }
+    }
+    const success = fixture(); success.msg = 'Rate limit exceeded';
+    expect(parseGofo(success, NUMBER).status).toBe('delivered');
   });
 
   it('rejects incomplete histories and summaries even when dates or descriptions coincide', () => {
@@ -265,6 +287,24 @@ describe('GOFO US history', () => {
 });
 
 describe('GOFO direct retrieval', () => {
+  it('preserves a JSON throttle through tracking, HTTP recognition, telemetry and the public failure hint', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({ code: 20002, success: 0, msg: 'Rate limit exceeded' }));
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const environment = { fetcher, recorder, trawl: null, browserExecutablePath: null, env: {} };
+    const instance = adapter(environment);
+    await expect(instance.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'rate_limited' });
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited' });
+    const registry = new AdapterRegistry({ carriers: { gofo: 'gofo' }, factories: { gofo: adapter } }, environment);
+    await expect(createTracker({ registry, providers: [] }).track({ number: NUMBER, carrier: 'gofo' }))
+      .rejects.toMatchObject({ hint: { kind: 'rate_limited' }, attempts: [{ source: 'gofo', kind: 'rate_limited' }] });
+    expect(fetcher).toHaveBeenCalledTimes(3);
+    expect(recorder.step.mock.calls).toHaveLength(3);
+    expect(recorder.lookup.mock.calls).toHaveLength(3);
+    for (const [record] of [...recorder.step.mock.calls, ...recorder.lookup.mock.calls]) {
+      expect(record).toMatchObject({ outcome: 'rate_limited', errorType: 'RateLimitedError' });
+    }
+  });
+
   it('uses one fresh anonymous US POST and passes the request signal', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(fixture())));
     const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });

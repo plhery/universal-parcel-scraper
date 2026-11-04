@@ -1,6 +1,6 @@
 import { DateTime, IANAZone } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
@@ -110,6 +110,10 @@ export function parseGofo(payload: unknown, rawNumber: string, site: GofoSite = 
     const code = Number.isInteger(payload.code) && Math.abs(payload.code as number) < 1e6 ? ` (code ${payload.code as number})` : '';
     const said = clean(payload.msg, 500);
     const message = said && said.length <= 120 && !/\d{5}/.test(said) && !said.toUpperCase().includes(number) ? `: ${said}` : '';
+    // This failed envelope explicitly names a throttle; its code alone supplies no reason or retry delay.
+    if (payload.code === 20002 && /\b(?:rate[ -]limit(?:ed|ing)?|too many requests)\b/i.test(said)) {
+      throw new RateLimitedError(site.provider, undefined, `GOFO rate limited the lookup${code}${message}`);
+    }
     throw new IndeterminateError(site.provider, `GOFO returned an inconclusive lookup${code}${message}`);
   }
   if (!isRecord(payload.data) || !Array.isArray(payload.data.success) || payload.data.success.length > 25
