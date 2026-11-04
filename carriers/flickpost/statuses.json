@@ -1,4 +1,101 @@
 {
   "carrier": "flickpost",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered — Delivered, Door/Yard",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Out for delivery — Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — Arrived at GOFO Delivery Station",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — Loaded on Vehicle",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — Arrived at GOFO Regional Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — In Transit to Next Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — Departed GOFO Regional Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transit — Shipping Label Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "En route to destination's port of entry — Inbound for customs processing",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Departed connecting facility — En route to destination's port of entry",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Package in transit — En route to next facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Processed At Hub — Outbound clearance in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Arrived At Hub — Awaiting Sorting and Bagging",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Request Received — Processing",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Progress — Shipment created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

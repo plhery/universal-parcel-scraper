@@ -1,28 +1,37 @@
 # Flickpost
 
-Flickpost parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads Flickpost's server-rendered guest tracking page through plain HTTP. It binds
+the whole reference in the visible heading and copy field, and requires Flickpost booking or
+hub activity alongside its service details before accepting partner history as its forwarding
+service. A postal identifier alone establishes no Flickpost ownership.
 
-Flickpost, run by Cargo Miles Sdn Bhd, ships parcels from Malaysia to more than 200 countries, on
-postal lanes or by courier. Its site is flickpost.com.
+## Numbers and routing
 
-## Numbers
+The lookup supports Flickpost's X references and valid Malaysian postal references. Bare postal
+numbers keep Pos Malaysia detection; the short X format has no detection rule. Explicit carrier
+selection and [Flickpost tracking links](https://flickpost.com/how-to-track-shipment-status/) reach
+the native adapter. It adds no general postal recognition candidate. A named handoff can ask it
+about a supported reference, subject to direct confirmation.
 
-Flickpost hands most parcels to Pos Malaysia, so its customers mostly get Pos Malaysia's UPU S10
-numbers ending in MY, which its tracker also answers. Those numbers belong to Pos Malaysia's
-network, so no rule claims them for Flickpost. Its own ids, X and six digits, are too short and
-common a shape for a rule.
+## Retrieval
 
-## Why there is no adapter
+`flickpost.com/tracking/` takes one `trackingNumber`. The page's hidden example and generic
+invalid-number notice are separate from its actual result. Only the complete number-bound error
+in the result block becomes not-found. Challenges, changed markup and unbound errors keep their
+failure kinds; enabled universal providers remain available.
 
-The tracker reads up to forty numbers from its address and draws its answer on the server without a
-session. Only the sentence "Error occurred while tracking shipment" marks an unknown number; an
-"Invalid tracking number" sentence is hidden on every page. An adapter can follow.
-
-## Links
-
-Tracking links carry the number as `trackingNumber` on the tracking page.
+The timeline's order is retained because Malaysian and overseas wall clocks have no stated
+offsets. A shipping label remains registration even under the broad Transit heading; customs
+details distinguish clearance from linehaul. A Track and Trace link is an administrative entry.
+The adapter retains service, weight, logistics activities and facilities, while omitting contact
+footers, arbitrary comments, linked references and the page's application/onboarding forms.
+Those unrelated forms contain CAPTCHA widgets; the tracking form does not require them.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`FLICKPOST_TRACKING_NUMBER` and `FLICKPOST_OWN_NUMBER` supply retained postal and own-reference
+histories; `FLICKPOST_UNKNOWN_NUMBER` supplies a synthetic unknown:
+
+```sh
+npm run test:carriers:live -- carriers/flickpost/adapter.live.test.ts
+```

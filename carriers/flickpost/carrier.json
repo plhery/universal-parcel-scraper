@@ -16,18 +16,47 @@
   "timezone": "Asia/Kuala_Lumpur",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "flickpost",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "weight",
+    "service_name"
+  ],
   "portal": {
     "url": "https://flickpost.com/tracking/?trackingNumber={trackingNumber}",
     "searchUrl": "https://flickpost.com/tracking/",
     "canaryUrl": "https://flickpost.com/tracking/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "service_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "service_name"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "provider_code",
+      "destination_country",
+      "sender_name",
+      "receiver_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {

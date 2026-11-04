@@ -11,6 +11,7 @@ import { isAnotherPostItemAtChronopost } from '../detection/chronopost.js';
 import { isCorreosChileLookup } from '../detection/correosChile.js';
 import { isPosteItalianeLookup } from '../detection/posteItaliane.js';
 import { isSpsLookup } from '../detection/sps.js';
+import { isFlickpostReference } from '../detection/flickpost.js';
 import { countryCode } from '../time/index.js';
 
 export interface DeliveryHandoff {
@@ -22,6 +23,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
+  flickpost: isFlickpostReference,
   'poste-italiane': isPosteItalianeLookup,
   'slovak-parcel-service': isSpsLookup,
   // DHL Express tracks its waybills and the piece identifiers on its labels.

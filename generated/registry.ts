@@ -244,6 +244,7 @@ import { adapter as flashExpressPh } from '../carriers/flash-express-ph/adapter.
 import { adapter as flashbirdCa } from '../carriers/flashbird-ca/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
+import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
 import { adapter as flippost } from '../carriers/flippost/adapter.js';
 import { adapter as fmTransportes } from '../carriers/fm-transportes/adapter.js';
 import { adapter as fmx } from '../carriers/fmx/adapter.js';
@@ -963,6 +964,7 @@ export const REGISTRY: RegistryDefinition = {
     "flashbird-ca": flashbirdCa,
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
+    "flickpost": flickpost,
     "flippost": flippost,
     "fm-transportes": fmTransportes,
     "fmx": fmx,
@@ -1887,7 +1889,7 @@ export const REGISTRY: RegistryDefinition = {
     "flecha-amarilla": "universal",
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
-    "flickpost": "universal",
+    "flickpost": "flickpost",
     "flight-logistics": "universal",
     "flippost": "flippost",
     "flipxpress": "universal",

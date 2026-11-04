@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'flickpost', number: 'EW000000005MY',
+    route: /^https:\/\/flickpost\.com\/tracking\/\?trackingNumber=EW000000005MY$/,
+    marker: /Error occurred while tracking shipment/ },
   { carrier: 'direct-freight-express', number: '9907403682516',
     route: /^https:\/\/www\.directfreight\.com\.au\/ConsignmentStatus\.aspx\?lookuptype=0&consignment_no=9907403682516$/,
     marker: /Consignment Number\s+9907403682516 could not be found/ },

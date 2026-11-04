@@ -20808,7 +20808,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kuala_Lumpur",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flickpost",
+      "localClocks": true
     },
     "canaryUrl": "https://flickpost.com/tracking/",
     "trackingUrlTemplate": "https://flickpost.com/tracking/?trackingNumber={trackingNumber}",
