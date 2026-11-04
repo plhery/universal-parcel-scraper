@@ -292,10 +292,9 @@ describe('Yanwen result projection', () => {
       ['2026-03-03', '13:41:00 [GMT-05]', 'EXAMPLE TOWN,ZZ', 'Shipping Label Created, USPS Awaiting Item'],
       ['2026-03-03', '11:44:30 [GMT+08]', '', 'Yanwen Pickup Scan'],
     ], '运输途中', 'US');
-    // USPS's unmapped steps are left to the shared wording rules, which read them in transit.
     expect(result.events?.map((event) => [event.description, event.stage, event.stage_source, event.location, event.time ?? event.local_time])).toEqual([
-      ['In Transit to Next Facility, Arriving On Time', undefined, undefined, '', '2026-03-07'],
-      ['Arrived at USPS Regional Origin Facility', undefined, undefined, 'EXAMPLE CITY,ZZ', '2026-03-06T05:54:00-05:00'],
+      ['In Transit to Next Facility, Arriving On Time', 'in_transit', undefined, '', '2026-03-07'],
+      ['Arrived at USPS Regional Origin Facility', 'in_transit', undefined, 'EXAMPLE CITY,ZZ', '2026-03-06T05:54:00-05:00'],
       ['Yanwen facility - Outbound', 'in_transit', undefined, '', '2026-03-04T12:21:29+08:00'],
       ['Shipping Label Created, USPS Awaiting Item', 'accepted', 'none', '', '2026-03-03T13:41:00-05:00'],
       ['Yanwen Pickup Scan', 'accepted', undefined, '', '2026-03-03T11:44:30+08:00'],

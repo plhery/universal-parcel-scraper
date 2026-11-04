@@ -111,9 +111,9 @@ function measurement(raw: unknown, units: Record<string, number>): number | null
 
 // Posti's copies of the origin post's scans in the country of origin carry
 // that post's wall clock under Helsinki's offset, an hour before the post's
-// own scans. Poczta Polska's and La Poste's own scans confirm it to the
-// minute; items from other posts keep the time Posti states.
-const ORIGIN_POST_ZONES: Readonly<Record<string, string>> = { FR: 'Europe/Paris', PL: 'Europe/Warsaw' };
+// own scans. Poczta Polska's, La Poste's and Posta Shqiptare's own scans
+// confirm it to the minute; items from other posts keep the time Posti states.
+const ORIGIN_POST_ZONES: Readonly<Record<string, string>> = { AL: 'Europe/Tirane', FR: 'Europe/Paris', PL: 'Europe/Warsaw' };
 const IN_COUNTRY_OF_ORIGIN = /\bcountry of origin\b/i;
 
 /** A placeless scan in the country of origin of an item from a post whose own scans confirm the clock, on that post's clock. */

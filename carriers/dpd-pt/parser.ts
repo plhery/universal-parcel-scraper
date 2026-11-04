@@ -7,7 +7,8 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import {
-  DPD_PT_COLLECTION, DPD_PT_DELIVERY, DPD_PT_FORECAST, DPD_PT_POINT_RECEIPT, DPD_PT_RETURN, DPD_PT_WINDOW, dpdPtStage, isDpdPtNotice,
+  DPD_PT_COLLECTION, DPD_PT_DELIVERY, DPD_PT_FORECAST, DPD_PT_POINT_RECEIPT, DPD_PT_RETURN, DPD_PT_RETURNED, DPD_PT_WINDOW, dpdPtStage,
+  isDpdPtNotice,
 } from './status.js';
 
 export const PROVIDER = 'DPD Portugal';
@@ -25,6 +26,8 @@ const CLOCK = /^(\d{2}):(\d{2})$/;
 const WINDOW = /^((?:[01]\d|2[0-3]):[0-5]\d)\s*-\s*((?:[01]\d|2[0-3]):[0-5]\d)$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+// The stages of a scan that moves the parcel on towards a delivery.
+const MOVING: ReadonlySet<Stage> = new Set(['in_transit', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup']);
 
 /** A DPD parcel number: fourteen digits, or fourteen and their matching check character, looked up by the digits. */
 export function normalizeDpdPtNumber(raw: string): string {
@@ -147,27 +150,38 @@ export function parseDpdPt(html: string, raw: string): CarrierResult {
   if (!scans.length) throw new NoHistoryError(PROVIDER);
 
   // Oldest first: a collection and a delivery take their stage from the scans
-  // before them, and a notice keeps the stage of the scan before it.
+  // before them, a parcel sent back from the scans after it, and a notice keeps
+  // the stage of the scan before it.
+  const oldestFirst = [...scans].reverse();
+  const moves = oldestFirst.map(({ code, event }) => MOVING.has(dpdPtStage(code, event.description!)?.stage as Stage));
   let previous: Stage | undefined;
   let returning = false;
-  for (const { code, event } of [...scans].reverse()) {
-    if (isDpdPtNotice(code)) {
+  oldestFirst.forEach(({ code, event }, index) => {
+    const movedOn = moves.includes(true, index + 1);
+    // A proof of delivery that later scans take back, as the parcel back at
+    // the depot to go out again, delivered nothing: like a notice, it keeps
+    // the stage of the scan before it.
+    if (isDpdPtNotice(code) || (code === DPD_PT_DELIVERY && !returning && movedOn)) {
       Object.assign(event, { stage: previous ?? 'registered', stage_source: 'none' });
-      continue;
+      return;
     }
     const staged = dpdPtStage(code, event.description!);
-    if (!staged) continue;
+    if (!staged) return;
     let stage = staged.stage;
     if (code === DPD_PT_COLLECTION && previous && previous !== 'registered') stage = 'in_transit';
     if (code === DPD_PT_DELIVERY && returning) stage = 'returned';
-    if (code === DPD_PT_RETURN) returning = true;
+    if (code === DPD_PT_RETURNED && movedOn) stage = 'exception';
+    if (code === DPD_PT_RETURN || code === DPD_PT_RETURNED) returning = true;
     Object.assign(event, { stage, stage_source: staged.source });
     previous = stage;
-  }
+  });
 
   const events = scans.map(scan => scan.event);
   const decider = events.find(event => event.stage && event.stage_source !== 'none');
-  const stage = decider?.stage as Stage | undefined;
+  // Once the parcel is sent back, it is a return under way, whatever the scans
+  // on the way read, until a delivery reaches the sender.
+  const read = decider?.stage as Stage | undefined;
+  const stage = returning && read && read !== 'returned' ? 'exception' : read;
   const point = stage === 'ready_for_pickup' || stage === 'delivered' ? pickupPoint(scans) : null;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

@@ -79,7 +79,7 @@ describe('Posti projection', () => {
     expect(waiting('READY_FOR_PICKUP', [departed])).toMatchObject({ current_stage: 'ready_for_pickup' });
   });
 
-  it('reads its copies of a Polish or French post\'s scans in the country of origin on that post\'s clock', () => {
+  it('reads its copies of a Polish, French or Albanian post\'s scans in the country of origin on that post\'s clock', () => {
     const data = fixture();
     const times = (number: string, events: object[]) => parse({ data: { consumerSearchShipments: { totalHits: 1, hits: [{
       ...hit(data), displayId: number, packages: [], events,
@@ -94,6 +94,8 @@ describe('Posti projection', () => {
       .toEqual(['2026-10-25T08:00:00Z', '2026-10-24T12:02:35Z', '2026-10-23T12:44:00+02:00', '2026-10-22T16:26:00+02:00']);
     // In winter too: Helsinki's 11:00 is Paris's.
     expect(times('CW123456785FR', [{ ...departed, timestamp: '2026-01-12T09:00:00Z' }])).toEqual(['2026-01-12T11:00:00+01:00']);
+    // Posta Shqiptare's acceptance at 11:05 Tirana time, which Posti shows at 11:05 Helsinki time.
+    expect(times('CW123456785AL', [{ ...mailed, timestamp: '2026-10-27T09:05:00Z' }])).toEqual(['2026-10-27T11:05:00+01:00']);
     // Another post's item, Posti's own number, and a scan naming a place keep Posti's time.
     expect(times('CW123456785DE', [departed])).toEqual(['2026-10-23T09:44:00Z']);
     expect(times('JJFI12345678901234567', [departed])).toEqual(['2026-10-23T09:44:00Z']);

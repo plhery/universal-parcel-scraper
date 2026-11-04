@@ -147,6 +147,30 @@ describe('DPD Portugal tracking adapter', () => {
       last_status_text: 'SAMPLE EVENT', last_update_local: '2026-10-15T09:00:00' });
   });
 
+  it('reads a proof of delivery later scans take back as no step, and a parcel sent back as a return under way', () => {
+    const returning = [
+      ['611', '30-10-2026', '08:40', 'ENCOMENDA DEVOLVIDA AO EXPEDIDOR'], ['410', '23-10-2026', '09:00', 'ENVIO EM ARMAZÉM'],
+      ['403', '22-10-2026', '18:30', 'RETORNO ARMAZÉM (PÁRA AEP)'], ['506', '22-10-2026', '15:00', 'AUSÊNCIA DO DESTINATÁRIO'],
+      ['OFD', '22-10-2026', '08:30', 'EM DISTRIBUIÇÃO'], ['402', '21-10-2026', '19:10', 'RETORNO ARMAZÉM PARA ENTREGA'],
+      ['POD', '21-10-2026', '12:50', 'PROVA DE ENTREGA'], ['OFD', '21-10-2026', '08:20', 'EM DISTRIBUIÇÃO'],
+      ['PEC', '21-10-2026', '06:00', 'ENTRADA EM ARMAZÉM'],
+    ] as const;
+    const onTheWay = history(['HUB', '31-10-2026', '06:10', 'PASSAGEM POR HUB'], ['PEC', '30-10-2026', '19:00', 'ENTRADA EM ARMAZÉM'], ...returning);
+    expect(parseDpdPt(onTheWay, DELIVERED)).toMatchObject({ status: 'exception', current_stage: 'exception',
+      current_stage_source: 'carrier_map', last_status_text: 'PASSAGEM POR HUB', expected_delivery: null });
+    expect(parseDpdPt(onTheWay, DELIVERED).events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['HUB', 'in_transit', 'carrier_map'], ['PEC', 'in_transit', 'carrier_map'], ['611', 'exception', 'carrier_map'],
+      ['410', 'in_transit', 'carrier_map'], ['403', 'in_transit', 'carrier_map'], ['506', 'failed_attempt', 'carrier_map'],
+      ['OFD', 'out_for_delivery', 'carrier_map'], ['402', 'in_transit', 'carrier_map'], ['POD', 'out_for_delivery', 'none'],
+      ['OFD', 'out_for_delivery', 'carrier_map'], ['PEC', 'in_transit', 'carrier_map'],
+    ]);
+    // With no later scan, the parcel is back with the sender; so it is after the delivery back to the sender.
+    expect(parseDpdPt(history(...returning), DELIVERED)).toMatchObject({ current_stage: 'returned' });
+    const back = history(['POD', '03-11-2026', '11:00', 'PROVA DE ENTREGA'], ['HUB', '31-10-2026', '06:10', 'PASSAGEM POR HUB'], ...returning);
+    expect(parseDpdPt(back, DELIVERED)).toMatchObject({ current_stage: 'returned', last_status_text: 'PROVA DE ENTREGA' });
+    expect(stages(back).slice(0, 3)).toEqual([['POD', 'returned'], ['HUB', 'in_transit'], ['611', 'exception']]);
+  });
+
   it('leaves out the expected delivery day, which is dated when DPD set it', () => {
     const forecast = history(['714', '20-10-2026', '16:25', 'DATA PREVISTA DE ENTREGA'], ['INB', '20-10-2026', '16:09', 'ENTRADA EM ARMAZÉM']);
     expect(parseDpdPt(forecast, DELIVERED)).toMatchObject({ last_status_text: 'ENTRADA EM ARMAZÉM', last_update_local: '2026-10-20T16:09:00' });
@@ -319,8 +343,8 @@ describe('DPD Portugal status vocabulary', () => {
       expect(isDpdPtNotice(entry.code), entry.code).toBe(stage === undefined);
       const answer = statusMapAnswer({ carrier: 'dpd-pt', providerCode: entry.code, description: entry.wording });
       if (stage === undefined) expect(answer, entry.code).toMatchObject({ kind: 'intentional_gap' });
-      // A collection and a delivery take their stage from the scans before them.
-      else if (entry.code === 'COL' || entry.code === 'POD') expect(answer, entry.code).toEqual({ kind: 'unknown' });
+      // A collection and a delivery take their stage from the scans before them, a parcel sent back from the scans after it.
+      else if (['COL', 'POD', '611'].includes(entry.code)) expect(answer, entry.code).toEqual({ kind: 'unknown' });
       else expect(answer, entry.code).toEqual({ kind: 'mapped', stage });
     }
     expect(statusMap.stage(null, 'prova de entrega')).toBeUndefined();

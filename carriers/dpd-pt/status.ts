@@ -31,6 +31,8 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   // delivery stops, and the parcel has not reached the sender yet.
   ['008', 'exception'],
   ['424', 'exception'],
+  // Back with the sender, unless later scans still move the parcel: the parser
+  // then reads the return under way.
   ['611', 'returned'],
   ['POD', 'delivered'],
 ]);
@@ -41,6 +43,8 @@ export const DPD_PT_COLLECTION = 'COL';
 export const DPD_PT_DELIVERY = 'POD';
 /** The return to the sender, ordered. */
 export const DPD_PT_RETURN = '424';
+/** The parcel sent back to the sender; a return under way while later scans still move it. */
+export const DPD_PT_RETURNED = '611';
 /** The pickup point's own scan; its comment names the point. */
 export const DPD_PT_POINT_RECEIPT = '002';
 /** The message giving the recipient the delivery's hour on its day; the comment column holds the window. */
@@ -76,12 +80,15 @@ export function dpdPtStage(code: string, wording: string): ClassifiedWording | n
   return worded.source === 'none' ? null : worded;
 }
 
+// A collection and a proof of delivery take their stage from the scans before
+// them, and a parcel sent back from the scans after it.
+const IN_CONTEXT = new Set([DPD_PT_COLLECTION, DPD_PT_DELIVERY, DPD_PT_RETURNED]);
+
 /**
- * What the map says about one scan. A collection and a proof of delivery take
- * their stage from the scans before them, so the map does not know it from
- * their code; notices are left without a stage on purpose.
+ * What the map says about one scan. It does not know the stage of a scan that
+ * takes it from the scans around it; notices are left without a stage on purpose.
  */
 export const statusMap: CarrierStatusMap = {
-  stage: (code) => code && code !== DPD_PT_COLLECTION && code !== DPD_PT_DELIVERY ? dpdPtMappedStage(code) : undefined,
+  stage: (code) => code && !IN_CONTEXT.has(code) ? dpdPtMappedStage(code) : undefined,
   gaps: [...NOTICES].map(([code, note]) => ({ code, note })),
 };

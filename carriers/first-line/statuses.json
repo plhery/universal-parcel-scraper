@@ -16,6 +16,9 @@
     {"wording": "The package is being submitted for customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance: it follows the flight, and China's export declaration came before the hand-over to the airline."},
     {"wording": "The package has been cleared through customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The import release, after the landing."},
     {"wording": "Customs broker picked it up", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The customs broker collecting the parcel after its import release, before the hand-over to the delivery carrier: it is no longer held in customs."},
-    {"wording": "The package has been transferred to the service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The hand-over to the delivery carrier after the broker's collection."}
+    {"wording": "The package has been transferred to the service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The hand-over to the delivery carrier after the broker's collection."},
+    {"wording": "Arrived at GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The delivering partner GOFO's sorting hub."},
+    {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Leaving GOFO's sorting hub for its delivery station."},
+    {"wording": "Arrived at GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "GOFO's last-mile station, before its delivery round."}
   ]
 }

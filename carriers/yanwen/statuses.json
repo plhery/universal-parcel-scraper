@@ -237,6 +237,22 @@
       "note": "Relayed from USPS after Yanwen hands the parcel over; Yanwen's pickup scan is the acceptance."
     },
     {
+      "wording": "Arrived at USPS Regional Origin Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "USPS's first sorting centre after the hand-over."
+    },
+    {
+      "wording": "In Transit to Next Facility, Arriving On Time",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "USPS's day-only step between its facilities."
+    },
+    {
       "wording": "Your shipment has been accepted by delivery carrier",
       "language": "en",
       "stage": "in_transit",

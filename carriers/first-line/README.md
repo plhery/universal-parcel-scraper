@@ -30,8 +30,9 @@ The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is need
   no place, are dated on Beijing's clock: 17TRACK's copies have those instants to the second.
   The destination's rows stay wall clocks. Rows keep the tracker's order. A row is held back
   only when it is after the lookup on China's clock, the latest of them.
-- The forwarder's own rows are mapped in [statuses.json](statuses.json); the delivering
-  partner's, such as USPS's, go to the shared wording rules. ParcelsApp names the line "1ST"
+- The forwarder's own rows are mapped in [statuses.json](statuses.json), with the delivering
+  partners' rows seen on it, such as UniUni's and GOFO's; others, such as USPS's, go to the
+  shared wording rules. ParcelsApp names the line "1ST"
   and relays its rows, which take the same map.
 - A relayed USPS round, "Out for Delivery, Expected Delivery by 9:00pm" or "Between" two clocks,
   gives the expected delivery on its wall clock's day while the parcel is on it: the day for

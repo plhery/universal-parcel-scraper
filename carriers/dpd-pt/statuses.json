@@ -26,7 +26,7 @@
     {"code": "002", "wording": "RECEPCIONADO PELO PONTO DE ENTREGA", "stage": "ready_for_pickup", "language": "pt", "confirmedBy": "portal", "note": "The pickup point took the parcel in; the comment column names the point."},
     {"code": "008", "wording": "DATA DE PERMANÊNCIA EM LOJA EXPIRADA", "stage": "exception", "language": "pt", "confirmedBy": "portal", "note": "Nobody collected the parcel at the pickup point in time."},
     {"code": "424", "wording": "DEVOLUÇÃO AO EXPEDIDOR", "stage": "exception", "language": "pt", "confirmedBy": "portal", "note": "A return to the sender ordered; the proof of delivery after it is the delivery back to the sender."},
-    {"code": "611", "wording": "ENCOMENDA DEVOLVIDA AO EXPEDIDOR", "stage": "returned", "language": "pt", "confirmedBy": "portal"},
-    {"code": "POD", "wording": "PROVA DE ENTREGA", "stage": "delivered", "language": "pt", "confirmedBy": "portal", "note": "Proof of delivery; the comment column names who received the parcel. After a return to the sender is ordered, the parcel is returned."}
+    {"code": "611", "wording": "ENCOMENDA DEVOLVIDA AO EXPEDIDOR", "stage": "returned", "language": "pt", "confirmedBy": "portal", "note": "Sent back to the sender; while later scans still move the parcel, a return under way, an exception, until the delivery back to the sender."},
+    {"code": "POD", "wording": "PROVA DE ENTREGA", "stage": "delivered", "language": "pt", "confirmedBy": "portal", "note": "Proof of delivery; the comment column names who received the parcel. After a return to the sender, the parcel is returned. One that later scans take back, as the parcel back at the depot to go out again, keeps the stage of the scan before it."}
   ]
 }

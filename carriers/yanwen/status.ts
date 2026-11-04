@@ -42,6 +42,8 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Shipping information received. Your parcel is on its way to UniUni for delivery to you', { status: 'pending', stage: 'registered' }],
   ['Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.', { status: 'pending', stage: 'registered' }],
   ['Accepted at USPS Origin Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at USPS Regional Origin Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['In Transit to Next Facility, Arriving On Time', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has been accepted by delivery carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has arrived at sorting center', { status: 'in_transit', stage: 'in_transit' }],
   // A partner's manifest as the parcel leaves Yanwen's facility, then the destination leg's

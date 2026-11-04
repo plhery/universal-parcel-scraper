@@ -36,8 +36,12 @@ Portugal. It runs its own tracker on `tracking.dpd.pt`, apart from the `dpd.com`
   so they stay wall clocks.
 - The codes are mapped in [status.ts](status.ts). A courier's collection accepts the parcel
   unless an earlier scan already moved it, as at the pickup point where the sender dropped it.
-  Once a return to the sender is ordered, the proof of delivery is the delivery back to the
-  sender, so the parcel is returned. Messages to the recipient and requests for a new delivery
+  Once a return to the sender is ordered (424) or reported (611), the parcel is an exception,
+  a return under way, whatever its scans on the way back read, and the proof of delivery is the
+  delivery back to the sender, so the parcel is returned. The report alone, with no later scan
+  moving the parcel, is returned; with later scans it is the return under way. A proof of
+  delivery that later scans take back, as the parcel back at the depot to go out again, out for
+  delivery or a missed attempt, keeps the stage of the scan before it. Messages to the recipient and requests for a new delivery
   or address keep the stage of the scan before them. The expected delivery day row (714) names
   no day: its date and time are when DPD set one, and its comment holds at most a country code.
   It is left out, since as a step it would show a day the parcel was not due.
