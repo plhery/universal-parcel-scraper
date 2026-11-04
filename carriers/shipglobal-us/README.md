@@ -1,28 +1,28 @@
 # ShipGlobal US
 
-ShipGlobal US parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the public US guest API for FFUSA waybills. ShipGlobal India is a separate
+carrier. The existing prefix rule remains a low-confidence suggestion; HTTP recognition asks
+the native adapter for a whole, identity-bound dated history.
 
-ShipGlobal US Inc., formerly First Flight USA, sends documents and parcels from New York to more
-than 220 countries and resells UPS, FedEx and USPS labels within the United States. It is a separate
-company from ShipGlobal India. Its site is shipglobal.us.
+The public page posts a form-encoded `waybill` to `api.shipglobal.us/api/tracking` without a
+session or token. The response combines numbered checkpoints with shipment metadata. The
+adapter binds `waybill`, checks `CurrentStatus` against the newest checkpoint and preserves
+all distinct carrier entries. The source can repeat Delivered at older in-transit clocks;
+these remain visible rather than becoming inferred extra delivery legs.
 
-## Numbers
+Unknown and malformed references share an HTTP 400 `Invalid tracking number` reply, so it
+remains inconclusive. Other errors, verification and rate limits retain their failure kinds.
+Enabled universal providers remain available for fallback.
 
-Its waybill numbers are FFUSA and digits: seven in the tracker's example, six in the one public
-number. `shipglobal-us-1` reads FFUSA and six or seven digits at low confidence, as only one public
-number is known, and lists ShipGlobal US first, as the prefix is its own.
-
-## Why there is no adapter
-
-The tracker posts waybills to an open JSON service without a session or CAPTCHA, which answers with
-the shipment's scans; their times carry no zone. An unknown and a malformed number get the same
-reply. One public number is known. An adapter can follow.
-
-## Links
-
-Tracking links carry the waybill as `waybill` on the tracking page.
+Clocks have no offsets and remain local times, including overseas scans. The adapter does not
+infer a scan location from a destination in the wording, a time zone from the company's home,
+or an event from its day-only shipment date. Proof-of-delivery links and recipient metadata
+are omitted.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Supply `SHIPGLOBAL_US_TRACKING_NUMBER` and `SHIPGLOBAL_US_UNKNOWN_NUMBER` privately:
+
+```sh
+npm run test:carriers:live -- carriers/shipglobal-us/adapter.live.test.ts
+```

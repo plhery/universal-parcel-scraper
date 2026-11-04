@@ -19,18 +19,38 @@
   "timezone": "Asia/Hong_Kong",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "royale-international",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "service_name"
+  ],
   "portal": {
     "url": "https://www.royaleinternational.com/tracking?waybillno={trackingNumber}",
     "searchUrl": "https://www.royaleinternational.com/tracking",
     "canaryUrl": "https://www.royaleinternational.com/tracking",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

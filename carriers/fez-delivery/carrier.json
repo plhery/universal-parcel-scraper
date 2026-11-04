@@ -19,18 +19,39 @@
   "timezone": "Africa/Lagos",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fez-delivery",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 82,
+      "pattern": "^(?![A-Z]{2,3}\\d+$|1G|ASE)(?=[0-9]{0,3}[A-Z])[A-Z0-9]{4}(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])2\\d{3}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://web.fezdelivery.co/track-delivery/{trackingNumber}",
     "searchUrl": "https://web.fezdelivery.co/track-delivery",
     "canaryUrl": "https://web.fezdelivery.co/track-delivery",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

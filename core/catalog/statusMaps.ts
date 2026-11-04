@@ -726,6 +726,10 @@ import { statusMap as zajil } from '../../carriers/zajil/status.js';
 import { statusMap as zeleris } from '../../carriers/zeleris/status.js';
 import { statusMap as zoomVe } from '../../carriers/zoom-ve/status.js';
 import { statusMap as zrExpress } from '../../carriers/zr-express/status.js';
+import { statusMap as fezDelivery } from '../../carriers/fez-delivery/status.js';
+import { statusMap as junfengInternational } from '../../carriers/junfeng-international/status.js';
+import { statusMap as shipglobalUs } from '../../carriers/shipglobal-us/status.js';
+import { statusMap as royaleInternational } from '../../carriers/royale-international/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../status/statusMap.js';
@@ -733,6 +737,11 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'fez-delivery': fezDelivery,
+  'junfeng-international': junfengInternational,
+  'shipglobal-us': shipglobalUs,
+  'royale-international': royaleInternational,
+
   'direct-freight-express': directFreightExpress,
   'qatar-post': qatarPost, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,

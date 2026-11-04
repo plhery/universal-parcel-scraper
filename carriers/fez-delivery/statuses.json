@@ -1,4 +1,40 @@
 {
   "carrier": "fez-delivery",
-  "entries": []
+  "entries": [
+    {
+      "code": "Delivered",
+      "wording": "Delivered — Your package has been successfully delivered to the recipient.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "Dispatched",
+      "wording": "Dispatched — Your package is on its way to the delivery address.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "Returned To Last Mile Hub",
+      "wording": "Delivery Failed — We could not deliver your item after three unsuccessful attempts",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "In Return To Last Mile Hub",
+      "wording": "First Delivery Attempt Failed — Our dispatch driver attempted to deliver the package but was unable to do so.",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "Picked-Up",
+      "wording": "Picked-Up — Our rider has picked-up your item and is heading back to the office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

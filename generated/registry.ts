@@ -237,6 +237,7 @@ import { adapter as fedexFreight } from '../carriers/fedex-freight/adapter.js';
 import { adapter as fedexInternationalConnect } from '../carriers/fedex-international-connect/adapter.js';
 import { adapter as fedexPl } from '../carriers/fedex-pl/adapter.js';
 import { adapter as fermopoint } from '../carriers/fermopoint/adapter.js';
+import { adapter as fezDelivery } from '../carriers/fez-delivery/adapter.js';
 import { adapter as fgDelivery } from '../carriers/fg-delivery/adapter.js';
 import { adapter as firstLine } from '../carriers/first-line/adapter.js';
 import { adapter as flashExpress } from '../carriers/flash-express/adapter.js';
@@ -351,6 +352,7 @@ import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
+import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
@@ -539,6 +541,7 @@ import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
 import { adapter as royalExpressMm } from '../carriers/royal-express-mm/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
+import { adapter as royaleInternational } from '../carriers/royale-international/adapter.js';
 import { adapter as rozetkaDelivery } from '../carriers/rozetka-delivery/adapter.js';
 import { adapter as rpxIndonesia } from '../carriers/rpx-indonesia/adapter.js';
 import { adapter as russianPost } from '../carriers/russian-post/adapter.js';
@@ -567,6 +570,7 @@ import { adapter as shipa } from '../carriers/shipa/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
 import { adapter as shipentegra } from '../carriers/shipentegra/adapter.js';
 import { adapter as shipglobalIn } from '../carriers/shipglobal-in/adapter.js';
+import { adapter as shipglobalUs } from '../carriers/shipglobal-us/adapter.js';
 import { adapter as shiprocket } from '../carriers/shiprocket/adapter.js';
 import { adapter as shipter } from '../carriers/shipter/adapter.js';
 import { adapter as shouwu } from '../carriers/shouwu/adapter.js';
@@ -957,6 +961,7 @@ export const REGISTRY: RegistryDefinition = {
     "fedex-international-connect": fedexInternationalConnect,
     "fedex-pl": fedexPl,
     "fermopoint": fermopoint,
+    "fez-delivery": fezDelivery,
     "fg-delivery": fgDelivery,
     "first-line": firstLine,
     "flash-express": flashExpress,
@@ -1071,6 +1076,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrt": jrt,
     "js-express": jsExpress,
     "jumppoint": jumppoint,
+    "junfeng-international": junfengInternational,
     "kazpost": kazpost,
     "kec-ecommerce": kecEcommerce,
     "kex": kex,
@@ -1259,6 +1265,7 @@ export const REGISTRY: RegistryDefinition = {
     "roadrunner": roadrunner,
     "royal-express-mm": royalExpressMm,
     "royal-mail": royalMail,
+    "royale-international": royaleInternational,
     "rozetka-delivery": rozetkaDelivery,
     "rpx-indonesia": rpxIndonesia,
     "russian-post": russianPost,
@@ -1287,6 +1294,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipblu": shipblu,
     "shipentegra": shipentegra,
     "shipglobal-in": shipglobalIn,
+    "shipglobal-us": shipglobalUs,
     "shiprocket": shiprocket,
     "shipter": shipter,
     "shouwu": shouwu,
@@ -1876,7 +1884,7 @@ export const REGISTRY: RegistryDefinition = {
     "fedex-pl": "fedex-pl",
     "fercam": "universal",
     "fermopoint": "fermopoint",
-    "fez-delivery": "universal",
+    "fez-delivery": "fez-delivery",
     "fg-delivery": "fg-delivery",
     "fimile": "universal",
     "first-delivery-tn": "universal",
@@ -2091,7 +2099,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrt": "jrt",
     "js-express": "js-express",
     "jumppoint": "jumppoint",
-    "junfeng-international": "universal",
+    "junfeng-international": "junfeng-international",
     "juxi-express": "universal",
     "jy-express": "universal",
     "kargoist": "universal",
@@ -2427,7 +2435,7 @@ export const REGISTRY: RegistryDefinition = {
     "route1-fulfilment": "universal",
     "royal-express-mm": "royal-express-mm",
     "royal-mail": "royal-mail",
-    "royale-international": "universal",
+    "royale-international": "royale-international",
     "rozetka-delivery": "rozetka-delivery",
     "rpx-hk": "universal",
     "rpx-indonesia": "rpx-indonesia",
@@ -2482,7 +2490,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipentegra": "shipentegra",
     "shipgce": "universal",
     "shipglobal-in": "shipglobal-in",
-    "shipglobal-us": "universal",
+    "shipglobal-us": "shipglobal-us",
     "shippify": "universal",
     "shiprocket": "shiprocket",
     "shipter": "shipter",

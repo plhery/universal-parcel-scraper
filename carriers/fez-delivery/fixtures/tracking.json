@@ -1,0 +1,37 @@
+{
+  "status": "Success",
+  "description": "History Fetched",
+  "order": {
+    "orderNo": "TZ7K04072612",
+    "orderStatusAlias": "Delivered",
+    "proofOfDelivery": "https://example.invalid/private-proof",
+    "recipientName": "PRIVATE RECIPIENT",
+    "createdAt": "2026-07-01 09:10:11"
+  },
+  "history": [
+    {
+      "orderStatusAlias": "Delivered",
+      "orderStatus": "Delivered",
+      "statusCreationDate": "2026-07-04 10:20:30",
+      "statusDescription": "Your package has been successfully delivered to the recipient."
+    },
+    {
+      "orderStatusAlias": "Dispatched",
+      "orderStatus": "Dispatched",
+      "statusCreationDate": "2026-07-04 08:10:20",
+      "statusDescription": "Your package is on its way to the delivery address."
+    },
+    {
+      "orderStatusAlias": "First Delivery Attempt Failed",
+      "orderStatus": "In Return To Last Mile Hub",
+      "statusCreationDate": "2026-07-03 11:10:20",
+      "statusDescription": "Our dispatch driver attempted to deliver the package but was unable to do so. Reason : PRIVATE PHONE AND ADDRESS"
+    },
+    {
+      "orderStatusAlias": "Picked-Up",
+      "orderStatus": "Picked-Up",
+      "statusCreationDate": "2026-07-02 10:10:20",
+      "statusDescription": "Our rider has picked-up your item and is heading back to the office"
+    }
+  ]
+}

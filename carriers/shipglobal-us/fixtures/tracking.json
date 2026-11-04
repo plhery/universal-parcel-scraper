@@ -1,0 +1,36 @@
+{
+  "response": "success",
+  "data": [
+    {
+      "waybill": "FFUSA7416302",
+      "CurrentStatus": "Delivered",
+      "Shipment Date": "2026-06-30",
+      "Destination": "NSW Australia",
+      "pod": "https://example.invalid/private-proof",
+      "0": {
+        "date": "2026-07-04 10:20:30",
+        "description": "Delivered",
+        "location": "",
+        "status": "Delivered"
+      },
+      "1": {
+        "date": "2026-07-03 09:10:00",
+        "description": "Your parcel is on its way to Example Town",
+        "location": "",
+        "status": "In Transit"
+      },
+      "2": {
+        "date": "2026-07-03 09:10:00",
+        "description": "Delivered",
+        "location": "",
+        "status": "Delivered"
+      },
+      "3": {
+        "date": "2026-07-02 12:00:00",
+        "description": "Your parcel has been picked up!",
+        "location": "",
+        "status": "In Transit"
+      }
+    }
+  ]
+}

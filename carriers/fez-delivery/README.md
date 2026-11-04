@@ -1,31 +1,22 @@
 # Fez Delivery
 
-Fez Delivery parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads Fez Delivery's public guest history API with one whole order reference.
+It binds `order.orderNo` before accepting the newest-first scan list. The existing date-shaped
+number rule remains a suggestion; HTTP recognition confirms it through a dated history.
 
-Fez Delivery is a Lagos delivery company carrying parcels door to door across Nigeria, with exports, imports
-and parcel lockers. Its site is fezdelivery.co.
+`customerapi.fezdelivery.co/v1/order/historyv2/{number}` needs no account or session. Only its
+separate, exact `Order Not Found` envelope becomes not-found. Changed replies, rate limits and
+verification failures remain distinct, with enabled universal providers available for fallback.
 
-## Numbers
-
-Its order numbers are twelve characters: four letters and digits, the order's creation date as day, month and
-year, and two digits. `fez-delivery-1` suggests that layout at low confidence when a letter comes among the
-first four; the one real public example is an archived lookup on its own tracker, and its API documentation
-gives the others. It leaves out numbers that open with two or three letters followed only by digits, or with
-`1G` or `ASE`, as other carriers' numbers do.
-
-## Why there is no adapter
-
-Its tracker reads an open JSON API without a session or CAPTCHA:
-`GET customerapi.fezdelivery.co/v1/order/historyv2/{number}`. It answers the public example with the order's
-history, and an unknown number with HTTP 200 and an `Error` status, so an adapter has to read the status. Its
-times carry no zone, and its proof of delivery is a photo link an adapter must not show. No adapter has been
-written for it yet.
-
-## Links
-
-The tracker opens numbers from its path, `/track-delivery/<number>`.
+Scan clocks have no stated offset and remain local times. Dispatched describes a delivery round;
+a failed attempt returning to the last-mile hub is an exception, not a return to the sender.
+The projection omits recipient fields, proof-of-delivery URLs and free-text delivery reasons.
+It adds no event from the order's creation date.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Supply `FEZ_DELIVERY_TRACKING_NUMBER` and `FEZ_DELIVERY_UNKNOWN_NUMBER` privately:
+
+```sh
+npm run test:carriers:live -- carriers/fez-delivery/adapter.live.test.ts
+```

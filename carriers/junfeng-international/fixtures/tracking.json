@@ -1,0 +1,45 @@
+{
+  "resultCode": "0",
+  "resultMsg": "操作成功",
+  "data": {
+    "TrackInfo": {
+      "Data": {
+        "Result": "0",
+        "dataList": [
+          {
+            "outwaybillCode": "IW864209751GB",
+            "LatestStatus": "Example PFW Depot, Delivered to Safe Place",
+            "Data": {
+              "Result": "0",
+              "Destination": [
+                {
+                  "Date": "2026-07-04 10:20:30",
+                  "Details": "Example PFW Depot, Delivered to Safe Place",
+                  "StatusDescription": "Example PFW Depot, Delivered to Safe Place",
+                  "CountryName": "",
+                  "SourceId": 12345
+                },
+                {
+                  "Date": "2026-07-04 09:00:00",
+                  "Details": "Example PFW Depot, Out for Delivery"
+                },
+                {
+                  "Date": "2026-07-03 08:00:00",
+                  "Details": "清关完成，已交邮"
+                },
+                {
+                  "Date": "2026-07-02 11:00:00",
+                  "Details": "头程航班预计03日13:40起飞"
+                },
+                {
+                  "Date": "2026-07-02 12:00:00",
+                  "Details": "已发货，司机正在送到机场"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

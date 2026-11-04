@@ -1,4 +1,33 @@
 {
   "carrier": "shipglobal-us",
-  "entries": []
+  "entries": [
+    {
+      "code": "Delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "In Transit",
+      "wording": "Your parcel has arrived at the next depot for sorting and processing",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "In Transit",
+      "wording": "Your parcel is on its way to Coffs Harbour",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "In Transit",
+      "wording": "Your parcel has been picked up!",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

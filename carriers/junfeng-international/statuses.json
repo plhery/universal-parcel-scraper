@@ -1,4 +1,59 @@
 {
   "carrier": "junfeng-international",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Nottingham PFW Depot, Delivered to Safe Place",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Nottingham PFW Depot, Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Coventry PFW National Hub, Shipment Received in Depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "清关完成，已交邮",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "飞机已到达，正在拆板",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "飞机已起飞，送往目的地",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "航司载量不足，头程延误，航班预配中",
+      "stage": "exception",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "航司已收货，等待装板",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "已发货，司机正在送到机场",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "portal"
+    }
+  ]
 }

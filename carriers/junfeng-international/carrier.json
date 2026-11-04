@@ -23,18 +23,35 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "junfeng-international",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.junfengfast.com/tracking.html?no={trackingNumber}",
     "searchUrl": "https://www.junfengfast.com/tracking.html",
     "canaryUrl": "https://www.junfengfast.com/tracking.html",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

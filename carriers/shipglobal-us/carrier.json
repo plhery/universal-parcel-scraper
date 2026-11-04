@@ -18,18 +18,39 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "shipglobal-us",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 83,
+      "pattern": "^FFUSA\\d{6,7}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://shipglobal.us/track.html?waybill={trackingNumber}",
     "searchUrl": "https://shipglobal.us/track.html",
     "canaryUrl": "https://shipglobal.us/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

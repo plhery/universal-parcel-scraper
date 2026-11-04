@@ -1,26 +1,27 @@
 # Royale International
 
-Royale International parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads Royale International's server-rendered guest tracking page. It binds the
+whole prefilled waybill and the unique shipment, event and proof tables. Twelve digits alone
+establish no carrier ownership, so explicit selection and tracking links reach the adapter
+without a broad numeric detection rule.
 
-Royale International Couriers Limited, founded in Hong Kong in 1993 as HKDC and headquartered
-there, runs international express, time-critical and on-board courier, air freight and
-warehousing through offices around the world. Its site is royaleinternational.com.
+`www.royaleinternational.com/tracking?waybillno={number}` needs no account or session. An empty
+search view remains inconclusive. Changed markup and verification failures stay distinct;
+enabled universal providers remain available for fallback.
 
-## Numbers
+The page lists updates oldest first. The adapter reverses that sequence without assigning a
+home time zone to overseas scans. A dated proof supplies a delivery event; its separate POD
+capture update is administrative. The proof must have a same-day capture context to place it
+in the history. POD capture alone does not prove delivery. The latest update clock can therefore
+be later than the physical delivery clock.
 
-An archived lookup on its former tracker shows one twelve-digit waybill number. Many carriers'
-rules read twelve digits, so there is no rule.
-
-## Why there is no adapter
-
-The tracker is a plain page that shows a waybill's details, scans and proof of delivery without a
-session, for shipments years old. One public number is known. An adapter can follow.
-
-## Links
-
-Tracking links carry the number as `waybillno` on the tracking page.
+Recipient, shipper, reference, signature and proof-detail cells are omitted. Only explicit
+facility scans provide locations; a facility the parcel is travelling toward does not.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Supply `ROYALE_INTERNATIONAL_TRACKING_NUMBER` and `ROYALE_INTERNATIONAL_UNKNOWN_NUMBER` privately:
+
+```sh
+npm run test:carriers:live -- carriers/royale-international/adapter.live.test.ts
+```
