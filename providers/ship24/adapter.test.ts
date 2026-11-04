@@ -249,6 +249,10 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(feed('gofo-express-tracking', 'GOFO Express', [['2026-11-03T07:51:11-07:00', 'PENSACOLA'],
       ['2026-11-03T07:41:11-07:00', 'Cantonment'], ['2026-11-02T18:01:24-07:00', 'Orlando']]))
       .toEqual(['2026-11-03T13:51:11.000Z', '2026-11-03T13:41:11.000Z', '2026-11-02T23:01:24.000Z']);
+    // Its Texas stations are on Central time, as GOFO's own API dates them, and so is the scan without a place after them.
+    expect(feed('gofo-express-tracking', 'GOFO Express', [['2026-10-29T03:33:19-07:00', undefined],
+      ['2026-10-24T04:11:36-07:00', 'Austin'], ['2026-10-23T14:37:02-07:00', 'Lewisville']]))
+      .toEqual(['2026-10-29T08:33:19.000Z', '2026-10-24T09:11:36.000Z', '2026-10-23T19:37:02.000Z']);
   });
 
   it('reads PostNL\'s and Amazon UK\'s Z as the clock of the scan\'s country or of the marketplace', () => {

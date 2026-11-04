@@ -16,8 +16,8 @@ const STATION_ZONES: Readonly<Record<string, readonly string[]>> = {
   'America/New_York': ['Atlanta', 'Brooklyn', 'Carteret', 'Charleston', 'Cincinnati', 'Detroit', 'Doral', 'IND.H', 'Jamaica',
     'Miami', 'Milford', 'New York', 'Ocala', 'Orlando', 'Suwanee', 'VPC01'],
   // The station serving Pensacola is in Cantonment, Florida's Panhandle: GOFO dates its scans, and the
-  // round the feed names after Pensacola, on Central time.
-  'America/Chicago': ['Cantonment', 'Melrose Park', 'Pensacola'],
+  // round the feed names after Pensacola, on Central time. So it dates its Texas stations' scans.
+  'America/Chicago': ['Austin', 'Cantonment', 'Lewisville', 'Melrose Park', 'Pensacola'],
   // Newark is the Bay Area hub. ORD02.V picks up in Chicago, on Pacific time.
   'America/Los_Angeles': ['Chino', 'LAX.H', 'Los Angeles', 'Newark', 'ORD02.V', 'Portland', 'San Fernando Valley', 'San Francisco',
     'Seattle', 'Vernon'],

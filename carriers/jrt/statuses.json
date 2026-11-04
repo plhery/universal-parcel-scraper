@@ -806,6 +806,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "After the airline's notice of arrival and before the import clearance."
+    },
+    {
+      "wording": "Rerouted to parcel machine., The Recipient of this courier parcel used the free option of dynamic rerouting to the InPost parcel machine. Once the parcel is delivered to the selected machine, the Recipient will receive an e-mail/SMS message containing the details needed to receive the parcel.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Copied from InPost on the line into Poland: the recipient sent the courier parcel to a parcel machine, where it has not arrived yet."
+    },
+    {
+      "wording": "Consignee Contacted",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "A call or message to the recipient, which moves nothing."
+    },
+    {
+      "wording": "Data transferred and received by carrier",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The parcel's data passed to the carrier, before JRT's receiving point takes the parcel in."
     }
   ]
 }

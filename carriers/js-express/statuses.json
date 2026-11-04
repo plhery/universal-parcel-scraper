@@ -97,6 +97,7 @@
     {"code": "OIT", "wording": "ARRIVE TRANSITHUB", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's transit hub, after the import release."},
     {"code": "OIT", "wording": "TASK ASSIGNED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's delivery task, after the hand-over to it and before its sorting."},
     {"code": "OIT", "wording": "ORDER SORTED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's sorting."},
-    {"code": "OIT", "wording": "OUTBOUND SCANNED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's depot scanning the parcel out, before its delivery round."}
+    {"code": "OIT", "wording": "OUTBOUND SCANNED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's depot scanning the parcel out, before its delivery round."},
+    {"code": "OIT", "wording": "PREFERENCE APPLIED", "stage": "pending", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's record of a delivery preference the recipient chose, days before it has the parcel. It moves nothing."}
   ]
 }

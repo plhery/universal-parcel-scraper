@@ -10,7 +10,7 @@
     {"wording": "Export customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "China's export declaration, written in Shenzhen before the flight; the parcel is not held in customs."},
     {"wording": "Depart from facility to service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Hand over to airline", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At Hong Kong's airport after the export declaration."},
-    {"wording": "Order received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The delivering partner's order data, such as UniUni's, written before it has the parcel."},
+    {"wording": "Order received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The delivering partner's order data, such as UniUni's: it follows the shipper's parcel information and comes before the Shenzhen warehouse's first scan, days before the flight."},
     {"wording": "Next stop destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight, after the hand-over to the airline; the row keeps Hong Kong's airport as its place."},
     {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's landing, before the import clearance."},
     {"wording": "The package is being submitted for customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance: it follows the flight, and China's export declaration came before the hand-over to the airline."},

@@ -136,6 +136,7 @@ describe('DPD UK public history projection', () => {
   });
 
   it.each(['A notification has been sent to advise you when the delivery will take place',
+    'There has been a delay with your delivery',
     'As requested, your parcel will now be left in your selected safe place',
     'As requested, your parcel will now be delivered on Mon 2 November 2026 at 9:30.',
     'As requested, your parcel will now be delivered on Mon 2 November 2026'])('gives the notice %s no mapped stage', text => {

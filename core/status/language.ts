@@ -33,6 +33,8 @@ const DELIVERY_FORECAST = new RegExp(`(?:${[
   String.raw`\b(?:will|would|shall|should|may|might|must|won't|can(?! ?not\b)|could(?! not\b))(?: (?:not|now|then|still|also|likely|probably|possibly|hopefully|soon|shortly|only|normally|usually|again|today|tomorrow))* be delivered\b(?! (?:back )?to (?:the )?(?:sender|shipper)\b)`,
   // An estimate: "Your parcel is estimated to be delivered on: <date>".
   String.raw`(?:\b(?:is|are|was|were|has been|have been|had been) (?:now |still |also )?)?\b(?:estimated|expected|scheduled|planned|forecast(?:ed)?|projected|due) to be delivered\b(?! (?:back )?to (?:the )?(?:sender|shipper)\b)`,
+  // A condition: "Once the parcel is delivered to the selected machine, the Recipient will receive…".
+  String.raw`\b(?:once|when|until|till|as soon as|if)(?: (?:the|your|this|it|its|[a-z]+))?(?: (?:parcel|package|shipment|item|order|consignment))? (?:is|gets|has been) delivered\b(?! (?:back )?to (?:the )?(?:sender|shipper)\b)`,
   String.raw`\b(?:sera|seront|serait|seraient|va etre|vont etre|doit etre|doivent etre|devrait etre|devraient etre|pourra etre|pourront etre|pourrait etre)(?: \w+){0,2}? livree?s?\b(?! a (?:l'|son |leur |votre )expediteur)`,
   String.raw`\b(?:wird|werden|soll|sollte|sollen|sollten)\b(?!${SENTENCE}*?\babsender\b)${SENTENCE}*?(?<!\bnicht )\bzugestellt\b`,
   String.raw`\bvoraussichtlich\w*\b${SENTENCE}*?\b(?:zugestellt|zustellung)\b|\b(?:zustellung|zustelltermin) (?:(?:ist|erfolgt) )?(?:voraussichtlich|geplant)\b`,

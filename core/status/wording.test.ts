@@ -593,7 +593,10 @@ describe('classifyWording', () => {
     'Your parcel is estimated to be delivered on: Friday, July 17, 2026', 'Expected to be delivered on Monday',
     'Your package has been scheduled to be delivered by 08:00 PM on Mar 11.', 'Due to be delivered tomorrow',
     'The parcel is now expected to be delivered on 17.07.2026', 'Your parcel is due to be delivered on Monday 02nd November 2026',
-    'Your shipment is due to be delivered on Monday'])('gives the notice "%s" no stage', wording => {
+    'Your shipment is due to be delivered on Monday',
+    // A condition is one too: "once the parcel is delivered" still waits for it.
+    'Once the parcel is delivered to the selected machine, the recipient will receive an e-mail with the details',
+    'You will get a text when your parcel is delivered', 'Keep this number until it has been delivered'])('gives the notice "%s" no stage', wording => {
     expect(trackingLanguageStage(wording)).toBeUndefined();
     expect(classifyWording(wording, 'pending')).toEqual({ stage: 'pending', source: 'none' });
     expect(classifyWording(wording, 'in_transit')).toEqual({ stage: 'in_transit', source: 'none' });
@@ -616,6 +619,7 @@ describe('classifyWording', () => {
     ['Will be delivered back to sender', 'exception'],
     ['Arrived at the depot. Your parcel is estimated to be delivered on: Friday, July 17, 2026', 'in_transit'],
     ['The shipment was loaded into the delivery vehicle and is expected to be delivered today.', 'out_for_delivery'],
+    ['Arrived at the depot. Once the parcel is delivered, you will receive an e-mail', 'in_transit'],
   ] as const)('reads only what "%s" reports: %s', (wording, stage) => {
     expect(classifyWording(wording, 'pending')).toEqual({ stage, source: 'wording:language' });
   });

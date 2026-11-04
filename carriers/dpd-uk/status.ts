@@ -2,8 +2,9 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import { classifyDpdUkWording } from './parser.js';
 import { dpdUkWording } from './wording.js';
 
-// Delivery notices: the notification of a coming delivery, and the day and hour or the safe place the recipient chose.
+// Delivery notices: the notification of a coming delivery, a delay to it, and the day and hour or the safe place the recipient chose.
 const NOTICE = new RegExp('^(?:a notification has been sent to advise you when the delivery will take place'
+  + '|there has been a delay with your delivery'
   + '|as requested, your parcel will now be (?:left in your selected safe place'
   + '|delivered on [a-z]{3} \\d{1,2} [a-z]+ \\d{4}(?: at (?:[01]?\\d|2[0-3]):[0-5]\\d)?))$');
 
