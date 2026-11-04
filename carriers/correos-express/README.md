@@ -2,7 +2,9 @@
 
 Tracks 16-digit shipment references through the anonymous public tracking form,
 and the 23-digit parcel labels. Other reference formats use the universal
-providers. Both lengths end in a GS1 check digit, which detection requires.
+providers. Both lengths end in a GS1 check digit, which detection requires. The
+tracker also answers some 16-digit shipments that fail it; detection does not
+offer Correos Express for those, but the adapter takes any 16 digits.
 
 ## How it works
 

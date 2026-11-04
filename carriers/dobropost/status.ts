@@ -9,6 +9,8 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
  * are mapped.
  */
 const CODES: ReadonlyMap<string, Stage> = new Map([
+  // The customer's parcel on record before the goods it will hold reach the warehouse.
+  ['VIRTUAL_PARCEL', 'registered'],
   // At DobroPost's warehouse in China, which holds the customer's goods.
   ['ON_ASSEMBLY', 'accepted'], // The goods are packed into one parcel.
   ['ON_WEIGHING', 'accepted'],

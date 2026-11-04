@@ -1,6 +1,7 @@
 {
   "carrier": "dobropost",
   "entries": [
+    {"code": "VIRTUAL_PARCEL", "wording": "Виртуальная посылка", "stage": "registered", "language": "ru", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The customer's parcel on record, days before the warehouse packs the goods into it."},
     {"code": "ON_ASSEMBLY", "wording": "На комплектации", "stage": "accepted", "language": "ru", "confirmedBy": "live", "note": "The goods the customer bought are packed into one parcel at DobroPost's warehouse in China."},
     {"code": "ON_WEIGHING", "wording": "На взвешивании", "stage": "accepted", "language": "ru", "confirmedBy": "live"},
     {"code": "AWAITING_PAYMENT", "wording": "Ожидает оплату", "stage": "accepted", "language": "ru", "confirmedBy": "live", "note": "The customer pays for the shipping; the parcel waits at the warehouse."},
