@@ -57,9 +57,10 @@ only for twelve-digit guías. The samples and their sources are in [`numbers.jso
 
 ## Links
 
-`envia.co/tracking` reads the guía from `?guia=` and looks it up when it opens. The former
-tracker on `portal.envia.co` read it from `?Guia=`, and the Envía Colvanes site from `?rastreo=`
-on `Contenido.aspx`.
+`envia.co/rastreo/` reads the guía from `?guia=` and looks it up when it opens. Links to
+`envia.co/tracking` still name Envía, but that page now sends visitors to `rastreo` without the
+guía. The former tracker on `portal.envia.co` read it from `?Guia=`, and the Envía Colvanes site
+from `?rastreo=` on `Contenido.aspx`.
 
 ## Testing
 

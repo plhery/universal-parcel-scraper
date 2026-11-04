@@ -18516,15 +18516,15 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "recognitionRank": 912,
       "localClocks": true
     },
-    "canaryUrl": "https://envia.co/tracking",
-    "trackingUrlTemplate": "https://envia.co/tracking?guia={trackingNumber}",
-    "trackingSearchUrl": "https://envia.co/tracking",
+    "canaryUrl": "https://envia.co/rastreo/",
+    "trackingUrlTemplate": "https://envia.co/rastreo/?guia={trackingNumber}",
+    "trackingSearchUrl": "https://envia.co/rastreo/",
     "linkRules": [
       {
         "domains": [
           "envia.co"
         ],
-        "pathPattern": "^/tracking/?$",
+        "pathPattern": "^/(?:rastreo|tracking)/?$",
         "params": [
           "guia"
         ]

@@ -38,9 +38,9 @@
     "offset_timestamps"
   ],
   "portal": {
-    "url": "https://envia.co/tracking?guia={trackingNumber}",
-    "searchUrl": "https://envia.co/tracking",
-    "canaryUrl": "https://envia.co/tracking",
+    "url": "https://envia.co/rastreo/?guia={trackingNumber}",
+    "searchUrl": "https://envia.co/rastreo/",
+    "canaryUrl": "https://envia.co/rastreo/",
     "shows": [
       "status",
       "history",
@@ -85,7 +85,7 @@
       "domains": [
         "envia.co"
       ],
-      "pathPattern": "^/tracking/?$",
+      "pathPattern": "^/(?:rastreo|tracking)/?$",
       "params": [
         "guia"
       ]
