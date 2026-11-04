@@ -75,8 +75,10 @@ describe('DHL Poland browser history', () => {
     payload.events[0]!.description = 'Shipment collected from DHL Parcelstation. . Thank you!';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).toMatchObject({ stage: 'delivered' });
   });
-  it('keeps unknown and informational wording without guessing a stage', () => {
+  it('files a notice that moves nothing as pending and keeps unknown wording without guessing a stage', () => {
     const payload = history(); payload.events[0]!.description = 'The recipient was informed about the date of delivery.';
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).toMatchObject({ stage: 'pending' });
+    payload.events[0]!.description = 'The recipient was informed about something new.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).not.toHaveProperty('stage');
   });
   it('requires request binding and lets the latest refusal override an earlier success', async () => {

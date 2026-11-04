@@ -26,11 +26,16 @@ const ESTIMATED_DAY = /^(estimated (?:departure|arrival date) is )[a-z]+ \d{1,2}
 // The bilingual row of a booked flight names its day in both halves: "预计10.29航班/Flight scheduled for October 29th".
 const SCHEDULED_FLIGHT = /^(预计)\d{1,2}\.\d{1,2}(航班\/flight scheduled for )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
 
+// On the line into Mexico the booked flight is in Spanish, naming the destination and the day:
+// "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
+const SPANISH_FLIGHT = /^(se espera que el vuelo salga hacia )[^\d…]{1,40}?( el )\d{1,2} de [a-z]+$/;
+const FLIGHT_EN_ROUTE = /^(the flight is en route to the airport in )[^\d…]{1,40}$/;
+
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
 export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
-  .replace(SCHEDULED_FLIGHT, '$1…$2…');
+  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…');
 
 /**
  * The stage JRT's map gives a row, by its whole `normalizeStatusWording` wording:

@@ -323,6 +323,9 @@ describe('JRT tracking adapter', () => {
     // The bilingual row of a booked flight reads alike whatever its day.
     expect(answer('预计10.29航班/Flight scheduled for October 29th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计11.3航班/Flight scheduled for November 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // On the line into Latin America the booked flight and the flight name the destination and the day.
+    expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // So is the hand-over to FedEx after the clearance, and the warehouse's receipt before it: neither is an acceptance.
     for (const description of ['It has been handed over to the service provider.',
       'The cargo has been picked up and arrived at the warehouse，awaiting outbound shipment', 'Arrived at FedEx hub', 'Departed FedEx hub', 'On the way']) {
@@ -336,6 +339,7 @@ describe('JRT tracking adapter', () => {
       'loaded to movement / tour vehicle again',
       'The flight is expected to depart on soon and land on 10.27',
       '10/22号航班 CA000',
+      'Se espera que el vuelo salga hacia México',
     ]) expect(answer(description), description).toEqual({ kind: 'unknown' });
   });
 

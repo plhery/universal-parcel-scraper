@@ -830,6 +830,46 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "The parcel's data passed to the carrier, before JRT's receiving point takes the parcel in."
+    },
+    {
+      "wording": "Shipment inbound in sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Into the sorting centre that prepares the export, after the receiving point took the parcel in."
+    },
+    {
+      "wording": "Departed from sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Out of that sorting centre, on the way to the airport."
+    },
+    {
+      "wording": "Se espera que el vuelo salga hacia … el …",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Waiting for the booked flight on the line into Mexico; the destination and the flight's day are read as ellipses."
+    },
+    {
+      "wording": "The flight is en route to the airport in …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The flight to the destination's airport, which the map reads as an ellipsis."
+    },
+    {
+      "wording": "At local FedEx facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Copied from FedEx, which delivers the last leg: at its station before the delivery run."
     }
   ]
 }
