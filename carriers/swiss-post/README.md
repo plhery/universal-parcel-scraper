@@ -87,7 +87,9 @@ row by provider code, instant and location, unless one of the two is revoked.
   not read. A delivered parcel has none, collected there or not.
 - Weight (sent in grams), measurements (millimetres; most letters have two),
   destination country and delivery time come from the shipment summary. The
-  delivery estimate is dropped once the shipment is delivered or returned.
+  estimate is the day Swiss Post names, with its time slot, or else the days of
+  its `deliveryRange` (`expected_delivery_from` to `expected_delivery`). It is
+  dropped once the shipment is delivered or returned.
 - Timestamps are kept exactly as sent and parsed only to sort (offset-less
   values read as UTC for that comparison), but for the destination post's events
   and those of the origin offices and the pre-advice [clock.ts](clock.ts) lists.

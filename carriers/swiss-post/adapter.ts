@@ -101,21 +101,24 @@ function clockParts(value: unknown): string[] {
   return clocks;
 }
 
-export function swissPostExpectedDelivery(item: JsonObject): string | null {
+/**
+ * When the parcel is expected: its day and time slot, or the days Swiss Post gives as a range,
+ * as its tracker writes "Wed 04.11. – Fri 06.11." while it names no single day.
+ */
+export function swissPostExpectedDelivery(item: JsonObject): { from: string | null; to: string } | null {
   const interval = item.deliveryTimeInterval;
   const range = isRecord(item.deliveryRange) ? item.deliveryRange : {};
-  const date = [
-    item.calculatedDeliveryDate,
-    item.deliveryDate,
-    interval,
-    range.start,
-    range.end,
-  ].map(datePart).find(Boolean) ?? null;
-  if (!date) return null;
+  const day = [item.calculatedDeliveryDate, item.deliveryDate, interval].map(datePart).find(Boolean) ?? null;
+  if (!day) {
+    const [start, end] = [datePart(range.start), datePart(range.end)];
+    if (start && end && start < end) return { from: start, to: end };
+    const date = start ?? end;
+    return date ? { from: null, to: date } : null;
+  }
   const clocks = clockParts(interval);
-  if (clocks.length === 0) return date;
-  if (clocks.length === 1 || clocks[0] === clocks[1]) return `${date} ${clocks[0]}`;
-  return `${date} ${clocks[0]}–${clocks[1]}`;
+  if (clocks.length === 0) return { from: null, to: day };
+  if (clocks.length === 1 || clocks[0] === clocks[1]) return { from: null, to: `${day} ${clocks[0]}` };
+  return { from: null, to: `${day} ${clocks[0]}–${clocks[1]}` };
 }
 
 /** A positive whole measurement, or null. Swiss Post sends 0 for an unmeasured item. */
@@ -355,12 +358,14 @@ export function parseSwissPostShipment(
     : null;
   const weight = weightKg(item);
   const dimensions = dimensionsText(item);
+  const expected = finished ? null : swissPostExpectedDelivery(item);
   return {
     status,
     ...(stage ? { current_stage: stage } : {}),
     last_status_text: lastStatusText,
     last_update: lastUpdate,
-    expected_delivery: finished ? null : swissPostExpectedDelivery(item),
+    expected_delivery: expected?.to ?? null,
+    ...(expected?.from ? { expected_delivery_from: expected.from } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(weight !== null ? { weight_kg: weight } : {}),
     ...(dimensions ? { dimensions_text: dimensions } : {}),

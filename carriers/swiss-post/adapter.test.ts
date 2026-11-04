@@ -371,6 +371,22 @@ describe('Swiss Post projection', () => {
       .toMatchObject({ delivered_at: '2026-07-28T08:22:56+02:00' });
   });
 
+  it('keeps the days of a range Swiss Post gives while it names no single day', () => {
+    const scan = { eventCode: 'PARCEL.*.1.1003', timestamp: '2026-11-04T12:36:32+01:00' };
+    const range = { start: '2026-11-04T00:00:00+01:00', end: '2026-11-06T00:00:00+01:00', saturdayIncluded: true };
+    const ranged = parseSwissPostShipment({ globalStatus: 'IN_TRANSPORT', calculatedDeliveryDate: null, deliveryRange: range }, [scan]);
+    expect(ranged).toMatchObject({ expected_delivery_from: '2026-11-04', expected_delivery: '2026-11-06' });
+    const oneDay = parseSwissPostShipment({ globalStatus: 'IN_TRANSPORT', deliveryRange: { start: '2026-11-05', end: '2026-11-05' } }, [scan]);
+    expect(oneDay.expected_delivery).toBe('2026-11-05');
+    expect(oneDay).not.toHaveProperty('expected_delivery_from');
+    const named = parseSwissPostShipment({ globalStatus: 'IN_TRANSPORT', calculatedDeliveryDate: '2026-11-05', deliveryRange: range }, [scan]);
+    expect(named.expected_delivery).toBe('2026-11-05');
+    expect(named).not.toHaveProperty('expected_delivery_from');
+    const delivered = { eventCode: 'PARCEL.*.1.4001', timestamp: '2026-11-05T10:41:00+01:00' };
+    expect(parseSwissPostShipment({ globalStatus: 'DELIVERED', deliveryRange: range }, [delivered, scan]))
+      .not.toHaveProperty('expected_delivery_from');
+  });
+
   it('covers every capability declared in carrier.json', () => {
     expect(capabilities).toEqual(['history', 'location', 'eta', 'pickup_point', 'provider_code', 'weight', 'dimensions', 'delivered_at']);
     const { shipment, events, translations } = outForDelivery();
