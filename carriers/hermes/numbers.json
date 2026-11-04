@@ -14,7 +14,7 @@
           "dhl-ecommerce"
         ]
       },
-      "note": "A real delivered order that the live test checks. Its serial sits far beyond the range in use."
+      "note": "A real delivered order's number with its serial moved far beyond the range in use."
     },
     {
       "number": "6268200378000044960",

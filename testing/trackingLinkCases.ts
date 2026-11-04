@@ -129,7 +129,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'vasp-expresso', number: '9990000000000',
     route: /^https:\/\/www\.vaspexpresso\.pt\/pt\/geral\/track-and-trace\/\?search=9990000000000$/,
     marker: /Encontre a sua encomenda|Localizar Encomenda/ },
-  { carrier: 'seur', number: '9900002',
+  // Fourteen digits: SEUR reuses its seven-digit expedition numbers, so a made-up one can open
+  // someone's shipment.
+  { carrier: 'seur', number: '04999999999980',
     route: /^https:\/\/www\.seur\.com\/miseur\/mis-envios(?:\?|$)/,
     marker: /Seguimiento de envíos|Mis envíos|localizador|shipment|IDENTIFIER|Tracking|NÚMERO DE ENVÍO/i, renderTimeoutMs: 20_000 },
   { carrier: 'brt', number: '99000000000002',

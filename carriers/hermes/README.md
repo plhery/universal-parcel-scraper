@@ -59,5 +59,5 @@ rule claims it: its company prefix is the shipper's.
 
 ## Testing
 
-`npm run test:carriers:live -- carriers/hermes` (no env vars). It checks the corpus's
-delivered order and the empty-order not-found for a wrong number.
+`npm run test:carriers:live -- carriers/hermes` (no env vars). It checks the delivered
+orders of the confirmed public records and the empty-order not-found for a wrong number.
