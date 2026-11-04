@@ -64,6 +64,20 @@ describe('Meso-global tracking adapter', () => {
     for (const value of ['Synthetic Recipient', 'Example Street', 'MG-TEST-001', 'MGTEST0000000000001']) expect(text, value).not.toContain(value);
   });
 
+  it('counts DHL’s row written again with another tracking link once, as its first record', () => {
+    const payload = fixture('track') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const rows = payload[0]!.data[0]!.trackDetails;
+    const row = (content: string, written: string) => ({ ...rows[0], track_date: '2026-03-11 06:07:00', track_createdate: written,
+      track_location: 'AT', track_content: content });
+    const arrived = (id: string) => 'The shipment has arrived in the destination country/destination area. '
+      + `(Homepage / online shipment tracking: https://post.example/tracking/${id})`;
+    rows.unshift(row(arrived('EXP_EXAMPLE'), '2026-03-11 09:28:20'), row('The shipment has arrived at the parcel center', '2026-03-11 09:28:20'),
+      row(arrived('EXAMPLE'), '2026-03-11 09:30:10'));
+    expect(parseMesoGlobalTrack(payload, NUMBER, READ_AT)!.events!.slice(0, 3).map(({ description, location }) => [description, location])).toEqual([
+      ['The shipment has arrived at the parcel center', 'AT'], [arrived('EXAMPLE'), 'AT'], ['Connecting flight departed, not yet landed', undefined],
+    ]);
+  });
+
   it('holds back a row dated after the lookup', () => {
     const result = parseMesoGlobalTrack(fixture('track'), NUMBER, Date.parse('2026-03-08T00:00:00Z'))!;
     expect(result).toMatchObject({ last_status_text: 'First flight landed, connecting flight booked' });

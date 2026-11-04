@@ -55,7 +55,9 @@ export interface HualeiTenant {
   readonly clock?: (row: HualeiRow) => 'platform' | 'wall' | 'day';
   /**
    * Whether a row's wording repeats another's, at the same clock, place and
-   * kind, with more around it: the row then counts once, as the other.
+   * kind, with more around it: the row then counts once, as the other. Two rows
+   * that repeat each other are one row written twice: the one the reply lists
+   * last, its first record, stays.
    */
   readonly repeats?: (wording: string, other: string) => boolean;
   /**
@@ -293,7 +295,8 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const { repeats } = tenant;
   const unrepeated = repeats ? kept.filter((entry) => !kept.some((other) => other !== entry && other.clock === entry.clock
     && other.event.location === entry.event.location && other.event.provider_code === entry.event.provider_code
-    && repeats(entry.event.description!, other.event.description!))) : kept;
+    && repeats(entry.event.description!, other.event.description!)
+    && (other.index > entry.index || !repeats(other.event.description!, entry.event.description!)))) : kept;
   // The platform can write a partner's row again, and a copy written after a European clock change
   // reads the partner's clock an hour off: meso-global's DHL rows written in October summer time at
   // 17:09 came again, written after the change, at 18:09. The copy written later goes.

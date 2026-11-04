@@ -19,6 +19,8 @@
     {"wording": "已落地 等待拆板提货", "language": "zh", "english": "Landed, awaiting unloading for collection", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "The last flight has landed; its pallets are still to be broken down and the shipment collected from the airport."},
     {"wording": "已提回 等待清关", "language": "zh", "english": "Collected from the airport, awaiting customs clearance", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-29", "note": "Collected from the airport and held for import clearance, as other forwarders' rows of the same step read."},
     {"wording": "The shipment has been loaded onto the delivery vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Relayed from DHL: the destination post's delivery run, after the parcel center."},
-    {"wording": "Item is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Relayed from DHL with the loading onto the delivery vehicle."}
+    {"wording": "Item is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Relayed from DHL with the loading onto the delivery vehicle."},
+    {"wording": "The shipment has been successfully delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Relayed from DHL: the destination post's delivery, after its delivery run."},
+    {"wording": "Item delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Relayed from DHL with the delivery."}
   ]
 }

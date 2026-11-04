@@ -21,6 +21,10 @@ const LINK = /\s*\([^()]*https?:\/\/[^()]*\)$/;
 export const mesoGlobalScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2').replace(HANDED_OVER_DAY, '…$1')
   .replace(LINK, '');
 
+/** DHL's row from the destination country written again with another tracking link: one scan. */
+export const repeatsMesoGlobalRow = (wording: string, other: string): boolean => wording !== other
+  && LINK.test(wording) && LINK.test(other) && wording.replace(LINK, '') === other.replace(LINK, '');
+
 /**
  * The stage Meso-global's map gives a row, by its whole `normalizeStatusWording`
  * wording: Meso-global's own, or the English the adapter shows for it.

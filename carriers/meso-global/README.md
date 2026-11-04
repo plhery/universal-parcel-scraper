@@ -23,6 +23,9 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   shows for them, and DHL Germany's English rows that follow. Flight rows name the day they
   expect the flight as month-day; the map reads them without it, and the English leaves it out,
   since it is still to come. The hand-over row starts with a month-day too, read the same way.
+- DHL's row from the destination country ends with the destination post's tracking link. The
+  tracker can write that row again with another link. That is one scan, and the copy the reply
+  lists as the older one stays.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder Meso-global, and its Chinese name 中际跨境; both are names here.
