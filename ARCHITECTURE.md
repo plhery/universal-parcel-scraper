@@ -380,7 +380,8 @@ or within a minute after the first movement, stays registered: a provider's copy
 after the scan it came with is that scan's record ([registration.ts](core/result/registration.ts)).
 Scans are compared by their instants, or by wall clocks in a history with no instant. A customs
 filing, a problem or a scan no rule read is not a movement. A result whose current stage is
-registered for its newest scan, a registration after a movement, is in transit.
+registered for its newest scan, a registration after a movement, is in transit, or accepted when
+that registration is the record of the acceptances that are the parcel's only movements.
 
 A step a carrier records again within minutes is read once: every adapter's and provider's
 result leaves out a scan with an earlier scan's wording, place and stage at most ten minutes

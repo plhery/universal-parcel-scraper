@@ -73,6 +73,22 @@ describe('late registrations', () => {
     expect(readLateRegistrations(answer)).toEqual(answer);
   });
 
+  it('keeps a parcel accepted when its newest scan is a registration within the minute after its acceptances', () => {
+    // A destination partner's order, on its own clock, created two seconds after the pickup scan.
+    const events = [scan('2030-01-10T05:00:02-05:00', 'Synthetic last-mile order created', 'registered'),
+      scan('2030-01-10T18:00:00+08:00', 'Picked up', 'accepted'), scan('2030-01-10T18:00:00+08:00', 'Processing information input', 'accepted'),
+      scan('2030-01-03T12:00:00+08:00', 'Shipment information received', 'registered')];
+    const answer = readLateRegistrations(result(events, { status: 'pending', current_stage: 'registered' }));
+    expect(answer).toMatchObject({ status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map' });
+    expect(answer.events).toEqual(events);
+    expect(readLateRegistrations(answer)).toEqual(answer);
+    // A minute after the acceptance, or after a scan that moved the parcel further, it is in transit.
+    const later = [scan('2030-01-10T05:01:01-05:00', 'Synthetic last-mile order created', 'registered'), ...events.slice(1)];
+    expect(readLateRegistrations(result(later, { status: 'pending', current_stage: 'registered' }))).toMatchObject({ current_stage: 'in_transit' });
+    const further = [events[0]!, scan('2030-01-10T18:00:01+08:00', 'Departed from facility', 'in_transit'), ...events.slice(1)];
+    expect(readLateRegistrations(result(further, { status: 'pending', current_stage: 'registered' }))).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('takes no movement from a customs filing, a problem or a scan no rule read', () => {
     const events = [scan('2030-01-11T10:00:00Z', 'Shipping label created', 'registered'),
       scan('2030-01-10T12:00:00Z', 'Electronic customs data sent', 'customs'), scan('2030-01-10T11:00:00Z', 'Label voided', 'exception'),

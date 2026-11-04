@@ -47,7 +47,8 @@ export function clocks(events: readonly unknown[]): (number | null)[] {
  * provider dates seconds after the scan it came with is that scan's record. Its stage then
  * comes from this reading of the carrier's sequence, so its source is `carrier_map`. A result
  * whose current stage is registered for its newest scan, a registration after a movement, is
- * in transit.
+ * in transit, or accepted when that registration is the record of the acceptances the parcel's
+ * only movements are.
  */
 export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const events: unknown[] = Array.isArray(result.events) ? result.events : [];
@@ -74,9 +75,12 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const newest = order.filter(index => at[index] === at[order.at(-1)!]);
   const headline = result.current_stage === 'registered' && newest.some(index => late.has(index))
     && newest.every(index => read[index] !== 'registered' || late.has(index));
+  // Within the minute, the registration is the record of the movement it came with: an acceptance stays one.
+  const stage: Stage = newest.some(index => settled.has(index)) || order.some(index => MOVED.has(read[index] as Stage) && read[index] !== 'accepted')
+    ? 'in_transit' : 'accepted';
   return {
     ...result,
-    ...(headline ? { current_stage: 'in_transit', current_stage_source: 'carrier_map', ...(result.status === 'pending' ? { status: 'in_transit' } : {}) } : {}),
+    ...(headline ? { current_stage: stage, current_stage_source: 'carrier_map', ...(result.status === 'pending' ? { status: 'in_transit' } : {}) } : {}),
     events: events.map((event, index) => settled.has(index)
       ? { ...event as CarrierEvent, stage: 'in_transit', stage_source: 'carrier_map' } : event) as CarrierEvent[],
   };
