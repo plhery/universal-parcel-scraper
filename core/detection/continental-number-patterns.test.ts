@@ -726,9 +726,10 @@ describe('wave eight courier rules', () => {
     }
   });
 
-  it('names DobroPost for DBRPST and ten digits', () => {
+  it('names DobroPost for DBRPST and ten or eleven digits', () => {
     expect(detectCarrierMatch('DBRPST0000000001')).toMatchObject({ carrier: 'dobropost', confidence: 'high', candidates: ['dobropost'] });
-    for (const number of ['DBRPST000000001', 'DBRPST00000000001', 'DBRPSX0000000001', 'DBPST0000000001']) {
+    expect(detectCarrierMatch('DBRPST00000000001')).toMatchObject({ carrier: 'dobropost', confidence: 'high', candidates: ['dobropost'] });
+    for (const number of ['DBRPST000000001', 'DBRPST000000000001', 'DBRPSX0000000001', 'DBPST0000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dobropost');
     }
   });

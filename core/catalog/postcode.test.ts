@@ -66,7 +66,7 @@ describe.each([
 });
 
 describe('Mondial Relay numbers that need no postcode', () => {
-  it.each(['1212345678', '121234567801'])('asks no postcode for the brand form %s, and keeps one an older client sends', (number) => {
+  it.each(['1212345678', '121234567801', '12123456780102'])('asks no postcode for the brand form %s, and keeps one an older client sends', (number) => {
     expect(carrierRequirements('mondial-relay', number)).toEqual([]);
     expect(normalizeCarrierInputs('mondial-relay', number, '', '')).toEqual({ trackingUrl: null, postcode: null });
     expect(normalizeCarrierInputs('mondial-relay', number, '', '1012 ab')).toEqual({ trackingUrl: null, postcode: '1012 AB' });

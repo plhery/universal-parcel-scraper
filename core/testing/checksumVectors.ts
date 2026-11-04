@@ -402,6 +402,20 @@ const RECIPES: Record<ChecksumId, (recipe: Recipe) => void> = {
     }
   },
 
+  'mondial-relay-head'(r) {
+    // Brand and shipment, sequence, count: no key, only the sequence's range.
+    const head = (sequence: number, count: number) => `${r.string(10)}${pad(sequence)}${pad(count)}`;
+    const valid = Array.from({ length: 10 }, () => {
+      const count = 1 + r.int(99);
+      return head(1 + r.int(count), count);
+    });
+    valid.push(head(1, 1), head(1, 99), head(99, 99), head(9, 10));
+    r.add(...valid);
+    // The sequence runs from 1 to the count; a key or a missing digit leaves the head's shape.
+    r.add(head(0, 1), head(0, 0), head(2, 1), head(10, 9), head(99, 98), head(1, 0));
+    r.add(valid[0]!.slice(0, -1), `${valid[0]!}0`, `${valid[1]!.slice(0, 13)}A`);
+  },
+
   ontrac(r) {
     const valid = [...'CCCCDDDD'].map((lead) => r.complete(lead + r.string(13)));
     standard(r, valid);

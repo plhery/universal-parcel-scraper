@@ -88,7 +88,7 @@
   "detection": [
     {
       "id": "dobropost-1",
-      "pattern": "^DBRPST\\d{10}$",
+      "pattern": "^DBRPST\\d{10,11}$",
       "confidence": "high"
     }
   ]

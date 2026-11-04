@@ -51,6 +51,9 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['PARTNER_OUTBOUND_FR', 'in_transit'],
   ['IN_TRANSIT_FR', 'in_transit'],
   ['CW_INBOUND', 'in_transit'],
+  // "Failed delivery at consolidation warehouse": the warehouse did not take the parcel in, and it goes back
+  // to the seller, as "Package not accepted by sorting center" (`SC_INBOUND_FAILURE`).
+  ['CW_INBOUND_FAILURE', 'exception'],
   // "Arrived at warehouse": the consolidation warehouse signs the parcel in, before its "Departed from warehouse".
   ['CW_SIGN_IN_SUCCESS', 'in_transit'],
   ['CW_OUTBOUND', 'in_transit'],
@@ -132,6 +135,11 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GTMS_STA_SIGN_FAILURE', 'exception'],
   // Back at the local warehouse after the failed delivery, on its way back.
   ['RT_INBOUND', 'exception'],
+  // The way back to the seller: leaving the consolidation warehouse under the return's number, received by the
+  // courier in the country of departure, then "Package delivered to sender" (`RT_EX_SIGNED`, returned below).
+  ['RT_CW_OUTBOUND', 'exception'],
+  ['RT_EX_PICKUP', 'exception'],
+  ['RT_EX_SIGNED', 'exception'],
   ['EXCEPTION', 'exception'],
 ]);
 
@@ -162,7 +170,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
   if (['GTMS_DEL_FAILURE', 'LM_DELIVERY_FAILURE', 'PUDO_DELIVERY_FAILURE'].includes(code)) return 'failed_attempt';
-  if (code === 'RT_INBOUND') return 'returned';
+  if (code === 'RT_INBOUND' || code === 'RT_EX_SIGNED') return 'returned';
   const status = CAINIAO_ACTION_STATUS.get(code);
   return status ? cainiaoStageByStatus()[status] : undefined;
 }

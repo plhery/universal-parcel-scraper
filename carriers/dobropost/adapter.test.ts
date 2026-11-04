@@ -44,6 +44,12 @@ describe('DobroPost HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
+  it('asks for DBRPST and eleven digits as well', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('in-transit')));
+    await expect(carrier(fetcher).track({ number: 'DBRPST00000000002' })).resolves.toMatchObject({ current_stage: 'customs' });
+    expect(String(fetcher.mock.calls[0]![0])).toBe(`${DOBROPOST_API}?key=${DOBROPOST_KEY}&trackCode=DBRPST00000000002`);
+  });
+
   it('keeps every scan as an instant at its stated offset, once, newest first, and stages it by its code', () => {
     const result = parseDobropost(fixture('delivered'), DELIVERED);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
@@ -210,7 +216,7 @@ describe('DobroPost HTTP adapter', () => {
 
   it('refuses what DobroPost does not look up as a parcel, or a cancelled lookup, without a request', async () => {
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['DBRPST000000000', 'DBRPST00000000000', 'DBRPST000000000A', 'SF0000000000000', `DBRPST${'0'.repeat(60)}`]) {
+    for (const number of ['DBRPST000000000', 'DBRPST000000000000', 'DBRPST000000000A', 'SF0000000000000', `DBRPST${'0'.repeat(60)}`]) {
       await expect(carrier(fetcher).track({ number })).rejects.toMatchObject({ kind: 'invalid_input' });
     }
     await expect(carrier(fetcher).track({ number: IN_TRANSIT }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');

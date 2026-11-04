@@ -85,6 +85,10 @@ shipment → `SchemaError`.
 - 26-digit label barcodes need no postcode. Both modulo-11 check digits and the
   parcel sequence are validated; the first 12 digits are the public alias used
   for links and lookups.
+- The barcode's first 14 digits (brand, shipment, parcel sequence and count), as
+  a provider can list them, are asked as the 12-digit form. They carry no check
+  digit, so only a sequence from one to the count is read, and detection only
+  suggests Mondial Relay for that shape, which many carriers' numbers share.
 - Never read the barcode's routing suffix as a postcode: it looks like one, and a
   wrong postcode returns another parcel or nothing.
 - The website also finds an 8-digit shipment without a postcode when it is given

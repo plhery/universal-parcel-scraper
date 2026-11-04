@@ -598,6 +598,10 @@ describe('Cainiao projection', () => {
     const refused = journey(['SC_INBOUND_FAILURE', 'PU_PICKUP_SUCCESS']);
     expect(refused).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(refused.events?.map((event) => event.stage)).toEqual(['exception', 'accepted']);
+    // So does the consolidation warehouse; the way back to the seller is under way until the seller signs for it.
+    const sentBack = journey(['RT_EX_SIGNED', 'RT_EX_PICKUP', 'RT_CW_OUTBOUND', 'CW_INBOUND_FAILURE', 'CW_SIGN_IN_SUCCESS', 'PU_PICKUP_SUCCESS']);
+    expect(sentBack).toMatchObject({ status: 'exception', current_stage: 'returned' });
+    expect(sentBack.events?.map((event) => event.stage)).toEqual(['returned', 'exception', 'exception', 'exception', 'in_transit', 'accepted']);
   });
 
   it('reads an order the seller is still preparing, before any scan, as registered', () => {

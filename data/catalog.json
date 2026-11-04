@@ -1290,6 +1290,11 @@
       {
         "pattern": "^FV\\d{8}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low",
+        "checksum": "mondial-relay-head"
       }
     ]
   },
@@ -16051,7 +16056,7 @@
     ],
     "detectionRules": [
       {
-        "pattern": "^DBRPST\\d{10}$",
+        "pattern": "^DBRPST\\d{10,11}$",
         "confidence": "high"
       }
     ]

@@ -122,7 +122,9 @@ how a consumer learns that DHL holds one behind a postcode.
   [can take another day](https://www.paketda.de/status-dhl-sendung-unterwegs-packstation.html).
 - "Delivery not possible" is a failed attempt: it follows the loading onto the
   delivery vehicle, the parcel then waits at a retail outlet, and the partner
-  posts' copies of the scan read it so.
+  posts' copies of the scan read it so. As the summary of a round whose newest scan
+  starts the return ("The shipment is returned to the sender", "wird … zurückgesandt"),
+  it gives way to that scan: the parcel is going back.
 - `fortschritt` is only the fallback for unmapped wording (`<= 1` means the
   parcel is still announced); the wording explains progress better.
 - Timestamps carry an offset and are kept verbatim, except on scans DHL places

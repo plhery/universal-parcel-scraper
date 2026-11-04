@@ -374,6 +374,11 @@ describe('Shouwu International status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     expect(shouwuStage('预计航班')).toBeNull();
+    // iMile, the delivering partner in Italy, opens its rows with its centre: its sentences read them whatever the centre.
+    for (const [wording, stage] of [['【NAP 03】Arrived.', 'in_transit'], ['【NAP 03】Shipment out for delivery.', 'out_for_delivery'],
+      ['【NAP 03】 Back To DS.', 'failed_attempt'], ['【Example Transit Center】Order Closed.', 'exception']] as const) {
+      expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toEqual({ kind: 'mapped', stage });
+    }
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: 'Preparing' })).toEqual({ kind: 'unknown' });
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: 'TRACE_STATUS_SAMPLE', description: 'Sample Status Note' })).toEqual({ kind: 'unknown' });
     for (const wording of ['constructor', 'toString', 'Sample Status Note', 'Preparing']) expect(shouwuStage(wording), wording).toBeNull();

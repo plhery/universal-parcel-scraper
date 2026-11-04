@@ -142,6 +142,28 @@ describe('DHL public tracking normalization', () => {
     expect(redirected.current_stage).toBe('in_transit');
   });
 
+  it("reads the recipient's collection from a Packstation as the delivery", () => {
+    const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
+    const payload = shipment({ istZugestellt: true, sendungsverlauf: { ...timeline, status: 'Abholung aus Packstation' } });
+    payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push(
+      { datum: '2026-08-11T12:02:24+02:00', status: 'Die Sendung liegt in der Packstation zur Abholung bereit.' },
+      { datum: '2026-08-11T14:50:54+02:00', status: 'Abholung aus Packstation' });
+    const result = parseDHLTrackingResponse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['delivered', 'ready_for_pickup']);
+  });
+
+  it('reads a failed round that starts the return as the return, under the headline "Delivery not possible"', () => {
+    const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
+    const payload = shipment({ sendungsverlauf: { ...timeline, status: 'Delivery not possible' } });
+    payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push(
+      { datum: '2026-08-11T15:04:25+02:00', status: 'The recipient could not be found at the address on the shipment.' },
+      { datum: '2026-08-11T15:04:26+02:00', status: 'Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.' });
+    const result = parseDHLTrackingResponse(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Delivery not possible' });
+    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['exception', 'failed_attempt']);
+  });
+
   it('keeps the correct event order, stages and dates without private recipient data', () => {
     const result = parseDHLTrackingResponse(shipment(), NUMBER);
     expect(result).toMatchObject({
@@ -253,6 +275,9 @@ describe('DHL public tracking normalization', () => {
     ['Die Sendung befindet sich auf dem Weg zurück zum Absender.', 'exception', 'exception'],
     ['The shipment will be returned.', 'exception', 'exception'],
     ['The shipment has been returned to the sender', 'returned', 'exception'],
+    // The English of "wird an den Absender zurückgesandt", after a failed round: the return starts.
+    ['Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.', 'exception', 'exception'],
+    ['The recipient could not be found at the address on the shipment.', 'failed_attempt', 'exception'],
     ['The shipment has been delivered', 'delivered', 'delivered'],
     ['Die Sendung wurde erfolgreich zugestellt.', 'delivered', 'delivered'],
   ])('maps %s without confusing future or failed delivery with delivery', (text, stage, status) => {

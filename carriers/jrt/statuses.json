@@ -446,6 +446,14 @@
       "note": "JRT's own row on its line into the United States, naming the flight's month and day, read as an ellipsis."
     },
     {
+      "wording": "航班延误，预计…号飞出 Flight delayed, estimated departure on …",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "A delayed flight with its new day, month/day and month name day, in both halves; the map reads each day as an ellipsis."
+    },
+    {
       "wording": "Parcel Information Received",
       "language": "en",
       "stage": "registered",

@@ -638,6 +638,42 @@
       "note": "Back at the local warehouse after a failed delivery, while Cainiao reads the parcel as returning."
     },
     {
+      "code": "CW_INBOUND_FAILURE",
+      "wording": "Failed delivery at consolidation warehouse",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The consolidation warehouse did not take the parcel in; the return to the seller followed."
+    },
+    {
+      "code": "RT_CW_OUTBOUND",
+      "wording": "trackingDescriptionMailno:<return number>",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The return leaving the consolidation warehouse; the reply gives an unfilled template with the return's number as its wording."
+    },
+    {
+      "code": "RT_EX_PICKUP",
+      "wording": "Package returned received by the logistics company in the country/region of departure",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The return picked up by the courier in the country of departure: the way back, not a new shipment."
+    },
+    {
+      "code": "RT_EX_SIGNED",
+      "wording": "Package delivered to sender",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The return delivered to the seller."
+    },
+    {
       "code": "SC_HO_OUT_SUCCESS",
       "wording": "Departed from departure country/region sorting center",
       "language": "en",

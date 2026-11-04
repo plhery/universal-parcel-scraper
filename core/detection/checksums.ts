@@ -18,7 +18,7 @@ import { isValidGlsParcelNumber } from './gls.js';
 import { isValidHermesParcelNumber } from './hermes.js';
 import { isValidDhlEcommercePolandNumber, isValidDhlIdentcode } from './identcode.js';
 import { isValidMagyarPostaNumber } from './magyarPosta.js';
-import { isValidMondialRelayBarcode } from './mondialRelay.js';
+import { isMondialRelayBarcodeHead, isValidMondialRelayBarcode } from './mondialRelay.js';
 import {
   hasGs1CheckDigit,
   hasLuhnCheckDigit,
@@ -41,6 +41,7 @@ export type ChecksumId = NonNullable<DetectionRule['checksum']>;
 
 export const CHECKSUMS: Readonly<Record<ChecksumId, (trackingNumber: string) => boolean>> = {
   'mondial-relay': isValidMondialRelayBarcode,
+  'mondial-relay-head': isMondialRelayBarcodeHead,
   s10: isValidS10TrackingNumber,
   hermes: isValidHermesParcelNumber,
   gls: isValidGlsParcelNumber,

@@ -54,6 +54,16 @@ describe('French carrier number candidates', () => {
     expect(detectCarrierMatch('GFUSA000000075001').candidates).toEqual(['colis-prive']);
   });
 
+  it("suggests Mondial Relay for its label barcode's head when the parcel sequence is within the count", () => {
+    for (const number of ['12000000010102', '12000000019999']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('mondial-relay');
+    }
+    for (const number of ['12000000010302', '12000000010002', '1200000001010']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('mondial-relay');
+    }
+  });
+
   it("does not read a postcode into numbers with DobroPost's prefix", () => {
     // DBRPST and eleven digits: the last five look like a French postcode.
     expect(detectCarrierMatch('DBRPST00000075001').candidates ?? []).not.toContain('colis-prive');

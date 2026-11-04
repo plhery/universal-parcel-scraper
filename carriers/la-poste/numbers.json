@@ -457,6 +457,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "mondial-relay",
           "la-poste",
           "chronopost",
           "ciblex",
@@ -492,6 +493,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "mondial-relay",
           "la-poste",
           "chronopost",
           "ciblex",
@@ -680,6 +682,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "mondial-relay",
           "la-poste",
           "chronopost",
           "ciblex",

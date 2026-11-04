@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
+import { isMondialRelayBarcodeHead } from '../../core/detection/mondialRelay.js';
 import { ChallengeError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
@@ -37,7 +38,7 @@ const APP_RESERVE_MS = 500;
 /** The stages of a parcel on its way, whose app answer the website's estimate completes. */
 const ON_THE_WAY = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
 const ZONE = 'Europe/Paris';
-const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires a 26-digit label barcode, a 10- or 12-digit shipment '
+const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires a 26-digit label barcode or its first 14 digits, a 10- or 12-digit shipment '
   + 'number, an 8-digit shipment number with the recipient postcode, or an InPost Spain number (FV and eight digits)';
 // Portugal's postcodes: four digits, then three. Mondial Relay holds them as 1234-567.
 const PORTUGUESE_POSTCODE = /^(\d{4})[ -]?(\d{3})$/;
@@ -109,6 +110,12 @@ export function normalizeMondialRelayCredential(
     }
     // The public alias carries brand/shipment/parcel sequence, not a postcode.
     return { shipment: shipment.slice(0, 12), postcode, canonicalShipment: shipment.slice(2, 10), barcode: true };
+  }
+  if (/^\d{14}$/.test(shipment)) {
+    // The barcode's head, without its key, as a notice can print it: the
+    // 12-digit form and the parcel count. Its sequence runs to that count.
+    if (!isMondialRelayBarcodeHead(shipment)) throw new InvalidInputError('Mondial Relay', CREDENTIAL_MESSAGE);
+    return { shipment: shipment.slice(0, 12), postcode: '', canonicalShipment: shipment.slice(2, 10) };
   }
   if (!postcode && /^(?:\d{13}|\d{15}|\d{17})$/.test(shipment)) {
     // A French label prints the shipment followed by the 5-digit postcode.

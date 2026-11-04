@@ -16,6 +16,7 @@ const CODES: Readonly<Record<string, Stage>> = {
   OSM07: 'in_transit',
   OSM09: 'in_transit',
   OSM13: 'in_transit',
+  OSM15: 'out_for_delivery',
   OSM01: 'delivered',
 };
 

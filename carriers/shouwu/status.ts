@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { imileRelayedStage } from '../imile/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 interface Entry { readonly code?: string; readonly wording?: string; readonly stage?: string }
@@ -29,9 +30,13 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   [/^(?:二程)?预计\d{1,2}号的航班$/, 'in_transit'],
 ];
 
-/** A wording's stage in Shouwu's map, the wording in `normalizeStatusWording` form. */
+/**
+ * A wording's stage in Shouwu's map, the wording in `normalizeStatusWording` form. On the line into
+ * Italy the delivering partner is iMile, whose rows open with its centre in 【】 ("【Milan center】Received."):
+ * iMile's sentences read them.
+ */
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1];
+  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? imileRelayedStage(wording);
 }
 
 /** The stage of a parcel's status code. */

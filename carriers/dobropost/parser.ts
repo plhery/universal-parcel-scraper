@@ -10,8 +10,8 @@ import { dobropostStage } from './status.js';
 export const PROVIDER = 'DobroPost';
 // A long history is under ten kilobytes; a refused key comes back with a Java stack trace of about fifteen.
 export const DOBROPOST_MAX_BYTES = 512 * 1024;
-// DobroPost's own parcel numbers, the layout its tracker asks for.
-const NUMBER = /^DBRPST\d{10}$/;
+// DobroPost's own parcel numbers, the layout its tracker asks for, and the longer one it issues too.
+const NUMBER = /^DBRPST\d{10,11}$/;
 const NOT_FOUND = /^Parcel with trackCode - (.{0,64}) not found$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
@@ -19,7 +19,7 @@ const MAX_EVENTS = 100;
 /** A DobroPost parcel number in capitals; anything else is not one its tracker looks up as a parcel. */
 export function normalizeDobropostNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw).toUpperCase() : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'DobroPost parcel numbers are DBRPST and ten digits');
+  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'DobroPost parcel numbers are DBRPST and ten or eleven digits');
   return number;
 }
 

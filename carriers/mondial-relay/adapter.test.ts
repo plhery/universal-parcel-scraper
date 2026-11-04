@@ -110,6 +110,12 @@ describe('Mondial Relay tracking input', () => {
       postcode: '',
       canonicalShipment: '73685166',
     });
+    // The label barcode's head: the 12-digit form, then the parcel count.
+    expect(normalizeMondialRelayCredential('12000000010102', OFFICIAL_PAGE_POSTCODE)).toEqual({
+      shipment: '120000000101',
+      postcode: '',
+      canonicalShipment: '00000001',
+    });
     expect(mondialRelayTrackingUrl(PUBLIC_CREDENTIAL)).toBe(
       `${TRACKING_PAGE}?numeroExpedition=${OFFICIAL_PDF_SHIPMENT}`,
     );
@@ -165,6 +171,9 @@ describe('Mondial Relay tracking input', () => {
       [OFFICIAL_PDF_SHIPMENT, '', 'input_required'],
       ['1718596', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
       ['17185966000', OFFICIAL_PAGE_POSTCODE, 'invalid_input'],
+      // A head whose sequence is past the count, or zero.
+      ['12000000010302', '', 'invalid_input'],
+      ['12000000010002', '', 'invalid_input'],
       [OFFICIAL_PDF_SHIPMENT, '12', 'input_required'],
       [OFFICIAL_PDF_SHIPMENT, 'ABCDE', 'input_required'],
       [OFFICIAL_PDF_SHIPMENT, '75001/2', 'input_required'],

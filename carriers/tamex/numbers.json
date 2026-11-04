@@ -81,6 +81,7 @@
         "confidence": "low",
         "candidates": [
           "dpd",
+          "mondial-relay",
           "chronopost",
           "ciblex",
           "seur",
@@ -144,6 +145,7 @@
         "candidates": [
           "dpd-fr",
           "dpd",
+          "mondial-relay",
           "ciblex",
           "hermes-de",
           "seur",
@@ -177,6 +179,7 @@
         "candidates": [
           "dpd-fr",
           "dpd",
+          "mondial-relay",
           "ciblex",
           "seur",
           "brt",

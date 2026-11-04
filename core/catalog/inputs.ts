@@ -23,11 +23,11 @@ export {
 
 /**
  * Older clients may still supply a postcode for Mondial Relay numbers that
- * need none: label barcodes and the 10- and 12-digit forms. It is validated
+ * need none: label barcodes, their 14-digit heads and the 10- and 12-digit forms. It is validated
  * when present, while they work without one.
  */
 function mondialWithoutPostcode(carrierId: string, trackingNumber: string): boolean {
-  return carrierId === 'mondial-relay' && /^(?:\d{10}|\d{12}|\d{26})$/.test(trackingNumber);
+  return carrierId === 'mondial-relay' && /^(?:\d{10}|\d{12}|\d{14}|\d{26})$/.test(trackingNumber);
 }
 
 /** Whether the carrier reads a delivery postcode for this number, required or optional. */

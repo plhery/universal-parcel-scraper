@@ -50,7 +50,8 @@ Post takes the last leg. Tracked through the lookup its tracking page makes.
 ## Numbers
 
 DobroPost's parcel numbers are DBRPST and ten digits, the layout its tracker and forms ask
-for; customers quote them in the carrier's own review topic. The prefix belongs to DobroPost
+for; customers quote them in the carrier's own review topic. Its tracker also holds parcels
+under DBRPST and eleven digits, so both lengths are read. The prefix belongs to DobroPost
 alone, so a high-confidence rule claims the layout. The Chinese sellers' numbers that reach its
 warehouses and the domestic carrier's numbers stay with their own carriers. The samples and
 their sources are in [`numbers.json`](numbers.json).

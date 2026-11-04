@@ -91,6 +91,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['delivered, receiver type:', 'delivered'],
   ['your package was received', 'delivered'],
   ['order delivery failed, returning to sender', 'exception'],
+  // The delivery order closed without a delivery, as the return starts (`1008`), also as Shouwu relays it.
+  ['order closed', 'exception'],
   ['shipment returned to origin', 'returned'],
   ['return signature', 'returned'],
 ]);

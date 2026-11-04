@@ -27,7 +27,7 @@ import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js'
 import { normalizeUpayaNumber, UPAYA_LAYOUT } from '../../carriers/upaya/number.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { regionalGofoRequestNumber } from '../detection/gofo.js';
-import { isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
+import { isMondialRelayBarcodeHead, isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
 import { ninjaVanTrackingUrl } from '../detection/ninjaVan.js';
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { amazonOrdersUrl, amazonShippingUrl } from './amazon.js';
@@ -44,7 +44,7 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   const normalized = normalizeTrackingNumber(raw);
   // DEX Pakistan finds its reference only with the official hyphen after PK.
   if (carrierId === 'dex-pk' && /^PKDEX\d{9}$/.test(normalized)) return normalizeDexPkNumber(normalized);
-  if (carrierId === 'mondial-relay' && isValidMondialRelayBarcode(normalized)) return normalized.slice(0, 12);
+  if (carrierId === 'mondial-relay' && (isValidMondialRelayBarcode(normalized) || isMondialRelayBarcodeHead(normalized))) return normalized.slice(0, 12);
   if (carrierId === 'c-chez-vous') {
     const composite = /^([A-Z0-9]{11})(\d{5})$/.exec(normalized);
     if (composite) return `${composite[1]}--${composite[2]}`;

@@ -20,6 +20,7 @@
         "candidates": [
           "dpd-fr",
           "dpd",
+          "mondial-relay",
           "ciblex",
           "seur",
           "brt",
@@ -265,6 +266,7 @@
         "candidates": [
           "dpd-fr",
           "dpd",
+          "mondial-relay",
           "ciblex",
           "seur",
           "brt",
@@ -336,6 +338,7 @@
         "candidates": [
           "dpd",
           "dpd-fr",
+          "mondial-relay",
           "chronopost",
           "ciblex",
           "seur",
@@ -407,6 +410,7 @@
         "candidates": [
           "dpd",
           "dpd-fr",
+          "mondial-relay",
           "chronopost",
           "ciblex",
           "seur",

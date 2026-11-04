@@ -237,9 +237,11 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   // Nor is a pre-advice DHL gives as its summary once a scan moved the parcel: the newest scan is.
   const currentText = (preAdvice(summary) && Number.isFinite(firstMove) ? '' : summary) || events[0]?.description || 'Delivered';
   const fallback = Number(timeline.fortschritt) <= 1 ? 'registered' : String(events[0]?.stage || 'in_transit');
-  const stage = details.istZugestellt === true
+  const reported = details.istZugestellt === true
     ? details.ruecksendung === true ? 'returned' : 'delivered'
     : keepsStage(currentText) ? fallback : stageForText(currentText, fallback);
+  // DHL heads a round that ends in the return with "Delivery not possible": the newest scan says the parcel goes back.
+  const stage = reported === 'failed_attempt' && events[0]?.stage === 'exception' ? 'exception' : reported;
   const delivery = isRecord(details.zustellung) ? details.zustellung : {};
   const window = ['delivered', 'returned'].includes(stage) ? {} : deliveryWindow(delivery);
   const stated = date(timeline.datumAktuellerStatus);

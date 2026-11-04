@@ -226,6 +226,83 @@
       "note": "The local courier's reason for a failed round, in angle brackets; the parcel went on in transit after it."
     },
     {
+      "wording": "<User not at home>",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "iMile's driver's reason for a failed round in Italy, in angle brackets, after its out-for-delivery row."
+    },
+    {
+      "wording": "【Milan center】Received.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "iMile, the delivering partner in Italy, receiving the parcel at its centre. iMile's sentences read its rows whatever centre they name."
+    },
+    {
+      "wording": "【Milan center】Parcel shipped to【ROM 10】.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "iMile sending the parcel on to its delivery station."
+    },
+    {
+      "wording": "【ROM 10】Arrived.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04"
+    },
+    {
+      "wording": "【ROM 10】Shipment out for delivery.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04"
+    },
+    {
+      "wording": "【ROM 10】 Back To DS.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Back at iMile's delivery station after the round failed, as iMile's map reads it."
+    },
+    {
+      "wording": "【ROM 10】Parcel shipped to【Milan Transit Center】.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "After two failed rounds, the delivery station sends the parcel back to iMile's centre."
+    },
+    {
+      "wording": "【Milan Transit Center】Arrived.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04"
+    },
+    {
+      "wording": "【Milan Transit Center】Order Closed.",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "iMile closing the delivery order without a delivery, as on its own return rows."
+    },
+    {
+      "wording": "FR, Votre envoi est en transit sur nos plateformes logistiques.,运输途中",
+      "stage": "in_transit",
+      "language": "fr",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "The French delivering partner's transit row, after the sort in the Netherlands, with the country before it and Shouwu's Chinese for in transit after it."
+    },
+    {
       "wording": "Shipment arrived at a carrier facility",
       "stage": "in_transit",
       "language": "en",
@@ -413,7 +490,21 @@
       "firstSeen": "2026-11-03",
       "note": "The hand-over to the last-mile partner after import clearance; \"deliverey\" is Shouwu's spelling."
     },
-    {"wording": "NOA received", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The destination agent's receipt of the flight's notice of arrival, after the landing and before clearance."},
-    {"wording": "Customs clearance in progress", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "Import clearance under way, before \"Customs clearance has been completed\"."}
+    {
+      "wording": "NOA received",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "The destination agent's receipt of the flight's notice of arrival, after the landing and before clearance."
+    },
+    {
+      "wording": "Customs clearance in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "Import clearance under way, before \"Customs clearance has been completed\"."
+    }
   ]
 }

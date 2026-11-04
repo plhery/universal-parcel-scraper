@@ -124,6 +124,12 @@
       "id": "mondial-relay-3",
       "pattern": "^FV\\d{8}$",
       "confidence": "low"
+    },
+    {
+      "id": "mondial-relay-4",
+      "pattern": "^\\d{14}$",
+      "confidence": "low",
+      "checksum": "mondial-relay-head"
     }
   ]
 }

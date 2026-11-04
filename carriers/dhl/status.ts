@@ -63,11 +63,13 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase();
   // A return still to come or under way, such as a parcel left uncollected past its storage period:
   // the parcel is not back yet, so it is an exception, never its acceptance or the final return.
-  if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
+  // "The shipment is returned to the sender" after a failed round is the English of "wird … zurückgesandt".
+  if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bis (?:being )?returned to (?:the )?sender\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
   if (/returned to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
   // "Delivery not possible" comes after the loading onto the delivery vehicle, before the parcel
   // waits at a retail outlet: a failed attempt, as the partner posts' copies of the scan read it.
-  if (/not delivered|could not be delivered|unable to deliver|delivery attempt|delivery (?:was )?not possible|\bnicht\b[^.]*\bzugestellt\b|zustellversuch|nicht angetroffen/.test(value)) return 'failed_attempt';
+  // So is a recipient the courier could not find at the address on the parcel.
+  if (/not delivered|could not be delivered|unable to deliver|delivery attempt|delivery (?:was )?not possible|recipient could not be found\b|\bnicht\b[^.]*\bzugestellt\b|zustellversuch|nicht angetroffen/.test(value)) return 'failed_attempt';
   // GENERATED equivalents of DHL's existing forecast behavior: a forecast retains
   // the structured progress fallback; it cannot establish delivery or pre-advice.
   if (/will be delivered|sera livr[ée]|wird\s+(?!zugestellt\b).+zugestellt|sar[àa] consegnat/.test(value)) return fallback;
@@ -76,7 +78,8 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   const translated = trackingLanguageStage(text);
   if (translated) return translated;
   if (/ready for (?:pickup|collection)|ready to (?:collect|pick up)|awaiting collection|abholbereit|zur abholung bereit|liegt zur abholung\b[^.]*\bbereit/.test(value)) return 'ready_for_pickup';
-  if (/has been delivered|was delivered|successfully delivered|^delivered\b|erfolgreich zugestellt|wurde.*zugestellt/.test(value)) return 'delivered';
+  // "Abholung aus Packstation": the recipient took the parcel out of the Packstation, as DHL's delivered flag says.
+  if (/has been delivered|was delivered|successfully delivered|^delivered\b|erfolgreich zugestellt|wurde.*zugestellt|^abholung aus (?:der )?packstation\b/.test(value)) return 'delivered';
   if (/^being delivered[.!]?$|out for delivery|loaded (?:into|onto).*delivery vehicle|in das zustellfahrzeug geladen|in zustellung/.test(value)) return 'out_for_delivery';
   if (/customs clearance process\b[^.]*\bhas been completed\b/.test(value)) return 'in_transit';
   if (/customs|zoll/.test(value)) return 'customs';
