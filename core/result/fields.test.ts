@@ -104,6 +104,12 @@ describe('event places', () => {
     expect(events.map((event) => event.location ?? null)).toEqual([null, null, 'Sampletown']);
     expect(events[0]).not.toHaveProperty('location');
   });
+
+  it('drop the empty parts of a place joined from parts, and a place that has none', () => {
+    const places = [',,,', ' , ', 'Sampletown,,,', ',,,CA', ',Sampletown', 'SAMPLE HUB,', 'Sampletown, , Region', 'Sampletown, Region', 'Sample,Town'];
+    const events = normalizeCarrierResult({ status: 'in_transit', events: places.map((location) => ({ time: '2026-01-02T10:00:00Z', description: 'In transport', location })) }).events!;
+    expect(events.map((event) => event.location ?? null)).toEqual([null, null, 'Sampletown', 'CA', 'Sampletown', 'SAMPLE HUB', 'Sampletown, Region', 'Sampletown, Region', 'Sample,Town']);
+  });
 });
 
 describe('recipient actions', () => {

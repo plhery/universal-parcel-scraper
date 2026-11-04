@@ -165,6 +165,8 @@ const OPTIONAL_TEXT_FIELDS = [
   'timezone',
 ] as const;
 const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'stage', 'stage_source'] as const;
+// A comma with nothing before or after it, or between it and the next.
+const EMPTY_PART = /^\s*,|,\s*(?:,|$)/;
 const NUMBER_FIELDS = ['delivery_tracking_number', 'canonical_tracking_number', 'international_tracking_number'] as const;
 
 /** A carrier's coordinates for a scan, or null when they are not a usable point. */
@@ -274,8 +276,12 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
       }
     }
     const event = { ...rawEvent };
-    // A blank place is no place.
-    if (typeof event.location === 'string' && !event.location.trim()) delete event.location;
+    // A blank place is no place, and a place joined from parts keeps the parts it has: ",,,CA" is "CA", ",,," none.
+    if (typeof event.location === 'string') {
+      const place = EMPTY_PART.test(event.location) ? event.location.split(',').filter((part) => part.trim()).join(',').trim() : event.location;
+      if (place.trim()) event.location = place;
+      else delete event.location;
+    }
     if (event.point !== undefined) {
       const point = isRecord(event.point) ? eventPoint(event.point.latitude, event.point.longitude) : null;
       if (point) event.point = point;
