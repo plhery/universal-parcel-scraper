@@ -13,6 +13,9 @@
     {"wording": "Order received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The delivering partner's order data, such as UniUni's, written before it has the parcel."},
     {"wording": "Next stop destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight, after the hand-over to the airline; the row keeps Hong Kong's airport as its place."},
     {"wording": "Arrived at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's landing, before the import clearance."},
-    {"wording": "The package is being submitted for customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance: it follows the flight, and China's export declaration came before the hand-over to the airline."}
+    {"wording": "The package is being submitted for customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Import clearance: it follows the flight, and China's export declaration came before the hand-over to the airline."},
+    {"wording": "The package has been cleared through customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The import release, after the landing."},
+    {"wording": "Customs broker picked it up", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The customs broker collecting the parcel after its import release, before the hand-over to the delivery carrier: it is no longer held in customs."},
+    {"wording": "The package has been transferred to the service provider", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The hand-over to the delivery carrier after the broker's collection."}
   ]
 }

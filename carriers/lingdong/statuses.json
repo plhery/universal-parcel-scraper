@@ -15,6 +15,7 @@
     {"wording": "拆板作业中，等待取货通知【Under destuffing, waiting for pickup instructions.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight's pallets are broken down after the landing while the cargo waits to be collected for clearance: not a collection by the recipient."},
     {"wording": "货物在清关【Customs clearance in progress】", "language": "zh", "stage": "customs", "confirmedBy": "live", "note": "In the destination's customs, after the landing."},
     {"wording": "货物已完成清关【The goods have completed customs clearance】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Released by the destination's customs, hours after its clearance began."},
+    {"wording": "货物已交服务商【The shipment has been transferred to the logistics partner.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The hand-over to the delivery partner after the import release."},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]
 }
