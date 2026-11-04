@@ -45,7 +45,10 @@ export default class CanaryReporter {
     const rows = [];
     let passed = 0;
     let gated = 0;
-    const reason = (error) => `${error?.name ?? 'Error'}: ${error?.message ?? 'failed'}`;
+    // An assertion on a lookup's promise names the lookup's own error only in
+    // its cause, past the point where the message shortens it.
+    const reason = (error) => `${error?.name ?? 'Error'}: ${error?.message ?? 'failed'}`
+      + (error?.cause?.name && error.cause.message ? ` · caused by ${error.cause.name}: ${error.cause.message}` : '');
     for (const testModule of testModules) {
       for (const error of testModule.errors()) {
         rows.push({ result: 'failed', check: testModule.relativeModuleId, reason: reason(error) });

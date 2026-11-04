@@ -27,6 +27,10 @@ test('lists failed and inconclusive checks but counts gated ones', (t) => {
         yield testCase('PostNL > maps a wrong number to a 404', {
           state: 'failed', errors: [{ name: 'AssertionError', message: 'expected 429\n  to be | 404' }],
         });
+        yield testCase('Hermes > returns a delivered order', {
+          state: 'failed', errors: [{ name: 'AssertionError', message: 'promise rejected "UpstreamHttpError: Hermes tracking return… { …(7) }" instead of resolving',
+            cause: { name: 'UpstreamHttpError', message: 'Hermes tracking returned HTTP 400' } }],
+        });
         yield testCase('UPS > opens a tracking page', { state: 'skipped', note: 'Carrier bot protection' });
         yield testCase('FedEx > returns real history', { state: 'skipped', note: undefined });
       },
@@ -34,12 +38,12 @@ test('lists failed and inconclusive checks but counts gated ones', (t) => {
   }], []);
 
   const summary = fs.readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8');
-  assert.match(summary, /^### Adapters\n\n1 passed · 1 failed · 1 unverified · 1 not run/);
+  assert.match(summary, /^### Adapters\n\n1 passed · 2 failed · 1 unverified · 1 not run/);
   assert.match(summary, /\| ❌ failed \| PostNL > maps a wrong number to a 404 \| AssertionError: expected 429 to be \\\| 404 \|/);
   assert.match(summary, /\| ⚠️ unverified \| UPS > opens a tracking page \| Carrier bot protection \|/);
   assert.doesNotMatch(summary, /FedEx|CTT/);
   assert.match(fs.readFileSync(env.GITHUB_OUTPUT, 'utf8'),
-    /^failures<<(EOF_[\w-]+)\n- `PostNL > maps a wrong number to a 404`: AssertionError: expected 429 to be \\\| 404\n\1\n$/);
+    /^failures<<(EOF_[\w-]+)\n- `PostNL > maps a wrong number to a 404`: AssertionError: expected 429 to be \\\| 404\n- `Hermes > returns a delivered order`: AssertionError: promise rejected "UpstreamHttpError: Hermes tracking return… \{ …\(7\) \}" instead of resolving · caused by UpstreamHttpError: Hermes tracking returned HTTP 400\n\1\n$/);
 });
 
 test('writes nothing outside GitHub Actions and no output without failures', () => {

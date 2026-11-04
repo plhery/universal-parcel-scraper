@@ -45,8 +45,10 @@ npm run test:carriers:live -- carriers/<id>
 They read private inputs from environment variables or ignored files. Do not turn a blocked
 or inconclusive response into a passing test.
 
-A scheduled canary run looks up wrong numbers through every public adapter and provider, and
-keeps one issue open for as long as something fails. That issue is a good place to find work.
+A scheduled canary run looks up wrong numbers through every public adapter and provider. Its
+issue is open while a check fails two days running on a page that answers, or a carrier has
+not answered for two weeks, and its body lists every failing check with the day it started.
+That issue is a good place to find work.
 
 ## Add a carrier
 

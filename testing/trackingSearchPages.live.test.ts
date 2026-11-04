@@ -78,7 +78,7 @@ describe('carrier search pages (rendered at phone size)', () => {
           : 'The page rendered nothing to an automated browser: search page remains unverified');
       }
       // Address and title only, like the tracking links.
-      context.expect(verdict, `Expected a field to type a tracking number in; landed on ${page.url()} titled ${JSON.stringify(title)}`)
+      context.expect(verdict, `Expected a field to type a tracking number in; landed on ${page.url()} with HTTP ${documentStatus ?? response?.status() ?? 'status unknown'}, titled ${JSON.stringify(title)}`)
         .toBe('search-page');
     } finally {
       await phoneContext.close();

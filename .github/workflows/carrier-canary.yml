@@ -200,8 +200,20 @@ jobs:
     permissions:
       actions: read
       checks: read
+      contents: read
       issues: write
     steps:
+      # The script alone: it has no dependencies.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          sparse-checkout: scripts/canary-issue.mjs
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 26
+      # The issue keeps a record of each failing check and asks for a look only
+      # at checks that keep failing on a page that answers, and at carriers down
+      # for two weeks. scripts/canary-issue.mjs explains the rules.
       - name: Open, update or close the canary issue
         env:
           GH_TOKEN: ${{ github.token }}
@@ -209,60 +221,4 @@ jobs:
           NEEDS: ${{ toJSON(needs) }}
           RUN_ID: ${{ github.run_id }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        run: |
-          set -euo pipefail
-          # A job that runs out of time ends cancelled, like the jobs of a
-          # superseded run; only its annotation tells them apart.
-          cancelled=$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/jobs" --paginate \
-            --jq '.jobs[] | select(.conclusion == "cancelled") | .id')
-          timed_out=0
-          for job in $cancelled; do
-            if gh api "repos/$GH_REPO/check-runs/$job/annotations" --jq '.[].message' \
-              | grep -q 'exceeded the maximum execution time'; then timed_out=$((timed_out + 1)); fi
-          done
-          # A superseded run says nothing about carrier health.
-          if [ "$(jq '[.[] | select(.result == "cancelled")] | length' <<<"$NEEDS")" != "$timed_out" ]; then exit 0; fi
-          failures=$(jq -r '
-            {"probe": "Public carrier reachability", "adapters": "Carrier adapters with synthetic numbers",
-             "tracking-links": "Rendered UI tracking links", "search-pages": "Carrier search pages at phone size"} as $names
-            | to_entries[] | .value.result as $result | select($result != "success" and $result != "skipped")
-            | "#### \($names[.key] // .key)\n\n\(.value.outputs.failures | select(. != null and . != "")
-                // if $result == "cancelled" then "The job ran out of time before reporting checks; see the run log."
-                   else "The job failed before reporting checks; see the run log." end)\n"
-          ' <<<"$NEEDS")
-          title='Daily carrier canary failures'
-          # The issues this workflow opened, newest first and an open one
-          # before any closed one. Not a search: the search index once missed
-          # the open issue, and a second one was opened beside it. A failed
-          # listing ends the step instead of opening another.
-          issue=$(gh api -X GET "repos/$GH_REPO/issues" -f state=all -f 'creator=github-actions[bot]' -F per_page=100 \
-            --jq "map(select(.title == \"$title\" and .pull_request == null)) | (map(select(.state == \"open\")) + .)
-              | first // empty | \"\(.number) \(.state | ascii_upcase)\"")
-          read -r number state <<<"$issue"
-          if [ -z "$failures" ]; then
-            if [ "${state:-}" = OPEN ]; then
-              gh issue edit "$number" --body "All carrier canaries passed: $RUN_URL"
-              gh issue close "$number" --comment "All carrier canaries passed: $RUN_URL"
-            fi
-            exit 0
-          fi
-          body="$failures"$'\n'"Run: $RUN_URL"
-          if [ -z "${number:-}" ]; then
-            gh issue create --title "$title" --body "$body"
-          elif [ "$state" = CLOSED ]; then
-            gh issue edit "$number" --body "$body"
-            gh issue reopen "$number" --comment "$body"
-          else
-            # Comment only when the set of failing checks changes, so a
-            # persistent failure does not notify every day. The backticks are
-            # Markdown, not command substitutions.
-            # shellcheck disable=SC2016
-            checks() { grep -E '^(####|- )' | sed 's/`: .*/`/'; }
-            previous=$(gh issue view "$number" --json body,comments --jq '(.comments | last | .body) // .body')
-            # The body always shows the current result, even when the same
-            # failing checks need no new notification.
-            gh issue edit "$number" --body "$body"
-            if [ "$(checks <<<"$previous")" != "$(checks <<<"$failures")" ]; then
-              gh issue comment "$number" --body "$body"
-            fi
-          fi
+        run: node scripts/canary-issue.mjs
