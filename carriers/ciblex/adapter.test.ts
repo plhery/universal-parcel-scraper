@@ -4,6 +4,8 @@ import { load } from 'cheerio';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { createTracker } from '../../facade/index.js';
+import { UniversalTracker } from '../../providers/universal.js';
 import {
   CiblexTracker,
   adapter,
@@ -239,7 +241,45 @@ describe('Ciblex response normalization', () => {
       expect(() => parseCiblexTrackingHtml(html, TEST_TRACKING_NUMBER)).toThrow(SchemaError);
     }
     const many: Row[] = Array.from({ length: 120 }, (_,i) => ['23/01/2026', '09:00', `Provider wording ${i}`, '']);
-    expect(parseCiblexTrackingHtml(trackingPage({ rows: many }), TEST_TRACKING_NUMBER).events).toHaveLength(100);
+    const capped = parseCiblexTrackingHtml(trackingPage({ rows: many }), TEST_TRACKING_NUMBER);
+    expect(capped.events).toHaveLength(100);
+    expect(capped.history_truncated).toBe(true);
+  });
+
+  it('keeps complete histories complete at the cap and counts distinct scans before capping', () => {
+    const rows: Row[] = Array.from({ length: 100 }, (_,i) => ['23/01/2026', '09:00', `Provider wording ${i}`, '']);
+    const complete = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
+    expect(complete.events).toHaveLength(100);
+    expect(complete).not.toHaveProperty('history_truncated');
+    const repeated = parseCiblexTrackingHtml(trackingPage({ rows: Array<Row>(120).fill(rows[0]!) }), TEST_TRACKING_NUMBER);
+    expect(repeated.events).toHaveLength(1);
+    expect(repeated).not.toHaveProperty('history_truncated');
+  });
+
+  it('lets an enabled provider complete a capped native history', async () => {
+    const number = '41872605390182';
+    const rows: Row[] = Array.from({ length: 101 }, (_,i) => {
+      const minutes = 100 - i;
+      return ['23/01/2026', `${String(9 + Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`, 'Colis Contrôle', ''];
+    });
+    const page = trackingPage({ trackingNumber: number, rows }), native = parseCiblexTrackingHtml(page, number);
+    const events = native.events!;
+    const fuller: CarrierResult = { ...native, history_truncated: undefined, events: [...events,
+      { ...events[events.length - 1]!, time: '2026-01-23T09:00:00+01:00' }] };
+    const provider = vi.spyOn(UniversalTracker.prototype, 'fetchSource').mockResolvedValue(fuller);
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(page));
+    try {
+      const tracker = createTracker({ fetcher, providers: ['17TRACK'], env: {}, trawlUrl: '', chromiumPath: '' });
+      const answer = await tracker.track({ number, carrier: 'ciblex' });
+      expect(answer.attempts.map(({ source, kind }) => ({ source, kind }))).toEqual([
+        { source: 'ciblex', kind: 'ok' }, { source: '17TRACK', kind: 'ok' },
+      ]);
+      expect(answer.source).toBe('17TRACK');
+      expect(answer.result.events).toHaveLength(101);
+      expect(answer.direct).toMatchObject({ history_truncated: true, events: expect.any(Array) });
+      expect(fetcher).toHaveBeenCalledTimes(1);
+      expect(provider).toHaveBeenCalledTimes(1);
+    } finally { provider.mockRestore(); }
   });
   it('normalizes a provider-shaped history without retaining unrelated or unsafe fields', () => {
     const result = parseCiblexTrackingHtml(trackingPage(), TEST_TRACKING_NUMBER);

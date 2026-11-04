@@ -17,6 +17,7 @@ The HTTP encoding takes precedence over the older HTML charset declaration.
 Fully dated scans use the French portal clock and sort by instant with stable
 ties. A scan dated by its day alone keeps that day as `local_time`. If a date is
 unresolved, native position remains authoritative and its text is preserved. Unknown current wording cannot inherit older delivery.
+Histories capped by the adapter stay marked partial so enabled providers can complete them.
 
 The place column can contain recipient addresses. Only the established depot
 labels with their department code are retained: `TOWN 68 (68)` as written, and

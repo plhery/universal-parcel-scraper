@@ -98,5 +98,5 @@ export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResul
   return { status: mapped.status, ...(mapped.status !== 'unknown' ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, expected_delivery: null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
-    timezone: 'Europe/Paris', events: events.slice(0, 100) };
+    timezone: 'Europe/Paris', ...(events.length > 100 ? { history_truncated: true } : {}), events: events.slice(0, 100) };
 }
