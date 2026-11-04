@@ -142,6 +142,11 @@ describe('Raben tracking adapter', () => {
     expect(round.events!.slice(0, 2).map(event => [event.provider_code, event.stage])).toEqual([['E05', 'out_for_delivery'], ['E07', 'ready_for_pickup']]);
   });
 
+  it('declares the fields it returns, the ETA slot among them', () => {
+    const { capabilities } = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')) as { capabilities: string[] };
+    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'eta', 'eta_window', 'weight', 'delivered_at']);
+  });
+
   it('reads the ETA slot of a delivery round as the expected window, until the round is over or the shipment settled', async () => {
     // A slot of four hours from 11:00 UTC, after the newest row at 09:05 UTC in Lithuania.
     const FROM = 1773140400000;

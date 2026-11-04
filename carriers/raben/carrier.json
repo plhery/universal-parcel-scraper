@@ -48,6 +48,7 @@
     "location",
     "provider_code",
     "eta",
+    "eta_window",
     "weight",
     "delivered_at"
   ],
@@ -74,6 +75,7 @@
       "location",
       "provider_code",
       "eta",
+      "eta_window",
       "weight",
       "delivered_at",
       "offset_timestamps"

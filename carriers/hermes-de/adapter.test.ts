@@ -48,8 +48,8 @@ describe('Hermes Germany', () => {
   });
 
   it('covers every capability declared in carrier.json', () => {
-    expect(capabilities).toEqual(['history', 'location', 'eta', 'sender_name', 'delivered_at', 'pickup_point', 'provider_code',
-      'delivery_partner', 'delivery_tracking_number']);
+    expect(capabilities).toEqual(['history', 'location', 'eta', 'eta_window', 'sender_name', 'delivered_at', 'pickup_point',
+      'provider_code', 'delivery_partner', 'delivery_tracking_number']);
     const result = parseHermesGermanyResponse(delivered(), NUMBER);
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.some((event) => event.provider_code)).toBe(true);
@@ -57,6 +57,9 @@ describe('Hermes Germany', () => {
     expect(result.delivered_at).toBe('2026-09-03T09:00:00.000Z');
     const active = parseHermesGermanyResponse(outForDelivery(), NUMBER);
     expect(active).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-09-03' });
+    const slot = parseHermesGermanyResponse([{ ...outForDelivery()[0], forecast: {
+      deliveryTimeFromUTC: '2026-09-03T08:00:00Z', deliveryTimeToUTC: '2026-09-03T11:59:59.999Z' } }], NUMBER);
+    expect(slot).toMatchObject({ expected_delivery_from: '2026-09-03T10:00:00+02:00', expected_delivery: '2026-09-03T14:00:00+02:00' });
     expect(parseHermesGermanyResponse(atShop('PARCELSHOP_READY_FOR_COLLECTION'), NUMBER).pickup_point).toBeTruthy();
     expect(parseHermesGermanyResponse(abroad('https://tracking.postnord.com/en/?id=00370000000000000017'), NUMBER))
       .toMatchObject({ delivery_carrier: 'postnord', delivery_tracking_number: '00370000000000000017' });
