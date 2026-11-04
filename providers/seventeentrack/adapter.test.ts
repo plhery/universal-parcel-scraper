@@ -567,6 +567,11 @@ describe('17TRACK result parsing', () => {
     const round = row('2026-10-22', '00:00:00', '+02:00', 'EXAMPLE CITY (000)', 'FOR DELIVERY');
     const brt = parse17TrackResponse(reply(199997, [round, row('2026-10-22', '00:00:00', '+02:00', 'EXAMPLE CITY (000)', 'DEPARTED')], 'BRT (IT)', 'IT'), number);
     expect(brt.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-10-22', '2026-10-21T22:00:00.000Z']);
+    // FedEx's pickup, which FedEx dates by its day alone, keeps its day; a scan at midnight its clock.
+    const pickup = { ...row('2026-10-30', '00:00:00', '-04:00', 'EXAMPLE CITY, CA, US', 'Picked up'), time_raw: { date: '2026-10-30', time: '00:00:00', timezone: null } };
+    const sorted = { ...pickup, description: 'Arrived at FedEx location' };
+    expect(parse17TrackResponse(reply(100003, [pickup, sorted]), number).events?.map((event) => event.time ?? event.local_time))
+      .toEqual(['2026-10-30T04:00:00.000Z', '2026-10-30']);
   });
 
   it('reads a USPS label its mailer wrote on UTC, which its facility\'s zone would date after the read', () => {

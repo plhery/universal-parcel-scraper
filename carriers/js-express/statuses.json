@@ -98,6 +98,19 @@
     {"code": "OIT", "wording": "TASK ASSIGNED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's delivery task, after the hand-over to it and before its sorting."},
     {"code": "OIT", "wording": "ORDER SORTED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's sorting."},
     {"code": "OIT", "wording": "OUTBOUND SCANNED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's depot scanning the parcel out, before its delivery round."},
-    {"code": "OIT", "wording": "PREFERENCE APPLIED", "stage": "pending", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's record of a delivery preference the recipient chose, days before it has the parcel. It moves nothing."}
+    {"code": "OIT", "wording": "PREFERENCE APPLIED", "stage": "pending", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's record of a delivery preference the recipient chose, days before it has the parcel. It moves nothing."},
+    {"code": "OIT", "wording": "Quick Pickup", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "SF Express's pickup at JS Express's Chinese hub, after the departure from origin: the line's carrier takes the parcel, not its acceptance."},
+    {"code": "OIT", "wording": "Operation center Weighing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "SF Express weighing the parcel at its operation centre, beside its collection."},
+    {"code": "OIT", "wording": "The shipment has been collected by SF Express", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier took the parcel from JS Express's hub, after the departure from origin."},
+    {"code": "OIT", "wording": "Shipment loaded, prepare to send to next station.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
+    {"code": "OIT", "wording": "Shipment has arrived at the station and unloading.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
+    {"code": "DCF", "wording": "Under customs clearance, please wait patiently.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Export customs at the departure airport."},
+    {"code": "OIT", "wording": "Flight departure scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
+    {"code": "OIT", "wording": "Flight arrival scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
+    {"code": "OCP", "wording": "Start Custom clearance Process", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs at the destination."},
+    {"code": "DCF", "wording": "customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs released the parcel."},
+    {"code": "OIT", "wording": "Shipment in transit. Thanks for your waiting.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
+    {"code": "OIT", "wording": "Delivery in progress", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier at the destination, after its station's arrival and before any courier round: no round of its own."},
+    {"code": "SJS", "wording": "Refused", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The recipient refused the parcel on the delivery round; it goes back."}
   ]
 }

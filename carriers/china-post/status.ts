@@ -210,7 +210,7 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^中国邮政已收取邮件$/u, 'accepted'],
   [/^【[^【】]+】退回(?:[，,]备注[:：].+)?$/u, 'exception'],
   [/^出口海关\/留存待验$/u, 'customs'],
-  [/^邮件(?:到达|离开)(?:$|[【，])/u, 'in_transit'],
+  [/^(?:邮件|快件)(?:到达|离开)(?:$|[【，])/u, 'in_transit'],
   [/^邮件已在【[^【】]+】完成分拣，准备发出$/u, 'in_transit'],
   [/^邮件已乘机由【[^【】]+】飞往【[^【】]+】$/u, 'in_transit'],
   [/^【[^【】]+】已出口直封$/u, 'in_transit'],

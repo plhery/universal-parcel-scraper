@@ -131,6 +131,8 @@ carrier.
   USPS scan at exactly midnight is read the same way.
 - BRT's leg (carrier key 199997) shows its "FOR DELIVERY" round, which BRT's page dates by
   its day alone, at midnight; it keeps its day as `local_time`, as the ParcelsApp copy does.
+  FedEx's leg (100003) shows FedEx's pickup, which FedEx sends at midnight with no offset, the
+  same way; it keeps its day, as the [FedEx adapter](../../carriers/fedex/README.md) does.
 - Correos de Chile's leg (carrier key 3101) shows its wall clocks, and 17TRACK labels them
   `-04:00`, Chile's offset outside summer time, in summer too: an hour late against
   Correos de Chile's page and Correios Brazil's copies. That leg's `time_raw` is read on

@@ -1,6 +1,7 @@
 {
   "carrier": "topyou",
   "entries": [
+    {"code": "0", "wording": "Parcel Data Received", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "The parcel's data, before TopYou's first-mile scan."},
     {"code": "5", "wording": "Arrived at the first mile sorting center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in TopYou's hands, at its warehouse in China."},
     {"code": "10", "wording": "Departed from the first mile sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "15", "wording": "Arrived at airport of the original country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},

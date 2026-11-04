@@ -268,6 +268,12 @@ const USPS_UNPLACED = /^(?:|US|USA|United States)$/i;
 const BRT = 199997;
 const BRT_ROUND = /^for\s+delivery$/i;
 /**
+ * FedEx sends its pickup with a midnight time and no offset, and its adapter keeps that day alone;
+ * 17TRACK's carrier 100003 shows it at midnight under an offset of its own: it keeps its day too.
+ */
+const FEDEX = 100003;
+const FEDEX_PICKUP = /^picked\s+up$/i;
+/**
  * DHL eCommerce US's Webtrack adds an EN ROUTE row without a place, stamped with each request,
  * which its adapter skips: it echoes the status. 17TRACK relays one each time it asks again.
  */
@@ -582,6 +588,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const quickRabbit = reported.key === QUICK_RABBIT;
     const usps = reported.key === USPS;
     const brt = reported.key === BRT;
+    const fedex = reported.key === FEDEX;
     const chile = reported.key === CORREOS_CHILE;
     const correos = reported.key === CORREOS_SPAIN;
     const poland = reported.key === POLAND_POST;
@@ -644,7 +651,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const trailing = !english && !parsed.location && BRACKETED_PLACES.has(reported.key) ? trailingPlace(parsed.description ?? '') : undefined;
       if (trailing) Object.assign(parsed, { description: trailing.wording, location: trailing.place });
       const day = undatedClock(raw) ?? (usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
-        : brt && BRT_ROUND.test(text(raw.description).trim()) ? dayAlone(raw) : null);
+        : (brt && BRT_ROUND.test(text(raw.description).trim())) || (fedex && FEDEX_PICKUP.test(text(raw.description).trim())) ? dayAlone(raw) : null);
       if (day) {
         const local: CarrierEvent = { ...parsed, local_time: day };
         delete local.time;

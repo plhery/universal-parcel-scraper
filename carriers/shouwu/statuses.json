@@ -391,6 +391,20 @@
       "note": "The delivering carrier's local branch, after the hub: the parcel waits there for its round, not for collection."
     },
     {
+      "wording": "Parcel received by distributor",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The delivering carrier's courier took the parcel at the branch, before its round."
+    },
+    {
+      "wording": "Parcel out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The delivering carrier's round."
+    },
+    {
       "wording": "货物电子信息已经收到",
       "stage": "registered",
       "language": "zh",
