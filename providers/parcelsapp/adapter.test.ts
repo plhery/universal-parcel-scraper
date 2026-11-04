@@ -209,6 +209,19 @@ describe('ParcelsApp YTO scans', () => {
     ] }, number, identity()).events?.[0]).toMatchObject({ description: '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', stage: 'pending' });
   });
 
+  it("keeps the stage before Cainiao's last-mile notice, which is no scan", () => {
+    const parsed = parseParcelsAppResponse({ carriers: ['Cainiao'], states: [
+      { date: '2026-10-26T09:27:01Z', status: 'Arrived at departure transport hub', carrier: 0 },
+      { date: '2026-10-26T07:36:00Z', status: 'Last-mile delivery forecast', carrier: 0 },
+      { date: '2026-10-26T07:35:22Z', status: 'Outbound in sorting center', carrier: 0, location: 'Example District' },
+    ] }, number, identity());
+    expect(parsed.events?.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
+      ['Arrived at departure transport hub', 'in_transit', 'wording:language'],
+      ['Last-mile delivery forecast', 'in_transit', 'none'],
+      ['Outbound in sorting center', 'in_transit', 'wording:language'],
+    ]);
+  });
+
   it("reads Mayi Yinfu's relayed airport hand-over as transit, and its delivery abroad as a delivery", () => {
     const parcel = (states: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['DHL Parcel Spain', 'Mayiyinfu'],
       originCode: 'CN', destinationCode: 'ES', states }, number, identity());

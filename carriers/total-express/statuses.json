@@ -68,6 +68,7 @@
     {"code": "97", "wording": "INÍCIO DE COLETA C/ EDI", "language": "pt", "stage": "registered", "confirmedBy": "bundle"},
     {"code": "98", "wording": "AGUARDANDO CUBAGEM", "language": "pt", "confirmedBy": "live", "unmapped": true, "note": "Waiting to be measured, logged at the same second as the arrival at the distribution centre. The parcel moves on whatever it says."},
     {"code": "99", "wording": "INÍCIO DE COLETA", "language": "pt", "stage": "registered", "confirmedBy": "bundle"},
+    {"code": "0", "wording": "ARQUIVO RECEBIDO", "language": "pt", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The merchant's order file arrived, days before the collection."},
     {"code": "100", "wording": "ARQUIVO APROVADO", "language": "pt", "stage": "registered", "confirmedBy": "bundle"},
     {"code": "101", "wording": "RECEBIDA E PROCESSADA NO CD", "language": "pt", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "102", "wording": "TRANSFERENCIA PARA", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "Followed by the code of the base it goes to, which can be missing."},

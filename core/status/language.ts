@@ -411,6 +411,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // receive", Royal Mail's "Sender preparing item" (or "parcel"), "Sender despatching item" and "Sender has despatched item", "Shipping info sent to BRT",
   // a line's "Shipping Order Created", and iMile's order, in its spelling: "Order Submited.".
   if (/\border submitted(?:,| and)? pending (?:to )?rece(?:iv|ipt)|^(?:your |the )?order (?:has been |was )?submit+ed\.?$|\bshipment data uploaded\b|^sender preparing (?:item|parcel)\b|^sender (?:has despatched|despatching) item$|^shipping info(?:rmation)? sent to (?!(?:the |your? )?(?:recipient|customer|consignee|addressee|buyer)\b)|\bwe have received your shipment information\b|\bhemos recibido la informacion de su envio\b|\bwe will pick up (?:the|your) (?:package|parcel) from the sender\b|^booked for collection$|\bpending shipping by (?:the )?(?:seller|sender|shipper|merchant)\b|\bship(?:ment|ping) order created\b/.test(text)) return 'registered';
+  // A marketplace's seller still packing the order, as Postal Ninja relays it: "Awaiting shipping confirmation.
+  // The seller has already received your order and is preparing the packaging for shipping."
+  if (/^awaiting shipping confirmation\b|\bseller has (?:already )?received your order and is preparing\b/.test(text)) return 'registered';
   // A Shenzhen forwarder's pre-advice from the shipper, before its warehouse has the parcel.
   if (/^forecast has been received$/.test(text)) return 'registered';
   // The carrier has not had the parcel yet: "Shipment not yet received or

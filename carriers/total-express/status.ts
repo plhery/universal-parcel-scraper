@@ -8,6 +8,7 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
  * falls to the wording rules.
  */
 const CODES: ReadonlyMap<string, Stage> = new Map([
+  ['0', 'registered'], // ARQUIVO RECEBIDO: the merchant's order file arrived, before it is accepted.
   ['100', 'registered'], // ARQUIVO APROVADO: the merchant's order file was accepted.
   ['99', 'registered'], // INÍCIO DE COLETA: a driver is on the way to the merchant.
   ['97', 'registered'], // INÍCIO DE COLETA C/ EDI

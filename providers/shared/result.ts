@@ -763,6 +763,21 @@ function newestFirst(events: CarrierEvent[]): CarrierEvent[] {
   return sorted;
 }
 
+// Cainiao's order data sent ahead to the last-mile carrier, in ParcelsApp's and Postal Ninja's words, is
+// neither a scan nor a forecast of one: it keeps the stage of the scan before it, as Cainiao's own map reads it.
+const LAST_MILE_NOTICE = /^(?:last-mile delivery forecast|forecast of last-mile delivery by carrier)[.!]?$/i;
+
+/** A last-mile notice with no stage of its own takes the stage of the scan before it, newest first. */
+function keepStages(events: CarrierEvent[]): void {
+  for (let index = events.length - 2; index >= 0; index--) {
+    const event = events[index]!;
+    const before = events[index + 1]!.stage;
+    if (LAST_MILE_NOTICE.test(event.description ?? '') && (event.stage_source ?? 'none') === 'none' && before && before !== 'pending') {
+      Object.assign(event, { stage: before, stage_source: 'none' });
+    }
+  }
+}
+
 export function result(events: CarrierEvent[], source: UniversalSource, preserveOrder = false): CarrierResult {
   // Wall times sort alongside UTC instants only approximately; providers that
   // omit offsets everywhere pass preserveOrder instead.
@@ -785,6 +800,7 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
     && !(GENERIC_TRANSIT.test(event.description ?? '') && specific.has(at(event))));
   const ordered = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
   const unique = ordered.map((event) => parcelShopScan(event, ordered));
+  keepStages(unique);
   if (!unique.length && written.size) {
     throw new NoHistoryError(source, `${source} relays only a timeline written to a schedule`, { reason: 'written_ahead' });
   }

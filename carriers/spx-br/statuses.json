@@ -526,6 +526,24 @@
       "note": "Fleet feed: English in every language. Read as \"Unloaded\" at the hub it names, without the transfer and trip ids, and left out when the hub's own scan takes the parcel in within a day after it."
     },
     {
+      "code": "Hub_LHUnloading",
+      "wording": "[…] unloading at […] via Linehaul Trip […]",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Fleet feed: the line haul unloading at a delivery point (XPT), between the last-mile hub's scans and Delivering. Read as \"Unloading\" at the point it names, as LMHub_LHUnloading."
+    },
+    {
+      "code": "HUB_LHUnloaded",
+      "wording": "[…] unloaded at […] via Linehaul Trip […]",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Fleet feed, written in capitals: the line haul unloaded at a delivery point (XPT), before Delivering. Read as \"Unloaded\" at the point it names, as LMHub_LHUnloaded."
+    },
+    {
       "code": "LMHub_Received",
       "wording": "Seu pacote foi recebido pelo centro de distribuição",
       "language": "pt",

@@ -53,6 +53,8 @@ const FLEET: ReadonlyMap<string, Stage> = new Map(([
   ['SOC_LHUnloading', 'in_transit'], ['SOC_LHUnloaded', 'in_transit'], // F580.
   ['SOC_Received', 'in_transit'], ['SOC_LHTransporting', 'in_transit'], // F510 and F540.
   ['LMHub_LHUnloading', 'in_transit'], ['LMHub_LHUnloaded', 'in_transit'], ['LMHub_Received', 'in_transit'], // F599.
+  // The same unloading at a delivery point (an XPT) the delivery leaves from, without its received scan.
+  ['Hub_LHUnloading', 'in_transit'], ['Hub_LHUnloaded', 'in_transit'],
   ['Delivering', 'out_for_delivery'], // F600.
   ['Delivered', 'delivered'], // F980.
 ] as const).map(([status, stage]) => [status.toUpperCase(), stage]));

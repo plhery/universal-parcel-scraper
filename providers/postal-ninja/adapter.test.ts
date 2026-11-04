@@ -39,6 +39,12 @@ describe('Postal Ninja result parsing', () => {
     ]);
   });
 
+  it("reads a marketplace's seller still packing the order as registered", () => {
+    const parsed = parsePostalNinjaResponse(withEvents([{ ds: 'Example', dt: '2026-08-12T08:00:00',
+      dsc: 'Awaiting shipping confirmation. The seller has already received your order and is preparing the packaging for shipping.' }]), number);
+    expect(parsed.events?.[0]).toMatchObject({ stage: 'registered', stage_source: 'wording:language' });
+  });
+
   it('leaves out a delivery day the recipient booked, as Hermes leaves it out of its history', () => {
     const parsed = parsePostalNinjaResponse(withEvents([
       { ds: 'Example', dt: '2026-08-12T08:00:00', dsc: 'Registered in the system' },

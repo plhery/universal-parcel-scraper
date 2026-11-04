@@ -74,6 +74,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   writes it, is a copy of that scan and is dropped. Cainiao's "Pending shipping by the
   seller" and the sentence of GLS's progress bar that points to the detailed tracking below
   keep no time when dated after the lookup: the seller's deadline and GLS's delivery estimate.
+  Cainiao's "Last-mile delivery forecast", its order data sent ahead to the courier, keeps the
+  stage of the scan before it.
 - `fetchSource()` treats a history in which no scan has an instant (only wall times with
   no known zone) as inconclusive: `indeterminate` with reason `undated_history`, so the
   chain moves on. UPU is exempt, because its local clocks are by design.
