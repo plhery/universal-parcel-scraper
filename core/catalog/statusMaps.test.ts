@@ -1850,6 +1850,9 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'Last-mile delivery forecast')).toEqual(gap);
     // A forwarder's stock count, as ParcelsApp relays it after the flight.
     expect(answer('unknown', null, 'Stocktaking delay')).toEqual(gap);
+    // The same delay in the forwarder's Chinese; 17TRACK's transit code still stages it.
+    expect(answer('unknown', null, '地勤理货延误')).toEqual(gap);
+    expect(answer('unknown', 'InTransit_Other', '地勤理货延误')).toEqual(mapped('in_transit'));
     // An address change as ParcelsApp relays Huahan's; Huahan's own map stages it after the hand-off.
     expect(answer('unknown', null, 'Change of delivery address')).toEqual(gap);
     expect(answer('huahan', null, 'Change of delivery address')).toEqual(mapped('in_transit'));

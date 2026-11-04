@@ -92,6 +92,9 @@ export const statusMap: CarrierStatusMap = {
     wording: 'stocktaking delay',
     note: "A forwarder's stock count holding the parcel, as ParcelsApp relays it after the flight: it moves nothing, so it keeps the stage the parcel already had.",
   }, {
+    wording: '地勤理货延误',
+    note: "The same delay in a forwarder's Chinese, its ground handlers' stock count held up, as 17TRACK relays it after the flight: it moves nothing, so it keeps the stage the parcel already had.",
+  }, {
     wording: 'en demora - el envío ha sufrido un retraso provocando una posible demora en la entrega.',
     note: "SEUR's delay notice as Ship24 relays it, group before wording: not a scan, so it keeps the stage the parcel already had.",
   }, {
