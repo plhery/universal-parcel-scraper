@@ -4,6 +4,7 @@ import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SpeedpakTracker } from './adapter.js';
 import { normalizeSpeedpakNumber, parseSpeedpak } from './parser.js';
+import { statusMap } from './status.js';
 
 const NUMBER = 'ES0000000000000UN0000000000N';
 const fixture = () => JSON.parse(readFileSync(new URL('./fixtures/delivered.json', import.meta.url), 'utf8'));
@@ -61,6 +62,16 @@ describe('SpeedPAK response projection', () => {
     expect(result.events?.map(event => event.stage)).toEqual([
       'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'registered',
     ]);
+  });
+
+  it("reads SpeedX's attempt relayed without SpeedPAK's label as a failed attempt", () => {
+    const payload = fixture();
+    payload.result.waybills[0].traces[0] = { eventDesc: 'Attempted Delivery: No access', oprTimestamp: 1767362400000 };
+    payload.result.waybills[0].lastStatus = 'Attempted Delivery: No access';
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'carrier_map' });
+    expect(statusMap.stage(null, 'attempted delivery: no access')).toBe('failed_attempt');
   });
 
   it('keeps a destination hand-off\'s departures and arrivals moving by their labels', () => {

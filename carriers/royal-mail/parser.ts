@@ -4,7 +4,8 @@ import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
-import { countryCode, countryTimeZone, explicitOffsetTime, isoTime } from '../../core/time/index.js';
+import { countryCode, explicitOffsetTime, isoTime } from '../../core/time/index.js';
+import { destinationRelay, europeanAbroad, partnerPlace, ROYAL_MAIL_HOME, ROYAL_MAIL_RELAY_CLOCK } from './clock.js';
 import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
@@ -52,16 +53,8 @@ function eventTime(value: unknown): string | null {
   return explicitOffsetTime(raw)?.iso ?? null;
 }
 
-const HOME = new Set(['GB', 'JE', 'GG', 'IM']);
-// A European partner's scans reach Royal Mail on Central European time, whatever the country's own clock.
-const RELAY_CLOCK = 'Europe/Brussels';
-const IN_DESTINATION = /\bin the destination country\b/i;
 // The scan that leaves a country: "Item Leaving the UK", or "Item Leaving overseas" placed in the country of origin.
 const LEAVING = /^item leaving\b/i;
-// Royal Mail's own facilities go by bare names: "Example MC", "Example DO", "LANGLEY HWDC".
-const HOME_FACILITY = /\b(?:MC|DO|HWDC|IMC|LC|DC|PFW|Mail Centre|Delivery Office|Hub|Depot)\b/i;
-const europeanAbroad = (country: string | null) => Boolean(country && !HOME.has(country)
-  && countryTimeZone(country)?.startsWith('Europe/'));
 /** The country a scan's place is, or ends with. */
 const placeCountry = (location: string) => countryCode(/(?:^|,)\s*([^,]+)$/.exec(location)?.[1]);
 
@@ -81,14 +74,13 @@ function abroadClock(raw: string, location: string, description: string, destina
   const label = eventTime(raw);
   if (!label) return null;
   const country = placeCountry(location);
-  const partner = !location || !HOME_FACILITY.test(location);
   const relayed = country ? europeanAbroad(country)
-    : partner && (europeanAbroad(destination) && IN_DESTINATION.test(description)
-      || Boolean(location) && departure !== null && Date.parse(label) < departure);
+    : destinationRelay(location, description, destination)
+      || partnerPlace(location) && Boolean(location) && departure !== null && Date.parse(label) < departure;
   if (!relayed) return null;
   const wall = DateTime.fromISO(raw, { setZone: true }).toISO({ includeOffset: false, suppressMilliseconds: true });
   if (!wall) return null;
-  const placed = isoTime(wall, RELAY_CLOCK);
+  const placed = isoTime(wall, ROYAL_MAIL_RELAY_CLOCK);
   return placed ? { time: placed.iso } : { local_time: wall };
 }
 
@@ -192,7 +184,7 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   const destinationCountry = /^[A-Z]{2}$/.test(destination) ? destination : null;
   // Without it, an unplaced scan in the destination country is in the country the scans abroad name.
   const abroadCountry = destinationCountry ?? scans.slice(0, MAX_EVENTS_TO_INSPECT)
-    .map(raw => isRecord(raw) ? placeCountry(placeName(raw.locationName)) : null).find(country => country && !HOME.has(country)) ?? null;
+    .map(raw => isRecord(raw) ? placeCountry(placeName(raw.locationName)) : null).find(country => country && !ROYAL_MAIL_HOME.has(country)) ?? null;
   // Mail from abroad names its country of origin on the scan that leaves it, as Royal Mail labels it.
   const departure = scans.slice(0, MAX_EVENTS_TO_INSPECT).flatMap((raw) => {
     if (!isRecord(raw) || !LEAVING.test(cleanScalar(raw.eventName).replace(/\*\*/g, '').trim())

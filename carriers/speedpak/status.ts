@@ -17,6 +17,8 @@ const MAP: Readonly<Record<string, ClassifiedStatus>> = {
   'The item is received by PostNL': { status: 'in_transit', stage: 'in_transit' },
   'The item is at the PostNL sorting center': { status: 'in_transit', stage: 'in_transit' },
   'Out for delivery': { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  // SpeedX's last-mile wording, relayed without its Chinese label.
+  'Attempted Delivery: No access': { status: 'exception', stage: 'failed_attempt' },
 };
 
 const MOVING: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };

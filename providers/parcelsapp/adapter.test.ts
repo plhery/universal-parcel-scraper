@@ -2237,11 +2237,12 @@ describe('ParcelsApp result parsing', () => {
     }, number, identity()).events?.map((scan) => scan.time);
     const scan = (date: string, status: string, location?: string) => ({ date, status, carrier: 0, ...(location ? { location } : {}) });
     expect(times('PT', [
+      scan('2026-07-23T11:24:00Z', 'Your item is currently with Customs in the destination country', 'EXAMPLE CSI'),
       scan('2026-07-21T11:24:00Z', 'Your item is currently with Customs in the destination country.'),
       scan('2026-07-21T10:05:00Z', 'Item Received', 'Portugal'),
       scan('2026-07-17T04:12:09Z', 'Item Leaving the UK', 'EXAMPLE HWDC'),
       scan('2026-07-16T18:40:00Z', 'Item Received', 'Example MC'),
-    ])).toEqual(['2026-07-21T09:24:00.000Z', '2026-07-21T08:05:00.000Z', '2026-07-17T03:12:09.000Z', '2026-07-16T17:40:00.000Z']);
+    ])).toEqual(['2026-07-23T09:24:00.000Z', '2026-07-21T09:24:00.000Z', '2026-07-21T08:05:00.000Z', '2026-07-17T03:12:09.000Z', '2026-07-16T17:40:00.000Z']);
     expect(times('FR', [scan('2026-07-21T19:30:00Z', 'Item has left the overseas International Processing Centre', 'EXAMPLE IPC, France')]))
       .toEqual(['2026-07-21T17:30:00.000Z']);
     expect(parseParcelsAppResponse({ carriers: ['Parcelforce'], originCode: 'GB', destinationCode: 'FR',

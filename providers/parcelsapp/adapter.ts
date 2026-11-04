@@ -40,6 +40,7 @@ import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.j
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
+import { destinationRelay, europeanAbroad, ROYAL_MAIL_RELAY_CLOCK } from '../../carriers/royal-mail/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
@@ -526,21 +527,16 @@ const HOME_COUNTRIES: Readonly<Record<string, string>> = {
  * departure at the French office of exchange had the digits of La Poste's own
  * scans, Paris time; on one to Portugal, its "Item Received" and customs scans
  * came an hour after CTT's own digits, Lisbon time, at the same minute. A scan
- * located in another European country is such a relay, and so is one with no
- * place in Royal Mail's words for the destination ("Your item is currently with
- * Customs in the destination country.") on a parcel bound there. Beyond
- * Europe, the label is on London time (`HOME_CLOCKS`).
+ * located in another European country is such a relay, and so is one in Royal
+ * Mail's words for the destination ("Your item is currently with Customs in the
+ * destination country.") on a parcel bound there, with no place or a partner's
+ * bare facility name, as Royal Mail's own adapter reads it. Beyond Europe, the
+ * label is on London time (`HOME_CLOCKS`).
  */
-const ROYAL_MAIL_RELAY_CLOCK = 'Europe/Brussels';
 const ROYAL_MAIL_NAMES = new Set(['royalmail', 'parcelforce', 'parcelforceworldwide']);
-const ROYAL_MAIL_HOME = new Set(['GB', 'JE', 'GG', 'IM']);
-const ROYAL_MAIL_ABROAD = /\bin the destination country\b/i;
-const europeanAbroad = (country: string | null) => Boolean(country && !ROYAL_MAIL_HOME.has(country)
-  && countryTimeZone(country)?.startsWith('Europe/'));
 function royalMailRelay(location: string, status: string, destination: string | null): boolean {
   const country = countryCode(lastPlace(location));
-  if (country) return europeanAbroad(country);
-  return !location && europeanAbroad(destination) && ROYAL_MAIL_ABROAD.test(status);
+  return country ? europeanAbroad(country) : destinationRelay(location, status, destination);
 }
 /**
  * Pitney Bowes's catalog clock, London's, is only its UK hub's. Its tracker

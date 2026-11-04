@@ -416,9 +416,9 @@ step exists for future protocol changes.
   whatever the country's clock: its receipt and departure at France's office of exchange
   have the digits of La Poste's own scans, and its "Item Received" and customs scans in
   Portugal come an hour after CTT's digits, at the same minute. Step 1 reads a Royal Mail
-  scan located in another European country on Brussels time, and so one with no place that
-  puts the item "in the destination country" on a parcel bound there, and so for
-  Parcelforce's names. A name or relay added here moves its stored scans (see Limitations).
+  scan located in another European country on Brussels time, and so one that puts the item
+  "in the destination country" on a parcel bound there, with no place or a partner's bare
+  facility name, as Royal Mail's own adapter does, and so for Parcelforce's names. A name or relay added here moves its stored scans (see Limitations).
 - Pitney Bowes's London clock is only its UK hub's. Its other scans are read as Pitney
   Bowes's own adapter reads them: Interpost's import declaration and clearance, placed by a
   country alone ("Customs Clearance" at "IT"), on that country's clock; the platform's

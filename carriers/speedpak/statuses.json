@@ -88,6 +88,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Attempted Delivery: No access",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "SpeedX's last-mile wording, which SpeedPAK relays."
+    },
+    {
       "wording": "Delivered. (Recipient's front door)",
       "language": "en",
       "stage": "delivered",
