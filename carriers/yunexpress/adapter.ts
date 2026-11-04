@@ -311,6 +311,9 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
 }
 
 /** A later captured reply is final; never silently reuse an earlier success. */
+/** Time a retry needs for tier 2 to replay the session a refused tier 3 page saved. */
+const TRAWL_RETRY_MS = 8_000;
+
 export function parseCaptured(page: TrawlScrapeResponse, number: string): CarrierResult {
   const capture = page.capturedResponses.filter((entry) => entry.url === API).at(-1);
   if (!capture) throw new TransportError('YunExpress', 'The browser service did not capture YunExpress history');
@@ -375,13 +378,26 @@ export class YunExpressTracker {
       // The shared launcher serves a lookup for at most 60 s; a longer budget gives the browser that much.
       { id: 'browser', enabled: Boolean(this.options.executablePath), run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.min(60_000, Math.max(1, Math.floor(remainingMs)))) },
       // Keep the local runtime primary. Service capture needs the matching
-      // decoded-response hook and is used only without local Chromium.
+      // decoded-response hook and is used only without local Chromium. The
+      // service skips tier 2 until it holds a session for the site, which only
+      // a tier 3 page saves, so tier 3 is allowed.
       { id: 'trawl', enabled: !this.options.executablePath && Boolean(this.options.trawl), run: async ({ signal, remainingMs }) => {
-        const timeoutMs = Math.max(1, Math.min(25_000, Math.floor(remainingMs)));
-        const page = await this.options.trawl!.scrape({ url: yunExpressTrackingUrl(number), skipHttp: true, maxTier: 2,
-          maxTimeout: timeoutMs, captureResponses: [API], settleTimeout: 5_000 }, {
-          provider: 'TRAWL while fetching YunExpress', timeoutMs, maxBytes: 2_000_000, fetcher: this.options.fetcher, signal });
-        return parseCaptured(page, number);
+        const started = Date.now();
+        const read = (budgetMs: number) => {
+          const timeoutMs = Math.max(1, Math.min(25_000, Math.floor(budgetMs)));
+          return this.options.trawl!.scrape({ url: yunExpressTrackingUrl(number), skipHttp: true, maxTier: 3,
+            maxTimeout: timeoutMs, captureResponses: [API], settleTimeout: 5_000 }, {
+            provider: 'TRAWL while fetching YunExpress', timeoutMs, maxBytes: 2_000_000, fetcher: this.options.fetcher, signal });
+        };
+        const page = await read(remainingMs);
+        try { return parseCaptured(page, number); } catch (error) {
+          // YunExpress's firewall often refuses the API call of a fresh tier 3 page. The page
+          // still leaves the service the site's session, and tier 2 replays it with that call.
+          const left = remainingMs - (Date.now() - started);
+          if (!(error instanceof ChallengeError) || page.tier !== 3 || left < TRAWL_RETRY_MS) throw error;
+          signal.throwIfAborted();
+          return parseCaptured(await read(left), number);
+        }
       } },
     ]);
   }

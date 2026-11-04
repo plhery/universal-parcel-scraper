@@ -17,7 +17,7 @@ export interface TrawlScrapeRequest extends JsonObject {
   url: string;
   /** Skip the plain HTTP tier and go straight to a browser. */
   skipHttp?: boolean;
-  /** 1 = HTTP client, 2 = headless browser, 3 = full browser with challenge solving. */
+  /** 1 = HTTP client, 2 = browser replaying a session an earlier tier 3 page saved for the site (skipped without one), 3 = full browser with challenge solving. */
   maxTier?: 1 | 2 | 3;
   /** Milliseconds the service may spend before answering. */
   maxTimeout?: number;

@@ -13,6 +13,10 @@ includes the [Yuntrack capture hook](../../trawl/tracking-capture.mjs).
 The hook checks the posted parcel and reads the browser's decoded API body.
 Stock Trawl skips compressed bodies. Service capture is skipped when local
 Chromium is configured.
+The service replays a site's session at tier 2 only after a tier 3 page has saved one,
+so the adapter allows tier 3. YunExpress's firewall often refuses the API call of that
+fresh page, which still saves the session, so after such a refusal the adapter reads
+once more.
 An interactive verification remains a challenge and falls back to the providers.
 
 The response's latest-event record supplies an offset for that exact scan.

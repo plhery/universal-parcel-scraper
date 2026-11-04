@@ -620,10 +620,31 @@ describe('YunExpress browser execution', () => {
     const [url, init] = fetcher.mock.calls[0]!;
     expect(String(url)).toBe('http://127.0.0.1:8191/scrape');
     expect(JSON.parse(String(init?.body))).toMatchObject({ url: `https://www.yuntrack.com/parcelTracking?id=${NUMBER}`, skipHttp: true,
-      maxTier: 2, captureResponses: [API], settleTimeout: 5_000 });
+      maxTier: 3, captureResponses: [API], settleTimeout: 5_000 });
     expect(Number.isInteger(JSON.parse(String(init?.body)).maxTimeout)).toBe(true);
     expect(init?.signal).toBeInstanceOf(AbortSignal);
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok' }));
+  });
+
+  it('reads again once when the firewall refuses a fresh tier 3 page, so tier 2 replays its session', async () => {
+    const refused = { ...captured(), tier: 3, capturedResponses: [{ ...captured().capturedResponses[0]!, status: 405, body: null }] };
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(JSON.stringify(refused)))
+      .mockResolvedValueOnce(new Response(JSON.stringify(captured())));
+    const tracker = new YunExpressTracker({ trawl: new TrawlClient('http://127.0.0.1:8191', fetcher) });
+    await expect(tracker.fetch(NUMBER, { budgetMs: 30_000 })).resolves.toMatchObject({ current_stage: 'customs' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]?.body)).maxTimeout).toBeLessThanOrEqual(25_000);
+  });
+
+  it('keeps a refusal from tier 2, or one that leaves too little time, without another read', async () => {
+    const refusal = (tier: number) => ({ ...captured(), tier, capturedResponses: [{ ...captured().capturedResponses[0]!, status: 405, body: null }] });
+    for (const [tier, budgetMs] of [[2, 30_000], [3, 7_000]] as const) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(refusal(tier))));
+      const tracker = new YunExpressTracker({ trawl: new TrawlClient('http://127.0.0.1:8191', fetcher) });
+      await expect(tracker.fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'challenge', status: 405 });
+      expect(fetcher).toHaveBeenCalledOnce();
+    }
   });
 
   it('does not fabricate a direct result when browser runtime is unavailable', async () => {
