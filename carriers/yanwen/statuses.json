@@ -190,6 +190,13 @@
       "note": "Relayed from USPS: a label it has not scanned yet."
     },
     {
+      "wording": "Shipping Label Created, USPS Awaiting Item",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Relayed from USPS hours after Yanwen's pickup scan, while the parcel is still in China: a notice that keeps the stage before it and drops the label's US origin as its place."
+    },
+    {
       "wording": "Shipment information received",
       "language": "en",
       "stage": "registered",

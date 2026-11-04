@@ -27,6 +27,11 @@ China Post's domestic scans, which Yanwen relays in Chinese, read as China
 Post's map reads them; a centre's security-check return is an exception the
 centre deals with before it sends the parcel on. China Post's receipt follows
 Yanwen's outbound scan, so it is a hand-over in transit.
+USPS's "Shipping Label Created, USPS Awaiting Item", relayed while Yanwen still
+has the parcel in China, is a notice: it keeps the stage of the scan before it
+and loses its place, the label's US origin, where the parcel has not been.
+USPS dates its "In Transit to Next Facility" steps by their day alone; Yanwen
+relays them at midnight, so one at 00:00:00 keeps its day as `local_time`.
 
 Partner scans can start with their country's code, as in "UA.In the New Post
 Office"; the map reads the words after it. A scan of the code alone names no

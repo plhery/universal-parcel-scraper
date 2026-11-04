@@ -193,8 +193,9 @@ describe('Yanwen result projection', () => {
       ['2026-03-02', '14:00:00 [GMT+08]', '', 'Yanwen Pickup Scan'],
     ]);
     expect(result).toMatchObject({ status: 'delivered', last_update: '2026-03-06T12:47:56-04:00', delivered_at: '2026-03-06T12:47:56-04:00' });
-    expect(result.events?.map((event) => [event.time, event.location])).toEqual([
-      ['2026-03-06T12:47:56-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-06T06:10:00-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-05T00:00:00-04:00', ''],
+    // USPS dates its "In Transit to Next Facility" by its day alone, which the local copy gives at midnight.
+    expect(result.events?.map((event) => [event.time ?? event.local_time, event.location])).toEqual([
+      ['2026-03-06T12:47:56-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-06T06:10:00-04:00', 'EXAMPLE TOWN, ZZ'], ['2026-03-05', ''],
       ['2026-03-04T16:11:42-05:00', 'EXAMPLE CITY, ZZ'], ['2026-03-02T14:00:00+08:00', ''],
     ]);
     // The copy carries the UTC wall clock, so under an eastern offset it reads early.
@@ -280,6 +281,36 @@ describe('Yanwen result projection', () => {
     ], '运输途中');
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
     expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'exception']);
+  });
+
+  it("keeps USPS's label notice on the stage before it, without its US place, and USPS's day-only step on its day", () => {
+    const result = history([
+      ['2026-03-07', '00:00:00 [GMT-05]', '', 'In Transit to Next Facility, Arriving On Time'],
+      ['2026-03-07', '05:00:00 [GMT-05]', '', 'In Transit to Next Facility, Arriving On Time'],
+      ['2026-03-06', '05:54:00 [GMT-05]', 'EXAMPLE CITY,ZZ', 'Arrived at USPS Regional Origin Facility'],
+      ['2026-03-04', '12:21:29 [GMT+08]', '', 'Yanwen facility - Outbound'],
+      ['2026-03-03', '13:41:00 [GMT-05]', 'EXAMPLE TOWN,ZZ', 'Shipping Label Created, USPS Awaiting Item'],
+      ['2026-03-03', '11:44:30 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'US');
+    // USPS's unmapped steps are left to the shared wording rules, which read them in transit.
+    expect(result.events?.map((event) => [event.description, event.stage, event.stage_source, event.location, event.time ?? event.local_time])).toEqual([
+      ['In Transit to Next Facility, Arriving On Time', undefined, undefined, '', '2026-03-07'],
+      ['Arrived at USPS Regional Origin Facility', undefined, undefined, 'EXAMPLE CITY,ZZ', '2026-03-06T05:54:00-05:00'],
+      ['Yanwen facility - Outbound', 'in_transit', undefined, '', '2026-03-04T12:21:29+08:00'],
+      ['Shipping Label Created, USPS Awaiting Item', 'accepted', 'none', '', '2026-03-03T13:41:00-05:00'],
+      ['Yanwen Pickup Scan', 'accepted', undefined, '', '2026-03-03T11:44:30+08:00'],
+    ]);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-03-07' });
+    // Newest, the notice leaves the parcel where the pickup put it.
+    const noticed = history([
+      ['2026-03-03', '13:41:00 [GMT-05]', 'EXAMPLE TOWN,ZZ', 'Shipping Label Created, USPS Awaiting Item'],
+      ['2026-03-03', '11:44:30 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'US');
+    expect(noticed).toMatchObject({ current_stage: 'accepted', last_status_text: 'Shipping Label Created, USPS Awaiting Item' });
+    expect(statusMap.stage(null, normalizeStatusWording('Shipping Label Created, USPS Awaiting Item'))).toBeUndefined();
+    expect(statusMap.gaps?.map((gap) => gap.wording)).toContain(normalizeStatusWording('Shipping Label Created, USPS Awaiting Item'));
+    // A step at another clock keeps it.
+    expect(history([['2026-03-07', '07:29:00 [GMT-08]', '', 'In Transit to Next Facility']]).events?.[0]?.time).toBe('2026-03-07T07:29:00-08:00');
   });
 
   it("stages the delivering carrier's loading in Canada on the scan itself, as the category files it", () => {

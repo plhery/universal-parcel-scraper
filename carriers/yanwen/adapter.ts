@@ -10,7 +10,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isYanwenPlaceholder } from './app.js';
-import { yanwenCategory, yanwenStatus } from './status.js';
+import { yanwenCategory, yanwenNotice, yanwenStatus } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
 // anonymous form protocol, not a customer or account credential.
@@ -101,6 +101,31 @@ function withoutUtcCopies(events: CarrierEvent[]): CarrierEvent[] {
   return events.flatMap((event, index) => copies.has(index) ? [] : [places.has(index) ? { ...event, location: places.get(index) } : event]);
 }
 
+// USPS's "In Transit to Next Facility" steps ("…, Arriving On Time") are dated by their day alone; Yanwen relays one
+// at midnight on the facility's offset.
+const USPS_DAY_STEP = /^in transit to next facility\b/i;
+
+/** A relayed USPS step dated by its day alone keeps that day, not a midnight USPS never gave. */
+function onDayAlone(event: CarrierEvent): CarrierEvent {
+  if (!USPS_DAY_STEP.test(event.description ?? '') || typeof event.time !== 'string') return event;
+  const shown = DateTime.fromISO(event.time, { setZone: true });
+  if (shown.hour || shown.minute || shown.second || shown.millisecond) return event;
+  const day: CarrierEvent = { ...event, local_time: shown.toISODate()! };
+  delete day.time;
+  return day;
+}
+
+/** Events newest first, with each notice on the stage of the staged scan before it and without a place. */
+function withNotices(events: CarrierEvent[]): CarrierEvent[] {
+  const read = [...events];
+  for (let index = read.length - 1; index >= 0; index--) {
+    if (!yanwenNotice(read[index]!.description ?? '')) continue;
+    const previous = read.slice(index + 1).find((event) => event.stage)?.stage ?? 'registered';
+    read[index] = { ...read[index]!, location: '', stage: previous, stage_source: 'none' };
+  }
+  return read;
+}
+
 export function parse(html: string, trackingNumber: string): CarrierResult {
   const number = normalizeYanwenNumber(trackingNumber);
   const $ = load(html);
@@ -156,9 +181,11 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const country = clean(columns.eq(3).text(), 8).toUpperCase();
     const local = withoutUtcCopies(scanned);
     // Without a local copy beside them, La Poste's scans came on UTC's wall clock alone.
-    const events = country === 'FR' && local.length === scanned.length ? local.map(onFrenchUtcClock) : local;
+    const events = withNotices((country === 'FR' && local.length === scanned.length ? local.map(onFrenchUtcClock) : local).map(onDayAlone));
     const latest = events[0]!;
-    const scan = yanwenStatus(latest.description!, latest.provider_code);
+    // A notice moves nothing: the newest scan before it gives the parcel's status.
+    const heading = events.find((event) => !yanwenNotice(event.description ?? '')) ?? latest;
+    const scan = yanwenStatus(heading.description!, heading.provider_code);
     // The category gives the status when the newest scan's wording is new. A
     // delivery still needs a delivered scan; the category alone never makes one.
     const filed = yanwenCategory(identities.attr('status'));
@@ -172,7 +199,8 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
     const notes = block.find('.addNotes p').toArray().map((line) => clean($(line).text(), 300));
     const partner = handoff ? distributor(notes, handoff) : undefined;
     results.push({ status, ...(stage ? { current_stage: stage } : {}),
-      last_status_text: latest.description, last_update: latest.time,
+      last_status_text: latest.description, last_update: latest.time ?? null,
+      ...(typeof latest.local_time === 'string' ? { last_update_local: latest.local_time } : {}),
       ...(delivery ? { delivered_at: delivery.time } : {}), ...(parcel !== number ? { canonical_tracking_number: parcel } : {}),
       ...(handoff ? { delivery_tracking_number: handoff, ...(partner ? { delivery_carrier: partner } : {}) } : {}),
       ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}), events: events.slice(0, 100) });

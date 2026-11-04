@@ -144,10 +144,22 @@ export function yanwenStatus(description: string, code?: string): ClassifiedStat
 
 const STAGE_BY_WORDING = new Map([...WORDING].map(([wording, { stage }]) => [normalizeStatusWording(wording), stage]));
 
+// USPS's record of the label Yanwen made, relayed while Yanwen still has the parcel in China, at the
+// label's US origin: a notice that moves nothing and names no place the parcel has been.
+const NOTICES = new Map([
+  ['Shipping Label Created, USPS Awaiting Item', "USPS's record of the label Yanwen made for it, relayed while Yanwen still has the parcel: not a scan, so it keeps the stage the parcel already had."],
+].map(([wording, note]) => [normalizeStatusWording(wording!), note!]));
+
+/** Whether a scan is a notice: it keeps the stage of the scan before it and names no place. */
+export const yanwenNotice = (description: string): boolean => NOTICES.has(normalizeStatusWording(withoutPrefix(description)));
+
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(withoutPrefix(wording)) ?? chinaPostRelayedStage(wording)),
-  gaps: [{ wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." }],
+  gaps: [
+    { wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." },
+    ...[...NOTICES].map(([wording, note]) => ({ wording, note })),
+  ],
 };
 
 /** The parcel's status from the category on its identity field, for scans the map does not know. */
