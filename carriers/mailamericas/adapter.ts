@@ -44,6 +44,10 @@ export class MailamericasTracker {
         }
         throw new ChallengeError(PROVIDER, 'MailAmericas refused the lookup', { status: 403 });
       }
+      // AWS's firewall holds a request it wants a browser to verify with an empty 202 (`x-amzn-waf-action`).
+      if (response.headers.has('x-amzn-waf-action') || (response.status === 202 && !bytes.byteLength)) {
+        throw new ChallengeError(PROVIDER, 'MailAmericas held the lookup for a browser check', { status: response.status });
+      }
       return parseMailamericas(json(decodeText(bytes)), number);
     };
     // One read with the whole budget: a parcel the service has not looked up

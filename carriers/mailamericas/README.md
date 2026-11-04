@@ -20,6 +20,9 @@ Tracked through the lookup its tracking page makes.
   name such as curl, and refuses an address for a few minutes after a burst of lookups. Both
   get the same bare 403 page, which the adapter reports as rate limited. The package's default
   User-Agent passes.
+- AWS's firewall can hold a lookup for a browser to verify, with an empty HTTP 202 that names its
+  action in `x-amzn-waf-action`. The adapter reports it as a challenge and solves nothing; enabled
+  universal providers take over.
 - Some replies take twenty seconds or more. The single read gets the whole budget rather than
   half of it with a retry after.
 - The shipment must echo the number asked.

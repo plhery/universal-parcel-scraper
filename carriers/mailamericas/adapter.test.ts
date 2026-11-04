@@ -283,6 +283,10 @@ describe('MailAmericas HTTP adapter', () => {
       .rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup('<html><script>window.gokuProps = {}; AwsWafIntegration.getToken()</script></html>', { headers: { 'Content-Type': 'text/html' } }))
       .rejects.toMatchObject({ kind: 'challenge' });
+    // AWS's firewall holds a lookup for a browser to verify with an empty 202, which names its action.
+    await expect(lookup('', { status: 202 })).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(lookup('', { status: 202, headers: { 'x-amzn-waf-action': 'challenge' } })).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(lookup('', { status: 200 })).rejects.toMatchObject({ kind: 'schema' });
     await expect(lookup('<html><title>MailAmericas</title></html>')).rejects.toMatchObject({ kind: 'schema' });
     // The service's own failure, which it also gives for numbers it knows.
     await expect(lookup({ error: 'Error al consultar el tracking' }, { status: 500 })).rejects.toMatchObject({ kind: 'indeterminate' });
