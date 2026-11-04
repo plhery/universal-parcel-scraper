@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'royale-international', number: '970682415309',
+    route: /^https:\/\/www\.royaleinternational\.com\/tracking\?waybillno=970682415309$/,
+    marker: /My online tracking|Waybill Number Not Found/ },
   { carrier: 'fez-delivery', number: 'TZ7K01012601',
     route: /^https:\/\/web\.fezdelivery\.co\/track-delivery\/TZ7K01012601$/,
     marker: /Track your shipment/i },
@@ -2190,7 +2193,6 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   dtdc: 'the MyDTDC Flutter page exposes no visible body text until accessibility is enabled, and the portal link opens its home page',
   'emirates-post': 'www.emiratespost.ae answers automated Chrome with a Cloudflare managed challenge before the tracker page; only the TRAWL browser step clears it, so number forwarding cannot be verified daily',
   etomars: 'The result page returns an empty tracking form without the number or a notice for absent and expired registrations; only a retained registration verifies the link',
-  'royale-international': 'The guest page clears an unknown waybill to the empty search form without a number-bound notice; only a retained waybill verifies forwarding',
   'fargo-courier': 'www.fargocourier.co.ke passes the number only to its tracker frame from portal.fargocourier.co.ke, which loads it as a document the rendered-page check does not read and answers an unknown waybill with a generic HTTP 500 error page, so number forwarding cannot be verified',
   'fedex-freight': 'FedEx Freight\'s ten-digit PROs run densely, so a synthetic one can open another shipper\'s shipment; only a known PRO verifies the link',
   'forward-air': 'Forward Air reuses its eight-digit waybill numbers, so a synthetic one can open other people\'s shipments; only a known waybill verifies the link',
