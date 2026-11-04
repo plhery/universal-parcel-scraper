@@ -1624,6 +1624,8 @@ describe("universal providers' answers", () => {
     for (const [wording, stage] of [
       // Latvijas Pasts' export steps, ECMS's pre-alert and InPost's refusal at the door, as ParcelsApp and Ship24 relay them.
       ['Received at the logistics center', 'in_transit'], ['Item held at outward office of exchange', 'in_transit'], ['Sending the package', 'in_transit'],
+      // China Post's dispatch from its outward office of exchange, as ParcelsApp relays it.
+      ['Dispatch from outward office of exchange', 'in_transit'],
       ['Virtual Manifest has been received. 发货预报已收到，正在等待货物到达我们的始发站仓库', 'registered'], ['Virtual Manifest has been received', 'registered'],
       ['Acceptance refusal', 'failed_attempt'],
       // Lietuvos paštas' acceptance, a bare receipt the shared rules leave unread.
@@ -1785,7 +1787,7 @@ describe("universal providers' answers", () => {
       ['Objekti u pranua ne zyren e shkembimit /', 'in_transit'], ['Regjistrimi i informacionit doganor te objektit /', 'customs'],
     ] as const) expect(answer('unknown', null, wording), wording).toEqual(mapped(stage));
     // Each is matched whole: the same words in another scan, and the report's open wording, stay unread.
-    for (const wording of ['Sending the package to the sender', 'Item held at outward office of exchange for inspection', 'Virtual Manifest pending',
+    for (const wording of ['Sending the package to the sender', 'Item held at outward office of exchange for inspection', 'Dispatch from outward office of exchange delayed', 'Virtual Manifest pending',
       'Parcel received by the recipient']) {
       expect(answer('unknown', null, wording), wording).toEqual(unknown);
     }

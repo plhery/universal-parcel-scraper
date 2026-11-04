@@ -204,6 +204,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Shipment in transit-To the airline",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "On the way to the airline, written with the export declaration and before the flight."
+    },
+    {
       "wording": "Abnormal delivery",
       "stage": "failed_attempt",
       "language": "en",

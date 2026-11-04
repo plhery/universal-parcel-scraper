@@ -484,6 +484,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // Its export steps after that, as ParcelsApp relays them: the logistics centre, the outward office of
   // exchange holding the item for dispatch, and the dispatch before the item leaves Latvia.
   if (/^received at the logistics cent(?:er|re)[.!]?$|^item held at outward office of exchange[.!]?$|^sending the package[.!]?$/i.test(value)) return 'in_transit';
+  // The origin post's dispatch from its outward office of exchange (UPU's EMC), as ParcelsApp relays China Post's
+  // after the export release and beside "Departed country of origin".
+  if (/^dispatch from outward office of exchange[.!]?$/i.test(value)) return 'in_transit';
   // BRT's TURMOIL, a public demonstration holding the parcel up (exception in its own map), as Ship24 relays it.
   if (/^turmoil[.!]?$/i.test(value)) return 'exception';
   // Lietuvos paštas' acceptance (ACCEPTED in its own map) as ParcelsApp relays it. The shared rules leave a
