@@ -93886,6 +93886,14 @@
     ]
   },
   {
+    "input": "RH082902857GB",
+    "carrier": "royal-mail",
+    "confidence": "high",
+    "candidates": [
+      "royal-mail"
+    ]
+  },
+  {
     "input": "RH131719789SK",
     "carrier": "slovenska-posta",
     "confidence": "high",

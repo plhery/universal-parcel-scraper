@@ -117,7 +117,7 @@ try {
     assert.equal(typeof carrierTrackingHintKey('ups'), 'string');
     assert(!('carrierTrackingHintKey' in tracking));
     const base = new URL('.', import.meta.resolve('universal-parcel-scraper/node'));
-    for (const file of ['carriers/correios-br/ocr-worker.mjs','carriers/correios-br/model/captcha.onnx','carriers/correios-br/model/LICENSE',
+    for (const file of ['carriers/correios-br/ocr-worker.mjs','carriers/correios-br/model/captcha.onnx','carriers/correios-br/model/LICENSE','carriers/wahana/ocr-worker.mjs',
       'carriers/viettel-post/ocr-worker.mjs','core/transport/text-captcha-worker.mjs','core/transport/text-captcha-decode.mjs','carriers/chunghwa-post/ocr-worker.mjs','carriers/chunghwa-post/captcha.mjs','core/transport/text-captcha-model/captcha.onnx','core/transport/text-captcha-model/characters.json','core/transport/text-captcha-model/arithmetic-characters.json','core/transport/text-captcha-model/LICENSE',
       'places/places.tsv.br','places/pincodes.json','places/zipcodes.json','browser/scraper.js']) assert(existsSync(new URL(file, base)), file);
     assert(!readFileSync(new URL('browser/scraper.js', base), 'utf8').includes('node:'));

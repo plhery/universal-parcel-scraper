@@ -56,6 +56,7 @@ import { statusMap as asyadExpress } from '../../carriers/asyad-express/status.j
 import { statusMap as nepalPost } from '../../carriers/nepal-post/status.js';
 import { statusMap as wpGround } from '../../carriers/wp-ground/status.js';
 import { statusMap as logisticsSolution } from '../../carriers/logistics-solution/status.js';
+import { statusMap as qatarPost } from '../../carriers/qatar-post/status.js';
 import { statusMap as quickFort } from '../../carriers/quick-fort/status.js';
 import { statusMap as russianPost } from '../../carriers/russian-post/status.js';
 import { statusMap as suratKargo } from '../../carriers/surat-kargo/status.js';
@@ -168,6 +169,7 @@ import { statusMap as dhlEcommerceEs } from '../../carriers/dhl-ecommerce-es/sta
 import { statusMap as dhlEcommerceNl } from '../../carriers/dhl-ecommerce-nl/status.js';
 import { statusMap as dhlEcommercePl } from '../../carriers/dhl-ecommerce-pl/status.js';
 import { statusMap as dhlEcommerceUk } from '../../carriers/dhl-ecommerce-uk/status.js';
+import { statusMap as directFreightExpress } from '../../carriers/direct-freight-express/status.js';
 import { statusMap as dhlExpress } from '../../carriers/dhl-express/status.js';
 import { statusMap as dhlFreight } from '../../carriers/dhl-freight/status.js';
 import { statusMap as dhl } from '../../carriers/dhl/status.js';
@@ -690,6 +692,7 @@ import { statusMap as vintedGo } from '../../carriers/vinted-go/status.js';
 import { statusMap as vozovoz } from '../../carriers/vozovoz/status.js';
 import { statusMap as vrlLogistics } from '../../carriers/vrl-logistics/status.js';
 import { statusMap as wanbexpress } from '../../carriers/wanbexpress/status.js';
+import { statusMap as wahana } from '../../carriers/wahana/status.js';
 import { statusMap as weWorldExpress } from '../../carriers/we-world-express/status.js';
 import { statusMap as whistl } from '../../carriers/whistl/status.js';
 import { statusMap as whizDelivery } from '../../carriers/whiz-delivery/status.js';
@@ -728,7 +731,8 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
-  'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, 'russian-post': russianPost, 'surat-kargo': suratKargo,
+  'direct-freight-express': directFreightExpress,
+  'qatar-post': qatarPost, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,
   'a-duie-pyle': aDuiePyle, 'a-tu-hora-express': aTuHoraExpress, 'a1-post': a1Post, 'ab-courier': abCourier, 'abf-freight': abfFreight, 'aci-express-kr': aciExpressKr,
   'acs-courier': acsCourier, 'aex-paraguay': aexParaguay, 'airpak-express': airpakExpress, 'ait-worldwide': aitWorldwide, ajex,
@@ -809,7 +813,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost,
-  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wanbexpress, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees,
+  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees,
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
 };

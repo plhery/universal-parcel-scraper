@@ -1,5 +1,24 @@
 {
   "carrier": "qatar-post",
-  "gap": "no public sample found yet",
-  "records": []
+  "records": [
+    {
+      "number": "RH082902857GB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ca.trustpilot.com/review/cottonreal.com?page=5",
+        "date": "2023-06-26",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "note": "The merchant response publishes this inbound Royal Mail identifier and Qatar Post milestones. The official guest mobile service returns the same whole identifier and its delivery history.",
+      "expect": {
+        "carrier": "royal-mail",
+        "confidence": "high"
+      }
+    }
+  ]
 }

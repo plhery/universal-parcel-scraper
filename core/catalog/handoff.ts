@@ -31,6 +31,7 @@ const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>
   // Speedy and DPD Romania name ACS for the leg it delivers, by whatever reference they hold.
   'acs-courier': isAcsVoucherNumber,
   'correos-chile': isCorreosChileLookup,
+  'qatar-post': isValidS10TrackingNumber,
 };
 
 // DHL Paket's international parcels, its `C` postal numbers, go to the partner

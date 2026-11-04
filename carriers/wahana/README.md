@@ -1,30 +1,29 @@
 # Wahana Express
 
-Wahana Express parcels use enabled universal providers. There is no dedicated adapter.
+The dedicated adapter reads Wahana's public guest tracker. Its eight-character resi is too
+generic for an offline detection rule; choose Wahana explicitly or use an enabled provider's
+carrier hint. A tracker link identifies the number but still needs guest verification.
 
-## Numbers
+The adapter opens a fresh HTTP session, reads Captcheck's five image choices and matches the
+requested letter or digit with local OCR. It tries at most two generations. Keeping each
+character's proportions matters; the model's ordinary wide text resize loses it. Ambiguous
+or unreadable choices stay challenges, and enabled providers remain available. The accessible
+text alternative does not pass the tracker's verification.
 
-Wahana Express prints an eight-character resi of digits and capital letters in random order, as
-its FAQ describes. The shape is too generic for a detection rule, so a number is only matched
-to Wahana when the user or a provider names the carrier.
+`sharp` and `onnxruntime-web` are optional peers needed for this lookup. The model and decoder
+load in a bounded worker on first use, with cancellation and a short idle lifetime. No browser
+service is needed.
 
-## Links
+The parser requires one matching shipment card and keeps the complete collapsed timeline.
+It leaves scan clocks local because the page states no offset, removes recipient and courier
+names from delivery wording, and drops contact fields. A capped history stays incomplete.
+A verification refusal is separate from the portal's no-history reply.
 
-The tracker reads up to ten numbers, separated by spaces, from the `noresi` query parameter
-of `/lacak-kiriman` on `www.wahana.com` and `wahana.com`, and the library reads the number from
-that address. The page shows a history only after its CAPTCHA, so the address alone opens no
-parcel.
+The Sahabat Wahana app restricts tracking to shipments booked through its own account.
+Agent and partner portals also require accounts; the adapter uses none of them.
 
-## Limitations
+Run the opt-in live test with `WAHANA_TEST_NUMBER`:
 
-Wahana's server checks the answer to its tracker's CAPTCHA, a self-hosted Captcheck picture
-question. Without a solved one the page answers "Resi tidak ditemukan" for every number, current
-parcels included, so that answer says nothing about the number. The result page's PDF download
-fails without one too. The Sahabat Wahana app tracks only the shipments booked in the user's own
-app account, and the agent and partner portals need an account. A dedicated Captcheck flow
-is not implemented, so Wahana Express stays on universal providers.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:carriers:live -- carriers/wahana
+```

@@ -87,7 +87,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -99,7 +99,7 @@
           "loggi"
         ]
       },
-      "note": "A Media Konsumen letter about a damaged Wahana Express parcel gives it as the resi."
+      "note": "A Media Konsumen letter gives this Wahana resi; the carrier's public tracker confirms it with its shipment history."
     },
     {
       "number": "N7ARHE9P",

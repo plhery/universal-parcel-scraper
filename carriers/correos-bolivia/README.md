@@ -17,11 +17,16 @@ offers no carrier for them.
 The tracker form sends the number in the `codigo` parameter of its result page together with
 a captcha answer, so no address opens one parcel without the captcha.
 
-## Why there is no adapter
+## Guest tracking
 
-The tracker's page asks its own lookup for each number with the answer to a captcha, and the
-lookup refuses a number sent without one: it answers HTTP 422 and a new captcha. So Correos de
-Bolivia stays on universal providers.
+The page reads `/api/busqueda/captcha` and returns its literal text code as `captcha_answer`,
+together with `captcha_challenge`, to `/api/busqueda/ems-eventos?codigo=...`. Omitting the answer
+returns HTTP 422 and a replacement challenge. Accepted verification can return a whole-code
+HTTP 404 JSON reply with `existe_paquete: false` and an empty `resultado`.
+
+For a found item the page requests `/api/public/tracking/access` and opens its returned detail
+address. A positive shipment read and that detail response are unconfirmed. No dedicated history
+parser is shipped; enabled universal providers handle tracking.
 
 ## Testing
 

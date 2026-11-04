@@ -15906,7 +15906,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Sydney",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "direct-freight-express",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://www.directfreight.com.au/",
     "trackingUrlTemplate": "https://www.directfreight.com.au/ConsignmentStatus.aspx?lookuptype=0&consignment_no={trackingNumber}",
@@ -37671,7 +37673,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Qatar",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "qatar-post",
+      "localClocks": true
     },
     "canaryUrl": "https://www.qatarpost.qa/TrackAndTrace",
     "trackingUrlTemplate": "https://www.qatarpost.qa/TrackAndTrace?trackingNumber={trackingNumber}",
@@ -48134,7 +48137,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "wahana",
+      "localClocks": true
     },
     "canaryUrl": "https://www.wahana.com/",
     "trackingUrlTemplate": "https://www.wahana.com/lacak-kiriman?noresi={trackingNumber}",

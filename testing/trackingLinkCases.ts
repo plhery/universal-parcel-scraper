@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'direct-freight-express', number: '9907403682516',
+    route: /^https:\/\/www\.directfreight\.com\.au\/ConsignmentStatus\.aspx\?lookuptype=0&consignment_no=9907403682516$/,
+    marker: /Consignment Number\s+9907403682516 could not be found/ },
   { carrier: 'kec-ecommerce', number: 'KECSYNTH00000001',
     route: /^https:\/\/kec\.kln\.com\/en\/logistics-tracking\/?\?tracking=KECSYNTH00000001$/,
     marker: /Logistics Tracking/ },
@@ -2132,6 +2135,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  wahana: 'The tracking address needs a fresh Captcheck answer; it cannot render a shipment from the number alone.',
   egxpress: 'Unknown waybills redirect to a system-error page; the rendered-link check has no verified missing-parcel view for that route.',
   'tcc-co': 'the public tracking page submits a reCAPTCHA token; native history comes from its separate guest endpoint',
   'toyou': 'the page can remain on its loading view; native tracking reads server-rendered guest state and a separate parcel API',

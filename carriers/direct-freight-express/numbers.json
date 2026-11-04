@@ -199,7 +199,7 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -212,7 +212,7 @@
           "econt"
         ]
       },
-      "note": "A ProductReview review of Direct Freight Express gives it as the consignment or tracking number."
+      "note": "A public ProductReview complaint gives this consignment number; the carrier's public tracker confirms it with depot, vehicle and delivery scans."
     },
     {
       "number": "2389900401626",

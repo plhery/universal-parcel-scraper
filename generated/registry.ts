@@ -157,6 +157,7 @@ import { adapter as dhlEcommerceUk } from '../carriers/dhl-ecommerce-uk/adapter.
 import { adapter as dhlExpress } from '../carriers/dhl-express/adapter.js';
 import { adapter as dhlFreight } from '../carriers/dhl-freight/adapter.js';
 import { adapter as dhlink } from '../carriers/dhlink/adapter.js';
+import { adapter as directFreightExpress } from '../carriers/direct-freight-express/adapter.js';
 import { adapter as direx } from '../carriers/direx/adapter.js';
 import { adapter as dobropost } from '../carriers/dobropost/adapter.js';
 import { adapter as dohrnTransfer } from '../carriers/dohrn-transfer/adapter.js';
@@ -514,6 +515,7 @@ import { adapter as ptsWorldwideExpress } from '../carriers/pts-worldwide-expres
 import { adapter as ptt } from '../carriers/ptt/adapter.js';
 import { adapter as pullmanCargo } from '../carriers/pullman-cargo/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
+import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
 import { adapter as quickFort } from '../carriers/quick-fort/adapter.js';
 import { adapter as quickRabbit } from '../carriers/quick-rabbit/adapter.js';
@@ -680,6 +682,7 @@ import { adapter as vimenpaq } from '../carriers/vimenpaq/adapter.js';
 import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
+import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
@@ -872,6 +875,7 @@ export const REGISTRY: RegistryDefinition = {
     "dhl-express": dhlExpress,
     "dhl-freight": dhlFreight,
     "dhlink": dhlink,
+    "direct-freight-express": directFreightExpress,
     "direx": direx,
     "dobropost": dobropost,
     "dohrn-transfer": dohrnTransfer,
@@ -1229,6 +1233,7 @@ export const REGISTRY: RegistryDefinition = {
     "ptt": ptt,
     "pullman-cargo": pullmanCargo,
     "purolator": purolator,
+    "qatar-post": qatarPost,
     "quantium-solutions": quantiumSolutions,
     "quick-fort": quickFort,
     "quick-rabbit": quickRabbit,
@@ -1395,6 +1400,7 @@ export const REGISTRY: RegistryDefinition = {
     "vinted-go": vintedGo,
     "vozovoz": vozovoz,
     "vrl-logistics": vrlLogistics,
+    "wahana": wahana,
     "wanbexpress": wanbexpress,
     "we-world-express": weWorldExpress,
     "whistl": whistl,
@@ -1744,7 +1750,7 @@ export const REGISTRY: RegistryDefinition = {
     "dida-international": "universal",
     "dimex": "universal",
     "direct-couriers": "universal",
-    "direct-freight-express": "universal",
+    "direct-freight-express": "direct-freight-express",
     "direx": "direx",
     "dnipro-llc": "universal",
     "dnx-cargo": "universal",
@@ -2382,7 +2388,7 @@ export const REGISTRY: RegistryDefinition = {
     "purolator": "purolator",
     "pushpak-courier": "universal",
     "pxc-pacific": "universal",
-    "qatar-post": "universal",
+    "qatar-post": "qatar-post",
     "qls-quince": "universal",
     "quality-post": "universal",
     "quantium-solutions": "quantium-solutions",
@@ -2694,7 +2700,7 @@ export const REGISTRY: RegistryDefinition = {
     "vrl-logistics": "vrl-logistics",
     "vt-freight-express": "universal",
     "w-express-ph": "universal",
-    "wahana": "universal",
+    "wahana": "wahana",
     "wanbexpress": "wanbexpress",
     "wangjing-3cq": "universal",
     "ward-trucking": "universal",

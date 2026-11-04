@@ -18,18 +18,49 @@
   "timezone": "Australia/Sydney",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "direct-freight-express",
+    "steps": [
+      "direct",
+      "retry",
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
   "portal": {
     "url": "https://www.directfreight.com.au/ConsignmentStatus.aspx?lookuptype=0&consignment_no={trackingNumber}",
     "searchUrl": "https://www.directfreight.com.au/",
     "canaryUrl": "https://www.directfreight.com.au/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "origin",
+      "destination",
+      "package_count",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "package_count",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

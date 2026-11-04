@@ -103,7 +103,7 @@ const NATIONAL_POSTS: ReadonlyMap<string, CarrierId> = new Map([
   ['IT', 'poste-italiane'], ['JO', 'jordan-post'], ['JP', 'japan-post'], ['KE', 'posta-kenya'], ['KG', 'kyrgyz-post'], ['LT', 'lietuvos-pastas'],
   ['LU', 'post-luxembourg'], ['LV', 'latvijas-pasts'], ['MA', 'barid-al-maghrib'], ['MK', 'posta-north-macedonia'], ['MT', 'maltapost'],
   ['NL', 'spring-gds'],
-  ['NO', 'bring-posten'], ['NZ', 'nz-post'], ['PE', 'serpost'], ['PH', 'phlpost'], ['PK', 'pakistan-post'], ['PL', 'poczta-polska'], ['PT', 'ctt'], ['RO', 'posta-romana'], ['RS', 'posta-srbije'],
+  ['NO', 'bring-posten'], ['NZ', 'nz-post'], ['PE', 'serpost'], ['PH', 'phlpost'], ['PK', 'pakistan-post'], ['PL', 'poczta-polska'], ['PT', 'ctt'], ['QA', 'qatar-post'], ['RO', 'posta-romana'], ['RS', 'posta-srbije'],
   ['SA', 'saudi-post'], ['SE', 'postnord'], ['SI', 'posta-slovenije'], ['SK', 'slovenska-posta'], ['SV', 'correos-el-salvador'], ['TW', 'chunghwa-post'], ['UA', 'ukrposhta'],
   ['US', 'usps'], ['UY', 'correo-uruguayo'], ['UZ', 'uzbekistan-post'], ['ZA', 'south-african-post-office'],
 ]);

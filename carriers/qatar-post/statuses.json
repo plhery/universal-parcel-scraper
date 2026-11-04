@@ -1,4 +1,75 @@
 {
   "carrier": "qatar-post",
-  "entries": []
+  "entries": [
+    {
+      "code": "EDI0008",
+      "wording": "Dispatched to Destination Country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0012",
+      "wording": "Send item abroad (EDI-received)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0055",
+      "wording": "Received at Destenation Country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0056",
+      "wording": "Awaiting Customs Inspection",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0063",
+      "wording": "Item Returned to customs",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0293",
+      "wording": "Dispatched to Branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0029",
+      "wording": "Received at Qatar Post",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0291",
+      "wording": "Ready for PO Box Pickup",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0288",
+      "wording": "Picked up by Customer",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "22",
+      "wording": "Counter Delivery Success",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

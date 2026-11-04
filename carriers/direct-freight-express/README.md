@@ -1,27 +1,24 @@
 # Direct Freight Express
 
-Direct Freight Express parcels use enabled universal providers. There is no dedicated adapter.
+The dedicated adapter reads the public consignment status page. Its thirteen-digit format is
+shared with other carriers, so there is no offline detection rule. Choose the carrier explicitly
+or open its whole-number tracking link.
 
-## Numbers
+HTTP is tried first. A network failure gets one retry; an identified browser challenge can use
+the configured TRAWL service. Both paths parse the same shipment identity and history. Rate
+limits, malformed pages and definite replies do not launch a browser. The ordinary TRAWL image
+is sufficient; no carrier-specific service module is needed.
 
-Consignment numbers on Direct Freight Express's tracker and in reviews are thirteen digits.
-Many carriers print thirteen-digit numbers and nothing in these points to this network, so no
-rule claims them.
+The page renders desktop and mobile copies of each scan. The parser checks that they agree,
+then keeps one complete timeline, depot locations and the stated delivery-estimate day. Scan
+clocks stay local because the page gives no offset. Capped histories stay incomplete. Pickup and
+delivery addresses, item counts and proof-of-delivery controls are omitted.
 
-## Links
+The dispatch API requires an account's key and account number. The adapter uses the public
+tracking page, without account access.
 
-The consignment status page reads a number from `consignment_no` with `lookuptype=0`, as
-archived lookups on the carrier's site show.
+Run the opt-in live test with `DIRECT_FREIGHT_TRACKING_NUMBER` and `FLARESOLVERR_URL`:
 
-## Why there is no adapter
-
-The consignment status page renders a consignment's scans in its own HTML, with no key or
-sign-in. Cloudflare answers it, and the tracking form's post, with an HTTP 403 challenge page
-before any result; a browser passes the challenge on its own. Direct Freight's dispatch API
-tracks consignments only with an account's API key and number, and Direct Freight publishes no
-tracking app, so Direct Freight Express stays on universal providers.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:carriers:live -- carriers/direct-freight-express
+```

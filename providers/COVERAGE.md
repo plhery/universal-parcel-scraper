@@ -13,6 +13,10 @@ unverified cells have no established result.
 A direct sample names an alternative when that reference is outside the adapter's scope or
 no longer available.
 
+Qatar Post's guest app route follows inbound S10 mail under the sending post's identifier.
+It is a destination-post handoff candidate, subject to direct confirmation; that evidence does
+not change issuer detection or make a provider's carrier hint a recognition candidate.
+
 When replacing a comparison reference, rerun the adapter and every provider on the same
 replacement. Keep other references as routing evidence. Adapter availability and successful
 comparison lookups are separate counts.
