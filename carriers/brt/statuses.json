@@ -83,6 +83,13 @@
       "note": "The courier found no one in and left a notice."
     },
     {
+      "wording": "ABSENT AFTER ATTEMPT.DELIVERY",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The partner abroad that delivers the parcel found no one in on its round; another round or the return to the sender follows."
+    },
+    {
       "wording": "TURMOIL",
       "language": "en",
       "stage": "exception",

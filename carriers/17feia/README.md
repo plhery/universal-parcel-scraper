@@ -27,7 +27,9 @@ Tracked through the lookup its tracking page makes.
 - Every row carries 17FEIA's label in Chinese whatever the reply's language. The map reads the
   label; rows relayed from the partner share one label, so their stage comes from the partner's
   wording. The broker's "delivered to warehouse" is customs, and the row written before the
-  warehouse has the parcel is a registration.
+  warehouse has the parcel is a registration. A domestic return (`国内退回`) sends the parcel
+  back to the sender from the warehouse in China: a return, on Beijing time like the warehouse's
+  other steps. Its place is the line's system name, such as `DE-DHL-server`, and is dropped.
 - A row is read on the clock its place keeps: its country's when the country has one, and in
   the United States its state's when the state has one. The warehouse's rows and the partner's
   relayed scans name such a place. A `timeZone` the place's clock does not have at that time

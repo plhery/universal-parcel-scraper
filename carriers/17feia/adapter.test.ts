@@ -105,6 +105,16 @@ describe('17FEIA HTTP adapter', () => {
     expect(result.events!.find((event) => event.provider_code === '仓库收货')).toMatchObject({ time: '2026-02-04T16:12:44+08:00' });
   });
 
+  it('reads the domestic return as a return on Beijing time, without the line’s system name as its place', () => {
+    const result = parseSeventeenFeia(changed('dpd-at-warehouse', (order) => {
+      order.currentOrderTrackInfos.unshift({ id: null, createTime: '2026-02-06 11:35:07', status: '国内退回', description: '包裹已做国内退回处理',
+        location: 'DE-DHL-server', timeZone: '', country: '', state: '', city: '', postalCode: '', code: '' });
+    }), WAREHOUSE, LATER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map' });
+    expect(result.events![0]).toEqual({ time: '2026-02-06T11:35:07+08:00', description: '包裹已做国内退回处理', provider_code: '国内退回',
+      stage: 'returned', stage_source: 'carrier_map' });
+  });
+
   it('dates DHL’s relayed scans on Germany’s clock, keeps the flight’s and customs’ milestones local and drops the estimate', () => {
     const result = parseSeventeenFeia(fixture('dhl-relayed'), RELAYED, LATER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'wording:language',

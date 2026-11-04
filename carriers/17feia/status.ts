@@ -41,6 +41,8 @@ const LABELS: ReadonlyMap<string, Stage> = new Map([
   // Handed in at the partner's depot, before the partner's own first scan.
   ['已交仓，等待上网', 'in_transit'],
   ['成功签收', 'delivered'],
+  // The parcel goes back to the sender in China instead of leaving the country.
+  ['国内退回', 'returned'],
 ]);
 
 /** The label on rows relayed from the delivering partner: their wording is the partner's. */

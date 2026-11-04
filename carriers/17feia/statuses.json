@@ -31,6 +31,7 @@
     {"code": "运输途中", "wording": "The international shipment has been processed in the parcel center of origin", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from DHL in Germany, with DHL's place, country and offset. The label marks every relayed row; the stage comes from the partner's wording."},
     {"code": "运输途中", "wording": "The international shipment has been processed in the export parcel center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from DHL in Germany."},
     {"code": "运输途中", "wording": "The shipment will be transported to the destination country/destination area and, from there, handed over to the delivery organization.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from DHL in Germany, for a parcel bound for France."},
-    {"code": "成功签收", "stage": "delivered", "language": "zh", "confirmedBy": "bundle", "note": "The last box of the tracking page's progress rail."}
+    {"code": "成功签收", "stage": "delivered", "language": "zh", "confirmedBy": "bundle", "note": "The last box of the tracking page's progress rail."},
+    {"code": "国内退回", "wording": "包裹已做国内退回处理", "stage": "returned", "language": "zh", "confirmedBy": "live", "note": "A domestic return: after the warehouse confirmed the order, the parcel goes back to the sender in China instead of leaving the country."}
   ]
 }

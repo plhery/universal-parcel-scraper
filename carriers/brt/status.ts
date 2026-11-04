@@ -18,6 +18,8 @@ const labels: Record<string, ClassifiedStatus> = {
   'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
   // The courier found no one in and left a notice.
   'NOTICE OF ATTEMPTED DELIVERY': { status: 'exception', stage: 'failed_attempt' },
+  // The partner abroad found no one in on its round; the next round or a return follows.
+  'ABSENT AFTER ATTEMPT.DELIVERY': { status: 'exception', stage: 'failed_attempt' },
   // A public demonstration holds the parcel up.
   TURMOIL: { status: 'exception', stage: 'exception' },
   'RETURNED TO SENDER': { status: 'exception', stage: 'returned' },

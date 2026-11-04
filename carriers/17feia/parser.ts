@@ -21,10 +21,13 @@ const OFFSET = /^[+-]\d{2}:\d{2}$/;
 const HOME_ZONE = SEVENTEENFEIA_HOME_ZONE;
 /**
  * 17FEIA's steps at its warehouse in China before the flight, from its
- * receipt. The backend writes them on Beijing time; the offset they carry is
- * the destination line's, whatever the step's clock.
+ * receipt, and the domestic return that sends a parcel back from there. The
+ * backend writes them on Beijing time; the offset they carry is the
+ * destination line's, whatever the step's clock.
  */
-const WAREHOUSE_STEPS: ReadonlySet<string> = new Set(['包裹在去设施路上', '仓库收货', '订单待客户确认', '订单已确认', '订单已出库', '出口报关中']);
+const WAREHOUSE_STEPS: ReadonlySet<string> = new Set(['包裹在去设施路上', '仓库收货', '订单待客户确认', '订单已确认', '订单已出库', '出口报关中', '国内退回']);
+/** A line's system name where a place would go, as "DE-DHL-server" on a domestic return: no place. */
+const SYSTEM_PLACE = /-server$/i;
 // States whose places keep different clocks, so a state does not settle a clock's zone.
 const SPLIT_STATES = new Set(['AK', 'AZ', 'FL', 'ID', 'IN', 'KS', 'KY', 'MI', 'ND', 'NE', 'NV', 'OR', 'SD', 'TN', 'TX']);
 const MAX_ROWS = 500;
@@ -107,7 +110,7 @@ function projectRow(row: unknown, readAt: number): { key: string; event: Carrier
   const { at, ...clock } = clockOf(stamp, label, text(row, 'timeZone', 16), country, country === 'US' ? text(row, 'state', 8).toUpperCase() : '');
   // A row dated after the read is not a scan yet.
   if (at > readAt) return null;
-  const place = text(row, 'location', 200) || text(row, 'city', 200);
+  const place = [text(row, 'location', 200), text(row, 'city', 200)].find((part) => part && !SYSTEM_PLACE.test(part)) ?? '';
   // A relayed place often ends with its country already, as `Town, MA, US` or `FR`.
   const named = /^[A-Z]{2}$/.test(country) && place.split(/,\s*/).at(-1)?.toUpperCase() !== country;
   const location = [place, named ? country : ''].filter(Boolean).join(', ');
