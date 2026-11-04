@@ -256,6 +256,13 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // DobroPost's record of a parcel its customer announced, as 17TRACK relays it without a code: it comes before
   // DobroPost's warehouse in China assembles the goods ("На комплектации"), so nobody has the parcel yet.
   if (/^виртуальная посылка[.!]?$/iu.test(description)) return 'registered';
+  // MailAmericas' scans as ParcelsApp relays them, its group before its wording, read as MailAmericas' map reads
+  // their codes: the label (OC-1), the intermediate warehouse in the destination country (WI) and the delivery
+  // office's receipt (LM-1).
+  if (/^order created\. label generated[.!]?$/i.test(description)) return 'registered';
+  if (/^wi\s*[–-]\s*intermediate warehouse\. (?:container (?:received|reception)|package (?:received at|reception at) intermediate warehouse|processed)[.!]?$/i
+    .test(description)) return 'in_transit';
+  if (/^delivery office\. received at branch[.!]?$/i.test(description)) return 'in_transit';
   // Sender pre-advice such as Quickpac's "Shipment recorded by sender (data delivered)".
   if (/being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
   // 17FEIA's customs broker taking the parcel to its warehouse after the flight, as Ship24 relays it with

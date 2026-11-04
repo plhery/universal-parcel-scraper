@@ -28,6 +28,8 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   // MailAmericas' tax ID checks (its SM codes, left out of its own map), as ParcelsApp relays them.
   ['tax id. form received', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
   ['tax id. address not found', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
+  ['buyer info. tax id ok', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
+  ['buyer info. tn validation ok', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
   // Detail lines that sit beside different scans, headings, and a code relayed without its wording.
   ['filiale / agentur', 'A German detail line that sits beside different scans: no step of its own.'],
   ['packstation', 'A detail line naming a Packstation, before the parcel was collected: no step of its own.'],

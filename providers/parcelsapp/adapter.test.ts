@@ -4,6 +4,7 @@ import timers from 'node:timers/promises';
 import { DateTime } from 'luxon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { carrierErrorKind, IndeterminateError, InputRequiredError, NoHistoryError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
@@ -1596,6 +1597,21 @@ describe('ParcelsApp result parsing', () => {
     ];
     expect(parseParcelsAppResponse({ carriers: ['MailAmericas'], destinationCode: 'CO', states }, number, identity())
       .events?.map((scan) => scan.stage)).toEqual(['delivered', 'in_transit', 'in_transit']);
+  });
+
+  it("stages MailAmericas' English label, intermediate warehouse and branch as its map does, and leaves its buyer checks out", () => {
+    const states = [
+      { date: '2026-07-14T15:00:00Z', status: 'Delivery office. Received at Branch', carrier: 0, location: 'Example Town' },
+      { date: '2026-07-12T12:30:00Z', status: 'WI – Intermediate Warehouse. Package reception at Intermediate Warehouse', carrier: 0 },
+      { date: '2026-07-12T10:30:00Z', status: 'WI – Intermediate Warehouse. Package received at Intermediate Warehouse', carrier: 0 },
+      { date: '2026-07-12T04:45:00Z', status: 'WI – Intermediate Warehouse. Container received', carrier: 0 },
+      { date: '2026-07-01T04:00:00Z', status: 'Order created. Label generated', carrier: 0 },
+    ];
+    expect(parseParcelsAppResponse({ carriers: ['MailAmericas'], destinationCode: 'CO', states }, number, identity())
+      .events?.map((scan) => scan.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'in_transit', 'registered']);
+    const answer = (description: string) => statusMapAnswer({ carrier: 'unknown', providerCode: null, description });
+    expect(answer('Order created. Label generated')).toEqual({ kind: 'mapped', stage: 'registered' });
+    for (const check of ['Buyer info. Tax ID OK', 'Buyer info. TN Validation OK']) expect(answer(check)).toMatchObject({ kind: 'intentional_gap' });
   });
 
   it('reads a town of the state a country\'s code also names in that state, not the country', () => {
