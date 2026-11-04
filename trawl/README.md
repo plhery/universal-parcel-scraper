@@ -2,8 +2,12 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon and ZTO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas and ZTO. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
+
+MailAmericas lets the official page complete its AWS check in a fresh context, then captures
+only tracking POSTs for the requested number. It retains bounded refusals and retries without
+cookies, challenge tokens, recipient fields or rendered pages.
 
 Pro Carrier, Delnext, MRL Global, AIT Worldwide, Hitch, PBT and Celeritas also use the
 ordinary browser tiers after a challenged HTTP lookup. Their adapters read the rendered

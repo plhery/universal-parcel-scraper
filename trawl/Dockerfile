@@ -39,6 +39,7 @@ COPY dhl-poland-browser.mjs /app/packages/tiers/src/utils/dhl-poland-browser.mjs
 COPY track718-juxi.mjs /app/packages/tiers/src/utils/track718-juxi.mjs
 COPY ozon-browser.mjs /app/packages/tiers/src/utils/ozon-browser.mjs
 COPY dhl-express-browser.mjs /app/packages/tiers/src/utils/dhl-express-browser.mjs
+COPY mailamericas-browser.mjs /app/packages/tiers/src/utils/mailamericas-browser.mjs
 COPY poste-italiane-browser.mjs /app/packages/tiers/src/utils/poste-italiane-browser.mjs
 COPY sf-express-session.mjs /app/packages/tiers/src/utils/sf-express-session.mjs
 COPY sf-express-gap.mjs /app/packages/tiers/src/utils/sf-express-gap.mjs

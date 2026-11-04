@@ -9,8 +9,13 @@ Tracked through the lookup its tracking page makes.
 
 1. `direct`: one `POST https://mailamericas.com/api/tracking` with the body
    `{"trackingNumber":"{number}","language":"en"}`, as the tracking page sends it. It needs no
-   cookie, token, key or browser. The JSON reply has the shipment's summary and its scans,
+   cookie, token or key when the firewall permits HTTP. Origin and Referer identify the public
+   form. The JSON reply has the shipment's summary and its scans,
    newest first.
+2. `trawl`: after a browser challenge, the configured browser service opens the official
+   tracking page in a fresh context and lets its AWS verification finish. It captures the
+   page's tracking POST only when it carries the whole requested number. The same parser
+   reads its decoded JSON. The service needs this repository's MailAmericas capture helper.
 
 - An unknown number is HTTP 200 with `{"data":null}`, which the page reports as not found. A
   404 or a redirect is a moved route.
@@ -21,12 +26,14 @@ Tracked through the lookup its tracking page makes.
   get the same bare 403 page, which the adapter reports as rate limited. The package's default
   User-Agent passes.
 - AWS's firewall can hold a lookup for a browser to verify, with an empty HTTP 202 that names its
-  action in `x-amzn-waf-action`. The adapter reports it as a challenge and solves nothing; enabled
-  universal providers take over.
+  action in `x-amzn-waf-action`. Browser recovery retains that failure. A later refusal,
+  throttle or malformed reply cannot be hidden by an earlier history. Unresolved verification
+  still needs enabled universal providers.
 - Some replies take twenty seconds or more. The single read gets the whole budget rather than
   half of it with a retry after.
 - The shipment must echo the number asked.
-- Recognition makes the same request.
+- Recognition makes only the HTTP request. Rate limits, missing parcels and schema failures
+  do not open a browser.
 
 ## Notes
 
@@ -65,6 +72,8 @@ Tracked through the lookup its tracking page makes.
 
 ## Limitations
 
+- The public `dev.mailamericas.com` site accepts the same request shape but can report no data
+  for shipments the production tracker holds, so it is not an alternative tracking source.
 - No weight. Node lookups date the scans that keep `local_time` on a deduced zone, the
   destination's for a scan without a place ([clocks](../../places/README.md#clocks)).
 - The tracker also answers some senders' own references, which no rule claims.

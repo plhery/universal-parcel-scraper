@@ -30402,7 +30402,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "mailamericas",
       "recognitionRank": 985,
-      "localClocks": true
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://mailamericas.com/tracking",
     "trackingUrlTemplate": "https://mailamericas.com/tracking?number_id={trackingNumber}",

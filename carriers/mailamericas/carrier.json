@@ -27,8 +27,10 @@
   "tracking": {
     "mode": "automatic",
     "adapter": "mailamericas",
+    "browser": true,
     "steps": [
-      "direct"
+      "direct",
+      "trawl"
     ],
     "recognition": {
       "rank": 985

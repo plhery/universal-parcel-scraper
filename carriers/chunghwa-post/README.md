@@ -6,8 +6,12 @@ Reads Chunghwa Post's international postal tracking through its public image-CAP
 
 The [official tracker](https://postserv.post.gov.tw/pstmail/main_mail.html) opens a session
 through `SessionServlet` and creates a four-digit JPEG through `jcaptcha` with a fresh UUID.
-The adapter uses the shared local [OCR model](../../core/transport/text-captcha-model/README.md)
-and posts the same UUID, answer and one whole item to `EsoafDispatcher`, using the public
+The adapter uses the shared local [OCR model](../../core/transport/text-captcha-model/README.md).
+It preserves the original reading when it contains four digits. Otherwise its own worker
+removes long grid lines, compares the original and cleaned images at their natural proportions,
+and decodes digits only. Competing character scores keep uncertain readings from outranking
+clearer ones. Image processing adds no carrier requests.
+It posts the same UUID, answer and one whole item to `EsoafDispatcher`, using the public
 client's `EB500200` query envelope. One fresh challenge is allowed after an unreadable or
 explicitly refused answer. Cookies and verification material stay within that lookup.
 
@@ -56,6 +60,7 @@ A return to the sender shows only in the remark of an unsuccessful delivery, whi
 discards.
 Scans abroad have no instant, so an item that has left Taiwan has a wall clock as its last update.
 No cheap HTTP recognition is declared. Changed image geometry remains a challenge.
+OCR can still misread a digit; the server's verification verdict remains authoritative.
 
 ## Testing
 

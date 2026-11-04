@@ -28,7 +28,7 @@ if (!copies.length || commands !== 'bun /tmp/install-tracking-capture.mjs && rm 
 }
 console.log(`${header}
 LABEL org.opencontainers.image.revision="${revision}"
-RUN printf '%s' ${chunks} > /tmp/upc-trawl-sources.z85 \\
- && bun -e 'import{readFileSync,writeFileSync,mkdirSync}from"node:fs";import{dirname}from"node:path";import{brotliDecompressSync}from"node:zlib";for(const[path,text]of Object.entries(JSON.parse(brotliDecompressSync((${decoder})(readFileSync("/tmp/upc-trawl-sources.z85","utf8"),${compressed.length},"${alphabet}")).toString("utf8")))){mkdirSync(dirname(path),{recursive:true});writeFileSync(path,text)}' \\
- && rm /tmp/upc-trawl-sources.z85 \\
+RUN printf '%s' ${chunks} > /tmp/upc-trawl-sources.b91 \\
+ && bun -e 'import{readFileSync,writeFileSync,mkdirSync}from"node:fs";import{dirname}from"node:path";import{brotliDecompressSync}from"node:zlib";for(const[path,text]of Object.entries(JSON.parse(brotliDecompressSync((${decoder})(readFileSync("/tmp/upc-trawl-sources.b91","utf8"),${compressed.length},"${alphabet}")).toString("utf8")))){mkdirSync(dirname(path),{recursive:true});writeFileSync(path,text)}' \\
+ && rm /tmp/upc-trawl-sources.b91 \\
  && ${commands}`);

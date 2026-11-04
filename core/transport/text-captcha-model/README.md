@@ -10,6 +10,10 @@ Latin-letter and digit labels at their original indices from `CHARSET_OLD`.
 An output outside that alphabet is unreadable, rather than forced to a Latin character.
 This model does not solve reCAPTCHA or locate ordered Chinese-character clicks.
 
+Chunghwa Post has its own worker using the same model. It keeps an original four-digit
+reading, otherwise compares cleaned and original images with digit-only decoding.
+Other carriers' preprocessing and alphabets are unchanged.
+
 ECMS uses a separate `arithmetic-characters.json` alphabet from the same upstream
 indices: digits, plus and minus. Its profile crops off the fixed equals-sign
 column before inference. Other profiles retain their own geometry and alphabet.

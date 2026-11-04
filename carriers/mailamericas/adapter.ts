@@ -1,9 +1,10 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, RateLimitedError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import type { TrawlClient } from '../../core/transport/trawl.js';
 import { MAILAMERICAS_MAX_BYTES, normalizeMailamericasNumber, parseMailamericas, PROVIDER } from './parser.js';
 
 /** The lookup the tracking page on mailamericas.com makes for the number typed in. */
@@ -24,13 +25,43 @@ function json(body: string): unknown {
 }
 
 export class MailamericasTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
+
+  private async browser(number: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
+    const timeoutMs = Math.floor(remainingMs);
+    if (timeoutMs <= 2500) throw new BudgetExceededError(PROVIDER, timeoutMs);
+    const page = await this.options.trawl!.scrape({
+      url: `https://mailamericas.com/tracking?number_id=${number}`, skipHttp: true, maxTier: 3,
+      maxTimeout: timeoutMs - 2000, captureResponses: [MAILAMERICAS_API],
+    }, { provider: PROVIDER, signal, timeoutMs, maxBytes: 4 * MAILAMERICAS_MAX_BYTES,
+      requireSolved: false, captureWindow: 'last', allowHttpStatuses: [403, 405], fetcher: this.options.fetcher });
+    // A helper binds the POST, even when the carrier's unknown-item reply has no identity.
+    const replies = page.capturedResponses.filter(entry => entry.url === MAILAMERICAS_API && entry.trackingNumberSubmitted === number);
+    const reply = replies.at(-1);
+    if (!reply) throw new ChallengeError(PROVIDER, 'MailAmericas browser verification did not yield a bound tracking reply', { reason: 'verification_unfinished' });
+    if (reply.headers['x-amzn-waf-action'] || [202, 403, 405].includes(reply.status)) {
+      throw new ChallengeError(PROVIDER, 'MailAmericas browser verification remained blocked', { status: reply.status, reason: 'verification_refused' });
+    }
+    if (reply.status === 429 || reply.status >= 500) {
+      const retry = reply.headers['retry-after'];
+      const retryAfterMs = retry === undefined ? undefined : /^\d+$/.test(retry.trim())
+        ? Number(retry) * 1000 : Date.parse(retry) - Date.now();
+      throw new UpstreamHttpError(PROVIDER, reply.status, Number.isFinite(retryAfterMs) ? Math.max(0, retryAfterMs!) : undefined);
+    }
+    if (reply.status !== 200) throw new TransportError(PROVIDER, 'MailAmericas browser tracking did not answer', { status: reply.status });
+    if (reply.truncated || reply.base64Encoded || reply.error || reply.body === null
+      || new TextEncoder().encode(reply.body).length > MAILAMERICAS_MAX_BYTES) {
+      throw new SchemaError(PROVIDER, 'MailAmericas browser tracking returned an unreadable reply');
+    }
+    return parseMailamericas(json(reply.body), number);
+  }
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeMailamericasNumber(raw);
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const { response, bytes } = await fetchBounded(MAILAMERICAS_API, { method: 'POST', signal, headers: {
         Accept: 'application/json', 'Content-Type': 'application/json', 'User-Agent': userAgentOf(this.options.userAgent),
+        Origin: 'https://mailamericas.com', Referer: 'https://mailamericas.com/tracking',
       }, body: JSON.stringify({ trackingNumber: number, language: 'en' }) }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)),
         maxBytes: MAILAMERICAS_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, 403, 404, 410] });
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'MailAmericas redirected its tracking lookup');
@@ -52,19 +83,22 @@ export class MailamericasTracker {
     };
     // One read with the whole budget: a parcel the service has not looked up
     // lately takes it twenty seconds to answer.
-    return runSteps({ carrier: 'mailamericas', budgetMs: context.budgetMs ?? 30_000, signal: context.signal,
+    return runSteps({ carrier: 'mailamericas', budgetMs: context.budgetMs ?? (this.options.trawl ? 60_000 : 30_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: ({ signal, remainingMs }) => read(signal, remainingMs) },
+      { id: 'trawl', enabled: Boolean(this.options.trawl), recovers: error => carrierErrorKind(error) === 'challenge',
+        run: ({ signal, remainingMs }) => this.browser(number, signal, remainingMs) },
     ]);
   }
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new MailamericasTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
+  const tracker = new MailamericasTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent, trawl: environment.trawl });
+  const http = new MailamericasTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
-    id: 'mailamericas', recordsSteps: true, steps: ['direct'],
+    id: 'mailamericas', recordsSteps: true, steps: ['direct', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+    recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
       () => accepted(() => normalizeMailamericasNumber(number))),
   };
 };

@@ -5,6 +5,8 @@ import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { universalCarrierHints } from '../../providers/shared/hints.js';
+import { TrawlClient } from '../../core/transport/trawl.js';
+import type { TrawlCapturedResponse } from '../../core/transport/trawl.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { adapter, MAILAMERICAS_API, MailamericasTracker } from './adapter.js';
 import { mailamericasWording, normalizeMailamericasNumber, parseMailamericas } from './parser.js';
@@ -382,5 +384,61 @@ describe('MailAmericas status vocabulary', () => {
     expect(mailamericasStage('ZZ-9', 'Synthetic note')).toBeNull();
     expect(mailamericasStage('sm-9', 'Tax ID: Delivered')).toBeNull();
     expect(mailamericasStage('pf-1', 'Finished: Delivered')).toEqual({ stage: 'delivered', source: 'carrier_map' });
+  });
+});
+
+describe('MailAmericas browser recovery', () => {
+  const capture = (overrides: Partial<TrawlCapturedResponse> = {}): TrawlCapturedResponse => ({
+    url: MAILAMERICAS_API, status: 200, body: JSON.stringify(fixture('delivered')), headers: {},
+    truncated: false, base64Encoded: false, error: null, trackingNumberSubmitted: DELIVERED, ...overrides,
+  });
+  function setup(entries: TrawlCapturedResponse[], httpStatus = 202, httpBody = '') {
+    const trawl = new TrawlClient('http://browser.test');
+    const scrape = vi.spyOn(trawl, 'scrape').mockResolvedValue({ url: '', html: '', cookies: [], userAgent: null,
+      tier: 3, statusCode: 200, capturedResponses: entries, raw: {} });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(httpBody, { status: httpStatus }));
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const instance = adapter({ fetcher, trawl, recorder, env: {}, browserExecutablePath: null });
+    return { instance, scrape, fetcher, recorder };
+  }
+  it('recovers a held lookup and records its failure, while HTTP recognition stays browserless', async () => {
+    const f = setup([capture()]);
+    await expect(f.instance.track({ number: DELIVERED }, { budgetMs: 20_000 })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(f.recorder.step.mock.calls.map(([row]) => [row.step, row.outcome])).toEqual([['direct', 'challenge'], ['trawl', 'ok']]);
+    expect(f.recorder.step.mock.calls[1]![0]).toMatchObject({ fallbackFrom: 'direct', fallbackReason: 'challenge' });
+    const [request, options] = f.scrape.mock.calls[0]!;
+    expect(request.captureResponses).toEqual([MAILAMERICAS_API]);
+    expect(request.maxTimeout).toBeLessThan(options.timeoutMs);
+    expect(options.allowHttpStatuses).toEqual([403, 405]);
+    expect(options.signal).toBeInstanceOf(AbortSignal);
+    await expect(f.instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(f.scrape).toHaveBeenCalledTimes(1);
+  });
+  it('requires a bound request for absence and rejects a different returned identity', async () => {
+    await expect(setup([capture({ body: '{"data":null}' })]).instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'not_found' });
+    for (const entry of [capture({ trackingNumberSubmitted: undefined }), capture({ trackingNumberSubmitted: IN_TRANSIT })]) {
+      await expect(setup([entry]).instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'challenge' });
+    }
+    await expect(setup([capture({ body: JSON.stringify(fixture('in-transit')) })]).instance.track({ number: DELIVERED }))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+  it('keeps the final refusal or malformed reply instead of an earlier successful history', async () => {
+    for (const [entry, kind] of [
+      [capture({ status: 202, body: null }), 'challenge'], [capture({ status: 429, body: null }), 'rate_limited'],
+      [capture({ status: 503, body: null }), 'maintenance'], [capture({ body: '{' }), 'schema'],
+      [capture({ truncated: true }), 'schema'], [capture({ error: 'response-unreadable' }), 'schema'],
+    ] as const) await expect(setup([capture(), entry]).instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind });
+    await expect(setup([capture({ status: 429, headers: { 'retry-after': '120' } })]).instance.track({ number: DELIVERED }))
+      .rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 120_000 });
+  });
+  it('does not use a browser for a throttle, missing parcel, schema failure or exhausted cleanup budget', async () => {
+    for (const [status, body] of [[403, BALANCER], [429, ''], [200, '{"data":null}'], [200, '{}']] as const) {
+      const f = setup([capture()], status, body);
+      await expect(f.instance.track({ number: DELIVERED })).rejects.toThrow();
+      expect(f.scrape).not.toHaveBeenCalled();
+    }
+    const f = setup([capture()]);
+    await expect(f.instance.track({ number: DELIVERED }, { budgetMs: 2000 })).rejects.toMatchObject({ kind: 'budget' });
+    expect(f.scrape).not.toHaveBeenCalled();
   });
 });

@@ -230,6 +230,25 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of Taiwan-issued UH letter post. The tracker's notes say U letter post cannot be followed online, though the tracker answered one such item with the scan a universal provider had. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "EN544513815JP",
+      "role": "shipment",
+      "evidence": "open_source_example",
+      "source": {
+        "url": "https://github.com/x43x61x69/Taiwan-Post-Chrome-Extension/blob/fb14ba3ec788ff4487e421259b4e4235bc1f0881/README.md",
+        "date": "2026-10-11",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "japan-post",
+        "confidence": "high"
+      },
+      "note": "The extension uses this Japan-issued EMS item as its international-query example. Chunghwa Post handles its destination tracking."
     }
   ]
 }
