@@ -28,8 +28,8 @@ the numbers, with their dot and hyphens, and its session's form token to
 `/{id|en}/track-shipments`, and renders the histories in the reply.
 
 The Paxel Android app (`com.paxel`) shows the history of the signed-in account's own
-shipments only, and shares the web tracker's link for any other. The library solves no
-CAPTCHA, so Paxel stays on universal providers.
+shipments only, and shares the web tracker's link for any other. A dedicated public-page
+verification flow is not implemented, so Paxel stays on universal providers.
 
 ## Testing
 

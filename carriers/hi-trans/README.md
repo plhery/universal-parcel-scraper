@@ -15,10 +15,9 @@ with the number in `Number`.
 
 ## Why there is no adapter
 
-Cloudflare answers the consignment summary page, and every other page of the carrier's
-sites, with an HTTP 403 challenge page before any result. The Freight API tracks a consignment
-only with the username and token Hi-Trans issues to a customer, and Hi-Trans publishes no
-tracking app, so Hi-Trans Express stays on universal providers.
+The public consignment summary can answer with a Cloudflare managed challenge before any
+result. A dedicated browser recovery flow is not implemented. The Freight API needs the
+username and token Hi-Trans issues to a customer, so it cannot replace public guest tracking.
 
 ## Testing
 
