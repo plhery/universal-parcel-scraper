@@ -55,6 +55,7 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'O140000V': { status: 'exception', stage: 'returned' },
   // Observed live on public parcels in the number corpus.
   'B030000V': { status: 'in_transit', stage: 'in_transit' },
+  'C230000V': { status: 'in_transit', stage: 'in_transit' },
   'C010000V': { status: 'in_transit', stage: 'in_transit' },
   'D050000V': { status: 'in_transit', stage: 'in_transit' },
   'F010000V': { status: 'in_transit', stage: 'in_transit' },

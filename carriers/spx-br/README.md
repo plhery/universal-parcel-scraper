@@ -57,7 +57,8 @@ numbers carry a PH prefix.
   the clocks.
 - A fleet line opens with its hub in brackets. The hub leaves the wording and is the place of
   the hub taking the parcel in; a pickup or a delivery keeps none. A drop-off point's line opens
-  with the point's name, often its keeper's, which is dropped, and keeps no place. Line-haul
+  with the point's name, often its keeper's, and a partner carrier's delivery with the partner's
+  code; both are dropped, and neither keeps a place. Line-haul
   lines name internal transfer and trip ids, which are dropped. An unloading, in English in
   every language, reads "Unloading" or "Unloaded" at the hub it names. When that hub's own scan
   takes the parcel in within a day after it, the unloading is left out, since that scan stands

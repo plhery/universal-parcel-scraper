@@ -566,6 +566,15 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "note": "Fleet feed: paired with F980. The line names who took the parcel after it, which is dropped."
+    },
+    {
+      "code": "3PL_Delivered",
+      "wording": "Pacote foi entregue",
+      "language": "pt",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Fleet feed: the delivery by a partner carrier after SPX's sorting centre, with no round of SPX's own. The line opens with the partner's code, which is dropped, and leaves the receiver's name empty."
     }
   ]
 }

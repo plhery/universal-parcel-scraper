@@ -37,6 +37,7 @@
     { "code": "EOL.9001", "language": "es", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Carried over from the prior-art map; shape does not match the other Correos codes and has not been re-observed." },
     { "code": "O140000V", "language": "es", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },
     { "code": "B030000V", "wording": "En oficina de cambio", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-14", "note": "At the origin international exchange office." },
+    { "code": "C230000V", "wording": "En oficina de cambio", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "At the origin international exchange office again, an hour after B030000V and before the departure from it." },
     { "code": "C010000V", "wording": "Leaving the Exchange Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-26", "note": "Left the origin international exchange office." },
     { "code": "D050000V", "wording": "Llegada a oficina de cambio", "language": "es", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-14", "note": "Arrived at the destination international exchange office." },
     { "code": "F010000V", "wording": "Leaving the destination Exchange Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-26", "note": "Left the destination international exchange office." },

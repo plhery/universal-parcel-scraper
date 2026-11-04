@@ -193,6 +193,8 @@ describe('SPX Express Brazil HTTP adapter', () => {
   it('takes whoever received the parcel out of the wording', () => {
     expect(spxBrWording('Pedido entregue. Recebido por: Pessoa Exemplo')).toBe('Pedido entregue');
     expect(spxBrWording('[LM Hub_SP_Exemplo] Seu pacote foi entregue a [Pessoa Exemplo] ')).toBe('[LM Hub_SP_Exemplo] Seu pacote foi entregue');
+    // A partner carrier's delivery leaves the name empty.
+    expect(spxBrWording('[00000] Pacote foi entregue a  ')).toBe('[00000] Pacote foi entregue');
     expect(spxBrWording('Pacote [TO0000] está sendo transportado para [SoC_SP_Exemplo]'))
       .toBe('Pacote [TO0000] está sendo transportado para [SoC_SP_Exemplo]');
     expect(spxBrWording('Seu pacote foi recebido pelo centro de triagem')).toBe('Seu pacote foi recebido pelo centro de triagem');
@@ -305,6 +307,10 @@ describe('SPX Express Brazil HTTP adapter', () => {
     fleet.data.tracking_list = [fleet.data.tracking_list[2]!,
       { timestamp: 1_779_090_000 + 86_401, status: 'SOC_Received', message: '[SoC_SP_Cidade Exemplo] Seu pacote foi recebido pelo centro de triagem' }];
     expect(parseSpxBrFleet(fleet, 'BR2600000000045').events!.map((event) => event.provider_code)).toEqual(['SOC_Received', 'SOC_LHUnloading']);
+    // A partner carrier's delivery, with its code first and no receiver's name.
+    fleet.data.tracking_list = [{ timestamp: 1_779_200_000, status: '3PL_Delivered', message: '[00000] Pacote foi entregue a ' }];
+    expect(parseSpxBrFleet(fleet, 'BR2600000000045')).toMatchObject({ current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Pacote foi entregue', events: [{ provider_code: '3PL_Delivered', stage: 'delivered', description: 'Pacote foi entregue' }] });
   });
 
   it('keeps the order lookup’s answer unless the fleet feed holds the parcel or says it has no scans', async () => {
@@ -446,6 +452,7 @@ describe('SPX Express Brazil status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     // A code the map does not know falls to the shared wording rules.
     expect(spxBrStage('F981', 'Pedido entregue')).toMatchObject({ stage: 'delivered' });
+    expect(spxBrStage('3PL_Delivered', '[00000] Pacote foi entregue')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(spxBrStage('F777', 'Aviso sintético')).toBeNull();
   });
 });

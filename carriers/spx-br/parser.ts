@@ -47,9 +47,10 @@ export function normalizeSpxBrNumber(raw: string): string {
 }
 
 // Who took the parcel: "Recebido por: …" after a delivery, or the bracketed
-// name the tracker's pt-BR wording puts after "entregue a".
+// name the tracker's pt-BR wording puts after "entregue a", which a partner
+// carrier's delivery leaves empty.
 const RECEIVER = /\s*[.,;]?\s*\b(?:recebid[oa]|retirad[oa]|assinad[oa]) por\s*:[\s\S]*$/i;
-const NAMED = /\b(entregue)\s+(?:a|ao|à|para)\s+\[[^\]]*\][\s\S]*$/i;
+const NAMED = /\b(entregue)\s+(?:a|ao|à|para)(?:\s+\[[^\]]*\][\s\S]*|\s*)$/i;
 
 /** A scan's wording without the name of whoever took the parcel. */
 export function spxBrWording(text: string): string {
@@ -181,7 +182,8 @@ const HUB = /^\[((?:FM|LM) ?Hub_[^\]]{1,100}|SoC_[^\]]{1,100})\]\s*/i;
 // The bracketed name the feed's English line puts after a delivery.
 const LAST_NAMED = /\s*\[[^\]]*\]\s*$/;
 // A drop-off point's line opens with the point's name, often its keeper's: "[Nome] Seu pacote foi recebido pelo ponto de coleta".
-const DROP_OFF_NAMED = /^\[[^\]]{1,200}\]\s*/;
+// A partner carrier's delivery opens with the partner's code: "[00000] Pacote foi entregue a".
+const OPENING_NAME = /^\[[^\]]{1,200}\]\s*/;
 // A line haul's transfer and trip, in English in every language: "[TO…] unloading at [SoC_SP_Exemplo] via Linehaul Trip [LT…]".
 const LINE_HAUL = /^\[[^\]]{1,64}\]\s*(unload(?:ing|ed)) at \[([^\]]{1,100})\]\s*via linehaul trip\s*\[[^\]]{1,64}\]$/i;
 // A line haul leaving for a hub: "Pacote [TO…] está sendo transportado para [SoC_SP_Exemplo]".
@@ -205,7 +207,7 @@ function projectFleetRow(row: Record<string, unknown>): CarrierEvent {
   const haul = LINE_HAUL.exec(line);
   const description = haul ? haul[1]!.charAt(0).toUpperCase() + haul[1]!.slice(1).toLowerCase()
     : hub ? line.slice(hub[0].length)
-      : /^DOP_/i.test(code) ? line.replace(DROP_OFF_NAMED, '')
+      : /^(?:DOP|3PL)_/i.test(code) ? line.replace(OPENING_NAME, '')
         : /_LHTransporting$/i.test(code) ? line.replace(TRANSFER_ID, '$1 ').replace(NEXT_HUB, '$1') : line;
   if (!description) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a scan without wording');
   const location = haul ? clean(haul[2], 120) : hub && /_Received$/i.test(code) ? clean(hub[1], 120) : '';
