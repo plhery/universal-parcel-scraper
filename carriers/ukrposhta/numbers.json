@@ -258,7 +258,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "fan-courier"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."

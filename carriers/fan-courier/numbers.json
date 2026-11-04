@@ -278,6 +278,32 @@
         ]
       },
       "note": "Made-up number in the layout of a parcel from Romania starting with 5 whose history FAN Courier's tracker returned."
+    },
+    {
+      "number": "7365729786924",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231115060517/https://www.fancourier.ro/en/awb-track/?tracking=7365729786924",
+        "date": "2023-11-15",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "econt",
+          "fan-courier"
+        ]
+      },
+      "note": "Looked up on FAN Courier's English tracker, as an archived address shows; FAN Courier's tracking returns its delivered history."
     }
   ]
 }

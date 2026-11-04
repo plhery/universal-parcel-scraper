@@ -57171,10 +57171,12 @@
       "correos-chile",
       "delhivery",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
     "asked": [
-      "delhivery"
+      "delhivery",
+      "fan-courier"
     ]
   },
   {
@@ -57411,10 +57413,12 @@
       "correos-chile",
       "delhivery",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
     "asked": [
-      "delhivery"
+      "delhivery",
+      "fan-courier"
     ]
   },
   {
@@ -57496,10 +57500,12 @@
       "correos-chile",
       "delhivery",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
     "asked": [
-      "delhivery"
+      "delhivery",
+      "fan-courier"
     ]
   },
   {
@@ -57517,7 +57523,11 @@
     "candidates": [
       "correos-chile",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
+    ],
+    "asked": [
+      "fan-courier"
     ]
   },
   {
@@ -57623,7 +57633,11 @@
     "candidates": [
       "correos-chile",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
+    ],
+    "asked": [
+      "fan-courier"
     ]
   },
   {
@@ -57792,10 +57806,12 @@
       "correos-chile",
       "delhivery",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
     "asked": [
-      "delhivery"
+      "delhivery",
+      "fan-courier"
     ]
   },
   {
@@ -59704,7 +59720,11 @@
     "candidates": [
       "correos-chile",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
+    ],
+    "asked": [
+      "fan-courier"
     ]
   },
   {
@@ -59848,10 +59868,12 @@
       "ukrposhta",
       "correos-chile",
       "yunda",
-      "econt"
+      "econt",
+      "fan-courier"
     ],
     "asked": [
-      "ukrposhta"
+      "ukrposhta",
+      "fan-courier"
     ]
   },
   {

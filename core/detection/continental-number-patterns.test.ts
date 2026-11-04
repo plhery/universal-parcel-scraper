@@ -858,13 +858,13 @@ describe('wave eight courier rules', () => {
 
 describe('FAN Courier AWBs', () => {
   // Synthetic AWBs in FAN Courier's layout; none is a real parcel.
-  it('suggests FAN Courier for thirteen digits starting with 2 to 5 or 7000, and asks it first in Romania', () => {
-    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100', '7000123456785']) {
+  it('suggests FAN Courier for thirteen digits starting with 2 to 5 or 7, and asks it first in Romania', () => {
+    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100', '7312345678904', '7000123456785']) {
       expect(detectCarrierMatch(number).candidates, number).toContain('fan-courier');
       expect(detectCarrierMatch(number).confidence, number).toBe('low');
       expect(recognitionAskedCarriers(number, { countryHint: 'RO' })[0], number).toBe('fan-courier');
     }
-    for (const number of ['1012345678901', '6012345678901', '7001123456785', '201234567890', '20123456789012']) {
+    for (const number of ['1012345678901', '6012345678901', '8012345678901', '9012345678901', '201234567890', '20123456789012']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('fan-courier');
     }
   });
@@ -874,7 +874,7 @@ describe('FAN Courier AWBs', () => {
     expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['fan-courier'] });
     expect(detected.candidates[0]).toBe('fan-courier');
     expect(recognitionAskedCarriers('7000123456785')[0]).toBe('fan-courier');
-    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100']) {
+    for (const number of ['2012345678901', '3012345678901', '4098765432104', '5098765432100', '7312345678904']) {
       expect(detectCarrierMatch(number).preferred, number).not.toContain('fan-courier');
     }
   });

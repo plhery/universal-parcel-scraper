@@ -466,7 +466,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "fan-courier"
         ]
       },
       "note": "Reported as a Mondial Relay tracking reference on a GLS partner return. Its thirteen digits do not match the documented public shipment formats, so its representation remains unresolved and must not be split into a lookup credential.",
