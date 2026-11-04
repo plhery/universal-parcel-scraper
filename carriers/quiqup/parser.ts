@@ -2,6 +2,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -124,12 +125,16 @@ export function parseQuiqup(payload: unknown, raw: string): CarrierResult {
   const window = isRecord(order.delivery_time) ? order.delivery_time : {};
   const due = !stage || NO_ESTIMATE.has(stage) || clean(order.service_kind, 40) === RETURN_COLLECTION
     ? null : instant(window.delivery_before);
+  // The window runs from the time the order is due after; without one before its end, the end alone.
+  const opens = due ? instant(window.delivery_after) : null;
+  const estimate = due && opens && opens.timestamp < due.timestamp
+    ? windowEstimate(opens.iso, due.iso) : { expected_delivery: due?.iso ?? null };
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source ?? 'carrier_map' } : {}),
     last_status_text: newest.description!,
     last_update: newest.time!,
-    expected_delivery: due?.iso ?? null,
+    ...estimate,
     ...(delivery ? { delivered_at: delivery } : {}),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),

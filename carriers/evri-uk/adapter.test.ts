@@ -111,8 +111,17 @@ describe('Evri UK anonymous history', () => {
     const window = { eta: { start: '2026-07-03T18:00:00Z', end: '2026-07-03T20:00:00Z' } };
     payload.results[0].trackingEvents = [scan('4_COURIER', 'DELIVERY_1900_2100', '2026-07-03T11:00:00Z', window), scan('3', 'LOCAL_DEPOT', '2026-07-03T05:00:00Z')];
     expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-07-03 19:00–21:00' });
+    expect(parseEvriUk(payload, NUMBER, URN)).not.toHaveProperty('expected_delivery_from');
+    // A window into the next British day runs over its days.
+    payload.results[0].trackingEvents[0].eta = { start: '2026-07-03T18:00:00Z', end: '2026-07-04T08:00:00Z' };
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ expected_delivery_from: '2026-07-03', expected_delivery: '2026-07-04' });
+    // Late UTC hours already fall on the next British day.
+    payload.results[0].trackingEvents[0].eta = { start: '2026-07-03T23:15:00Z', end: '2026-07-04T01:00:00Z' };
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ expected_delivery: '2026-07-04 00:15–02:00' });
     payload.results[0].trackingEvents.unshift(scan('4_COURIER', 'NOT_DELIVERED_BUSINESS_CLOSED', '2026-07-03T19:30:00Z'));
-    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', expected_delivery: null });
+    const failed = parseEvriUk(payload, NUMBER, URN);
+    expect(failed).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', expected_delivery: null });
+    expect(failed).not.toHaveProperty('expected_delivery_from');
     payload.results[0].trackingEvents.unshift(scan('5_COURIER', 'DELIVERED', '2026-07-04T12:00:00Z'));
     const delivered = parseEvriUk(payload, NUMBER, URN);
     expect(delivered).toMatchObject({ status: 'delivered', expected_delivery: null, delivered_at: '2026-07-04T12:00:00Z' });

@@ -34,9 +34,10 @@ Tracked through the lookup its tracking page makes.
   `Recovered` (`COMP`) is the consignee collecting the freight at the destination station, the
   end of a station-to-station shipment, so it counts as a delivery like `Delivered`. A scan
   recorded after a delivery does not undo it. The invoice that follows moves nothing.
-- The estimate is the day the page shows: the end of the delivery window when there is one, else
-  the day the freight is due at the destination station. The delivery instant is the delivery
-  scan's. The weight is kept when the reply gives it in pounds.
+- The estimate is the one the page shows: the delivery window when there is one, on the
+  station's wall clock as a slot within one day or as its days across several, else the day the
+  freight is due at the destination station. The delivery instant is the delivery scan's. The
+  weight is kept when the reply gives it in pounds.
 - A scan's location is its station code, such as an airport's, as the page shows it.
 - The page shows who recorded each scan as its signatory; the reply also names the consignee's
   signer, the paying customer's account and the customer's reference. None of them is read, nor

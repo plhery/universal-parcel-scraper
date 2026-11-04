@@ -1,5 +1,7 @@
+import { DateTime } from 'luxon';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -53,9 +55,21 @@ export function parseDhlEcommercePlRejection(payload: unknown): never {
   throw new IndeterminateError(PROVIDER, 'DHL eCommerce Poland returned an inconclusive tracking error');
 }
 
-function instant(value: unknown): { iso: string; day: string } | undefined {
+function instant(value: unknown): { iso: string; day: string; polish: string } | undefined {
   const time = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value) ? explicitOffsetTime(value) : null;
-  return time ? { iso: time.iso, day: new Intl.DateTimeFormat('en-CA', { timeZone: ZONE }).format(time.timestamp) } : undefined;
+  const polish = time ? DateTime.fromMillis(time.timestamp, { zone: ZONE }) : null;
+  return time && polish ? { iso: time.iso, day: polish.toISODate()!, polish: polish.toISO({ suppressMilliseconds: true })! } : undefined;
+}
+
+/**
+ * The planned delivery: the portal's hours, `planOfDeliveryFromUtc` to `planOfDeliveryToUtc`, as
+ * instants on the Polish clock, whose day is the one the portal shows. Without both, the day of
+ * the start, else of `deliveryDateUtc`.
+ */
+function planned(shipment: Record<string, unknown>): WindowEstimate {
+  const [from, to] = [instant(shipment.planOfDeliveryFromUtc), instant(shipment.planOfDeliveryToUtc)];
+  if (from && to) return windowEstimate(from.polish, to.polish);
+  return { expected_delivery: from?.day ?? instant(shipment.deliveryDateUtc)?.day ?? null };
 }
 
 export function parseDhlEcommercePl(payload: unknown, rawNumber: string): CarrierResult {
@@ -84,13 +98,12 @@ export function parseDhlEcommercePl(payload: unknown, rawNumber: string): Carrie
   // Only a receipt is timed, by the recipient or by the sender a return reached. The posting
   // date is a day, and no other status says when it was reached.
   const received = stage && FINAL.includes(stage) ? instant(shipment.receiptDateUtc)?.iso : undefined;
-  const planned = instant(shipment.planOfDeliveryFromUtc)?.day ?? instant(shipment.deliveryDateUtc)?.day;
   return {
     status: stage ? statusForStage(stage) : shipment.timelineStep === 'None' ? 'pending' : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: description,
     last_update: received ?? null,
-    expected_delivery: stage && FINAL.includes(stage) ? null : planned ?? null,
+    ...(stage && FINAL.includes(stage) ? { expected_delivery: null } : planned(shipment)),
     ...(received && stage === 'delivered' ? { delivered_at: received } : {}),
     ...(sender ? { sender_name: sender } : {}),
     summary_only: true,

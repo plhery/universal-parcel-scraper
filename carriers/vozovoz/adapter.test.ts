@@ -83,6 +83,29 @@ describe('Vozovoz HTTP adapter', () => {
     expect(flagged({ isTaken: true, isGiven: true }).events).toHaveLength(1);
   });
 
+  it('gives the estimate as the arrival window, its hours on one day, and a bound alone as its day', () => {
+    const arriving = (from: unknown, to: unknown) => parseVozovoz(changed('in-transit', (body) => {
+      body.dates.arrivalFrom = from;
+      body.dates.arrivalTo = to;
+    }), IN_TRANSIT);
+    const slot = arriving('2026-04-14T10:00:00', '2026-04-14T18:00:00');
+    expect(slot).toMatchObject({ current_stage: 'accepted', expected_delivery: '2026-04-14 10:00–18:00' });
+    expect(slot).not.toHaveProperty('expected_delivery_from');
+    // Across days, from day to day; midnight stands for the day alone.
+    expect(arriving('2026-04-14T00:00:00', '2026-04-16T00:00:00')).toMatchObject({ expected_delivery_from: '2026-04-14', expected_delivery: '2026-04-16' });
+    expect(arriving('2026-04-14T10:00:00', '2026-04-16T18:00:00')).toMatchObject({ expected_delivery_from: '2026-04-14', expected_delivery: '2026-04-16' });
+    for (const [from, to] of [['2026-04-14T00:00:00', undefined], ['2026-04-14T00:00:00', '0001-01-01T00:00:00'], [undefined, '2026-04-14T18:00:00'],
+      ['2026-04-14T00:00:00', '2026-04-14T00:00:00'], ['2026-04-16T10:00:00', '2026-04-14T18:00:00']]) {
+      const day = arriving(from, to);
+      expect(day.expected_delivery).toBe('2026-04-14');
+      expect(day).not.toHaveProperty('expected_delivery_from');
+    }
+    // An issued order's window is no estimate.
+    const issued = parseVozovoz(fixture('delivered'), DELIVERED);
+    expect(issued.expected_delivery).toBeNull();
+    expect(issued).not.toHaveProperty('expected_delivery_from');
+  });
+
   it('words the issue date by the order’s final status: an issue, or a finished group pickup', () => {
     const group = parseVozovoz(changed('delivered', (body) => {
       body.status.message = 'Групповой забор завершен';
@@ -164,6 +187,7 @@ describe('Vozovoz HTTP adapter', () => {
       (body: Reply) => { body.dates.given = '2026-03-05T24:00:00'; },
       (body: Reply) => { body.dates.given = '2026-03-05T14:20:33+03:00'; },
       (body: Reply) => { body.dates.arrivalFrom = 20260306; },
+      (body: Reply) => { body.dates.arrivalTo = '06.03.2026 18:00'; },
     ]) {
       expect(() => parseVozovoz(changed('delivered', change), DELIVERED)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }

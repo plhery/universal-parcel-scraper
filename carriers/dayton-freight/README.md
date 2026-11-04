@@ -35,8 +35,8 @@ beyond its network to partner carriers. Tracked through the lookup its tracking 
   and there is no `delivered_at`. A midnight clock is a date without a time.
 - For freight a partner collected, the page shows the partner's pickup day, and so does the
   result.
-- The estimate is the day the page shows until the delivery: the appointment's, else the
-  estimated day.
+- Until the delivery, the estimate is the appointment, as a slot within one day or as its days
+  across several, else the estimated day.
 - A shipment handed to A. Duie Pyle, Southeastern Freight Lines or Oak Harbor, partners the reply
   names by their SCAC, names that partner and its PRO. The status then relays the partner's scans.
   Dayton Freight's own expedited and truckload services are not partners.

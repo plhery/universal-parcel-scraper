@@ -95,9 +95,10 @@ Spain and other carriers deliver them elsewhere, so that shape only suggests Paa
 - `expected_delivery` is the delivery window, `expected_delivery_ts`, as
   `YYYY-MM-DD HH:MM–HH:MM`. Its ends are instants, and the page shows them on the delivery
   country's clock (the Canary Islands' for Spanish postcodes 35 and 38), so the result does
-  too and takes that clock as its `timezone`. A window across midnight, or without an
-  offset, keeps only its last day. It is dropped once delivered, returned or in exception, and
-  when it ended before the newest scan. A failed attempt keeps it: it is the new attempt's.
+  too and takes that clock as its `timezone`. A window across midnight or days runs from its
+  first day, `expected_delivery_from`, to its last; one without an offset keeps only its last
+  day. It is dropped once delivered, returned or in exception, and when it ended before the
+  newest scan. A failed attempt keeps it: it is the new attempt's.
 - Through Evri International the result is that tracker's: Evri's scans up to the hand-over,
   then Paack's, in Evri's English wording and stages, with locations and the parcel's weight.
   Its clocks have no offset. Paack's, from "Arrived In Country" on, have the digits of

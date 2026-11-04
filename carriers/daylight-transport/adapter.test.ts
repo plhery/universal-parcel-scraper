@@ -93,14 +93,15 @@ describe('Daylight Transport HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/SAMPLE SUPPLY|EXAMPLE OUTFITTERS|JANE|JOHN|EXAMPLE AVE|SAMPLE RD|90000|07000|555 010|example\.com|BOL-SAMPLE|PO-SAMPLE|900001|SAMPLE CRATES|CALL|EXA-DYLT|DYLT/);
   });
 
-  it('reads an in-transit history, its newest staged row and the delivery window’s day', () => {
+  it('reads an in-transit history, its newest staged row and the delivery window', () => {
     const result = parseDaylight(details('in-transit'), history('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({
       status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
       // The appointment row is the newest and moves nothing.
       last_status_text: 'Appointment Required', last_update: null, last_update_local: '2026-10-17T06:09:28',
-      expected_delivery: '2026-10-21',
+      expected_delivery: '2026-10-21 08:00–17:00',
     });
+    expect(result).not.toHaveProperty('expected_delivery_from');
     expect(events(result)).toEqual([
       ['2026-10-17T06:09:28', 'Appointment Required', null, 'SAMPLEBURG, OH'],
       ['2026-10-16T21:01:00', 'Enroute To Destination', 'in_transit', 'SAMPLE VALLEY, CA'],
@@ -111,6 +112,25 @@ describe('Daylight Transport HTTP adapter', () => {
       ['2026-10-15T06:06:29', 'Freight Bill Entered', 'registered', 'SAMPLEBURG'],
     ]);
     expect(JSON.stringify(result)).not.toMatch(/PAT EXAMPLE|EXAMPLE PARTS|ALEX|EXAMPLE LN|SAMPLE BLVD|43000|91000|SBG|SVL|PRTR|Residential/);
+  });
+
+  it('gives the delivery window from both its ends: a slot on one day, days across days, a day for one end', () => {
+    const windowed = (startDate: unknown, endDate: unknown) => parseDaylight(details('in-transit', (item) => {
+      item.delivery = { startDate, endDate };
+    }), history('in-transit'), IN_TRANSIT);
+    expect(windowed('2026-10-21T10:30:00', '2026-10-21T10:30:00').expected_delivery).toBe('2026-10-21 10:30');
+    expect(windowed('2026-10-21T08:00:00', '2026-10-23T17:00:00')).toMatchObject({ expected_delivery_from: '2026-10-21', expected_delivery: '2026-10-23' });
+    for (const [startDate, endDate, day] of [['2026-10-21T08:00:00', null, '2026-10-21'], ['2026-10-21T08:00:00', '0001-01-01T00:00:00', '2026-10-21'],
+      [null, '2026-10-23T17:00:00', '2026-10-23'], ['2026-10-23T08:00:00', '2026-10-21T17:00:00', '2026-10-21']] as const) {
+      const result = windowed(startDate, endDate);
+      expect(result.expected_delivery).toBe(day);
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+    expect(windowed(null, null).expected_delivery).toBeNull();
+    // A delivered shipment has no estimate.
+    const delivered = parseDaylight(details('delivered', (item) => { item.delivery.endDate = '2026-03-12T17:00:00'; }), history('delivered'), DELIVERED);
+    expect(delivered.expected_delivery).toBeNull();
+    expect(delivered).not.toHaveProperty('expected_delivery_from');
   });
 
   it('settles a delivery the history does not record from the details, dated by their delivery time', () => {
@@ -136,7 +156,7 @@ describe('Daylight Transport HTTP adapter', () => {
     const empty = (rows: Row[]) => { rows.length = 0; };
     const transit = parseDaylight(details('in-transit'), history('in-transit', empty), IN_TRANSIT);
     expect(transit).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
-      last_status_text: 'In Transit', last_update: null, expected_delivery: '2026-10-21', summary_only: true, events: [] });
+      last_status_text: 'In Transit', last_update: null, expected_delivery: '2026-10-21 08:00–17:00', summary_only: true, events: [] });
     expect(parseDaylight(details('in-transit', (item) => { item.status = 'Requested'; }), history('in-transit', empty), IN_TRANSIT))
       .toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Requested' });
     expect(parseDaylight(details('delivered'), history('delivered', empty), DELIVERED)).toMatchObject({ status: 'delivered',
@@ -184,6 +204,7 @@ describe('Daylight Transport HTTP adapter', () => {
       (item: Details['item']) => { item.delivery = '2026-10-21' as never; },
       (item: Details['item']) => { item.delivery.startDate = '10/21/2026 8:00 AM'; },
       (item: Details['item']) => { item.delivery.startDate = '2026-10-21T08:00:00-07:00'; },
+      (item: Details['item']) => { item.delivery.endDate = '2026-10-21T17:00'; },
     ]) {
       expect(() => parseDaylight(details('in-transit', change), history('in-transit'), IN_TRANSIT)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }

@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -17,6 +18,8 @@ const NUMBER = /^[A-Z0-9]{5,40}$/;
 const CODE = /^[a-z0-9-]{1,64}$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+// A delivered or settled shipment keeps its old window, which promises nothing.
+const NO_ESTIMATE: ReadonlySet<Stage> = new Set(['delivered', 'returned', 'exception']);
 
 /** A reference in capitals, as the portal's reply gives it back; anything else is not one Internet Express issues. */
 export function normalizeInternetExpressNumber(raw: string): string {
@@ -40,6 +43,19 @@ function instant(value: unknown): { iso: string; timestamp: number } {
   const parsed = typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value) ? explicitOffsetTime(value) : null;
   if (!parsed) throw new SchemaError(PROVIDER, 'Internet Express returned an invalid scan time');
   return parsed;
+}
+
+/**
+ * The shipment's delivery window, `shipment_estimated_delivery_from` to `_to`, while it is on its
+ * way; none once it ended before the newest scan.
+ */
+function estimate(shipment: Record<string, unknown>, stage: Stage | undefined, newest: number): WindowEstimate {
+  if (!stage || NO_ESTIMATE.has(stage)) return { expected_delivery: null };
+  const start = explicitOffsetTime(shipment.shipment_estimated_delivery_from);
+  const end = explicitOffsetTime(shipment.shipment_estimated_delivery_to);
+  const last = end ?? start;
+  if (last && last.timestamp < newest) return { expected_delivery: null };
+  return windowEstimate(start?.iso, end?.iso);
 }
 
 interface Scan { event: CarrierEvent; timestamp: number }
@@ -109,7 +125,7 @@ export function parseInternetExpress(payload: unknown, raw: string): CarrierResu
     last_status_text: internetExpressWording(current),
     ...(current !== newest.provider_code ? { provider_code: current } : {}),
     last_update: newest.time ?? null,
-    expected_delivery: null,
+    ...estimate(shipment, stage, scans[0]!.timestamp),
     ...(delivery?.time ? { delivered_at: delivery.time } : {}),
     ...(service ? { service_name: service } : {}),
     events: events.slice(0, MAX_EVENTS),

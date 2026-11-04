@@ -32,9 +32,11 @@ HTTP-only path.
 ## Data and limitations
 
 The API supplies the current status, sender and delivery estimate. Its receipt
-time is an instant; posting dates are calendar days. History rows retain
-facility-local clocks without an invented offset, including international
-scans. Unknown history wording remains unclassified.
+time is an instant; posting dates are calendar days. The estimate is the
+delivery hours the portal shows, as instants on the Polish clock, else the
+planned day. History rows retain facility-local clocks without an invented
+offset, including international scans. Unknown history wording remains
+unclassified.
 
 DHL rewords a scan in place: a terminal arrival later gains its planned
 delivery day. History scans carry no code, so the identity policy in

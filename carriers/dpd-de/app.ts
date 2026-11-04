@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { CarrierError, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import type { ClassifiedStatus, Stage } from '../../core/status/index.js';
 import { calendarDay, isoTime, zonedTime } from '../../core/time/index.js';
 import type { XmlNode } from '../../core/transport/xml.js';
@@ -44,13 +45,16 @@ function announcedDay(wording: string): string | null {
   return date ? estimateDay(date) : null;
 }
 
-/** Specified dates are forecasts, never scans; delivered display dates are actuals. */
-function deliveryEstimate(tracking: XmlNode, announced: string | null): string | null {
+/**
+ * Specified dates are forecasts, never scans; delivered display dates are actuals. The live window
+ * is a slot within one day and its days across several.
+ */
+function deliveryEstimate(tracking: XmlNode, announced: string | null): WindowEstimate {
   const planned = optional(tracking, 'NewDeliveryInfo');
   const day = planned && affirmative(scalar(planned, 'PlannedDeliveryDateSpecified', 8))
     ? estimateDay(scalar(planned, 'PlannedDeliveryDate', 64)) : null;
   // The app displays a changed delivery day ahead of its previous forecast.
-  if (day && planned && affirmative(scalar(planned, 'DateChanged', 8))) return day;
+  if (day && planned && affirmative(scalar(planned, 'DateChanged', 8))) return { expected_delivery: day };
   const live = optional(tracking, 'LiveTracking');
   if (live && affirmative(scalar(live, 'EstimatedDeliveryDateTimeSpecified', 8))) {
     const from = scalar(live, 'EstimatedDeliveryDateTimeFrom', 64);
@@ -64,13 +68,11 @@ function deliveryEstimate(tracking: XmlNode, announced: string | null): string |
       const display = (raw: string, timestamp: number) => hasOffset(raw)
         ? DateTime.fromMillis(timestamp, { zone: 'Europe/Berlin' }).toFormat('yyyy-MM-dd HH:mm')
         : raw.slice(0, 16).replace('T', ' ');
-      const first = display(from, start.timestamp);
-      const last = display(to, end.timestamp);
-      return `${first}–${first.slice(0, 10) === last.slice(0, 10) ? last.slice(11) : last}`;
+      return windowEstimate(display(from, start.timestamp), display(to, end.timestamp));
     }
   }
   // DeliveryDateTime is display text and can omit the year: never invent it.
-  return day ?? announced ?? estimateDay(scalar(tracking, 'DeliveryDateTime', 64));
+  return { expected_delivery: day ?? announced ?? estimateDay(scalar(tracking, 'DeliveryDateTime', 64)) };
 }
 
 /** A two-letter country, where the service puts a placeholder three-letter one for an unknown depot. */
@@ -177,8 +179,8 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
   const result: CarrierResult = {
     status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description ?? null, last_update: current.time ?? null,
-    expected_delivery: affirmative(scalar(tracking, 'Delivered', 8)) || status === 'delivered' || status === 'exception'
-      || stage === 'delivered' || stage === 'ready_for_pickup' ? null : deliveryEstimate(tracking, announced),
+    ...(affirmative(scalar(tracking, 'Delivered', 8)) || status === 'delivered' || status === 'exception'
+      || stage === 'delivered' || stage === 'ready_for_pickup' ? { expected_delivery: null } : deliveryEstimate(tracking, announced)),
     ...(current.time ? {} : { last_update_local: current.local_time }),
     ...(Number.isFinite(kilograms) && kilograms > 0 ? { weight_kg: kilograms } : {}),
     ...(dimensions ? { dimensions_text: dimensions } : {}),

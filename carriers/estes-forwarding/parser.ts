@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -90,22 +91,29 @@ function projectRow(row: Record<string, unknown>, code: string, index: number): 
 }
 
 /**
- * The day the parcel is due: the scheduled delivery the page shows, else the
+ * When the parcel is due: the scheduled delivery the page shows, else the
  * estimate event. Both are instants; the reply names no recipient's zone, so
- * the day is read in the carrier's, where a delivery's day and hours fall on
- * the same date across the contiguous states.
+ * they are read in the carrier's, where a delivery's day and hours fall on the
+ * same date across the contiguous states. A delivery scheduled `Between` two
+ * times is that window; any other is due by `fromGMT` and gives its day, as
+ * the estimate event does.
  */
-function estimate(shipment: Record<string, unknown>, rows: Record<string, unknown>[]): string | null {
-  let due: Instant | null = null;
+function estimate(shipment: Record<string, unknown>, rows: Record<string, unknown>[]): WindowEstimate {
+  const eastern = (instant: Instant) => DateTime.fromMillis(instant.millis, { zone: ZONE });
   const scheduled = shipment.scheduledDelivery;
+  let due: Instant | null = null;
   if (isRecord(scheduled) && shipment.scheduledDELactive !== true && text(shipment, 'shipmenttype', 32).toLowerCase() !== 'international'
     && !PICKUP_SERVICES.has(text(shipment, 'servicelevelcode', 16).toUpperCase())) {
     const from = clock(scheduled, 'fromGMT');
-    if (from && clock(scheduled, 'toGMT')) due = from;
+    const to = clock(scheduled, 'toGMT');
+    if (from && to && scheduled.scheduledDeliveryType === 'Between' && from.millis < to.millis) {
+      return windowEstimate(eastern(from).toISO({ suppressMilliseconds: true }), eastern(to).toISO({ suppressMilliseconds: true }));
+    }
+    if (from && to) due = from;
   }
   const etd = rows.find((row) => text(row, 'code', 16).toUpperCase() === 'ETD');
   due ??= etd ? clock(etd, 'datetimeGMT') : null;
-  return due ? DateTime.fromMillis(due.millis, { zone: ZONE }).toISODate() : null;
+  return { expected_delivery: due ? eastern(due).toISODate() : null };
 }
 
 /** The total weight the page shows, in pounds, as kilograms; none when a line lacks it. */
@@ -151,7 +159,7 @@ function projectShipment(shipment: Record<string, unknown>): CarrierResult {
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);
   const stage = staged?.stage as Stage | undefined;
-  const expected = closed || stage === 'delivered' || stage === 'returned' ? null : estimate(shipment, rows);
+  const expected = closed || stage === 'delivered' || stage === 'returned' ? { expected_delivery: null } : estimate(shipment, rows);
   const service = text(shipment, 'servicelevel', 80);
   const weight = weightOf(shipment);
   return {
@@ -159,7 +167,7 @@ function projectShipment(shipment: Record<string, unknown>): CarrierResult {
     ...(stage ? { current_stage: stage, current_stage_source: staged!.stage_source! } : {}),
     last_status_text: newest.description!,
     last_update: newest.time!,
-    expected_delivery: expected,
+    ...expected,
     ...(stage === 'delivered' ? { delivered_at: staged!.time! } : {}),
     ...(service ? { service_name: service } : {}),
     ...(weight !== null ? { weight_kg: weight } : {}),

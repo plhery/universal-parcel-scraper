@@ -140,21 +140,31 @@ describe('Colisweb response normalization', () => {
   });
 
   it('shows the booked slot on Paris clocks while the delivery is planned', () => {
-    const slot = (overrides: Record<string, unknown>) => parseColiswebTrackingResponse(successPayload({
+    const booked = (overrides: Record<string, unknown>) => parseColiswebTrackingResponse(successPayload({
       step: 'confirmed',
       deliveryConfirmationDate: '2026-01-02T09:00:00.000Z',
       deliveredDate: null,
       pickedUpDate: null,
       ...overrides,
-    }), OFFICIAL_SYNTHETIC_NUMBER).expected_delivery;
+    }), OFFICIAL_SYNTHETIC_NUMBER);
+    const slot = (overrides: Record<string, unknown>) => booked(overrides).expected_delivery;
+    expect(booked({ startsAt: '2026-04-08T10:00:00Z', endsAt: '2026-04-08T12:00:00Z' }))
+      .not.toHaveProperty('expected_delivery_from');
     expect(slot({ startsAt: '2026-04-08T10:00:00Z', endsAt: '2026-04-08T12:00:00Z' }))
       .toBe('2026-04-08 12:00–14:00');
     expect(slot({ step: 'package_withdrawn', startsAt: '2026-01-15T08:00:00Z', endsAt: '2026-01-15T10:00:00Z' }))
       .toBe('2026-01-15 09:00–11:00');
     expect(slot({ startsAt: '2026-08-28T22:30:00Z', endsAt: '2026-08-29T00:30:00Z' }))
       .toBe('2026-08-29 00:30–02:30');
-    for (const endsAt of [null, '2026-04-08T10:00:00Z', '2026-04-08T23:00:00Z', 'soon']) {
-      expect(slot({ startsAt: '2026-04-08T10:00:00Z', endsAt })).toBe('2026-04-08');
+    // A slot across days on Paris clocks runs from its first day to its last.
+    for (const [endsAt, last] of [['2026-04-08T23:00:00Z', '2026-04-09'], ['2026-04-10T16:00:00Z', '2026-04-10']]) {
+      expect(booked({ startsAt: '2026-04-08T10:00:00Z', endsAt }))
+        .toMatchObject({ expected_delivery_from: '2026-04-08', expected_delivery: last });
+    }
+    for (const endsAt of [null, '2026-04-08T10:00:00Z', '2026-04-08T09:00:00Z', '2026-04-07T12:00:00Z', 'soon']) {
+      const result = booked({ startsAt: '2026-04-08T10:00:00Z', endsAt });
+      expect(result.expected_delivery, String(endsAt)).toBe('2026-04-08');
+      expect(result).not.toHaveProperty('expected_delivery_from');
     }
     expect(slot({ startsAt: '2026-04-08T10:00:00', endsAt: '2026-04-08T12:00:00' })).toBe('2026-04-08');
     expect(slot({ startsAt: 'soon', endsAt: '2026-04-08T12:00:00Z' })).toBeNull();

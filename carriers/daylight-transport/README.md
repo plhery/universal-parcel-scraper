@@ -32,7 +32,8 @@ lookups its shipment page makes.
   result keeps the town and state, or the terminal's town.
 - A shipment the details call delivered without a delivery row gets one, at the details'
   delivery time.
-- Until the delivery, the estimate is the day of the delivery window the details give.
+- Until the delivery, the estimate is the delivery window the details give, from its start to
+  its end.
 - Appointment rows, needed or made, can come before the pickup and have no stage.
 - The details hold the shipper, the consignee and the forwarder with their addresses, contacts,
   phones and e-mails, references, items, weights, special instructions and notification e-mails;

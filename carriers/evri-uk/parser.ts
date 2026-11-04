@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
@@ -66,15 +67,17 @@ function scanTime(raw: unknown) {
     ? explicitOffsetTime(text) : null;
 }
 
-/** The window a scan announces, on the British clock its wording uses. */
-function deliveryWindow(eta: unknown): string | null {
+/**
+ * The window a scan announces, on the British clock its wording uses: its slot
+ * within one day, its days across several.
+ */
+function deliveryWindow(eta: unknown): WindowEstimate | null {
   if (!isRecord(eta)) return null;
   const start = scanTime(eta.start);
   const end = scanTime(eta.end);
   if (!start || !end || end.timestamp < start.timestamp) return null;
-  const first = DateTime.fromMillis(start.timestamp, { zone: ZONE }).toFormat('yyyy-MM-dd HH:mm');
-  const last = DateTime.fromMillis(end.timestamp, { zone: ZONE }).toFormat('yyyy-MM-dd HH:mm');
-  return `${first}–${first.slice(0, 10) === last.slice(0, 10) ? last.slice(11) : last}`;
+  const british = (timestamp: number) => DateTime.fromMillis(timestamp, { zone: ZONE }).toFormat('yyyy-MM-dd HH:mm');
+  return windowEstimate(british(start.timestamp), british(end.timestamp));
 }
 
 /**
@@ -108,7 +111,7 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
   if (!Array.isArray(parcel.trackingEvents) || parcel.trackingEvents.length > 500) throw new SchemaError('Evri UK', 'Evri UK returned invalid tracking events');
   if (!parcel.trackingEvents.length) throw new IndeterminateError('Evri UK', 'Evri UK returned no parcel activity');
   const events: CarrierEvent[] = [];
-  const windows = new Map<CarrierEvent, string>();
+  const windows = new Map<CarrierEvent, WindowEstimate>();
   const seen = new Set<string>();
   for (const rawEvent of parcel.trackingEvents) {
     if (!isRecord(rawEvent) || !isRecord(rawEvent.trackingPoint) || !isRecord(rawEvent.trackingStage)) {
@@ -146,7 +149,7 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
     status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage } : {}),
     last_status_text: newest.description ?? null, last_update: newest.time ?? null,
     // Only the newest scan's window is current: a later scan replaces or withdraws it.
-    expected_delivery: windows.get(newest) ?? null,
+    ...(windows.get(newest) ?? { expected_delivery: null }),
     ...(stage === 'delivered' && newest.time ? { delivered_at: newest.time } : {}),
     ...(sender ? { sender_name: sender } : {}),
     ...(service ? { service_name: service } : {}),

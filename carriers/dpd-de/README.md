@@ -170,7 +170,8 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   window, as in the app. Placeholder dates, incomplete windows and display
   dates without a year are ignored; completed delivery and pickup availability
   clear the forecast. Offset-bearing windows use German civil time; unresolved
-  window clocks retain their supplied digits.
+  window clocks retain their supplied digits. A window within one day is its
+  slot, one across days its days.
 - Scan clocks have minutes and no offset. A scan at a German facility is read
   in German civil time, which agrees with the guest API's offsets for the same
   scans. A clock elsewhere stays local.

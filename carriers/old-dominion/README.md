@@ -48,14 +48,15 @@ built from the installed version are scoped to this adapter.
 - Scan clocks carry their UTC offset and keep it as instants: the trace page itself converts
   each one to the viewer's zone. The live history seen gives every scan `-04:00`, whatever the
   service center's zone. Weight is converted from pounds.
-- Until delivery, `expected_delivery` is the confirmed delivery appointment
+- Until delivery, the estimate is the confirmed delivery appointment
   (`deliveryAppointmentStatus` `Appointment Set/Confirmed`) that the page shows as "Appointment
-  Scheduled": the start's day with its window, or with a single time when the start is
-  midnight, which the page drops, or equals the end. Its ends have no offset, so it stays on the
-  service's own clock, as text: `YYYY-MM-DD HH:mm–HH:mm` when the window lies within that day and
-  starts before it ends, else the day alone. Without such an appointment, or when its start is
-  no wall clock, the estimate (`updatedEta`, else `standardEta`) gives a calendar day. The
-  pickup appointment is never read, since its window can end before it starts.
+  Scheduled". Its ends have no offset, so it stays on the service's own clock:
+  `YYYY-MM-DD HH:mm–HH:mm` when the window lies within one day and starts before it ends, its
+  days (`expected_delivery_from` to `expected_delivery`) when it runs into a later day, else the
+  start's day alone. A midnight start, which the page drops, gives no time. Without such an
+  appointment, or when its start is no wall clock, the estimate (`updatedEta`, else
+  `standardEta`) gives a calendar day. The pickup appointment is never read, since its window
+  can end before it starts.
 - Shipper and consignee names and addresses, the signer, bill of lading and purchase order
   numbers and piece count are discarded.
 - An empty `500` is a rejected page verification, and the `422` "couldn't confirm you're not a

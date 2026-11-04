@@ -16,6 +16,7 @@ import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../detection/usps.j
 import { deliveredToDoor } from './pickup.js';
 import { isRecipientAction, recipientAction, type RecipientAction } from '../status/action.js';
 import { withTieOrder } from './order.js';
+import { windowOpens, writtenWindow } from './window.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -214,6 +215,17 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
     if (fieldValue != null && typeof fieldValue !== 'string') {
       throw new TypeError(`The carrier adapter returned an invalid ${field.replaceAll('_', ' ')}`);
     }
+  }
+  // A window across days written as one text gives both its ends, and a start that opens no
+  // window with the estimate, alone or after it, says nothing.
+  const written = writtenWindow(normalized.expected_delivery);
+  if (written) {
+    normalized.expected_delivery = written.expected_delivery;
+    if (written.expected_delivery_from) normalized.expected_delivery_from = written.expected_delivery_from;
+    else delete normalized.expected_delivery_from;
+  }
+  if (normalized.expected_delivery_from != null && !windowOpens(normalized.expected_delivery_from, normalized.expected_delivery)) {
+    delete normalized.expected_delivery_from;
   }
   const weight = normalized.weight_kg;
   if (weight != null && (typeof weight !== 'number' || !Number.isFinite(weight) || weight < 0)) {

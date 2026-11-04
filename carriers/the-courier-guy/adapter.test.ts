@@ -69,6 +69,15 @@ describe('The Courier Guy native product references', () => {
   });
 });
 
+// A collected shipment whose newest scan is the collection, with the delivery window given.
+function moving(from: unknown, to: unknown, status = 'collected') {
+  const value = payload(); const shipment = value.shipments[0];
+  shipment.tracking_events = shipment.tracking_events.slice(3);
+  shipment.tracking_events[0].status = status;
+  Object.assign(shipment, { status, shipment_estimated_delivery_from: from, shipment_estimated_delivery_to: to });
+  return normalizeCarrierResult(parseCourierGuy(value, NUMBER));
+}
+
 describe('The Courier Guy shipment projection', () => {
   it('keeps aggregate history, explicit scan instants and pickup readiness without private messages', () => {
     const result = normalizeCarrierResult(parseCourierGuy(payload(), NUMBER));
@@ -78,8 +87,30 @@ describe('The Courier Guy shipment projection', () => {
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|recipient|shipment_time|estimated_delivery|message/);
     const declared = JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8'));
     const evidence: Record<string, boolean> = { history: Boolean(result.events?.length), location: Boolean(result.events?.[0]?.location), delivered_at: Boolean(result.delivered_at),
-      service_name: Boolean(result.service_name) };
+      service_name: Boolean(result.service_name), eta: Boolean(moving('2026-01-07T08:00:00Z', '2026-01-08T16:00:00Z').expected_delivery) };
     for (const capability of declared.capabilities) expect(evidence[capability], capability).toBe(true);
+  });
+
+  it('keeps the delivery window while the shipment is on its way, not the old one a settled shipment keeps', () => {
+    expect(moving('2026-01-07T08:00:00Z', '2026-01-08T16:00:00Z'))
+      .toMatchObject({ current_stage: 'accepted', expected_delivery_from: '2026-01-07T08:00:00Z', expected_delivery: '2026-01-08T16:00:00Z' });
+    expect(moving('2026-01-07T08:00:00Z', '2026-01-07T16:00:00Z'))
+      .toMatchObject({ expected_delivery_from: '2026-01-07T08:00:00Z', expected_delivery: '2026-01-07T16:00:00Z' });
+    // One end alone, or a window that ends before it starts, gives that end's day.
+    for (const [from, to] of [[null, '2026-01-08T16:00:00Z'], ['2026-01-09T08:00:00Z', '2026-01-08T16:00:00Z']]) {
+      const result = moving(from, to);
+      expect(result.expected_delivery).toBe('2026-01-08');
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+    // The fixture's window ended before the collection; delivered, returned and stopped shipments keep theirs.
+    const none = [moving('2026-01-01T08:00:00Z', '2026-01-02T16:00:00Z'), moving('soon', 'later'),
+      moving('2026-01-07T08:00:00Z', '2026-01-08T16:00:00Z', 'returned-to-sender'),
+      moving('2026-01-07T08:00:00Z', '2026-01-08T16:00:00Z', 'on-hold'),
+      normalizeCarrierResult(parseCourierGuy(payload(), NUMBER))];
+    for (const result of none) {
+      expect(result.expected_delivery).toBeNull();
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
   });
 
   it('rejects wrong carriers, aliases, piece references and duplicated shipment matches', () => {

@@ -70,11 +70,11 @@ describe('Dayton Freight HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/J Sample|500001|SAMPLETON|Example PKWY|8005550100|46999|40\.12|Appointment/);
   });
 
-  it('reads a partner’s status on a ten-digit PRO, the estimated day and the partner taking the freight on', () => {
+  it('reads a partner’s status on a ten-digit PRO, the appointment and the partner taking the freight on', () => {
     const result = parseDayton(fixture('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
       last_status_text: 'arrived at SAMPLE HARBOR, CT', last_update: null, last_update_local: '2026-10-14T20:50:00',
-      expected_delivery: '2026-10-16', delivery_carrier: 'a-duie-pyle', delivery_tracking_number: '111222333', summary_only: true });
+      expected_delivery: '2026-10-16 09:00–11:00', delivery_carrier: 'a-duie-pyle', delivery_tracking_number: '111222333', summary_only: true });
     expect(result).not.toHaveProperty('canonical_tracking_number');
     expect(result).not.toHaveProperty('delivered_at');
     expect(events(result)).toEqual([
@@ -94,11 +94,22 @@ describe('Dayton Freight HTTP adapter', () => {
     expect(String(fetcher.mock.calls[0]![0])).toBe(`${DAYTON_API}?numbers=000${DELIVERED}&type=Pro`);
   });
 
-  it('reads the day the page gives for the delivery until it happens', () => {
+  it('reads the appointment or the estimated day for the delivery until it happens', () => {
     const estimate = (change: (shipment: Shipment) => void) => parseDayton(transit(change), IN_TRANSIT).expected_delivery;
-    // An appointment fixes the day.
-    expect(estimate((shipment) => { shipment.appointmentFrom = '2026-10-19T08:00:00'; shipment.appointmentTo = '2026-10-19T12:00:00'; }))
-      .toBe('2026-10-19');
+    const window = (from: string | null, to: string | null) => {
+      const result = parseDayton(transit((shipment) => { shipment.appointmentFrom = from; shipment.appointmentTo = to; }), IN_TRANSIT);
+      return [result.expected_delivery_from ?? null, result.expected_delivery];
+    };
+    // An appointment within one day is its slot, one across days its days.
+    expect(parseDayton(fixture('in-transit'), IN_TRANSIT)).not.toHaveProperty('expected_delivery_from');
+    expect(window('2026-10-19T08:00:00', '2026-10-19T12:00:00')).toEqual([null, '2026-10-19 08:00–12:00']);
+    expect(window('2026-10-19T08:00:00', '2026-10-20T12:00:00')).toEqual(['2026-10-19', '2026-10-20']);
+    // A midnight end is a day without a time, and either end alone gives its day.
+    expect(window('2026-10-19T08:00:00', '2026-10-19T00:00:00')).toEqual([null, '2026-10-19']);
+    expect(window('2026-10-19T08:00:00', null)).toEqual([null, '2026-10-19']);
+    expect(window('0001-01-01T00:00:00', '2026-10-20T12:00:00')).toEqual([null, '2026-10-20']);
+    // A window that ends before it starts gives its end's day.
+    expect(window('2026-10-21T08:00:00', '2026-10-20T12:00:00')).toEqual([null, '2026-10-20']);
     expect(estimate((shipment) => { shipment.appointmentFrom = null; shipment.appointmentTo = null; })).toBe('2026-10-16');
     expect(estimate((shipment) => {
       shipment.appointmentFrom = null;

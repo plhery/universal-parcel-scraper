@@ -65,13 +65,13 @@
       "provider_code",
       "offset_timestamps",
       "eta",
+      "eta_window",
       "delivered_at",
       "service_name",
       "weight"
     ],
     "discarded": [
       "progress_rail",
-      "eta_window",
       "parcel_count",
       "dimensions",
       "order_contents",

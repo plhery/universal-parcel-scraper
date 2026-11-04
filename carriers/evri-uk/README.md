@@ -73,8 +73,9 @@ caller's deadline and cancellation signal.
   is its delivery. Points on these rails do not refine them: a ParcelShop
   arrival there is the parcel reaching its recipient's shop, not a drop-off.
 - On the delivery day a courier scan carries the window it announces. The
-  newest scan's window becomes `expected_delivery` on the British clock; a
-  later scan replaces or withdraws it. A delivery's time is `delivered_at`.
+  newest scan's window becomes the estimate on the British clock, a slot
+  within one day or its days across several; a later scan replaces or
+  withdraws it. A delivery's time is `delivered_at`.
 - `sender_name` is the account Evri names as the sender, only when Evri
   marks the parcel as neither consumer-to-consumer nor a customer return.
 - `service_name` is the delivery service Evri gives the parcel

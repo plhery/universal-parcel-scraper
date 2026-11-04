@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { classifyWording, languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -129,9 +130,9 @@ function shipmentOf(payload: unknown, number: string): Record<string, unknown> {
   return shipment;
 }
 
-/** The day of a window's start, the day the page shows for it. */
-function windowDay(window: Record<string, unknown>): string | null {
-  return clockOf(window, 'startDate')?.slice(0, 10) ?? null;
+/** The delivery window from its start to its end, on the clocks' wall time. */
+function deliveryWindow(window: Record<string, unknown>): WindowEstimate {
+  return windowEstimate(clockOf(window, 'startDate'), clockOf(window, 'endDate'));
 }
 
 /** The delivery's clock, when its window is one instant, else its day. */
@@ -209,7 +210,7 @@ export function parseDaylight(details: { status: number; body: unknown }, histor
     last_update: null,
     ...(current?.local_time ? { last_update_local: current.local_time } : {}),
     // Until the delivery, the page shows the delivery window as the estimated delivery time.
-    expected_delivery: settled ? null : windowDay(record(shipment, 'delivery')),
+    ...(settled ? { expected_delivery: null } : deliveryWindow(record(shipment, 'delivery'))),
     ...(rows.length ? {} : { summary_only: true }),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),

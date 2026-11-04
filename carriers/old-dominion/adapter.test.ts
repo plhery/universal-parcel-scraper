@@ -2,7 +2,7 @@ import { EventEmitter } from 'node:events';
 import { readFileSync } from 'node:fs';
 import { chromium } from 'playwright-core';
 import { describe, expect, it, vi } from 'vitest';
-import { normalizeCarrierResult } from '../../core/result/index.js';
+import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, normalizeOldDominionNumber, OldDominionTracker, oldDominionPro, oldDominionTraceUrl, parseOldDominionReply,
   type OldDominionReply } from './adapter.js';
@@ -112,22 +112,26 @@ describe('Old Dominion trace replies', () => {
     // The estimate falls on another day, so the appointment's day is told apart from it.
     info.updatedEta = '2026-03-11';
     const details = info.deliveryDetails as Record<string, unknown>;
-    for (const [begin, end, expected] of [
+    const estimate = (result: CarrierResult) => [result.expected_delivery_from ?? null, result.expected_delivery];
+    for (const [begin, end, from, expected] of [
       // The page shows the start's day with a single time: the end after a
       // midnight start, which it drops, or the one time of both ends.
-      ['2026-03-10 00:00:00', '2026-03-10 15:30:00', '2026-03-10'],
-      ['2026-03-10 07:30:00', '2026-03-10 07:30:00', '2026-03-10'],
-      // It shows the start's day beside any other window, or the start alone.
-      ['2026-03-10 15:00:00', '2026-03-10 00:00:00', '2026-03-10'],
-      ['2026-03-10 07:30:00', '2026-03-11 15:30:00', '2026-03-10'],
-      ['2026-03-10 07:30:00', null, '2026-03-10'],
+      ['2026-03-10 00:00:00', '2026-03-10 15:30:00', null, '2026-03-10'],
+      ['2026-03-10 07:30:00', '2026-03-10 07:30:00', null, '2026-03-10'],
+      // A window into a later day runs over its days, from a midnight start too.
+      ['2026-03-10 07:30:00', '2026-03-12 15:30:00', '2026-03-10', '2026-03-12'],
+      ['2026-03-10 00:00:00', '2026-03-12 15:30:00', '2026-03-10', '2026-03-12'],
+      // A window that ends before it starts, or the start alone, gives the start's day.
+      ['2026-03-10 15:00:00', '2026-03-10 00:00:00', null, '2026-03-10'],
+      ['2026-03-12 07:30:00', '2026-03-10 15:30:00', null, '2026-03-12'],
+      ['2026-03-10 07:30:00', null, null, '2026-03-10'],
       // A start that is no wall clock leaves the estimate.
-      ['2026-03-10T07:30:00-04:00', '2026-03-10T15:30:00-04:00', '2026-03-11'],
-      ['2026-02-30 07:30:00', '2026-02-30 15:30:00', '2026-03-11'],
-      [null, '2026-03-10 15:30:00', '2026-03-11'],
+      ['2026-03-10T07:30:00-04:00', '2026-03-10T15:30:00-04:00', null, '2026-03-11'],
+      ['2026-02-30 07:30:00', '2026-02-30 15:30:00', null, '2026-03-11'],
+      [null, '2026-03-10 15:30:00', null, '2026-03-11'],
     ]) {
       Object.assign(details, { deliveryAptBeginTime: begin, deliveryAptEndTime: end });
-      expect(parse(line(payload)).expected_delivery, `${begin} to ${end}`).toBe(expected);
+      expect(estimate(parse(line(payload))), `${begin} to ${end}`).toEqual([from, expected]);
     }
     Object.assign(details, { deliveryAptBeginTime: '2026-03-10 07:30:00', deliveryAptEndTime: '2026-03-10 15:30:00' });
     for (const status of ['Appointment Cancelled', 'Appointment Attempted', undefined]) {

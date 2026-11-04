@@ -33,10 +33,11 @@ its own entry. Tracked through the lookup its tracking page makes.
 - The event's `code` (`OHD`) stages it. The appointment event (`APP`) carries the appointment's
   time rather than a scan's and the page leaves it out of the status, so it is not kept. The
   page also hides `REC` from the history, and so does the adapter.
-- The estimate is the day of the scheduled delivery the page shows, else of the estimate event
-  (`ETD`). It is an instant without the recipient's zone, so its day is read in Eastern time,
-  where a delivery's hours anywhere in the contiguous states fall on the same date. The time
-  window and the appointment are not kept, and a closed or delivered shipment has no estimate.
+- The estimate is the scheduled delivery the page shows, else the day of the estimate event
+  (`ETD`). A delivery scheduled `Between` two times is that window; one due `By` a time gives
+  the day of `fromGMT`. These are instants without the recipient's zone, so they are read in
+  Eastern time, where a delivery's hours anywhere in the contiguous states fall on the same
+  date. The appointment is not kept, and a closed or delivered shipment has no estimate.
 - A closed or cancelled shipment (`CLS`, `CXL`) is an exception.
 - The weight is the freight lines' total, which the page shows in pounds. Their contents,
   pieces and dimensions are not kept.

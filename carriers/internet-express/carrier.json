@@ -24,6 +24,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "delivered_at",
     "service_name",
     "provider_code",
@@ -47,6 +48,7 @@
       "status",
       "history",
       "location",
+      "eta",
       "delivered_at",
       "service_name",
       "provider_code",
@@ -54,7 +56,6 @@
     ],
     "discarded": [
       "messages",
-      "eta",
       "parcel_count",
       "progress_rail"
     ],

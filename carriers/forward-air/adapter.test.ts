@@ -134,15 +134,25 @@ describe('Forward Air HTTP adapter', () => {
   });
 
   it('reads the estimate the page shows, and a weight only in pounds', () => {
-    const estimate = (window: unknown, available: unknown = '11/02/2026 09:00') => parseForwardAir(transit((shipment) => {
-      shipment.EstimatedDeliveryRange = window;
-      shipment.EstimatedAvailableDate = available;
-    }), IN_TRANSIT).expected_delivery;
-    expect(estimate('11/03/2026 08:00-11/04/2026 17:00')).toBe('2026-11-04');
-    expect(estimate(null)).toBe('2026-11-02');
-    expect(estimate('11/03/2026 08:00')).toBe('2026-11-02');
-    expect(estimate('', '')).toBeNull();
-    expect(estimate('', '02/30/2026 09:00')).toBeNull();
+    const estimate = (window: unknown, available: unknown = '11/02/2026 09:00') => {
+      const result = parseForwardAir(transit((shipment) => {
+        shipment.EstimatedDeliveryRange = window;
+        shipment.EstimatedAvailableDate = available;
+      }), IN_TRANSIT);
+      return [result.expected_delivery_from ?? null, result.expected_delivery];
+    };
+    // A window within one day is its slot on the station's clock, one across days its days.
+    expect(estimate('11/03/2026 08:00-11/03/2026 17:00')).toEqual([null, '2026-11-03 08:00–17:00']);
+    expect(estimate('11/03/2026 08:00 - 11/04/2026 17:00')).toEqual(['2026-11-03', '2026-11-04']);
+    // A window that ends before it starts, or whose start is no real clock, gives its end's day.
+    expect(estimate('11/04/2026 08:00-11/03/2026 17:00')).toEqual([null, '2026-11-03']);
+    expect(estimate('02/30/2026 08:00-11/03/2026 17:00')).toEqual([null, '2026-11-03']);
+    // One whose end is no real clock gives none.
+    expect(estimate('11/03/2026 08:00-02/30/2026 17:00')).toEqual([null, null]);
+    expect(estimate(null)).toEqual([null, '2026-11-02']);
+    expect(estimate('11/03/2026 08:00')).toEqual([null, '2026-11-02']);
+    expect(estimate('', '')).toEqual([null, null]);
+    expect(estimate('', '02/30/2026 09:00')).toEqual([null, null]);
     const weight = (value: unknown, unit: unknown) => parseForwardAir(transit((shipment) => {
       shipment.Weight = value;
       shipment.WeightType = unit;

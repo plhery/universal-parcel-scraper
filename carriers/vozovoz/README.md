@@ -36,8 +36,9 @@ order's status and dates rather than a scan history.
   names no route, so it stays in transit.
 - Dates come to the second without a zone. Russia spans eleven zones and nothing in the reply
   says whose clock it is, so they stay `local_time`.
-- The page shows the day of `arrivalFrom` as the estimated delivery. It becomes
-  `expected_delivery` until the order is issued or cancelled, and is no milestone.
+- The estimated delivery is the window from `arrivalFrom` to `arrivalTo`, of which the page
+  shows the day of `arrivalFrom`; midnight stands for the day alone. It is the estimate until
+  the order is issued or cancelled, and is no milestone.
 - Only the number, the status and the order's dates are kept; the reply's other details are not.
 
 ## Limitations

@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -63,6 +64,18 @@ function clockOf(row: Record<string, unknown>, key: string): string | null {
   // The clock's fields are checked here, since date libraries accept hour 24.
   if (!day || Number(hour) > 23 || Number(minute) > 59 || Number(second) > 59) invalid(`CCFS returned an invalid ${key}`);
   return `${day}T${hour}:${minute}:${second}`;
+}
+
+/**
+ * The delivery window from `ExpectedAfter` to `ExpectedBefore`, on the clocks' wall time. A window
+ * of days writes its ends at midnight, which stands for no time.
+ */
+function deliveryWindow(shipment: Record<string, unknown>): WindowEstimate {
+  const end = (key: string) => {
+    const clock = clockOf(shipment, key);
+    return clock?.endsWith('T00:00:00') ? clock.slice(0, 10) : clock;
+  };
+  return windowEstimate(end('ExpectedAfter'), end('ExpectedBefore'));
 }
 
 /** A row's town and state, without a ZIP code; a place still holding a digit is left out. */
@@ -185,8 +198,8 @@ export function parseCcfs(reply: { status: number; body: unknown }, raw: string)
     last_status_text: fromRail ? rail.text : current?.description ?? (status || null),
     last_update: null,
     ...(current?.local_time ? { last_update_local: current.local_time } : {}),
-    // Until the delivery, the page shows the day of the delivery window's start as the estimate.
-    expected_delivery: settled ? null : clockOf(shipment, 'ExpectedAfter')?.slice(0, 10) ?? null,
+    // Until the delivery, the delivery window is the estimate.
+    ...(settled ? { expected_delivery: null } : deliveryWindow(shipment)),
     // The page heads the shipment with its pro number.
     ...(pro !== number && PRO.test(pro) ? { canonical_tracking_number: pro } : {}),
     ...(rows.length ? {} : { summary_only: true }),

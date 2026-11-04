@@ -63,17 +63,46 @@ describe('DHL eCommerce Poland parser', () => {
     expect(parseDhlEcommercePl(lower, NUMBER).current_stage).toBe('delivered');
   });
 
-  it('files an unrecorded code under its timeline step, without a time, and keeps the planned day', () => {
+  it('files an unrecorded code under its timeline step, without a time, and keeps the planned delivery', () => {
     const payload = clone();
     Object.assign(shipment(payload), { status: 'TT_LK', timelineStep: 'Delivery', step: '', title: 'Out with the courier',
       receiptDateUtc: null, planOfDeliveryFromUtc: '2026-03-04T23:30:00Z', planOfDeliveryToUtc: '2026-03-05T11:00:00Z' });
     const result = parseDhlEcommercePl(payload, NUMBER);
-    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: null, expected_delivery: '2026-03-05' });
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update: null,
+      expected_delivery_from: '2026-03-05T00:30:00+01:00', expected_delivery: '2026-03-05T12:00:00+01:00' });
     expect(result.delivered_at).toBeUndefined();
     expect(result).toMatchObject({ last_status_text: 'Out with the courier', summary_only: true, events: [] });
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'Route')).toEqual({ description: 'On its way', stage: 'in_transit' });
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'Somewhere')).toEqual({ description: 'Tt new code' });
     expect(dhlEcommercePlStatus('TT_NEW_CODE', 'None')).toEqual({ description: 'Shipment preparation' });
+  });
+
+  it('plans the delivery by the portal’s hours on the Polish clock, else by its day', () => {
+    const planned = (plan: Record<string, unknown>) => {
+      const payload = clone();
+      Object.assign(shipment(payload), { status: 'TT_LK', timelineStep: 'Delivery', step: 'With delivery courier', receiptDateUtc: null, ...plan });
+      return normalizeCarrierResult(parseDhlEcommercePl(payload, NUMBER));
+    };
+    // The hours are instants on Poland's clock, in winter and in summer.
+    expect(planned({ deliveryDateUtc: '2026-03-04T23:00:00Z', planOfDeliveryFromUtc: '2026-03-05T07:00:00Z', planOfDeliveryToUtc: '2026-03-05T11:00:00Z' }))
+      .toMatchObject({ expected_delivery_from: '2026-03-05T08:00:00+01:00', expected_delivery: '2026-03-05T12:00:00+01:00' });
+    expect(planned({ planOfDeliveryFromUtc: '2026-07-06T13:00:00Z', planOfDeliveryToUtc: '2026-07-06T16:00:00Z', deliveryUpToUtc: '2026-07-06T16:00:00Z' }))
+      .toMatchObject({ expected_delivery_from: '2026-07-06T15:00:00+02:00', expected_delivery: '2026-07-06T18:00:00+02:00' });
+    // Hours that close before they open give the closing day.
+    const inverted = planned({ planOfDeliveryFromUtc: '2026-03-05T11:00:00Z', planOfDeliveryToUtc: '2026-03-05T07:00:00Z' });
+    expect(inverted.expected_delivery).toBe('2026-03-05');
+    expect(inverted).not.toHaveProperty('expected_delivery_from');
+    // Without both hours, the start's day, else the delivery day, read on the Polish clock.
+    for (const [plan, day] of [
+      [{ planOfDeliveryFromUtc: '2026-03-04T23:30:00Z' }, '2026-03-05'],
+      [{ deliveryDateUtc: '2026-03-04T23:00:00Z', planOfDeliveryToUtc: '2026-03-05T11:00:00Z' }, '2026-03-05'],
+      [{ deliveryDateUtc: '2026-03-04T23:00:00Z' }, '2026-03-05'],
+      [{}, null],
+    ] as const) {
+      const result = planned(plan);
+      expect(result.expected_delivery).toBe(day);
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
   });
 
   it('reads absence only from an entry without a number type', () => {

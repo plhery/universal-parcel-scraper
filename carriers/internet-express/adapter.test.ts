@@ -84,6 +84,32 @@ describe('Internet Express HTTP adapter', () => {
     expect(unknown).not.toHaveProperty('current_stage');
   });
 
+  it('keeps the delivery window while the shipment is on its way, not the old one a settled shipment keeps', () => {
+    expect(parseInternetExpress(fixture('in-transit'), IN_TRANSIT)).toMatchObject({
+      expected_delivery_from: '2026-04-13T06:00:00Z', expected_delivery: '2026-04-14T15:00:00Z' });
+    const window = (from: unknown, to: unknown, status = 'in-transit') => parseInternetExpress(changed('in-transit', (shipment) => {
+      shipment.status = status;
+      shipment.shipment_estimated_delivery_from = from;
+      shipment.shipment_estimated_delivery_to = to;
+    }), IN_TRANSIT);
+    expect(window('2026-04-13T06:00:00Z', '2026-04-13T15:00:00Z'))
+      .toMatchObject({ expected_delivery_from: '2026-04-13T06:00:00Z', expected_delivery: '2026-04-13T15:00:00Z' });
+    // One end alone, or a window that ends before it starts, gives that end's day.
+    for (const [from, to, day] of [[null, '2026-04-14T15:00:00Z', '2026-04-14'], ['2026-04-15T06:00:00Z', '2026-04-14T15:00:00Z', '2026-04-14']]) {
+      const result = window(from, to);
+      expect(result.expected_delivery).toBe(day);
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+    // A window that ended before the newest scan, an unreadable one, and any window once delivered or settled say nothing.
+    const none = [window('2026-04-10T06:00:00Z', '2026-04-11T15:00:00Z'), window(null, null), window('soon', 'later'),
+      window('2026-04-13T06:00:00Z', '2026-04-14T15:00:00Z', 'cancelled'), window('2026-04-13T06:00:00Z', '2026-04-14T15:00:00Z', 'returned-to-sender'),
+      window('2026-04-13T06:00:00Z', '2026-04-14T15:00:00Z', 'synthetic-state'), parseInternetExpress(fixture('delivered'), DELIVERED)];
+    for (const result of none) {
+      expect(result.expected_delivery).toBeNull();
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+  });
+
   it('counts a shipment only when it is Internet Express’s and carries the reference asked', () => {
     expect(parseInternetExpress(fixture('delivered'), 'zzzzz2').status).toBe('delivered');
     expect(parseInternetExpress(changed('delivered', (shipment) => { shipment.custom_tracking_reference = DELIVERED.toLowerCase(); }), DELIVERED).status)

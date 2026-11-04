@@ -33,8 +33,10 @@ failed collection attempts and cancellation. Movement or completion still requir
 a complete shipment count.
 
 Explicit scan offsets establish instants. Offsetless or incomplete clocks remain
-local evidence. Estimates are omitted because delivered responses retain old
-promises and their active-shipment provenance is unverified.
+local evidence. The estimate is the shipment's delivery window,
+`shipment_estimated_delivery_from` to `shipment_estimated_delivery_to`. Delivered
+responses retain old promises, so it is dropped once the shipment is delivered,
+returned or in exception, and when it ended before the newest scan.
 
 Links to the `/track` page and the root of the portal and tracking hosts name
 The Courier Guy; their other pages name none.

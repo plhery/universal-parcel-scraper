@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -119,10 +120,14 @@ function handoff(shipment: Record<string, unknown>): Pick<CarrierResult, 'delive
   return Object.hasOwn(PARTNERS, code) && PARTNER_PRO.test(pro) ? { delivery_carrier: PARTNERS[code]!, delivery_tracking_number: pro } : {};
 }
 
-/** The day the page gives for the delivery: the appointment's, else the estimate. */
-function estimateOf(shipment: Record<string, unknown>): string | null {
-  const appointment = clockOf(shipment, 'appointmentTo') ?? clockOf(shipment, 'appointmentFrom');
-  return (appointment ?? clockOf(shipment, 'estimatedDeliveryDate'))?.slice(0, 10) ?? null;
+/**
+ * The delivery's estimate: the appointment, its slot within one day or its
+ * days across several, or the day of either end alone; else the estimated day.
+ */
+function estimateOf(shipment: Record<string, unknown>): WindowEstimate {
+  const [from, to] = [clockOf(shipment, 'appointmentFrom'), clockOf(shipment, 'appointmentTo')];
+  if (from || to) return windowEstimate(from, to);
+  return { expected_delivery: clockOf(shipment, 'estimatedDeliveryDate')?.slice(0, 10) ?? null };
 }
 
 function milestone(clock: string, description: string, stage: 'accepted' | 'customs' | 'in_transit'): CarrierEvent {
@@ -187,7 +192,7 @@ export function parseDayton(payload: unknown, raw: string): CarrierResult {
     last_status_text: current.description || null,
     last_update: null,
     ...(current.local_time ? { last_update_local: current.local_time } : {}),
-    expected_delivery: settled ? null : estimateOf(shipment),
+    ...(settled ? { expected_delivery: null } : estimateOf(shipment)),
     ...handoff(shipment),
     ...(pro !== number ? { canonical_tracking_number: pro } : {}),
     summary_only: true,

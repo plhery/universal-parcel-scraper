@@ -63,10 +63,10 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "sender_name",
       "sender_address",
       "recipient_name",

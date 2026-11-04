@@ -13,6 +13,7 @@ import { DateTime } from 'luxon';
 import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { calendarDay, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { UpstreamHttpError, clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -48,22 +49,18 @@ function writtenDay(value: unknown): string | null {
 /**
  * The booked slot as the tracking page shows it: the day it starts, then
  * `HH:mm–HH:mm`. The endpoint sends UTC instants and the page prints them on
- * French clocks, so they are restated on Paris time. A slot whose end is
- * missing, not after its start or on another day keeps only its day, and one
- * without an offset the day it is written with. A slot that ended before the
- * newest milestone is dropped.
+ * French clocks, so they are restated on Paris time. A slot across days runs
+ * from its first day to its last. One whose end is missing or not after its
+ * start keeps only the day it starts, and one without an offset the day it is
+ * written with. A slot that ended before the newest milestone is dropped.
  */
-function bookedSlot(startsAt: unknown, endsAt: unknown, newest: number): string | null {
+function bookedSlot(startsAt: unknown, endsAt: unknown, newest: number): WindowEstimate {
   const start = explicitOffsetTime(startsAt);
-  if (!start) return writtenDay(startsAt);
+  if (!start) return { expected_delivery: writtenDay(startsAt) };
   const end = explicitOffsetTime(endsAt);
-  if ((end ?? start).timestamp < newest) return null;
+  if ((end ?? start).timestamp < newest) return { expected_delivery: null };
   const clock = (time: ParsedTime) => DateTime.fromMillis(time.timestamp, { zone: TIMEZONE }).toFormat('yyyy-MM-dd HH:mm');
-  const first = clock(start);
-  const last = end ? clock(end) : '';
-  return last.slice(0, 10) === first.slice(0, 10) && first < last
-    ? `${first}–${last.slice(11)}`
-    : first.slice(0, 10);
+  return windowEstimate(clock(start), end && end.timestamp > start.timestamp ? clock(end) : null);
 }
 
 function saysNotFound(value: unknown): boolean {
@@ -146,7 +143,7 @@ export function parseColiswebTrackingResponse(
     ...(current.stage ? { current_stage: current.stage } : {}),
     last_status_text: current.description,
     last_update: lastUpdate,
-    expected_delivery: planned ? bookedSlot(payload.startsAt, payload.endsAt, newest) : null,
+    ...(planned ? bookedSlot(payload.startsAt, payload.endsAt, newest) : { expected_delivery: null }),
     ...(sender ? { sender_name: sender } : {}),
     timezone: TIMEZONE,
     events,

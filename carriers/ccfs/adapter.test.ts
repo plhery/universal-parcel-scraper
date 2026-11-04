@@ -107,6 +107,33 @@ describe('CCFS HTTP adapter', () => {
     expect(events(descending)).toEqual(events(result));
   });
 
+  it('gives the delivery window from both its ends, a window of days by its days, until the delivery', () => {
+    const windowed = (after: unknown, before: unknown) => parseCcfs(search('in-transit', (item) => {
+      item.ExpectedAfter = after;
+      item.ExpectedBefore = before;
+    }), IN_TRANSIT);
+    // Midnight at both ends is the day alone.
+    expect(parseCcfs(search('in-transit'), IN_TRANSIT)).not.toHaveProperty('expected_delivery_from');
+    // Hours on one day are its slot.
+    const slot = windowed('2026-10-16T08:00:00', '2026-10-16T17:00:00');
+    expect(slot).toMatchObject({ expected_delivery: '2026-10-16 08:00–17:00' });
+    expect(slot).not.toHaveProperty('expected_delivery_from');
+    // Across days the window runs from day to day.
+    expect(windowed('2026-10-16T00:00:00', '2026-10-19T00:00:00')).toMatchObject({ expected_delivery_from: '2026-10-16', expected_delivery: '2026-10-19' });
+    expect(windowed('2026-10-16T08:00:00', '2026-10-19T17:00:00')).toMatchObject({ expected_delivery_from: '2026-10-16', expected_delivery: '2026-10-19' });
+    // One end alone, or a window that ends before it opens, is a day.
+    for (const [after, before, day] of [['2026-10-16T08:00:00', null, '2026-10-16'], [null, '2026-10-19T17:00:00', '2026-10-19'],
+      ['2026-10-19T08:00:00', '2026-10-16T17:00:00', '2026-10-16']] as const) {
+      const result = windowed(after, before);
+      expect(result.expected_delivery).toBe(day);
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+    // A delivered shipment has no estimate, whatever its window.
+    const delivered = parseCcfs(search('delivered'), DELIVERED);
+    expect(delivered.expected_delivery).toBeNull();
+    expect(delivered).not.toHaveProperty('expected_delivery_from');
+  });
+
   it('takes the further of the newest staged row and the progress rail, and lets a delivery or a problem settle it', () => {
     // The rail ahead of every row is the current state, without a clock.
     const out = parseCcfs(search('in-transit', (item) => { item.Progress!.OutForDelivery = true; }), IN_TRANSIT);
@@ -189,6 +216,7 @@ describe('CCFS HTTP adapter', () => {
       (item: Shipment) => { item.Progress = 'In Transit' as never; },
       (item: Shipment) => { (item.Progress as Row).InTransit = 'yes'; },
       (item: Shipment) => { item.ExpectedAfter = '10/16/2026'; },
+      (item: Shipment) => { item.ExpectedBefore = '2026-10-16T17:00:00Z'; },
       (item: Shipment) => { item.Locations![0]!.Status = null; },
       (item: Shipment) => { item.Locations![0]!.Status = ['Scanned on dock']; },
       (item: Shipment) => { item.Locations![0]!.Date = null; },

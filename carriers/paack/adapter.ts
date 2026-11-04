@@ -30,6 +30,7 @@ import { lookupBudget, type AdapterFactory, type TrackingContext } from '../../c
 import { carrierErrorKind, IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs } from '../../core/runner/networkRetry.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
@@ -91,21 +92,18 @@ function deliveryZone(country: unknown, postcode: string): string {
 }
 
 /**
- * `expected_delivery_ts` as the page shows it: `YYYY-MM-DD HH:MM–HH:MM` on the
- * delivery clock when both ends are instants within one day, else the day
- * alone. A window that ended before the newest scan is dropped.
+ * `expected_delivery_ts` as the page shows it, on the delivery clock:
+ * `YYYY-MM-DD HH:MM–HH:MM` when both ends are instants within one day, its
+ * first and last days across days, else the last day alone. A window that
+ * ended before the newest scan is dropped.
  */
-function expectedDelivery(window: JsonObject, zone: string, newest: number): string | null {
+function expectedDelivery(window: JsonObject, zone: string, newest: number): WindowEstimate {
   const start = explicitOffsetTime(window.start);
   const end = explicitOffsetTime(window.end) ?? start;
-  if (!end) return normalizedDate(window.end ?? window.start);
-  if (end.timestamp < newest) return null;
+  if (!end) return { expected_delivery: normalizedDate(window.end ?? window.start) };
+  if (end.timestamp < newest) return { expected_delivery: null };
   const clock = (time: ParsedTime) => DateTime.fromMillis(time.timestamp, { zone }).toFormat('yyyy-MM-dd HH:mm');
-  const last = clock(end);
-  const first = start ? clock(start) : last;
-  return first.slice(0, 10) === last.slice(0, 10) && first < last
-    ? `${first}–${last.slice(11)}`
-    : last.slice(0, 10);
+  return windowEstimate(start && start.timestamp < end.timestamp ? clock(start) : null, clock(end));
 }
 
 function routeData(payload: unknown): JsonObject {
@@ -334,14 +332,14 @@ export function parsePaackTrackingResponse(
   // A failed attempt keeps the window: it is the new attempt's.
   const expected = isRecord(order.expected_delivery_ts) && !['delivered', 'returned', 'exception'].includes(current.stage)
     ? expectedDelivery(order.expected_delivery_ts, zone, newest)
-    : null;
+    : { expected_delivery: null };
   const pickup = current.stage === 'ready_for_pickup' ? pickupPoint(order) : '';
   return {
     status: current.status,
     current_stage: current.stage,
     last_status_text: current.description,
     last_update: newer?.event.time ?? activeTime?.iso ?? events[0]?.time ?? null,
-    expected_delivery: expected,
+    ...expected,
     ...(pickup ? { pickup_point: pickup } : {}),
     timezone: zone,
     events,

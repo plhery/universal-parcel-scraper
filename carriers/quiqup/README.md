@@ -26,9 +26,9 @@ through the lookup its tracking page makes.
   each label.
 - The order's current state decides its stage. A courier who cannot collect the parcel moves
   nothing, so that state has no stage.
-- The estimate is the end of the delivery window, which the page shows until the order is
-  delivered, held, missed, cancelled or returned. A customer's return the courier collects gets
-  none.
+- The estimate is the delivery window, `delivery_after` to `delivery_before`, which the page
+  shows until the order is delivered, held, missed, cancelled or returned. Without a start
+  before its end, it is the end alone. A customer's return the courier collects gets none.
 - On the page, the order's phone number opens a card with the delivery address, the courier,
   the payment and the delivery code. The adapter never sends a phone number. The reply to the
   number alone has the merchant's own order number, which is not kept.

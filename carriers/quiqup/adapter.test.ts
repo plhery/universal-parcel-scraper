@@ -68,14 +68,29 @@ describe('Quiqup HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC|partner_same_day/);
   });
 
-  it('keeps the time an order on its way is due by, and a hold it came back from', () => {
+  it('keeps the window an order on its way is due in, and a hold it came back from', () => {
     const result = parseQuiqup(fixture('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In transit',
-      last_update: '2026-06-02T11:12:46+04:00', expected_delivery: '2026-06-03T22:00:00+04:00' });
+      last_update: '2026-06-02T11:12:46+04:00', expected_delivery_from: '2026-06-02T08:00:00+04:00',
+      expected_delivery: '2026-06-03T22:00:00+04:00' });
     expect(result).not.toHaveProperty('delivered_at');
     expect(result.events!.map((event) => [event.provider_code, event.stage])).toEqual([
       ['in_transit', 'in_transit'], ['ready_for_collection', 'registered'], ['picking_started', 'registered'], ['on_hold', 'exception'],
     ]);
+  });
+
+  it('keeps a window within one day as its two instants, and the end alone without a start before it', () => {
+    const due = (window: Row) => parseQuiqup(changed('in-transit', (order) => { order.delivery_time = window; }), IN_TRANSIT);
+    expect(due({ delivery_after: '2026-06-03T14:00:00.000+04:00', delivery_before: '2026-06-03T22:00:00.000+04:00' }))
+      .toMatchObject({ expected_delivery_from: '2026-06-03T14:00:00+04:00', expected_delivery: '2026-06-03T22:00:00+04:00' });
+    for (const start of [undefined, null, '2026-06-03 08:00', '2026-06-03T22:00:00.000+04:00', '2026-06-04T08:00:00.000+04:00']) {
+      const result = due({ delivery_after: start, delivery_before: '2026-06-03T22:00:00.000+04:00' });
+      expect(result.expected_delivery, String(start)).toBe('2026-06-03T22:00:00+04:00');
+      expect(result, String(start)).not.toHaveProperty('expected_delivery_from');
+    }
+    const held = parseQuiqup(changed('in-transit', (order) => { order.state = 'on_hold'; }), IN_TRANSIT);
+    expect(held.expected_delivery).toBeNull();
+    expect(held).not.toHaveProperty('expected_delivery_from');
   });
 
   it('promises no time once the order is held, missed, cancelled, returned or a customer’s return', () => {

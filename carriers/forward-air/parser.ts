@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -133,14 +134,18 @@ function day(value: string): string | null {
 }
 
 /**
- * The day the page shows as the expected delivery: the end of the delivery
- * window when there is one, else the day the freight is due at the
- * destination station.
+ * The estimate the page shows: the delivery window when there is one, its
+ * slot within one day or its days across several, on the station's wall clock;
+ * else the day the freight is due at the destination station. A window whose
+ * end is no real clock gives none.
  */
-function estimate(record: Record<string, unknown>): string | null {
+function estimate(record: Record<string, unknown>): WindowEstimate {
   const window = WINDOW.exec(text(record, 'EstimatedDeliveryRange', 64));
-  if (window) return day(window[2]!);
-  return day(text(record, 'EstimatedAvailableDate', 32));
+  if (window) {
+    const end = wallClock(window[2]!);
+    return end ? windowEstimate(wallClock(window[1]!), end) : { expected_delivery: null };
+  }
+  return { expected_delivery: day(text(record, 'EstimatedAvailableDate', 32)) };
 }
 
 /** The shipment's weight, which the reply gives in pounds (`WeightType` `L`), in kilograms. */
@@ -196,7 +201,7 @@ export function parseForwardAir(payload: unknown, raw: string): CarrierResult {
   const delivery = events.find((event) => event.stage === 'delivered');
   const staged = delivery ?? events.find((event) => event.stage);
   const stage = staged?.stage as Stage | undefined;
-  const expected = stage === 'delivered' || stage === 'returned' ? null : estimate(shipment.record);
+  const expected = stage === 'delivered' || stage === 'returned' ? { expected_delivery: null } : estimate(shipment.record);
   const kilograms = weight(shipment.record);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
@@ -204,7 +209,7 @@ export function parseForwardAir(payload: unknown, raw: string): CarrierResult {
     last_status_text: newest.description!,
     last_update: newest.time ?? null,
     ...(newest.local_time ? { last_update_local: newest.local_time } : {}),
-    expected_delivery: expected,
+    ...expected,
     ...(delivery?.time ? { delivered_at: delivery.time } : {}),
     ...(kilograms ? { weight_kg: kilograms } : {}),
     events: events.slice(0, MAX_EVENTS),

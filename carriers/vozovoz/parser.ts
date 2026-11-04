@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -67,6 +68,12 @@ function clock(dates: Record<string, unknown>, key: string): string | undefined 
   return raw;
 }
 
+/** A window's end, a day alone when it falls at midnight, as an estimate of days writes it. */
+function windowEnd(dates: Record<string, unknown>, key: string): string | undefined {
+  const value = clock(dates, key);
+  return value?.endsWith('T00:00:00') ? value.slice(0, 10) : value;
+}
+
 const named = (payload: Record<string, unknown>) =>
   PARTIES.some((key) => payload[key] !== undefined && payload[key] !== null && payload[key] !== '');
 
@@ -102,8 +109,8 @@ export function parseVozovoz(payload: unknown, raw: string): CarrierResult {
 
   const created = clock(dates, 'created');
   const given = clock(dates, 'given');
-  // The page shows this day as the estimated delivery; it is no milestone.
-  const arrival = clock(dates, 'arrivalFrom');
+  // The estimated delivery's window; it is no milestone.
+  const arrival = windowEstimate(windowEnd(dates, 'arrivalFrom'), windowEnd(dates, 'arrivalTo'));
   const events: CarrierEvent[] = [];
   // The issue date belongs to the order's final status, which names what it was: an issue, or a finished group pickup.
   if (given && flags.isGiven) {
@@ -125,7 +132,7 @@ export function parseVozovoz(payload: unknown, raw: string): CarrierResult {
     last_status_text: message || null,
     last_update: null,
     ...(events[0] ? { last_update_local: events[0].local_time } : {}),
-    expected_delivery: settled || !arrival ? null : arrival.slice(0, 10),
+    ...(settled ? { expected_delivery: null } : arrival),
     summary_only: true,
     events,
   };

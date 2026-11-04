@@ -33,7 +33,8 @@ page makes.
 - The page's progress rail runs from the pickup request to the delivery. A delivery, from a row
   or the rail, settles the shipment; a problem in the newest staged row comes next; otherwise
   the further of that row and the rail decides. A rail step ahead of every row has no clock.
-- Until the delivery, the estimate is the day the delivery window opens.
+- Until the delivery, the estimate is the delivery window, `ExpectedAfter` to `ExpectedBefore`.
+  A window of days writes midnight at its ends, which stands for no time.
 - A freight bill number's result is headed by the shipment's pro number, as the page does.
 - The map covers the status descriptions CCFS publishes at
   `www.ccfs.com/api/public/Service/StatusDescription`. Notices, notifications, appointments and

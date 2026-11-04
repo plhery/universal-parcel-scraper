@@ -29,12 +29,14 @@ the adapter makes the lookup that portal makes.
   remarks, is not kept.
 - Every clock carries its UTC `Z`, so scans are instants.
 - A failed collection is still `registered`: the parcel waits at the sender for the next try.
-- The service level name is `service_name`. The delivery estimate is not kept: a delivered
-  shipment keeps its old window.
+- The service level name is `service_name`. The estimate is the shipment's delivery window,
+  `shipment_estimated_delivery_from` to `shipment_estimated_delivery_to`. A delivered shipment
+  keeps its old window, so the estimate is dropped once the shipment is delivered, returned or
+  in exception, and when it ended before the newest scan.
 
 ## Limitations
 
-- No estimate, piece count or hub names.
+- No piece count or hub names.
 - A piece reference (the waybill reference, `/` and the piece number) does not pass input
   validation, so pieces cannot be looked up on their own.
 

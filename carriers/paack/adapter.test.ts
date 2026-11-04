@@ -598,19 +598,36 @@ describe('Paack delivery window', () => {
     ['PT', '4445-027', 'Europe/Lisbon', '2024-07-28 13:00–14:00'],
     ['GB', 'SW1A 1AA', 'Europe/London', '2024-07-28 13:00–14:00'],
   ])('shows a slot in %s (%s) on the %s clock', (country, postcode, timezone, window) => {
-    expect(parsePaackTrackingResponse(labelRoute({
+    const result = parsePaackTrackingResponse(labelRoute({
       delivery_address: { country, post_code: postcode },
       expected_delivery_ts: slot,
-    }), postcode)).toMatchObject({ expected_delivery: window, timezone });
+    }), postcode);
+    expect(result).toMatchObject({ expected_delivery: window, timezone });
+    expect(result).not.toHaveProperty('expected_delivery_from');
   });
 
-  it('keeps the day alone across midnight or without an offset', () => {
-    expect(parsePaackTrackingResponse(labelRoute({
-      expected_delivery_ts: { start: '2024-07-28T20:00:00.000Z', end: '2024-07-28T22:30:00.000Z' },
-    }), LABEL_POSTCODE).expected_delivery).toBe('2024-07-29');
-    expect(parsePaackTrackingResponse(labelRoute({
-      expected_delivery_ts: { start: '2024-07-28T09:00:00', end: '2024-07-28T22:00:00' },
-    }), LABEL_POSTCODE).expected_delivery).toBe('2024-07-28');
+  it('keeps the first and last days of a window across days on the delivery clock', () => {
+    const window = (start: string, end: string) => parsePaackTrackingResponse(labelRoute({
+      expected_delivery_ts: { start, end },
+    }), LABEL_POSTCODE);
+    expect(window('2024-07-28T07:00:00.000Z', '2024-07-30T18:00:00.000Z'))
+      .toMatchObject({ expected_delivery_from: '2024-07-28', expected_delivery: '2024-07-30' });
+    // 22:00 to 00:30 on Paris clocks.
+    expect(window('2024-07-28T20:00:00.000Z', '2024-07-28T22:30:00.000Z'))
+      .toMatchObject({ expected_delivery_from: '2024-07-28', expected_delivery: '2024-07-29' });
+  });
+
+  it('keeps the last day alone without an offset, or for a window that does not end after it starts', () => {
+    for (const [start, end, day] of [
+      ['2024-07-28T09:00:00', '2024-07-28T22:00:00', '2024-07-28'],
+      ['2024-07-28T09:00:00', '2024-07-30T22:00:00', '2024-07-30'],
+      ['2024-07-29T12:00:00.000Z', '2024-07-29T12:00:00.000Z', '2024-07-29'],
+      ['2024-07-30T12:00:00.000Z', '2024-07-29T12:00:00.000Z', '2024-07-29'],
+    ]) {
+      const result = parsePaackTrackingResponse(labelRoute({ expected_delivery_ts: { start, end } }), LABEL_POSTCODE);
+      expect(result.expected_delivery, `${start} ${end}`).toBe(day);
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
   });
 
   it('drops a window that ended before the newest scan', () => {

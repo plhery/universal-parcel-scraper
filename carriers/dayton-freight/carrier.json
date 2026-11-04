@@ -62,11 +62,11 @@
       "location",
       "provider_code",
       "eta",
+      "eta_window",
       "delivery_partner",
       "delivery_tracking_number"
     ],
     "discarded": [
-      "eta_window",
       "weight",
       "parcel_count",
       "signatory",

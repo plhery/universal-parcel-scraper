@@ -3,6 +3,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, R
   TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { calendarDay, explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
@@ -89,23 +90,28 @@ function etaDay(value: unknown): string | null {
   return match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null;
 }
 
+/** An appointment end, a wall clock without an offset, as `YYYY-MM-DD HH:mm`. */
+function appointmentTime(value: unknown): string | null {
+  const match = /^(\d{4})-(\d{2})-(\d{2}) ([01]\d|2[0-3]):([0-5]\d):[0-5]\d$/.exec(clean(value, 32));
+  const day = match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null;
+  return day ? `${day} ${match![4]}:${match![5]}` : null;
+}
+
 /**
  * A confirmed delivery appointment, which the trace page shows as "Appointment
- * Scheduled": the start's day and its window, or a single time when the start
- * is midnight, which the page drops, or equals the end. Both ends are wall
- * clocks without an offset, so the appointment stays local text: the window
- * `YYYY-MM-DD HH:mm–HH:mm` when it lies within that day and starts before it
- * ends, else that day alone. The pickup window, which can end before it
- * starts, is never read.
+ * Scheduled". Both ends are wall clocks without an offset, so the appointment
+ * stays on the service's own clock: `YYYY-MM-DD HH:mm–HH:mm` when it lies
+ * within one day and starts before it ends, its days when it runs into another
+ * one, else the start's day alone. A midnight start, which the page drops,
+ * gives no time. The pickup window, which can end before it starts, is never
+ * read.
  */
-function deliveryWindow(details: unknown): string | null {
+function deliveryWindow(details: unknown): WindowEstimate | null {
   if (!isRecord(details) || clean(details.deliveryAppointmentStatus, 40) !== 'Appointment Set/Confirmed') return null;
-  const ends = [details.deliveryAptBeginTime, details.deliveryAptEndTime]
-    .map(value => /^(\d{4})-(\d{2})-(\d{2}) ([01]\d|2[0-3]):([0-5]\d):[0-5]\d$/.exec(clean(value, 32)));
-  const days = ends.map(match => match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null);
-  const clocks = ends.map(match => match ? `${match[4]}:${match[5]}` : '');
-  if (!days[0]) return null;
-  return days[0] === days[1] && clocks[0] !== '00:00' && clocks[0]! < clocks[1]! ? `${days[0]} ${clocks[0]}–${clocks[1]}` : days[0];
+  const begin = appointmentTime(details.deliveryAptBeginTime);
+  const end = appointmentTime(details.deliveryAptEndTime);
+  if (!begin) return null;
+  return windowEstimate(begin.endsWith(' 00:00') ? begin.slice(0, 10) : begin, end && end > begin ? end : null);
 }
 
 interface Scan { event: CarrierEvent; timestamp: number; key: string }
@@ -155,7 +161,8 @@ function shipment(payload: Record<string, unknown>, pro: string, number: string)
     ...(current ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: latest.event.description ?? null,
     last_update: latest.event.time ?? null,
-    expected_delivery: delivered ? null : deliveryWindow(info.deliveryDetails) ?? etaDay(info.updatedEta) ?? etaDay(info.standardEta),
+    ...(delivered ? { expected_delivery: null }
+      : deliveryWindow(info.deliveryDetails) ?? { expected_delivery: etaDay(info.updatedEta) ?? etaDay(info.standardEta) }),
     delivered_at: handover?.event.time ?? null,
     ...(weight !== null ? { weight_kg: weight } : {}),
     events: scans.slice(0, 100).map(item => item.event),

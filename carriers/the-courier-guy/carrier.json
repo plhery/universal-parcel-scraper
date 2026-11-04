@@ -26,6 +26,7 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
     "delivered_at",
     "service_name"
   ],
@@ -43,14 +44,14 @@
       "status",
       "history",
       "location",
+      "eta",
       "delivered_at",
       "service_name"
     ],
     "discarded": [
       "messages",
       "contact_details",
-      "proof_images",
-      "eta"
+      "proof_images"
     ],
     "unavailable": []
   },

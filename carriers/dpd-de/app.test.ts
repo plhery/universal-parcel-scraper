@@ -78,14 +78,16 @@ describe('DPD Germany app service', () => {
   });
 
   it.each([
-    ['naive clocks', '2026-01-04T10:15:00', '2026-01-04T12:45:00', '2026-01-04 10:15–12:45'],
-    ['a window crossing midnight', '2026-01-04T23:30:00+01:00', '2026-01-05T00:30:00+01:00', '2026-01-04 23:30–2026-01-05 00:30'],
-    ['source UTC clocks', '2026-01-04T09:15:00Z', '2026-01-04T11:45:00Z', '2026-01-04 10:15–12:45'],
-    ['offsets crossing a calendar boundary', '2026-01-05T00:30:00+05:00', '2026-01-05T01:30:00+05:00', '2026-01-04 20:30–21:30'],
-    ['the summer delivery clock', '2026-07-04T08:15:00Z', '2026-07-04T10:45:00Z', '2026-07-04 10:15–12:45'],
-  ])('renders %s on the German clock only when the source establishes an instant', async (_, from, to, expected) => {
+    ['naive clocks', '2026-01-04T10:15:00', '2026-01-04T12:45:00', null, '2026-01-04 10:15–12:45'],
+    ['a window crossing midnight', '2026-01-04T23:30:00+01:00', '2026-01-05T00:30:00+01:00', '2026-01-04', '2026-01-05'],
+    ['naive clocks across days', '2026-01-04T10:15:00', '2026-01-05T12:45:00', '2026-01-04', '2026-01-05'],
+    ['source UTC clocks', '2026-01-04T09:15:00Z', '2026-01-04T11:45:00Z', null, '2026-01-04 10:15–12:45'],
+    ['offsets crossing a calendar boundary', '2026-01-05T00:30:00+05:00', '2026-01-05T01:30:00+05:00', null, '2026-01-04 20:30–21:30'],
+    ['offsets moving onto the German day after', '2026-01-04T22:30:00Z', '2026-01-04T23:30:00Z', '2026-01-04', '2026-01-05'],
+    ['the summer delivery clock', '2026-07-04T08:15:00Z', '2026-07-04T10:45:00Z', null, '2026-07-04 10:15–12:45'],
+  ])('renders %s on the German clock only when the source establishes an instant', async (_, from, to, start, expected) => {
     const result = await service({ getTrackingData: [() => xml(withForecast(window(from, to)))] }).track();
-    expect(result.expected_delivery).toBe(expected);
+    expect([result.expected_delivery_from ?? null, result.expected_delivery]).toEqual([start, expected]);
   });
 
   it.each([

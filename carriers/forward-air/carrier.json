@@ -60,11 +60,11 @@
       "provider_code",
       "location",
       "eta",
+      "eta_window",
       "delivered_at",
       "weight"
     ],
     "discarded": [
-      "eta_window",
       "parcel_count",
       "signatory",
       "origin",

@@ -1,6 +1,8 @@
 import { DateTime } from 'luxon';
 import { IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
+import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -22,6 +24,23 @@ function clock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: stri
     if (wall.isValid) return { local_time: wall.toISO({ includeOffset: false }) };
   }
   return raw ? { provider_time_text: raw } : {};
+}
+
+// A delivered or settled shipment keeps its old window, which promises nothing.
+const NO_ESTIMATE: ReadonlySet<Stage> = new Set(['delivered', 'returned', 'exception']);
+
+/**
+ * The shipment's delivery window, `shipment_estimated_delivery_from` to `_to`, while it is on its
+ * way; none once it ended before the newest dated scan.
+ */
+function estimate(shipment: Record<string, unknown>, stage: Stage | undefined, events: readonly CarrierEvent[]): WindowEstimate {
+  if (!stage || NO_ESTIMATE.has(stage)) return { expected_delivery: null };
+  const start = explicitOffsetTime(shipment.shipment_estimated_delivery_from);
+  const end = explicitOffsetTime(shipment.shipment_estimated_delivery_to);
+  const last = end ?? start;
+  const newest = Math.max(-Infinity, ...events.map(event => explicitOffsetTime(event.time)?.timestamp ?? -Infinity));
+  if (last && last.timestamp < newest) return { expected_delivery: null };
+  return windowEstimate(start?.iso, end?.iso);
 }
 
 export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierResult {
@@ -92,6 +111,6 @@ export function parseCourierGuy(payload: unknown, rawNumber: string): CarrierRes
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     ...(shipment.short_tracking_reference !== number ? { canonical_tracking_number: shipment.short_tracking_reference } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
-    expected_delivery: null, ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
+    ...estimate(shipment, mapped?.stage, unique), ...(mapped?.status === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     ...(service ? { service_name: service } : {}), events: unique.slice(0, 100) };
 }

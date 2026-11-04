@@ -92,6 +92,38 @@ describe('Estes Forwarding Worldwide HTTP adapter', () => {
     expect(due((shipment) => { shipment.scheduledDelivery = { fromGMT: '', toGMT: '' }; shipment.events.splice(1, 1); })).toBeNull();
   });
 
+  it('gives a delivery scheduled between two times as that window in Eastern time, and one due by a time as its day', () => {
+    const scheduled = (delivery: Row) => parseEstesForwarding(changed('in-transit', (shipment) => {
+      shipment.scheduledDelivery = delivery;
+    }), IN_TRANSIT);
+    // 9:00 AM to 5:00 PM on one day, in summer and in winter.
+    expect(scheduled({ fromGMT: '05/18/26 13:00', toGMT: '05/18/26 21:00', scheduledDeliveryType: 'Between' }))
+      .toMatchObject({ expected_delivery_from: '2026-05-18T09:00:00-04:00', expected_delivery: '2026-05-18T17:00:00-04:00' });
+    expect(scheduled({ fromGMT: '12/07/26 14:00', toGMT: '12/07/26 22:00', scheduledDeliveryType: 'Between' }))
+      .toMatchObject({ expected_delivery_from: '2026-12-07T09:00:00-05:00', expected_delivery: '2026-12-07T17:00:00-05:00' });
+    // Across days, from one instant to the other.
+    expect(scheduled({ fromGMT: '05/18/26 13:00', toGMT: '05/20/26 01:00', scheduledDeliveryType: 'Between' }))
+      .toMatchObject({ expected_delivery_from: '2026-05-18T09:00:00-04:00', expected_delivery: '2026-05-19T21:00:00-04:00' });
+    // "By" is due by its first time, the 18th's 5:00 PM, whatever the second; so is a type it does not name. A window
+    // that closes when or before it opens is its first time's day.
+    for (const delivery of [
+      { fromGMT: '05/18/26 21:00', toGMT: '05/18/26 04:00', scheduledDeliveryType: 'By' },
+      { fromGMT: '05/18/26 21:00', toGMT: '05/19/26 04:00', scheduledDeliveryType: 'By' },
+      { fromGMT: '05/18/26 21:00', toGMT: '05/18/26 04:00', scheduledDeliveryType: null },
+      { fromGMT: '05/18/26 21:00', toGMT: '05/18/26 21:00', scheduledDeliveryType: 'Only' },
+      { fromGMT: '05/18/26 21:00', toGMT: '05/18/26 13:00', scheduledDeliveryType: 'Between' },
+      { fromGMT: '05/18/26 21:00', toGMT: '05/18/26 21:00', scheduledDeliveryType: 'Between' },
+    ]) {
+      const result = scheduled(delivery);
+      expect(result.expected_delivery).toBe('2026-05-18');
+      expect(result).not.toHaveProperty('expected_delivery_from');
+    }
+    // A delivered shipment has no estimate, whatever its window.
+    const delivered = parseEstesForwarding(fixture('delivered'), DELIVERED);
+    expect(delivered.expected_delivery).toBeNull();
+    expect(delivered).not.toHaveProperty('expected_delivery_from');
+  });
+
   it('reads a closed or cancelled shipment as an exception without an estimate, keeping the reply’s order at one instant', () => {
     const result = parseEstesForwarding(changed('in-transit', (shipment) => {
       shipment.events.push({ code: 'CLS', description: 'Closed - Not Delivered', datetimeGMT: '06/21/26 02:15' },
