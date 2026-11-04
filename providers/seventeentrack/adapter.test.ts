@@ -739,6 +739,28 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-08-05T22:09:00.000Z');
   });
 
+  it("reads the origin post's scans Japan Post relays on that post's clock, and Japan Post's own on Tokyo's", () => {
+    const row = (date: string, time: string, description: string, location: string) => ({
+      time_iso: `${date}T${time}+09:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (requested: string) => ({ meta: { code: 200 }, shipments: [{ number: requested, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key: 10021, name: 'Japan Post', country: 'JP' }, events: [
+        row('2026-11-04', '09:10:00', 'Arrival at inward office of exchange', 'TOKYO INTERNATIONAL'),
+        row('2026-10-31', '18:42:00', 'Dispatch from outward office of exchange', 'EXAMPLE EMS'),
+        row('2026-10-31', '18:41:00', 'Item returned from export Customs', 'CHINA'),
+        row('2026-10-31', '16:28:00', 'Posting/Collection', 'CHINA'),
+      ] }] } } }] });
+    const times = (requested: string) => parse17TrackResponse(reply(requested), requested).events?.map(e => e.time);
+    // China Post's acceptance at 16:28 Beijing time, under 17TRACK's +09:00.
+    expect(times('ZZ123456785CN')).toEqual(['2026-11-04T00:10:00.000Z', '2026-10-31T10:42:00.000Z', '2026-10-31T10:41:00.000Z',
+      '2026-10-31T08:28:00.000Z']);
+    // An origin on several clocks, or Japan's own, keeps 17TRACK's reading.
+    for (const requested of ['ZZ123456785US', 'ZZ123456785JP']) {
+      expect(times(requested)).toEqual(['2026-11-04T00:10:00.000Z', '2026-10-31T09:42:00.000Z', '2026-10-31T09:41:00.000Z',
+        '2026-10-31T07:28:00.000Z']);
+    }
+  });
+
   it('reads Correos de El Salvador\'s scans in UTC, its copies of the origin post\'s and Swiss Post\'s relays on their offices\' clocks', () => {
     const row = (date: string, time: string, offset: string | null, description: string, location: string | null = null) => ({
       time_iso: `${date}T${time}${offset ?? '-05:00'}`, time_utc: null, time_raw: { date, time, timezone: offset },

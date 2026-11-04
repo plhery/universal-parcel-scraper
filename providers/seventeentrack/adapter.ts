@@ -446,6 +446,23 @@ function originZone(number: string): string | null {
   return origin === 'NZ' ? 'Pacific/Auckland' : origin && origin !== 'CN' ? countryTimeZone(origin) : null;
 }
 
+/** 17TRACK's carrier 10021, Japan Post. */
+const JAPAN_POST = 10021;
+/** The origin post's scans Japan Post relays on an item from abroad: its acceptance, export customs and outward exchange office. */
+const OUTWARD_SCAN = /^(?:Posting\/Collection|(?:Arrival at|Dispatch from) outward office of exchange|Item (?:presented to|returned from) export Customs)$/;
+
+/**
+ * Japan Post's leg relays the origin post's scans on that post's wall clock, as Japan Post's
+ * tracker shows them (see [Japan Post](../../carriers/japan-post/README.md)), and 17TRACK
+ * labels them with Japan's +09:00: China Post's posting at 16:28 Beijing time showed at
+ * 16:28 +09:00, an hour before China Post's own leg puts it. On an S10 number from abroad,
+ * from a country on one clock, they are read on that clock; elsewhere 17TRACK's reading stays.
+ */
+function japanPostOriginZone(number: string): string | null {
+  const origin = isValidS10TrackingNumber(number) ? number.slice(-2) : null;
+  return origin && origin !== 'JP' ? countryTimeZone(origin) : null;
+}
+
 /**
  * An India Post take-off, which India Post dates with the departure airport's
  * wall clock labelled UTC, and 17TRACK takes the label at its word: it showed
@@ -554,7 +571,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const nz = reported.key === NZ_POST;
     const abroad = nz && provider.events.length <= MAX_EVENTS
       ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers)) : new Map<number, string | null>();
-    const origin = reported.key === CHINA_POST ? originZone(number) : null;
+    const origin = reported.key === CHINA_POST ? originZone(number) : reported.key === JAPAN_POST ? japanPostOriginZone(number) : null;
+    const outward = reported.key === JAPAN_POST ? OUTWARD_SCAN : ORIGIN_EXCHANGE;
     const salvador = reported.key === CORREO_EL_SALVADOR;
     const sender = salvador && isValidS10TrackingNumber(number) ? countryTimeZone(number.slice(-2)) : null;
     const bound = reported.key === SWISS_POST ? recipientCountry(shipment) : null;
@@ -579,7 +597,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
-      const exchange = origin !== null && ORIGIN_EXCHANGE.test(text(raw.description));
+      const exchange = origin !== null && outward.test(text(raw.description).trim());
       const own = !salvador ? null : OUTBOUND.test(text(raw.description)) ? sender : 'UTC';
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".
       const relayed = bound ? swissPostDestinationZone(text(raw.description), text(raw.location), bound)
