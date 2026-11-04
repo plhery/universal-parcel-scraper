@@ -200,19 +200,23 @@ Track718 has a Juxi-only helper for its guest detail page. It binds the selected
 complete number, signed tracking request and WebSocket session, retaining the completed replies
 without account or recipient fields. Other Track718 carrier selections use no helper.
 
-## Independent FedEx IPv6 worker
+## Independent FedEx retry worker
 
-Run `bun /app/packages/tiers/src/utils/fedex-ipv6-server.mjs` from this same image
-in a separate container with its own browser pool. `HOST` defaults to loopback;
-`PORT` defaults to 8192. Keep its endpoint private and set `LOG_LEVEL=warn`.
-It serves only the exact FedEx capture flow, one lookup at a time, with no shared
-browser profile or session cache. Keep the primary service's deployment settings.
+`node trawl/render-fedex-retry.mjs` prints a Dockerfile for a separate container on the
+same pinned image, running `fedex-retry-server.mjs` with its own browser pool. `HOST`
+defaults to loopback and `PORT` to 8192. Keep its endpoint private and the primary
+service's deployment settings. It serves only the exact FedEx capture flow, one lookup at
+a time, with no shared browser profile or session cache.
 
-A per-context loopback CONNECT proxy resolves the FedEx page and tracking API
-with IPv6 only, connects to a validated public address, and verifies the socket
-family. It preserves public HTTPS page dependencies, including IPv4-only resources.
-Missing IPv6 never falls back to IPv4 for the page or API. DNS answers, URLs and
-cookies are not logged; the response reports aggregate connection proof. The
-worker returns no rendered page or cookies. Failed contexts and their proxies
-are closed together. Use `FEDEX_IPV6_TRAWL_URL` in the consumer and compare retry
-outcomes against the original route with `FEDEX_IPV6_RETRY_PERCENT`.
+`FEDEX_RETRY_PROXY_URL` names an authenticated residential gateway. Each browser context
+gets a loopback CONNECT proxy that sends every tunnel through it, to checked public
+addresses, without a direct fallback. The response reports page and API tunnel counts and
+tunnel bytes; DNS answers, URLs, cookies and the rendered page never leave the worker.
+Failed contexts and their proxies are closed together. Use `FEDEX_RESIDENTIAL_TRAWL_URL`
+in the consumer, as the [FedEx adapter](../carriers/fedex/README.md) describes.
+
+A gateway that refuses tunnels, as when its pinned exit goes offline, makes every lookup
+fail after its deadline. The `fedex.gateway-refusal` warning counts a lookup's refused
+tunnels, those for the page and API among them, and gives the gateway's last status and
+the plain-token reason it names in an `x-…-reason` header, such as Webshare's
+`x-webshare-reason`.

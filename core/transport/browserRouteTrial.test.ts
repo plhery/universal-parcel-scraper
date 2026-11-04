@@ -24,7 +24,7 @@ it('assigns once at an eligible retry, resets observations and omits unstarted s
 it('keeps the default route when absent or the lottery misses, without inventing connection proof', () => {
   vi.spyOn(Math, 'random').mockReturnValue(0.5);
   for (const alternative of [null, 'alternate']) {
-    const step = vi.fn(), trial = new BrowserRouteTrial({ primary: 'normal', alternative, route: 'ipv6', share: 0.5,
+    const step = vi.fn(), trial = new BrowserRouteTrial({ primary: 'normal', alternative, route: 'residential', share: 0.5,
       steps: ['browser'], recorder: { step, lookup() {} } });
     expect(trial.retry()).toBe('normal'); expect(trial.isAlternate).toBe(false);
     trial.recorder.step(record); expect(step.mock.calls[0]?.[0]).toMatchObject({ networkFamily: 'unknown', historyAvailable: false });

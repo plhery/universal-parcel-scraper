@@ -118,7 +118,7 @@ when a carrier's existing recovery starts and records route, attempt, verified c
 family and dated-history availability. It adds no attempts and does not decide which errors
 are recoverable. The adapter keeps its identity checks, refusal rules and shared deadline;
 the host supplies isolated services or private proxy credentials. A selected route does not
-establish the connection family: IPv6 needs socket evidence, otherwise telemetry says unknown.
+establish the connection family: only the socket does, otherwise telemetry says unknown.
 A fallback route is opt-in too: USPS reads through its configured proxy only while the
 carrier refuses the service's own address, and WanbExpress makes one read through its own
 after a refused one. Each records its reads' routes the same way. A proxied read solves no
@@ -514,4 +514,4 @@ address unless `trustedProxies` says how many proxies append to `X-Forwarded-For
 Its logs carry route names, status codes and durations only. Library consumers connect their
 own observability through `StepRecorder`. The routes are in [openapi.json](server/openapi.json).
 
-FedEx's opt-in residential retry worker uses the same browser flow and bounded second attempt as the primary service. Its host-owned route takes precedence over the IPv6 trial. A configured gateway is never treated as evidence of the exit's IP family; page and API proxy tunnels are required. Byte telemetry measures encrypted proxy payload, including page dependencies, rather than billing totals.
+FedEx's opt-in residential retry worker uses the same browser flow and bounded second attempt as the primary service. A configured gateway is never treated as evidence of the exit's IP family; page and API proxy tunnels are required. Byte telemetry measures encrypted proxy payload, including page dependencies, rather than billing totals.

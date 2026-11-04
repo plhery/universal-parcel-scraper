@@ -192,14 +192,14 @@ application identifiers and issued tokens stay outside the repository.
 `FEDEX_SECRET_KEY` instead, through the API alone. The missing-browser check runs without
 any of them.
 
-An optional `FEDEX_IPV6_TRAWL_URL` sends the qualifying second browser attempt to
-an independent worker. `FEDEX_IPV6_RETRY_PERCENT` selects its share (default 100);
-the rest retain the original retry route. The worker must attest actual IPv6
-connections to both the public page and tracking API. Missing proof is a transport
-failure, never a successful IPv6 answer. The attempt count, total deadline,
-whole-number checks and provider fallback remain unchanged. Step telemetry records
-the selected route, observed family and presence of dated history.
+An optional independent worker behind a residential proxy can take the qualifying
+second browser attempt. Custom adapter hosts supply it as
+`environment.trawlRoutes["fedex-residential"]`; the facade constructs it from
+`FEDEX_RESIDENTIAL_TRAWL_URL`, and the carrier never constructs a browser service itself.
+`FEDEX_RESIDENTIAL_RETRY_PERCENT` selects its share of those attempts, defaulting to half;
+the rest keep the original retry route. It never adds an attempt: the attempt count, total
+deadline, whole-number checks and provider fallback remain unchanged. Step telemetry
+records the selected route and whether dated history came back. A retry over IPv6 alone
+recovered fewer histories than the original route, so no such route is offered.
 
-Custom adapter hosts supply the isolated client as `environment.trawlRoutes["fedex-ipv6"]`. The facade constructs it from `FEDEX_IPV6_TRAWL_URL`; the carrier never constructs a browser service itself.
-
-An optional independent residential service is supplied as `environment.trawlRoutes["fedex-residential"]`, or `FEDEX_RESIDENTIAL_TRAWL_URL` in the facade. `FEDEX_RESIDENTIAL_RETRY_PERCENT` selects its share of the existing eligible second attempts, defaulting to half. When configured, this trial takes precedence over the IPv6 trial; it never adds an attempt. The service requires `FEDEX_RETRY_PROXY_URL`, tunnels every browser connection through that authenticated gateway without direct fallback, and attests page and API tunnels. The exit's IP family remains unknown. Accepted sessions retain their original proxy context; rejected contexts are discarded. Aggregate encrypted tunnel bytes include browser dependencies; per-attempt bytes omit traffic outside the attempt and responses lost to transport failure. The worker's private `/metrics` counter includes those bytes too.
+The worker requires `FEDEX_RETRY_PROXY_URL`, tunnels every browser connection through that authenticated gateway without direct fallback, and attests page and API tunnels; a reply without that proof is a transport failure. The exit's IP family remains unknown. Accepted sessions retain their original proxy context; rejected contexts are discarded. Aggregate encrypted tunnel bytes include browser dependencies; per-attempt bytes omit traffic outside the attempt and responses lost to transport failure. The worker's private `/metrics` counter includes those bytes too.

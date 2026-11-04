@@ -1,11 +1,41 @@
 import { createServer, request as httpRequest } from 'node:http';
 import { request as httpsRequest } from 'node:https';
 import { lookup } from 'node:dns/promises';
-import { fedexDestination, publicAddress } from './fedex-ipv6-proxy.mjs';
+import { BlockList, isIP } from 'node:net';
+
+const private4 = new BlockList();
+for (const [ip, prefix] of [['0.0.0.0', 8], ['10.0.0.0', 8], ['100.64.0.0', 10], ['127.0.0.0', 8],
+  ['169.254.0.0', 16], ['172.16.0.0', 12], ['192.0.0.0', 24], ['192.0.2.0', 24], ['192.168.0.0', 16],
+  ['198.18.0.0', 15], ['198.51.100.0', 24], ['203.0.113.0', 24], ['224.0.0.0', 3]]) private4.addSubnet(ip, prefix, 'ipv4');
+const global6 = new BlockList(); global6.addSubnet('2000::', 3, 'ipv6');
+const special6 = new BlockList();
+for (const [ip, prefix] of [['2001::', 23], ['2001:db8::', 32], ['2002::', 16], ['3fff::', 20]]) special6.addSubnet(ip, prefix, 'ipv6');
+
+export function publicAddress(address) {
+  const family = isIP(address);
+  return family === 4 ? !private4.check(address, 'ipv4')
+    : family === 6 && global6.check(address, 'ipv6') && !special6.check(address, 'ipv6');
+}
+
+/** A browser's CONNECT authority: a host name on port 443, and whether it is FedEx's page or tracking API. */
+export function fedexDestination(authority) {
+  const match = /^([a-z0-9](?:[a-z0-9.-]{0,251}[a-z0-9])?):443$/i.exec(authority ?? '');
+  if (!match || match[1].includes('..') || isIP(match[1])) throw new Error('Invalid proxy destination');
+  const host = match[1].toLowerCase();
+  return { host, target: host === 'www.fedex.com' ? 'page' : host === 'api.fedex.com' ? 'api' : 'resource' };
+}
+
+/** A gateway names why it refused a tunnel in a header such as `x-webshare-reason`; only a plain token is kept. */
+function refusalReason(headers) {
+  for (const [name, value] of Object.entries(headers)) {
+    if (/^x-[a-z0-9-]+-reason$/.test(name) && typeof value === 'string' && /^[A-Za-z0-9_.:-]{1,80}$/.test(value)) return value;
+  }
+  return null;
+}
 
 /** Every TLS connection goes through the configured authenticated gateway; no direct fallback. */
 export async function createFedExResidentialProxy(value, { resolve = lookup, requestHttp = httpRequest,
-  requestHttps = httpsRequest, onBytes = () => {} } = {}) {
+  requestHttps = httpsRequest, onBytes = () => {}, onRefusal = () => {} } = {}) {
   let gateway;
   try { gateway = new URL(value); } catch { throw new Error('Invalid residential gateway'); }
   if (!['http:', 'https:'].includes(gateway.protocol) || !gateway.hostname || gateway.search || gateway.hash
@@ -43,6 +73,7 @@ export async function createFedExResidentialProxy(value, { resolve = lookup, req
       request.once('error', fail);
       request.once('connect', (response, socket, buffered) => {
         upstream = socket;
+        if (response.statusCode !== 200) onRefusal({ target: destination.target, status: response.statusCode, reason: refusalReason(response.headers) });
         if (response.statusCode !== 200 || closed || client.destroyed) { fail(); return; }
         clearTimeout(timer);
         sockets.add(socket); socket.once('close', () => sockets.delete(socket)); socket.once('error', fail);

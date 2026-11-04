@@ -18,7 +18,7 @@ export class BrowserRouteTrial<T> {
   private history = false;
   private partial = false;
 
-  constructor(private readonly options: { primary: T; alternative: T | null; route: 'ipv6' | 'residential'; share: number;
+  constructor(private readonly options: { primary: T; alternative: T | null; route: 'residential'; share: number;
     steps: readonly string[]; recorder?: StepRecorder }) {
     retryShare(options.share);
     const sink = options.recorder ?? NOOP_RECORDER;

@@ -20,8 +20,6 @@ COPY swiftx-slider.py /app/packages/tiers/src/utils/swiftx-slider.py
 COPY royal-mail-history.mjs /app/packages/tiers/src/utils/royal-mail-history.mjs
 COPY track123-browser.mjs /app/packages/tiers/src/utils/track123-browser.mjs
 COPY fedex-session.mjs /app/packages/tiers/src/utils/fedex-session.mjs
-COPY fedex-ipv6-proxy.mjs /app/packages/tiers/src/utils/fedex-ipv6-proxy.mjs
-COPY fedex-ipv6-server.mjs /app/packages/tiers/src/utils/fedex-ipv6-server.mjs
 COPY australia-post-browser.mjs /app/packages/tiers/src/utils/australia-post-browser.mjs
 COPY wanbexpress-browser.mjs /app/packages/tiers/src/utils/wanbexpress-browser.mjs
 COPY xpo-browser.mjs /app/packages/tiers/src/utils/xpo-browser.mjs

@@ -764,37 +764,6 @@ describe('FedEx lookup steps', () => {
       .resolves.toMatchObject({ status: 'delivered' });
   });
 
-  it('routes only the existing retry to the independent service and records verified recovery', async () => {
-    const records: Parameters<StepRecorder['step']>[0][] = [];
-    const fetcher = vi.spyOn(globalThis, 'fetch')
-      .mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>', capturedResponses: [{ url: TRACK_API, status: 403, body: null,
-        headers: { 'x-trawl-network-family': 'IPv4' } }] }))
-      .mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>',
-        fedexEgress: { family: 'IPv6', pageConnections: 1, apiConnections: 1 },
-        capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(deliveredFixture()) }] }));
-    const tracker = adapter({ trawl: new TrawlClient(TRAWL_URL),
-      trawlRoutes: { 'fedex-ipv6': new TrawlClient('http://trawl-ipv6.test:8192') },
-      env: { FEDEX_IPV6_RETRY_PERCENT: '100' }, browserExecutablePath: null,
-      recorder: { step: record => records.push(record), lookup() {} } });
-    await expect(tracker.track({ number: DELIVERED_NUMBER })).resolves.toMatchObject({ status: 'delivered' });
-    expect(fetcher.mock.calls.map(call => String(call[0]))).toEqual([`${TRAWL_URL}/scrape`, 'http://trawl-ipv6.test:8192/scrape']);
-    expect(records).toMatchObject([{ networkRoute: 'default', networkFamily: 'IPv4', historyAvailable: false },
-      { networkRoute: 'ipv6', networkFamily: 'IPv6', historyAvailable: true, fallbackFrom: 'trawl', outcome: 'ok' }]);
-    const budgets = fetcher.mock.calls.map(call => JSON.parse(String(call[1]?.body)).maxTimeout);
-    expect(budgets[1]).toBeLessThanOrEqual(budgets[0]);
-  });
-
-  it.each([undefined, { family: 'IPv4', pageConnections: 1, apiConnections: 1 },
-    { family: 'IPv6', pageConnections: 1, apiConnections: 0 }])('rejects an unattested IPv6 answer without another retry', async proof => {
-    const fetcher = vi.spyOn(globalThis, 'fetch')
-      .mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>', capturedResponses: [{ url: TRACK_API, status: 403, body: null }] }))
-      .mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>', fedexEgress: proof,
-        capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(deliveredFixture()) }] }));
-    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL), ipv6Trawl: new TrawlClient('http://trawl-ipv6.test') })
-      .fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'transport', reason: 'ipv6_unverified' });
-    expect(fetcher).toHaveBeenCalledTimes(2);
-  });
-
   it('uses a residential service only for the eligible retry, preserving proof and byte telemetry', async () => {
     const records: Parameters<StepRecorder['step']>[0][] = [];
     const fetcher = vi.spyOn(globalThis, 'fetch')
@@ -822,8 +791,8 @@ describe('FedEx lookup steps', () => {
   it('keeps the control cohort on the original retry service', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>',
       capturedResponses: [{ url: TRACK_API, status: 403, body: null }] }));
-    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL), ipv6Trawl: new TrawlClient('http://trawl-ipv6.test'),
-      ipv6RetryShare: 0 }).fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL), residentialTrawl: new TrawlClient('http://residential.test'),
+      residentialRetryShare: 0 }).fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     expect(fetcher.mock.calls.map(call => String(call[0]))).toEqual([`${TRAWL_URL}/scrape`, `${TRAWL_URL}/scrape`]);
   });
 
