@@ -174,7 +174,8 @@ describe('Techlink status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'Warehousing_Packed', description: 'Parcel has been packed and is ready for outbound shipping' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'Synthetic_Code', description: 'synthetic wording' })).toEqual({ kind: 'unknown' });
-    // A family's code maps only the wording listed with it; another of its rows falls to the shared rules.
+    // A family's code maps the wording listed with it, or its delivering partner's reading of it; another of its rows falls to
+    // the shared rules.
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other', description: 'Your shipment has arrived at sorting center' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     for (const description of ['Your shipment has been processed at sorting center and ready for shipping', 'Your shipment has departed from the transit origin',
@@ -190,6 +191,13 @@ describe('Techlink status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InfoReceived_Online', description: 'Shipment Received at Facility' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(techlinkStage('InTransit_Other', 'Delivery attempted, recipient not at home')).not.toMatchObject({ source: 'carrier_map' });
+    // iMile's rows, whatever centre they name, and YWE's, whatever reason; the sentence decides over the family.
+    expect(techlinkStage('InTransit_Other', '【Example center】Parcel shipped to【EXA 01】.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(techlinkStage('DlvFail_Other', 'Parcel delivery failed [Synthetic Reason]. Parcel will be returned to the warehouse.'))
+      .toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'DlvFail_Other', description: 'Parcel is out for delivery.' }))
+      .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+    expect(techlinkStage('Synthetic_Code', '【Example center】Parcel shipped to【EXA 01】.')).not.toMatchObject({ source: 'carrier_map' });
     expect(techlinkStage('Synthetic_Code', 'synthetic wording')).toBeNull();
   });
 });

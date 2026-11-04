@@ -35,6 +35,7 @@
     {"code": "15", "wording": "Airline arrived at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "15", "wording": "Export clearance success", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "Cleared for export, not held."},
     {"code": "15", "wording": "Arrive at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
-    {"code": "20", "wording": "Import clearance success", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "Cleared by the destination's customs for the delivery carrier, a post here; the post's own customs scans can follow."}
+    {"code": "20", "wording": "Import clearance success", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "Cleared by the destination's customs for the delivery carrier, a post here; the post's own customs scans can follow."},
+    {"code": "15", "wording": "Customs Clearance Completed Successfully", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination's import clearance, minutes after the hand-over to the last-mile carrier, under the code TopYou gives every scan up to the delivery."}
   ]
 }

@@ -1658,6 +1658,7 @@ describe("universal providers' answers", () => {
       ['Export declaration in progress., OTHER', 'customs'], ['Flight delayed., OTHER', 'in_transit'],
       ['Flight delay. The flight scheduled for the 7th is expected to be delayed', 'in_transit'],
       ['Airline delay', 'in_transit'], ['Flight delay', 'in_transit'], ['Parcel shipped', 'in_transit'], ['Customer information manifested', 'registered'],
+      ['Order has been placed successfully.', 'registered'], ['We have your parcel', 'accepted'],
       ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
       ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'],
       ['In FedEx possession - Package received after final location pickup has occurred. Scheduled for pickup next business day', 'accepted'],
@@ -1854,6 +1855,8 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'Last-mile delivery forecast')).toEqual(gap);
     // A forwarder's stock count, as ParcelsApp relays it after the flight.
     expect(answer('unknown', null, 'Stocktaking delay')).toEqual(gap);
+    // Its ground handlers held up after the flight's arrival.
+    expect(answer('unknown', null, 'Cargo handling delay')).toEqual(gap);
     // The same delay in the forwarder's Chinese; 17TRACK's transit code still stages it.
     expect(answer('unknown', null, '地勤理货延误')).toEqual(gap);
     expect(answer('unknown', 'InTransit_Other', '地勤理货延误')).toEqual(mapped('in_transit'));

@@ -519,6 +519,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
       "note": "Import clearance under way, before \"Customs clearance has been completed\"."
+    },
+    {
+      "wording": "Delivered to letterbox",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "Colis Privé's delivery to the recipient's letterbox, on the line into France."
     }
   ]
 }

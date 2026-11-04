@@ -19,6 +19,10 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
 - Each scan has a code (`Warehousing_Packed`), which stages it, English and Chinese wording,
   the wall clock in `actual_time`, a place given as a country code, both countries and the
   last-mile number.
+- A code ending in `_Other` stands for a family. Abroad its rows are the delivering partner's
+  scans in the partner's words: iMile's in Italy and YWE's in the United States. Their own maps
+  read such a row whatever centre or reason it names, and the sentence decides over the family:
+  a failure's code on an out-for-delivery line is a new delivery round.
 - Techlink's own records are on Beijing's clock: the order's electronic information, which has
   no place, and the warehouse scans in China. So is a scan abroad worded with its centre in
   brackets (`【…】Received.`): read on the destination's clock, one came hours after the lookup

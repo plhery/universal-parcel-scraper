@@ -24,9 +24,12 @@ const key = (normalized: string) => normalized.replace(HUB, '<hub>').replace(REA
 const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => entry.wording && entry.stage)
   .map((entry) => [key(normalizeStatusWording(entry.wording!)), entry.stage as Stage]));
 
+/** The stage YWE's map gives a wording, whatever hub, reason or place it names. */
+export const yweMappedStage = (wording: string): Stage | undefined => WORDINGS.get(key(normalizeStatusWording(wording)));
+
 /** A scan's stage: the map, else the shared wording rules, else nothing. */
 export function yweStage(wording: string): ClassifiedWording | null {
-  const mapped = WORDINGS.get(key(normalizeStatusWording(wording)));
+  const mapped = yweMappedStage(wording);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;

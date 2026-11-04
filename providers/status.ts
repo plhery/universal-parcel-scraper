@@ -93,6 +93,9 @@ export const statusMap: CarrierStatusMap = {
     wording: 'stocktaking delay',
     note: "A forwarder's stock count holding the parcel, as ParcelsApp relays it after the flight: it moves nothing, so it keeps the stage the parcel already had.",
   }, {
+    wording: 'cargo handling delay',
+    note: "A forwarder's ground handlers held up after the flight's arrival, as ParcelsApp relays it: it moves nothing, so it keeps the stage the parcel already had.",
+  }, {
     wording: '地勤理货延误',
     note: "The same delay in a forwarder's Chinese, its ground handlers' stock count held up, as 17TRACK relays it after the flight: it moves nothing, so it keeps the stage the parcel already had.",
   }, {

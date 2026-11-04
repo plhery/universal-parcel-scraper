@@ -535,6 +535,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // A consolidator's steps as aggregators relay them: the customer's data on its manifest, its origin
   // hub taking the parcel in, the parcel sent on, and a flight held up, for which results carry no delay flag.
   if (/^customer information manifested[.!]?$/i.test(value)) return 'registered';
+  // A line's order and intake as ParcelsApp relays them: the order placed with it, after the sender's submission,
+  // and the parcel in its hands before it leaves the depot for the airport.
+  if (/^order has been placed successfully[.!]?$/i.test(value)) return 'registered';
+  if (/^we have your parcel[.!]?$/i.test(value)) return 'accepted';
   // A booking before any carrier has the parcel: a collection requested or booked, or a carrier still waiting for it.
   if (/^(?:pickup requested|booked|waiting for (?:the )?parcel)[.!]?$/i.test(value)) return 'registered';
   // A forwarder's warehouse scanning the parcel in or out, as aggregators relay SPT Express's rows.
