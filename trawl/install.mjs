@@ -8,8 +8,14 @@ import { trawlLicense } from '/app/packages/tiers/src/utils/license.mjs';
 const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
 const solver = fastRecaptchaAudio(readFileSync(solverPath, 'utf8'));
 writeFileSync(solverPath, solver);
+const speech = readFileSync('/app/packages/tiers/src/solvers/stt.ts', 'utf8');
+// Magyar Posta's helper hands the speech-to-text a page whose request client serves the clip it has read.
+for (const part of ['export async function transcribeAudio(\n  audioUrl: string,\n  signal: AbortSignal | undefined,\n  page: Page,\n  timeoutMs: number,\n)',
+  'await page.request.get(audioUrl, { headers, timeout: Math.max(1, timeoutMs) })']) {
+  if (speech.split(part).length !== 2) throw new Error('TRAWL speech-to-text changed: review the Magyar Posta transcription');
+}
 const nativeDir = '/app/packages/tiers/src/utils/dhl-poland-native';
-const nativeSources = dhlPolandNativeSources(solver, readFileSync('/app/packages/tiers/src/solvers/stt.ts', 'utf8'));
+const nativeSources = dhlPolandNativeSources(solver, speech);
 mkdirSync(nativeDir, { recursive: true });
 writeFileSync(`${nativeDir}/recaptcha.ts`, nativeSources.recaptcha);
 writeFileSync(`${nativeDir}/stt.ts`, nativeSources.stt);
@@ -78,7 +84,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   }
   if (carrierPage && magyarPostaAppRequest(url, capture)) {
     return await runMagyarPostaApp({ ...carrierRun, signal: budget.signal,
-      transcribe: (audio, signal) => transcribeMagyarPostaAudio(audio, AbortSignal.any([budget.signal, signal])) })
+      transcribe: (address, signal, page, timeout) => transcribeMagyarPostaAudio(address, AbortSignal.any([budget.signal, signal]), page, timeout) })
   }`;
   writeFileSync(path, 'import { attachTrackingCapture, reserveDeadline } from "../utils/tracking-capture.mjs"\n'
     + 'import { solveRecaptchaV2 } from "../solvers/recaptcha"\n'

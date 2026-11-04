@@ -222,7 +222,7 @@ jobs:
       - name: Include matching TRAWL source
         if: ${{ inputs.publish_trawl }}
         run: |
-          gh api repos/germondai/trawl/tarball/4f3a7cf91d6b6c86e9a603b049e3fcea648faca1 > trawl-upstream-source.tar.gz
+          gh api repos/germondai/trawl/tarball/fc3f64a7eebc9776c39bad1b5ed72b461cd3cdbb > trawl-upstream-source.tar.gz
           git archive --format=tar.gz --prefix=universal-parcel-scraper/ HEAD trawl > trawl-patch-source.tar.gz
       - name: Tag and publish GitHub release
         run: |

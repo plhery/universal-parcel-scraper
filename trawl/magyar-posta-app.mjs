@@ -118,13 +118,22 @@ async function verified(page) {
   return await within(page.evaluate(() => !!document.getElementById('verification')?.value), 1000, false);
 }
 
+/**
+ * TRAWL's speech-to-text reads its clip through a page's request client. This one serves
+ * the clip the helper has already read within its limits, so the clip is fetched once.
+ */
+export function heldClip(bytes) {
+  const clip = { status: () => 200, headers: () => ({ 'content-type': 'audio/mpeg' }), body: async () => Buffer.from(bytes), dispose: async () => {} };
+  return { request: { get: async () => clip } };
+}
+
 /** The audio clip's words, fetched in the widget's own context, or null. */
 async function listen(context, address, transcribe, timeoutMs, signal) {
   const clip = await within(context.request.get(address, { headers: { Referer: 'https://www.google.com/' }, timeout: timeoutMs, maxRedirects: 0 }), timeoutMs, null);
   if (!clip || clip.status() !== 200) return null;
   const bytes = await within(clip.body(), timeoutMs, null);
   if (!bytes || !bytes.length || bytes.length > MAX_AUDIO || signal.aborted) return null;
-  const answer = await within(transcribe(`data:audio/mpeg;base64,${Buffer.from(bytes).toString('base64')}`, signal), timeoutMs, undefined);
+  const answer = await within(transcribe(address, signal, heldClip(bytes), timeoutMs), timeoutMs, undefined);
   return typeof answer === 'string' && answer.trim() ? answer.trim().slice(0, 100) : null;
 }
 

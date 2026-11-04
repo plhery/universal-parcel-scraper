@@ -74,7 +74,12 @@ function fixture({ verdict = 'accept', passive = false, blockedAtAudio = false, 
     registrationCache: magyarPostaRegistrations(), onRegistration: () => {},
     handle: { browser: { newContext: async () => context } },
     installPolicy: async () => { state.policy++; },
-    transcribe: async audio => { assert.match(audio, /^data:audio\/mpeg;base64,/); return ' synthetic words '; },
+    transcribe: async (address, signal, page, timeoutMs) => {
+      assert.equal(address, state.heard.at(-1)); assert.ok(signal instanceof AbortSignal); assert.ok(timeoutMs > 0);
+      const clip = await page.request.get(address, { timeout: timeoutMs });
+      assert.equal(clip.status(), 200); assert.equal((await clip.body()).toString(), 'synthetic audio'); await clip.dispose();
+      return ' synthetic words ';
+    },
     fetcher: async (target, init) => {
       state.posts.push({ target, init });
       return new Response(body, { status, headers: { 'content-type': 'application/json', 'retry-after': '30' } });

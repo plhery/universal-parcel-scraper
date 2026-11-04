@@ -36,7 +36,7 @@ One step, `trawl`, with a 30 s budget:
    scans; otherwise the first one stands. It needs 5 s of the budget left.
 
 This needs the pinned TRAWL compatibility build ([ops/trawl](../../trawl/README.md)).
-TRAWL 1.3.1 ignores capture requests. Stock 1.9.3 refuses compressed bodies and can
+TRAWL 1.3.1 ignores capture requests. Stock 1.10.0 refuses compressed bodies and can
 finish before polling completes. The compatibility build captures the browser-decoded
 JSON and waits through code 100.
 
