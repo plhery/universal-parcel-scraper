@@ -2360,7 +2360,7 @@ describe('ParcelsApp result parsing', () => {
       ['In Transit to Next Facility', '2026-10-21T12:22:36.000Z', 'in_transit', 'wording:language'],
       ['Arrived at Facility', '2026-10-21T12:22:00.000Z', 'in_transit', 'wording:language'],
       ['Import Scan', '2026-10-19T18:30:00.000Z', 'in_transit', 'wording:language'],
-      ['Arrived at Destination Airport', '2026-10-18T12:55:00.000Z', 'in_transit', 'wording:language'],
+      ['Arrived at Destination Airport', '2026-10-18T12:55:00.000Z', 'in_transit', 'carrier_map'],
       ['Departed from Origin Airport', '2026-10-17T21:43:00.000Z', 'in_transit', 'wording:language'],
       ['Arrived at Origin Airport', '2026-10-17T08:51:00.000Z', 'in_transit', 'wording:language'],
       ['Export customs declaration completed', '2026-10-16T08:41:00.000Z', 'in_transit', 'carrier_map'],

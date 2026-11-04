@@ -60,7 +60,7 @@ describe('FIRST LINE HTTP adapter', () => {
       ['2026-03-15T21:04:00', 'EXAMPLE CITY FL DISTRIBUTION CENTER', 'Arrived at USPS Regional Facility', 'in_transit', 'wording:language'],
       ['2026-03-14T13:35:00', undefined, 'In Transit, Arriving Late', 'in_transit', 'wording:language'],
       ['2026-03-12T12:00:14', 'New York NY USA', 'Released from customs: customs cleared.', 'in_transit', 'wording:language'],
-      ['2026-03-11T20:53:44', 'New York NY USA', 'Arrived at destination airport', 'in_transit', 'wording:language'],
+      ['2026-03-11T20:53:44', 'New York NY USA', 'Arrived at destination airport', 'in_transit', 'carrier_map'],
       ['2026-03-11T03:15:15+08:00', 'HK international airport', 'Customs clearance begins', 'customs', 'wording:language'],
       ['2026-03-10T08:16:37+08:00', 'SHENZHEN', 'Depart from facility to service provider', 'in_transit', 'carrier_map'],
       ['2026-03-09T16:15:29+08:00', 'SHENZHEN', 'Packaged', 'in_transit', 'carrier_map'],
