@@ -11,6 +11,7 @@
 import type { CarrierEvent } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import { cdekScan } from '../../carriers/cdek/status.js';
+import { chunghwaPostScan } from '../../carriers/chunghwa-post/status.js';
 import { emileScan } from '../../carriers/emile/status.js';
 import { firstLineScan } from '../../carriers/first-line/status.js';
 import { hrvatskaPostaScan } from '../../carriers/hrvatska-posta/status.js';
@@ -21,6 +22,8 @@ import { ytoScan } from '../../carriers/yto/status.js';
 export interface CarrierScan {
   stage: Stage;
   wording: string;
+  // The place the label names beside the scan, which the stored wording leaves out.
+  location?: string;
   returnLeg?: true;
   // A receipt that, once the item moved on, is a facility further on receiving it.
   receipt?: true;
@@ -30,6 +33,7 @@ export interface CarrierScan {
 
 const VOCABULARIES: Readonly<Record<string, (label: string) => CarrierScan | undefined>> = {
   cdek: cdekScan,
+  'chunghwa-post': chunghwaPostScan,
   emile: emileScan,
   'first-line': firstLineScan,
   'hrvatska-posta': hrvatskaPostaScan,

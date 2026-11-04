@@ -39,6 +39,15 @@ describe('Postal Ninja result parsing', () => {
     ]);
   });
 
+  it('leaves out a delivery day the recipient booked, as Hermes leaves it out of its history', () => {
+    const parsed = parsePostalNinjaResponse(withEvents([
+      { ds: 'Example', dt: '2026-08-12T08:00:00', dsc: 'Registered in the system' },
+      { ds: 'Example', dt: '2026-08-13T16:39:00', dsc: 'A desired day for delivery has been booked' },
+      { ds: 'Example', dt: '2026-08-14T09:00:00', dsc: 'Inventory in a warehouse' },
+    ]), number);
+    expect(parsed.events?.map(({ description }) => description)).toEqual(['Inventory in a warehouse', 'Registered in the system']);
+  });
+
   it('names the services that reported the scans as carrier hints', () => {
     // A catalog carrier no detection rule claims the number for is still the hint (Raben's fifteen digits).
     const freight = '990000000000001';

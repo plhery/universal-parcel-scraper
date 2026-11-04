@@ -870,6 +870,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "Copied from FedEx, which delivers the last leg: at its station before the delivery run."
+    },
+    {
+      "wording": "On the way, A trusted third-party vendor is on the way with your package.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "Copied from FedEx's in-transit scan (code IT): a contractor carries the parcel between FedEx's facilities, a day before the local station's scan and the delivery run."
     }
   ]
 }

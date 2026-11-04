@@ -48,10 +48,12 @@ export function text(value: unknown): string {
 
 // Universal sites mix carrier events with UI notices and data updates. Notices must not
 // manufacture a shipment timestamp or make an electronic announcement look like movement.
+// The drop-off place or delivery day a recipient books with Hermes, which Hermes keeps out of
+// its own history, is a notice too.
 // DHL's detail line "Keine weiteren Details erforderlich" ("no further details required"),
 // which ParcelsApp relays as a row of its own beside DHL's scans, says nothing either.
 export function isNotice(description: string): boolean {
-  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^keine weiteren details erforderlich[.!]?$/i.test(description);
+  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^a desired day for delivery (?:has been|was) booked\b|^keine weiteren details erforderlich[.!]?$/i.test(description);
 }
 
 // Raw text, so accented and plain spellings are both listed. A carrier receiving the

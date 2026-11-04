@@ -189,6 +189,26 @@ describe('ParcelsApp YTO scans', () => {
       ['2026-10-18T09:00:00Z', 'Item returned to sender', '20000 EXAMPLE TOWN']])).toMatchObject({ current_stage: 'returned' });
   });
 
+  it("reads Chunghwa Post's relayed office and status as its own tracker does", () => {
+    // ParcelsApp's copy puts the office before the status, and the tracker's follow-up column after it when empty.
+    const parsed = parseParcelsAppResponse({ carriers: ['Chunghwa Post'], states: [
+      { date: '2026-11-03T20:12:44Z', status: '範例航空郵件科, 已出口－資料詳如右方', carrier: 0, location: '' },
+      { date: '2026-11-03T09:09:52Z', status: '範例中心國際快捷股, 到達出口互換局, 後續處理方式:', carrier: 0, location: '' },
+      { date: '2026-11-02T15:26:30Z', status: '範例郵局, 交寄郵件', carrier: 0, location: '' },
+      { date: '2026-11-02T09:25:14Z', status: 'Posted at post office', carrier: 0, location: 'Taiwan' },
+    ] }, number, identity());
+    expect(parsed.events?.map((event) => [event.description, event.location, event.stage, event.stage_source, event.time])).toEqual([
+      ['已出口－資料詳如右方', '範例航空郵件科', 'in_transit', 'carrier_map', '2026-11-03T12:12:44.000Z'],
+      ['到達出口互換局', '範例中心國際快捷股', 'in_transit', 'carrier_map', '2026-11-03T01:09:52.000Z'],
+      ['交寄郵件', '範例郵局', 'accepted', 'carrier_map', '2026-11-02T07:26:30.000Z'],
+      ['Posted at post office', 'Taiwan', 'accepted', 'wording:language', '2026-11-02T01:25:14.000Z'],
+    ]);
+    // A follow-up with words in it can send the item elsewhere, so it is left unread.
+    expect(parseParcelsAppResponse({ carriers: ['Chunghwa Post'], states: [
+      { date: '2026-11-03T09:09:52Z', status: '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', carrier: 0, location: '' },
+    ] }, number, identity()).events?.[0]).toMatchObject({ description: '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', stage: 'pending' });
+  });
+
   it("reads Mayi Yinfu's relayed airport hand-over as transit, and its delivery abroad as a delivery", () => {
     const parcel = (states: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['DHL Parcel Spain', 'Mayiyinfu'],
       originCode: 'CN', destinationCode: 'ES', states }, number, identity());

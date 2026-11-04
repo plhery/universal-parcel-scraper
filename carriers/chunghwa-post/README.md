@@ -59,6 +59,9 @@ no longer give online tracking of registered letters.
 A return to the sender shows only in the remark of an unsuccessful delivery, which the adapter
 discards.
 Scans abroad have no instant, so an item that has left Taiwan has a wall clock as its last update.
+ParcelsApp relays a scan as the office and the status in one label, with the follow-up column
+after them when it is empty. The status is read by this map and the office becomes the place; a
+label with a follow-up in words stays unread, since the follow-up can send the item elsewhere.
 No cheap HTTP recognition is declared. Changed image geometry remains a challenge.
 OCR can still misread a digit; the server's verification verdict remains authoritative.
 

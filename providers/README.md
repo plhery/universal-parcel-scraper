@@ -63,7 +63,7 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   their own. So is the carrier's catalog id: 17TRACK asks again for that carrier when its own
   detection finds no history from it ([its README](seventeentrack/README.md)).
 - UI notices (postcode or country prompts, sign-in requests, "no information"), the
-  recipient's delivery preferences, DHL's detail line "Keine weiteren Details
+  recipient's delivery preferences and the drop-off place or delivery day they book, DHL's detail line "Keine weiteren Details
   erforderlich" ("no further details required"), 17FEIA's estimated departure and the
   flight DHLink, Intel-Valley or Mayi Yinfu book, written before the flight, never become
   events. Neither does a bracketed time or date with no words, a language's label with nothing
@@ -139,9 +139,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - [shared/hints.ts](shared/hints.ts): reported carrier names to catalog ids, and whether
   a name is new to the catalog.
 - [shared/scans.ts](shared/scans.ts): scan vocabularies of carriers whose labels providers
-  relay (YTO, Paack's page labels, Emile's status texts, CDEK's leg labels and FIRST LINE's rows): stage and
-  stored wording of the carrier's own labels, original or translated, and the return leg that
-  follows a return scan.
+  relay (YTO, Paack's page labels, Emile's status texts, CDEK's leg labels, FIRST LINE's rows and
+  Chunghwa Post's office and status): stage and stored wording of the carrier's own labels, original
+  or translated, the place a label names beside its status, and the return leg that follows a return scan.
 - [shared/capture.ts](shared/capture.ts): TRAWL response decoding and capture errors.
 - [core/runner](../core/runner/index.ts) runs steps and records telemetry.
   [core/errors](../core/errors/index.ts) holds the shared failure categories.

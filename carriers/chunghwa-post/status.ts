@@ -13,4 +13,18 @@ export function chunghwaPostStage(wording: string): ClassifiedWording | null {
   const classified = classifyWording(wording, 'in_transit');
   return classified.source === 'none' ? null : classified;
 }
+// ParcelsApp relays a scan as the office and the status in one label, sometimes followed by the
+// tracker's follow-up column left empty ("<office>, 到達出口互換局, 後續處理方式:"). A follow-up with
+// words in it is not read: it can send the item somewhere else.
+const RELAYED = /^([^,，]{1,60}), ([^,，]{1,60})(?:, 後續處理方式[:：])?$/u;
+
+/** A label an aggregator relays from the tracker, staged by the map, with the office it names as its place. */
+export function chunghwaPostScan(label: string): { stage: Stage; wording: string; location?: string } | undefined {
+  const text = label.trim();
+  const whole = WORDING.get(text);
+  if (whole) return { stage: whole, wording: text };
+  const [, office, status] = RELAYED.exec(text) ?? [];
+  const stage = status ? WORDING.get(status.trim()) : undefined;
+  return stage ? { stage, wording: status!.trim(), location: office!.trim() } : undefined;
+}
 export const statusMap: CarrierStatusMap = { stage: (_code, wording) => WORDING.get(wording), gaps: [] };

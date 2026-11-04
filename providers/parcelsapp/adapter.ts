@@ -1733,7 +1733,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     if (parsed && guessedAhead(parsed, entry.location, zone, timezone, readAt)) continue;
     if (parsed) {
       // Some Chronopost rows put the service label in the location field.
-      const location = reportedPlace(raw.location);
+      const location = scan?.location ?? reportedPlace(raw.location);
       if (location && !/^Type de livraison\s*:/i.test(location)) parsed.location = location;
       events.push(parsed);
       carried.push({ event: parsed, carrier: nameKey(name) });
@@ -1883,6 +1883,7 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
       : wall ? localEvent(wall, scan?.wording ?? description)
         : event((zone ? mislabeledLocalTime(state.date, zone)?.iso : undefined) ?? state.date, scan?.wording ?? description);
     if (parsed && guessedAhead(parsed, '', zone, timezone, readAt)) continue;
+    if (parsed && scan?.location) parsed.location = scan.location;
     if (parsed) events.push(parsed);
     if (parsed) carried.push({ event: parsed, carrier: nameKey(name) });
     if (parsed && step) steps.add(parsed);

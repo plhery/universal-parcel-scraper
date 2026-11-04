@@ -123,6 +123,25 @@ describe('DHL public tracking normalization', () => {
     expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: refused });
   });
 
+  it('reads a Packstation as the address as a notice that keeps the stage before it', () => {
+    const packstation = 'Sendung auf dem Weg zur Packstation.';
+    const read = (before: string) => {
+      const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
+      const payload = shipment({ sendungsverlauf: { ...timeline, status: packstation } });
+      payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push({ datum: '2026-08-11T06:29:59+02:00', status: before },
+        { datum: '2026-08-11T06:30:00+02:00', status: packstation });
+      return parseDHLTrackingResponse(payload, NUMBER);
+    };
+    // Written beside the loading onto the delivery vehicle, it does not undo it.
+    const loaded = read('Die Sendung wurde in das Zustellfahrzeug geladen. Die Zustellung erfolgt voraussichtlich heute.');
+    expect(loaded.events?.[0]).toMatchObject({ description: packstation, stage: 'out_for_delivery', stage_source: 'none' });
+    expect(loaded).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: packstation });
+    // Written on a redirect before the delivery run, it is no delivery run either.
+    const redirected = read('Die Sendung ist in der Region des Empfängers angekommen und wird im nächsten Schritt zur Zustellbasis transportiert.');
+    expect(redirected.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
+    expect(redirected.current_stage).toBe('in_transit');
+  });
+
   it('keeps the correct event order, stages and dates without private recipient data', () => {
     const result = parseDHLTrackingResponse(shipment(), NUMBER);
     expect(result).toMatchObject({

@@ -116,7 +116,10 @@ how a consumer learns that DHL holds one behind a postcode.
   first, or with the first move, stays registered.
 - A redirect DHL refused ("Paketumleitung … storniert", the parcel goes to the
   home address) stays in the history as a notice with the stage of the scan
-  before it: its "nicht … zugestellt" is not a delivery attempt.
+  before it: its "nicht … zugestellt" is not a delivery attempt. So does a Packstation
+  as the address ("auf dem Weg zur Packstation"): DHL writes it beside the loading onto the
+  delivery vehicle, and also on a redirect to a Packstation, which
+  [can take another day](https://www.paketda.de/status-dhl-sendung-unterwegs-packstation.html).
 - "Delivery not possible" is a failed attempt: it follows the loading onto the
   delivery vehicle, the parcel then waits at a retail outlet, and the partner
   posts' copies of the scan read it so.

@@ -40,7 +40,7 @@ import {
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { withoutPartnerLink } from './identity.js';
-import { BOOKED_OPTION, movedParcel, preAdvice, REFUSED_REDIRECT, stageForText, statusForStage } from './status.js';
+import { BOOKED_OPTION, keepsStage, movedParcel, preAdvice, stageForText, statusForStage } from './status.js';
 
 const PROVIDER = 'DHL';
 const TIMEZONE = 'Europe/Berlin';
@@ -223,10 +223,10 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   const events: CarrierEvent[] = scans.filter((scan) => !(scan.time && preAdvice(scan.description) && millis(scan.time) > firstMove))
     .sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100)
     .map(({ time, ...event }) => ({ ...event, ...clock(time, event.location) }));
-  // A refused redirect is a notice: it keeps the stage of the scan before it.
+  // A refused redirect or a Packstation as the address is a notice: it keeps the stage of the scan before it.
   events.forEach((event, index) => {
-    if (REFUSED_REDIRECT.test(event.description ?? '')) {
-      Object.assign(event, { stage: events.slice(index + 1).find((older) => !REFUSED_REDIRECT.test(older.description ?? ''))?.stage ?? 'registered', stage_source: 'none' });
+    if (keepsStage(event.description ?? '')) {
+      Object.assign(event, { stage: events.slice(index + 1).find((older) => !keepsStage(older.description ?? ''))?.stage ?? 'registered', stage_source: 'none' });
     }
   });
   const summary = withoutPartnerLink(clean(timeline.status));
@@ -239,7 +239,7 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   const fallback = Number(timeline.fortschritt) <= 1 ? 'registered' : String(events[0]?.stage || 'in_transit');
   const stage = details.istZugestellt === true
     ? details.ruecksendung === true ? 'returned' : 'delivered'
-    : REFUSED_REDIRECT.test(currentText) ? fallback : stageForText(currentText, fallback);
+    : keepsStage(currentText) ? fallback : stageForText(currentText, fallback);
   const delivery = isRecord(details.zustellung) ? details.zustellung : {};
   const window = ['delivered', 'returned'].includes(stage) ? {} : deliveryWindow(delivery);
   const stated = date(timeline.datumAktuellerStatus);
