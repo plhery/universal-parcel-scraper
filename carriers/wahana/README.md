@@ -21,8 +21,8 @@ Wahana's server checks the answer to its tracker's CAPTCHA, a self-hosted Captch
 question. Without a solved one the page answers "Resi tidak ditemukan" for every number, current
 parcels included, so that answer says nothing about the number. The result page's PDF download
 fails without one too. The Sahabat Wahana app tracks only the shipments booked in the user's own
-app account, and the agent and partner portals need an account. The library solves no CAPTCHA,
-so Wahana Express stays on universal providers.
+app account, and the agent and partner portals need an account. A dedicated Captcheck flow
+is not implemented, so Wahana Express stays on universal providers.
 
 ## Testing
 

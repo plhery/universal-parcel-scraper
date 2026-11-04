@@ -20,8 +20,8 @@ a five-letter picture code tied to the page's session. Its item-list form asks f
 receipt's number and passcode instead. The Cash on Delivery tracker on bepost.lk needs no code
 but holds only COD items, so its "No record found" says nothing about other mail. For mail
 abroad, Sri Lanka Post's site links UPU's Global Track & Trace and its PostMate app opens
-ParcelsApp, both universal providers here. The library solves no CAPTCHA, so Sri Lanka Post
-stays on universal providers.
+ParcelsApp, both universal providers here. A dedicated courier verification flow is not
+implemented, so Sri Lanka Post stays on universal providers.
 
 ## Testing
 

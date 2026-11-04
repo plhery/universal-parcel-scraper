@@ -25,7 +25,7 @@ verification. For the other branch the page sends the phone digits as `awb_id`. 
 with the same kind of token; the content-service routes left in it are no longer called and no
 longer answer. Both services refuse a missing or failed token for made-up numbers too, so the
 refusal says nothing about the number, while a missing waybill gets an explicit `Not Found`
-reply. The library solves no captcha, so SiCepat stays on universal providers.
+reply. A dedicated verification flow is not implemented, so SiCepat stays on universal providers.
 
 ## Testing
 

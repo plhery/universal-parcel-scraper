@@ -19,8 +19,8 @@ reCAPTCHA checkbox answer. The server checks that answer: without one, or with a
 returns "Please complete the reCAPTCHA." instead of a history. The track box on ghanapost.com.gh
 only opens the tracker site, and its international tracker is the UPU's Global Track & Trace,
 which the UPU provider already reads. Ghana Post's Android apps cover digital addresses, rides
-and its riders' rounds; none tracks an item. The library solves no CAPTCHA, so Ghana Post stays
-on universal providers.
+and its riders' rounds; none tracks an item. A dedicated verification flow is not implemented,
+so Ghana Post stays on universal providers.
 
 ## Testing
 

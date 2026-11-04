@@ -28,7 +28,7 @@ number. The home page's tracking form posts to `ws_paquetes_index.php` with the 
 
 The UES Go app linked from the site (`com.soydelivery.xpres`) orders same-day courier jobs and
 lists only the signed-in customer's own orders, and the customer portals need an account. The
-library solves no captcha, so UES stays on universal providers.
+dedicated verification flow is not implemented, so UES stays on universal providers.
 
 ## Testing
 
