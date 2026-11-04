@@ -22,18 +22,44 @@
   "timezone": "Asia/Hong_Kong",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "kec-ecommerce",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://kec.kln.com/en/logistics-tracking/?tracking={trackingNumber}",
     "searchUrl": "https://kec.kln.com/en/logistics-tracking/",
     "canaryUrl": "https://kec.kln.com/en/logistics-tracking/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "offset_timestamps"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "offset_timestamps"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

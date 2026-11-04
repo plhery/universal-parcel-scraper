@@ -208,6 +208,7 @@ import { adapter as equick } from '../carriers/equick/adapter.js';
 import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
+import { adapter as etsExpress } from '../carriers/ets-express/adapter.js';
 import { adapter as eurodis } from '../carriers/eurodis/adapter.js';
 import { adapter as euroexpressBa } from '../carriers/euroexpress-ba/adapter.js';
 import { adapter as europochta } from '../carriers/europochta/adapter.js';
@@ -348,6 +349,7 @@ import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
+import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
 import { adapter as kexExpressHk } from '../carriers/kex-express-hk/adapter.js';
 import { adapter as kitTk } from '../carriers/kit-tk/adapter.js';
@@ -526,6 +528,7 @@ import { adapter as redx } from '../carriers/redx/adapter.js';
 import { adapter as relaisColis } from '../carriers/relais-colis/adapter.js';
 import { adapter as relaytech } from '../carriers/relaytech/adapter.js';
 import { adapter as rexIndonesia } from '../carriers/rex-indonesia/adapter.js';
+import { adapter as rincos } from '../carriers/rincos/adapter.js';
 import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
 import { adapter as rlCarriers } from '../carriers/rl-carriers/adapter.js';
 import { adapter as roadie } from '../carriers/roadie/adapter.js';
@@ -561,6 +564,7 @@ import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
 import { adapter as shipentegra } from '../carriers/shipentegra/adapter.js';
 import { adapter as shipglobalIn } from '../carriers/shipglobal-in/adapter.js';
 import { adapter as shiprocket } from '../carriers/shiprocket/adapter.js';
+import { adapter as shipter } from '../carriers/shipter/adapter.js';
 import { adapter as shouwu } from '../carriers/shouwu/adapter.js';
 import { adapter as shreeAnjani } from '../carriers/shree-anjani/adapter.js';
 import { adapter as shreeMaruti } from '../carriers/shree-maruti/adapter.js';
@@ -919,6 +923,7 @@ export const REGISTRY: RegistryDefinition = {
     "estafeta": estafeta,
     "estes": estes,
     "estes-forwarding": estesForwarding,
+    "ets-express": etsExpress,
     "eurodis": eurodis,
     "euroexpress-ba": euroexpressBa,
     "europochta": europochta,
@@ -1059,6 +1064,7 @@ export const REGISTRY: RegistryDefinition = {
     "js-express": jsExpress,
     "jumppoint": jumppoint,
     "kazpost": kazpost,
+    "kec-ecommerce": kecEcommerce,
     "kex": kex,
     "kex-express-hk": kexExpressHk,
     "kit-tk": kitTk,
@@ -1237,6 +1243,7 @@ export const REGISTRY: RegistryDefinition = {
     "relais-colis": relaisColis,
     "relaytech": relaytech,
     "rex-indonesia": rexIndonesia,
+    "rincos": rincos,
     "rivigo": rivigo,
     "rl-carriers": rlCarriers,
     "roadie": roadie,
@@ -1272,6 +1279,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipentegra": shipentegra,
     "shipglobal-in": shipglobalIn,
     "shiprocket": shiprocket,
+    "shipter": shipter,
     "shouwu": shouwu,
     "shree-anjani": shreeAnjani,
     "shree-maruti": shreeMaruti,
@@ -1819,7 +1827,7 @@ export const REGISTRY: RegistryDefinition = {
     "estes-forwarding": "estes-forwarding",
     "ethiopian-post": "universal",
     "etomars": "universal",
-    "ets-express": "universal",
+    "ets-express": "ets-express",
     "eurodis": "eurodis",
     "euroexpress-ba": "euroexpress-ba",
     "europochta": "europochta",
@@ -2080,7 +2088,7 @@ export const REGISTRY: RegistryDefinition = {
     "kargoturk": "universal",
     "kart2door": "universal",
     "kazpost": "kazpost",
-    "kec-ecommerce": "universal",
+    "kec-ecommerce": "kec-ecommerce",
     "kerry-express-tw": "universal",
     "kerry-tj": "universal",
     "kex": "kex",
@@ -2398,7 +2406,7 @@ export const REGISTRY: RegistryDefinition = {
     "rex-indonesia": "rex-indonesia",
     "rhenus-de": "universal",
     "rhenus-it": "universal",
-    "rincos": "universal",
+    "rincos": "rincos",
     "rivigo": "rivigo",
     "rl-carriers": "rl-carriers",
     "roadie": "roadie",
@@ -2467,7 +2475,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipglobal-us": "universal",
     "shippify": "universal",
     "shiprocket": "shiprocket",
-    "shipter": "universal",
+    "shipter": "shipter",
     "shipup": "universal",
     "shipx-asia": "universal",
     "shouwu": "shouwu",

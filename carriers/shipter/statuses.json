@@ -1,4 +1,17 @@
 {
   "carrier": "shipter",
-  "entries": []
+  "entries": [
+    {"wording":"The shipment information has been received by shipter, but the package has not been picked up yet.","language":"en","stage":"registered","confirmedBy":"live"},
+    {"wording":"The parcel has been scanned by shipter and ready to be shipped.","language":"en","stage":"accepted","confirmedBy":"live"},
+    {"wording":"The parcel has been shipped.","language":"en","stage":"in_transit","confirmedBy":"live"},
+    {"wording":"The flight has been departed.","language":"en","stage":"in_transit","confirmedBy":"live"},
+    {"wording":"Parcel received in processing centre (…)","language":"en","stage":"in_transit","confirmedBy":"live","note":"The processing hub is variable."},
+    {"wording":"Parcel depart from … depot","language":"en","stage":"in_transit","confirmedBy":"live","note":"The departure depot is variable."},
+    {"wording":"The item is ready for shipment…","language":"en","stage":"in_transit","confirmedBy":"live","note":"A partner's dispatch row after processing at its hub; the appended hub name is variable."},
+    {"wording":"Your shipping information has been submitted to aramex..","language":"en","stage":"registered","confirmedBy":"live","note":"A partner's pre-advice; the repeated depot prefix is left out of the map key."},
+    {"wording":"Your parcel has been received at … depot..","language":"en","stage":"in_transit","confirmedBy":"live","note":"A partner's depot arrival; the repeated depot prefix and destination town are variable."},
+    {"wording":"Your parcel is currently in transit to …","language":"en","stage":"in_transit","confirmedBy":"live","note":"The repeated depot prefix and destination town are variable."},
+    {"wording":"Your parcel is with your local courier and ready for delivery..","language":"en","stage":"out_for_delivery","confirmedBy":"live","note":"The repeated depot prefix is left out of the map key."},
+    {"wording":"Delivered.","language":"en","stage":"delivered","confirmedBy":"live"}
+  ]
 }

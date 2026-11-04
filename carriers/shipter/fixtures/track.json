@@ -1,0 +1,31 @@
+{
+  "suc": 1,
+  "result": [
+    {
+      "in_track_no": "H3AU482716KR",
+      "out_track_no": "SYNTHETICPARTNER4817",
+      "carrier": "Synthetic partner A, Synthetic partner B",
+      "partner_api_id": 91,
+      "destination": "AU",
+      "status": "delivered",
+      "updated_at": "2026-03-22 09:18 GMT+09:00",
+      "delivered_at": "2026-03-13T10:19:18.000Z",
+      "created_at": "2026-03-11 16:24 GMT+09:00",
+      "events": [
+        {"location":"SMP","content":"Delivered.","time":"2026-03-21 12:14 GMT+09:00"},
+        {"location":"SMP","content":"Smp, smp, your parcel is with your local courier and ready for delivery..","time":"2026-03-21 10:32 GMT+09:00"},
+        {"location":"HUB","content":"Hub, hub, your parcel is currently in transit to sampletown..","time":"2026-03-20 23:18 GMT+09:00"},
+        {"location":"HUB","content":"Hub, hub, your parcel has been received at sampletown depot..","time":"2026-03-20 13:28 GMT+09:00"},
+        {"location":"HUB","content":"Hub, hub, your parcel is currently in transit to sampletown..","time":"2026-03-20 13:28 GMT+09:00"},
+        {"location":"HUB","content":"Hub, hub, your shipping information has been submitted to aramex..","time":"2026-03-16 00:24 GMT+09:00"},
+        {"location":"XFR","content":"The item is ready for shipmentsynthetic hub","time":"2026-03-15 22:18 GMT+09:00"},
+        {"location":"XFR","content":"Parcel depart from synthetic hub depot","time":"2026-03-15 16:38 GMT+09:00"},
+        {"location":"XFR","content":"Parcel received in processing centre (synthetic hub)","time":"2026-03-15 16:12 GMT+09:00"},
+        {"location":"Synthetic airport, South Korea","content":"The flight has been departed.","time":"2026-03-15 00:18 GMT+09:00"},
+        {"location":"Shipter, South Korea","content":"The parcel has been shipped.","time":"2026-03-14 17:24 GMT+09:00"},
+        {"location":"Shipter, South Korea","content":"The parcel has been scanned by shipter and ready to be shipped.","time":"2026-03-11 16:24 GMT+09:00"},
+        {"location":"Shipter, South Korea","content":"The shipment information has been received by shipter, but the package has not been picked up yet.","time":"2026-03-10 14:18 GMT+09:00"}
+      ]
+    }
+  ]
+}

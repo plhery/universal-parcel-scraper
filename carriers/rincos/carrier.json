@@ -19,18 +19,52 @@
   "timezone": "Asia/Seoul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rincos",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://www.rincos.asia/out/TraceInfo_kr.do?SCGBN=20&P_VAL={trackingNumber}",
     "searchUrl": "https://www.rincos.co.kr/tracking/tracking?lang=en",
     "canaryUrl": "https://www.rincos.co.kr/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "destination_country",
+      "sender_name",
+      "receiver_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "destination_country"
+    ],
+    "discarded": [
+      "sender_name",
+      "receiver_name"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "provider_code"
+    ]
   },
   "links": [
     {

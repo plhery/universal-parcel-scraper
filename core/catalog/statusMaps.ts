@@ -223,6 +223,7 @@ import { statusMap as equick } from '../../carriers/equick/status.js';
 import { statusMap as estafeta } from '../../carriers/estafeta/status.js';
 import { statusMap as estes } from '../../carriers/estes/status.js';
 import { statusMap as estesForwarding } from '../../carriers/estes-forwarding/status.js';
+import { statusMap as etsExpress } from '../../carriers/ets-express/status.js';
 import { statusMap as eurodis } from '../../carriers/eurodis/status.js';
 import { statusMap as euroexpressBa } from '../../carriers/euroexpress-ba/status.js';
 import { statusMap as europochta } from '../../carriers/europochta/status.js';
@@ -365,6 +366,7 @@ import { statusMap as jrt } from '../../carriers/jrt/status.js';
 import { statusMap as jsExpress } from '../../carriers/js-express/status.js';
 import { statusMap as jumppoint } from '../../carriers/jumppoint/status.js';
 import { statusMap as kazpost } from '../../carriers/kazpost/status.js';
+import { statusMap as kecEcommerce } from '../../carriers/kec-ecommerce/status.js';
 import { statusMap as kex } from '../../carriers/kex/status.js';
 import { statusMap as kexExpressHk } from '../../carriers/kex-express-hk/status.js';
 import { statusMap as kitTk } from '../../carriers/kit-tk/status.js';
@@ -538,6 +540,7 @@ import { statusMap as rexIndonesia } from '../../carriers/rex-indonesia/status.j
 import { statusMap as redx } from '../../carriers/redx/status.js';
 import { statusMap as relaisColis } from '../../carriers/relais-colis/status.js';
 import { statusMap as relaytech } from '../../carriers/relaytech/status.js';
+import { statusMap as rincos } from '../../carriers/rincos/status.js';
 import { statusMap as rivigo } from '../../carriers/rivigo/status.js';
 import { statusMap as rlCarriers } from '../../carriers/rl-carriers/status.js';
 import { statusMap as roadrunner } from '../../carriers/roadrunner/status.js';
@@ -571,6 +574,7 @@ import { statusMap as shipblu } from '../../carriers/shipblu/status.js';
 import { statusMap as shipentegra } from '../../carriers/shipentegra/status.js';
 import { statusMap as shiprocket } from '../../carriers/shiprocket/status.js';
 import { statusMap as shipglobalIn } from '../../carriers/shipglobal-in/status.js';
+import { statusMap as shipter } from '../../carriers/shipter/status.js';
 import { statusMap as shouwu } from '../../carriers/shouwu/status.js';
 import { statusMap as shreeAnjani } from '../../carriers/shree-anjani/status.js';
 import { statusMap as shreeMaruti } from '../../carriers/shree-maruti/status.js';
@@ -748,7 +752,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,
   'ecms-express': ecmsExpress, 'ecom-logistics': ecomLogistics, econt, ecoscooting, ecourier, 'egypt-post': egyptPost, egxpress, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
-  envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, eurodis, 'euroexpress-ba': euroexpressBa, europochta, eushipments,
+  envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, 'ets-express': etsExpress, eurodis, 'euroexpress-ba': euroexpressBa, europochta, eushipments,
   'evdemo-lojistik': evdemoLojistik, evri, 'evri-uk': evriUk, evropat, ewe, exelot,
   'exline-kz': exlineKz, exmate, 'express-one': expressOne, 'express-one-bg': expressOneBg, 'fan-courier': fanCourier, 'far-international': farInternational, 'fargo-courier': fargoCourier, 'fargo-uz': fargoUz, fastbox, fastdrop,
   fastfrate, fedex, 'fedex-freight': fedexFreight, 'fedex-international-connect': fedexInternationalConnect, 'fedex-pl': fedexPl, fermopoint, 'fg-delivery': fgDelivery, 'first-line': firstLine,
@@ -765,7 +769,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'indah-logistik': indahLogistik, 'india-post': indiaPost, inpost, instabox, 'integral-pack': integralPack, 'intel-valley': intelValley, intelcom, 'internet-express': internetExpress, interrapidisimo,
   'intex-paketdienst': intexPaketdienst, 'israel-post': israelPost, 'j-and-t': jAndT, 'j-and-t-au': jAndTAu, 'j-and-t-de': jAndTDe, 'j-and-t-uk': jAndTUk, 'j-and-t-cargo': jntCargo,
   'j-and-t-middle-east': jAndTMiddleEast, janio, 'japan-post': japanPost, jcex, 'jd-logistics': jdLogistics, jeebly, 'jersey-post': jerseyPost, 'jet-logistic': jetLogistic, 'jetline-couriers': jetlineCouriers,
-  jhgj, jifan, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, kazpost, kex, 'kex-express-hk': kexExpressHk,
+  jhgj, jifan, jitsu, jne, 'jordan-post': jordanPost, jrt, 'js-express': jsExpress, jumppoint, kazpost, 'kec-ecommerce': kecEcommerce, kex, 'kex-express-hk': kexExpressHk,
   'kit-tk': kitTk, 'komon-express': komonExpress, 'korea-post': koreaPost, 'kolay-gelsin': kolayGelsin, 'kuehne-nagel': kuehneNagel, 'kun-express': kunExpress, kunyoung, kyoungdong, 'kyrgyz-post': kyrgyzPost, 'l-post': lPost, 'la-poste': laPoste,
   'la-poste-burkina-faso': laPosteBurkinaFaso, 'la-poste-senegal': laPosteSenegal, 'laar-courier': laarCourier, labaih,
   'landmark-global': landmarkGlobal, 'last-one-mile-coop': lastOneMileCoop, 'latvijas-pasts': latvijasPasts, 'lbc-express': lbcExpress, 'lex-id': lexId, 'lex-my': lexMy, 'leopards-courier': leopardsCourier, liccardi, 'linear-logistics': linearLogistics,
@@ -789,9 +793,9 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   postnord, posturinn, ppl, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, 'quantium-solutions': quantiumSolutions,
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
-  rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
+  rincos, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
-  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shouwu,
+  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
   skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, slgtrax,
   'slovak-parcel-service': slovakParcelService,

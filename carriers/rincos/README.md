@@ -1,28 +1,30 @@
 # Rincos
 
-Rincos parcels use enabled universal providers. There is no dedicated adapter.
+Rincos cross-border parcels are read from its anonymous rendered tracker. Select Rincos
+explicitly or use its tracking link; the shared numeric shape has no detection rule.
 
-Rincos (린코스) is an Incheon cross-border logistics firm and the carrier of eBay Korea's eGS
-programme. It hands parcels to a carrier in the destination country, such as Sagawa or FedEx.
-Its site is rincos.co.kr.
+## How it works
 
-## Numbers
+1. `direct`: one GET of the [Rincos result page](https://www.rincos.asia/out/TraceInfo_kr.do)
+   with `SCGBN=20` and the whole number in `P_VAL`. Its `frm` form and `goSearch` builder
+   submit the same fields. No session, login or browser is needed.
+2. `retry`: one further read after a network failure, inside the same lookup budget.
 
-Its tracking numbers are fourteen digits starting with `82`, a length many carriers' rules
-accept, so there is no rule.
+The printed Rincos shipment number must match the whole requested number. Both origin and
+collapsed destination histories are retained, along with a recognized delivery partner and
+its number. Recipient, sender, order, print and remark details are omitted.
 
-## Why there is no adapter
+Origin and destination rows keep their local wall clocks and the portal's order within each
+leg. Korean origin clocks and destination facility clocks do not establish one shared zone;
+the adapter adds no offset, and preserves an offset if the carrier supplies one.
 
-Its two trackers render each shipment's history without a session and answered public numbers;
-an adapter is possible and not yet written. A result names the destination carrier and its
-number. Origin events carry Korean time, destination events the destination carrier's local
-time.
+## Limitations
 
-## Links
-
-The rincos.asia result page opens a number from its `P_VAL` parameter.
+The no-information notice does not distinguish an unknown number from expired history, so
+it is inconclusive. Empty pages, changed layouts and blocked responses remain failures. A
+current status without its corresponding milestone is marked as partial history.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/rincos`, with `RINCOS_TRACKING_NUMBER` and optionally
+`RINCOS_UNKNOWN_NUMBER` set outside the repository. These tests call Rincos directly.

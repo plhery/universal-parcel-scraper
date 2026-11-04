@@ -18945,7 +18945,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "ets-express",
+      "recognitionRank": 734,
+      "localClocks": true
     },
     "canaryUrl": "https://www.ets-express.com/",
     "trackingSearchUrl": "https://www.ets-express.com/inquiry.html",
@@ -27661,7 +27663,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "kec-ecommerce"
     },
     "canaryUrl": "https://kec.kln.com/en/logistics-tracking/",
     "trackingUrlTemplate": "https://kec.kln.com/en/logistics-tracking/?tracking={trackingNumber}",
@@ -38457,7 +38459,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rincos",
+      "localClocks": true
     },
     "canaryUrl": "https://www.rincos.co.kr/",
     "trackingUrlTemplate": "https://www.rincos.asia/out/TraceInfo_kr.do?SCGBN=20&P_VAL={trackingNumber}",
@@ -40766,7 +40769,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "shipter",
+      "recognitionRank": 727
     },
     "canaryUrl": "https://www.shipter.kr/",
     "trackingUrlTemplate": "https://www.shipter.kr/tracking/{trackingNumber}",

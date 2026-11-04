@@ -1,4 +1,13 @@
 {
   "carrier": "ets-express",
-  "entries": []
+  "entries": [
+    {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "live"},
+    {"wording": "Shipment registered", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "stage": "accepted", "confirmedBy": "live"},
+    {"code": "SHIPMENT", "wording": "货物离开操作中心", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Handed over to the delivery service", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Sent to your city", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Ready for pickup", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live"},
+    {"wording": "Shipment is handed over to the customer", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
 }

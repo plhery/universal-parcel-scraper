@@ -1,30 +1,35 @@
 # KEC eCommerce
 
-KEC eCommerce parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter tracks KEC eCommerce's cross-border parcels through its public guest feed.
+KEC, formerly Kerry eCommerce, is separate from [KEX Express](../kex-express-hk/README.md).
 
-KEC eCommerce (KEC嘉顺达), formerly Kerry eCommerce, is the cross-border e-commerce arm of KLN,
-Kerry Logistics Network. It flies parcels from Hong Kong and Shenzhen to Asia, Europe, the US and
-Australia and delivers locally in Hong Kong and South-East Asia. Its site is kec.kln.com. It is a
-separate brand from [KEX Express](../kex-express-hk/README.md).
+## Retrieval
 
-## Numbers
+The [official guest widget](https://kec.kln.com/en/logistics-tracking/) sends a GET to
+`https://tt.kec-app.com/api/status` with `tracking_number` and a fixed authorization value it
+gives every visitor. The adapter uses that same request without an account or browser. A network
+failure can retry once within the lookup budget; HTTP errors and invalid replies do not retry.
 
-Its tracker answers the numbers its shippers upload, including YunExpress numbers, which stay with
-[YunExpress](../yunexpress/README.md). Its own older `KECID` numbers have a single public example
-that the tracker no longer answers, so there is no rule.
+The returned whole number must match the request. Each scan keeps `event_date` with its stated
+`timezone` offset; `timezone_date` is the UTC copy, checked when present. Stages use the observed
+code and wording together because delivery-attempt categories can contain depot sorting.
 
-## Why there is no adapter
+## Limitations
 
-Its tracking page reads a JSON API with a guest key the page gives every visitor, and it answered
-a public number; each event states its UTC offset. An unknown number gets an HTTP 500 error reply,
-so the API does not tell a missing parcel from a fault. An adapter is possible and not yet written.
+Unknown numbers and service faults share HTTP 500, which remains inconclusive. Empty histories
+also remain inconclusive. Responses beyond the retained scan limit are marked partial so enabled
+providers can supply a fuller history.
 
-## Links
-
-The tracking page opens numbers from its `tracking` parameter, in English and both Chinese
-scripts.
+Tracking uses an explicit carrier or a recognized KEC link. The feed accepts uploaded shipper
+numbers, including YunExpress references, which stay with [YunExpress](../yunexpress/README.md)
+in detection. KEC's older own format has no confirmed current history and gains no number rule.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Use private inputs outside Git:
+
+```sh
+KEC_ECOMMERCE_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/kec-ecommerce
+```
+
+`KEC_ECOMMERCE_UNKNOWN_NUMBER` optionally checks the inconclusive unknown response.

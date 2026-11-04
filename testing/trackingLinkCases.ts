@@ -29,6 +29,15 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'kec-ecommerce', number: 'KECSYNTH00000001',
+    route: /^https:\/\/kec\.kln\.com\/en\/logistics-tracking\/?\?tracking=KECSYNTH00000001$/,
+    marker: /Logistics Tracking/ },
+  { carrier: 'rincos', number: '82000000000000',
+    route: /^https:\/\/www\.rincos\.asia\/out\/TraceInfo_kr\.do\?SCGBN=20&P_VAL=82000000000000$/,
+    marker: /Rincos Tracking No\./ },
+  { carrier: 'shipter', number: 'H3ZZ071934KR',
+    route: /^https:\/\/www\.shipter\.kr\/tracking\/H3ZZ071934KR$/,
+    marker: /Tracking No|검색 결과가 존재하지 않습니다/ },
   { carrier: 'dex-pk', number: 'PK-DEX748316205',
     route: /^https:\/\/www\.dex\.com\.pk\/tracking\?references=PK-DEX748316205$/,
     marker: /YOUR RESULTS/i },

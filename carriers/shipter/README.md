@@ -1,27 +1,29 @@
 # Shipter
 
-Shipter parcels use enabled universal providers. There is no dedicated adapter.
+Tracks Shipter's own H3 shipment numbers through its ordinary guest service. A delivery
+carrier's reference is not a Shipter identifier and does not establish a delivery handoff.
 
-Shipter is H3 Networks' cross-border shipping service from Korea, handing parcels to a delivery carrier in
-the destination country. Its site is shipter.kr.
+## How it works
 
-## Numbers
+`direct` sends one JSON POST to `https://shiptertracking.com:3963/tracking/getTracks`, with
+`trackNos` containing the whole requested number. The [official tracking page](https://www.shipter.kr/tracking)
+uses this service without an account or session. A successful reply must identify the number
+as `in_track_no` in the service's `result` list. `retry` repeats the read once only after a
+network failure, within the same budget.
 
-Its numbers are `H3`, the destination's country code, five or six digits and `KR`, which `shipter-1`
-suggests at low confidence. The only public example is an archived lookup on its own tracker, with six
-digits; a parcel whose Shipter rows 17TRACK read had five. The delivery carrier's number stays with that
-carrier.
+The separate `deliveries: []` and `err: "no result"` envelope confirms absence. An empty
+success list, another error, or an expired reply does not. Blocks and malformed replies stop
+the lookup.
 
-## Why there is no adapter
+## Limitations
 
-Its tracker reads an open JSON API without a session or CAPTCHA, which answers an unknown number with an
-empty list. No adapter has been written for it yet.
-
-## Links
-
-The tracker takes the number in its path, on shipter.kr and on the older shiptertracking.com.
+Event clocks preserve their stated GMT offsets. A clock without an offset keeps its wall
+time. The timeline supplies the latest activity and delivery time; refresh and summary
+clocks can disagree with it. A summary without scans, a conflicting delivery summary or a
+capped history stays partial so an enabled provider can complete it. Combined partner labels
+remain unattributed, and partner references never become canonical Shipter numbers.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/shipter`, with `SHIPTER_TRACKING_NUMBER` and optionally
+`SHIPTER_UNKNOWN_NUMBER` set outside the repository.

@@ -22,17 +22,49 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "ets-express",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 734
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "service_name",
+    "destination_country"
+  ],
   "portal": {
     "searchUrl": "https://www.ets-express.com/inquiry.html",
     "canaryUrl": "https://www.ets-express.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination_country",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "customer_reference"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": [

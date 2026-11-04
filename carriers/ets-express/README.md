@@ -1,28 +1,29 @@
 # ETS Express
 
-ETS Express parcels use enabled universal providers. There is no dedicated adapter.
+Tracks ETS Express (俄通收) parcels by their own RETS shipment number. Ozon posting references
+stay with [Ozon](../ozon-logistics/README.md); they do not identify ETS shipments by themselves.
 
-ETS Express, 俄通收 (RETS), is a Harbin forwarder carrying e-commerce parcels from China to
-Russia, many of them Ozon orders. Its site is ets-express.com.
+## How it works
 
-## Numbers
+`direct` reads the guest Hualei tracker at `1.12.55.94:8082`, over plain HTTP without an account
+or session. The [official inquiry page](https://www.ets-express.com/inquiry.html) and its
+[request builder](https://www.ets-express.com/upload/js/21fea6ed55bf4dffae261a3dc3887f17.js)
+use `selectTrack.htm?documentCode=<number>`. A positive reply must carry the whole RETS invoice
+or tracking number and name a RETS service.
 
-It files a shipment under its own RETS code, `RETS`, twelve digits and `UES`, which
-`ets-express-1` suggests at low confidence: the only public example is the one on its own
-inquiry page. Its tracker also answers the Ozon posting numbers of the parcels it carries; those
-stay with [Ozon](../ozon-logistics/README.md).
+The interface's no-track reply also covers orders without scans. A POST of the same
+`documentCode` to `trackIndex.htm` confirms absence only when it renders one empty waybill
+for that exact number. A positive page that only shows an Ozon posting cannot bind the RETS
+shipment. The inquiry page's demo fallback is never read.
 
-## Why there is no adapter
+## Limitations
 
-Its inquiry page reads a Hualei (华磊) tracker at `1.12.55.94:8082` over plain HTTP, the platform
-[GZYL's adapter](../gzyl/hualei.ts) reads, without a session; it answered public numbers. An
-adapter is possible and not yet written. Its event times carry no zone.
-
-## Links
-
-The inquiry page takes numbers in a form, so no portal link is published.
+Scan clocks keep their local wall times because the feed states no offset. The shared
+[Hualei parser](../gzyl/hualei.ts) holds back custom-trajectory and written-ahead rows and
+retains truncation flags. References do not become canonical ETS numbers or delivery handoffs.
+A block, throttle or malformed reply ends the lookup.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/ets-express`, with `ETS_EXPRESS_TRACKING_NUMBER` and
+optionally `ETS_EXPRESS_UNKNOWN_NUMBER` set outside the repository.

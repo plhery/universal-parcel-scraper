@@ -1,4 +1,26 @@
 {
   "carrier": "rincos",
-  "entries": []
+  "entries": [
+    { "wording": "On Its Way to Rincos Sorting Center", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The portal says this does not indicate receipt by Rincos." },
+    { "wording": "Shipment Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Processing at GMP Airport", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Handed over to partner", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Leave the warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Airline Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Airline Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Import clearance start", "stage": "customs", "language": "en", "confirmedBy": "live" },
+    { "wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "In Transit", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Arrived at FedEx hub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "International shipment release - Import", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Left FedEx origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Departed FedEx hub", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "On the way", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "At destination sort facility", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "At local FedEx facility", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "On FedEx vehicle for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
 }

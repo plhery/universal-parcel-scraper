@@ -18,18 +18,43 @@
   "timezone": "Asia/Seoul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "shipter",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 727
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://www.shipter.kr/tracking/{trackingNumber}",
     "searchUrl": "https://www.shipter.kr/tracking",
     "canaryUrl": "https://www.shipter.kr/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "offset_timestamps"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "offset_timestamps"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

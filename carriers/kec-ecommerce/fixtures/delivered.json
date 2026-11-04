@@ -1,0 +1,67 @@
+{
+  "responsecode": "200001",
+  "message": "success",
+  "data": [
+    {
+      "tracking_number": "KECSYNTH39057186240",
+      "status": [
+        {
+          "status_code": "lastmile_delivered",
+          "event_date": "2026-04-21 09:13:16",
+          "location": "Synthetic destination depot",
+          "track_message": "Delivered - No Signature",
+          "timezone": "UTC+00:00",
+          "timezone_date": "2026-04-21 09:13:16"
+        },
+        {
+          "status_code": "lastmile_first_delivery_attempt",
+          "event_date": "2026-04-21 06:20:10",
+          "location": "Synthetic destination depot",
+          "track_message": "Indoor Sorting - Ready For Delivery",
+          "timezone": "UTC+00:00",
+          "timezone_date": "2026-04-21 06:20:10"
+        },
+        {
+          "status_code": "import_customs_clearance_success",
+          "event_date": "2026-04-20 10:01:00",
+          "location": "Synthetic customs depot",
+          "track_message": "Clearance processing completed - Import",
+          "timezone": "UTC+00:00",
+          "timezone_date": "2026-04-20 10:01:00"
+        },
+        {
+          "status_code": "import_customs_clearance_start",
+          "event_date": "2026-04-20 09:58:00",
+          "location": "Synthetic customs depot",
+          "track_message": "In clearance processing - Import",
+          "timezone": "UTC+00:00",
+          "timezone_date": "2026-04-20 09:58:00"
+        },
+        {
+          "status_code": "air_freight_uplift",
+          "event_date": "2026-04-19 07:15:00",
+          "location": "Synthetic origin airport",
+          "track_message": "Flight departure",
+          "timezone": "UTC+08:00",
+          "timezone_date": "2026-04-18 23:15:00"
+        },
+        {
+          "status_code": "origin_sc_inbound_success",
+          "event_date": "2026-04-18 08:31:24",
+          "location": "Synthetic origin depot",
+          "track_message": "Warehouse Scan In",
+          "timezone": "UTC+08:00",
+          "timezone_date": "2026-04-18 00:31:24"
+        },
+        {
+          "status_code": "package_created",
+          "event_date": "2026-04-17 12:13:00",
+          "location": "",
+          "track_message": "Order Successfully Uploaded",
+          "timezone": "UTC+08:00",
+          "timezone_date": "2026-04-17 04:13:00"
+        }
+      ]
+    }
+  ]
+}

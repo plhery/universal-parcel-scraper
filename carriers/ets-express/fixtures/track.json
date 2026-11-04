@@ -1,0 +1,30 @@
+[
+  {
+    "ack": "true",
+    "data": [
+      {
+        "trackingNumber": "73492816-0265-2",
+        "referenceNumber": "73492816-0265-2",
+        "business_seqinvoicecode": "RETS004827610539UES",
+        "business_channeltransfercode": "",
+        "channel_name": "",
+        "productKindName": "RETS EXtra small Standard",
+        "consigneeCountry": "RU",
+        "consignee_name": "Synthetic recipient",
+        "consignee_address": "Synthetic private address",
+        "trackDetails": [
+          {"track_date":"2026-02-18 18:34:29","track_createdate":"2026-02-18 18:43:15","track_content":"Shipment is handed over to the customer","track_location":"","track_kind":""},
+          {"track_date":"2026-02-18 17:14:03","track_createdate":"2026-02-18 17:24:08","track_content":"Ready for pickup","track_location":"","track_kind":""},
+          {"track_date":"2026-02-15 12:48:25","track_createdate":"2026-02-15 12:53:40","track_content":"Sent to your city","track_location":"","track_kind":""},
+          {"track_date":"2026-02-15 12:48:24","track_createdate":"2026-02-15 12:53:40","track_content":"Handed over to the delivery service","track_location":"","track_kind":""},
+          {"track_date":"2026-02-08 13:25:16","track_createdate":"2026-02-08 13:25:16","track_content":"出口海关结束","track_location":"示例口岸","track_kind":"CO_C_CR"},
+          {"track_date":"2026-02-08 05:25:16","track_createdate":"2026-02-08 05:25:16","track_content":"包裹到达了出口海关","track_location":"示例口岸","track_kind":"CO_C_CR"},
+          {"track_date":"2026-02-05 05:25:16","track_createdate":"2026-02-05 05:25:16","track_content":"货物离开操作中心","track_location":"示例市","track_kind":"SHIPMENT"},
+          {"track_date":"2026-02-05 00:15:21","track_createdate":"2026-02-05 00:15:21","track_content":"到达收货点","track_location":"示例市","track_kind":"ARRIVAL"},
+          {"track_date":"2026-02-04 07:12:18","track_createdate":"2026-02-05 00:21:13","track_content":"Shipment registered","track_location":"","track_kind":""},
+          {"track_date":"2026-02-04 07:12:15","track_createdate":"2026-02-05 00:15:21","track_content":"货物电子信息已经收到","track_location":"","track_kind":""}
+        ]
+      }
+    ]
+  }
+]

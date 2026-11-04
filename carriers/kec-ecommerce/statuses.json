@@ -1,4 +1,89 @@
 {
   "carrier": "kec-ecommerce",
-  "entries": []
+  "entries": [
+    {
+      "code": "package_created",
+      "wording": "Order Successfully Uploaded",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "origin_sc_inbound_success",
+      "wording": "Warehouse Scan In",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "origin_sc_outbound_success",
+      "wording": "Warehouse Scan Out",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "origin_sc_handover_success",
+      "wording": "Handover to Linehaul",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "air_freight_uplift",
+      "wording": "Flight departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "air_freight_arrived",
+      "wording": "International flight has arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "import_customs_clearance_start",
+      "wording": "In clearance processing - Import",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "import_customs_clearance_success",
+      "wording": "Clearance processing completed - Import",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_in_transit",
+      "wording": "Inward MC - Automation Acceptance",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_second_delivery_attempt",
+      "wording": "Indoor Sorting - Ready For Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_first_delivery_attempt",
+      "wording": "Indoor Sorting - Ready For Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "lastmile_delivered",
+      "wording": "Delivered - No Signature",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }
