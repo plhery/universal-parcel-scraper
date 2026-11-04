@@ -2177,6 +2177,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   dropp: 'the tracker page answers an unknown number with a generic "try again later" error that does not show the number, so only a real parcel verifies the link',
   dtdc: 'the MyDTDC Flutter page exposes no visible body text until accessibility is enabled, and the portal link opens its home page',
   'emirates-post': 'www.emiratespost.ae answers automated Chrome with a Cloudflare managed challenge before the tracker page; only the TRAWL browser step clears it, so number forwarding cannot be verified daily',
+  etomars: 'The result page returns an empty tracking form without the number or a notice for absent and expired registrations; only a retained registration verifies the link',
   'fargo-courier': 'www.fargocourier.co.ke passes the number only to its tracker frame from portal.fargocourier.co.ke, which loads it as a document the rendered-page check does not read and answers an unknown waybill with a generic HTTP 500 error page, so number forwarding cannot be verified',
   'fedex-freight': 'FedEx Freight\'s ten-digit PROs run densely, so a synthetic one can open another shipper\'s shipment; only a known PRO verifies the link',
   'forward-air': 'Forward Air reuses its eight-digit waybill numbers, so a synthetic one can open other people\'s shipments; only a known waybill verifies the link',

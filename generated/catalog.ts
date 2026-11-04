@@ -18912,7 +18912,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Seoul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "etomars",
+      "recognitionRank": 99,
+      "recognitionPattern": "^SN\\d{9}JP$",
+      "localClocks": true
     },
     "canaryUrl": "https://etomars.com/",
     "trackingUrlTemplate": "https://cbt.shipnergy.com/Track/Result?mode=0&ids={trackingNumber}",

@@ -21,18 +21,55 @@
   "timezone": "Asia/Seoul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "etomars",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 99,
+      "pattern": "^SN\\d{9}JP$"
+    },
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://cbt.shipnergy.com/Track/Result?mode=0&ids={trackingNumber}",
     "searchUrl": "https://cbt.shipnergy.com/Track/Search",
     "canaryUrl": "https://etomars.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "receiver_name"
+    ]
   },
   "links": [
     {

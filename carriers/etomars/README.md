@@ -1,30 +1,38 @@
 # Etomars
 
-Etomars parcels use enabled universal providers. There is no dedicated adapter.
-
-Etomars (이투마스), based in Seoul with a logistics centre in Incheon, ships online orders from
-Korea to Japan under its SHIPNERGY brand, and to Taiwan and Southeast Asia. Sagawa delivers the
-last leg in Japan, and Yamato or Japan Post some parcels, under their own numbers, which the
-tracker shows. Its sites are etomars.com and shipnergy.com.
+The adapter reads SHIPNERGY registration histories for Etomars's Korea-to-Japan service through
+plain HTTP. It binds the registration in both the result heading and shipment details, reads the
+complete collapsed timeline and retains the carrier's local scan clocks. No offset is stated.
 
 ## Numbers
 
-Its tracker takes the registration number: SN, nine digits and JP. These look like Japan Post's
-UPU S10 numbers, but most fail the S10 check digit. Japan Post's rule claims the few that pass,
-and `etomars-1` suggests Etomars for the rest at low confidence, since a mistyped postal number
-fails its check digit too. The order numbers the tracker also takes stay unclaimed.
+Registration numbers are SN, nine digits and JP. They resemble Japan Post's UPU S10 numbers,
+but most fail its check digit. The existing low-confidence rule has HTTP recognition; a number
+with a valid postal checksum keeps its postal detection. Detection alone establishes no shipment.
+Order references and other service modes remain with enabled universal providers.
 
-## Why there is no adapter
+## Retrieval
 
-The tracker is a plain page that shows a registration number's history without a session, but
-it keeps only the last three months. An adapter can follow.
+`cbt.shipnergy.com/Track/Result` reads registration numbers through `mode=0` and `ids`. The
+tracker keeps three months of records and returns the same empty view for expired and absent
+registrations. That response remains inconclusive.
+
+The destination delivery phase includes linehaul and storage. Its Japanese activity distinguishes
+a delivery round from those scans. Order completion needs an explicit delivered activity before
+it becomes delivery. The adapter projects known logistics activities and facilities; it omits
+arbitrary free comments and the separate partner message box. A declared Sagawa handoff retains
+its number for direct confirmation. A fast summary cannot replace the returned timeline.
 
 ## Links
 
-Tracking links carry the registration number as `ids` on the tracker's result page, with
-`mode=0`; other modes look up order and delivery numbers.
+Tracking links carry the registration number as `ids`, with `mode=0`. Other modes look up order
+and delivery numbers.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`ETOMARS_TRACKING_NUMBER` supplies a registration with retained history; `ETOMARS_UNKNOWN_NUMBER`
+supplies a synthetic registration with no history:
+
+```sh
+npm run test:carriers:live -- carriers/etomars/adapter.live.test.ts
+```

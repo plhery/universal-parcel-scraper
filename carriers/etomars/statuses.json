@@ -1,4 +1,89 @@
 {
   "carrier": "etomars",
-  "entries": []
+  "entries": [
+    {
+      "code": "10",
+      "wording": "Order Placed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "20",
+      "wording": "KR 물류센터 출고 준비 완료",
+      "stage": "registered",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "30",
+      "wording": "KR Logistics Center Outbound Completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "100",
+      "wording": "Start Global Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "200",
+      "wording": "도착국가 통관장 도착",
+      "stage": "customs",
+      "language": "ko",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "300",
+      "wording": "Customs Clearance in Progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "400",
+      "wording": "Customs Clearance Completed",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "500",
+      "wording": "(Destination Country)Start Delivery — 発送準備中",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "550",
+      "wording": "(Destination Country)In Delivery — 輸送中",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "550",
+      "wording": "(Destination Country)In Delivery — 保管中",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "550",
+      "wording": "(Destination Country)In Delivery — 配達中",
+      "stage": "out_for_delivery",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "700",
+      "wording": "Order Completed — Delivered : 配達完了",
+      "stage": "delivered",
+      "language": "ja",
+      "confirmedBy": "portal"
+    }
+  ]
 }
