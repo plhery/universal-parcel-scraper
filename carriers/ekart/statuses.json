@@ -96,6 +96,13 @@
       "note": "Followed by the hub's name. The shared wording rules would read it as acceptance."
     },
     {
+      "wording": "Dispatched to",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Followed by the hub the parcel is sent on to (\"Dispatched to CentralHub_…\"), the prose form of the dispatched code."
+    },
+    {
       "code": "InscannedAtFacility",
       "language": "en",
       "stage": "in_transit",

@@ -475,6 +475,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-27",
       "note": "Official Taiwan routes opCode 70 with this remark: the courier waits at a receiving warehouse that inspects the parcel before it accepts it, then signs."
+    },
+    {
+      "code": "77",
+      "wording": "The shipment is queuing up for flight resources，please wait patiently",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Official Taiwan routes opCode 77 with this remark, after the collection: the parcel waits for space on a flight, on its way. Other remarks of the code stay unclassified."
     }
   ]
 }

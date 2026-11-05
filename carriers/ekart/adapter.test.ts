@@ -47,13 +47,15 @@ describe('Ekart parser', () => {
     expect(result.expected_delivery).toBeUndefined();
     expect(parseEkart(load('return'), RETURN).events?.at(-1)).not.toHaveProperty('provider_leg');
   });
-  it('reads a hub named after "Received at" as transit, not acceptance', () => {
-    const value = fixture(); value[NUMBER].shipmentTrackingDetails.splice(1, 2, { date: 1767400000000, city: 'Example hub', statusDetails: 'Received at Example Hub' });
-    expect(parseEkart(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', expected_delivery: '2026-01-03T16:00:00Z' });
+  it('reads a hub named after "Received at" or "Dispatched to" as transit, not acceptance', () => {
+    for (const statusDetails of ['Received at Example Hub', 'Dispatched to ExampleHub_AAA']) {
+      const value = fixture(); value[NUMBER].shipmentTrackingDetails.splice(1, 2, { date: 1767400000000, city: 'Example hub', statusDetails });
+      expect(parseEkart(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', expected_delivery: '2026-01-03T16:00:00Z' });
+    }
   });
   it('replays every recorded status through the map', () => {
     for (const entry of statuses.entries) {
-      const description = 'code' in entry && entry.code ? `${entry.code} - ExampleHub_AAA` : entry.wording === 'Received at' ? 'Received at ExampleHub' : entry.wording!;
+      const description = 'code' in entry && entry.code ? `${entry.code} - ExampleHub_AAA` : entry.wording === 'Received at' || entry.wording === 'Dispatched to' ? `${entry.wording} ExampleHub` : entry.wording!;
       expect(ekartScan(description).stage, description).toBe(entry.stage);
     }
   });

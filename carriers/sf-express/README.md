@@ -46,7 +46,8 @@ Budget: 45 s by default (max 60 s), including a 15 s TRAWL transport allowance.
   delivery round too: the receiving warehouse checks it before it signs. Unknown
   combinations stay unclassified. Code
   `99` is read by its remark: "being returned" is a return and "being forwarded" a parcel sent on,
-  and its other remarks stay unclassified.
+  and its other remarks stay unclassified. So is `77`: a parcel "queuing up for flight resources"
+  is on its way.
 - Summary `expressState` `99` is broad transit, so a mapped latest scan wins over it. Other summary
   states win over the scan.
 - `scanDateTime` has no offset. Every scan's clock reads UTC+08:00, the time of mainland China,

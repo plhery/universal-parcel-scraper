@@ -46,19 +46,23 @@ const NOTICES: readonly (readonly [RegExp, ClassifiedStatus])[] = [
   [/^The shipment is being forwarded\.?$/i, TRANSIT],
 ];
 
-/** Codes 8000 and 70 are ambiguous without their reason, 70 and 99 without their remark; do not default them to signed. */
+// Code 77 is read by its remark: a parcel queuing for space on a flight is on its way.
+const FLIGHT_WAITS: readonly RegExp[] = [/^The shipment is queuing up for flight resources\b/i];
+
+/** Codes 8000 and 70 are ambiguous without their reason, 70, 77 and 99 without their remark; do not default them to signed. */
 export function sfExpressEventStatus(code: string, reason: string, remark = ''): ClassifiedStatus | undefined {
   if (code === '8000') {
     return REASONS.get(reason);
   }
   if (code === '70') return UNDELIVERED.get(reason) ?? UNDELIVERED_REMARKS.find(([wording]) => wording.test(remark.trim()))?.[1];
   if (code === '99') return NOTICES.find(([wording]) => wording.test(remark.trim()))?.[1];
+  if (code === '77') return FLIGHT_WAITS.some((wording) => wording.test(remark.trim())) ? TRANSIT : undefined;
   return CODES.get(code);
 }
 
 /**
- * What the map says about one scan by its operation code, and code 99 by its
- * remark, which is the scan's wording. Codes 8000 and 70 are read by a reason
+ * What the map says about one scan by its operation code, and codes 77 and 99
+ * by their remark, which is the scan's wording. Codes 8000 and 70 are read by a reason
  * the provider code does not carry, so the code alone gives them no stage.
  */
 export const statusMap: CarrierStatusMap = {

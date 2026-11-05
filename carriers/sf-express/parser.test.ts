@@ -130,6 +130,9 @@ describe('SF Express public route parsing', () => {
     expect(sfExpressEventStatus('99', '', 'The shipment is being returned')).toEqual({ stage: 'returned', status: 'exception' });
     expect(sfExpressEventStatus('99', '', 'The shipment is being forwarded')).toEqual({ stage: 'in_transit', status: 'in_transit' });
     for (const remark of ['', 'The shipment is being returned to the hub for sorting', 'Status updated']) expect(sfExpressEventStatus('99', '', remark)).toBeUndefined();
+    // So is code 77: a parcel queuing for space on a flight.
+    expect(sfExpressEventStatus('77', '', 'The shipment is queuing up for flight resources，please wait patiently')).toEqual({ stage: 'in_transit', status: 'in_transit' });
+    expect(sfExpressEventStatus('77', '', 'Status updated')).toBeUndefined();
     // Code 70 with a reason it does not know is read by its remark.
     expect(sfExpressEventStatus('70', '', 'The shipment has arrived at the warehouse and is waiting for inspection and acceptance. Please wait patiently.'))
       .toEqual({ stage: 'out_for_delivery', status: 'out_for_delivery' });

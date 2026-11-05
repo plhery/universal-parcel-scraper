@@ -24,7 +24,8 @@ const key = (text: string) => text.toLowerCase().replace(/[^a-z]/g, '');
 export function ekartScan(description: string): { code?: string; stage?: Stage; returning: boolean } {
   const coded = /^([A-Za-z]+(?:_[A-Za-z]+)*) - \S/.exec(description);
   const code = coded?.[1];
-  const stage = code ? STAGES.get(key(code)) : /^received at \S/i.test(description) ? 'in_transit' : STAGES.get(key(description));
+  // A hub's name after "Received at" or "Dispatched to": the parcel arriving there, or sent on to it.
+  const stage = code ? STAGES.get(key(code)) : /^(?:received at|dispatched to) \S/i.test(description) ? 'in_transit' : STAGES.get(key(description));
   return { ...(code ? { code } : {}), ...(stage ? { stage } : {}), returning: !!code && /^(?:rto|return|shipmentrto)/i.test(code) };
 }
 
