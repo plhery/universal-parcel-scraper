@@ -327,6 +327,10 @@ describe('JRT tracking adapter', () => {
     expect(answer('sorted')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(isJrtDhlRow('sorted')).toBe(true);
     expect(isJrtDhlRow('sorted at the airport')).toBe(false);
+    // DHL's round that found no such address, and the return it starts, on DHL's clock.
+    expect(answer('not delivered-bad address')).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(answer('shipment will be returned to origin-bad address')).toEqual({ kind: 'mapped', stage: 'returned' });
+    expect(isJrtDhlRow('not delivered-bad address')).toBe(true);
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // DHL's row for the parcel on its way to it, as JRT copies it in lower case.

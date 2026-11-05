@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { chinaPostDestinationStage, chinaPostRelayedStage } from '../china-post/status.js';
 
 // The origin milestone codes are documented by getCargoTrack. The web tracker
 // adds the origin airport's receipt (AP), the flight and clearance milestones,
@@ -52,6 +53,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['货物离开操作中心', 'in_transit'],
   ['picked up by shipping partner', 'in_transit'],
   ['arrived shipping partner facility', 'in_transit'],
+  // China Post's receipt on the postal line, after HuaHan's own acceptance: the hand-over to the post.
+  ['中国邮政已收取邮件', 'in_transit'],
 ]);
 // Milestones in Chinese with the English after them, and lines with a day, a flight, a time or a place.
 const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
@@ -70,12 +73,16 @@ const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 
 // HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
 const OWN_CODE = /^[A-Z]{2}$/;
-// HuaHan's codes for the destination carrier's scans that its words stage.
-const CARRIER_SCAN_CODES = new Set(['IA', 'CA']);
+// HuaHan's codes for the destination carrier's scans that its words stage. On the postal line DR
+// also carries the destination post's arrivals.
+const CARRIER_SCAN_CODES = new Set(['IA', 'CA', 'DR']);
 
+// On the postal line HuaHan relays China Post's scans in China Post's Chinese, offices in 【】,
+// and the destination post's as China Post copies them: China Post's vocabulary reads both.
 function mappedStage(code: string, wording: string): Stage | undefined {
   return CODES.get(code) ?? (!OWN_CODE.test(code) || CARRIER_SCAN_CODES.has(code)
-    ? WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] : undefined);
+    ? WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1]
+      ?? chinaPostRelayedStage(wording) ?? chinaPostDestinationStage(wording) : undefined);
 }
 
 /** A scan's stage: its code or wording in the map, else the shared rules, else nothing. A recorded gap has none. */

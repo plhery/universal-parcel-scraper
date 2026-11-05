@@ -306,6 +306,22 @@
       "note": "Copied from DHL: the recipient refused it as not ordered, and it goes back."
     },
     {
+      "wording": "not delivered-bad address",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Copied from DHL: the address could not be found on the round."
+    },
+    {
+      "wording": "shipment will be returned to origin-bad address",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Copied from DHL: the address could not be found, and it goes back."
+    },
+    {
       "wording": "loaded to movement / tour vehicle(return to sender)",
       "language": "en",
       "stage": "returned",

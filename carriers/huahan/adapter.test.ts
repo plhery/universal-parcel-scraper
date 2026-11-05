@@ -224,6 +224,23 @@ describe('HuaHan status map', () => {
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'ZZ', description: 'Departed from origin facility' })).toEqual({ kind: 'unknown' });
     // The destination carrier's address change, relayed without a code after the hand-off.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Change of delivery address' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // China Post's scans on the postal line, offices in 【】, and the destination post's as China Post copies them.
+    for (const [code, description, stage] of [
+      [null, '中国邮政已收取邮件', 'in_transit'],
+      [null, '邮件到达【示例市国际互换局】', 'in_transit'],
+      [null, '邮件离开【示例市国际互换局】，正在发往下一站', 'in_transit'],
+      [null, '送交出口海关', 'customs'],
+      ['DR', '到达寄达地处理中心', 'in_transit'],
+      [null, '境外进口海关留存待验(等待提交给边境机构/安全部门)', 'customs'],
+      [null, '境外进口互换局留存', 'customs'],
+      ['IA', '寄达地海关允许进口（无需缴税）', 'in_transit'],
+      [null, '离开【加拿大】处理中心', 'in_transit'],
+      ['CA', '已到达【加拿大】投递局', 'in_transit'],
+      [null, '【加拿大】安排投递', 'out_for_delivery'],
+      [null, '【加拿大】已妥投', 'delivered'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+    }
     // CTT Express's pre-advice, relayed without a code before HuaHan's receipt in China.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Pendiente de recepción en CTT Express' })).toEqual({ kind: 'mapped', stage: 'registered' });
     expect(huahanStage('', 'Pendiente de recepción en CTT Express')).toEqual({ stage: 'registered', source: 'carrier_map' });

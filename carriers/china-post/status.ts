@@ -243,6 +243,28 @@ export function chinaPostDestinationScan(wording: string): boolean {
   return DESTINATION_PLACED_LABELS.has(label) && place !== undefined && chinaPostCountry(place) !== undefined;
 }
 
+// The stages of the destination leg's labels, which China Post's parser reads by code, for a
+// forwarder that relays them in Chinese without China Post's codes. The import office of
+// exchange keeps the item (境外进口互换局留存) between customs' hold and its presentation.
+const DESTINATION_STAGES: ReadonlyMap<string, Stage> = new Map([
+  ['到达寄达地', 'in_transit'],
+  ['到达寄达地处理中心', 'in_transit'],
+  ['送交境外进口海关', 'customs'],
+  ['境外进口海关留存待验', 'customs'],
+  ['境外进口互换局留存', 'customs'],
+  ['寄达地海关允许进口', 'in_transit'],
+  ['离开…处理中心', 'in_transit'],
+  ['到达境外经转局', 'in_transit'],
+  ['已到达…投递局', 'in_transit'],
+  ['…安排投递', 'out_for_delivery'],
+  ['…已妥投', 'delivered'],
+]);
+
+/** The stage of a destination leg's label relayed in Chinese, its places and closing note aside, or undefined. */
+export function chinaPostDestinationStage(wording: string): Stage | undefined {
+  return DESTINATION_STAGES.get(chinaPostLabel(wording));
+}
+
 /**
  * The name a label gives in its only 【】, "启运【香港】", which its English
  * leaves out, or the country code a partner's scan abroad gives before its

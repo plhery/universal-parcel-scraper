@@ -75,7 +75,7 @@ const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data f
 const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
 
 // DHL's own event texts, in lower case, as the tracker copies them: "loaded to movement / tour vehicle".
-const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|sorted$|not delivered-consignee\b|held for consignee collection|shipment will be returned to origin\b)/i;
+const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|sorted$|not delivered-(?:consignee|bad address)\b|held for consignee collection|shipment will be returned to origin\b)/i;
 
 /**
  * Whether a row is one DHL wrote that the tracker copies, on DHL's wall clock where it scanned the parcel: its

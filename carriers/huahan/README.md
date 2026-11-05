@@ -34,6 +34,9 @@ to the destination carrier's scans.
 - An American partner's scans ("Picked up by Shipping Partner", its facility's arrival and
   departure) can come before the flight leaves China: written ahead, they read as transit, not
   as the parcel's acceptance.
+- On the postal line the reply relays China Post's scans in Chinese, offices in 【】, and the
+  destination post's as China Post copies them, some under `DR`, `IA` or `CA`. China Post's
+  vocabulary reads them; its receipt after HuaHan's own acceptance is the hand-over, in transit.
 
 ## Numbers
 
