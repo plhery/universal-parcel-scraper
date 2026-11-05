@@ -601,6 +601,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // forwarder's inbound scan at a facility, which may follow in brackets, move
   // the parcel on.
   if (/\bcross ?dock(?:ed|ing)?\b|\bready for outbound\b|^(?:(?:item|parcel|package|shipment) )?inbound scan(?:ned|ning)?\b|\b(?:un)?bagg(?:ed|ing)\b|\bmaster (?:air ?way ?bill|awb)(?: (?:number|no))? (?:received|assigned|allocated)\b|\bhand ?over to (?:the |an )?(?:airline|air carrier)\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has )?left (?:the|our) warehouse$|\b(?:flight|leg)\b[^.;]*\b(?:is taking off|took off|has taken off|landed)\b|\bflight (?:take ?off|landing)\b|^(?:initial|final) landing$|\bcargo tally in the supervised warehouse\b|\bprepared for (?:the )?last[- ]mile hand ?over\b/.test(text)) return 'in_transit';
+  // The airline's notice of arrival (NOA) reaching the destination agent, after the landing and
+  // before clearance, as Shouwu, JRT and the ground handlers word it.
+  if (/^(?:the )?noa (?:has been |was )?received$|^noa-notification of arrival\b/.test(text)) return 'in_transit';
   // A linehaul is the trunk haul between hubs, whatever was handed over.
   // A parcel at a distribution centre, the whole scan, as Lietuvos paštas words it. Other scans naming
   // such a centre, a courier's origin scan or a retailer's order sent to its store, say less.

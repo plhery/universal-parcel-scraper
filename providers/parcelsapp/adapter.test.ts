@@ -2234,6 +2234,23 @@ describe('ParcelsApp result parsing', () => {
     ])).toEqual(['2026-10-31T23:29:00.000Z', '2026-10-31T07:03:00.000Z', '2026-10-30T08:00:00.000Z']);
   });
 
+  it("shows China Post's Chinese labels in English, staged as the Chinese was, with the place the label names where none is given", () => {
+    const scans = parseParcelsAppResponse({ carriers: ['China Post', 'Example Line'], originCode: 'CN', destinationCode: 'FR', states: [
+      { date: '2026-11-01T07:29:00Z', status: '邮件到达处理中心【FR Example FR】', carrier: 0, location: 'France' },
+      { date: '2026-11-01T03:10:00Z', status: '邮件离开处理中心【FR Example FR】', carrier: 0, location: 'France' },
+      { date: '2026-10-29T09:00:00Z', status: '启运【香港】', carrier: 0 },
+      { date: '2026-10-28T09:00:00Z', status: '邮件到达处理中心【示例】', carrier: 1, location: 'Example' },
+    ] }, number, identity()).events?.map(({ description, location, stage }) => [description, location, stage]);
+    expect(scans).toEqual([
+      ['Arrival at processing center', 'France', 'in_transit'],
+      ['Departure from processing center', 'France', 'in_transit'],
+      [expect.any(String), '香港', 'in_transit'],
+      // Another carrier's row keeps its words.
+      ['邮件到达处理中心【示例】', 'Example', 'in_transit'],
+    ]);
+    expect(scans?.[2]?.[0]).not.toMatch(/\p{Script=Han}/u);
+  });
+
   it("dates UPU's scans at an office the destination's code names by the office's place", () => {
     // 4-72 dates the delivery UPU copies at such an office at the same digits, as China Post's copy has them.
     const parse = (destinationCode: string, location: string) => dateLocalClocks('parcelsapp', parseParcelsAppResponse({

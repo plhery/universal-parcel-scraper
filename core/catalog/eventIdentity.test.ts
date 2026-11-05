@@ -3,10 +3,17 @@ import { describe, expect, it } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 
 describe('same-instant identity policies', () => {
-  it('requires India Post scans to retain their provider code, and lets a scan abroad take its own offset', () => {
-    expect(sameInstantIdentityPolicy('india-post')).toEqual({
-      sourceCarrierId: 'india-post', storedSources: ['india-post'], requireProviderCode: true, relabelledFrom: 'Asia/Kolkata', matchWallClock: true,
+  it('matches an India Post scan restated at the same second and office under another code, and lets a scan abroad take its own offset', () => {
+    const policy = sameInstantIdentityPolicy('india-post', { supportsScanMatching: true });
+    expect(policy).toMatchObject({
+      sourceCarrierId: 'india-post', storedSources: ['india-post'], requireProviderCode: false, matchEachScan: true,
+      relabelledFrom: 'Asia/Kolkata', matchWallClock: true,
     });
+    const scan = (description: string, providerCode: string, location = 'Sample GPO 400001') => ({ stage: 'in_transit', description, providerCode, location });
+    expect(policy?.matches?.(scan('Bag Closed', 'BagOpened'), scan('Item bagged', 'ItemBagged'))).toBe(true);
+    expect(policy?.matches?.(scan('Bag Dispatched', 'BagDispatched'), scan('Item Dispatched', 'ItemDispatched', 'Sample NSH 400001'))).toBe(false);
+    // Older app versions match by the instant and code alone, so they get no policy.
+    expect(sameInstantIdentityPolicy('india-post')).toBeUndefined();
   });
 
   // A carrier giving wall clocks in no stated zone also matches a scan a better deduced zone re-dates.

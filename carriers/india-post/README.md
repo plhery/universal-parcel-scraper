@@ -82,8 +82,10 @@ Outcomes:
   and route, and the location excludes the origin's pincode and directory coordinates. Ordinary
   sorting arrivals without a matching flight remark keep their office. Arrival timestamps retain
   their supplied offset; the take-off clock correction does not apply to them.
-- The app identity policy requires the same instant and provider code before updating a
-  reworded stored scan. Its `relabelledFrom: 'Asia/Kolkata'` lets a scan abroad take over the row
+- MySpeedPost can restate a scan at the same second and office in other words and under another
+  `event_type` ("Item bagged" as "Bag Closed"), and a reply never holds two scans at one second
+  and office. So the app identity policy updates the stored scan at the same instant and location,
+  when the match is unique both ways, whatever the provider code. Its `relabelledFrom: 'Asia/Kolkata'` lets a scan abroad take over the row
   stored under India's label, by wall clock, provider code and location. The consumer owns the
   stored rows and notification receipts.
 - IDs and pincodes arrive as numbers or strings, hence `cleanScalar`. A pincode is kept in the

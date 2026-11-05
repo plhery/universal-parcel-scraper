@@ -32,6 +32,7 @@ import { countryName, militaryPostOffice } from '../../places/trackingLocation.j
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { captureFailure, capturedBodies, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { CAINIAO_CHINA_LEG, CAINIAO_CHINA_ZONE } from '../../carriers/aliexpress/clock.js';
+import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { DHLINK_RECORD_ZONE, usClockCopy } from '../../carriers/dhlink/clock.js';
@@ -1750,6 +1751,16 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       // Some Chronopost rows put the service label in the location field.
       const location = scan?.location ?? reportedPlace(raw.location);
       if (location && !/^Type de livraison\s*:/i.test(location)) parsed.location = location;
+      // China Post words its labels in Chinese only, also those it gives the destination post's scans:
+      // they show in English where it is known, staged as the Chinese was, with the place left to the
+      // location, or taken from the label's 【】 where none is given, as 17TRACK's copies of them are.
+      const english = !scan && typeof name === 'string' && carrierIdFromName(name) === 'china-post'
+        && /\p{Script=Han}/u.test(parsed.description ?? '') ? chinaPostEnglish(parsed.description!) : undefined;
+      if (english) {
+        const named = parsed.location ? '' : reportedPlace(chinaPostLabelPlace(parsed.description!) ?? '');
+        parsed.description = english;
+        if (named) parsed.location = named;
+      }
       events.push(parsed);
       carried.push({ event: parsed, carrier: nameKey(name) });
       scanCarriers.add(name);

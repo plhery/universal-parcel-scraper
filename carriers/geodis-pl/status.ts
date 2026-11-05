@@ -36,6 +36,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['15', 'accepted'],
   // The driver could not collect the shipment from the sender.
   ['14', 'exception'],
+  // A terminal's receipt from a driver: after the collection, or after a round that brought it back undelivered.
   ['20', 'in_transit'],
   ['30', 'in_transit'],
   ['40', 'in_transit'],

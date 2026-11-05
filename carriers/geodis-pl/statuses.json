@@ -4,7 +4,7 @@
     {"code": "10", "wording": "Received from the sender", "language": "en", "stage": "accepted", "confirmedBy": "live"},
     {"code": "15", "wording": "Collected (SMS)", "language": "en", "stage": "accepted", "confirmedBy": "portal", "note": "The collection from the sender, confirmed by text message."},
     {"code": "14", "wording": "Failed collection (SMS)", "language": "en", "stage": "exception", "confirmedBy": "portal", "note": "The driver could not collect the shipment from the sender."},
-    {"code": "20", "wording": "Inbound Scan From Driver to Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The collecting terminal received the shipment from the driver."},
+    {"code": "20", "wording": "Inbound Scan From Driver to Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A terminal received the shipment from a driver: the collecting one after the collection, or the delivery terminal after a round that brought it back undelivered. Without an attempt code (65, 68) the round made no attempt: the shipment waits for another round."},
     {"code": "30", "wording": "Outbound Scan from (Collection) Terminal to Line-haul", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "40", "wording": "Inbound Scan from Line-haul to (Delivery) Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "50", "wording": "Outbound for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "portal"},
