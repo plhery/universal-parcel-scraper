@@ -19,16 +19,17 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 ## Notes
 
 - The forwarder writes its scans in English: its Shenzhen warehouse's arrival (`ARRIVAL`) and
-  departure (`SHIPMENT`) rows, each with a place. The stage comes from the wording in
-  [status.ts](status.ts).
+  departure (`SHIPMENT`) rows, each with a place, then the flight, customs and hand-over rows in
+  Chinese and English, and the delivery partner's scans as it relays them, such as Poste
+  Italiane's. The stage comes from the wording in [status.ts](status.ts).
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held
   back.
 
 ## Limitations
 
-The record names no delivery carrier or last-mile number, so tracking stops at the warehouse's
-departure scan until the forwarder adds rows.
+The record names no delivery carrier or last-mile number, so the delivery partner's scans are
+only those the forwarder relays.
 
 ## Numbers
 
