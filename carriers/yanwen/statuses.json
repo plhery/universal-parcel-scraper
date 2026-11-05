@@ -905,6 +905,22 @@
       "note": "GOFO's line haul between its hubs."
     },
     {
+      "wording": "Arrived at GOFO Delivery Station",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "GOFO's delivery station receiving the parcel before its round."
+    },
+    {
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "GOFO's round from its delivery station, as the forwarder relays it."
+    },
+    {
       "code": "LM40",
       "stage": "delivered",
       "confirmedBy": "live",

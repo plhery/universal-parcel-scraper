@@ -124,6 +124,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // A forwarder's leg after Yanwen's outbound scan, worded as First Line's and read as its map reads them: the
   // warehouse scans, China's export declaration before the flight, the landing and import release, the broker handing
   // the parcel to GOFO, then GOFO's hubs. GOFO loads the truck minutes before the hub's departure scan: no round yet.
+  // Then GOFO's delivery station receives the parcel and sends it out on its round.
   ['Barcode scanning', { status: 'in_transit', stage: 'in_transit' }],
   ['Packaged', { status: 'in_transit', stage: 'in_transit' }],
   ['Leaving Scan', { status: 'in_transit', stage: 'in_transit' }],
@@ -138,6 +139,8 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Loaded on Vehicle', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed GOFO Regional Hub', { status: 'in_transit', stage: 'in_transit' }],
   ['In Transit to Next Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at GOFO Delivery Station', { status: 'in_transit', stage: 'in_transit' }],
+  ['Out for Delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:
