@@ -19,6 +19,8 @@ import { isRoyaleInternationalReference } from '../detection/royaleInternational
 import { isTopdeliveryReference } from '../detection/topdelivery.js';
 import { isKargoturkReference } from '../detection/kargoturk.js';
 import { isProfitFieldsReference } from '../detection/profitFields.js';
+import { isLmParcelReference } from '../detection/lmParcel.js';
+import { isZnlogicReference } from '../detection/znlogic.js';
 import { isExpedicoReference } from '../detection/expedico.js';
 import { isFanCourierReference } from '../detection/fanCourier.js';
 import { countryCode } from '../time/index.js';
@@ -33,7 +35,7 @@ export interface DeliveryHandoff {
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
   topdelivery: isTopdeliveryReference, kargoturk: isKargoturkReference, expedico: isExpedicoReference, 'fan-courier': isFanCourierReference,
-  'profit-fields': isProfitFieldsReference,
+  'profit-fields': isProfitFieldsReference, 'lm-parcel': isLmParcelReference, znlogic: isZnlogicReference,
   'fez-delivery': isFezDeliveryReference,
   'junfeng-international': isJunfengInternationalReference,
   'shipglobal-us': isShipglobalUsReference,

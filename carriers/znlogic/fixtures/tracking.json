@@ -1,0 +1,45 @@
+{
+  "status": "Delivered January 6",
+  "origin": "US",
+  "destination": "US",
+  "zip_code": "PRIVATE",
+  "last_update_summary": "Delivered",
+  "history": [
+    {
+      "message": "Delivered, In/At Mailbox (PRIVATE 00000)",
+      "time": "2026-01-06T12:43:00.000",
+      "human_time": "PRIVATE",
+      "location": "BOSTON MA US"
+    },
+    {
+      "message": "Out for Delivery",
+      "time": "2026-01-06T08:33:00.000",
+      "human_time": "PRIVATE",
+      "location": "BOSTON MA US"
+    },
+    {
+      "message": "Arrived at Post Office",
+      "time": "2026-01-06T08:22:00.000",
+      "human_time": "PRIVATE",
+      "location": "BOSTON MA US"
+    },
+    {
+      "message": "Departed USPS Facility",
+      "time": "2026-01-06T05:44:00.000",
+      "human_time": "PRIVATE",
+      "location": "BOSTON MA US"
+    },
+    {
+      "message": "USPS in possession of item",
+      "time": "2026-01-06T05:36:00.000",
+      "human_time": "PRIVATE",
+      "location": "BOSTON MA US"
+    },
+    {
+      "message": "Picked Up By Shipping Partner, USPS Awaiting Item",
+      "time": "2026-01-05T09:05:00.000",
+      "human_time": "PRIVATE",
+      "location": null
+    }
+  ]
+}

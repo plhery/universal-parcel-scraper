@@ -29560,7 +29560,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lm-parcel",
+      "recognitionRank": 2,
+      "recognitionPattern": "^LM\\d{10}$",
+      "localClocks": true
     },
     "canaryUrl": "https://www.lmparcel.com/search",
     "trackingUrlTemplate": "https://www.lmparcel.com/search?nums={trackingNumber}",
@@ -50378,10 +50381,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "US"
     ],
     "selectable": true,
-    "timezone": "America/Los_Angeles",
+    "timezone": "UTC",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "znlogic",
+      "recognitionRank": 3,
+      "recognitionPattern": "^ZPY[A-Z]{2}\\d{10}YQ$",
+      "localClocks": true
     },
     "canaryUrl": "https://tracking.link/tracking",
     "trackingUrlTemplate": "https://tracking.link/tracking?tracking_id={trackingNumber}",

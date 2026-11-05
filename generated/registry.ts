@@ -390,6 +390,7 @@ import { adapter as lingdong } from '../carriers/lingdong/adapter.js';
 import { adapter as linhan } from '../carriers/linhan/adapter.js';
 import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
 import { adapter as liuchen } from '../carriers/liuchen/adapter.js';
+import { adapter as lmParcel } from '../carriers/lm-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
 import { adapter as loggi } from '../carriers/loggi/adapter.js';
 import { adapter as logisimple } from '../carriers/logisimple/adapter.js';
@@ -722,6 +723,7 @@ import { adapter as ywe } from '../carriers/ywe/adapter.js';
 import { adapter as yypost } from '../carriers/yypost/adapter.js';
 import { adapter as zajil } from '../carriers/zajil/adapter.js';
 import { adapter as zeleris } from '../carriers/zeleris/adapter.js';
+import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
 import { adapter as zrExpress } from '../carriers/zr-express/adapter.js';
 import { adapter as zto } from '../carriers/zto/adapter.js';
@@ -1118,6 +1120,7 @@ export const REGISTRY: RegistryDefinition = {
     "linhan": linhan,
     "lion-parcel": lionParcel,
     "liuchen": liuchen,
+    "lm-parcel": lmParcel,
     "logen": logen,
     "loggi": loggi,
     "logisimple": logisimple,
@@ -1450,6 +1453,7 @@ export const REGISTRY: RegistryDefinition = {
     "yypost": yypost,
     "zajil": zajil,
     "zeleris": zeleris,
+    "znlogic": znlogic,
     "zoom-ve": zoomVe,
     "zr-express": zrExpress,
     "zto": zto,
@@ -2170,7 +2174,7 @@ export const REGISTRY: RegistryDefinition = {
     "lion-parcel": "lion-parcel",
     "liuchen": "liuchen",
     "ljx-express": "universal",
-    "lm-parcel": "universal",
+    "lm-parcel": "lm-parcel",
     "logen": "logen",
     "loggi": "loggi",
     "logisimple": "logisimple",
@@ -2789,7 +2793,7 @@ export const REGISTRY: RegistryDefinition = {
     "zheldor": "universal",
     "zimpost": "universal",
     "zippd": "universal",
-    "znlogic": "universal",
+    "znlogic": "znlogic",
     "zoom-ve": "zoom-ve",
     "zr-express": "zr-express",
     "zto": "zto",

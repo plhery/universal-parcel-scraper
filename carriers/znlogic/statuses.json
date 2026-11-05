@@ -1,4 +1,41 @@
 {
   "carrier": "znlogic",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered, In/At Mailbox",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Arrived at Post Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Departed USPS Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "USPS in possession of item",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Picked Up By Shipping Partner, USPS Awaiting Item",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

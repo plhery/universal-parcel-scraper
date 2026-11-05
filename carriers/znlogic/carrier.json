@@ -17,21 +17,49 @@
     "color": "#ac7138"
   },
   "selectable": true,
-  "timezone": "America/Los_Angeles",
+  "timezone": "UTC",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "znlogic",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 3,
+      "pattern": "^ZPY[A-Z]{2}\\d{10}YQ$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "origin_country",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://tracking.link/tracking?tracking_id={trackingNumber}",
     "searchUrl": "https://tracking.link/tracking",
     "canaryUrl": "https://tracking.link/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "origin_country",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "origin_country",
+      "destination_country"
+    ],
+    "discarded": [
+      "recipient",
+      "contact",
+      "address"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

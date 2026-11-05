@@ -29,6 +29,12 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'lm-parcel', number: 'LM9746825103',
+    route: /^https:\/\/www\.lmparcel\.com\/search\?nums=LM9746825103$/,
+    marker: /查询不到|运输途中/ },
+  { carrier: 'znlogic', number: 'ZPYXY9746825103YQ',
+    route: /^https:\/\/tracking\.link\/tracking\?tracking_id=ZPYXY9746825103YQ$/,
+    marker: /Zinc Tracking/ },
   { carrier: 'profit-fields', number: 'EWSXY974682510369YQ',
     route: /^https:\/\/www\.8dt\.com\/tracking\?track=EWSXY974682510369YQ$/,
     marker: /全球包裏|Global Logistics Track and Trace|Track Package/ },

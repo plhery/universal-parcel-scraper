@@ -1,27 +1,17 @@
 # Zinc
 
-Zinc parcels use enabled universal providers. There is no dedicated adapter.
+Zinc gives marketplace orders its own reference and relays the retailer's delivery scans. The
+native adapter calls the public tracker's same-origin JSON route, with the whole Zinc reference
+in its path. Positive replies do not echo an identifier: binding relies on that exact request
+route without redirects. Only a shipment-specific 404 that echoes the whole reference means
+not found; a missing route or generic error does not.
 
-Zinc Technologies, the San Francisco maker of the PriceYak and JoeLister drop-shipping tools, gives
-orders that a retailer ships its own tracking number, which marketplaces such as eBay show under the
-carrier name ZNLOGIC. Its tracker is at tracking.link.
+The feed's clocks have no offsets. They stay local rather than taking the company's headquarters
+clock; consumer place or country enrichment retains its basis. Recipient ZIP and contact details are omitted.
+A carrier name in a scan does not supply its barcode, so it cannot create a delivery handoff.
+Unknown scan wording remains unstaged and no delivery estimate is inferred from the summary.
 
-## Numbers
+Retrieval uses the caller's transport and budget, with one network-only retry. Enabled universal
+providers remain available when direct tracking is inconclusive.
 
-Its numbers are ZPY, two letters, ten digits and YQ. Detection suggests Zinc for that shape at low
-confidence, as its known numbers come from one source.
-
-## Why there is no adapter
-
-The tracker asks an open JSON service with the number alone and relays the delivering carrier's
-scans without that carrier's number. Its reply also carries the recipient's ZIP code, which an
-adapter would have to drop. An adapter can follow.
-
-## Links
-
-Tracking links carry the number as `tracking_id` on the `tracking` page at tracking.link.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `ZNLOGIC_TRACKING_NUMBER=… ZNLOGIC_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/znlogic/adapter.live.test.ts` with private inputs.

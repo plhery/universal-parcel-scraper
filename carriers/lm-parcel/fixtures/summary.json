@@ -1,0 +1,18 @@
+{
+  "msg": "",
+  "data": [
+    {
+      "searchNo": "LM9746825104",
+      "waybillNo": "LM9746825104",
+      "originCountry": "CN",
+      "targetCountry": "US",
+      "originTime": 0,
+      "status": 4,
+      "routeType": 1300,
+      "routeContent": "Delivered. Position: PRIVATE",
+      "occurTime": 1767685995000
+    }
+  ],
+  "code": "0",
+  "success": true
+}

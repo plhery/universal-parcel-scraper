@@ -284,6 +284,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "line-clear": 741,
   "lion-parcel": 952,
   "liuchen": 748,
+  "lm-parcel": 2,
   "logen": 48,
   "logistiq": 768,
   "logoix": 869,
@@ -508,6 +509,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "ycs-logistics": 718,
   "yurtici-kargo": 430,
   "zeleris": 230,
+  "znlogic": 3,
   "zr-express": 801,
   "zto-international": 998,
 };

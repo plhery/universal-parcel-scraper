@@ -1,4 +1,96 @@
 {
   "carrier": "lm-parcel",
-  "entries": []
+  "entries": [
+    {
+      "code": "1300",
+      "wording": "Delivered.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "1215",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "1215",
+      "wording": "Processing at Designated Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "1150",
+      "wording": "Delivery to local courier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "850",
+      "wording": "Customs clearance agent received the shipment in destnation country",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "1000",
+      "wording": "Customs clearance completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "700",
+      "wording": "Flight Depart",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "800",
+      "wording": "Flight Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "500",
+      "wording": "Arrived at AIRPORT of Origin",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "420",
+      "wording": "Departed from Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "400",
+      "wording": "Departed Facility In processing center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "300",
+      "wording": "Arrived at Sort Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "100",
+      "wording": "Item information received.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

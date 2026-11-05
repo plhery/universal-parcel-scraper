@@ -17,18 +17,53 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "lm-parcel",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 2,
+      "pattern": "^LM\\d{10}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_tracking_number",
+    "origin_country",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://www.lmparcel.com/search?nums={trackingNumber}",
     "searchUrl": "https://www.lmparcel.com/search",
     "canaryUrl": "https://www.lmparcel.com/search",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_tracking_number",
+      "origin_country",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_tracking_number",
+      "origin_country",
+      "destination_country"
+    ],
+    "discarded": [
+      "recipient",
+      "contact",
+      "address",
+      "internal_metadata"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

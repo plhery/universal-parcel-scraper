@@ -1,28 +1,17 @@
 # LM Parcel
 
-LM Parcel parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter uses the public search page's anonymous summary POST and details GET. The
+single search result must echo the whole requested reference, and every detail row must name the
+same waybill. Only the bound empty search signature establishes absence. Partner barcodes keep
+their issuer's detection and can propose a separate confirmation lookup.
 
-LM Parcel (六脉速运, 六脉小包) runs direct parcel lines from China for online sellers to the
-United States, where USPS delivers, the United Kingdom, Germany, where DHL delivers, and the
-Netherlands. Its site is lmparcel.com.
+The numeric scan values encode facility wall digits through the China clock. The parser reads
+those digits with each row's stated offset, then orders known instants. Missing offsets stay
+local and preserve source order. Facility processing and local-courier handoff are transit;
+assigning a last-mile reference is an administrative notice. Staff metadata, contact and delivery
+position details are omitted. There is no ETA in the observed reply.
 
-## Numbers
+Retrieval uses the caller's transport and budget, with one network-only retry. Refusals, rate
+limits and malformed replies remain distinct, so enabled universal providers can still help.
 
-LM Parcel numbers are LM and ten digits. An archived lookup on its tracker, which still answers
-the number, and an example label in its API document have them. They are two sources, so the
-rule is low.
-
-## Why there is no adapter
-
-The tracker asks an open JSON service without a session or CAPTCHA, which answered a public
-number with its scans and gives an empty list for an unknown one. Each scan states its own UTC
-offset, and one marks the hand-off to the last-mile carrier. An adapter can follow.
-
-## Links
-
-Tracking links carry the number as `nums` on lmparcel.com's search page.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `LM_PARCEL_TRACKING_NUMBER=… LM_PARCEL_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/lm-parcel/adapter.live.test.ts` with private inputs.
