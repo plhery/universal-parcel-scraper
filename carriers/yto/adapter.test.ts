@@ -144,8 +144,12 @@ describe('YTO domestic parser', () => {
     // A contact in the first bracket is no place, and a code without a label of its own stays malformed.
     value[0].waybillProcessInfo[0].description = '您的快件已经到达【派件员 Example 13000000000】';
     expect(parseYto(value, NUMBER).events?.[0]!.location).toBeUndefined();
-    value[0].waybillProcessInfo[0].opCode = '741';
+    value[0].waybillProcessInfo[0].opCode = '999';
     expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    // A code the website's client or a provider labels takes that label.
+    value[0].waybillProcessInfo[0].opCode = '756';
+    value[0].waybillProcessInfo[0].description = '您好，圆通速递快递员正在处理中，如有问题请联系物流客服。【Example depot】';
+    expect(parseYto(value, NUMBER).events?.[0]).toMatchObject({ provider_code: '756', stage: 'in_transit' });
     // The locker or station code takes its label from its sign type: stored for collection, or taken back out.
     value[0].waybillProcessInfo[0].opCode = '751';
     value[0].waybillProcessInfo[0].description = '您的快件已存放至【Example驿站】，请您及时取件';

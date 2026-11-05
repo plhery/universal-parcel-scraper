@@ -30,10 +30,13 @@ export function ytoStatus(code: string, signType?: unknown): ClassifiedStatus | 
   return STATUS.get(code);
 }
 
-// The website's label of each operation code that has one label, for a scan the feed sends
-// with its code and description but no label.
+// The label of each operation code that has one, for a scan the feed sends with its code and
+// description but no label: the website's scan labels, those its client maps a code to, and
+// those a provider relays with the code.
 const LABELS = new Map<string, string>([
   ['310', '揽收扫描'], ['131', '装件入车扫描'], ['171', '下车扫描'], ['710', '派件扫描'], ['745', 'PDA正常签收扫描'],
+  ['311', '已取件'], ['111', '运输中'], ['136', '运输中'], ['176', '运输中'], ['741', '派件中'], ['746', '派件中'],
+  ['123', '快件城市信息'], ['756', '小件员取出'], ['835', '退回件扫描'], ['996', '冬运会安检'],
 ]);
 
 /**
