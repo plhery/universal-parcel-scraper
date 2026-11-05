@@ -529,6 +529,9 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^delivery to local courier[.!]?$/i.test(value)) return 'in_transit';
   // YunExpress's handler taking the parcel from the airline's cargo terminal after its flight, as its own map reads it.
   if (/^collected at cargo terminal[.!]?$/i.test(value)) return 'in_transit';
+  // 4PX's operation point packing a parcel for the carrier that takes it in next, before that carrier's acceptance,
+  // as ParcelsApp relays 4PX's row in English and Spanish: a warehouse packing the order, as Cainiao's is.
+  if (/^packing the operating point[.!]?$|^empacando el punto de operacion[.!]?$/i.test(value)) return 'registered';
   // Maersk's leg as ParcelsApp relays it after the first carrier's: the manifest announcing the parcel, then
   // Maersk taking it over in the destination country, the step the first carrier calls its local delivery
   // company's receipt. A parcel relabelled at a facility on the way moves on.

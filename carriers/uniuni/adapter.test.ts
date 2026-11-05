@@ -5,6 +5,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, UniuniTracker } from './adapter.js';
 import { normalizeUniuniNumber, normalizeUniuniRecognitionNumber, parseUniuni } from './parser.js';
 import { uniuniStatus } from './status.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 
@@ -130,13 +131,15 @@ describe('UniUni parcel history', () => {
     ];
     const reply = (count: number) => ({ status: 'SUCCESS', data: { invalid_tno: '',
       valid_tno: [{ tno: reference, urlType: 'ltian', state: count === scans.length ? 203 : 202, spath_list: scans.slice(0, count) }] } });
-    expect(parseUniuni(reply(1), reference)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+    // The shipper's notice that its data reached UniUni: UniUni does not have the parcel yet.
+    expect(parseUniuni(reply(1), reference)).toMatchObject({ status: 'pending', current_stage: 'registered',
       last_status_text: scans[0]!.pathInfo, last_update_local: '2026-01-01T09:00:00' });
+    expect(statusMapAnswer({ carrier: 'uniuni', providerCode: '202', description: scans[0]!.pathInfo })).toEqual({ kind: 'mapped', stage: 'registered' });
     expect(parseUniuni(reply(3), reference)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
     expect(parseUniuni(reply(4), reference)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
     const delivered = parseUniuni(reply(5), reference);
     expect(delivered).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
-    expect(delivered.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit']);
+    expect(delivered.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'registered']);
     expect(JSON.stringify(delivered)).not.toContain('PRIVATE');
   });
 

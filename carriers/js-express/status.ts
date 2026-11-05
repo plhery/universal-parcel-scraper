@@ -38,9 +38,14 @@ const uspsSentenceStage = (normalized: string): Stage | undefined => {
   return status ? WORDINGS.stage(status) : undefined;
 };
 
+// The destination courier's waybill with its reference after the wording ("Waybill Generated for …") takes the
+// entry recorded without one.
+const WAYBILL_REFERENCE = /^(waybill generated for) [a-z]{0,4}\d{6,30}$/;
+
 // iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading.
 const mappedStage = (normalized: string): Stage | undefined =>
-  WORDINGS.stage(normalized) ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined) ?? uspsSentenceStage(normalized)
+  WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1')) ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
+    ?? uspsSentenceStage(normalized)
     ?? chinaPostRelayedStage(normalized)
     ?? imileRelayedStage(normalized);
 

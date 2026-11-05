@@ -3137,6 +3137,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "BRT Bartolini",
       "BRT Bartolini (Parcel ID)",
       "BRT Bartolini (DPD)",
+      "BRT Italy (DPD Group)",
       "myBRT.it"
     ],
     "countries": [

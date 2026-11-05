@@ -584,6 +584,11 @@ describe('JS Express status vocabulary', () => {
     expect(statusMap.gaps.every(gap => gap.wording && gap.note)).toBe(true);
     for (const wording of ['constructor', 'toString', 'Sample delivered note']) expect(jsExpressMappedStage(wording), wording).toBeUndefined();
     expect(jsExpressStage('')).toBeNull();
+    // The destination courier's waybill with its reference after the wording.
+    const waybill = 'Waybill Generated for ZZ0000000000000';
+    expect(jsExpressStage(waybill, 'OIT')).toEqual({ stage: 'registered', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: waybill })).toEqual({ kind: 'mapped', stage: 'registered' });
+    expect(jsExpressMappedStage('Waybill Generated for the sample shop')).toBeUndefined();
   });
 
   it('reads a wording the map lacks by its code where the code settles the stage alone, and a gap whatever its code', () => {

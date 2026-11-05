@@ -37,6 +37,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "202",
+      "wording": "Shipping information received. Your parcel is on its way to UniUni for delivery to you",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "A cross-border shipper's notice under 202, which its rows carry until delivery: its data reached UniUni, which does not have the parcel yet, as with UniUni's own Order received."
+    },
+    {
       "code": "211",
       "wording": "Failed delivery attempt, returning to the warehouse",
       "language": "en",

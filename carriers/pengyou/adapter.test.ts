@@ -81,6 +81,8 @@ describe('Pengyou tracking adapter', () => {
       status: 'in_transit', current_stage: 'accepted', current_stage_source: 'carrier_map', last_status_text: scan,
     });
     expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: scan })).toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: 'parcel has been sorted and is ready to be sent [Sample City]' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it('reads a delivery’s town as its place, on Beijing’s clock, without the postal code', () => {

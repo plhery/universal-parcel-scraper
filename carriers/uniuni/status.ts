@@ -20,13 +20,19 @@ export function uniuniStatus(code: number): ClassifiedStatus | undefined {
 }
 
 /**
+ * A cross-border shipper's notice that its data reached UniUni, which does not have the parcel yet: "on its
+ * way to UniUni". UniUni's own scans never word it so, and its own "Order received" (190) is registered too.
+ */
+const SHIPPER_NOTICE = /^shipping information received\. your parcel is on its way to uniuni\b/i;
+
+/**
  * A scan without UniUni's English summary is read by its own code, except 202:
  * cross-border shippers' scans carry it on every row until delivery, so there
  * only the wording tells a received label from a parcel out for delivery.
  */
 export function uniuniPartnerStatus(code: number, text: string): ClassifiedStatus | undefined {
   if (code !== 202) return uniuniStatus(code);
-  const stage = wordingStage(text);
+  const stage = SHIPPER_NOTICE.test(text.trim()) ? 'registered' : wordingStage(text);
   return { status: languageStageStatus(stage), stage };
 }
 
@@ -38,15 +44,16 @@ export function uniuniDropOffStage(text: string): ClassifiedStatus | undefined {
 /**
  * What the map says about one scan: its state code, as the adapter reads it, and a Uni Store
  * drop-off, which has none, by its wording. 202 is left open: the stored row does not say whether
- * it is UniUni's own scan or a cross-border shipper's.
+ * it is UniUni's own scan or a cross-border shipper's, except for the shipper's notice.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     if (code === null) return uniuniDropOffStage(wording)?.stage;
-    return /^\d{1,9}$/.test(code) && code !== '202' ? uniuniStatus(Number(code))?.stage : undefined;
+    if (code === '202') return SHIPPER_NOTICE.test(wording) ? 'registered' : undefined;
+    return /^\d{1,9}$/.test(code) ? uniuniStatus(Number(code))?.stage : undefined;
   },
   gaps: [{
     code: '202',
-    note: "Out for delivery in UniUni's own scans; a cross-border shipper's scans carry it on every row until delivery, and their wording decides. The stored row does not say whose it is.",
+    note: "Out for delivery in UniUni's own scans; a cross-border shipper's scans carry it on every row until delivery, and their wording decides. The stored row does not say whose it is, except the shipper's notice that its data reached UniUni.",
   }],
 };

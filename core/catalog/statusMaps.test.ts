@@ -477,6 +477,9 @@ describe('status map answers', () => {
     expect(answer('uniuni', '203', 'Delivered')).toEqual(mapped('delivered'));
     expect(answer('uniuni', null, 'Parcel dropped off at Uni Store')).toEqual(mapped('accepted'));
     expect(answer('uniuni', '202', 'Out for delivery')).toEqual(gap);
+    // A cross-border shipper's notice under 202, which UniUni's own scans never word.
+    expect(answer('uniuni', '202', 'Shipping information received. Your parcel is on its way to UniUni for delivery to you'))
+      .toEqual(mapped('registered'));
     expect(answer('uniuni', null, 'Delivered')).toEqual(unknown);
   });
 
@@ -1661,6 +1664,7 @@ describe("universal providers' answers", () => {
       ['Order has been placed successfully.', 'registered'], ['We have your parcel', 'accepted'],
       ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
       ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'], ['Collected at Cargo Terminal', 'in_transit'],
+      ['Packing the operating point', 'registered'], ['Empacando el punto de operación', 'registered'],
       ['In FedEx possession - Package received after final location pickup has occurred. Scheduled for pickup next business day', 'accepted'],
       ['In FedEx possession — At FedEx location', 'accepted'],
       ['Shipment under processing at origin hub', 'in_transit'], ['Shipment despatched to transshipment hub', 'in_transit'],
