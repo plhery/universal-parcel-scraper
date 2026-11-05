@@ -34,7 +34,9 @@ Preparing a parcel does not mean the carrier has received it. A return to the
 sorting centre after a delivery problem is an exception; the client's return
 category establishes a return to the sender. The service name is retained as
 the carrier supplies it. `expected_delivery` is GOFO's `expectedDeliveryTime`,
-kept as a date until the parcel is delivered or returned.
+kept as a date until the parcel is delivered or returned. A filled `edtStartTime`
+or `edtEndTime`, which the adapter does not read yet, is named in
+`unread_estimates`.
 
 ## Limitations
 

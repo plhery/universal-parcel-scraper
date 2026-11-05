@@ -45,7 +45,11 @@ parcel in it and a parcel number only that parcel.
   is unknown.
 - Clocks are wall clocks without an offset and are kept as local times.
 - The expected day is the latest of the parcels in view. It is shown only between the pickup and
-  the delivery, as on the tracker, and is dropped once a newer day's scan has come.
+  the delivery, as on the tracker, and is dropped once a newer day's scan has come. A filled
+  `EstimatedDeliveryDateRangeStart`, `EstimatedDeliveryDateRangeEnd`,
+  `EstimatedDeliveryDateTimeStart`, `EstimatedDeliveryDateTimeEnd`,
+  `EstimatedDeliveryDateTimeExact` or `EstimatedDeliveryTime`, which the adapter does not read
+  yet, is named in `unread_estimates`.
 - The reply also carries the recipient's postcode, town and map position, the handheld's position
   on each scan, the signer, photo and signature ids, sender references, weights, notes and the
   tracker's help texts. None of them is read.

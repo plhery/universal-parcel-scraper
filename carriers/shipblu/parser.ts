@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -155,6 +156,8 @@ export function parseShipblu(payload: unknown, raw: string): CarrierResult {
     ? instant(payload.delivered_date)?.iso ?? events.find((event) => event.provider_code === 'delivered')?.time : undefined;
   const facts = {
     expected_delivery: estimate(payload, type, current, stage),
+    // The window the customer chose with the day is not read yet; a filled one is named as unread.
+    ...unreadEstimates({ preferred_window: payload.preferred_window }),
     ...(delivered ? { delivered_at: delivered } : {}),
   };
 

@@ -41,7 +41,8 @@ lookup its tracking page makes.
   stage.
 - The estimate is the delivery day the page shows over the history when the reply has one, else
   the planned day as last updated, else the first planned. A delivered or returned shipment has
-  none.
+  none. A filled `estimatedArrivalTimeStart` or `estimatedArrivalTimeFinish`, a slot on that day
+  which the adapter does not read yet, is named in `unread_estimates`.
 - When the reply names another courier and its waybill, which the page shows as that courier's
   lettera di vettura, the waybill becomes the delivery number. The reply's courier codes are
   not known, so the number's own detection decides whether another carrier is asked.

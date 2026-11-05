@@ -36,7 +36,8 @@ makes.
 - The estimate follows the page: none before pickup or once the order ended, else the day the
   customer chose, else for a return ShipBlu's estimate. The page asks another endpoint for a
   delivery order's estimate; that endpoint answers a delivered order with the current time, so
-  it is not read.
+  it is not read. A filled `preferred_window`, the window the customer chose with the day, which
+  the adapter does not read yet, is named in `unread_estimates`.
 - A missed visit keeps the reason the courier gave, without phone numbers. Other comments, the
   merchant, the recipient's name, phones, address and coordinates, the visit days, the packages
   and the cash to collect come in the same reply and are not read.

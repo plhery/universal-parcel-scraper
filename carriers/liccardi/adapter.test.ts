@@ -118,6 +118,18 @@ describe('Liccardi HTTP adapter', () => {
     }), IN_TRANSIT)).toMatchObject({ expected_delivery: null });
   });
 
+  it('names the slot on the delivery day, which the adapter does not read yet, when the reply fills it', () => {
+    expect(parseLiccardi(fixture('in-transit'), IN_TRANSIT)).not.toHaveProperty('unread_estimates');
+    expect(parseLiccardi(fixture('delivered'), DELIVERED)).not.toHaveProperty('unread_estimates');
+    const slot = (tracking: Tracking) => Object.assign(tracking,
+      { estimatedArrivalDate: '2026-05-24', estimatedArrivalTimeStart: '09:00', estimatedArrivalTimeFinish: '12:00' });
+    expect(parseLiccardi(changed('in-transit', slot), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-05-24',
+      unread_estimates: ['estimatedArrivalTimeStart', 'estimatedArrivalTimeFinish'] });
+    // A delivered shipment still shows the slot's shape.
+    expect(parseLiccardi(changed('delivered', slot), DELIVERED)).toMatchObject({ expected_delivery: null,
+      unread_estimates: ['estimatedArrivalTimeStart', 'estimatedArrivalTimeFinish'] });
+  });
+
   it('does not deliver a shipment while one of its parcels is still on its way', () => {
     const partial = parseLiccardi(changed('delivered', (tracking) => { tracking.colli[1]!.esiti.pop(); }), DELIVERED);
     expect(partial).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'SPEDIZIONE CONSEGNATA',

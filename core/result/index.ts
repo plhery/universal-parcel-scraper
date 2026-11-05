@@ -17,6 +17,7 @@ import { deliveredToDoor } from './pickup.js';
 import { isRecipientAction, recipientAction, type RecipientAction } from '../status/action.js';
 import { withTieOrder } from './order.js';
 import { windowOpens, writtenWindow } from './window.js';
+import { MAX_UNREAD_ESTIMATES, UNREAD_ESTIMATE_FIELD } from './unread.js';
 
 export type CarrierStatus =
   | 'pending'
@@ -133,6 +134,11 @@ export interface CarrierResult extends JsonObject {
    * relaying them shows as scans: an instant with its offset, or a wall clock.
    */
   written_ahead?: string[];
+  /**
+   * The fields of the carrier's reply that hold a delivery estimate or slot the adapter does
+   * not read yet, by their path in the reply: a capture of this reply would teach it their shape.
+   */
+  unread_estimates?: string[];
   events?: CarrierEvent[];
 }
 
@@ -272,6 +278,12 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   const ahead = normalized.written_ahead;
   if (!Array.isArray(ahead) || !ahead.length || ahead.length > MAX_WRITTEN_AHEAD
     || !ahead.every((clock) => typeof clock === 'string' && WRITTEN_AHEAD_CLOCK.test(clock))) delete normalized.written_ahead;
+  const unread = Array.isArray(normalized.unread_estimates)
+    ? [...new Set(normalized.unread_estimates.filter((field): field is string => typeof field === 'string' && UNREAD_ESTIMATE_FIELD.test(field)))]
+      .slice(0, MAX_UNREAD_ESTIMATES)
+    : [];
+  if (unread.length) normalized.unread_estimates = unread;
+  else delete normalized.unread_estimates;
 
   const rawEvents = normalized.events ?? [];
   if (!Array.isArray(rawEvents)) {

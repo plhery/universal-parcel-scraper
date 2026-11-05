@@ -107,6 +107,17 @@ describe('Danske Fragtmænd tracking adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ time: '2026-10-25T02:30:00+02:00', provider_code: 'DAT' });
   });
 
+  it('names the slot of a timed delivery, which the adapter does not read yet, when the note fills it', () => {
+    expect(parseDanskeFragtmaend(fixture('in-transit'), IN_TRANSIT)).not.toHaveProperty('unread_estimates');
+    expect(parseDanskeFragtmaend(fixture('delivered'), DELIVERED)).not.toHaveProperty('unread_estimates');
+    const slot = (body: Reply) => Object.assign(body.ConsignmentNote.DeliveryTime, { DotIntervalStart: '2026-12-01T08:00:00', DotIntervalEnd: '2026-12-01T12:00:00' });
+    expect(parseDanskeFragtmaend(edited('in-transit', slot), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-12-01',
+      unread_estimates: ['DeliveryTime.DotIntervalStart', 'DeliveryTime.DotIntervalEnd'] });
+    // A delivered note still shows the slot's shape.
+    expect(parseDanskeFragtmaend(edited('delivered', slot), DELIVERED)).toMatchObject({ expected_delivery: null,
+      unread_estimates: ['DeliveryTime.DotIntervalStart', 'DeliveryTime.DotIntervalEnd'] });
+  });
+
   it('stages an unmapped code by its delivered or cancelled icon, else by its wording, and keeps a place the scan names', () => {
     const result = parseDanskeFragtmaend(edited('in-transit', (body) => {
       Object.assign(body.ConsignmentNoteTraces[0]!, { EventCode: 'LFF', EventCodeText: 'Sample handover', Status: 3, CargoHubDisplayText: 'Sample Terminal' });

@@ -179,6 +179,17 @@ describe('GLS Switzerland response normalization', () => {
     expect(JSON.stringify(waiting)).not.toMatch(/2760000000|07:00/);
   });
 
+  it('keeps the first date of an arrival range and names the text, whose end the adapter does not read yet', () => {
+    const parse = (payload: JsonObject) => parseGLSSwitzerlandTrackingResponse(payload, OFFICIAL_TEST_PARCEL_NUMBER);
+    for (const payload of [deliveredOverviewFixture(), detailedFixture(), parcelShopFixture()]) {
+      expect(parse(payload)).not.toHaveProperty('unread_estimates');
+    }
+    const arrivalTime = { name: 'Expected delivery:', value: '20-Jun-2026 - 22-Jun-2026' };
+    expect(parse({ ...parcelShopFixture(), arrivalTime })).toMatchObject({ expected_delivery: '2026-06-20', unread_estimates: ['arrivalTime'] });
+    // A delivered parcel still shows the text's shape.
+    expect(parse({ ...detailedFixture(), arrivalTime })).toMatchObject({ expected_delivery: null, unread_estimates: ['arrivalTime'] });
+  });
+
   it('names the ParcelShop alone without its street and town, and from the history without the shop', () => {
     const shop = parcelShopFixture();
     const address = (shop.parcelShop as { address: JsonObject }).address;

@@ -4,6 +4,7 @@ import {
 } from '../../core/errors/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -240,6 +241,8 @@ function project(shipment: Record<string, unknown>): CarrierResult {
     ...(newest.local_time ? { last_update_local: newest.local_time } : {}),
     ...(stage === 'delivered' && current?.time ? { delivered_at: current.time } : {}),
     expected_delivery: null,
+    // The slot the shipment is booked for is not read yet; a filled one is named as unread.
+    ...unreadEstimates({ deliveryTimeSlot: plain(shipment.deliveryTimeSlot) }),
     ...(weight ? { weight_kg: weight } : {}),
     ...(service ? { service_name: service } : {}),
     ...(country ? { destination_country: country } : {}),

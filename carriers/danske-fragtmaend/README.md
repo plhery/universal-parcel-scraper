@@ -35,6 +35,8 @@ on trace.fragt.dk makes.
 - The expected day is the note's `ExpectedDeliveryDate`, kept until the delivery. The reply's
   `ActualDeliveryDate` can be a failed attempt's time, so the delivery time comes from the
   delivery scan. The weight is the total of the goods lines.
+- The slot of a timed delivery, `DeliveryTime.DotIntervalStart` to `DotIntervalEnd`, is not read
+  yet; a filled one is named in `unread_estimates`.
 - For a collicode, the consignment note number is the canonical number.
 - Delivery scans can carry the delivery's coordinates, which point at the recipient's address
   and are not kept. Neither are the goods, their value, the sender's reference, the driver and

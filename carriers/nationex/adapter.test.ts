@@ -117,6 +117,27 @@ describe('Nationex tracking adapter', () => {
     }
   });
 
+  it('names the estimate fields the parcels in view fill that the adapter does not read yet', () => {
+    for (const [name, number] of [['transit', TRANSIT], ['delivered', DELIVERED], ['multi-parcel', SHIPMENT]]) {
+      expect(parseNationex(fixture(name!), number!), name).not.toHaveProperty('unread_estimates');
+    }
+    const windowed = fixture('transit');
+    Object.assign(windowed.Parcels[0], { EstimatedDeliveryDateRangeStart: '2026-03-12T00:00:00', EstimatedDeliveryDateRangeEnd: '2026-03-13T00:00:00',
+      EstimatedDeliveryDateTimeStart: '2026-03-12T09:00:00', EstimatedDeliveryDateTimeEnd: '2026-03-12T12:00:00' });
+    expect(parseNationex(windowed, TRANSIT)).toMatchObject({ expected_delivery: '2026-03-12', unread_estimates: ['EstimatedDeliveryDateRangeStart',
+      'EstimatedDeliveryDateRangeEnd', 'EstimatedDeliveryDateTimeStart', 'EstimatedDeliveryDateTimeEnd'] });
+    // A delivered parcel still shows the field's shape.
+    const delivered = fixture('delivered');
+    delivered.Parcels[0].EstimatedDeliveryDateTimeExact = '2026-03-04T14:00:00';
+    expect(parseNationex(delivered, DELIVERED)).toMatchObject({ expected_delivery: null, unread_estimates: ['EstimatedDeliveryDateTimeExact'] });
+    // The shipment names what any of its parcels fills; a parcel number only that parcel's.
+    const shipment = fixture('multi-parcel');
+    shipment.Parcels[1].EstimatedDeliveryTime = '13:00';
+    expect(parseNationex(shipment, SHIPMENT).unread_estimates).toEqual(['EstimatedDeliveryTime']);
+    expect(parseNationex(shipment, `${SHIPMENT}02`).unread_estimates).toEqual(['EstimatedDeliveryTime']);
+    expect(parseNationex(shipment, `${SHIPMENT}01`)).not.toHaveProperty('unread_estimates');
+  });
+
   it('merges the parcels of a shipment and keeps a partial delivery on its way, while a parcel number reads that parcel', () => {
     const shipment = parseNationex(fixture('multi-parcel'), SHIPMENT);
     expect(shipment).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',

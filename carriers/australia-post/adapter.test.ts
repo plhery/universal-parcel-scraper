@@ -19,7 +19,7 @@ const capabilities = (JSON.parse(readFileSync(new URL('./carrier.json', import.m
 describe('Australia Post parser', () => {
   it('projects all capabilities without retaining private details or modification times', () => {
     const result = parse(fixture(), NUMBER);
-    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'delivered_at', 'pickup_point', 'service_name']);
+    expect(capabilities).toEqual(['history', 'location', 'provider_code', 'eta', 'delivered_at', 'pickup_point', 'service_name']);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',
       service_name: 'Parcel Post Small Satchel',
       last_update: '2026-06-08T14:10:00+10:00', delivered_at: '2026-06-08T14:10:00+10:00', expected_delivery: null });
@@ -257,6 +257,38 @@ describe('Australia Post status codes and places', () => {
       .toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'In transit' });
     // A summary further along than the scan's own milestone keeps its stage.
     expect(journey('AU', [received("We've got it")], 'In transit')).toMatchObject({ current_stage: 'in_transit' });
+  });
+
+  it('expects the parcel on the days the reply gives, else by the day it names, until it is delivered', () => {
+    const departed = scan('AA-0001', 'Item processed at facility', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
+    const range = { estimatedDeliveryDateRange: { fromDate: '2026-06-09', toDate: '2026-06-10' }, deliveredByDateISO: '2026-06-10' };
+    const result = journey('AU', [departed], 'In transit', range);
+    expect(result).toMatchObject({ status: 'in_transit', expected_delivery_from: '2026-06-09', expected_delivery: '2026-06-10' });
+    expect(result).not.toHaveProperty('unread_estimates');
+    // A range of one day is that day, and without a range the parcel is expected by the day the reply names.
+    const oneDay = journey('AU', [departed], 'In transit', { estimatedDeliveryDateRange: { fromDate: '2026-06-10', toDate: '2026-06-10' } });
+    expect(oneDay.expected_delivery).toBe('2026-06-10');
+    expect(oneDay).not.toHaveProperty('expected_delivery_from');
+    expect(journey('AU', [departed], 'In transit', { deliveredByDateISO: '2026-06-10' })).toMatchObject({ expected_delivery: '2026-06-10' });
+    // A delivered parcel is expected no more.
+    const payload = fixture();
+    Object.assign(payload[0].shipment.articles[0].details[0], range);
+    const delivered = parse(payload, NUMBER);
+    expect(delivered.expected_delivery).toBeNull();
+    expect(delivered).not.toHaveProperty('expected_delivery_from');
+  });
+
+  it('names a slot on the day, and a range in a shape it does not read, as estimates it does not read yet', () => {
+    const departed = scan('AA-0001', 'Item processed at facility', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
+    expect(journey('AU', [departed], 'In transit', { timeWindow: { startTime: '09:00', endTime: '12:00' } }))
+      .toMatchObject({ expected_delivery: null, unread_estimates: ['timeWindow'] });
+    expect(journey('AU', [departed], 'In transit', { estimatedDeliveryDateRange: { from: '10/06/2026' }, timeWindow: null }))
+      .toMatchObject({ expected_delivery: null, unread_estimates: ['estimatedDeliveryDateRange'] });
+    // An empty slot says nothing, and a delivered parcel's slot still shows its shape.
+    expect(journey('AU', [departed], 'In transit', { timeWindow: { startTime: null, endTime: '' } })).not.toHaveProperty('unread_estimates');
+    const payload = fixture();
+    payload[0].shipment.articles[0].details[0].timeWindow = 'Between 9am and 12pm';
+    expect(parse(payload, NUMBER)).toMatchObject({ expected_delivery: null, unread_estimates: ['timeWindow'] });
   });
 
   it("takes the newest scan's coded stage when it is further along than the summary label", () => {

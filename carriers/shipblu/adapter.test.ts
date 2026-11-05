@@ -120,6 +120,15 @@ describe('ShipBlu HTTP adapter', () => {
     expect(estimate((body) => { body.status = 'return_to_origin'; })).toBeNull();
   });
 
+  it('names the window the customer chose, which the adapter does not read yet, when the order fills it', () => {
+    expect(parseShipblu(fixture('in-transit'), IN_TRANSIT)).not.toHaveProperty('unread_estimates');
+    expect(parseShipblu(fixture('delivered'), DELIVERED)).not.toHaveProperty('unread_estimates');
+    const chosen = (body: Reply) => { body.preferred_window = ['10:00', '14:00']; };
+    expect(parseShipblu(changed('in-transit', chosen), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-01-22', unread_estimates: ['preferred_window'] });
+    // A delivered order still shows the window's shape.
+    expect(parseShipblu(changed('delivered', chosen), DELIVERED)).toMatchObject({ expected_delivery: null, unread_estimates: ['preferred_window'] });
+  });
+
   it('reads a return order to the merchant and its arrival there as returned', () => {
     const result = parseShipblu(changed('in-transit', (body) => {
       body.tracking_number = RETURN;

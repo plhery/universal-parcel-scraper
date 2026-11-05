@@ -121,13 +121,16 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
   refuses a request without its `AUTH-KEY`, so the address is not looked up.
 - `statusModificationDateTime` and summary milestone timestamps are not scan times (they can be hours
   off the delivery scan). `last_update` and `delivered_at` come from events.
+- The estimate is the article's `estimatedDeliveryDateRange`, from its `fromDate` to its `toDate`, or
+  else the day `deliveredByDateISO` names, until the parcel is delivered, returned or waits for
+  collection. A filled `timeWindow`, a slot on the day, is not read yet and is named in
+  `unread_estimates`, as is a range in another shape.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.
 - `service_name` is the article's product (`productSubType`, such as a satchel size); its family
   (`articleType`) is not read.
 
 ## Limitations
 
-- No ETA.
 - Recipient and sender blocks, addresses other than the destination country, barcodes, access
   instructions, proof links, collection credentials and facility IDs are never kept. At most 100 of 500 events are kept.
 

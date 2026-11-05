@@ -163,6 +163,9 @@ copies of them and are set aside; a fallback left with nothing has no history ei
 apply `writtenAheadClocks` to the carrier's error and `withoutWrittenAhead` to each fallback.
 A carrier that keeps other rows names those clocks in the result's `written_ahead`, and
 `fillPartialAnswer` sets a fallback's copies of them aside before comparing histories.
+An adapter that knows a reply field can hold a delivery estimate or slot it does not read yet
+names the field in the result's `unread_estimates` (`core/result/unread.ts`) whenever a reply
+fills it, so a host can keep the number for a capture that teaches the adapter its shape.
 The `countryHint` input is still accepted but no longer affects a lookup.
 The `language` input, the reader's language as a BCP 47 tag, goes to the carrier's adapter
 (`readerLanguage`). An adapter whose tracker words its scans in that language asks in it, and

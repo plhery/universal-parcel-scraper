@@ -40,6 +40,8 @@ inconclusive rather than not-found. Proof images, recipient verification,
 detailed delivery prose, failed-delivery reasons and unrelated references are
 excluded. Weight has no verified unit. `expected_delivery` is GOFO's
 `expectedDeliveryTime`, kept as a date until the parcel is delivered or returned.
+A filled `edtStartTime` or `edtEndTime`, which the adapter does not read yet, is
+named in `unread_estimates`.
 
 ## Live test
 

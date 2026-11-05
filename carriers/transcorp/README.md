@@ -50,7 +50,8 @@ lookup Elite's tracking page makes while it renders.
 
 ## Limitations
 
-- No delivery estimate: the page shows a placeholder.
+- No delivery estimate: the page shows a placeholder. A filled `deliveryTimeSlot`, which the
+  adapter does not read yet, is named in `unread_estimates`.
 - No pickup point, proof of delivery or delivery partner.
 - Only Elite airwaybills; Transcorp's own references are not tracked.
 

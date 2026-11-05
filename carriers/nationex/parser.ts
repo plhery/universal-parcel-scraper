@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -34,6 +35,11 @@ const ALERTS: ReadonlySet<string> = new Set(['Attention', 'RefusedDelivery', 'Pi
 const PROBLEMS: ReadonlySet<Stage> = new Set(['failed_attempt', 'exception']);
 // States that end the shipment's journey; no scan overrides them.
 const SETTLED: ReadonlySet<Stage> = new Set(['delivered', 'returned', 'exception']);
+// A parcel's estimate fields besides its expected day: a range of days, a span of clock
+// times, an exact time and a time. The adapter does not read them yet, so a filled one is
+// named in `unread_estimates`.
+const UNREAD_ESTIMATES = ['EstimatedDeliveryDateRangeStart', 'EstimatedDeliveryDateRangeEnd', 'EstimatedDeliveryDateTimeStart',
+  'EstimatedDeliveryDateTimeEnd', 'EstimatedDeliveryDateTimeExact', 'EstimatedDeliveryTime'] as const;
 
 /** A Nationex shipment (nine digits) or parcel (eleven digits) number; anything else is not one the adapter can look up. */
 export function normalizeNationexNumber(raw: string): string {
@@ -100,6 +106,11 @@ function expectedDay(parcels: readonly Record<string, unknown>[], stage: Stage |
     if (day && DateTime.fromISO(day, { zone: 'UTC' }).isValid && day > latest) latest = day;
   }
   return latest && (!newest || latest >= newest.slice(0, 10)) ? latest : null;
+}
+
+/** The estimate fields the adapter does not read yet that a parcel in view fills, whatever its stage. */
+function unreadParcelEstimates(parcels: readonly Record<string, unknown>[]): Pick<CarrierResult, 'unread_estimates'> {
+  return unreadEstimates(Object.fromEntries(UNREAD_ESTIMATES.map((field) => [field, parcels.map((parcel) => parcel[field])])));
 }
 
 /**
@@ -193,11 +204,12 @@ export function parseNationex(payload: unknown, raw: string): CarrierResult {
   const events = scans.map((scan) => scan.event);
   const newest = events[0];
   const expected = expectedDay(scope, stage, newest?.local_time);
+  const unread = unreadParcelEstimates(scope);
 
   if (!newest) {
     if (!stateStage) throw new NoHistoryError(PROVIDER);
     return { status: languageStageStatus(stateStage), current_stage: stateStage, current_stage_source: 'carrier_map',
-      last_status_text: nationexStateLabel(state), last_update: null, expected_delivery: expected, summary_only: true, events: [] };
+      last_status_text: nationexStateLabel(state), last_update: null, expected_delivery: expected, ...unread, summary_only: true, events: [] };
   }
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
@@ -207,6 +219,7 @@ export function parseNationex(payload: unknown, raw: string): CarrierResult {
     last_update: null,
     last_update_local: newest.local_time,
     expected_delivery: expected,
+    ...unread,
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };

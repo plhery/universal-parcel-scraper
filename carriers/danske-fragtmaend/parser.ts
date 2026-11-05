@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -147,7 +148,13 @@ export function parseDanskeFragtmaend(payload: unknown, raw: string): CarrierRes
   const source = cancelled ? 'carrier_map' : current?.stage_source;
   const delivered = stage === 'delivered' ? current!.time : undefined;
   const settled = stage === 'delivered' || stage === 'returned' || cancelled;
-  const delivery = isRecord(note.DeliveryTime) ? wallClock(text(note.DeliveryTime, 'ExpectedDeliveryDate', 40)) : null;
+  const timing = isRecord(note.DeliveryTime) ? note.DeliveryTime : null;
+  const delivery = timing ? wallClock(text(timing, 'ExpectedDeliveryDate', 40)) : null;
+  // The slot a timed delivery keeps (`DotIntervalStart` to `DotIntervalEnd`) is not read yet, so
+  // a filled one is named as unread, on a delivered note too.
+  const unread = unreadEstimates({
+    'DeliveryTime.DotIntervalStart': timing?.DotIntervalStart, 'DeliveryTime.DotIntervalEnd': timing?.DotIntervalEnd,
+  });
   const weight = weightOf(note.Goods);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
@@ -155,6 +162,7 @@ export function parseDanskeFragtmaend(payload: unknown, raw: string): CarrierRes
     last_status_text: cancelled ? 'The shipment is cancelled' : latest!.description!,
     last_update: latest?.time ?? null,
     expected_delivery: !settled && delivery ? delivery.slice(0, 10) : null,
+    ...unread,
     ...(delivered ? { delivered_at: delivered } : {}),
     ...(weight !== null ? { weight_kg: weight } : {}),
     ...(kind === 'colli' ? { canonical_tracking_number: consignment } : {}),

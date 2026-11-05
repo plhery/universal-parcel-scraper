@@ -32,6 +32,7 @@
     "history",
     "location",
     "provider_code",
+    "eta",
     "delivered_at",
     "pickup_point",
     "service_name"
@@ -47,6 +48,8 @@
       "location",
       "provider_code",
       "delivered_at",
+      "eta",
+      "eta_window",
       "service_name",
       "destination_country",
       "pickup_point",
@@ -60,6 +63,8 @@
       "location",
       "provider_code",
       "delivered_at",
+      "eta",
+      "eta_window",
       "pickup_point",
       "destination_country",
       "service_name"

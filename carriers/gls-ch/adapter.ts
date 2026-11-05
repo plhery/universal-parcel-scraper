@@ -5,6 +5,7 @@ import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingCont
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
@@ -332,10 +333,15 @@ function parseEvents(parcel: JsonObject): ParsedEvent[] {
   return parsed.slice(0, MAX_EVENTS_TO_RETURN);
 }
 
+// A date in the arrival text: "20-Jun-2026", "20/06/2026", "20.06.2026".
+const ARRIVAL_DATE = /\b(\d{1,2}[-/.][A-Za-z]{3}|\d{1,2}[-/.]\d{1,2})[-/.](\d{4})\b/;
+
+function arrivalText(parcel: JsonObject): string {
+  return isRecord(parcel.arrivalTime) ? plainText(parcel.arrivalTime.value, 128) : '';
+}
+
 function expectedDelivery(parcel: JsonObject): string | null {
-  if (!isRecord(parcel.arrivalTime)) return null;
-  const value = plainText(parcel.arrivalTime.value, 128);
-  const match = value.match(/\b(\d{1,2}[-/.][A-Za-z]{3}|\d{1,2}[-/.]\d{1,2})[-/.](\d{4})\b/);
+  const match = arrivalText(parcel).match(ARRIVAL_DATE);
   if (!match) return null;
   const raw = match[0];
   for (const format of ['d-MMM-yyyy', 'd/MM/yyyy', 'd.MM.yyyy']) {
@@ -343,6 +349,15 @@ function expectedDelivery(parcel: JsonObject): string | null {
     if (parsed.isValid) return parsed.toISODate();
   }
   return null;
+}
+
+/**
+ * The estimate reads the arrival text's first date. A text with more dates gives a range whose
+ * end is not read yet, so it is named as unread, whatever the parcel's status.
+ */
+function unreadArrival(parcel: JsonObject): Pick<CarrierResult, 'unread_estimates'> {
+  const arrival = arrivalText(parcel);
+  return unreadEstimates({ arrivalTime: (arrival.match(new RegExp(ARRIVAL_DATE, 'g'))?.length ?? 0) > 1 ? arrival : null });
 }
 
 export function parseGLSSwitzerlandTrackingResponse(
@@ -394,6 +409,7 @@ export function parseGLSSwitzerlandTrackingResponse(
     expected_delivery: ['delivered', 'exception'].includes(status)
       ? null
       : expectedDelivery(parcel),
+    ...unreadArrival(parcel),
     timezone: 'Europe/Zurich',
     ...pickup,
     ...(weight != null ? { weight_kg: weight } : {}),

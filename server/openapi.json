@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Universal Parcel Scraper",
-    "version": "0.977.1"
+    "version": "0.978.0"
   },
   "paths": {
     "/health": {
@@ -787,6 +787,13 @@
               "type": "string"
             },
             "description": "The clocks of rows the carrier holds back as written ahead of them, which a provider relaying them shows as scans."
+          },
+          "unread_estimates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The fields of the carrier's reply that hold a delivery estimate or slot the adapter does not read yet, by their path in the reply."
           },
           "events": {
             "type": "array",

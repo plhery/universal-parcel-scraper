@@ -60,7 +60,9 @@ upstream error.
   GLS" acceptance.
 - Scan date and time arrive as separate offset-less fields and are read in
   `Europe/Zurich` (gls-de relabels the timezone only).
-- The estimate is dropped once the parcel is delivered or in exception.
+- The estimate is the first date of the `arrivalTime` text, dropped once the parcel is
+  delivered or in exception. A text with more dates, a range whose end the adapter does not
+  read yet, is named in `unread_estimates`.
 - While the parcel waits at a ParcelShop, its `parcelShop` object, the one the
   tracking page prints, gives the pickup point: the shop's name, then its
   street and town on their own lines. Without it, the scan that names the shop

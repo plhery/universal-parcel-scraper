@@ -70,6 +70,16 @@ describe.each(cases)('GOFO $region identity and history', ({ region, number, par
     expect(parse(returned, number)).toMatchObject({ current_stage: 'returned', expected_delivery: null });
   });
 
+  it("names the estimate's window, which the adapter does not read yet, when GOFO fills it", () => {
+    expect(parse(fixture(region), number)).not.toHaveProperty('unread_estimates');
+    const windowed = fixture(region);
+    Object.assign(item(windowed), { edtType: 'RANGE', edtStartTime: '2026-01-05T09:00:00.000+0100', edtEndTime: '2026-01-05T13:00:00.000+0100' });
+    // A delivered parcel still shows the window's shape.
+    expect(parse(windowed, number)).toMatchObject({ expected_delivery: null, unread_estimates: ['edtStartTime', 'edtEndTime'] });
+    item(windowed).edtStartTime = '';
+    expect(normalizeCarrierResult(parse(windowed, number)).unread_estimates).toEqual(['edtEndTime']);
+  });
+
   it('accepts only the complete official national families', () => {
     for (const prefix of ['GF', 'CI']) for (const digits of [13, 14]) {
       const candidate = prefix + region.toUpperCase() + '0'.repeat(digits - 1) + '1';

@@ -97,6 +97,16 @@ describe('Transcorp HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/Test Consignee|Example (?:Street|District|Shop|Area|Hub)|\+0|synthetic|DRIVER_APP/);
   });
 
+  it('names the slot the shipment is booked for, which the adapter does not read yet, when the reply fills it', () => {
+    expect(parse(fixture('delivered'), DELIVERED)).not.toHaveProperty('unread_estimates');
+    expect(parse(fixture('in-transit'), IN_TRANSIT)).not.toHaveProperty('unread_estimates');
+    const slot = (value: unknown) => (shipment: Shipment) => { shipment.deliveryTimeSlot = value; };
+    expect(parse(editShipment(fixture('delivered'), slot('$undefined')), DELIVERED)).not.toHaveProperty('unread_estimates');
+    // A delivered shipment still shows the slot's shape.
+    expect(parse(editShipment(fixture('delivered'), slot([{ start: '09:00', end: '13:00' }])), DELIVERED))
+      .toMatchObject({ expected_delivery: null, unread_estimates: ['deliveryTimeSlot'] });
+  });
+
   it('keeps a legacy clock as a wall clock when the country has no single zone', () => {
     const body = editShipment(fixture('delivered'), (shipment) => { shipment.operatingCountry = '$undefined'; });
     const result = parse(body, DELIVERED);

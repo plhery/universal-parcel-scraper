@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { isRegionalGofoNumber, isRegionalGofoWaybill, type GofoRegion } from '../../core/detection/gofo.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
@@ -146,6 +147,8 @@ export function parseRegionalGofo(payload: unknown, rawNumber: string, region: G
   return { status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,
     expected_delivery: stage && GOFO_ENDED_STAGES.has(stage) ? null : gofoDeliveryDate(item.expectedDeliveryTime),
+    // The estimate's window, which the adapter does not read yet, is named when its start or end is filled.
+    ...unreadEstimates({ edtStartTime: item.edtStartTime, edtEndTime: item.edtEndTime }),
     destination_country: region, canonical_tracking_number: waybill,
     ...(stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}), ...(service ? { service_name: service } : {}),
     ...(Number(item.trackEventCount) > rows.length || events.length > 100 ? { history_truncated: true } : {}), events: events.slice(0, 100) };

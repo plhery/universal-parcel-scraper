@@ -3,6 +3,8 @@ import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContex
 import { BudgetExceededError, ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { unreadEstimates } from '../../core/result/unread.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { furtherAlong } from '../../core/status/progress.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
@@ -15,6 +17,7 @@ import { australiaPostCode, australiaPostCodeParts, australiaPostStatus } from '
 
 const PROVIDER = 'Australia Post';
 const DETAIL = 'https://auspost.com.au/mypost/track/details/';
+const ENDED = new Set(['delivered', 'returned', 'ready_for_pickup']);
 const API = 'https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments';
 const MAX_BYTES = 1_000_000;
 const TRANSPORT_ALLOWANCE_MS = 15_000;
@@ -139,6 +142,21 @@ function consignmentResult(articles: readonly Record<string, unknown>[], consign
   return results.reduce((last, result) => reached(result) > reached(last) ? result : last);
 }
 
+/**
+ * The days an article's details expect delivery on, `estimatedDeliveryDateRange` from its
+ * `fromDate` to its `toDate`, else the day they expect it by, `deliveredByDateISO`; with the
+ * estimate fields they fill that are not read, a slot on the day (`timeWindow`) among them.
+ */
+function deliveryEstimate(details: Record<string, unknown>): { estimate: WindowEstimate; unread: Pick<CarrierResult, 'unread_estimates'> } {
+  const range = isRecord(details.estimatedDeliveryDateRange) ? details.estimatedDeliveryDateRange : {};
+  const window = windowEstimate(range.fromDate, range.toDate);
+  return {
+    estimate: window.expected_delivery ? window : windowEstimate(null, details.deliveredByDateISO),
+    unread: unreadEstimates({ estimatedDeliveryDateRange: window.expected_delivery ? null : details.estimatedDeliveryDateRange,
+      timeWindow: details.timeWindow }),
+  };
+}
+
 /** One article's history and state; its single detail object must repeat the article and consignment. */
 function articleResult(selected: Record<string, unknown>, consignmentId: string): CarrierResult {
   if (typeof selected.articleId !== 'string' || !selected.articleId || !Array.isArray(selected.details)
@@ -218,6 +236,7 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   const deliveredAt = status?.status === 'delivered' ? events.find(({ event }) => event.stage === 'delivered')?.event.time : null;
   // The reply names the point but gives no address for it.
   const pickup = collectionPoint(status?.stage, events.map(({ event }) => event));
+  const { estimate, unread } = deliveryEstimate(details);
   // Summary modification/milestone timestamps are not scan times. In the
   // observed reply they differed from the delivery event by about ten hours.
   return {
@@ -225,7 +244,9 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
     last_status_text: status?.status === 'delivered' ? 'Delivered' : summary,
     last_update: latest.event.time ?? null,
     ...(typeof latest.event.local_time === 'string' ? { last_update_local: latest.event.local_time } : {}),
-    expected_delivery: null, ...(service ? { service_name: service } : {}), ...(pickup ? { pickup_point: pickup } : {}),
+    // The estimate stands until the parcel is delivered, returned or waits for collection.
+    ...(status && ENDED.has(status.stage) ? { expected_delivery: null } : estimate), ...unread,
+    ...(service ? { service_name: service } : {}), ...(pickup ? { pickup_point: pickup } : {}),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}), ...(destination ? { destination_country: destination } : {}),
     events: events.slice(0, 100).map(({ event }) => event),
   };

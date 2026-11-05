@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -138,6 +139,13 @@ function estimate(tracking: Record<string, unknown>): string | null {
   return day(tracking, 'estimatedArrivalDate') ?? day(tracking, 'dataPrevistaConsegnaAggiornata') ?? day(tracking, 'dataPrevistaConsegnaTeorica');
 }
 
+/** The slot on the delivery day, which the adapter does not read yet: named when the reply fills its start or finish. */
+function unreadSlot(tracking: Record<string, unknown>): Pick<CarrierResult, 'unread_estimates'> {
+  return unreadEstimates({
+    estimatedArrivalTimeStart: tracking.estimatedArrivalTimeStart, estimatedArrivalTimeFinish: tracking.estimatedArrivalTimeFinish,
+  });
+}
+
 /**
  * Another courier's waybill, which the page shows as that courier's lettera
  * di vettura when the reply names both the courier and the number.
@@ -191,6 +199,7 @@ export function parseLiccardi(payload: unknown, raw: string): CarrierResult {
       ...(summary.event.provider_code ? { provider_code: summary.event.provider_code } : {}),
       last_update: summary.event.time!,
       expected_delivery: stage === 'delivered' || stage === 'returned' ? null : estimate(tracking),
+      ...unreadSlot(tracking),
       ...handoff,
       summary_only: true,
       events: [],
@@ -206,6 +215,7 @@ export function parseLiccardi(payload: unknown, raw: string): CarrierResult {
     last_status_text: newest.description!,
     last_update: newest.time!,
     expected_delivery: stage === 'delivered' || stage === 'returned' ? null : estimate(tracking),
+    ...unreadSlot(tracking),
     ...(stage === 'delivered' ? { delivered_at: events.find((event) => event.stage === 'delivered')!.time! } : {}),
     ...handoff,
     events: events.slice(0, MAX_EVENTS),
