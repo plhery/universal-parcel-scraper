@@ -27,6 +27,10 @@ which files these parcels under Pengyou.
   named so that a universal provider's copies of them are set aside. The providers' shared
   reading drops those copies too, by their spacing ([ARCHITECTURE.md](../../ARCHITECTURE.md)).
   The record's own summary status is not read.
+- The script ends, as GZYL's does, in a delivery row the platform writes in an evening batch on
+  the delivery's own day, at a clock hours before the write or just after it, in the destination's
+  night. On a record with rows written ahead that row is held back and named with them; on one
+  written as it happened, a delivery is a scan. MTSCN's script has the same wording.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it, deliveries abroad too: on the destination's clock, some would have been written half a day
   before the delivery they record.

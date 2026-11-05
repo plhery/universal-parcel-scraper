@@ -26,7 +26,10 @@ export function splitPengyouRow(content: string, location: string): { content: s
   return { content: match[1]!, location: town };
 }
 
-export const PENGYOU: HualeiTenant = { carrier: 'pengyou', provider: PROVIDER, origin: PENGYOU_ORIGIN, stage: pengyouStage, split: splitPengyouRow };
+// Its scripts end, as GZYL's do, in a delivery row the platform writes in an evening batch on its own day.
+export const PENGYOU: HualeiTenant = {
+  carrier: 'pengyou', provider: PROVIDER, origin: PENGYOU_ORIGIN, stage: pengyouStage, split: splitPengyouRow, scriptedDelivery: true,
+};
 
 export const normalizePengyouNumber = (raw: string): string => normalizeHualeiNumber(raw, PROVIDER);
 /** The track interface's reply, or null when it holds no row for the number. */

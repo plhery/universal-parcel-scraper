@@ -85,9 +85,22 @@ describe('Pengyou tracking adapter', () => {
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
+  it('holds back the delivery row a timeline written ahead ends in, though the platform writes it on its own day', () => {
+    const payload = structuredClone(fixture('track')) as [{ data: [{ trackDetails: { track_content: string; track_location: string; track_date: string; track_createdate: string }[] }] }];
+    // The evening batch writes the delivery hours after its clock, the rest of the script days before theirs.
+    Object.assign(payload[0].data[0].trackDetails[0]!, { track_content: 'Delivered Sample Town 00000', track_createdate: '2026-03-09 21:10:27' });
+    const result = parsePengyouTrack(payload, NUMBER, Date.parse('2026-03-12T04:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Shipment arrived at facility' });
+    expect(result.events).toHaveLength(2);
+    expect(result.written_ahead).toContain('2026-03-09T07:39:05+08:00');
+    expect(JSON.stringify(result)).not.toContain('Sample Town');
+  });
+
   it('reads a delivery’s town as its place, on Beijing’s clock, without the postal code', () => {
-    const payload = structuredClone(fixture('track')) as [{ data: [{ trackDetails: { track_content: string; track_location: string }[] }] }];
-    // The delivery leaves the row's place empty.
+    const payload = structuredClone(fixture('track')) as [{ data: [{ trackDetails: { track_content: string; track_location: string; track_date: string; track_createdate: string }[] }] }];
+    // A record written as it happened, and a delivery that leaves the row's place empty.
+    const details = payload[0].data[0].trackDetails;
+    payload[0].data[0].trackDetails = details.filter((row) => row.track_date === row.track_createdate || row.track_content === 'Shipment arrived at facility');
     Object.assign(payload[0].data[0].trackDetails.find((row) => row.track_content === 'Shipment arrived at facility')!,
       { track_content: 'Delivered Sample TownZ9Z 9Z9', track_location: '' });
     const result = parsePengyouTrack(payload, NUMBER, READ_AT)!;
