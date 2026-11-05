@@ -17,18 +17,39 @@
   "timezone": "America/Kralendijk",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "fxdc-post",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "service_name",
+    "weight_kg"
+  ],
   "portal": {
     "url": "https://my.fxdc-post.com/klant/volgen?ref={trackingNumber}",
     "searchUrl": "https://my.fxdc-post.com/klant/volgen",
     "canaryUrl": "https://fxdc-post.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress",
+      "service_name",
+      "weight_kg"
+    ],
+    "scraped": [
+      "status",
+      "service_name",
+      "weight_kg"
+    ],
+    "discarded": [
+      "contents",
+      "undated_progress"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

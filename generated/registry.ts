@@ -256,7 +256,10 @@ import { adapter as forzaDelivery } from '../carriers/forza-delivery/adapter.js'
 import { adapter as fourPx } from '../carriers/four-px/adapter.js';
 import { adapter as foxpost } from '../carriers/foxpost/adapter.js';
 import { adapter as franchExpress } from '../carriers/franch-express/adapter.js';
+import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
+import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
+import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
 import { adapter as gdex } from '../carriers/gdex/adapter.js';
@@ -986,7 +989,10 @@ export const REGISTRY: RegistryDefinition = {
     "four-px": fourPx,
     "foxpost": foxpost,
     "franch-express": franchExpress,
+    "freightways-global": freightwaysGlobal,
+    "frontier-ca": frontierCa,
     "fukuyama": fukuyama,
+    "fxdc-post": fxdcPost,
     "gaash": gaash,
     "gati": gati,
     "gdex": gdex,
@@ -1927,12 +1933,12 @@ export const REGISTRY: RegistryDefinition = {
     "foxpost": "foxpost",
     "fragilepak": "universal",
     "franch-express": "franch-express",
-    "freightways-global": "universal",
+    "freightways-global": "freightways-global",
     "frontdoor-collective": "universal",
-    "frontier-ca": "universal",
+    "frontier-ca": "frontier-ca",
     "fukuyama": "fukuyama",
     "furniture-logis": "universal",
-    "fxdc-post": "universal",
+    "fxdc-post": "fxdc-post",
     "gaash": "gaash",
     "garantpost": "universal",
     "gati": "gati",

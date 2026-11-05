@@ -7,6 +7,9 @@ import { adapter as royaleInternational } from '../carriers/royale-international
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
+import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
+import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
+import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
 import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import type { AdapterFactory } from '../core/adapter/index.js';
 import { AdapterRegistry } from '../core/adapter/index.js';
@@ -38,6 +41,12 @@ const cases: { carrier: string; factory: AdapterFactory; number: string; fixture
   { carrier: 'profit-fields', factory: profitFields, number: 'EWSXY974682510368YQ', fixture: 'tracking.json', count: 5,
     request: (url, init) => { expect(url.href).toBe('https://8dt.com/api/tracking/query'); expect(init?.method).toBe('POST');
       expect(JSON.parse(String(init?.body))).toEqual({ trackingNumbers: ['EWSXY974682510368YQ'] }); } },
+  { carrier: 'freightways-global', factory: freightwaysGlobal, number: 'NZC974682511', fixture: 'tracking.html', count: 7,
+    request: url => { expect(url.href).toBe('https://track.fgmailconnect.co.nz/?id=NZC974682511'); } },
+  { carrier: 'fxdc-post', factory: fxdcPost, number: '97468251', fixture: 'tracking.html', count: 0,
+    request: url => { expect(url.href).toBe('https://my.fxdc-post.com/klant/volgen?ref=97468251'); } },
+  { carrier: 'frontier-ca', factory: frontierCa, number: '97468251', fixture: 'tracking.xml', count: 5,
+    request: url => { expect(url.href).toBe('https://tracking.carrierlogistics.com/scripts/fscf.pol/protracexml.htm?pronum=97468251'); } },
 ];
 const environment = (fetcher: typeof fetch) => ({ fetcher, userAgent: 'consumer-agent', recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 const body = (entry: typeof cases[number]) => readFileSync(new URL(`../carriers/${entry.carrier}/fixtures/${entry.fixture}`, import.meta.url), 'utf8');

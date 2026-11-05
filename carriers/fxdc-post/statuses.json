@@ -1,4 +1,47 @@
 {
   "carrier": "fxdc-post",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Aangemeld",
+      "stage": "registered",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Ontvangen in Miami",
+      "stage": "accepted",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Verzendklaar",
+      "stage": "in_transit",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Onderweg naar Bonaire",
+      "stage": "in_transit",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Ontvangen op Bonaire",
+      "stage": "in_transit",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Klaar om af te halen",
+      "stage": "ready_for_pickup",
+      "language": "nl",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Afgehaald",
+      "stage": "delivered",
+      "language": "nl",
+      "confirmedBy": "portal"
+    }
+  ]
 }

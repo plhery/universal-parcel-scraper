@@ -21,18 +21,41 @@
   "timezone": "America/Winnipeg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "frontier-ca",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://tracking.carrierlogistics.com/scripts/fscf.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
     "searchUrl": "https://tracking.carrierlogistics.com/scripts/fscf.pol/facts.htm",
     "canaryUrl": "https://www.frontiercourier.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient",
+      "contact",
+      "address",
+      "references",
+      "proof"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

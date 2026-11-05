@@ -1,26 +1,18 @@
 # Frontier Courier
 
-Frontier Courier parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter reads Frontier's anonymous Carrier Logistics FACTS XML trace at
+`tracking.carrierlogistics.com/scripts/fscf.pol/protracexml.htm?pronum=…`. The tenant belongs to
+Frontier, and the returned whole PRO must match. Only an exact error naming that PRO establishes
+absence; a missing route, WebSpeed failure or mixed reply does not. There is no broad numeric
+rule or recognition probe.
 
-Frontier Courier is the courier and last-mile service of Frontier Supply Chain Solutions, a
-Winnipeg customs broker and logistics company, with same-day, evening and LTL delivery in
-Manitoba, Saskatchewan and Ontario. Its site is frontiercourier.com.
+The detailed history is read newest first, retaining local clocks and genuine town/province
+remarks. Dispatching a pickup driver is registration, before freight custody. Delivery needs
+agreement between the lifecycle, delivered flag and physical history. Signatory/POD data,
+customer references, address fields and unitless weight are omitted. No estimate is inferred
+from the shipping or delivery date.
 
-## Numbers
+Retrieval uses the caller's transport, signal and budget, with one network-only retry. Enabled
+universal providers remain available when direct tracking is inconclusive.
 
-Shipment numbers have eight digits, as do many other carriers' numbers, and one public number is
-known, so there is no rule.
-
-## Why there is no adapter
-
-Its tracker is a Carrier Logistics FACTS host. The open XML trace that the Dohrn Transfer adapter
-reads on its own host answered the public number with its history. An adapter can follow.
-
-## Links
-
-Links to Frontier's pages on tracking.carrierlogistics.com carry the number as `wpro1` or `pronum`.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `FRONTIER_CA_TRACKING_NUMBER=… FRONTIER_CA_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/frontier-ca/adapter.live.test.ts` with private inputs.

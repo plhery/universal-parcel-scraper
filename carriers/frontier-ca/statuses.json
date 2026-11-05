@@ -1,4 +1,40 @@
 {
   "carrier": "frontier-ca",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "code": "Delivered"
+    },
+    {
+      "wording": "Out For Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal",
+      "code": "Out For Delivery"
+    },
+    {
+      "wording": "Picked Up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal",
+      "code": "Picked Up"
+    },
+    {
+      "wording": "Pickup Dispatched To Driver",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "code": "Pickup Dispatched To Driver"
+    },
+    {
+      "wording": "Pickup Request Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal",
+      "code": "Pickup Request Received"
+    }
+  ]
 }

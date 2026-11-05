@@ -1,4 +1,47 @@
 {
   "carrier": "freightways-global",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "On courier vehicle for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Your parcel is in transit to delivery depot",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Handed over to final mile carrier.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Customs cleared in NZ",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Tracking number allocated & order ready",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

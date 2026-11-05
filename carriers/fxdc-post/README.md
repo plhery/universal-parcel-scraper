@@ -1,28 +1,17 @@
 # FXDC Post
 
-FXDC Post parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter reads the anonymous `/klant/volgen?ref=…` page on `my.fxdc-post.com` for the
+verified Punto Mio forwarding service. The form and separate result identifier must both match,
+and the service branding and own Miami receipt must be consistent. Postal and other service
+references remain with enabled universal providers until a positive control establishes them.
+There is no broad numeric detection rule.
 
-FXDC Post, run by Flamingo Express Dutch Caribbean, is the postal operator of Caribbean
-Netherlands, with branches on Bonaire, Sint Eustatius and Saba. It carries letters, parcels and
-EMS, and forwards parcels from mailboxes in Miami and the Netherlands. Its site is fxdc-post.com.
+The page supplies a current status and update day beside an undated progress diagram. The adapter
+returns a partial summary with no invented scan history, midnight or delivery instant, so a richer
+provider history can still be used. The labelled mass is converted from its stated unit; commodity
+text is omitted. The explicit number-bound unknown message is distinct
+from malformed replies, refusals and rate limits.
 
-## Numbers
+Retrieval uses the caller's transport and budget, with one network-only retry.
 
-Its tracker's page gives the eight-digit reference of a forwarded parcel as an example, which the
-tracker answers. One example does not show how its references are built, and other carriers'
-rules read eight digits, so there is no rule. Postal detection reads the UPU S10 numbers it also
-takes.
-
-## Why there is no adapter
-
-The tracker is a plain page that lists a parcel's milestones without a session, dated by day
-only. The one known reference is a forwarded parcel, and no postal item has shown a reply yet.
-
-## Links
-
-Tracking links carry the reference as `ref` on the tracker or its embedded version.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `FXDC_POST_TRACKING_NUMBER=… FXDC_POST_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/fxdc-post/adapter.live.test.ts` with private inputs.

@@ -29,6 +29,17 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'freightways-global', number: 'NZC974682510',
+    route: /^https:\/\/track\.fgmailconnect\.co\.nz\/\?id=NZC974682510$/,
+    marker: /No results found/,
+    forwarding: { notFound: /No results found/ } },
+  { carrier: 'fxdc-post', number: '97468251',
+    route: /^https:\/\/my\.fxdc-post\.com\/klant\/volgen\?ref=97468251$/,
+    marker: /Dit nummer kennen we niet/ },
+  { carrier: 'frontier-ca', number: '97468251',
+    route: /^https:\/\/tracking\.carrierlogistics\.com\/scripts\/fscf\.pol\/boldetail\.htm\?wbtn=PRO&wpro1=97468251$/,
+    marker: /Please Enter a Valid BOL Number/,
+    forwarding: { notFound: /Please Enter a Valid BOL Number/ } },
   { carrier: 'lm-parcel', number: 'LM9746825103',
     route: /^https:\/\/www\.lmparcel\.com\/search\?nums=LM9746825103$/,
     marker: /查询不到|运输途中/ },

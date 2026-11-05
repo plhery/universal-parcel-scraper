@@ -21,18 +21,49 @@
   "timezone": "Pacific/Auckland",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "freightways-global",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "canonical_tracking_number",
+    "service_name",
+    "weight_kg",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://track.fgmailconnect.co.nz/?id={trackingNumber}",
     "searchUrl": "https://track.fgmailconnect.co.nz/",
     "canaryUrl": "https://freightwaysglobal.co.nz/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "canonical_tracking_number",
+      "service_name",
+      "weight_kg",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "canonical_tracking_number",
+      "service_name",
+      "weight_kg",
+      "destination_country"
+    ],
+    "discarded": [
+      "account_reference",
+      "parcel_barcodes",
+      "partner_links",
+      "cubic_volume"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

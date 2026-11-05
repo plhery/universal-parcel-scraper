@@ -21395,7 +21395,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Pacific/Auckland",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "freightways-global",
+      "localClocks": true
     },
     "canaryUrl": "https://freightwaysglobal.co.nz/",
     "trackingUrlTemplate": "https://track.fgmailconnect.co.nz/?id={trackingNumber}",
@@ -21469,7 +21470,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Winnipeg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "frontier-ca",
+      "localClocks": true
     },
     "canaryUrl": "https://www.frontiercourier.com/",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/fscf.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
@@ -21569,7 +21571,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Kralendijk",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fxdc-post",
+      "localClocks": true
     },
     "canaryUrl": "https://fxdc-post.com/",
     "trackingUrlTemplate": "https://my.fxdc-post.com/klant/volgen?ref={trackingNumber}",
