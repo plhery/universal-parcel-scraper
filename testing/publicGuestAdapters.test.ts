@@ -6,6 +6,7 @@ import { adapter as shipglobalUs } from '../carriers/shipglobal-us/adapter.js';
 import { adapter as royaleInternational } from '../carriers/royale-international/adapter.js';
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
+import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
 import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import type { AdapterFactory } from '../core/adapter/index.js';
 import { AdapterRegistry } from '../core/adapter/index.js';
@@ -34,6 +35,9 @@ const cases: { carrier: string; factory: AdapterFactory; number: string; fixture
     request: (url, init) => { expect(url.href).toBe('https://expedico.eu/api/public'); expect(init?.method).toBe('POST');
       const body = JSON.parse(String(init?.body)); expect(body.variables).toEqual({ codes: ['9734628105691'] });
       expect(body.query).toContain('tracking(codes: $codes)'); expect(body.query).not.toMatch(/sender|moneyCod|Authorization/); } },
+  { carrier: 'profit-fields', factory: profitFields, number: 'EWSXY974682510368YQ', fixture: 'tracking.json', count: 5,
+    request: (url, init) => { expect(url.href).toBe('https://8dt.com/api/tracking/query'); expect(init?.method).toBe('POST');
+      expect(JSON.parse(String(init?.body))).toEqual({ trackingNumbers: ['EWSXY974682510368YQ'] }); } },
 ];
 const environment = (fetcher: typeof fetch) => ({ fetcher, userAgent: 'consumer-agent', recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 const body = (entry: typeof cases[number]) => readFileSync(new URL(`../carriers/${entry.carrier}/fixtures/${entry.fixture}`, import.meta.url), 'utf8');
@@ -56,6 +60,12 @@ describe.each(cases)('$carrier bounded guest transport', entry => {
 
   it('reaches native history from explicit selection while retaining local clocks and enrichment provenance', async () => {
     const fetcher = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+      if (entry.carrier === 'profit-fields' && new URL(String(url)).hostname === 'tracking.speedx.io') {
+        expect(String(url)).toBe('https://tracking.speedx.io/SPXABC974682510368142731');
+        const absent = readFileSync(new URL('../carriers/speedx/fixtures/not-found.rsc', import.meta.url), 'utf8')
+          .replace(/SPX[A-Z]{3}\d{12,18}/g, 'SPXABC974682510368142731');
+        return new Response(absent, { headers: { 'Content-Type': 'text/x-component' } });
+      }
       entry.request(new URL(String(url)), init);
       return new Response(body(entry));
     }) as unknown as typeof fetch;
@@ -64,7 +74,10 @@ describe.each(cases)('$carrier bounded guest transport', entry => {
     expect(response.result.current_stage).toBe('delivered'); expect(response.result.events).toHaveLength(entry.count);
     expect(response.result.events.every(event => event.local_time ? (!event.time || (event.time_zone && event.time_zone_basis)) : Boolean(event.time))).toBe(true);
     if (entry.carrier === 'expedico') expect(response.handoff).toBeUndefined();
-    expect(fetcher).toHaveBeenCalledTimes(1);
+    if (entry.carrier === 'profit-fields') {
+      expect(response.handoff).toMatchObject({ carrier: 'speedx', number: 'SPXABC974682510368142731', basis: 'reference', confirmed: false });
+    }
+    expect(fetcher).toHaveBeenCalledTimes(entry.carrier === 'profit-fields' ? 2 : 1);
   });
 
   it('retries a connection failure once and retains HTTP, parse and challenge failure kinds', async () => {
@@ -111,7 +124,7 @@ describe('guest adapter routing and recognition', () => {
     expect(detectCarrierMatch(cases[1]!.number).carrier).toBe('royal-mail');
     expect(recognitionCandidates(cases[1]!.number).map(candidate => candidate.carrier)).not.toContain('junfeng-international');
     expect(recognitionCandidates(cases[3]!.number).map(candidate => candidate.carrier)).not.toContain('royale-international');
-    for (const entry of cases.slice(4)) expect(recognitionCandidates(entry.number).map(candidate => candidate.carrier)).not.toContain(entry.carrier);
+    for (const entry of cases.slice(4).filter(entry => entry.carrier !== 'profit-fields')) expect(recognitionCandidates(entry.number).map(candidate => candidate.carrier)).not.toContain(entry.carrier);
     for (const entry of cases) {
       expect(hasDirectHandoffAdapter(entry.carrier, entry.number)).toBe(true);
       expect(hasDirectHandoffAdapter(entry.carrier, 'UNSUPPORTED7')).toBe(false);

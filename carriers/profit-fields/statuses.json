@@ -1,4 +1,86 @@
 {
   "carrier": "profit-fields",
-  "entries": []
+  "entries": [
+    {
+      "code": "SIGNED",
+      "wording": "Delivered. Position: Lobby",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LAST_MILE_DELIVERY",
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "IN_TRANSIT_TRANSFER",
+      "wording": "In transit to destination facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "STARTED_DELIVERY",
+      "wording": "Processing at Designated Facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "DELIVERED_TO_CARRIER",
+      "wording": "Sending To The Post Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "CLEARED",
+      "wording": "Clearance processing complete",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "ARRIVED_PORT",
+      "wording": "Flight has arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "IN_TRANSIT",
+      "wording": "Flight has taken off",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "DELIVERED_TO_PORT",
+      "wording": "Arrive at the airport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Departed Facility in China",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Shipping Label Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Shipment info confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

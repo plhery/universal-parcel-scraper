@@ -515,6 +515,7 @@ import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
+import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
 import { adapter as promptXpress } from '../carriers/prompt-xpress/adapter.js';
 import { adapter as proships } from '../carriers/proships/adapter.js';
 import { adapter as ptsWorldwideExpress } from '../carriers/pts-worldwide-express/adapter.js';
@@ -1242,6 +1243,7 @@ export const REGISTRY: RegistryDefinition = {
     "ppl": ppl,
     "precision-deliveries": precisionDeliveries,
     "pro-carrier": proCarrier,
+    "profit-fields": profitFields,
     "prompt-xpress": promptXpress,
     "proships": proships,
     "pts-worldwide-express": ptsWorldwideExpress,
@@ -2395,7 +2397,7 @@ export const REGISTRY: RegistryDefinition = {
     "pro-carrier": "pro-carrier",
     "product-care-group": "universal",
     "professional-couriers": "universal",
-    "profit-fields": "universal",
+    "profit-fields": "profit-fields",
     "promed-delivery": "universal",
     "prompt-xpress": "prompt-xpress",
     "pronto-lanka": "universal",

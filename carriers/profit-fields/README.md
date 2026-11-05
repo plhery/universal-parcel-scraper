@@ -1,27 +1,29 @@
 # Profit Fields
 
-Profit Fields parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads EWS references from Profit Fields' anonymous guest tracking API.
+Its official page posts a one-item `trackingNumbers` list to `8dt.com/api/tracking/query`,
+without an account, cookie jar or verification token. The query identity, record id and
+tracking number must agree before history is accepted. HTTP recognition uses this same
+bounded request; the supported EWS layouts remain low-confidence suggestions until confirmed.
 
-Profit Fields (永利八达通, 8DT) is a Shenzhen forwarder running packet lines from China to North
-America, the UK and Europe, handing parcels to the destination post. Its site is 8dt.com.
+Only the number-bound `found: false`, `status: notfound` record with empty history and
+parcel fields means not-found. API errors, refusals, rate limits and malformed replies
+retain their failure kinds. Enabled universal providers remain available.
 
-## Numbers
+The detailed timeline is returned newest first. Each scan's stated UTC offset is preserved;
+an unlabelled clock stays local. The separate process diagram is a summary, not extra scans.
+Sending a parcel to a local carrier or processing it at a destination facility is transit.
+Only explicit out-for-delivery wording refines the broad last-mile code.
 
-Its numbers are `EWS`, a two-letter destination, ten digits and `YQ`, which `profit-fields-1`
-suggests at low confidence; the only public example is an archived lookup on its old tracker. Its
-tracker also takes the destination carrier's number, which stays with that carrier.
-
-## Why there is no adapter
-
-Its tracking page posts numbers to a JSON API without a session or CAPTCHA, and the API answers
-an unknown number with an explicit not-found. No current public number is known to confirm a
-found reply.
-
-## Links
-
-The tracking page opens a number from its `track` parameter.
+The field called `carrier` contains a commodity label and does not identify a delivery company.
+The recorded transfer reference stays whole; its issuer can propose a separate confirmation.
+Customer order references, diagram details, recipient fields and contact suffixes are omitted.
+The delivery signature date and elapsed-day counter are not an estimate.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Supply `PROFIT_FIELDS_TRACKING_NUMBER` and `PROFIT_FIELDS_UNKNOWN_NUMBER` privately:
+
+```sh
+npm run test:carriers:live -- carriers/profit-fields/adapter.live.test.ts
+```

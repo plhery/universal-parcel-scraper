@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'profit-fields', number: 'EWSXY974682510369YQ',
+    route: /^https:\/\/www\.8dt\.com\/tracking\?track=EWSXY974682510369YQ$/,
+    marker: /全球包裏|Global Logistics Track and Trace|Track Package/ },
   { carrier: 'topdelivery', number: '97468251',
     route: /^https:\/\/www\.topdelivery\.ru\/tracking\/\?order=97468251$/,
     marker: /Ваш заказ не найден/ },

@@ -1,0 +1,82 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": {
+    "items": [
+      {
+        "queryNumber": "EWSXY974682510368YQ",
+        "id": "EWSXY974682510368YQ",
+        "found": true,
+        "orderId": "PRIVATE_ORDER",
+        "number": "PRIVATE_INTERNAL",
+        "trackingNumber": "EWSXY974682510368YQ",
+        "transferNumber": "SPXABC974682510368142731",
+        "customerOrderNo": "PRIVATE_CUSTOMER_ORDER",
+        "carrier": "PRIVATE_COMMODITY",
+        "status": "delivered",
+        "nodeStatus": "SIGNED",
+        "nodeStatusName": "已签收",
+        "productLine": "PRIVATE_PRODUCT_CODE",
+        "origin": "PRIVATE_WAREHOUSE",
+        "destination": "United States",
+        "signDate": "2026-07-04",
+        "statusDays": 3,
+        "receiver": "PRIVATE_RECIPIENT",
+        "phone": "PRIVATE_PHONE",
+        "flowLayout": [
+          {
+            "type": "node",
+            "code": "LS",
+            "labelEn": "PRIVATE_DIAGRAM",
+            "details": {
+              "PRIVATE_KEY": "PRIVATE_VALUE"
+            }
+          }
+        ],
+        "timeline": [
+          {
+            "time": "2026-07-04 09:51:00",
+            "timeZone": "(UTC -04:00)",
+            "location": "US, Boston, MA",
+            "eventEn": "Delivered. Position: Lobby",
+            "eventCn": "Delivered. Position: Lobby",
+            "nodeStatus": "SIGNED",
+            "recipient": "PRIVATE_RECIPIENT"
+          },
+          {
+            "time": "2026-07-04 07:50:24",
+            "timeZone": "(UTC -04:00)",
+            "location": "US, Boston, MA",
+            "eventEn": "Out for Delivery",
+            "eventCn": "Out for Delivery",
+            "nodeStatus": "LAST_MILE_DELIVERY"
+          },
+          {
+            "time": "2026-07-02 01:28:00",
+            "timeZone": "(UTC +08:00)",
+            "location": "CN, SHENZHEN",
+            "eventEn": "Flight has taken off",
+            "eventCn": "Flight has taken off",
+            "nodeStatus": "IN_TRANSIT"
+          },
+          {
+            "time": "2026-07-01 22:30:26",
+            "timeZone": "(UTC +08:00)",
+            "location": "CN, SHENZHEN",
+            "eventEn": "Departed Facility in China",
+            "eventCn": "Departed Facility in China",
+            "nodeStatus": null
+          },
+          {
+            "time": "2026-07-01 10:07:48",
+            "timeZone": "(UTC +08:00)",
+            "location": "CN, SHENZHEN",
+            "eventEn": "Shipment info confirmed",
+            "eventCn": "Shipment info confirmed",
+            "nodeStatus": null
+          }
+        ]
+      }
+    ]
+  }
+}

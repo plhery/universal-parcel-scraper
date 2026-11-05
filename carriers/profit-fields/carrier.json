@@ -21,18 +21,45 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "profit-fields",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 1,
+      "pattern": "^EWS[A-Z]{2}(?:\\d{10}|\\d{12})YQ$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivery_tracking_number",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://www.8dt.com/tracking?track={trackingNumber}",
     "searchUrl": "https://www.8dt.com/tracking",
     "canaryUrl": "https://www.8dt.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_tracking_number",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivery_tracking_number",
+      "destination_country"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {
@@ -50,6 +77,11 @@
     {
       "id": "profit-fields-1",
       "pattern": "^EWS[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low"
+    },
+    {
+      "id": "profit-fields-2",
+      "pattern": "^EWS[A-Z]{2}\\d{12}YQ$",
       "confidence": "low"
     }
   ]

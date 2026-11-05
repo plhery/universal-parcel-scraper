@@ -37360,7 +37360,10 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "profit-fields",
+      "recognitionRank": 1,
+      "recognitionPattern": "^EWS[A-Z]{2}(?:\\d{10}|\\d{12})YQ$",
+      "localClocks": true
     },
     "canaryUrl": "https://www.8dt.com/",
     "trackingUrlTemplate": "https://www.8dt.com/tracking?track={trackingNumber}",
@@ -37380,6 +37383,10 @@
     "detectionRules": [
       {
         "pattern": "^EWS[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^EWS[A-Z]{2}\\d{12}YQ$",
         "confidence": "low"
       }
     ]

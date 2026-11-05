@@ -37364,7 +37364,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "profit-fields",
+      "recognitionRank": 1,
+      "recognitionPattern": "^EWS[A-Z]{2}(?:\\d{10}|\\d{12})YQ$",
+      "localClocks": true
     },
     "canaryUrl": "https://www.8dt.com/",
     "trackingUrlTemplate": "https://www.8dt.com/tracking?track={trackingNumber}",
@@ -37384,6 +37387,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^EWS[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^EWS[A-Z]{2}\\d{12}YQ$",
         "confidence": "low"
       }
     ]
@@ -52849,7 +52856,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pro-carrier": ["pro-carrier-1"],
   "product-care-group": [],
   "professional-couriers": [],
-  "profit-fields": ["profit-fields-1"],
+  "profit-fields": ["profit-fields-1","profit-fields-2"],
   "promed-delivery": [],
   "prompt-xpress": ["prompt-xpress-1"],
   "pronto-lanka": [],

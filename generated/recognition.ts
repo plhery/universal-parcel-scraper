@@ -374,6 +374,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "ppl": 608,
   "precision-deliveries": 696,
   "pro-carrier": 843,
+  "profit-fields": 1,
   "prompt-xpress": 583,
   "pts-worldwide-express": 818,
   "ptt": 400,
