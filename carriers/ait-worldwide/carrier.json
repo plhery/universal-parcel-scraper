@@ -57,10 +57,10 @@
       "progress_rail",
       "history",
       "provider_code",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "delivered_at",
       "destination",
       "signatory",

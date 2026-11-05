@@ -31,9 +31,10 @@ tracking page makes.
   before the reply was archived. They read as Ontario's, where Domain delivers, but the reply
   names no zone, so they stay `local_time`.
 - Each status carries its own `Estimated`: a day with the delivery window once the order ships,
-  then an arrival time when it is out for delivery. Those clocks have no zone either, so the
-  estimate is the newest status's day, dropped once the order is delivered or the day has
-  passed.
+  then an arrival time when it is out for delivery. The estimate is the newest status's, on the
+  same wall clock as the statuses, such as `2026-03-13 17:00–22:30` or `2026-03-12 20:15`. A
+  status stamped after its time or window ends keeps the day alone, and the estimate is dropped
+  once the order is delivered or the day has passed.
 - `Service`, such as `Express Delivery`, is the service name. The `Note` beside a status is the
   page's advice about the estimate and is not kept.
 - The page writes each value in as HTML; the adapter keeps the text.

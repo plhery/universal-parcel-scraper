@@ -1,6 +1,8 @@
+import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
@@ -28,6 +30,9 @@ const CHALLENGE_PAGE = /<title>\s*(?:Just a moment|Un instant)|_cf_chl_opt/i;
 
 // An estimate is kept while the parcel is still on its way to the recipient.
 const ON_THE_WAY = new Set<Stage>(['registered', 'accepted', 'in_transit', 'out_for_delivery', 'customs']);
+// DPD's Predict message to the recipient, whose note is the delivery window on its day, "09:00 - 12:00".
+const PREDICT = '175';
+const PREDICT_WINDOW = /^([01]\d|2[0-3]):([0-5]\d)\s*-\s*([01]\d|2[0-3]):([0-5]\d)$/;
 
 /** Read one reply of the public track endpoint: a shipment, a missing one, or a failure of its own kind. */
 export function parseDpdRoReply(status: number, body: string, rawNumber: string): CarrierResult {
@@ -54,13 +59,34 @@ function estimateOf(row: Record<string, unknown>): string | null {
   return null;
 }
 
+interface Scan { event: CarrierEvent; at: number; row: Record<string, unknown> }
+
+/**
+ * The window a Predict scan's note gives, on the scan's day and wall clock, as
+ * `YYYY-MM-DD HH:MM–HH:MM`. A window that ended before the newest scan is passed.
+ */
+function predictWindowOf(scan: Scan, newest: number): string | null {
+  if (scan.event.provider_code !== PREDICT || !scan.event.time) return null;
+  const sent = DateTime.fromISO(scan.event.time, { setZone: true });
+  if (!sent.isValid) return null;
+  for (const comment of (Array.isArray(scan.row.comments) ? scan.row.comments.slice(0, 20) : []).filter(isRecord)) {
+    const match = PREDICT_WINDOW.exec(clean(comment.text, 32));
+    if (!match) continue;
+    const ends = sent.set({ hour: Number(match[3]), minute: Number(match[4]), second: 0, millisecond: 0 });
+    if (ends.toMillis() < newest) return null;
+    const day = sent.toISODate();
+    return windowEstimate(`${day} ${match[1]}:${match[2]}`, `${day} ${match[3]}:${match[4]}`).expected_delivery;
+  }
+  return null;
+}
+
 export function parseDpdRo(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeDpdRoNumber(rawNumber);
   if (!isRecord(payload) || !Array.isArray(payload.events) || payload.events.length > 300) throw new SchemaError(PROVIDER);
   if (cleanScalar(payload.barcode, 32) !== number) throw new SchemaError(PROVIDER, 'DPD Romania did not identify the requested waybill');
   const info = isRecord(payload.info) ? payload.info : {};
 
-  const scans: { event: CarrierEvent; at: number; row: Record<string, unknown> }[] = [];
+  const scans: Scan[] = [];
   const seen = new Set<string>();
   for (const row of payload.events) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'DPD Romania returned an incomplete scan');
@@ -85,7 +111,10 @@ export function parseDpdRo(payload: unknown, rawNumber: string): CarrierResult {
   const staged = events.find(event => event.stage);
   const stage = (staged ? staged.stage : phase?.stage) as Stage | undefined;
   const delivered = stage === 'delivered' ? events.find(event => event.stage === 'delivered') : undefined;
-  const estimate = stage && ON_THE_WAY.has(stage) ? ordered.map(({ row }) => estimateOf(row)).find(Boolean) ?? null : null;
+  // The newest scan with an estimate gives it: a Predict window not yet passed, or the expected day.
+  const estimate = stage && ON_THE_WAY.has(stage)
+    ? ordered.map((scan) => predictWindowOf(scan, ordered[0]!.at) ?? estimateOf(scan.row)).find(Boolean) ?? null
+    : null;
 
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

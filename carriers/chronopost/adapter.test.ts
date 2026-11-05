@@ -293,11 +293,35 @@ describe('Chronopost direct tracking', () => {
       .toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
     const invalid: Record<string, string>[] = [{ 'Début créneau RDV': '31/02/2026 10:00', 'Fin créneau RDV': '31/02/2026 12:00' },
       { 'Début créneau RDV': '27/06/2026 12:00', 'Fin créneau RDV': '27/06/2026 10:00' },
-      { 'Début créneau RDV': '27/06/2026 10:00', 'Fin créneau RDV': '28/06/2026 12:00' }, { 'Date de relivraison': '2026-06-29' }];
+      { 'Début créneau RDV': '28/06/2026 10:00', 'Fin créneau RDV': '27/06/2026 12:00' },
+      { 'Début créneau RDV': '27/06/2026 10:00' }, { 'Date de relivraison': '2026-06-29' }];
     for (const infos of invalid) {
       const xml = history(scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", infos));
       expect(parseChronopostTrackingXml(xml, number).expected_delivery).toBeNull();
     }
+  });
+
+  it('keeps both days of an appointment across two days until its last day passes', () => {
+    const twoDays = { 'Début créneau RDV': '27/06/2026 08:00', 'Fin créneau RDV': '28/06/2026 18:00:00' };
+    const booked = scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", twoDays);
+    const window = { expected_delivery_from: '2026-06-27', expected_delivery: '2026-06-28' };
+    expect(normalizeCarrierResult(parseChronopostTrackingXml(history(booked), number))).toMatchObject(window);
+    const firstDay = scan('SD', '2026-06-27T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
+    expect(parseChronopostTrackingXml(history(booked, firstDay), number)).toMatchObject({ current_stage: 'in_transit', ...window });
+    const lastDay = scan('TA', '2026-06-28T07:05:00+02:00', 'Colis en cours de livraison par le livreur');
+    expect(parseChronopostTrackingXml(history(booked, firstDay, lastDay), number))
+      .toMatchObject({ current_stage: 'out_for_delivery', ...window });
+    const later = scan('SD', '2026-06-29T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
+    const lapsed = parseChronopostTrackingXml(history(booked, firstDay, later), number);
+    expect(lapsed.expected_delivery).toBeNull();
+    expect(lapsed).not.toHaveProperty('expected_delivery_from');
+    // A redelivery day on a later scan replaces the window, start and all.
+    const chosen = scan('CL', '2026-06-27T11:10:00+02:00', 'Instruction de livraison reçue', { 'Date de relivraison': '30/06/2026' });
+    const redelivered = parseChronopostTrackingXml(history(booked, firstDay, chosen), number);
+    expect(redelivered.expected_delivery).toBe('2026-06-30');
+    expect(redelivered).not.toHaveProperty('expected_delivery_from');
+    // A window within one day stays its slot, without a start.
+    expect(parseChronopostTrackingXml(history(prepared), number)).not.toHaveProperty('expected_delivery_from');
   });
 
   it("keeps the stage the parcel had through the recipient's delivery instruction", () => {

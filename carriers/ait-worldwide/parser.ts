@@ -4,6 +4,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -21,9 +22,11 @@ export const AIT_MAX_BYTES = 1_000_000;
 const NUMBER = /^(?=[A-Z]*\d)[A-Z0-9]{7,10}$/;
 // A row's clock as the page's data writes it: a wall time to the second, without an offset.
 const CLOCK = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d{1,7})?$/;
-// A delivery appointment with its window, stamped with the window's start.
+// A delivery appointment with its window, stamped with the window's start, as
+// "APPOINTMENT DELIVERY SCHEDULED ON 03/12/2026 BETWEEN 12:00 PM AND 4:00 PM".
 const APPOINTMENT_CODE = 'APPTDE';
-const APPOINTMENT = /^APPOINTMENT DELIVERY SCHEDULED ON (\d{2})\/(\d{2})\/(\d{4})\b/i;
+const APPOINTMENT = /^APPOINTMENT DELIVERY SCHEDULED ON (\d{2})\/(\d{2})\/(\d{4})\b(?:\s+BETWEEN\s+(.{1,12}?)\s+AND\s+(.{1,12}?)\s*$)?/i;
+const TWELVE_HOUR = /^(\d{1,2}):([0-5]\d)\s*([AP]M)$/i;
 const NOT_FOUND = /^Tracking Number\(s\) Not Found:\s*(.{1,400})$/i;
 // The history grid's rows, inside the grid's settings, and the number the grid belongs to.
 const GRID_DATA = '"data":{"Data":';
@@ -98,8 +101,25 @@ function clockOf(row: Record<string, unknown>): string {
 
 interface Row {
   event: CarrierEvent;
-  /** The day of a delivery appointment, which is an estimate and not a scan. */
+  /** The day of a delivery appointment, with its window when the wording gives it; an estimate and not a scan. */
   appointment: string | null;
+}
+
+/** A twelve-hour clock, "4:00 PM", as `HH:MM`, or null when it is not one. */
+function twelveHour(value: string | undefined): string | null {
+  const match = value ? TWELVE_HOUR.exec(value) : null;
+  const hour = match ? Number(match[1]) : 0;
+  if (!match || hour < 1 || hour > 12) return null;
+  return `${String((hour % 12) + (match[3]!.toUpperCase() === 'PM' ? 12 : 0)).padStart(2, '0')}:${match[2]}`;
+}
+
+/**
+ * An appointment's day, with its window on the page's wall clock as `YYYY-MM-DD HH:MM–HH:MM`
+ * when the wording gives both ends; otherwise the day alone.
+ */
+function appointmentOf(day: string, from: string | undefined, to: string | undefined): string {
+  const [start, end] = [twelveHour(from), twelveHour(to)];
+  return start && end ? windowEstimate(`${day} ${start}`, `${day} ${end}`).expected_delivery ?? day : day;
 }
 
 /** One row of the history grid: its `DateAndTime`, `Code` and `Description`. */
@@ -113,7 +133,7 @@ function rowOf(row: unknown): Row {
   const booked = APPOINTMENT.exec(description);
   if (code === APPOINTMENT_CODE || booked) {
     const day = booked ? calendarDay(Number(booked[3]), Number(booked[1]), Number(booked[2])) : null;
-    return { event: { local_time, description }, appointment: day ?? local_time.slice(0, 10) };
+    return { event: { local_time, description }, appointment: day ? appointmentOf(day, booked?.[4], booked?.[5]) : local_time.slice(0, 10) };
   }
   const staged = aitStage(code || null, description);
   return {
@@ -278,7 +298,7 @@ export function parseAit(html: string, raw: string): CarrierResult {
     last_status_text: fromMeter ? shipment.progress : current?.description ?? (shipment.progress || null),
     last_update: null,
     ...(current?.local_time ? { last_update_local: current.local_time } : {}),
-    // Until the delivery, the newest appointment's day, else the day the page says to deliver by.
+    // Until the delivery, the newest appointment's day and window, else the day the page says to deliver by.
     expected_delivery: settled ? null : appointment ?? deliverByDay(shipment.deliverBy, newest),
     ...(events.length ? {} : { summary_only: true }),
     events: events.slice(0, MAX_EVENTS),

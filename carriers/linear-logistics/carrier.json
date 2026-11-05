@@ -26,7 +26,8 @@
   },
   "capabilities": [
     "history",
-    "location"
+    "location",
+    "eta"
   ],
   "portal": {
     "url": "https://linearlogistics.co.uk/tracking?q={trackingNumber}",
@@ -38,16 +39,18 @@
       "location",
       "delivery_partner",
       "recipient_name",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "scraped": [
       "status",
       "history",
-      "location"
+      "location",
+      "eta",
+      "eta_window"
     ],
     "discarded": [
       "recipient_name",
-      "eta",
       "delivery_partner"
     ],
     "unavailable": [

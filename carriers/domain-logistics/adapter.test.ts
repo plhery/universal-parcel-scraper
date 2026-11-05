@@ -62,17 +62,29 @@ describe('Domain Logistics HTTP adapter', () => {
     expect(JSON.stringify(parseDomainLogistics(fixture('delivered')))).not.toMatch(/Synthetic advice/);
   });
 
-  it('reads a shipped order with the day of its estimated window, and an order out for delivery with its arrival day', () => {
+  it('reads a shipped order with its estimated window, and an order out for delivery with its arrival time, on the rows’ wall clock', () => {
     expect(parseDomainLogistics(fixture('in-transit'))).toEqual({
       status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
       last_status_text: 'Your order has been shipped!',
       last_update: null, last_update_local: '2026-03-11T14:40:00',
-      expected_delivery: '2026-03-13',
+      expected_delivery: '2026-03-13 17:00–22:30',
       service_name: 'Express Delivery',
       events: [{ local_time: '2026-03-11T14:40:00', description: 'Your order has been shipped!', stage: 'in_transit', stage_source: 'carrier_map' }],
     });
     const out = parseDomainLogistics(fixture('delivered').slice(1));
-    expect(out).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', expected_delivery: '2026-03-12' });
+    expect(out).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', expected_delivery: '2026-03-12 20:15' });
+    expect(out).not.toHaveProperty('expected_delivery_from');
+    const estimate = (Estimated: unknown, Date = '2026-03-11<br/>02:40 PM') =>
+      parseDomainLogistics(changed('in-transit', (rows) => { Object.assign(rows[0]!, { Estimated, Date }); })).expected_delivery;
+    expect(estimate('2026-03-13<br>9:00 am-12:00 PM')).toBe('2026-03-13 09:00–12:00');
+    expect(estimate('2026-03-13<br/>12:30 AM')).toBe('2026-03-13 00:30');
+    // Wording after the day it does not read, a window that does not end after it starts, or one that
+    // ended before the newest status, leaves the day.
+    for (const Estimated of ['2026-03-13<br/>Evening', '2026-03-13<br/>13:00 PM – 10:30 PM', '2026-03-13<br/>10:30 PM – 05:00 PM']) {
+      expect(estimate(Estimated), Estimated).toBe('2026-03-13');
+    }
+    expect(estimate('2026-03-13<br/>05:00 PM – 10:30 PM', '2026-03-13<br/>10:45 PM')).toBe('2026-03-13');
+    expect(estimate('2026-03-13<br/>05:00 PM – 10:30 PM', '2026-03-13<br/>10:30 PM')).toBe('2026-03-13 17:00–22:30');
     // An estimate that is not a day, or whose day passed before the newest status, is no estimate.
     for (const Estimated of ['', null, 'Pending', '2026-02-30', '2026-03-10<br/>05:00 PM – 10:30 PM']) {
       expect(parseDomainLogistics(changed('in-transit', (rows) => { rows[0]!.Estimated = Estimated; })).expected_delivery, String(Estimated)).toBeNull();

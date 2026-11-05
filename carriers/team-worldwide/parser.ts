@@ -3,6 +3,7 @@ import type { Element } from 'domhandler';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -29,8 +30,9 @@ const ISO_DAY = /^(\d{4})-(\d{2})-(\d{2})$/;
 // Whoever signed for the freight, after the words that introduce them.
 const SIGNER = /^(SIGNED FOR)\b.*$/i;
 // A delivery or pickup appointment, stamped when it was booked, and the day it is
-// booked for; a window and the booking agent's name can follow.
-const APPOINTMENT = /^(APPT FOR (DEL|PKU) SCHED)\b(?:\s+(\d{8})\b)?/i;
+// booked for; its window, "BET 0800-1200", or a time it is due by, and the booking
+// agent's name can follow.
+const APPOINTMENT = /^(APPT FOR (DEL|PKU) SCHED)\b(?:\s+(\d{8})\b(?:\s+BET\s+(\d{2})(\d{2})-(\d{2})(\d{2})\b)?)?/i;
 // A town and its state after a row's wording: "OUT FOR DELIVERY - EXAMPLETOWN, TX".
 const PLACE = /^(.*\S)\s+-\s+(\p{L}[\p{L} .'-]{0,59}, [A-Z]{2})$/u;
 // Free text after a row's wording, which can name someone.
@@ -66,7 +68,7 @@ function clockOf(date: string, time: string): string {
 
 interface Row {
   event: CarrierEvent;
-  /** The day a delivery appointment is booked for, which is an estimate and not a scan. */
+  /** The day a delivery appointment is booked for, with its window, which is an estimate and not a scan. */
   appointment: string | null;
 }
 
@@ -78,7 +80,10 @@ function wordingOf(raw: string): { description: string; location?: string; appoi
   if (booked) {
     const date = booked[3] ? DAY.exec(booked[3]) : null;
     const day = date && booked[2]!.toUpperCase() === 'DEL' ? calendarDay(Number(date[1]), Number(date[2]), Number(date[3])) : null;
-    return { description: booked[1]!.toUpperCase(), appointment: day };
+    // The window's two clocks on the booked day, "2026-10-21 08:00–12:00"; a time it is due by is the day alone.
+    const window = day && booked[4]
+      ? windowEstimate(`${day} ${booked[4]}:${booked[5]}`, `${day} ${booked[6]}:${booked[7]}`).expected_delivery : null;
+    return { description: booked[1]!.toUpperCase(), appointment: window ?? day };
   }
   const placed = PLACE.exec(raw);
   if (placed) return { description: SUFFIX.exec(placed[1]!)?.[1] ?? placed[1]!, location: placed[2]!, appointment: null };
@@ -222,8 +227,8 @@ export function parseTeam(html: string, raw: string): CarrierResult {
   const current = fromHeader ? undefined : delivery ?? events[0];
   const clocks = events.map((event) => String(event.local_time)).sort();
   const newest = clocks.length ? clocks.at(-1)!.slice(0, 10) : null;
-  // Until the delivery, the newest delivery appointment's day, else the header's
-  // estimate; a day before the newest row's is stale.
+  // Until the delivery, the newest delivery appointment's day and window, else the
+  // header's estimate; a day before the newest row's is stale.
   const estimate = shipment.rows.find((entry) => entry.appointment)?.appointment ?? shipment.requested;
   const settled = decided !== null && FINAL.has(decided.stage);
   return {
@@ -232,7 +237,7 @@ export function parseTeam(html: string, raw: string): CarrierResult {
     last_status_text: fromHeader ? shipment.status : current?.description ?? (shipment.status || null),
     last_update: null,
     ...(current?.local_time ? { last_update_local: current.local_time } : {}),
-    expected_delivery: !settled && estimate && !(newest && estimate < newest) ? estimate : null,
+    expected_delivery: !settled && estimate && !(newest && estimate.slice(0, 10) < newest) ? estimate : null,
     ...(events.length ? {} : { summary_only: true }),
     events,
   };

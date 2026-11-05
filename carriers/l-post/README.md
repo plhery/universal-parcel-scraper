@@ -39,8 +39,9 @@ lookups its tracking page makes.
   delivery waits for the courier, which stays in transit.
 - `DateChange` is a wall clock to the minute without a zone. Pickup points sit in several
   zones, so the clocks stay `local_time`.
-- The planned delivery day is the estimate until the order is delivered or cancelled. The
-  courier window is not kept.
+- The planned delivery day is the estimate until the order is delivered or cancelled. A
+  courier delivery adds its window, `TimeFrom` to `TimeTo` in whole hours on the recipient's
+  wall clock, such as `2026-06-02 10:00–18:00`.
 - The seller is `sender_name`. The pickup point's address and directions are `pickup_point`
   once the parcel waits there or was collected there. A courier order's address is the
   recipient's and is not kept, nor are the shop's order number, the storage deadline, the

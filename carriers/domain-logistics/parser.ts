@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { textFromHtml } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -17,8 +18,10 @@ export const DOMAIN_LOGISTICS_MAX_BYTES = 64 * 1024;
 const NUMBER = /^(?=[A-Z]*\d)[A-Z0-9]{6,40}$/;
 // A row's `Date`: the day, a line break and a twelve-hour clock, as "2026-01-02<br/>09:30 PM".
 const CLOCK = /^(\d{4}-\d{2}-\d{2})\s*<br\s*\/?>\s*(\d{1,2}):(\d{2})\s*([AP]M)$/i;
-// A row's `Estimated`: the day, then nothing, an arrival time or a window.
-const ESTIMATE = /^(\d{4}-\d{2}-\d{2})(?:\s*<br\s*\/?>|$)/i;
+// A row's `Estimated`: the day, then nothing, an arrival time or a window, as
+// "2026-01-02<br/>05:00 PM – 10:30 PM".
+const ESTIMATE = /^(\d{4}-\d{2}-\d{2})(?:\s*<br\s*\/?>(.*)|$)/is;
+const ARRIVAL = /^(\d{1,2}):(\d{2})\s*([AP]M)(?:\s*[–-]\s*(\d{1,2}):(\d{2})\s*([AP]M))?$/i;
 const FINAL: readonly Stage[] = ['delivered', 'returned'];
 const MAX_ROWS = 100;
 
@@ -44,22 +47,52 @@ function day(value: string): string | null {
   return parsed.isValid && parsed.toISODate() === value ? value : null;
 }
 
+/** A twelve-hour clock as `HH:MM`, or null when it is not one. */
+function twelveHour(hour: string, minute: string, meridiem: string): string | null {
+  const [hours, minutes] = [Number(hour), Number(minute)];
+  if (hours < 1 || hours > 12 || minutes > 59) return null;
+  return `${String((hours % 12) + (meridiem.toUpperCase() === 'PM' ? 12 : 0)).padStart(2, '0')}:${minute}`;
+}
+
 /**
  * A row's clock. The page prints it as it comes; it reads as Ontario's wall clock, but the
  * reply names no zone, so the clock stays local.
  */
 function wallClock(raw: string): string {
   const match = CLOCK.exec(raw);
-  const hour = match ? Number(match[2]) : 0;
-  if (!match || hour < 1 || hour > 12 || !day(match[1]!)) throw new SchemaError(PROVIDER, 'Domain Logistics returned an invalid status time');
-  const hours = (hour % 12) + (match[4]!.toUpperCase() === 'PM' ? 12 : 0);
-  const local = `${match[1]}T${String(hours).padStart(2, '0')}:${match[3]}:00`;
+  const clock = match ? twelveHour(match[2]!, match[3]!, match[4]!) : null;
+  if (!match || !clock || !day(match[1]!)) throw new SchemaError(PROVIDER, 'Domain Logistics returned an invalid status time');
+  const local = `${match[1]}T${clock}:00`;
   const parsed = DateTime.fromISO(local, { zone: 'UTC' });
   if (!parsed.isValid || parsed.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== local) throw new SchemaError(PROVIDER, 'Domain Logistics returned an invalid status time');
   return local;
 }
 
-interface Row { event: CarrierEvent; local: string; service: string; estimate: string | null }
+interface Estimate {
+  day: string;
+  /** The day, its arrival time or its window, as `expected_delivery` carries it. */
+  value: string;
+  /** The wall clock the arrival time or window ends at, `YYYY-MM-DDTHH:MM`. */
+  ends: string | null;
+}
+
+interface Row { event: CarrierEvent; local: string; service: string; estimate: Estimate | null }
+
+/**
+ * A row's `Estimated`: its day, with the arrival time or window after it on the same wall
+ * clock as the rows. Anything else after the day leaves the day alone.
+ */
+function estimateOf(raw: string): Estimate | null {
+  const match = ESTIMATE.exec(raw);
+  const date = match ? day(match[1]!) : null;
+  if (!date) return null;
+  const time = ARRIVAL.exec(textFromHtml(match![2] ?? '', 80));
+  const from = time ? twelveHour(time[1]!, time[2]!, time[3]!) : null;
+  const to = time?.[4] ? twelveHour(time[4], time[5]!, time[6]!) : from;
+  if (!from || !to) return { day: date, value: date, ends: null };
+  const value = windowEstimate(`${date} ${from}`, `${date} ${to}`).expected_delivery ?? date;
+  return { day: date, value, ends: value === date ? null : `${date}T${to}` };
+}
 
 function projectRow(row: unknown): Row {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Domain Logistics returned an invalid status row');
@@ -69,14 +102,23 @@ function projectRow(row: unknown): Row {
   const local = wallClock(field(row, 'Date'));
   // `Note` is the page's advice beside a status, about the estimate or the delivery; it is not read.
   field(row, 'Note');
-  const estimate = ESTIMATE.exec(field(row, 'Estimated'))?.[1];
+  const estimate = estimateOf(field(row, 'Estimated'));
   const staged = domainLogisticsStage(description);
   return {
     local,
     service: textFromHtml(field(row, 'Service'), 80),
-    estimate: estimate ? day(estimate) : null,
+    estimate,
     event: { local_time: local, description, ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) },
   };
+}
+
+/**
+ * The newest status's estimate, until the order is delivered: none once its day has passed, and
+ * its day alone once its arrival time or window ended before the newest status.
+ */
+function currentEstimate(estimate: Estimate | null, newest: string): string | null {
+  if (!estimate || estimate.day < newest.slice(0, 10)) return null;
+  return estimate.ends && estimate.ends < newest.slice(0, 16) ? estimate.day : estimate.value;
 }
 
 /**
@@ -106,15 +148,13 @@ export function parseDomainLogistics(payload: unknown): CarrierResult {
   const newest = rows[0]!;
   const scanned = rows.find((row) => row.event.stage)?.event;
   const stage = scanned?.stage as Stage | undefined;
-  // The newest status's estimate, until the order is delivered or once its day has passed.
-  const estimate = stage && FINAL.includes(stage) ? null : newest.estimate;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: scanned!.stage_source ?? 'carrier_map' } : {}),
     last_status_text: newest.event.description!,
     last_update: null,
     last_update_local: newest.local,
-    expected_delivery: estimate && estimate >= newest.local.slice(0, 10) ? estimate : null,
+    expected_delivery: stage && FINAL.includes(stage) ? null : currentEstimate(newest.estimate, newest.local),
     ...(newest.service ? { service_name: newest.service } : {}),
     events: rows.map((row) => row.event),
   };

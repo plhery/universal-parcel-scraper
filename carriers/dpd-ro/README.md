@@ -45,10 +45,13 @@ MySpeedy's endpoint does not know DPD Romania waybills and MyDPD's does not know
 shipments, so each carrier asks its own host.
 
 The estimate is the expected delivery day on the shipment-data scan, kept while the shipment is
-on its way. Scan comments, which can hold the receiver's name, a proof-of-delivery link or the
-return waybill, are dropped. When DPD Romania hands the receiving leg to ACS, as for parcels to
-Cyprus, the adapter names ACS and its number, as Speedy's does, so the partner can be asked
-when the number is a ten-digit ACS voucher.
+on its way. Once a Predict scan, DPD's message to the recipient, notes the delivery window, such
+as `09:00 - 12:00`, the estimate is that window on the scan's day and wall clock, as
+`2026-03-04 09:00–12:00`, until a scan comes after the window ends. Other scan comments, which
+can hold the receiver's name, a proof-of-delivery link or the return waybill, are dropped. When
+DPD Romania hands the receiving leg to ACS, as for parcels to Cyprus, the adapter names ACS and
+its number, as Speedy's does, so the partner can be asked when the number is a ten-digit ACS
+voucher.
 
 ## Limitations
 

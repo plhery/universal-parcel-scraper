@@ -43,10 +43,10 @@
     ],
     "scraped": [
       "status",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "sender_name",
       "recipient_name",
       "recipient_address",

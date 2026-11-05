@@ -88,8 +88,9 @@ after that reaches the sender, so it is `returned`.
 A delivery instruction can carry the redelivery day the recipient chose, and
 scans can carry the booked appointment window. The newest scan with either
 becomes the expected delivery, a redelivery day replacing a window on the same
-scan; an unreadable value gives none. It lapses once a later scan is not
-progress towards that delivery or falls on a later day.
+scan; an unreadable value gives none. A window within one day is that day's
+slot; one across days keeps its first and last day. It lapses once a later
+scan is not progress towards that delivery or falls after its last day.
 
 While the parcel waits at a relay or locker, that becomes the pickup point: its
 name, then its street and town on their own lines when its address has the

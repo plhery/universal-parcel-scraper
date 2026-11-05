@@ -80,22 +80,35 @@ describe('L-POST HTTP adapter', () => {
     expect(normalizeCarrierResult(result).pickup_point).toBe(result.pickup_point);
   });
 
-  it('reads a courier order waiting for its courier as in transit, without the recipient’s address', () => {
+  it('reads a courier order waiting for its courier as in transit, with its window and without the recipient’s address', () => {
     const result = parse(order('order-courier-in-transit'), history('history-in-transit'));
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
-      last_status_text: 'Размещено в пункте доставки', last_update_local: '2026-06-01T07:12:00', expected_delivery: '2026-06-02' });
+      last_status_text: 'Размещено в пункте доставки', last_update_local: '2026-06-01T07:12:00', expected_delivery: '2026-06-02 10:00–18:00' });
+    expect(normalizeCarrierResult(result)).toMatchObject({ expected_delivery: '2026-06-02 10:00–18:00' });
+    expect(result).not.toHaveProperty('expected_delivery_from');
     expect(result.events!.map((event) => [event.provider_code, event.stage])).toEqual([
       ['24', 'in_transit'], ['23', 'in_transit'], ['22', 'in_transit'], ['21', 'in_transit'], ['4', 'registered'], ['1', 'registered'],
     ]);
     expect(result).not.toHaveProperty('pickup_point');
     expect(result).not.toHaveProperty('sender_name');
-    expect(JSON.stringify(result)).not.toMatch(/Образцов|Вымышленная|кв\.|"10"|"18"/);
+    expect(JSON.stringify(result)).not.toMatch(/Образцов|Вымышленная|кв\./);
+    // A window of single-digit hours reads on the clock; one missing an hour, or not ending after it starts, leaves the day.
+    const window = (TimeFrom: unknown, TimeTo: unknown) => parse(order('order-courier-in-transit', (details) => {
+      Object.assign(details, { TimeFrom, TimeTo });
+    }), history('history-in-transit')).expected_delivery;
+    expect(window('9', '13')).toBe('2026-06-02 09:00–13:00');
+    expect(window(9, 13)).toBe('2026-06-02 09:00–13:00');
+    for (const [from, to] of [[null, null], ['10', null], ['18', '10'], ['10', '10'], ['10', '24'], ['10:00', '18:00'], ['ten', '18']]) {
+      expect(window(from, to), `${from}–${to}`).toBe('2026-06-02');
+    }
     // The same status at a pickup point is ready for collection there.
     const waiting = parse(order('order-courier-in-transit', (details) => {
       details.isCourier = '0';
       details.AdressDelivery = 'ул. Вымышленная, д. 0';
     }), history('history-in-transit'));
-    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: 'ул. Вымышленная, д. 0' });
+    // A pickup point delivery has no courier window.
+    expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: 'ул. Вымышленная, д. 0',
+      expected_delivery: '2026-06-02' });
     expect(waiting.events![0]).toMatchObject({ provider_code: '24', stage: 'ready_for_pickup' });
   });
 

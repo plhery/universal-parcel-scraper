@@ -71,10 +71,11 @@ describe('Torrestir HTTP adapter', () => {
     expect(result.events!.filter((event) => event.point)).toHaveLength(3);
   });
 
-  it('reads a shipment out for delivery with its estimate’s day, once per repeated scan', () => {
+  it('reads a shipment out for delivery with its estimate’s day and window, once per repeated scan', () => {
     const result = parseTorrestir(fixture('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Em Distribuiçao',
-      last_update_local: '2026-10-27T08:55:00', expected_delivery: '2026-10-27' });
+      last_update_local: '2026-10-27T08:55:00', expected_delivery: '2026-10-27 14:00–14:30' });
+    expect(result).not.toHaveProperty('expected_delivery_from');
     expect(result.events!.map((event) => [event.local_time, event.description, event.location ?? null])).toEqual([
       ['2026-10-27T08:55:00', 'Em Distribuiçao', null],
       ['2026-10-26T06:10:00', 'Na Plataforma de Destino', 'VILA PROVA'],
@@ -90,6 +91,11 @@ describe('Torrestir HTTP adapter', () => {
   it('keeps the estimate’s day only while it is still to come', () => {
     expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-10-26 14:00 / 14:30'), IN_TRANSIT)).toMatchObject({ expected_delivery: null });
     expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-10-28'), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-10-28' });
+    expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-10-28 09:05 / 09:35'), IN_TRANSIT))
+      .toMatchObject({ expected_delivery: '2026-10-28 09:05–09:35' });
+    // A time without the window's end, or a window that ends before it starts, is the day alone.
+    expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-10-28 09:05'), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-10-28' });
+    expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-10-28 14:30 / 14:00'), IN_TRANSIT)).toMatchObject({ expected_delivery: '2026-10-28' });
     expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', '2026-02-30 14:00 / 14:30'), IN_TRANSIT)).toMatchObject({ expected_delivery: null });
     expect(parseTorrestir(changed('in-transit', '2026-10-27 14:00 / 14:30', ''), IN_TRANSIT)).toMatchObject({ expected_delivery: null });
   });
@@ -111,7 +117,7 @@ describe('Torrestir HTTP adapter', () => {
     expect(worded).toMatchObject({ status: 'delivered', current_stage: 'delivered', expected_delivery: null });
     expect(worded.events![0]).toMatchObject({ stage: 'delivered', stage_source: expect.not.stringMatching(/^carrier_map$/) });
     const unstaged = parseTorrestir(changed('in-transit', /Em Distribui&#231;ao/g, 'Nota Sintética'), IN_TRANSIT);
-    expect(unstaged).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Nota Sintética', expected_delivery: '2026-10-27' });
+    expect(unstaged).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Nota Sintética', expected_delivery: '2026-10-27 14:00–14:30' });
     expect(unstaged.events![0]).not.toHaveProperty('stage');
   });
 

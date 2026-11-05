@@ -41,8 +41,9 @@ with the delivery postcode.
   after it.
 - On the delivery day, while the crew is out, the page shows the crew's first names, the
   stops before the customer's, today's window and a map of the van instead of the rows. The
-  adapter reads it as out for delivery today, a summary without scans, and keeps none of the
-  rest.
+  adapter reads it as out for delivery today, a summary without scans, with today's window on
+  the UK's wall clock: the crew's current estimate, else the planned window, such as
+  `2026-03-20 11:00–11:30`. It keeps none of the rest.
 - A collection is accepted once collected and returned once sent on to the retailer's
   returns site.
 - With no rows, the progress bar's step is the status. Its last step settles a delivery whose

@@ -46,6 +46,7 @@
       "history",
       "location",
       "eta",
+      "eta_window",
       "delivered_at",
       "recipient_name",
       "proof_of_delivery",
@@ -59,6 +60,7 @@
       "location",
       "provider_code",
       "eta",
+      "eta_window",
       "delivered_at",
       "delivery_partner",
       "delivery_tracking_number"

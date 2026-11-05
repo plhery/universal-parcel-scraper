@@ -1,6 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { uspsRoundDelivery } from '../../core/result/round.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -45,11 +46,26 @@ function scanOf(value: unknown): CarrierEvent {
 }
 
 /**
+ * The delivery the round the parcel is on promises, from the newest scan of the
+ * newest run out for delivery that relays a USPS round, on its scan's day at the
+ * offset it states.
+ */
+function roundDelivery(events: readonly CarrierEvent[]): string | null {
+  for (const event of events) {
+    if (event.stage && event.stage !== 'out_for_delivery') return null;
+    const round = uspsRoundDelivery(event.description ?? '', event.time!.slice(0, 10));
+    if (round) return round;
+  }
+  return null;
+}
+
+/**
  * The open tracking service's answer, `GET /openapi/v1/external/tracking?number=`:
  * the number, the origin and destination countries, a summary status and the
  * scans, in no set order, each with an instant and its offset, a place, a
  * wording and a 17TRACK-style sub-status. The number must be the one asked.
- * The summary status is not read; the scans decide.
+ * The summary status is not read; the scans decide. While the parcel is out
+ * for delivery, a relayed USPS round gives the estimate.
  */
 export function parseBestfulfill(payload: unknown, raw: string): CarrierResult {
   const number = normalizeBestfulfillNumber(raw);
@@ -75,7 +91,7 @@ export function parseBestfulfill(payload: unknown, raw: string): CarrierResult {
     ...(stage ? { current_stage: stage, current_stage_source: current!.stage_source! } : {}),
     last_status_text: newest.description!,
     last_update: newest.time!,
-    expected_delivery: null,
+    expected_delivery: stage === 'out_for_delivery' ? roundDelivery(events) : null,
     ...(/^[A-Z]{2}$/.test(destination) ? { destination_country: destination } : {}),
     ...(partner && partner !== number ? { delivery_tracking_number: partner } : {}),
     events,

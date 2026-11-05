@@ -5,7 +5,7 @@
  * record as JSON in a `<tracking :tracking-results="…">` attribute: the shop,
  * the recipient's name, address, phone and e-mail, the ordered articles and the
  * booked time window sit next to the per-parcel step. `parse()` reads the
- * delivery type, the step and the delivery date and nothing else.
+ * delivery type, the step, the delivery date and its window and nothing else.
  *
  * The order reference alone opens that page, so it is part of the tracking
  * credential: never log it, quote it in an issue, or put a real one in a
@@ -16,6 +16,7 @@ import { load } from 'cheerio';
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { UpstreamHttpError, clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { UNKNOWN_STEP, UNKNOWN_STEP_DESCRIPTION, deliveryKind, parcelStep, stepDetails } from './status.js';
@@ -30,11 +31,14 @@ const MAX_RESPONSE_BYTES = 1_000_000;
 
 const FRENCH_POSTCODE = /^(?:0[1-9]|[1-8]\d|9[0-5]|97|98)\d{3}$/;
 const NOT_FOUND_PATTERN = /commande est introuvable|commande introuvable/i;
+// The booked window on the Paris clock, as `dateMessage` words it: "Entre 08h00 et 13h00".
+const WINDOW = /^entre\s+([01]\d|2[0-3])h([0-5]\d)\s+et\s+([01]\d|2[0-3])h([0-5]\d)$/i;
 
 /**
  * The embedded record carries ISO timestamps for the delivery appointment. Only
- * the calendar day is kept, so no `core/time` policy applies: the day is read
- * off the string, and a string `Date.parse` refuses is dropped.
+ * the calendar day is kept, its hours coming from `dateMessage`, so no
+ * `core/time` policy applies: the day is read off the string, and a string
+ * `Date.parse` refuses is dropped.
  */
 function normalizedIsoDate(value: unknown): string | null {
   if (typeof value !== 'string') return null;
@@ -42,6 +46,29 @@ function normalizedIsoDate(value: unknown): string | null {
   const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(candidate);
   if (!match || Number.isNaN(Date.parse(candidate))) return null;
   return `${match[1]}-${match[2]}-${match[3]}`;
+}
+
+/** A parcel's booked window, "08:00" to "13:00", or null. */
+function bookedWindow(value: unknown): [string, string] | null {
+  const match = typeof value === 'string' ? WINDOW.exec(value.trim()) : null;
+  return match ? [`${match[1]}:${match[2]}`, `${match[3]}:${match[4]}`] : null;
+}
+
+/**
+ * The latest appointment day, with the window its parcels are booked in on the
+ * Paris clock when each of them gives one: "2024-01-02 08:00–13:00".
+ */
+function appointmentEstimate(parcels: readonly Record<string, unknown>[]): string | null {
+  const booked = parcels
+    .map((parcel) => ({ day: normalizedIsoDate(parcel.date), window: bookedWindow(parcel.dateMessage) }))
+    .filter((entry): entry is { day: string; window: [string, string] | null } => entry.day !== null);
+  const day = booked.map((entry) => entry.day).sort().at(-1);
+  if (!day) return null;
+  const windows = booked.filter((entry) => entry.day === day).map((entry) => entry.window);
+  if (windows.some((window) => window === null)) return day;
+  const from = windows.map((window) => window![0]).sort()[0]!;
+  const to = windows.map((window) => window![1]).sort().at(-1)!;
+  return windowEstimate(`${day} ${from}`, `${day} ${to}`).expected_delivery ?? day;
 }
 
 function normalizeResponseCredential(value: unknown): string {
@@ -130,11 +157,7 @@ export function parseCChezVousTrackingHtml(
   // and a parcel on a step we do not know makes the whole order unknown.
   const currentStep = steps.includes(UNKNOWN_STEP) ? UNKNOWN_STEP : Math.min(...steps);
   const current = stepDetails(currentStep, kind);
-  const deliveryDates = parcels
-    .map((parcel) => normalizedIsoDate(parcel.date))
-    .filter((date): date is string => date !== null)
-    .sort();
-  const expectedDelivery = deliveryDates.at(-1) ?? null;
+  const expectedDelivery = appointmentEstimate(parcels);
 
   return {
     status: current?.status ?? 'unknown',

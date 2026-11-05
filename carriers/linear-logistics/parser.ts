@@ -5,6 +5,7 @@ import {
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
@@ -21,6 +22,11 @@ const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 // The feed appends future delivery dates and windows to actual scan wording.
 const ESTIMATE = /\s*\((?:ETA:|Due for delivery\b)[^)]*\)/gi;
+// A round's window on its scan's day: "(ETA: 13:19-15:19)".
+const ROUND = /\(ETA:\s*([01]\d|2[0-3]):([0-5]\d)\s*-\s*([01]\d|2[0-3]):([0-5]\d)\)/i;
+// The day a booking or the hub gives: "(Due for delivery on Thursday 05 Mar 2026)", or "by" it.
+const DUE = /\(Due for delivery (?:on|by) [A-Z]+ (\d{1,2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4})\)/i;
+const MONTHS = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 const RECEIVER = /\s+(?:and\s+)?(?:received|signed|collected)\s+by\b(?!\s+DX\b)[\s\S]*$/i;
 const DELIVERY_PLACE = /\b(delivered|left)\s+(?:to|at)\b[\s\S]*$/i;
 const PRIVATE = /https?:\/\/|mailto:|tel:|\S+@\S+|\b(?:OTP|PIN)\s*[:=]?\s*\d|(?<![A-Z\d])\+?\d(?:[\s().-]{0,2}\d){8,}(?![A-Z\d])/i;
@@ -50,6 +56,19 @@ export function linearWording(raw: string): string {
   const privateAt = wording.search(PRIVATE);
   if (privateAt >= 0) wording = wording.slice(0, privateAt);
   return clean(wording, 500).replace(/[\s|,;:.\-–]+$/, '');
+}
+
+/**
+ * The estimate a scan's wording appends: a round's window on `day`, the scan's,
+ * as a wall clock like the scan's ("2026-03-05 13:19–15:19"), or the day a
+ * booking gives.
+ */
+export function linearEstimate(raw: string, day: string): string | null {
+  const wording = textFromHtml(raw, 4_000);
+  const round = ROUND.exec(wording);
+  if (round) return windowEstimate(`${day} ${round[1]}:${round[2]}`, `${day} ${round[3]}:${round[4]}`).expected_delivery;
+  const due = DUE.exec(wording);
+  return due ? calendarDay(Number(due[3]), MONTHS.indexOf(due[2]!.toLowerCase()) + 1, Number(due[1])) : null;
 }
 
 /** The page displays these date and time strings directly, without a zone. */
@@ -89,6 +108,7 @@ export function parseLinear(payload: unknown, raw: string): CarrierResult {
   if (payload.data.length > MAX_ROWS) invalid('Linear Logistics returned an oversized history');
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
+  const estimates = new Map<CarrierEvent, string>();
   for (const row of payload.data) {
     if (!isRecord(row)) invalid('Linear Logistics returned an invalid scan');
     const identity = returnedTrackingNumber(row.lpn);
@@ -99,7 +119,8 @@ export function parseLinear(payload: unknown, raw: string): CarrierResult {
       throw new IndeterminateError(PROVIDER, 'Linear Logistics returned an unverified carrier feed');
     }
     const local = wallClock(row);
-    const description = linearWording(text(row, 'description', 4_000));
+    const wording = text(row, 'description', 4_000);
+    const description = linearWording(wording);
     if (!description) invalid('Linear Logistics returned a scan without its activity');
     const place = text(row, 'location', 200);
     const location = place === '-' || PRIVATE.test(place) ? '' : place;
@@ -107,8 +128,11 @@ export function parseLinear(payload: unknown, raw: string): CarrierResult {
     if (seen.has(key)) continue;
     seen.add(key);
     const staged = linearStage(description);
-    events.push({ local_time: local, description, ...(location ? { location } : {}),
-      ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
+    const event: CarrierEvent = { local_time: local, description, ...(location ? { location } : {}),
+      ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
+    const estimate = linearEstimate(wording, local.slice(0, 10));
+    if (estimate) estimates.set(event, estimate);
+    events.push(event);
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
   if (listsNewestFirst(events) === false) events.reverse();
@@ -116,11 +140,16 @@ export function parseLinear(payload: unknown, raw: string): CarrierResult {
   const newest = events[0]!;
   const staged = events.find((event) => event.stage);
   const stage = staged?.stage as Stage | undefined;
+  // The newest estimate a scan appends, until the delivery. A failed attempt after it, or a day
+  // before the newest scan's, leaves it stale.
+  const at = events.findIndex((event) => estimates.has(event));
+  const estimate = at >= 0 && stage !== 'delivered' && stage !== 'returned'
+    && !events.slice(0, at).some((event) => event.stage === 'failed_attempt') ? estimates.get(events[at]!)! : null;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: staged!.stage_source } : {}),
     last_status_text: newest.description!, last_update: null, last_update_local: newest.local_time,
-    expected_delivery: null,
+    expected_delivery: estimate && estimate.slice(0, 10) >= String(newest.local_time).slice(0, 10) ? estimate : null,
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };

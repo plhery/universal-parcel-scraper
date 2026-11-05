@@ -36,9 +36,10 @@ Recognition stays HTTP-only.
 - A row's code stages it; its wording can change under the same code. `EMAILED INFO` moves
   nothing.
 - A delivery appointment row is stamped with the start of its window, so it is an estimate and
-  not a scan: it is left out of the history, and until the delivery the newest one's day is the
-  estimate. Without one, the estimate is the page's "Deliver By" day, which has no year; it is
-  read in the year nearest the newest row's whose calendar has that weekday.
+  not a scan: it is left out of the history, and until the delivery the newest one is the
+  estimate, its day with the window its wording gives on the page's wall clock, such as
+  `2026-03-12 12:00–16:00`. Without one, the estimate is the page's "Deliver By" day, which has
+  no year; it is read in the year nearest the newest row's whose calendar has that weekday.
 - The progress meter over the history runs from `Initiated` to `Delivered`. A delivery, from a
   row or the meter, settles the shipment; otherwise the further of the newest staged row and the
   meter decides. A meter step ahead of every row has no clock.

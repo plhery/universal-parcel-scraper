@@ -59,11 +59,11 @@
       "history",
       "provider_code",
       "eta",
+      "eta_window",
       "pickup_point",
       "sender_name"
     ],
     "discarded": [
-      "eta_window",
       "pickup_deadline",
       "recipient_address",
       "payment_details",

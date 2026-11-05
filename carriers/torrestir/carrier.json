@@ -57,10 +57,10 @@
       "history",
       "location",
       "coordinates",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "delivered_at",
       "progress_rail",
       "sender_name",

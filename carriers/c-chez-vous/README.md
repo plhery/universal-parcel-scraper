@@ -44,21 +44,21 @@ Accepted references, uppercased with spaces removed:
 - A `parcelStep` its order's set does not list makes the whole order `unknown` with no stage,
   so the sync records it for review. Clamping it to step 1 would claim the order has not
   started.
-- The estimate is the latest parcel appointment day, dropped once delivered. The time window
-  (`dateMessage`) is discarded on purpose.
+- The estimate is the latest parcel appointment day, dropped once delivered, with the window
+  its parcels are booked in (`dateMessage`, `Entre 08h00 et 13h00`) as a Paris wall clock. A
+  parcel on that day without a window it can read leaves the day alone.
 - `history` is not declared: the page has no scan history and the single event restates the
   current step.
 - `pickupName` is the person receiving the order, not a parcel shop, so `pickup_point` is not
   declared.
 - The record also carries shop, recipient name, address, phone, e-mail and ordered articles.
-  Only the delivery type, the step and the appointment date are read; a test asserts none of
-  the rest reaches the result.
+  Only the delivery type, the step and the appointment date and window are read; a test
+  asserts none of the rest reaches the result.
 
 ## Limitations
 
 - No scan history, locations, failure or return steps. A cancelled or failed order simply
   stops advancing.
-- Day-resolution estimate only.
 
 ## Testing
 

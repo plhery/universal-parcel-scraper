@@ -4,7 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { adapter, LINEAR_API, LinearTracker } from './adapter.js';
-import { LINEAR_MAX_BYTES, linearWording, normalizeLinearNumber, parseLinear } from './parser.js';
+import { LINEAR_MAX_BYTES, linearEstimate, linearWording, normalizeLinearNumber, parseLinear } from './parser.js';
 import { linearStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -52,6 +52,28 @@ describe('Linear Logistics HTTP adapter', () => {
     expect(result.events![8]).toMatchObject({ local_time: '2026-03-03T18:07:00', location: 'Sample Hub' });
     expect(result.events!.every((event) => event.local_time && !event.time)).toBe(true);
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC RECIPIENT|received by (?!DX\b)|ETA:|Due for delivery|lpn|"carrier"/i);
+  });
+
+  it('reads the newest estimate a scan appends, the round’s window on its day, until the delivery', () => {
+    const from = (first: number) => parseLinear(changed((body) => { body.data = body.data.slice(first); }), NUMBER);
+    // Out on the round: its window on the scan's day, as a wall clock.
+    expect(from(1)).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-03-05 13:19–15:19' });
+    expect(from(1)).not.toHaveProperty('expected_delivery_from');
+    // Before the round, the day the redelivery is booked for; after a failed attempt, the booking's day.
+    expect(from(2)).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-03-05' });
+    expect(from(3)).toMatchObject({ current_stage: 'failed_attempt', expected_delivery: '2026-03-05' });
+    // A failed attempt after the round's window leaves it stale.
+    expect(from(4)).toMatchObject({ current_stage: 'failed_attempt', expected_delivery: null });
+    expect(from(5)).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-03-04 11:29–13:29' });
+    expect(from(7)).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-03-04' });
+    expect(from(8)).toMatchObject({ expected_delivery: null });
+    // A day before the newest scan's is stale.
+    expect(parseLinear(changed((body) => { body.data = [{ ...body.data[8]!, date: '05/03/2026' }, ...body.data.slice(7)]; }), NUMBER))
+      .toMatchObject({ expected_delivery: null });
+    expect(linearEstimate('Item out on delivery vehicle (ETA: 15:19-13:19)', '2026-03-05')).toBe('2026-03-05');
+    expect(linearEstimate('Item out on delivery vehicle (ETA: 25:00-26:00)', '2026-03-05')).toBeNull();
+    expect(linearEstimate('Redelivery has been booked (Due for delivery on Monday 30 Feb 2026)', '2026-03-05')).toBeNull();
+    expect(linearEstimate('Arrived at Hub', '2026-03-05')).toBeNull();
   });
 
   it('does not let the booking of a later delivery undo the failed attempt', () => {

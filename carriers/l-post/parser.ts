@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -14,6 +15,8 @@ export const L_POST_MAX_BYTES = 256 * 1024;
 const NUMBER = /^ABC\d{8}$/;
 const CLOCK = /^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/;
 const PLANNED = /^(\d{4}-\d{2}-\d{2})(?:[ T]\d{2}:\d{2}(?::\d{2})?)?$/;
+// A courier window's end, as the reply writes it: a whole hour.
+const HOUR = /^(?:[01]?\d|2[0-3])$/;
 const CODE = /^[A-Z][A-Z_]{0,39}$/;
 const ID = /^\d{1,4}$/;
 const MAX_ROWS = 500;
@@ -49,7 +52,7 @@ export interface LPostOrder {
   wording: string;
   /** Brought to the door by a courier rather than collected from a pickup point. */
   courier: boolean;
-  /** The planned delivery day. */
+  /** The planned delivery day, with the courier's window on it as `HH:MM–HH:MM` when the reply gives one. */
   planned: string | null;
   seller: string;
   /** The pickup point's address and directions; empty for a courier delivery, whose address is the recipient's. */
@@ -82,14 +85,27 @@ export function parseLPostOrder(payload: unknown, raw: string): LPostOrder {
   const wording = text(order, 'TXT_Status_RU', 200);
   if (!wording || (code && !CODE.test(code)) || (id && !ID.test(id))) throw new SchemaError(PROVIDER, 'L-POST returned an order without its status');
   const courier = cleanScalar(order.isCourier, 4) === '1';
-  const planned = PLANNED.exec(text(order, 'DeliveryDatePlan', 32))?.[1];
+  const written = PLANNED.exec(text(order, 'DeliveryDatePlan', 32))?.[1];
+  const planned = written && DateTime.fromISO(written, { zone: 'UTC' }).isValid ? written : null;
   const point = courier ? '' : [text(order, 'AdressDelivery'), text(order, 'PickupDopInfo', 200)].filter(Boolean).join('\n');
   return {
     number, code, id, wording, courier,
-    planned: planned && DateTime.fromISO(planned, { zone: 'UTC' }).isValid ? planned : null,
+    planned: planned && courier ? courierWindow(planned, order) : planned,
     seller: text(order, 'SellerName', 120),
     point,
   };
+}
+
+/**
+ * The planned day with the courier's window, `TimeFrom` to `TimeTo` in whole hours on the
+ * recipient's wall clock, as `YYYY-MM-DD HH:MM–HH:MM`. Without both hours, or with a window
+ * that does not end after it starts, the day alone.
+ */
+function courierWindow(day: string, order: Record<string, unknown>): string {
+  const [from, to] = [cleanScalar(order.TimeFrom, 4), cleanScalar(order.TimeTo, 4)];
+  if (!HOUR.test(from) || !HOUR.test(to) || Number(from) >= Number(to)) return day;
+  const clock = (hour: string) => `${day} ${hour.padStart(2, '0')}:00`;
+  return windowEstimate(clock(from), clock(to)).expected_delivery ?? day;
 }
 
 /** A row's wall clock, `dd.MM.yyyy HH:mm`; the reply names no zone. */

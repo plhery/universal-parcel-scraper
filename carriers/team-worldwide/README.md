@@ -30,13 +30,14 @@ the terminal is scheduling the delivery. Tracked through Team Trac.
   shipment; otherwise the further of the newest staged row and the header's status decides. A
   header status ahead of every row has no clock. `(SEE REMARKS)` names no stage.
 - A delivery appointment row (`ADS`) is stamped when the station booked it, so it stays in the
-  history, and until the delivery the newest one's day is the estimate. Without one, the
-  estimate is the header's `Requested Delivery` day, which the page calls an estimate. A day
-  before the newest row's is stale. The estimated arrival at the destination terminal is not a
+  history, and until the delivery the newest one's day is the estimate, with its window when it
+  gives one (`BET 0800-1200`) as a wall clock like the rows'. A time it is due by (`BY 1700`)
+  leaves the day alone. Without one, the estimate is the header's `Requested Delivery` day,
+  which the page calls an estimate. A day before the newest row's is stale. The estimated arrival at the destination terminal is not a
   delivery estimate and is not read.
 - A town and state after a row's wording, `OUT FOR DELIVERY - {town}, {state}`, is the row's
-  location. Other text after the wording, the appointment window and the booking agent who
-  follows it, and the signer after `SIGNED FOR` are not kept.
+  location. Other text after the wording, the booking agent after an appointment, and the
+  signer after `SIGNED FOR` are not kept.
 - Remarks (`FRE`, formerly `CMT`) are free text the station types and can name people, so they
   are left out of the history.
 - The shipper's reference, the town and ZIP code the shipment goes to, the delivery's clock in

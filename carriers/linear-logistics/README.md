@@ -16,7 +16,10 @@ Every scan must name the whole requested `lpn` and the supported DX feed. The ad
 preserves the full timeline, including failed attempts and the booking of a later delivery.
 A booking changes no stage. Scan clocks keep their local date and time because the tracker
 states no offset. Receiver names, contacts and future delivery estimates are removed from
-scan wording.
+scan wording. The newest estimate a scan appends is the result's estimate until the
+delivery: the round's window on its scan's day (`ETA: 13:19-15:19`), a wall clock like the
+scans, or the day a booking or the hub gives (`Due for delivery on …`). A failed attempt
+after it, or a day before the newest scan's, leaves it stale.
 
 ## Limitations
 

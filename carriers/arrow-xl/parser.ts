@@ -7,6 +7,7 @@ import {
   ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, SchemaError,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -24,6 +25,10 @@ const CLOCK = /^(\d{2})-([A-Za-z]{3})(?:-(\d{4}))? (\d{2}):(\d{2})$/;
 // The day a booking, a route plan or a postponement is for, as "Customer Booked 05-MAY-2026".
 const BOOKED = /^(?:Customer Booked|Route Planned For|Customer Postponed) (\d{2})-([A-Za-z]{3})-(\d{4})$/i;
 const PROGRESS = /\/wismo-progress-stage([1-4])\.png$/i;
+// An end of a window on the crew's page, "10:15".
+const DROP_CLOCK = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+// The crew's page's windows, most current first: its estimate now, then the planned window.
+const DROP_WINDOWS = ['accurate-drop-window', 'inaccurate-drop-window'];
 const NOT_FOUND = 'Invalid UPI number';
 // A firewall or bot check's page, which can come back with HTTP 200.
 const BLOCKED = /<title>\s*(?:Request Rejected|Access Denied|Attention Required|Just a moment)|requested URL was rejected|_cf_chl_opt|cf-turnstile|g-recaptcha|h-captcha/i;
@@ -174,9 +179,24 @@ function historyPage($: CheerioAPI, now: number): CarrierResult {
 }
 
 /**
+ * Today's window on the crew's page, on the UK's wall clock, as
+ * `YYYY-MM-DD HH:MM–HH:MM`: the crew's current estimate, else the planned
+ * window, else the day alone.
+ */
+function crewWindow($: CheerioAPI, today: string): string {
+  for (const kind of DROP_WINDOWS) {
+    const ends = $(`.hismo-second-header span.${kind}`).toArray().map((span) => clean($(span).text(), 8));
+    if (ends.length !== 2 || !ends.every((end) => DROP_CLOCK.test(end))) continue;
+    const window = windowEstimate(`${today} ${ends[0]}`, `${today} ${ends[1]}`).expected_delivery;
+    if (window && window !== today) return window;
+  }
+  return today;
+}
+
+/**
  * The page the tracker shows on the day while the crew is on its rounds: the
  * crew's first names, the stops before the customer's, today's window and a
- * map of the van. None of that is kept; it is today's delivery under way.
+ * map of the van. Only the window is kept; it is today's delivery under way.
  */
 function crewPage($: CheerioAPI, now: number): CarrierResult {
   const top = clean($('.hismo-top').text(), 400);
@@ -188,7 +208,7 @@ function crewPage($: CheerioAPI, now: number): CarrierResult {
     // The words the progress bar uses for that step.
     last_status_text: delivery ? 'Out for Delivery' : 'On the Road',
     last_update: null,
-    expected_delivery: delivery ? DateTime.fromMillis(now, { zone: ARROW_XL_ZONE }).toISODate() : null,
+    expected_delivery: delivery ? crewWindow($, DateTime.fromMillis(now, { zone: ARROW_XL_ZONE }).toISODate()!) : null,
     summary_only: true,
     events: [],
   };

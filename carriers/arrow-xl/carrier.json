@@ -63,10 +63,10 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "progress_rail",
       "driver_name",
       "coordinates"

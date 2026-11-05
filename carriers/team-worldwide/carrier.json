@@ -58,10 +58,10 @@
       "history",
       "location",
       "provider_code",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [
-      "eta_window",
       "terminal_eta",
       "delivered_at",
       "destination",

@@ -2,6 +2,7 @@ import { load, type CheerioAPI } from 'cheerio';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult } from '../../core/result/index.js';
+import { windowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -18,7 +19,7 @@ const CLOCK = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})$/;
 // Torrestir's own reference, the guia: "0.10.3.12345678".
 const REFERENCE = /^\d{1,3}\.\d{1,3}\.\d{1,3}\.(\d{1,10})$/;
 // The estimate's day, with the window the page may add: "2026-01-13 10:05 / 10:35".
-const ESTIMATE = /^(\d{4})-(\d{2})-(\d{2})(?: \d{2}:\d{2}(?: \/ \d{2}:\d{2})?)?$/;
+const ESTIMATE = /^(\d{4})-(\d{2})-(\d{2})(?: (\d{2}:\d{2})(?: \/ (\d{2}:\d{2}))?)?$/;
 // A scan at one of Torrestir's warehouses (armazém) names it by its town: "ARM. LISBOA".
 const WAREHOUSE = /^ARM\.\s*(\S.*)$/;
 // The scan list is bound to the page's model: `listaTracking[0].BeginDate`.
@@ -89,11 +90,16 @@ function scanRows($: CheerioAPI): Row[] {
   return rows;
 }
 
-/** The estimate's day while the parcel is still to come, and not a day before its newest scan. */
-function estimateDay(text: string, newest: string): string | null {
+/**
+ * The estimate's day while the parcel is still to come, and not a day before its
+ * newest scan, with its window as a wall clock like the scans': "2026-01-13
+ * 10:05–10:35". A time without the window's end is the day alone.
+ */
+function estimateOf(text: string, newest: string): string | null {
   const match = ESTIMATE.exec(text);
   const day = match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null;
-  return day && day >= newest.slice(0, 10) ? day : null;
+  if (!day || day < newest.slice(0, 10)) return null;
+  return (match![5] ? windowEstimate(`${day} ${match![4]}`, `${day} ${match![5]}`).expected_delivery : null) ?? day;
 }
 
 /**
@@ -167,7 +173,7 @@ export function parseTorrestir(html: string, rawNumber: string): CarrierResult {
     last_update: null,
     last_update_local: newest,
     // The estimate stays on the page after the delivery.
-    expected_delivery: final ? null : estimateDay(estimate, newest),
+    expected_delivery: final ? null : estimateOf(estimate, newest),
     events,
   };
 }

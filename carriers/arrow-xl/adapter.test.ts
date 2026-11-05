@@ -108,14 +108,24 @@ describe('ArrowXL HTTP adapter', () => {
     ]);
   });
 
-  it('reads the crew’s page on the day as out for delivery, without the crew, the stops, the window or the van', () => {
+  it('reads the crew’s page on the day as out for delivery with the crew’s window, without the crew, the stops or the van', () => {
     const result = normalizeCarrierResult(parseArrowXl(fixture('crew'), NUMBER, MARCH));
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Out for Delivery',
-      expected_delivery: '2026-03-20', summary_only: true, events: [] });
+      expected_delivery: '2026-03-20 11:00–11:30', summary_only: true, events: [] });
+    expect(result).not.toHaveProperty('expected_delivery_from');
     const kept = JSON.stringify(result);
-    for (const value of ['Alex', 'Sam', '11:00', '10:15', '52.0', 'SYNTHETIC-MAPS-KEY']) expect(kept, value).not.toContain(value);
+    for (const value of ['Alex', 'Sam', '10:15', '52.0', 'SYNTHETIC-MAPS-KEY']) expect(kept, value).not.toContain(value);
     // The day is the UK's: just after midnight in summer it is already the next day.
-    expect(parseArrowXl(fixture('crew'), NUMBER, Date.parse('2026-06-30T23:30:00Z'))).toMatchObject({ expected_delivery: '2026-07-01' });
+    expect(parseArrowXl(fixture('crew'), NUMBER, Date.parse('2026-06-30T23:30:00Z')))
+      .toMatchObject({ expected_delivery: '2026-07-01 11:00–11:30' });
+    // Without the crew's current estimate the planned window stands, and without either the day.
+    const planned = fixture('crew').replaceAll("class='accurate-drop-window'", "class='other'");
+    expect(parseArrowXl(planned, NUMBER, MARCH)).toMatchObject({ expected_delivery: '2026-03-20 10:15–12:15' });
+    expect(parseArrowXl(planned.replaceAll("class='inaccurate-drop-window'", "class='other'"), NUMBER, MARCH))
+      .toMatchObject({ expected_delivery: '2026-03-20' });
+    // A window not ending after it starts, or an end that is not a clock, is passed over.
+    expect(parseArrowXl(fixture('crew').replace('11:30<', '10:45<'), NUMBER, MARCH)).toMatchObject({ expected_delivery: '2026-03-20 10:15–12:15' });
+    expect(parseArrowXl(planned.replace('12:15<', 'soon<'), NUMBER, MARCH)).toMatchObject({ expected_delivery: '2026-03-20' });
     expect(parseArrowXl(fixture('crew').replace('Your delivery crew', 'Your collection crew'), NUMBER, MARCH))
       .toMatchObject({ current_stage: 'registered', last_status_text: 'On the Road', expected_delivery: null });
     expect(() => parseArrowXl(fixture('crew').replace('Your delivery crew', 'Your crew'), NUMBER, MARCH))

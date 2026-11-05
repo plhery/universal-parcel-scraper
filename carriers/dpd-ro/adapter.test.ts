@@ -56,6 +56,36 @@ describe('DPD Romania HTTP adapter', () => {
     }
   });
 
+  it('keeps the Predict window on its day while the parcel is out for delivery, until the window has passed', () => {
+    const outForDelivery = (change: (events: Record<string, unknown>[]) => void = () => {}) => {
+      const payload = fixture('delivered') as { events: Record<string, unknown>[]; info: Record<string, unknown> };
+      payload.events.pop();
+      payload.info = { phase: 'IN_TRANSIT' };
+      change(payload.events);
+      return parseDpdRo(payload, DELIVERED);
+    };
+    const result = outForDelivery();
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', expected_delivery: '2026-03-04 09:00–12:00' });
+    expect(result).not.toHaveProperty('expected_delivery_from');
+    expect(result.events!.find(event => event.provider_code === '175')).toEqual(
+      { time: '2026-03-04T07:30:00+02:00', description: 'Predict', provider_code: '175' });
+    // A window is on the scan's own day and wall clock, not UTC's.
+    expect(outForDelivery((events) => {
+      Object.assign(events[5]!, { dateTime: '2026-03-04T00:30:00+0200', comments: [{ text: '08:30-10:00' }] });
+    }).expected_delivery).toBe('2026-03-04 08:30–10:00');
+    // A scan after the window ends passes it, and the expected day stands.
+    expect(outForDelivery((events) => {
+      events.push({ operationCode: 9001, description: 'Example new operation', dateTime: '2026-03-04T12:30:00+0200', place: '', comments: [] });
+    }).expected_delivery).toBe('2026-03-04');
+    // A note in another shape, a window that does not end after it starts, or the note on another scan is no window.
+    for (const [index, note] of [[5, 'between nine and noon'], [5, '12:00 - 09:00'], [6, '09:00 - 12:00']] as const) {
+      expect(outForDelivery((events) => {
+        events[5]!.comments = [];
+        events[index]!.comments = [{ text: note }];
+      }).expected_delivery, note).toBe('2026-03-04');
+    }
+  });
+
   it('keeps the estimate of a parcel on its way abroad, its partner scan place and none of the partner mapping', () => {
     const result = parseDpdRo(fixture('abroad'), ABROAD);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Arrival Scan',

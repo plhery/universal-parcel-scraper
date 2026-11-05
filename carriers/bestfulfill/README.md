@@ -30,10 +30,13 @@ tracking page on bestfulfillpacket.com asks.
 - The last-mile carrier's number comes from the reply's `localNumber`, or else from the scan
   `Last Mile Tracking Number: …`, and is kept as the delivery number. The reply's summary status is
   not read; the scans decide.
+- While the parcel is out for delivery, a relayed USPS round, `Out for Delivery, Expected Delivery
+  Between 11:15am and 1:15pm`, is the estimate: the slot on the scan's day at the offset it states,
+  or the day alone for a round due `by` a time. A later scan that moves the parcel on ends it.
 
 ## Limitations
 
-- No estimate, weight, service or recipient.
+- No estimate before the delivery round, and no weight, service or recipient.
 
 ## Numbers
 

@@ -32,7 +32,8 @@
     "provider_code",
     "offset_timestamps",
     "destination_country",
-    "delivery_tracking_number"
+    "delivery_tracking_number",
+    "eta"
   ],
   "portal": {
     "url": "https://www.bestfulfillpacket.com/track?number={trackingNumber}",
@@ -44,7 +45,9 @@
       "location",
       "origin",
       "destination_country",
-      "delivery_tracking_number"
+      "delivery_tracking_number",
+      "eta",
+      "eta_window"
     ],
     "scraped": [
       "status",
@@ -53,13 +56,14 @@
       "provider_code",
       "offset_timestamps",
       "destination_country",
-      "delivery_tracking_number"
+      "delivery_tracking_number",
+      "eta",
+      "eta_window"
     ],
     "discarded": [
       "origin"
     ],
     "unavailable": [
-      "eta",
       "weight",
       "service_name",
       "sender_name",

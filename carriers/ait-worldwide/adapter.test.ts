@@ -93,7 +93,7 @@ describe('AIT Worldwide Logistics HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/SAMPLETON|EXAMPLE|555-010|Signed|APPOINTMENT|BETWEEN|explanation|emailed to/i);
   });
 
-  it('reads an in-transit history, and the newest delivery appointment’s day as the estimate', () => {
+  it('reads an in-transit history, and the newest delivery appointment’s day and window as the estimate', () => {
     const result = parseAit(fixture('in-transit'), IN_TRANSIT);
     expect(result).toMatchObject({
       status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
@@ -117,9 +117,19 @@ describe('AIT Worldwide Logistics HTTP adapter', () => {
         row('2026-10-19T08:00:00', 'APPTDE', 'APPOINTMENT DELIVERY SCHEDULED ON 10/19/2026 BETWEEN 8:00 AM AND 12:00 PM'));
     }), IN_TRANSIT);
     expect(booked).toMatchObject({ current_stage: 'in_transit', last_status_text: 'CHECKED INTO DELIVERY TERMINAL',
-      last_update_local: '2026-10-15T09:30:00', expected_delivery: '2026-10-21' });
+      last_update_local: '2026-10-15T09:30:00', expected_delivery: '2026-10-21 08:00–12:00' });
+    expect(booked).not.toHaveProperty('expected_delivery_from');
     expect(booked.events).toHaveLength(7);
     expect(JSON.stringify(booked)).not.toMatch(/APPOINTMENT/);
+    // The window is on the page's wall clock; one the wording does not give in full, or that does not end after it starts, leaves the day.
+    const appointment = (wording: string) => parseAit(withRows(fixture('in-transit'), (rows) => {
+      rows.unshift(row('2026-10-21T12:00:00', 'APPTDE', wording));
+    }), IN_TRANSIT).expected_delivery;
+    expect(appointment('APPOINTMENT DELIVERY SCHEDULED ON 10/21/2026 BETWEEN 12:00 PM AND 4:30 PM')).toBe('2026-10-21 12:00–16:30');
+    for (const wording of ['APPOINTMENT DELIVERY SCHEDULED ON 10/21/2026', 'APPOINTMENT DELIVERY SCHEDULED ON 10/21/2026 BETWEEN NOON AND 4:00 PM',
+      'APPOINTMENT DELIVERY SCHEDULED ON 10/21/2026 BETWEEN 4:00 PM AND 12:00 PM', 'APPOINTMENT DELIVERY SCHEDULED ON 10/21/2026 BETWEEN 13:00 PM AND 4:00 PM']) {
+      expect(appointment(wording), wording).toBe('2026-10-21');
+    }
     // An appointment row without its date in the wording gives its own clock's day.
     expect(parseAit(withRows(fixture('in-transit'), (rows) => {
       rows.unshift(row('2026-10-16T13:00:00', 'APPTDE', 'APPOINTMENT DELIVERY'));

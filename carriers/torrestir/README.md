@@ -32,9 +32,10 @@ renders for one tracking code.
 - The scans carry no code; their wordings are mapped and any other goes to the shared wording
   rules. `Devolvido` is a parcel brought back to the warehouse from a delivery round, which then
   goes out again, so it is a failed attempt rather than a return to the sender.
-- The estimate's day is kept until the delivery; its window is not. The customer that booked
-  the shipment and its reference, the guia, the origin and destination towns and the parcel and
-  pallet counts are not kept. The progress bar is not read.
+- The estimate's day and its window, `14:00 / 14:30`, are kept until the delivery, the window
+  as a wall clock like the scans'. The customer that booked the shipment and its reference, the
+  guia, the origin and destination towns and the parcel and pallet counts are not kept. The
+  progress bar is not read.
 - The page names no other carrier or number, so there is no hand-off.
 
 ## Limitations

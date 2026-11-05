@@ -59,6 +59,23 @@ describe('BestFulfill Packet tracking', () => {
     expect(events.find((event) => event.description === 'PICK UP')).toMatchObject({ location: 'Sample Origin', stage: 'accepted' });
   });
 
+  it('reads the slot a relayed USPS round promises while the parcel is out for delivery', () => {
+    const reply = fixture();
+    reply.events = reply.events.filter((event) => event.content !== 'Delivered');
+    expect(parseBestfulfill(reply, NUMBER)).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-01-12 11:15–13:15' });
+    expect(parseBestfulfill(reply, NUMBER)).not.toHaveProperty('expected_delivery_from');
+    // Scans of one instant in the other order still give the round's slot.
+    expect(parseBestfulfill({ ...reply, events: [...reply.events].reverse() }, NUMBER).expected_delivery).toBe('2026-01-12 11:15–13:15');
+    // A round due by a time is its day.
+    const by = reply.events.map((event) => (event.content?.startsWith('Out for Delivery, ')
+      ? { ...event, content: 'Out for Delivery, Expected Delivery by 7:40pm' } : event));
+    expect(parseBestfulfill({ ...reply, events: by }, NUMBER).expected_delivery).toBe('2026-01-12');
+    // Once a later scan moves the parcel on, or it is delivered, the round promises nothing.
+    const back = [...reply.events, { time: '2026-01-13T06:00:00-05:00', location: 'SAMPLE TOWN, NY 00000', content: 'Arrived at USPS Regional Facility', status: 'InTransit_Other' }];
+    expect(parseBestfulfill({ ...reply, events: back }, NUMBER)).toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
+    expect(parseBestfulfill(fixture(), NUMBER).expected_delivery).toBeNull();
+  });
+
   it('prefers the last-mile number the reply names', () => {
     const reply = { ...fixture(), localNumber: 'synthetic9200000000000000000002' };
     expect(parseBestfulfill(reply, NUMBER).delivery_tracking_number).toBe('SYNTHETIC9200000000000000000002');

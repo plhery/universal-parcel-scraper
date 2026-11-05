@@ -103,8 +103,21 @@ describe('Team Worldwide HTTP adapter', () => {
       ['ADS', '20261019', '1100', 'APPT FOR DEL SCHED 20261021 BET 0800-1200'],
       ['RCU', '20261019', '0930', 'FREIGHT RECOVERED'],
     ]);
+    // A time the delivery is due by is the day alone; a window keeps its hours on the booked day.
     expect(parseTeam(booked, IN_TRANSIT)).toMatchObject({ last_status_text: 'APPT FOR DEL SCHED', expected_delivery: '2026-10-22' });
     expect(JSON.stringify(parseTeam(booked, IN_TRANSIT))).not.toMatch(/SAMPLE|JFK|1700/);
+    const slot = withRows(fixture('in-transit'), [
+      ['ADS', '20261020', '0824', 'APPT FOR DEL SCHED 20261021 BET 0800-1200 SAMPLE/JFK'],
+      ['RCU', '20261019', '0930', 'FREIGHT RECOVERED'],
+    ]);
+    expect(parseTeam(slot, IN_TRANSIT)).toMatchObject({ last_status_text: 'APPT FOR DEL SCHED', expected_delivery: '2026-10-21 08:00–12:00' });
+    expect(parseTeam(slot, IN_TRANSIT)).not.toHaveProperty('expected_delivery_from');
+    expect(JSON.stringify(parseTeam(slot, IN_TRANSIT))).not.toMatch(/SAMPLE|JFK/);
+    // A window booked for the newest row's day still stands; one that ends before it starts is its day.
+    expect(parseTeam(withRows(fixture('in-transit'), [['ADS', '20261021', '0705', 'APPT FOR DEL SCHED 20261021 BET 1300-1700']]), IN_TRANSIT))
+      .toMatchObject({ expected_delivery: '2026-10-21 13:00–17:00' });
+    expect(parseTeam(withRows(fixture('in-transit'), [['ADS', '20261020', '0824', 'APPT FOR DEL SCHED 20261021 BET 1200-0800']]), IN_TRANSIT))
+      .toMatchObject({ expected_delivery: '2026-10-21' });
     // A pickup appointment is no delivery estimate, and a day before the newest row's is stale.
     expect(parseTeam(withRows(fixture('in-transit'), [['APS', '20261020', '0954', 'APPT FOR PKU SCHED 20261028 BET 0800-1600']]), IN_TRANSIT))
       .toMatchObject({ expected_delivery: '2026-10-23' });

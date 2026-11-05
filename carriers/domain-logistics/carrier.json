@@ -44,10 +44,10 @@
       "status",
       "history",
       "eta",
+      "eta_window",
       "service_name"
     ],
     "discarded": [
-      "eta_window",
       "remarks"
     ],
     "unavailable": [

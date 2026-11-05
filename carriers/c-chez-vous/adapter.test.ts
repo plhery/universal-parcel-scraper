@@ -107,7 +107,7 @@ describe('C Chez Vous response normalization', () => {
       current_stage: 'in_transit',
       last_status_text: 'Commande en route vers la plateforme régionale',
       last_update: null,
-      expected_delivery: '2024-01-02',
+      expected_delivery: '2024-01-02 08:00–13:00',
       timezone: 'Europe/Paris',
       events: [{ description: 'Commande en route vers la plateforme régionale', stage: 'in_transit' }],
     });
@@ -115,8 +115,29 @@ describe('C Chez Vous response normalization', () => {
     for (const privateValue of PRIVATE_PLACEHOLDERS) {
       expect(serialized).not.toContain(privateValue);
     }
-    // The appointment window is shown to the recipient but deliberately not kept.
+    // The booked window keeps its hours on the Paris clock, not the page's wording.
     expect(serialized).not.toContain('08h00');
+  });
+
+  it('reads the booked window on the appointment day, else the day alone', () => {
+    const estimate = (parcels: Record<string, unknown>[]) =>
+      parseCChezVousTrackingHtml(trackingPage({ parcels }), OFFICIAL_EXAMPLE_NUMBER).expected_delivery;
+    expect(estimate([{ parcelStep: 4, date: '2024-01-02T13:00:00Z', dateMessage: 'Entre 14h00 et 18h30' }]))
+      .toBe('2024-01-02 14:00–18:30');
+    // A window it cannot read, or a window that ends before it starts, leaves the day.
+    for (const dateMessage of [undefined, null, '', 'Matin', 'Entre 8h et 13h', 'Entre 13h00 et 08h00']) {
+      expect(estimate([{ parcelStep: 4, date: '2024-01-02T07:00:00Z', dateMessage }])).toBe('2024-01-02');
+    }
+    // Parcels booked on the latest day span their windows; one without a window leaves the day.
+    expect(estimate([
+      { parcelStep: 4, date: '2024-01-01T07:00:00Z', dateMessage: 'Entre 07h00 et 09h00' },
+      { parcelStep: 4, date: '2024-01-02T07:00:00Z', dateMessage: 'Entre 08h00 et 13h00' },
+      { parcelStep: 4, date: '2024-01-02T12:00:00Z', dateMessage: 'Entre 13h00 et 17h00' },
+    ])).toBe('2024-01-02 08:00–17:00');
+    expect(estimate([
+      { parcelStep: 4, date: '2024-01-02T07:00:00Z', dateMessage: 'Entre 08h00 et 13h00' },
+      { parcelStep: 4, date: '2024-01-02T12:00:00Z' },
+    ])).toBe('2024-01-02');
   });
 
   it('returns every capability declared in carrier.json', () => {

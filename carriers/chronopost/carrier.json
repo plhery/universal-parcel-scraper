@@ -43,13 +43,15 @@
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "scraped": [
       "status",
       "history",
       "location",
-      "eta"
+      "eta",
+      "eta_window"
     ],
     "discarded": [],
     "unavailable": []

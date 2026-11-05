@@ -4,6 +4,7 @@ import { isAnotherPostItemAtChronopost } from '../../core/detection/chronopost.j
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { withoutShortenedScans } from '../../core/result/repeats.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { calendarDay, countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -88,12 +89,21 @@ function redeliveryDay(value: string): string | null {
   return match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null;
 }
 
-/** An appointment window within one day, printed as dd/MM/yyyy HH:mm[:ss] at both ends. */
-function appointmentWindow(start: string, end: string): string | null {
-  const ends = [start, end].map(value => /^(\d{2})\/(\d{2})\/(\d{4}) ([01]\d|2[0-3]):([0-5]\d)(?::[0-5]\d)?$/.exec(value));
-  const days = ends.map(match => match ? calendarDay(Number(match[3]), Number(match[2]), Number(match[1])) : null);
-  const clocks = ends.map(match => match ? `${match[4]}:${match[5]}` : '');
-  return days[0] && days[0] === days[1] && clocks[0]! < clocks[1]! ? `${days[0]} ${clocks[0]}–${clocks[1]}` : null;
+/** One end of an appointment, printed as dd/MM/yyyy HH:mm[:ss], a wall clock without an offset. */
+function appointmentEnd(value: string): string | null {
+  const match = /^(\d{2})\/(\d{2})\/(\d{4}) ([01]\d|2[0-3]):([0-5]\d)(?::[0-5]\d)?$/.exec(value);
+  if (!match) return null;
+  const day = calendarDay(Number(match[3]), Number(match[2]), Number(match[1]));
+  return day ? `${day} ${match[4]}:${match[5]}` : null;
+}
+
+/**
+ * An appointment window, within one day or across days: that day's slot, or the days it
+ * runs from and to. Both ends must be readable and the window must end after it starts.
+ */
+function appointmentWindow(start: string, end: string): WindowEstimate | null {
+  const [from, to] = [appointmentEnd(start), appointmentEnd(end)];
+  return from && to && from < to ? windowEstimate(from, to) : null;
 }
 
 /**
@@ -253,12 +263,12 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
   // The newest scan that names a redelivery day or an appointment window
   // decides, even when its value is unreadable; a redelivery day replaces the
   // window on the same scan. A later scan that is not progress towards that
-  // delivery, or that falls on a later day, ends it.
-  let promised: string | null = null;
+  // delivery, or that falls after its last day, ends it.
+  let promised: WindowEstimate | null = null;
   for (const scan of projected) {
-    if (scan.redelivery !== undefined) promised = scan.redelivery;
+    if (scan.redelivery !== undefined) promised = scan.redelivery ? { expected_delivery: scan.redelivery } : null;
     else if (scan.appointment !== undefined) promised = scan.appointment;
-    else if (promised && (clockDay(scan.event) > promised.slice(0, 10)
+    else if (promised && (clockDay(scan.event) > (promised.expected_delivery ?? '').slice(0, 10)
       || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {
       promised = null;
     }
@@ -290,7 +300,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     last_status_text: latest.description,
     last_update: latest.time ?? null,
     ...(!latest.time && latest.local_time ? { last_update_local: latest.local_time } : {}),
-    expected_delivery: returning || ['delivered', 'returned', 'ready_for_pickup'].includes(stage) ? null : promised,
+    ...(returning || ['delivered', 'returned', 'ready_for_pickup'].includes(stage) || !promised ? { expected_delivery: null } : promised),
     ...(stage === 'delivered' && deliveredAt ? { delivered_at: deliveredAt } : {}),
     ...(pickupPoint ? { pickup_point: pickupPoint } : {}),
     ...(reference ? { delivery_tracking_number: reference } : {}),
