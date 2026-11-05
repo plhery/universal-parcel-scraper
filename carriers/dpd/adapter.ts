@@ -556,6 +556,9 @@ export function parseDPDTrackingApi(
   const forecast = announced && stage !== 'ready_for_pickup' && !(newestDay && announced.slice(0, 10) < newestDay)
     ? announced : null;
   const listed = expectedDelivery(payload);
+  // A notice whose day is read is a forecast, not a scan: that day is the estimate, or has
+  // lapsed. One without a readable day stays, the only place its words are kept.
+  const timeline = events.filter((event) => !(DELIVERY_NOTICE.test(event.description ?? '') && noticeEstimate(event.description ?? '')));
   // Never projected: `receiver` (name, contact, address, geoPosition), the
   // sender's id and address, `customerReference1/2`, `gttsZipCode`, `podUrl`
   // and `product`, which holds the recipient's delivery preference.
@@ -563,7 +566,7 @@ export function parseDPDTrackingApi(
     status,
     ...(currentStage ? { current_stage: currentStage } : {}),
     last_status_text: statusText,
-    last_update: events[0]?.time || apiEventTime(
+    last_update: timeline[0]?.time || apiEventTime(
       zone,
       current.eventDateAndTime,
       '',
@@ -571,7 +574,7 @@ export function parseDPDTrackingApi(
     ) || null,
     expected_delivery: status === 'delivered' || status === 'exception' ? null
       : listed && listed !== forecast?.slice(0, 10) ? listed : forecast ?? listed,
-    events,
+    events: timeline,
     source: 'mydpd_guest_api',
     delivery_date: optionalText(payload.deliveryDate),
     delivery_time_from: optionalText(payload.deliveryTimeFrom),

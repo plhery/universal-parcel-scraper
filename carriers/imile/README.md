@@ -59,6 +59,9 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   Zealand, whose other zone is the Chatham Islands': its delivery stations keep Auckland's clock,
   as Australia's keep their own. Australia, Brazil, Mexico and the United States span several
   zones and the reply does not say which, so their clocks stay `local_time`.
+- The order record (`1001`) is on the recipient's clock too. On a parcel with Cainiao's leg it
+  lands seconds after Cainiao's last sorting-centre dispatch, when Cainiao notifies iMile; read
+  on China's clock it would come hours before that dispatch.
 - A scan's description is its own sentence without the brackets the page shows. A name in 【】
   opening a scan is its centre, which the location shows, or else heads the sentence ("BOG:
   Clearance start."); the other names, and the reasons and dates in <>, keep their words.

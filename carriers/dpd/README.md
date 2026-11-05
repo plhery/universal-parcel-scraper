@@ -82,7 +82,10 @@ signal.
   notice adds a window. The newest notice supplies a missing estimate or the
   window for the reply's own day; a different day in the reply wins. An
   unreadable newest notice leaves no estimate, and a notice lapses at a pickup
-  point or once a later scan passes its day. Notices remain events.
+  point or once a later scan passes its day. A notice whose day is read is a
+  forecast, not a scan, and is left out of the events, as the German app's
+  reading leaves it out; one without a readable day stays, since nothing else
+  keeps its words.
 - Some scans are notices, not movements. `MSDLX`, DPD failing to send the
   delivery details, reads like a failed round to the shared wording rules.
   `ENA` (DPD's internal data exchange), `SPE` (a delivery estimate), `MSDLO`
