@@ -259,6 +259,19 @@ describe('JS Express tracking adapter', () => {
     expect(policy?.matches?.(delivered, { ...delivered, description: '【Sample DS】Delivered, Receiver Type:【Self or family】.' })).toBe(true);
     expect(policy?.matches?.(delivered, { ...delivered, description: '【Other DS】Delivered, Receiver Type:【Self or family】.' })).toBe(false);
     expect(policy?.matches?.(delivered, { ...delivered, description: '【Sample DS】Delivered.', location: 'Other DS' })).toBe(false);
+    // China Post's scan from the feed that keeps seconds and the office's code takes over, less than a minute away,
+    // the row from the feed that keeps minutes and the town, in the same words or China Post's two for one arrival,
+    // and the other way round.
+    expect(policy).toMatchObject({ matchWithinMinute: true });
+    const post = { stage: 'in_transit', description: '邮件离开【示例中心】，正在发往下一站', location: '示例市 00000001', providerCode: 'OIT' };
+    expect(policy?.matches?.(post, { ...post, location: '示例市' })).toBe(true);
+    expect(policy?.matches?.({ ...post, location: '示例市' }, post)).toBe(true);
+    const arrival = { ...post, description: '邮件到达【示例中心】' };
+    expect(policy?.matches?.(arrival, { ...arrival, description: '快件到达【示例中心】，示例口号！', location: '示例市' })).toBe(true);
+    for (const stored of [{ ...post, location: '示例市' }, { ...arrival, location: '别的市' }, { ...arrival, location: '示例市 00000002' }, arrival,
+      { ...arrival, description: '快件到达【别的中心】', location: '示例市' }, { ...arrival, location: '示例市', providerCode: 'OPU' }]) {
+      expect(policy?.matches?.(arrival, stored), JSON.stringify(stored)).toBe(false);
+    }
     // Only a delivery's wording loses a "by" clause.
     expect(jsExpressScan('Picked up by the airline', 'HKG').description).toBe('Picked up by the airline');
   });

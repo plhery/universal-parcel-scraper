@@ -344,6 +344,27 @@ describe('Yanwen result projection', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
   });
 
+  it("reads J&T Australia's relayed scans as J&T's map does, its pickup after Yanwen's batch handover as transit", () => {
+    for (const [wording, stage] of [
+      ['The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000', 'in_transit'],
+      ['The parcel is dispatched from the transit center to the next destination', 'in_transit'],
+      ['The parcel arrives at the distribution center and is prepared for transport to the next destination.', 'in_transit'],
+      ['Your parcel is out for delivery. If you have any questions, please call customer service:130000, Thank you for your patience.', 'out_for_delivery'],
+    ] as const) {
+      expect(yanwenStatus(wording)?.stage, wording).toBe(stage);
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
+    }
+    const result = history([
+      ['2026-10-27', '17:00:03 [GMT+08]', 'EXAMPLE DEPOT', 'Your parcel is out for delivery. If you have any questions, please call customer service:130000, Thank you for your patience.'],
+      ['2026-10-27', '15:58:57 [GMT+08]', 'EXAMPLE HUB', 'The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000'],
+      ['2026-10-26', '17:04:50 [GMT+10]', '', 'Batch delivery to carrier', 'LH40'],
+    ], '正在派送', 'AU');
+    expect(result.events?.map((event) => event.stage)).toEqual(['out_for_delivery', 'in_transit', 'in_transit']);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    // Another courier's pickup sentence is not J&T's.
+    expect(yanwenStatus('The parcel has been successfully picked up. Customer service:130000')).toBeUndefined();
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);

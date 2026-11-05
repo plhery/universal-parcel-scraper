@@ -65,6 +65,10 @@ delivers them. Tracked through the lookup its English tracking page makes.
   "Array" for a partner's place it holds as a list.
   JS Express's own status in Chinese shows the English its entry in
   [statuses.json](statuses.json) gives, and takes over the row stored in Chinese.
+- The tracker relays China Post's domestic scans from two feeds: one dates them to the minute
+  and places them in the town, the other to the second with the office's code after the town,
+  and can word an arrival differently. A scan from one takes over the row stored from the other
+  less than a minute away, so the parcel does not show each scan twice when the tracker switches.
 - iMile's scans as the destination courier open with the centre's name in 【】, so each pair of
   centres makes a new wording. They take the stage iMile's own sentences give, as its adapter
   reads them.

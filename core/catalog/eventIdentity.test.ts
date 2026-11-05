@@ -775,6 +775,8 @@ describe('same-instant identity policies', () => {
       sourceCarrierId: source, storedSources: [source], requireProviderCode: false, matchEachScan: true, matches: expect.any(Function),
       // YTO, China Post, JRT, JS Express and Mayi Yinfu date local clocks, which adds the wall-clock pass.
       ...(['yto', 'china-post', 'jrt', 'js-express', 'mayiyinfu'].includes(source) ? { matchWallClock: true } : {}),
+      // JS Express relays China Post's scans from a feed that keeps minutes and one that keeps seconds.
+      ...(source === 'js-express' ? { matchWithinMinute: true } : {}),
     });
     const stored = { stage, description: chinese, location: 'Sample Town', providerCode: code };
     const incoming = { ...stored, description: ` ${english.toUpperCase()} `, location: 'Sample Town ' };

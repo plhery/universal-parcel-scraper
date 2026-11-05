@@ -26,7 +26,10 @@ are its intake, so they read as accepted rather than as an announcement.
 China Post's domestic scans, which Yanwen relays in Chinese, read as China
 Post's map reads them; a centre's security-check return is an exception the
 centre deals with before it sends the parcel on. China Post's receipt follows
-Yanwen's outbound scan, so it is a hand-over in transit.
+Yanwen's outbound scan, so it is a hand-over in transit. J&T Express
+Australia's scans, relayed with its customer service line, read as J&T's map
+reads them, except its pickup after Yanwen's batch handover at the destination
+port: that is a hand-over in transit too.
 USPS's "Shipping Label Created, USPS Awaiting Item", relayed while Yanwen still
 has the parcel in China, is a notice: it keeps the stage of the scan before it
 and loses its place, the label's US origin, where the parcel has not been.

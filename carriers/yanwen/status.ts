@@ -2,6 +2,7 @@ import type { CarrierStatus } from '../../core/result/index.js';
 import { languageStageStatus, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { chinaPostRelayedStage } from '../china-post/status.js';
+import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
 
 const WORDING = new Map<string, ClassifiedStatus>([
   ['Delivered.', { status: 'delivered', stage: 'delivered' }],
@@ -143,10 +144,20 @@ const withoutPrefix = (description: string) => description.replace(/^【[^】]*�
 // A partner's postal event can end with its country's code: "Arrival at Destination Post (Country: TR)".
 const bare = (description: string) => withoutPrefix(description).replace(/\s*\(Country(?: code)?: [a-z]{2}\)$/i, '');
 
+// J&T Express Australia's scans after Yanwen's batch handover at the destination port, relayed with its customer
+// service line: read as J&T's own map reads them, but its pickup is Yanwen's handover, not the parcel's acceptance.
+const HOTLINE = /[\s.]*customer service\s*[:：]\s*\d[\d\s]*$/i;
+function jAndTAuRelayedStage(wording: string): Stage | undefined {
+  const stage = jAndTAuMappedStage(wording.replace(HOTLINE, '.'));
+  return stage === 'accepted' ? 'in_transit' : stage;
+}
+
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
-// map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception.
+// map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T Australia's.
+const relayedStage = (normalized: string): Stage | undefined => chinaPostRelayedStage(normalized) ?? jAndTAuRelayedStage(normalized);
+
 function relayedStatus(description: string): ClassifiedStatus | undefined {
-  const stage = chinaPostRelayedStage(normalizeStatusWording(description));
+  const stage = relayedStage(normalizeStatusWording(description));
   return stage ? { status: languageStageStatus(stage), stage } : undefined;
 }
 
@@ -168,7 +179,7 @@ export const yanwenNotice = (description: string): boolean => NOTICES.has(normal
 
 /** What the map says about one scan by its milestone icon, the only code it keeps, else its wording. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(bare(wording)) ?? chinaPostRelayedStage(wording)),
+  stage: (code, wording) => (code === DELIVERY_ICON ? 'delivered' : STAGE_BY_WORDING.get(bare(wording)) ?? relayedStage(wording)),
   gaps: [
     { wording: 'ua.', note: "A partner's scan in Ukraine that Yanwen relays as its country's code alone, without words: it names no stage." },
     ...[...NOTICES].map(([wording, note]) => ({ wording, note })),

@@ -676,6 +676,38 @@
       "note": "China Post's domestic scan, which Yanwen relays in Chinese with the centre in 【】; read as China Post's map reads it."
     },
     {
+      "wording": "The parcel has been successfully picked up and is being prepared for transportation.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "J&T Express Australia's pickup from Yanwen's batch handover at the destination port, relayed with J&T's customer service line after it: a handover, not the parcel's acceptance, which J&T's own history reads it as."
+    },
+    {
+      "wording": "The parcel is dispatched from the transit center to the next destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "J&T Express Australia's scan, which Yanwen relays after its batch handover at the destination port; read as J&T's map reads it."
+    },
+    {
+      "wording": "The parcel arrives at the distribution center and is prepared for transport to the next destination.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "J&T Express Australia's scan, which Yanwen relays after its batch handover at the destination port; read as J&T's map reads it."
+    },
+    {
+      "wording": "Your parcel is out for delivery.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "J&T Express Australia's scan, which Yanwen relays with J&T's courtesy and customer service line after it; read as J&T's map reads it."
+    },
+    {
       "wording": "送交出口海关",
       "language": "zh",
       "stage": "customs",
