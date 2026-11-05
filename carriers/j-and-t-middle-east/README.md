@@ -33,6 +33,8 @@ lookup its tracking page makes.
   `statusCode` is the provider code. The page reads the code only to pick an icon, and one code
   groups several labels, so the label stages the scan: through the map in `statuses.json`, else
   the shared wording rules.
+- A pickup after a scan that moved the parcel, as an import's clearance and transit at the
+  gateway branch, is J&T collecting it for the last mile, so it reads as in transit.
 - A scan's location is its branch's town and province. The sentence under each label
   (`customerTracking`) is free text with, as in J&T's other trackers, the courier's name and
   phone. It is not read, nor are the fields for the courier, the signer and the branch's

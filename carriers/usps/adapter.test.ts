@@ -65,6 +65,8 @@ describe('USPS status vocabulary', () => {
     expect(uspsStage('Delivered, In/At Mailbox')).toBe('delivered');
     expect(uspsStage('Out for Delivery')).toBe('out_for_delivery');
     expect(uspsStage('Notice Left')).toBe('failed_attempt');
+    // A Post Office counter's receipt for an item handed in, before "Departed Post Office".
+    expect(uspsStage('USPS electronic receipt of item for mailing')).toBe('accepted');
     expect(uspsStage('Insufficient Address')).toBe('failed_attempt');
     expect(uspsStage('Refused')).toBe('returned');
     expect(uspsStage('Pre-Shipment')).toBe('registered');

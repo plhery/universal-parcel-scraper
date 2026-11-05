@@ -277,6 +277,13 @@ describe('TopYou status vocabulary', () => {
     expect(relayed('Shipment, Your order has arrived at 【Sample DS】')?.source).not.toBe('carrier_map');
   });
 
+  it('reads a pickup point’s notice to collect the parcel as waiting there, whether or not the tracker names the point', () => {
+    const notice = (point: string) => `Arrived, The parcel has been delivered to ${point}. Please collect your parcel promptly at ${point} using your pickup code. `
+      + `If you have any questions, please contact the pickup point at ${point}.`;
+    expect(topyouStage('20', notice('【】'))).toEqual({ stage: 'ready_for_pickup', source: 'carrier_map' });
+    expect(topyouStage('20', notice('【Sample Point】'))).toEqual({ stage: 'ready_for_pickup', source: 'carrier_map' });
+  });
+
   it('lets a delivered or returned code settle a scan, then the shared rules, then the code', () => {
     expect(topyouStage('30', 'Synthetic note')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(topyouStage('40', 'Out for delivery')).toEqual({ stage: 'returned', source: 'carrier_map' });

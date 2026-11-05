@@ -5,7 +5,7 @@
     {"code": "5", "wording": "Customs Declaration", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "An import's first scan at the gateway branch, before the clearance."},
     {"code": "5", "wording": "Customs Clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "The clearance at the gateway branch; the parcel moves on with the next scan."},
     {"code": "5", "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
-    {"code": "5", "wording": "Picked-up", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "J&T collected the parcel; for an import it comes after the clearance, at the gateway branch."},
+    {"code": "5", "wording": "Picked-up", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "J&T collected the parcel. After an earlier scan moved it, as an import's clearance and transit at the gateway branch, it is J&T's collection for the last mile and reads as in transit."},
     {"code": "5", "wording": "Delivering", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The courier's delivery round, the courier delivering the parcel; the code groups it with the transit labels."},
     {"code": "6", "wording": "Abnormal Parcel", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "J&T's problem parcel, after a delivery round that did not deliver it; the reason is in the sentence under it, which is not read."}
   ]

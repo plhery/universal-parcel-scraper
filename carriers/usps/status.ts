@@ -36,8 +36,12 @@ const REGISTERED_TERMS = [
   'acceptance pending', 'usps awaiting item', 'awaiting item', 'order received', 'origin post is preparing',
 ];
 // A facility arrival ("Arrived at USPS Facility") follows acceptance: it is transit. Incoming
-// international mail shows the origin post's posting as "Acceptance".
-const ACCEPTED_TERMS = ['accepted', 'acceptance', 'in possession of item', 'picked up', 'picked-up', 'tendered', 'shipment received'];
+// international mail shows the origin post's posting as "Acceptance", and a Post Office counter
+// its receipt for an item handed in as "USPS electronic receipt of item for mailing".
+const ACCEPTED_TERMS = [
+  'accepted', 'acceptance', 'in possession of item', 'receipt of item for mailing', 'picked up', 'picked-up', 'tendered',
+  'shipment received',
+];
 const CUSTOMS_TERMS = ['customs', 'clearance'];
 // "Awaiting Delivery (Scan)" ends a delivery day without a delivery scan, at about 9 pm local time; USPS then
 // expects the delivery the next business day.

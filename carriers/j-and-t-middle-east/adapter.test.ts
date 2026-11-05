@@ -91,6 +91,20 @@ describe('J&T Express Middle East HTTP adapter', () => {
       last_status_text: 'Order creation', last_update: '2026-07-01T09:00:00+03:00' });
   });
 
+  it('reads an import’s pickup after its clearance and transit as J&T’s collection in transit, and a first pickup as the acceptance', () => {
+    const scans = (labels: [string, string][]) => changed('in-transit', (answer) => {
+      const first = answer.details.at(-1)!;
+      answer.details = labels.map(([scanTime, status]) => ({ ...first, scanTime, status, statusCode: status === 'Order creation' ? 1 : 5 })).reverse();
+    });
+    const imported = parseJAndTMiddleEast(scans([['2026-07-01 09:00:00', 'Order creation'], ['2026-07-04 10:40:48', 'Customs Declaration'],
+      ['2026-07-04 15:40:48', 'Customs Clearance'], ['2026-07-04 18:25:48', 'In transit'], ['2026-07-04 18:30:48', 'Picked-up'],
+      ['2026-07-04 18:35:48', 'In transit']]), IN_TRANSIT);
+    expect(imported.events!.map((event) => [event.description, event.stage])).toEqual([['In transit', 'in_transit'], ['Picked-up', 'in_transit'],
+      ['In transit', 'in_transit'], ['Customs Clearance', 'customs'], ['Customs Declaration', 'customs'], ['Order creation', 'registered']]);
+    const collected = parseJAndTMiddleEast(scans([['2026-07-01 09:00:00', 'Order creation'], ['2026-07-01 16:00:00', 'Picked-up']]), IN_TRANSIT);
+    expect(collected).toMatchObject({ current_stage: 'accepted', current_stage_source: 'carrier_map' });
+  });
+
   it('reads the unknown-waybill code as not found, a captcha request as a challenge and a waybill without scans as no history', () => {
     expect(() => parseJAndTMiddleEast(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const refusal = (code: number, msg: string) => ({ code, msg, data: null, succ: false, fail: true });

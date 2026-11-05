@@ -141,6 +141,13 @@ export function parseJAndTMiddleEast(payload: unknown, raw: string): CarrierResu
   if (!scans.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; scans at one instant keep the reply's order.
   const newestFirst = scans.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index).map(({ event }) => event);
+  // An import's pickup comes after its clearance and transit at the gateway branch: J&T
+  // collecting it for the last mile, not the sender handing it over.
+  let moved = false;
+  for (const event of [...newestFirst].reverse()) {
+    if (event.stage === 'accepted' && moved) event.stage = 'in_transit';
+    if (event.stage && event.stage !== 'registered') moved = true;
+  }
 
   const newest = newestFirst[0]!;
   const staged = newestFirst.find((event) => event.stage);
