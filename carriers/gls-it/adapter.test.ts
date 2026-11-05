@@ -86,6 +86,16 @@ describe('GLS Italy direct tracking', () => {
     expect(returning).toMatchObject({ status: 'exception', current_stage: 'returned' });
   });
 
+  it('reads a booked redelivery as the parcel on its way again, its day the estimate until a newer scan', () => {
+    const booked = (sentence: string) => parseGLSItaly(shipment((row) => {
+      row.history.splice(0, 1, { time: '22:47:00', date: '2026-03-04', evtDscr: sentence });
+    }), NUMBER);
+    expect(booked('Consegna prenotata il 06/03/26')).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
+      current_stage_source: 'carrier_map', last_status_text: 'Consegna prenotata il 06/03/26', expected_delivery: '2026-03-06' });
+    expect(booked('Consegna prenotata il 31/02/26')).toMatchObject({ current_stage: 'in_transit', expected_delivery: null });
+    expect(parseGLSItaly(fixture(), NUMBER).expected_delivery).toBeNull();
+  });
+
   it('keeps the weight only when the page prints one', () => {
     for (const value of ['   0,0 Kg', '', 'n/a', '1.4 kg; 2 kg']) {
       const result = parseGLSItaly(shipment((row) => { (row.infos as Record<string, unknown>[])[1]!.value = value; }), NUMBER);
@@ -97,8 +107,9 @@ describe('GLS Italy direct tracking', () => {
   it('maps every recorded sentence, and the status map answers as the parser stages', () => {
     for (const entry of statuses.entries) {
       if (!('wording' in entry)) continue;
-      expect(glsItalyScanStage(entry.wording!), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
-      expect(statusMapAnswer({ carrier: 'gls-it', description: entry.wording! })).toEqual({ kind: 'mapped', stage: entry.stage });
+      const wording = entry.wording!.replace('<date>', '06/11/26');
+      expect(glsItalyScanStage(wording), wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'gls-it', description: wording })).toEqual({ kind: 'mapped', stage: entry.stage });
     }
     expect(statusMapAnswer({ carrier: 'gls-it', description: '  DELIVERED. ' })).toEqual({ kind: 'mapped', stage: 'delivered' });
     expect(statusMapAnswer({ carrier: 'gls-it', providerCode: 'DELIVERED', description: 'Delivered.' })).toEqual({ kind: 'unknown' });
@@ -115,7 +126,8 @@ describe('GLS Italy direct tracking', () => {
     expect(italian.events![1]).toMatchObject({ description: 'Shipment in transit.', stage: 'in_transit' });
     expect(italian.last_status_text).toBe('Delivered.');
     for (const entry of statuses.entries) {
-      if (!('wording' in entry) || entry.language !== 'it') continue;
+      // A sentence GLS gives no English for, such as a booked redelivery's, stays Italian.
+      if (!('wording' in entry) || entry.language !== 'it' || !('english' in entry)) continue;
       expect(glsItalyEnglish(entry.wording), entry.wording).toBe(entry.english);
       const shown = parseGLSItaly(shipment((row) => { row.history[0]!.evtDscr = entry.wording; }), NUMBER).events![0]!;
       expect(shown.description, entry.wording).not.toBe(entry.wording);

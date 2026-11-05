@@ -162,6 +162,14 @@
       "note": "The Italian version of the hold until the recipient books a redelivery."
     },
     {
+      "wording": "Consegna prenotata il <date>",
+      "language": "it",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The day the recipient booked a redelivery for, as dd/mm/yy, after a failed attempt left the parcel awaiting instructions: it waits at the depot, on its way again. Written in Italian in the English locale too; the day is the estimate while it is the newest scan."
+    },
+    {
       "code": "PREADVICE",
       "stage": "registered",
       "confirmedBy": "live",

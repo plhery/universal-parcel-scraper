@@ -32,6 +32,9 @@ numbers, so this adapter does not share their route.
   `Accept-Language` gets an internal error instead. When the newest sentence gives no stage, the
   current step of the page's progress rail stands in. GLS's return flag makes the shipment
   returned.
+- A redelivery the recipient books after a failed attempt is a scan in Italian only, "Consegna
+  prenotata il dd/mm/yy": the parcel is on its way again, and the booked day is the estimate
+  while that scan is the newest.
 - The national search only answers for shipments inside GLS Italy's network, so a timed scan
   is read in Italian time. A scan with only a date keeps the date as a local clock, and so does
   an hour the clocks skip in spring.
@@ -60,7 +63,7 @@ rejects, so the catalog link carries it.
 
 - Parcel numbers, delivery-note references and international searches are not supported.
 - A shipment forwarded or returned under a new number is not followed.
-- No delivery estimate, pickup point or sender name.
+- No delivery estimate beyond a booked redelivery's day, no pickup point or sender name.
 - Older shipments drop out of the tracker and come back not found.
 
 ## Testing

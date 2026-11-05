@@ -64,9 +64,27 @@ export function glsItalyEnglish(sentence: string): string | undefined {
   return ENGLISH.get(normalizeStatusWording(sentence));
 }
 
+// The day the recipient booked a redelivery for, after a failed attempt: the parcel waits at the
+// depot for it, on its way again. GLS writes it in Italian in the English locale too.
+const BOOKED = /^consegna prenotata il (\d{2})\/(\d{2})\/(\d{2})\.?$/;
+
+/** The day a redelivery was booked for, `YYYY-MM-DD`, when the sentence books one. */
+export function glsItalyBookedDay(sentence: string): string | undefined {
+  const match = BOOKED.exec(normalizeStatusWording(sentence));
+  if (!match) return undefined;
+  const [year, month, date] = [2000 + Number(match[3]), Number(match[2]), Number(match[1])];
+  const day = new Date(Date.UTC(year, month - 1, date));
+  return day.getUTCMonth() === month - 1 && day.getUTCDate() === date ? `${year}-${match[2]}-${match[1]}` : undefined;
+}
+
+/** The stage the map gives a sentence, by `normalizeStatusWording` form. */
+function mappedStage(wording: string): Stage | undefined {
+  return SCANS.get(wording) ?? (BOOKED.test(wording) ? 'in_transit' : undefined);
+}
+
 /** The stage a scan's sentence gives it: the map first, then the shared wording rules. */
 export function glsItalyScanStage(sentence: string): ClassifiedWording | null {
-  const mapped = SCANS.get(normalizeStatusWording(sentence));
+  const mapped = mappedStage(normalizeStatusWording(sentence));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(sentence, 'in_transit');
   return worded.source === 'none' ? null : worded;
@@ -79,6 +97,6 @@ export function glsItalyRailStage(code: string): Stage | undefined {
 
 /** The scans carry a sentence and no code. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => code ? undefined : SCANS.get(wording),
+  stage: (code, wording) => code ? undefined : mappedStage(wording),
   gaps: [],
 };

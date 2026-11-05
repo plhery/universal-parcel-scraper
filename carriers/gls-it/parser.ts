@@ -7,7 +7,7 @@ import { languageStageStatus, type ClassifiedWording } from '../../core/status/i
 import { zonedTime } from '../../core/time/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { glsItalyEnglish, glsItalyRailStage, glsItalyScanStage } from './status.js';
+import { glsItalyBookedDay, glsItalyEnglish, glsItalyRailStage, glsItalyScanStage } from './status.js';
 
 export const PROVIDER = 'GLS Italy';
 const ZONE = 'Europe/Rome';
@@ -135,7 +135,8 @@ export function parseGLSItaly(payload: unknown, raw: string): CarrierResult {
     last_status_text: latest.description!,
     last_update: latest.time ?? null,
     ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
-    expected_delivery: null,
+    // The day a redelivery was booked for, until a newer scan.
+    expected_delivery: (current?.stage !== 'delivered' ? glsItalyBookedDay(latest.description!) : undefined) ?? null,
     ...(kilograms !== null ? { weight_kg: kilograms } : {}),
     events: events.slice(0, MAX_EVENTS),
   };
