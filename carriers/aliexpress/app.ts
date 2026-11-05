@@ -40,6 +40,7 @@ export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
     if (!code || code !== cainiaoActionCode(stored.providerCode)
       || incoming.stage !== cainiaoActionStage(code)) return false;
     const correction = (['customs', 'accepted'].includes(incoming.stage) && stored.stage === 'in_transit')
+      || (incoming.stage === 'in_transit' && stored.stage === 'customs' && code === 'CC_EX_START')
       || (incoming.stage === 'ready_for_pickup' && stored.stage === 'out_for_delivery')
       || (incoming.stage === 'out_for_delivery' && stored.stage === 'ready_for_pickup');
     return correction && (movedLocation || (wording === normalized(stored.description)

@@ -696,6 +696,13 @@ const CHINA_POST_OWN_LINE_ABROAD = /^邮件(?:到达|离开)处理中心【[^】
 // ("【…】received", not iMile's own "【…】Your order has been received."), are on Beijing's clock: in Italy
 // each read seven hours ahead of iMile's own copy, and on Italy's clock the delivery round came after the lookup.
 const IMILE_FORWARDER_COPY = /^【[^【】]{1,60}】\s*(?:received|arrived|parcel shipped to ?【[^【】]{1,60}】|shipment out for delivery)$/iu;
+// MailAmericas's customs scans in the destination country, on that country's clock as its own adapter dates them
+// ("Destination customs: Hand over to Last Mile Provider" at 20:31-03:00): ParcelsApp gives the digits marked UTC.
+// Mexico's and Chile's states keep several clocks, so their scans are left as they were.
+const MAILAMERICAS_DESTINATION_CUSTOMS = /^customs at destination\./i;
+const MAILAMERICAS_DESTINATION_ZONES: Readonly<Record<string, string>> = {
+  AR: 'America/Argentina/Buenos_Aires', CO: 'America/Bogota', PE: 'America/Lima',
+};
 
 /**
  * Whether a China Post scan is the destination post's: its place or wording
@@ -963,6 +970,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
   if (carrier === 'imile') return IMILE_FORWARDER_COPY.test(status.trim()) ? 'Asia/Shanghai' : countryTimeZone(destination);
+  if (carrier === 'mailamericas' && MAILAMERICAS_DESTINATION_CUSTOMS.test(status.trim())) {
+    return MAILAMERICAS_DESTINATION_ZONES[countryCode(destination) ?? ''] ?? undefined;
+  }
   if (carrier === 'china-post' && CHINA_POST_OWN_LINE_ABROAD.test(status.trim())) return CHINA_POST_ZONE;
   if (carrier === 'china-post' && chinaPostAbroad(scanLocation(name, state.location), status, destination)) return countryTimeZone(destination);
   // Cainiao's copies of Speedaf's scans keep Speedaf's digits, its arrival at the linehaul office too.

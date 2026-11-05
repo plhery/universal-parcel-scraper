@@ -328,7 +328,8 @@ describe('status map answers', () => {
 
   it("answers the Cainiao scans in front of an iMile history by Cainiao's map, and iMile's own by iMile's", () => {
     expect(answer('imile', 'PU_PICKUP_SUCCESS', 'Received by logistics company')).toEqual(mapped('accepted'));
-    expect(answer('imile', 'CC_EX_START', 'Export customs clearance started')).toEqual(mapped('customs'));
+    expect(answer('imile', 'CC_EX_START', 'Export customs clearance started')).toEqual(mapped('in_transit'));
+    expect(answer('imile', 'CC_IM_START', 'Import customs clearance started')).toEqual(mapped('customs'));
     expect(answer('imile', 'LH_DEPART', 'Departed from departure country/region')).toEqual(mapped('in_transit'));
     expect(answer('imile', 'GTMS_ORDER_INFO_UPDATE', 'Delivery details updated')).toEqual(gap);
     expect(answer('imile', 'NEW_UNSEEN_CODE', 'Synthetic scan')).toEqual(unknown);

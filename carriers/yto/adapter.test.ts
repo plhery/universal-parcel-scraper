@@ -144,8 +144,14 @@ describe('YTO domestic parser', () => {
     // A contact in the first bracket is no place, and a code without a label of its own stays malformed.
     value[0].waybillProcessInfo[0].description = '您的快件已经到达【派件员 Example 13000000000】';
     expect(parseYto(value, NUMBER).events?.[0]!.location).toBeUndefined();
-    value[0].waybillProcessInfo[0].opCode = '751';
+    value[0].waybillProcessInfo[0].opCode = '741';
     expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    // The locker or station code takes its label from its sign type: stored for collection, or taken back out.
+    value[0].waybillProcessInfo[0].opCode = '751';
+    value[0].waybillProcessInfo[0].description = '您的快件已存放至【Example驿站】，请您及时取件';
+    expect(parseYto(value, NUMBER).events?.[0]).toMatchObject({ provider_code: '751', stage: 'ready_for_pickup', description: 'In a parcel locker or pickup station' });
+    value[0].waybillProcessInfo[0].extTrack = { signType: '1' };
+    expect(parseYto(value, NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', description: 'Taken out of the locker by the courier' });
   });
 
   it.each([null, {}, { waybillNo: NUMBER, opCode: 'NEW' }, { waybillNo: NUMBER, opName: '下车扫描' }])('rejects malformed scans %s without dropping them', scan => {

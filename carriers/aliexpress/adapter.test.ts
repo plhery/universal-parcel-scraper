@@ -372,10 +372,10 @@ describe('Cainiao projection', () => {
     ]);
     expect(result.events?.[0]).toMatchObject({ stage_source: 'none' });
     expect(result.events?.[1]).not.toHaveProperty('stage_source');
-    // Worded only by the placeholder, after export customs started, it leaves the parcel in customs.
+    // Worded only by the placeholder, after import customs started, it leaves the parcel in customs.
     const placeholder = scan('LAST_MILE_ASN_NOTIFY', '2026-06-10 09:00:00');
     const customs = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001',
-      latestTrace: placeholder, detailList: [placeholder, scan('CC_EX_START', '2026-06-10 08:00:00', '', 'Export customs clearance started'), departed],
+      latestTrace: placeholder, detailList: [placeholder, scan('CC_IM_START', '2026-06-10 08:00:00', '', 'Import customs clearance started'), departed],
     }] }, 'LP00000000000001');
     expect(customs).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Carrier update' });
     expect(customs.events?.[0]).toMatchObject({ stage: 'customs', stage_source: 'none' });
@@ -464,7 +464,7 @@ describe('Cainiao projection', () => {
   it('keeps each milestone stable as the parcel moves from customs to collection', () => {
     const journey = [
       ['PU_PICKUP_SUCCESS', 'Received by logistics company', 'accepted'],
-      ['CC_EX_START', 'Export customs clearance started', 'customs'],
+      ['CC_EX_START', 'Export customs clearance started', 'in_transit'],
       ['CC_EX_SUCCESS', 'Export customs clearance complete', 'in_transit'],
       ['CC_HO_IN_SUCCESS', 'Arrived at customs', 'customs'],
       ['CC_IM_START', 'Import customs clearance started', 'customs'],

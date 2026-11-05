@@ -8,7 +8,7 @@ import { classifyWording, languageStageStatus } from '../../core/status/index.js
 import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { dpdUkWording, withoutDriverName } from './wording.js';
+import { dpdUkWording, isDpdUkNotice, withoutDriverName } from './wording.js';
 
 export const PROVIDER = 'DPD UK';
 
@@ -95,7 +95,9 @@ export function classifyDpdUkWording(description: string) {
   // A sender's cancellation goes on to name the sender to contact.
   const stage = Object.hasOwn(VERIFIED_WORDING, wording) ? VERIFIED_WORDING[wording]
     : /^your delivery has been cancelled\b/.test(wording) ? 'exception' : MISSED.test(wording) ? 'failed_attempt' : undefined;
-  return stage ? { stage, source: 'carrier_map' } : classifyWording(description);
+  if (stage) return { stage, source: 'carrier_map' };
+  // A delivery notice moves nothing, whatever the shared rules read in it, such as a delay.
+  return isDpdUkNotice(description) ? { stage: 'in_transit' as Stage, source: 'none' } : classifyWording(description);
 }
 
 function publicDescription(value: unknown): string {

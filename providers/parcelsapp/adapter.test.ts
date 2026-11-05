@@ -938,6 +938,19 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it("reads MailAmericas's customs scans in the destination on that country's clock", () => {
+    // MailAmericas's own reply dates the hand-over to the last mile 20:31-03:00 on a parcel for Argentina; ParcelsApp
+    // gave the digits marked UTC, three hours early.
+    const parse = (destinationCode: string) => parseParcelsAppResponse({ carriers: ['MailAmericas'], originCode: 'CN', destinationCode, states: [
+      { date: '2026-10-21T20:31:00Z', status: 'Customs at destination. Hand over to Last Mile Provider', carrier: 0 },
+    ] }, number, identity(), null, Date.parse('2026-11-04T19:04:00Z'));
+    expect(parse('AR').events?.[0]?.time).toBe('2026-10-21T23:31:00.000Z');
+    expect(parse('CO').events?.[0]?.time).toBe('2026-10-22T01:31:00.000Z');
+    // Mexico's states keep several clocks: the row reads as it did.
+    const before = parse('MX').events?.[0];
+    expect(before?.time ?? before?.local_time).toMatch(/^2026-10-21T20:31:00/);
+  });
+
   it("reads JS Express's scans on their place's clock, China's at home only", () => {
     // JS Express's own feed gives these digits with the offset of each scan's place, and its
     // partners' scans abroad came out six hours early on China's clock.
@@ -1345,6 +1358,11 @@ describe('ParcelsApp result parsing', () => {
       scan('2026-11-01T22:40:00Z', 'Pensacola Florida, United States of America', 'Out for Delivery'),
       scan('2026-11-01T08:00:00Z', 'Tallahassee, FL'),
     ])).toEqual(['2026-11-02T12:15:24.000Z', '2026-11-02T04:40:00.000Z', '2026-11-01T13:00:00.000Z']);
+    // Texas's El Paso and Hudspeth counties keep Mountain time, as FedEx's own feed dates its Sierra Blanca scans.
+    expect(times(['FedEx'], [
+      scan('2026-11-04T18:07:00Z', 'HANKAMER, TX', 'On the way'),
+      scan('2026-11-04T05:07:00Z', 'SIERRA BLANCA, TX', 'On the way'),
+    ])).toEqual(['2026-11-05T00:07:00.000Z', '2026-11-04T12:07:00.000Z']);
   });
 
   it('keeps the instant of a shipping partner\'s row filed under USPS, its place after its wording', () => {

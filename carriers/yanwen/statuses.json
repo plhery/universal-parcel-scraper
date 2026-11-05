@@ -793,6 +793,118 @@
       "note": "Sent back at the centre's security check, which it deals with before dispatching the item again; not a return to the sender."
     },
     {
+      "wording": "Barcode scanning",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The forwarder's warehouse scan, relayed after Yanwen's outbound scan and the domestic terminal: the parcel is already on its way."
+    },
+    {
+      "wording": "Packaged",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The forwarder bagging the parcel at its warehouse."
+    },
+    {
+      "wording": "Leaving Scan",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The forwarder's warehouse sending the parcel to the airport."
+    },
+    {
+      "wording": "Export customs declaration completed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "China's export declaration before the flight, as the forwarder relays it: the parcel is not held in customs."
+    },
+    {
+      "wording": "Hand over to airline",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The forwarder's hand-over to the airline after the export declaration."
+    },
+    {
+      "wording": "Next stop destination airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The flight, under Yanwen's LH20 milestone."
+    },
+    {
+      "wording": "Arrived at destination airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The landing, under Yanwen's LH30 milestone, before the import release."
+    },
+    {
+      "wording": "The package has been cleared through customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The import release, after the landing."
+    },
+    {
+      "wording": "Customs broker picked it up",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The customs broker collecting the parcel after its import release, before the hand-over to GOFO: no longer held in customs."
+    },
+    {
+      "wording": "The package has been transferred to the service provider",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The hand-over to the delivering carrier GOFO after the broker's collection."
+    },
+    {
+      "wording": "Arrived at GOFO Regional Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "GOFO's sorting hubs, as the forwarder relays them."
+    },
+    {
+      "wording": "Loaded on Vehicle",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "GOFO loading the truck at its hub minutes before the hub's departure scan: not the delivery round."
+    },
+    {
+      "wording": "Departed GOFO Regional Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Leaving GOFO's hub for the next one or its delivery station."
+    },
+    {
+      "wording": "In Transit to Next Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "GOFO's line haul between its hubs."
+    },
+    {
       "code": "LM40",
       "stage": "delivered",
       "confirmedBy": "live",

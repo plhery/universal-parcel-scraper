@@ -160,11 +160,17 @@ function along(line: readonly (readonly [number, number])[], at: number): number
   return fromValue + (toValue - fromValue) * (at - fromKey) / (toKey - fromKey);
 }
 
+// Texas's El Paso and Hudspeth counties keep Mountain time (15 U.S.C. 265). Their east line is Culberson County's west
+// line, 104.92°W in the Census Bureau's TIGER county outlines; only those two counties' towns lie west of it.
+const CULBERSON_COUNTY_WEST = -104.918;
+
 /**
  * The zone of a point in a state split between zones, where its place decides: Florida's
- * Panhandle keeps Central time. Null where the state's main zone holds.
+ * Panhandle keeps Central time, Texas's El Paso and Hudspeth counties Mountain time. Null where
+ * the state's main zone holds.
  */
 export function splitRegionZone(country: string, region: string, latitude: number, longitude: number): string | null {
+  if (country === 'US' && region === 'TX') return longitude < CULBERSON_COUNTY_WEST ? 'America/Denver' : null;
   if (country !== 'US' || region !== 'FL') return null;
   const central = longitude < GULF_COUNTY_WEST
     || (longitude < along(APALACHICOLA_RIVER, latitude) && latitude > along(GULF_WATERWAY, longitude));

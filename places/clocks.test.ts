@@ -22,6 +22,13 @@ describe('placeTimeZone', () => {
     expect(splitRegionTownZone('US', 'NY', 'Albany')).toBeNull();
   });
 
+  it("keeps Mountain time in Texas's El Paso and Hudspeth counties, Central east of them", () => {
+    for (const town of ['El Paso, TX', 'Fort Hancock, TX', 'Sierra Blanca, TX', 'Dell City, TX']) expect(zoneOf(town), town).toBe('America/Denver');
+    for (const town of ['Van Horn, TX', 'Valentine, TX', 'Odessa, TX', 'Houston, TX']) expect(zoneOf(town), town).toBe('America/Chicago');
+    expect(splitRegionTownZone('US', 'TX', 'SIERRA BLANCA')).toBe('America/Denver');
+    expect(splitRegionTownZone('US', 'TX', 'Hankamer')).toBe('America/Chicago');
+  });
+
   it('reads a country of one clock, a state or province, or the nearest zone of a large country', () => {
     expect(zoneOf('Leipzig/Halle Hub')).toBe('Europe/Berlin');
     expect(zoneOf('Changsha')).toBe('Asia/Shanghai');

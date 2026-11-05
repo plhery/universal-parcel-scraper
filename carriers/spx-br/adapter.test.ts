@@ -318,7 +318,8 @@ describe('SPX Express Brazil HTTP adapter', () => {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(NOT_HELD)).mockResolvedValueOnce(reply(fleet));
       return carrier(fetcher).track({ number });
     };
-    const held = { kind: 'indeterminate', message: 'SPX Express Brazil did not complete the lookup (retcode 2)' };
+    // The orders' own answer that they do not hold the number is no outage.
+    const held = { kind: 'indeterminate', reason: 'portal_not_found', message: 'SPX Express Brazil\'s orders do not hold the number' };
     await expect(lookup({ retcode: -1217, message: 'No order tracking information current now', data: null }))
       .rejects.toMatchObject({ kind: 'indeterminate', name: 'NoHistoryError' });
     // The feed answers an unknown number with a server error, a rejected checksum with empty data.

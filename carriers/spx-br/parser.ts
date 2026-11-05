@@ -15,6 +15,8 @@ export const SPX_BR_MAX_BYTES = 1_000_000;
 const NUMBER = /^BR\d{12}[0-9A-Z]$/;
 // The order index's own count of parcels under the number: none.
 const UNKNOWN = /GetLogisticOrderIndexMap[\s\S]*\bfind \[0\]/;
+// The orders' answer for a number they do not hold, the parcel only the fleet feed may know, or none yet.
+const NOT_HELD = /^not found spx order$/i;
 const CODE = /^[A-Z0-9_]{1,16}$/;
 const MAX_ROWS = 1000;
 const MAX_EVENTS = 100;
@@ -124,6 +126,9 @@ export function parseSpxBr(payload: unknown, raw: string): CarrierResult {
   if (!isRecord(payload) || typeof payload.retcode !== 'number') throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid envelope');
   if (payload.retcode !== 0) {
     if (typeof payload.message === 'string' && UNKNOWN.test(payload.message)) throw new NotFoundError(PROVIDER);
+    if (typeof payload.message === 'string' && NOT_HELD.test(payload.message.trim())) {
+      throw new IndeterminateError(PROVIDER, 'SPX Express Brazil\'s orders do not hold the number', { reason: 'portal_not_found' });
+    }
     throw new IndeterminateError(PROVIDER, `SPX Express Brazil did not complete the lookup (${refusal(payload.retcode, payload.message)})`);
   }
   if (!isRecord(payload.data)) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned no tracking data');

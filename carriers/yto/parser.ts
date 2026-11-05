@@ -44,14 +44,14 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
       throw new SchemaError(PROVIDER, 'YTO returned mixed or incomplete shipment history');
     }
     const code = clean(raw.opCode, 32);
+    const ext = isRecord(raw.extTrack) ? raw.extTrack : {};
     // The feed can send a scan's code and description without its label and place.
-    const label = clean(raw.opName, 200) || (ytoCodeLabel(code) ?? '');
+    const label = clean(raw.opName, 200) || (ytoCodeLabel(code, ext.signType) ?? '');
     if (!code || !label) throw new SchemaError(PROVIDER, 'YTO returned a scan with no operation');
     const details = clean(raw.description, 1000);
     const returnType = clean(raw.ioTypeName, 32);
     if (code === '835' || /^退回(?:[一二三四五六七八九十\d]+次)?$/.test(returnType)
       || /(?:收件人|签收人)\s*[:：]\s*退回(?:[，。,]|$)/.test(details)) returning = true;
-    const ext = isRecord(raw.extTrack) ? raw.extTrack : {};
     const mapped = ytoStatus(code, ext.signType);
     const stage = returning && mapped?.stage === 'delivered' ? 'returned' : mapped?.stage;
     const wording = ytoScan(label)?.wording ?? label;

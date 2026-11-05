@@ -36,8 +36,13 @@ const LABELS = new Map<string, string>([
   ['310', '揽收扫描'], ['131', '装件入车扫描'], ['171', '下车扫描'], ['710', '派件扫描'], ['745', 'PDA正常签收扫描'],
 ]);
 
-/** The label the website gives an operation code, where the code has one. */
-export function ytoCodeLabel(code: string): string | undefined {
+/**
+ * The label the website gives an operation code, where the code has one. The locker or station
+ * code has two, told apart by its sign type as `ytoStatus` reads it: the courier taking the parcel
+ * back out, or the parcel stored for collection ("您的快件已存放至【…驿站…】，请您及时取件").
+ */
+export function ytoCodeLabel(code: string, signType?: unknown): string | undefined {
+  if (code === STATION) return signType === '1' ? '小件员取出' : '入柜|入库';
   return LABELS.get(code);
 }
 

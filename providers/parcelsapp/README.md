@@ -385,7 +385,9 @@ step exists for future protocol changes.
   take the destination's single clock, or else keep their wall clock, as iMile's own
   lookup does. A Chinese forwarder's copies of them under the same name, the centre in
   brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
-  hours ahead of iMile's own in Italy. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
+  hours ahead of iMile's own in Italy. "MailAmericas" customs scans in the destination ("Customs at
+  destination. …") are on that country's clock, as MailAmericas's own reply dates them: Argentina's,
+  Colombia's or Peru's; Mexico's and Chile's several clocks leave them as they are. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African
   office's scans have the instants of the South African post's own clock that way.
   Their European partners' relays are on another clock (below). Correios Brazil's ("Brazil
@@ -534,7 +536,7 @@ step exists for future protocol changes.
   ("Riverside, CA, US", "Charlotte, NC", "Linden, NJ 12345", "Scranton PA", "Mississauga,
   ON, CA", 4PX's "EXAMPLE CITY, IN, US 12345", USPS's "EXAMPLE CITY IL DISTRIBUTION
   CENTER" and "ISC EXAMPLE CITY IL (USPS)"), the majority zone where there are several
-  except in a town of a part with its own clock (Florida's Panhandle keeps Central time), as
+  except in a town of a part with its own clock (Florida's Panhandle keeps Central time, West Texas Mountain time), as
   in the USPS adapter. A state written out counts only after the country ("Example City
   Minnesota, United States of America", as Orange Connex writes SpeedPAK's), since Georgia
   is a country too. A code shared with a single-clock country (CO, DE, IL, IN, MT, NL, SK)

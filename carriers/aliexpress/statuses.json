@@ -177,10 +177,10 @@
     },
     {
       "code": "CC_EX_START",
-      "stage": "customs",
+      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-09-12",
-      "note": "",
+      "note": "China's export clearance, after the arrival at the departure hub and before the parcel leaves the country: the export step, not the destination's customs.",
       "wording": "Export customs clearance started",
       "language": "en"
     },

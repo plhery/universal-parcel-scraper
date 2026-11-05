@@ -165,7 +165,9 @@ export function cainiaoStageByStatus(): Partial<Record<CarrierStatus, Stage>> {
 /** Each scan keeps its own milestone even after the parcel progresses. */
 export function cainiaoActionStage(code: string): Stage | undefined {
   if (CAINIAO_PICKUP_ACTIONS.has(code)) return 'ready_for_pickup';
-  if (['CC_EX_START', 'CC_IM_START', 'CC_HO_IN_SUCCESS'].includes(code)) return 'customs';
+  // Export clearance starts at the departure hub and ends before the parcel leaves the country: the export step, in
+  // transit. The destination's customs taking the parcel in and its import clearance are customs.
+  if (['CC_IM_START', 'CC_HO_IN_SUCCESS'].includes(code)) return 'customs';
   if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).

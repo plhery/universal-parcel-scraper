@@ -1004,7 +1004,7 @@ describe('same-instant identity policies', () => {
 
   it.each([
     ['CC_IM_START', 'in_transit', 'customs'],
-    ['CC_EX_START', 'in_transit', 'customs'],
+    ['CC_EX_START', 'customs', 'in_transit'],
     ['CC_HO_IN_SUCCESS', 'in_transit', 'customs'],
     ['PU_PICKUP_SUCCESS', 'in_transit', 'accepted'],
     ['GTMS_STA_SIGNED', 'out_for_delivery', 'ready_for_pickup'],

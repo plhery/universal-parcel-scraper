@@ -77,8 +77,9 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
 - `GTMS_DEL_FAILURE` is a missed delivery: the parcel is an `exception` at the `failed_attempt`
   stage, as Cainiao's last-mile gateway also reports it for [Ecoscooting](../ecoscooting/README.md).
 - Each scan is staged by its own action code, so pickup availability stays distinct from the
-  delivery round after collection. Customs entry and clearance start remain customs until release;
-  collection by the origin carrier is acceptance. A partner accepting the parcel after the
+  delivery round after collection. The destination's customs entry and import clearance start
+  remain customs until release. Export clearance runs at the departure hub before the parcel
+  leaves the country, so it is in transit. Collection by the origin carrier is acceptance. A partner accepting the parcel after the
   hand-off (`GTMS_ACCEPT`, `SL_ACCEPT`, `LH_POST_COLLECTION`) stays in transit.
 - An empty module is not-found only when `mailNoSource` is `EXTERNAL`. Otherwise the seller has
   not shipped yet and the parcel stays pending at the `registered` stage; a 404 would make the sync

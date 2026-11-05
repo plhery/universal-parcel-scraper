@@ -18,6 +18,9 @@ numbers carry a PH prefix.
   other failure, so only that message is not found; other failures are inconclusive, and their
   error names the refusal's codes, failing step and count, never its text. A 404 or a
   redirect is a moved route, and a web page in place of the JSON is a gateway's check.
+- "not found spx order" is a number the orders do not hold: a label SPX has not taken in yet,
+  or a parcel only the fleet feed holds. It is inconclusive with `portal_not_found`, the
+  carrier's own answer that it holds no history yet, not an outage.
 - The tracking object must name the number asked.
 2. `legacy`: an inconclusive order lookup, such as a number its orders do not hold ("not found
    spx order"), asks the fleet feed the tracker's scripts also read:
@@ -72,6 +75,7 @@ numbers carry a PH prefix.
 
 - No delivery estimate, weight or delivery partner.
 - The lookup also answers the numeric order reference its reply carries, which no rule claims.
+- Neither lookup answers the 28-character labels made of such a number, `SPXLM` and eight digits.
 
 ## Numbers
 

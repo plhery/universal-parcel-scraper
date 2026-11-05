@@ -366,7 +366,7 @@ function townRegion(place: EventPlace): string | null {
 /**
  * The zone a scan at this place keeps its clock on: its country's, or where a
  * country keeps several, its state's or province's (the US, Canada, Australia,
- * Brazil), the part's where a state is split by place (Florida's Panhandle),
+ * Brazil), the part's where a state is split by place (Florida's Panhandle, West Texas),
  * or the zone whose principal place lies nearest. A place that names
  * only a country with several zones takes the one most of its people live on.
  * Null for a country the tz database does not know.
