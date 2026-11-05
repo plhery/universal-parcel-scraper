@@ -1,4 +1,65 @@
 {
   "carrier": "kargoturk",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Teslim Edildi",
+      "stage": "delivered",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Dağıtıma Çıkarıldı",
+      "stage": "out_for_delivery",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Şube Karşıladı",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transfer Aşamasında",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Paket Kabulü Yapıldı",
+      "stage": "accepted",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Gönderen Firmaya İade Edildi",
+      "stage": "returned",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Çıkış Şubesine Geri Geldi",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Şubeden İade Olarak Yönlendirildi",
+      "stage": "exception",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Şube Ön İade",
+      "stage": "exception",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Varış Şubesi Karşıladı",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    }
+  ]
 }

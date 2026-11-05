@@ -53,6 +53,7 @@ Older links put the AWB in `awb` or in the path.
 
 ## Limitations
 
+Partner barcodes are kept whole and are not substituted for an AWB in a native handoff.
 Reference searches, which the page also accepts, are not supported. The reply has no
 estimate, sender or pickup point.
 

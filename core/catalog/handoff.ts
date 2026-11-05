@@ -16,6 +16,10 @@ import { isFezDeliveryReference } from '../detection/fezDelivery.js';
 import { isJunfengInternationalReference } from '../detection/junfengInternational.js';
 import { isShipglobalUsReference } from '../detection/shipglobalUs.js';
 import { isRoyaleInternationalReference } from '../detection/royaleInternational.js';
+import { isTopdeliveryReference } from '../detection/topdelivery.js';
+import { isKargoturkReference } from '../detection/kargoturk.js';
+import { isExpedicoReference } from '../detection/expedico.js';
+import { isFanCourierReference } from '../detection/fanCourier.js';
 import { countryCode } from '../time/index.js';
 
 export interface DeliveryHandoff {
@@ -27,6 +31,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
+  topdelivery: isTopdeliveryReference, kargoturk: isKargoturkReference, expedico: isExpedicoReference, 'fan-courier': isFanCourierReference,
   'fez-delivery': isFezDeliveryReference,
   'junfeng-international': isJunfengInternationalReference,
   'shipglobal-us': isShipglobalUsReference,

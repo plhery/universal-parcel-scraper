@@ -19427,7 +19427,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Prague",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "expedico",
+      "localClocks": true
     },
     "canaryUrl": "https://expedico.eu/tracking",
     "trackingUrlTemplate": "https://expedico.eu/tracking?code={trackingNumber}",
@@ -27559,7 +27560,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "kargoturk",
+      "localClocks": true
     },
     "canaryUrl": "https://www.kargoturk.com.tr/kargo-takip",
     "trackingUrlTemplate": "https://online.kargoturk.com.tr/tracking?har_kod={trackingNumber}",
@@ -45321,7 +45323,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "topdelivery",
+      "localClocks": true
     },
     "canaryUrl": "https://www.topdelivery.ru/",
     "trackingUrlTemplate": "https://www.topdelivery.ru/tracking/?order={trackingNumber}",

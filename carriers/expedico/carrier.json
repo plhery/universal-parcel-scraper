@@ -34,18 +34,46 @@
   "timezone": "Europe/Prague",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "expedico",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "weight",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://expedico.eu/tracking?code={trackingNumber}",
     "searchUrl": "https://expedico.eu/tracking",
     "canaryUrl": "https://expedico.eu/tracking",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "offset_timestamps"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "weight",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "offset_timestamps"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

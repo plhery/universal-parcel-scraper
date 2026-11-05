@@ -1,0 +1,51 @@
+{
+  "data": {
+    "tracking": [
+      {
+        "id": "9734628105691",
+        "code": "9734628105691",
+        "trackingCode": "9746825103681427F6048",
+        "result": "FOUND",
+        "parcelWeightKg": "1.25",
+        "packetState": {
+          "sys": "delivered"
+        },
+        "carrier": {
+          "id": "180",
+          "labelLocal": "RO Fan"
+        },
+        "sender": "PRIVATE SENDER",
+        "events": [
+          {
+            "carrierStateDescription": null,
+            "packetState": {
+              "sys": "created"
+            },
+            "occuredOn": "2026-07-01T10:00:00Z"
+          },
+          {
+            "carrierStateDescription": "Received code: HUB International Example -  Arrival in HUB",
+            "packetState": {
+              "sys": "in_hub"
+            },
+            "occuredOn": "2026-07-02T12:00:00Z"
+          },
+          {
+            "carrierStateDescription": "Received code: Out for delivery ",
+            "packetState": {
+              "sys": "in_transit"
+            },
+            "occuredOn": "2026-07-04T09:00:00+03:00"
+          },
+          {
+            "carrierStateDescription": "Received code: Delivered",
+            "packetState": {
+              "sys": "delivered"
+            },
+            "occuredOn": "2026-07-04T13:30:00+03:00"
+          }
+        ]
+      }
+    ]
+  }
+}

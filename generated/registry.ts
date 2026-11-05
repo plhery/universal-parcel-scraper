@@ -223,6 +223,7 @@ import { adapter as ewe } from '../carriers/ewe/adapter.js';
 import { adapter as exelot } from '../carriers/exelot/adapter.js';
 import { adapter as exlineKz } from '../carriers/exline-kz/adapter.js';
 import { adapter as exmate } from '../carriers/exmate/adapter.js';
+import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import { adapter as expressOne } from '../carriers/express-one/adapter.js';
 import { adapter as expressOneBg } from '../carriers/express-one-bg/adapter.js';
 import { adapter as fanCourier } from '../carriers/fan-courier/adapter.js';
@@ -353,6 +354,7 @@ import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
+import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as kazpost } from '../carriers/kazpost/adapter.js';
 import { adapter as kecEcommerce } from '../carriers/kec-ecommerce/adapter.js';
 import { adapter as kex } from '../carriers/kex/adapter.js';
@@ -651,6 +653,7 @@ import { adapter as tntAu } from '../carriers/tnt-au/adapter.js';
 import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
 import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
+import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as toptrans } from '../carriers/toptrans/adapter.js';
 import { adapter as topyou } from '../carriers/topyou/adapter.js';
 import { adapter as torrestir } from '../carriers/torrestir/adapter.js';
@@ -947,6 +950,7 @@ export const REGISTRY: RegistryDefinition = {
     "exelot": exelot,
     "exline-kz": exlineKz,
     "exmate": exmate,
+    "expedico": expedico,
     "express-one": expressOne,
     "express-one-bg": expressOneBg,
     "fan-courier": fanCourier,
@@ -1077,6 +1081,7 @@ export const REGISTRY: RegistryDefinition = {
     "js-express": jsExpress,
     "jumppoint": jumppoint,
     "junfeng-international": junfengInternational,
+    "kargoturk": kargoturk,
     "kazpost": kazpost,
     "kec-ecommerce": kecEcommerce,
     "kex": kex,
@@ -1375,6 +1380,7 @@ export const REGISTRY: RegistryDefinition = {
     "tnt-it": tntIt,
     "today-kr": todayKr,
     "tonami": tonami,
+    "topdelivery": topdelivery,
     "toptrans": toptrans,
     "topyou": topyou,
     "torrestir": torrestir,
@@ -1858,7 +1864,7 @@ export const REGISTRY: RegistryDefinition = {
     "exelot": "exelot",
     "exline-kz": "exline-kz",
     "exmate": "exmate",
-    "expedico": "universal",
+    "expedico": "expedico",
     "explus-logistics": "universal",
     "express-one": "express-one",
     "express-one-bg": "express-one-bg",
@@ -2103,7 +2109,7 @@ export const REGISTRY: RegistryDefinition = {
     "juxi-express": "universal",
     "jy-express": "universal",
     "kargoist": "universal",
-    "kargoturk": "universal",
+    "kargoturk": "kargoturk",
     "kart2door": "universal",
     "kazpost": "kazpost",
     "kec-ecommerce": "kec-ecommerce",
@@ -2627,7 +2633,7 @@ export const REGISTRY: RegistryDefinition = {
     "tonda-global": "universal",
     "too-express": "universal",
     "top-logistics-au": "universal",
-    "topdelivery": "universal",
+    "topdelivery": "topdelivery",
     "topex-logistics": "universal",
     "topnic": "universal",
     "toptrans": "toptrans",

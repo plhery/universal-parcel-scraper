@@ -4,6 +4,9 @@ import { adapter as fezDelivery } from '../carriers/fez-delivery/adapter.js';
 import { adapter as junfengInternational } from '../carriers/junfeng-international/adapter.js';
 import { adapter as shipglobalUs } from '../carriers/shipglobal-us/adapter.js';
 import { adapter as royaleInternational } from '../carriers/royale-international/adapter.js';
+import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
+import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
+import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import type { AdapterFactory } from '../core/adapter/index.js';
 import { AdapterRegistry } from '../core/adapter/index.js';
 import { hasDirectHandoffAdapter } from '../core/catalog/handoff.js';
@@ -23,6 +26,14 @@ const cases: { carrier: string; factory: AdapterFactory; number: string; fixture
     request: (url, init) => { expect(url.href).toBe('https://api.shipglobal.us/api/tracking'); expect(init?.method).toBe('POST'); expect(String(init?.body)).toBe('waybill=FFUSA7416302'); } },
   { carrier: 'royale-international', factory: royaleInternational, number: '970682415309', fixture: 'tracking.html', count: 4,
     request: (url, init) => { expect(url.href).toBe('https://www.royaleinternational.com/tracking?waybillno=970682415309'); expect(init?.method).toBeUndefined(); } },
+  { carrier: 'topdelivery', factory: topdelivery, number: '97468135', fixture: 'tracking.html', count: 5,
+    request: (url, init) => { expect(url.href).toBe('https://www.topdelivery.ru/tracking/?order=97468135'); expect(init?.method).toBeUndefined(); } },
+  { carrier: 'kargoturk', factory: kargoturk, number: '974681350246', fixture: 'tracking.html', count: 6,
+    request: (url, init) => { expect(url.href).toBe('https://online.kargoturk.com.tr/tracking?har_kod=974681350246'); expect(init?.method).toBeUndefined(); } },
+  { carrier: 'expedico', factory: expedico, number: '9734628105691', fixture: 'tracking.json', count: 4,
+    request: (url, init) => { expect(url.href).toBe('https://expedico.eu/api/public'); expect(init?.method).toBe('POST');
+      const body = JSON.parse(String(init?.body)); expect(body.variables).toEqual({ codes: ['9734628105691'] });
+      expect(body.query).toContain('tracking(codes: $codes)'); expect(body.query).not.toMatch(/sender|moneyCod|Authorization/); } },
 ];
 const environment = (fetcher: typeof fetch) => ({ fetcher, userAgent: 'consumer-agent', recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 const body = (entry: typeof cases[number]) => readFileSync(new URL(`../carriers/${entry.carrier}/fixtures/${entry.fixture}`, import.meta.url), 'utf8');
@@ -51,7 +62,8 @@ describe.each(cases)('$carrier bounded guest transport', entry => {
     const response = await createTracker({ fetcher, providers: [], env: {} }).track({ carrier: entry.carrier, number: entry.number });
     expect(response.source).toBe(entry.carrier);
     expect(response.result.current_stage).toBe('delivered'); expect(response.result.events).toHaveLength(entry.count);
-    expect(response.result.events.every(event => event.local_time && (!event.time || (event.time_zone && event.time_zone_basis)))).toBe(true);
+    expect(response.result.events.every(event => event.local_time ? (!event.time || (event.time_zone && event.time_zone_basis)) : Boolean(event.time))).toBe(true);
+    if (entry.carrier === 'expedico') expect(response.handoff).toBeUndefined();
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
@@ -99,6 +111,7 @@ describe('guest adapter routing and recognition', () => {
     expect(detectCarrierMatch(cases[1]!.number).carrier).toBe('royal-mail');
     expect(recognitionCandidates(cases[1]!.number).map(candidate => candidate.carrier)).not.toContain('junfeng-international');
     expect(recognitionCandidates(cases[3]!.number).map(candidate => candidate.carrier)).not.toContain('royale-international');
+    for (const entry of cases.slice(4)) expect(recognitionCandidates(entry.number).map(candidate => candidate.carrier)).not.toContain(entry.carrier);
     for (const entry of cases) {
       expect(hasDirectHandoffAdapter(entry.carrier, entry.number)).toBe(true);
       expect(hasDirectHandoffAdapter(entry.carrier, 'UNSUPPORTED7')).toBe(false);

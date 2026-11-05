@@ -1,4 +1,35 @@
 {
   "carrier": "topdelivery",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Заказ доставлен",
+      "stage": "delivered",
+      "language": "ru",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Прибыл в город назначения",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Отправлен в город назначения",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Получен в службе доставки",
+      "stage": "accepted",
+      "language": "ru",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Подготавливается к отправке в службу доставки",
+      "stage": "registered",
+      "language": "ru",
+      "confirmedBy": "portal"
+    }
+  ]
 }

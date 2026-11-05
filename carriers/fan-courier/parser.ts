@@ -1,4 +1,5 @@
 import { returnedTrackingNumber } from '../../core/detection/returned.js';
+import { isFanCourierReference } from '../../core/detection/fanCourier.js';
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
@@ -17,7 +18,7 @@ const ABSENT = new Set(['the awb was not found', 'awb-ul nu a fost gasit']);
 /** A thirteen-digit AWB, the only length FAN Courier's documentation, clients and tracker show. */
 export function normalizeFanCourierNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^\d{13}$/.test(number)) throw new InvalidInputError(PROVIDER, 'FAN Courier requires a thirteen-digit AWB number');
+  if (!isFanCourierReference(number)) throw new InvalidInputError(PROVIDER, 'FAN Courier requires a thirteen-digit AWB number');
   return number;
 }
 

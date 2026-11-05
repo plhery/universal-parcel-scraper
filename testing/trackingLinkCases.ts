@@ -29,6 +29,16 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'topdelivery', number: '97468251',
+    route: /^https:\/\/www\.topdelivery\.ru\/tracking\/\?order=97468251$/,
+    marker: /Ваш заказ не найден/ },
+  { carrier: 'kargoturk', number: '974682510368',
+    route: /^https:\/\/online\.kargoturk\.com\.tr\/tracking\?har_kod=974682510368$/,
+    marker: /Kargo takip kodu bulunamadı/,
+    forwarding: { notFound: /Kargo takip kodu bulunamadı/ } },
+  { carrier: 'expedico', number: '9734628105692',
+    route: /^https:\/\/expedico\.eu\/tracking\?code=9734628105692$/,
+    marker: /Track a parcel/ },
   { carrier: 'royale-international', number: '970682415309',
     route: /^https:\/\/www\.royaleinternational\.com\/tracking\?waybillno=970682415309$/,
     marker: /My online tracking|Waybill Number Not Found/ },

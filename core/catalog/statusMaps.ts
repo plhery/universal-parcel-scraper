@@ -730,6 +730,9 @@ import { statusMap as fezDelivery } from '../../carriers/fez-delivery/status.js'
 import { statusMap as junfengInternational } from '../../carriers/junfeng-international/status.js';
 import { statusMap as shipglobalUs } from '../../carriers/shipglobal-us/status.js';
 import { statusMap as royaleInternational } from '../../carriers/royale-international/status.js';
+import { statusMap as topdelivery } from '../../carriers/topdelivery/status.js';
+import { statusMap as kargoturk } from '../../carriers/kargoturk/status.js';
+import { statusMap as expedico } from '../../carriers/expedico/status.js';
 import type { CarrierId, Stage } from '../../generated/catalog.js';
 import { statusMap as universal } from '../../providers/status.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../status/statusMap.js';
@@ -737,6 +740,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  topdelivery, kargoturk, expedico,
   'fez-delivery': fezDelivery,
   'junfeng-international': junfengInternational,
   'shipglobal-us': shipglobalUs,

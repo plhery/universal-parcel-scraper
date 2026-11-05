@@ -1,4 +1,47 @@
 {
   "carrier": "expedico",
-  "entries": []
+  "entries": [
+    {
+      "code": "delivered",
+      "wording": "Received code: Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "in_transit",
+      "wording": "Received code: Parcel was picked up",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "in_transit",
+      "wording": "Received code: Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "in_hub",
+      "wording": "Received code: Arrived at Delivery Hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "in_hub",
+      "wording": "Received code: HUB International Arad - Arrival in HUB",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "created",
+      "wording": "created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }
