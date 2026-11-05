@@ -1,7 +1,6 @@
 import type { Request, Response as BrowserResponse } from 'playwright-core';
 import { ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { withRemoteBrowser } from '../../core/transport/localBrowser.js';
-import type { BrowserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { isRecord } from '../../core/types.js';
 
 const PROVIDER = 'Poste Italiane';
@@ -10,10 +9,9 @@ const MAX_BYTES = 1_000_000;
 
 /** The official guest page makes and consumes its own tracking request in a fresh private browser context. */
 export async function fetchPosteItalianeInBrowser(number: string, endpoint: string, signal: AbortSignal,
-  timeoutMs: number, proxy?: BrowserContextProxy | null): Promise<unknown> {
+  timeoutMs: number): Promise<unknown> {
   return withRemoteBrowser({ provider: PROVIDER, endpoint, signal, timeoutMs }, async ({ browser, signal: session, remainingMs }) => {
-    const context = await browser.newContext({ locale: 'it-IT', acceptDownloads: false, serviceWorkers: 'block',
-      ...(proxy ? { proxy } : {}) });
+    const context = await browser.newContext({ locale: 'it-IT', acceptDownloads: false, serviceWorkers: 'block' });
     const page = await context.newPage();
     const requests = new Set<Request>();
     let active = true, count = 0, bytes = 0;

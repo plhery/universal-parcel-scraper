@@ -586,24 +586,6 @@ describe('PosteItalianeTracker fetch', () => {
     expect(vi.mocked(fetchPosteItalianeInBrowser).mock.calls[0]?.[3]).toBeLessThanOrEqual(15000);
   });
 
-  it.each([0, 1])('keeps the existing recovery chain with proxy share %s and records its dated history', async share => {
-    const gate = { tipo: 'error', descrizione: 'CAPTCHA required' };
-    const service = browser([capture(gate, 400)]), step = vi.fn();
-    vi.mocked(fetchPosteItalianeInBrowser).mockClear().mockResolvedValueOnce(parcel());
-    const tracker = new PosteItalianeTracker({ fetcher: async () => response(gate, 400), trawl: service.trawl,
-      browserWsEndpoint: 'ws://browser.test/private-path', browserRetryProxy: 'http://guest:secret@proxy.test:8080',
-      browserRetryShare: share, recorder: { lookup() {}, step } });
-    const result = await tracker.fetch(TRACKING_NUMBER);
-    expect(result.history_truncated).toBe(share ? true : undefined);
-    const call = vi.mocked(fetchPosteItalianeInBrowser).mock.calls[0]!;
-    expect(call[4]).toEqual(share ? { server: 'http://proxy.test:8080', username: 'guest', password: 'secret' } : null);
-    expect(call[3]).toBeLessThanOrEqual(15000);
-    expect(step.mock.calls.map(([event]) => event.step)).toEqual(['direct', 'trawl', 'browser']);
-    expect(step.mock.calls[2]?.[0]).toMatchObject({ networkRoute: share ? 'residential' : 'default', networkAttempt: 'retry',
-      networkFamily: 'unknown', historyAvailable: true, fallbackReason: 'challenge' });
-    expect(JSON.stringify(step.mock.calls)).not.toContain('secret');
-  });
-
   it('never spends the private browser on HTTP recognition or a paced search', async () => {
     vi.mocked(fetchPosteItalianeInBrowser).mockClear();
     const fetcher = async () => response({ tipo: 'error', descrizione: 'CAPTCHA required' }, 400);

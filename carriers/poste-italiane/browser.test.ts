@@ -44,14 +44,6 @@ describe('Poste Italiane private guest browser', () => {
     expect(h.events.eventNames()).toEqual([]);
   });
 
-  it('routes the entire fresh guest context through the supplied proxy', async () => {
-    const h = harness(), proxy = { server: 'http://proxy.test:8080', username: 'guest', password: 'secret' };
-    h.goto.mockImplementationOnce(async () => { h.send(); return { status: () => 200 }; });
-    await expect(fetchPosteItalianeInBrowser(NUMBER, 'ws://browser.test/private-path', h.controller.signal, 3000, proxy)).resolves.toEqual(payload);
-    expect(h.browser.newContext).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ proxy, serviceWorkers: 'block' }));
-    expect(h.close).toHaveBeenCalledOnce();
-  });
-
   it.each([{ number: `${NUMBER}9` }, { foreignFrame: true }, { endpoint: `${API}/other` }, { method: 'GET' }])(
     'ignores an unrelated request before accepting its bound response: %j', async options => {
       const h = harness();

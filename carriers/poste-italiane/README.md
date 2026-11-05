@@ -166,16 +166,6 @@ and accepts only the whole-number-bound API reply, under the original lookup dea
 This path solves no interactive CAPTCHA and retains no browser state between lookups.
 HTTP recognition and the direct-search pacing remain unchanged. Keep the endpoint private.
 
-`POSTE_ITALIANE_RETRY_PROXY_URL` optionally sends a share of that existing native-browser
-recovery through a residential HTTP(S) proxy, including its credentials when required.
-`POSTE_ITALIANE_RETRY_PROXY_PERCENT` selects the share from zero to one hundred, defaulting
-to fifty. Assignment happens once per lookup; the proxy carries the whole fresh context,
-with no direct downgrade or extra attempt. Route, recovery outcome and dated-history
-availability are recorded without the proxy address or credentials. Leave the URL unset
-to keep the normal route. Replies must match the whole identifier. Residential replies can
-omit an older movement; they are conservatively marked `history_truncated`, keeping richer
-provider history eligible even when the current status and latest scan are present.
-
 ## Limitations
 
 - No event location for a scan at a post office's street address without its office name.

@@ -1,4 +1,3 @@
-import { BrowserRouteTrial, browserContextProxy, retryShare, type BrowserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { fetchPosteItalianeInBrowser } from './browser.js';
 
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
@@ -336,42 +335,32 @@ export class PosteItalianeTracker {
   readonly timeoutMs: number;
   readonly fetcher: typeof fetch | undefined;
   private readonly userAgent: string;
-  private readonly retryProxy: BrowserContextProxy | null;
-  private readonly retryProxyShare: number;
 
-  constructor(private readonly options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null; recorder?: StepRecorder; browserWsEndpoint?: string | null; browserRetryProxy?: string | null; browserRetryShare?: number } = {}) {
+  constructor(private readonly options: { timeoutMs?: number; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null; recorder?: StepRecorder; browserWsEndpoint?: string | null } = {}) {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.fetcher = options.fetcher;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Poste Italiane tracking timeout must be positive');
     }
     this.userAgent = userAgentOf(options.userAgent);
-    this.retryProxy = options.browserRetryProxy ? browserContextProxy(options.browserRetryProxy) : null;
-    this.retryProxyShare = retryShare(options.browserRetryShare ?? 0.5);
   }
 
   async fetch(rawTrackingNumber: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const trackingNumber = normalizePosteItalianeTrackingNumber(rawTrackingNumber);
-    const trial = new BrowserRouteTrial<BrowserContextProxy | null>({ primary: null, alternative: this.retryProxy,
-      route: 'residential', share: this.retryProxyShare, steps: ['trawl', 'browser'], recorder: this.options.recorder });
-    return runSteps({ carrier: 'poste-italiane', signal: context.signal, recorder: trial.recorder,
+    return runSteps({ carrier: 'poste-italiane', signal: context.signal, recorder: this.options.recorder,
       budgetMs: context.budgetMs ?? ((this.options.trawl || this.options.browserWsEndpoint) ? 45_000 : 2 * this.timeoutMs + TRANSIENT_RETRY_DELAY_MS) }, [
       { id: 'direct', run: ({ signal, remainingMs }) => this.direct(trackingNumber, { signal, budgetMs: remainingMs }) },
       { id: 'trawl', enabled: !!this.options.trawl, recovers: error => error instanceof ChallengeError,
         run: ({ signal, remainingMs, previousError }) => {
           if (remainingMs < 8000) throw previousError;
-          trial.primary();
-          return this.browser(trackingNumber, signal, remainingMs).then(result => trial.result(result));
+          return this.browser(trackingNumber, signal, remainingMs);
         } },
       { id: 'browser', enabled: !!this.options.browserWsEndpoint, recovers: error => error instanceof ChallengeError,
         run: async ({ signal, remainingMs, previousError }) => {
           if (remainingMs < 4000) throw previousError;
           const payload = await fetchPosteItalianeInBrowser(trackingNumber, this.options.browserWsEndpoint!, signal,
-            Math.min(15_000, remainingMs - 1000), trial.retry());
-          const result = parsePosteItalianeTrackingResponse(payload, trackingNumber);
-          // Residential replies can omit an older movement despite an unchanged latest scan.
-          // Keep richer sources eligible until this route's full-history coverage is established.
-          return trial.result(trial.isAlternate && result.events?.length ? { ...result, history_truncated: true } : result);
+            Math.min(15_000, remainingMs - 1000));
+          return parsePosteItalianeTrackingResponse(payload, trackingNumber);
         } },
     ]);
   }
@@ -447,10 +436,7 @@ export class PosteItalianeTracker {
 export const adapter: AdapterFactory = (environment) => {
   const options = { fetcher: environment.fetcher, userAgent: environment.userAgent, recorder: environment.recorder };
   const endpoint = environment.env.POSTE_ITALIANE_BROWSER_WS_ENDPOINT?.trim() || null;
-  const tracker = new PosteItalianeTracker({ ...options, trawl: environment.trawl, browserWsEndpoint: endpoint,
-    browserRetryProxy: environment.env.POSTE_ITALIANE_RETRY_PROXY_URL,
-    browserRetryShare: environment.env.POSTE_ITALIANE_RETRY_PROXY_PERCENT === undefined ? 0.5
-      : Number(environment.env.POSTE_ITALIANE_RETRY_PROXY_PERCENT) / 100 });
+  const tracker = new PosteItalianeTracker({ ...options, trawl: environment.trawl, browserWsEndpoint: endpoint });
   // Cheap recognition never opens a browser or spends the shared audio allowance.
   const recognition = new PosteItalianeTracker(options);
   return {
