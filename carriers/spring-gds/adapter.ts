@@ -187,9 +187,9 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
   const clocks = rawEvents.slice(0, 100).map(scanClock);
   const times = settleGuessedClocks(clocks, readAt.getTime());
   const events = rawEvents.slice(0, 100).map((event, index): CarrierEvent => {
-    const classified = postNLStatus(event.category, event.status_description);
-    const { local_time, provider_time_text } = clocks[index]!;
     const code = eventCode(event.status);
+    const classified = postNLStatus(event.category, event.status_description, code);
+    const { local_time, provider_time_text } = clocks[index]!;
     return {
       ...(times[index] ? { time: times[index].iso } : local_time ? { local_time } : provider_time_text ? { provider_time_text } : {}),
       location: (text(event.country_name) || text(event.country_code)).slice(0, 200),
@@ -200,7 +200,7 @@ export function parsePostNLTrackingResponse(value: unknown, trackingNumber: stri
   });
   const latest = rawEvents[0] ?? {};
   const category = text(latest.category);
-  const classified = postNLStatus(category, latest.status_description);
+  const classified = postNLStatus(category, latest.status_description, eventCode(latest.status));
   const deliveredAt = classified?.status === 'delivered' ? events[0]?.time : null;
   const destination = text(item.destination_code).trim().toUpperCase();
   return {

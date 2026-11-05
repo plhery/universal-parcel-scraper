@@ -16,6 +16,22 @@
       "note": "A freight milestone."
     },
     {
+      "wording": "Undelivered",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "A freight milestone: the shipment's \"On the Way\" relabelled, at that milestone's date, once it goes back to the seller. It dates no attempt."
+    },
+    {
+      "wording": "REACHED_SEL_CITY",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The status of a returning shipment that reached the seller's city."
+    },
+    {
       "wording": "In Transit",
       "language": "en",
       "stage": "in_transit",

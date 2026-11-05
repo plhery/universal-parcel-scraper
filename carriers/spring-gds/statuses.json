@@ -182,7 +182,7 @@
       "stage": "accepted",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "The Transit category also covers PostNL's acceptance scans."
+      "note": "The Transit category also covers PostNL's acceptance scans; status 173 reads as acceptance whatever its wording."
     },
     {
       "wording": "The item is received by PostNL",
@@ -198,7 +198,7 @@
       "stage": "accepted",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "The Transit category also covers PostNL's acceptance scans."
+      "note": "The Transit category also covers PostNL's acceptance scans; status 3116 reads as acceptance whatever its wording, since a universal provider relays it as \"Arrive at transit country or district\"."
     },
     {
       "wording": "Driver is en route to the pickup location",

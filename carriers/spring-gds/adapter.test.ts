@@ -616,6 +616,13 @@ describe('PostNL domestic tracker', () => {
     expect(statusMap.stage('X01', 'Shipment is ready for transport to the country of destination')).toBe('in_transit');
   });
 
+  it('reads PostNL acceptance by its status number, as a universal provider rewords it', () => {
+    expect(statusMap.stage('3116/transit', 'Arrive at transit country or district')).toBe('accepted');
+    expect(statusMap.stage('173/transit', 'Synthetic relayed wording')).toBe('accepted');
+    expect(statusMap.stage('301/transit', 'Arrive at transit country or district')).toBe('in_transit');
+    expect(postNLStatus('Transit', 'Synthetic relayed wording', '3116')).toEqual({ status: 'in_transit', stage: 'accepted' });
+  });
+
   it('dates the delivery the observations leave out, and only when PostNL says it happened', () => {
     const delivered = parsePostNLDomesticResponse(reply(collo({
       isDelivered: true, deliveryDate: '2026-05-12T11:21:20+02:00', statusPhase: { index: 4, message: 'Shipment in letterbox' },

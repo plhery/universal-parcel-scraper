@@ -65,6 +65,8 @@ instead.
   them to a script: on Tianhui Hengyuan they read like China Post's scans, all on one second of
   the minute, and on Mayi Yinfu they have the parcel abroad before it reaches the airport. They
   are held back on every tenant and named like rows written ahead.
+- A record's product (`productKindName`) is the service name, in English where every Chinese
+  term of it is known ("欧洲DHL快线-A" is "Europe DHL Express Line-A"), else as written.
 - Rows carry wall clocks without an offset, abroad too, on the trackers' Beijing clock: rows
   at the destination were shown up to seven hours before their clock read as UTC, earlier than
   the destination's own clock allows, and on the destination's clock some delivery rows would be

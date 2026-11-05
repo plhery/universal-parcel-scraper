@@ -10,6 +10,11 @@ const statuses: Record<string, ClassifiedStatus> = {
   // The scan of the out-for-delivery milestone.
   DISPATCHED: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'PICKED UP': { status: 'in_transit', stage: 'accepted' },
+  // The freight milestone after the pickup once the shipment goes back to the seller: Delhivery relabels
+  // its "On the Way" so, keeping that milestone's date, and dates no attempt.
+  UNDELIVERED: { status: 'exception', stage: 'exception' },
+  // The status of a returning shipment that reached the seller's city.
+  'REACHED SEL CITY': { status: 'in_transit', stage: 'in_transit' },
   MANIFESTED: { status: 'pending', stage: 'registered' },
   'RTO DELIVERED': { status: 'exception', stage: 'returned' },
   'DELIVERED SELLER': { status: 'exception', stage: 'returned' },

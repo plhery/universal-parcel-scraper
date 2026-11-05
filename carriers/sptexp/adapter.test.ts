@@ -46,7 +46,7 @@ describe('SPT Express tracking adapter', () => {
     const result = parseSptexpTrack(fixture('track'), NUMBER, READ_AT)!;
     expect(result).toMatchObject({
       status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Arrived at Origin Port',
-      last_update: '2026-03-04T22:48:30+08:00', service_name: 'SPT全球小包-M', destination_country: 'US', expected_delivery: null,
+      last_update: '2026-03-04T22:48:30+08:00', service_name: 'SPT Global Small Parcel-M', destination_country: 'US', expected_delivery: null,
     });
     expect(result.events).toEqual([
       { time: '2026-03-04T22:48:30+08:00', description: 'Arrived at Origin Port', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-06T22:28:42+08:00' },

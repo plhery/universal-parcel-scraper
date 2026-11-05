@@ -2,7 +2,8 @@
 
 JS Express (急速国际), run by 急创速供应链管理（苏州）有限公司, ships parcels abroad from China
 for online shops, through dedicated lines, express and postal services, and a local carrier
-delivers them. Tracked through the lookup its English tracking page makes.
+delivers them. Tracked through the lookup its English tracking page makes. 17TRACK's carrier
+list names it "JS" (the js-exp.com entry), so that name is an alias.
 
 ## How it works
 

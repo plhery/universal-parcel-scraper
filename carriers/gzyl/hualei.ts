@@ -24,6 +24,7 @@ import { isoTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import type { CarrierId } from '../../generated/catalog.js';
+import { hualeiServiceName } from './service.js';
 import { hualeiPlace, hualeiScanText, hualeiWording } from './text.js';
 
 export { hualeiScanText };
@@ -490,7 +491,7 @@ export function parseHualeiTrack(payload: unknown, raw: string, tenant: HualeiTe
   return result(details.map((row) => trackRow(row, provider)), {
     number, destination, partner: partnerOf(record, destination, tenant, downstream),
     tracking: downstream ? '' : tracking, ...(downstream ? { downstream } : {}),
-    service: text(record, 'productKindName', provider, 100) || undefined,
+    service: hualeiServiceName(text(record, 'productKindName', provider, 100)) || undefined,
   }, tenant, readAt);
 }
 

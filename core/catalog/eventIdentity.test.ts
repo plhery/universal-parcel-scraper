@@ -16,6 +16,18 @@ describe('same-instant identity policies', () => {
     expect(sameInstantIdentityPolicy('india-post')).toBeUndefined();
   });
 
+  it('matches a Delhivery freight milestone relabelled at its date, and a scan only in the same words and place', () => {
+    const policy = sameInstantIdentityPolicy('delhivery', { supportsScanMatching: true });
+    expect(policy).toMatchObject({ sourceCarrierId: 'delhivery', storedSources: ['delhivery'], matchEachScan: true, matchWallClock: true });
+    const scan = (description: string, location = '') => ({ stage: 'in_transit', description, providerCode: '', location });
+    expect(policy?.matches?.(scan('Undelivered'), scan('On the Way'))).toBe(true);
+    expect(policy?.matches?.(scan('Shipment Received at Facility', 'Sample City'), scan('shipment received at  facility', 'Sample City'))).toBe(true);
+    expect(policy?.matches?.(scan('Out for Delivery', 'Sample City'), scan('Shipment Received at Facility', 'Sample City'))).toBe(false);
+    expect(policy?.matches?.(scan('Undelivered'), scan('On the Way', 'Sample City'))).toBe(false);
+    expect(policy?.matches?.(scan(''), scan('On the Way'))).toBe(false);
+    expect(sameInstantIdentityPolicy('delhivery')).toBeUndefined();
+  });
+
   // A carrier giving wall clocks in no stated zone also matches a scan a better deduced zone re-dates.
   it.each([
     ['ctt', 'UTC', { matchWallClock: true }],

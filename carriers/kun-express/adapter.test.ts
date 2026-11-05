@@ -48,7 +48,7 @@ describe('Kun Express tracking adapter', () => {
     const result = parseKunExpressTrack(fixture('track'), NUMBER, READ_AT)!;
     expect(result).toMatchObject({
       status: 'delivered', current_stage: 'delivered', current_stage_source: 'wording:language', last_status_text: 'Delivered, In/At Mailbox',
-      last_update: null, last_update_local: '2026-03-10T11:55:00', service_name: 'KUN美国专线', destination_country: 'US',
+      last_update: null, last_update_local: '2026-03-10T11:55:00', service_name: 'KUN US Line', destination_country: 'US',
     });
     expect(result.events!.map(({ time, local_time, description, location, provider_code, stage, stage_source }) =>
       [time ?? local_time, description, location, provider_code, stage, stage_source])).toEqual([

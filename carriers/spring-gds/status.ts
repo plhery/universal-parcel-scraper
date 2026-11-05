@@ -58,16 +58,25 @@ const LABEL_STATUS = new Map<string, ReadonlyMap<string, ClassifiedStatus>>([
   ].map((label): [string, ClassifiedStatus] => [label, { status: 'exception', stage: 'returned' }]))],
 ]);
 
+/**
+ * PostNL's acceptance scans by status number, whatever their wording: 173 is the acceptance
+ * centre's receipt and 3116 the bulk handover, and a universal provider relays 3116 as "Arrive at
+ * transit country or district".
+ */
+const CODE_STATUS = new Map<string, ReadonlyMap<string, ClassifiedStatus>>([
+  ['transit', new Map(['173', '3116'].map((code): [string, ClassifiedStatus] => [code, { status: 'in_transit', stage: 'accepted' }]))],
+]);
+
 /** A category as the maps key it: trimmed, in lower case. */
 function categoryKey(category: unknown): string {
   return (typeof category === 'string' ? category : '').trim().toLocaleLowerCase('en-US');
 }
 
-/** The status and stage for one PostNL event category, or undefined when unmapped. */
-export function postNLStatus(category: unknown, description?: unknown): ClassifiedStatus | undefined {
+/** The status and stage for one PostNL event category, its label and status number, or undefined when unmapped. */
+export function postNLStatus(category: unknown, description?: unknown, status?: string): ClassifiedStatus | undefined {
   const code = categoryKey(category);
   const label = (typeof description === 'string' ? description : '').trim().toLocaleLowerCase('en-US').replace(/[.!]+$/, '');
-  return LABEL_STATUS.get(code)?.get(label) ?? CATEGORY_STATUS.get(code);
+  return LABEL_STATUS.get(code)?.get(label) ?? (status ? CODE_STATUS.get(code)?.get(status) : undefined) ?? CATEGORY_STATUS.get(code);
 }
 
 /**
@@ -103,14 +112,14 @@ export function postNLCode(status: string, category: unknown): string {
 
 /**
  * What the map says about one scan. An international scan stored with its category is staged by
- * that category and its label, the stored wording, as the adapter stages it. A domestic
- * observation, or an international scan stored with its status number alone, is read by the
+ * that category, its label (the stored wording) and its status number, as the adapter stages it.
+ * A domestic observation, or an international scan stored with its status number alone, is read by the
  * domestic tracker's labels.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
-    const category = /^\d{1,8}\/(.+)$/s.exec(code ?? '')?.[1];
-    return category === undefined ? postNLDomesticStage(wording) : postNLStatus(category, wording)?.stage;
+    const [, status, category] = /^(\d{1,8})\/(.+)$/s.exec(code ?? '') ?? [];
+    return category === undefined ? postNLDomesticStage(wording) : postNLStatus(category, wording, status)?.stage;
   },
   gaps: [],
 };

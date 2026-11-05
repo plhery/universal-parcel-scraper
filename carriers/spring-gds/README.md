@@ -81,11 +81,13 @@ it; everything user-facing says PostNL.
   several milestones: sorting and the delivery round within `Processing`, PostNL's own
   acceptance within `Transit`, customs release within `Customs`, and a completed return
   within `Undelivered` ("will be returned" can still end in a new delivery attempt).
+  PostNL's acceptance statuses 173 and 3116 read as acceptance whatever their wording, since a
+  universal provider rewords 3116 ("Arrive at transit country or district").
   Unknown categories leave the event unstaged and the shipment status unknown.
 - Each scan keeps its numeric `status`, a slash and its category, trimmed and in lower case, as
   its `provider_code` (`37/delivered`); a scan without a category keeps its number alone. The
   parcel app's review asks the same map (`statusMap`) by that code, so it stages a scan by its
-  category and label as the adapter does. A domestic observation, or a scan stored with its
+  category, label and number as the adapter does. A domestic observation, or a scan stored with its
   number alone, is read by the domestic labels. Adding the category changes no stored scan's
   identity, which the app keys on its time, place and wording.
 - `unsuccesfull` is PostNL's own spelling. The corrected spelling is mapped too, so an

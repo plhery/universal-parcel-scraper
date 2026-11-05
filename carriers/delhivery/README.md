@@ -27,6 +27,10 @@ no year: it takes the year, no more than one before the status date, in which th
 falls on the weekday shown, or else stays as written. The delivered milestone dates the
 delivery, since a freight status can date a later proof-of-delivery audit, and the
 delivered status then adds no snapshot of its own.
+Once a shipment turns back, Delhivery relabels its "On the Way" milestone "Undelivered" at the
+same date, which dates no delivery attempt: it reads as an exception. The parcel app's identity
+policy lets a placeless milestone take over the placeless row at its instant, so the relabel
+replaces the stored milestone instead of doubling it.
 Calendar days and invalid date labels remain unresolved instead of becoming midnight scans.
 The returned flow can still be in transit. Its shipment status determines current progress;
 return scans retain their leg, and sender delivery does not become recipient delivery.
