@@ -527,6 +527,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // destination's last-mile carrier, as its own map reads them.
   if (/^domestic allocation has begun[.!]?$|^under domestic allocation[.!]?$/i.test(value)) return 'in_transit';
   if (/^delivery to local courier[.!]?$/i.test(value)) return 'in_transit';
+  // YunExpress's handler taking the parcel from the airline's cargo terminal after its flight, as its own map reads it.
+  if (/^collected at cargo terminal[.!]?$/i.test(value)) return 'in_transit';
   // Maersk's leg as ParcelsApp relays it after the first carrier's: the manifest announcing the parcel, then
   // Maersk taking it over in the destination country, the step the first carrier calls its local delivery
   // company's receipt. A parcel relabelled at a facility on the way moves on.

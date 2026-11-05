@@ -171,11 +171,21 @@ describe('UPS API reply', () => {
       item.activity = [
         activity('KB', 'DELIVERED', { ...place, time: '173950', gmtDate: '20261027', gmtTime: '15:39:50', gmtOffset: '+02:00' }),
         activity('KB', 'DELIVERED', { ...place, time: '173950', gmtDate: undefined, gmtTime: undefined, gmtOffset: '+02:00' }),
+        activity('KB', 'DELIVERED', {
+          location: { address: { city: 'EXAMPLE CITY', stateProvince: 'CA', countryCode: 'US' } },
+          date: '20261027', time: '173950', gmtDate: '20261028', gmtTime: '00:39:50', gmtOffset: '-07:00',
+        }),
+        activity('KB', 'DELIVERED', {
+          location: { address: { city: 'EXAMPLE CITY', stateProvince: 'CA', countryCode: 'US' } },
+          date: '20261104', time: '125427', gmtDate: '20261104', gmtTime: '19:54:27', gmtOffset: '-07:00',
+        }),
       ];
     }), TRACKING_NUMBER).events;
     expect(events?.map(({ time, local_time, time_zone }) => ({ time, local_time, time_zone }))).toEqual([
       { time: '2026-10-27T17:39:50+01:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/Paris' },
       { time: '2026-10-27T17:39:50+01:00', local_time: '2026-10-27T17:39:50', time_zone: 'Europe/Paris' },
+      { time: '2026-10-27T17:39:50-07:00', local_time: undefined, time_zone: undefined },
+      { time: '2026-11-04T12:54:27-08:00', local_time: '2026-11-04T12:54:27', time_zone: 'America/Los_Angeles' },
     ]);
   });
 

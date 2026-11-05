@@ -12,6 +12,7 @@ import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
+import { otherRegionZones, regionZone } from '../../places/zones.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
@@ -378,19 +379,22 @@ function statedOffset(stated: string): number | null {
 
 /**
  * The zone of a scan's place, from its country's code or English name, when the country keeps one
- * civil time. Spain and Portugal have none here: their islands keep a clock an hour from the
- * mainland's, the offset the mainland keeps in the other season.
+ * civil time, or from its state or province's code in a country with several, when all of it
+ * keeps one: California's, not Texas's. Spain and Portugal have none here: their islands keep a
+ * clock an hour from the mainland's, the offset the mainland keeps in the other season.
  */
-function placeZone(country: string): string | null {
+function placeZone(country: string, region: string): string | null {
   const code = countryCode(country);
-  return code && code !== 'ES' && code !== 'PT' ? countryTimeZone(code) : null;
+  if (!code || code === 'ES' || code === 'PT') return null;
+  const state = region.trim().toUpperCase();
+  return countryTimeZone(code) ?? (state && !otherRegionZones(code, state).length ? regionZone(code, state) : null);
 }
 
 /**
  * A scan UPS states on its place's offset for the other season, one the place's zone does not
  * keep at that wall clock but keeps at another time of the year, dated on the place's clock.
- * After the clocks went back, UPS dated deliveries in France on the summer offset: each reached
- * its answer an hour after the instant that offset gives, and the wall clock was the place's.
+ * After the clocks went back, UPS dated deliveries in France and California on the summer offset:
+ * each reached its answer an hour after the instant that offset gives, and the wall clock was the place's.
  * The scan keeps that wall clock, and the instant says its zone is the place's.
  */
 function placeClock(wall: string, offset: number, zone: string | null): ScanClock | null {
@@ -445,7 +449,7 @@ function scanClock(activity: JsonObject, local: string | null, day: string | nul
   return raw ? { provider_time_text: raw } : {};
 }
 
-/** The clock of a scan in the page's reply, whose local pair reads `08/04/2026` and `9:12 A.M.`, at a place such as `ZUERICH, CH`. */
+/** The clock of a scan in the page's reply, whose local pair reads `08/04/2026` and `9:12 A.M.`, at a place such as `ZUERICH, CH` or `SAN DIEGO, CA, US`. */
 function activityClock(activity: JsonObject, place: string): ScanClock {
   const localDate = cleanScalar(activity.date);
   const localTime = cleanScalar(activity.time);
@@ -456,7 +460,8 @@ function activityClock(activity: JsonObject, place: string): ScanClock {
     ? `${dateMatch[3]}-${dateMatch[1]}-${dateMatch[2]}T${String(hour % 12 + (timeMatch[3]!.toUpperCase() === 'P' ? 12 : 0)).padStart(2, '0')}:${timeMatch[2]}:00`
     : null;
   const day = dateMatch && !localTime ? calendarDay(Number(dateMatch[3]), Number(dateMatch[1]), Number(dateMatch[2])) : null;
-  return scanClock(activity, local, day, clean(`${localDate} ${localTime}`), placeZone(place.split(',').at(-1)!.trim()));
+  const fields = place.split(',').map((field) => field.trim());
+  return scanClock(activity, local, day, clean(`${localDate} ${localTime}`), placeZone(fields.at(-1)!, fields.length > 2 ? fields.at(-2)! : ''));
 }
 
 /** The clock of a scan in the official API's reply, whose local pair reads `20260804` and `091204`. */
@@ -469,7 +474,7 @@ function apiActivityClock(activity: JsonObject): ScanClock {
   const local = day && timeMatch ? `${day}T${timeMatch[1]}:${timeMatch[2]}:${timeMatch[3]}` : null;
   const address = isRecord(activity.location) && isRecord(activity.location.address) ? activity.location.address : {};
   return scanClock(activity, local, localTime ? null : day, clean(`${localDate} ${localTime}`),
-    placeZone(cleanScalar(address.countryCode || address.country, 8)));
+    placeZone(cleanScalar(address.countryCode || address.country, 8), cleanScalar(address.stateProvince, 8)));
 }
 
 const MONTHS: Record<string, number> = {

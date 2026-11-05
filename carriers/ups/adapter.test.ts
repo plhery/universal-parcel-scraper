@@ -220,6 +220,26 @@ describe('UPS structured response', () => {
     ]);
   });
 
+  it('dates such a scan on the clock of a state or province that keeps one zone', () => {
+    const delivered = (location: string, gmtTime: string, gmtOffset: string) => ({
+      actCode: 'KB', activityScan: 'DELIVERED', location, date: '11/04/2026', time: '12:54 P.M.', gmtDate: '20261104', gmtTime, gmtOffset,
+    });
+    const events = parseUPSTrackingResponse(withScans([
+      // California keeps -08:00 after the clocks go back.
+      delivered('EXAMPLE CITY, CA, US', '19:54:27', '-07:00'),
+      delivered('EXAMPLE CITY, CA, US', '20:54:27', '-08:00'),
+      // Part of Texas keeps Mountain time, so its clock is not deduced; nor is one without a state.
+      delivered('EXAMPLE CITY, TX, US', '17:54:27', '-05:00'),
+      delivered('EXAMPLE CITY, US', '19:54:27', '-07:00'),
+    ]), TRACKING_NUMBER, new Date('2026-11-05T00:00:00Z')).events;
+    expect(events?.map(({ time, local_time, time_zone, time_zone_basis }) => ({ time, local_time, time_zone, time_zone_basis }))).toEqual([
+      { time: '2026-11-04T12:54:27-08:00', local_time: '2026-11-04T12:54:27', time_zone: 'America/Los_Angeles', time_zone_basis: 'place' },
+      { time: '2026-11-04T12:54:27-08:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+      { time: '2026-11-04T12:54:27-05:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+      { time: '2026-11-04T12:54:27-07:00', local_time: undefined, time_zone: undefined, time_zone_basis: undefined },
+    ]);
+  });
+
   it('lets the newest scan code outrank the progress token', () => {
     // A Ground Saver delay: UPS's token reads Exception, the parcel is moving.
     const delayed = parseUPSTrackingResponse(withScans([
