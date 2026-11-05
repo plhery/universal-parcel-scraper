@@ -149,6 +149,14 @@
       "note": "Handed to the airport, with the day of the flight booked in both halves (\"预计11号的航班\", \"of the 11rd\"); the map reads each day as an ellipsis. The flight is still to come, so the row shows its English without it."
     },
     {
+      "wording": "货物已交机场,等待…号的航班起飞 Goods have been delivered to the airport, pending departure on the flight on the …",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Handed to the airport to wait for the flight whose day both halves name (\"等待23号\", \"on the 23rd.\"); the map reads each day as an ellipsis."
+    },
+    {
       "wording": "报关已放行等待…号航班起飞 Customs released,Awaiting departure on flight of the …",
       "language": "zh",
       "stage": "in_transit",
@@ -248,6 +256,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
       "note": "Copied from DHL: DHL collected the parcel after JRT's hand-over, so it is already on its way."
+    },
+    {
+      "wording": "sorted",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Copied from DHL, beside the destination's code, within a second of DHL's parcel-centre scan on the same wall clock."
     },
     {
       "wording": "the shipment has been processed in the destination parcel center",

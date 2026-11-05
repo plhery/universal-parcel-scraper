@@ -6,6 +6,8 @@ import statuses from './statuses.json' with { type: 'json' };
 const WORDINGS = statusWordings(statuses.entries);
 // The airport row names the day of the booked flight in both halves.
 const FLIGHT_DAY = /^(货物已交机场,预计)\d{1,2}(号的航班 goods delivered to airport, scheduled on flight of the )\d{1,2}(?:st|nd|rd|th)$/;
+// Its later wording waits for that flight: "等待23号的航班起飞 … pending departure on the flight on the 23rd.".
+const AWAITED_FLIGHT_DAY = /^(货物已交机场,等待)\d{1,2}(号的航班起飞 goods have been delivered to the airport, pending departure on the flight on the )\d{1,2}(?:st|nd|rd|th)\.?$/;
 
 // So does the export clearance row, in both halves: "等待27号航班起飞 … on flight of the 27th".
 const CLEARED_FLIGHT_DAY = /^(报关已放行等待)\d{1,2}(号航班起飞 customs released,awaiting departure on flight of the )\d{1,2}(?:st|nd|rd|th)$/;
@@ -31,11 +33,12 @@ const SCHEDULED_FLIGHT = /^(预计)\d{1,2}\.\d{1,2}(航班\/flight scheduled for
 const SPANISH_FLIGHT = /^(se espera que el vuelo salga hacia )[^\d…]{1,40}?( el )\d{1,2} de [a-z]+$/;
 const FLIGHT_EN_ROUTE = /^(the flight is en route to the airport in )[^\d…]{1,40}$/;
 
-// A delayed flight names its new day in both halves: "航班延误，预计11/1号飞出 Flight delayed, estimated departure on Nov 1.".
-const DELAYED_FLIGHT = /^(航班延误[，,] ?预计)\d{1,2}\/\d{1,2}(号飞出 flight delayed, estimated departure on )[a-z]{3,9}\.? \d{1,2}(?:st|nd|rd|th)?\.?$/;
+// A delayed flight names its new day in both halves: "航班延误，预计11/1号飞出 Flight delayed, estimated departure on Nov 1.",
+// sometimes with the month's full stop for the space ("Oct.24.").
+const DELAYED_FLIGHT = /^(航班延误[，,] ?预计)\d{1,2}\/\d{1,2}(号飞出 flight delayed, estimated departure on )[a-z]{3,9}(?:\. ?| )\d{1,2}(?:st|nd|rd|th)?\.?$/;
 
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
-export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…')
+export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
@@ -72,7 +75,7 @@ const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data f
 const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
 
 // DHL's own event texts, in lower case, as the tracker copies them: "loaded to movement / tour vehicle".
-const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|not delivered-consignee\b|held for consignee collection|shipment will be returned to origin\b)/i;
+const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|sorted$|not delivered-consignee\b|held for consignee collection|shipment will be returned to origin\b)/i;
 
 /**
  * Whether a row is one DHL wrote that the tracker copies, on DHL's wall clock where it scanned the parcel: its

@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
-import { statusMap } from './status.js';
+import { isJrtDhlRow, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -319,6 +319,14 @@ describe('JRT tracking adapter', () => {
     // A delayed flight names its new day in both halves.
     expect(answer('航班延误，预计12/3号飞出 Flight delayed, estimated departure on Dec 3.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('航班延误，预计11/21号飞出 Flight delayed, estimated departure on November 21st')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('航班延误，预计10/24号飞出 Flight delayed, estimated departure on Oct.24.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The airport row that waits for the booked flight names its day in both halves.
+    expect(answer('货物已交机场,等待23号的航班起飞 Goods have been delivered to the airport, pending departure on the flight on the 23rd.'))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // DHL's sorting scan, as JRT copies it, is one of DHL's rows, on DHL's clock.
+    expect(answer('sorted')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(isJrtDhlRow('sorted')).toBe(true);
+    expect(isJrtDhlRow('sorted at the airport')).toBe(false);
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // DHL's row for the parcel on its way to it, as JRT copies it in lower case.
