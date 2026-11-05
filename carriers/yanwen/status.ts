@@ -2,6 +2,7 @@ import type { CarrierStatus } from '../../core/result/index.js';
 import { languageStageStatus, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { chinaPostRelayedStage } from '../china-post/status.js';
+import { withoutCourtesy } from '../j-and-t-au/identity.js';
 import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
 
 const WORDING = new Map<string, ClassifiedStatus>([
@@ -115,6 +116,11 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['IN TRANSIT,Present to Import Customs', { status: 'in_transit', stage: 'customs' }],
   ['Shipment released from customs/ government check point,Released from Custom', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment hold for collection,Receive item at collection point for pick-up', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // La Poste's own sentences on a parcel bound for France, read as La Poste's map reads their codes: its
+  // platforms and the local sort in transit, the sort into the morning's round (DISTOU/MD1) out for delivery.
+  ['Votre colis est en transit sur nos plateformes logistiques.', { status: 'in_transit', stage: 'in_transit' }],
+  ['Votre Colissimo est en cours de traitement sur le site de tri local.', { status: 'in_transit', stage: 'in_transit' }],
+  ['Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:
@@ -154,6 +160,9 @@ function jAndTAuRelayedStage(wording: string): Stage | undefined {
   const stage = jAndTAuMappedStage(wording.replace(HOTLINE, '.'));
   return stage === 'accepted' ? 'in_transit' : stage;
 }
+
+/** A relayed scan's wording without J&T Australia's customer service line and the courtesy that offers it, as J&T's own adapter keeps neither. */
+export const yanwenWording = (description: string): string => withoutCourtesy(description.replace(HOTLINE, '.')).trim();
 
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
 // map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T Australia's.

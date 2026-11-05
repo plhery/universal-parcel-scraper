@@ -771,6 +771,13 @@
       "note": "The order's delivery details changed, which moves no parcel: it keeps the stage of the scan before it."
     },
     {
+      "code": "PARCEL_ORDER_INFO_UPDATE",
+      "wording": "Self-pickup converted to home delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The order changed from a self-pickup to a home delivery, which moves no parcel: it keeps the stage of the scan before it."
+    },
+    {
       "code": "LABEL_CREATED",
       "wording": "Shipment data information received",
       "language": "en",

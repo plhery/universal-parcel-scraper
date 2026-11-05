@@ -688,6 +688,14 @@ function inChina(location: string): boolean {
 const CHINA_POST_ZONE = 'Asia/Shanghai';
 // China Post's office abroad that hands it the destination post's scans.
 const CHINA_POST_OFFICE_ABROAD = /境外经转局/u;
+// China Post's own lines for a scan abroad, a processing centre there in brackets or a clearance named by
+// the destination's code, are on its own clock: China Post's tracker and 17TRACK give their digits
+// "+08:00", and read on Paris's clock they came seven hours late.
+const CHINA_POST_OWN_LINE_ABROAD = /^邮件(?:到达|离开)处理中心【[^】]{1,60}】$|^customs clearance completed in [A-Z]{2}$/iu;
+// iMile's scans as a Chinese forwarder copies them, the centre in brackets before a short step
+// ("【…】received", not iMile's own "【…】Your order has been received."), are on Beijing's clock: in Italy
+// each read seven hours ahead of iMile's own copy, and on Italy's clock the delivery round came after the lookup.
+const IMILE_FORWARDER_COPY = /^【[^【】]{1,60}】\s*(?:received|arrived|parcel shipped to ?【[^【】]{1,60}】|shipment out for delivery)$/iu;
 
 /**
  * Whether a China Post scan is the destination post's: its place or wording
@@ -954,7 +962,8 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
   if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
-  if (carrier === 'imile') return countryTimeZone(destination);
+  if (carrier === 'imile') return IMILE_FORWARDER_COPY.test(status.trim()) ? 'Asia/Shanghai' : countryTimeZone(destination);
+  if (carrier === 'china-post' && CHINA_POST_OWN_LINE_ABROAD.test(status.trim())) return CHINA_POST_ZONE;
   if (carrier === 'china-post' && chinaPostAbroad(scanLocation(name, state.location), status, destination)) return countryTimeZone(destination);
   // Cainiao's copies of Speedaf's scans keep Speedaf's digits, its arrival at the linehaul office too.
   if (carrier === 'speedaf' || (key === 'cainiao' && speedafDeparture(payload))) return speedafZone(payload, state.date, destination);

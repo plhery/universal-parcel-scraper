@@ -567,6 +567,10 @@ function providerWordingStage(description: string): Stage | undefined {
   const unplaced = value.replace(/ ?(?:\[[^[\]]{1,60}\]|【[^【】]{1,60}】)$/u, '');
   if (/^[a-z ]{1,40} processing cent(?:er|re) has received it[.!]?$/i.test(unplaced)) return 'accepted';
   if (/^(?:(?:the )?(?:parcel|package|shipment) )?leaves (?:the )?processing cent(?:er|re)[.!]?$|^airline received[.!]?$/i.test(unplaced)) return 'in_transit';
+  // iMile's scans abroad as a Chinese forwarder copies them, the centre in brackets first: a centre taking
+  // the parcel in ("【…】received") and sending it on to the next ("【…】parcel shipped to【…】").
+  const centre = /^【[^【】]{1,60}】\s*(.+)$/u.exec(value)?.[1];
+  if (centre && /^received[.!]?$|^parcel shipped to ?【[^【】]{1,60}】$/i.test(centre)) return 'in_transit';
   // Helthjem sending a home delivery on to a pickup point, as Ship24 relays it: the parcel prepared for
   // the pickup point, and sorted again before it goes there.
   if (/^pakken (?:din )?behandles for sending til (?:et )?hentested[.!]?$|^pakken sorteres pa nytt før den sendes til (?:et )?hentested[.!]?$/i.test(value)) return 'in_transit';

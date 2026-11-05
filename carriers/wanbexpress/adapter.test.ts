@@ -110,6 +110,9 @@ describe('WanbExpress', () => {
     // A US partner's codeless scans between its receipt and the run.
     expect(wanbStage(null, 'In Processing at Transit Facility.')).toBe('in_transit');
     expect(statusMap.stage(null, 'in transit to next facility.')).toBe('in_transit');
+    for (const wording of ['In Transit to Next Facility', 'It is currently in transit to the next facility', 'The package is being transferred to the next facility']) {
+      expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // A partner's announcement other trackers relay too reads as they read it, through the shared map.
     const announced = 'Your package is being prepared by the sender and will be handed over to us soon';
     expect(wanbStage(null, announced)).toBe('registered');

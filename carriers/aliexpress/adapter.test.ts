@@ -379,6 +379,13 @@ describe('Cainiao projection', () => {
     }] }, 'LP00000000000001');
     expect(customs).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Carrier update' });
     expect(customs.events?.[0]).toMatchObject({ stage: 'customs', stage_source: 'none' });
+    // An order turned from a self-pickup into a home delivery moves no parcel either.
+    const converted = scan('PARCEL_ORDER_INFO_UPDATE', '2026-06-10 09:00:00', '', 'Self-pickup converted to home delivery');
+    const order = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001', latestTrace: converted, detailList: [converted, departed] }] }, 'LP00000000000001');
+    expect(order).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(order.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'none' });
+    expect(statusMapAnswer({ carrier: 'aliexpress', providerCode: 'PARCEL_ORDER_INFO_UPDATE', description: 'Self-pickup converted to home delivery' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage of the scan before it/) });
     // Before any scan, a notice leaves the parcel pending.
     const alone = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000001', latestTrace: placeholder, detailList: [placeholder] }] }, 'LP00000000000001');
     expect(alone.events?.[0]).toMatchObject({ stage: 'pending', stage_source: 'none' });

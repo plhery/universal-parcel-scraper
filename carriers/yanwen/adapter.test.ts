@@ -221,6 +221,13 @@ describe('Yanwen result projection', () => {
     expect(times('IT')?.slice(0, 2)).toEqual(['2026-10-26T18:40:00+01:00', '2026-10-23T13:34:37+02:00']);
     // France was on +02:00 on 22 October: a +01:00 stamp then is not France's offset.
     expect(times('FR', [['2026-10-22', '14:00:00 [GMT+01]', 'EXAMPLE HUB', 'Arrived at destination']])).toEqual(['2026-10-22T14:00:00+01:00']);
+    // La Poste's own French sentences come on the local clock, as its delivery under the icon does.
+    expect(times('FR', [
+      ['2026-10-30', '10:30:38 [GMT+01]', 'EXAMPLE OFFICE', 'Votre colis est livré dans votre boite aux lettres.', 'LM40'],
+      ['2026-10-30', '09:23:12 [GMT+01]', 'EXAMPLE OFFICE', 'Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.'],
+      ['2026-10-30', '06:54:48 [GMT+01]', 'EXAMPLE OFFICE', 'Votre Colissimo est en cours de traitement sur le site de tri local.'],
+      ['2026-10-22', '09:33:45 [GMT+02]', 'EXAMPLE SENDER', 'Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.'],
+    ])).toEqual(['2026-10-30T10:30:38+01:00', '2026-10-30T09:23:12+01:00', '2026-10-30T06:54:48+01:00', '2026-10-22T09:33:45+02:00']);
     // A history that also came on the local clock already lost its UTC copies.
     expect(times('FR', [['2026-10-23', '15:34:37 [GMT+02]', 'EXAMPLE HUB', 'Arrived at destination'],
       ['2026-10-23', '13:34:37 [GMT+02]', 'EXAMPLE HUB', 'Arrived at destination']])).toEqual(['2026-10-23T15:34:37+02:00']);
@@ -361,6 +368,11 @@ describe('Yanwen result projection', () => {
     ], '正在派送', 'AU');
     expect(result.events?.map((event) => event.stage)).toEqual(['out_for_delivery', 'in_transit', 'in_transit']);
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    // Without J&T's customer service line and the courtesy that offers it, as J&T's own adapter.
+    expect(result.events?.slice(0, 2).map((event) => event.description)).toEqual([
+      'Your parcel is out for delivery.', 'The parcel has been successfully picked up and is being prepared for transportation.']);
+    expect(JSON.stringify(result)).not.toMatch(/130000|customer service/i);
+    for (const event of result.events!.slice(0, 2)) expect(statusMap.stage(null, normalizeStatusWording(event.description!)), event.description).toBe(event.stage);
     // Another courier's pickup sentence is not J&T's.
     expect(yanwenStatus('The parcel has been successfully picked up. Customer service:130000')).toBeUndefined();
   });

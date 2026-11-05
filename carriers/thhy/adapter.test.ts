@@ -53,6 +53,17 @@ describe('Tianhui Hengyuan tracking adapter', () => {
     expect((error as { writtenAhead: string[] }).writtenAhead.slice(0, 2)).toEqual(['2026-03-07T20:48:57+08:00', '2026-03-05T16:30:57+08:00']);
   });
 
+  it('reads the sign-for the forwarder writes weeks after its clock as the delivery', () => {
+    const track = fixture('track') as [{ data: [{ trackDetails: Record<string, string>[] }] }];
+    const rows = track[0].data[0].trackDetails.filter((row) => row.track_kind !== 'CO_C_CR');
+    track[0].data[0].trackDetails = [{ ...rows[0]!, track_content: '签收', track_kind: '', track_location: '',
+      track_date: '2026-04-04 11:52:29', track_createdate: '2026-04-30 18:53:16' }, ...rows];
+    const result = parseThhyTrack(track, NUMBER, Date.parse('2026-05-01T00:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Signed for' });
+    expect(result.events?.[0]).toMatchObject({ time: '2026-04-04T11:52:29+08:00', description: 'Signed for', stage: 'delivered', written_at: '2026-04-30T18:53:16+08:00' });
+    expect(statusMapAnswer({ carrier: 'thhy', providerCode: null, description: '签收' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+  });
+
   it('reads the page’s unknown-number answer as not found', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('no-track'))).mockResolvedValueOnce(html(page('page-unknown')));
     await expect(adapter(environment(fetcher)).track({ number: 'NOTFOUND000002' })).rejects.toMatchObject({ kind: 'not_found' });

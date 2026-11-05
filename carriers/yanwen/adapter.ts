@@ -10,7 +10,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { isYanwenPlaceholder } from './app.js';
-import { yanwenCategory, yanwenNotice, yanwenStatus } from './status.js';
+import { yanwenCategory, yanwenNotice, yanwenStatus, yanwenWording } from './status.js';
 
 // This constant is shipped in the public browser script; it is part of the
 // anonymous form protocol, not a customer or account credential.
@@ -63,15 +63,19 @@ function eventTime(day: string, raw: string): string {
 }
 
 /**
- * Yanwen relays La Poste's scans of a parcel bound for France on UTC's wall
- * clock under France's offset, with no copy on the local clock: its "Arrived
- * at destination" at 13:34:37 [GMT+02] is La Poste's 15:34:37+02:00. A
- * relayed scan, placed and without an icon, under France's offset at the
- * instant its wall clock gives in UTC, is read that way and keeps its offset.
+ * Yanwen relays La Poste's scans of a parcel bound for France in its own
+ * English on UTC's wall clock under France's offset, with no copy on the local
+ * clock: its "Arrived at destination" at 13:34:37 [GMT+02] is La Poste's
+ * 15:34:37+02:00. A relayed scan, placed and without an icon, under France's
+ * offset at the instant its wall clock gives in UTC, is read that way and keeps
+ * its offset. La Poste's own French sentences, relayed word for word, come on
+ * the local clock, as its delivery under the icon does, and keep it.
  */
+const LA_POSTE_SENTENCE = /^votre (?:colis|colissimo|envoi)\b/i;
+
 function onFrenchUtcClock(event: CarrierEvent): CarrierEvent {
   const shown = DateTime.fromISO(event.time!, { setZone: true });
-  if (!event.location || event.provider_code || !shown.offset) return event;
+  if (!event.location || event.provider_code || !shown.offset || LA_POSTE_SENTENCE.test(event.description ?? '')) return event;
   const utc = DateTime.fromISO(shown.toISO({ includeOffset: false })!, { zone: 'utc' });
   if (utc.setZone('Europe/Paris').offset !== shown.offset) return event;
   return { ...event, time: utc.setZone(shown.zone).toISO({ suppressMilliseconds: true })! };
@@ -165,7 +169,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
       const time = eventTime(day, clean(row.find('.timePoint').text(), 64));
       const words = row.find('.cz_r h6');
       if (words.length < 1 || words.length > 2) throw new SchemaError('Yanwen');
-      const description = clean(words.last().text(), 500).replace(DELIVERY_DETAIL, '');
+      const description = yanwenWording(clean(words.last().text(), 500).replace(DELIVERY_DETAIL, ''));
       if (!description) throw new SchemaError('Yanwen', 'Yanwen returned an empty scan');
       const location = words.length === 2 ? place(clean(words.first().text(), 200).replace(/^\[|\]$/g, '')) : '';
       const code = /\/([A-Z]{2}\d{2})\.png$/.exec(row.find('.cz_c img').attr('src') ?? '')?.[1];

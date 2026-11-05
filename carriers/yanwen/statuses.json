@@ -229,6 +229,27 @@
       "note": "Colissimo's announcement, relayed before Yanwen's pickup scan."
     },
     {
+      "wording": "Votre colis est en transit sur nos plateformes logistiques.",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "La Poste's own sentence for its platforms (ACHNAT/ET1), relayed word for word with the platform's name."
+    },
+    {
+      "wording": "Votre Colissimo est en cours de traitement sur le site de tri local.",
+      "language": "fr",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "La Poste's own sentence for the local sort (DISARR/EP1), relayed word for word."
+    },
+    {
+      "wording": "Votre colis est sur son site de distribution. Nous le préparons pour le mettre en livraison.",
+      "language": "fr",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "La Poste's sort into the morning's round (DISTOU/MD1), which La Poste's map reads as out for delivery."
+    },
+    {
       "wording": "Accepted at USPS Origin Facility",
       "language": "en",
       "stage": "in_transit",

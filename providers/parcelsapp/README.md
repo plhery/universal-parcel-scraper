@@ -383,7 +383,9 @@ step exists for future protocol changes.
   destination's single clock, or else only a guess. "iMile" has the digits of iMile's
   page, which writes every scan on the recipient country's clock, wherever it was: they
   take the destination's single clock, or else keep their wall clock, as iMile's own
-  lookup does. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
+  lookup does. A Chinese forwarder's copies of them under the same name, the centre in
+  brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
+  hours ahead of iMile's own in Italy. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African
   office's scans have the instants of the South African post's own clock that way.
   Their European partners' relays are on another clock (below). Correios Brazil's ("Brazil
@@ -440,7 +442,9 @@ step exists for future protocol changes.
   UPU's copies at the destination's office of exchange show: they are read on the
   destination's single clock, else kept as wall clocks. So are its English copies whose
   place is in the destination, by the country's name or, on an item to the US or Canada, a
-  state or province. A copy at a place of China Post's own ("Final delivery" at a code)
+  state or province. Its own lines for those scans, a processing centre in brackets
+  ("邮件到达处理中心【…】") or a clearance named by the country's code, keep China's clock:
+  China Post's tracker gives them "+08:00". A copy at a place of China Post's own ("Final delivery" at a code)
   takes the zone of another network's scan at the same minute in the destination, the
   post's own or UPU's: on an item to New Zealand, its delivery had the minute of New Zealand
   Post's, and read on China's clock came five hours later. Its UPU and EMS scans come under

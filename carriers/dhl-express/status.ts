@@ -63,6 +63,26 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['CC', 'ready_for_pickup'], ['ND', 'failed_attempt'], ['RT', 'returned'],
 ]);
 
+// Some pieces of a multi-piece shipment handed over while others are still on the way, written again
+// in the minute the last of them is delivered. It neither delivers the shipment nor moves it back.
+const PIECE_DELIVERY = 'partial delivery of one or more pieces of a multi-piece shipment';
+
+/** Whether a checkpoint is the delivery of some of the shipment's pieces, which keeps the stage of the scan before it. */
+export function isDhlExpressPieceDelivery(description: string): boolean {
+  return description.replace(/\s+/g, ' ').trim().toLowerCase() === PIECE_DELIVERY;
+}
+
+/** Events newest first, each piece delivery on the stage of the staged scan before it. */
+export function withPieceDeliveries<T extends { description?: string; stage?: string; stage_source?: string }>(events: T[]): T[] {
+  const read = [...events];
+  for (let index = read.length - 1; index >= 0; index--) {
+    if (!isDhlExpressPieceDelivery(read[index]!.description ?? '')) continue;
+    const previous = read.slice(index + 1).find((event) => !isDhlExpressPieceDelivery(event.description ?? ''))?.stage ?? 'registered';
+    read[index] = { ...read[index]!, stage: previous, stage_source: 'none' };
+  }
+  return read;
+}
+
 /** The checkpoint's stage from DHL's own wording, if the wording is one of DHL's checkpoints. */
 export function dhlExpressCheckpointStage(description: string): Stage | undefined {
   const text = description.toLowerCase();
@@ -83,4 +103,7 @@ export function dhlExpressStage(description: string, code?: string | null): { st
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => checkpointStage(wording, code),
   gaps: [],
+  gapNote: (_code, wording) => (isDhlExpressPieceDelivery(wording)
+    ? 'The delivery of some pieces of a multi-piece shipment, while others are on the way or in the minute the rest is delivered: the shipment keeps the stage it had.'
+    : undefined),
 };

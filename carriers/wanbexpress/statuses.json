@@ -103,6 +103,27 @@
       "note": "The same partner's move towards the facility that delivers, before the delivery run."
     },
     {
+      "wording": "In Transit to Next Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The same move, sent without the full stop."
+    },
+    {
+      "wording": "It is currently in transit to the next facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A partner's move between facilities after the flight lands, relayed without a code."
+    },
+    {
+      "wording": "The package is being transferred to the next facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The same partner's next move between facilities, relayed without a code."
+    },
+    {
       "code": "LastMileInTransit",
       "wording": "In transit along Poste Italiane’s logistic network",
       "language": "en",

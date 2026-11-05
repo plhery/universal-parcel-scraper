@@ -190,6 +190,7 @@ const UNCODED_SCANS: ReadonlyMap<string, string> = new Map([
 /** Cainiao's records that move no parcel: each keeps the stage of the scan before it. */
 const NOTICES = [
   { code: 'GTMS_ORDER_INFO_UPDATE', note: "The order's delivery details changed, which moves no parcel: it keeps the stage of the scan before it." },
+  { code: 'PARCEL_ORDER_INFO_UPDATE', note: 'The order changed from a self-pickup to a home delivery ("Self-pickup converted to home delivery"), which moves no parcel: it keeps the stage of the scan before it.' },
   { code: 'SC_TRANS_INBOUND_FAILURE', note: 'A transit sorting center\'s inbound that did not go through, worded only "Carrier update": it names no movement and no fault, so it keeps the stage of the scan before it.' },
   { code: 'LAST_MILE_ASN_NOTIFY', note: 'Cainiao\'s advance notice of the parcel to the courier that delivers it, worded "Last-mile delivery forecast" or only "Carrier update": sent after a scan and carrying no date, not a forecast of one, so it keeps the stage of the scan before it.' },
 ];

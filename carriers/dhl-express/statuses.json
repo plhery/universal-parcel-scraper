@@ -16,6 +16,13 @@
       "firstSeen": "2026-10-05"
     },
     {
+      "wording": "Partial delivery of one or more pieces of a multi-piece shipment",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Some pieces handed over while others are still on the way, and again in the minute the last is delivered: it keeps the stage of the scan before it."
+    },
+    {
       "wording": "Shipment is on hold",
       "language": "en",
       "stage": "exception",

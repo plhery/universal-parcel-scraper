@@ -920,6 +920,24 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it("reads a Chinese forwarder's copies of iMile's scans abroad on Beijing's clock", () => {
+    // Each copy reads seven hours ahead of iMile's own in Italy; on Italy's clock the round came after the lookup.
+    const result = parseParcelsAppResponse({ carriers: ['iMile', 'iMile'], originCode: 'CN', destinationCode: 'IT', states: [
+      { date: '2026-11-05T16:17:49Z', status: '【lat 01】shipment out for delivery', carrier: 0, location: 'LAT 01' },
+      { date: '2026-11-05T09:17:49Z', status: 'Shipment is out for delivery', carrier: 1 },
+      { date: '2026-11-03T07:51:38Z', status: '【example center】parcel shipped to【lat 01】', carrier: 0, location: 'Example center' },
+      { date: '2026-11-03T04:55:33Z', status: '【example center】received', carrier: 0, location: 'Example center' },
+      { date: '2026-11-02T21:55:33Z', status: 'Example center Your order has been received', carrier: 1, location: 'Example center' },
+    ] }, number, identity(), null, Date.parse('2026-11-05T11:25:00Z'));
+    expect(result.events?.map((scan) => [scan.time, scan.stage])).toEqual([
+      ['2026-11-05T08:17:49.000Z', 'out_for_delivery'],
+      ['2026-11-05T08:17:49.000Z', 'out_for_delivery'],
+      ['2026-11-02T23:51:38.000Z', 'in_transit'],
+      ['2026-11-02T20:55:33.000Z', 'in_transit'],
+      ['2026-11-02T20:55:33.000Z', 'in_transit'],
+    ]);
+  });
+
   it("reads JS Express's scans on their place's clock, China's at home only", () => {
     // JS Express's own feed gives these digits with the offset of each scan's place, and its
     // partners' scans abroad came out six hours early on China's clock.
@@ -2190,6 +2208,12 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-09-17T11:25:00Z', status: 'Delivered', carrier: 0, location: 'Delivered' },
       { date: '2026-09-17T11:25:00Z', status: 'Final delivery', carrier: 1, location: '12345' },
     ])?.at(-1)).toBe('2026-09-17T03:25:00.000Z');
+    // China Post's own lines for its scans in the destination keep its clock: its tracker gives them "+08:00".
+    expect(times('FR', ['China Post'], [
+      { date: '2026-11-01T07:29:00Z', status: '邮件到达处理中心【FR Example FR】', carrier: 0, location: 'France' },
+      { date: '2026-10-31T15:03:00Z', status: 'Customs clearance completed in FR', carrier: 0, location: 'France' },
+      { date: '2026-10-30T09:00:00Z', status: 'Arrive at the place of destination', carrier: 0, location: 'France' },
+    ])).toEqual(['2026-10-31T23:29:00.000Z', '2026-10-31T07:03:00.000Z', '2026-10-30T08:00:00.000Z']);
   });
 
   it("dates UPU's scans at an office the destination's code names by the office's place", () => {

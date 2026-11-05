@@ -130,7 +130,9 @@ whole, and those that end with the facility ("Processed at CITY - COUNTRY")
 match on their start. Other wording goes to the shared classifier.
 "Clearance processing complete at …" puts the parcel back in transit; a
 clearance still under way stays in customs. Only the stage changes, so stored
-scans keep their identity.
+scans keep their identity. A partial delivery of a multi-piece shipment hands over
+some pieces while others are still on the way, and DHL writes it again in the minute
+the last piece is delivered, so it keeps the stage of the scan before it.
 
 ## Limits
 

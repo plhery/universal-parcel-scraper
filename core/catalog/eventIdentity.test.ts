@@ -241,6 +241,17 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(incoming, { ...stored, description: '您的快件在【示例市】已揽收' })).toBe(false);
   });
 
+  it("lets a Yanwen relay of a J&T Australia scan without its customer service line take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('yanwen', { supportsScanMatching: true });
+    const stored = { stage: 'out_for_delivery', location: 'EXAMPLE DEPOT', providerCode: '',
+      description: 'Your parcel is out for delivery. If you have any questions, please call customer service:130000, Thank you for your patience.' };
+    const incoming = { ...stored, description: 'Your parcel is out for delivery.' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    const picked = { ...stored, stage: 'in_transit', description: 'The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000' };
+    expect(policy?.matches?.({ ...picked, description: 'The parcel has been successfully picked up and is being prepared for transportation.' }, picked)).toBe(true);
+    for (const different of [{ ...stored, location: 'OTHER DEPOT' }, { ...stored, stage: 'delivered' }]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
   it('lets a ZTO trace shown in English take over the row stored in its Chinese label, by type and place', () => {
     const policy = sameInstantIdentityPolicy('zto', { supportsScanMatching: true });
     const stored = { stage: 'delivered', description: '已签收', location: 'Example depot', providerCode: 'SIGNED' };

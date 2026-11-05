@@ -25,6 +25,7 @@
     {"code": "CO_C_CR", "wording": "The package is waiting for processing at the station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the delivery station, not yet handed to a courier."},
     {"code": "CO_C_CR", "wording": "Packages ready for delivery on the next working day", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the delivery station; delivery starts the next working day, so it is not out for delivery yet."},
     {"code": "CO_C_CR", "wording": "Packages in transit for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "签收", "language": "zh", "english": "Signed for", "stage": "delivered", "confirmedBy": "live", "note": "The forwarder's record, without a code or a place, that the parcel was signed for, written weeks after its clock rather than ahead of it. The English is a plain rendering."},
     {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time. The English is the row's on BYHD's tracker."}
   ]
 }

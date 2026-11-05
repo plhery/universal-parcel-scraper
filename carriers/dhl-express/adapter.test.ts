@@ -6,7 +6,8 @@ import { TrawlClient } from '../../core/transport/index.js';
 import { adapter, DhlExpressTracker, normalizeNumber, normalizePieceId, parse, parseMobile, parseUnified, parseUnifiedPiece } from './adapter.js';
 import { CAPTCHA_MEMORY_MS, HOURLY_REQUESTS, MAX_CAPTCHA_MEMORY_MS, MobilePacedError, SETTINGS_TTL_MS } from './mobile.js';
 import { API, ApiPacedError, PAUSE_MS, SPACING_MS } from './api.js';
-import { dhlExpressStage } from './status.js';
+import { dhlExpressStage, statusMap } from './status.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 
 const number = '1234567891';
 const payload = () => ({ results: [{ id: number, duplicate: false, hasDuplicateShipment: false,
@@ -53,6 +54,32 @@ describe('DHL Express projection', () => {
     // A consumer reads an offset-less `time` in the catalog zone, which is UTC here.
     expect(result.events?.some((event) => 'time' in event)).toBe(false);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|private|signature|signatory/);
+  });
+  it("keeps a delivery of some pieces on the stage before it, without delivering the shipment or moving it back", () => {
+    const partial = 'Partial delivery of one or more pieces of a multi-piece shipment';
+    const web = payload();
+    web.results[0]!.checkpoints = [
+      { description: 'Delivered', date: 'Monday, October 12, 2026', time: '10:11', location: 'EXAMPLE TOWN - ITALY' },
+      { description: partial, date: 'Monday, October 12, 2026', time: '10:11', location: 'EXAMPLE TOWN - ITALY' },
+      { description: 'Processed at EXAMPLE HUB - UK', date: 'Thursday, October 08, 2026', time: '19:46', location: 'EXAMPLE HUB - UK' },
+      { description: partial, date: 'Monday, October 05, 2026', time: '10:14', location: 'EXAMPLE TOWN - ITALY' },
+      { description: 'Shipment is out with courier for delivery', date: 'Monday, October 05, 2026', time: '09:32', location: 'EXAMPLE CITY - ITALY' },
+    ];
+    const result = parse(web, number);
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['delivered', 'carrier_map'], ['in_transit', 'none'], ['in_transit', 'carrier_map'], ['out_for_delivery', 'none'], ['out_for_delivery', 'carrier_map'],
+    ]);
+    expect(parse({ results: [{ ...web.results[0]!, checkpoints: web.results[0]!.checkpoints.slice(3) }] }, number))
+      .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'none', last_status_text: partial });
+    const unified = unifiedPayload();
+    unified.shipments[0]!.status = { description: partial, statusCode: 'transit', timestamp: '2026-10-05T13:14:00-04:00' };
+    unified.shipments[0]!.events = [{ description: partial, statusCode: 'transit', timestamp: '2026-10-05T13:14:00-04:00' }, ...unified.shipments[0]!.events.slice(1)] as typeof unified.shipments[0]['events'];
+    const read = parseUnified(unified, number);
+    expect(read).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'none' });
+    expect(read.events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'none' });
+    expect(statusMap.stage(null, partial.toLowerCase())).toBeUndefined();
+    expect(statusMapAnswer({ carrier: 'dhl-express', providerCode: null, description: partial }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
   it('maps DHL checkpoints that end with their facility, and leaves other wording to the classifier', () => {
     expect([
