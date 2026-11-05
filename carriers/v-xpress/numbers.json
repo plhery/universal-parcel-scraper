@@ -183,6 +183,36 @@
         ]
       },
       "note": "An archived address on V-Xpress's own site carries this number in its path, but that address only pages through the track page and shows no docket; it lies within a few dozen of the numbers archived there in other years, more like one set of links crawled again than dockets issued then; V-Xpress's tracker does not find it."
+    },
+    {
+      "number": "3002063035",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/931003355/Vxpress-vijayant-in-Consignments-46995173-Print",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A public docket document identifies the shipment; the own guest tracker returns a matching whole docket and delivered movement history."
     }
   ]
 }

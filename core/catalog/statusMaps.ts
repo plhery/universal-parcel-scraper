@@ -735,6 +735,7 @@ import { statusMap as kargoturk } from '../../carriers/kargoturk/status.js';
 import { statusMap as profitFields } from '../../carriers/profit-fields/status.js';
 import { statusMap as lmParcel } from '../../carriers/lm-parcel/status.js';
 import { statusMap as znlogic } from '../../carriers/znlogic/status.js';
+import { statusMap as vXpress } from '../../carriers/v-xpress/status.js';
 import { statusMap as airspeed } from '../../carriers/airspeed/status.js';
 import { statusMap as freightwaysGlobal } from '../../carriers/freightways-global/status.js';
 import { statusMap as fxdcPost } from '../../carriers/fxdc-post/status.js';
@@ -747,7 +748,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
-  airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa,
+  'v-xpress': vXpress, airspeed, topdelivery, kargoturk, expedico, 'profit-fields': profitFields, 'lm-parcel': lmParcel, znlogic, 'freightways-global': freightwaysGlobal, 'fxdc-post': fxdcPost, 'frontier-ca': frontierCa,
   'fez-delivery': fezDelivery,
   'junfeng-international': junfengInternational,
   'shipglobal-us': shipglobalUs,

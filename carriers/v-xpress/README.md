@@ -1,29 +1,21 @@
 # V-Xpress
 
-V-Xpress parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter posts a docket to the public tracker at `vxpress.in/sx_trackapi.php`,
+using the current page's `iTrackingNumber` and `isTrace=1` fields. Both the shipment summary
+and movement heading must match the whole docket. Explicit selection and named handoffs
+reach it; shared numeric formats receive no detection or recognition rule.
 
-V-Xpress is the express cargo division of V-Trans (India) Ltd., carrying parcels by road, air and multimodal
-services across India from its own branches. Its site is vxpress.in.
+The timeline keeps its unoffset scan clocks. The summary's delivery clock differs from the
+timeline without stating a zone, so it supplies neither a delivery instant nor an estimate.
+Any zone a consumer deduces remains separate from the source clock. Labels precede custody;
+assigning trips, data dispatch, account edits and proof administration do not establish movement.
+Mobile dispatch alone supplies no custody stage. Unknown detail text is represented as a generic
+update because that field can embed contact details. Recipient and shipper information, mixed
+locations, references, proof links and raw detail text are omitted.
 
-## Numbers
+The exact empty `Docket Not Found......` reply establishes absence. Mixed results, malformed
+markup, refusals and rate limits stay distinct, with enabled provider fallback available.
+Retrieval uses verified HTTPS, the caller's transport, cancellation and aggregate budget,
+cache revalidation and one network-only retry. It needs no session or browser bootstrap.
 
-Its docket numbers are seven digits in a customer's complaint. Seven bare digits are shared by other carriers,
-so there is no rule. Its tracking page warns that the docket number differs from a shop's order number.
-
-## Why there is no adapter
-
-Its tracking page posts the docket number to an open endpoint without a session or CAPTCHA:
-`POST vxpress.in/sx_trackapi_new.php` with `iTrackingNumber` and `isTrace=1`, which returns an HTML fragment. An
-unknown number gets HTTP 200 with a "Docket Number Not Found" message. The reply allows public caching for
-a month, so an adapter has to bypass shared caches. It does not find the public docket, which is old, so no found
-reply has been seen.
-
-## Links
-
-Its tracker has no address for a single number: `/track/<number>/` on its site only pages through the track
-page, so no link names it.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `VXPRESS_TRACKING_NUMBER=… VXPRESS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/v-xpress/adapter.live.test.ts` with private inputs.

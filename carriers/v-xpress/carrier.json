@@ -18,16 +18,38 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "v-xpress",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
-    "searchUrl": "https://vxpress.in/track-result/",
+    "searchUrl": "https://vxpress.in/track-result-new/",
     "canaryUrl": "https://vxpress.in/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": [
+      "status",
+      "history",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_details",
+      "shipper_details",
+      "references",
+      "proof_links",
+      "mixed_locations",
+      "administrative_updates",
+      "summary_clocks",
+      "eta"
+    ],
     "unavailable": []
   },
   "links": [],

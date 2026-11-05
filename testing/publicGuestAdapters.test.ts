@@ -7,6 +7,7 @@ import { adapter as royaleInternational } from '../carriers/royale-international
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
 import { adapter as kargoturk } from '../carriers/kargoturk/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
+import { adapter as vXpress } from '../carriers/v-xpress/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as freightwaysGlobal } from '../carriers/freightways-global/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
@@ -48,6 +49,9 @@ const cases: { carrier: string; factory: AdapterFactory; number: string; fixture
     request: url => { expect(url.href).toBe('https://my.fxdc-post.com/klant/volgen?ref=97468251'); } },
   { carrier: 'frontier-ca', factory: frontierCa, number: '97468251', fixture: 'tracking.xml', count: 5,
     request: url => { expect(url.href).toBe('https://tracking.carrierlogistics.com/scripts/fscf.pol/protracexml.htm?pronum=97468251'); } },
+  { carrier: 'v-xpress', factory: vXpress, number: '9746825136', fixture: 'tracking.html', count: 8,
+    request: (url, init) => { expect(url.href).toBe('https://vxpress.in/sx_trackapi.php'); expect(init?.method).toBe('POST');
+      expect(String(init?.body)).toBe('iTrackingNumber=9746825136&isTrace=1'); } },
   { carrier: 'airspeed', factory: airspeed, number: '974682513', fixture: 'tracking.html', count: 5,
     request: url => { expect(url.href).toBe('https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill=974682513'); } },
 ];

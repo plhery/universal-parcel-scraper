@@ -1,4 +1,47 @@
 {
   "carrier": "v-xpress",
-  "entries": []
+  "entries": [
+    {
+      "wording": "All Package Label Generated",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Package Labels Printed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Unloaded at facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Loaded for transport",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Arrived at delivery branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

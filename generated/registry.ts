@@ -686,6 +686,7 @@ import { adapter as urbano } from '../carriers/urbano/adapter.js';
 import { adapter as urvaam } from '../carriers/urvaam/adapter.js';
 import { adapter as usps } from '../carriers/usps/adapter.js';
 import { adapter as uzbekistanPost } from '../carriers/uzbekistan-post/adapter.js';
+import { adapter as vXpress } from '../carriers/v-xpress/adapter.js';
 import { adapter as valmo } from '../carriers/valmo/adapter.js';
 import { adapter as vaspExpresso } from '../carriers/vasp-expresso/adapter.js';
 import { adapter as veloces } from '../carriers/veloces/adapter.js';
@@ -1420,6 +1421,7 @@ export const REGISTRY: RegistryDefinition = {
     "urvaam": urvaam,
     "usps": usps,
     "uzbekistan-post": uzbekistanPost,
+    "v-xpress": vXpress,
     "valmo": valmo,
     "vasp-expresso": vaspExpresso,
     "veloces": veloces,
@@ -2707,7 +2709,7 @@ export const REGISTRY: RegistryDefinition = {
     "utec-logistics": "universal",
     "uvan": "universal",
     "uzbekistan-post": "uzbekistan-post",
-    "v-xpress": "universal",
+    "v-xpress": "v-xpress",
     "valmo": "valmo",
     "value-logistics": "universal",
     "valueway": "universal",

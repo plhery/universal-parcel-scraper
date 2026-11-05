@@ -47308,10 +47308,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "v-xpress",
+      "localClocks": true
     },
     "canaryUrl": "https://vxpress.in/",
-    "trackingSearchUrl": "https://vxpress.in/track-result/",
+    "trackingSearchUrl": "https://vxpress.in/track-result-new/",
     "linkRules": [],
     "detectionRules": []
   },
