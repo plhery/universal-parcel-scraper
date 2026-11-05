@@ -637,6 +637,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'jumppoint', number: 'JP000000000000',
     route: /^https:\/\/tracking\.jumppoint\.io\/\?q=JP000000000000$/,
     marker: /Shipment Not Found|查無此單|查无此单|Jumppoint標準快遞 及 即日快遞|Jumppoint Standard Express and Same-day Express/ },
+  { carrier: 'jumppoint-international', number: 'JPSG0000000000',
+    route: /^https:\/\/int-tracking\.jumppoint\.io\/\?q=JPSG0000000000$/,
+    marker: /Jumppoint國際快遞|Jumppoint International Express|國際快遞|International Express/ },
   // A hash-routed tracker: it lists an unknown number with its own notice.
   { carrier: 'ubi-smart-parcel', number: 'AU9999999999999',
     route: /^https:\/\/shipper\.ubismartparcel\.com\/#\/ubi\?trackingNos=AU9999999999999$/,

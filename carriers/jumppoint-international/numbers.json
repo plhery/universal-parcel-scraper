@@ -1,0 +1,22 @@
+{
+  "carrier": "jumppoint-international",
+  "records": [
+    {
+      "number": "JPMY4551840739",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/jumppoint/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "jumppoint-international",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's Jumppoint page offers it as a sample to try. Its layout is the one Jumppoint's international tracker accepts; no source ties it to a shipment."
+    }
+  ]
+}

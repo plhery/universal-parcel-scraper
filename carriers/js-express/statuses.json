@@ -33,6 +33,7 @@
     {"wording": "Arrived at GOFO Regional Destination Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Preparing for delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's step at the delivering facility, before the courier takes the parcel out."},
     {"wording": "Courier is out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Route not completed", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "iMile's driver's reason for the attempt's end, relayed under the code DDE without iMile's centre in 【】."},
     {"wording": "Delivery failed, type: Recipient absent or address unreachable. We will redeliver as soon as possible. Please be patient and keep in touch.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "GOFO's failed attempt, with another one to come."},
     {"wording": "DESPATCHED AND ON ROUTE TO YODEL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's record of the parcel on its way to it, written while JS Express's warehouse in China sent it out."},
     {"wording": "PARCEL PICKED UP", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Yodel's record of its partner collecting the parcel from JS Express's warehouse in China, which accepted it the day before."},

@@ -239,6 +239,20 @@
       "note": "Recipient could not be met; a new attempt follows on the next working day or the preferred day"
     },
     {
+      "code": "DELIVERY_FAILED_NOT_MET_2X",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The second attempt without meeting the recipient, in the first's words; a new attempt follows on the next working day or the preferred day"
+    },
+    {
+      "code": "DELIVERY_FAILED_NOT_MET_3X",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The third attempt without meeting the recipient, who has 10 days to book a delivery before the parcel goes back to the sender"
+    },
+    {
       "code": "NOT_DELIVERABLE",
       "stage": "exception",
       "confirmedBy": "official-doc",

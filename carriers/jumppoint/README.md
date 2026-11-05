@@ -39,11 +39,9 @@ Tracked through the lookup its tracking page makes.
 - The courier's phone numbers, the merchant's order number and the pick-up point's phone and
   opening hours are not kept. The pick-up point's name and address are kept while the parcel
   waits there and after it is collected.
-- The page can show a number from Jumppoint's international service, which no catalog carrier
-  tracks, so there is no hand-off. That service's numbers are `JP`, two letters and ten digits,
-  the layout its own tracker at `int-tracking.jumppoint.io` accepts besides this one. Its lookup,
-  `GET https://int-tracking-api.jumppoint.io/shipment/tracking/`, refuses a request without the
-  page's reCAPTCHA token, so neither this adapter nor a rule takes those numbers.
+- Numbers of Jumppoint's international service, `JP`, two letters and ten digits, belong to
+  [Jumppoint International Express](../jumppoint-international/README.md), which universal
+  providers track.
 
 ## Limitations
 

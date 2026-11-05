@@ -27412,6 +27412,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jumppoint-international": {
+    "displayName": "Jumppoint International Express",
+    "color": "#0f4ae1",
+    "aliases": [
+      "Jumppoint International",
+      "Jumppoint國際快遞"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://int-tracking.jumppoint.io/",
+    "trackingUrlTemplate": "https://int-tracking.jumppoint.io/?q={trackingNumber}",
+    "trackingSearchUrl": "https://int-tracking.jumppoint.io/",
+    "linkRules": [
+      {
+        "domains": [
+          "int-tracking.jumppoint.io"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JP[A-Z]{2}\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "junfeng-international": {
     "displayName": "JunFeng International",
     "color": "#f3c93a",
@@ -51249,6 +51286,7 @@ export const CARRIER_IDS = [
   "jrt",
   "js-express",
   "jumppoint",
+  "jumppoint-international",
   "junfeng-international",
   "juxi-express",
   "jy-express",
@@ -52592,6 +52630,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1"],
   "jumppoint": ["jumppoint-1"],
+  "jumppoint-international": ["jumppoint-international-1"],
   "junfeng-international": [],
   "juxi-express": ["juxi-express-1"],
   "jy-express": [],

@@ -824,6 +824,14 @@
       "note": "Copied from InPost on the line into Poland: the recipient sent the courier parcel to a parcel machine, where it has not arrived yet."
     },
     {
+      "wording": "Prepared by the Sender., The parcel will soon be handed over to us to reach you as quickly as possible.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Copied from InPost: the sender's label, written before JRT's warehouse receives the parcel."
+    },
+    {
       "wording": "Consignee Contacted",
       "language": "en",
       "stage": "pending",

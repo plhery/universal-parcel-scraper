@@ -543,6 +543,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "Colis Privé's delivery to the recipient's letterbox, on the line into France."
+    },
+    {
+      "wording": "Arrival at the processing center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "A delivering partner's sort centre after the import clearance. Shouwu's own warehouse intake is \"Arrival processing center\"."
+    },
+    {
+      "wording": "Departed the processing center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The parcel leaving a delivering partner's sort centre after the import clearance."
+    },
+    {
+      "wording": "The shipment could not be delivered. Please find more information here.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "A delivering partner's failed attempt; another delivery run follows. The link the wording points to is not relayed."
     }
   ]
 }

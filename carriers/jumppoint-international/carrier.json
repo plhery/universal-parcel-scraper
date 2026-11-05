@@ -1,0 +1,51 @@
+{
+  "id": "jumppoint-international",
+  "displayName": "Jumppoint International Express",
+  "aliases": [
+    "Jumppoint International",
+    "Jumppoint國際快遞"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#0f4ae1"
+  },
+  "selectable": true,
+  "timezone": "Asia/Hong_Kong",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://int-tracking.jumppoint.io/?q={trackingNumber}",
+    "searchUrl": "https://int-tracking.jumppoint.io/",
+    "canaryUrl": "https://int-tracking.jumppoint.io/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "int-tracking.jumppoint.io"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "q"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "jumppoint-international-1",
+      "pattern": "^JP[A-Z]{2}\\d{10}$",
+      "confidence": "high"
+    }
+  ]
+}

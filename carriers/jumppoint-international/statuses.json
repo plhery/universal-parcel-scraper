@@ -1,0 +1,11 @@
+{
+  "carrier": "jumppoint-international",
+  "entries": [
+    {"wording": "Order Created", "stage": "registered", "language": "en", "confirmedBy": "source", "note": "The order data, before the parcel is handed over."},
+    {"wording": "Handover to Linehaul", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "The parcel handed to the line haul."},
+    {"wording": "Departure from Origin Airport", "stage": "in_transit", "language": "en", "confirmedBy": "source"},
+    {"wording": "Arrival at Destination Airport", "stage": "in_transit", "language": "en", "confirmedBy": "source"},
+    {"wording": "Import Customs Handover To Lastmile", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "Import customs hands the cleared parcel to the delivering carrier."},
+    {"wording": "Arrival at Last Mile Distribution Point", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "The delivering carrier's depot, before the delivery round."}
+  ]
+}

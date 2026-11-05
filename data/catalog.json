@@ -27408,6 +27408,43 @@
       }
     ]
   },
+  "jumppoint-international": {
+    "displayName": "Jumppoint International Express",
+    "color": "#0f4ae1",
+    "aliases": [
+      "Jumppoint International",
+      "Jumppoint國際快遞"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Hong_Kong",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://int-tracking.jumppoint.io/",
+    "trackingUrlTemplate": "https://int-tracking.jumppoint.io/?q={trackingNumber}",
+    "trackingSearchUrl": "https://int-tracking.jumppoint.io/",
+    "linkRules": [
+      {
+        "domains": [
+          "int-tracking.jumppoint.io"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JP[A-Z]{2}\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "junfeng-international": {
     "displayName": "JunFeng International",
     "color": "#f3c93a",

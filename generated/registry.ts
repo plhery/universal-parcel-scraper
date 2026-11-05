@@ -2111,6 +2111,7 @@ export const REGISTRY: RegistryDefinition = {
     "jrt": "jrt",
     "js-express": "js-express",
     "jumppoint": "jumppoint",
+    "jumppoint-international": "universal",
     "junfeng-international": "junfeng-international",
     "juxi-express": "universal",
     "jy-express": "universal",

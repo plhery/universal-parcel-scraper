@@ -325,6 +325,8 @@ describe('Hermes Germany', () => {
     ['INTERNATIONAL_UNDELIVERABLE', 'exception', 'exception'],
     ['DELIVERY_FAILED_ADDRESS_PROBLEM', 'failed_attempt', 'exception'],
     ['DELIVERY_FAILED_NOT_MET_1X', 'failed_attempt', 'exception'],
+    ['DELIVERY_FAILED_NOT_MET_2X', 'failed_attempt', 'exception'],
+    ['DELIVERY_FAILED_NOT_MET_3X', 'failed_attempt', 'exception'],
   ])('reads %s as %s', (code, stage, status) => {
     const payload = [{ barcode: NUMBER, parcelProgress: [
       { parcelStatus: 'SORTED', timestamp: '2026-09-02T09:00:00Z' },
