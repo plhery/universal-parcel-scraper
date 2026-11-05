@@ -16,6 +16,8 @@
     {"code": "卡车到达俄罗斯", "wording": "Arrived in Russia", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "卡车到达白俄", "wording": "Arrived in Belarus", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "卡车进入欧盟境内", "wording": "Entered the EU.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The truck crossing into the EU, before import customs."},
+    {"code": "卡车到达波兰", "wording": "Arrived in Poland", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-05"},
+    {"code": "卡车抵达清关地", "wording": "Arrived at customs clearance.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "The truck reaching the place of import clearance, as a flight's landing at the clearance port, before the broker takes the shipment; its wording repeats the row's own time, and the shared rules would read it as customs."},
     {"code": "预计起飞日期", "wording": "Estimated departure date: …", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "An estimate written before the flight, followed by its date: no scan, so the adapter drops the row."},
     {"code": "航班延误", "wording": "Flight delayed.", "language": "en", "confirmedBy": "live", "unmapped": true, "firstSeen": "2026-10-22", "note": "Between the estimated departure and the take-off: not a movement, so the row keeps the stage of the one before it."},
     {"code": "航班已起飞", "wording": "Flight has departed.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

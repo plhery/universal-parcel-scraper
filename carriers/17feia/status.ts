@@ -27,6 +27,9 @@ const LABELS: ReadonlyMap<string, Stage> = new Map([
   ['卡车到达俄罗斯', 'in_transit'],
   ['卡车到达白俄', 'in_transit'],
   ['卡车进入欧盟境内', 'in_transit'],
+  ['卡车到达波兰', 'in_transit'],
+  // The truck reaching the place of import clearance, as a flight lands at the clearance port, before the broker has it.
+  ['卡车抵达清关地', 'in_transit'],
   ['航班已起飞', 'in_transit'],
   ['飞机起飞', 'in_transit'],
   ['航班到达中转地', 'in_transit'],
