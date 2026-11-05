@@ -311,6 +311,14 @@
       "note": "The French delivering partner's transit row, after the sort in the Netherlands, with the country before it and Shouwu's Chinese for in transit after it."
     },
     {
+      "wording": "Germany, Die Sendung wurde im Briefzentrum bearbeitet.,运输途中",
+      "stage": "in_transit",
+      "language": "de",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The German delivering partner's sort at a letter centre, with the country before it and Shouwu's Chinese for in transit after it."
+    },
+    {
       "wording": "Shipment arrived at a carrier facility",
       "stage": "in_transit",
       "language": "en",
