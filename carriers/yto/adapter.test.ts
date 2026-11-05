@@ -127,7 +127,28 @@ describe('YTO domestic parser', () => {
     expect(result.events?.[1]!.time).toBe('2026-01-03T12:00:00+08:00');
   });
 
-  it.each([null, {}, { waybillNo: NUMBER, opCode: '745' }])('rejects malformed scans %s without dropping them', scan => {
+  it('reads a scan sent without its label or place by its code and the place its description names', () => {
+    const value = fixture();
+    const scans = value[0].waybillProcessInfo.filter((scan: { opCode: string }) => ['131', '171'].includes(scan.opCode));
+    value[0].waybillProcessInfo = scans.map((row: Record<string, unknown>) => {
+      const scan = { ...row }; delete scan.opName; delete scan.opOrgName;
+      return { ...scan, description: scan.opCode === '171' ? '您的快件已经到达【Example arrival depot】【物流问题请致电（专属热线:95000）更快解决】'
+        : '您的快件离开【Example departure hub】，已发往【Example arrival depot】' };
+    });
+    const result = parseYto(value, NUMBER);
+    expect(result.events?.map(({ provider_code, stage, description, location }) => ({ provider_code, stage, description, location }))).toEqual([
+      { provider_code: '171', stage: 'in_transit', description: 'Unloaded at a sorting centre', location: 'Example arrival depot' },
+      { provider_code: '131', stage: 'in_transit', description: 'Loaded for transport', location: 'Example departure hub' },
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/95000|热线/);
+    // A contact in the first bracket is no place, and a code without a label of its own stays malformed.
+    value[0].waybillProcessInfo[0].description = '您的快件已经到达【派件员 Example 13000000000】';
+    expect(parseYto(value, NUMBER).events?.[0]!.location).toBeUndefined();
+    value[0].waybillProcessInfo[0].opCode = '751';
+    expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it.each([null, {}, { waybillNo: NUMBER, opCode: 'NEW' }, { waybillNo: NUMBER, opName: '下车扫描' }])('rejects malformed scans %s without dropping them', scan => {
     const value = fixture(); value[0].waybillProcessInfo.unshift(scan);
     expect(() => parseYto(value, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

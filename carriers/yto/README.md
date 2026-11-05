@@ -23,6 +23,10 @@ keeps subsequent movement, collection and signature scans on the return to the s
 Return transit remains active; only a completed sender signature is terminal.
 Short operation labels and depot names are retained; expanded descriptions containing
 courier contacts, recipient details and collection addresses are excluded.
+The feed can send a scan with its code and description but no label or depot. Such a scan
+takes the label the website gives its code, and an arrival or departure takes the first
+place its description names unless that bracket gives a contact. A code without a label
+of its own stays malformed.
 Known labels are shown in English, and rows stored with the Chinese label take the
 English in place.
 

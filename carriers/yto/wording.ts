@@ -19,3 +19,12 @@ export function ytoRelayedWording(description: string): string {
   }
   return kept.join('').replace(/\s+/gu, ' ').trim().replace(/[\s,，;；:：]+$/u, '');
 }
+
+/**
+ * The place a transit scan's description names first, "您的快件已经到达【<place>】…" or
+ * "您的快件离开【<place>】，已发往【…】", for a scan the feed sends without its place.
+ */
+export function ytoDescribedPlace(description: string): string | undefined {
+  const place = /^您的快件(?:已经)?(?:到达|离开)【([^【】]{1,100})】/u.exec(description.trim())?.[1]?.trim();
+  return place && !CONTACT.test(place) ? place : undefined;
+}

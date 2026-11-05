@@ -30,6 +30,17 @@ export function ytoStatus(code: string, signType?: unknown): ClassifiedStatus | 
   return STATUS.get(code);
 }
 
+// The website's label of each operation code that has one label, for a scan the feed sends
+// with its code and description but no label.
+const LABELS = new Map<string, string>([
+  ['310', '揽收扫描'], ['131', '装件入车扫描'], ['171', '下车扫描'], ['710', '派件扫描'], ['745', 'PDA正常签收扫描'],
+]);
+
+/** The label the website gives an operation code, where the code has one. */
+export function ytoCodeLabel(code: string): string | undefined {
+  return LABELS.get(code);
+}
+
 /** The wording of a signature on the way back: the sender took the parcel. */
 export const YTO_RETURNED = 'Returned to the sender';
 

@@ -5,7 +5,8 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { YTO_RETURNED, ytoScan, ytoStatus } from './status.js';
+import { YTO_RETURNED, ytoCodeLabel, ytoScan, ytoStatus } from './status.js';
+import { ytoDescribedPlace } from './wording.js';
 
 const PROVIDER = 'YTO Express';
 // The domestic client's /ec/apollo/checkWaybillNo rules. Keep them local so a
@@ -43,7 +44,8 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
       throw new SchemaError(PROVIDER, 'YTO returned mixed or incomplete shipment history');
     }
     const code = clean(raw.opCode, 32);
-    const label = clean(raw.opName, 200);
+    // The feed can send a scan's code and description without its label and place.
+    const label = clean(raw.opName, 200) || (ytoCodeLabel(code) ?? '');
     if (!code || !label) throw new SchemaError(PROVIDER, 'YTO returned a scan with no operation');
     const details = clean(raw.description, 1000);
     const returnType = clean(raw.ioTypeName, 32);
@@ -59,7 +61,7 @@ export function parseYto(payload: unknown, trackingNumber: string): CarrierResul
     const clock = clean(raw.opTime, 64);
     const parsed = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/.test(clock)
       ? zonedTime(clock, 'yyyy-MM-dd HH:mm:ss', ZONE) : null;
-    const location = clean(raw.opOrgName, 200);
+    const location = clean(raw.opOrgName, 200) || ytoDescribedPlace(details);
     // opName is the short operation label. The website's expanded description
     // includes courier names/phones, collection addresses and recipient details.
     const event: CarrierEvent = { description, provider_code: code,
