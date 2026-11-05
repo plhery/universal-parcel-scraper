@@ -1,0 +1,33 @@
+{
+  "id": "tiptop",
+  "displayName": "TipTop",
+  "aliases": [
+    "义乌壹皓国际物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e6212a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.tiptop56.com/",
+    "canaryUrl": "https://www.tiptop56.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

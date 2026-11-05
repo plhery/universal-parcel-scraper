@@ -2620,6 +2620,7 @@ export const REGISTRY: RegistryDefinition = {
     "timely-titan": "timely-titan",
     "tinypack": "universal",
     "tipsa": "tipsa",
+    "tiptop": "universal",
     "tirupati-courier": "tirupati-courier",
     "tiui": "universal",
     "tmm-express": "tmm-express",

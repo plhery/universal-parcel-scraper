@@ -44899,6 +44899,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "tiptop": {
+    "displayName": "TipTop",
+    "color": "#e6212a",
+    "aliases": [
+      "义乌壹皓国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.tiptop56.com/",
+    "trackingSearchUrl": "https://www.tiptop56.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tirupati-courier": {
     "displayName": "Shree Tirupati Courier",
     "color": "#f4791f",
@@ -51693,6 +51713,7 @@ export const CARRIER_IDS = [
   "tiki",
   "timely-titan",
   "tinypack",
+  "tiptop",
   "tirupati-courier",
   "tiui",
   "tmm-express",
@@ -53035,6 +53056,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tiki": [],
   "timely-titan": ["timely-titan-1"],
   "tinypack": [],
+  "tiptop": [],
   "tirupati-courier": [],
   "tiui": [],
   "tmm-express": [],
