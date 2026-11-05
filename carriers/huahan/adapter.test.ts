@@ -224,6 +224,9 @@ describe('HuaHan status map', () => {
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'ZZ', description: 'Departed from origin facility' })).toEqual({ kind: 'unknown' });
     // The destination carrier's address change, relayed without a code after the hand-off.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Change of delivery address' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // CTT Express's pre-advice, relayed without a code before HuaHan's receipt in China.
+    expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Pendiente de recepción en CTT Express' })).toEqual({ kind: 'mapped', stage: 'registered' });
+    expect(huahanStage('', 'Pendiente de recepción en CTT Express')).toEqual({ stage: 'registered', source: 'carrier_map' });
     // The destination carrier's hub and trunk route under IA, by their words.
     for (const description of ['In Transit, Arrived to HU HUB', 'In Transit, Parcel has entered the Linehaul network.']) {
       expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'IA', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });

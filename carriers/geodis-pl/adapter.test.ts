@@ -97,6 +97,14 @@ describe('GEODIS Poland HTTP adapter', () => {
     expect(result).not.toHaveProperty('delivered_at');
   });
 
+  it('reads a history of one scan that comes as that row alone, not in a list', () => {
+    const [row] = history('history-in-transit');
+    expect(parseGeodisPlHistory(row, summary, LATER)).toEqual(parseGeodisPlHistory([row], summary, LATER));
+    expect(parseGeodisPlHistory(row, summary, LATER).events).toHaveLength(1);
+    // The row is read as strictly as in a list.
+    expect(() => parseGeodisPlHistory({ ...row, TS_TIME: '2026-01-12 08:14' }, summary, LATER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('holds back a scan dated over an hour after the read', () => {
     const result = parseGeodisPlHistory(history('history-delivered'), summary, Date.parse('2026-07-07T07:00:00Z'));
     expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: '2026-07-07T07:31:00+02:00' });

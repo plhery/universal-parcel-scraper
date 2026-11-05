@@ -176,18 +176,20 @@ function jsonKind(value: unknown): string {
 /**
  * The shipment's history (`GET /en/?ltlHistory=`): JSON rows oldest first, or
  * `null` when it holds none. It does not echo the number; the search page,
- * read first, binds the shipment. Identical rows are one scan. A pseudo-scan
+ * read first, binds the shipment. A history of one scan can come as that row
+ * alone, not in a list. Identical rows are one scan. A pseudo-scan
  * (300) cancels the delivery, return and claim scans before it and is dropped
  * with them. A scan dated over an hour after the read is held back.
  */
 export function parseGeodisPlHistory(payload: unknown, summary: GeodisPlSummary, readAt = Date.now()): CarrierResult {
   if (payload === null) return summaryOnly(summary);
-  if (!Array.isArray(payload)) throw new SchemaError(PROVIDER, `GEODIS Poland returned an invalid history (${jsonKind(payload)})`);
-  if (payload.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'GEODIS Poland returned an oversized history');
+  const list: unknown = isRecord(payload) && Object.hasOwn(payload, 'TS_SCAN') ? [payload] : payload;
+  if (!Array.isArray(list)) throw new SchemaError(PROVIDER, `GEODIS Poland returned an invalid history (${jsonKind(payload)})`);
+  if (list.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'GEODIS Poland returned an oversized history');
 
   const seen = new Set<string>();
   const rows: Scan[] = [];
-  for (const row of payload) {
+  for (const row of list) {
     const scan = projectRow(row);
     const key = JSON.stringify([scan.code, scan.wall, scan.event.location ?? '', scan.event.description]);
     if (seen.has(key)) continue;

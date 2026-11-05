@@ -28,6 +28,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['has been given to local carrier', 'in_transit'],
   ['data processed', 'in_transit'],
   ['we will pick up your parcel from the sender soon.', 'registered'],
+  // CTT Express's notice of the parcel coming, relayed while HuaHan still has it in China.
+  ['pendiente de recepción en ctt express', 'registered'],
   ['ready to ship, parcel received and processed', 'in_transit'],
   ['shipped', 'in_transit'],
   ['change of delivery address', 'in_transit'],

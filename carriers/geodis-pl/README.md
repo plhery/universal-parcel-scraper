@@ -10,7 +10,8 @@ the separate [`geodis`](../geodis/README.md) carrier.
    - `/en/?ShNumber={number}` answers the same search the page's form posts with its
      `REQUEST_TOKEN`. The reply is the search page with a summary of the shipment, or a notice.
    - `/en/?ltlHistory={number}` is the request the summary's "Details" link sends. It returns
-     the scans as JSON rows, or `null` when the shipment has none yet.
+     the scans as JSON rows, or `null` when the shipment has none yet. A history of one scan
+     can come as that row alone, not in a list.
 2. `retry`: one more try when a request fails to reach the site or hangs. The first try gets
    half of the budget.
 
