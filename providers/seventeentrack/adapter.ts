@@ -29,6 +29,7 @@ import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
 import { placedInIndia } from '../../carriers/shiprocket/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { uspsRowZone, uspsScanZone } from '../../carriers/usps/clock.js';
+import { ytoRelayedWording } from '../../carriers/yto/wording.js';
 import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
@@ -435,6 +436,8 @@ const CHINA_POST = 3011;
 const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049]);
 /** Legs whose English wording ends with the place in brackets: Pengyou (捧友, 191878 in 17TRACK's carrier list). */
 const BRACKETED_PLACES: ReadonlySet<unknown> = new Set([191878]);
+/** 17TRACK's carrier 190157, YTO Express, whose scans it relays in the website's expanded wording. */
+const YTO = 190157;
 /** China Post's mirror of the origin post's outward exchange office: "arrived at" or "left the exchange office abroad". */
 const ORIGIN_EXCHANGE = /^(?:到达|离开)境外出口互换局/;
 
@@ -635,7 +638,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         : daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location))));
       const placed = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
       let parsed: CarrierEvent | null;
-      try { parsed = seventeenTrackEvent(raw, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
+      // YTO's wording without the courier's name and phone and its hotline, as YTO's own result keeps neither.
+      const scan = reported.key === YTO ? { ...raw, description: ytoRelayedWording(text(raw.description)) } : raw;
+      try { parsed = seventeenTrackEvent(scan, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed || (reported.key === DHL_ECOMMERCE_US && !parsed.location && DHL_ECOMMERCE_EN_ROUTE.test(parsed.description ?? ''))) continue;
       // China Post words its labels in Chinese only, on its own leg and on a forwarder's that relays them: they

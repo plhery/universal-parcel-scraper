@@ -127,6 +127,30 @@ describe('17TRACK result parsing', () => {
     }
   });
 
+  it("leaves the courier's name and phone and the hotline out of YTO's wording, as YTO's own result does", () => {
+    const scan = (time: string, sub_status: string, description: string) => ({
+      time_iso: `2026-11-03T${time}+08:00`, time_utc: null, time_raw: { date: '2026-11-03', time, timezone: null },
+      description, location: '', stage: null, sub_status });
+    const hotline = '【物流问题请致电（专属热线:10000）更快解决】';
+    const payload = postalHistory([
+      scan('22:29:58', 'InTransit_Other', '您的快件离开【示例转运中心】，已发往【其他转运中心】。预计【11月05日】到达【其他市】，请您放心！'),
+      scan('22:26:23', 'InTransit_Other', `您的快件已经到达【示例转运中心】${hotline}`),
+      scan('18:21:50', 'InTransit_Other', '您的快件离开【示例市】，已发往【示例转运中心】'),
+      scan('18:20:35', 'InTransit_PickedUp', `您的快件在【示例市】已揽收，揽收人: 示例（13000000000）${hotline}`),
+      scan('18:00:00', 'InTransit_Other', '快递员示例（13000000000）正在为您揽件'),
+    ], 'InTransit');
+    const providers = (payload.shipments[0]!.shipment as { tracking: { providers: { provider: unknown }[] } }).tracking.providers;
+    providers[0]!.provider = { key: 190157, name: 'YTO Express' };
+    const result = parse17TrackResponse(payload, number);
+    expect(result.events?.map((event) => [event.description, event.stage])).toEqual([
+      ['您的快件离开【示例转运中心】，已发往【其他转运中心】。预计【11月05日】到达【其他市】，请您放心！', 'in_transit'],
+      ['您的快件已经到达【示例转运中心】', 'in_transit'],
+      ['您的快件离开【示例市】，已发往【示例转运中心】', 'in_transit'],
+      ['您的快件在【示例市】已揽收', 'accepted'],
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/示例（|13000000000|热线|致电/u);
+  });
+
   it('reads an exact voided label as a problem despite the generic transit code', () => {
     const label = { ...postalScan('InfoReceived', 'Shipping Label Created'),
       time_iso: '2026-09-19T12:22:00+08:00', time_utc: '2026-09-19T04:22:00Z' };

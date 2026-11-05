@@ -28,6 +28,9 @@ English in place.
 
 Relayed Chinese labels and their ParcelsApp translations use the same vocabulary as
 direct scans. ParcelsApp's UTC-labelled China clocks are read in the catalog timezone.
+17TRACK relays the expanded description instead; its copy keeps the clauses before the
+first that names the courier, a phone or YTO's hotline, without a bracket that gives one,
+and a row that opens with a contact is left out.
 
 ## Limitations
 

@@ -1,6 +1,7 @@
 import type { SameInstantIdentityPolicy, SameInstantScan } from '../../core/catalog/eventIdentity.js';
 import { matchesLocationEnrichment, matchesRereadLocation } from '../../core/catalog/locationIdentity.js';
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
+import { ytoRelayedWording } from '../../carriers/yto/wording.js';
 import { place, trailingPlace } from './result.js';
 
 const normalized = (value: string) => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('en-US');
@@ -32,14 +33,26 @@ function matchesTrailingPlace(incoming: SameInstantScan, stored: SameInstantScan
     && (!incoming.providerCode || !stored.providerCode || incoming.providerCode === stored.providerCode);
 }
 
+/**
+ * A YTO scan stored with the courier's name and phone or YTO's hotline, before
+ * 17TRACK's copy left them out: the stored wording without them, at the same
+ * location, with provider codes that agree.
+ */
+function matchesYtoContacts(incoming: SameInstantScan, stored: SameInstantScan): boolean {
+  const wording = ytoRelayedWording(stored.description);
+  return wording !== '' && normalized(wording) !== normalized(stored.description) && normalized(wording) === normalized(incoming.description)
+    && normalized(incoming.location) === normalized(stored.location)
+    && (!incoming.providerCode || !stored.providerCode || incoming.providerCode === stored.providerCode);
+}
+
 // A copy may add a place, or drop a label it was once stored with that names
 // no place (Posti's "abroad", a feed's system user) or the words before a
 // depot's town, show a China Post label in English, or take the place from
-// after its wording.
+// after its wording, or leave out a YTO courier's contact.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'unknown', storedSources: ['unknown'], requireProviderCode: false,
   matchEachScan: true,
   matches: (incoming, stored) => matchesLocationEnrichment(incoming, stored)
     || matchesRereadLocation(incoming, stored, place) || matchesChinaPostEnglish(incoming, stored)
-    || matchesTrailingPlace(incoming, stored),
+    || matchesTrailingPlace(incoming, stored) || matchesYtoContacts(incoming, stored),
 };

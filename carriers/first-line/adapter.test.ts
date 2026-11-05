@@ -8,6 +8,8 @@ import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, FIRST_LINE_PAGE, FirstLineTracker } from './adapter.js';
 import { normalizeFirstLineNumber, parseFirstLine, parseFirstLinePage } from './parser.js';
+import { firstLinePlace } from './place.js';
+import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { firstLineStage } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -72,6 +74,23 @@ describe('FIRST LINE HTTP adapter', () => {
     expect(result.events!.filter((event) => event.local_time).map((event) => event.location ?? null))
       .toEqual(['SAMPLE TOWN FL', 'SAMPLE TOWN FL', 'EXAMPLE CITY FL DISTRIBUTION CENTER', null, 'New York NY USA', 'New York NY USA', null, 'SAMPLE HUB GA']);
     expect(JSON.stringify(result)).not.toMatch(/0000[12]|&nbsp;/);
+  });
+
+  it('names a US partner’s town and state once where the tracker repeats them', () => {
+    for (const [cell, place] of [
+      ['Sample Park, IL, Sample Park IL 00000', 'Sample Park, IL'], ['Sample Park, IL IL 00000', 'Sample Park, IL'],
+      ['Sample Park, IL, Sample Park IL', 'Sample Park, IL'], ['Sample Park, IL', 'Sample Park, IL'],
+      ['Sample Park, IL, Other Town IL', 'Sample Park, IL, Other Town IL'], ['Sample Park, IL, Sample Park WI', 'Sample Park, IL, Sample Park WI'],
+      ['New York NY USA', 'New York NY USA'], ['SAMPLE TOWN FL 00000', 'SAMPLE TOWN FL'],
+    ] as const) expect(firstLinePlace(cell), cell).toBe(place);
+    // The row stored with them said twice is taken over by the scan that names them once, and only that row.
+    const policy = sameInstantIdentityPolicy('first-line', { supportsScanMatching: true });
+    const scan = { stage: 'in_transit', description: 'Loaded on Vehicle', location: 'Sample Park, IL', providerCode: '' };
+    expect(policy?.matches?.(scan, { ...scan, location: 'Sample Park, IL IL' })).toBe(true);
+    expect(policy?.matches?.(scan, { ...scan, location: 'Sample Park, IL, Sample Park IL' })).toBe(true);
+    for (const stored of [{ ...scan, location: 'Other Town, IL IL' }, { ...scan, description: 'Departed GOFO Regional Hub', location: 'Sample Park, IL IL' }, scan]) {
+      expect(policy?.matches?.(scan, stored), JSON.stringify(stored)).toBe(false);
+    }
   });
 
   it('reads the delivery a relayed round promises on its own day while the parcel is on it', () => {

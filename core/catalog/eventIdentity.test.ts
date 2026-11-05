@@ -226,6 +226,21 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.({ ...stored, location: 'Other Post Office' }, stored)).toBe(false);
   });
 
+  it("lets a universal copy of a YTO scan without the courier's contact and the hotline take over its stored row", () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const stored = { stage: 'accepted', description: '您的快件在【示例市】已揽收，揽收人: 示例（13000000000）【物流问题请致电（专属热线:10000）更快解决】',
+      location: '', providerCode: 'InTransit_PickedUp' };
+    const incoming = { ...stored, description: '您的快件在【示例市】已揽收' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    for (const different of [
+      { ...stored, description: '您的快件在【其他市】已揽收，揽收人: 示例（13000000000）' },
+      { ...stored, providerCode: 'InTransit_Other' },
+      { ...stored, location: '示例市' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+    // A row stored without a contact is the scan itself.
+    expect(policy?.matches?.(incoming, { ...stored, description: '您的快件在【示例市】已揽收' })).toBe(false);
+  });
+
   it('lets a ZTO trace shown in English take over the row stored in its Chinese label, by type and place', () => {
     const policy = sameInstantIdentityPolicy('zto', { supportsScanMatching: true });
     const stored = { stage: 'delivered', description: '已签收', location: 'Example depot', providerCode: 'SIGNED' };

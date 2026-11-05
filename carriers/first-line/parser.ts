@@ -8,6 +8,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { textFromHtml } from '../../core/transport/index.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from './clock.js';
+import { firstLinePlace } from './place.js';
 import { firstLineStage } from './status.js';
 
 export const PROVIDER = 'FIRST LINE';
@@ -45,11 +46,6 @@ export function parseFirstLinePage(html: string): string {
   throw new SchemaError(PROVIDER, 'FIRST LINE’s tracking page holds no lookup address');
 }
 
-/** A place as the tracker writes it, without a trailing postcode. */
-function placeOf(location: string): string {
-  return location.replace(/\s+\d{4,6}(?:-\d{4})?$/, '').trim();
-}
-
 function stageOf(description: string): { stage: Stage; source: string } | undefined {
   const mapped = firstLineStage(null, normalizeStatusWording(description));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
@@ -69,7 +65,7 @@ function projectRow(row: string, readAt: number): { key: string; event: CarrierE
   if (latest.toMillis() > readAt) return null;
   const description = textFromHtml(match[4]);
   if (!description) return null;
-  const location = placeOf(textFromHtml(match[3], 200));
+  const location = firstLinePlace(textFromHtml(match[3], 200));
   const staged = stageOf(description);
   // A row in China or Hong Kong is on Beijing's clock; any other keeps its wall clock.
   const inChina = location ? firstLineInChina(location) : ORDER_DATA.test(description);

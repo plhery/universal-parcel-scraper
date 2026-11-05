@@ -43,7 +43,7 @@ The tracker answers plain HTTP only. No account, key, CAPTCHA or browser is need
 ## Limitations
 
 The tracker names no delivery partner, last-mile number or destination country, and the
-places' postcodes are dropped. It does not know every 1ST waybill: it answers 1ST06 waybills but not
+places' postcodes are dropped, as is GOFO's town and state said again after its hub's. It does not know every 1ST waybill: it answers 1ST06 waybills but not
 1ST18 ones, which the providers that relay 1ST's rows track from the order data to the
 delivery, in the English of another forwarder's system. No public tracker of the
 group answers those: the group's own query at `1st56.com/group/tracking/` is gone (HTTP 404),
