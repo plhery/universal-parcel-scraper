@@ -269,6 +269,40 @@ describe('Mondial Relay app step', () => {
     expect(failing).toHaveBeenCalled();
   });
 
+  it('keeps the caller’s estimate in place of the website’s while its day is ahead and no newer scan shows', async () => {
+    const website = JSON.parse(readFileSync(new URL('./fixtures/available-at-relay.json', import.meta.url), 'utf8')) as { Expedition: Record<string, unknown> };
+    website.Expedition.Numero = SHIPMENT;
+    const browserFor = () => {
+      const replies = [
+        { tier: 3, statusCode: 200, url: 'https://www.mondialrelay.fr/suivi-de-colis/', html: '<div id="tracking" token="SYNTHETIC_PAGE_TOKEN_1234567890"></div>' },
+        { tier: 3, statusCode: 200, url: `https://www.mondialrelay.fr/api/tracking?shipment=${SHIPMENT}&postcode=${POSTCODE}&brand=&codePays=fr`, html: `<pre>${JSON.stringify(website)}</pre>` },
+      ];
+      return vi.fn<typeof fetch>(() => Promise.resolve(json(replies.shift())));
+    };
+    const app = await new MondialRelayTracker({ app: service().client, trawl: null }).fetch(SHIPMENT, POSTCODE);
+    const lookup = (knownEstimate: { expectedDelivery: string; lastUpdate: string | null }, now = NOW) => {
+      const browser = browserFor();
+      const tracker = new MondialRelayTracker({ app: service().client, trawl: new TrawlClient(trawlServiceUrl, browser), fetcher: browser, now: () => now });
+      return tracker.fetch(SHIPMENT, POSTCODE, { knownEstimate }).then((result) => ({ result, browser }));
+    };
+    // The day is ahead and the caller's estimate came with the app's newest scan: no browser.
+    const kept = await lookup({ expectedDelivery: '2026-01-05', lastUpdate: app.last_update ?? null });
+    expect(kept.browser).not.toHaveBeenCalled();
+    expect(kept.result).toEqual({ ...app, expected_delivery: '2026-01-05' });
+    // A newer scan than the caller saw, a day that has come, or a malformed day asks the website.
+    for (const [known, now] of [
+      [{ expectedDelivery: '2026-01-05', lastUpdate: '2026-01-02T07:00:00+01:00' }, NOW],
+      [{ expectedDelivery: '2026-01-05', lastUpdate: null }, NOW],
+      [{ expectedDelivery: '2026-01-03', lastUpdate: app.last_update ?? null }, NOW],
+      [{ expectedDelivery: '2026-01-05', lastUpdate: app.last_update ?? null }, Date.UTC(2026, 0, 4, 23, 30)],
+      [{ expectedDelivery: '05/01/2026', lastUpdate: app.last_update ?? null }, NOW],
+    ] as const) {
+      const asked = await lookup(known, now);
+      expect(asked.browser, JSON.stringify(known)).toHaveBeenCalledTimes(2);
+      expect(asked.result.expected_delivery).toBe('2026-08-31');
+    }
+  });
+
   it('searches the app with a Portuguese postcode as the website takes it, hyphenated', async () => {
     const { calls, client } = service();
     await expect(new MondialRelayTracker({ app: client, trawl: null }).fetch(SHIPMENT, '1000001', {}, 'PT'))

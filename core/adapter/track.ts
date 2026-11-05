@@ -27,13 +27,15 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
   const input = { ...typed, number: normalizeTrackingNumber(typed.number) };
   const registered = options.registry.for(carrier);
   if (registered) {
-    const context = { signal: options.signal, budgetMs: options.budgetMs === undefined ? undefined : Math.min(60_000, options.budgetMs) };
+    const known = options.knownEstimate ? { knownEstimate: options.knownEstimate } : {};
+    const context = { signal: options.signal, budgetMs: options.budgetMs === undefined ? undefined : Math.min(60_000, options.budgetMs), ...known };
+    const passed = Boolean(options.signal || options.budgetMs !== undefined || options.knownEstimate);
     try {
       const result = registered.recordsSteps || registered.steps.length > 1
-        ? await registered.track(input, ...(options.signal || options.budgetMs !== undefined ? [context] as const : []))
+        ? await registered.track(input, ...(passed ? [context] as const : []))
         : await runSteps({ carrier, budgetMs: options.budgetMs ?? 120_000, signal: options.signal,
           recorder: options.recorder ?? NOOP_RECORDER }, [{ id: registered.steps[0] ?? 'direct',
-          run: ({ signal, remainingMs }) => registered.track(input, ...(options.signal || options.budgetMs !== undefined ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs) }] as const : [])) }]);
+          run: ({ signal, remainingMs }) => registered.track(input, ...(passed ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs), ...known }] as const : [])) }]);
       const answer = normalizeCarrierResult(result);
       return readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
         restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer))));

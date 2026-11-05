@@ -64,10 +64,23 @@ export function readerLanguage<const Language extends string>(
   return supported.find((language) => language === primary);
 }
 
+/** A delivery estimate the caller already holds for a parcel. */
+export interface KnownEstimate {
+  /** The estimated delivery day, `YYYY-MM-DD`, as a result's `expected_delivery` gave it. */
+  expectedDelivery: string;
+  /** The `last_update` of the result that gave it: the newest scan the caller had then, or null for none. */
+  lastUpdate: string | null;
+}
+
 export interface TrackingContext {
   signal?: AbortSignal;
   /** Overrides the adapter's default lookup budget. */
   budgetMs?: number;
+  /**
+   * The caller's estimate for the parcel. An adapter whose estimate costs a request of its own may
+   * keep this one instead while its day is ahead and the answer shows no newer scan.
+   */
+  knownEstimate?: KnownEstimate;
 }
 
 /** What an adapter derives from a `TrackingContext`: one signal and one clock for the whole lookup. */

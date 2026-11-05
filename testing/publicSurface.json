@@ -242,6 +242,7 @@
       "DpdSession",
       "DpdSessionEvent",
       "DpdSessionStore",
+      "KnownEstimate",
       "LocalBrowserOptions",
       "LocalBrowserSession",
       "LookupBudget",

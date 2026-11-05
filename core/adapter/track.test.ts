@@ -20,6 +20,18 @@ describe('consumer dispatch', () => {
     expect(track).toHaveBeenCalledWith({ number: 'TEST0001', postcode: '00000' }, expect.objectContaining({ signal: expect.any(AbortSignal) }));
   });
 
+  it('passes the caller’s known estimate to the adapter, alone or with a budget', async () => {
+    const knownEstimate = { expectedDelivery: '2026-01-05', lastUpdate: '2026-01-03T07:00:00+01:00' };
+    for (const steps of [['direct'], ['app', 'website']]) {
+      const track = vi.fn().mockResolvedValue({ status: 'in_transit' });
+      const registry = new AdapterRegistry({ factories: { test: () => ({ id: 'test', steps, track }) }, carriers: { test: 'test' } }, environment);
+      await trackCarrier('test', { number: 'TEST0001' }, { registry, knownEstimate, universal: {} as UniversalTracker });
+      await trackCarrier('test', { number: 'TEST0001' }, { registry, knownEstimate, budgetMs: 5_000, universal: {} as UniversalTracker });
+      expect(track).toHaveBeenNthCalledWith(1, { number: 'TEST0001' }, expect.objectContaining({ knownEstimate }));
+      expect(track).toHaveBeenNthCalledWith(2, { number: 'TEST0001' }, expect.objectContaining({ knownEstimate, budgetMs: expect.any(Number) }));
+    }
+  });
+
   it('holds back the scans an adapter enters at their planned time until they are due', async () => {
     const soon = new Date(Date.now() + 2 * 3_600_000).toISOString();
     const track = vi.fn().mockResolvedValue({ status: 'in_transit', last_update: soon, events: [

@@ -264,14 +264,15 @@ export function createTracker(options: TrackerOptions = {}) {
     const postcodeCountry = fields.postcode && input.postcodeCountry ? { postcodeCountry: input.postcodeCountry.trim().toUpperCase() } : {};
     const directInput = { number, postcode: fields.postcode, ...postcodeCountry, trackingUrl: fields.trackingUrl, ...language };
     const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
+    const known = context.knownEstimate ? { knownEstimate: context.knownEstimate } : {};
     // A carrier that enters some scans at their planned time shows them once they are due.
     const due = (answer: CarrierResult) => adapter?.plannedScans ? dueScans(answer, carrier) : answer;
     let result = adapter ? await attempt(carrier, async () => dateLocalClocks(carrier, due(normalizeCarrierResult(
       await (adapter.recordsSteps || adapter.steps.length > 1
-        ? adapter.track(directInput, { signal, budgetMs: directBudget() })
+        ? adapter.track(directInput, { signal, budgetMs: directBudget(), ...known })
         : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
           { id: adapter.steps[0] ?? 'direct', run: ({ signal: stepSignal, remainingMs }) => adapter.track(
-            directInput, { signal: stepSignal, budgetMs: remainingMs }) },
+            directInput, { signal: stepSignal, budgetMs: remainingMs, ...known }) },
         ])))))) : null;
     let source: string = carrier;
     // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.

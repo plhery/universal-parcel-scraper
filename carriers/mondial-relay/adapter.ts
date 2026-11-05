@@ -1,7 +1,7 @@
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { recognizeFromLookup, type AdapterFactory, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
+import { recognizeFromLookup, type AdapterFactory, type KnownEstimate, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { isValidMondialRelayBarcode } from '../../core/detection/index.js';
 import { isMondialRelayBarcodeHead } from '../../core/detection/mondialRelay.js';
@@ -198,6 +198,21 @@ function expectedDelivery(value: unknown): string | null {
   if (!raw || raw.startsWith('0001-01-01')) return null;
   const date = firstOccurrence(DateTime.fromISO(raw, { zone: ZONE }));
   return date.isValid ? date.toISODate() : null;
+}
+
+/**
+ * The caller's estimate, kept in place of the website's: its day is after today in Paris and the
+ * app's answer shows no scan newer than the caller's, so the website's estimate would be the same
+ * one. A day that has come, or a newer scan, asks the website again.
+ */
+function keptEstimate(known: KnownEstimate | undefined, result: CarrierResult, now: number): string | null {
+  if (!known || !/^\d{4}-\d{2}-\d{2}$/.test(known.expectedDelivery)) return null;
+  const day = firstOccurrence(DateTime.fromISO(known.expectedDelivery, { zone: ZONE })).toISODate();
+  const today = DateTime.fromMillis(now, { zone: ZONE }).toISODate();
+  if (day !== known.expectedDelivery || !today || day <= today) return null;
+  const newest = result.last_update ? Date.parse(result.last_update) : Number.NaN;
+  const seen = known.lastUpdate ? Date.parse(known.lastUpdate) : Number.NaN;
+  return Number.isNaN(newest) || newest <= seen ? day : null;
 }
 
 /**
@@ -401,6 +416,8 @@ export interface MondialRelayTrackerOptions {
   fetcher?: typeof fetch;
   userAgent?: string;
   recorder?: StepRecorder;
+  /** Test seam: the current time, in epoch milliseconds. */
+  now?: () => number;
 }
 
 export class MondialRelayTracker {
@@ -411,6 +428,7 @@ export class MondialRelayTracker {
   readonly #fetcher: typeof fetch | undefined;
   readonly #userAgent: string | undefined;
   readonly #recorder: StepRecorder;
+  readonly #now: () => number;
   readonly #serialize = singleFlight();
 
   constructor(options: MondialRelayTrackerOptions = {}) {
@@ -428,6 +446,7 @@ export class MondialRelayTracker {
     this.#fetcher = options.fetcher;
     this.#userAgent = options.userAgent;
     this.#recorder = options.recorder ?? NOOP_RECORDER;
+    this.#now = options.now ?? Date.now;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('Mondial Relay timeout must be positive');
     }
@@ -481,6 +500,9 @@ export class MondialRelayTracker {
           const result = this.#link(await app!.track(query, { signal, timeoutMs: Math.min(remainingMs, this.directTimeoutMs) }),
             credential, 'mobile-app-response');
           if (!trawl || !ON_THE_WAY.has(String(result.current_stage))) return result;
+          // The caller's estimate stands while its day is ahead and the app shows no newer scan.
+          const kept = keptEstimate(context.knownEstimate, result, this.#now());
+          if (kept) return { ...result, expected_delivery: kept };
           // The app gives no delivery estimate and the website does: for a parcel on its way, its
           // answer adds the estimate to the app's, which stands without it.
           const website = await this.#trawlResult(trawl, credential, deadline - APP_RESERVE_MS, signal).catch(() => {

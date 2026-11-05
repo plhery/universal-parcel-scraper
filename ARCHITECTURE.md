@@ -247,7 +247,10 @@ Consumers with their own router can call `trackCarrier` from `/node` with an
 carrier lookup and normalizes the result, and leaves scheduling and provider choice to the
 caller. It and `UniversalTracker` hand adapters and providers the normalized number, as
 `createTracker()` does: a number stored as typed, with a letter O for a zero in an S10 serial,
-reaches them corrected. An adapter with `recordsSteps` reports its own lookup, so dispatch
+reaches them corrected. A caller that holds a delivery estimate can pass it as `knownEstimate`
+with the `last_update` it came with: an adapter whose estimate costs a request of its own, as
+Mondial Relay's website does after its app, keeps it while its day is ahead and no newer scan
+shows. An adapter with `recordsSteps` reports its own lookup, so dispatch
 does not wrap its telemetry a second time. `CarrierError.reason` separates expected details,
 such as Amazon Shipping's expired history, from transport failures. An inconclusive error
 for the carrier's own answer that it holds no history under the number, an empty result or
