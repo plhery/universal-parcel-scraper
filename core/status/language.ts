@@ -269,9 +269,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^your parcel is in the air and is heading your way$|^your parcel's left the transfer country and is back on the move$|^touchdown! your parcel has landed$|^collected from the airline for processing$|^your parcel's on an interstate journey\. we'll keep you updated as it travels$/.test(text)) return 'in_transit';
   if (/^it's happening, your parcel will be delivered today\. get ready$|^parcel out for final mile carrier delivery$/.test(text)) return 'out_for_delivery';
   if (/^parcel unsafe to leave at address$/.test(text)) return 'failed_attempt';
-  // Royal Mail's delivery-round scans (EVGPD, EVKPD), as universal providers relay them: the
-  // delivery today is its out-for-delivery scan, not a forecast.
-  if (/^due to be delivered today(?: by\b.*)?$/.test(text)) return 'out_for_delivery';
+  // Royal Mail's delivery-round scans (EVGPD, EVKPD), as universal providers relay them, Postal
+  // Ninja as "Due for delivery today": the delivery today is its out-for-delivery scan, not a forecast.
+  if (/^due (?:to be delivered|for delivery) today(?: by\b.*)?$/.test(text)) return 'out_for_delivery';
   // DHL eCommerce UK's row for the day it plans to deliver on, which follows the collection, as
   // universal providers relay it with the shipment's number: the carrier's map reads it in transit.
   if (/^your shipment (?:\d{7,} )?is due to be delivered on (?:mon|tues|wednes|thurs|fri|satur|sun)day \d{2}(?:st|nd|rd|th) [a-z]+ \d{4}$/.test(text)) return 'in_transit';

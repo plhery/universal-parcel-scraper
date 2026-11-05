@@ -253,6 +253,13 @@
       "note": "The third attempt without meeting the recipient, who has 10 days to book a delivery before the parcel goes back to the sender"
     },
     {
+      "code": "DELIVERY_FAILED_NOT_MET_4X",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The fourth round without meeting the recipient, after which the parcel goes back to the sender"
+    },
+    {
       "code": "NOT_DELIVERABLE",
       "stage": "exception",
       "confirmedBy": "official-doc",

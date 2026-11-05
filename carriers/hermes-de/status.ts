@@ -74,6 +74,8 @@ export const STATUSES: Record<string, Milestone> = {
   DELIVERY_FAILED_NOT_MET_1X: milestone('failed_attempt', 'exception', 'Recipient not met; another attempt follows'),
   DELIVERY_FAILED_NOT_MET_2X: milestone('failed_attempt', 'exception', 'Recipient not met a second time; another attempt follows'),
   DELIVERY_FAILED_NOT_MET_3X: milestone('failed_attempt', 'exception', 'Recipient not met three times; book a delivery within 10 days or the parcel goes back'),
+  // The last round: the parcel goes back to the sender, whose return scan follows.
+  DELIVERY_FAILED_NOT_MET_4X: milestone('failed_attempt', 'exception', 'Recipient not met; the parcel goes back to the sender'),
   INTERNATIONAL_DELIVERY_FAILED: milestone('failed_attempt', 'exception', 'Delivery attempt unsuccessful'),
   INTERNATIONAL_DELIVERY_FAILED_ADDRESS: milestone('failed_attempt', 'exception', 'Delivery address not found'),
   INTERNATIONAL_PUDO_READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at a parcel shop'),
