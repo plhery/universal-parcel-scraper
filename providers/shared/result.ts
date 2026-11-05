@@ -541,8 +541,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // hub taking the parcel in, the parcel sent on, and a flight held up, for which results carry no delay flag.
   if (/^customer information manifested[.!]?$/i.test(value)) return 'registered';
   // A line's order and intake as ParcelsApp relays them: the order placed with it, after the sender's submission,
-  // and the parcel in its hands before it leaves the depot for the airport.
-  if (/^order has been placed successfully[.!]?$/i.test(value)) return 'registered';
+  // in English or Chinese, and the parcel in its hands before it leaves the depot for the airport.
+  if (/^(?:order has been placed successfully|已成功下单)[.!。]?$/i.test(value)) return 'registered';
   if (/^we have your parcel[.!]?$/i.test(value)) return 'accepted';
   // A booking before any carrier has the parcel: a collection requested or booked, or a carrier still waiting for it.
   if (/^(?:pickup requested|booked|waiting for (?:the )?parcel)[.!]?$/i.test(value)) return 'registered';

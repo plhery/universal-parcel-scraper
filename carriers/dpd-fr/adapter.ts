@@ -5,12 +5,13 @@ import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import type { Stage } from '../../core/status/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, type TrawlClient } from '../../core/transport/index.js';
 import { isDeliveryStatusCell } from './identity.js';
-import { classifyStatus, comparableText, includesAny } from './status.js';
+import { classifyStatus, comparableText, includesAny, isAcceptanceNotice } from './status.js';
 
 // Protocol provenance:
 // - DPD France publishes a server-rendered recipient page rather than a
@@ -201,6 +202,13 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
   parsedEvents.sort((left, right) => (
     right.timestamp - left.timestamp || left.sourceIndex - right.sourceIndex
   ));
+  // Oldest first: the acceptance notice keeps the stage of the scan before it, so it cannot pull
+  // the parcel back.
+  let previous: Stage | undefined;
+  for (const { event } of [...parsedEvents].reverse()) {
+    if (isAcceptanceNotice(comparableText(event.description ?? ''))) Object.assign(event, { stage: previous ?? 'registered', stage_source: 'none' });
+    else if (event.stage) previous = event.stage as Stage;
+  }
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   const latest = parsedEvents.find((event) => event.status !== 'unknown');
   const status = latest?.status ?? 'unknown';

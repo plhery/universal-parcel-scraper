@@ -14,7 +14,8 @@ import {
   normalizeDPDFranceTrackingNumber,
   parseDPDFranceTrackingHtml,
 } from './adapter.js';
-import { classifyStatus } from './status.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { classifyStatus, statusMap } from './status.js';
 
 type Row = [date: string, clock: string, description: string, location: string];
 type Detail = [label: string, value: string];
@@ -162,6 +163,25 @@ describe('DPD France rendered tracking', () => {
     ]) {
       expect(serialized).not.toContain(privateValue);
     }
+  });
+
+  it('gives an acceptance notice the stage of the scan before it, so a late one moves nothing back', () => {
+    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
+      ['05/03/2026', '05:11', 'Le destinataire est informé par e-mail de la prise en charge de son colis dans notre réseau', ''],
+      ['05/03/2026', '02:59', 'Le destinataire est informé par SMS de la prise en charge de son colis dans notre réseau', ''],
+      ['05/03/2026', '02:32', 'Votre colis est en transit dans notre réseau', 'Centre de tri DPD de Exemple (999)'],
+      ['04/03/2026', '20:00', 'Votre colis a été pris en charge dans notre réseau', 'Agence DPD de Exemple (998)'],
+    ] }), TEST_TRACKING_NUMBER);
+
+    expect(result.status).toBe('in_transit');
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['in_transit', 'none'], ['in_transit', 'none'], ['in_transit', undefined], ['accepted', undefined],
+    ]);
+    const notice = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
+      ['05/03/2026', '08:00', 'Le destinataire est informé par SMS de la prise en charge de son colis dans notre réseau', ''],
+      ['05/03/2026', '07:00', 'Votre colis a été pris en charge dans notre réseau', 'Agence DPD de Exemple (998)'],
+    ] }), TEST_TRACKING_NUMBER);
+    expect(notice.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted']);
   });
 
   it('returns every declared capability from one fixture', () => {
@@ -329,13 +349,16 @@ describe('DPD France status vocabulary', () => {
       .toEqual({ status: 'out_for_delivery', stage: 'ready_for_pickup' });
   });
 
-  it('keeps the same-day delivery notices on the delivery round and reads acceptance notices as accepted', () => {
+  it('keeps the same-day delivery notices on the delivery round and gives acceptance notices no stage', () => {
     for (const channel of ['SMS', 'e-mail']) {
       expect(classifyStatus(`Le destinataire est informé par ${channel} de la livraison de son colis ce jour`))
         .toEqual({ status: 'out_for_delivery', stage: 'out_for_delivery' });
-      expect(classifyStatus(`Le destinataire est informé par ${channel} de la prise en charge de son colis dans notre réseau`))
-        .toEqual({ status: 'in_transit', stage: 'accepted' });
+      const notice = `Le destinataire est informé par ${channel} de la prise en charge de son colis dans notre réseau`;
+      expect(classifyStatus(notice).status).toBe('unknown');
+      expect(statusMap.stage(null, normalizeStatusWording(notice))).toBeUndefined();
+      expect(statusMap.gapNote?.(null, normalizeStatusWording(notice))).toMatch(/keeps the stage/);
     }
+    expect(statusMap.gapNote?.(null, normalizeStatusWording('Votre colis a été pris en charge dans notre réseau'))).toBeUndefined();
     expect(classifyStatus('Votre colis a été pris en charge dans notre réseau'))
       .toEqual({ status: 'in_transit', stage: 'accepted' });
     // The driver taking the parcel over is still the delivery round.

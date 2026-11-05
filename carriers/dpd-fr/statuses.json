@@ -316,10 +316,10 @@
     {
       "wording": "de la prise en charge de son colis",
       "language": "fr",
-      "stage": "accepted",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-09-17",
-      "note": "Acceptance notice sent to the recipient by SMS and by e-mail; the result status becomes in_transit."
+      "note": "Acceptance notice sent to the recipient by SMS and by e-mail. It can come hours after a sort centre's scan, so it keeps the stage of the scan before it; the acceptance scan itself is accepted."
     },
     {
       "wording": "colis en retour",

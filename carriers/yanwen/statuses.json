@@ -381,6 +381,22 @@
       "note": "The destination partner's arrival at its next depot, after its departure scan, as DPD Romania words it."
     },
     {
+      "wording": "Incoming scan at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "A Belgian partner's hub taking the parcel in, minutes after Yanwen's batch handover and before the post's departure abroad."
+    },
+    {
+      "wording": "Outgoing scan at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The same hub sending the parcel on, minutes later."
+    },
+    {
       "wording": "Prepared for Self-collecting by Consignee",
       "language": "en",
       "stage": "ready_for_pickup",

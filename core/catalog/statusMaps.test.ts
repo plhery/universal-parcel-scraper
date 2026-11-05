@@ -349,7 +349,7 @@ describe('status map answers', () => {
   it("answers DPD France's wording, the only key its trace page has", () => {
     expect(answer('dpd-fr', null, 'Votre colis a été pris en charge dans notre réseau')).toEqual(mapped('accepted'));
     expect(answer('dpd-fr', null, 'Le destinataire est informé par SMS de la prise en charge de son colis dans notre réseau'))
-      .toEqual(mapped('accepted'));
+      .toEqual(gap);
     expect(answer('dpd-fr', null, 'Le destinataire est informé par e-mail de la livraison de son colis ce jour'))
       .toEqual(mapped('out_for_delivery'));
     expect(answer('dpd-fr', null, 'Synthetic wording')).toEqual(unknown);
@@ -1661,7 +1661,7 @@ describe("universal providers' answers", () => {
       ['Export declaration in progress., OTHER', 'customs'], ['Flight delayed., OTHER', 'in_transit'],
       ['Flight delay. The flight scheduled for the 7th is expected to be delayed', 'in_transit'],
       ['Airline delay', 'in_transit'], ['Flight delay', 'in_transit'], ['Parcel shipped', 'in_transit'], ['Customer information manifested', 'registered'],
-      ['Order has been placed successfully.', 'registered'], ['We have your parcel', 'accepted'],
+      ['Order has been placed successfully.', 'registered'], ['已成功下单', 'registered'], ['We have your parcel', 'accepted'],
       ['Pickup requested', 'registered'], ['Booked', 'registered'], ['Waiting for Parcel', 'registered'],
       ['Item inbound scanning', 'in_transit'], ['Item outbound scanning', 'in_transit'], ['Collected at Cargo Terminal', 'in_transit'],
       ['Packing the operating point', 'registered'], ['Empacando el punto de operación', 'registered'],

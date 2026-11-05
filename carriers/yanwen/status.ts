@@ -65,6 +65,9 @@ const WORDING = new Map<string, ClassifiedStatus>([
   // next depot, as DPD Romania words them.
   ['Departure Scan', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrival Scan', { status: 'in_transit', stage: 'in_transit' }],
+  // A Belgian partner's hub taking the batch in and sending it on, minutes after the handover.
+  ['Incoming scan at facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Outgoing scan at facility', { status: 'in_transit', stage: 'in_transit' }],
   // The destination partner's post office holding the parcel for the recipient to collect.
   ['Prepared for Self-collecting by Consignee', { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
   ['Transport to delivery centre', { status: 'in_transit', stage: 'in_transit' }],

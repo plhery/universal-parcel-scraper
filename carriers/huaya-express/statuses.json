@@ -11,6 +11,7 @@
     {"wording": "Package in transit to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Package arrived at destination country", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it."},
     {"wording": "Customs import clearance completed, awaiting pickup by local carrier", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "As a universal provider relays it; the local carrier has not taken the parcel yet."},
-    {"wording": "It has been handed over to the service provider.", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "The hand-over to the local carrier in the destination country, as a universal provider relays it; the row names neither."}
+    {"wording": "It has been handed over to the service provider.", "language": "en", "stage": "in_transit", "confirmedBy": "source", "note": "The hand-over to the local carrier in the destination country, as a universal provider relays it; the row names neither."},
+    {"wording": "Arrived at Origin Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "The US delivery partner's first hub, by Chicago O'Hare, once the parcel has flown there, as DHLink's and SwiftX's maps read it: in transit, not Huaya's acceptance."}
   ]
 }

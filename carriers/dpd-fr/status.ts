@@ -38,6 +38,11 @@ export function includesAny(value: string, phrases: string[]): boolean {
   return phrases.some((phrase) => value.includes(phrase));
 }
 
+/** The notice that the recipient was told of the acceptance, by its `comparableText` form. */
+export function isAcceptanceNotice(value: string): boolean {
+  return value.includes('de la prise en charge de son colis');
+}
+
 export function classifyStatus(description: string): ClassifiedStatus {
   const value = comparableText(description);
 
@@ -103,11 +108,13 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'donnees du colis transmises',
   ])) return { status: 'pending', stage: 'registered' };
 
-  // Acceptance into the network, and the notices that report it to the recipient.
-  if (includesAny(value, [
-    'pris en charge dans notre reseau',
-    'de la prise en charge de son colis',
-  ])) return { status: 'in_transit', stage: 'accepted' };
+  // The notice telling the recipient of the acceptance can come hours later, after a sort
+  // centre's scan; staged, it would pull the parcel back to accepted. The acceptance's own scan
+  // stages it, and the adapter gives the notice the stage of the scan before it.
+  if (isAcceptanceNotice(value)) return { status: 'unknown', stage: 'in_transit' };
+
+  // Acceptance into the network.
+  if (includesAny(value, ['pris en charge dans notre reseau'])) return { status: 'in_transit', stage: 'accepted' };
 
   if (includesAny(value, [
     'remis a dpd',
@@ -141,4 +148,6 @@ export const statusMap: CarrierStatusMap = {
     return classified && classified.status !== 'unknown' ? classified.stage : undefined;
   },
   gaps: [],
+  gapNote: (code, wording) => (!code && isAcceptanceNotice(comparableText(wording))
+    ? 'The recipient told of the acceptance, which can come after the parcel moved on: it keeps the stage it had.' : undefined),
 };

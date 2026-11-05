@@ -191,6 +191,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Flight arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The flight landed, a day after it left China; the tracker places it at \"EU\"."
+    },
+    {
       "wording": "Customs clearance has been completed",
       "stage": "in_transit",
       "language": "en",
