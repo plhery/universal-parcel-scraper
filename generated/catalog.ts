@@ -6936,7 +6936,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Manila",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airspeed",
+      "localClocks": true
     },
     "canaryUrl": "https://airspeed.ph/track-cargo/",
     "trackingUrlTemplate": "https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill={trackingNumber}",

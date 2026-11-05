@@ -1,28 +1,22 @@
 # Airspeed
 
-Airspeed parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter reads the anonymous cargo tracker at
+`logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill=…` for its supported waybills.
+The separate shipment number must match whole, and the current status and clock must agree with
+an end of the history grid. Explicit selection, tracking links and supported handoffs reach it;
+there is no broad numeric detection or recognition rule.
 
-Airspeed (Airspeed International Corporation) is a Philippine courier, cargo forwarder and logistics group,
-delivering across the Philippines and forwarding shipments abroad. Its site is airspeed.ph.
+The grid keeps local month/day clocks, newest first in the result, without an assumed offset.
+A pickup request precedes custody, and preparing a manifest records no movement. The combined
+location/remarks column can contain receiver and proof details, so it is omitted together with
+references and destination details. No estimate is inferred from the booking date.
 
-## Numbers
+An empty tracker view also supplies the server's current clock as its booking date. That date
+proves no booking; the empty view remains inconclusive because it supplies no bound shipment or
+explicit absence notice. Refusals, rate limits and malformed replies stay distinct, with enabled
+provider fallback available.
 
-Its waybills are nine digits, as an archived lookup on its own tracker shows. Nine digits are shared by other
-carriers, so there is no rule.
+Retrieval uses verified HTTPS, the caller's transport, cancellation and aggregate budget, with
+one network-only retry. No session or browser bootstrap is needed.
 
-## Why there is no adapter
-
-Its cargo tracker answers an open GET, `logistics.airspeed.com.ph/track/TrackingSearch.aspx` with the number in
-`waybill`, without a session or CAPTCHA, and returns an HTML page with the shipment's details and scan history.
-An unknown number gets the same page with empty fields and the server's current time as its booking date. The
-page also names the recipient. The tracking form on trackshipment.airspeed.com.ph, linked from the home page,
-does not find the public number. No adapter has been written for it yet.
-
-## Links
-
-The cargo tracker opens numbers from its `waybill` parameter.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Run `AIRSPEED_TRACKING_NUMBER=… AIRSPEED_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/airspeed/adapter.live.test.ts` with private inputs.

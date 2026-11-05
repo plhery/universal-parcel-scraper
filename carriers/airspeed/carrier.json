@@ -21,18 +21,36 @@
   "timezone": "Asia/Manila",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "airspeed",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://logistics.airspeed.com.ph/track/TrackingSearch.aspx?waybill={trackingNumber}",
     "searchUrl": "https://airspeed.ph/track-cargo/",
     "canaryUrl": "https://airspeed.ph/track-cargo/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "references",
+      "destination_details",
+      "location_remarks"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

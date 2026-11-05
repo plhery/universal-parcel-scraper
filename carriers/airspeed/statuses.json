@@ -1,4 +1,29 @@
 {
   "carrier": "airspeed",
-  "entries": []
+  "entries": [
+    {
+      "wording": "For Pick-Up",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Picked",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Received at AIC WHSE",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

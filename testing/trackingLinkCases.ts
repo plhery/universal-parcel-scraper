@@ -2183,6 +2183,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  airspeed: 'the cargo tracker looks up the number on the server, but an unknown one clears its summary and search box without an absence notice, so a synthetic rendered-page check cannot prove number forwarding',
   wahana: 'The tracking address needs a fresh Captcheck answer; it cannot render a shipment from the number alone.',
   egxpress: 'Unknown waybills redirect to a system-error page; the rendered-link check has no verified missing-parcel view for that route.',
   'tcc-co': 'the public tracking page submits a reCAPTCHA token; native history comes from its separate guest endpoint',
