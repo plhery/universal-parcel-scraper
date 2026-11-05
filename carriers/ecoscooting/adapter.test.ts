@@ -73,18 +73,20 @@ describe('Ecoscooting parcel history', () => {
     const value = portugalFixture(); value.statuses[0][field] = field === 'description' ? 'Not delivered' : 'Different';
     expect(() => parseEcoscooting(value, PORTUGAL_NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
-  it('reads a pickup-point collection as delivered and the earlier pickup-point scans as waiting there', () => {
+  it('reads a pickup-point collection as delivered, the shop’s check-in as waiting there and the courier’s hand-over as its round', () => {
     const result = normalizeCarrierResult(parseEcoscooting(pickupFixture(), NUMBER));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Your shipment has been collected by consignee at the parcelshop',
       last_update: '2026-02-06T17:30:00Z', delivered_at: '2026-02-06T17:30:00Z', weight_kg: 1.25, pickup_point: PICKUP_POINT });
-    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'ready_for_pickup', 'failed_attempt', 'out_for_delivery', 'in_transit', 'registered', 'registered']);
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'ready_for_pickup', 'out_for_delivery', 'failed_attempt', 'out_for_delivery', 'in_transit', 'registered', 'registered']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|imgUrl|opCode|opRemark|Latitude|Longitude|outOrder|toZip|feature|cainiaoId|popStation|pinCode/);
-    // "Delivered to PUDO" is the pickup point's signature, not the recipient's.
+    // Checked in by the shop, the parcel waits there.
     const waiting = pickupFixture(); waiting.statuses.shift();
     expect(parseEcoscooting(waiting, NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: PICKUP_POINT });
     expect(parseEcoscooting(waiting, NUMBER)).not.toHaveProperty('delivered_at');
+    // "Delivered to PUDO" is the courier leaving it there, before the shop checks it in: it cannot be collected yet.
     waiting.statuses.shift();
-    expect(parseEcoscooting(waiting, NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', pickup_point: PICKUP_POINT });
+    expect(parseEcoscooting(waiting, NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', pickup_point: PICKUP_POINT });
+    expect(parseEcoscooting(waiting, NUMBER)).not.toHaveProperty('delivered_at');
   });
   it('names the pickup point only once a scan places the parcel there', () => {
     const beforeArrival = pickupFixture(); beforeArrival.statuses = beforeArrival.statuses.slice(3);
@@ -135,7 +137,7 @@ describe('Ecoscooting parcel history', () => {
     const result = normalizeCarrierResult(parseEcoscooting(returnedFixture(), NUMBER));
     expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Your shipment has been returned successfully to sender', weight_kg: 0.8 });
     expect(result).not.toHaveProperty('delivered_at');
-    expect(result.events?.map(event => event.stage)).toEqual([...Array(7).fill('returned'), 'ready_for_pickup', 'ready_for_pickup', 'out_for_delivery',
+    expect(result.events?.map(event => event.stage)).toEqual([...Array(7).fill('returned'), 'ready_for_pickup', 'out_for_delivery', 'out_for_delivery',
       'in_transit', 'in_transit', 'in_transit', 'registered']);
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|imgUrl|opCode|opRemark|Latitude|Longitude|outOrder|toZip|feature|cainiaoId/);
     const expired = returnedFixture(); expired.statuses = expired.statuses.slice(6);

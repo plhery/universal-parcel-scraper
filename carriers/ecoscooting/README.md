@@ -29,9 +29,10 @@ wording. A delivery or a collection at a pickup point needs its exact code and
 both affirmative labels, and flags, when present, must both affirm it; anything
 else stays inconclusive. `GTMS_DEL_FAILURE` also carries the last-mile
 family's exception wording ("[Parcel lost]"), which reads as a problem rather than a
-failed attempt. Arrival at a pickup point and
-the pickup point's own signature ("Delivered to PUDO") read as ready for
-pickup. A parcel left at a pickup point past its deadline, and its whole
+failed attempt. The courier leaving the parcel
+at a pickup point ("Delivered to PUDO") ends its round: the shop checks the
+parcel in minutes or an hour later, so it reads as out for delivery, and the
+shop's check-in as ready for pickup. A parcel left at a pickup point past its deadline, and its whole
 journey back to the sender, read as returned. The last-mile station lists its
 exception or failed attempt first and the return it decides at the same
 second; the return then leads the history. The web client names the GTMS

@@ -33,6 +33,16 @@
     {
       "opTimestamp": "1770285900000",
       "datetime": "2026-02-05 11:05:00 UTC+1",
+      "actionCode": "GTMS_PUDO_INBOUND",
+      "statusName": "PUDO Inbound Success",
+      "description": "Your shipment has arrived at parcelshop and you‘ll receive pickup instructions shortly",
+      "timezone": "1",
+      "imgUrl": "PRIVATE_SYNTHETIC_IMAGE",
+      "opCode": "PRIVATE_SYNTHETIC_OPERATOR"
+    },
+    {
+      "opTimestamp": "1770285600000",
+      "datetime": "2026-02-05 11:00:00 UTC+1",
       "actionCode": "GTMS_STA_SIGNED",
       "statusName": "Delivered to PUDO",
       "description": "Your package has been processed by the courier. We will notify you when it is ready for pickup at the point.",
@@ -40,16 +50,6 @@
       "imgUrl": "PRIVATE_SYNTHETIC_IMAGE",
       "deliveryLongitude": "PRIVATE_SYNTHETIC_LONGITUDE",
       "deliveryLatitude": "PRIVATE_SYNTHETIC_LATITUDE",
-      "opCode": "PRIVATE_SYNTHETIC_OPERATOR"
-    },
-    {
-      "opTimestamp": "1770285600000",
-      "datetime": "2026-02-05 11:00:00 UTC+1",
-      "actionCode": "GTMS_PUDO_INBOUND",
-      "statusName": "PUDO Inbound Success",
-      "description": "Your shipment has arrived at parcelshop and you‘ll receive pickup instructions shortly",
-      "timezone": "1",
-      "imgUrl": "PRIVATE_SYNTHETIC_IMAGE",
       "opCode": "PRIVATE_SYNTHETIC_OPERATOR"
     },
     {

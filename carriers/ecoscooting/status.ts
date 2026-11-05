@@ -2,15 +2,18 @@ import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const DELIVERED: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
-// A pickup point signing for the parcel or receiving it means it waits there.
+// A pickup point receiving the parcel means it waits there.
 const AT_PICKUP_POINT: ClassifiedStatus = { status: 'out_for_delivery', stage: 'ready_for_pickup' };
+// The courier leaving it at the point ("Delivered to PUDO": "We will notify you when it is ready for pickup at the
+// point") ends the round before the shop checks the parcel in, so it cannot be collected yet.
+const LEFT_AT_PICKUP_POINT: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery' };
 const RETURNED: ClassifiedStatus = { status: 'exception', stage: 'returned' };
 
 const CODES = new Map<string, ClassifiedStatus>([
   // Codes of the GTMS/TD family.
   ['GTMS_SIGNED', DELIVERED],
   ['GTMS_PUDO_SIGNED', DELIVERED],
-  ['GTMS_STA_SIGNED', AT_PICKUP_POINT],
+  ['GTMS_STA_SIGNED', LEFT_AT_PICKUP_POINT],
   ['GTMS_PUDO_INBOUND', AT_PICKUP_POINT],
   ['GTMS_PUDO_OVERDUE', RETURNED],
   ['GTMS_SIGN_FAILURE', RETURNED],
@@ -34,7 +37,7 @@ const CODES = new Map<string, ClassifiedStatus>([
   // Codes of the last-mile family, which every CN reference uses.
   ['LM_SIGN_SUCCESS', DELIVERED],
   ['PUDO_SIGN_SUCCESS', DELIVERED],
-  ['PUDO_DELIVERY', AT_PICKUP_POINT],
+  ['PUDO_DELIVERY', LEFT_AT_PICKUP_POINT],
   // The courier could not leave the parcel at the parcelshop (closed): a failed attempt, not a parcel waiting there.
   ['PUDO_DELIVERY_FAILURE', { status: 'exception', stage: 'failed_attempt' }],
   ['PUDO_INBOUND', AT_PICKUP_POINT],

@@ -106,7 +106,7 @@
     {"code": "OIT", "wording": "The shipment has been collected by SF Express", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier took the parcel from JS Express's hub, after the departure from origin."},
     {"code": "OIT", "wording": "Shipment loaded, prepare to send to next station.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Shipment has arrived at the station and unloading.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
-    {"code": "DCF", "wording": "Under customs clearance, please wait patiently.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Export customs at the departure airport."},
+    {"code": "DCF", "wording": "Under customs clearance, please wait patiently.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "China's export customs at the departure airport, before the flight: in transit, not the destination's customs, which follows under OCP."},
     {"code": "OIT", "wording": "Flight departure scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Flight arrival scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OCP", "wording": "Start Custom clearance Process", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs at the destination."},

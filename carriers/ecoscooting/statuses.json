@@ -26,9 +26,9 @@
       "code": "GTMS_STA_SIGNED",
       "wording": "Delivered to PUDO",
       "language": "en",
-      "stage": "ready_for_pickup",
+      "stage": "out_for_delivery",
       "confirmedBy": "live",
-      "note": "The pickup point signed for the parcel, not the recipient."
+      "note": "The courier left the parcel at the pickup point, ending its round. The shop checks it in minutes or an hour later, and only then can it be collected."
     },
     {
       "code": "GTMS_PUDO_INBOUND",
@@ -169,9 +169,9 @@
       "code": "PUDO_DELIVERY",
       "wording": "Delivered to PUDO",
       "language": "en",
-      "stage": "ready_for_pickup",
+      "stage": "out_for_delivery",
       "confirmedBy": "live",
-      "note": "The pickup point signed for the parcel, not the recipient."
+      "note": "The courier left the parcel at the pickup point, ending its round. The shop checks it in minutes or an hour later, and only then can it be collected."
     },
     {
       "code": "PUDO_DELIVERY_FAILURE",
@@ -413,8 +413,9 @@
       "code": "GTMS_STA_SIGNED",
       "wording": "Your package has been processed by the courier. We will notify you when it is ready for pickup at the point.",
       "language": "en",
-      "stage": "ready_for_pickup",
-      "confirmedBy": "live"
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The same hand-over at the pickup point, before the shop checks the parcel in."
     },
     {
       "code": "LM_DELIVERY_FAILURE",
@@ -441,8 +442,9 @@
       "code": "PUDO_DELIVERY",
       "wording": "Your package has been processed by the courier. We will notify you when it is ready for pickup at the point.",
       "language": "en",
-      "stage": "ready_for_pickup",
-      "confirmedBy": "live"
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The same hand-over at the pickup point, before the shop checks the parcel in."
     },
     {
       "code": "RT_DO_ARRIVE",
