@@ -26,6 +26,17 @@ The app receives that key from Firebase Remote Config, under
 `enterprise_tracking_api_key_android_string`. It is the same for every install
 and is included in the adapter.
 
+`trawl` recovers refused or unreachable guest API requests through the configured
+browser service. It opens the official tracking deep link in a fresh context,
+observes the whole-barcode customer search and the history request before
+navigation, and reads their decoded responses. The search identifiers, one
+lookup-day URN and the returned history must agree. Verification, rotating keys
+and cookies stay in the page; the service returns selected tracking fields.
+Intermediate refusals and later retries remain ordered, including rate limits
+and unfinished requests.
+Short budgets keep the direct allowance when no service window fits. A service
+response reserve that cannot fit still leaves local browser recovery available.
+
 `browser` uses a fresh local Chromium through `TRACKING_CHROMIUM_PATH` when the
 guest API is refused or unreachable. The official page's AWS WAF SDK obtains its
 token and rotating API keys from `/protected/keys.json`. The customer search at
@@ -33,8 +44,9 @@ token and rotating API keys from `/protected/keys.json`. The customer search at
 identifiers, the application constructs a lookup-day URN and reads the same
 history service. Those keys and tokens remain inside the browser.
 
-The page reads the same history as the guest API. When the guest API answers
-without confirming a parcel, the page is not opened.
+Both browser paths read the same history as the guest API. When the guest API
+answers without confirming a parcel, neither browser path runs. Histories with
+more than the event limit remain partial so enabled providers can complete them.
 
 Recognition sends the guest API's reference lookup alone and never opens the
 page. A barcode it resolves is known. No parcel, a barcode the service rejects
@@ -89,7 +101,7 @@ caller's deadline and cancellation signal.
 
 Calling-card numbers, postcode-gated ownership details, locations and the
 ParcelShop holding a parcel are not projected. Evri announces no estimate
-before the delivery day. No TRAWL path is registered. A refused key, WAF rejection or
+before the delivery day. A refused key, WAF rejection or
 empty history does not establish parcel absence. The adapter does not fetch a
 rotated key from Remote Config. The deployed browser's network and build still
 affect the page step.
@@ -103,4 +115,5 @@ text markers.
 
 Set `EVRI_UK_TRACKING_NUMBER` outside the repository, then run
 `npm run test:carriers:live -- carriers/evri-uk`. With `TRACKING_CHROMIUM_PATH`
-set, the page step is compared with the guest API on the same parcel.
+set, the page step is compared with the guest API on the same parcel. Set
+`FLARESOLVERR_URL` outside the repository to exercise configured TRAWL recovery.

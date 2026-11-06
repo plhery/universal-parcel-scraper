@@ -1,26 +1,34 @@
 # City Air Express
 
-City Air Express parcels use enabled universal providers. There is no dedicated adapter yet.
+Guest parcel history from City Air Express’s Belfast NetCourier portal. The official site
+routes tracking there, including the confirmed MN series; the depot prefix does not select a
+host. Other series and depot hosts remain with enabled universal providers.
 
-City Air Express, which traded as CAE Delivers, carries next-day parcels from Great Britain to
-Northern Ireland and Ireland. Its site is cityairexpress.com.
+## Retrieval
 
-## Numbers
+A bounded GET reads `/online/tracking/trackinginfo/{trackingNumber}`. The complete waybill must
+match the `TRACKING FOR` heading before any dated event is read. Only the exact number-bound
+“Sorry, we could not find job” notice is not found. Redirects, route failures, blocked pages and
+malformed history remain distinct failures. One network-only retry shares the lookup budget.
 
-Waybills start with a depot code. An archived lookup on its own tracker reads `MN` and six
-digits, and the tracker still answers it. Eight characters also fit other carriers' lettered
-numbers, so `city-air-express-1` stays low confidence and no rule takes the other depot codes.
+The request selects British English explicitly. NetCourier's locale handling returns a server
+error for Node's default language header before rendering the tracking response.
 
-## Tracker
+The adapter reads the dated logistics rows, removes exact duplicates and preserves their order.
+The progress rail, recipient and signature prose, hidden forms and postcode-protected details
+are excluded. Scan times retain their full year and minute precision without an inferred zone;
+no delivery instant or estimate is supplied. Data processing records label activity, not custody.
+Unrecognized wording becomes a generic update and marks history partial for provider completion.
+All source rows are validated before the output cap.
 
-Its NetCourier tracker renders a waybill's events without a login or CAPTCHA; signatures need a
-postcode. Each depot has its own host.
+## Scope
 
-## Links
-
-The trackers keep the waybill in the path.
+The MN series has a shared eligibility gate for direct tracking and HTTP recognition. Its
+existing low-confidence detection stays unchanged; other carriers can issue a similar shape.
+A whole confirmed waybill without dated history is known to recognition but supplies no history.
+The public reference demonstrates retained history, not current shipment recognition coverage.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `CITY_AIR_EXPRESS_TRACKING_NUMBER` and optionally `CITY_AIR_EXPRESS_UNKNOWN_NUMBER` outside
+the repository, then run `npm run test:carriers:live -- carriers/city-air-express`.

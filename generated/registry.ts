@@ -103,6 +103,7 @@ import { adapter as chunghwaPost } from '../carriers/chunghwa-post/adapter.js';
 import { adapter as chunil } from '../carriers/chunil/adapter.js';
 import { adapter as ciblex } from '../carriers/ciblex/adapter.js';
 import { adapter as citilogistics } from '../carriers/citilogistics/adapter.js';
+import { adapter as cityAirExpress } from '../carriers/city-air-express/adapter.js';
 import { adapter as cityExpressRs } from '../carriers/city-express-rs/adapter.js';
 import { adapter as citylinkExpress } from '../carriers/citylink-express/adapter.js';
 import { adapter as citymail } from '../carriers/citymail/adapter.js';
@@ -702,6 +703,7 @@ import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
+import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
@@ -839,6 +841,7 @@ export const REGISTRY: RegistryDefinition = {
     "chunil": chunil,
     "ciblex": ciblex,
     "citilogistics": citilogistics,
+    "city-air-express": cityAirExpress,
     "city-express-rs": cityExpressRs,
     "citylink-express": citylinkExpress,
     "citymail": citymail,
@@ -1438,6 +1441,7 @@ export const REGISTRY: RegistryDefinition = {
     "wahana": wahana,
     "wanbexpress": wanbexpress,
     "we-world-express": weWorldExpress,
+    "wedo": wedo,
     "whistl": whistl,
     "whiz-delivery": whizDelivery,
     "wiio": wiio,
@@ -1678,7 +1682,7 @@ export const REGISTRY: RegistryDefinition = {
     "citi-sprint": "universal",
     "citilogistics": "citilogistics",
     "cititrans": "universal",
-    "city-air-express": "universal",
+    "city-air-express": "city-air-express",
     "city-express-rs": "city-express-rs",
     "citylink-express": "citylink-express",
     "citymail": "citymail",
@@ -2744,7 +2748,7 @@ export const REGISTRY: RegistryDefinition = {
     "ward-trucking": "universal",
     "wassel": "universal",
     "we-world-express": "we-world-express",
-    "wedo": "universal",
+    "wedo": "wedo",
     "welivery": "universal",
     "wepost": "universal",
     "western-bid": "universal",

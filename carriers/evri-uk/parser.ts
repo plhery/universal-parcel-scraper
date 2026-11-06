@@ -154,6 +154,7 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
     ...(sender ? { sender_name: sender } : {}),
     ...(service ? { service_name: service } : {}),
     events: events.slice(0, 100),
+    ...(events.length > 100 ? { history_truncated: true } : {}),
     tracking_url: evriUkTrackingUrl(number), tracking_source: 'structured-web-response',
   };
 }

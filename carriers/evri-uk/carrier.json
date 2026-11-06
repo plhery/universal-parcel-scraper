@@ -21,6 +21,7 @@
     "adapter": "evri-uk",
     "steps": [
       "direct",
+      "trawl",
       "browser"
     ],
     "recognition": {

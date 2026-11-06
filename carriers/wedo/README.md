@@ -1,32 +1,38 @@
 # One by Allegro CZ
 
-One by Allegro CZ parcels use enabled universal providers. There is no dedicated adapter yet.
+The Czech WeDo, IN TIME and Uloženka network, separate from
+[Allegro One in Poland](../allegro-one/README.md).
 
-WE|DO CZ is the Czech courier formed in 2020 from IN TIME spedice and Uloženka. Allegro bought it
-with Mall Group and has run it as One by Allegro, with One Box lockers, One Point and One Kurýr,
-since 2024. Its site is onedelivery.cz. It is a separate network from Poland's
-[Allegro One](../allegro-one/README.md), with its own numbers.
+## Retrieval
 
-## Numbers
+The official tracker reads GET https://edge.onedelivery.cz/one/tracking with the
+whole label in packageNo and Allegro's media type. It needs no account, postcode,
+cookie or CAPTCHA. English wording requires Accept-Language: en-US; bare en
+returns Czech. The adapter shares the guest transport and English scan projection
+with Allegro One while keeping the Czech endpoint and label scope separate.
 
-A parcel number is a three-character customer prefix and eight digits. Three lookups archived
-from the carrier's own tracker are still answered by it, so `wedo-1` has high confidence. It
-takes prefixes of a digit with a letter in the second or third place. All-digit prefixes, which
-the carrier's documentation also shows, share eleven digits with many carriers and get no rule,
-and DTDC's 7D and 7X numbers are left out. A package barcode adds a letter and a suffix after an
-asterisk; no rule reads it.
+The reply contains scans without repeating the label. Retrieval therefore binds the
+whole query to the official Czech route and rejects a changed response URL or redirect.
+Only standard logistics wording is projected; unknown prose becomes a generic update
+and marks the history incomplete so another source can complete it.
 
-## Tracker
+Scan clocks keep their stated offsets and precision. Duplicate scans are removed and
+history is sorted by its instants. A parcel waiting at a pickup point is ready for
+collection until delivered. A courier taking an uncollected parcel back is interpreted
+with its later journey, as in the shared Allegro scan projection.
 
-The tracking page asks Allegro's tracking interface on edge.onedelivery.cz, the one Allegro One
-uses, without a cookie, key or CAPTCHA. A dedicated adapter can share Allegro One's client.
+## Limitations
 
-## Links
+Only the existing lettered Czech label scope is supported. Polish Allegro labels,
+all-digit labels and package barcode suffixes are not admitted. An empty scan list
+stays inconclusive because the service does not say whether it dropped an older
+history. There is no estimate, location or partner identity in this reply.
 
-The tracking page opens a parcel from its `numer` parameter. Older links on trace.wedo.cz and
-trace.intime.cz carry it as `orderNumber` and now redirect there.
+One network failure gets a recorded retry inside the caller's deadline. Refusals,
+rate limits, redirects and malformed replies remain distinct from an empty history.
+Enabled universal providers remain available for recovery and completion.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set WEDO_TRACKING_NUMBER and optionally WEDO_UNKNOWN_NUMBER outside the repository,
+then run npm run test:carriers:live -- carriers/wedo.

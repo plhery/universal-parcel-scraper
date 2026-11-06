@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express and ZTO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK and ZTO. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -34,6 +34,12 @@ LBC Express binds the public page's main-frame tracking POST to the whole label 
 decodes its compressed response. Its bounded capture retains automatic verification
 retries and returns selected identity and scan fields without recipient details,
 nonces, cookies or a page archive.
+
+Evri UK binds the whole-barcode customer search, its parcel identifier and the
+lookup-day history URN in a fresh guest context. It reads decoded tracking
+responses even when their content length is absent, preserving bounded retries
+and final refusals. Only selected history leaves the context, without page
+HTML, cookies, rotating keys or ownership details.
 
 ## Sessions
 

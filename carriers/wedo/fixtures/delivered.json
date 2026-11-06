@@ -1,0 +1,12 @@
+{
+  "status": [
+    { "eventTimestamp": "2026-08-12T14:35:01Z", "description": "Parcel has been delivered", "recipient": "PRIVATE recipient" },
+    { "eventTimestamp": "2026-08-12T08:20:00.125Z", "description": "Parcel is awaiting pick-up" },
+    { "eventTimestamp": "2026-08-12T06:10:00Z", "description": "Parcel has been released for delivery" },
+    { "eventTimestamp": "2026-08-11T22:45:00Z", "description": "Parcel has been accepted at the sorting center" },
+    { "eventTimestamp": "2026-08-11T19:15:00Z", "description": "Parcel has been accepted at the branch", "address": "PRIVATE address" },
+    { "eventTimestamp": "2026-08-11T16:30:00Z", "description": "Parcel has been picked up by the courier" },
+    { "eventTimestamp": "2026-08-11T10:00:00Z", "description": "Parcel has been prepared by the sender" },
+    { "eventTimestamp": "2026-08-11T10:00:00Z", "description": "Parcel has been prepared by the sender" }
+  ]
+}

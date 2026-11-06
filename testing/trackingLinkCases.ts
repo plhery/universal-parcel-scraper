@@ -29,6 +29,12 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'city-air-express', number: 'MN846291',
+    route: /^https:\/\/caebfs\.netcourier\.net\/online\/tracking\/trackinginfo\/MN846291$/,
+    marker: /Sorry, we could not find job MN846291\./ },
+  { carrier: 'wedo', number: '9ZZ73648295',
+    route: /^https:\/\/onedelivery\.cz\/sledovani-zasilky\?numer=9ZZ73648295$/,
+    marker: /Sledovat zásilku/ },
   { carrier: 'freightways-global', number: 'NZC974682510',
     route: /^https:\/\/track\.fgmailconnect\.co\.nz\/\?id=NZC974682510$/,
     marker: /No results found/,

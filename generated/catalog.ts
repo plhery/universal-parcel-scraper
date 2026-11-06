@@ -12464,7 +12464,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "city-air-express",
+      "recognitionRank": 7,
+      "recognitionPattern": "^MN\\d{6}$",
+      "localClocks": true
     },
     "canaryUrl": "https://www.cityairexpress.com/",
     "trackingUrlTemplate": "https://caebfs.netcourier.net/online/tracking/trackinginfo/{trackingNumber}",
@@ -48452,7 +48455,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Prague",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "wedo"
     },
     "canaryUrl": "https://onedelivery.cz/",
     "trackingUrlTemplate": "https://onedelivery.cz/sledovani-zasilky?numer={trackingNumber}",

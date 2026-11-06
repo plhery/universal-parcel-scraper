@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { TrawlClient } from '../../core/transport/trawl.js';
 import { carrierErrorKind } from '../../core/errors/index.js';
 import { EvriUkTracker } from './adapter.js';
 
@@ -20,6 +21,16 @@ describe('Evri UK live tracking', () => {
     expect(result.events?.some(event => event.time)).toBe(true);
     expect(Object.keys(result).some(key => /recipient|receiver|address|photo|signature|token/i.test(key))).toBe(false);
   }, 20_000);
+
+  it.runIf(Boolean(process.env.FLARESOLVERR_URL && number))('recovers the guest API through configured bound TRAWL capture', async () => {
+    const result = await new EvriUkTracker({ trawl: TrawlClient.fromEnvironment(),
+      fetcher: (target, init) => new URL(String(target)).hostname === 'tracking.platform-apis.evri.com'
+        ? Promise.resolve(new Response('', { status: 403 })) : fetch(target, init) })
+      .fetch(number!, { budgetMs: 45_000 });
+    expect(result.events?.length).toBeGreaterThan(0);
+    expect(result.tracking_source).toBe('structured-web-response');
+    expect(Object.keys(result).some(key => /recipient|receiver|address|photo|signature|token/i.test(key))).toBe(false);
+  }, 55_000);
 
   it.runIf(Boolean(executablePath && number))('returns the same history through the page', async () => {
     const direct = await new EvriUkTracker().fetch(number!, { budgetMs: 15_000 });

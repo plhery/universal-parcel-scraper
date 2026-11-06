@@ -1,4 +1,53 @@
 {
   "carrier": "wedo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Parcel has been prepared by the sender",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been picked up by the courier",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been dispatched to its destination point",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been accepted at the sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been accepted at the branch",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been released for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel is awaiting pick-up",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Parcel has been delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
 }

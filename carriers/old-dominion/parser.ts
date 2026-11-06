@@ -154,6 +154,12 @@ function shipment(payload: Record<string, unknown>, pro: string, number: string)
   const handover = delivered ? scans.find(item => item.key === 'DELIVERED') ?? latest : undefined;
   const weight = typeof info.weight === 'number' && Number.isFinite(info.weight) && info.weight > 0 && info.weight < 1_000_000
     ? Math.round(info.weight * POUNDS_TO_KG * 1000) / 1000 : null;
+  const seen = new Set<string>();
+  const events = scans.map(item => item.event).filter(event => {
+    const key = JSON.stringify(event);
+    if (seen.has(key)) return false;
+    seen.add(key); return true;
+  });
   // Shipper and consignee names and addresses, the signer, bill of lading and
   // purchase order numbers and the pickup appointment are never read.
   return {
@@ -165,7 +171,8 @@ function shipment(payload: Record<string, unknown>, pro: string, number: string)
       : deliveryWindow(info.deliveryDetails) ?? { expected_delivery: etaDay(info.updatedEta) ?? etaDay(info.standardEta) }),
     delivered_at: handover?.event.time ?? null,
     ...(weight !== null ? { weight_kg: weight } : {}),
-    events: scans.slice(0, 100).map(item => item.event),
+    events: events.slice(0, 100),
+    ...(events.length > 100 ? { history_truncated: true } : {}),
     tracking_url: oldDominionTraceUrl(number),
     tracking_source: 'structured-web-response',
   };

@@ -1,4 +1,23 @@
 {
   "carrier": "city-air-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Data processed at CAEBFS",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Job received at Belfast Depot",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

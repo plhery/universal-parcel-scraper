@@ -118,6 +118,7 @@ import { statusMap as chunghwaPost } from '../../carriers/chunghwa-post/status.j
 import { statusMap as chunil } from '../../carriers/chunil/status.js';
 import { statusMap as ciblex } from '../../carriers/ciblex/status.js';
 import { statusMap as citilogistics } from '../../carriers/citilogistics/status.js';
+import { statusMap as cityAirExpress } from '../../carriers/city-air-express/status.js';
 import { statusMap as cityExpressRs } from '../../carriers/city-express-rs/status.js';
 import { statusMap as citylinkExpress } from '../../carriers/citylink-express/status.js';
 import { statusMap as citymail } from '../../carriers/citymail/status.js';
@@ -696,6 +697,7 @@ import { statusMap as vozovoz } from '../../carriers/vozovoz/status.js';
 import { statusMap as vrlLogistics } from '../../carriers/vrl-logistics/status.js';
 import { statusMap as wanbexpress } from '../../carriers/wanbexpress/status.js';
 import { statusMap as wahana } from '../../carriers/wahana/status.js';
+import { statusMap as wedo } from '../../carriers/wedo/status.js';
 import { statusMap as weWorldExpress } from '../../carriers/we-world-express/status.js';
 import { statusMap as whistl } from '../../carriers/whistl/status.js';
 import { statusMap as whizDelivery } from '../../carriers/whiz-delivery/status.js';
@@ -768,7 +770,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, boxtal, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods,
   byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,
-  'chit-chats': chitChats, chronodiali, chronopost, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
+  'chit-chats': chitChats, chronodiali, chronopost, chukou1, 'chunghwa-post': chunghwaPost, chunil, ciblex, citilogistics, 'city-air-express': cityAirExpress, 'city-express-rs': cityExpressRs, 'citylink-express': citylinkExpress, citymail,
   'cj-logistics': cjLogistics, 'cj-packet': cjPacket, 'closer-logistics': closerLogistics, cne, 'colis-prive': colisPrive, colisweb, 'connect-couriers': connectCouriers, consegnia, coordinadora,
   'copa-courier': copaCourier, corre,
   'correios-br': correiosBr, 'correo-argentino': correoArgentino, 'correo-uruguayo': correoUruguayo, 'correos-chile': correosChile, 'correos-cuba': correosCuba, 'correos-de-mexico': correosDeMexico, 'correos-el-salvador': correosElSalvador, 'correos-express': correosExpress, 'correos-spain': correosSpain,
@@ -837,7 +839,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'ubi-smart-parcel': ubiSmartParcel, 'ukp-worldwide': ukpWorldwide, ukrposhta,
   'united-delivery-service': unitedDeliveryService, uniuni, upaya, ups, urbano, urvaam, usps,
   'uzbekistan-post': uzbekistanPost, valmo, 'vasp-expresso': vaspExpresso, veloces, venipak, 'via-cargo': viaCargo, viadireta, 'viettel-post': viettelPost,
-  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees,
+  vimenpaq, 'vinted-go': vintedGo, vozovoz, 'vrl-logistics': vrlLogistics, wahana, wanbexpress, wedo, 'we-world-express': weWorldExpress, whistl, 'whiz-delivery': whizDelivery, wiio, winit, wooliiporter, 'xde-logistics': xdeLogistics, xdp, xgs, 'xinghe-freight': xingheFreight, xlcourier, 'xpo-ltl': xpoLtl, xpressbees,
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
 };

@@ -17,6 +17,15 @@ const PRO = '7200000001';
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const delivered = () => JSON.parse(fixture('delivered.ndjson')) as { body: Record<string, unknown> & {
   traceInfo: (Record<string, unknown> & { trackTraceDetail: Record<string, unknown>[] })[] } };
+const longHistory = (transitCount: number) => {
+  const payload = delivered();
+  const info = payload.body.traceInfo[0]!;
+  const transit = info.trackTraceDetail[4]!;
+  info.trackTraceDetail = [...info.trackTraceDetail.slice(0, 2), ...Array.from({ length: transitCount }, (_, index) => ({
+    ...transit, dateTime: new Date(Date.UTC(2026, 2, 9, 0, transitCount - index - 1)).toISOString().replace('.000Z', '-04:00'),
+  }))];
+  return payload;
+};
 const line = (value: unknown) => `${JSON.stringify(value)}\n`;
 const reply = (body: string, status = 200, contentType = 'application/x-ndjson', retryAfter: string | null = null): OldDominionReply =>
   ({ status, contentType, retryAfter, body });
@@ -63,6 +72,34 @@ describe('Old Dominion trace replies', () => {
     expect(result.events?.at(-1)).toMatchObject({ location: 'EXAMPLE CITY, NC', stage: 'registered' });
     expect(result.events?.find(event => event.provider_code === 'Pickup Completed')?.stage).toBe('accepted');
     expect(result.events?.every(event => /T\d{2}:\d{2}:\d{2}-04:00$/.test(event.time ?? ''))).toBe(true);
+  });
+
+  it('marks a capped distinct history partial while preserving its newest status and delivery time', () => {
+    const result = parse(line(longHistory(105)));
+    expect(result).toMatchObject({ history_truncated: true, status: 'delivered', current_stage: 'delivered',
+      last_status_text: 'Delivery Confirmed', last_update: '2026-03-11T06:10:00-04:00',
+      delivered_at: '2026-03-10T14:20:10-04:00', expected_delivery: null });
+    expect(result.events).toHaveLength(100);
+    expect(result.events?.at(-1)?.time).toBe('2026-03-09T00:07:00-04:00');
+  });
+
+  it('keeps a complete hundred distinct scans when private source fields repeat their projection', () => {
+    const payload = longHistory(98);
+    const info = payload.body.traceInfo[0]!;
+    info.trackTraceDetail.unshift(...Array.from({ length: 3 }, (_, index) => ({
+      ...info.trackTraceDetail[0]!, city: 'PRIVATE CUSTOMER ' + index,
+    })));
+    const result = parse(line(payload));
+    expect(result.events).toHaveLength(100);
+    expect(result.history_truncated).toBeUndefined();
+    expect(result.events?.at(-1)?.time).toBe('2026-03-09T00:00:00-04:00');
+    expect(JSON.stringify(result)).not.toContain('PRIVATE CUSTOMER');
+  });
+
+  it('rejects a malformed older scan even when the output cap would omit it', () => {
+    const payload = longHistory(105);
+    payload.body.traceInfo[0]!.trackTraceDetail.at(-1)!.dateTime = 'not a clock';
+    fails(line(payload), 'schema');
   });
 
   it('never projects shipper, consignee, signer, references or a delivered shipment\'s appointment', () => {

@@ -65,6 +65,9 @@ built from the installed version are scoped to this adapter.
 
 ## Limitations
 
+The adapter validates the full reply and keeps its newest 100 distinct scans. A capped
+history remains partial so enabled providers can complete it.
+
 The tracking service takes a single-use reCAPTCHA Enterprise token with each call and scores it,
 so there is no plain HTTP route: a missing, junk or replayed token gets the empty `500`. The
 adapter lets the page obtain its own token and never makes or replays one. A low score ends the

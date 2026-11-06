@@ -19,18 +19,41 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "city-air-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 7,
+      "pattern": "^MN\\d{6}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://caebfs.netcourier.net/online/tracking/trackinginfo/{trackingNumber}",
     "searchUrl": "https://www.cityairexpress.com/track-my-parcel",
     "canaryUrl": "https://www.cityairexpress.com/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_details",
+      "signature",
+      "postcode_protected_details",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

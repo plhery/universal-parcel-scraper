@@ -2,6 +2,8 @@ import { accepted, type AdapterFactory, type TrackingContext } from '../../core/
 import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
+import { readEvriUkTrawl } from './trawl.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
 import { requestEvriUkInPage } from './browser.js';
 import { EVRI_UK_UNCONFIRMED, readEvriUkMobile, recognizeEvriUkMobile } from './mobile.js';
@@ -12,7 +14,7 @@ const DIRECT_TIMEOUT_MS = 10_000;
 
 export class EvriUkTracker {
   constructor(private readonly options: {
-    executablePath?: string | null; recorder?: StepRecorder; fetcher?: typeof fetch; userAgent?: string;
+    executablePath?: string | null; recorder?: StepRecorder; fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null;
   } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
@@ -20,15 +22,21 @@ export class EvriUkTracker {
     const budgetMs = context.budgetMs ?? 45_000;
     if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 60_000) throw new TypeError('Evri UK budget must be between 1 and 60000 ms');
     const browser = Boolean(this.options.executablePath);
+    const recovery = browser || (Boolean(this.options.trawl) && budgetMs > DIRECT_TIMEOUT_MS + TRAWL_TRANSPORT_ALLOWANCE_MS);
     return runSteps({ carrier: 'evri-uk', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [{
       id: 'direct', run: ({ signal, remainingMs }) => readEvriUkMobile(number, {
         fetcher: this.options.fetcher, userAgent: this.options.userAgent, signal,
-        timeoutMs: browser ? Math.min(remainingMs, DIRECT_TIMEOUT_MS) : remainingMs,
+        timeoutMs: recovery ? Math.min(remainingMs, DIRECT_TIMEOUT_MS) : remainingMs,
       }),
+    }, {
+      id: 'trawl', enabled: Boolean(this.options.trawl),
+      recovers: error => recoverableByDefault(error) && !(error instanceof CarrierError && error.reason === EVRI_UK_UNCONFIRMED),
+      run: ({ signal, remainingMs }) => readEvriUkTrawl(number, this.options.trawl!, { fetcher: this.options.fetcher, signal, remainingMs }),
     }, {
       id: 'browser', enabled: browser,
       // The page reads the same history service, so its answer about the parcel would not differ.
-      recovers: error => recoverableByDefault(error) && !(error instanceof CarrierError && error.reason === EVRI_UK_UNCONFIRMED),
+      recovers: error => (recoverableByDefault(error) || (Boolean(this.options.trawl) && carrierErrorKind(error) === 'budget'))
+        && !(error instanceof CarrierError && error.reason === EVRI_UK_UNCONFIRMED),
       run: ({ signal, remainingMs: remaining }) => withLocalBrowser({ provider: 'Evri UK',
         executablePath: this.options.executablePath!, signal, timeoutMs: Math.max(1, Math.floor(remaining)),
         args: ['--disable-blink-features=AutomationControlled'],
@@ -81,10 +89,10 @@ export class EvriUkTracker {
 export const adapter: AdapterFactory = environment => {
   const tracker = new EvriUkTracker({
     executablePath: environment.browserExecutablePath, recorder: environment.recorder, fetcher: environment.fetcher,
-    userAgent: environment.userAgent,
+    userAgent: environment.userAgent, trawl: environment.trawl,
   });
   return {
-    id: 'evri-uk', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context),
+    id: 'evri-uk', recordsSteps: true, steps: ['direct', 'trawl', 'browser'], track: (input, context) => tracker.fetch(input.number, context),
     // The guest API's reference lookup alone; the page is never opened to recognize a number.
     recognize: async (number, context = {}) => {
       if (!accepted(() => normalizeEvriUkNumber(number))) return { known: false };

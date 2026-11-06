@@ -26,18 +26,43 @@
   "timezone": "Europe/Prague",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "wedo",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://onedelivery.cz/sledovani-zasilky?numer={trackingNumber}",
     "searchUrl": "https://onedelivery.cz/sledovani-zasilky",
     "canaryUrl": "https://onedelivery.cz/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "delivered_at"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "detail_messages"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "delivery_partner"
+    ]
   },
   "links": [
     {
