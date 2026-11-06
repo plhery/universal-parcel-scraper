@@ -84,7 +84,8 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
 - The page shows `lmWaybillNo` as the last-mile number of US parcels. The reply names no courier
   for it, so there is no hand-off.
 - The day a booking scan names ("Shipment is scheduled to [day]") is the expected delivery, until
-  a failed attempt, a problem or the end follows it, or a newer scan is on a later day.
+  a failed attempt, a problem or the end follows it, or a newer scan is on a later day. The
+  scan itself moves nothing: after a failed attempt it books the new round, and the attempt stands.
 - The page asks `/saastms/mobileWeb/getLatestDeliveryDate` for an estimated delivery date. The
   answers seen were empty, so the adapter does not ask.
 

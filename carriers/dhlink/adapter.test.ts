@@ -480,5 +480,13 @@ describe('DHLink status vocabulary', () => {
         .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
     }
     expect(statusMapAnswer({ carrier: 'dhlink', providerCode: 'J014', description: 'Shipment has delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    // UniUni's scans keep their stage with the hub's place written first.
+    expect(dhlinkStage('', '', 'Sampletown, Parcel received at UniUni sorting hub.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(dhlinkStage('', '', 'Sampletown, Parcel scanned and in transit')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    // A clock alone names no step.
+    for (const description of ['(13:05)', '( 9:40 )']) {
+      expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    }
   });
 });

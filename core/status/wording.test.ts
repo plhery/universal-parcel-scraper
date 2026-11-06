@@ -102,6 +102,10 @@ describe('classifyWording', () => {
     expect(classifyWording('Indirizzo errato')).toEqual({ stage: 'exception', source: 'wording:language' });
     expect(classifyWording('Carrier exception')).toEqual({ stage: 'exception', source: 'wording:exception_incident' });
     expect(classifyWording('Updated delivery address required from customer')).toEqual({ stage: 'exception', source: 'wording:language' });
+    // Relayed in capitals and cut short, for a parcel filed under no carrier.
+    for (const wording of ['NON-EXISTENT/INCOMPLETE ADDRES', 'Non-existent address']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'exception', source: 'wording:language' });
+    }
     expect(wordingStage('Przesyłka zatrzymana')).toBe('exception');
   });
 
@@ -480,7 +484,9 @@ describe('classifyWording', () => {
     expect(wordingStage('On board for delivery')).toBe('out_for_delivery');
     expect(wordingStage('Loaded onto the delivery vehicle')).toBe('out_for_delivery');
     // Lines providers relay for parcels filed under no carrier: a checkpoint scan, and the pallet broken down (拆板).
-    for (const line of ['Parcel scanned at checkpoint.', 'Example City IL, parcel scanned at checkpoint', 'Dismantling the board']) {
+    for (const line of ['Parcel scanned at checkpoint.', 'Example City IL, parcel scanned at checkpoint', 'Dismantling the board',
+      // China Post's office of exchange, as a tracking service relays it.
+      'In exchange office. The shipment has reached the international logistics center of origin']) {
       expect(classifyWording(line, 'pending')).toEqual({ stage: 'in_transit', source: 'wording:language' });
     }
     expect(wordingStage('Delivery successful.')).toBe('delivered');

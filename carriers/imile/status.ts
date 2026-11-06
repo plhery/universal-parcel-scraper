@@ -1,5 +1,5 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { statusMap as cainiaoStatusMap } from '../aliexpress/status.js';
 
 /**
@@ -97,6 +97,9 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['return signature', 'returned'],
 ]);
 
+/** The delivery day booked at the local warehouse, a date after the opening. */
+const SCHEDULED = /^(?:shipment is )?scheduled to\b/;
+
 /**
  * Sentences that carry a date or a reason after a fixed opening. A booked
  * flight and a scheduled delivery day are no movement.
@@ -105,7 +108,7 @@ const OPENINGS: readonly (readonly [RegExp, Stage | null])[] = [
   // The origin airport's warehouse took the parcel in; the flight it books follows.
   [/^origin port warehouse receive\b/, 'in_transit'],
   [/^flight schedule etd\b/, null],
-  [/^(?:shipment is )?scheduled to\b/, null],
+  [SCHEDULED, null],
   [/^the driver failed to deliver\b/, 'failed_attempt'],
   // The driver could not book the delivery with the recipient, with the reason: "failed to schedule due to [noanswer]".
   [/^failed to schedule due to\b/, 'failed_attempt'],
@@ -186,4 +189,7 @@ export const statusMap: CarrierStatusMap = {
     { code: DELIVERY, wording: 'the delivery method has been confirmed with the recipient as self-pickup.', note: 'The recipient chose to collect the parcel after a failed attempt; it keeps the stage of the scan before it until the pickup point has the parcel.' },
     ...cainiaoStatusMap.gaps,
   ],
+  gapNote: (code, wording) => ((code ?? DELIVERY) === DELIVERY && SCHEDULED.test(normalizeStatusWording(wording))
+    ? 'A delivery day booked, after a failed attempt the new round: the adapter reads it as the expected delivery, and the parcel keeps the stage it had.'
+    : undefined),
 };

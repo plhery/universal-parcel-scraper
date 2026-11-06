@@ -328,7 +328,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/\b(?:damaged|broken in transit)\b|endommag|avarie|deterior|beschadigt|danneggiat|danad[oa]|danificad|uszkodzon/.test(text)) return 'exception';
   if (/\blost (?:in transit|package|parcel|shipment)?\b|colis perdu|envoi perdu|egare|verloren|verlust der sendung|smarrit|(?:paquete|envio) perdid|extraviad|zagubion|zaginion/.test(text)) return 'exception';
   if (/refused by (?:the )?(?:recipient|consignee)|\brefused\b|rejected by (?:the )?recipient|refus(?:e|ee)? par le destinataire|refus du destinataire|(?:colis|envoi|pli) refuse|annahme verweigert|verweigert|rifiutat|rechazad|recusad|odmowa przyjecia|odmowiono przyjecia/.test(text)) return 'exception';
-  if (/address (?:incomplete|incorrect|invalid|insufficient|unknown)|(?:incorrect|incomplete|insufficient|wrong|invalid) address|(?:updated|correct(?:ed)?|complete) (?:delivery )?address (?:is )?(?:required|needed)|address(?:ee)? (?:unknown|cannot be located)|recipient unknown|adresse (?:incorrecte|incomplete|erronee|invalide|inconnue)|destinataire inconnu|(?:adresse|anschrift) (?:unvollstandig|falsch|unbekannt)|empfanger unbekannt|indirizzo (?:errato|incompleto|insufficiente|sconosciuto)|destinatario sconosciuto|direccion (?:incorrecta|incompleta|erronea|desconocida)|destinatario desconocido|endereco (?:incorreto|incompleto|errado|desconhecido)|destinatario desconhecido|adres (?:niepelny|nieprawidlowy|bledny)|nieznany adresat/.test(text)) return 'exception';
+  if (/address (?:incomplete|incorrect|invalid|insufficient|unknown)|(?:incorrect|incomplete|insufficient|wrong|invalid|non[- ]?existent) addres|(?:updated|correct(?:ed)?|complete) (?:delivery )?address (?:is )?(?:required|needed)|address(?:ee)? (?:unknown|cannot be located)|recipient unknown|adresse (?:incorrecte|incomplete|erronee|invalide|inconnue)|destinataire inconnu|(?:adresse|anschrift) (?:unvollstandig|falsch|unbekannt)|empfanger unbekannt|indirizzo (?:errato|incompleto|insufficiente|sconosciuto)|destinatario sconosciuto|direccion (?:incorrecta|incompleta|erronea|desconocida)|destinatario desconocido|endereco (?:incorreto|incompleto|errado|desconhecido)|destinatario desconhecido|adres (?:niepelny|nieprawidlowy|bledny)|nieznany adresat/.test(text)) return 'exception';
   if (CUSTOMS_PROBLEM_ENDED.test(text)) return 'in_transit';
   // A customs problem is an exception; a customs hold is customs at work.
   if (/customs (?:issue|problem)|probleme de douane|zollproblem|problema doganale|problema de aduana|problema (?:alfandegario|na alfandega)|problem celny/.test(text)) return 'exception';
@@ -473,7 +473,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // küldemény átvétele a kicserélőben".
   if (/^(?:load vehicle|scan ok gateway)$/.test(text)
     || /^(?:the )?item in process in office of exchange\b/.test(text)
-    || /^acceptance of (?:the )?incoming (?:shipment|item|mail) at the exchange office$/.test(text)) return 'in_transit';
+    || /^acceptance of (?:the )?incoming (?:shipment|item|mail) at the exchange office$/.test(text)
+    // China Post's office of exchange as 17TRACK words it: "In exchange office. The shipment has reached …".
+    || /^in (?:the )?exchange office\b/.test(text)) return 'in_transit';
   // Speedy's scans as providers relay them: its courier's collection, then an
   // office's receipt and a handover to a partner abroad, as its own map reads them.
   if (/^courier pick up$/.test(text)) return 'accepted';

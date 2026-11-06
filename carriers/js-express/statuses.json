@@ -114,6 +114,10 @@
     {"code": "OIT", "wording": "Shipment in transit. Thanks for your waiting.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Delivery in progress", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier at the destination, after its station's arrival and before any courier round: no round of its own."},
     {"code": "SJS", "wording": "Refused", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The recipient refused the parcel on the delivery round; it goes back."},
-    {"code": "DRS", "wording": "Returned", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Back at the courier's sorting centre after the recipient refused the parcel, at the same second as that centre's arrival scan: the parcel goes back and has not reached the sender."}
+    {"code": "DRS", "wording": "Returned", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Back at the courier's sorting centre after the recipient refused the parcel, at the same second as that centre's arrival scan: the parcel goes back and has not reached the sender."},
+    {"code": "OIT", "wording": "Shipment information sent to FedEx", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's label for the last leg, written before the order reaches JS Express's warehouse."},
+    {"code": "OIT", "wording": "Domestic pick up", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "After the departure from origin and before export customs release the parcel: the pick-up for the flight."},
+    {"code": "DCF", "wording": "Item Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Import customs released the parcel after the flight landed."},
+    {"code": "OIT", "wording": "Arrived at Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The destination's sorting facility after import clearance, before the local courier takes the parcel."}
   ]
 }

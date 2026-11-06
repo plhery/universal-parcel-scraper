@@ -103,6 +103,15 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['item returned from customs?', 'in_transit'],
   // China Post's 安排投递 abroad.
   ['scheduled for delivery', 'out_for_delivery'],
+  // A line's warehouse in China bagging the parcel, its master air waybill, its departure from
+  // the warehouse and the flight's from the airport, in DHLink's English.
+  ['warehouse scanning bagging', 'in_transit'],
+  ['master airway bill number received', 'in_transit'],
+  ['leave the warehouse', 'in_transit'],
+  ['departed from airport of origin', 'in_transit'],
+  ['dismantling the board', 'in_transit'],
+  // A European partner's linehaul after the flight.
+  ['linehaul transit; parcel has entered the linehaul network.', 'in_transit'],
 ]);
 
 /** DHLink's and China Post's scans in Chinese, and a relayed USPS notice. */
@@ -155,6 +164,11 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/已妥投$/, 'delivered'],
   // USPS's attempt, relayed after the post office's place.
   [/\bno access to delivery location$/, 'failed_attempt'],
+  // UniUni's sorting hub and its transit scans, relayed with or without the hub's place first.
+  [/^(?:[^,]{1,60}, )?parcel received at uniuni sorting hub\.?$/, 'in_transit'],
+  [/^(?:[^,]{1,60}, )?parcel scanned and in transit\.?$/, 'in_transit'],
+  // A European partner's hub, named by its code.
+  [/^arrived to [a-z0-9]{2,10} hub$/, 'in_transit'],
 ];
 
 function wordingStage(wording: string): Stage | undefined {
@@ -193,9 +207,13 @@ export function dhlinkStage(code: string, name: string, wording: string): Classi
   return worded.source === 'none' ? null : worded;
 }
 
+// A clock alone in brackets, written after the hand-over to the airline: it names no step.
+const CLOCK_ONLY = /^\(\s*\d{1,2}[:：]\d{2}\s*\)$/;
+
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? NODE_CODES.get(code) : undefined) ?? wordingStage(wording),
   gaps: [],
   gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
-    ? 'The flight the parcel is booked on, any date, not a movement: the adapter drops the row and the parcel keeps the stage it had.' : undefined),
+    ? 'The flight the parcel is booked on, any date, not a movement: the adapter drops the row and the parcel keeps the stage it had.'
+    : CLOCK_ONLY.test(normalizeStatusWording(wording)) ? 'A clock alone in brackets, no wording: it names no step, so the parcel keeps the stage it had.' : undefined),
 };
