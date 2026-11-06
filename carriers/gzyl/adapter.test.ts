@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NoHistoryError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -18,6 +20,19 @@ const page = (name: string) => readFileSync(new URL(`./fixtures/${name}.html`, i
 const json = (body: unknown) => new Response(JSON.stringify(body), { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
 const html = (body: string) => new Response(body, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+
+describe('GZYL numbers', () => {
+  it('names GZYL for its YL738 series, and suggests other YL waybills with ten digits and YQ, which recognition asks the tracker about', () => {
+    const series = 'YL7389999980YQ';
+    expect(detectCarrierMatch(series)).toMatchObject({ carrier: 'gzyl', confidence: 'high', candidates: ['gzyl'] });
+    const other = 'YL9999999980YQ';
+    expect(detectCarrierMatch(other)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['gzyl'] });
+    expect(recognitionCandidates(other, {}).map((candidate) => candidate.carrier)).toEqual(['gzyl']);
+    for (const near of ['YL738999998YQ', 'YL73899999800YQ', 'YM7389999980YQ', 'YL7389999980YR', 'YL7389999980YQX']) {
+      expect(detectCarrierMatch(near).candidates ?? [], near).not.toContain('gzyl');
+    }
+  });
+});
 
 describe('GZYL tracking adapter', () => {
   it('asks GZYL’s Hualei tracker for the whole number over plain HTTP and records the step', async () => {

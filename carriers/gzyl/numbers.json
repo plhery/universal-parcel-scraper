@@ -15,6 +15,18 @@
         ]
       },
       "note": "Made-up number in the shape of the waybills GZYL's tracker answers, which a Hualei number rule makes. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "YL7389999980YQ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-06",
+      "expect": {
+        "carrier": "gzyl",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the parcels the app tracked in GZYL's YL738 series, which GZYL's own tracker answered every time. Its serial sits far beyond the range in use."
     }
   ]
 }

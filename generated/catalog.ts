@@ -23962,8 +23962,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^YL\\d{10}YQ$",
+        "pattern": "^YL(?!738)\\d{10}YQ$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^YL738\\d{7}YQ$",
+        "confidence": "high"
       }
     ]
   },
@@ -53650,7 +53654,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gta-airskip": ["gta-airskip-1"],
   "gtl-goto": ["gtl-goto-1","gtl-goto-2"],
   "guatex": [],
-  "gzyl": ["gzyl-1"],
+  "gzyl": ["gzyl-1","gzyl-2"],
   "hanjin": [],
   "hapdong": [],
   "happy-post": [],
