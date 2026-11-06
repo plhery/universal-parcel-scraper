@@ -116,6 +116,15 @@ describe('Ship24 result parsing', () => {
     expect(parsed.events?.map((scan) => scan.description)).toEqual(['Delivered']);
   });
 
+  it('keeps the day alone of an ECMS flight row Ship24 dates at midnight UTC', () => {
+    const scan = (timestamp: string, status: string) => ({ timestamp, status, courier: { crawler_code: 'example-tracking' } });
+    const parsed = parseShip24Response({ data: { tracking_number: number, origin_country_code: 'CN', destination_country_code: 'US', events: [
+      scan('2026-11-02T00:00:00Z', 'Flight arrival'), scan('2026-10-30T00:00:00.000+00:00', 'Flight departure'),
+      scan('2026-10-30T07:10:00Z', 'Flight departure'), scan('2026-10-30T00:00:00Z', 'Shipment departed from origin facility.')] } }, number);
+    expect(parsed.events?.map(({ time, local_time }) => time ?? local_time)).toEqual(
+      ['2026-11-02', '2026-10-30T07:10:00.000Z', '2026-10-30T00:00:00.000Z', '2026-10-30']);
+  });
+
   it('rejects history that belongs to another shipment', () => {
     expect(() => parseShip24Response({ data: { tracking_number: 'OTHER123', events: [] } }, number))
       .toThrow('no matching shipment history');

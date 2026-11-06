@@ -252,6 +252,18 @@ function forwardingJob(scans: unknown[]): boolean {
     && typeof scan.status === 'string' && FORWARDING_MILESTONES.test(scan.status.trim()));
 }
 
+/**
+ * ECMS dates a flight row by the flight's day alone, at midnight sharp, recorded hours later
+ * (carriers/ecms-express). Ship24 relays that midnight as UTC's: the row keeps its day.
+ */
+const MIDNIGHT_UTC = /^(\d{4}-\d{2}-\d{2})T00:00(?::00(?:\.0+)?)?(?:Z|[+-]00:00)$/;
+const ECMS_FLIGHTS = new Set(['flight departure', 'flight arrival']);
+
+function flightDay(scan: Record<string, unknown>): string | null {
+  const day = typeof scan.timestamp === 'string' ? MIDNIGHT_UTC.exec(scan.timestamp)?.[1] : undefined;
+  return day && typeof scan.status === 'string' && ECMS_FLIGHTS.has(scan.status.trim().toLowerCase()) ? day : null;
+}
+
 function planned(scan: Record<string, unknown>, event: CarrierEvent, now: number): boolean {
   const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
   if (typeof code !== 'string' || !PLANNING_FEEDS.has(code)) return false;
@@ -429,6 +441,13 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     if (!parsed || planned(raw, parsed, now)) continue;
     const location = place(raw.location);
     if (location) parsed.location = location;
+    const day = flightDay(raw);
+    if (day) {
+      const dated: CarrierEvent = { ...parsed, local_time: day };
+      delete dated.time;
+      readings.push({ event: dated, wall: null, feed, country: null, zone: null });
+      continue;
+    }
     const wall = typeof parsed.local_time === 'string' ? parsed.local_time : null;
     // Another feed's offset-less scan takes the parcel's named clock at once;
     // a relabelling feed's first borrows from its neighbours (below), and a

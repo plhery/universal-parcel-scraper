@@ -165,6 +165,9 @@ No account, cookie, fingerprint or issued token is used.
   guessed UTC instant. A reply made only of such scans is inconclusive.
 - A scan dated without a time (GLS Italy's announcement) is left out: it has no place
   among the others.
+- ECMS dates a flight row by the flight's day alone, at midnight sharp, and Ship24 gives
+  that midnight as UTC's. A "Flight departure" or "Flight arrival" at midnight UTC keeps
+  its day alone, as ECMS's own result does (carriers/ecms-express).
 - Each scan keeps its `location`, a town, region and country or a hub's code, unless it
   holds private delivery details or is Posti's "ULKOMAILLA" ("abroad"), which names no
   place. A hub's code such as "GOFO-PR" stays: the places module pins nothing for it, and
