@@ -21,7 +21,7 @@ import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
-import { chinaPostDestinationScan, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
+import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
@@ -586,6 +586,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     // reads them, and 17TRACK labels them with China's offset: Correos's arrival at its exchange office at 09:25
     // Madrid time showed in China Post's leg at 09:25 +08:00, seven hours before Correos's own row of it.
     const inbound = reported.key === CHINA_POST ? countryTimeZone(recipientCountry(shipment)) : null;
+    const destination = inbound !== null && provider.events.length <= MAX_EVENTS ? chinaPostDestinationRows(provider.events.map((raw: unknown) => (
+      isRecord(raw) ? { wording: text(raw.description), wall: wallMillis(raw) } : { wording: '', wall: Number.NaN }))) : new Set<number>();
     const salvador = reported.key === CORREO_EL_SALVADOR;
     const sender = salvador && isValidS10TrackingNumber(number) ? countryTimeZone(number.slice(-2)) : null;
     const bound = reported.key === SWISS_POST ? recipientCountry(shipment) : null;
@@ -612,7 +614,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
       const exchange = origin !== null && outward.test(text(raw.description).trim());
-      const arrived = inbound !== null && chinaPostDestinationScan(text(raw.description));
+      const arrived = destination.has(index);
       const own = !salvador ? null : OUTBOUND.test(text(raw.description)) ? sender : 'UTC';
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".
       const relayed = bound ? swissPostDestinationZone(text(raw.description), text(raw.location), bound)

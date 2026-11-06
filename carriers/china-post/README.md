@@ -98,8 +98,8 @@ providers enabled can still look for the full history. A history known to be
 cut also gains its acceptance as the oldest event: the collector record's time
 and office, earlier than every returned scan, under the app's own label
 `已揽收`. The receiver country label becomes `destination_country` when it is a
-Chinese country name, which lets routing confirm the destination post's own
-history.
+Chinese country name, or a short name China Post writes (阿联酋), which lets
+routing confirm the destination post's own history.
 
 Stages come from the scan code. The coarse state label (`stateDesc`) is used
 only for codes without a mapping. A delivery attempt (542) keeps its own stage,

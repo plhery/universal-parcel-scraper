@@ -790,6 +790,37 @@ describe('17TRACK result parsing', () => {
     expect(times('US')?.[1]).toEqual(['Arrival at processing center in the destination country', '2026-11-05T01:25:00.000Z']);
   });
 
+  it("reads the destination post's scans placed under China Post's short name, and its place-less attempt, on its clock", () => {
+    const row = (date: string, time: string, description: string) => ({
+      time_iso: `${date}T${time}+08:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location: '', stage: null, sub_status: 'InTransit_Other' });
+    const reply = (events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'Delivered' }, shipping_info: { recipient_address: { country: 'AE' } },
+      tracking: { providers: [{ provider: { key: 3011, name: 'China Post', country: 'CN' }, events }] } } }] });
+    const abroad = [
+      row('2026-10-17', '19:58:00', '【阿联酋】已妥投'),
+      row('2026-10-17', '13:35:00', '已试投/投递失败（/已通知客户）'),
+      row('2026-10-17', '13:34:00', '已到达【阿联酋】投递局'),
+      row('2026-10-16', '20:26:00', '离开【阿联酋】处理中心'),
+      row('2026-10-16', '20:25:00', '寄达地海关允许进口'),
+      row('2026-10-16', '15:55:00', '到达寄达地处理中心'),
+    ];
+    const read = (events: unknown[]) => parse17TrackResponse(reply(events), number).events?.map((e) => [e.description, e.time, e.location]);
+    // Dubai's clock, four hours behind China's label: the attempt stays after the arrival at the delivery office.
+    expect(read([...abroad, row('2026-10-10', '15:55:49', '中国邮政已收取邮件')])).toEqual([
+      ['Delivered', '2026-10-17T15:58:00.000Z', '阿联酋'],
+      ['Delivery attempted, not delivered', '2026-10-17T09:35:00.000Z', undefined],
+      ['Arrived at the delivery office', '2026-10-17T09:34:00.000Z', '阿联酋'],
+      ['Departure from processing center', '2026-10-16T16:26:00.000Z', '阿联酋'],
+      ['Import allowed by destination customs', '2026-10-16T16:25:00.000Z', undefined],
+      ['Arrival at processing center in the destination country', '2026-10-16T11:55:00.000Z', undefined],
+      ['China Post has received the mail', '2026-10-10T07:55:49.000Z', undefined],
+    ]);
+    // An attempt after a scan at a Chinese office, the item home again, is China Post's own.
+    const home = read([row('2026-10-25', '10:00:00', '已试投/投递失败'), row('2026-10-24', '09:00:00', '邮件到达【示例市处理中心】'), ...abroad]);
+    expect(home?.[0]).toEqual(['Delivery attempted, not delivered', '2026-10-25T02:00:00.000Z', undefined]);
+  });
+
   it("reads the origin post's scans Japan Post relays on that post's clock, and Japan Post's own on Tokyo's", () => {
     const row = (date: string, time: string, description: string, location: string) => ({
       time_iso: `${date}T${time}+09:00`, time_utc: null, time_raw: { date, time, timezone: null },

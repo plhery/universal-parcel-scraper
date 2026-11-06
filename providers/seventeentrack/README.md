@@ -201,7 +201,10 @@ carrier.
   adapter reads them (the arrival at its processing centre, import customs, the delivery
   office's scans), under the same `+08:00`: Correos's arrival at its exchange office showed
   seven hours before Correos's own row of it. When the recipient's country is on one clock
-  they are read on it; China Post's own arrival in that country stays on China's.
+  they are read on it; China Post's own arrival in that country stays on China's. The
+  delivery office's scans count when their 【】 names a country, in its short name too
+  (阿联酋); the attempt names none and counts once a scan of that post comes before it,
+  until a scan at a Chinese office has the item home again.
 - Japan Post's leg (carrier key 10021) relays the origin post's acceptance, export customs and
   outward exchange scans on that post's wall clock, as Japan Post's tracker shows them, and
   17TRACK labels them `+09:00`: China Post's posting came an hour before China Post's own leg

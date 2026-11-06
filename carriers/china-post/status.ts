@@ -243,6 +243,30 @@ export function chinaPostDestinationScan(wording: string): boolean {
   return DESTINATION_PLACED_LABELS.has(label) && place !== undefined && chinaPostCountry(place) !== undefined;
 }
 
+// The destination post's attempt, which China Post words with no place, unlike its round and
+// delivery: "已试投/投递失败（/已通知客户）".
+const DESTINATION_UNPLACED_LABELS = new Set(['已试投/投递失败']);
+
+/**
+ * The rows of a forwarder's China Post feed that are the destination post's own scans: those
+ * `chinaPostDestinationScan` names, and from the first of them on, by the clock as written, an
+ * attempt, until a scan placed at a Chinese office has the item home again.
+ */
+export function chinaPostDestinationRows(rows: readonly { wording: string; wall: number }[]): Set<number> {
+  const found = new Set(rows.flatMap((row, index) => (chinaPostDestinationScan(row.wording) ? [index] : [])));
+  const order = rows.flatMap((row, index) => (Number.isFinite(row.wall) ? [index] : []))
+    .sort((a, b) => rows[a]!.wall - rows[b]!.wall);
+  let abroad = false;
+  for (const index of order) {
+    const { wording } = rows[index]!;
+    const place = chinaPostLabelPlace(wording);
+    if (found.has(index)) abroad = true;
+    else if (place !== undefined && /^\p{Script=Han}+$/u.test(place) && chinaPostCountry(place) === undefined) abroad = false;
+    else if (abroad && place === undefined && DESTINATION_UNPLACED_LABELS.has(chinaPostLabel(wording))) found.add(index);
+  }
+  return found;
+}
+
 // The stages of the destination leg's labels, which China Post's parser reads by code, for a
 // forwarder that relays them in Chinese without China Post's codes. The import office of
 // exchange keeps the item (境外进口互换局留存) between customs' hold and its presentation.
@@ -300,13 +324,15 @@ function isCountry(code: string): boolean {
 }
 
 // Current ISO regions by their Simplified Chinese name, plus the short forms
-// of the special administrative regions.
+// of the special administrative regions and of the countries China Post shortens.
 const COUNTRY_BY_NAME: ReadonlyMap<string, string> = new Map([
   ...Array.from({ length: 26 * 26 }, (_, index) => String.fromCharCode(65 + Math.floor(index / 26), 65 + (index % 26)))
     .filter(isCountry)
     .map((code) => [CHINESE_REGIONS.of(code) ?? code, code] as const)
     .filter(([name, code]) => name !== code),
   ['香港', 'HK'], ['中国香港', 'HK'], ['澳门', 'MO'], ['中国澳门', 'MO'], ['中国台湾', 'TW'],
+  // The short names China Post writes for a destination: 阿拉伯联合酋长国 as 阿联酋.
+  ['阿联酋', 'AE'],
 ]);
 
 export function chinaPostCountry(name: string): string | undefined {
