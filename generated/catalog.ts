@@ -42090,7 +42090,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Kyiv",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "skladusa",
+      "localClocks": true
     },
     "canaryUrl": "https://skladusa.com/en/tracking/",
     "trackingUrlTemplate": "https://skladusa.com/en/tracking/{trackingNumber}/",
@@ -42101,7 +42102,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "skladusa.com",
           "www.skladusa.com"
         ],
-        "path": "^/en/tracking/([A-Za-z0-9]+)/?$"
+        "path": "^/(?:en/)?tracking/([A-Za-z0-9]+)/?$",
+        "ownNumbersOnly": true
       }
     ],
     "detectionRules": [

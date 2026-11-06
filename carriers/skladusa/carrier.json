@@ -19,18 +19,37 @@
   "timezone": "Europe/Kyiv",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "skladusa",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://skladusa.com/en/tracking/{trackingNumber}/",
     "searchUrl": "https://skladusa.com/en/tracking/",
     "canaryUrl": "https://skladusa.com/en/tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_details",
+      "location_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {
@@ -38,7 +57,8 @@
         "skladusa.com",
         "www.skladusa.com"
       ],
-      "path": "^/en/tracking/([A-Za-z0-9]+)/?$"
+      "path": "^/(?:en/)?tracking/([A-Za-z0-9]+)/?$",
+      "ownNumbersOnly": true
     }
   ],
   "detection": [

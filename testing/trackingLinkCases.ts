@@ -2194,6 +2194,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  skladusa: 'the empty-history view has no visible whole-reference confirmation; native retrieval binds the canonical route and matching found-result headings, which a synthetic rendered check cannot establish',
   'post-one': 'an unknown item redirects home without its query or an absence notice, so a synthetic rendered-page check cannot prove forwarding; known-item retrieval checks the whole returned item identity',
   airspeed: 'the cargo tracker looks up the number on the server, but an unknown one clears its summary and search box without an absence notice, so a synthetic rendered-page check cannot prove number forwarding',
   wahana: 'The tracking address needs a fresh Captcheck answer; it cannot render a shipment from the number alone.',
