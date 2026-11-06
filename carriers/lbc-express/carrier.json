@@ -19,6 +19,7 @@
     "adapter": "lbc-express",
     "steps": [
       "direct",
+      "trawl",
       "browser"
     ],
     "localClocks": true,

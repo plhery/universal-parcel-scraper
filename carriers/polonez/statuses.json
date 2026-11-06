@@ -1,4 +1,47 @@
 {
   "carrier": "polonez",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Label created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Received at authorized shipping outlet",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered to origin warehouse",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Arrived at EU distribution center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Transferred to final-mile carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Handed over to final-mile carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

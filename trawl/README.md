@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas and ZTO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express and ZTO. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -29,6 +29,11 @@ needs handling that this image's solvers do not provide; its
 [documentation](../carriers/hongkong-post/README.md) describes the verification flow.
 
 Track123 uses a fresh context for its public FedEx form. The page owns guest verification and polling; only the matching history is captured. It adds no challenge attempts or retained verification state.
+
+LBC Express binds the public page's main-frame tracking POST to the whole label and
+decodes its compressed response. Its bounded capture retains automatic verification
+retries and returns selected identity and scan fields without recipient details,
+nonces, cookies or a page archive.
 
 ## Sessions
 

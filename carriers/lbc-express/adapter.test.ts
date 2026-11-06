@@ -28,6 +28,15 @@ describe('LBC website history', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: null, last_update_local: '2026-10-02T15:40:01' });
     expect(JSON.stringify(result)).not.toMatch(/PRIVATE|SYNTHETIC RECIPIENT/);
   });
+  it('marks a capped history partial and validates scans beyond the cap', () => {
+    const body = website(), original = scans(body)[0]!;
+    const many: Json[] = Array.from({ length: 110 }, (_, i) => ({ ...original, DatePostedTime: `9:${String(Math.floor(i / 60)).padStart(2, '0')}:${String(i % 60).padStart(2, '0')} AM` }));
+    trackingStatus(body).TrackingHistory = { TrackingHistory: many };
+    expect(parseLbcWebsite(body, NUMBER)).toMatchObject({ history_truncated: true });
+    expect(parseLbcWebsite(body, NUMBER).events).toHaveLength(100);
+    many[109]!.StatusId = {};
+    expect(() => parseLbcWebsite(body, NUMBER)).toThrow();
+  });
   it('reads a single scan copied as an object and empty elements as blanks', () => {
     const reply = website();
     trackingStatus(reply).TrackingHistory = { TrackingHistory: { ...scans(reply)[0], CityName: [], ProvinceName: {} } };
@@ -36,11 +45,12 @@ describe('LBC website history', () => {
     expect(result.events?.[0]).toMatchObject({ provider_code: '8000', stage: 'accepted', local_time: '2026-10-01T09:15:20' });
     expect(result.events?.[0]).not.toHaveProperty('location');
   });
-  it.each(['wrong identity', 'missing identity', 'two shipments', 'nested text', 'numeric value', 'bad clock', 'missing history', 'bare WordPress answer'])(
+  it.each(['wrong identity', 'padded identity suffix', 'missing identity', 'two shipments', 'nested text', 'numeric value', 'bad clock', 'missing history', 'bare WordPress answer'])(
     'rejects %s without exposing reply data', mode => {
       let reply: unknown = website();
       const edited = reply as Json;
       if (mode === 'wrong identity') details(edited).TrackingNo = '100000000002';
+      if (mode === 'padded identity suffix') details(edited).TrackingNo = NUMBER + ' '.repeat(50) + '9';
       if (mode === 'missing identity') delete details(edited).TrackingNo;
       if (mode === 'two shipments') trackingStatus(edited).TrackingDetails = { TrackingDetails: [details(edited), details(edited)] };
       if (mode === 'nested text') details(edited).TrackingNo = { Other: NUMBER };

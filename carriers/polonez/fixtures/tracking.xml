@@ -1,0 +1,251 @@
+<return>
+  <api>Tracking</api>
+  <apiversion>1.0</apiversion>
+  <result_table>
+    <items>
+      <DateTimeAction>2026-01-04 08:10:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Shipper created a label, UPS has not received the package yet..</ActionMessages_EN>
+      <City_EN>Sarasota</City_EN>
+      <Country_EN>FL</Country_EN>
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-04 09:14:20</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Received at Authorized Shipping Outlet</ActionMessages_EN>
+      <City_EN>Sarasota</City_EN>
+      <Country_EN>FL</Country_EN>
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-05 12:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Out For Delivery Today.</ActionMessages_EN>
+      <City_EN>Edison</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-05 15:12:32</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Receiving in PORT READING, NJ, USA.</ActionMessages_EN>
+      <City_EN>PORT READING</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-05 15:20:21</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>DELIVERED.</ActionMessages_EN>
+      <City_EN>PORT READING</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-06 09:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Added to container.</ActionMessages_EN>
+      <City_EN>New Jersey</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-08 14:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Shipped from New Jersey, USA.</ActionMessages_EN>
+      <City_EN>New Jersey</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-10 08:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>On the way to the destination facility in PL (Ocean Container) &lt;span class=note&gt;*&lt;/span&gt;</ActionMessages_EN>
+      <City_EN>On the Ship</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-20 06:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Delivered to EU Distribution Center.</ActionMessages_EN>
+      <City_EN>Czestochowa</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-20 06:00:01</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Transferred to Final Destination. GLS tracking number: 97468251360</ActionMessages_EN>
+      <City_EN>Czestochowa</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-20 07:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Cleared Customs - Preparing for Loading</ActionMessages_EN>
+      <City_EN>Karex - Czestochowa</City_EN>
+      <Country_EN>PL</Country_EN>
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-20 17:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>The parcel data was entered into the GLS IT system; the parcel was not yet handed over to GLS..</ActionMessages_EN>
+      <City_EN>Czestochowa</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-20 21:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>The parcel was handed over to GLS..</ActionMessages_EN>
+      <City_EN>Czestochowa</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-21 07:00:00</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>The parcel is expected to be delivered during the day..</ActionMessages_EN>
+      <City_EN>Czeladz</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-21 15:59:34</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>The parcel has been delivered..</ActionMessages_EN>
+      <City_EN>Czeladz</City_EN>
+      <Country_EN />
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+    <items>
+      <DateTimeAction>2026-01-22</DateTimeAction>
+      <ShipmentNumber>PIE482MP905731</ShipmentNumber>
+      <ShipmentNumberSender>PIE482MP905731</ShipmentNumberSender>
+      <Barcode>PIE482MP905731</Barcode>
+      <ShipmentNumberTransit>97468251360</ShipmentNumberTransit>
+      <StatusCode />
+      <ActionMessages_EN>Delivered</ActionMessages_EN>
+      <City_EN>Sosnowiec</City_EN>
+      <Country_EN>PL</Country_EN>
+      <AgentCode />
+      <DetailMessages_EN>SYNTHETIC PERSON, 19 Example Road, sender@example.invalid</DetailMessages_EN>
+      <Status_Info>Private proof https://example.invalid/pod?token=SYNTHETIC-PRIVATE</Status_Info>
+      <Recipient_Country>PL</Recipient_Country>
+    </items>
+  </result_table>
+  <result_uuid>SYNTHETIC-RESULT</result_uuid>
+  <errors>
+    <code>000</code>
+    <name> </name>
+  </errors>
+</return>

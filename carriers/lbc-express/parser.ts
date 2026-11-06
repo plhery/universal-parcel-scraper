@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { returnedTrackingNumber } from '../../core/detection/returned.js';
 import { IndeterminateError, InvalidInputError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -73,7 +74,7 @@ export function lbcHistory(scans: readonly LbcScan[]): CarrierResult {
   const mapped = classifyLbcScan(String(current.provider_code), current.description!);
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description, last_update: null, ...(current.local_time ? { last_update_local: current.local_time } : {}),
-    timezone: 'Asia/Manila', events: events.slice(0, 100) };
+    timezone: 'Asia/Manila', events: events.slice(0, 100), ...(events.length > 100 ? { history_truncated: true } : {}) };
 }
 
 function invalidJson(): never { throw new SchemaError('lbc-express', 'LBC returned invalid tracking JSON'); }
@@ -119,7 +120,7 @@ export function parseLbcWebsite(payload: unknown, raw: string): CarrierResult {
   if (scalar(status, 'StatusCode', true, 16) !== '0001') throw new IndeterminateError('lbc-express', 'LBC returned no confirmed parcel history');
   const details = elements(object(status.TrackingDetails).TrackingDetails);
   if (details.length !== 1) invalidJson();
-  if (scalar(details[0]!, 'TrackingNo', true, 40) !== number) throw new SchemaError('lbc-express', 'LBC returned a different shipment');
+  if (returnedTrackingNumber(details[0]!.TrackingNo) !== number) throw new SchemaError('lbc-express', 'LBC returned a different shipment');
   const history = empty(status.TrackingHistory) ? [] : elements(object(status.TrackingHistory).TrackingHistory);
   return lbcHistory(history.map(row => ({
     code: scalar(row, 'StatusId', true, 32), wording: scalar(row, 'StatusandLocation'),

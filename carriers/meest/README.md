@@ -55,6 +55,9 @@ time, as the page shows it. The destination country comes from the rows when
 they agree. A partner feed's "To be delivered to" or "Delivery by … with barcode" note gives the
 delivery carrier once the catalog can place it, with that carrier's number.
 
+Polonez uses this same guest client with its own parser for its code-free rows;
+its label ownership, wording and delivery legs remain separate from Meest's coded network.
+
 ## Limitations
 
 Meest drops old histories, after which a number answers as not found. The reply has no

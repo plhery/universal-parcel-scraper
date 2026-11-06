@@ -977,6 +977,8 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/apcchoice\.apc-overnight\.com\/track-parcel\?id=2026030599999999999991$/,
     marker: /Your consignment could not be found|CONSIGNMENT SUMMARY/ },
   // The page prefills its field with the number in its address and looks it up on load.
+  { carrier: 'polonez', number: 'POL904MP752683',
+    route: /^https:\/\/tracking-iframe\.meest\.com\/t\/en\/POL904MP752683$/, marker: /Status language|Track shipment/ },
   { carrier: 'meest', number: 'ZZ0000000ZZ00000G',
     route: /^https:\/\/t\.meest-group\.com\/n\/ZZ0000000ZZ00000G$/,
     marker: /Відстежити посилку|не знайдено відправлення з таким номером/ },

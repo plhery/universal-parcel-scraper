@@ -1,31 +1,40 @@
 # Polonez
 
-Polonez parcels use enabled universal providers. There is no dedicated adapter yet.
+Tracks the current labels of Polonez's US-to-Poland service through the public
+[Meest tracker](../meest/README.md) its site embeds. Older labels remain on enabled
+universal providers. Existing number detection stays unchanged; the native adapter
+accepts only the current documented label families.
 
-Polonez Express (Polonez America LLC) ships parcels from the United States to Poland from its
-New Jersey hub. Meest bought the Polonez Parcel Service trademark in 2023, and Polonez's tracking
-page embeds [Meest's](../meest/README.md) tracker. In Poland, KAREX clears customs and GLS
-Poland delivers under its own number, which the history names.
+## Retrieval
 
-## Numbers
+The adapter shares Meest's guest page, short-lived public salt and signed XML
+lookup. It keeps its own parser: Polonez rows have no Meest status code. All three
+own label fields must match the whole requested label on every row. A sender-only
+or partner-reference match cannot establish Polonez ownership. Empty retained
+history is inconclusive because the portal removes old shipments.
 
-A label number is three letters, three digits, two letters and six digits. The example on
-Polonez's tracking page, an example on its older site and archived lookups on its old tracker
-give six numbers, and Meest's tracker answers the current one, so `polonez-1` has high
-confidence. Older M and seven-digit numbers share GLS's and Loggi's layouts and get no rule.
+The newer JSON iframe omits scans and shifts some clocks, so it is not the source
+of history. No account, recipient credential, browser or CAPTCHA is needed for the
+XML route. Network failures get one recorded retry within the caller's budget;
+an expired cached salt gets one refresh. HTTP errors and malformed replies keep
+their failure kinds.
 
-## Tracker
+## Interpretation
 
-Meest's tracker files the whole history under the label number, but its rows carry no status
-code, which the Meest adapter refuses. An adapter can reuse Meest's lookup and read the GLS
-Poland number as the delivery partner's.
+UPS delivery to the origin warehouse and arrival at the EU distribution center
+remain transit. Recipient delivery needs the Polish leg; final-mile pre-advice and
+a delivery expectation establish no new stage. The explicit GLS label note gives
+the Polish delivery partner and its reference only when the shipment also
+establishes a consistent Polish destination. Unknown wording stays a generic
+update and marks the answer partial for enabled provider enrichment. Contacts, detail messages, internal references and proof links are omitted.
 
-## Links
+Clocks retain their wall digits and source precision without an offset. Relayed
+scans span countries and do not share a proven zone. Date-only rows stay dates;
+no delivery instant or ETA is invented. Long histories are bounded and marked
+partial so richer enabled providers remain available.
 
-Polonez's own page takes no number in its address. Meest's per-parcel page,
-`tracking-iframe.meest.com/t/en/<number>`, routes to Meest.
+## Live test
 
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `POLONEZ_TRACKING_NUMBER` outside the repository and run
+`npm run test:carriers:live -- carriers/polonez/adapter.live.test.ts`.
+Optionally set `POLONEZ_UNKNOWN_NUMBER` to check empty retained history.

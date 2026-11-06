@@ -21,6 +21,7 @@ import { isKargoturkReference } from '../detection/kargoturk.js';
 import { isProfitFieldsReference } from '../detection/profitFields.js';
 import { isLmParcelReference } from '../detection/lmParcel.js';
 import { isZnlogicReference } from '../detection/znlogic.js';
+import { isPolonezReference } from '../detection/polonez.js';
 import { isVXpressReference } from '../detection/vXpress.js';
 import { isAirspeedReference } from '../detection/airspeed.js';
 import { isFreightwaysGlobalReference } from '../detection/freightwaysGlobal.js';
@@ -39,7 +40,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
-  'v-xpress': isVXpressReference, airspeed: isAirspeedReference, 'freightways-global': isFreightwaysGlobalReference, 'fxdc-post': isFxdcPostReference, 'frontier-ca': isFrontierCaReference,
+  polonez: isPolonezReference, 'v-xpress': isVXpressReference, airspeed: isAirspeedReference, 'freightways-global': isFreightwaysGlobalReference, 'fxdc-post': isFxdcPostReference, 'frontier-ca': isFrontierCaReference,
   topdelivery: isTopdeliveryReference, kargoturk: isKargoturkReference, expedico: isExpedicoReference, 'fan-courier': isFanCourierReference,
   'profit-fields': isProfitFieldsReference, 'lm-parcel': isLmParcelReference, znlogic: isZnlogicReference,
   'fez-delivery': isFezDeliveryReference,

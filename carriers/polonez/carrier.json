@@ -20,18 +20,43 @@
   "timezone": "America/New_York",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "polonez",
+    "steps": [
+      "direct",
+      "retry",
+      "refresh"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivery_partner"
+  ],
   "portal": {
     "url": "https://tracking-iframe.meest.com/t/en/{trackingNumber}",
     "searchUrl": "https://polonez.express/us-en/parcel-track",
     "canaryUrl": "https://polonez.express/us-en/parcel-track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_carrier",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_details",
+      "shipper_details",
+      "references",
+      "proof_links",
+      "detail_messages"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps"
+    ]
   },
   "links": [],
   "detection": [

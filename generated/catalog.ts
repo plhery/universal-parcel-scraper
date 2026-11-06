@@ -36327,7 +36327,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "polonez",
+      "localClocks": true
     },
     "canaryUrl": "https://polonez.express/us-en/parcel-track",
     "trackingUrlTemplate": "https://tracking-iframe.meest.com/t/en/{trackingNumber}",

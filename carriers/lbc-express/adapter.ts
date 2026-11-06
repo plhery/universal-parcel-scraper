@@ -1,9 +1,11 @@
 import type { Page, Request as BrowserRequest, Response as BrowserResponse } from 'playwright-core';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { carrierErrorKind, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { BudgetExceededError, carrierErrorKind, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { withLocalBrowser } from '../../core/transport/localBrowser.js';
+import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/trawl.js';
 import { normalizeLbcNumber, parseLbcWebsite } from './parser.js';
 import { readLbcMobile } from './mobile.js';
 
@@ -12,11 +14,49 @@ const MAX_BYTES = 1_000_000;
 export const LBC_TRACK_PAGE = `${ORIGIN}/track/`;
 export const LBC_TRACK_REQUEST = `${ORIGIN}/wp-admin/admin-ajax.php`;
 
-function httpFailure(status: number): Error {
+function httpFailure(status: number, retryAfter?: string): Error {
+  if (status < 100) return new TransportError('lbc-express', 'The bound browser request failed');
+  const retryMs = retryAfter === undefined ? NaN : /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
   if ([401, 403].includes(status)) return new ChallengeError('lbc-express');
   return [404, 410].includes(status)
     ? new TransportError('lbc-express', 'LBC tracking endpoint is unavailable', { status })
-    : new UpstreamHttpError('lbc-express', status);
+    : new UpstreamHttpError('lbc-express', status, Number.isFinite(retryMs) ? Math.max(0, retryMs) : undefined);
+}
+
+/** The service observes the page's whole-number POST and decodes only that response. */
+async function trawlBrowser(number: string, trawl: TrawlClient, fetcher: typeof fetch | undefined, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
+  const timeoutMs = Math.floor(Math.min(25_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
+  if (timeoutMs < 1) throw new BudgetExceededError('lbc-express', remainingMs);
+  const url = `${LBC_TRACK_PAGE}?${new URLSearchParams({ 'tracking-number': number })}`;
+  const page = await trawl.scrape({ url, skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
+    captureResponses: [LBC_TRACK_REQUEST], settleTimeout: 1000 },
+  { provider: 'TRAWL while fetching LBC Express', timeoutMs, signal, fetcher,
+    maxBytes: 4 * MAX_BYTES, requireSolved: false, captureWindow: 'last' });
+  signal.throwIfAborted();
+  if (page.url !== url || (typeof page.raw.effectiveUrl === 'string' && page.raw.effectiveUrl !== url)) throw new SchemaError('lbc-express', 'LBC redirected away from its tracking page');
+  let result: CarrierResult | undefined;
+  let failure: Error | undefined;
+  for (const entry of page.capturedResponses.filter(entry => entry.url === LBC_TRACK_REQUEST)) {
+    if (!entry.trackingNumberSubmitted) throw new TransportError('lbc-express', 'The browser service does not support bound LBC capture');
+    if (entry.trackingNumberSubmitted !== number) throw new SchemaError('lbc-express', 'The browser service did not bind the whole LBC request');
+    result = undefined;
+    if (entry.status !== 200) { failure = httpFailure(entry.status, entry.headers['retry-after']); continue; }
+    if (entry.truncated || entry.error || entry.base64Encoded || typeof entry.body !== 'string'
+      || new TextEncoder().encode(entry.body).byteLength > MAX_BYTES) throw new SchemaError('lbc-express', 'LBC returned unreadable tracking data');
+    let payload: unknown;
+    try { payload = JSON.parse(entry.body); }
+    catch { throw new SchemaError('lbc-express', 'LBC returned invalid tracking JSON'); }
+    try { result = parseLbcWebsite(payload, number); failure = undefined; }
+    catch (error) {
+      // A later automatic retry must never conceal a mismatched shipment.
+      if (carrierErrorKind(error) === 'schema') throw error;
+      failure = error instanceof Error ? error : new TransportError('lbc-express', 'LBC tracking could not be parsed');
+    }
+  }
+  if (result) return result;
+  if (failure) throw failure;
+  if (page.statusCode !== 200) throw httpFailure(page.statusCode);
+  throw new TransportError('lbc-express', 'LBC tracking page sent no bound tracking response');
 }
 
 /** The tracking page's own `track_package` request for the whole number. */
@@ -81,7 +121,7 @@ function localBrowser(number: string, executablePath: string, signal: AbortSigna
 
 export class LbcExpressTracker {
   constructor(private readonly options: { executablePath?: string | null; recorder?: StepRecorder;
-    fetcher?: typeof fetch; userAgent?: string } = {}) {}
+    fetcher?: typeof fetch; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
 
   fetch(raw: string, context: TrackingContext = {}) {
     const number = normalizeLbcNumber(raw);
@@ -92,6 +132,8 @@ export class LbcExpressTracker {
         fetcher: this.options.fetcher, userAgent: this.options.userAgent, signal,
         timeoutMs: Math.max(1, Math.min(10_000, Math.floor(remainingMs))),
       }) },
+      { id: 'trawl', enabled: Boolean(this.options.trawl), run: ({ signal, remainingMs }) => trawlBrowser(number,
+        this.options.trawl!, this.options.fetcher, signal, remainingMs) },
       { id: 'browser', enabled: Boolean(this.options.executablePath), run: ({ signal, remainingMs }) => localBrowser(number, this.options.executablePath!, signal, Math.max(1, Math.floor(remainingMs))) },
     ]);
   }
@@ -99,6 +141,6 @@ export class LbcExpressTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new LbcExpressTracker({ executablePath: environment.browserExecutablePath, recorder: environment.recorder,
-    fetcher: environment.fetcher, userAgent: environment.userAgent });
-  return { id: 'lbc-express', recordsSteps: true, steps: ['direct', 'browser'], track: (input, context) => tracker.fetch(input.number, context) };
+    fetcher: environment.fetcher, userAgent: environment.userAgent, trawl: environment.trawl });
+  return { id: 'lbc-express', recordsSteps: true, steps: ['direct', 'trawl', 'browser'], track: (input, context) => tracker.fetch(input.number, context) };
 };

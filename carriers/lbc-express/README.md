@@ -2,13 +2,15 @@
 
 Tracks Philippine LBC shipments through the Android app's guest SOAP API. Domestic waybills have twelve digits, and only those suggest LBC; the tracker also answers for ten-, eleven- and fourteen-digit numbers, which many carriers share, so LBC tracks them when the caller names it. The shared subscription key is included, so no account or browser setup is needed for this tier.
 
-A configured local Chromium browser recovers from a refused key, transport failure or inconclusive mobile response. It opens the public tracking page through the page's own `tracking-number` link, whose script posts a `track_package` request to WordPress's `admin-ajax.php` with a nonce from the page, and reads that request's reply. Only the page's request for the whole number is read. The reply is the app service's result copied into JSON, so both tiers read the same scans the same way. The request also answers over plain HTTP with the nonce and cookies of a fetched tracking page. Rate limits and malformed or mismatched replies end the lookup.
+The optional TRAWL service recovers from a refused key, transport failure or inconclusive mobile response. It opens the public tracking page through the page's own `tracking-number` link, whose script posts a `track_package` request to WordPress's `admin-ajax.php` with a nonce from the page, and reads that request's reply. Only the page's request for the whole number is read. The reply is the app service's result copied into JSON, so all paths read the same scans the same way. The request also answers over plain HTTP with the nonce and cookies of a fetched tracking page. Rate limits and malformed or mismatched replies end the lookup.
 
 The mobile gateway's explicit [Cloudflare origin error](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1000/) is a transport failure, including when it arrives with HTTP 403. It does not establish key rejection.
 
-A fresh browser context keeps the lookup isolated. The browser completes the website's automatic JavaScript protection; interactive challenges remain failures. The result must name the requested number before any history is projected. A remittance number's answer and empty history are inconclusive in both tiers: neither establishes that a parcel is missing.
+TRAWL binds the page's main-frame POST to the complete tracking number, decodes its compressed reply and retains the bounded response sequence. An earlier refusal can recover through the page's automatic verification; a later refusal or mismatched identity cannot be hidden by an older success. The capture returns selected shipment and scan fields without contacts, nonces, cookies or the rendered page.
 
-Both tiers supply local scan clocks without offsets; they stay in `local_time`. Neither tier invents an update or delivery instant. History is current first, exact duplicate rows are removed, and the names in delivered-to and released-to rows are discarded. A scan takes its branch's town and province as its location; a forwarding scan carries its destination's, so it gets none. Status code 0 covers several kinds of scan, so its stage comes from LBC's wording. Scans stored without a town, or with a representative's name, keep their identity when they gain the town or lose the name.
+A configured local Chromium remains available after the service. That local context is fresh for each lookup. The browser completes the website's automatic JavaScript protection; verification and automatic retries remain inside the lookup budget. The result must name the requested number before any history is projected. A remittance number's answer and empty history are inconclusive in all paths: neither establishes that a parcel is missing.
+
+All retrieval paths supply local scan clocks without offsets; they stay in `local_time`. No retrieval path invents an update or delivery instant. History is current first, exact duplicate rows are removed, and the names in delivered-to and released-to rows are discarded. A scan takes its branch's town and province as its location; a forwarding scan carries its destination's, so it gets none. Capped histories stay partial for enabled provider enrichment. Status code 0 covers several kinds of scan, so its stage comes from LBC's wording. Scans stored without a town, or with a representative's name, keep their identity when they gain the town or lose the name.
 
 ## Mobile app
 
@@ -37,6 +39,6 @@ key needs a new release; browser retrieval remains available.
 
 ## Requirements
 
-`TRACKING_CHROMIUM_PATH` enables browser recovery. Automatic key refresh, browser-service retrieval, estimates and pickup points are not implemented. Provide `LBC_TRACKING_NUMBER` outside Git for a positive live lookup.
+`FLARESOLVERR_URL` enables service recovery; the TRAWL image must include LBC decoded capture. `TRACKING_CHROMIUM_PATH` enables local Chromium recovery. Automatic key refresh, estimates and pickup points are not implemented. Provide `LBC_TRACKING_NUMBER` outside Git for a positive live lookup.
 
 `npm run test:carriers:live -- carriers/lbc-express`

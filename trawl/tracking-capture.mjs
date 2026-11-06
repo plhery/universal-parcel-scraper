@@ -64,6 +64,42 @@ export async function requestAustraliaPostInPage({ number, budgetMs }) {
   } finally { clearTimeout(timer); }
 }
 
+/** LBC's XML-shaped JSON, without contacts, proof links, nonces or recipient prose. */
+export function projectLbcTracking(raw) {
+  const record = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  if (!record(raw) || typeof raw.success !== 'boolean') return {};
+  if (!raw.success) return { success: false };
+  const body = raw.data?.Body;
+  if (!record(body)) return { success: true, data: { Body: {} } };
+  if (Object.hasOwn(body, 'Fault')) return { success: true, data: { Body: { Fault: {} } } };
+  const status = body.LBCTrackAndTraceResponse?.LBCTrackAndTraceResult?.TrackingStatus;
+  if (!record(status)) return { success: true, data: { Body: {} } };
+  const scalar = (value, max) => value === undefined ? undefined
+    : typeof value === 'string' ? value.length <= max ? value : null
+    : Array.isArray(value) && value.length === 0 ? []
+    : record(value) && Object.keys(value).length === 0 ? {} : null;
+  const elements = (value, limit, project) => Array.isArray(value)
+    ? value.length <= limit ? value.map(item => record(item) ? project(item) : null) : [null]
+    : record(value) ? Object.keys(value).length ? project(value) : {} : null;
+  const details = record(status.TrackingDetails)
+    ? { TrackingDetails: elements(status.TrackingDetails.TrackingDetails, 2,
+      row => ({ TrackingNo: scalar(row.TrackingNo, 4096) })) } : scalar(status.TrackingDetails, 0);
+  const history = record(status.TrackingHistory)
+    ? { TrackingHistory: elements(status.TrackingHistory.TrackingHistory, 500, row => {
+      const code = scalar(row.StatusId, 32);
+      const original = scalar(row.StatusandLocation, 1000);
+      const wording = typeof original !== 'string' ? original : code === '1' ? 'Delivered'
+        : /^Delivered to\b/i.test(original) ? 'Delivery update'
+        : /^Released to authorized representative\b/i.test(original) ? 'Released to authorized representative'
+        : /^Released to\b/i.test(original) ? 'Release update' : original;
+      return { StatusId: code, StatusandLocation: wording, DatePosted: scalar(row.DatePosted, 64),
+        DatePostedTime: scalar(row.DatePostedTime, 64), CityName: scalar(row.CityName, 120), ProvinceName: scalar(row.ProvinceName, 120) };
+    }) } : scalar(status.TrackingHistory, 0);
+  return { success: true, data: { Body: { LBCTrackAndTraceResponse: { LBCTrackAndTraceResult: {
+    TrackingStatus: { StatusCode: scalar(status.StatusCode, 16), TrackingDetails: details, TrackingHistory: history },
+  } } } } };
+}
+
 const SITES = [
   {
     api: 'https://mydhl.express.dhl/shipmentTracking',

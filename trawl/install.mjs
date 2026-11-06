@@ -54,6 +54,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && track718JuxiNumber(url, capture)) return await runTrack718Juxi({ ...carrierRun, signal: budget.signal })
   if (carrierPage && ozonBrowserRequest(url, capture)) return await runOzonBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && dhlExpressBrowserNumber(url, capture)) return await runDhlExpressBrowser(carrierRun)
+  if (carrierPage && lbcBrowserNumber(url, capture)) return await runLbcBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && mailamericasBrowserNumber(url, capture)) return await runMailamericasBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && posteItalianeBrowserNumber(url, capture)) {
     return await runPosteItalianeBrowser({ ...carrierRun, signal: budget.signal,
@@ -101,6 +102,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { track718JuxiNumber, runTrack718Juxi } from "../utils/track718-juxi.mjs"\n'
     + 'import { ozonBrowserRequest, runOzonBrowser } from "../utils/ozon-browser.mjs"\n'
     + 'import { dhlExpressBrowserNumber, runDhlExpressBrowser } from "../utils/dhl-express-browser.mjs"\n'
+    + 'import { lbcBrowserNumber, runLbcBrowser } from "../utils/lbc-browser.mjs"\n'
     + 'import { mailamericasBrowserNumber, runMailamericasBrowser } from "../utils/mailamericas-browser.mjs"\n'
     + 'import { posteItalianeBrowserNumber, runPosteItalianeBrowser } from "../utils/poste-italiane-browser.mjs"\n'
     + 'import { ztoBrowserNumber, runZtoBrowser } from "../utils/zto-browser.mjs"\n'
