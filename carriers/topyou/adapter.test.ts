@@ -138,6 +138,26 @@ describe('TopYou HTTP adapter', () => {
     ]);
   });
 
+  it('reads its own end of the clearance on China’s clock when it comes without an offset', () => {
+    // Read on the destination's clock, it came after the hand-over TopYou scans next.
+    const cleared = changed('in-transit', (track) => {
+      const last = track.trackInfo!.at(-1)!;
+      track.trackInfo!.push(
+        { ...last, id: '900008', changeDate: '2026/04/17 09:34:05', timeZone: null, location: null, record: 'Shipment completed the customs clearance process at destination', status: '20' },
+        { ...last, id: '900009', changeDate: '2026/04/17 15:33:16', location: null, record: 'Shipment is out for delivery', status: '20' },
+      );
+    });
+    expect(scans(parseTopyou(cleared, IN_TRANSIT)).slice(0, 2)).toEqual([
+      ['2026-04-17T15:33:16+08:00', '20', 'in_transit'],
+      ['2026-04-17T09:34:05+08:00', '20', 'in_transit'],
+    ]);
+    // The delivery carrier's scans without an offset keep their wall clock.
+    const relayed = changed('in-transit', (track) => {
+      track.trackInfo!.push({ ...track.trackInfo!.at(-1)!, id: '900010', changeDate: '2026/04/18 08:00:00', timeZone: null, record: 'Arrived at USPS Regional Facility', status: '15' });
+    });
+    expect(parseTopyou(relayed, IN_TRANSIT).events![0]).toMatchObject({ local_time: '2026-04-18T08:00:00' });
+  });
+
   it('reads a newest-first reply the same, and dates a delivery TopYou scans itself', () => {
     const newestFirst = changed('delivered', (track) => { track.trackInfo!.reverse(); });
     expect(parseTopyou(newestFirst, DELIVERED)).toEqual(parseTopyou(fixture('delivered'), DELIVERED));
