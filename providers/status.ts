@@ -119,5 +119,8 @@ export const statusMap: CarrierStatusMap = {
   }, {
     wording: 'your package will be delivered to another pickup point. you will be informed of the address and hours by email.',
     note: "Colis Privé's notice of a delivery still to come at another pickup point, as ParcelsApp relays it: not a scan, so it keeps the stage the parcel already had.",
+  }, {
+    wording: 'delivery request received',
+    note: "Royal Mail's record of a redelivery the recipient asked for after a missed delivery, as Postal Ninja relays it: not a scan, so it keeps the stage the parcel already had.",
   }, ...NO_STEP.map(([wording, note]) => ({ wording, note }))],
 };

@@ -130,6 +130,7 @@ describe('status map answers', () => {
     expect(answer('four-px', 'FPX_O_IR', 'Order information has been transmitted to Example Post.')).toEqual(mapped('registered'));
     expect(answer('four-px', 'FPX_O_IR', 'Label creation')).toEqual(mapped('registered'));
     expect(answer('four-px', 'FPX_O_IR', 'Manifest created')).toEqual(mapped('in_transit'));
+    expect(answer('four-px', 'FPX_D_APC', 'Arrival at processing center')).toEqual(mapped('in_transit'));
     expect(answer('j-and-t-au', null, 'Your parcel is out for delivery. If you have any questions, please call, Thank you for your patience.')).toEqual(mapped('out_for_delivery'));
     expect(answer('j-and-t-au', null, 'Your parcel has been delivered.If you have any questions,please call. We look forward to serving you again.')).toEqual(mapped('delivered'));
     expect(answer('dhl-express', 'PL', 'Processed at EXAMPLE CITY - FRANCE')).toEqual(mapped('in_transit'));
@@ -595,6 +596,8 @@ describe('status map answers', () => {
     expect(answer('ctt', '2', 'Aceite')).toEqual(mapped('accepted'));
     expect(answer('ctt', '10', 'Synthetic customs wording')).toEqual(mapped('customs'));
     expect(answer('ctt', '12', 'Entregue')).toEqual(mapped('delivered'));
+    expect(answer('ctt', '3', 'Importação cancelada.')).toEqual(gap);
+    expect(answer('ctt', '3', 'Synthetic cancellation')).toEqual(unknown);
     expect(answer('ctt', '99', 'Entregue')).toEqual(unknown);
     expect(answer('ctt', '02', 'Aceite')).toEqual(unknown);
     expect(answer('ctt', null, 'Aceite')).toEqual(unknown);
@@ -665,6 +668,8 @@ describe('status map answers', () => {
       .toEqual(mapped('exception'));
     expect(answer('hermes-de', 'INTERNATIONAL_UNDELIVERABLE', 'The shipment could not be delivered.')).toEqual(mapped('exception'));
     expect(answer('hermes-de', 'ANNOUNCED', 'Synthetic wording')).toEqual(mapped('registered'));
+    expect(answer('hermes-de', 'INTERNATIONAL_TRANSIT', 'Die Sendung wird an Hermes weitergeleitet. Weitere Informationen folgen, sobald uns die Sendung erreicht hat.'))
+      .toEqual(mapped('in_transit'));
     expect(answer('hermes-de', 'DELIVERED_NEIGHBOUR', 'Synthetic wording')).toEqual(mapped('delivered'));
     expect(answer('hermes-de', 'DELIVERED_PARCELBOX', 'Synthetic wording')).toEqual(mapped('ready_for_pickup'));
     expect(answer('hermes-de', 'EDL_BOOKED_PARCELSHOP', 'Für die Sendung wurde ein WunschPaketShop gebucht.')).toEqual(gap);
@@ -1512,6 +1517,7 @@ describe("universal providers' answers", () => {
     // Nor is a bare delivery estimate, or a note that the recipient's details changed.
     expect(answer('unknown', null, 'Estimated delivery')).toEqual(gap);
     expect(answer('unknown', null, 'Recipient information updated')).toEqual(gap);
+    expect(answer('unknown', null, 'Delivery request received')).toEqual(gap);
     // Posti's notification tool, as providers relay it beside Posti's scans.
     expect(answer('unknown', null, 'We have not received the recipient’s phone number')).toEqual(gap);
     expect(answer('unknown', null, 'We sent the recipient a letter about the item')).toEqual(gap);

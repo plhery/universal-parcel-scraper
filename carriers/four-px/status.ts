@@ -27,6 +27,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['FPX_I_CP', { status: 'in_transit', stage: 'customs' }],
   ['FPX_I_RCUK', { status: 'in_transit', stage: 'in_transit' }],
   ['FPX_D_AOPC', { status: 'in_transit', stage: 'in_transit' }],
+  // The destination post's processing centre, in the minute that post scans the parcel's arrival in the country.
+  ['FPX_D_APC', { status: 'in_transit', stage: 'in_transit' }],
   ['FPX_D_STPP', { status: 'in_transit', stage: 'in_transit' }],
   ['FPX_D_HQ', { status: 'in_transit', stage: 'in_transit' }],
   ['FPX_D_DFD', { status: 'in_transit', stage: 'in_transit' }], // Left the destination's national sorting centre.

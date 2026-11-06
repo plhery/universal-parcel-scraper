@@ -3,6 +3,7 @@
   "entries": [
     { "code": "1", "language": "pt", "wording": "Aguarda entrada nos CTT", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Shipment announced, not yet accepted." },
     { "code": "2", "language": "pt", "wording": "Aceite", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "CTT accepted the item and started the shipment." },
+    { "code": "3", "language": "pt", "wording": "Importação cancelada.", "stage": null, "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "State Cancelado with UPU event EDX, a second after an arrival scan (EMD) at a second office in Portugal: the voided arrival. It moves nothing." },
     { "code": "5", "language": "pt", "wording": "Devolvido", "stage": "returned", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Handed back to the sender." },
     { "code": "7", "language": "pt", "wording": "Em entrega", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "" },
     { "code": "8", "language": "pt", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "" },

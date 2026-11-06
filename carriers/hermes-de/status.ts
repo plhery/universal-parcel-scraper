@@ -45,6 +45,8 @@ export const STATUSES: Record<string, Milestone> = {
   ARRIVED_IN_DESTINATION_REGION_V2: milestone('in_transit', 'in_transit', 'Shipment arrived in the destination region'),
   IN_TRANSIT: milestone('in_transit', 'in_transit', 'Shipment in transit'),
   SORTED: milestone('in_transit', 'in_transit', 'Shipment sorted at the hub'),
+  // A parcel from abroad on its way to Hermes, before Hermes takes it over in Germany.
+  INTERNATIONAL_TRANSIT: milestone('in_transit', 'in_transit', 'Shipment on its way to Hermes'),
   INTERNATIONAL_ARRIVED_IN_COUNTRY: milestone('in_transit', 'in_transit', 'Shipment arrived in the destination country'),
   INTERNATIONAL_SORTED: milestone('in_transit', 'in_transit', 'Shipment sorted in the destination country'),
   DELIVERY_TOUR_STARTED: milestone('out_for_delivery', 'out_for_delivery', 'Out for delivery'),

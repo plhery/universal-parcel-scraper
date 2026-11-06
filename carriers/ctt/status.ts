@@ -14,7 +14,7 @@
  * apresentação à Alfândega" and "O envio está em desalfandegamento".
  */
 import type { ClassifiedStatus } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const EVENT_STATUS: Record<number, ClassifiedStatus> = {
   1: { status: 'pending', stage: 'registered' },
@@ -37,9 +37,15 @@ export function classifyCttStatus(stateId: unknown): ClassifiedStatus | undefine
 /**
  * What the map says about one scan: its `StateId`, as the adapter writes it.
  * Every scan carries one, so wording alone gets nothing; an id the map does not
- * know stays open for review.
+ * know stays open for review. State 3 ("Cancelado") is left out: its import
+ * cancellation (UPU EDX) voids an arrival scan CTT recorded a second earlier at
+ * a second office, so it moves nothing.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code) => code !== null && /^[1-9]\d{0,3}$/.test(code) ? EVENT_STATUS[Number(code)]?.stage : undefined,
-  gaps: [],
+  gaps: [{
+    code: '3',
+    wording: normalizeStatusWording('Importação cancelada.'),
+    note: 'CTT voiding the arrival scan it recorded a second earlier at another office: it moves nothing, so it keeps the stage of the scan before it.',
+  }],
 };

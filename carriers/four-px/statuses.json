@@ -196,6 +196,15 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "code": "FPX_D_APC",
+      "wording": "Arrival at processing center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "The destination post's processing centre, in the minute that post scans the parcel's arrival in the country."
+    },
+    {
       "code": "FPX_C_SPQS",
       "wording": "4px received shipment.",
       "language": "en",

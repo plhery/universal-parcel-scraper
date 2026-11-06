@@ -331,6 +331,15 @@
       "note": "Collected by the recipient at the ParcelShop its wording names."
     },
     {
+      "code": "INTERNATIONAL_TRANSIT",
+      "wording": "Die Sendung wird an Hermes weitergeleitet. Weitere Informationen folgen, sobald uns die Sendung erreicht hat.",
+      "language": "de",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "A parcel from abroad on its way to Hermes, at the instant its line's carrier reports it in international transit and days before Hermes takes it over"
+    },
+    {
       "code": "INTERNATIONAL_ARRIVED_IN_COUNTRY",
       "wording": "The shipment has arrived in the destination country Italy and is prepared for the further shipping.",
       "language": "en",
