@@ -74,6 +74,16 @@ describe('Kun Express tracking adapter', () => {
     }
   });
 
+  it('drops a warehouse departure dated a day or more after the delivery', () => {
+    const reply = fixture('track');
+    const details = reply[0].data[0].trackDetails;
+    const departure = details.find((detail: { track_kind: string }) => detail.track_kind === 'SHIPMENT');
+    details.unshift({ ...departure, track_id: '2000099', track_date: '2026-03-12 16:09:05', track_createdate: '2026-03-12 16:09:05' });
+    const result = parseKunExpressTrack(reply, NUMBER, Date.parse('2026-03-13T00:00:00Z'))!;
+    expect(result).toMatchObject({ current_stage: 'delivered', last_status_text: 'Delivered, In/At Mailbox' });
+    expect(result.events!.filter((event) => event.provider_code === 'SHIPMENT')).toHaveLength(1);
+  });
+
   it('finds the parcel by the shipper’s reference and names its own number', () => {
     expect(parseKunExpressTrack(fixture('track'), REFERENCE, READ_AT)?.canonical_tracking_number).toBe(NUMBER);
   });

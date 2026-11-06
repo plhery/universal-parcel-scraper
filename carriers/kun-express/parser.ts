@@ -43,8 +43,9 @@ export function kunExpressClock(row: HualeiRow): 'platform' | 'wall' | 'day' {
  */
 export const repeatsKunExpressRow = (wording: string, other: string): boolean => wording.endsWith(`, ${other}`);
 
+// The departure from its origin warehouse, which a record can carry again weeks after USPS's delivery.
 export const KUN_EXPRESS: HualeiTenant = { carrier: 'kun-express', provider: PROVIDER, origin: KUN_EXPRESS_ORIGIN, stage: kunExpressStage,
-  split: splitKunExpressRow, clock: kunExpressClock, repeats: repeatsKunExpressRow };
+  split: splitKunExpressRow, clock: kunExpressClock, repeats: repeatsKunExpressRow, departure: 'SHIPMENT' };
 
 /** The track interface's reply, or null when it holds no row for the number. */
 export const parseKunExpressTrack = (payload: unknown, number: string, readAt?: number): CarrierResult | null =>

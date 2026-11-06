@@ -37,6 +37,8 @@ CAPTCHA or browser is needed.
   code; ZIP codes are cut from places too.
 - The record's product name is the service name. Records name no channel or transfer number,
   so no delivery carrier or USPS number is handed over.
+- A record can carry its origin warehouse departure again weeks after USPS's delivery. Such a
+  row, dated a day or more after a delivery, is dropped so the delivery stays the latest scan.
 - The tracker also finds a parcel by the shipper's reference, and then names the KUN number.
 
 ## Limitations

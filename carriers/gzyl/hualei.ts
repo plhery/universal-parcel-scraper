@@ -94,6 +94,12 @@ export interface HualeiTenant {
    * row it shows is held back too.
    */
   readonly scriptedDelivery?: true;
+  /**
+   * The code of the tenant's origin warehouse departure. The parcel leaves it before any delivery,
+   * so such a row dated a day or more after a delivery row is a stray written late, not movement,
+   * and goes.
+   */
+  readonly departure?: string;
 }
 
 /**
@@ -301,10 +307,13 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   // The platform can write a partner's row again, and a copy written after a European clock change
   // reads the partner's clock an hour off: meso-global's DHL rows written in October summer time at
   // 17:09 came again, written after the change, at 18:09. The copy written later goes.
-  const unique = unrepeated.filter((entry) => !unrepeated.some((other) => other !== entry
+  const copies = unrepeated.filter((entry) => !unrepeated.some((other) => other !== entry
     && other.event.description === entry.event.description && other.event.location === entry.event.location
     && other.event.provider_code === entry.event.provider_code && hourApart(other.clock, entry.clock)
     && Date.parse(other.event.written_at ?? '') < Date.parse(entry.event.written_at ?? '')));
+  const deliveries = copies.filter(({ event }) => event.stage === 'delivered').map(({ clock }) => Date.parse(`${clock}Z`));
+  const unique = tenant.departure ? copies.filter(({ clock, event }) => event.provider_code !== tenant.departure
+    || !deliveries.some((at) => Date.parse(`${clock}Z`) - at >= 86_400_000)) : copies;
   // Rows come newest first; rows on one clock keep the reply's order.
   unique.sort((a, b) => (a.clock === b.clock ? a.index - b.index : a.clock < b.clock ? 1 : -1));
   const leg = returnLeg(unique.map(({ event }) => event));
