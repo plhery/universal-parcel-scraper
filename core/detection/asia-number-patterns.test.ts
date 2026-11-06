@@ -271,6 +271,15 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
     }
   });
+
+  it('asks DHLink about CYS and eleven digits on its UniUni line without naming it from the shape', () => {
+    expect(detectCarrierMatch('CYS00000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(detectCarrierMatch('cys 0000 0000 001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(recognitionAskedCarriers('CYS00000000001')).toEqual(['dhlink']);
+    for (const number of ['CYS0000000001', 'CYS000000000001', 'CYT00000000001', 'CY000000000001', 'CYS0000000000A', 'CYS00000000001US']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+    }
+  });
 });
 
 describe('wave seven South-East Asian courier rules', () => {

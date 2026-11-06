@@ -76476,6 +76476,17 @@
     ]
   },
   {
+    "input": "CYS99999999999",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhlink"
+    ],
+    "asked": [
+      "dhlink"
+    ]
+  },
+  {
     "input": "CZ000000014SI",
     "carrier": "posta-slovenije",
     "confidence": "high",
