@@ -22,7 +22,7 @@ import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { chinaPostDestinationScan, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
-import { agencyIntake, cttSiteZone, isCttExpressAgency } from '../../carriers/ctt/clock.js';
+import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
@@ -606,7 +606,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const labelled = labelZone(reported);
     const ctt = reported.key === CTT;
     const countries = ctt ? [recipientCountry(shipment, 'shipper_address'), recipientCountry(shipment)] : [];
-    const agencyScans = ctt ? provider.events.flatMap((raw: unknown) => isRecord(raw) && isCttExpressAgency(text(raw.location))
+    const agencyScans = ctt ? provider.events.flatMap((raw: unknown) => isRecord(raw) && isCttExpressPlace(text(raw.location))
       ? [wallMillis(raw)] : []) : [];
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');

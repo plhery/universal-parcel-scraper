@@ -188,6 +188,33 @@ describe('CTT response parsing', () => {
       ]);
       // The shipment record CTT Express sends, which CTT places in Madrid, keeps Madrid's clock too.
       expect(scanAt('2026-10-08T09:55:27Z', 'Madrid')).toBe('2026-10-08T09:55:27+02:00');
+    });
+
+    it('reads a scan at a Spanish provincial capital named bare, and the acceptance just before it, on Spain\'s clock', () => {
+      const result = parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ RecipientCountryCode: 'PT',
+        Events: { List: [
+          { DateTime: '2026-11-12T19:40:05Z', State: 'X', StateId: 11, Event: 'Arrived', EventCode: 'EMB', Local: 'Centro Operacional Example' },
+          { DateTime: '2026-11-11T15:02:47Z', State: 'X', StateId: 11, Event: 'Arrived', EventCode: 'EMB', Local: 'BARCELONA' },
+          { DateTime: '2026-11-11T15:02:46Z', State: 'X', StateId: 2, Event: 'Accepted', EventCode: 'EMA', Local: '' },
+          { DateTime: '2026-11-03T08:41:13Z', State: 'X', StateId: 1, Event: 'Information received', EventCode: 'EMO', Local: 'Barcelona' },
+          { DateTime: '2026-11-03T07:50:58Z', State: 'X', StateId: 1, Event: 'Information received', EventCode: 'EMO', Local: '' },
+        ] } }) } }, TRACKING_NUMBER);
+      expect(result.events?.map((event) => [event.description, event.time])).toEqual([
+        ['Arrived', '2026-11-12T19:40:05+00:00'],
+        // CTT Express's own tracker dates its dispatch and its shipment record an hour before these digits.
+        ['Arrived', '2026-11-11T15:02:47+01:00'],
+        ['Accepted', '2026-11-11T15:02:46+01:00'],
+        // CTT's own record of the information, with no place and no CTT Express scan after it, stays on Lisbon's clock.
+        ['Information received', '2026-11-03T07:50:58+00:00'],
+        ['Information received', '2026-11-03T08:41:13+01:00'],
+      ]);
+      // A delivery round in Spain, and the Canary Islands' capitals an hour behind the mainland.
+      expect(scanAt('2026-11-02T09:15:30Z', 'Valladolid', 'EMZ')).toBe('2026-11-02T09:15:30+01:00');
+      expect(scanAt('2026-11-02T09:15:30Z', 'Las Palmas de Gran Canaria')).toBe('2026-11-02T09:15:30+00:00');
+      expect(scanAt('2026-08-02T09:15:30Z', 'Santa Cruz de Tenerife')).toBe('2026-08-02T09:15:30+01:00');
+      // A Portuguese town stays on Lisbon's clock, and a capital's name on a parcel bound elsewhere keeps that country's.
+      expect(scanAt('2026-11-02T09:15:30Z', 'Example')).toBe('2026-11-02T09:15:30+00:00');
+      expect(scanAt('2026-11-02T09:15:30Z', 'Valencia', 'EMI', 'VE')).toBe('2026-11-02T09:15:30-04:00');
       // A code of CTT's own sites, or a Ponto CTT, stays on Portugal's clock.
       expect(scanAt('2026-10-20T19:12:27Z', '000000 - (PC) Ponto CTT Example')).toBe('2026-10-20T19:12:27+01:00');
       expect(scanAt('2026-10-20T19:12:27Z', '0099999 - (CO) C.O. EXAMPLE')).toBe('2026-10-20T19:12:27+01:00');

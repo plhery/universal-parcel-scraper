@@ -13,7 +13,7 @@ import {
   parseJsonBytes,
 } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { agencyIntake, cttSiteZone, isCttExpressAgency, portugalZone } from './clock.js';
+import { agencyIntake, cttSiteZone, isCttExpressPlace, portugalZone } from './clock.js';
 import { classifyCttStatus } from './status.js';
 
 // Protocol provenance:
@@ -162,10 +162,10 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
   const sender = clean(record.SenderCountryCode, 8).toUpperCase();
   const origin = requested.endsWith('PT') ? null : /^[A-Z]{2}$/.test(sender) && sender !== 'PT' ? sender : requested.slice(-2);
   const rows = eventsList.filter(isRecord).slice(0, 500);
-  // A parcel CTT Express hands over in Spain: its agencies' scans, and the
-  // acceptance CTT records with no place as one takes the parcel in, are on
-  // Madrid's clock (clock.ts).
-  const agencyScans = rows.filter((row) => isCttExpressAgency(clean(row.Local, 160))).map((row) => wallMillis(row.DateTime));
+  // A parcel CTT Express hands over in Spain: the scans at its agencies and
+  // towns, and the acceptance CTT records with no place as the parcel reaches
+  // one, are on Spain's clock (clock.ts).
+  const agencyScans = rows.filter((row) => isCttExpressPlace(clean(row.Local, 160))).map((row) => wallMillis(row.DateTime));
   const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
   const seen = new Set<string>();
   rows.forEach((rawEvent, index) => {
@@ -175,8 +175,7 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
     const code = clean(rawEvent.EventCode, 8);
     const partner = abroad && DESTINATION_EVENT.test(code) ? abroad : origin && ORIGIN_EVENT.test(code) ? origin : null;
     const at = wallMillis(rawEvent.DateTime);
-    const spanish = isCttExpressAgency(location)
-      || (!location && agencyIntake(at, agencyScans));
+    const spanish = !location && agencyIntake(at, agencyScans);
     const clock = scanClock(rawEvent.DateTime, location, partner, spanish);
     if (!clock || !description) return;
     const identity = `${clock.time ?? clock.local_time}\u0000${description}\u0000${Number.isSafeInteger(stateId) ? stateId : ''}`;

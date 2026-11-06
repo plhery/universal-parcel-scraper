@@ -1,4 +1,4 @@
-import { countryTimeZone, regionHasTown } from '../../core/time/index.js';
+import { countryTimeZone, regionHasTown, townKey } from '../../core/time/index.js';
 
 /**
  * CTT's clocks. CTT dates a scan with the wall clock of the place it happened
@@ -41,15 +41,47 @@ export function portugalZone(location: string): string {
 const CTT_EXPRESS_AGENCY = /^00\d{4}\s+-\s+\(/;
 
 /**
- * Madrid, which CTT names on the shipment record CTT Express sends it. The record keeps
- * Madrid's wall clock: CTT Express's own tracker dates it two hours before CTT's digits in
- * summer time.
+ * Spain's provincial capitals and its two autonomous cities, which CTT names bare, without a
+ * code, on the scans of CTT Express's network: the shipment record CTT Express sends it,
+ * CTT Express's hand-over and a delivery round in Spain. Such a scan keeps the town's wall
+ * clock: CTT Express's own tracker dates the shipment record an hour before CTT's digits for
+ * Barcelona in winter and two hours for Madrid in summer, to the second, and its dispatch the
+ * same hour before CTT's arrival at Barcelona.
  */
-const MADRID = /^madrid$/i;
+const SPANISH_CAPITALS = new Set([
+  'A Coruña', 'La Coruña', 'Albacete', 'Alicante', 'Alacant', 'Almería', 'Ávila', 'Badajoz', 'Barcelona', 'Bilbao',
+  'Burgos', 'Cáceres', 'Cádiz', 'Castellón', 'Castellón de la Plana', 'Castelló', 'Ciudad Real', 'Córdoba', 'Cuenca',
+  'Girona', 'Gerona', 'Granada', 'Guadalajara', 'Huelva', 'Huesca', 'Jaén', 'León', 'Lleida', 'Lérida', 'Logroño',
+  'Lugo', 'Madrid', 'Málaga', 'Murcia', 'Ourense', 'Orense', 'Oviedo', 'Palencia', 'Palma', 'Palma de Mallorca',
+  'Pamplona', 'Iruña', 'Pontevedra', 'Salamanca', 'San Sebastián', 'Donostia', 'Santander', 'Segovia', 'Sevilla',
+  'Soria', 'Tarragona', 'Teruel', 'Toledo', 'Valencia', 'València', 'Valladolid', 'Vitoria', 'Vitoria-Gasteiz',
+  'Zamora', 'Zaragoza', 'Ceuta', 'Melilla',
+].map(townKey));
+/** The Canary Islands' two capitals, an hour behind the mainland. */
+const CANARY_CAPITALS = new Set(['Las Palmas', 'Las Palmas de Gran Canaria', 'Santa Cruz de Tenerife'].map(townKey));
+
+/**
+ * The clock of a Spanish provincial capital a location names bare, unless the parcel's
+ * `countries` include one besides Spain and Portugal, where a town of that name may lie.
+ */
+function spanishTownZone(location: string, countries: readonly (string | null)[]): string | null {
+  if (countries.some((country) => country && country !== 'ES' && country !== 'PT')) return null;
+  const town = townKey(location);
+  if (!town || !/^[\p{L} .'-]+$/u.test(location.trim())) return null;
+  return CANARY_CAPITALS.has(town) ? 'Atlantic/Canary' : SPANISH_CAPITALS.has(town) ? 'Europe/Madrid' : null;
+}
 
 /** Whether a location names one of CTT Express's agencies, not one of CTT's own sites. */
 export function isCttExpressAgency(location: string): boolean {
   return CTT_EXPRESS_AGENCY.test(location) && !CTT_SITE.test(location);
+}
+
+/**
+ * Whether a location is one of CTT Express's: one of its agencies or a Spanish provincial
+ * capital named bare. CTT records its acceptance with no place as the parcel reaches either.
+ */
+export function isCttExpressPlace(location: string): boolean {
+  return isCttExpressAgency(location) || spanishTownZone(location, []) !== null;
 }
 
 /** The acceptance CTT records with no place as a CTT Express agency takes a parcel in comes up to this long before. */
@@ -57,8 +89,8 @@ const AGENCY_INTAKE_MS = 60_000;
 
 /**
  * Whether a CTT scan with no place, at `at`, is that acceptance: at most a minute before one of
- * `agencyScans`, the agencies' scans. Both are wall clocks read as UTC, only to compare them.
- * It is on Madrid's clock, as the agency's scan is.
+ * `agencyScans`, the scans at CTT Express's places (`isCttExpressPlace`). Both are wall clocks
+ * read as UTC, only to compare them. It is on Madrid's clock, as the agency's scan is.
  */
 export function agencyIntake(at: number, agencyScans: readonly number[]): boolean {
   return agencyScans.some((agency) => agency - at >= 0 && agency - at <= AGENCY_INTAKE_MS);
@@ -67,15 +99,16 @@ export function agencyIntake(at: number, agencyScans: readonly number[]): boolea
 /**
  * The clock a CTT scan's location itself names: the country of the office of
  * exchange leading it, when that is Portugal or one of `countries` (the
- * parcel's), Madrid's for Madrid or one of CTT Express's agencies, else
- * Portugal's for one of CTT's own sites. Null when the location does not say.
- * Providers' copies of CTT's scans keep CTT's digits, so they take the same clocks.
+ * parcel's), Madrid's for one of CTT Express's agencies, a Spanish provincial
+ * capital's, else Portugal's for one of CTT's own sites. Null when the location
+ * does not say. Providers' copies of CTT's scans keep CTT's digits, so they take
+ * the same clocks.
  */
 export function cttSiteZone(location: string, countries: readonly (string | null)[]): string | null {
   const office = OFFICE.exec(location)?.[1];
   if (office === 'PT' || (office && countries.includes(office))) {
     return office === 'PT' ? portugalZone(location) : countryTimeZone(office);
   }
-  if (MADRID.test(location.trim()) || isCttExpressAgency(location)) return 'Europe/Madrid';
-  return CTT_SITE.test(location) ? portugalZone(location) : null;
+  if (isCttExpressAgency(location)) return 'Europe/Madrid';
+  return spanishTownZone(location, countries) ?? (CTT_SITE.test(location) ? portugalZone(location) : null);
 }

@@ -56,10 +56,16 @@ carrier.
     that issued the number, unless the location names a Portuguese office or CTT site. An
     origin with several zones keeps CTT's `Z`.
   - On a parcel CTT Express hands over in Spain, a scan at one of its agencies (a six-digit
-    code starting `00`, as in `009999 - (PL) …`) and the acceptance CTT records with no
-    place up to a minute before it are on Madrid's clock: CTT Express's own tracker dates
-    that arrival two hours before the digits CTT shows.
-  - The shipment record CTT Express sends, which CTT places in Madrid, is on Madrid's clock.
+    code starting `00`, as in `009999 - (PL) …`) is on Madrid's clock: CTT Express's own
+    tracker dates that arrival two hours before the digits CTT shows.
+  - A scan placed by a Spanish provincial capital's bare name, such as the shipment record
+    CTT Express sends, its hand-over or a delivery round in Spain, is on that town's clock:
+    Madrid's, or the Canary Islands' for their two capitals. CTT Express's own tracker dates
+    the record and its dispatch an hour before CTT's digits in winter, to the second. A
+    parcel bound to another country, where a town of that name may lie, keeps that
+    country's clock.
+  - The acceptance CTT records with no place up to a minute before a scan at an agency or
+    such a town is on Madrid's clock too.
   - Any other scan is CTT's, on Portugal's clock.
   - Ship24's, ParcelsApp's and 17TRACK's copies keep CTT's digits, so a location they relay
     takes the same clock: a CTT Express agency's scan is Madrid's there too.
