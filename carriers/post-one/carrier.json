@@ -21,18 +21,45 @@
   "timezone": "Europe/Sofia",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "post-one",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 9,
+      "pattern": "^R\\d{10}$"
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://postone.eu/en/track?code={trackingNumber}",
     "searchUrl": "https://postone.eu/en/products/view/track",
     "canaryUrl": "https://postone.eu/en",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_details",
+      "incomplete_progress_rows"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {
@@ -43,7 +70,8 @@
       "pathPattern": "^/(?:[a-z]{2}/)?track/?$",
       "params": [
         "code"
-      ]
+      ],
+      "ownNumbersOnly": true
     }
   ],
   "detection": [

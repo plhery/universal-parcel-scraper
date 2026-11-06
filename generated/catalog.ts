@@ -36698,7 +36698,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sofia",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "post-one",
+      "recognitionRank": 9,
+      "recognitionPattern": "^R\\d{10}$",
+      "localClocks": true
     },
     "canaryUrl": "https://postone.eu/en",
     "trackingUrlTemplate": "https://postone.eu/en/track?code={trackingNumber}",
@@ -36712,7 +36715,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/(?:[a-z]{2}/)?track/?$",
         "params": [
           "code"
-        ]
+        ],
+        "ownNumbersOnly": true
       }
     ],
     "detectionRules": [

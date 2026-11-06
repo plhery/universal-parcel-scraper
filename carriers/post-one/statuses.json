@@ -1,4 +1,11 @@
 {
   "carrier": "post-one",
-  "entries": []
+  "entries": [
+    { "code": "crd", "wording": "Created", "stage": "registered", "language": "en", "confirmedBy": "portal" },
+    { "code": "apo", "wording": "Sorted at Hub", "stage": "in_transit", "language": "en", "confirmedBy": "portal" },
+    { "code": "ded", "wording": "Departed to Destination", "stage": "in_transit", "language": "en", "confirmedBy": "portal" },
+    { "code": "icn", "wording": "In Carrier's Network", "stage": "in_transit", "language": "en", "confirmedBy": "portal" },
+    { "code": "ofd", "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal" },
+    { "code": "dld", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "portal" }
+  ]
 }

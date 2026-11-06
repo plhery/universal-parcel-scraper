@@ -519,6 +519,7 @@ import { statusMap as postaSlovenije } from '../../carriers/posta-slovenije/stat
 import { statusMap as postaSrbije } from '../../carriers/posta-srbije/status.js';
 import { statusMap as posteItaliane } from '../../carriers/poste-italiane/status.js';
 import { statusMap as postex } from '../../carriers/postex/status.js';
+import { statusMap as postOne } from '../../carriers/post-one/status.js';
 import { statusMap as posti } from '../../carriers/posti/status.js';
 import { statusMap as postlogistics } from '../../carriers/postlogistics/status.js';
 import { statusMap as postmediaParcelServices } from '../../carriers/postmedia-parcel-services/status.js';
@@ -819,7 +820,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
-  'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
+  'post-one': postOne, 'posta-slovenije': postaSlovenije, 'posta-srbije': postaSrbije, 'poste-italiane': posteItaliane, postex, posti, postlogistics, 'postmedia-parcel-services': postmediaParcelServices,
   postnord, posturinn, ppl, 'precision-deliveries': precisionDeliveries,
   'pro-carrier': proCarrier, 'prompt-xpress': promptXpress, proships, 'pts-worldwide-express': ptsWorldwideExpress, ptt, 'pullman-cargo': pullmanCargo, purolator, 'quantium-solutions': quantiumSolutions,
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
