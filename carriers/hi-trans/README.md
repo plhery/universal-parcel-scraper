@@ -13,6 +13,10 @@ carriers print letters followed by a counter, so no rule claims the layout.
 The home page's track form opens `online.hi-trans.com.au/Connotes/ShowConsignmentSummary.aspx`
 with the number in `Number`.
 
+Interparcel's [Hi-Trans tracker](https://au.interparcel.com/couriers/hi-trans-express/tracking)
+covers shipments booked through Interparcel and asks for its booking reference. It does not
+establish support for arbitrary Hi-Trans consignment notes.
+
 ## Why there is no adapter
 
 The public consignment summary can answer with a Cloudflare managed challenge before any

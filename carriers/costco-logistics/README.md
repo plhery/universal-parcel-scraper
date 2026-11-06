@@ -14,9 +14,10 @@ their layouts with many carriers and get no rule.
 
 ## Tracker
 
-The tracking page asks a JSON interface that needs two fixed headers but no session. Its reply
-holds the delivery address, which an adapter must leave out. Clocks have no zone and are local
-to the delivering market.
+The tracking page publishes two fixed headers for its JSON interface, which also enforces
+browser-origin access. Sending those headers alone is insufficient; a dedicated browser flow
+is not implemented. Replies include the delivery address, which an adapter must leave out.
+Clocks have no zone and are local to the delivering market.
 
 ## Links
 
