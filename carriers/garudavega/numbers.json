@@ -1,0 +1,34 @@
+{
+  "carrier": "garudavega",
+  "gap": "Garudavega's numbers are eleven digits, a length many carriers share, and only an aggregator's example shows one.",
+  "records": [
+    {
+      "number": "21115688316",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/garudavega/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "ppl"
+        ]
+      },
+      "note": "TrackShip's GarudaVega page gives it as a tracking code example."
+    }
+  ]
+}

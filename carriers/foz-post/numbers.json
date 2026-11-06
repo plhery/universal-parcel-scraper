@@ -1,0 +1,38 @@
+{
+  "carrier": "foz-post",
+  "gap": "Twelve bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "006098230354",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/foz-post/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "poste-italiane",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sending"
+        ]
+      },
+      "note": "TrackShip's Foz Post page gives it as a tracking code example."
+    }
+  ]
+}

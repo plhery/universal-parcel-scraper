@@ -1,0 +1,39 @@
+{
+  "id": "rocket-shipping",
+  "displayName": "Rocket Shipping",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#f6874f"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.rocketshipping.io/track/{trackingNumber}",
+    "searchUrl": "https://tracking.rocketshipping.io/",
+    "canaryUrl": "https://tracking.rocketshipping.io/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.rocketshipping.io"
+      ],
+      "path": "^/track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

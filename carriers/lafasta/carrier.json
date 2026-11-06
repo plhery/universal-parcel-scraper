@@ -1,0 +1,42 @@
+{
+  "id": "lafasta",
+  "displayName": "Lafasta",
+  "aliases": [
+    "لافاستا",
+    "شركة لافاستا للشحن والتوصيل"
+  ],
+  "region": {
+    "countries": [
+      "SA"
+    ]
+  },
+  "brand": {
+    "color": "#395c3b"
+  },
+  "selectable": true,
+  "timezone": "Asia/Riyadh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://c.lafasta.sa.com/Track/{trackingNumber}",
+    "searchUrl": "https://c.lafasta.sa.com/Track/",
+    "canaryUrl": "https://c.lafasta.sa.com/Track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "c.lafasta.sa.com"
+      ],
+      "path": "^/Track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

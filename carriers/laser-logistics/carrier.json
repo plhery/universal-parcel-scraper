@@ -1,0 +1,43 @@
+{
+  "id": "laser-logistics",
+  "displayName": "Laser Logistics",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#033f98"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",
+    "searchUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
+    "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.laserlogistics.co.za",
+        "laserlogistics.co.za"
+      ],
+      "pathPattern": "^/parcel-tracking/?$",
+      "params": [
+        "waybillnumber"
+      ]
+    }
+  ],
+  "detection": []
+}

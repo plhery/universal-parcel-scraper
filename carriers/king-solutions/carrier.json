@@ -1,0 +1,45 @@
+{
+  "id": "king-solutions",
+  "displayName": "King Solutions",
+  "aliases": [
+    "King Solutions, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#00a8d1"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://kingsolutionsglobal.com/track/?pros={trackingNumber}",
+    "searchUrl": "https://kingsolutionsglobal.com/track/",
+    "canaryUrl": "https://kingsolutionsglobal.com/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "kingsolutionsglobal.com",
+        "www.kingsolutionsglobal.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "pros"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "carrybee",
+  "displayName": "CarryBee",
+  "aliases": [
+    "Carry Bee",
+    "CarryBee Express Ltd"
+  ],
+  "region": {
+    "countries": [
+      "BD"
+    ]
+  },
+  "brand": {
+    "color": "#ffcb05"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dhaka",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://carrybee.com/track?consignmentId={trackingNumber}",
+    "searchUrl": "https://carrybee.com/track",
+    "canaryUrl": "https://carrybee.com/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "carrybee.com",
+        "www.carrybee.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "consignmentId"
+      ]
+    }
+  ],
+  "detection": []
+}

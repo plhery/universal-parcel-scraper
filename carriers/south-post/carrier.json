@@ -1,0 +1,42 @@
+{
+  "id": "south-post",
+  "displayName": "South Post",
+  "aliases": [
+    "South Post S.A."
+  ],
+  "region": {
+    "countries": [
+      "AR"
+    ]
+  },
+  "brand": {
+    "color": "#339fe0"
+  },
+  "selectable": true,
+  "timezone": "America/Argentina/Buenos_Aires",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.southpost.com.ar/t/{trackingNumber}",
+    "searchUrl": "https://www.southpost.com.ar/",
+    "canaryUrl": "https://www.southpost.com.ar/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.southpost.com.ar",
+        "southpost.com.ar"
+      ],
+      "path": "^/t/([0-9]+)/?$"
+    }
+  ],
+  "detection": []
+}

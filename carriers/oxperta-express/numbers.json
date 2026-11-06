@@ -1,0 +1,54 @@
+{
+  "carrier": "oxperta-express",
+  "gap": "Sixteen-digit examples fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "2630008361998386",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/oxperta-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "TrackShip's Oxperta Express page gives it as a tracking code example."
+    },
+    {
+      "number": "3230002508166912",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking-pro.oxperta.com/js/widget.js",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "correos-express",
+          "canada-post",
+          "tnt",
+          "evri-uk"
+        ]
+      },
+      "note": "Oxperta's tracking widget script gives it as the example localizador in its usage comment."
+    }
+  ]
+}

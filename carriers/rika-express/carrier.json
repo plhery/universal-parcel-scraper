@@ -1,0 +1,45 @@
+{
+  "id": "rika-express",
+  "displayName": "RIKA Express-Mail",
+  "aliases": [
+    "RIKA LLP",
+    "Экспресс-почта РИКА"
+  ],
+  "region": {
+    "countries": [
+      "KZ"
+    ]
+  },
+  "brand": {
+    "color": "#e5097f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Almaty",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://home.courierexe.ru/350/tracking?orderno={trackingNumber}&submit=1&lang=2",
+    "searchUrl": "https://rika.kz/en/tracking/",
+    "canaryUrl": "https://rika.kz/en/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "home.courierexe.ru"
+      ],
+      "pathPattern": "^/350/tracking/?$",
+      "params": [
+        "orderno"
+      ]
+    }
+  ],
+  "detection": []
+}

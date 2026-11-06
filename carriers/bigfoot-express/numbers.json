@@ -1,0 +1,40 @@
+{
+  "carrier": "bigfoot-express",
+  "gap": "Only an aggregator's examples show Bigfoot Express Freight waybill numbers.",
+  "records": [
+    {
+      "number": "BFO356627",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/bigfoot-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Bigfoot Express page gives it as a tracking code example."
+    },
+    {
+      "number": "WB7058138",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/bigfoot-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Bigfoot Express page gives it as a tracking code example."
+    }
+  ]
+}

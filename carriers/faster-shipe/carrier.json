@@ -1,0 +1,45 @@
+{
+  "id": "faster-shipe",
+  "displayName": "Faster Shipe",
+  "aliases": [
+    "Fastershipe"
+  ],
+  "region": {
+    "countries": [
+      "SA"
+    ]
+  },
+  "brand": {
+    "color": "#0a7cff"
+  },
+  "selectable": true,
+  "timezone": "Asia/Riyadh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://fastershipe.com/track.html?id={trackingNumber}",
+    "searchUrl": "https://fastershipe.com/track.html",
+    "canaryUrl": "https://fastershipe.com/track.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "fastershipe.com",
+        "www.fastershipe.com"
+      ],
+      "pathPattern": "^/track\\.html$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

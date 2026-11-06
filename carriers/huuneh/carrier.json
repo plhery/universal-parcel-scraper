@@ -1,0 +1,43 @@
+{
+  "id": "huuneh",
+  "displayName": "Huuneh",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#347db8"
+  },
+  "selectable": true,
+  "timezone": "America/Toronto",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
+    "searchUrl": "https://huuneh.com/dashboard/tracking.php",
+    "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "huuneh.com",
+        "www.huuneh.com"
+      ],
+      "pathPattern": "^/dashboard/track\\.php$",
+      "params": [
+        "order_track"
+      ]
+    }
+  ],
+  "detection": []
+}

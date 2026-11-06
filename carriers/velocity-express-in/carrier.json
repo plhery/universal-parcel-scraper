@@ -1,0 +1,40 @@
+{
+  "id": "velocity-express-in",
+  "displayName": "Velocity Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#0366af"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://velexp.com/home-tracking/{trackingNumber}?type=awb",
+    "searchUrl": "https://velexp.com/home-tracking",
+    "canaryUrl": "https://velexp.com/home-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "velexp.com",
+        "www.velexp.com"
+      ],
+      "path": "^/home-tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

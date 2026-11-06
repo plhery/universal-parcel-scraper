@@ -1,0 +1,55 @@
+{
+  "id": "total-transportation",
+  "displayName": "Total Transportation & Distribution",
+  "aliases": [
+    "Total Transportation",
+    "TTD"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#003466"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.carrierlogistics.com/scripts/tot.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
+    "searchUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
+    "canaryUrl": "https://tracking.carrierlogistics.com/scripts/tot.pol/facts.htm",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.carrierlogistics.com"
+      ],
+      "pathPattern": "^/scripts/tot\\.pol/boldetail\\.htm$",
+      "params": [
+        "wpro1"
+      ]
+    },
+    {
+      "domains": [
+        "tracking.carrierlogistics.com"
+      ],
+      "pathPattern": "^/scripts/tot\\.pol/facts\\.htm$",
+      "params": [
+        "pronum"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -4481,5 +4481,161 @@
     "pattern": "^420\\d{5}(?:\\d{4})?\\d{22}$",
     "kind": "by_design",
     "reason": "Global Parcel Service hands its parcels to USPS, and its tracker's example is USPS's 420 routing barcode, so detection names USPS."
+  },
+  {
+    "carrier": "apd-parcel",
+    "pattern": "^[A-Z]\\d{7}[A-Z]$",
+    "kind": "collision",
+    "reason": "APD numbers of a letter, seven digits and a letter share their shape with other carriers' numbers, so the shape cannot name APD."
+  },
+  {
+    "carrier": "bigfoot-express",
+    "pattern": "^[A-Z]{2,3}\\d{6,7}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a Bigfoot Express Freight number of two or three letters and six or seven digits, so there is no rule."
+  },
+  {
+    "carrier": "brink-transport",
+    "pattern": "^\\d{13}$",
+    "kind": "collision",
+    "reason": "Brink Transport numbers of thirteen digits share their shape with other carriers' numbers, so the shape cannot name Brink Transport."
+  },
+  {
+    "carrier": "carrybee",
+    "pattern": "^[A-Z0-9]{11}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a CarryBee number of eleven letters and digits, so there is no rule."
+  },
+  {
+    "carrier": "faster-shipe",
+    "pattern": "^FS\\d{9}$",
+    "kind": "collision",
+    "reason": "Faster Shipe numbers of FS and nine digits share their shape with other carriers' numbers, so the shape cannot name Faster Shipe."
+  },
+  {
+    "carrier": "foz-post",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Foz Post numbers of twelve digits share their shape with other carriers' numbers, so the shape cannot name Foz Post."
+  },
+  {
+    "carrier": "garudavega",
+    "pattern": "^\\d{11}$",
+    "kind": "collision",
+    "reason": "Garudavega numbers of eleven digits share their shape with other carriers' numbers, so the shape cannot name Garudavega."
+  },
+  {
+    "carrier": "gruber-logistics",
+    "pattern": "^[A-Z0-9]{2}\\d{10}$",
+    "kind": "collision",
+    "reason": "GRUBER Logistics numbers of two letters or digits and ten digits share their shape with other carriers' numbers, so the shape cannot name GRUBER Logistics."
+  },
+  {
+    "carrier": "huuneh",
+    "pattern": "^AWB\\d{10}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a Huuneh number of AWB and ten digits, so there is no rule."
+  },
+  {
+    "carrier": "intertown-transport",
+    "pattern": "^\\d{8}$",
+    "kind": "collision",
+    "reason": "Intertown Transport numbers of eight digits share their shape with other carriers' numbers, so the shape cannot name Intertown Transport."
+  },
+  {
+    "carrier": "king-solutions",
+    "pattern": "^[A-Z]{2}\\d{9}[A-Z]{2}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a King Solutions number of two letters, nine digits and two letters, so there is no rule."
+  },
+  {
+    "carrier": "laser-logistics",
+    "pattern": "^[A-Z]{3}\\d{8}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a Laser Logistics number of three letters and eight digits, so there is no rule."
+  },
+  {
+    "carrier": "moran-transportation",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Moran Transportation numbers of ten digits share their shape with other carriers' numbers, so the shape cannot name Moran Transportation."
+  },
+  {
+    "carrier": "mte-xpress",
+    "pattern": "^[A-Z0-9]{9}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a MTE Xpress number of nine letters and digits, so there is no rule."
+  },
+  {
+    "carrier": "nova-kargo",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Nova Kargo numbers of twelve digits share their shape with other carriers' numbers, so the shape cannot name Nova Kargo."
+  },
+  {
+    "carrier": "oxperta-express",
+    "pattern": "^\\d{16}$",
+    "kind": "collision",
+    "reason": "Oxperta Express numbers of sixteen digits share their shape with other carriers' numbers, so the shape cannot name Oxperta Express."
+  },
+  {
+    "carrier": "puntopost",
+    "pattern": "^MX[A-Z0-9]{10,11}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a PuntoPost number of MX and ten or eleven letters and digits, so there is no rule."
+  },
+  {
+    "carrier": "rika-express",
+    "pattern": "^\\d{13}$",
+    "kind": "collision",
+    "reason": "RIKA Express-Mail numbers of thirteen digits share their shape with other carriers' numbers, so the shape cannot name RIKA Express-Mail."
+  },
+  {
+    "carrier": "rocket-shipping",
+    "pattern": "^\\d{8,9}$",
+    "kind": "collision",
+    "reason": "Rocket Shipping numbers of eight or nine digits share their shape with other carriers' numbers, so the shape cannot name Rocket Shipping."
+  },
+  {
+    "carrier": "south-post",
+    "pattern": "^\\d{1,7}$",
+    "kind": "by_design",
+    "reason": "South Post numbers are at most seven digits, too short to name any carrier."
+  },
+  {
+    "carrier": "tma-companies",
+    "pattern": "^T\\d{8}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a TMA number of T and eight digits, so there is no rule."
+  },
+  {
+    "carrier": "total-transportation",
+    "pattern": "^[A-Z]{3}\\d{9}$",
+    "kind": "collision",
+    "reason": "Total Transportation & Distribution numbers of three letters and nine digits share their shape with other carriers' numbers, so the shape cannot name Total Transportation & Distribution."
+  },
+  {
+    "carrier": "transportes-rapex",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Transportes Rapex numbers of twelve digits share their shape with other carriers' numbers, so the shape cannot name Transportes Rapex."
+  },
+  {
+    "carrier": "velocity-express-in",
+    "pattern": "^VIN\\d{7}$",
+    "kind": "collision",
+    "reason": "Velocity Express numbers of VIN and seven digits share their shape with other carriers' numbers, so the shape cannot name Velocity Express."
+  },
+  {
+    "carrier": "walker-logistics",
+    "pattern": "^[A-Z]{6}\\d{6}$",
+    "kind": "collision",
+    "reason": "Walker Logistics numbers of six letters and six digits share their shape with other carriers' numbers, so the shape cannot name Walker Logistics."
+  },
+  {
+    "carrier": "xpress-freight-management",
+    "pattern": "^KTXF\\d{6}$",
+    "kind": "open",
+    "reason": "Only an aggregator's example shows a XFM number of KTXF and six digits, so there is no rule."
   }
 ]

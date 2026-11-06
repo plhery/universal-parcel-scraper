@@ -1,0 +1,46 @@
+{
+  "carrier": "rocket-shipping",
+  "gap": "Rocket Shipping's load ids are bare digit runs, which other carriers' numbers share, and only an aggregator's examples show them.",
+  "records": [
+    {
+      "number": "110018728",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/rocket-shipping/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Rocket Shipping page gives it as a tracking code example."
+    },
+    {
+      "number": "22088765",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/rocket-shipping/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "TrackShip's Rocket Shipping page gives it as a tracking code example."
+    }
+  ]
+}

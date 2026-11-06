@@ -1,0 +1,46 @@
+{
+  "id": "gruber-logistics",
+  "displayName": "GRUBER Logistics",
+  "aliases": [
+    "GRUBER Logistics S.p.A."
+  ],
+  "region": {
+    "countries": [
+      "IT",
+      "DE",
+      "AT"
+    ]
+  },
+  "brand": {
+    "color": "#d92c27"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://glapptracking.gruber-logistics.com/?trackingId={trackingNumber}",
+    "searchUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
+    "canaryUrl": "https://glapptracking.gruber-logistics.com/search-tracking-number",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "glapptracking.gruber-logistics.com"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "trackingId"
+      ]
+    }
+  ],
+  "detection": []
+}

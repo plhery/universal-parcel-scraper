@@ -1,0 +1,26 @@
+{
+  "carrier": "faster-shipe",
+  "gap": "Only one public Faster Shipe number is known.",
+  "records": [
+    {
+      "number": "FS877284074",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/faster-shipe/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "TrackShip's Faster Shipe page gives it as a tracking code example."
+    }
+  ]
+}

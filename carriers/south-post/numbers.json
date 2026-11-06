@@ -1,0 +1,23 @@
+{
+  "carrier": "south-post",
+  "gap": "South Post numbers are at most seven digits, a shape many carriers share.",
+  "records": [
+    {
+      "number": "556587",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/south-post/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's South Post page gives it as a tracking code example."
+    }
+  ]
+}

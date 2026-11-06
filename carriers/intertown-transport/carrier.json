@@ -1,0 +1,33 @@
+{
+  "id": "intertown-transport",
+  "displayName": "Intertown Transport",
+  "aliases": [
+    "ITT"
+  ],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#ed1c24"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://intertown.pperfect.com/",
+    "canaryUrl": "https://intertown.pperfect.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

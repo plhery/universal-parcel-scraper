@@ -1,0 +1,44 @@
+{
+  "id": "oxperta-express",
+  "displayName": "Oxperta Express",
+  "aliases": [
+    "Oxperta Express S.L."
+  ],
+  "region": {
+    "countries": [
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#003793"
+  },
+  "selectable": true,
+  "timezone": "Europe/Madrid",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://express.oxperta.com/seguimiento-de-envio/?localizador={trackingNumber}",
+    "searchUrl": "https://express.oxperta.com/seguimiento-de-envio/",
+    "canaryUrl": "https://express.oxperta.com/seguimiento-de-envio/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "express.oxperta.com"
+      ],
+      "pathPattern": "^/seguimiento-de-envio/?$",
+      "params": [
+        "localizador"
+      ]
+    }
+  ],
+  "detection": []
+}

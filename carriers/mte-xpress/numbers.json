@@ -1,0 +1,23 @@
+{
+  "carrier": "mte-xpress",
+  "gap": "Only an aggregator's example shows an MTE Xpress reference.",
+  "records": [
+    {
+      "number": "UAMTDR3FB",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/mte-xpress/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's MTE Xpress page gives it as a tracking code example."
+    }
+  ]
+}

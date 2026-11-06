@@ -1,0 +1,26 @@
+{
+  "carrier": "walker-logistics",
+  "gap": "Only an aggregator's example shows a Walker Logistics number.",
+  "records": [
+    {
+      "number": "BYDEZI502002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/walkers/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "TrackShip's Walkers page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "carrier": "rika-express",
+  "gap": "Thirteen bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "1000000245267",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/rika-express-mail/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "correos-chile",
+          "yunda",
+          "korea-post",
+          "econt"
+        ]
+      },
+      "note": "TrackShip's RIKA Express-Mail page gives it as a tracking code example."
+    },
+    {
+      "number": "1000000245265",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/rika-express-mail/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt"
+        ]
+      },
+      "note": "TrackShip's RIKA Express-Mail page gives it as a tracking code example."
+    }
+  ]
+}

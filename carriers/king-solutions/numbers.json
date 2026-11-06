@@ -1,0 +1,23 @@
+{
+  "carrier": "king-solutions",
+  "gap": "Only an aggregator's example shows a King Solutions number.",
+  "records": [
+    {
+      "number": "SO000014701SO",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/king-solutions/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's King Solutions page gives it as a tracking code example."
+    }
+  ]
+}

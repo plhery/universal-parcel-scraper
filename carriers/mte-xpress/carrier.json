@@ -1,0 +1,45 @@
+{
+  "id": "mte-xpress",
+  "displayName": "MTE Xpress",
+  "aliases": [
+    "MTE Express Logistics"
+  ],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#2a3653"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://portal.mtexpress.co.za/track?ref={trackingNumber}",
+    "searchUrl": "https://portal.mtexpress.co.za/track",
+    "canaryUrl": "https://portal.mtexpress.co.za/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.mtexpress.co.za",
+        "mtexpress.shiplogic.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "ref"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "carrier": "apd-parcel",
+  "gap": "Only an aggregator's examples show APD numbers.",
+  "records": [
+    {
+      "number": "R4864731P",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/apd/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "2go"
+        ]
+      },
+      "note": "TrackShip's APD page gives it as a tracking code example."
+    },
+    {
+      "number": "R4864732I",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/apd/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "2go"
+        ]
+      },
+      "note": "TrackShip's APD page gives it as a tracking code example."
+    }
+  ]
+}

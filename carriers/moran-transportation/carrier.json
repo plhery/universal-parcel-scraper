@@ -1,0 +1,53 @@
+{
+  "id": "moran-transportation",
+  "displayName": "Moran Transportation",
+  "aliases": [
+    "Moran Transportation Corporation"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#00ab67"
+  },
+  "selectable": true,
+  "timezone": "America/Chicago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.carrierlogistics.com/scripts/mor.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",
+    "searchUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
+    "canaryUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.carrierlogistics.com"
+      ],
+      "pathPattern": "^/scripts/mor\\.pol/boldetail\\.htm$",
+      "params": [
+        "wpro1"
+      ]
+    },
+    {
+      "domains": [
+        "tracking.carrierlogistics.com"
+      ],
+      "pathPattern": "^/scripts/mor\\.pol/facts\\.htm$",
+      "params": [
+        "pronum"
+      ]
+    }
+  ],
+  "detection": []
+}

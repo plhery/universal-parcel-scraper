@@ -1,0 +1,45 @@
+{
+  "id": "foz-post",
+  "displayName": "Foz Post",
+  "aliases": [
+    "Fozpost",
+    "Fozpost - Entregas e Recolhas de Encomendas Lda"
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#f05423"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://fozpost.com/pt/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://fozpost.com/pt/tracking",
+    "canaryUrl": "https://fozpost.com/pt/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "fozpost.com"
+      ],
+      "pathPattern": "^/(?:pt|en)/tracking/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

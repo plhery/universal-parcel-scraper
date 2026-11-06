@@ -1,0 +1,55 @@
+{
+  "id": "yuexi-logistics",
+  "displayName": "YXI Logistics",
+  "aliases": [
+    "YXI International",
+    "悦希国际物流",
+    "悦希国际",
+    "悦希物流"
+  ],
+  "region": {
+    "countries": [
+      "CN",
+      "HK",
+      "ID",
+      "MY",
+      "PH",
+      "SG",
+      "TH",
+      "VN"
+    ]
+  },
+  "brand": {
+    "color": "#ff6400"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.yxlg.com/track.html?no={trackingNumber}",
+    "searchUrl": "https://www.yxlg.com/track.html",
+    "canaryUrl": "https://www.yxlg.com/track.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.yxlg.com",
+        "yxlg.com"
+      ],
+      "pathPattern": "^/track\\.html$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}

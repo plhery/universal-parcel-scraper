@@ -1,0 +1,23 @@
+{
+  "carrier": "laser-logistics",
+  "gap": "Only an aggregator's example shows a Laser Logistics waybill number.",
+  "records": [
+    {
+      "number": "MUS11289883",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/laser-logistics/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Laser Logistics page gives it as a tracking code example."
+    }
+  ]
+}

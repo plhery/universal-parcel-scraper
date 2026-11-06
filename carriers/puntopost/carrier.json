@@ -1,0 +1,44 @@
+{
+  "id": "puntopost",
+  "displayName": "PuntoPost",
+  "aliases": [
+    "PuntoPost Technologies México",
+    "PuntoPost Technologies México, S.A. de C.V."
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#13a590"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.puntopost.mx/tracking-summary/#{trackingNumber}",
+    "searchUrl": "https://www.puntopost.mx/tracking-summary/",
+    "canaryUrl": "https://www.puntopost.mx/tracking-summary/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.puntopost.mx",
+        "puntopost.mx"
+      ],
+      "pathPattern": "^/tracking-summary/?$",
+      "fragment": "^(MX[A-Za-z0-9]+)$"
+    }
+  ],
+  "detection": []
+}

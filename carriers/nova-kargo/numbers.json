@@ -1,0 +1,68 @@
+{
+  "carrier": "nova-kargo",
+  "gap": "Twelve bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "420000376064",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/nova-kargo/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sending"
+        ]
+      },
+      "note": "TrackShip's Nova Kargo page gives it as a tracking code example."
+    },
+    {
+      "number": "882839300002",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/nova-kargo/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "poste-italiane",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sending"
+        ]
+      },
+      "note": "TrackShip's Nova Kargo page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "carrier": "moran-transportation",
+  "gap": "Moran Transportation's PRO numbers are bare digits, which other carriers' numbers share, and only an aggregator's example shows one.",
+  "records": [
+    {
+      "number": "1003306592",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/moran-transportation/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "tipsa",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "geniki-taxydromiki",
+          "gls-es"
+        ]
+      },
+      "note": "TrackShip's Moran Transportation page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "apd-parcel",
+  "displayName": "APD",
+  "aliases": [
+    "APD Parcel Delivery",
+    "APD Parcel",
+    "Adelaide Parcel Delivery"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#0085ca"
+  },
+  "selectable": true,
+  "timezone": "Australia/Adelaide",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://online.apdparcel.com.au/track",
+    "canaryUrl": "https://online.apdparcel.com.au/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

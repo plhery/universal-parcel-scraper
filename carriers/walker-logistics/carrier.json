@@ -1,0 +1,42 @@
+{
+  "id": "walker-logistics",
+  "displayName": "Walker Logistics",
+  "aliases": [
+    "Walker Courier"
+  ],
+  "region": {
+    "countries": [
+      "NZ"
+    ]
+  },
+  "brand": {
+    "color": "#3e4095"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Auckland",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://walkerlogistics.tempo.delivery/tracker/#/{trackingNumber}",
+    "searchUrl": "https://walkerlogistics.tempo.delivery/tracker/",
+    "canaryUrl": "https://walkerlogistics.tempo.delivery/tracker/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "walkerlogistics.tempo.delivery"
+      ],
+      "pathPattern": "^/tracker/?$",
+      "fragment": "^/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

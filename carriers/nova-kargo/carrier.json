@@ -1,0 +1,44 @@
+{
+  "id": "nova-kargo",
+  "displayName": "Nova Kargo",
+  "aliases": [
+    "Kargo Nova",
+    "Kargonova"
+  ],
+  "region": {
+    "countries": [
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#fdc962"
+  },
+  "selectable": true,
+  "timezone": "Europe/Istanbul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://webpostman.novakargo.com/tracking?har_kod={trackingNumber}",
+    "canaryUrl": "https://webpostman.novakargo.com/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "webpostman.novakargo.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "har_kod"
+      ]
+    }
+  ],
+  "detection": []
+}

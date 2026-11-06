@@ -1,0 +1,26 @@
+{
+  "carrier": "velocity-express-in",
+  "gap": "Only an aggregator's example shows a Velocity Express number.",
+  "records": [
+    {
+      "number": "VIN0392703",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/velocity-express/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "TrackShip's Velocity Express page gives it as a tracking code example."
+    }
+  ]
+}

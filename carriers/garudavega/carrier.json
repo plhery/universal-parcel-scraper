@@ -1,0 +1,42 @@
+{
+  "id": "garudavega",
+  "displayName": "Garudavega",
+  "aliases": [
+    "Garudavega International Courier"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#114172"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.garudavega.com/track/{trackingNumber}",
+    "searchUrl": "https://www.garudavega.com/track/",
+    "canaryUrl": "https://www.garudavega.com/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.garudavega.com",
+        "garudavega.com"
+      ],
+      "path": "^/track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

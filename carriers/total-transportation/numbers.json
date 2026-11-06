@@ -1,0 +1,28 @@
+{
+  "carrier": "total-transportation",
+  "gap": "Only an aggregator's example shows a Total Transportation & Distribution PRO number.",
+  "records": [
+    {
+      "number": "CJN002844519",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/total-transportation/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "TrackShip's Total Transportation page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "express-freight-ni",
+  "displayName": "Express Freight",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "GB",
+      "IE"
+    ]
+  },
+  "brand": {
+    "color": "#056482"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.expressfreight.co.uk/track/view?number_txt={trackingNumber}",
+    "searchUrl": "https://www.expressfreight.co.uk/track",
+    "canaryUrl": "https://www.expressfreight.co.uk/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.expressfreight.co.uk",
+        "expressfreight.co.uk"
+      ],
+      "pathPattern": "^/track/view/?$",
+      "params": [
+        "number_txt"
+      ]
+    }
+  ],
+  "detection": []
+}

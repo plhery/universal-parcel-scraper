@@ -1,0 +1,46 @@
+{
+  "id": "xpress-freight-management",
+  "displayName": "XFM",
+  "aliases": [
+    "Xpress Freight Management",
+    "Xpress Freight Management Pty Ltd"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#00c1e0"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://xfm.com.au/xpress-track/?consignmentNumber={trackingNumber}",
+    "searchUrl": "https://xfm.com.au/xpress-track/",
+    "canaryUrl": "https://xfm.com.au/xpress-track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "xfm.com.au",
+        "www.xfm.com.au"
+      ],
+      "pathPattern": "^/xpress-track/?$",
+      "params": [
+        "consignmentNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

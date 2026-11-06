@@ -1,0 +1,40 @@
+{
+  "id": "bigfoot-express",
+  "displayName": "Bigfoot Express Freight",
+  "aliases": [
+    "Bigfoot Express",
+    "Bigfoot Express Freight (Pty) Ltd"
+  ],
+  "region": {
+    "countries": [
+      "ZA",
+      "BW",
+      "LS",
+      "SZ",
+      "NA",
+      "ZM",
+      "ZW"
+    ]
+  },
+  "brand": {
+    "color": "#00818d"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://bigfootexpress.pperfect.com/",
+    "canaryUrl": "https://bigfootexpress.pperfect.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

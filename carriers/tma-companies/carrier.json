@@ -1,0 +1,34 @@
+{
+  "id": "tma-companies",
+  "displayName": "TMA",
+  "aliases": [
+    "TMA Companies",
+    "TMA Interstate Corp"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#6a6c73"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
+    "canaryUrl": "https://www.tmacompanies.com/Tracking/default.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

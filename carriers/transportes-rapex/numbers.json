@@ -1,0 +1,37 @@
+{
+  "carrier": "transportes-rapex",
+  "gap": "Twelve bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "090079192043",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/transportes-rapex/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sending"
+        ]
+      },
+      "note": "TrackShip's Transportes Rapex page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "carrier": "carrybee",
+  "gap": "Only an aggregator's example shows a CarryBee number, in a layout many carriers share.",
+  "records": [
+    {
+      "number": "F0910B74W5Y",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/carrybee/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's CarryBee page gives it as a tracking code example."
+    }
+  ]
+}

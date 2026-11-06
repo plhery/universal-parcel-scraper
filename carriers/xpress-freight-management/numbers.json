@@ -1,0 +1,23 @@
+{
+  "carrier": "xpress-freight-management",
+  "gap": "Only an aggregator's example shows an XFM number.",
+  "records": [
+    {
+      "number": "KTXF001563",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/xpress-freight/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's Xpress Freight page gives it as a tracking code example."
+    }
+  ]
+}

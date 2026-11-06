@@ -1,0 +1,28 @@
+{
+  "carrier": "intertown-transport",
+  "gap": "Eight bare digits fit many carriers' numbers.",
+  "records": [
+    {
+      "number": "10315434",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/intertown-transport/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "TrackShip's Intertown Transport page gives it as a tracking code example."
+    }
+  ]
+}

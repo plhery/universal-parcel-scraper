@@ -1,0 +1,44 @@
+{
+  "id": "transportes-rapex",
+  "displayName": "Transportes Rapex",
+  "aliases": [
+    "Transportes Rapex Unipessoal Lda"
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#3191af"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://transportes-rapex.pt/pt/tracking?tracking={trackingNumber}",
+    "searchUrl": "https://transportes-rapex.pt/pt/tracking",
+    "canaryUrl": "https://transportes-rapex.pt/pt/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "transportes-rapex.pt"
+      ],
+      "pathPattern": "^/(?:pt|en)/tracking/?$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

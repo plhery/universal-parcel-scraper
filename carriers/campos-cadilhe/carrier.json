@@ -1,0 +1,42 @@
+{
+  "id": "campos-cadilhe",
+  "displayName": "Campos&Cadilhe",
+  "aliases": [
+    "Campos & Cadilhe Lda",
+    "Campos e Cadilhe"
+  ],
+  "region": {
+    "countries": [
+      "PT"
+    ]
+  },
+  "brand": {
+    "color": "#536b8f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Lisbon",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://otm.camposcadilhe.pt/track/{trackingNumber}",
+    "searchUrl": "https://otm.camposcadilhe.pt/track/",
+    "canaryUrl": "https://otm.camposcadilhe.pt/track/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "otm.camposcadilhe.pt"
+      ],
+      "path": "^/track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,23 @@
+{
+  "carrier": "puntopost",
+  "gap": "Only an aggregator's example shows a whole PuntoPost number.",
+  "records": [
+    {
+      "number": "MXL0000016G39",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://trackship.com/shipping-provider/puntopost/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "TrackShip's PuntoPost page gives it as a tracking code example."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "id": "brink-transport",
+  "displayName": "Brink Transport",
+  "aliases": [
+    "Brink Transport ApS"
+  ],
+  "region": {
+    "countries": [
+      "DK"
+    ]
+  },
+  "brand": {
+    "color": "#e31e24"
+  },
+  "selectable": true,
+  "timezone": "Europe/Copenhagen",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://brinkdk.opter.cloud/tt?keyword={trackingNumber}",
+    "searchUrl": "https://brinkdk.opter.cloud/tt",
+    "canaryUrl": "https://brinkdk.opter.cloud/tt",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "brinkdk.opter.cloud"
+      ],
+      "pathPattern": "^/[Tt][Tt]/?$",
+      "params": [
+        "keyword"
+      ]
+    }
+  ],
+  "detection": []
+}
