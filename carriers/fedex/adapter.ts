@@ -1,5 +1,5 @@
 import { BrowserRouteTrial, retryShare } from '../../core/transport/browserRouteTrial.js';
-import { RetryRouteTrial, type RetryRouteTrialStore, type TrialRoute } from '../../core/transport/retryRouteTrial.js';
+import { RetryRouteTrial, type RetryRouteLease, type RetryRouteTrialStore, type TrialRoute } from '../../core/transport/retryRouteTrial.js';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
@@ -642,15 +642,18 @@ export class FedExTracker {
     const trial = new BrowserRouteTrial({ primary: trawl, alternative: this.#residentialTrawl,
       route: 'residential', share: this.#residentialRetryShare, steps: ['trawl'], recorder: this.#recorder,
       routes: { datacenter: this.#datacenterTrawl, residential: this.#residentialTrawl } });
-    let proven: number | undefined;
-    const browser = async (client: TrawlClient, remainingMs: number, signal: AbortSignal, route: 'default' | TrialRoute = 'default') =>
+    // The worker's report for the retry: its bytes, and whether it named the lease it was given and cut it.
+    let report: { bytes?: number; verified: boolean; limited: boolean } = { verified: false, limited: false };
+    const browser = async (client: TrawlClient, remainingMs: number, signal: AbortSignal, route: 'default' | TrialRoute = 'default',
+      lease: RetryRouteLease | null = null) =>
       trial.result(await this.#trawlResult(client, number, browserMs(remainingMs), signal, route,
         family => trial.observeFamily(family), proof => {
           trial.observeBytes(proof.bytes);
-          // What the worker carried outside lookups since its previous reply is billed too.
-          const counted = [proof.bytes, proof.idleBytes].filter((n): n is number => typeof n === 'number' && Number.isSafeInteger(n) && n >= 0);
-          proven = counted.length ? counted.reduce((sum, n) => sum + n, 0) : undefined;
-        }));
+          // Only the lease's own bytes: whatever another lookup carried was charged to that one.
+          report = { ...(typeof proof.bytes === 'number' && Number.isSafeInteger(proof.bytes) && proof.bytes >= 0 ? { bytes: proof.bytes } : {}),
+            verified: lease !== null && proof.lease === lease.id && proof.allowance === lease.allowanceBytes,
+            limited: proof.limited === true };
+        }, lease));
     return runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
@@ -675,18 +678,19 @@ export class FedExTracker {
               return browser(client, remainingMs, signal, trial.isAlternate ? 'residential' : 'default');
             }
             // Never the original route: the trial assigns datacenter or residential, else datacenter.
+            // The trial waits for its store within a quarter of the budget; a residential route has its reservation saved.
             const started = performance.now();
-            const assignment = this.#retryTrial ? await this.#retryTrial.assign() : null;
+            const assignment = this.#retryTrial ? await this.#retryTrial.assign({ budgetMs: remainingMs / 4 }) : null;
             const route = assignment?.route ?? 'datacenter';
             const client = trial.retry(route)!;
-            proven = undefined;
+            report = { verified: false, limited: false };
             const left = Math.max(1, Math.floor(remainingMs - (performance.now() - started)));
             try {
-              const result = await browser(client, left, signal, route);
-              assignment?.settle({ outcome: 'ok', history: Boolean(result.events?.some(event => event.time || event.local_time)), bytes: proven });
+              const result = await browser(client, left, signal, route, assignment?.lease ?? null);
+              assignment?.settle({ outcome: 'ok', history: Boolean(result.events?.some(event => event.time || event.local_time)), ...report });
               return result;
             } catch (error) {
-              assignment?.settle({ outcome: outcomeOf(error), history: false, bytes: proven });
+              assignment?.settle({ outcome: outcomeOf(error), history: false, ...report });
               throw error;
             }
           } },
@@ -709,7 +713,7 @@ export class FedExTracker {
    */
   async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal,
     route: 'default' | TrialRoute = 'default', observed: (family: 'IPv4' | 'IPv6' | 'unknown') => void = () => {},
-    observeProof: (proof: JsonObject) => void = () => {}): Promise<CarrierResult> {
+    observeProof: (proof: JsonObject) => void = () => {}, lease: RetryRouteLease | null = null): Promise<CarrierResult> {
     const page = await trawl.scrape({
       url: fedexTrackingUrl(number),
       skipHttp: true,
@@ -717,6 +721,8 @@ export class FedExTracker {
       maxTimeout: timeoutMs,
       captureResponses: [TRACK_API],
       settleTimeout: SETTLE_TIMEOUT_MS,
+      // The retry worker carries no more than this for the lookup, and nothing once it has replied.
+      ...(lease ? { lease: lease.id, byteAllowance: lease.allowanceBytes } : {}),
     }, {
       provider: 'TRAWL while fetching FedEx',
       timeoutMs,
@@ -832,7 +838,8 @@ export function fedexRetryTrial(env: Readonly<Record<string, string | undefined>
     targetAttempts: setting('FEDEX_RETRY_TRIAL_ATTEMPTS', 100),
     maxResidentialBytes: setting('FEDEX_RETRY_TRIAL_RESIDENTIAL_BYTES', 250_000_000),
     durationMs: setting('FEDEX_RETRY_TRIAL_HOURS', 48) * 3_600_000,
-    unmeasuredBytes: setting('FEDEX_RETRY_TRIAL_UNMEASURED_BYTES', 2_000_000),
+    allowanceBytes: setting('FEDEX_RETRY_TRIAL_ALLOWANCE_BYTES', 10_000_000),
+    marginBytes: setting('FEDEX_RETRY_TRIAL_MARGIN_BYTES', 1_000_000),
   };
   const key = JSON.stringify(options);
   let trials = TRIALS.get(store);

@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { recognizeFromLookup } from '../../core/adapter/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
-import type { RetryRouteAttempt, RetryRouteTrialStore } from '../../core/transport/retryRouteTrial.js';
+import { memoryRetryRouteTrialStore } from '../../core/transport/retryRouteTrial.js';
 import {
   FedExTracker,
   fedexRetryTrial,
@@ -817,32 +817,59 @@ describe('FedEx lookup steps', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
-  it('lets the persisted trial assign the retry and saves its outcome and billed bytes', async () => {
-    const rows = new Map<string, RetryRouteAttempt>();
-    const store: RetryRouteTrialStore = { load: async () => [...rows.values()], save: async attempt => { rows.set(attempt.id, { ...attempt }); } };
+  it('lets the persisted trial assign the retry, gives the worker its lease and charges what the worker vouches for', async () => {
+    const store = memoryRetryRouteTrialStore();
     const environment = { trawl: new TrawlClient(TRAWL_URL), browserExecutablePath: null,
       trawlRoutes: { 'fedex-residential': new TrawlClient('http://residential.test'), 'fedex-datacenter': new TrawlClient('http://datacenter.test') },
-      retryTrialStores: { 'fedex-retry': store }, env: { FEDEX_RETRY_TRIAL: 'adapter-test', FEDEX_RETRY_TRIAL_ATTEMPTS: '1' }, recorder: { step() {}, lookup() {} } };
+      retryTrialStores: { 'fedex-retry': store }, env: { FEDEX_RETRY_TRIAL: 'adapter-test', FEDEX_RETRY_TRIAL_ATTEMPTS: '2' }, recorder: { step() {}, lookup() {} } };
     const trial = fedexRetryTrial(environment.env, store)!;
     expect(fedexRetryTrial(environment.env, store)).toBe(trial);
+    const tracker = adapter(environment);
+    const bodies: Array<{ url: string; body: Record<string, unknown> }> = [];
+    let residentialReplies = 0;
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async (input, init) => {
+      const url = String(input);
+      if (url.startsWith(TRAWL_URL)) return Response.json({ tier: 3, statusCode: 200, html: '', capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+      const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+      bodies.push({ url, body });
+      const route = url.includes('residential') ? 'residential' : 'datacenter';
+      // The first residential reply names its lease; the second names another, so it vouches for nothing.
+      const lease = route === 'residential' && residentialReplies++ > 0 ? 'another-lease' : body.lease;
+      return Response.json({ tier: 3, statusCode: 200, html: '<body>Access Denied</body>',
+        fedexEgress: { route, family: 'unknown', pageConnections: 1, apiConnections: 1, bytes: 1_000, idleBytes: 24, lease, allowance: body.byteAllowance, limited: false },
+        capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+    });
+    for (let i = 0; i < 16; i++) await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
+    await trial.flush();
+    const retries = fetcher.mock.calls.map(c => String(c[0])).filter(url => !url.startsWith(TRAWL_URL));
+    expect(retries.length).toBe(16);
+    expect(retries.filter(url => url.includes('residential')).length).toBe(2);
+    // Every trial attempt carries its lease and allowance; once the trial is over the worker applies its own.
+    const leased = bodies.filter(({ body }) => body.lease !== undefined);
+    expect(leased.every(({ body }) => body.byteAllowance === 10_000_000 && store.rows.has(String(body.lease)))).toBe(true);
+    expect(bodies.at(-1)!.body).not.toHaveProperty('lease');
+    const saved = [...store.rows.values()].filter(row => row.route === 'residential');
+    // Its own bytes plus the margin when vouched for, never the other lookup's idle bytes; the reservation otherwise.
+    expect(saved.map(row => row.chargedBytes)).toEqual([1_001_000, 11_000_000]);
+    expect(saved).toEqual([expect.objectContaining({ outcome: 'challenge', history: false, bytes: 1_000 }), expect.objectContaining({ bytes: 1_000 })]);
+    expect(trial.snapshot()).toMatchObject({ phase: 'complete', endReason: 'samples', chargedResidentialBytes: 12_001_000 });
+  });
+
+  it('takes the datacenter route at once when the trial store does not save the reservation', async () => {
+    const memory = memoryRetryRouteTrialStore();
+    const store = { ...memory, reserve: () => new Promise<never>(() => {}) };
+    const environment = { trawl: new TrawlClient(TRAWL_URL), browserExecutablePath: null,
+      trawlRoutes: { 'fedex-residential': new TrawlClient('http://residential.test'), 'fedex-datacenter': new TrawlClient('http://datacenter.test') },
+      retryTrialStores: { 'fedex-retry': store }, env: { FEDEX_RETRY_TRIAL: 'adapter-pending' }, recorder: { step() {}, lookup() {} } };
     const tracker = adapter(environment);
     const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async input => {
       const url = String(input);
       if (url.startsWith(TRAWL_URL)) return Response.json({ tier: 3, statusCode: 200, html: '', capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
-      const route = url.includes('residential') ? 'residential' : 'datacenter';
       return Response.json({ tier: 3, statusCode: 200, html: '<body>Access Denied</body>',
-        fedexEgress: { route, family: 'unknown', pageConnections: 1, apiConnections: 1, bytes: 1_000, idleBytes: 24 },
-        capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+        fedexEgress: { route: 'datacenter', family: 'unknown', pageConnections: 1, apiConnections: 1, bytes: 1 }, capturedResponses: [] });
     });
-    // One attempt per route ends the trial; the rest take the datacenter route.
-    for (let i = 0; i < 12; i++) await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
-    await trial.flush();
-    const retries = fetcher.mock.calls.map(c => String(c[0])).filter(url => !url.startsWith(TRAWL_URL));
-    expect(retries.length).toBe(12);
-    expect(retries.filter(url => url.includes('residential')).length).toBe(1);
-    const saved = [...rows.values()];
-    expect(saved.filter(row => row.route === 'residential')).toEqual([expect.objectContaining({ outcome: 'challenge', history: false, bytes: 1_024 })]);
-    expect(trial.snapshot()).toMatchObject({ phase: 'complete', endReason: 'samples', chargedResidentialBytes: 1_024 });
+    for (let i = 0; i < 6; i++) await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
+    expect(fetcher.mock.calls.map(c => String(c[0])).filter(url => url.includes('residential'))).toEqual([]);
   });
 
   it('keeps the control cohort on the original retry service', async () => {

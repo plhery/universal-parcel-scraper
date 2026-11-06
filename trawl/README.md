@@ -219,9 +219,15 @@ authenticated gateway, or several separated by white space or commas, such as a 
 datacenter addresses. Each browser context draws one gateway and keeps it for its life; a
 denial never moves a context to another. Each context gets a loopback CONNECT proxy that
 sends every tunnel through its gateway, to checked public addresses, without a direct
-fallback. The response reports page and API tunnel counts, the lookup's tunnel bytes and
-the idle bytes carried since the previous reply; DNS answers, URLs, cookies, gateways and
-the rendered page never leave the worker. Failed contexts and their proxies are closed
+fallback. A tunnel opens only under the running lookup's lease: the request's `lease` id,
+used once, and its `byteAllowance` (at most, and by default, 64 MiB). Each chunk is counted
+against the allowance before it is relayed; the one that would pass it is dropped with every
+tunnel of the lease. The lease closes when the lookup ends, or two seconds after its budget,
+and between lookups the proxy refuses every tunnel, so a retained session carries nothing
+while idle. The response reports the lease's page and API tunnel counts, tunnel bytes,
+allowance and whether it was cut; DNS answers, URLs, cookies, gateways and the rendered page
+never leave the worker. `/metrics` counts the tunnel bytes, leases by how they ended and
+refused tunnels outside a lease. Failed contexts and their proxies are closed
 together. `/health` gives the route and the number of gateways. Run one worker per route
 and use `FEDEX_RESIDENTIAL_TRAWL_URL` and `FEDEX_DATACENTER_TRAWL_URL` in the consumer, as
 the [FedEx adapter](../carriers/fedex/README.md) describes.

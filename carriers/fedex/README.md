@@ -206,26 +206,37 @@ With the residential worker alone, `FEDEX_RESIDENTIAL_RETRY_PERCENT` selects its
 those attempts, defaulting to half; the rest keep the original retry route. Once the
 datacenter worker is configured, the original route takes no retry. Every retry goes to
 the datacenter worker, unless the host keeps a trial: `FEDEX_RETRY_TRIAL` names it and
-`environment.retryTrialStores["fedex-retry"]` saves each attempt, so its limits hold across
-restarts. While it runs, a biased coin (two chances in three for the route behind) assigns
-each retry to the datacenter or residential worker, without regard to outcomes. The
-residential route stops at the first of `FEDEX_RETRY_TRIAL_ATTEMPTS` attempts (100),
-`FEDEX_RETRY_TRIAL_RESIDENTIAL_BYTES` (250,000,000) or `FEDEX_RETRY_TRIAL_HOURS` from its
-first attempt (48); every retry after that goes to the datacenter worker. Its bytes are
-each attempt's proven tunnel bytes plus what the worker carried since its previous reply;
-an attempt without proof, lost or still running, is charged
-`FEDEX_RETRY_TRIAL_UNMEASURED_BYTES` (2,000,000), and the cap stops the route before its
-next attempt could pass it. Until the store answers, and while saving fails, retries take the
-datacenter worker. `fedexRetryTrial(env, store)` returns the trial with its snapshot: per-route
-attempts, dated histories, outcomes and bytes, and when and why it ended. Another
-`FEDEX_RETRY_TRIAL` name starts a new trial.
+`environment.retryTrialStores["fedex-retry"]` keeps it, so its limits hold across restarts and
+across processes sharing the store. While it runs, a biased coin (two chances in three for the
+route behind) assigns each retry to the datacenter or residential worker, without regard to
+outcomes. The residential route stops at the first of `FEDEX_RETRY_TRIAL_ATTEMPTS` attempts
+(100), `FEDEX_RETRY_TRIAL_RESIDENTIAL_BYTES` (250,000,000) or `FEDEX_RETRY_TRIAL_HOURS` from
+its first attempt (48); every retry after that goes to the datacenter worker, and the store
+keeps the end, so a later process or a lower settlement does not open it again.
+
+The residential budget is a reservation, not an estimate. Before a residential attempt
+starts, the store must save its reservation, `FEDEX_RETRY_TRIAL_ALLOWANCE_BYTES`
+(10,000,000) plus `FEDEX_RETRY_TRIAL_MARGIN_BYTES` (1,000,000), in one atomic step that
+refuses it once the charges and the new reservation would pass the cap, and while another
+residential attempt younger than three minutes is unsettled. A store that fails or answers
+after a quarter of the lookup's budget (three seconds at most) sends the retry to the
+datacenter worker, a reservation answered too late is saved as `not_started` (no sample, no
+charge), and a failed call keeps residential closed for a minute. Each trial
+attempt, on either route, gives the worker its id and allowance: the worker carries no more
+than the allowance and nothing once it has replied. An attempt is charged the bytes its
+worker reported under that lease plus the margin; one cut at its allowance, without a proof
+naming its lease, or lost, keeps the whole reservation or more. The margin covers data in
+flight when the worker closes the tunnels and the gateway's own exchanges.
+`fedexRetryTrial(env, store)` returns the trial with its snapshot: per-route attempts, dated
+histories, outcomes and bytes, the charged and still reserved residential bytes, and when
+and why it ended. Another `FEDEX_RETRY_TRIAL` name starts a new trial.
 
 Each worker requires `FEDEX_RETRY_PROXY_URL`, names its route in `FEDEX_RETRY_ROUTE`,
 tunnels every browser connection through its authenticated gateway without direct
 fallback, and attests page and API tunnels; a reply without that proof, or from the other
 route, is a transport failure (`datacenter_unverified`, `residential_unverified`). The
 exit's IP family remains unknown. Accepted sessions retain their original proxy context;
-rejected contexts are discarded. Aggregate encrypted tunnel bytes include browser
-dependencies; per-attempt bytes omit traffic outside the attempt and responses lost to
-transport failure, which the next reply's idle bytes carry. The worker's private `/metrics`
-counter includes those bytes too. None of these counts is the provider's bill.
+rejected contexts are discarded. A context opens tunnels only while a lookup runs under its
+lease, so it carries nothing between lookups. Tunnel bytes count both directions and include
+browser dependencies; a lookup's are reported with its lease, and the worker's private
+`/metrics` counter includes those bytes too. None of these counts is the provider's bill.
