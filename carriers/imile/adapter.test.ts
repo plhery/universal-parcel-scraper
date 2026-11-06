@@ -611,6 +611,8 @@ describe('iMile status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Lost order' })).toMatchObject({ kind: 'intentional_gap' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'User not at home' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Failed to schedule due to [noanswer]。' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'The delivery method has been confirmed with the recipient as Self-Pickup.' }))
       .toMatchObject({ kind: 'intentional_gap' });
     // The pickup point and its address vary; the parcel waits there for the recipient.

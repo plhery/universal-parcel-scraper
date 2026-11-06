@@ -9,6 +9,12 @@
     {"wording": "Flight departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Flight arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Import clearance start", "stage": "customs", "language": "en", "confirmedBy": "live"},
-    {"wording": "Import customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's import clearance is complete."}
+    {"wording": "Import customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination's import clearance is complete."},
+    {"wording": "Shipment been picked up by the destination partner", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO takes the parcel over after import clearance: a handover on the way, not the sender's acceptance."},
+    {"wording": "Loaded on Vehicle", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's last mile in the United States, relayed with GOFO's own wording."},
+    {"wording": "Departed GOFO Regional Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's last mile in the United States, relayed with GOFO's own wording."},
+    {"wording": "In Transit to Next Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's last mile in the United States, relayed with GOFO's own wording."},
+    {"wording": "Arrived at GOFO Delivery Station", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO's last mile in the United States, relayed with GOFO's own wording."},
+    {"wording": "Out of delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "GOFO's own tracker words it \"Out for Delivery\": it follows the arrival at the delivery station by minutes and comes before the delivery or its exception."}
   ]
 }

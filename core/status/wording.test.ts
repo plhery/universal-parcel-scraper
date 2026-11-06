@@ -479,6 +479,10 @@ describe('classifyWording', () => {
     expect(classifyWording('Onboard for delivery', 'pending')).toEqual({ stage: 'out_for_delivery', source: 'wording:language' });
     expect(wordingStage('On board for delivery')).toBe('out_for_delivery');
     expect(wordingStage('Loaded onto the delivery vehicle')).toBe('out_for_delivery');
+    // Lines providers relay for parcels filed under no carrier: a checkpoint scan, and the pallet broken down (拆板).
+    for (const line of ['Parcel scanned at checkpoint.', 'Example City IL, parcel scanned at checkpoint', 'Dismantling the board']) {
+      expect(classifyWording(line, 'pending')).toEqual({ stage: 'in_transit', source: 'wording:language' });
+    }
     expect(wordingStage('Delivery successful.')).toBe('delivered');
     expect(wordingStage('Delivery complete. Recipient : () Result : Delivery complete')).toBe('delivered');
     expect(wordingStage('Delivery completion expected tomorrow', 'pending')).not.toBe('delivered');
