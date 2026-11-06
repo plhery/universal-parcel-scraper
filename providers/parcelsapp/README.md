@@ -534,6 +534,9 @@ step exists for future protocol changes.
   Created, USPS Awaiting Item" and keep its wall clock. Read on its place's clock, such a
   label came eight hours after ParcelsApp first returned it, and Juxi Express's rows of
   that shape fall between 17TRACK's instants of the same warehouse's steps as labeled.
+  Only a label or a step naming the shipping partner is read so. USPS's own scans can repeat
+  their place too ("USPS picked up item, EXAMPLE CITY, KY 12345"); USPS's tracker dates them
+  five or eight hours after ParcelsApp's digits, on their place's clock, which they keep.
 - North American scans: the dates of UPS, FedEx, UniUni, EasyShip and DHL eCommerce are
   the scan's local clock, as UPS's own instants, FedEx's own page, UniUni's own feed,
   Ship24's offsets and DHL eCommerce's Webtrack, which names each scan's clock, show on US

@@ -1388,6 +1388,21 @@ describe('ParcelsApp result parsing', () => {
     ]);
     expect(parseParcelsAppHtml(rendered(carrierRow('03 Nov 2026', '04:40', label, 'USPS')), number, 'America/New_York')
       .events?.[0]?.time).toBe('2026-11-03T04:40:00.000Z');
+    const partner = 'Picked up by Shipping Partner, EXAMPLE CITY, IL 12345';
+    expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
+      { date: '2026-11-03T06:37:00Z', status: partner, carrier: 0, location: 'EXAMPLE CITY, IL 12345' },
+    ] }, number, identity(), null, Date.parse('2026-11-03T07:00:00Z')).events?.[0]?.time).toBe('2026-11-03T06:37:00.000Z');
+  });
+
+  it('reads USPS\'s own scan with its place after its wording on that place\'s clock', () => {
+    // USPS's own tracker dated these five hours after ParcelsApp's digits, on Kentucky's and
+    // Georgia's Eastern time; a midday pickup read on UTC came at seven in the morning.
+    const at = (status: string, location: string) => parseParcelsAppResponse({ carriers: ['USPS'], states: [
+      { date: '2026-11-04T12:07:00Z', status, carrier: 0, location },
+    ] }, number, identity(), null, Date.parse('2026-11-06T07:00:00Z')).events?.[0]?.time;
+    expect(at('USPS picked up item, EXAMPLE CITY, KY 12345', 'EXAMPLE CITY, KY 12345')).toBe('2026-11-04T17:07:00.000Z');
+    expect(at('Accepted at USPS Facility, EXAMPLE CITY, GA 12345', 'EXAMPLE CITY, GA 12345')).toBe('2026-11-04T17:07:00.000Z');
+    expect(at('USPS in possession of item, EXAMPLE CITY, CA 12345', 'EXAMPLE CITY, CA 12345')).toBe('2026-11-04T20:07:00.000Z');
   });
 
   it('lends a wall-clock scan with no place the clock of its network\'s nearest placed scan, as a guess', () => {

@@ -227,9 +227,12 @@ const WALL_CLOCKS = new Set(['usps', 'canadapost', 'gofoexpress', 'speedpak', 'e
  * USPS's own rows read "Shipping Label Created, USPS Awaiting Item". Its date
  * is the instant: read on its place's clock, a label came eight hours after
  * ParcelsApp first returned it, and Juxi Express's rows of this shape fall
- * between 17TRACK's instants of the same warehouse's steps as labeled.
+ * between 17TRACK's instants of the same warehouse's steps as labeled. Only a
+ * label or a shipping partner's step is such a row: USPS's own scans can come
+ * with their place after them too ("USPS picked up item, EXAMPLE CITY, KY
+ * 12345"), and USPS's own tracker dates them on their place's clock.
  */
-const USPS_PARTNER_ROW = /,[^,]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?$/;
+const USPS_PARTNER_ROW = /^(?:shipping label created|[^,]*\bshipping partner\b[^,]*),[^,]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?$/i;
 const uspsPartnerRow = (name: unknown, status: string) => nameKey(name) === 'usps' && USPS_PARTNER_ROW.test(status.trim());
 // Known clocks that are the destination or origin country's (`knownClock`).
 const DESTINATION = 'destination';
