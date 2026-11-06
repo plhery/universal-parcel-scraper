@@ -222,18 +222,32 @@ function dayEvent(day: string, description: string): CarrierEvent | null {
  */
 const WALL_CLOCKS = new Set(['usps', 'canadapost', 'gofoexpress', 'speedpak', 'ems', 'cainiao', 'ecoscooting', '4pxexpress', 'mailamericas', '1st']);
 /**
- * A shipping partner's row that ParcelsApp files under USPS, its place repeated
- * after its wording ("Shipping Label Created, EXAMPLE CITY, CA 12345"), where
- * USPS's own rows read "Shipping Label Created, USPS Awaiting Item". Its date
- * is the instant: read on its place's clock, a label came eight hours after
- * ParcelsApp first returned it, and Juxi Express's rows of this shape fall
- * between 17TRACK's instants of the same warehouse's steps as labeled. Only a
- * label or a shipping partner's step is such a row: USPS's own scans can come
- * with their place after them too ("USPS picked up item, EXAMPLE CITY, KY
- * 12345"), and USPS's own tracker dates them on their place's clock.
+ * A mailer's label that ParcelsApp files under USPS, its place repeated after
+ * its wording ("Shipping Label Created, EXAMPLE CITY, CA 12345"), where USPS's
+ * own rows read "Shipping Label Created, USPS Awaiting Item". Its date is the
+ * instant: read on its place's clock, three labels came eight hours after
+ * ParcelsApp first returned them, and Juxi Express's rows of this shape fall
+ * between 17TRACK's instants of the same warehouse's steps as labeled. A
+ * shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY,
+ * NV 12345") and USPS's own scans can come with their place after them too, and
+ * keep their place's clock, as USPS's own tracker dates them: ParcelsApp's
+ * copies of a partner's pickup and arrival had the digits USPS dates on that
+ * clock, and its departure, read as an instant, came before the arrival.
  */
-const USPS_PARTNER_ROW = /^(?:shipping label created|[^,]*\bshipping partner\b[^,]*),[^,]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?$/i;
-const uspsPartnerRow = (name: unknown, status: string) => nameKey(name) === 'usps' && USPS_PARTNER_ROW.test(status.trim());
+const USPS_LABEL_ROW = /^shipping label created,[^,]+,\s*[A-Z]{2}\s+\d{5}(?:-\d{4})?$/i;
+const uspsLabelRow = (name: unknown, status: string) => nameKey(name) === 'usps' && USPS_LABEL_ROW.test(status.trim());
+/**
+ * How far after the read a USPS scan that its place dates may come out. Later, it is held
+ * back until a read catches up with it, as the USPS adapter holds USPS's planned
+ * departures: ParcelsApp gives a scan it has just picked up its instant, and the place's
+ * wall clock once it reads USPS again. Two scans it returned within three hours came
+ * hours after the read on Georgia's clock, and a later read gave them Georgia's digits.
+ */
+const USPS_AHEAD_MS = 5 * 60 * 1_000;
+
+/** Whether a USPS scan its place dates comes out more than `USPS_AHEAD_MS` after the read. */
+const uspsAhead = (name: unknown, location: string, zone: string | null, event: CarrierEvent, readAt: number): boolean =>
+  nameKey(name) === 'usps' && !!location && !!zone && typeof event.time === 'string' && Date.parse(event.time) > readAt + USPS_AHEAD_MS;
 // Known clocks that are the destination or origin country's (`knownClock`).
 const DESTINATION = 'destination';
 const ORIGIN = 'origin';
@@ -984,7 +998,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
   if (carrier === 'tnt' && /^\d{9}$/.test(number)) return null;
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
-  if (uspsPartnerRow(name, status)) return null;
+  if (uspsLabelRow(name, status)) return null;
   if (carrier === 'paack' || carrier === 'vinted-go' || carrier === 'austrian-post' || carrier === 'straightship'
     || ownOffset(name, state.date, scanLocation(name, state.location))) return null;
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
@@ -1167,7 +1181,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const name = stateCarrierName(payload, raw);
   const location = scanLocation(name, raw.location);
   const offset = ownOffset(name, raw.date, location);
-  const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsPartnerRow(name, status);
+  const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsLabelRow(name, status);
   const relay = polandPostRelay(name, raw.date, location, number, destination);
   const pitneyBowes = relay ? undefined : pitneyBowesClock(payload, raw, status, destination);
   const own = relay?.zone ?? (pitneyBowes ? pitneyBowes.zone : carrierClock(payload, raw, number, status, destination));
@@ -1768,7 +1782,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
       undated++;
       continue;
     }
-    if (parsed && guessedAhead(parsed, entry.location, zone, timezone, readAt)) continue;
+    if (parsed && (guessedAhead(parsed, entry.location, zone, timezone, readAt) || uspsAhead(name, entry.location, zone, parsed, readAt))) continue;
     if (parsed) {
       // Some Chronopost rows put the service label in the location field.
       const location = scan?.location ?? reportedPlace(raw.location);

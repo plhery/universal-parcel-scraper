@@ -1375,23 +1375,50 @@ describe('ParcelsApp result parsing', () => {
     ])).toEqual(['2026-11-05T00:07:00.000Z', '2026-11-04T12:07:00.000Z']);
   });
 
-  it('keeps the instant of a shipping partner\'s row filed under USPS, its place after its wording', () => {
+  it('keeps the instant of a mailer\'s label filed under USPS, its place after its wording', () => {
     // Live shape: the label came 9 minutes before ParcelsApp returned it, at 04:40 under a UTC
     // label; read on California's clock, it came 8 hours after.
     const label = 'Shipping Label Created, EXAMPLE CITY, CA 12345';
     expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
       { date: '2026-11-05T09:12:00Z', status: 'Arrived at USPS Regional Facility', carrier: 0, location: 'EXAMPLE CITY CA DISTRIBUTION CENTER' },
       { date: '2026-11-03T04:40:00Z', status: label, carrier: 0, location: 'EXAMPLE CITY, CA 12345' },
-    ] }, number, identity(), null, Date.parse('2026-11-03T04:50:00Z')).events?.map((scan) => [scan.time, scan.description])).toEqual([
+    ] }, number, identity(), null, Date.parse('2026-11-06T00:00:00Z')).events?.map((scan) => [scan.time, scan.description])).toEqual([
       ['2026-11-05T17:12:00.000Z', 'Arrived at USPS Regional Facility'], // USPS's own row, on California's clock
       ['2026-11-03T04:40:00.000Z', label],
     ]);
     expect(parseParcelsAppHtml(rendered(carrierRow('03 Nov 2026', '04:40', label, 'USPS')), number, 'America/New_York')
       .events?.[0]?.time).toBe('2026-11-03T04:40:00.000Z');
-    const partner = 'Picked up by Shipping Partner, EXAMPLE CITY, IL 12345';
-    expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
-      { date: '2026-11-03T06:37:00Z', status: partner, carrier: 0, location: 'EXAMPLE CITY, IL 12345' },
-    ] }, number, identity(), null, Date.parse('2026-11-03T07:00:00Z')).events?.[0]?.time).toBe('2026-11-03T06:37:00.000Z');
+  });
+
+  it('reads a shipping partner\'s steps filed under USPS on their place\'s clock, as USPS dates them', () => {
+    // Live shape: USPS's own tracker dated the pickup and the arrival on these digits, on their
+    // place's clock. Read as an instant, the departure came before the arrival at the same facility.
+    const at = (states: Record<string, unknown>[], readAt: string) => parseParcelsAppResponse({ carriers: ['USPS', 'GlobalEco'], states },
+      number, identity(), null, Date.parse(readAt)).events?.map((scan) => [scan.time, scan.description]);
+    expect(at([
+      { date: '2026-11-06T07:55:00Z', status: 'Departed Shipping Partner Facility, EXAMPLE CITY, NV 12345', carrier: 0, location: 'EXAMPLE CITY, NV 12345' },
+      { date: '2026-11-06T06:22:00Z', status: 'Arrived Shipping Partner Facility, EXAMPLE CITY, NV 12345', carrier: 0, location: 'EXAMPLE CITY, NV 12345' },
+      { date: '2026-10-31T18:12:00Z', status: 'Picked up by Shipping Partner, EXAMPLE CITY, WA 12345', carrier: 0, location: 'EXAMPLE CITY, WA 12345' },
+    ], '2026-11-06T18:00:00Z')).toEqual([
+      ['2026-11-06T15:55:00.000Z', 'Departed Shipping Partner Facility, EXAMPLE CITY, NV 12345'],
+      ['2026-11-06T14:22:00.000Z', 'Arrived Shipping Partner Facility, EXAMPLE CITY, NV 12345'],
+      ['2026-11-01T01:12:00.000Z', 'Picked up by Shipping Partner, EXAMPLE CITY, WA 12345'],
+    ]);
+  });
+
+  it('holds back a USPS scan its place dates after the read, until a read catches up with it', () => {
+    // ParcelsApp gave these two scans their instants minutes and hours after them; read on
+    // Georgia's clock they came after the read. Hours later it gave them Georgia's digits.
+    const states = (post: string, facility: string) => [
+      { date: post, status: 'Arrived at Post Office, EXAMPLE CITY, GA 12345', carrier: 0, location: 'EXAMPLE CITY, GA 12345' },
+      { date: facility, status: 'Arrived at USPS Facility, EXAMPLE CITY, GA 12345', carrier: 0, location: 'EXAMPLE CITY, GA 12345' },
+      { date: '2026-11-06T02:00:00Z', status: 'Departed USPS Facility', carrier: 0, location: 'EXAMPLE CITY FL DISTRIBUTION CENTER' },
+    ];
+    const at = (post: string, facility: string, readAt: string) => parseParcelsAppResponse({ carriers: ['USPS'], states: states(post, facility) },
+      number, identity(), null, Date.parse(readAt)).events?.map((scan) => scan.time);
+    expect(at('2026-11-06T11:31:00Z', '2026-11-06T08:55:00Z', '2026-11-06T11:45:00Z')).toEqual(['2026-11-06T07:00:00.000Z']);
+    expect(at('2026-11-06T06:31:00Z', '2026-11-06T03:55:00Z', '2026-11-06T18:47:00Z'))
+      .toEqual(['2026-11-06T11:31:00.000Z', '2026-11-06T08:55:00.000Z', '2026-11-06T07:00:00.000Z']);
   });
 
   it('reads USPS\'s own scan with its place after its wording on that place\'s clock', () => {

@@ -529,14 +529,20 @@ step exists for future protocol changes.
 - So do PostNL's scans in Britain. FedEx International Connect lists the same scans two hours
   after ParcelsApp's digits, on Dutch summer time, so those digits are their UTC instants. Read
   on PostNL's Amsterdam clock, they came out two hours early. PostNL's other scans keep it.
-- So do a shipping partner's rows filed under USPS, whose wording repeats their place
-  ("Shipping Label Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label
-  Created, USPS Awaiting Item" and keep its wall clock. Read on its place's clock, such a
-  label came eight hours after ParcelsApp first returned it, and Juxi Express's rows of
-  that shape fall between 17TRACK's instants of the same warehouse's steps as labeled.
-  Only a label or a step naming the shipping partner is read so. USPS's own scans can repeat
-  their place too ("USPS picked up item, EXAMPLE CITY, KY 12345"); USPS's tracker dates them
-  five or eight hours after ParcelsApp's digits, on their place's clock, which they keep.
+- So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping
+  Label Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS
+  Awaiting Item" and keep its wall clock. Read on their place's clock, three such labels came
+  eight hours after ParcelsApp first returned them, and Juxi Express's rows of that shape
+  fall between 17TRACK's instants of the same warehouse's steps as labeled. Only a label is
+  read so. A shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY, NV
+  12345") and USPS's own scans can repeat their place too; USPS's tracker dates them five or
+  eight hours after ParcelsApp's digits, on their place's clock, which they keep. Read as an
+  instant, a partner's departure came before its arrival at the same facility.
+- ParcelsApp gives a USPS scan it has just picked up its instant, and the place's wall clock
+  once it reads USPS again: two scans it returned within three hours came hours after the
+  read on Georgia's clock. A placed USPS scan dated more than five minutes after the read is
+  held back until a read catches up with it, as the USPS adapter holds USPS's planned
+  departures.
 - North American scans: the dates of UPS, FedEx, UniUni, EasyShip and DHL eCommerce are
   the scan's local clock, as UPS's own instants, FedEx's own page, UniUni's own feed,
   Ship24's offsets and DHL eCommerce's Webtrack, which names each scan's clock, show on US
