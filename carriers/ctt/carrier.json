@@ -14,7 +14,7 @@
     "color": "#df0024"
   },
   "selectable": true,
-  "timezone": "UTC",
+  "timezone": "Europe/Lisbon",
   "tracking": {
     "mode": "automatic",
     "adapter": "ctt",

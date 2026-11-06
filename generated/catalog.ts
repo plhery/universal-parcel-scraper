@@ -2615,7 +2615,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "FI"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
       "adapter": "postnord",
@@ -2933,7 +2933,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "PT"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Lisbon",
     "tracking": {
       "mode": "automatic",
       "adapter": "ctt",
@@ -3951,7 +3951,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "BR"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
       "adapter": "correios-br",
@@ -5120,7 +5120,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "FI"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Oslo",
     "tracking": {
       "mode": "automatic",
       "adapter": "bring-posten",

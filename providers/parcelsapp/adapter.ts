@@ -1058,7 +1058,8 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (carrier === 'ctt-express') return CTT_EXPRESS_CLOCK;
   // A home clock stays a guess that a location abroad rules out, even when
   // the catalog gives the network that zone (GEODIS Poland for "Pekaes").
-  const zone = carrier && !Object.hasOwn(HOME_COUNTRIES, key) ? carrierTimezone(carrier) : 'UTC';
+  // CTT's copies take the clock its offices of exchange give (`cttZone`).
+  const zone = carrier && carrier !== 'ctt' && !Object.hasOwn(HOME_COUNTRIES, key) ? carrierTimezone(carrier) : 'UTC';
   // A country-qualified routing name can identify a branch rather than the
   // scan location. Keep its clock as a guess even when the alias is catalogued.
   return zone !== 'UTC' && !(typeof name === 'string' && carrierNameCountryZone(name)) ? zone : undefined;

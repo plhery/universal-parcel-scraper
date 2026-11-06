@@ -21,7 +21,7 @@
     "color": "#00a0d6"
   },
   "selectable": true,
-  "timezone": "UTC",
+  "timezone": "Europe/Stockholm",
   "tracking": {
     "mode": "automatic",
     "adapter": "postnord",

@@ -2611,7 +2611,7 @@
       "FI"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Stockholm",
     "tracking": {
       "mode": "automatic",
       "adapter": "postnord",
@@ -2929,7 +2929,7 @@
       "PT"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Lisbon",
     "tracking": {
       "mode": "automatic",
       "adapter": "ctt",
@@ -3947,7 +3947,7 @@
       "BR"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
       "adapter": "correios-br",
@@ -5116,7 +5116,7 @@
       "FI"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "Europe/Oslo",
     "tracking": {
       "mode": "automatic",
       "adapter": "bring-posten",

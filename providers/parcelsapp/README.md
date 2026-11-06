@@ -87,7 +87,7 @@ step exists for future protocol changes.
   keeps the UTC digits and re-reads them in the first zone it finds:
   1. the home clock of a network ParcelsApp names its own way (see Home clocks below),
      else the catalog zone of the scan's carrier (`carriers[state.carrier]`), unless it is
-     UTC;
+     UTC or CTT's, whose sites name their own clock (see CTT below);
   2. the country at the end of `location`, past a trailing postcode ("Example Town,
      Denmark, 4600") or by the code FedEx writes before one, after a town and its region
      ("EXAMPLE TOWN, RR, IT 12345"), or the country the location reports once its "Country"

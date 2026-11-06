@@ -18,7 +18,7 @@
     "color": "#56b529"
   },
   "selectable": true,
-  "timezone": "UTC",
+  "timezone": "Europe/Oslo",
   "tracking": {
     "mode": "automatic",
     "adapter": "bring-posten",
