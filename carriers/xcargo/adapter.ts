@@ -1,5 +1,5 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, CarrierError, ChallengeError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { BudgetExceededError, CarrierError, ChallengeError, SchemaError, TransportError, UpstreamNetworkError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -55,7 +55,6 @@ export class XcargoTracker {
       let payload: unknown;
       try { payload = JSON.parse(history.text); }
       catch { throw new SchemaError(PROVIDER, 'X-Cargo returned malformed tracking JSON'); }
-      if (history.status === 404 && (!payload || typeof payload !== 'object')) throw new UpstreamHttpError(PROVIDER, 404);
       return parseXcargo(payload, number, history.status);
     };
     return runSteps({ carrier: 'xcargo', budgetMs: context.budgetMs ?? 20_000, signal: context.signal,

@@ -37,6 +37,14 @@ describe('X-Cargo guest adapter', () => {
     expect(unavailable).toHaveBeenCalledTimes(1);
   });
 
+  it('does not turn a malformed history404 into a missing parcel', async () => {
+    for (const value of ['null', '"missing"', '42', '[]']) {
+      const read = vi.fn<typeof fetch>().mockResolvedValueOnce(widget()).mockResolvedValueOnce(json(value, 404));
+      await expect(new XcargoTracker({ fetcher: read }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+      expect(read).toHaveBeenCalledTimes(2);
+    }
+  });
+
   it('keeps shared numeric inputs out of recognition and rejects unsupported named handoffs before HTTP', async () => {
     expect(recognitionAskedCarriers(NUMBER)).not.toContain('xcargo');
     const read = vi.fn<typeof fetch>();
