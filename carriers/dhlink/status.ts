@@ -87,6 +87,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['arrived at warehouse', 'in_transit'],
   // The flight landed in the destination country.
   ['package arrived at destination country', 'in_transit'],
+  // After the landing, the airport's cargo handling running late: held up, not back at the order.
+  ['cargo handling delay', 'in_transit'],
   // The last-mile partner's depot taking in the parcel the line handed over.
   ['shipment received in depot', 'in_transit'],
   // The last-mile carrier's pickup on a row without DHLink's node, then its local facility's receipt.

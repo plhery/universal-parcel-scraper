@@ -110,6 +110,14 @@
       "note": "The same move, sent without the full stop."
     },
     {
+      "wording": "In Transit, Arriving Late",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "USPS's notice that the parcel is still moving but behind its expected day, relayed without a code: no failed attempt or problem."
+    },
+    {
       "wording": "It is currently in transit to the next facility",
       "language": "en",
       "stage": "in_transit",

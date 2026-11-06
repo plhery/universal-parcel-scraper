@@ -118,6 +118,8 @@
     {"code": "OIT", "wording": "Shipment information sent to FedEx", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's label for the last leg, written before the order reaches JS Express's warehouse."},
     {"code": "OIT", "wording": "Domestic pick up", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "After the departure from origin and before export customs release the parcel: the pick-up for the flight."},
     {"code": "DCF", "wording": "Item Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Import customs released the parcel after the flight landed."},
-    {"code": "OIT", "wording": "Arrived at Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The destination's sorting facility after import clearance, before the local courier takes the parcel."}
+    {"code": "OIT", "wording": "Arrived at Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The destination's sorting facility after import clearance, before the local courier takes the parcel."},
+    {"code": "OIT", "wording": "Arrived at FedEx location", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's hub on the line it delivers, relayed under JS Express's catch-all code."},
+    {"code": "OIT", "wording": "Left FedEx origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's departure from its first facility, relayed under the same code."}
   ]
 }

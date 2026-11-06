@@ -14,6 +14,11 @@ const CODES: Readonly<Record<string, Stage>> = {
   // The cargo reached DSV, at a terminal or from the pickup.
   IRP: 'accepted',
   ACTUAL_PICKUP: 'accepted',
+  // The pickup done, and the cargo checked in at DSV's freight station or warehouse after it.
+  PCF: 'accepted',
+  CCI: 'accepted',
+  // Handed to the airline or line of the main carriage, before its departure.
+  HNV: 'in_transit',
   DEP: 'in_transit',
   ATD: 'in_transit',
   ARV: 'in_transit',

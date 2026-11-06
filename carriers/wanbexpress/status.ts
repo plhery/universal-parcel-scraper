@@ -17,6 +17,8 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['in processing at transit facility.', 'in_transit'],
   ['in transit to next facility.', 'in_transit'],
   ['in transit to next facility', 'in_transit'],
+  // USPS's notice of a parcel still moving but behind its expected day.
+  ['in transit, arriving late', 'in_transit'],
   ['it is currently in transit to the next facility', 'in_transit'],
   ['the package is being transferred to the next facility', 'in_transit'],
 ]);
