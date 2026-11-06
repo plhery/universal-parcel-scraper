@@ -362,6 +362,9 @@ const TRACK91_TYPES: Readonly<Record<string, string>> = {
   MAIL_ARRIVED: 'MailArrived',
   TRANSFER_OOE: TRANSFER_CODE,
 };
+// A bag's arrival as track91 words it in prose, a reply whose rows keep MySpeedPost's
+// wording as their code ("Send item to domestic location (Inb)").
+const TRACK91_ARRIVALS = new Set(['Bag unloaded at destination Airport']);
 const OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
 
 /**
@@ -391,10 +394,10 @@ function track91Rows(events: readonly unknown[]): JsonObject[] {
 const FLIGHT_TO = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From [A-Z]{3,5} To ([A-Z]{3}|[A-Z]{5})\)$/;
 
 /**
- * track91 names no destination. The scans after the latest arrival are the
- * country's it landed in, on its wall clock under India's label as on
- * MySpeedPost's page, unless that is India or a country the airport does not
- * tell. A take-off names only its next airport, often a hub on the way, so it
+ * track91 names no destination. The scans after the latest arrival, coded or
+ * worded, are the country's it landed in, on its wall clock under India's
+ * label as on MySpeedPost's page, unless that is India or a country the
+ * airport does not tell. A take-off names only its next airport, often a hub on the way, so it
  * places nothing; flight rows keep their own reading.
  */
 function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone: string | null } {
@@ -404,7 +407,8 @@ function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone
   let latest = -Infinity;
   let country: string | null = null;
   for (const [index, to] of flown.entries()) {
-    if (!to || !ARRIVAL_CODES.has(code(rows[index]!)) || !(labelled[index]! > latest)) continue;
+    const arrival = ARRIVAL_CODES.has(code(rows[index]!)) || TRACK91_ARRIVALS.has(clean(rows[index]!.event, 100));
+    if (!to || !arrival || !(labelled[index]! > latest)) continue;
     latest = labelled[index]!;
     country = to.length === 5 ? to.slice(0, 2) : airportCountry(to);
   }

@@ -730,6 +730,19 @@ describe('India Post Livewire session', () => {
     });
   });
 
+  it('reads the scans after a bag track91 words as unloaded abroad on that country\'s wall clock', () => {
+    const prose = track91Result();
+    const events = prose.events as Array<Record<string, unknown>>;
+    events[0] = { ...events[0], event: 'Item received at office of exchange (Inb)' };
+    events[1] = { ...events[1], event: 'Bag unloaded at destination Airport' };
+    expect(parseIndiaPostTrack91Result(prose, SAMPLE_NUMBER).events?.slice(0, 2)
+      .map((event) => [event.time ?? `local ${String(event.local_time)}`, event.provider_code])).toEqual([
+      // India's 14:04 is the exchange office's own clock, not 08:34Z.
+      ['local 2026-07-19T14:04:00', 'Item received at office of exchange (Inb)'],
+      ['2026-07-18T04:56:00Z', 'Bag unloaded at destination Airport'],
+    ]);
+  });
+
   it('reads the history a page in another state still carries, and is inconclusive without one', async () => {
     const withHistory = vi.fn<typeof fetch>().mockResolvedValue(new Response(
       pageHtml(SAMPLE_NUMBER, 'Failed', trackingHistoryHtml(SAMPLE_NUMBER, undefined, '2026-09-01T12:00:00Z')),
