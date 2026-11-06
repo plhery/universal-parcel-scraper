@@ -53,6 +53,18 @@ describe('Ekart parser', () => {
       expect(parseEkart(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map', expected_delivery: '2026-01-03T16:00:00Z' });
     }
   });
+  it('reads an undelivered attempt and the update written with it as a failed attempt, not a delivery', () => {
+    // In place of the delivery, after the run out for delivery.
+    const value = fixture();
+    value[NUMBER].shipmentTrackingDetails.splice(2, 1,
+      { date: 1767434400000, city: 'Example hub', statusDetails: 'ShipmentUndeliveredAttempted - ExampleHub_AAA' },
+      { date: 1767434400000, city: 'Example hub', statusDetails: 'undelivered_update - ExampleHub_AAA' });
+    const result = parseEkart(value, NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map' });
+    expect(result.events!.slice(0, 2).map(({ provider_code, stage }) => [provider_code, stage]))
+      .toEqual([['undelivered_update', 'failed_attempt'], ['ShipmentUndeliveredAttempted', 'failed_attempt']]);
+    expect(result.delivered_at).toBeUndefined();
+  });
   it('replays every recorded status through the map', () => {
     for (const entry of statuses.entries) {
       const description = 'code' in entry && entry.code ? `${entry.code} - ExampleHub_AAA` : entry.wording === 'Received at' || entry.wording === 'Dispatched to' ? `${entry.wording} ExampleHub` : entry.wording!;

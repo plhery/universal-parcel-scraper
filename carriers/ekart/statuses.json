@@ -155,6 +155,22 @@
       "note": "The delivery run ended without an attempt."
     },
     {
+      "code": "ShipmentUndeliveredAttempted",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "An attempt that did not deliver, beside its hub. The shared rules read the word run together as a delivery."
+    },
+    {
+      "code": "undelivered_update",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-03",
+      "note": "Written beside its hub at the same instant as the failed attempt."
+    },
+    {
       "code": "PickupCancel",
       "language": "en",
       "stage": "exception",

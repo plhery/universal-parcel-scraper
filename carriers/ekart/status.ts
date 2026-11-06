@@ -14,6 +14,8 @@ const STAGES = new Map<string, Stage>(Object.entries({
   inscannedatdh: 'in_transit', primarydhinscan: 'in_transit',
   outfordelivery: 'out_for_delivery', delivered: 'delivered',
   undeliveredattempted: 'failed_attempt', undeliveredunattempted: 'failed_attempt',
+  // The attempt's code beside its hub, and the update Ekart writes with it at the same instant.
+  shipmentundeliveredattempted: 'failed_attempt', undeliveredupdate: 'failed_attempt',
   pickupcancel: 'exception', shipmentrtoconfirmed: 'exception',
   rtoexpected: 'in_transit', rtoreceived: 'in_transit', returninscanned: 'in_transit',
 } satisfies Record<string, Stage>));
