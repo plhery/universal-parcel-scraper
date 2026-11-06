@@ -416,6 +416,22 @@
       "note": "Landed; the pallets are broken down and the goods collected for clearance."
     },
     {
+      "wording": "The flight has landed, and the package is ready to be handed over to customs for clearance.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-04",
+      "note": "On the line into Mexico: landed, before customs has the parcel, which the next row says it then has. Like the pallets broken down after landing, it is still the flight's leg."
+    },
+    {
+      "wording": "and the package has been handed over to customs for clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The row after the landing on the line into Mexico, as JRT writes it without its start: customs has the parcel."
+    },
+    {
       "wording": "Customs clearance of the cargo is in progress",
       "language": "en",
       "stage": "customs",
