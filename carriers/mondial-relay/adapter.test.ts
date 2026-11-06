@@ -450,6 +450,9 @@ describe('Mondial Relay response normalization', () => {
       'Colis en route vers le point de livraison', 'Colis pris en charge en Locker']) {
       expect(located(wording)?.location).toBe('');
     }
+    // Without a site name the carrier leaves "de ." behind, which is dropped.
+    expect(located('Prise en charge de votre colis sur notre site logistique de .')).toMatchObject({
+      location: '', description: 'Prise en charge de votre colis sur notre site logistique.', stage: 'in_transit' });
   });
 
   it('maps the wording it claims and leaves everything else to the sync', () => {

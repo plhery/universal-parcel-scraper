@@ -141,6 +141,15 @@ export function scanSite(description: string): string {
 }
 
 /**
+ * A scan's wording without the dangling "de" the carrier leaves when it has no
+ * site name: "… sur notre site logistique de ." reads "… sur notre site
+ * logistique.".
+ */
+export function scanWording(description: string): string {
+  return description.replace(/(\bsite(?: logistique)?) de\s*\.?$/iu, '$1.');
+}
+
+/**
  * `SuiviParEtapes` milestone numbers, used only when no wording on the
  * shipment classified. The numbers are positions on the page's own progress
  * bar, so they are read as "at least this far".

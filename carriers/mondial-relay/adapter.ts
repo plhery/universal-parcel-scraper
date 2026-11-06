@@ -17,7 +17,7 @@ import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, type TrawlClient,
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { MondialRelayAppClient } from './app.js';
 import { inpostSpainTrackingUrl, isInpostSpainNumber, readInpostSpain } from './inpostSpain.js';
-import { classifyScan, classifyStatus, milestoneNumberStatus, scanSite } from './status.js';
+import { classifyScan, classifyStatus, milestoneNumberStatus, scanSite, scanWording } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -252,7 +252,7 @@ function parseEvents(expedition: JsonObject): ParsedEvent[] {
   expedition.Evenements.forEach((rawEvent) => {
     if (!isRecord(rawEvent)) return;
     const time = eventTime(rawEvent.Date);
-    const description = plainText(rawEvent.Libelle);
+    const description = scanWording(plainText(rawEvent.Libelle));
     if (!time || !description) return;
     const identity = JSON.stringify([time.iso, description]);
     if (seen.has(identity)) return;

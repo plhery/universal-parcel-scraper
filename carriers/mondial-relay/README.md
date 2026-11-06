@@ -123,7 +123,8 @@ shipment → `SchemaError`.
   it in its wording ("sur notre site logistique de METZ", "sur le site METZ",
   "depuis le site METZ"), and that name becomes the scan's location, without a
   country. Both sources word scans alike, so a scan keeps one identity whichever
-  answers; a scan stored without its site gains it in place.
+  answers; a scan stored without its site gains it in place. Without a site name the carrier
+  writes "… sur notre site logistique de .", read as "… sur notre site logistique.".
 - While the parcel waits at a relay or locker, that point becomes the pickup
   point: its name, then its street and town on their own lines. The website
   gives a relay's record (`DetailPointRelais`) on the scans made there, the
