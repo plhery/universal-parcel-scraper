@@ -1633,9 +1633,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [
       {
         "domains": [
-          "espace-client.geodis.com",
-          "geodis.com"
+          "espace-client.geodis.com"
         ],
+        "pathPattern": "^/services/destinataires/?$",
         "params": [
           "noSuivi",
           "trackingNumber"

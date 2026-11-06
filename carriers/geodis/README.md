@@ -51,6 +51,13 @@ here.
   recipient block, `listInformationsComplementaires` (free-text access instructions) and
   delivery documents are never retained; a test asserts it.
 
+## Links
+
+Recipient links carry the number in the fragment, `#/<lang>/suivi/<number>`, on GEODIS's and
+France Express's portals. Query parameters are read only on the recipient page
+`espace-client.geodis.com/services/destinataires/`, so geodis.com's other pages, its site
+search included, are not read as tracking links.
+
 ## Testing
 
 `npm run test:carriers:live -- testing/frenchDirectCarriers.live.test.ts` (no env vars). It

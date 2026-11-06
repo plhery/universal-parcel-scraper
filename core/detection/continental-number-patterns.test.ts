@@ -929,6 +929,23 @@ describe('networks whose links route to an existing carrier', () => {
     }
   });
 
+  it('reads GEODIS links on its recipient portal only, not geodis.com search pages', () => {
+    expect(parseTrackingInput('https://espace-client.geodis.com/services/destinataires/?noSuivi=1G0000000000'))
+      .toMatchObject({ trackingNumber: '1G0000000000', carrier: 'geodis', source: 'link' });
+    for (const link of [
+      'https://geodis.com/fr/search?keys=livraison',
+      'https://www.geodis.com/fr/search?keys=12345678&op=Rechercher',
+      'https://geodis.com/fr/search?trackingNumber=12345678',
+      'https://www.geodis.com/fr/actualites?noSuivi=ABCDEFGH12',
+      'https://espace-client.geodis.com/services/autre/?noSuivi=12345678',
+    ]) {
+      expect(parseTrackingInput(link).carrier, link).not.toBe('geodis');
+    }
+    // A GEODIS number in a search link is still its own.
+    expect(parseTrackingInput('https://geodis.com/fr/search?keys=1G0000000000'))
+      .toMatchObject({ trackingNumber: '1G0000000000', carrier: 'geodis' });
+  });
+
   it('reads Royal Shipments links as SP Express', () => {
     expect(parseTrackingInput('https://royalshipments.com/tt/483260904000001')).toMatchObject({
       trackingNumber: '483260904000001', carrier: 'sp-express', source: 'link',
