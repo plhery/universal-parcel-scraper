@@ -51,7 +51,9 @@ public number has been found, so the reply's fields are known from the platform.
 No public source shows a whole Pengyou number. A parcel a universal provider files under Pengyou has
 three letters, nine digits and `PY`, so a low rule suggests Pengyou for that layout, and recognition
 asks the tracker; the corpus holds a made-up number in that shape. The letters before the digits
-may stand for a channel or a shipper, so the rule stays low.
+may stand for a channel or a shipper, so the rule stays low for letters other than `ZXA`. Pengyou's
+own tracker answered every parcel the app tracked with `ZXA`, and no other carrier's rule takes the
+layout, so `pengyou-2` names Pengyou for that series at high confidence.
 
 ## Links
 

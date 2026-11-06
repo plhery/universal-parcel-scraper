@@ -16,6 +16,18 @@
         ]
       },
       "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider filed under Pengyou. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "ZXA999999970PY",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-06",
+      "expect": {
+        "carrier": "pengyou",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of the parcels the app tracked in Pengyou's ZXA series, which Pengyou's own tracker answered every time. Its serial sits far beyond the range in use."
     }
   ]
 }

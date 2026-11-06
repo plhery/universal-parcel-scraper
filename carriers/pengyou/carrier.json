@@ -85,8 +85,13 @@
   "detection": [
     {
       "id": "pengyou-1",
-      "pattern": "^[A-Z]{3}\\d{9}PY$",
+      "pattern": "^(?!ZXA)[A-Z]{3}\\d{9}PY$",
       "confidence": "low"
+    },
+    {
+      "id": "pengyou-2",
+      "pattern": "^ZXA\\d{9}PY$",
+      "confidence": "high"
     }
   ]
 }

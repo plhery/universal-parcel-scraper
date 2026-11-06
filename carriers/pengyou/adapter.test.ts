@@ -20,9 +20,11 @@ const html = (body: string) => new Response(body, { headers: { 'Content-Type': '
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('Pengyou numbers', () => {
-  it('suggests three letters, nine digits and PY, and recognition asks the tracker about them', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });
-    expect(recognitionCandidates(NUMBER, {}).map((candidate) => candidate.carrier)).toEqual(['pengyou']);
+  it('names Pengyou for its ZXA series, and suggests other letters, nine digits and PY, which recognition asks the tracker about', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'pengyou', confidence: 'high', candidates: ['pengyou'] });
+    const other = `ZXB${NUMBER.slice(3)}`;
+    expect(detectCarrierMatch(other)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });
+    expect(recognitionCandidates(other, {}).map((candidate) => candidate.carrier)).toEqual(['pengyou']);
     for (const other of ['ZXA99000001PY', 'ZXA9900000001PY', 'ZX990000001PY', 'ZXA990000001PX', 'ZXA990000001PYX']) {
       expect(detectCarrierMatch(other).candidates ?? [], other).not.toContain('pengyou');
     }

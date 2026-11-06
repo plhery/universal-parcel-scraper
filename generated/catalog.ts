@@ -36203,8 +36203,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^[A-Z]{3}\\d{9}PY$",
+        "pattern": "^(?!ZXA)[A-Z]{3}\\d{9}PY$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^ZXA\\d{9}PY$",
+        "confidence": "high"
       }
     ]
   },
@@ -53990,7 +53994,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "peddler": ["peddler-1","peddler-2"],
   "pelican-express": [],
   "penguin-box": [],
-  "pengyou": ["pengyou-1"],
+  "pengyou": ["pengyou-1","pengyou-2"],
   "peninsula-truck-lines": [],
   "penta-express": [],
   "peqasus-az": [],
