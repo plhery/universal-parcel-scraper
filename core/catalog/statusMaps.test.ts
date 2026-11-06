@@ -1742,6 +1742,10 @@ describe("universal providers' answers", () => {
       // SPX's fleet feed hubs, and BRT's branch arrival on a DPD parcel delivered in Italy, as ParcelsApp relays them.
       ['Your parcel has been received by pickup hub', 'in_transit'], ['Your parcel has been received by delivery hub', 'in_transit'],
       ['In filiale', 'in_transit'],
+      // GEODIS Poland's history as ParcelsApp relays it under "Pekaes", misspellings included.
+      ['Collected from a shipper', 'accepted'], ['Entrance to the terminal from the driver', 'in_transit'],
+      ['Outboud from pickup terminal to the linehoul', 'in_transit'], ['Inbound from inehoul to terminal', 'in_transit'],
+      ['Issued for delivery', 'out_for_delivery'],
       ['Received in warehouse', 'accepted'], ['Item deposited to local postal operator', 'in_transit'],
       ['Item handed over to subcontractor', 'in_transit'], ['Item announced', 'registered'], ['Item sent', 'in_transit'],
       ['Origin Post is Preparing Shipment', 'registered'], ['Item posted abroad', 'accepted'],

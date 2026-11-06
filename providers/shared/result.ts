@@ -379,6 +379,13 @@ function providerWordingStage(description: string): Stage | undefined {
   // BRT's arrival at the delivering branch ("Arrivata in filiale"), as ParcelsApp relays it for DPD's
   // parcels delivered in Italy.
   if (/^in filiale[.!]?$/i.test(value)) return 'in_transit';
+  // GEODIS Poland's history in its tracker's own English, misspellings included, as ParcelsApp relays it under
+  // "Pekaes", read as GEODIS Poland's map reads codes 10 to 50: the collection from the sender, a terminal's
+  // receipt from the driver, the line-haul out of the collecting terminal and into the delivering one, and
+  // the delivery round ("wydanie do dostawy").
+  if (/^collected from a shipper[.!]?$/i.test(value)) return 'accepted';
+  if (/^entrance to the terminal from the driver[.!]?$|^outboun?d from pickup terminal to the line[- ]?h(?:au|ou)l[.!]?$|^inbound from l?ine[- ]?h(?:au|ou)l to terminal[.!]?$/i.test(value)) return 'in_transit';
+  if (/^issued for delivery[.!]?$/i.test(value)) return 'out_for_delivery';
   // SF Express's pickup notice, which goes on to name the courier.
   if (/^sf express has received your package\b/i.test(value)) return 'accepted';
   // iMile's scans as aggregators relay them, its 【】 place names cut or dropped.
