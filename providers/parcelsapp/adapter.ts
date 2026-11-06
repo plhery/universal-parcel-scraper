@@ -146,14 +146,21 @@ const UNLOCATED_LOCAL_CLOCKS = new Set(['ups', 'fedex']);
  * no time, and ParcelsApp writes it at 00:00 too. So does USPS's for its
  * pre-shipment notice and its place-less "In Transit to Next Facility" (worded
  * "In Transit, Arriving On Time" or "Arriving Late" while it is the newest):
- * read on the clock of a placed scan near it, it came at a US midnight.
+ * read on the clock of a placed scan near it, it came at a US midnight. A
+ * shipping partner's step filed under UPS or USPS ("Departed Shipping Partner
+ * Facility, EXAMPLE CITY, CA 12345") can come at 00:00 too, while UPS's own
+ * lookup gives the same step its minute that morning.
  */
 const USPS_UNTIMED = /^(?:in\s+transit(?:\s+to\s+next\s+facility|,\s*arriving\s+(?:on\s+time|late))|pre-shipment\s+info\s+sent\s+to\s+usps(?:,\s*usps\s+awaiting\s+item)?)$/i;
+const SHIPPING_PARTNER_STEP = /\bshipping\s+partner\b/i;
 function datedOnly(name: unknown, status: string, date: unknown): string | null {
   const wall = mislabeledWallTime(date);
-  const step = nameKey(name) === 'fedex' ? /^picked\s+up$/i : nameKey(name) === 'usps' ? USPS_UNTIMED
+  if (!wall || !/T00:00:00(?:\.0+)?$/.test(wall)) return null;
+  const key = nameKey(name);
+  const step = key === 'fedex' ? /^picked\s+up$/i : key === 'usps' ? USPS_UNTIMED
     : typeof name === 'string' && carrierIdFromName(name) === 'brt' ? /^for\s+delivery$/i : null;
-  return step?.test(status.trim()) && wall && /T00:00:00(?:\.0+)?$/.test(wall) ? wall.slice(0, 10) : null;
+  const partner = (key === 'ups' || key === 'usps') && SHIPPING_PARTNER_STEP.test(status);
+  return step?.test(status.trim()) || partner ? wall.slice(0, 10) : null;
 }
 
 /**
@@ -1012,6 +1019,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (epost !== undefined) return epost;
   if (carrier === 'paack' || carrier === 'vinted-go' || carrier === 'austrian-post' || carrier === 'straightship'
     || ownOffset(name, state.date, scanLocation(name, state.location))) return null;
+  // FAR's tracker states each scan's offset, the origin's in China and the last-mile carrier's
+  // abroad; ParcelsApp keeps the digits alone, so its copies keep their wall clock.
+  if (carrier === 'far-international') return null;
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
   if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
@@ -1206,7 +1216,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
-    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;

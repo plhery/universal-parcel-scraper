@@ -16,7 +16,8 @@ adapter reads FAR's own results page for its waybills.
 - Only the entry whose number is the whole number asked is read.
 - A scan with an offset in its zone column gets an instant at that offset, and the scans are then
   ordered by instant. Older parcels have an empty zone column: those scans keep their wall clock
-  and the page's order, and consumers can date them by place.
+  and the page's order, and consumers can date them by place. ParcelsApp names the carrier "FAR"
+  and drops the offsets, so its copies keep their wall clock too.
 - Older scans pair Chinese wording with its English translation, of which the English is kept.
   Newer scans are English or Chinese, with the last-mile carrier's own wording near the end. They
   are staged by the wording recorded in [statuses.json](statuses.json), then the shared rules.

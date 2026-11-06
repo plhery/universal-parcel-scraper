@@ -20018,6 +20018,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "FAR International",
     "color": "#003b75",
     "aliases": [
+      "FAR",
       "FAR International Logistics",
       "Far International Logistics",
       "泛远国际",

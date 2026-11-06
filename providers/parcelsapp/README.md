@@ -174,8 +174,10 @@ step exists for future protocol changes.
   null. BRT's "FOR DELIVERY" at 00:00 keeps its day the same way: BRT's page gives that
   step a date and no time. So do USPS's pre-shipment notice and its place-less "In Transit
   to Next Facility", which USPS dates by the day alone: read on the clock of a placed scan
-  near them, they came at a US midnight. A pickup at another time, another FedEx, BRT or
-  USPS scan at 00:00 and other carriers' midnight scans keep their instants. Such a step is
+  near them, they came at a US midnight. So does a shipping partner's step filed under UPS
+  or USPS ("Departed Shipping Partner Facility, EXAMPLE CITY, CA 12345"), which UPS's own
+  lookup dates to the minute that morning. A pickup at another time, another FedEx, BRT,
+  UPS or USPS scan at 00:00 and other carriers' midnight scans keep their instants. Such a step is
   left out when a timed scan of another network shows the same stage that day, as DPD
   Germany's "Parcel out for delivery" does BRT's "FOR DELIVERY" on a parcel BRT hands to
   it: without a time, the copy has no place among that day's scans.
@@ -387,7 +389,9 @@ step exists for future protocol changes.
   take the destination's single clock, or else keep their wall clock, as iMile's own
   lookup does. A Chinese forwarder's copies of them under the same name, the centre in
   brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
-  hours ahead of iMile's own in Italy. "MailAmericas" customs scans in the destination ("Customs at
+  hours ahead of iMile's own in Italy. "FAR" has the digits of FAR International's tracker,
+  which states each scan's offset, China's or the last-mile carrier's abroad: its copies
+  keep their wall clock, as FAR's own scans without an offset do. "MailAmericas" customs scans in the destination ("Customs at
   destination. …") are on that country's clock, as MailAmericas's own reply dates them: Argentina's,
   Colombia's or Peru's; Mexico's and Chile's several clocks leave them as they are. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African

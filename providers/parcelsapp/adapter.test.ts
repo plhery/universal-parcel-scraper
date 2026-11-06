@@ -1406,6 +1406,22 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it('keeps the day of a shipping partner\'s step filed under UPS at 00:00, which UPS dates to the minute', () => {
+    // Live shape: ParcelsApp wrote the partner's departure at 00:00, where UPS's own lookup has it
+    // that morning; read on the place's clock, it came at a California midnight.
+    const departed = 'Departed Shipping Partner Facility, EXAMPLE CITY, CA 12345';
+    const read = (date: string) => parseParcelsAppResponse({ carriers: ['UPS'], states: [
+      { date: '2026-11-06T04:43:00Z', status: 'Processing at UPS Facility', carrier: 0, location: 'EXAMPLE CITY, CA, US' },
+      { date, status: departed, carrier: 0, location: 'EXAMPLE CITY, CA 12345' },
+    ] }, number, identity(), null, Date.parse('2026-11-06T18:00:00Z')).events?.map((scan) => [scan.time, scan.local_time, scan.description]);
+    expect(read('2026-11-06T00:00:00Z')).toEqual([
+      ['2026-11-06T12:43:00.000Z', undefined, 'Processing at UPS Facility'],
+      [undefined, '2026-11-06', departed],
+    ]);
+    // Given its minute, it keeps its place's clock.
+    expect(read('2026-11-06T07:43:00Z')?.[0]).toEqual(['2026-11-06T15:43:00.000Z', undefined, departed]);
+  });
+
   it('holds back a USPS scan its place dates after the read, until a read catches up with it', () => {
     // ParcelsApp gave these two scans their instants minutes and hours after them; read on
     // Georgia's clock they came after the read. Hours later it gave them Georgia's digits.
@@ -2133,6 +2149,11 @@ describe('ParcelsApp result parsing', () => {
       .toEqual(['2026-05-22T14:20:30.000Z', '2026-05-19T13:47:46.000Z']);
     // Yanwen's own row states its shipment information +08:00, at the minute ParcelsApp labels UTC.
     expect(times(['Yanwen Logistics'], [scan('2026-11-04T09:26:00Z')])).toEqual(['2026-11-04T01:26:00.000Z']);
+    // FAR's tracker states each scan's offset, China's or the last-mile carrier's abroad, and ParcelsApp
+    // keeps the digits alone: read on FAR's Chinese clock, an Argentine scan came 11 hours early.
+    const far = parseParcelsAppResponse({ carriers: ['FAR'], states: [scan('2026-11-06T06:39:05Z'), scan('2026-11-04T13:19:00Z', 'Example City')] },
+      number, identity(), 'Asia/Shanghai').events;
+    expect(far?.map((event) => [event.time, event.local_time])).toEqual([[undefined, '2026-11-06T06:39:05.000'], [undefined, '2026-11-04T13:19:00.000']]);
     // CTT Express's own tracker has the same scans an hour earlier in winter, at Madrid's offset.
     expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-07-04T12:23:00Z')]))
       .toEqual(['2026-11-05T13:38:00.000Z', '2026-07-04T10:23:00.000Z']);
