@@ -7,6 +7,7 @@ import {
   IndiaPostTracker,
   indiaPostTrackingUrl,
   normalizeIndiaPostTrackingNumber,
+  parseIndiaPostTrack91Result,
   parseIndiaPostTrackingHtml,
 } from './adapter.js';
 import { classifyIndiaPostEvent } from './status.js';
@@ -130,6 +131,27 @@ function livewireResponse(
 }
 
 afterEach(() => vi.restoreAllMocks());
+
+// track91's events, rendered in the zone asked (here Europe/Zurich), newest first.
+function track91Result(trackingNumber = SAMPLE_NUMBER): Record<string, unknown> {
+  const event = (trackedAt: string, code: string, office: string, remarks: string | null = null) => ({
+    event_code: 'in_transit', event: code, tracked_at: trackedAt, location: { address: office }, remarks,
+  });
+  return {
+    provider_code: 'india-post', tracking_number: trackingNumber, success: true, tracked_at: '2026-07-20T01:00:00+01:00',
+    events: [
+      event('2026-07-19T09:34:00+01:00', 'ITEM_RECEIVE', 'EXAMPLE EMS'),
+      event('2026-07-18T05:56:00+01:00', 'MAIL_ARRIVED', 'Office - SGSIN', 'Flight No: ZZ0102 (From SGSIN To AUSYD)'),
+      event('2026-07-16T13:07:00+01:00', 'UPLIFT', 'Office - BOM', 'Flight No: ZZ0101 (From BOM To SIN)'),
+      event('2026-07-15T06:05:37+01:00', 'ITEM_RECEIVE', 'EXAMPLE FOREIGN EMS'),
+      event('2026-07-14T10:01:24+01:00', 'ITEM_BOOK', 'EXAMPLE FOREIGN POST OFFICE'),
+    ],
+  };
+}
+
+function track91Snapshot(trackingNumber: string, data: Record<string, unknown>): string {
+  return JSON.stringify({ data: { trackingNumber, result: null, workerPolling: false, ...data }, memo: { name: 'tracking.tracker' } });
+}
 
 it('distinguishes export-customs entry and exit under the same event type', () => {
   expect(classifyIndiaPostEvent('ExportCustoms', 'Out of Export Customs').stage).toBe('in_transit');
@@ -639,6 +661,59 @@ describe('India Post Livewire session', () => {
       method: 'fetchStatus',
       params: [],
     }]);
+  });
+
+  it('follows MySpeedPost to track91 for the same number, submits there and polls its worker', async () => {
+    const redirect = (number: string) => ({ xjs: [{ expression: '(url) => {}', params: [`https://track91.com/india-post/track?n=${number}&ref=redirect.myspeedpost.com`] }] });
+    const track91Page = `<html><head><meta name="csrf-token" content="${CSRF_TOKEN}"></head><body>
+      <div data-update-uri="https://track91.com/livewire-0a1b2c3d/update"></div>
+      <div wire:snapshot="${escapeAttribute(track91Snapshot(SAMPLE_NUMBER, { autoTrack: true }))}"></div></body></html>`;
+    const update = (data: Record<string, unknown>) => new Response(JSON.stringify({ components: [{ snapshot: track91Snapshot(SAMPLE_NUMBER, data), effects: {} }] }));
+    const fetcher = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'New', redirect(SAMPLE_NUMBER)))
+      .mockResolvedValueOnce(new Response(track91Page))
+      .mockResolvedValueOnce(update({ workerPolling: true }))
+      .mockResolvedValueOnce(update({ result: [track91Result(), { s: 'arr' }] }));
+    const result = await new IndiaPostTracker({ fetcher, pollIntervalMs: 0, workerPollIntervalMs: 0 }).fetch(SAMPLE_NUMBER);
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_update_local: '2026-07-19T14:04:00', source_synced_at: '2026-07-20T01:00:00+01:00' });
+    expect(fetcher.mock.calls.map(([url]) => String(url).replace(/\?.*/, ''))).toEqual([
+      'https://myspeedpost.com/track', 'https://myspeedpost.com/livewire/update', 'https://track91.com/india-post/track',
+      'https://track91.com/livewire-0a1b2c3d/update', 'https://track91.com/livewire-0a1b2c3d/update',
+    ]);
+    const calls = [3, 4].map((index) => JSON.parse(String(fetcher.mock.calls[index]?.[1]?.body)).components[0].calls[0].method);
+    expect(calls).toEqual(['submitTrackRequest', 'pollWorkerStatus']);
+
+    // A script effect for another number, or a worker that stops without a result, proves nothing.
+    const other = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'New', redirect(WRONG_VALID_NUMBER)));
+    await expect(new IndiaPostTracker({ fetcher: other, pollIntervalMs: 0 }).fetch(SAMPLE_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    const stopped = vi.fn<typeof fetch>()
+      .mockResolvedValueOnce(new Response(pageHtml(SAMPLE_NUMBER, 'New')))
+      .mockResolvedValueOnce(livewireResponse(SAMPLE_NUMBER, 'New', redirect(SAMPLE_NUMBER)))
+      .mockResolvedValueOnce(new Response(track91Page))
+      .mockResolvedValueOnce(update({ errorCode: 'failed' }));
+    await expect(new IndiaPostTracker({ fetcher: stopped, pollIntervalMs: 0, workerPollIntervalMs: 0 }).fetch(SAMPLE_NUMBER))
+      .rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+
+  it('reads track91\'s events as MySpeedPost\'s rows, abroad after the latest flight on the wall clock', () => {
+    const result = parseIndiaPostTrack91Result(track91Result(), SAMPLE_NUMBER);
+    expect(result.events?.map((event) => [event.time ?? `local ${String(event.local_time)}`, event.description])).toEqual([
+      ['local 2026-07-19T14:04:00', 'Item Received'],
+      ['2026-07-18T04:56:00Z', 'Mail Arrived'],
+      // The take-off keeps its airport's clock, as on MySpeedPost's page.
+      ['2026-07-16T12:07:00+05:30', 'Flight ZZ0101 departed: Mumbai Airport (BOM) → SIN'],
+      ['2026-07-15T05:05:37Z', 'Item Received'],
+      ['2026-07-14T09:01:24Z', 'Item Booked'],
+    ]);
+    expect(result).not.toHaveProperty('destination_country');
+    // A flight back to India keeps India's clock for what follows.
+    const back = track91Result();
+    (back.events as Array<Record<string, unknown>>)[1]!.remarks = 'Flight No: ZZ0102 (From SGSIN To INBOM)';
+    expect(parseIndiaPostTrack91Result(back, SAMPLE_NUMBER).events?.[0]?.time).toBe('2026-07-19T08:34:00Z');
+    expect(() => parseIndiaPostTrack91Result(track91Result(WRONG_VALID_NUMBER), SAMPLE_NUMBER)).toThrow(SchemaError);
   });
 
   it('reads the history a page in another state still carries, and is inconclusive without one', async () => {

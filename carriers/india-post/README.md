@@ -19,6 +19,13 @@ requests reliably.
    3. Otherwise `POST /livewire/update`: `__dispatch(set_consignment_number)` + `submit` for a `New`
       component, `fetchStatus` for one already `Processing`.
    4. Poll `fetchStatus` (up to 10 × 750 ms) until `Completed`, then parse the returned HTML fragment.
+   5. When an update's script effect opens `https://track91.com/india-post/track?n={number}` for the
+      same number, MySpeedPost has handed the lookup to track91, its operator's tracker. Load that
+      page, call `submitTrackRequest` on its `tracking.tracker` component, then `pollWorkerStatus`
+      (up to 10 × 2.5 s; the page polls every 5 s) until it holds a `result`. Its events are
+      MySpeedPost's rows rendered in the zone asked: each time goes back under UTC, the label
+      MySpeedPost gives, and the rows are read as on MySpeedPost's page. An error or a worker that
+      stops without a result is `IndeterminateError`.
 
 Outcomes:
 
@@ -68,6 +75,9 @@ Outcomes:
   `(Inb)` marks and bare codes without them, so both signals are needed. These rows are read in the
   destination's zone; for a country with several zones or none known they keep the wall time in
   `local_time` with no offset. Flight rows keep their own reading.
+- track91 gives no Destination card, article type or office PIN. The country its latest flight
+  remark flies to (an airport or a UN/LOCODE such as `AUSYD`) stands in for the destination: the
+  rows after that flight are that country's, unless it is India.
 - A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
   `Office - DEL 00000000`) carries the departure airport's wall clock labelled `Z`: a take-off was
   seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a

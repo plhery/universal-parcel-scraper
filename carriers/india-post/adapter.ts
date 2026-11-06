@@ -65,6 +65,8 @@ interface IndiaPostTrackerOptions {
   timeoutMs?: number;
   pollIntervalMs?: number;
   maxPollAttempts?: number;
+  /** The pause between polls of track91's worker. */
+  workerPollIntervalMs?: number;
   fetcher?: typeof fetch;
   now?: () => Date;
 }
@@ -315,6 +317,129 @@ function foreignClock(trackedAt: unknown, zone: string | null): { time: ParsedTi
   return time ? { time } : zone ? null : { local: wall, timestamp: labelled.timestamp };
 }
 
+// MySpeedPost hands a lookup to track91, its operator's tracker, with a script
+// that opens the number's page there. That page is another Livewire component:
+// `submitTrackRequest` starts the lookup and `pollWorkerStatus` reads it until
+// a result arrives. The page itself polls every five seconds.
+const TRACK91_ORIGIN = 'https://track91.com';
+const TRACK91_PAGE = `${TRACK91_ORIGIN}/india-post/track`;
+const TRACK91_UPDATE = /^https:\/\/track91\.com\/livewire(?:-[a-z0-9]+)?\/update$/;
+const DEFAULT_WORKER_POLL_INTERVAL_MS = 2_500;
+
+function sameNumber(value: unknown): string {
+  return clean(value, 64).toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+}
+
+/** Whether an update's script effects open track91's page for this number. */
+function handedToTrack91(effects: JsonObject, trackingNumber: string): boolean {
+  if (!Array.isArray(effects.xjs)) return false;
+  return effects.xjs.some((effect) => isRecord(effect) && Array.isArray(effect.params) && effect.params.some((param) => {
+    if (typeof param !== 'string') return false;
+    try {
+      const url = new URL(param);
+      return url.origin === TRACK91_ORIGIN && url.pathname === '/india-post/track'
+        && sameNumber(url.searchParams.get('n')) === trackingNumber;
+    } catch {
+      return false;
+    }
+  }));
+}
+
+/** A Livewire snapshot value without its type tuples (`[value, { s: 'arr' }]`). */
+function dehydrated(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    if (value.length === 2 && isRecord(value[1]) && typeof value[1].s === 'string') return dehydrated(value[0]);
+    return value.map(dehydrated);
+  }
+  return isRecord(value) ? Object.fromEntries(Object.entries(value).map(([key, item]) => [key, dehydrated(item)])) : value;
+}
+
+// The raw codes whose rows MySpeedPost typed with a code the parser reads.
+const TRACK91_TYPES: Readonly<Record<string, string>> = {
+  UPLIFT: TAKE_OFF_CODE,
+  MAIL_ARRIVED: 'MailArrived',
+  TRANSFER_OOE: TRANSFER_CODE,
+};
+const OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
+
+/**
+ * track91's events as MySpeedPost's raw rows. It renders MySpeedPost's label in
+ * the zone asked, so the instant goes back under UTC and a take-off or a scan
+ * abroad is read as on MySpeedPost's own page. It gives no office PIN.
+ */
+function track91Rows(events: readonly unknown[]): JsonObject[] {
+  return events.filter(isRecord).flatMap((event) => {
+    const value = clean(event.tracked_at, 100);
+    const time = OFFSET.test(value) ? DateTime.fromISO(value, { setZone: true }) : null;
+    const code = clean(event.event, 100);
+    if (!time?.isValid || !code) return [];
+    return [{
+      tracked_at: time.toUTC().toISO({ suppressMilliseconds: true }),
+      event: code,
+      event_type: TRACK91_TYPES[code] ?? code,
+      office: clean(isRecord(event.location) ? event.location.address : '', 120),
+      pincode: '',
+      remarks: clean(event.remarks, 500),
+    }];
+  });
+}
+
+// Where a flight remark sends the mail: an airport or a UN/LOCODE ("AUSYD"),
+// whose first two letters are the country.
+const FLIGHT_TO = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From [A-Z]{3,5} To ([A-Z]{3}|[A-Z]{5})\)$/;
+
+/**
+ * track91 names no destination. The scans after the latest flight are the
+ * country's it flew to, on its wall clock under India's label as on
+ * MySpeedPost's page, unless that is India or a country the airport does not
+ * tell.
+ */
+function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone: string | null } {
+  const labelled = rows.map((row) => isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? Number.NaN);
+  const flown = rows.map((row) => FLIGHT_TO.exec(clean(row.remarks, 500))?.[1] ?? null);
+  let latest = -Infinity;
+  let country: string | null = null;
+  for (const [index, to] of flown.entries()) {
+    if (!to || !(labelled[index]! > latest)) continue;
+    latest = labelled[index]!;
+    country = to.length === 5 ? to.slice(0, 2) : airportCountry(to);
+  }
+  const abroad = new Set<number>();
+  if (!country || country === 'IN') return { abroad, zone: null };
+  flown.forEach((to, index) => { if (!to && labelled[index]! > latest) abroad.add(index); });
+  return { abroad, zone: countryTimeZone(country) };
+}
+
+/** The result track91's tracker holds once its worker has asked India Post. */
+export function parseIndiaPostTrack91Result(value: unknown, trackingNumber: string): CarrierResult {
+  const requested = normalizeIndiaPostTrackingNumber(trackingNumber);
+  const result = dehydrated(value);
+  if (!isRecord(result) || result.provider_code !== 'india-post' || sameNumber(result.tracking_number) !== requested) {
+    throw new SchemaError('India Post', 'India Post returned a different shipment');
+  }
+  if (!Array.isArray(result.events)) throw new SchemaError('India Post', 'India Post returned invalid tracking events');
+  const rows = track91Rows(result.events.slice(0, 500));
+  if (rows.length === 0) throw new SchemaError('India Post', 'India Post returned no usable tracking events');
+  const { abroad, zone } = track91Abroad(rows);
+  return indiaPostResult(rows, { destination: null, service: '', syncedAt: result.tracked_at, abroad, destinationZone: zone });
+}
+
+/** track91's tracker component on its page or in an update, for this number. */
+function track91Component(snapshot: unknown, trackingNumber: string): { snapshot: string; data: JsonObject } {
+  let parsed: unknown = null;
+  try {
+    parsed = typeof snapshot === 'string' ? JSON.parse(snapshot) : null;
+  } catch {
+    // Reported below.
+  }
+  if (typeof snapshot !== 'string' || !isRecord(parsed) || !isRecord(parsed.data) || !isRecord(parsed.memo)
+    || parsed.memo.name !== 'tracking.tracker') {
+    throw new SchemaError('India Post', 'India Post returned invalid Livewire state');
+  }
+  if (sameNumber(parsed.data.trackingNumber) !== trackingNumber) throw new SchemaError('India Post', 'India Post returned a different shipment');
+  return { snapshot, data: parsed.data };
+}
+
 export function parseIndiaPostTrackingHtml(
   html: string,
   trackingNumber: string,
@@ -338,14 +463,30 @@ export function parseIndiaPostTrackingHtml(
   if (events.length !== rawEvents.length || events.length === 0) {
     throw new SchemaError('India Post', 'India Post returned invalid tracking events');
   }
+  const destination = destinationOf($);
+  const rows = events.slice(0, 500);
+  return indiaPostResult(rows, {
+    destination,
+    service: articleTypeOf($),
+    syncedAt: trackingRequest.synced_at,
+    abroad: scannedAbroad(rows, destination),
+    destinationZone: destination ? countryTimeZone(destination.code) : null,
+  });
+}
 
+interface RowContext {
+  destination: Destination | null;
+  service: string;
+  syncedAt: unknown;
+  /** The rows the destination's post scanned, on its wall clock under India's label. */
+  abroad: Set<number>;
+  destinationZone: string | null;
+}
+
+/** The result from MySpeedPost's raw rows, as its page or track91 relays them. */
+function indiaPostResult(rows: readonly JsonObject[], { destination, service, syncedAt: synced, abroad, destinationZone }: RowContext): CarrierResult {
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
-  const destination = destinationOf($);
-  const service = articleTypeOf($);
-  const rows = events.slice(0, 500);
-  const abroad = scannedAbroad(rows, destination);
-  const destinationZone = destination ? countryTimeZone(destination.code) : null;
   rows.forEach((rawEvent, index) => {
     const office = clean(rawEvent.office, 120);
     const providerCode = clean(rawEvent.event_type, 100);
@@ -400,7 +541,7 @@ export function parseIndiaPostTrackingHtml(
   const classified = latest.classified.status === 'unknown'
     ? { status: 'in_transit' as const, stage: 'in_transit' }
     : latest.classified;
-  const syncedAt = isoTime(trackingRequest.synced_at, 'UTC', 100);
+  const syncedAt = isoTime(synced, 'UTC', 100);
   return {
     status: classified.status,
     current_stage: classified.stage,
@@ -558,6 +699,7 @@ export class IndiaPostTracker {
   readonly timeoutMs: number;
   readonly pollIntervalMs: number;
   readonly maxPollAttempts: number;
+  readonly workerPollIntervalMs: number;
   readonly fetcher: typeof fetch;
   readonly now: () => Date;
 
@@ -566,11 +708,13 @@ export class IndiaPostTracker {
     this.timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
     this.pollIntervalMs = options.pollIntervalMs ?? DEFAULT_POLL_INTERVAL_MS;
     this.maxPollAttempts = options.maxPollAttempts ?? DEFAULT_MAX_POLL_ATTEMPTS;
+    this.workerPollIntervalMs = options.workerPollIntervalMs ?? DEFAULT_WORKER_POLL_INTERVAL_MS;
     this.fetcher = options.fetcher ?? fetch;
     if (!Number.isFinite(this.timeoutMs) || this.timeoutMs <= 0) {
       throw new TypeError('India Post timeout must be positive');
     }
-    if (!Number.isFinite(this.pollIntervalMs) || this.pollIntervalMs < 0) {
+    if (!Number.isFinite(this.pollIntervalMs) || this.pollIntervalMs < 0
+      || !Number.isFinite(this.workerPollIntervalMs) || this.workerPollIntervalMs < 0) {
       throw new TypeError('India Post poll interval cannot be negative');
     }
     if (!Number.isInteger(this.maxPollAttempts) || this.maxPollAttempts < 1) {
@@ -715,6 +859,7 @@ export class IndiaPostTracker {
       if (names.has('consignment_not_found')) throw new NotFoundError('India Post');
       if (loggedEvents(update.effects).has('tracking_rate_limited')) throw new RateLimitedError('India Post');
       if (names.has('turnstile-reset')) throw new IndiaPostChallengeError(TURNSTILE_REQUIRED);
+      if (handedToTrack91(update.effects, normalized)) return this.track91(fetcher, budget, normalized);
       const html = typeof update.effects.html === 'string' ? update.effects.html : '';
       if (update.component.status === 'Completed') {
         if (!html) throw new SchemaError('India Post', 'India Post returned an empty completed response');
@@ -735,6 +880,57 @@ export class IndiaPostTracker {
     }
     // The backend kept saying "Processing": it answered, but it proved nothing
     // about the shipment, so this must not become a not-found cooldown.
+    throw new IndeterminateError('India Post', 'India Post tracking did not complete in time');
+  }
+
+  /** track91's page for the number, where MySpeedPost hands the lookup: submit, then poll its worker. */
+  private async track91(fetcher: typeof fetch, budget: LookupBudget, normalized: string): Promise<CarrierResult> {
+    const pageUrl = `${TRACK91_PAGE}?n=${encodeURIComponent(normalized)}`;
+    const page = await this.request(fetcher, budget, pageUrl, {
+      headers: {
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'User-Agent': USER_AGENT,
+      },
+    });
+    const $ = load(page.html);
+    const updateUrl = clean($('[data-update-uri]').first().attr('data-update-uri'), 200);
+    const snapshot = $('[wire\\:snapshot]').toArray().map((element) => $(element).attr('wire:snapshot'))
+      .find((value) => value?.includes('"tracking.tracker"'));
+    if (!TRACK91_UPDATE.test(updateUrl) || !snapshot) throw new SchemaError('India Post', 'India Post did not return its tracking component');
+    const token = csrfToken(page.html);
+    let component = track91Component(snapshot, normalized);
+    let calls: JsonObject[] = [{ path: '', method: 'submitTrackRequest', params: [INDIA_ZONE] }];
+    let updates: JsonObject = { userTimezone: INDIA_ZONE };
+    for (let attempt = 0; attempt <= this.maxPollAttempts; attempt += 1) {
+      if (attempt > 0) await pause(this.workerPollIntervalMs, budget.signal);
+      const reply = await this.request(fetcher, budget, updateUrl, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Accept-Language': 'en-US,en;q=0.9',
+          'Content-Type': 'application/json',
+          Origin: TRACK91_ORIGIN,
+          Referer: pageUrl,
+          'User-Agent': USER_AGENT,
+          'X-Livewire': '',
+        },
+        body: JSON.stringify({ _token: token, components: [{ snapshot: component.snapshot, updates, calls }] }),
+      });
+      const payload = parseJsonBytes(reply.bytes, 'India Post tracking');
+      const first: unknown = isRecord(payload) && Array.isArray(payload.components) ? payload.components[0] : undefined;
+      if (!isRecord(first)) throw new SchemaError('India Post', 'India Post returned invalid Livewire state');
+      if (isRecord(first.effects) && dispatchNames(first.effects).has('turnstile-reset')) throw new IndiaPostChallengeError(TURNSTILE_REQUIRED);
+      component = track91Component(first.snapshot, normalized);
+      const result = dehydrated(component.data.result);
+      if (isRecord(result)) return parseIndiaPostTrack91Result(result, normalized);
+      // An error says nothing proven about the shipment; nor does a worker that stopped without a result.
+      if (component.data.errorCode != null || component.data.errorMessage != null || component.data.workerPolling !== true) {
+        throw new IndeterminateError('India Post', 'India Post tracking ended without a history');
+      }
+      calls = [{ path: '', method: 'pollWorkerStatus', params: [] }];
+      updates = {};
+    }
     throw new IndeterminateError('India Post', 'India Post tracking did not complete in time');
   }
 }
