@@ -931,6 +931,8 @@ describe('classifyWording', () => {
       ['Csomagod elkészült. Csomagod létrejött a rendszerünkben, a feladó még nem adta át azt a FOXPOST részére.', 'registered'],
       ['The collection has been registered', 'registered'], ['The shipment has been deposited at a SEUR pickup point', 'accepted'],
       ['The collection has been carried out', 'accepted'], ['Order placed', 'registered'], ['Sent abroad', 'in_transit'],
+      ['Send item abroad (EDI-received)', 'in_transit'], ['Send item to destination country', 'in_transit'],
+      ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.
       ['Sending the package from Poland', 'in_transit'],
       // Russian Post's operations, as ParcelsApp words them.
