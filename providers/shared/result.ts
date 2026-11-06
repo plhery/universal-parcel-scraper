@@ -321,6 +321,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // the explanation providers relay after them.
   if (/^your package will be in good hands with (?:intelcom|dragonfly)!(?:\s|$)/i.test(value)) return 'registered';
   if (/^(?:intelcom|dragonfly) has your package!(?:\s|$)/i.test(value)) return 'accepted';
+  // Spring GDS recording the parcel's data, as Postal Ninja relays it after the parcel was created there.
+  if (/^information\. parcel recorded successfully[.!]?$/i.test(value)) return 'registered';
   // Cainiao's warehouse packing the order, between the order it received and the parcel leaving it, in
   // ParcelsApp's words and in Postal Ninja's.
   if (/^package finished[.!]?$|^package is ready for shipping from the warehouse[.!]?$/i.test(value)) return 'registered';

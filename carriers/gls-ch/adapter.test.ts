@@ -260,6 +260,8 @@ describe('GLS Switzerland response normalization', () => {
     // INDELIVERY's wording: on today's round, though worded as an expectation.
     ['The parcel is expected to be delivered during the day.', 'out_for_delivery'],
     ['The parcel has reached the parcel center.', 'in_transit'],
+    // The ParcelShop hands the parcel to its recipient: the delivery, though the wording names the shop.
+    ['Handing over the parcel to the recipient at the GLS ParcelShop.', 'delivered'],
     // A delivery notice, not a delivery and not pre-advice.
     ['The parcel will be delivered on 20.06.2026.', 'in_transit'],
   ])('maps the history scan %s to %s', (evtDscr, stage) => {

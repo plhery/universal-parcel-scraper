@@ -6,6 +6,7 @@
     {"wording": "Paczka zarejestrowana w filii GLS", "stage": "in_transit", "language": "pl", "confirmedBy": "portal", "note": "Scanned in at a GLS depot; also the progress bar step before delivery."},
     {"wording": "Paczka wyjechała z filii GLS", "stage": "in_transit", "language": "pl", "confirmedBy": "portal", "note": "Left a GLS depot."},
     {"wording": "Paczka w doręczeniu", "stage": "out_for_delivery", "language": "pl", "confirmedBy": "portal"},
+    {"wording": "Handing over the parcel to the recipient at the GLS ParcelShop.", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The ParcelShop handing the parcel to its recipient, hours after the parcel was left there; the progress bar reads DELIVERED."},
     {"wording": "Paczka niedoreczona - odmowa przyjecia przez Odbiorce", "stage": "failed_attempt", "language": "pl", "confirmedBy": "portal", "note": "Not delivered because the recipient refused it; written without Polish diacritics."},
     {"wording": "Paczka pozostawiona w filii doreczajacej - Odbiorca odmowil przyjecia", "stage": "exception", "language": "pl", "confirmedBy": "portal", "note": "Held at the delivering depot after the recipient's refusal; written without Polish diacritics."},
     {"wording": "Dane paczki", "stage": "registered", "language": "pl", "confirmedBy": "portal", "note": "A step of the tracking page's progress bar. Parcel data received."},

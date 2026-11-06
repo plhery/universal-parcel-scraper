@@ -55,6 +55,8 @@ upstream error.
   wording rules ordered negatives first, then `core/status`'s multilingual
   classifier. A row keeps its event number as `provider_code`, not its status
   code, so the app's review asks those wording rules alone (`statusMap`).
+- "Handing over the parcel to the recipient at the GLS ParcelShop." is the delivery: the
+  shop names itself, but the progress bar then reads `DELIVERED`.
 - "The parcel has not been handed over to GLS." is `registered`: GLS knows of
   the parcel but does not have it. It is checked before the "handed over to
   GLS" acceptance.

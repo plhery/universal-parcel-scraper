@@ -128,6 +128,9 @@
     {"code": "DOP", "wording": "SHIPMENT PROCESSED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The same hub's processing, beside \"PROCESSED AT HUB\"."},
     {"code": "OIT", "wording": "SHIPMENT RECEIVED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The delivering courier's hub receiving the parcel, seconds after it processed it and days after JS Express's warehouse collected it: no acceptance."},
     {"code": "OIT", "wording": "DEPARTED FROM DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The courier's hub sending the parcel on to the depot that delivers."},
+    {"code": "DDF", "wording": "DELIVERY ATTEMPTED: 1ST DELIVERY ATTEMPT", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The delivering courier's missed delivery, at the second of the courier's own scan for it."},
+    {"code": "DDF", "wording": "DELIVERY ATTEMPTED: 2ND DELIVERY ATTEMPT", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The courier's second missed delivery."},
+    {"code": "DDE", "wording": "DELIVERY ATTEMPTED: 3RD DELIVERY ATTEMPT", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The courier's third missed delivery, under the code JS Express also gives forwards, at the second of the courier's own scan saying the recipient must book a delivery."},
     {"code": "OIT", "wording": "RECEIVED AT LOCAL DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The depot that delivers, minutes before each delivery round and again on the evening after a missed one: the courier's delivery depot, not a collection point."}
   ]
 }

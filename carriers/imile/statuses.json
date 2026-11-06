@@ -4,6 +4,7 @@
     {"code": "1001", "wording": "Order submitted, pending to receive.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Order Creation: the sender's order, before iMile has the parcel."},
     {"code": "1001", "wording": "Order Submited.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The same order on a European parcel; the misspelling is iMile's."},
     {"wording": "Your order has assigned pickup driver.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Logged without a code before the pickup."},
+    {"wording": "The pick-up task has been cancelled.", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "unmapped": true, "note": "Logged without a code between two pickup-driver assignments, before the collection from the sender: a pickup called off, not the recipient's, and it moves nothing."},
     {"code": "2005", "wording": "Your order has been picked up.", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Pick Up: collected from the sender."},
     {"code": "1002", "wording": "Flight Schedule ETD【<IST>】<2026-07-21 01:20:00>, ETA【<RUH>】<2026-07-21 05:15:00>.", "language": "en", "confirmedBy": "live", "unmapped": true, "note": "A flight booked for the parcel, logged before it leaves, with the airports and the planned clocks: still to come, so the adapter leaves the row out."},
     {"code": "1002", "wording": "【IST】The flight has taken off.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

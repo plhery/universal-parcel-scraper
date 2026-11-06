@@ -67,7 +67,9 @@ export function classifyDescription(description: string): ClassifiedStatus {
   if (/(return(?:ed)? to sender|cancel(?:led|ed)|delivery (?:failed|impossible)|not delivered)/.test(value)) {
     return { status: 'exception', stage: value.includes('return') ? 'returned' : 'failed_attempt' };
   }
-  if (/(delivered|handed to (?:the )?recipient|collected by (?:the )?recipient)/.test(value)) {
+  // The ParcelShop handing the parcel to its recipient: a delivery, whose progress bar reads DELIVERED,
+  // though the wording names the shop.
+  if (/(delivered|handed to (?:the )?recipient|collected by (?:the )?recipient|^handing over (?:the )?parcel to (?:the )?recipient\b)/.test(value)) {
     return { status: 'delivered', stage: 'delivered' };
   }
   if (/(ready for (?:pickup|collection)|parcel ?shop|locker)/.test(value)) {

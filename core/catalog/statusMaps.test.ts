@@ -168,6 +168,7 @@ describe('status map answers', () => {
     expect(answer('js-express', null, 'Under domestic allocation')).toEqual(mapped('in_transit'));
     expect(answer('js-express', null, 'Inbound to customs temporary warehouse')).toEqual(mapped('customs'));
     expect(answer('imile', '1003', '【Sample DS】Shipment out for delivery.')).toEqual(mapped('out_for_delivery'));
+    expect(answer('imile', null, 'The pick-up task has been cancelled.')).toEqual(gap);
     // BYHD's kind codes group wordings; the wording decides.
     expect(answer('byhd', 'ARRIVAL', '到达收货点')).toEqual(mapped('accepted'));
     expect(answer('byhd', 'SHIPMENT', 'Goods leaving the operation center')).toEqual(mapped('in_transit'));
@@ -446,6 +447,7 @@ describe('status map answers', () => {
       expect(answer(carrier, null, 'The parcel is expected to be delivered during the day.'), carrier).toEqual(mapped('out_for_delivery'));
       expect(answer(carrier, null, 'The parcel is ready for collection at the ParcelShop.'), carrier).toEqual(mapped('ready_for_pickup'));
       expect(answer(carrier, null, 'The parcel has been delivered.'), carrier).toEqual(mapped('delivered'));
+      expect(answer(carrier, null, 'Handing over the parcel to the recipient at the GLS ParcelShop.'), carrier).toEqual(mapped('delivered'));
       expect(answer(carrier, null, 'Synthetic note'), carrier).toEqual(unknown);
     }
   });
@@ -1518,6 +1520,7 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'Estimated delivery')).toEqual(gap);
     expect(answer('unknown', null, 'Recipient information updated')).toEqual(gap);
     expect(answer('unknown', null, 'Delivery request received')).toEqual(gap);
+    expect(answer('unknown', null, 'INFORMATION. PARCEL RECORDED SUCCESSFULLY')).toEqual(mapped('registered'));
     // Posti's notification tool, as providers relay it beside Posti's scans.
     expect(answer('unknown', null, 'We have not received the recipient’s phone number')).toEqual(gap);
     expect(answer('unknown', null, 'We sent the recipient a letter about the item')).toEqual(gap);

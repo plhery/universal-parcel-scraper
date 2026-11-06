@@ -42,6 +42,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['order submited', 'registered'],
   ['your order has assigned pickup driver', 'registered'],
   ['your order has been picked up', 'accepted'],
+  // The courier's collection from the sender called off, before a driver is assigned again: still with the sender.
+  ['the pick-up task has been cancelled', null],
   ['your order has been received', 'in_transit'],
   ['received', 'in_transit'],
   ['your order has arrived at', 'in_transit'],
@@ -185,6 +187,7 @@ export const statusMap: CarrierStatusMap = {
     ? cainiaoStatusMap.stage(code, wording)
     : imileMappedStage(code ?? '', wording) ?? undefined),
   gaps: [
+    { wording: 'the pick-up task has been cancelled.', note: 'The courier\'s collection from the sender called off, before a pickup driver is assigned again: the parcel is still with the sender, so it keeps the stage of the scan before it.' },
     { code: DELIVERY, wording: 'lost order', note: 'A driver\'s reason during a delivery run, followed by the attempt\'s end; the parcel it was seen on went out again and was delivered, so it does not establish a loss.' },
     { code: DELIVERY, wording: 'the delivery method has been confirmed with the recipient as self-pickup.', note: 'The recipient chose to collect the parcel after a failed attempt; it keeps the stage of the scan before it until the pickup point has the parcel.' },
     ...cainiaoStatusMap.gaps,
