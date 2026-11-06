@@ -63,6 +63,12 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^航班延误，重新配载至\d{1,2}号航班飞/, 'in_transit'],
   [/^目的国清关完成/, 'in_transit'],
   [/^departed shipping partner facility\b/, 'in_transit'],
+  // USPS's facility scans, the facility after a comma: USPS takes the parcel over from HuaHan,
+  // which accepted it in China, and moves it on. Its pre-advice comes while HuaHan still has it.
+  [/^accepted at usps facility\b/, 'in_transit'],
+  [/^arrived at usps facility\b/, 'in_transit'],
+  [/^departed usps facility\b/, 'in_transit'],
+  [/^pre-shipment info sent to usps\b/, 'registered'],
 ];
 
 const GAPS = [{
@@ -74,15 +80,22 @@ const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
 // HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
 const OWN_CODE = /^[A-Z]{2}$/;
 // HuaHan's codes for the destination carrier's scans that its words stage. On the postal line DR
-// also carries the destination post's arrivals.
-const CARRIER_SCAN_CODES = new Set(['IA', 'CA', 'DR']);
+// also carries the destination post's arrivals, and ND USPS's facility scans.
+const CARRIER_SCAN_CODES = new Set(['IA', 'CA', 'DR', 'ND']);
+// HuaHan's codes for the destination carrier's last steps. It also puts CB on USPS's departure
+// from a distribution centre, so the relayed words decide when they name a step, the code otherwise.
+const LAST_STEP_CODES = new Set(['CB', 'PB', 'CC']);
 
 // On the postal line HuaHan relays China Post's scans in China Post's Chinese, offices in 【】,
 // and the destination post's as China Post copies them: China Post's vocabulary reads both.
+function wordingStage(wording: string): Stage | undefined {
+  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1]
+    ?? chinaPostRelayedStage(wording) ?? chinaPostDestinationStage(wording);
+}
+
 function mappedStage(code: string, wording: string): Stage | undefined {
-  return CODES.get(code) ?? (!OWN_CODE.test(code) || CARRIER_SCAN_CODES.has(code)
-    ? WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1]
-      ?? chinaPostRelayedStage(wording) ?? chinaPostDestinationStage(wording) : undefined);
+  if (LAST_STEP_CODES.has(code)) return wordingStage(wording) ?? CODES.get(code);
+  return CODES.get(code) ?? (!OWN_CODE.test(code) || CARRIER_SCAN_CODES.has(code) ? wordingStage(wording) : undefined);
 }
 
 /** A scan's stage: its code or wording in the map, else the shared rules, else nothing. A recorded gap has none. */

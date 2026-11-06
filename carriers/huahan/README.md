@@ -37,6 +37,10 @@ to the destination carrier's scans.
 - On the postal line the reply relays China Post's scans in Chinese, offices in 【】, and the
   destination post's as China Post copies them, some under `DR`, `IA` or `CA`. China Post's
   vocabulary reads them; its receipt after HuaHan's own acceptance is the hand-over, in transit.
+- USPS's facility scans come under `ND` and are read by their words. HuaHan also puts its
+  out-for-delivery code `CB` on USPS's departure from a distribution centre, so under `CB`,
+  `PB` and `CC` the words decide when the map knows them and the code otherwise. USPS's
+  pre-advice, written while HuaHan still has the parcel, is registered.
 
 ## Numbers
 

@@ -257,4 +257,20 @@ describe('HuaHan status map', () => {
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'CA', description: 'In Transit, Scanned By DPD At parcel delivery centre.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
+
+  it('reads USPS\'s relayed facility scans by their words, even under its last-step codes', () => {
+    for (const [code, description, stage] of [
+      [null, 'Pre-Shipment Info Sent to USPS, USPS Awaiting Item', 'registered'],
+      ['ND', 'Accepted at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
+      ['ND', 'Arrived at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
+      // HuaHan puts its out-for-delivery code on USPS's departure from a distribution centre.
+      ['CB', 'Departed USPS Facility, EXAMPLE CITY IL DISTRIBUTION CENTER', 'in_transit'],
+      ['CB', 'Out for Delivery', 'out_for_delivery'],
+      ['PB', 'Available for Pickup', 'ready_for_pickup'],
+      ['CC', 'Delivered, In/At Mailbox', 'delivered'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+      expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
+    }
+  });
 });
