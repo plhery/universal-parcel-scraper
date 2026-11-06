@@ -36,6 +36,7 @@ import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { DHLINK_RECORD_ZONE, usClockCopy } from '../../carriers/dhlink/clock.js';
+import { epostGlobalCopyZone } from '../../carriers/epost-global/status.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from '../../carriers/first-line/clock.js';
 import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
@@ -436,6 +437,11 @@ const SUNYOU_DESTINATION_LEG = /^(?:arrived at destination country airport|custo
  * same scans agree once read that way. A scan whose digits come after the
  * flight's is in the destination, which gives it a zone if it has one clock.
  */
+/** The wordings of the states ParcelsApp files under EasyShip, the name it gives ePost Global's feed. */
+function feedWordings(payload: Record<string, unknown>): string[] {
+  return (Array.isArray(payload.states) ? payload.states : []).flatMap((raw: unknown) =>
+    isRecord(raw) && typeof raw.status === 'string' && nameKey(stateCarrierName(payload, raw)) === 'easyship' ? [raw.status] : []);
+}
 function speedafDeparture(payload: Record<string, unknown>): string | undefined {
   return (Array.isArray(payload.states) ? payload.states : []).flatMap((raw: unknown) => {
     const name = isRecord(raw) ? stateCarrierName(payload, raw) : undefined;
@@ -538,13 +544,15 @@ function cttZone(payload: Record<string, unknown>, location: string, date: unkno
  * place's abroad: on a parcel from the UK, its copy of the departure from the
  * British office of exchange had the digits of Royal Mail's own scan on London
  * time, and read on Johannesburg's, its arrival there came at the instant of
- * Parcelforce's label read on London's. Their home clock is a guess, which a
- * location in another country rules out.
+ * Parcelforce's label read on London's. "Yanwen Logistics"'s are China's: its
+ * place-less shipment information came at the minute of Yanwen's own row,
+ * stated +08:00, under ParcelsApp's UTC label. Their home clock is a guess,
+ * which a location in another country rules out.
  */
 const HOME_COUNTRIES: Readonly<Record<string, string>> = {
   southkoreapost: 'Asia/Seoul', postennorgenorwaypost: 'Europe/Oslo', japanpost: 'Asia/Tokyo',
   pekaes: 'Europe/Warsaw', yodel: 'Europe/London', inpostuk: 'Europe/London', collect: 'Europe/London', xzg: 'Asia/Shanghai',
-  spl: 'Asia/Riyadh', saudipost: 'Asia/Riyadh',
+  spl: 'Asia/Riyadh', saudipost: 'Asia/Riyadh', yanwenlogistics: 'Asia/Shanghai',
   brtbartolini: 'Europe/Rome', brtbartoliniparcelid: 'Europe/Rome', brtbartolinidpd: 'Europe/Rome',
   southafricapostoffice: 'Africa/Johannesburg', southafricapost: 'Africa/Johannesburg',
 };
@@ -999,6 +1007,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (carrier === 'tnt' && /^\d{9}$/.test(number)) return null;
   if (typeof name === 'string' && ASENDIA_USA.test(name.trim())) return null;
   if (uspsLabelRow(name, status)) return null;
+  // ePost Global's feed, which ParcelsApp files under EasyShip, as ePost Global's own tracker reads it.
+  const epost = key === 'easyship' ? epostGlobalCopyZone(status, feedWordings(payload)) : undefined;
+  if (epost !== undefined) return epost;
   if (carrier === 'paack' || carrier === 'vinted-go' || carrier === 'austrian-post' || carrier === 'straightship'
     || ownOffset(name, state.date, scanLocation(name, state.location))) return null;
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
@@ -1196,7 +1207,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
     || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
-    || PLACE_CLOCK_LINES.has(ownCarrier));
+    || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;
   // A posting that only its office's capital places borrows first (`postingOffice`).

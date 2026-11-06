@@ -2100,6 +2100,23 @@ describe('ParcelsApp result parsing', () => {
     ])?.map(([time]) => time)).toEqual(['2026-10-23T18:12:29.000Z', '2026-10-23T13:39:42.000Z']);
   });
 
+  it("reads ePost Global's feed, filed under EasyShip, on the clocks ePost Global's own tracker gives it", () => {
+    const state = (date: string, status: string, location?: string) => ({ date, status, carrier: 0, ...(location ? { location } : {}) });
+    const states = [
+      state('2026-11-06T06:30:09Z', 'The parcel has left the parcel center.', 'US ORD gateway'),
+      state('2026-11-04T02:22:34Z', 'In transit to GLSEU tracking #:  000000000000'),
+      state('2026-11-04T02:21:34Z', 'Parcel Shipped', 'Example City IL'),
+      state('2026-11-03T08:43:30Z', 'Shipment in Transit to the ePost Global Processing Center'),
+    ];
+    const clocks = (feed: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['EasyShip'], states: feed }, number, identity(), 'America/Los_Angeles')
+      .events?.map((scan) => scan.time ?? scan.local_time);
+    // GLS Europe's row on Berlin's clock, even at its US gateway; a processing center's scan on its state's;
+    // ePost Global's handover and label keep their wall clocks, as its own tracker's rows do.
+    expect(clocks(states)).toEqual(['2026-11-06T05:30:09.000Z', '2026-11-04T08:21:34.000Z', '2026-11-04T02:22:34.000', '2026-11-03T08:43:30.000']);
+    // Without ePost Global's label or handover, an EasyShip feed is read as before.
+    expect(clocks([states[0]!])).toEqual(['2026-11-06T14:30:09.000Z']);
+  });
+
   it('reads the networks ParcelsApp names its own way on their home clock', () => {
     const times = (carriers: string[], states: Record<string, unknown>[], trackingNumber = number) =>
       parseParcelsAppResponse({ carriers, states }, trackingNumber, identity(trackingNumber)).events?.map((scan) => scan.time);
@@ -2114,6 +2131,8 @@ describe('ParcelsApp result parsing', () => {
     // Shopee's UTC+8 clock in Brazil: SPX's own tracker has the same scans eight hours earlier.
     expect(times(['Shopee Express Brazil'], [scan('2026-05-22T22:20:30Z', 'LM Hub_RJ_Example Hub'), scan('2026-05-19T21:47:46Z')]))
       .toEqual(['2026-05-22T14:20:30.000Z', '2026-05-19T13:47:46.000Z']);
+    // Yanwen's own row states its shipment information +08:00, at the minute ParcelsApp labels UTC.
+    expect(times(['Yanwen Logistics'], [scan('2026-11-04T09:26:00Z')])).toEqual(['2026-11-04T01:26:00.000Z']);
     // CTT Express's own tracker has the same scans an hour earlier in winter, at Madrid's offset.
     expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-07-04T12:23:00Z')]))
       .toEqual(['2026-11-05T13:38:00.000Z', '2026-07-04T10:23:00.000Z']);

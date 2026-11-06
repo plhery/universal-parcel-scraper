@@ -41,6 +41,7 @@ it on ppxtrack.com, so that name counts as ePost Global's.
   United States, whose zone would date its departure after the lookup. Every other row keeps its
   wall clock: the data rows carry no place, and partners' rows are copied from the partner's feed
   in its own zone.
+  ParcelsApp's copies, filed under "EasyShip", are read the same way.
 - The delivering partner is named for Spring's PostNL service, which spring-gds tracks under the
   same number, and for partners the catalog knows by name whose link, if any, is their own. The
   partner's number is the delivery tracking number. GLS's European network is not named, since

@@ -402,7 +402,8 @@ step exists for future protocol changes.
   none, so the catalog's UTC label put them an hour late. "South Korea Post"
   (Korea Post's page) and "Posten Norge - Norway Post" (Bring's offsets, in Denmark too) were
   checked at home only, so their home clock is a step 3 guess that a location in another
-  country rules out. So was "Japan Post" (2026-10-11): Japan Post's portal gives local
+  country rules out. So is "Yanwen Logistics"'s, China's: its shipment information came at
+  the minute of Yanwen's own row, stated +08:00. So was "Japan Post" (2026-10-11): Japan Post's portal gives local
   times, 10:27 for a delivery in Japan that Cainiao dates 10:27 GMT+9 and Ship24 01:27Z.
   So were "Yodel" and "InPost UK", InPost's UK network, and "Collect+", Yodel's shop
   network, on London time: InPost's own offsets give the same instants. So was "XZG", a
@@ -516,6 +517,12 @@ step exists for future protocol changes.
   they go through the steps like any other scan, US ones included (below). Those that
   name only the country borrow the clock of one of theirs that a state places, else stay
   as labeled, hours early.
+- ePost Global's feed comes under "EasyShip" too, known by its label ("Shipment in Transit to
+  the ePost Global Processing Center") or its handover ("In transit to … tracking #:"). Its rows
+  take the clocks of [ePost Global's own tracker](../../carriers/epost-global/README.md): a
+  processing center's scan its state's, its own place-less rows their wall clock, and GLS
+  Europe's rows after the handover to GLS Berlin's, even at GLS's gateway in the United States,
+  which the routing zone put nine hours late.
 - So do Paack's scans. Paack's timeline gives instants, not wall clocks, and ParcelsApp's
   `date` is their UTC instant: Paack's own lookup gives the same instants scan for scan.
   Read on Paack's Paris clock, they came out two hours early in summer.

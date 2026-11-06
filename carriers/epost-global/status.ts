@@ -58,6 +58,25 @@ export function epostGlobalOwnRow(wording: string): boolean {
   return OWN.has(normalized) || HANDED_OVER.test(normalized);
 }
 
+/** GLS's European network's clock: its tracking runs on Central European time wherever the depot is. */
+export const EPOST_GLOBAL_GLS_ZONE = 'Europe/Berlin';
+
+// The handover to GLS's European network: "In transit to GLSEU tracking #: …".
+const GLS_HANDED_OVER = /^in transit (?:to|via) gls ?eu(?:rope)? tracking ?#:/;
+
+/**
+ * How a universal provider's copy of ePost Global's feed reads a row's clock: undefined for a
+ * processing center's scan, which its place dates, or a feed that is not ePost Global's (it has
+ * neither the label nor a handover); null for ePost Global's own row, a wall clock; GLS's zone for
+ * a partner's row once ePost Global handed the parcel to GLS's European network.
+ */
+export function epostGlobalCopyZone(wording: string, feed: readonly string[]): string | null | undefined {
+  const rows = feed.map(normalizeStatusWording);
+  if (!rows.some((row) => row === 'shipment in transit to the epost global processing center' || HANDED_OVER.test(row))) return undefined;
+  if (epostGlobalOwnRow(wording)) return epostGlobalFacilityScan(wording) ? undefined : null;
+  return rows.some((row) => GLS_HANDED_OVER.test(row)) ? EPOST_GLOBAL_GLS_ZONE : undefined;
+}
+
 /** A scan at one of ePost Global's processing centers. */
 export function epostGlobalFacilityScan(wording: string): boolean {
   return FACILITY_SCANS.has(normalizeStatusWording(wording));

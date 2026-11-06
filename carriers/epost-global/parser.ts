@@ -10,7 +10,7 @@ import { firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { postnlRecordZone } from '../spring-gds/adapter.js';
-import { epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
+import { EPOST_GLOBAL_GLS_ZONE, epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
 
 export const PROVIDER = 'ePost Global';
 // A delivered parcel's reply is up to a hundred kilobytes: its history twice,
@@ -35,7 +35,6 @@ const SPLIT_STATES = new Set(['AK', 'FL', 'ID', 'IN', 'KS', 'KY', 'MI', 'ND', 'N
 const VENDORS: ReadonlyMap<string, string> = new Map([['SPRING POST NL', 'spring-gds']]);
 // GLS's European network, whose tracking runs on Central European time wherever the depot is.
 const GLS_EUROPE = /^GLS ?EU(?:ROPE)?$/i;
-const GLS_ZONE = 'Europe/Berlin';
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
@@ -185,7 +184,7 @@ export function parseEpostGlobal(html: string, raw: string): CarrierResult {
   const shipper = text(details, 'OCt', 8).toUpperCase();
   const origin = VENDORS.get(text(details, 'Vendor', 80).toUpperCase()) === 'spring-gds' && /^[A-Z]{2}$/.test(shipper) ? shipper : null;
   // GLS's rows, even one placed at its gateway in the United States, on GLS's clock.
-  const partnerZone = GLS_EUROPE.test(text(details, 'Vendor', 80)) ? GLS_ZONE : null;
+  const partnerZone = GLS_EUROPE.test(text(details, 'Vendor', 80)) ? EPOST_GLOBAL_GLS_ZONE : null;
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
   for (const row of rows) {
