@@ -25,6 +25,9 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   LI573: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO HA SIDO DEPOSITADO EN EL LOCKER SELECCIONADO. SE DEBE ELEGIR OTRO PUNTO SEUR PICKUP.', mapped: exception },
   LI717: { group: 'EN INCIDENCIA', wording: 'INCIDENCIA EN ADUANAS: FALTA FACTURA. CONTACTA CON SEUR DESDE EL ÁREA DE SOPORTE.', mapped: exception },
   LI530: { group: 'ENTREGA EN TIENDA', wording: 'EL ENVÍO ESTÁ DISPONIBLE PARA RECOGER EN EL PUNTO SEUR PICKUP.', mapped: { status: 'in_transit', stage: 'ready_for_pickup' } },
+  // The shop's notice that the parcel can soon be collected, its details still to come, then its release, worded as LI530.
+  LI569: { group: 'ENTREGA EN TIENDA', wording: 'EN BREVE PODRÁS RECOGER TU ENVÍO. RECIBIRÁS UNA NOTIFICACIÓN CON LOS DETALLES', mapped: inTransit },
+  LI574: { group: 'ENTREGA EN TIENDA', wording: 'EL ENVÍO ESTÁ DISPONIBLE PARA RECOGER EN EL PUNTO SEUR PICKUP.', mapped: { status: 'in_transit', stage: 'ready_for_pickup' } },
   // Pending arrival at the destination's facility: in the delay group, but it says where the parcel is.
   LI511: { group: 'EN DEMORA', wording: 'EL ENVÍO ESTÁ PENDIENTE DE LLEGAR A DESTINO. EN CUANTO SE RECIBA, ACTUALIZAREMOS LA SITUACIÓN.', mapped: inTransit },
   LI567: { group: 'EN TRÁNSITO', wording: 'EL ENVÍO ESTÁ EN TRÁNSITO. PRÓXIMAMENTE LLEGARÁ A LAS INSTALACIONES DE DESTINO.', mapped: inTransit },

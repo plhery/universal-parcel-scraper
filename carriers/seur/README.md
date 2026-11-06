@@ -17,6 +17,8 @@ delay notice (LI300, LI582, LI557, LI587) is no movement: the row keeps the stag
 scan before it. SEUR delays a shipment on its way, so a notice with no stage before it, at
 times all SEUR lists, reads as in transit. Only observed code, group and wording combinations are mapped,
 so planned delivery or unfamiliar codes do not inherit an older terminal state.
+At a SEUR Pickup shop, LI569 says the parcel can soon be collected, with the details still to
+come, so it reads as transit; LI574 or LI530 then makes it ready for pickup.
 A code seen without its group takes the group of a code with the same wording. SEUR marks its scan clocks as UTC, but they
 are Spanish wall clocks: DPD gives the same scans the same digits with Madrid's
 offset. A scan names no place, and the lookup names no destination, while SEUR

@@ -577,6 +577,8 @@ describe('classifyWording', () => {
       ['A encomenda chegou ao centro de distribuição e será entregue amanhã', 'in_transit'],
       ['Pendiente de entrega', 'in_transit'],
       ['Estará disponible para recoger mañana', 'in_transit'],
+      ['En breve podrás recoger tu envío. Recibirás una notificación con los detalles', 'in_transit'],
+      ['Ya puedes recoger tu envío', 'ready_for_pickup'],
     ] as const) expect(classifyWording(wording)).toEqual({ stage, source: 'wording:language' });
     // A condition, a scheduled attempt, a sender pickup or a delivery still to come.
     for (const wording of [

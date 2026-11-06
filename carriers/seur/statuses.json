@@ -210,6 +210,24 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LI569",
+      "wording": "EN BREVE PODRÁS RECOGER TU ENVÍO. RECIBIRÁS UNA NOTIFICACIÓN CON LOS DETALLES",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "In the ENTREGA EN TIENDA group, the shop's notice that the parcel can soon be collected, its details still to come: LI574 releases it."
+    },
+    {
+      "code": "LI574",
+      "wording": "EL ENVÍO ESTÁ DISPONIBLE PARA RECOGER EN EL PUNTO SEUR PICKUP.",
+      "language": "es",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "Worded as LI530, the same minute as LI569, before the recipient collected the parcel (LL010)."
+    },
+    {
       "code": "LL003",
       "wording": "EL ENVÍO ESTÁ ENTREGADO.",
       "language": "es",

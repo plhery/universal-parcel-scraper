@@ -71,6 +71,18 @@ describe('SEUR simplified anonymous tracking', () => {
     expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered' });
   });
 
+  it("reads the shop's notice that the parcel can soon be collected as transit, and its release as ready for pickup", () => {
+    const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
+      descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
+    const body = copy();
+    body.situaciones = [scan('LI569', '2026-01-24T10:00:00Z'), scan('LJ105', '2026-01-23T18:00:00Z')] as typeof body.situaciones;
+    expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    body.situaciones.unshift(scan('LI574', '2026-01-24T10:00:30Z') as never);
+    const result = parseSeur(body, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup' });
+    expect(result.events?.map(e => e.stage)).toEqual(['ready_for_pickup', 'in_transit', 'in_transit']);
+  });
+
   it('reads the pickup SEUR makes on a pickup reference as the parcel accepted', () => {
     const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
       descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
