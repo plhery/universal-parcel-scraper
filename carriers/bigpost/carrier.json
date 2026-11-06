@@ -1,0 +1,33 @@
+{
+  "id": "bigpost",
+  "displayName": "Big Post",
+  "aliases": [
+    "BigPost"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#2e61a3"
+  },
+  "selectable": true,
+  "timezone": "Australia/Melbourne",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://bigpost.com.au/tracking/",
+    "canaryUrl": "https://bigpost.com.au/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -9900,6 +9900,26 @@
     ],
     "detectionRules": []
   },
+  "bigpost": {
+    "displayName": "Big Post",
+    "color": "#2e61a3",
+    "aliases": [
+      "BigPost"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bigpost.com.au/tracking/",
+    "trackingSearchUrl": "https://bigpost.com.au/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
     "color": "#feba30",
@@ -13663,6 +13683,40 @@
     "canaryUrl": "https://rastreo.correos.gob.ni:8084/SICRastreo",
     "trackingSearchUrl": "https://rastreo.correos.gob.ni:8084/SICRastreo",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "coship": {
+    "displayName": "COSHIP",
+    "color": "#e40613",
+    "aliases": [
+      "Canada Orient Shipping",
+      "Canada Orient Shipping Ltd.",
+      "캐나다쉬핑"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.coship.ca/tracking/",
+    "trackingUrlTemplate": "https://www.coship.ca/tracking/?no={trackingNumber}",
+    "trackingSearchUrl": "https://www.coship.ca/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.coship.ca",
+          "coship.ca"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "costco-logistics": {
@@ -27852,7 +27906,11 @@
       "Kerry Express (Hong Kong)",
       "Kerry Express (HK)",
       "KEX Express (Hong Kong)",
-      "嘉里快遞"
+      "嘉里快遞",
+      "Kerry Express Hong Kong (TGXpress)",
+      "TGXpress",
+      "Top Gun Express",
+      "精英速運"
     ],
     "countries": [
       "HK"

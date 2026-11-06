@@ -1,0 +1,47 @@
+{
+  "id": "coship",
+  "displayName": "COSHIP",
+  "aliases": [
+    "Canada Orient Shipping",
+    "Canada Orient Shipping Ltd.",
+    "캐나다쉬핑"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#e40613"
+  },
+  "selectable": true,
+  "timezone": "America/Vancouver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.coship.ca/tracking/?no={trackingNumber}",
+    "searchUrl": "https://www.coship.ca/tracking/",
+    "canaryUrl": "https://www.coship.ca/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.coship.ca",
+        "coship.ca"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "no"
+      ]
+    }
+  ],
+  "detection": []
+}

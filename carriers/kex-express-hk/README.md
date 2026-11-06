@@ -1,7 +1,8 @@
 # KEX Express Hong Kong
 
 KEX Express (Hong Kong) is the Kerry Logistics Network's local express carrier, formerly Kerry
-Express Hong Kong. It collects from senders and self-pickup points and delivers across Hong
+Express Hong Kong and, until April 2025, the company TGX (Top Gun Express). Providers still name it
+TGXpress, so those names are aliases; bare TGX is not, as Toll Global Express Asia uses it too. It collects from senders and self-pickup points and delivers across Hong
 Kong. It has its own site and tracker, separate from KEX Express in Thailand (`kex`). Tracked
 through its tracker's page.
 

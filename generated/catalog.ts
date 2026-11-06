@@ -9904,6 +9904,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bigpost": {
+    "displayName": "Big Post",
+    "color": "#2e61a3",
+    "aliases": [
+      "BigPost"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Melbourne",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bigpost.com.au/tracking/",
+    "trackingSearchUrl": "https://bigpost.com.au/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
     "color": "#feba30",
@@ -13667,6 +13687,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rastreo.correos.gob.ni:8084/SICRastreo",
     "trackingSearchUrl": "https://rastreo.correos.gob.ni:8084/SICRastreo",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "coship": {
+    "displayName": "COSHIP",
+    "color": "#e40613",
+    "aliases": [
+      "Canada Orient Shipping",
+      "Canada Orient Shipping Ltd.",
+      "캐나다쉬핑"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.coship.ca/tracking/",
+    "trackingUrlTemplate": "https://www.coship.ca/tracking/?no={trackingNumber}",
+    "trackingSearchUrl": "https://www.coship.ca/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.coship.ca",
+          "coship.ca"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "no"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "costco-logistics": {
@@ -27856,7 +27910,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Kerry Express (Hong Kong)",
       "Kerry Express (HK)",
       "KEX Express (Hong Kong)",
-      "嘉里快遞"
+      "嘉里快遞",
+      "Kerry Express Hong Kong (TGXpress)",
+      "TGXpress",
+      "Top Gun Express",
+      "精英速運"
     ],
     "countries": [
       "HK"
@@ -50853,6 +50911,7 @@ export const CARRIER_IDS = [
   "bex-express",
   "bfe-express",
   "big-smart",
+  "bigpost",
   "bjs-home-delivery",
   "blue-express",
   "blueex",
@@ -50957,6 +51016,7 @@ export const CARRIER_IDS = [
   "correos-ecuador",
   "correos-el-salvador",
   "correos-nicaragua",
+  "coship",
   "costco-logistics",
   "coupang-logistics",
   "courier-center",
@@ -52198,6 +52258,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bex-express": [],
   "bfe-express": [],
   "big-smart": [],
+  "bigpost": [],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "blue-express": [],
   "blueex": [],
@@ -52302,6 +52363,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correos-ecuador": [],
   "correos-el-salvador": [],
   "correos-nicaragua": [],
+  "coship": [],
   "costco-logistics": ["costco-logistics-1"],
   "coupang-logistics": [],
   "courier-center": [],
