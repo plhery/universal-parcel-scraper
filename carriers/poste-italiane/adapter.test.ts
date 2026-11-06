@@ -369,6 +369,20 @@ describe('Poste Italiane response parsing', () => {
     }), TRACKING_NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
   });
 
+  it('reads a Punto Poste intake after a pickup notice as the courier taking back an uncollected parcel', () => {
+    const waiting = [
+      movement('la spedizione è in transito', 1767600000000),
+      movement('disponibile per il ritiro entro i termini indicati su sms/email', 1767630000000),
+    ];
+    const takenBack = movement('la spedizione è stata presa in carico presso il Punto Poste-Locker', 1768200000000);
+    const result = parsePosteItalianeTrackingResponse(parcel({ stato: '2', listaMovimenti: [...waiting, takenBack] }), TRACKING_NUMBER);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: takenBack.statoLavorazione });
+    expect(result.events?.map((event) => event.stage)).toEqual(['exception', 'ready_for_pickup', 'in_transit']);
+    // Without a pickup notice before it, the same wording is the sender's drop-off.
+    expect(parsePosteItalianeTrackingResponse(parcel({ stato: '2', listaMovimenti: [takenBack] }), TRACKING_NUMBER))
+      .toMatchObject({ current_stage: 'accepted' });
+  });
+
   it('follows an item from abroad under the sending post\'s S10 number', async () => {
     const FROM_ABROAD = JSON.parse(readFileSync(new URL('./fixtures/from-abroad.json', import.meta.url), 'utf8')) as unknown;
     const result = parsePosteItalianeTrackingResponse(FROM_ABROAD, 'lx 123 456 785 jp');

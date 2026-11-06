@@ -107,6 +107,18 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
   }
 }
 
+/**
+ * A Punto Poste's or a Punto Poste-Locker's intake after a pickup notice: the courier taking back
+ * a parcel its recipient did not collect in time, which then goes back to the sender. It is worded
+ * as the sender's drop-off there, so only the scans before it tell the two apart. Its own box is
+ * intake (2), and the envelope's `stato` falls back to it.
+ */
+export function posteItalianeUncollected(wording: string, waited: boolean): ClassifiedStatus | undefined {
+  return waited && normalizePosteItalianeWording(wording).startsWith('la spedizione è stata presa in carico presso il punto poste')
+    ? { status: 'exception', stage: 'exception' }
+    : undefined;
+}
+
 /** What the map says about one scan: DoveQuando's wording carries no code. */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => classifyPosteItalianeStatus(wording)?.stage,

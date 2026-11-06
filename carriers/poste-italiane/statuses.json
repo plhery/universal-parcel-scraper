@@ -1,7 +1,7 @@
 {
   "carrier": "poste-italiane",
   "entries": [
-    { "wording": "la spedizione è stata presa in carico presso il Punto Poste", "language": "it", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Prefix match, checked before the shorter prefix: a drop-off at a Punto Poste." },
+    { "wording": "la spedizione è stata presa in carico presso il Punto Poste", "language": "it", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Prefix match, checked before the shorter prefix: a drop-off at a Punto Poste. After a pickup notice the adapter reads it as an exception: the courier taking back a parcel left uncollected there." },
     { "wording": "la spedizione è stata presa in carico da un nostro operatore…", "language": "it", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-10-02", "note": "Prefix match, checked before the shorter prefix: taken in at a post office counter or from the sender's home." },
     { "wording": "la spedizione è stata presa in carico…", "language": "it", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-09-10", "note": "Prefix match, after the Punto Poste and operator prefixes: the bare line names no intake." },
     { "wording": "da un nostro operatore presso…", "language": "it", "stage": "accepted", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Prefix match: the operator's intake on its own line." },

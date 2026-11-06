@@ -135,6 +135,10 @@ Italiane for a number issued abroad.
   fragment takes the sentence in place (`identity.ts`).
 - A failed round that names the day the next one starts from is a failed attempt, not that
   coming round.
+- "La spedizione è stata presa in carico presso il Punto Poste" (or "Punto Poste-Locker") is
+  the sender's drop-off there, so it reads as `accepted`. After a pickup notice, the same
+  wording is the courier taking back a parcel left uncollected at that Punto Poste, which
+  goes back to the sender, so it is an exception.
 - Customs release wording maps to `in_transit`.
 - A post-office scan names its office, which becomes the event location; the office's
   address, postcode and hours are not kept. Other scans keep `luogo` only when it is a town
