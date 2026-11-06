@@ -17,7 +17,7 @@ import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, type TrawlClient,
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { MondialRelayAppClient } from './app.js';
 import { inpostSpainTrackingUrl, isInpostSpainNumber, readInpostSpain } from './inpostSpain.js';
-import { classifyScan, classifyStatus, milestoneNumberStatus, scanSite, scanWording } from './status.js';
+import { classifyScan, classifyStatus, isMerchantDelivery, milestoneNumberStatus, scanSite, scanWording } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -324,7 +324,10 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
   const events = parsedEvents.map(({ event }) => event);
   const contextual = plainText(expedition.SuiviContextuel);
   const statusText = contextual || events[0]?.description || 'Tracking information received';
-  const contextualStatus = classifyStatus(statusText);
+  const headline = classifyStatus(statusText);
+  // The merchant's receipt of a parcel whose history started a return ends that return.
+  const contextualStatus: ClassifiedStatus = headline.stage === 'delivered' && isMerchantDelivery(statusText)
+    && parsedEvents.some(({ classified }) => classified.stage === 'returned') ? { status: 'exception', stage: 'returned' } : headline;
   const current = contextualStatus.status !== 'unknown'
     ? contextualStatus
     : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified

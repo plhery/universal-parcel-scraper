@@ -49,7 +49,7 @@ export const MONDIAL_RELAY_WORDING: readonly { phrases: readonly string[]; class
     phrases: [
       'retire par le destinataire', 'retrait effectue', 'remis au destinataire',
       'livraison effectuee au destinataire', 'colis livre au destinataire',
-      // A return the merchant received: "Votre colis a été livré à l'enseigne."
+      // The merchant received the parcel: "Votre colis a été livré à l'enseigne." See `MERCHANT_DELIVERY`.
       'livre a l enseigne',
     ],
     classified: { status: 'delivered', stage: 'delivered' },
@@ -111,6 +111,14 @@ export function classifyStatus(description: string): ClassifiedStatus {
   }
   return { status: 'unknown', stage: 'in_transit' };
 }
+
+/**
+ * The merchant receiving the parcel. A return has its own number, addressed to the merchant, and
+ * on it this is the delivery; on a parcel whose own history started a return it is the parcel
+ * back with its sender.
+ */
+const MERCHANT_DELIVERY = 'livre a l enseigne';
+export const isMerchantDelivery = (description: string): boolean => comparableText(description).includes(MERCHANT_DELIVERY);
 
 const LAST_LEG = 'colis en route vers le point de livraison';
 const OUT_FOR_DELIVERY: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery' };

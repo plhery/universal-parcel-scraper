@@ -469,6 +469,21 @@ describe('Mondial Relay response normalization', () => {
   it('reads a returned merchant delivery as delivered and a replacement relay as movement', () => {
     expect(classifyStatus("Votre colis a été livré à l'enseigne."))
       .toEqual({ status: 'delivered', stage: 'delivered' });
+    // A return's own number is addressed to the merchant: its receipt there is the delivery.
+    const fixture = syntheticSuccessFixture();
+    const expedition = fixture.Expedition as Record<string, unknown>;
+    expedition.SuiviContextuel = "Votre colis a été livré à l'enseigne.";
+    expedition.SuiviParEtapes = {};
+    expedition.Evenements = [
+      { Date: '2026-08-20T09:00:00', Libelle: 'Colis pris en charge en Point Relais' },
+      { Date: '2026-08-21T09:00:00', Libelle: 'Colis expédié depuis le site EXAMPLE TOWN' },
+    ];
+    expect(parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    // On a parcel whose own history started a return, it is the parcel back with its sender.
+    (expedition.Evenements as Record<string, string>[]).push({ Date: '2026-08-30T09:00:00', Libelle: "Colis en retour à l'expéditeur" });
+    const back = parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'returned', expected_delivery: null });
+    expect(back.delivered_at).toBeUndefined();
     for (const wording of ['Sollicitation Client pour replace colis', 'Relais de substitution choisi']) {
       expect(classifyStatus(wording)).toEqual({ status: 'in_transit', stage: 'in_transit' });
     }

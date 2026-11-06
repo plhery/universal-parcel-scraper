@@ -108,6 +108,10 @@ shipment → `SchemaError`.
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and
   the sync would otherwise fall back to "out for delivery".
+- The headline "Votre colis a été livré à l'enseigne." is the merchant receiving the parcel. A
+  return has its own number, addressed to the merchant, and there it is the delivery. On a parcel
+  whose own scans started a return ("retour à l'expéditeur") it is the parcel back with its
+  sender, so it reads as returned.
 - On a home delivery the website dates the "Colis en cours de livraison"
   milestone at the scan that sends the parcel "en route vers le point de
   livraison". That scan, and no other at that instant, reads out for delivery;
