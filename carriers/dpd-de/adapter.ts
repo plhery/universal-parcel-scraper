@@ -3,6 +3,7 @@ import { carrierErrorKind, IndeterminateError, NotFoundError } from '../../core/
 import { fillPartialAnswer } from '../../core/result/partial.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
+import { BrtTracker } from '../brt/adapter.js';
 import { DPDTracker, type DPDAbroad } from '../dpd/adapter.js';
 import { adapter as dpdAt } from '../dpd-at/adapter.js';
 import { DPDFranceTracker } from '../dpd-fr/adapter.js';
@@ -10,6 +11,7 @@ import { adapter as dpdIe, type DpdGroupLookup } from '../dpd-ie/adapter.js';
 import { adapter as dpdPl } from '../dpd-pl/adapter.js';
 import { DpdPtTracker } from '../dpd-pt/adapter.js';
 import { adapter as dpdUk } from '../dpd-uk/adapter.js';
+import { adapter as seur } from '../seur/adapter.js';
 import { DpdDeAppClient } from './app.js';
 import { DpdOtherCountryError, sharedDpdAppService } from './service.js';
 
@@ -40,6 +42,14 @@ const UNITS: Readonly<Record<string, Unit>> = {
   FR: ({ fetcher }) => {
     const tracker = new DPDFranceTracker({ fetcher });
     return (number, context) => tracker.fetch(number, context);
+  },
+  // SEUR, the group's network in Spain, whose lookup finds a parcel by its DPD number.
+  ES: adapterUnit(seur),
+  // BRT, the group's network in Italy, tracks a parcel DPD brings under the same fourteen digits. Its
+  // tracker alone: the partner its adapter adds is the group's service, which this step asks already.
+  IT: ({ fetcher, userAgent }) => {
+    const tracker = new BrtTracker({ fetcher, userAgent });
+    return async (number, context) => dateLocalClocks('brt', await tracker.fetch(number, context));
   },
 };
 

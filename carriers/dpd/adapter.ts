@@ -89,7 +89,7 @@ const DELIVERY_SIDE: ReadonlySet<string> = new Set([
  * code DPD gives: Switzerland's, Germany's and the units DPD Germany's abroad step asks.
  */
 export const DPD_DELIVERY_UNITS: Readonly<Record<string, string>> = {
-  CH: 'dpd', DE: 'dpd-de', AT: 'dpd-at', GB: 'dpd-uk', IE: 'dpd-ie', PL: 'dpd-pl', PT: 'dpd-pt', FR: 'dpd-fr',
+  CH: 'dpd', DE: 'dpd-de', AT: 'dpd-at', GB: 'dpd-uk', IE: 'dpd-ie', PL: 'dpd-pl', PT: 'dpd-pt', FR: 'dpd-fr', ES: 'seur', IT: 'brt',
 };
 const DEFAULT_TIMEOUT_MS = 90_000;
 /** How long a failed guest login answers new lookups before the next attempt. */

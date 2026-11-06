@@ -25,11 +25,14 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
    Netherlands' and Switzerland's read the group's service. The unit's history
    answers when it holds more scans and is not behind the group's milestones,
    else the group's milestones, as a truncated history. Either answers when the
-   other fails, and the answer keeps the link of the source that gave it. No
-   unit opens a browser: DPD France's and Portugal's pages use direct HTTP. A
-   unit's clocks without a zone are dated as its own lookup dates them, so DPD
-   Portugal's scans, which name no place, are on Lisbon's clock rather than
-   Germany's. Scans an earlier release dated on Germany's clock keep their rows
+   other fails, and the answer keeps the link of the source that gave it. In
+   Spain and Italy the unit is the group's network there, [SEUR](../seur/README.md)
+   and [BRT](../brt/README.md), whose trackers find a parcel by its DPD number.
+   BRT's tracker is asked alone: the partner its adapter adds is the group's
+   service. No unit opens a browser: DPD France's and Portugal's pages use
+   direct HTTP. A unit's clocks without a zone are dated as its own lookup
+   dates them, so DPD Portugal's scans, which name no place, are on Lisbon's
+   clock and SEUR's on Madrid's rather than Germany's. Scans an earlier release dated on Germany's clock keep their rows
    (`matchWallClock`).
 
 Either German service answers when the other fails, except for a parcel the

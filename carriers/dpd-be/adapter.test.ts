@@ -108,6 +108,7 @@ describe('DPD Belgium guest tracking', () => {
   it.each([
     ['Switzerland', 'CH', 'dpd'], ['Germany', 'DE', 'dpd-de'], ['Austria', 'AT', 'dpd-at'], ['Great Britain', 'GB', 'dpd-uk'],
     ['Ireland', 'IE', 'dpd-ie'], ['Poland', 'PL', 'dpd-pl'], ['Portugal', 'PT', 'dpd-pt'], ['France', 'FR', 'dpd-fr'],
+    ['Spain', 'ES', 'seur'], ['Italy', 'IT', 'brt'],
   ])('hands a parcel DPD places in %s at its delivery depot or later to that unit under the same number', async (_country, countryCode, carrier) => {
     const result = await dpdBe(guest(placed(countryCode))).track({ number: NUMBER });
     expect(result).toMatchObject({ status: 'delivered', delivery_carrier: carrier });

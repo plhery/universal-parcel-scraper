@@ -811,6 +811,21 @@ describe('DPD Germany tiers', () => {
       time_zone: 'Europe/Lisbon' });
   });
 
+  it.each([
+    ['Spain', 'ES', 'www.seur.com', () => JSON.stringify({ ...JSON.parse(readFileSync(new URL('../seur/fixtures/history.json', import.meta.url), 'utf8')),
+      identificador_busqueda: NUMBER }), 'LL020'],
+    ['Italy', 'IT', 'vas.brt.it', () => readFileSync(new URL('../brt/fixtures/history.html', import.meta.url), 'utf8')
+      .replaceAll('99000000000002', NUMBER), undefined],
+  ])("reads a parcel the app service places in %s from that country's network, by its DPD number", async (_, country, host, page, code) => {
+    const { app, opened, steps, tracking } = tiers([new Response('', { status: 500 })], { [host]: page() });
+    await opened();
+    app.replies.getTrackingScanList = [() => xml(fixture('scans').replaceAll('Musterstadt (DE)', `Musterville (${country})`))];
+    const result = await tracking.track({ number: NUMBER });
+    expect(steps).toEqual([['app', 'indeterminate'], ['abroad', 'ok']]);
+    expect(result.events?.length).toBeGreaterThan(1);
+    if (code) expect(result.events?.[0]).toMatchObject({ provider_code: code });
+  });
+
   it('keeps the Portuguese handoff HTTP-only when a browser service is configured', async () => {
     const blocked = '<html><title>Just a moment...</title></html>';
     const { app, opened, guestCalls, tracking } = tiers([new Response('', { status: 500 })],
