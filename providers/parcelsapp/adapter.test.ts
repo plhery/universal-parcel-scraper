@@ -2072,6 +2072,9 @@ describe('ParcelsApp result parsing', () => {
     // Shopee's UTC+8 clock in Brazil: SPX's own tracker has the same scans eight hours earlier.
     expect(times(['Shopee Express Brazil'], [scan('2026-05-22T22:20:30Z', 'LM Hub_RJ_Example Hub'), scan('2026-05-19T21:47:46Z')]))
       .toEqual(['2026-05-22T14:20:30.000Z', '2026-05-19T13:47:46.000Z']);
+    // CTT Express's own tracker has the same scans an hour earlier in winter, at Madrid's offset.
+    expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-07-04T12:23:00Z')]))
+      .toEqual(['2026-11-05T13:38:00.000Z', '2026-07-04T10:23:00.000Z']);
     // Landmark Global's page clock is US Central's, whatever zone the check suggests.
     const landmark = { carriers: ['Landmark Global'], states: [scan('2026-10-14T09:00:00Z', 'Example City, Germany'), scan('2026-01-14T09:00:00Z')] };
     for (const hint of [null, 'Europe/Zurich']) {
