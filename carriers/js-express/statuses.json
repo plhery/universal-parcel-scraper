@@ -120,6 +120,9 @@
     {"code": "DCF", "wording": "Item Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Import customs released the parcel after the flight landed."},
     {"code": "OIT", "wording": "Arrived at Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The destination's sorting facility after import clearance, before the local courier takes the parcel."},
     {"code": "OIT", "wording": "Arrived at FedEx location", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's hub on the line it delivers, relayed under JS Express's catch-all code."},
-    {"code": "OIT", "wording": "Left FedEx origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's departure from its first facility, relayed under the same code."}
+    {"code": "OIT", "wording": "Left FedEx origin facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "FedEx's departure from its first facility, relayed under the same code."},
+    {"code": "OIT", "wording": "The instruction data for this shipment have been provided by the sender to DHL electronically", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "DHL's record of the sender's data on the line it delivers in Germany: no scan."},
+    {"code": "OIT", "wording": "The shipment is in transit to DHL", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "DHL's line for a parcel on its way to DHL's network from abroad."},
+    {"code": "OIT", "wording": "Die Sendung wurde im Briefzentrum bearbeitet.", "stage": "in_transit", "language": "de", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "DHL's mail centre in Germany sorting a small parcel, in German."}
   ]
 }
