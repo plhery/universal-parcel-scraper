@@ -51030,9 +51030,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": []
   },
   "yuexi-logistics": {
-    "displayName": "YXI Logistics",
+    "displayName": "YXL Logistics",
     "color": "#ff6400",
     "aliases": [
+      "YXI Logistics",
+      "YXIL",
       "YXI International",
       "悦希国际物流",
       "悦希国际",

@@ -1,8 +1,9 @@
-# YXI Logistics
+# YXL Logistics
 
-YXI Logistics parcels use enabled universal providers. There is no dedicated adapter.
+YXL Logistics parcels use enabled universal providers. There is no dedicated adapter.
 
-YXI Logistics, 悦希国际物流, is a forwarder in Shenzhen. It ships goods by sea, land and air from
+YXL Logistics, 悦希国际物流, is a forwarder in Shenzhen. Its logo reads YXL; its site text and the
+tracking services write YXI or YXIL, which are aliases. It ships goods by sea, land and air from
 China to Hong Kong, Indonesia, Malaysia, the Philippines, Singapore, Thailand and Vietnam, with
 warehousing and consolidation for overseas Chinese and students. Its site is yxlg.com.
 
