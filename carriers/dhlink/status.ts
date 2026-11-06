@@ -166,8 +166,9 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/已妥投$/, 'delivered'],
   // USPS's attempt, relayed after the post office's place.
   [/\bno access to delivery location$/, 'failed_attempt'],
-  // UniUni's sorting hub and its transit scans, relayed with or without the hub's place first.
+  // UniUni's sorting hub, its processing there and its transit scans, relayed with or without the hub's place first.
   [/^(?:[^,]{1,60}, )?parcel received at uniuni sorting hub\.?$/, 'in_transit'],
+  [/^(?:[^,]{1,60}, )?parcel processed\.?$/, 'in_transit'],
   [/^(?:[^,]{1,60}, )?parcel scanned and in transit\.?$/, 'in_transit'],
   // A European partner's hub, named by its code.
   [/^arrived to [a-z0-9]{2,10} hub$/, 'in_transit'],

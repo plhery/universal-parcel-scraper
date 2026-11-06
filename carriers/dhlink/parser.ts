@@ -207,9 +207,22 @@ function projectRow(row: unknown, readAt: number): Scan | 'ahead' | null {
     recorded: Math.min(recordedAt(row) ?? readAt, readAt) };
 }
 
-/** A relayed wording without the town and state a US partner can write before it ("Sampletown IL, "). */
+// The town and state a US partner can write before its wording ("Sampletown IL, "), as UniUni does.
+const TOWN_FIRST = /^([A-Z][A-Za-z .'-]{0,40}) ([A-Z]{2}), /;
+
+/** A relayed wording without the town and state a US partner can write before it. */
 function unplaced(description: string | undefined): string {
-  return (description ?? '').replace(/^[A-Z][A-Za-z .'-]{0,40} [A-Z]{2}, /, '');
+  return (description ?? '').replace(TOWN_FIRST, '');
+}
+
+/**
+ * A relayed wording without the town and state before it when the row's place
+ * starts with them too, so the place alone names them.
+ */
+export function dhlinkWithoutTown(description: string, location: string): string {
+  const town = TOWN_FIRST.exec(description);
+  if (!town || description.length === town[0].length) return description;
+  return location.trim().toLowerCase().startsWith(`${town[1]} ${town[2]}`.toLowerCase()) ? description.slice(town[0].length) : description;
 }
 
 function outranks(left: readonly number[], right: readonly number[]): boolean {
@@ -320,7 +333,8 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
     .map(({ scan, time }): CarrierEvent => {
       const { location, ...event } = scan.event;
       const placed = location && !(destination && countryCode(location) === destination) ? { location } : {};
-      return { ...(time ? { time: time.iso } : { local_time: scan.stamp }), ...event, ...placed };
+      return { ...(time ? { time: time.iso } : { local_time: scan.stamp }), ...event,
+        ...(event.description ? { description: dhlinkWithoutTown(event.description, location ?? '') } : {}), ...placed };
     });
   if (!events.length) throw new IndeterminateError(PROVIDER, 'DHLink has no scans for the parcel yet');
   // A receipt after DHLink moved the parcel on, at another warehouse or the post a line hands it

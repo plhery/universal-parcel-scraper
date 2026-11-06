@@ -326,6 +326,20 @@ describe('DHLink HTTP adapter', () => {
     expect(relayed([twins[3]!, twins[1]!], 'GB').events).toHaveLength(2);
   });
 
+  it('leaves a US partner’s town and state to the place when its wording starts with them too', () => {
+    const row = (place: string, info: string) => ({ trackTime: '2026-03-06 08:24:48', createDate: '2026-03-06 22:00:00', place, info, nodeCode: null, nodeName: null });
+    const relayed = (rows: Row[]) => parseDhlink(changed('swiftx-at-warehouse', (parcel) => {
+      parcel.destCountryCode = 'US';
+      parcel.lastTurnNo = null;
+      parcel.trackinfoList = rows;
+    }), WAREHOUSE, LATER).events![0];
+    expect(relayed([row('Sampletown IL, US', 'Sampletown IL, Parcel processed.')]))
+      .toMatchObject({ description: 'Parcel processed.', location: 'Sampletown IL, US', stage: 'in_transit', stage_source: 'carrier_map' });
+    // Without the town in its place, or with another, the wording keeps it.
+    expect(relayed([row('none', 'Sampletown IL, Parcel processed.')])).toMatchObject({ description: 'Sampletown IL, Parcel processed.', stage: 'in_transit' });
+    expect(relayed([row('Othertown IL, US', 'Sampletown IL, Parcel processed.')])?.description).toBe('Sampletown IL, Parcel processed.');
+  });
+
   it('reads the rows of Pactic, the Hungarian platform a line to Bulgaria goes through, on Budapest’s clock', () => {
     const row = (trackTime: string, createDate: string, info: string) => ({ trackTime, createDate, place: 'none', info, nodeCode: null, nodeName: null });
     const parcel = parseDhlink(changed('swiftx-at-warehouse', (reply) => {

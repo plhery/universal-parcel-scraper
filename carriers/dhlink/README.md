@@ -70,7 +70,8 @@ page makes.
   is. UniUni's scans can come twice, on its hub's clock, often after the hub's town, and on
   UTC: when a row read on UTC, before DHLink recorded either, is another's US reading to the
   second, with the same wording beside the town, the pair is one scan on that US clock and the
-  UTC copy is dropped. Otherwise a scan a USPS
+  UTC copy is dropped. A wording that opens with the town and state its row's place starts with
+  too loses them, so the place alone names them. Otherwise a scan a USPS
   office names with its state and ZIP code, or that pickup, is read on that state's time, unless
   the state spans several zones. A scan recorded before its clock could have struck at the
   destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. A line

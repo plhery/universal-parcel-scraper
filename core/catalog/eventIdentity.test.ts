@@ -741,6 +741,17 @@ describe('same-instant identity policies', () => {
     ]) expect(policy?.matches?.(cleared, different)).toBe(false);
   });
 
+  it('lets a partner’s scan DHLink relays take over the row stored with its place’s town and state before its wording', () => {
+    const policy = sameInstantIdentityPolicy('dhlink', { supportsScanMatching: true });
+    const processed = { stage: 'in_transit', description: 'Parcel processed.', location: 'Sampletown IL, US', providerCode: '' };
+    expect(policy?.matches?.(processed, { ...processed, description: 'Sampletown IL, Parcel processed.' })).toBe(true);
+    for (const different of [
+      { ...processed, description: 'Othertown IL, Parcel processed.' },
+      { ...processed, description: 'Sampletown IL, Parcel scanned and in transit.' },
+      { ...processed, description: 'Sampletown IL, Parcel processed.', location: '' },
+    ]) expect(policy?.matches?.(processed, different)).toBe(false);
+  });
+
   it('lets a DHLink scan shown without a place take over the row stored with only a country, or a placeholder, as its place', () => {
     const policy = sameInstantIdentityPolicy('dhlink', { supportsScanMatching: true });
     const handed = { stage: 'in_transit', description: 'Package handed over to airline', location: '', providerCode: '' };
