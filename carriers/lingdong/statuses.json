@@ -18,6 +18,10 @@
     {"wording": "货物已交服务商【The shipment has been transferred to the logistics partner.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The hand-over to the delivery partner after the import release."},
     {"wording": "First parcel scan along Poste Italiane’s logistic network", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "Poste Italiane's first scan as the delivery partner, a day after the hand-over to it, relayed in capitals: the parcel is already on its way."},
     {"wording": "In transit along Poste Italiane’s logistic network", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "Poste Italiane moving the parcel towards the office that delivers it."},
+    {"wording": "In transito, la spedizione è in transito", "language": "it", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Poste Italiane's scan on the way to the delivering office, relayed with its headline."},
+    {"wording": "In transito", "language": "it", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The same scan's headline alone, a second row at the same time."},
+    {"wording": "In consegna", "language": "it", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Poste Italiane's courier is out with the parcel, hours before its delivery."},
+    {"wording": "Consegnata, la spedizione è stata consegnata", "language": "it", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "Poste Italiane delivered the parcel, the last row of the record."},
     {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "prior-art", "note": "The platform writes this row itself for an order without scans, on its creation time."}
   ]
 }

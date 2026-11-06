@@ -91,6 +91,10 @@ describe('Lingdong International tracking adapter', () => {
     for (const description of ['FIRST PARCEL SCAN ALONG POSTE ITALIANE’S LOGISTIC NETWORK', 'IN TRANSIT ALONG POSTE ITALIANE’S LOGISTIC NETWORK']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
+    // Its Italian rows, the headline alone or with Poste Italiane's sentence.
+    for (const [description, stage] of [['In transito', 'in_transit'], ['In transito, la spedizione è in transito', 'in_transit'], ['In consegna', 'out_for_delivery'], ['Consegnata, la spedizione è stata consegnata', 'delivered']] as const) {
+      expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage });
+    }
     expect(carrier.portal).not.toHaveProperty('url');
   });
 });
