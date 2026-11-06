@@ -1402,6 +1402,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'liuchen', number: 'LC990000000002',
     route: /^https:\/\/www\.liuchenwl\.com\/index\/tracknumber\/track\?nos=LC990000000002$/,
     marker: /快件跟踪|跟踪\(Track\)/ },
+  { carrier: 'dongdu', number: 'DDGYL99000002YQ',
+    route: /^https:\/\/www\.ddgyl\.vip\/index\/tracknumber\/track\?nos=DDGYL99000002YQ$/,
+    marker: /快件跟踪|跟踪\(Track\)/ },
   // The page moves the number into its hash route, through a bare `#/` first, looks it up on load
   // and lists it, with a notice while it has no data.
   { carrier: 'dayone', number: 'DOT0990000000000001',

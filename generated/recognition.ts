@@ -130,6 +130,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "dobropost": 824,
   "dohrn-transfer": 731,
   "domex": 643,
+  "dongdu": 724,
   "dpd": 980,
   "dpd-at": 878,
   "dpd-be": 983,

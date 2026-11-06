@@ -1536,6 +1536,22 @@ describe('Liuchen', () => {
   });
 });
 
+describe('Dongdu Logistics', () => {
+  it('offers Dongdu at low confidence for DDGYL, eight digits and YQ, asks it, and reads its names and links', () => {
+    expect(detectCarrierMatch('ddgyl 9900 0002 yq')).toEqual({
+      carrier: 'unknown', confidence: 'low', candidates: ['dongdu'], preferred: [],
+    });
+    expect(recognitionCandidates('DDGYL99000002YQ').map((candidate) => candidate.carrier)).toEqual(['dongdu']);
+    for (const number of ['DDGYL9900002YQ', 'DDGYL990000002YQ', 'DDGYL99000002CN', 'DDGYJ99000002YQ', 'XDDGYL99000002YQ']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dongdu');
+      expect(recognitionCandidates(number).map((candidate) => candidate.carrier), number).not.toContain('dongdu');
+    }
+    expect(parseTrackingInput('https://www.ddgyl.vip/index/tracknumber/track?nos=DD1000000017'))
+      .toMatchObject({ trackingNumber: 'DD1000000017', carrier: 'dongdu', source: 'link' });
+    for (const name of ['DDGYL', '东渡供应链', '東渡物流']) expect(carrierIdFromName(name), name).toBe('dongdu');
+  });
+});
+
 describe('WooliiPorter', () => {
   it('reads its names and tracking links', () => {
     for (const name of ['WooliiPorter', 'Woolii']) expect(carrierIdFromName(name), name).toBe('wooliiporter');

@@ -16417,6 +16417,52 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dongdu": {
+    "displayName": "Dongdu Logistics",
+    "color": "#5b9a68",
+    "aliases": [
+      "DDGYL",
+      "Dongdu Supply Chain",
+      "東渡物流",
+      "东渡物流",
+      "东渡供应链",
+      "东渡供应链物流有限公司",
+      "深圳东渡供应链国际物流有限公司",
+      "Shenzhen Dongdu Supply Chain International Logistics Co., Ltd"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dongdu",
+      "recognitionRank": 724,
+      "recognitionPattern": "^DDGYL\\d{8}YQ$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ddgyl.vip/",
+    "trackingUrlTemplate": "https://www.ddgyl.vip/index/tracknumber/track?nos={trackingNumber}",
+    "trackingSearchUrl": "https://www.ddgyl.vip/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.ddgyl.vip"
+        ],
+        "pathPattern": "^/index/tracknumber/track/?$",
+        "params": [
+          "nos"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^DDGYL\\d{8}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "dpd-at": {
     "displayName": "DPD Austria",
     "color": "#dc0032",
@@ -52018,6 +52064,7 @@ export const CARRIER_IDS = [
   "domain-logistics",
   "domesa",
   "domex",
+  "dongdu",
   "dpd-at",
   "dpd-be",
   "dpd-de",
@@ -53395,6 +53442,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "domain-logistics": [],
   "domesa": [],
   "domex": [],
+  "dongdu": ["dongdu-1"],
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-de": ["dpd-de-3","dpd-de-4","dpd-de-1","dpd-de-2"],

@@ -1,0 +1,84 @@
+{
+  "carrier": "dongdu",
+  "entries": [
+    {
+      "wording": "Order information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "The shipment data has arrived; Dongdu does not hold the parcel yet."
+    },
+    {
+      "wording": "Arrive at the cross border receiving point",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "Received at the receiving point in China."
+    },
+    {
+      "wording": "Goods leave the operation center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06"
+    },
+    {
+      "wording": "Arrival at domestic internationality airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "At the departure airport in China."
+    },
+    {
+      "wording": "Departure from the airport of origin domestic",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "The flight has left China."
+    },
+    {
+      "wording": "Item arrives at destination airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "The first step after the flight."
+    },
+    {
+      "wording": "local carrier Agent Import customs clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "Import clearance by the destination agent."
+    },
+    {
+      "wording": "transfer to local acting company International self-operation team",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "Handed to the local partner after clearance."
+    },
+    {
+      "wording": "Internationaliy Package received at processing center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "note": "The local partner's processing centre; the misspelling is the tracker's."
+    },
+    {
+      "wording": "查询不到",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-06",
+      "unmapped": true,
+      "note": "\"Cannot be found\": the summary status for a number the tracker does not know, with no scans. The adapter reads it as not found."
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "carrier": "dongdu",
+  "records": [
+    {
+      "number": "DDGYL99000002YQ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-06",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dongdu"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider reported from DDGYL and Dongdu's tracker answered: DDGYL, the initials of 东渡供应链, eight digits and YQ."
+    }
+  ]
+}

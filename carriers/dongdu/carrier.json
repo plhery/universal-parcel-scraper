@@ -1,0 +1,85 @@
+{
+  "id": "dongdu",
+  "displayName": "Dongdu Logistics",
+  "aliases": [
+    "DDGYL",
+    "Dongdu Supply Chain",
+    "東渡物流",
+    "东渡物流",
+    "东渡供应链",
+    "东渡供应链物流有限公司",
+    "深圳东渡供应链国际物流有限公司",
+    "Shenzhen Dongdu Supply Chain International Logistics Co., Ltd"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#5b9a68"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dongdu",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 724,
+      "pattern": "^DDGYL\\d{8}YQ$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "destination_country",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://www.ddgyl.vip/index/tracknumber/track?nos={trackingNumber}",
+    "searchUrl": "https://www.ddgyl.vip/",
+    "canaryUrl": "https://www.ddgyl.vip/",
+    "shows": [
+      "status",
+      "history",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "provider_code",
+      "eta",
+      "weight",
+      "delivered_at",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.ddgyl.vip"
+      ],
+      "pathPattern": "^/index/tracknumber/track/?$",
+      "params": [
+        "nos"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "dongdu-1",
+      "pattern": "^DDGYL\\d{8}YQ$",
+      "confidence": "low"
+    }
+  ]
+}
