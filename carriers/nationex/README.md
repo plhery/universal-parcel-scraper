@@ -1,7 +1,8 @@
 # Nationex
 
 Tracks Nationex shipments and parcels in Canada through the service behind Nationex's own
-tracker.
+tracker. Courant Plus, the Montreal cargo-bike courier Nationex bought, now sends its site to
+Nationex, so its name points here.
 
 ## How it works
 

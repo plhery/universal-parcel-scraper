@@ -1,7 +1,10 @@
 {
   "id": "nationex",
   "displayName": "Nationex",
-  "aliases": [],
+  "aliases": [
+    "Courant Plus",
+    "Courant+"
+  ],
   "region": {
     "countries": [
       "CA"
