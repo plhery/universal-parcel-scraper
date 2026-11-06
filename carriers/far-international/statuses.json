@@ -29,6 +29,7 @@
     {"wording": "Transferred to Next Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
     {"wording": "In transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
     {"wording": "In Transit to Destination", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
+    {"wording": "Arrived at Destination Office", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "The last-mile carrier's arrival at the office that delivers the parcel, after In Transit to Destination; it names no collection."},
     {"wording": "进口清关完成", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "Import clearance completed."},
     {"wording": "Received by local delivery company", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
     {"wording": "包裹开始派送", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "The last-mile carrier takes the parcel on: it comes before that carrier's own facility scans, not on the delivery round."},
