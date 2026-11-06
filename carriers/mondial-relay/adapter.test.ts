@@ -347,6 +347,20 @@ describe('Mondial Relay response normalization', () => {
       .toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
   });
 
+  it('keeps the drop-off\'s stage while the headline names the leg to the agency before any scan of it', () => {
+    const fixture = syntheticSuccessFixture();
+    const expedition = fixture.Expedition as Record<string, unknown>;
+    expedition.SuiviContextuel = 'En transit vers notre agence';
+    expedition.Evenements = [{ Date: '2026-08-30T12:00:00', Libelle: 'Colis pris en charge en Point Relais' }];
+    expect(parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'En transit vers notre agence' });
+    expedition.Evenements = [
+      { Date: '2026-08-31T08:00:00', Libelle: 'Colis expédié depuis le site logistique' },
+      { Date: '2026-08-30T12:00:00', Libelle: 'Colis pris en charge en Point Relais' },
+    ];
+    expect(parseMondialRelayTrackingResponse(fixture, PUBLIC_CREDENTIAL)).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('uses reached official milestones only when contextual history is inconclusive', () => {
     const fixture = syntheticSuccessFixture();
     const expedition = fixture.Expedition as Record<string, unknown>;

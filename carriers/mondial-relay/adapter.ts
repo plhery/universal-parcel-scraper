@@ -328,10 +328,15 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
   // The merchant's receipt of a parcel whose history started a return ends that return.
   const contextualStatus: ClassifiedStatus = headline.stage === 'delivered' && isMerchantDelivery(statusText)
     && parsedEvents.some(({ classified }) => classified.stage === 'returned') ? { status: 'exception', stage: 'returned' } : headline;
-  const current = contextualStatus.status !== 'unknown'
-    ? contextualStatus
-    : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified
-      ?? milestoneStatus(expedition);
+  // The headline names the leg to the agency from the drop-off on, before the courier
+  // collects the parcel at the relay or locker: over a newest scan that is the drop-off,
+  // the drop-off's stage stays, so the result is never a step ahead of every scan.
+  const droppedOff = contextualStatus.stage === 'in_transit' && parsedEvents[0]?.classified.stage === 'accepted';
+  const current = droppedOff ? parsedEvents[0]!.classified
+    : contextualStatus.status !== 'unknown'
+      ? contextualStatus
+      : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified
+        ?? milestoneStatus(expedition);
   const status = current?.status ?? 'unknown';
   // The scans since the parcel reached its pickup point, newest first: its
   // arrival there and the locker countdown, which names no relay. Drop-off and

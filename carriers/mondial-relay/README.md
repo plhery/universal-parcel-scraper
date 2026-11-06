@@ -108,6 +108,9 @@ shipment → `SchemaError`.
   highest reached milestone (its label, then its number). The deciding stage is
   set as `current_stage`, because the status vocabulary has no pickup value and
   the sync would otherwise fall back to "out for delivery".
+- From the drop-off on, the headline reads "En transit vers notre agence", up to two days
+  before the courier's first scan of the leg. Over a newest scan that is the drop-off, the
+  drop-off's `accepted` stays, so the result is never a step ahead of every scan.
 - The headline "Votre colis a été livré à l'enseigne." is the merchant receiving the parcel. A
   return has its own number, addressed to the merchant, and there it is the delivery. On a parcel
   whose own scans started a return ("retour à l'expéditeur") it is the parcel back with its
