@@ -9,7 +9,8 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const scratch = mkdtempSync(path.join(tmpdir(), 'parcel-scraper-package-'));
 let tarball;
 try {
-  const packed = JSON.parse(execFileSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch], { cwd: root, encoding: 'utf8' }))[0];
+  // The JSON lists every packed file, which outgrows the default 1 MiB buffer.
+  const packed = JSON.parse(execFileSync('npm', ['pack', '--ignore-scripts', '--json', '--pack-destination', scratch], { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }))[0];
   tarball = path.join(scratch, packed.filename);
   assert(packed.files.every(file => !/fixtures|private\.numbers|\.env|\.test\.|\.git\//.test(file.path)));
   writeFileSync(path.join(scratch,'package.json'), JSON.stringify({ private: true, type: 'module' }));
