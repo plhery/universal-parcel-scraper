@@ -343,6 +343,11 @@ describe('Kuehne+Nagel search', () => {
   it('is asked about year-prefixed road numbers, which detection leaves as a suggestion, and reads its links', () => {
     expect(detectCarrierMatch(DELIVERED)).toMatchObject({ carrier: 'kuehne-nagel', confidence: 'high' });
     expect(recognitionAskedCarriers('99A999000001')).toContain('kuehne-nagel');
+    // Its RAPI tracking numbers: RAPI and eight digits exactly, spaces ignored.
+    for (const number of ['RAPI99900001', 'rapi 9990 0001']) expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'kuehne-nagel', confidence: 'high' });
+    for (const number of ['RAPI9990001', 'RAPI999000001', 'RAPX99900001', 'XRAPI9990001']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('kuehne-nagel');
+    }
     for (const link of [`https://mykn.kuehne-nagel.com/public-tracking/shipments?query=${DELIVERED}`,
       `https://mykn.kuehne-nagel.com/public-tracking/shipments/900000001?query=${DELIVERED}`]) {
       expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: DELIVERED, carrier: 'kuehne-nagel', source: 'link' });

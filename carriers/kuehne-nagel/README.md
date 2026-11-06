@@ -40,7 +40,9 @@ The myKN app is not needed, since the web tracker answers anonymously.
 The adapter takes references of 6 to 35 letters and digits, with at least one digit, and lets the
 tracker decide what they are. Road tracking numbers made of a two-digit year, `A` and nine digits
 are shared with other carriers' rules. `kuehne-nagel-1` suggests them at low confidence, so
-preflight asks the tracker. `RWM` and nine digits is `kuehne-nagel-2`. Waybills and customer
+preflight asks the tracker. `RWM` and nine digits is `kuehne-nagel-2`. `RAPI` and eight digits is
+`kuehne-nagel-3`: the tracker files the samples ParcelPanel's Kuehne+Nagel page gives, and a
+parcel a universal provider relays from myKN, under Kuehne+Nagel's own tracking number. Waybills and customer
 references have no rule of their own.
 
 ## Notes

@@ -28757,6 +28757,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^RWM\\d{9}$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^RAPI\\d{8}$",
+        "confidence": "high"
       }
     ]
   },
@@ -53778,7 +53782,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ktd": ["ktd-1"],
   "kuayuan-express": [],
   "kuayue-express": ["kuayue-express-1"],
-  "kuehne-nagel": ["kuehne-nagel-1","kuehne-nagel-2"],
+  "kuehne-nagel": ["kuehne-nagel-1","kuehne-nagel-2","kuehne-nagel-3"],
   "kun-express": ["kun-express-1"],
   "kunyoung": [],
   "kwick-box": [],

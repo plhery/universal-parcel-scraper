@@ -401,11 +401,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "carrier": "kuehne-nagel",
+        "confidence": "high"
       },
       "note": "ParcelPanel's Kuehne+Nagel page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -423,11 +420,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "carrier": "kuehne-nagel",
+        "confidence": "high"
       },
       "note": "ParcelPanel's Kuehne+Nagel page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -445,11 +439,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "carrier": "kuehne-nagel",
+        "confidence": "high"
       },
       "note": "ParcelPanel's Kuehne+Nagel page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     },
@@ -467,11 +458,8 @@
         "assessment": "candidate"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
+        "carrier": "kuehne-nagel",
+        "confidence": "high"
       },
       "note": "ParcelPanel's Kuehne+Nagel page offered it as a sample to try on 11 Oct 2026; it is not described as a live shipment."
     }

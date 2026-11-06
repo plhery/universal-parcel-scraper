@@ -108,6 +108,11 @@
       "id": "kuehne-nagel-2",
       "pattern": "^RWM\\d{9}$",
       "confidence": "high"
+    },
+    {
+      "id": "kuehne-nagel-3",
+      "pattern": "^RAPI\\d{8}$",
+      "confidence": "high"
     }
   ]
 }
