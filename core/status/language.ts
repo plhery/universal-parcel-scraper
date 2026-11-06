@@ -540,6 +540,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^(?:received in office|export to foreign provider)$/.test(text)) return 'in_transit';
   // An address fixed after a problem with it, as FedEx and GOFO word it ("Address corrected."): the parcel moves on.
   if (/^address corrected\b/.test(text)) return 'in_transit';
+  // ECMS's hand-over to the last-mile carrier, as providers relay it without ECMS's code.
+  if (/^shipment is tendering to (?:a |the )?third[ -]?party carrier for final delivery$/.test(text)) return 'in_transit';
   // The UPU's mail events as posts word them for providers: the despatch abroad, marked "(EDI-received)" by a
   // post that has it from the sending post's electronic data, and the despatch to the destination country.
   if (/^send item (?:abroad|to (?:the )?destination country)(?: \(edi received\))?$/.test(text)) return 'in_transit';

@@ -17700,7 +17700,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "易客满国际快递",
       "ECMSGlobal",
       "ECMS Global",
-      "ECMS"
+      "ECMS",
+      "ECMS International Logistics Co."
     ],
     "countries": [
       "CN",
