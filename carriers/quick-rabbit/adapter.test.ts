@@ -45,8 +45,8 @@ describe('Quick Rabbit numbers', () => {
     }
   });
 
-  it('only suggests Quick Rabbit for PKG, a dated code, ES, thirteen digits and a letter', () => {
-    expect(detectCarrierMatch(LONG)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['quick-rabbit'] });
+  it('files PKG, a dated code, ES, thirteen digits and a letter under Quick Rabbit, its tracker’s own tracking code', () => {
+    expect(detectCarrierMatch(LONG)).toMatchObject({ carrier: 'quick-rabbit', confidence: 'high' });
     for (const other of ['PKG006261301ES9900000000001A', 'PKG006261001FR9900000000001A', 'PKG006261001ES990000000001A',
       'PKG006261001ES9900000000001', 'PKG006261001ES99000000000011']) {
       expect(offers(other), other).not.toContain('quick-rabbit');

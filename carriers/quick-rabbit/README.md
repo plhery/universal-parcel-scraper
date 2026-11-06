@@ -45,10 +45,10 @@ points. Tracked through the lookup its tracking page makes.
 
 Customers quote Quick Rabbit tracking codes in public complaints: PKG, three digits, the date the
 parcel was documented and nine digits. No other carrier issues the layout, so the rule has high
-confidence. A universal provider files under Quick Rabbit a longer code with the same PKG, three
-digits and a two-digit year, then ES, thirteen digits and a letter, and relays the tracker's
-status names for it. A single parcel shows that layout, so a low rule suggests Quick Rabbit and
-recognition asks the tracker; the corpus holds a made-up number in that shape. The shipper's
+confidence. A longer code has the same PKG, three digits and date, then ES, thirteen digits and a
+letter. A universal provider files one under Quick Rabbit, and the tracker gives another as the
+parcel's own tracking code, with the shipper's reference beside it, so that rule has high
+confidence too; the corpus holds a made-up number in that shape. The shipper's
 reference, WT and sixteen digits, also finds the parcel. Its issuer is not known, so a low rule
 suggests Quick Rabbit and recognition asks the tracker.
 

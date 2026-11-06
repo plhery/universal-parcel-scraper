@@ -38696,7 +38696,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^PKG\\d{5}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])ES\\d{13}[A-Z]$",
-        "confidence": "low"
+        "confidence": "high"
       },
       {
         "pattern": "^WT\\d{16}$",
