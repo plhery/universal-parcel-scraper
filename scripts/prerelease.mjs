@@ -213,8 +213,12 @@ export function report({ version, publish, published, notify, reason }, env = pr
   console.log(`${summary}\n${outputs}`);
 }
 
+// npm's JSON answers list every packed file and every published version, past
+// the default 1 MiB buffer.
 function run(command, args) {
-  return execFileSync(command, args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
+  return execFileSync(command, args, {
+    cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 64 * 1024 * 1024,
+  });
 }
 
 function commitCount() {
