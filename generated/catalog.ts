@@ -25172,6 +25172,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       },
       {
+        "pattern": "^3\\d{12}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^6(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])2[4-9]\\d{6}$",
         "confidence": "low",
         "preferred": true
@@ -52595,7 +52599,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "idexpress": ["idexpress-1"],
   "ids-logistik": [],
   "ilyang-logis": [],
-  "imile": ["imile-3","imile-1","imile-4","imile-2"],
+  "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
   "indopaket": [],
   "inntralog": [],

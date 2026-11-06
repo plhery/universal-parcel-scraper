@@ -1843,12 +1843,6 @@
     "reason": "Ilyang Logis waybills are bare digit runs with a mod-7 check digit, which other carriers' numbers of the same length also pass, so nothing in the number points to Ilyang Logis."
   },
   {
-    "carrier": "imile",
-    "pattern": "^\\d{13}$",
-    "kind": "by_design",
-    "reason": "Thirteen bare digits are shared with many carriers. Only the dated waybills imile-2 suggests show iMile in the number; those that start with 3 do not."
-  },
-  {
     "carrier": "inpost",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

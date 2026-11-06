@@ -439,6 +439,17 @@ describe('iMile HTTP adapter', () => {
     for (const number of ['6010123000001', '3010124000001']) expect(detectCarrierMatch(number).preferred ?? [], number).not.toContain('imile');
   });
 
+  it('suggests iMile among the other thirteen-digit carriers for 3 and twelve digits, without preferring it, so recognition asks it', () => {
+    const undated = '3000000000001';
+    expect(detectCarrierMatch(undated)).toMatchObject({ carrier: 'unknown', confidence: 'low',
+      candidates: expect.arrayContaining(['imile', 'fan-courier', 'yunda', 'correos-chile']) });
+    expect(detectCarrierMatch(undated).preferred ?? []).not.toContain('imile');
+    expect(recognitionAskedCarriers(undated)).toEqual(expect.arrayContaining(['imile', 'fan-courier']));
+    for (const number of ['300000000001', '30000000000001', '4000000000001']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('imile');
+    }
+  });
+
   it('lists iMile first for 49 and twelve digits, which its tracker answered for Italian parcels, beside the other fourteen-digit carriers', () => {
     for (const number of ['49999999999987', '49 0000 0000 0017']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['imile'],
