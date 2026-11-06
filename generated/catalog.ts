@@ -15975,7 +15975,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
-        "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
+        "pattern": "^JXC(?:YI|ZO)\\d{10}YQ$",
         "confidence": "low",
         "preferred": true
       }
@@ -27935,7 +27935,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
+        "pattern": "^JXC(?!YI|ZO)[A-Z]{2}\\d{10}YQ$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^JXC(?:YI|ZO)\\d{10}YQ$",
         "confidence": "low"
       }
     ]
@@ -53704,7 +53708,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],
   "junfeng-international": [],
-  "juxi-express": ["juxi-express-1"],
+  "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
   "kargoist": ["kargoist-1"],
   "kargoturk": [],

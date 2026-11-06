@@ -230,7 +230,7 @@
       "note": "Made-up number in the shape of a parcel on a US line UniUni delivered, which DHLink's tracker answered under that tracking number: CYS and eleven digits. Its serial sits far beyond the range in use."
     },
     {
-      "number": "JXCZZ9999999990YQ",
+      "number": "JXCZO9999999990YQ",
       "role": "shipment",
       "evidence": "synthetic",
       "derivedFrom": "donated_real",
@@ -243,7 +243,7 @@
           "juxi-express"
         ]
       },
-      "note": "Made-up number in the shape of Juxi Express's waybills, which DHLink's tracker answered for a parcel on a US line that providers named beside DHLink: JXC, two letters, ten digits and YQ. Its serial sits far beyond the range in use."
+      "note": "Made-up number in the shape of Juxi Express's waybills, on a line whose code DHLink's tracker answered: JXC, YI or ZO, ten digits and YQ. Its serial sits far beyond the range in use."
     }
   ]
 }

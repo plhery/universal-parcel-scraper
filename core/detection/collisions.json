@@ -7593,12 +7593,12 @@
     "reason": "Boyuan's tracking numbers carry its initials; ParcelsApp named DHLink beside Boyuan for one on a US line. Both rules are low-confidence: recognition asks DHLink, the one with a tracker the app asks, and a provider names Boyuan for the parcels DHLink does not know."
   },
   {
-    "shape": "JXC, two letters, ten digits and YQ",
+    "shape": "JXC, YI or ZO, ten digits and YQ",
     "carriers": [
       "dhlink",
       "juxi-express"
     ],
-    "reason": "Juxi Express's waybills carry its code; most of the app's are on lines it sends through DHLink, which providers name beside it and whose tracker answers them. Both rules are low-confidence and DHLink's is preferred: recognition asks DHLink, and a provider names Juxi Express alone for the parcels on its other lines."
+    "reason": "Juxi Express's waybills carry its code; DHLink's tracker knows those on the two lines coded YI and ZO and not those on its other lines. Both rules are low-confidence and DHLink's is preferred: recognition asks DHLink, and a provider names Juxi Express alone for the parcels DHLink does not know."
   },
   {
     "shape": "TDT, ten digits and CN",
