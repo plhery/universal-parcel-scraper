@@ -197,6 +197,11 @@ carrier.
   S10 number from a country on one clock, or from New Zealand (Auckland's), they are read on
   that clock. Elsewhere, and for its handover scans (`已送交承运商`), whose clock is unknown,
   17TRACK's reading stays.
+- It also copies the destination post's own scans on that post's wall clock, as China Post's
+  adapter reads them (the arrival at its processing centre, import customs, the delivery
+  office's scans), under the same `+08:00`: Correos's arrival at its exchange office showed
+  seven hours before Correos's own row of it. When the recipient's country is on one clock
+  they are read on it; China Post's own arrival in that country stays on China's.
 - Japan Post's leg (carrier key 10021) relays the origin post's acceptance, export customs and
   outward exchange scans on that post's wall clock, as Japan Post's tracker shows them, and
   17TRACK labels them `+09:00`: China Post's posting came an hour before China Post's own leg

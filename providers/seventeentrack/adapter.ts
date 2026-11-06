@@ -21,7 +21,7 @@ import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
-import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
+import { chinaPostDestinationScan, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { agencyIntake, cttSiteZone, isCttExpressAgency } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
@@ -582,6 +582,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers)) : new Map<number, string | null>();
     const origin = reported.key === CHINA_POST ? originZone(number) : reported.key === JAPAN_POST ? japanPostOriginZone(number) : null;
     const outward = reported.key === JAPAN_POST ? OUTWARD_SCAN : ORIGIN_EXCHANGE;
+    // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
+    // reads them, and 17TRACK labels them with China's offset: Correos's arrival at its exchange office at 09:25
+    // Madrid time showed in China Post's leg at 09:25 +08:00, seven hours before Correos's own row of it.
+    const inbound = reported.key === CHINA_POST ? countryTimeZone(recipientCountry(shipment)) : null;
     const salvador = reported.key === CORREO_EL_SALVADOR;
     const sender = salvador && isValidS10TrackingNumber(number) ? countryTimeZone(number.slice(-2)) : null;
     const bound = reported.key === SWISS_POST ? recipientCountry(shipment) : null;
@@ -608,6 +612,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
       const exchange = origin !== null && outward.test(text(raw.description).trim());
+      const arrived = inbound !== null && chinaPostDestinationScan(text(raw.description));
       const own = !salvador ? null : OUTBOUND.test(text(raw.description)) ? sender : 'UTC';
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".
       const relayed = bound ? swissPostDestinationZone(text(raw.description), text(raw.location), bound)
@@ -624,15 +629,15 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const site = !ctt ? null : cttSiteZone(text(raw.location), countries)
         ?? (!text(raw.location) && agencyIntake(wallMillis(raw), agencyScans) ? 'Europe/Madrid' : null);
       // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
-      const read = facility || site || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || own || chile || shiprocket || daiPost || quickRabbit
-        || sent !== undefined;
+      const read = facility || site || relaysFacilityClock(name) || utc || nz || polish || handed || exchange || arrived || own || chile || shiprocket || daiPost
+        || quickRabbit || sent !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland ? null : seasonZone(raw, labelled, now);
       const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
       // A label its mailer wrote on UTC, as USPS's adapter reads it.
       const scanned = facility && wall ? uspsRowZone(wall, facility, text(raw.description), now.toMillis()) : facility;
       const zone = !wall ? null : season ?? (hywl ? relayed : relayed ?? scanned ?? site ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
-        : exchange ? origin : utc ? 'UTC' : polish ? polish : handed ? handed
+        : exchange ? origin : arrived ? inbound : utc ? 'UTC' : polish ? polish : handed ? handed
         : nz ? 'Pacific/Auckland' : quickRabbit ? 'Europe/Madrid' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
         : shiprocket ? (placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null)
         : daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location))));

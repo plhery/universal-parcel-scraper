@@ -768,6 +768,28 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-08-05T22:09:00.000Z');
   });
 
+  it("reads China Post's copies of the destination post's scans on that post's clock, and its own on China's", () => {
+    const row = (date: string, time: string, description: string) => ({
+      time_iso: `${date}T${time}+08:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location: '', stage: null, sub_status: 'InTransit_Other' });
+    const reply = (recipient: string) => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, shipping_info: { recipient_address: { country: recipient } },
+      tracking: { providers: [{ provider: { key: 3011, name: 'China Post', country: 'CN' }, events: [
+        row('2026-11-05', '09:26:00', '送交境外进口海关'),
+        row('2026-11-05', '09:25:00', '到达寄达地处理中心'),
+        row('2026-11-04', '19:37:00', '到达寄达地'),
+      ] }] } } }] });
+    const times = (recipient: string) => parse17TrackResponse(reply(recipient), number).events?.map((e) => [e.description, e.time]);
+    // Correos dated the arrival at its exchange office 09:25 Madrid time; the landing is China Post's own scan.
+    expect(times('ES')).toEqual([
+      ['Presented to import customs abroad', '2026-11-05T08:26:00.000Z'],
+      ['Arrival at processing center in the destination country', '2026-11-05T08:25:00.000Z'],
+      ['Arrive at the place of destination', '2026-11-04T11:37:00.000Z'],
+    ]);
+    // A destination on several clocks keeps 17TRACK's reading.
+    expect(times('US')?.[1]).toEqual(['Arrival at processing center in the destination country', '2026-11-05T01:25:00.000Z']);
+  });
+
   it("reads the origin post's scans Japan Post relays on that post's clock, and Japan Post's own on Tokyo's", () => {
     const row = (date: string, time: string, description: string, location: string) => ({
       time_iso: `${date}T${time}+09:00`, time_utc: null, time_raw: { date, time, timezone: null },
