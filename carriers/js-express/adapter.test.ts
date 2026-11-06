@@ -332,6 +332,7 @@ describe('JS Express tracking adapter', () => {
       ['【iMile Sample DC Center】Received.', 'in_transit'],
       ['【iMile Sample DC Center】Parcel shipped to【Sample01】.', 'in_transit'],
       ['【Other Hub】Parcel shipped to【Other02】.', 'in_transit'],
+      ['【Other Hub】Shipment dispatched.', 'in_transit'],
       ['【Sample DS】Shipment out for delivery.', 'out_for_delivery'],
       ['【Sample DS】Delivered.', 'delivered'],
     ] as const) {

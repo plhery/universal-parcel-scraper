@@ -52,6 +52,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['your order has been shipped from', 'in_transit'],
   // A centre sends the parcel on to the next, the delivery station in 【】 after it, as JS Express relays it.
   ['parcel shipped to', 'in_transit'],
+  // The same centre sending the parcel on without naming the next, as JS Express relays it.
+  ['shipment dispatched', 'in_transit'],
   ['goods put on shelves completed', 'in_transit'],
   ['parcel is currently being processed', 'in_transit'],
   ['the flight has taken off', 'in_transit'],
