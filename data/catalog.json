@@ -42235,7 +42235,8 @@
     "color": "#dc0032",
     "aliases": [
       "Speedy AD",
-      "Speedy Bulgaria"
+      "Speedy Bulgaria",
+      "Speedy (DPD)"
     ],
     "countries": [
       "BG",
@@ -44185,7 +44186,8 @@
     "displayName": "TDN",
     "color": "#ffc72c",
     "aliases": [
-      "TDN, S.A.U."
+      "TDN, S.A.U.",
+      "TDN Online"
     ],
     "countries": [
       "ES",
@@ -48589,6 +48591,26 @@
         "confidence": "low"
       }
     ]
+  },
+  "westweg": {
+    "displayName": "Westweg",
+    "color": "#281569",
+    "aliases": [
+      "Westweg GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://westweg.itdida.com/",
+    "trackingSearchUrl": "https://westweg.itdida.com/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "whistl": {
     "displayName": "Whistl",

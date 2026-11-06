@@ -1,0 +1,33 @@
+{
+  "id": "westweg",
+  "displayName": "Westweg",
+  "aliases": [
+    "Westweg GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#281569"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://westweg.itdida.com/",
+    "canaryUrl": "https://westweg.itdida.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -2748,6 +2748,7 @@ export const REGISTRY: RegistryDefinition = {
     "welivery": "universal",
     "wepost": "universal",
     "western-bid": "universal",
+    "westweg": "universal",
     "whistl": "whistl",
     "whiz-delivery": "whiz-delivery",
     "widect": "universal",

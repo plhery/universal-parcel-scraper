@@ -42239,7 +42239,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#dc0032",
     "aliases": [
       "Speedy AD",
-      "Speedy Bulgaria"
+      "Speedy Bulgaria",
+      "Speedy (DPD)"
     ],
     "countries": [
       "BG",
@@ -44189,7 +44190,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "TDN",
     "color": "#ffc72c",
     "aliases": [
-      "TDN, S.A.U."
+      "TDN, S.A.U.",
+      "TDN Online"
     ],
     "countries": [
       "ES",
@@ -48594,6 +48596,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "westweg": {
+    "displayName": "Westweg",
+    "color": "#281569",
+    "aliases": [
+      "Westweg GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://westweg.itdida.com/",
+    "trackingSearchUrl": "https://westweg.itdida.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "whistl": {
     "displayName": "Whistl",
     "color": "#fd4f00",
@@ -51874,6 +51896,7 @@ export const CARRIER_IDS = [
   "welivery",
   "wepost",
   "western-bid",
+  "westweg",
   "whistl",
   "whiz-delivery",
   "widect",
@@ -53218,6 +53241,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "welivery": [],
   "wepost": [],
   "western-bid": ["western-bid-1"],
+  "westweg": [],
   "whistl": ["whistl-1"],
   "whiz-delivery": ["whiz-delivery-1"],
   "widect": [],
