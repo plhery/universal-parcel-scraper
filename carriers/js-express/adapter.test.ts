@@ -321,6 +321,11 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressStage('In Transit to Next Facility', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
+  it("reads FedEx's status between its facilities on the line it delivers", () => {
+    expect(jsExpressStage('On the way', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'On the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it("reads China Post's express item arriving at a centre, slogan and all, as its mail arriving", () => {
     const arrived = '快件到达【示例集散中心】，该处理中心已实现光伏绿色能源供电，绿色邮政，绿动未来！';
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: arrived })).toEqual({ kind: 'mapped', stage: 'in_transit' });
