@@ -25,6 +25,17 @@ browser is needed.
   is written at "US, SYSTEM, SYSTEM", a place the platform reads as none, repeated at the head of
   its wording, which is read without it. The tracker writes the warehouse receipt in Chinese,
   "到达收货点", which the map lists too.
+- On the line into Germany the tracker writes its own steps in Chinese, from the airport to the
+  hand-over to DHL's warehouse ("已交仓"), and then copies DHL's English sentences. A flight row
+  names the day it is due to land, which the map reads as an ellipsis.
+- DHL's sentences come on DHL's wall clock, as [JRT's](../jrt/README.md) do on the same platform:
+  each is written at the platform's next 4-hourly poll after its German time, where Beijing time
+  would put it seven to ten hours later. Without a town, DHL's rows from Germany before the parcel
+  leaves (the sender's data, the announcement, the parcel centre of origin) are read on DHL's
+  German clock and the others on the destination's.
+- DHL's "The shipment is returned to the sender" row starts the way back: a move or a delivery
+  after it reads as returned. DHL's delivery "from the parcel center to the business customer" is
+  then the return delivered to the sender.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.

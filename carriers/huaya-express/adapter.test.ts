@@ -106,6 +106,57 @@ describe('Huaya Express tracking adapter', () => {
     expect(policy.matches?.({ ...handed, description: 'Package handed over to airline', location: 'SHENZHEN' }, handed)).toBe(false);
   });
 
+  it('dates the rows it copies from DHL on DHL’s clock and reads the way back after a return as returned', () => {
+    const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
+    const record = reply[0].data[0];
+    const template = record.trackDetails.at(-1)!;
+    // Newest first, as the tracker lists them, each with the platform's Beijing time it was written at.
+    const row = (date: string, created: string, content: string, kind = '') =>
+      ({ ...template, track_date: date, track_createdate: created, track_content: content, track_location: '', track_kind: kind });
+    record.consigneeCountry = 'DE';
+    record.trackDetails = [
+      row('2026-11-04 10:00:00', '2026-11-04 18:33:03', 'The shipment has been sent directly from the parcel center to the business customer.'),
+      row('2026-11-04 04:35:00', '2026-11-04 14:33:02', 'The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.'),
+      row('2026-11-03 20:37:00', '2026-11-04 06:33:03', 'The shipment has been processed in the parcel center of origin'),
+      row('2026-11-02 13:42:00', '2026-11-02 22:33:02', 'Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.'),
+      row('2026-11-02 13:42:00', '2026-11-02 22:33:02', 'The recipient could not be found at the address on the shipment.'),
+      row('2026-11-02 09:55:00', '2026-11-02 18:33:03', 'The shipment has been loaded onto the delivery vehicle.'),
+      row('2026-10-28 11:03:00', '2026-10-29 21:48:27', '已交仓'),
+      row('2026-10-23 22:57:00', '2026-10-28 16:59:18', '清关完成'),
+      row('2026-10-22 15:19:00', '2026-10-28 16:59:18', '航班落地，清关中'),
+      row('2026-10-22 10:05:00', '2026-10-28 16:59:18', '航班起飞，预计航班落地时间(10.22)'),
+      row('2026-10-18 18:37:00', '2026-10-19 02:33:00', 'The shipment is in transit to DHL'),
+      row('2026-10-18 01:14:00', '2026-10-18 10:03:04', 'The instruction data for this shipment have been provided by the sender to DHL electronically'),
+      row('2026-10-17 23:47:00', '2026-10-17 23:47:42', '到达收货点', 'ARRIVAL'),
+    ];
+    const result = parseHuayaTrack(reply, NUMBER, Date.parse('2026-11-05T00:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_update: '2026-11-04T10:00:00+01:00' });
+    expect(result.events!.map(({ time, stage }) => [time, stage])).toEqual([
+      // DHL's rows on its German wall clock: each was written at the platform's next 4-hourly
+      // poll, which Beijing time would put seven to ten hours later.
+      ['2026-11-04T10:00:00+01:00', 'returned'],
+      ['2026-11-04T04:35:00+01:00', 'returned'],
+      ['2026-11-03T20:37:00+01:00', 'returned'],
+      ['2026-11-02T13:42:00+01:00', 'returned'],
+      ['2026-11-02T13:42:00+01:00', 'failed_attempt'],
+      ['2026-11-02T09:55:00+01:00', 'out_for_delivery'],
+      // Huaya's own rows on the platform's Beijing clock.
+      ['2026-10-28T11:03:00+08:00', 'in_transit'],
+      ['2026-10-23T22:57:00+08:00', 'in_transit'],
+      ['2026-10-22T15:19:00+08:00', 'customs'],
+      ['2026-10-22T10:05:00+08:00', 'in_transit'],
+      ['2026-10-18T18:37:00+02:00', 'in_transit'],
+      ['2026-10-18T01:14:00+02:00', 'registered'],
+      ['2026-10-17T23:47:00+08:00', 'accepted'],
+    ]);
+    expect(result.events!.filter((event) => event.time_zone).map((event) => event.time_zone_basis))
+      .toEqual(['destination', 'destination', 'carrier', 'destination', 'destination', 'destination', 'carrier', 'carrier']);
+    // Without a return the delivery is the recipient's.
+    record.trackDetails.splice(0, 4);
+    record.trackDetails.unshift(row('2026-11-02 13:42:00', '2026-11-02 22:33:02', 'The shipment has been sent directly from the parcel center to the business customer.'));
+    expect(parseHuayaTrack(reply, NUMBER, Date.parse('2026-11-05T00:00:00Z'))).toMatchObject({ current_stage: 'delivered' });
+  });
+
   it('holds back a row dated after the lookup', () => {
     const result = parseHuayaTrack(fixture('track'), NUMBER, Date.parse('2026-03-10T00:00:00Z'))!;
     expect(result).toMatchObject({ last_status_text: 'Customs import clearance completed, awaiting pickup by local carrier' });
