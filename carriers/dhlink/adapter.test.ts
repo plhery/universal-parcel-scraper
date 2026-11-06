@@ -326,6 +326,24 @@ describe('DHLink HTTP adapter', () => {
     expect(relayed([twins[3]!, twins[1]!], 'GB').events).toHaveLength(2);
   });
 
+  it('reads the rows of Pactic, the Hungarian platform a line to Bulgaria goes through, on Budapest’s clock', () => {
+    const row = (trackTime: string, createDate: string, info: string) => ({ trackTime, createDate, place: 'none', info, nodeCode: null, nodeName: null });
+    const parcel = parseDhlink(changed('swiftx-at-warehouse', (reply) => {
+      reply.destCountryCode = 'BG';
+      reply.lastTurnNo = null;
+      reply.trackinfoList = [
+        row('2026-03-05 09:40:00', '2026-03-05 17:00:00', 'Shipment arrived to sorting centre / Shipment in the sorting centre'),
+        row('2026-03-04 12:58:00', '2026-03-04 20:30:00', 'Linehaul Transit; Parcel has entered the Linehaul network.'),
+        row('2026-03-04 12:22:00', '2026-03-04 20:30:00', 'Arrived to HU HUB'),
+        row('2026-02-28 23:01:01', '2026-03-01 08:00:00', 'Data Received; Data transferred and received by carrier'),
+      ];
+    }), WAREHOUSE, LATER);
+    // Sofia's clock would put the hub an hour early; the sorting centre, which names no country, keeps its wall clock.
+    expect(parcel.events!.map((event) => event.time ?? event.local_time)).toEqual([
+      '2026-03-05T09:40:00', '2026-03-04T12:58:00+01:00', '2026-03-04T12:22:00+01:00', '2026-02-28T23:01:01+01:00',
+    ]);
+  });
+
   it('drops the row’s own clock from the end of a node’s wording, and keeps any other', () => {
     const worded = (info: string) => parseDhlink(changed('postal-delivered', (parcel) => {
       parcel.trackinfoList[1]!.info = info;

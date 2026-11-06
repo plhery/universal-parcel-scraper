@@ -73,8 +73,11 @@ page makes.
   UTC copy is dropped. Otherwise a scan a USPS
   office names with its state and ZIP code, or that pickup, is read on that state's time, unless
   the state spans several zones. A scan recorded before its clock could have struck at the
-  destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. Any
-  other scan could be on either clock and keeps its wall clock in `local_time`; the newest
+  destination, even in the destination's easternmost zone, keeps DHLink's own Beijing time. A line
+  to south-eastern Europe goes through Pactic, a Hungarian shipping platform (see
+  [Sameday](../sameday/README.md)): its data record, the arrival at its hub in Hungary ("HU HUB")
+  and the line haul from there are read on Budapest's clock, where the destination's would put
+  them an hour early. Any other scan could be on either clock and keeps its wall clock in `local_time`; the newest
   scan's instant, when it has one, is the last update.
 - A row still after the read at UTC+14, the earliest instant it can stand for, is dropped, and
   the delivered count is then not trusted. So is the flight DHLink books the parcel on

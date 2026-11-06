@@ -145,6 +145,11 @@ function recordedAt(row: Record<string, unknown>): number | null {
   return wall ? isoTime(`${wall[1]}T${wall[2]}`, RECORD_ZONE)?.timestamp ?? null : null;
 }
 
+// The rows of Pactic, the Hungarian platform a line to south-eastern Europe goes through: its data record, the
+// arrival at its hub in Hungary and the line haul from there, on Budapest's clock whatever the destination's.
+const PACTIC_ROW = /^(?:data received; data transferred and received by carrier|arrived to hu hub|linehaul transit; parcel has entered the linehaul network)\b/i;
+const PACTIC_ZONE = 'Europe/Budapest';
+
 /**
  * The zone a scan's clock keeps, where DHLink's record shows it. Places in
  * China and every row of a parcel whose last leg relays on Beijing time keep
@@ -159,6 +164,7 @@ function scanZone(scan: Scan, destination: string, beijingClock: boolean): strin
     const time = isoTime(scan.stamp, zone);
     return time !== null && time.timestamp <= scan.recorded + CLOCK_SKEW_MS;
   };
+  if (PACTIC_ROW.test(scan.event.description ?? '')) return fits(PACTIC_ZONE) ? PACTIC_ZONE : null;
   if (scan.china || beijingClock) return fits(RECORD_ZONE) ? RECORD_ZONE : null;
   if (scan.state && fits(scan.state)) return scan.state;
   const away = scan.state ? [scan.state] : countryZones(destination);
