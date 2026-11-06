@@ -56,6 +56,13 @@ describe('Russian Post anonymous tracking', () => {
     expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '11.0', description: 'Прием на таможню' })).toEqual({ kind: 'mapped', stage: 'customs' });
   });
 
+  it('reads every acceptance attribute of operation type 1 as the acceptance', () => {
+    for (const code of ['1.1', '1.8', '1.11']) {
+      expect(statusMapAnswer({ carrier: 'russian-post', providerCode: code, description: 'Упрощенный предоплаченный' }), code).toEqual({ kind: 'mapped', stage: 'accepted' });
+    }
+    expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '10.0', description: 'Example' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it('does not end a return while later sorting or transport continues', () => {
     const body = fixture(); Object.assign(body[0]!.trackingItem, { globalStatus: 'RETURNED', isReturned: true,
       trackingHistoryItemList: [row(8, 4, 'Departed from local distribution center'), row(3, 1, 'Returned to the sender', '2026-03-10T12:00:00.000+03:00')] });

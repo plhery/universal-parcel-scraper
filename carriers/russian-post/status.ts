@@ -2,7 +2,7 @@ import { classifyWording, type ClassifiedWording, type Stage } from '../../core/
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const CODES: ReadonlyMap<string, Stage> = new Map([
-  ['28.0', 'registered'], ['1.1', 'accepted'], ['1.2', 'accepted'],
+  ['28.0', 'registered'],
   ['8.0', 'in_transit'], ['8.1', 'in_transit'], ['8.2', 'ready_for_pickup'], ['8.3', 'in_transit'],
   ['8.4', 'in_transit'], ['8.18', 'out_for_delivery'], ['8.20', 'in_transit'], ['4.5', 'exception'],
   // International exchange, by the operation list of the open-source lapaygroup/RussianPost client: the
@@ -14,17 +14,23 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
 ]);
 const DELIVERY = new Set(['2.6', '2.25']);
 
+/**
+ * An operation of type 1 is the acceptance ("Прием"), whatever its attribute: single, batch, simplified
+ * prepaid (1.8) or on a forwarder's order, by the lapaygroup/RussianPost operation list.
+ */
+const codeStage = (code: string): Stage | undefined =>
+  code.startsWith('3.') ? 'exception' : code.startsWith('1.') ? 'accepted' : CODES.get(code);
+
 /** A return operation starts the return leg; a later delivery completes that leg. */
 export function russianPostStage(code: string, wording: string, returnLeg = false): ClassifiedWording | null {
   if (DELIVERY.has(code)) return { stage: returnLeg ? 'returned' : 'delivered', source: 'carrier_map' };
-  if (code.startsWith('3.')) return { stage: 'exception', source: 'carrier_map' };
-  const stage = CODES.get(code);
+  const stage = codeStage(code);
   if (stage) return { stage, source: 'carrier_map' };
   const staged = classifyWording(wording, 'in_transit');
   return staged.source === 'none' ? null : staged;
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: code => code?.startsWith('3.') ? 'exception' : CODES.get(code ?? ''),
+  stage: code => codeStage(code ?? ''),
   gaps: [...DELIVERY].map(code => ({ code, note: 'Delivery completes the forward or return leg; the adapter reads it with the preceding return operation.' })),
 };

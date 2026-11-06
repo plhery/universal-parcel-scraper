@@ -21,7 +21,8 @@ A return operation starts the return leg. Later sorting or transport stays activ
 operation completes a return only with that leg's context or the carrier's return flag. The
 single-scan status map leaves delivery codes for the adapter to interpret with that context.
 
-Operations are staged by their type and attribute codes. The international exchange codes the
+Operations are staged by their type and attribute codes. Every type 1 operation is the acceptance,
+whatever its attribute, and every type 3 one the return. The international exchange codes the
 page has not shown yet are mapped from the operation list of the open-source
 [lapaygroup/RussianPost](https://github.com/lapaygroup/RussianPost/blob/master/src/StatusList.php)
 client, which names each operation in Russian.

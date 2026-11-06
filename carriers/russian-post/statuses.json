@@ -23,6 +23,14 @@
       "confirmedBy": "live"
     },
     {
+      "code": "1.8",
+      "wording": "Упрощенный предоплаченный",
+      "stage": "accepted",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "Acceptance (operation type 1), simplified and prepaid. Every type 1 attribute is an acceptance."
+    },
+    {
       "code": "8.0",
       "wording": "Sorting",
       "stage": "in_transit",
