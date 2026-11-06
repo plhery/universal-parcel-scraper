@@ -1,4 +1,103 @@
 {
   "carrier": "xcargo",
-  "entries": []
+  "entries": [
+    {
+      "code": "101",
+      "wording": "Creación del numero de orden",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "199",
+      "wording": "Aceptación de envío",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "130",
+      "wording": "Contenerizado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "200",
+      "wording": "Recibido",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "201",
+      "wording": "En estación",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "210",
+      "wording": "Disponible en estación de última milla",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "131",
+      "wording": "Descontenerizado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "301",
+      "wording": "Asignado a ruta de última milla",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "303",
+      "wording": "Paquete próximo en entrega",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "310",
+      "wording": "Intentados no entregados",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "311",
+      "wording": "Cliente no disponible (DND)",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "206",
+      "wording": "Regreso a la estación",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "207",
+      "wording": "En espera para salir de nuevo a ruta de entrega",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "360",
+      "wording": "Entregado al cliente",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "portal"
+    }
+  ]
 }

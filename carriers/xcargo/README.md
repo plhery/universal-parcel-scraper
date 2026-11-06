@@ -1,29 +1,42 @@
 # X-Cargo
 
-X-Cargo parcels use enabled universal providers. There is no dedicated adapter.
+Guest tracking for X-Cargo's Fontylink group consignments in Colombia, through
+the Big Smart platform used by its official widget.
 
-X-Cargo is a Bogotá express courier with an electric last-mile fleet, delivering across Colombia, SHEIN's
-parcels among others. Its site is x-cargo.co.
+## Retrieval and scope
 
-## Numbers
+The adapter reads the shared visitor bearer from the public widget script at
+`x-cargo.co/wp-content/uploads/BigTracking/big-tracker.min.js`, then requests
+`GET api.bigsmart.mx/api/order-logs/{number}?populate=true&language=es` with the
+widget's origin. No account or recipient input is needed. Fresh configuration
+avoids copying an expiring credential into the adapter.
 
-Its numbers are sixteen digits in the one public example, a regulator's reply, and no check digit fits them.
-Sixteen digits are shared by other carriers, so there is no rule.
+Both canonical tracking identities and every scan's order binding must agree.
+The record must belong to Fontylink, which X-Cargo names as part of its
+[holding group](https://x-cargo.co/about-us/). Other clients on the shared platform
+do not establish X-Cargo ownership. The adapter supports complete sixteen-digit
+references without adding a shared numeric detection rule or HTTP recognition.
+An operating-carrier label is not converted into a guessed catalog handoff.
 
-## Why there is no adapter
+Only the exact HTTP404 missing-record envelope establishes absence. An empty
+history, unsupported group, refusal or malformed reply remains a separate failure.
+One network-only retry restarts the two-request flow inside the caller's deadline.
 
-Its home page embeds Big Smart's tracking widget, the platform Big Smart's own entry runs on. The widget
-reads an open JSON API without a CAPTCHA: `GET api.bigsmart.mx/api/order-logs/{number}?populate=true&language=es`
-with a bearer token the public widget script gives every visitor, and x-cargo.co as origin. It answers the
-public example with its scans and an unknown number with a 404. The token expires yearly, so an adapter would
-read it from the widget script. Its scans carry Mexico's GMT-06:00 offset, which an adapter has to check
-against Colombian time, and its delivery notes name the receiver. No adapter has been written for it yet.
+## History and clocks
 
-## Links
+Registration does not establish custody. Assignment to a route stays in transit;
+the operator's actual dispatch establishes out for delivery. A return to the
+delivery station is not a return to sender. All source rows are validated before
+projected deduplication and the output cap; unknown codes keep history partial.
+Notes, recipient/proof fields, employees, contact details and GPS are omitted.
 
-Its tracker has no address for a single number, so no link names it.
+Scan clocks retain their stated GMT offsets, including offsets on Colombian
+records that differ from the catalog's Bogota zone. The country does not justify
+replacing an explicit source offset. Equal-time scans retain their source order.
+Driver estimates and map data are not parcel delivery promises, so no ETA is
+inferred from them.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `XCARGO_TRACKING_NUMBER` and optionally `XCARGO_UNKNOWN_NUMBER` outside the
+repository, then run `npm run test:carriers:live -- carriers/xcargo`.

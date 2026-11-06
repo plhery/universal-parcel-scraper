@@ -18,17 +18,35 @@
   "timezone": "America/Bogota",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "xcargo",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
-    "searchUrl": "https://x-cargo.co/",
-    "canaryUrl": "https://x-cargo.co/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "searchUrl": "https://x-cargo.co/tracking/",
+    "canaryUrl": "https://x-cargo.co/tracking/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "recipient_details",
+      "location_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [],
   "detection": []

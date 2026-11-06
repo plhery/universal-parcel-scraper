@@ -14,9 +14,10 @@ carrier's number, which stays with that carrier.
 
 ## Why there is no adapter
 
-Its tracking page reads a JSON API without a session, and the reply names the final-mile carrier
-and its number. It keeps a shipment only for a short time, and no current public reference is
-known to confirm an answer. Its event times carry no zone.
+The current tracking page requests `GET /api/track-shipment?tracking_code=` on shipwizmo.com
+without an account or secondary input. Archived shipment replies belong to the older
+`/api/v1/portal/track/` interface; they do not verify the current endpoint's identity, partner
+fields or scan clocks. No current public positive is known, so native retrieval remains disabled.
 
 ## Links
 

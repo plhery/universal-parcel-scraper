@@ -1,0 +1,278 @@
+{
+  "id": 1001,
+  "tracking_number": "9000000000000017",
+  "reference_tracking_number": "9000000000000017",
+  "alternative_tracking_number": "SYNTHETIC_PRIVATE_REFERENCE",
+  "primary_client_name": "Fontylink",
+  "carrier_name": "SYNTHETIC_OPERATOR",
+  "customer_municipality": "SYNTHETIC_CITY",
+  "customer_state": "SYNTHETIC_STATE",
+  "phone_carrier": "SYNTHETIC_PHONE",
+  "estimated_delivery_date": "2040-01-02",
+  "tracking_summary": null,
+  "tracking_summary_details": {
+    "contact": "SYNTHETIC_CONTACT"
+  },
+  "data": [
+    {
+      "id": 2001,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3101,
+        "code": 101,
+        "code_type": "line_haul",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-01 08:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2002,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3199,
+        "code": 199,
+        "code_type": "line_haul",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-02 09:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2003,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3301,
+        "code": 301,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 10:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2004,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3303,
+        "code": 303,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 11:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2005,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3310,
+        "code": 310,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 12:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2006,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3311,
+        "code": 311,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 12:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2007,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3206,
+        "code": 206,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 13:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2008,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3207,
+        "code": 207,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-03 14:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2009,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3303,
+        "code": 303,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-04 09:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    },
+    {
+      "id": 2010,
+      "order_id": 1001,
+      "status": null,
+      "status_code": {
+        "id": 3360,
+        "code": 360,
+        "code_type": "last_mile",
+        "activity": "SYNTHETIC_FREE_WORDING",
+        "description": "SYNTHETIC_PRIVATE_DESCRIPTION"
+      },
+      "created_at": "2026-05-04 10:00:00",
+      "gmt_offset": "GMT-06:00",
+      "notes": "SYNTHETIC_RECIPIENT SIGNATURE phone@example.invalid",
+      "employee": {
+        "name": "SYNTHETIC_PERSON"
+      },
+      "details": "SYNTHETIC_DETAILS",
+      "evidences": [
+        {
+          "url": "https://example.invalid/private-proof"
+        }
+      ],
+      "latitude": 0,
+      "longitude": 0
+    }
+  ]
+}

@@ -50108,10 +50108,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Bogota",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xcargo"
     },
-    "canaryUrl": "https://x-cargo.co/",
-    "trackingSearchUrl": "https://x-cargo.co/",
+    "canaryUrl": "https://x-cargo.co/tracking/",
+    "trackingSearchUrl": "https://x-cargo.co/tracking/",
     "linkRules": [],
     "detectionRules": []
   },

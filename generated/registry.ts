@@ -713,6 +713,7 @@ import { adapter as wiio } from '../carriers/wiio/adapter.js';
 import { adapter as winit } from '../carriers/winit/adapter.js';
 import { adapter as wooliiporter } from '../carriers/wooliiporter/adapter.js';
 import { adapter as wpGround } from '../carriers/wp-ground/adapter.js';
+import { adapter as xcargo } from '../carriers/xcargo/adapter.js';
 import { adapter as xdeLogistics } from '../carriers/xde-logistics/adapter.js';
 import { adapter as xdp } from '../carriers/xdp/adapter.js';
 import { adapter as xgs } from '../carriers/xgs/adapter.js';
@@ -1454,6 +1455,7 @@ export const REGISTRY: RegistryDefinition = {
     "winit": winit,
     "wooliiporter": wooliiporter,
     "wp-ground": wpGround,
+    "xcargo": xcargo,
     "xde-logistics": xdeLogistics,
     "xdp": xdp,
     "xgs": xgs,
@@ -2804,7 +2806,7 @@ export const REGISTRY: RegistryDefinition = {
     "wp-ground": "wp-ground",
     "x-express-ba": "universal",
     "x-trac": "universal",
-    "xcargo": "universal",
+    "xcargo": "xcargo",
     "xd-express": "universal",
     "xde-logistics": "xde-logistics",
     "xdp": "xdp",
