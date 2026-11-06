@@ -47,10 +47,10 @@ describe('AnserX HTTP adapter', () => {
     expect(recorder.lookup).toHaveBeenCalledTimes(1);
   });
 
-  it('reads a delivered parcel as wall clocks, newest first, with towns but no postcodes or the customer’s references', () => {
+  it('reads a delivered parcel on Beijing time, newest first, with towns but no postcodes or the customer’s references', () => {
     const result = normalizeCarrierResult(parseAnserx(fixture('delivered'), DELIVERED));
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
-      last_status_text: 'Parcel has been delivered', last_update: null, last_update_local: '2026-09-21T12:40:15',
+      last_status_text: 'Parcel has been delivered', last_update: '2026-09-21T12:40:15+08:00',
       expected_delivery: null, destination_country: 'MX' });
     expect(result.events!.map((event) => [event.local_time, event.location, event.provider_code, event.stage])).toEqual([
       ['2026-09-21T12:40:15', 'Puebla', 'BTY_LASTMILE_DELIVERED', 'delivered'],
@@ -67,14 +67,16 @@ describe('AnserX HTTP adapter', () => {
       ['2026-09-03T20:10:05', 'CN', 'BTY_ORDER_CREATED', 'registered'],
     ]);
     expect(result.events![3]!.description).toBe('Leaving transportation partner facilities, waiting for items');
-    expect(result.events!.every((event) => event.time === undefined && event.stage_source === 'carrier_map')).toBe(true);
+    // The Mexican scans too: AnserX writes every scan on its own clock.
+    expect(result.events!.every((event) => event.time === `${event.local_time}+08:00` && event.time_zone === 'Asia/Shanghai'
+      && event.time_zone_basis === 'carrier' && event.stage_source === 'carrier_map')).toBe(true);
     expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(JSON.stringify(result)).not.toMatch(/72000|C000X000|SAMPLE-ORDER|1800000000000000001/);
   });
 
   it('reads a parcel with the delivery carrier and hands its delivery number on', () => {
     const result = parseAnserx(fixture('in-transit'), IN_TRANSIT);
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update_local: '2026-10-02T07:25:00',
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-10-02T07:25:00+08:00',
       last_status_text: 'arrival at transportation partner facilities, waiting for items',
       delivery_tracking_number: USPS, destination_country: 'US' });
     expect(result).not.toHaveProperty('delivery_carrier');
@@ -122,7 +124,8 @@ describe('AnserX HTTP adapter', () => {
           trackingTime: '2026-10-04 10:00:00' },
       );
     }), IN_TRANSIT);
-    expect(result.events![0]).toEqual({ local_time: '2026-10-05T10:00:00', description: 'Synthetic note' });
+    expect(result.events![0]).toEqual({ local_time: '2026-10-05T10:00:00', time: '2026-10-05T10:00:00+08:00', time_zone: 'Asia/Shanghai',
+      time_zone_basis: 'carrier', description: 'Synthetic note' });
     expect(result.events![1]).toMatchObject({ location: 'Springfield', provider_code: 'BTY_SYNTHETIC_STEP', stage: 'delivered',
       stage_source: expect.stringMatching(/^wording/) });
     expect(result).toMatchObject({ current_stage: 'delivered', last_status_text: 'Synthetic note' });
@@ -179,9 +182,9 @@ describe('AnserX HTTP adapter', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')))).track({ number: UNKNOWN }))
       .rejects.toMatchObject({ kind: 'not_found' });
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('not-found')))).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
-    // A local clock dates the last activity without an instant.
+    // Beijing's clock dates the last activity.
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')))).recognize!(DELIVERED))
-      .resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-09-21T12:40:15' });
+      .resolves.toEqual({ known: true, lastActivityAt: '2026-09-21T04:40:15.000Z' });
   });
 
   it('keeps a failed lookup, a refusal, a moved route, a browser check and a broken reply apart', async () => {

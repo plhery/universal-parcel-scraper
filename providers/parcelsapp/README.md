@@ -273,7 +273,9 @@ step exists for future protocol changes.
   Italy, Japan, Brazil and the US) dates its origin leg on China time, from "Order
   received successfully" to "Left from departure country/region", and its return
   warehouse too. That leg includes the warehouse's own steps ("Shipment information
-  received by warehouse electronically" to "Package shipped out from warehouse") and the
+  received by warehouse electronically" to "Package shipped out from warehouse", with
+  ParcelsApp's "Arrived at warehouse" and "Received by warehouse", which Cainiao's own
+  reply dates +08:00 on a parcel routed elsewhere on another clock) and the
   origin sorting center's ("Processing at sorting center", "Departed from sorting
   center"), which AliExpress's feed dates +08:00 in mainland China and Hong Kong.
   "Carrier update" is not listed: besides its own notices, on China time, Cainiao words its
@@ -487,11 +489,12 @@ step exists for future protocol changes.
   oficina de cambio" and "En aduana de origen", are at that post's clock, as on Correos's
   own tracker ([Correos](../../carriers/correos-spain/README.md)). They are read on the
   clock of the country an S10 number ends with, or stay wall times when it has several.
-- Correo Uruguayo's copies of a sending post's scans name that post's country ("CHINA")
-  and are on its clock, as on Correo Uruguayo's own tracker
+- Correo Uruguayo's and Slovak Post's copies of a sending post's scans name that post's
+  country ("CHINA", "TAIWAN") and are on its clock, as on their own trackers
   ([Correo Uruguayo](../../carriers/correo-uruguayo/README.md)), or stay wall times when it
   has several. Read on Montevideo's clock, China Post's posting came eleven hours after China
-  Post's own row of it.
+  Post's own row of it; read on Bratislava's, Chunghwa Post's came seven hours after Slovak
+  Post's own row, which states +08:00.
 - Speedaf's dates are its sites' wall clocks under a UTC label. Its own feed dates the
   scans up to the departing flight ("Cargo flight departured") on China time and the rest
   on the destination's, and Cainiao's copies of the same scans agree once read that way.

@@ -23,9 +23,10 @@ tracking page makes.
 
 ## Notes
 
-- The tracking page says every scan time is the time where the scan happened. One history runs
-  from China's clock to the destination's, and the reply gives no zone, so the clocks stay
-  `local_time`.
+- Every scan time is on Beijing time, the scans abroad too, although the tracking page says
+  each is the time where the scan happened. Each scan also carries the moment it was entered,
+  on Beijing time: read on Mexico's clock, Mexican delivery scans would have been entered hours
+  before they happened, while on Beijing's every scan comes before its entry.
 - A scan's description is its English wording, or its Chinese one when the English is empty.
   The `trackingCode` (`BTY_LASTMILE_DELIVERED`) stages it. The clearance code's English says
   export customs while its Chinese says import clearance at destination, where it is placed;
@@ -41,7 +42,7 @@ tracking page makes.
 
 ## Limitations
 
-- No ETA, weight, service or delivery instant with a zone.
+- No ETA, weight or service.
 - The adapter takes only the layout below.
 
 ## Numbers

@@ -752,6 +752,16 @@ describe('ParcelsApp result parsing', () => {
     expect(time('MONTEVIDEO')).toEqual(['2026-10-10T16:51:00.000Z']);
   });
 
+  it("reads Slovak Post's copy of a sending post's posting on the clock of the country it names", () => {
+    const time = (location?: string) => parseParcelsAppResponse({
+      carriers: ['Taiwan Post - Chunghwa Post', 'Slovakia Post'], originCode: 'TW', destinationCode: 'SK',
+      states: [{ date: '2026-11-02T09:25:14Z', status: 'Posted at post office', carrier: 1, ...(location ? { location } : {}) }],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // Slovak Post's own row of the posting states +08:00.
+    expect(time('TAIWAN')).toEqual(['2026-11-02T01:25:14.000Z']);
+    expect(time()).toEqual(['2026-11-02T08:25:14.000Z']);
+  });
+
   it('reads scans named "Evri" on Evri UK\'s London clock and proposes Evri UK', () => {
     // Live shape (2026-10-16): Evri UK's wall clocks labelled "+00:00", an hour
     // after the instants of Evri UK's own history in summer.
@@ -1573,6 +1583,15 @@ describe('ParcelsApp result parsing', () => {
       '2026-10-16T00:01:25.000Z',
       '2026-10-15T22:30:00.000Z',
       '2026-10-15T19:07:09.000Z',
+    ]);
+    // The consolidation warehouse's own steps, which Cainiao's reply dates +08:00, whatever routing's zone.
+    const consolidated = parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode: 'IT', states: [
+      { date: '2026-10-29T13:53:00Z', status: 'Departed from warehouse', carrier: 0 },
+      { date: '2026-10-29T12:51:15Z', status: 'Received by warehouse', carrier: 0 },
+      { date: '2026-10-29T09:11:22Z', status: 'Arrived at warehouse', carrier: 0 },
+    ] }, number, identity(), 'Europe/Rome');
+    expect(consolidated.events?.map((scan) => scan.time)).toEqual([
+      '2026-10-29T05:53:00.000Z', '2026-10-29T04:51:15.000Z', '2026-10-29T01:11:22.000Z',
     ]);
   });
 

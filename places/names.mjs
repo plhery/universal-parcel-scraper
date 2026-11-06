@@ -10,7 +10,8 @@ const directions = new Set(['nord', 'sud', 'ost', 'west', 'north', 'south', 'eas
 /**
  * Lower case, no accents, words separated by single spaces:
  * "Zürich" and "ZURICH" both become "zurich", "St. Gallen" becomes "st gallen".
- * Chinese, Japanese, Korean and Cyrillic script stays as written: "深圳", "тюмень".
+ * Chinese, Japanese, Korean, Cyrillic, Greek and Thai script stays as written: "深圳",
+ * "тюмень", "αθηνα", "เชียงใหม่", Thai with its vowel and tone marks.
  * @param {string} name
  * @returns {string}
  */
@@ -18,11 +19,11 @@ export function nameKey(name) {
   return name
     .replace(/[ßæÆøØœŒłŁđĐıþð]/g, (letter) => letters[/** @type {keyof typeof letters} */ (letter)])
     .normalize('NFD')
-    // Kana voicing marks are part of the letter, not an accent.
-    .replace(/(?![\u3099\u309a])\p{Mn}/gu, '')
+    // Kana voicing marks and Thai vowels and tone marks are part of the word, not accents.
+    .replace(/(?![\u3099\u309a\u0e00-\u0e7f])\p{Mn}/gu, '')
     .normalize('NFC')
     .toLowerCase()
-    .replace(/[^a-z0-9\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Cyrillic}]+/gu, ' ')
+    .replace(/[^a-z0-9\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\p{Script=Cyrillic}\p{Script=Greek}\p{Script=Thai}]+/gu, ' ')
     .trim();
 }
 

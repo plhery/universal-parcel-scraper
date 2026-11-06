@@ -311,6 +311,8 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
   ['gofoexpress', [{ wording: /^shipping label created$/i, zone: 'America/Los_Angeles' }]],
   ['cainiao', [
     { wording: wordings(CAINIAO_CHINA_LEG), zone: CAINIAO_CHINA_ZONE },
+    // The consolidation warehouse's arrival and receipt in ParcelsApp's words, which Cainiao states +08:00.
+    { wording: wordings(['arrived at warehouse', 'received by warehouse']), zone: CAINIAO_CHINA_ZONE },
     { wording: wordings(['import clearance start', 'import customs clearance complete', 'arrived at customs', 'leaving customs',
       'we\'re inspecting your order']), zone: DESTINATION, via: { PT: 'ES' } },
     { wording: wordings(['your shipment has arrived at sorting center', 'your shipment has been processed at sorting center and ready for shipping']),
@@ -941,15 +943,23 @@ function placeClockLine(carrier: string, status: string, location: string): stri
 }
 
 /**
- * The clock of a sending post's scan that Correo Uruguayo relays under the
- * country it names ("CHINA"): that country's, as on its own tracker, or null
- * when the country keeps several clocks. Read on Montevideo's clock, China
- * Post's posting came eleven hours after China Post's own row of it.
- * Undefined for a scan the place does not put abroad.
+ * The destination posts that relay a sending post's scan under the country it
+ * names ("CHINA", "TAIWAN"), on that post's clock, by their home country. Read
+ * on Montevideo's clock, China Post's posting came eleven hours after China
+ * Post's own row of it; read on Bratislava's, Chunghwa Post's came seven
+ * hours after Slovak Post's own row, which states +08:00.
  */
-function correoUruguayoRelayZone(location: string): string | null | undefined {
-  const country = countryCode(lastPlace(location));
-  return country && country !== 'UY' ? countryTimeZone(country) : undefined;
+const RELAYING_POSTS: Readonly<Record<string, string>> = { 'correo-uruguayo': 'UY', 'slovenska-posta': 'SK' };
+
+/**
+ * The clock of a sending post's scan a relaying post names abroad: that
+ * country's, as on its own tracker, or null when the country keeps several
+ * clocks. Undefined for a scan the place does not put abroad.
+ */
+function relayedPostZone(carrier: string | undefined, location: string): string | null | undefined {
+  const home = carrier && Object.hasOwn(RELAYING_POSTS, carrier) ? RELAYING_POSTS[carrier] : undefined;
+  const country = home ? countryCode(lastPlace(location)) : undefined;
+  return country && country !== home ? countryTimeZone(country) : undefined;
 }
 
 /**
@@ -994,7 +1004,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // Correos relays an origin post's scans on an item from abroad on that post's clock, or keeps their wall clock (null).
   const sent = carrier === 'correos-spain' ? correosOriginZone(number, { wording: status }) : undefined;
   if (sent !== undefined) return sent;
-  const relayed = carrier === 'correo-uruguayo' ? correoUruguayoRelayZone(scanLocation(name, state.location)) : undefined;
+  const relayed = relayedPostZone(carrier, scanLocation(name, state.location));
   if (relayed !== undefined) return relayed;
   if (carrier && PLACE_CLOCK_LINES.has(carrier)) return placeClockLine(carrier, status, scanLocation(name, state.location));
   if (Object.hasOwn(HOME_CLOCKS, key)) return HOME_CLOCKS[key]!;
@@ -1154,13 +1164,14 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // ParcelsApp has its digits; read on iMile's catalog zone they came out early. A destination
   // of one zone places them, and without one they keep their wall clock. So do China Post's
   // copies of the destination post's scans (`chinaPostAbroad`), Croatia Post's scan without an
-  // office or at a facility abroad whose office code names no single clock, Correos's and Correo
-  // Uruguayo's copies of an origin post's scan from a country of several clocks, a scan of a
+  // office or at a facility abroad whose office code names no single clock, Correos's and a relaying
+  // post's copies of an origin post's scan from a country of several clocks, a scan of a
   // line on its place's clock that its place does not date (`PLACE_CLOCK_LINES`), and Pitney
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
-    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'correo-uruguayo'].includes(ownCarrier) || PLACE_CLOCK_LINES.has(ownCarrier));
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
+    || PLACE_CLOCK_LINES.has(ownCarrier));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;
   // A posting that only its office's capital places borrows first (`postingOffice`).

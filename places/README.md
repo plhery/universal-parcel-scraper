@@ -32,7 +32,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   include old names, so nothing confirming it, only a city's of 100,000 people places a town
   (Trenton was "Mill Hill"). A town found by a translation keeps the carrier's words for its own
   name: "Asuncion del Paraguay" is "Asuncion". Words in capitals or small letters alone give
-  the town's own name instead ("KOELN" is Köln). Each half of a bilingual name counts
+  the town's own name instead ("KOELN" is Köln), and so do words in another script than the
+  Latin ("Москва" is Moscow). Each half of a bilingual name counts
   ("Biel/Bienne"), but not a direction that halves a district's ("Neustadt/Süd").
 - A town is looked up at the start or the end of a name, and between other words when it is
   a city of 100,000 people where the parcel is ("Example Reading Station Lockers"), or
@@ -59,8 +60,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   (镇, 乡) after its city. A town's name can
   start a facility's ("义乌转运中心"); a word for a facility or a part of town ("中心",
   "新城") names no town. Latin letters next to such script are a word: "Changsha市".
-- A larger town of a country written in Cyrillic also matches by its names in Cyrillic
-  ("Тюмень").
+- A larger town of a country written in Cyrillic, Greek or Thai also matches by its names in
+  that script ("Тюмень", "ΑΘΗΝΑ", "เชียงใหม่"). Thai's vowel and tone marks are part of its words.
 - A country also goes by its Chinese or Japanese name ("日本").
 - A smaller town in the same region that ends the part of the text a city begins, within
   30 km of the city, is the carrier's site there: "TORINO MONCALIERI (999)" is in Moncalieri.

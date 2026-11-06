@@ -4,6 +4,7 @@ import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detectio
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { isoTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { anserxStage } from './status.js';
@@ -15,6 +16,8 @@ export const ANSERX_MAX_BYTES = 256 * 1024;
 const NUMBER = /^BTYCN\d{10}YQ$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 const CODE = /^[A-Z][A-Z0-9_]{0,63}$/;
+/** AnserX's own clock, Beijing time, on which it writes every scan, those abroad too. */
+export const ANSERX_ZONE = 'Asia/Shanghai';
 const MAX_SHIPMENTS = 10;
 const MAX_ROWS = 300;
 
@@ -34,9 +37,11 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
 }
 
 /**
- * A scan's `YYYY-MM-DD HH:mm:ss`. The tracker says every scan time is the
- * time where the scan happened, and one history runs from China's clock to
- * the destination's, so it stays a wall clock.
+ * A scan's `YYYY-MM-DD HH:mm:ss`, on Beijing time wherever the scan was. The
+ * tracker says each time is the scan's place's, but each scan also carries the
+ * moment it was entered (`createDate`), on Beijing time, and Mexican delivery
+ * scans entered hours before their time on Mexico's clock come after it on
+ * Beijing's.
  */
 function scanClock(row: Record<string, unknown>): string {
   const match = CLOCK.exec(text(row, 'trackingTime', 32));
@@ -83,6 +88,9 @@ function projectRow(row: unknown, number: string): { key: string; event: Carrier
   const staged = anserxStage(code, description);
   const event: CarrierEvent = {
     local_time: local,
+    time: isoTime(local, ANSERX_ZONE)!.iso,
+    time_zone: ANSERX_ZONE,
+    time_zone_basis: 'carrier',
     ...(location ? { location } : {}),
     description,
     ...(code ? { provider_code: code } : {}),
@@ -132,8 +140,7 @@ export function parseAnserx(payload: unknown, raw: string): CarrierResult {
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
   // Newest first, as the page lists them; an oldest-first reply is turned round.
-  // The clocks are each scan's own zone's, so they are not sorted.
-  const newestFirst = (events[0]!.local_time as string) < (events.at(-1)!.local_time as string) ? events.reverse() : events;
+  const newestFirst = (events[0]!.time as string) < (events.at(-1)!.time as string) ? events.reverse() : events;
 
   const newest = newestFirst[0]!;
   const current = newestFirst.find((event) => event.stage);
@@ -146,8 +153,7 @@ export function parseAnserx(payload: unknown, raw: string): CarrierResult {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: current!.stage_source } : {}),
     last_status_text: newest.description!,
-    last_update: null,
-    last_update_local: newest.local_time,
+    last_update: newest.time!,
     expected_delivery: null,
     ...(delivery ? { delivery_tracking_number: delivery } : {}),
     ...(/^[A-Z]{2}$/.test(country) ? { destination_country: country } : {}),

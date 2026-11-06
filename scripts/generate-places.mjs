@@ -34,8 +34,10 @@ const MULTILINGUAL = new Set(['CH', 'LI', 'AT', 'DE', 'FR', 'IT', 'BE', 'LU', 'N
 // Chinese, Japanese and Korean carriers print towns in their own script ("深圳市").
 const CJK_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW', 'JP', 'KR']);
 const CHINESE_COUNTRIES = new Set(['CN', 'HK', 'MO', 'TW']);
-// So do carriers in countries written in Cyrillic ("Тюмень").
+// So do carriers in countries written in Cyrillic ("Тюмень"), Greek ("ΑΘΗΝΑ") or Thai ("เชียงใหม่").
 const CYRILLIC_COUNTRIES = new Set(['RU', 'BY', 'UA', 'KZ', 'KG', 'TJ', 'MN', 'BG', 'RS', 'MK']);
+const GREEK_COUNTRIES = new Set(['GR', 'CY']);
+const THAI_COUNTRIES = new Set(['TH']);
 const SKIPPED_FEATURES = new Set(['PPLH', 'PPLQ', 'PPLW', 'PPLCH']);
 // Chinese carriers lead with the province ("广东省深圳市"); GeoNames names them only in English.
 const CHINESE_PROVINCES = {
@@ -86,6 +88,11 @@ const round = (value) => Math.round(Number(value) * 1e3) / 1e3;
 const latin = (name) => /^[\p{Script=Latin} '’.\-()]{3,40}$/u.test(name) && !/^[A-Z]{2,5}$/.test(name);
 const cjk = (name) => /^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]{2,12}$/u.test(name);
 const cyrillic = (name) => /^[\p{Script=Cyrillic} '’.\-()]{3,40}$/u.test(name);
+const greek = (name) => /^[\p{Script=Greek} '’.\-()]{3,40}$/u.test(name);
+const thai = (name) => /^[\p{Script=Thai} ]{2,40}$/u.test(name);
+/** Whether a name is in the script of its country's own language, other than the Latin. */
+const native = (name, country) => CJK_COUNTRIES.has(country) && cjk(name) || CYRILLIC_COUNTRIES.has(country) && cyrillic(name)
+  || GREEK_COUNTRIES.has(country) && greek(name) || THAI_COUNTRIES.has(country) && thai(name);
 
 const alternatesFrom = (country) => (MULTILINGUAL.has(country) ? BILINGUAL_FROM : ALTERNATES_FROM);
 
@@ -101,11 +108,11 @@ function alternateKeys(id, alternates, country, population, primary) {
   const printed = printedNames.get(id);
   for (const other of alternates.split(',')) {
     if (latin(other) && other === other.toLowerCase() ? !CHINESE_COUNTRIES.has(country)
-      : !printed?.has(other) || !(latin(other) || CJK_COUNTRIES.has(country) && cjk(other) || CYRILLIC_COUNTRIES.has(country) && cyrillic(other))) continue;
+      : !printed?.has(other) || !(latin(other) || native(other, country))) continue;
     // Three Latin letters are a code or a stray transliteration more often
     // than a name ("lon" for Lognes, "chi" for Jizhou), and carriers print
     // them for other towns.
-    for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || cjk(key) || cyrillic(key))) keys.add(key);
+    for (const key of nameKeys(other)) if (!primary.has(key) && (key.length > 3 || native(key, country))) keys.add(key);
   }
   return keys;
 }

@@ -477,8 +477,8 @@ interface Phrase { key: string; text: string; rank: number; start: number; end: 
 
 function tokens(text: string): Token[] {
   // Chinese, Japanese and Korean script is read by `cjkPhrases`. Latin letters next to it are
-  // still a word: "Changsha市".
-  return [...text.matchAll(/(?:(?![\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}])[\p{L}\p{N}])+/gu)].flatMap((match) => {
+  // still a word: "Changsha市". A mark belongs to its letter's word: Thai writes vowels as marks.
+  return [...text.matchAll(/(?:(?![\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}])[\p{L}\p{M}\p{N}])+/gu)].flatMap((match) => {
     // "BARCELONA2": a depot number glued to the town.
     const word = /\p{L}/u.test(match[0]) ? match[0].replace(/\d+$/u, '') : match[0];
     // "TrondheimSorter": a facility word joined to its town.
@@ -1001,9 +1001,10 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
       .sort((a, b) => b.score - a.score)[0] : undefined) : undefined;
     const { place, text: carrierWords } = suburb ?? found;
     const airport = suburb ? null : atFound;
-    // Keep the carrier's spelling unless it is shouting or all in small letters: "La Crau", but "Köln"
-    // for "KOELN" and "Shenzhen" for "shenzhenshi".
-    const name = (town: Candidate) => !town.named && /\p{Ll}/u.test(carrierWords) && /\p{Lu}/u.test(carrierWords) ? carrierWords : town.name;
+    // Keep the carrier's spelling unless it is shouting, all in small letters or in another script than
+    // the Latin: "La Crau", but "Köln" for "KOELN", "Shenzhen" for "shenzhenshi" and "Moscow" for "Москва".
+    const name = (town: Candidate) => !town.named && /\p{Ll}/u.test(carrierWords) && /\p{Lu}/u.test(carrierWords)
+      && !/(?!\p{Script=Latin})\p{L}/u.test(carrierWords) ? carrierWords : town.name;
     const twins = county || suburb || place.hub ? [] : scored.filter((other) => other.key === best.key && other.place.country === place.country
       && !other.place.hub && other.place.alternate === place.alternate && best.score - other.score < TWIN_SCORE
       && distanceKm(place.latitude, place.longitude, other.place.latitude, other.place.longitude) > PART_OF_NAME_KM);

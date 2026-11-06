@@ -309,6 +309,20 @@ describe('locatePlace', () => {
   it('reads a town of a country written in Cyrillic by its Cyrillic name', () => {
     expect(place('Тюмень', ['RU'])).toMatchObject({ country: 'RU', latitude: 57.152, longitude: 65.527 });
     expect(place('Київ')).toMatchObject({ country: 'UA', latitude: 50.455, longitude: 30.524 });
+    // Named in Latin letters, however the carrier writes it.
+    expect(place('Москва')).toMatchObject({ country: 'RU', name: 'Moscow' });
+    expect(place('Київ 01001')).toMatchObject({ country: 'UA', name: 'Kyiv' });
+    expect(place('МОСКВА')).toMatchObject({ country: 'RU', name: 'Moscow' });
+  });
+
+  it('reads a town of a country written in Greek or Thai by its name in that script', () => {
+    expect(place('ΑΘΗΝΑ 00000')).toMatchObject({ country: 'GR', name: 'Athens' });
+    expect(place('Θεσσαλονίκη')).toMatchObject({ country: 'GR', latitude: 40.641 });
+    expect(place('ΛΕΜΕΣΟΣ')).toMatchObject({ country: 'CY', name: 'Limassol' });
+    // Thai writes vowels and tone marks as marks of the word.
+    expect(place('กรุงเทพมหานคร')).toMatchObject({ country: 'TH', name: 'Bangkok' });
+    expect(place('เชียงใหม่')).toMatchObject({ country: 'TH', name: 'Chiang Mai' });
+    expect(place('หาดใหญ่ 00000')).toMatchObject({ country: 'TH', name: 'Hat Yai' });
   });
 
   it('reads a town a carrier names after the city it serves as that town', () => {
