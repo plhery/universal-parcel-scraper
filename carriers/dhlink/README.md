@@ -24,7 +24,10 @@ page makes.
   on a US line, and Tuodatong's `TDT`, ten digits and `CN`, which it attributes to DHLink on an
   air line from China, are asked too, as is `YLE`, two letters, ten digits and `YQ`, a line ParcelsApp names
   YLE beside DHLink, and `CYS` and eleven digits, on a US line UniUni delivers, which it names
-  beside DHLink and UniUni. Their rules are low confidence, so
+  beside DHLink and UniUni. Juxi Express's waybills, `JXC`, two letters, ten digits and `YQ`,
+  are the tracking numbers of the lines it sends through DHLink; providers name DHLink beside it
+  for most of the app's, and DHLink's tracker answers them, so that rule is preferred and DHLink
+  is asked and named first. Their rules are low confidence, so
   DHLink is asked before it is named. Providers name XZG for its numbers, so XZG is an
   alias and their hint asks DHLink.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:

@@ -71,6 +71,10 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DHLink', 'Nova Poshta'], 'EYT0000000000HZ').discovered_carrier).toBe('dhlink');
     // DHLink's CYS rule fits a line UniUni delivers, which ParcelsApp names beside both.
     expect(universalCarrierHints(['DHLink', 'UNI Express'], 'CYS00000000001').discovered_carrier).toBe('dhlink');
+    // Juxi Express's waybills on its DHLink lines name DHLink, whose rule is preferred; on its other lines providers name Juxi alone.
+    expect(universalCarrierHints(['DHLink', 'Juxi Express', 'SHJX'], 'JXCZZ0000000001YQ').discovered_carrier).toBe('dhlink');
+    expect(universalCarrierHints(['SHJX', 'DHLink', 'GoFo Express'], 'JXCZZ0000000001YQ').discovered_carrier).toBe('dhlink');
+    expect(universalCarrierHints(['Juxi Express', 'SHJX'], 'JXCZZ0000000001YQ').discovered_carrier).toBe('juxi-express');
     // No rule fits the origin's number. SwiftX's numbers are all SWX and eighteen digits, so
     // SwiftX is named for the last leg and DHLink, whose numbers have no layout of their own, is left.
     expect(universalCarrierHints(['DHLink', 'SwiftX'], 'QQT0000000000HZ').discovered_carrier).toBe('dhlink');

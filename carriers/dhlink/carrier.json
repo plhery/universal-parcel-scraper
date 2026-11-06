@@ -145,6 +145,12 @@
       "id": "dhlink-cys",
       "pattern": "^CYS\\d{11}$",
       "confidence": "low"
+    },
+    {
+      "id": "dhlink-jxc",
+      "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low",
+      "preferred": true
     }
   ]
 }

@@ -142,7 +142,7 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     // Forwarders on one Chinese platform share the YQ ending and ten digits; the customer prefix names the forwarder.
     const owners = { JSEJY0000000001YQ: 'js-express', WNBZZ0000000001YQ: 'wanbexpress', FEISH0000000001YQ: '17feia',
       SFCAA0000000001YQ: 'sfc', CJPZZA0000000001YQ: 'cj-packet', BUFZA0000000001YQ: 'buffalo-ex',
-      JXCYT0000000001YQ: 'juxi-express', FARZZ9999999980YQ: 'far-international' };
+      FARZZ9999999980YQ: 'far-international' };
     for (const [number, carrier] of Object.entries(owners)) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier, confidence: 'high', candidates: [carrier] });
       expect(recognitionCandidates(number), number).toEqual([]);
@@ -278,6 +278,18 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('CYS00000000001')).toEqual(['dhlink']);
     for (const number of ['CYS0000000001', 'CYS000000000001', 'CYT00000000001', 'CY000000000001', 'CYS0000000000A', 'CYS00000000001US']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+    }
+  });
+
+  it('asks DHLink first about Juxi Express waybills, which most of its lines send through DHLink', () => {
+    expect(detectCarrierMatch('JXCYT0000000001YQ')).toMatchObject({
+      carrier: 'unknown', confidence: 'low', candidates: ['dhlink', 'juxi-express'], preferred: ['dhlink'],
+    });
+    expect(detectCarrierMatch('jxcyt 0000 0000 01 yq').candidates).toEqual(['dhlink', 'juxi-express']);
+    expect(recognitionAskedCarriers('JXCYT0000000001YQ')).toEqual(['dhlink']);
+    for (const number of ['JXCYT000000001YQ', 'JXCY0000000001YQ', 'JXCYT0000000001Y', 'JXDYT0000000001YQ', 'JXC1T0000000001YQ']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('juxi-express');
     }
   });
 });

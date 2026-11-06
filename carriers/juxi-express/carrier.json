@@ -37,7 +37,7 @@
     {
       "id": "juxi-express-1",
       "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
-      "confidence": "high"
+      "confidence": "low"
     }
   ]
 }

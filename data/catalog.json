@@ -15773,6 +15773,11 @@
       {
         "pattern": "^CYS\\d{11}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -27526,7 +27531,7 @@
     "detectionRules": [
       {
         "pattern": "^JXC[A-Z]{2}\\d{10}YQ$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },
