@@ -713,7 +713,21 @@ describe('India Post Livewire session', () => {
     const back = track91Result();
     (back.events as Array<Record<string, unknown>>)[1]!.remarks = 'Flight No: ZZ0102 (From SGSIN To INBOM)';
     expect(parseIndiaPostTrack91Result(back, SAMPLE_NUMBER).events?.[0]?.time).toBe('2026-07-19T08:34:00Z');
+    // A take-off to a hub names no destination: without the arrival, what follows keeps India's label.
+    const hub = track91Result();
+    (hub.events as Array<Record<string, unknown>>).splice(1, 1);
+    expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]?.time).toBe('2026-07-19T08:34:00Z');
     expect(() => parseIndiaPostTrack91Result(track91Result(WRONG_VALID_NUMBER), SAMPLE_NUMBER)).toThrow(SchemaError);
+  });
+
+  it('reads a take-off track91 words in prose on its airport\'s clock too', () => {
+    const prose = track91Result();
+    (prose.events as Array<Record<string, unknown>>)[2] = {
+      event_code: 'in_transit', event: 'Aircraft Departure', tracked_at: '2026-07-16T13:07:00+01:00', location: { address: 'Office - BOM' }, remarks: null,
+    };
+    expect(parseIndiaPostTrack91Result(prose, SAMPLE_NUMBER).events?.[2]).toMatchObject({
+      time: '2026-07-16T12:07:00+05:30', description: 'Aircraft Departure', location: 'Mumbai Airport (BOM), India', provider_code: 'AircraftTakeOff',
+    });
   });
 
   it('reads the history a page in another state still carries, and is inconclusive without one', async () => {

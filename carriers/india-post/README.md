@@ -76,8 +76,10 @@ Outcomes:
   destination's zone; for a country with several zones or none known they keep the wall time in
   `local_time` with no offset. Flight rows keep their own reading.
 - track91 gives no Destination card, article type or office PIN. The country its latest flight
-  remark flies to (an airport or a UN/LOCODE such as `AUSYD`) stands in for the destination: the
-  rows after that flight are that country's, unless it is India.
+  arrival lands in (an airport or a UN/LOCODE such as `AUSYD`) stands in for the destination: the
+  rows after that arrival are that country's, unless it is India. A take-off names only its next
+  airport, often a hub on the way, so it places no rows; they keep India's label. Its replies alternate between
+  codes and prose; a prose take-off reads "Aircraft Departure" and is typed as a take-off.
 - A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
   `Office - DEL 00000000`) carries the departure airport's wall clock labelled `Z`: a take-off was
   seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a

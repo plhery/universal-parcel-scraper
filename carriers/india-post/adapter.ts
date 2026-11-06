@@ -354,9 +354,11 @@ function dehydrated(value: unknown): unknown {
   return isRecord(value) ? Object.fromEntries(Object.entries(value).map(([key, item]) => [key, dehydrated(item)])) : value;
 }
 
-// The raw codes whose rows MySpeedPost typed with a code the parser reads.
+// The raw codes whose rows MySpeedPost typed with a code the parser reads. track91 can word a
+// reply in prose instead, where a take-off reads "Aircraft Departure".
 const TRACK91_TYPES: Readonly<Record<string, string>> = {
   UPLIFT: TAKE_OFF_CODE,
+  'Aircraft Departure': TAKE_OFF_CODE,
   MAIL_ARRIVED: 'MailArrived',
   TRANSFER_OOE: TRANSFER_CODE,
 };
@@ -389,24 +391,28 @@ function track91Rows(events: readonly unknown[]): JsonObject[] {
 const FLIGHT_TO = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From [A-Z]{3,5} To ([A-Z]{3}|[A-Z]{5})\)$/;
 
 /**
- * track91 names no destination. The scans after the latest flight are the
- * country's it flew to, on its wall clock under India's label as on
+ * track91 names no destination. The scans after the latest arrival are the
+ * country's it landed in, on its wall clock under India's label as on
  * MySpeedPost's page, unless that is India or a country the airport does not
- * tell.
+ * tell. A take-off names only its next airport, often a hub on the way, so it
+ * places nothing; flight rows keep their own reading.
  */
 function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone: string | null } {
   const labelled = rows.map((row) => isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? Number.NaN);
   const flown = rows.map((row) => FLIGHT_TO.exec(clean(row.remarks, 500))?.[1] ?? null);
+  const code = (row: JsonObject) => clean(row.event_type, 100);
   let latest = -Infinity;
   let country: string | null = null;
   for (const [index, to] of flown.entries()) {
-    if (!to || !(labelled[index]! > latest)) continue;
+    if (!to || !ARRIVAL_CODES.has(code(rows[index]!)) || !(labelled[index]! > latest)) continue;
     latest = labelled[index]!;
     country = to.length === 5 ? to.slice(0, 2) : airportCountry(to);
   }
   const abroad = new Set<number>();
   if (!country || country === 'IN') return { abroad, zone: null };
-  flown.forEach((to, index) => { if (!to && labelled[index]! > latest) abroad.add(index); });
+  flown.forEach((to, index) => {
+    if (!to && code(rows[index]!) !== TAKE_OFF_CODE && labelled[index]! > latest) abroad.add(index);
+  });
   return { abroad, zone: countryTimeZone(country) };
 }
 
