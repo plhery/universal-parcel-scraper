@@ -35,9 +35,12 @@ it on ppxtrack.com, so that name counts as ePost Global's.
   label times for the same parcels show, so they take the zone of the center's state. A state
   split between zones gives none. Records Spring's PostNL service keeps without a country (the
   pre-advice, the manifest) are placed in the shipper's country; they take the clock spring-gds
-  reads them on, Amsterdam or UTC by code, with `time_zone_basis` `carrier`. Every other row keeps
-  its wall clock: the data rows carry no place, and partners' rows are copied from the partner's
-  feed in its own zone.
+  reads them on, Amsterdam or UTC by code, with `time_zone_basis` `carrier`. GLS's European
+  network runs its tracking on Central European time, as [GLS Germany's](../gls-de/README.md)
+  notes, so the rows ePost Global relays from it take Berlin's clock, even at GLS's gateway in the
+  United States, whose zone would date its departure after the lookup. Every other row keeps its
+  wall clock: the data rows carry no place, and partners' rows are copied from the partner's feed
+  in its own zone.
 - The delivering partner is named for Spring's PostNL service, which spring-gds tracks under the
   same number, and for partners the catalog knows by name whose link, if any, is their own. The
   partner's number is the delivery tracking number. GLS's European network is not named, since
@@ -66,7 +69,8 @@ number at the end of a shop's `/t/{shop}/{number}` page.
 ## Limitations
 
 - No delivery estimate, delivery time, weight, service, sender or recipient.
-- Partners' scans keep the wall clocks ePost Global copies from them, except PostNL's own records.
+- Partners' scans keep the wall clocks ePost Global copies from them, except PostNL's own records
+  and GLS's rows.
 
 ## Testing
 

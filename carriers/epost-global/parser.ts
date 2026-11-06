@@ -10,7 +10,7 @@ import { firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { postnlRecordZone } from '../spring-gds/adapter.js';
-import { epostGlobalFacilityScan, epostGlobalStage } from './status.js';
+import { epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
 
 export const PROVIDER = 'ePost Global';
 // A delivered parcel's reply is up to a hundred kilobytes: its history twice,
@@ -33,6 +33,9 @@ const SPLIT_STATES = new Set(['AK', 'FL', 'ID', 'IN', 'KS', 'KY', 'MI', 'ND', 'N
 // Partners whose names the catalog does not know. Spring's PostNL service is
 // tracked by spring-gds under the same number.
 const VENDORS: ReadonlyMap<string, string> = new Map([['SPRING POST NL', 'spring-gds']]);
+// GLS's European network, whose tracking runs on Central European time wherever the depot is.
+const GLS_EUROPE = /^GLS ?EU(?:ROPE)?$/i;
+const GLS_ZONE = 'Europe/Berlin';
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
@@ -77,15 +80,15 @@ function facilityZone(description: string, place: string): string | null {
 type ScanClock = Pick<CarrierEvent, 'time' | 'local_time' | 'time_zone' | 'time_zone_basis'>;
 
 /**
- * A scan's clock: an instant in the center's zone, or in PostNL's for one of
- * its own records, else the wall clock as stamped.
+ * A scan's clock: an instant in the center's zone, or in the partner's for a
+ * row on its clock (PostNL's own records, GLS's rows), else the wall clock as stamped.
  */
-function clockOf(stamp: string, zone: string | null, postnl: string | null): ScanClock {
+function clockOf(stamp: string, zone: string | null, partner: string | null): ScanClock {
   const wall = WALL_CLOCK.exec(stamp)?.[1];
   if (!wall || !DateTime.fromISO(wall, { zone: 'utc' }).isValid) {
     throw new SchemaError(PROVIDER, 'ePost Global returned an invalid scan time');
   }
-  const reading = zone ?? postnl;
+  const reading = zone ?? partner;
   if (!reading) return { local_time: wall };
   const time = firstOccurrence(DateTime.fromISO(wall, { zone: reading })).toISO({ suppressMilliseconds: true });
   if (!time) throw new SchemaError(PROVIDER, 'ePost Global returned an invalid scan time');
@@ -100,7 +103,7 @@ function postnlZone(code: string, place: string, origin: string | null): string 
   return origin && place === origin && /^\d{1,8}$/.test(code) ? postnlRecordZone(code) : null;
 }
 
-function projectScan(row: unknown, origin: string | null): { key: string; event: CarrierEvent } | null {
+function projectScan(row: unknown, origin: string | null, partnerZone: string | null): { key: string; event: CarrierEvent } | null {
   if (!isRecord(row)) throw new SchemaError(PROVIDER, 'ePost Global returned an invalid scan');
   const description = text(row, 'Event');
   if (!description) return null;
@@ -109,7 +112,8 @@ function projectScan(row: unknown, origin: string | null): { key: string; event:
   const code = text(row, 'ECode', 32);
   const staged = epostGlobalStage(description, code);
   const event: CarrierEvent = {
-    ...clockOf(stamp, facilityZone(description, place), postnlZone(code, place, origin)),
+    ...clockOf(stamp, facilityZone(description, place),
+      postnlZone(code, place, origin) ?? (partnerZone && !epostGlobalOwnRow(description) ? partnerZone : null)),
     description,
     ...(place ? { location: place } : {}),
     ...(code ? { provider_code: code } : {}),
@@ -180,10 +184,12 @@ export function parseEpostGlobal(html: string, raw: string): CarrierResult {
   // The shipper's country, where ePost Global places the records Spring's PostNL service keeps without one.
   const shipper = text(details, 'OCt', 8).toUpperCase();
   const origin = VENDORS.get(text(details, 'Vendor', 80).toUpperCase()) === 'spring-gds' && /^[A-Z]{2}$/.test(shipper) ? shipper : null;
+  // GLS's rows, even one placed at its gateway in the United States, on GLS's clock.
+  const partnerZone = GLS_EUROPE.test(text(details, 'Vendor', 80)) ? GLS_ZONE : null;
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
   for (const row of rows) {
-    const scan = projectScan(row, origin);
+    const scan = projectScan(row, origin, partnerZone);
     if (!scan || seen.has(scan.key)) continue;
     seen.add(scan.key);
     events.push(scan.event);

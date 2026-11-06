@@ -119,9 +119,28 @@ describe('ePost Global HTTP adapter', () => {
     expect(elsewhere.events![7]).toMatchObject({ provider_code: '1233', local_time: '2026-03-05T17:47:00' });
     expect(elsewhere.events![7]!.time).toBeUndefined();
     const other = parseEpostGlobal(rewrite('spring-delivered', (details) => {
-      Object.assign(details, { Vendor: 'GLSEU', VendorTrackingUrl: '', VendorBaseUrl: 'https://gls-group.com/GROUP/en/parcel-tracking' });
+      Object.assign(details, { Vendor: 'ROYAL MAIL', VendorTrackingUrl: '', VendorBaseUrl: 'https://www.royalmail.com/track-your-item' });
     }), SPRING);
     expect(other.events![7]!.time).toBeUndefined();
+  });
+
+  it('dates the rows it relays from GLS on GLS’s Central European clock, even at its US gateway, and its own rows as before', () => {
+    const result = parseEpostGlobal(rewrite('spring-delivered', (details) => {
+      Object.assign(details, { Vendor: 'GLSEU', VendorTrackingUrl: '', VendorBaseUrl: 'https://gls-group.com/GROUP/en/parcel-tracking' });
+      const own = details.Events.filter((event) => /^(?:In transit to|Parcel|Shipment in Transit|Data Received)/.test(String(event.Event)));
+      details.Events = [{ ...details.Events[0]!, ECode: '5', Event: 'The parcel has left the parcel center.',
+        EventDT: '2026-03-06T06:30:09', Loc: 'US XYZ gateway' }, ...own];
+      details.Events[1]!.Event = 'In transit to Italy tracking #:  000000000000';
+    }), SPRING);
+    expect(result.events!.map((event) => [event.provider_code, event.time ?? null, event.time_zone ?? null, event.time_zone_basis ?? null])).toEqual([
+      // A US place, but GLS's clock: on New York's it would come five hours later.
+      ['5', '2026-03-06T06:30:09+01:00', 'Europe/Berlin', 'carrier'],
+      ['41', null, null, null],
+      ['32', '2026-03-04T23:40:44-06:00', null, null],
+      ['30', '2026-03-04T15:04:46-06:00', null, null],
+      ['EPGS01', null, null, null],
+      ['11', null, null, null],
+    ]);
   });
 
   it('does not step back to a partner’s announcement after the parcel was shipped', () => {

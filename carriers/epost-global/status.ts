@@ -37,6 +37,10 @@ const HANDED_OVER = /^in transit (?:to|via) \S.* tracking ?#:/;
 // A row relayed from OSM Worldwide, under its code.
 const OSM_CODE = /^OSM\d{2}$/;
 
+// ePost Global's own rows: its data, label, processing centers and handover. Every other row is a partner's.
+const OWN = new Set(['data received', 'shipment in transit to the epost global processing center', 'parcel received and processing',
+  'parcel shipped', 'in transit']);
+
 // The rows ePost Global's processing centers scan, stamped on the center's clock.
 const FACILITY_SCANS = new Set(['parcel received and processing', 'parcel shipped']);
 
@@ -46,6 +50,12 @@ export function epostGlobalScanStage(wording: string, code = ''): Stage | undefi
   if (relayed) return relayed;
   const normalized = normalizeStatusWording(wording);
   return HANDED_OVER.test(normalized) ? 'in_transit' : STAGES.get(normalized);
+}
+
+/** A row ePost Global writes itself, not one it relays from the partner. */
+export function epostGlobalOwnRow(wording: string): boolean {
+  const normalized = normalizeStatusWording(wording);
+  return OWN.has(normalized) || HANDED_OVER.test(normalized);
 }
 
 /** A scan at one of ePost Global's processing centers. */
