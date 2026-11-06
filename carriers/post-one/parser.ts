@@ -94,7 +94,7 @@ export function parsePostOneTrackingHtml(html: string, raw: string): CarrierResu
     if (known && image !== known.icon) throw new SchemaError(PROVIDER, 'Post One returned contradictory scan markers');
     const event: CarrierEvent = { local_time, description: known?.wording ?? 'Tracking update',
       ...(known ? { provider_code: known.code, stage: known.stage, stage_source: 'carrier_map' } : {}) };
-    scans.push({ event, index, key: JSON.stringify([local_time, known?.code ?? wording]) });
+    scans.push({ event, index, key: JSON.stringify(event) });
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER, 'Post One knows the item but returned no reached scans', { reason: 'parcel_found' });
   // Every source row is checked before deduplication, ordering and the public output cap.

@@ -135,6 +135,21 @@ describe('Post One own-item HTML parser', () => {
     }
   });
 
+  it('deduplicates redacted unknown updates before they can crowd out reached milestones', () => {
+    const html = mutate($ => {
+      const source = $('p.item').last().closest('.row').clone();
+      for (let index = 0; index < 120; index++) {
+        const row = source.clone(); row.find('strong').text('main_status.unmapped_' + index);
+        $('.col-md-4').append(row);
+      }
+    });
+    const result = parsePostOneTrackingHtml(html, NUMBER);
+    expect(result.events).toHaveLength(7);
+    expect(result.events!.filter(event => event.description === 'Tracking update')).toHaveLength(1);
+    expect(result.events!.some(event => event.provider_code === 'crd')).toBe(true);
+    expect(result.history_truncated).toBe(true);
+  });
+
   it('rejects malformed reached rows and contradictory official markers', () => {
     for (const html of [
       mutate($ => { $('p.item').last().find('br').remove(); }),

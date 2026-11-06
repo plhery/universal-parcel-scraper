@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { deliveryHandoff, hasDirectHandoffAdapter } from '../../core/catalog/handoff.js';
 import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { isPostOneReference } from '../../core/detection/postOne.js';
 import { parseTrackingInput } from '../../core/detection/parse.js';
@@ -53,6 +54,17 @@ describe('Post One HTTP tracking and recognition', () => {
     const partner = parseTrackingInput('https://postone.eu/en/track?code=70312345678901');
     expect(partner.trackingNumber).toBe('70312345678901'); expect(partner.carrier).not.toBe('post-one');
     expect(recognitionAskedCarriers('70312345678901')).not.toContain('post-one');
+  });
+
+  it('proposes named Post One handoffs only for references its adapter can actually read', () => {
+    expect(hasDirectHandoffAdapter('post-one', NUMBER)).toBe(true);
+    expect(hasDirectHandoffAdapter('post-one', '7030000000000001')).toBe(false);
+    expect(deliveryHandoff('yanwen', 'YW0000000000', {
+      delivery_carrier: 'post-one', delivery_tracking_number: '7030000000000001',
+    })).toBeNull();
+    expect(deliveryHandoff('yanwen', 'YW0000000000', {
+      delivery_carrier: 'post-one', delivery_tracking_number: NUMBER,
+    })).toEqual({ carrier: 'post-one', number: NUMBER, basis: 'partner' });
   });
 
   it('recognizes only the exact empty official-home redirect as absence', async () => {
