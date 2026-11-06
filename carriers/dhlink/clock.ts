@@ -12,5 +12,10 @@ const US_ZONES = ['America/New_York', 'America/Chicago', 'America/Denver', 'Amer
  * gives that instant.
  */
 export function usClockCopy(wall: string, timestamp: number): boolean {
-  return US_ZONES.some((zone) => isoTime(wall, zone)?.timestamp === timestamp);
+  return usClockZone(wall, timestamp) !== null;
+}
+
+/** The US zone, the state's first, on whose clock `wall` strikes at `timestamp`; null when none does. */
+export function usClockZone(wall: string, timestamp: number, state?: string | null): string | null {
+  return [...(state ? [state] : []), ...US_ZONES].find((zone) => isoTime(wall, zone)?.timestamp === timestamp) ?? null;
 }

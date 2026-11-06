@@ -298,6 +298,34 @@ describe('DHLink HTTP adapter', () => {
     expect(relayed([row('2026-03-10 07:00:00', '2026-03-10 18:05:00', 'SYSTEM, US', 'Shipping Label Created')]).events![0]).not.toHaveProperty('location');
   });
 
+  it('keeps one row of a US partner’s scan relayed on its hub’s clock and again on UTC, on the hub’s clock', () => {
+    const row = (trackTime: string, createDate: string, info: string) => ({ trackTime, createDate, place: 'none', info, nodeCode: null, nodeName: null });
+    const relayed = (rows: Row[], destination = 'US') => parseDhlink(changed('swiftx-at-warehouse', (parcel) => {
+      parcel.destCountryCode = destination;
+      parcel.lastTurnNo = null;
+      parcel.trackinfoList = rows;
+    }), WAREHOUSE, LATER);
+    const twins = [
+      row('2026-03-05 17:04:05', '2026-03-06 08:30:26', 'Sampletown IL, Parcel scanned and in transit.'),
+      row('2026-03-04 04:10:08', '2026-03-04 21:27:15', 'Parcel received at UniUni Sorting Hub.'),
+      row('2026-03-03 22:43:50', '2026-03-04 21:27:15', 'Out for delivery'),
+      row('2026-03-03 22:10:08', '2026-03-04 15:28:45', 'Sampletown IL, Parcel received at UniUni Sorting Hub.'),
+      row('2026-03-03 16:43:50', '2026-03-04 07:48:55', 'Out for delivery'),
+    ];
+    // The UTC copies go; the scans keep Chicago's clock, and a scan whose copy has not come stays a wall clock.
+    expect(timeline(relayed(twins).events)).toEqual([
+      ['2026-03-05T17:04:05', null, 'in_transit', null],
+      ['2026-03-03T22:10:08-06:00', null, 'in_transit', null],
+      ['2026-03-03T16:43:50-06:00', null, 'out_for_delivery', null],
+    ]);
+    // A copy recorded before its UTC reading, another second, or another destination: two scans.
+    const early = [twins[3]!, { ...twins[1]!, createDate: '2026-03-04 10:00:00' }];
+    expect(relayed(early).events).toHaveLength(2);
+    expect(relayed([twins[3]!, { ...twins[1]!, trackTime: '2026-03-04 04:10:09' }]).events).toHaveLength(2);
+    expect(relayed([twins[3]!, twins[1]!]).events).toHaveLength(1);
+    expect(relayed([twins[3]!, twins[1]!], 'GB').events).toHaveLength(2);
+  });
+
   it('drops the row’s own clock from the end of a node’s wording, and keeps any other', () => {
     const worded = (info: string) => parseDhlink(changed('postal-delivered', (parcel) => {
       parcel.trackinfoList[1]!.info = info;
