@@ -33,18 +33,40 @@ function refusalReason(headers) {
   return null;
 }
 
+export const RETRY_ROUTES = ['residential', 'datacenter'];
+
+/** The worker's route, `residential` unless `FEDEX_RETRY_ROUTE` names another. */
+export function retryRoute(value) {
+  const route = value?.trim() || 'residential';
+  if (!RETRY_ROUTES.includes(route)) throw new Error('FEDEX_RETRY_ROUTE must be residential or datacenter');
+  return route;
+}
+
+/** The gateways, separated by white space or commas; values never appear in errors. */
+export function retryGateways(value) {
+  const gateways = (value ?? '').split(/[\s,]+/).filter(Boolean);
+  if (!gateways.length) throw new Error('Set FEDEX_RETRY_PROXY_URL to the proxy gateway');
+  for (const gateway of gateways) gatewayUrl(gateway);
+  return gateways;
+}
+
+function gatewayUrl(value) {
+  let gateway;
+  try { gateway = new URL(value); } catch { throw new Error('Invalid proxy gateway'); }
+  if (!['http:', 'https:'].includes(gateway.protocol) || !gateway.hostname || gateway.search || gateway.hash
+    || !['', '/'].includes(gateway.pathname)) throw new Error('Invalid proxy gateway');
+  return gateway;
+}
+
 /** Every TLS connection goes through the configured authenticated gateway; no direct fallback. */
 export async function createFedExResidentialProxy(value, { resolve = lookup, requestHttp = httpRequest,
-  requestHttps = httpsRequest, onBytes = () => {}, onRefusal = () => {} } = {}) {
-  let gateway;
-  try { gateway = new URL(value); } catch { throw new Error('Invalid residential gateway'); }
-  if (!['http:', 'https:'].includes(gateway.protocol) || !gateway.hostname || gateway.search || gateway.hash
-    || !['', '/'].includes(gateway.pathname)) throw new Error('Invalid residential gateway');
+  requestHttps = httpsRequest, onBytes = () => {}, onRefusal = () => {}, route = 'residential' } = {}) {
+  const gateway = gatewayUrl(value);
   let authorization;
   try { authorization = 'Basic ' + Buffer.from(decodeURIComponent(gateway.username) + ':' + decodeURIComponent(gateway.password)).toString('base64'); }
-  catch { throw new Error('Invalid residential gateway credentials'); }
-  const peers = await resolve(gateway.hostname, { all: true });
-  if (!peers.length || peers.some(peer => !publicAddress(peer.address))) throw new Error('Invalid residential gateway address');
+  catch { throw new Error('Invalid proxy gateway credentials'); }
+  const peers = await resolve(gateway.hostname.replace(/^\[|\]$/g, ''), { all: true });
+  if (!peers.length || peers.some(peer => !publicAddress(peer.address))) throw new Error('Invalid proxy gateway address');
   const sockets = new Set(), requests = new Set();
   const counts = { page: 0, api: 0, failures: 0, bytes: 0 };
   let closed = false;
@@ -91,7 +113,7 @@ export async function createFedExResidentialProxy(value, { resolve = lookup, req
   });
   await new Promise((ready, reject) => { server.once('error', reject); server.listen(0, '127.0.0.1', ready); });
   return { url: `http://127.0.0.1:${server.address().port}`,
-    proof: () => ({ route: 'residential', family: 'unknown', pageConnections: counts.page,
+    proof: () => ({ route, family: 'unknown', pageConnections: counts.page,
       apiConnections: counts.api, connectionFailures: counts.failures, bytes: counts.bytes }),
     async close() { closed = true; for (const request of requests) request.destroy(); for (const socket of sockets) socket.destroy();
       await new Promise(done => server.close(done)); },

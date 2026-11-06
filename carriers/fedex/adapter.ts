@@ -1,4 +1,5 @@
 import { BrowserRouteTrial, retryShare } from '../../core/transport/browserRouteTrial.js';
+import { RetryRouteTrial, type RetryRouteTrialStore, type TrialRoute } from '../../core/transport/retryRouteTrial.js';
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
@@ -18,7 +19,7 @@ import {
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
-import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
+import { NOOP_RECORDER, outcomeOf, type StepRecorder } from '../../core/telemetry/index.js';
 import {
   calendarDay,
   canadaProvinceTimeZone,
@@ -583,8 +584,15 @@ export interface FedExTrackerOptions {
   trawl?: TrawlClient | null;
   /** Independent service which attests authenticated proxy tunnels for the page and API. */
   residentialTrawl?: TrawlClient | null;
-  /** Share of qualifying retries sent to that service, from zero to one. */
+  /** Share of qualifying retries sent to that service, from zero to one, while no datacenter service is configured. */
   residentialRetryShare?: number;
+  /**
+   * Independent service behind datacenter proxies, attesting its tunnels the same way. Once
+   * configured, every qualifying retry takes it or, as `retryTrial` assigns, the residential one.
+   */
+  datacenterTrawl?: TrawlClient | null;
+  /** Bounded, persisted assignment of retries between the datacenter and residential services. */
+  retryTrial?: RetryRouteTrial | null;
   /** The deployment's FedEx API project, or null without one. */
   api?: FedExApiCredentials | null;
   fetcher?: typeof fetch;
@@ -596,6 +604,8 @@ export class FedExTracker {
   readonly #trawl: TrawlClient | null;
   readonly #residentialTrawl: TrawlClient | null;
   readonly #residentialRetryShare: number;
+  readonly #datacenterTrawl: TrawlClient | null;
+  readonly #retryTrial: RetryRouteTrial | null;
   readonly #api: FedExApiClient | null;
   readonly #fetcher: typeof fetch | undefined;
   readonly #recorder: StepRecorder;
@@ -608,6 +618,10 @@ export class FedExTracker {
     this.#trawl = options.trawl ?? null;
     this.#residentialTrawl = options.residentialTrawl ?? null;
     this.#residentialRetryShare = retryShare(options.residentialRetryShare ?? 0.5);
+    this.#datacenterTrawl = options.datacenterTrawl ?? null;
+    // The trial needs both services; without the residential one every retry takes the datacenter's.
+    this.#retryTrial = this.#datacenterTrawl && this.#residentialTrawl ? options.retryTrial ?? null : null;
+    void this.#retryTrial?.load();
     this.#api = options.api ? new FedExApiClient(options.api, options.fetcher) : null;
     this.#fetcher = options.fetcher;
     this.#recorder = options.recorder ?? NOOP_RECORDER;
@@ -626,10 +640,17 @@ export class FedExTracker {
     }
     const browserMs = (remainingMs: number) => Math.max(1, Math.floor(Math.min(this.timeoutMs, remainingMs)));
     const trial = new BrowserRouteTrial({ primary: trawl, alternative: this.#residentialTrawl,
-      route: 'residential', share: this.#residentialRetryShare, steps: ['trawl'], recorder: this.#recorder });
-    const browser = async (client: TrawlClient, remainingMs: number, signal: AbortSignal, route: 'default' | 'residential' = 'default') =>
+      route: 'residential', share: this.#residentialRetryShare, steps: ['trawl'], recorder: this.#recorder,
+      routes: { datacenter: this.#datacenterTrawl, residential: this.#residentialTrawl } });
+    let proven: number | undefined;
+    const browser = async (client: TrawlClient, remainingMs: number, signal: AbortSignal, route: 'default' | TrialRoute = 'default') =>
       trial.result(await this.#trawlResult(client, number, browserMs(remainingMs), signal, route,
-        family => trial.observeFamily(family), bytes => trial.observeBytes(bytes)));
+        family => trial.observeFamily(family), proof => {
+          trial.observeBytes(proof.bytes);
+          // What the worker carried outside lookups since its previous reply is billed too.
+          const counted = [proof.bytes, proof.idleBytes].filter((n): n is number => typeof n === 'number' && Number.isSafeInteger(n) && n >= 0);
+          proven = counted.length ? counted.reduce((sum, n) => sum + n, 0) : undefined;
+        }));
     return runSteps<CarrierResult>({
       // Without a caller's budget the lookup leaves the service its own time and
       // the request the allowance to bring the answer back.
@@ -648,9 +669,26 @@ export class FedExTracker {
         // The service discards a context whose tracking call was refused, so a
         // second read starts a fresh one: Akamai's 403 is intermittent.
         { id: 'trawl', recovers: (error: unknown) => error instanceof ChallengeError && error.reason === 'api_denied' && error.status === 403,
-          run: ({ remainingMs, signal }: StepContext) => {
-            const client = trial.retry()!;
-            return browser(client, remainingMs, signal, trial.isAlternate ? 'residential' : 'default');
+          run: async ({ remainingMs, signal }: StepContext) => {
+            if (!this.#datacenterTrawl) {
+              const client = trial.retry()!;
+              return browser(client, remainingMs, signal, trial.isAlternate ? 'residential' : 'default');
+            }
+            // Never the original route: the trial assigns datacenter or residential, else datacenter.
+            const started = performance.now();
+            const assignment = this.#retryTrial ? await this.#retryTrial.assign() : null;
+            const route = assignment?.route ?? 'datacenter';
+            const client = trial.retry(route)!;
+            proven = undefined;
+            const left = Math.max(1, Math.floor(remainingMs - (performance.now() - started)));
+            try {
+              const result = await browser(client, left, signal, route);
+              assignment?.settle({ outcome: 'ok', history: Boolean(result.events?.some(event => event.time || event.local_time)), bytes: proven });
+              return result;
+            } catch (error) {
+              assignment?.settle({ outcome: outcomeOf(error), history: false, bytes: proven });
+              throw error;
+            }
           } },
       ] : []),
     ]);
@@ -670,7 +708,8 @@ export class FedExTracker {
    * validated. The page the browser rendered only tells a challenge apart.
    */
   async #trawlResult(trawl: TrawlClient, number: string, timeoutMs: number, signal: AbortSignal,
-    route: 'default' | 'residential' = 'default', observed: (family: 'IPv4' | 'IPv6' | 'unknown') => void = () => {}, observeBytes: (bytes: unknown) => void = () => {}): Promise<CarrierResult> {
+    route: 'default' | TrialRoute = 'default', observed: (family: 'IPv4' | 'IPv6' | 'unknown') => void = () => {},
+    observeProof: (proof: JsonObject) => void = () => {}): Promise<CarrierResult> {
     const page = await trawl.scrape({
       url: fedexTrackingUrl(number),
       skipHttp: true,
@@ -685,12 +724,13 @@ export class FedExTracker {
       fetcher: this.#fetcher,
       signal,
     });
-    if (route === 'residential') {
+    if (route !== 'default') {
+      // The worker names its own route; a reply from the other one, or without tunnels to both hosts, is no evidence.
       const proof = page.raw.fedexEgress;
-      if (isRecord(proof)) observeBytes(proof.bytes);
-      if (!isRecord(proof) || proof.route !== 'residential' || !Number.isSafeInteger(proof.pageConnections)
+      if (isRecord(proof)) observeProof(proof);
+      if (!isRecord(proof) || proof.route !== route || !Number.isSafeInteger(proof.pageConnections)
         || Number(proof.pageConnections) < 1 || !Number.isSafeInteger(proof.apiConnections) || Number(proof.apiConnections) < 1) {
-        throw new TransportError('FedEx', 'The retry service did not verify residential tracking connections', { reason: 'residential_unverified' });
+        throw new TransportError('FedEx', `The retry service did not verify ${route} tracking connections`, { reason: `${route}_unverified` });
       }
     }
     let captureError: Error | undefined;
@@ -772,6 +812,36 @@ export class FedExTracker {
   }
 }
 
+const TRIALS = new WeakMap<RetryRouteTrialStore, Map<string, RetryRouteTrial>>();
+
+/**
+ * The retry trial `FEDEX_RETRY_TRIAL` names, kept in the host's store, or null without
+ * either. One instance per store and settings, however many adapters the host builds,
+ * so that every lookup of the process counts against the same limits.
+ */
+export function fedexRetryTrial(env: Readonly<Record<string, string | undefined>>,
+  store: RetryRouteTrialStore | undefined): RetryRouteTrial | null {
+  const id = env.FEDEX_RETRY_TRIAL?.trim();
+  if (!id || !store) return null;
+  const setting = (name: string, fallback: number) => {
+    const value = env[name]?.trim();
+    return value ? Number(value) : fallback;
+  };
+  const options = {
+    id,
+    targetAttempts: setting('FEDEX_RETRY_TRIAL_ATTEMPTS', 100),
+    maxResidentialBytes: setting('FEDEX_RETRY_TRIAL_RESIDENTIAL_BYTES', 250_000_000),
+    durationMs: setting('FEDEX_RETRY_TRIAL_HOURS', 48) * 3_600_000,
+    unmeasuredBytes: setting('FEDEX_RETRY_TRIAL_UNMEASURED_BYTES', 2_000_000),
+  };
+  const key = JSON.stringify(options);
+  let trials = TRIALS.get(store);
+  if (!trials) TRIALS.set(store, trials = new Map<string, RetryRouteTrial>());
+  let trial = trials.get(key);
+  if (!trial) trials.set(key, trial = new RetryRouteTrial({ ...options, store }));
+  return trial;
+}
+
 export const adapter: AdapterFactory = (environment) => {
   const api = fedexApiCredentials(environment.env);
   const tracker = new FedExTracker({
@@ -779,6 +849,8 @@ export const adapter: AdapterFactory = (environment) => {
     trawl: environment.trawl,
     residentialTrawl: environment.trawlRoutes?.['fedex-residential'] ?? null,
     residentialRetryShare: environment.env.FEDEX_RESIDENTIAL_RETRY_PERCENT === undefined ? 0.5 : Number(environment.env.FEDEX_RESIDENTIAL_RETRY_PERCENT) / 100,
+    datacenterTrawl: environment.trawlRoutes?.['fedex-datacenter'] ?? null,
+    retryTrial: fedexRetryTrial(environment.env, environment.retryTrialStores?.['fedex-retry']),
     api,
     recorder: environment.recorder,
   });

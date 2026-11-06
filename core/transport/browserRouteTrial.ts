@@ -6,10 +6,12 @@ export function retryShare(value: number): number {
   return value;
 }
 
+export type AlternativeRoute = Exclude<NonNullable<StepRecord['networkRoute']>, 'default'>;
+
 /** One lookup's opt-in route assignment. The adapter owns eligibility, attempts and deadlines. */
 export class BrowserRouteTrial<T> {
   readonly recorder: StepRecorder;
-  private selected: boolean | undefined;
+  private selected: 'default' | AlternativeRoute | undefined;
   private pending = false;
   private route: StepRecord['networkRoute'] = 'default';
   private attempt: StepRecord['networkAttempt'] = 'initial';
@@ -19,7 +21,9 @@ export class BrowserRouteTrial<T> {
   private partial = false;
 
   constructor(private readonly options: { primary: T; alternative: T | null; route: 'residential'; share: number;
-    steps: readonly string[]; recorder?: StepRecorder }) {
+    steps: readonly string[]; recorder?: StepRecorder;
+    /** Routes a caller's own allocation can name at the retry, in place of the share's lottery. */
+    routes?: Partial<Record<AlternativeRoute, T | null>> }) {
     retryShare(options.share);
     const sink = options.recorder ?? NOOP_RECORDER;
     this.recorder = {
@@ -33,20 +37,32 @@ export class BrowserRouteTrial<T> {
     };
   }
 
-  primary(): T { return this.begin(false, 'initial'); }
+  primary(): T { return this.begin('default', 'initial'); }
 
   get isAlternate(): boolean { return this.route !== 'default'; }
 
-  /** Choose once, only when an existing eligible retry actually starts. */
-  retry(): T {
-    this.selected ??= this.options.alternative !== null && Math.random() < this.options.share;
+  get selectedRoute(): NonNullable<StepRecord['networkRoute']> { return this.route ?? 'default'; }
+
+  /**
+   * Choose once, only when an existing eligible retry actually starts. A named
+   * route, chosen by the caller's allocation, takes the place of the lottery;
+   * it must be one of the configured `routes`.
+   */
+  retry(choice?: AlternativeRoute): T {
+    if (choice !== undefined) {
+      const client = this.options.routes?.[choice];
+      if (client === undefined || client === null) throw new TypeError('Unconfigured browser retry route');
+      this.selected ??= choice;
+    }
+    this.selected ??= this.options.alternative !== null && Math.random() < this.options.share ? this.options.route : 'default';
     return this.begin(this.selected, 'retry');
   }
 
-  private begin(alternate: boolean, attempt: 'initial' | 'retry'): T {
+  private begin(route: 'default' | AlternativeRoute, attempt: 'initial' | 'retry'): T {
     this.pending = true; this.attempt = attempt; this.family = 'unknown'; this.bytes = undefined; this.history = false; this.partial = false;
-    this.route = alternate ? this.options.route : 'default';
-    return alternate ? this.options.alternative! : this.options.primary;
+    this.route = route;
+    if (route === 'default') return this.options.primary;
+    return (this.options.routes?.[route] ?? (route === this.options.route ? this.options.alternative : null))!;
   }
 
   observeFamily(family: 'IPv4' | 'IPv6' | 'unknown'): void { this.family = family; }

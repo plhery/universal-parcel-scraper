@@ -192,14 +192,40 @@ application identifiers and issued tokens stay outside the repository.
 `FEDEX_SECRET_KEY` instead, through the API alone. The missing-browser check runs without
 any of them.
 
-An optional independent worker behind a residential proxy can take the qualifying
-second browser attempt. Custom adapter hosts supply it as
-`environment.trawlRoutes["fedex-residential"]`; the facade constructs it from
-`FEDEX_RESIDENTIAL_TRAWL_URL`, and the carrier never constructs a browser service itself.
-`FEDEX_RESIDENTIAL_RETRY_PERCENT` selects its share of those attempts, defaulting to half;
-the rest keep the original retry route. It never adds an attempt: the attempt count, total
-deadline, whole-number checks and provider fallback remain unchanged. Step telemetry
-records the selected route and whether dated history came back. A retry over IPv6 alone
-recovered fewer histories than the original route, so no such route is offered.
+Optional independent workers behind proxies can take the qualifying second browser
+attempt; the first attempt keeps the original route. Custom adapter hosts supply them as
+`environment.trawlRoutes["fedex-residential"]` and `["fedex-datacenter"]`; the facade
+constructs them from `FEDEX_RESIDENTIAL_TRAWL_URL` and `FEDEX_DATACENTER_TRAWL_URL`, and
+the carrier never constructs a browser service itself. A worker never adds an attempt: the
+attempt count, total deadline, whole-number checks and provider fallback remain unchanged.
+Step telemetry records the selected route (`default`, `datacenter` or `residential`) and
+whether dated history came back. A retry over IPv6 alone recovered fewer histories than the
+original route, so no such route is offered.
 
-The worker requires `FEDEX_RETRY_PROXY_URL`, tunnels every browser connection through that authenticated gateway without direct fallback, and attests page and API tunnels; a reply without that proof is a transport failure. The exit's IP family remains unknown. Accepted sessions retain their original proxy context; rejected contexts are discarded. Aggregate encrypted tunnel bytes include browser dependencies; per-attempt bytes omit traffic outside the attempt and responses lost to transport failure. The worker's private `/metrics` counter includes those bytes too.
+With the residential worker alone, `FEDEX_RESIDENTIAL_RETRY_PERCENT` selects its share of
+those attempts, defaulting to half; the rest keep the original retry route. Once the
+datacenter worker is configured, the original route takes no retry. Every retry goes to
+the datacenter worker, unless the host keeps a trial: `FEDEX_RETRY_TRIAL` names it and
+`environment.retryTrialStores["fedex-retry"]` saves each attempt, so its limits hold across
+restarts. While it runs, a biased coin (two chances in three for the route behind) assigns
+each retry to the datacenter or residential worker, without regard to outcomes. The
+residential route stops at the first of `FEDEX_RETRY_TRIAL_ATTEMPTS` attempts (100),
+`FEDEX_RETRY_TRIAL_RESIDENTIAL_BYTES` (250,000,000) or `FEDEX_RETRY_TRIAL_HOURS` from its
+first attempt (48); every retry after that goes to the datacenter worker. Its bytes are
+each attempt's proven tunnel bytes plus what the worker carried since its previous reply;
+an attempt without proof, lost or still running, is charged
+`FEDEX_RETRY_TRIAL_UNMEASURED_BYTES` (2,000,000), and the cap stops the route before its
+next attempt could pass it. Until the store answers, and while saving fails, retries take the
+datacenter worker. `fedexRetryTrial(env, store)` returns the trial with its snapshot: per-route
+attempts, dated histories, outcomes and bytes, and when and why it ended. Another
+`FEDEX_RETRY_TRIAL` name starts a new trial.
+
+Each worker requires `FEDEX_RETRY_PROXY_URL`, names its route in `FEDEX_RETRY_ROUTE`,
+tunnels every browser connection through its authenticated gateway without direct
+fallback, and attests page and API tunnels; a reply without that proof, or from the other
+route, is a transport failure (`datacenter_unverified`, `residential_unverified`). The
+exit's IP family remains unknown. Accepted sessions retain their original proxy context;
+rejected contexts are discarded. Aggregate encrypted tunnel bytes include browser
+dependencies; per-attempt bytes omit traffic outside the attempt and responses lost to
+transport failure, which the next reply's idle bytes carry. The worker's private `/metrics`
+counter includes those bytes too. None of these counts is the provider's bill.

@@ -3,8 +3,10 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { recognizeFromLookup } from '../../core/adapter/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
+import type { RetryRouteAttempt, RetryRouteTrialStore } from '../../core/transport/retryRouteTrial.js';
 import {
   FedExTracker,
+  fedexRetryTrial,
   adapter,
   fedexTrackingUrl,
   parseFedExTrackingHtml,
@@ -786,6 +788,61 @@ describe('FedEx lookup steps', () => {
     await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL), residentialTrawl: new TrawlClient('http://residential.test'), residentialRetryShare: 1 })
       .fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ reason: 'residential_unverified' });
     expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('sends the eligible retry to the datacenter service once it is configured, never back to the original route', async () => {
+    const records: Parameters<StepRecorder['step']>[0][] = [];
+    const denied = () => Response.json({ tier: 3, statusCode: 200, html: '', capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(denied())
+      .mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '',
+        fedexEgress: { route: 'datacenter', family: 'unknown', pageConnections: 1, apiConnections: 2, bytes: 900, idleBytes: 100 },
+        capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(deliveredFixture()) }] }));
+    const tracker = adapter({ trawl: new TrawlClient(TRAWL_URL), browserExecutablePath: null,
+      trawlRoutes: { 'fedex-residential': new TrawlClient('http://residential.test'), 'fedex-datacenter': new TrawlClient('http://datacenter.test') },
+      env: { FEDEX_RESIDENTIAL_RETRY_PERCENT: '0' }, recorder: { step: r => records.push(r), lookup() {} } });
+    await expect(tracker.track({ number: DELIVERED_NUMBER })).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher.mock.calls.map(c => String(c[0]))).toEqual([`${TRAWL_URL}/scrape`, 'http://datacenter.test/scrape']);
+    expect(records[0]).toMatchObject({ networkRoute: 'default', networkAttempt: 'initial' });
+    expect(records[1]).toMatchObject({ networkRoute: 'datacenter', networkAttempt: 'retry', networkBytes: 900, historyAvailable: true });
+    // A reply that names another route, or proves no API tunnel, is a transport failure with its reason.
+    for (const egress of [{ route: 'residential', pageConnections: 1, apiConnections: 1 }, { route: 'datacenter', pageConnections: 1, apiConnections: 0 }]) {
+      fetcher.mockReset().mockResolvedValueOnce(denied()).mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '',
+        fedexEgress: { family: 'unknown', bytes: 1, ...egress }, capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(deliveredFixture()) }] }));
+      await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'transport', reason: 'datacenter_unverified' });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    }
+    // A failure that does not qualify for the retry still makes no second attempt.
+    fetcher.mockReset().mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Access Denied</body>', capturedResponses: [] }));
+    await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('lets the persisted trial assign the retry and saves its outcome and billed bytes', async () => {
+    const rows = new Map<string, RetryRouteAttempt>();
+    const store: RetryRouteTrialStore = { load: async () => [...rows.values()], save: async attempt => { rows.set(attempt.id, { ...attempt }); } };
+    const environment = { trawl: new TrawlClient(TRAWL_URL), browserExecutablePath: null,
+      trawlRoutes: { 'fedex-residential': new TrawlClient('http://residential.test'), 'fedex-datacenter': new TrawlClient('http://datacenter.test') },
+      retryTrialStores: { 'fedex-retry': store }, env: { FEDEX_RETRY_TRIAL: 'adapter-test', FEDEX_RETRY_TRIAL_ATTEMPTS: '1' }, recorder: { step() {}, lookup() {} } };
+    const trial = fedexRetryTrial(environment.env, store)!;
+    expect(fedexRetryTrial(environment.env, store)).toBe(trial);
+    const tracker = adapter(environment);
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async input => {
+      const url = String(input);
+      if (url.startsWith(TRAWL_URL)) return Response.json({ tier: 3, statusCode: 200, html: '', capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+      const route = url.includes('residential') ? 'residential' : 'datacenter';
+      return Response.json({ tier: 3, statusCode: 200, html: '<body>Access Denied</body>',
+        fedexEgress: { route, family: 'unknown', pageConnections: 1, apiConnections: 1, bytes: 1_000, idleBytes: 24 },
+        capturedResponses: [{ url: TRACK_API, status: 403, body: null }] });
+    });
+    // One attempt per route ends the trial; the rest take the datacenter route.
+    for (let i = 0; i < 12; i++) await expect(tracker.track({ number: DELIVERED_NUMBER })).rejects.toMatchObject({ kind: 'challenge' });
+    await trial.flush();
+    const retries = fetcher.mock.calls.map(c => String(c[0])).filter(url => !url.startsWith(TRAWL_URL));
+    expect(retries.length).toBe(12);
+    expect(retries.filter(url => url.includes('residential')).length).toBe(1);
+    const saved = [...rows.values()];
+    expect(saved.filter(row => row.route === 'residential')).toEqual([expect.objectContaining({ outcome: 'challenge', history: false, bytes: 1_024 })]);
+    expect(trial.snapshot()).toMatchObject({ phase: 'complete', endReason: 'samples', chargedResidentialBytes: 1_024 });
   });
 
   it('keeps the control cohort on the original retry service', async () => {

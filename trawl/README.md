@@ -208,12 +208,18 @@ defaults to loopback and `PORT` to 8192. Keep its endpoint private and the prima
 service's deployment settings. It serves only the exact FedEx capture flow, one lookup at
 a time, with no shared browser profile or session cache.
 
-`FEDEX_RETRY_PROXY_URL` names an authenticated residential gateway. Each browser context
-gets a loopback CONNECT proxy that sends every tunnel through it, to checked public
-addresses, without a direct fallback. The response reports page and API tunnel counts and
-tunnel bytes; DNS answers, URLs, cookies and the rendered page never leave the worker.
-Failed contexts and their proxies are closed together. Use `FEDEX_RESIDENTIAL_TRAWL_URL`
-in the consumer, as the [FedEx adapter](../carriers/fedex/README.md) describes.
+`FEDEX_RETRY_ROUTE` names the worker's route, `residential` (the default) or `datacenter`,
+in its proof, health, metrics and browser pool. `FEDEX_RETRY_PROXY_URL` names one
+authenticated gateway, or several separated by white space or commas, such as a list of
+datacenter addresses. Each browser context draws one gateway and keeps it for its life; a
+denial never moves a context to another. Each context gets a loopback CONNECT proxy that
+sends every tunnel through its gateway, to checked public addresses, without a direct
+fallback. The response reports page and API tunnel counts, the lookup's tunnel bytes and
+the idle bytes carried since the previous reply; DNS answers, URLs, cookies, gateways and
+the rendered page never leave the worker. Failed contexts and their proxies are closed
+together. `/health` gives the route and the number of gateways. Run one worker per route
+and use `FEDEX_RESIDENTIAL_TRAWL_URL` and `FEDEX_DATACENTER_TRAWL_URL` in the consumer, as
+the [FedEx adapter](../carriers/fedex/README.md) describes.
 
 A gateway that refuses tunnels, as when its pinned exit goes offline, makes every lookup
 fail after its deadline. The `fedex.gateway-refusal` warning counts a lookup's refused

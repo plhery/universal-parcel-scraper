@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { createServer, request } from 'node:http';
 import { connect } from 'node:net';
-import { createFedExResidentialProxy, fedexDestination, publicAddress } from './fedex-residential-proxy.mjs';
+import { createFedExResidentialProxy, fedexDestination, publicAddress, retryGateways, retryRoute } from './fedex-residential-proxy.mjs';
 
 const resolve = async () => [{ address: '8.8.8.8', family: 4 }];
 async function tunnel(proxy, authority, body = '') {
@@ -83,4 +83,20 @@ test('a refused tunnel reports the gateway status and its reason token', async (
       { target: 'resource', status: 502, reason: null }]);
     assert.equal(proxy.proof().pageConnections, 0);
   } finally { await proxy.close(); await new Promise(done => upstream.close(done)); }
+});
+test('a worker names one route and accepts several gateways without echoing them', async () => {
+  assert.equal(retryRoute(undefined), 'residential');
+  assert.equal(retryRoute(' datacenter '), 'datacenter');
+  assert.throws(() => retryRoute('default'));
+  assert.deepEqual(retryGateways('http://u:p@192.0.2.10:8000\nhttp://u:p@192.0.2.11:8001, http://u:p@192.0.2.12:8002'),
+    ['http://u:p@192.0.2.10:8000', 'http://u:p@192.0.2.11:8001', 'http://u:p@192.0.2.12:8002']);
+  for (const value of ['', ' ', 'http://u:secret@gateway.test/path', 'socks5://u:secret@gateway.test']) {
+    try { retryGateways(value); assert.fail('accepted'); }
+    catch (error) { assert.doesNotMatch(String(error), /secret/); }
+  }
+  // A gateway given by its address is checked like a resolved one, and the proof names the worker's route.
+  const proxy = await createFedExResidentialProxy('http://u:p@8.8.4.4:8000', { route: 'datacenter',
+    resolve: async host => [{ address: host, family: 4 }] });
+  try { assert.equal(proxy.proof().route, 'datacenter'); } finally { await proxy.close(); }
+  await assert.rejects(createFedExResidentialProxy('http://u:p@10.0.0.1:8000', { resolve: async host => [{ address: host, family: 4 }] }));
 });

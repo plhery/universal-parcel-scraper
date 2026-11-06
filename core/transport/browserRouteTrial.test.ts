@@ -49,3 +49,15 @@ it('records bounded byte observations and clears them between attempts', () => {
   expect(step.mock.calls[0]?.[0]).toHaveProperty('networkBytes', 123);
   trial.retry(); trial.recorder.step(record); expect(step.mock.calls[1]?.[0]).not.toHaveProperty('networkBytes');
 });
+
+it('takes a route the caller names once, records it, and refuses one that is not configured', () => {
+  const random = vi.spyOn(Math, 'random');
+  const step = vi.fn(), trial = new BrowserRouteTrial({ primary: 'normal', alternative: 'home', route: 'residential', share: 1,
+    steps: ['browser'], recorder: { step, lookup() {} }, routes: { datacenter: 'rack', residential: 'home' } });
+  expect(trial.retry('datacenter')).toBe('rack'); expect(trial.selectedRoute).toBe('datacenter');
+  trial.recorder.step(record);
+  expect(step.mock.calls[0]?.[0]).toMatchObject({ networkRoute: 'datacenter', networkAttempt: 'retry' });
+  expect(trial.retry()).toBe('rack'); expect(random).not.toHaveBeenCalled();
+  const bare = new BrowserRouteTrial({ primary: 'normal', alternative: null, route: 'residential', share: 0, steps: ['browser'] });
+  expect(() => bare.retry('datacenter')).toThrow(TypeError);
+});

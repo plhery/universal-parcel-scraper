@@ -32,6 +32,8 @@ export interface TrackerOptions {
   /** How this install names itself to carriers that accept a plain client. */
   userAgent?: string;
   env?: Readonly<Record<string, string | undefined>>;
+  /** Where a long-lived host keeps retry route trials, as `AdapterEnvironment.retryTrialStores`. */
+  retryTrialStores?: AdapterEnvironment['retryTrialStores'];
   /** A registry built by the host carries its own environment, `userAgent` included. */
   registry?: AdapterRegistry;
   /** Minimum gap between calls to the same universal provider in this process. */
@@ -120,14 +122,19 @@ export function createTracker(options: TrackerOptions = {}) {
     return baseFetcher(url, { ...init, ...(signal ? { signal } : {}) });
   }, options.fetcher);
   const residentialUrl = options.env?.FEDEX_RESIDENTIAL_TRAWL_URL?.trim();
+  const datacenterUrl = options.env?.FEDEX_DATACENTER_TRAWL_URL?.trim();
   const environment: AdapterEnvironment = {
     fetcher,
     userAgent: userAgentOf(options.userAgent),
     trawl: options.trawlUrl ? new TrawlClient(options.trawlUrl, fetcher) : null,
-    trawlRoutes: residentialUrl ? { 'fedex-residential': new TrawlClient(residentialUrl, fetcher) } : undefined,
+    trawlRoutes: residentialUrl || datacenterUrl ? {
+      ...(residentialUrl ? { 'fedex-residential': new TrawlClient(residentialUrl, fetcher) } : {}),
+      ...(datacenterUrl ? { 'fedex-datacenter': new TrawlClient(datacenterUrl, fetcher) } : {}),
+    } : undefined,
     browserExecutablePath: options.chromiumPath || null,
     recorder: options.recorder ?? NOOP_RECORDER,
     env: options.env ?? {},
+    ...(options.retryTrialStores ? { retryTrialStores: options.retryTrialStores } : {}),
   };
   const registry = options.registry ?? new AdapterRegistry(REGISTRY, environment);
   const universal = new UniversalTracker({ environment });

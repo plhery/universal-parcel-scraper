@@ -2,11 +2,14 @@
 // Run with Bun inside the same pinned image as the primary TRAWL service.
 import { BrowserPool } from '../../../browser/src/pool.ts';
 import { FedExSessions, fedexSessionNumber } from './fedex-session.mjs';
-import { createFedExResidentialProxy } from './fedex-residential-proxy.mjs';
+import { createFedExResidentialProxy, retryGateways, retryRoute } from './fedex-residential-proxy.mjs';
 
-const gateway = process.env.FEDEX_RETRY_PROXY_URL?.trim();
-if (!gateway) throw new Error('Set FEDEX_RETRY_PROXY_URL to the residential gateway');
+// One route per worker. Each browser context draws one of the gateways and keeps it for its life.
+const route = retryRoute(process.env.FEDEX_RETRY_ROUTE);
+const gateways = retryGateways(process.env.FEDEX_RETRY_PROXY_URL);
 let proxyBytes = 0;
+// The tunnel bytes up to the previous reply; the next reply reports what came after beyond its own lookup.
+let reportedBytes = 0;
 // The worker serves one lookup at a time, so the change in these counts over a lookup is that lookup's.
 const refused = { tunnels: 0, page: 0, api: 0, status: null, reason: null };
 const onRefusal = ({ target, status, reason }) => {
@@ -21,7 +24,7 @@ function reportRefusals(before) {
 }
 
 const pool = new BrowserPool({ poolSize: 1, recycleAfterTemporaryContexts: 0, contentProcesses: 2,
-  label: 'fedex-residential', blockAds: true });
+  label: `fedex-${route}`, blockAds: true });
 const sessions = new FedExSessions();
 const proxies = new Set();
 const bindings = new WeakMap();
@@ -33,7 +36,8 @@ async function bind(browser) {
   const original = browser.newContext.bind(browser);
   const binding = { current: null };
   browser.newContext = async options => {
-    const proxy = await createFedExResidentialProxy(gateway, { onBytes: n => { proxyBytes += n; }, onRefusal }); proxies.add(proxy);
+    const gateway = gateways[Math.floor(Math.random() * gateways.length)];
+    const proxy = await createFedExResidentialProxy(gateway, { route, onBytes: n => { proxyBytes += n; }, onRefusal }); proxies.add(proxy);
     try {
       const context = await original({ ...options, proxy: { server: proxy.url } });
       binding.current = proxy;
@@ -50,8 +54,9 @@ const server = Bun.serve({
   maxRequestBodySize: 16_384, idleTimeout: 60,
   async fetch(request) {
     const path = new URL(request.url).pathname;
-    if (path === '/health' && request.method === 'GET') return Response.json({ status: stopping ? 'stopping' : 'ok', mode: 'fedex-residential' }, { status: stopping ? 503 : 200 });
-    if (path === '/metrics' && request.method === 'GET') return new Response('# TYPE fedex_retry_proxy_bytes_total counter\nfedex_retry_proxy_bytes_total ' + proxyBytes + '\n', { headers: { 'content-type': 'text/plain; version=0.0.4' } });
+    if (path === '/health' && request.method === 'GET') return Response.json({ status: stopping ? 'stopping' : 'ok', mode: `fedex-${route}`,
+      route, gateways: gateways.length }, { status: stopping ? 503 : 200 });
+    if (path === '/metrics' && request.method === 'GET') return new Response(`# TYPE fedex_retry_proxy_bytes_total counter\nfedex_retry_proxy_bytes_total{route="${route}"} ${proxyBytes}\n`, { headers: { 'content-type': 'text/plain; version=0.0.4' } });
     if (path !== '/scrape' || request.method !== 'POST') return new Response(null, { status: 404 });
     let body;
     try { body = await request.json(); } catch { return new Response(null, { status: 400 }); }
@@ -77,8 +82,12 @@ const server = Bun.serve({
           capture: { captureResponses: body.captureResponses, settleTimeout: 250 } });
       } finally { request.signal.removeEventListener('abort', cancel); reportRefusals(refusedBefore); }
       context = binding.current;
-      const proof = context?.proof() ?? { route: 'residential', family: 'unknown', pageConnections: 0, apiConnections: 0, bytes: 0 };
+      const proof = context?.proof() ?? { route, family: 'unknown', pageConnections: 0, apiConnections: 0, bytes: 0 };
       proof.bytes = Math.max(0, proof.bytes - (context === previousProxy ? bytesBefore : 0));
+      // Everything else carried since the previous reply: idle sessions and lookups that failed without one.
+      // Over the replies, bytes and idle bytes add up to the worker's whole tunnel traffic.
+      proof.idleBytes = Math.max(0, proxyBytes - reportedBytes - proof.bytes);
+      reportedBytes = proxyBytes;
       // No rendered page, cookies, proxy address or destination addresses leave this endpoint.
       return Response.json({ ...result, html: '', body: '', cookies: [], fedexEgress: proof });
     } catch { return new Response(null, { status: 502 }); }
