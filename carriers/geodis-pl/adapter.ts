@@ -1,5 +1,5 @@
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { AdapterFactory, Recognition, TrackingContext } from '../../core/adapter/index.js';
+import { carrierErrorKind, ChallengeError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -33,15 +33,51 @@ function json(body: string): unknown {
   }
 }
 
+type Get = (url: string, accept: string, headers?: Record<string, string>) => Promise<string>;
+
 export class GeodisPlTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeGeodisPlNumber(raw);
+    return this.run(context, async (get) => {
+      const summary = parseGeodisPlSummary(await get(geodisPlSearchUrl(number), 'text/html'), number);
+      // The page's own request for the history, as its jQuery sends it.
+      const history = await get(geodisPlHistoryUrl(number), 'application/json, text/javascript, */*; q=0.01',
+        { 'X-Requested-With': 'XMLHttpRequest' });
+      return parseGeodisPlHistory(json(history), summary, Date.now());
+    });
+  }
+
+  /**
+   * Whether the tracker knows the shipment, from the search page alone. The
+   * summary names the number, and the page answers a number it does not know
+   * with its own notice, so a summary is the shipment, scanned or not.
+   * Reading the history too doubles the wait, which the first half of a short
+   * recognition budget does not always cover.
+   */
+  async recognize(raw: string, context: TrackingContext = {}): Promise<Recognition> {
+    let number: string;
+    try {
+      number = normalizeGeodisPlNumber(raw);
+    } catch {
+      return { known: false };
+    }
+    try {
+      await this.run(context, async (get) => parseGeodisPlSummary(await get(geodisPlSearchUrl(number), 'text/html'), number));
+    } catch (error) {
+      if (['not_found', 'invalid_input'].includes(carrierErrorKind(error) ?? '')) return { known: false };
+      throw error;
+    }
+    return { known: true, lastActivityAt: null };
+  }
+
+  /** One read of the site: a try with half of the budget, then one more when it fails to reach the site or hangs. */
+  private run<T>(context: TrackingContext, read: (get: Get) => Promise<T>): Promise<T> {
     const budgetMs = context.budgetMs ?? 15_000;
-    const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
+    const attempt = async (signal: AbortSignal, timeoutMs: number): Promise<T> => {
       const deadline = performance.now() + timeoutMs;
-      const get = async (url: string, accept: string, headers: Record<string, string> = {}): Promise<string> => {
+      const get: Get = async (url, accept, headers = {}) => {
         // A request out of time fails as a timeout, which the retry step may take up.
         const left = Math.max(1, Math.floor(deadline - performance.now()));
         signal.throwIfAborted();
@@ -53,17 +89,11 @@ export class GeodisPlTracker {
         if (response.status !== 200) throw new TransportError(PROVIDER, 'GEODIS Poland tracking page is unavailable');
         return decodeText(bytes);
       };
-      const summary = parseGeodisPlSummary(await get(geodisPlSearchUrl(number), 'text/html'), number);
-      // The page's own request for the history, as its jQuery sends it.
-      const history = await get(geodisPlHistoryUrl(number), 'application/json, text/javascript, */*; q=0.01',
-        { 'X-Requested-With': 'XMLHttpRequest' });
-      return parseGeodisPlHistory(json(history), summary, Date.now());
+      return read(get);
     };
-    // A read that fails to reach the site, or hangs, gets one more try: the
-    // first gets half of the budget, so the retry fits in the rest.
     return runSteps({ carrier: 'geodis-pl', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => read(signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => read(signal, remainingMs)),
+      { id: 'direct', run: ({ signal, remainingMs }) => attempt(signal, firstAttemptMs(remainingMs)) },
+      networkRetryStep(({ signal, remainingMs }) => attempt(signal, remainingMs)),
     ]);
   }
 }
@@ -73,7 +103,6 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'geodis-pl', recordsSteps: true, steps: ['direct', 'retry'],
     track: (input, context) => tracker.fetch(input.number, context),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
-      () => accepted(() => normalizeGeodisPlNumber(number))),
+    recognize: (number, context) => tracker.recognize(number, context),
   };
 };

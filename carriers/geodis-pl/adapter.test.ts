@@ -199,7 +199,13 @@ describe('GEODIS Poland HTTP adapter', () => {
     });
 
   it('recognizes a known shipment and the unknown-number answer, and asks nothing for a number GEODIS Poland does not issue', async () => {
-    await expect(carrier(site(search(), history('history-in-transit'))).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
+    const known = site(search(), history('history-in-transit'));
+    await expect(carrier(known).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
+    // The search page alone: its summary names the shipment, scanned or not.
+    expect(known.mock.calls.map(([url]) => String(url))).toEqual([geodisPlSearchUrl(NUMBER)]);
+    const unscanned = site(search().replace('Shipment in Line-haul', 'Transferred Data'), null);
+    await expect(carrier(unscanned).recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: null });
+    await expect(carrier(site(search(OTHER), null)).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
     const notFound = vi.fn<typeof fetch>().mockResolvedValue(page(text('search-not-found.html')));
     await expect(carrier(notFound).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(notFound).recognize!('PL123456789012345')).resolves.toEqual({ known: false });

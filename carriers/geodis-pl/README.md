@@ -21,7 +21,8 @@ the separate [`geodis`](../geodis/README.md) carrier.
 - "Shipment with such number does not exist" is not found, and a refused input is invalid. Both
   count only when the search field echoes the number asked. Redirects are not followed, and a
   moved or missing page is a transport failure.
-- Recognition makes the same requests.
+- Recognition reads the search page only. Its summary names the shipment, scanned or not, and
+  reading the history too doubles the wait, which a short recognition budget does not always cover.
 
 ## Notes
 
