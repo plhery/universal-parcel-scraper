@@ -301,6 +301,14 @@ describe('UPS structured response', () => {
       .toEqual([['L0', 'registered', 'none'], ['MP', 'registered', 'carrier_map']]);
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'L0', description: 'delivery instructions have been provided by the receiver.' }))
       .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('keeps the stage of the scan before it') });
+    // A government agency's hold and release share VK: the map leaves each wording to the shared rules.
+    for (const description of ["Your package is pending release from a Government Agency. We'll notify the receiver or sender if information is needed.",
+      'Your package has been released by a government agency.']) {
+      expect(statusMapAnswer({ carrier: 'ups', providerCode: 'VK', description })).toMatchObject({ kind: 'intentional_gap' });
+      expect(parseUPSTrackingResponse(withScans([scan('VK', description, '20260905 10:55:00'), scan('EP', 'Export Scan', '20260905 06:47:00')],
+        { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY).events?.[0], description).not.toHaveProperty('stage');
+    }
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'OC', description: 'Arrived at Facility' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A receiver's Saturday delivery, and a delivery home rather than to the access point, are new plans.
     for (const [code, description] of [['RF', 'Saturday Delivery has been requested. / Delivery will be rescheduled for Saturday.'],
       ['VM', "We will deliver the package to the original receiver's address as the receiver requested."]]) {

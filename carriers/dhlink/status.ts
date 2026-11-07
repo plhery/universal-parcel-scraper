@@ -114,6 +114,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['dismantling the board', 'in_transit'],
   // A European partner's linehaul after the flight.
   ['linehaul transit; parcel has entered the linehaul network.', 'in_transit'],
+  // Pactic's record of the parcel's data: a registration before DHLink's scans, no step back after them.
+  ['data received; data transferred and received by carrier', 'registered'],
 ]);
 
 /** DHLink's and China Post's scans in Chinese, and a relayed USPS notice. */

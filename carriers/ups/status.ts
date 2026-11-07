@@ -82,8 +82,8 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // parcel on its way to its first UPS facility, and the origin scan there.
   // The adapter reads these as transit after the parcel's delivery leg.
   ['XD', 'accepted'], ['ZO', 'accepted'], ['PU', 'accepted'], ['PC', 'accepted'], ['AG', 'accepted'], ['OR', 'accepted'],
-  // Facility scans, export and import scans.
-  ['AR', 'in_transit'], ['DP', 'in_transit'], ['DS', 'in_transit'], ['YP', 'in_transit'], ['HL', 'in_transit'],
+  // Facility scans, export and import scans. OC is worded "Arrived at Facility" too.
+  ['AR', 'in_transit'], ['OC', 'in_transit'], ['DP', 'in_transit'], ['DS', 'in_transit'], ['YP', 'in_transit'], ['HL', 'in_transit'],
   ['EP', 'in_transit'], ['IP', 'in_transit'],
   // A notice that the package is on its way, without a facility.
   ['DA', 'in_transit'],
@@ -184,5 +184,8 @@ export function upsUncodedScanStage(text: string): Stage | undefined {
 /** What the map says about one scan: by its activity code, or by its wording without one. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
-  gaps: [{ code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." }],
+  gaps: [
+    { code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." },
+    { code: 'VK', note: "A government agency holding the parcel, or releasing it: the code says neither, so the shared rules read the wording, a hold as customs and a release as in transit." },
+  ],
 };
