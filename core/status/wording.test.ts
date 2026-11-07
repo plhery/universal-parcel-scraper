@@ -527,6 +527,7 @@ describe('classifyWording', () => {
       ['Saída do Centro Internacional', 'in_transit'],
       ['PENDIENTE DE ENTREGAR A TIPSA', 'registered'],
       ['Pendiente de recepción en CTT Express', 'registered'],
+      ['Pendiente de entrada en red', 'registered'],
       ['Aguarda entrada nos CTT', 'registered'],
       // GOFO's scans in Spanish, as ParcelsApp relays them beside the English ones.
       ['Etiqueta de envío creada', 'registered'],
