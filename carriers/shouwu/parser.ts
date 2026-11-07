@@ -23,6 +23,14 @@ const EPOCH = /^\d{10}(?:\d{3})?$/;
 const BACK_OFFICE = 'Asia/Shanghai';
 // A facility's or a town's name. Anything with a digit, as a postcode, a street number or a phone number has, is dropped.
 const PLACE = /^\p{L}[\p{L}\p{M} .,'’()&/-]{0,59}$/u;
+// A row an agent files under a country's code, or under an airport's.
+const COUNTRY_CODE = /^[A-Z]{2}$/;
+const AIRPORT_CODE = /^[A-Z]{3}$/;
+// Shouwu's or an agent's own note: Chinese, without a word in Latin letters.
+const CHINESE_NOTE = /^(?!.*[A-Za-z]{2})(?=.*\p{Script=Han})/su;
+// iMile, the delivering partner in Italy, opens its rows with its centre and gives a missed delivery's reason in angle brackets.
+const IMILE_CENTRE = /^【[^】]+】/u;
+const REASON = /^<[^<>]+>$/;
 const MAX_ENTRIES = 20;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
@@ -54,8 +62,9 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
 
 /**
  * A scan's wall clock, from epoch seconds as a number or digits. Shouwu's
- * back office reads each scan's wall clock on Beijing time, a scan abroad's
- * too, so the epoch shows the scan's own wall clock in Beijing. The page
+ * back office reads a scan's wall clock on Beijing time, an airline's or a
+ * delivering partner's abroad too, so the epoch shows the scan's own wall
+ * clock in Beijing (`onEpoch` names the rows abroad it does not). The page
  * shows no time for an empty or zero value, and neither is read as one.
  */
 function scanClock(row: Record<string, unknown>): { seconds: number; wall: string } | null {
@@ -65,6 +74,17 @@ function scanClock(row: Record<string, unknown>): { seconds: number; wall: strin
   const seconds = EPOCH.test(digits) ? Number(digits.slice(0, 10)) : 0;
   if (seconds <= 0) throw new SchemaError(PROVIDER, 'Shouwu returned an invalid scan time');
   return { seconds, wall: DateTime.fromSeconds(seconds, { zone: BACK_OFFICE }).toFormat("yyyy-MM-dd'T'HH:mm:ss") };
+}
+
+/**
+ * Whether a scan's epoch is its instant though its place is abroad: a note an
+ * agent writes in China under the destination's code, iMile's rows, which iMile
+ * dates with their offset, and an agent's own rows under an airport's code.
+ */
+function onEpoch(row: Record<string, unknown>, description: string, location: string): boolean {
+  if (IMILE_CENTRE.test(description)) return true;
+  if (COUNTRY_CODE.test(location)) return CHINESE_NOTE.test(description) || REASON.test(description);
+  return AIRPORT_CODE.test(location) && text(row, 'traceType', 64) === 'TRACE_TYPE_TAIL';
 }
 
 /** The facility or town a scan names, at most; anything that could be an address is dropped. */
@@ -104,6 +124,10 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     const staged = shouwuStage(description);
     scans.push({ timestamp: clock.seconds, event: {
       local_time: clock.wall,
+      ...(onEpoch(row, description, location) ? {
+        time: DateTime.fromSeconds(clock.seconds, { zone: BACK_OFFICE }).toISO({ suppressMilliseconds: true })!,
+        time_zone: BACK_OFFICE, time_zone_basis: 'carrier' as const,
+      } : {}),
       ...(location ? { location } : {}),
       description,
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
@@ -122,9 +146,10 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
  * is a failed lookup. An entry is `order`, with the number in `orderNo`, the
  * status code in `traceStatus` and the destination in `countryCodeTwo`, and
  * `traces`, each with epoch seconds in `traceTime`, wording in `traceDesc`
- * and a place in `traceLocation`. A scan keeps the wall clock its epoch shows
- * in Beijing, for its place to date. Only entries naming the whole number asked
- * are read, and of them only those fields.
+ * and a place in `traceLocation`, and its feed in `traceType`. A scan keeps the
+ * wall clock its epoch shows in Beijing, for its place to date, unless its
+ * epoch is its instant. Only entries naming the whole number asked are read,
+ * and of them only those fields.
  */
 export function parseShouwu(payload: unknown, raw: string): CarrierResult {
   const number = normalizeShouwuNumber(raw);
@@ -191,7 +216,7 @@ export function parseShouwu(payload: unknown, raw: string): CarrierResult {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: source! } : {}),
     last_status_text: newest.description!,
-    last_update: null,
+    last_update: newest.time ?? null,
     last_update_local: newest.local_time!,
     expected_delivery: null,
     ...destination,

@@ -46,11 +46,20 @@ numbers `shouwu-1` offers.
   keeps the epoch's instant. A scan stored from the epoch as its instant is taken over by its
   wording and place (`identity.ts`). The page reads the first ten digits, so the adapter reads
   milliseconds as the same second.
+- Some rows abroad are the epoch's instant: iMile's rows in Italy (its 【centre】 sentences and a
+  missed delivery's `<reason>` under the country's code) and an agent's own flight, clearance and
+  hand-over rows under an airport's code in the agent's feed (`TRACE_TYPE_TAIL`). Their write time
+  (`createTs`) falls minutes or a few hours after the epoch, hours before their place's clock
+  would put them. The notes an agent writes in Chinese under the destination's code, as a delay at
+  a Chinese port filed under GB, are written in China and read the same way. These rows give
+  `time` on Beijing's clock. The airline's rows under an airport's code (`TRACE_TYPE_HEAD`) and the
+  delivering partners' rows are wall clocks: a flight from Shanghai to Amsterdam would otherwise
+  last five hours, and La Poste's and DHL's rounds would start at night.
 - A scan's place is `traceLocation`, which the page leaves out and Shouwu's own back office shows
   before the wording. A country's code it opens with, as in `CN,` before a sort facility, is left
   out. Anything with a digit, as an address or a postcode has, is dropped.
-- The destination is `order.countryCodeTwo`. The scan's leg (`traceType`), the status text
-  (`traceStatusDesc`) and the destination's name are not read.
+- The destination is `order.countryCodeTwo`. The status text (`traceStatusDesc`), the
+  destination's name and the write time are not read.
 - The request carries the page's `x-locale`, `zh-cn` unless a visitor chose another language.
 
 ## Limitations
