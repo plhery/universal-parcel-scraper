@@ -1,4 +1,41 @@
 {
   "carrier": "seino-super-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "受付",
+      "stage": "accepted",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "カゴ積込",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "運行",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "荷物到着",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "センター通過",
+      "stage": "in_transit",
+      "language": "ja",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "指定場所置き",
+      "stage": "delivered",
+      "language": "ja",
+      "confirmedBy": "portal"
+    }
+  ]
 }

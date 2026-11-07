@@ -40753,7 +40753,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Tokyo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "seino-super-express",
+      "localClocks": true
     },
     "canaryUrl": "https://inquire.trc.ssx.seino.co.jp/inquire/main.jsp",
     "trackingUrlTemplate": "https://inquire.trc.ssx.seino.co.jp/inquire/Main.jsp?uji.verbs=NAHS0010_find&uji.bean=com.seibu.bean.na.NAHS0010Bean&strDenpyoNo1={trackingNumber}",

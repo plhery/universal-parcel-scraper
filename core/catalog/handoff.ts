@@ -25,6 +25,7 @@ import { isPolonezReference } from '../detection/polonez.js';
 import { isPostOneReference } from '../detection/postOne.js';
 import { isSkladusaReference } from '../detection/skladusa.js';
 import { isXcargoReference } from '../detection/xcargo.js';
+import { isSeinoSuperExpressReference } from '../detection/seinoSuperExpress.js';
 import { isVXpressReference } from '../detection/vXpress.js';
 import { isAirspeedReference } from '../detection/airspeed.js';
 import { isFreightwaysGlobalReference } from '../detection/freightwaysGlobal.js';
@@ -43,6 +44,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
+  'seino-super-express': isSeinoSuperExpressReference,
   skladusa: isSkladusaReference,
   xcargo: isXcargoReference,
   'post-one': isPostOneReference,

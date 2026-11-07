@@ -21,18 +21,34 @@
   "timezone": "Asia/Tokyo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "seino-super-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://inquire.trc.ssx.seino.co.jp/inquire/Main.jsp?uji.verbs=NAHS0010_find&uji.bean=com.seibu.bean.na.NAHS0010Bean&strDenpyoNo1={trackingNumber}",
     "searchUrl": "https://inquire.trc.ssx.seino.co.jp/inquire/main.jsp",
     "canaryUrl": "https://inquire.trc.ssx.seino.co.jp/inquire/main.jsp",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location_details"
+    ],
+    "unavailable": [
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
   },
   "links": [
     {

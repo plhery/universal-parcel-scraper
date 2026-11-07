@@ -568,6 +568,7 @@ import { adapter as sapxExpress } from '../carriers/sapx-express/adapter.js';
 import { adapter as satUkraine } from '../carriers/sat-ukraine/adapter.js';
 import { adapter as saudiPost } from '../carriers/saudi-post/adapter.js';
 import { adapter as seino } from '../carriers/seino/adapter.js';
+import { adapter as seinoSuperExpress } from '../carriers/seino-super-express/adapter.js';
 import { adapter as seko } from '../carriers/seko/adapter.js';
 import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
@@ -1310,6 +1311,7 @@ export const REGISTRY: RegistryDefinition = {
     "sat-ukraine": satUkraine,
     "saudi-post": saudiPost,
     "seino": seino,
+    "seino-super-express": seinoSuperExpress,
     "seko": seko,
     "sendex": sendex,
     "sending": sending,
@@ -2527,7 +2529,7 @@ export const REGISTRY: RegistryDefinition = {
     "schneider": "universal",
     "seabourne-logistics": "universal",
     "seino": "seino",
-    "seino-super-express": "universal",
+    "seino-super-express": "seino-super-express",
     "seko": "seko",
     "sendex": "sendex",
     "sending": "sending",

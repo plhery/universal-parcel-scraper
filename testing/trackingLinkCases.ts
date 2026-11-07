@@ -377,6 +377,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'seino', number: '0000000000',
     route: /^https:\/\/track\.seino\.co\.jp\/cgi-bin\/gnpquery\.pgm\?GNPNO1=0000000000$/,
     marker: /入力されたお問合せ番号が見当りません/ },
+  // The server renders the slip number and its not-registered notice, including for an unknown slip.
+  { carrier: 'seino-super-express', number: '9700000008',
+    route: /^https:\/\/inquire\.trc\.ssx\.seino\.co\.jp\/inquire\/Main\.jsp\?uji\.verbs=NAHS0010_find&uji\.bean=com\.seibu\.bean\.na\.NAHS0010Bean&strDenpyoNo1=9700000008$/,
+    marker: /お問い合わせの伝票番号は登録されておりません/ },
   { carrier: 'yamato', number: '123456789012',
     route: /^https:\/\/toi\.kuronekoyamato\.co\.jp\/cgi-bin\/tneko/,
     marker: /荷物お問い合わせ|送り状番号|Tracking/i, forwarding: 'none' },
