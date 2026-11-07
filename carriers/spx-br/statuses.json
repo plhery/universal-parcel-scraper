@@ -240,6 +240,14 @@
       "note": "Released by customs. Seen without a Portuguese line."
     },
     {
+      "code": "F969",
+      "wording": "Pedido extraviado. Estorno será processado automaticamente.",
+      "language": "pt",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The parcel is lost; Shopee refunds the buyer without a claim."
+    },
+    {
       "code": "F979",
       "wording": "O pacote não pôde ser importado, será retornado ou confiscado pela alfândega",
       "language": "pt",
