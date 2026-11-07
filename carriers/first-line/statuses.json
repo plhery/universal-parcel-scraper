@@ -21,6 +21,7 @@
     {"wording": "Loaded on Vehicle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "GOFO loading the parcel on the truck at its sorting hub, minutes before the hub's departure scan: not the delivery round."},
     {"wording": "Departed GOFO Regional Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Leaving GOFO's sorting hub for its delivery station."},
     {"wording": "Arrived at GOFO Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "GOFO's last-mile station, before its delivery round."},
-    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "GOFO's scan between its hubs, after the hand-over."}
+    {"wording": "In Transit to Next Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "GOFO's scan between its hubs, after the hand-over."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "GOFO's delivery round, minutes after its delivery station's arrival scan."}
   ]
 }
