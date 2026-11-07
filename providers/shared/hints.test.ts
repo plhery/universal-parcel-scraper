@@ -211,6 +211,11 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['FedEx'], '00340000000000000014').discovered_carrier).toBe('fedex');
   });
 
+  it('keeps DPD France for the eighteen-digit 1660 numbers its adapter takes', () => {
+    // Synthetic: ParcelsApp files these numbers under DPD France, which tracks them.
+    expect(universalCarrierHints(['DPD France'], '166000000000000017').discovered_carrier).toBe('dpd-fr');
+  });
+
   it('proposes no such carrier when another carrier claims the number with high confidence', async () => {
     // No catalog rule claims ten or twelve digits with high confidence yet. A
     // synthetic one hides the failed waybill and GLS France checks from the

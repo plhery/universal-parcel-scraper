@@ -82,12 +82,13 @@ function expectedDeliveryDate(value: string): string | null {
  * Labels print a `250` parcel number with a GS1 check digit as a sixteenth
  * digit. The trace page takes that form and shows the fifteen-digit number, so
  * it is looked up by those fifteen digits; a wrong check digit is a typo.
+ * DPD France also tracks eighteen-digit numbers beginning `1660`.
  */
 export function normalizeDPDFranceTrackingNumber(raw: string): string {
   const value = raw.replace(/[\s.-]/g, '');
   if (/^250\d{13}$/.test(value) && hasGs1CheckDigit(value)) return value.slice(0, 15);
-  if (!/^(?:[01]\d{11,14}|250\d{9,12})$/.test(value)) {
-    throw new InvalidInputError('DPD France', 'DPD France tracking numbers must start with 0, 1, or 250 and contain 12 to 15 digits');
+  if (!/^(?:[01]\d{11,14}|250\d{9,12}|1660\d{14})$/.test(value)) {
+    throw new InvalidInputError('DPD France', 'DPD France tracking numbers must start with 0, 1, or 250 and contain 12 to 15 digits, or start with 1660 and contain 18');
   }
   return value;
 }

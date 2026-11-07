@@ -100,6 +100,15 @@ describe('DPD France tracking input', () => {
     expect(() => normalizeDPDFranceTrackingNumber('2509999999999808')).toThrow('12 to 15 digits');
   });
 
+  it('accepts the eighteen-digit numbers beginning 1660 that DPD France also tracks', () => {
+    expect(normalizeDPDFranceTrackingNumber('1660 0000 0000 0000 17')).toBe('166000000000000017');
+    expect(dpdFranceTrackingUrl('166000000000000017')).toBe('https://trace.dpd.fr/fr/trace/166000000000000017');
+    // Other eighteen-digit numbers, such as a shipper's SSCC, are not DPD France's.
+    for (const value of ['166100000000000017', '340000000000000014', '1660000000000000171']) {
+      expect(() => normalizeDPDFranceTrackingNumber(value)).toThrow('12 to 15 digits');
+    }
+  });
+
   it('rejects unsafe or non-France identifiers', () => {
     for (const value of [
       '25099999999',

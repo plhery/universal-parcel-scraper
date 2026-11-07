@@ -32,6 +32,9 @@ non-2xx statuses are indeterminate.
   links often carry that form. When the check digit matches, detection lists DPD
   France first and the adapter looks the parcel up by its fifteen digits, the
   number the trace page shows. Other sixteen-digit numbers are refused.
+- DPD France also tracks eighteen-digit numbers beginning `1660`; universal
+  providers read their history from it, and the adapter takes them. Detection
+  does not offer DPD France for them, as other carriers' numbers share the length.
 - With a browser service the plain GET is skipped: Cloudflare challenged every
   one, from a server and from a home connection alike, so it only added a
   failure before each browser lookup. Without one it is the only way to ask.
