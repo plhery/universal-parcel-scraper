@@ -39,6 +39,10 @@ carrier.
   the raw wording. The app's review asks the same map by that code (`statusMap`); wording
   without a code stays open there. State 3's "Importação cancelada." voids the arrival scan
   CTT recorded a second earlier at another office, so the map leaves it without a stage.
+- Mail from abroad that arrives (UPU `EMD`–`EMI`, `EDA`–`EDH`) at an office of exchange of the
+  country it came from is a return back at its origin. From that arrival on the scans carry
+  `provider_leg` `return`, and a movement or delivery among them is `returned`: CTT calls
+  that country the destination, whatever `StateId` it gives.
 - A timestamp's `Z` is no offset: the digits are the wall clock where the scan happened
   (`clock.ts`). The tracker is an OutSystems app whose DateTime values travel as UTC strings,
   and its page shows the digits unconverted in any browser zone. UPU's tracking has the same
@@ -47,6 +51,8 @@ carrier.
   - A scan at an office of exchange (`PTLISA - …`) or one of CTT's own sites (`Centro
     operacional` or `C.O.`, `Loja CTT`, `Ponto CTT`, `(CDP)`) is on Portugal's clock. That is the
     Azores' for a postcode from 9500 or a town only the islands have, and Lisbon's otherwise.
+  - A scan at an office of exchange of the parcel's origin or destination country is on that
+    country's clock, as a return arriving back at the origin's office.
   - On a parcel bound abroad (`RecipientCountryCode`), the destination post's events
     (UPU `EMD`–`EMI`, `EDA`–`EDH`) keep that post's wall clock: they are read in the
     destination's zone. When it has several they keep CTT's `Z`, the last guess: hours off,

@@ -13,7 +13,7 @@ import {
   parseJsonBytes,
 } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { agencyIntake, cttSiteZone, isCttExpressPlace, portugalZone } from './clock.js';
+import { agencyIntake, cttSiteZone, isCttExpressPlace, officeCountry, portugalZone } from './clock.js';
 import { classifyCttStatus } from './status.js';
 
 // Protocol provenance:
@@ -105,6 +105,9 @@ function sessionFromSetCookie(response: Response): CttSession | null {
 const DESTINATION_EVENT = /^(?:EM[D-I]|ED[A-H])$/;
 /** UPU events an origin post records: from posting to dispatch from its office of exchange. */
 const ORIGIN_EVENT = /^(?:EM[A-C]|EX[A-DX])$/;
+/** Stages a scan from the return's arrival back at the origin takes as part of the trip back. */
+const RETURN_TRIP = new Set(['accepted', 'in_transit', 'out_for_delivery', 'ready_for_pickup', 'delivered']);
+const RETURNED: ClassifiedStatus = { status: 'exception', stage: 'returned' };
 const WALL_CLOCK = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2})(?:\.\d{1,3})?(?:Z|\+00:?00)?$/i;
 
 /** A scan's wall clock read as UTC, only to compare it with another's. */
@@ -117,13 +120,15 @@ function wallMillis(value: unknown): number {
  * A scan's clock. CTT's Z is no offset: the digits are the wall clock where
  * the scan happened (see clock.ts). That is the partner post's country
  * (`partner`) for its scans: the destination's on a parcel bound abroad, the
- * origin's on mail from abroad. A location naming an office or a site of
- * CTT's overrides it; Portugal's clock applies otherwise. In a country with
+ * origin's on mail from abroad. A location naming an office of exchange in
+ * Portugal or one of the parcel's `countries`, or a site of CTT's, overrides
+ * it: a parcel returned to its origin arrives at the origin's office. Portugal's
+ * clock applies otherwise. In a country with
  * several zones the scan keeps CTT's Z, the last guess: hours off, but the
  * reply keeps its instant. Only a wall clock sent with no Z stays a wall time
  * there. Any other offset is taken as sent.
  */
-function scanClock(value: unknown, location: string, partner: string | null, spanish: boolean):
+function scanClock(value: unknown, location: string, partner: string | null, countries: readonly (string | null)[], spanish: boolean):
   { time?: string; local_time?: string; timestamp: number } | null {
   const raw = typeof value === 'string' ? value.trim() : '';
   const wall = WALL_CLOCK.exec(raw)?.[1];
@@ -131,7 +136,7 @@ function scanClock(value: unknown, location: string, partner: string | null, spa
     const time = explicitOffsetTime(raw);
     return time ? { time: time.iso, timestamp: time.timestamp } : null;
   }
-  const zone = cttSiteZone(location, partner ? [partner] : []) ?? (spanish ? 'Europe/Madrid' : null)
+  const zone = cttSiteZone(location, countries) ?? (spanish ? 'Europe/Madrid' : null)
     ?? (partner ? countryTimeZone(partner) : portugalZone(location));
   const placed = zone ? isoTime(wall, zone) : null;
   if (placed) return { time: placed.iso, timestamp: placed.timestamp };
@@ -166,7 +171,7 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
   // towns, and the acceptance CTT records with no place as the parcel reaches
   // one, are on Spain's clock (clock.ts).
   const agencyScans = rows.filter((row) => isCttExpressPlace(clean(row.Local, 160))).map((row) => wallMillis(row.DateTime));
-  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number }> = [];
+  const parsed: Array<{ event: CarrierEvent; classified: ClassifiedStatus | undefined; timestamp: number; index: number; back: boolean }> = [];
   const seen = new Set<string>();
   rows.forEach((rawEvent, index) => {
     const stateId = typeof rawEvent.StateId === 'number' ? rawEvent.StateId : Number.NaN;
@@ -176,7 +181,7 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
     const partner = abroad && DESTINATION_EVENT.test(code) ? abroad : origin && ORIGIN_EVENT.test(code) ? origin : null;
     const at = wallMillis(rawEvent.DateTime);
     const spanish = !location && agencyIntake(at, agencyScans);
-    const clock = scanClock(rawEvent.DateTime, location, partner, spanish);
+    const clock = scanClock(rawEvent.DateTime, location, partner, [abroad, origin], spanish);
     if (!clock || !description) return;
     const identity = `${clock.time ?? clock.local_time}\u0000${description}\u0000${Number.isSafeInteger(stateId) ? stateId : ''}`;
     if (seen.has(identity)) return;
@@ -200,9 +205,20 @@ export function parseCttTrackingResponse(payload: unknown, trackingNumber: strin
       classified: classified ?? undefined,
       timestamp: clock.timestamp,
       index,
+      // Mail from abroad arriving at an office of exchange of the country it
+      // came from is a return back at its origin.
+      back: Boolean(origin && !abroad && DESTINATION_EVENT.test(code) && officeCountry(location) === origin),
     });
   });
   parsed.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  // From that arrival on, the scans are the trip back to the sender: a movement
+  // or a delivery among them is the return, not a delivery to the recipient.
+  const arrivedBack = parsed.map((item) => item.back).lastIndexOf(true);
+  for (const item of parsed.slice(0, arrivedBack + 1)) {
+    const trip = RETURN_TRIP.has(item.classified?.stage ?? '');
+    if (trip) item.classified = RETURNED;
+    item.event = { ...item.event, ...(trip ? { stage: 'returned' } : {}), provider_leg: 'return' };
+  }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   const latest = parsed.find((item) => item.classified);
   if (!latest) {

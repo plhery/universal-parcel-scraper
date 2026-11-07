@@ -96,6 +96,11 @@ export function agencyIntake(at: number, agencyScans: readonly number[]): boolea
   return agencyScans.some((agency) => agency - at >= 0 && agency - at <= AGENCY_INTAKE_MS);
 }
 
+/** The country of the office of exchange leading a location, if one does. */
+export function officeCountry(location: string): string | null {
+  return OFFICE.exec(location)?.[1] ?? null;
+}
+
 /**
  * The clock a CTT scan's location itself names: the country of the office of
  * exchange leading it, when that is Portugal or one of `countries` (the
@@ -105,7 +110,7 @@ export function agencyIntake(at: number, agencyScans: readonly number[]): boolea
  * the same clocks.
  */
 export function cttSiteZone(location: string, countries: readonly (string | null)[]): string | null {
-  const office = OFFICE.exec(location)?.[1];
+  const office = officeCountry(location);
   if (office === 'PT' || (office && countries.includes(office))) {
     return office === 'PT' ? portugalZone(location) : countryTimeZone(office);
   }

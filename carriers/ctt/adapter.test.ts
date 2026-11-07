@@ -170,6 +170,31 @@ describe('CTT response parsing', () => {
       // Arrival, customs and delivery in Portugal are CTT's.
       expect(inboundAt('2026-10-12T07:13:04Z', 'PTEXAB - (OUTRO) EXAMPLE', 'EMD', 'CN')).toBe('2026-10-12T07:13:04+01:00');
       expect(inboundAt('2026-10-12T08:37:39Z', 'PTEXAE - (CTC) EXAMPLE', 'EDB', 'CN')).toBe('2026-10-12T08:37:39+01:00');
+      // A return's arrival back at the origin's office of exchange is on the origin's clock.
+      expect(inboundAt('2026-11-07T10:27:00Z', 'SGEXAA - (OUTRO) EXAMPLE', 'EMD', 'SG')).toBe('2026-11-07T10:27:00+08:00');
+      // An office of another country stays on Portugal's clock.
+      expect(inboundAt('2026-11-07T10:27:00Z', 'SGEXAA - (OUTRO) EXAMPLE', 'EMD', 'CN')).toBe('2026-11-07T10:27:00+00:00');
+    });
+
+    it("reads mail from abroad arriving back at its origin's office of exchange as returned", () => {
+      const number = 'LT000000005SG';
+      const parse = (office: string) => parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ ObjectCode: number,
+        RecipientCountryCode: 'PT', Events: { List: [
+          { DateTime: '2026-11-07T10:27:00Z', State: 'X', StateId: 11, Event: 'Arrived', EventCode: 'EMD', Local: `${office} - (OUTRO) EXAMPLE` },
+          { DateTime: '2026-11-03T09:00:00Z', State: 'X', StateId: 11, Event: 'Dispatched', EventCode: 'EMC', Local: 'PTEXAB - (OUTRO) EXAMPLE' },
+          { DateTime: '2026-10-30T08:00:01Z', State: 'X', StateId: 3, Event: 'Import cancelled', EventCode: 'EDX', Local: 'PTEXAE - (CTC) EXAMPLE' },
+          { DateTime: '2026-10-30T08:00:00Z', State: 'X', StateId: 11, Event: 'Arrived', EventCode: 'EMD', Local: 'PTEXAE - (CTC) EXAMPLE' },
+          { DateTime: '2026-10-28T06:00:00Z', State: 'X', StateId: 11, Event: 'Dispatched', EventCode: 'EMC', Local: 'SGEXAB - (OUTRO) EXAMPLE' },
+        ] } }) } }, number);
+      const back = parse('SGEXAA');
+      expect(back).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Arrived' });
+      expect(back.events![0]).toMatchObject({ stage: 'returned', provider_leg: 'return' });
+      expect(back.events!.slice(1).map((event) => event.stage)).toEqual(['in_transit', undefined, 'in_transit', 'in_transit']);
+      expect(back.events!.slice(1).some((event) => 'provider_leg' in event)).toBe(false);
+      // An office of exchange of another country is no return.
+      const onward = parse('CNEXAA');
+      expect(onward).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+      expect(onward.events!.some((event) => 'provider_leg' in event)).toBe(false);
     });
 
     it("reads a CTT Express agency's scans and the acceptance just before them on Madrid's clock", () => {
