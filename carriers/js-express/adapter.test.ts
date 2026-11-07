@@ -289,6 +289,14 @@ describe('JS Express tracking adapter', () => {
     expect(recorded).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'SHIPMENT CREATED' });
   });
 
+  it('keeps the stage of the scan before an e-mail to the recipient', () => {
+    const notified = parseJsExpress(withList([{ ...row('2026-05-02 11:00:00', '', 'E-MAIL NOTIFICATION HAS BEEN SENT TO THE RECIPIENT.'), code: 'OIT' } as Row,
+      row('2026-05-02 09:00:00', 'Sample Town', 'Out for delivery')]), DELIVERED);
+    expect(notified).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(notified.events?.[0]?.stage).toBeUndefined();
+    expect(statusMap.stage('OIT', normalizeStatusWording('E-MAIL NOTIFICATION HAS BEEN SENT TO THE RECIPIENT.'))).toBeUndefined();
+  });
+
   it("stages a customs warehouse's inbound, and a courier's announcement of the parcel moves nothing", () => {
     const announced = parseJsExpress(withList([
       row('2026-05-02 10:00:00', 'Sample Town', 'Your package is being prepared by the sender and will be handed over to us soon'),
