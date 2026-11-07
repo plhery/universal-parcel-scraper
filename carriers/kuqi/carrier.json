@@ -1,0 +1,46 @@
+{
+  "id": "kuqi",
+  "displayName": "Kuqi Supply Chain",
+  "aliases": [
+    "SZKUQI",
+    "Kuqi",
+    "库奇"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#01696c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://618881.ollogistic.com/tracking?code={trackingNumber}",
+    "searchUrl": "https://618881.ollogistic.com/tracking",
+    "canaryUrl": "https://618881.ollogistic.com/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "618881.ollogistic.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}

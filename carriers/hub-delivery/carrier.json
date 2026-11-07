@@ -1,0 +1,48 @@
+{
+  "id": "hub-delivery",
+  "displayName": "HUB Delivery",
+  "aliases": [
+    "HUB Delivery Incorporated",
+    "Hub Delivery, Inc.",
+    "HUB Delivery Services",
+    "HUB Delivery Incorporarted"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#000000"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html?search={trackingNumber}",
+    "searchUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "canaryUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.hubdelivery.com",
+        "hubdelivery.com"
+      ],
+      "pathPattern": "^/HubDelivery/PackageTracking\\.html$",
+      "params": [
+        "search"
+      ]
+    }
+  ],
+  "detection": []
+}

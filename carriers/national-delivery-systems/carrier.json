@@ -1,0 +1,33 @@
+{
+  "id": "national-delivery-systems",
+  "displayName": "National Delivery Systems",
+  "aliases": [
+    "National Delivery Systems, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#2f4a9c"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
+    "canaryUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

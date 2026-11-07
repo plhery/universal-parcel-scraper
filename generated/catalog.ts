@@ -25132,6 +25132,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hub-delivery": {
+    "displayName": "HUB Delivery",
+    "color": "#000000",
+    "aliases": [
+      "HUB Delivery Incorporated",
+      "Hub Delivery, Inc.",
+      "HUB Delivery Services",
+      "HUB Delivery Incorporarted"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "trackingUrlTemplate": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html?search={trackingNumber}",
+    "trackingSearchUrl": "https://www.hubdelivery.com/HubDelivery/PackageTracking.html",
+    "linkRules": [
+      {
+        "domains": [
+          "www.hubdelivery.com",
+          "hubdelivery.com"
+        ],
+        "pathPattern": "^/HubDelivery/PackageTracking\\.html$",
+        "params": [
+          "search"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "hub-group-final-mile": {
     "displayName": "Hub Group Final Mile",
     "color": "#d24f40",
@@ -28886,6 +28921,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/goods/goods_0[12](?:__)?\\.php$",
         "params": [
           "mulno"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "kuqi": {
+    "displayName": "Kuqi Supply Chain",
+    "color": "#01696c",
+    "aliases": [
+      "SZKUQI",
+      "Kuqi",
+      "库奇"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://618881.ollogistic.com/tracking",
+    "trackingUrlTemplate": "https://618881.ollogistic.com/tracking?code={trackingNumber}",
+    "trackingSearchUrl": "https://618881.ollogistic.com/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "618881.ollogistic.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "code"
         ]
       }
     ],
@@ -32838,6 +32906,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://nasxpress.com/",
     "trackingSearchUrl": "https://online.nasxpress.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "national-delivery-systems": {
+    "displayName": "National Delivery Systems",
+    "color": "#2f4a9c",
+    "aliases": [
+      "National Delivery Systems, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
+    "trackingSearchUrl": "https://ndsweb.tmwcloud.com/trace/external.msw",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52474,6 +52562,7 @@ export const CARRIER_IDS = [
   "htt-logistics",
   "huahan",
   "huaya-express",
+  "hub-delivery",
   "hub-group-final-mile",
   "hunter-express",
   "huuneh",
@@ -52580,6 +52669,7 @@ export const CARRIER_IDS = [
   "kuehne-nagel",
   "kun-express",
   "kunyoung",
+  "kuqi",
   "kwick-box",
   "kyoungdong",
   "kyrgyz-post",
@@ -52694,6 +52784,7 @@ export const CARRIER_IDS = [
   "mylerz",
   "naqel",
   "nas-express",
+  "national-delivery-systems",
   "nationex",
   "ncs-courier",
   "nege",
@@ -53856,6 +53947,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "htt-logistics": [],
   "huahan": ["huahan-1"],
   "huaya-express": ["huaya-express-1"],
+  "hub-delivery": [],
   "hub-group-final-mile": [],
   "hunter-express": [],
   "huuneh": [],
@@ -53962,6 +54054,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kuehne-nagel": ["kuehne-nagel-1","kuehne-nagel-2","kuehne-nagel-3"],
   "kun-express": ["kun-express-1"],
   "kunyoung": [],
+  "kuqi": [],
   "kwick-box": [],
   "kyoungdong": [],
   "kyrgyz-post": ["kyrgyz-post-s10"],
@@ -54076,6 +54169,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mylerz": ["mylerz-1"],
   "naqel": [],
   "nas-express": [],
+  "national-delivery-systems": [],
   "nationex": [],
   "ncs-courier": [],
   "nege": [],
