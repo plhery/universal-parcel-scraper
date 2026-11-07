@@ -315,6 +315,14 @@ describe('Yanwen result projection', () => {
     expect(noticed).toMatchObject({ current_stage: 'accepted', last_status_text: 'Shipping Label Created, USPS Awaiting Item' });
     expect(statusMap.stage(null, normalizeStatusWording('Shipping Label Created, USPS Awaiting Item'))).toBeUndefined();
     expect(statusMap.gaps?.map((gap) => gap.wording)).toContain(normalizeStatusWording('Shipping Label Created, USPS Awaiting Item'));
+    // DHL's record of the recipient's Packstation choice moves nothing either.
+    const redirected = history([
+      ['2026-03-03', '19:41:00 [GMT+01]', '', 'The recipient has selected a Packstation as the new delivery address.'],
+      ['2026-03-03', '11:44:30 [GMT+08]', '', 'Yanwen Pickup Scan'],
+    ], '运输途中', 'DE');
+    expect(redirected).toMatchObject({ current_stage: 'accepted' });
+    expect(redirected.events?.[0]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
+    expect(statusMap.gaps?.map((gap) => gap.wording)).toContain(normalizeStatusWording('The recipient has selected a Packstation as the new delivery address.'));
     // A step at another clock keeps it.
     expect(history([['2026-03-07', '07:29:00 [GMT-08]', '', 'In Transit to Next Facility']]).events?.[0]?.time).toBe('2026-03-07T07:29:00-08:00');
   });

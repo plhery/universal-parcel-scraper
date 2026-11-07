@@ -192,6 +192,11 @@ describe('Huaya Express tracking adapter', () => {
       const wait = Date.parse(event.written_at!) - Date.parse(event.time!);
       expect(wait > 0 && wait < 4.5 * 3_600_000, event.description).toBe(true);
     }
+    // The round ends in the partner's delivery, in the recipient's town.
+    record.trackDetails.unshift(row('2026-12-04 11:59:21', '2026-12-05 02:43:10', 'Delivered', 'US, EDISON, Delivery Location'));
+    const delivered = dateLocalClocks('huaya-express', parseHuayaTrack(reply, NUMBER, Date.parse('2026-12-04T20:00:00Z'))!);
+    expect(delivered).toMatchObject({ current_stage: 'delivered', last_update: '2026-12-04T11:59:21-05:00' });
+    expect(delivered.events![0]).toMatchObject({ stage: 'delivered', stage_source: 'carrier_map' });
   });
 
   it('holds back a row dated after the lookup', () => {

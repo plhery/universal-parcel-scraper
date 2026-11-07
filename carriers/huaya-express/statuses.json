@@ -18,6 +18,7 @@
     {"wording": "Departed Destination Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner leaving its hub nearest the recipient, after Arrived at Destination Hub."},
     {"wording": "Arrived At Warehouse", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "After Departed Destination Hub: the delivering partner's warehouse, before any delivery round. In transit, not yet out for delivery."},
     {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's round, the morning after Arrived At Warehouse."},
+    {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's delivery after its round, at the recipient's town and \"Delivery Location\"."},
     {"wording": "货物发往机场途中", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "On the way to the airport, before China's export clearance."},
     {"wording": "货物到达机场", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "At the airport, before China's export clearance."},
     {"wording": "国内清关完成", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "China's export clearance done."},

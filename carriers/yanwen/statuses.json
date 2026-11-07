@@ -197,6 +197,13 @@
       "note": "Relayed from USPS hours after Yanwen's pickup scan, while the parcel is still in China: a notice that keeps the stage before it and drops the label's US origin as its place."
     },
     {
+      "wording": "The recipient has selected a Packstation as the new delivery address.",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "Relayed from DHL a minute after DHL's record of the sender's data, while the parcel is still in China: the recipient's instruction, a notice that keeps the stage before it."
+    },
+    {
       "wording": "Shipment information received",
       "language": "en",
       "stage": "registered",
