@@ -3,8 +3,8 @@
 The dedicated adapter reads the public guest route shipped in the
 [official Android app](https://play.google.com/store/apps/details?id=qa.com.qatarpost2).
 It accepts checksum-valid postal S10 identifiers, including another post's identifier for mail
-handled in Qatar. Inbound retrieval is confirmed; Qatar-issued and domestic shipment histories
-are unconfirmed.
+handled in Qatar. It also reads Qatar-issued S10 histories, including foreign postal events
+relayed by the guest API. Domestic shipment histories are unconfirmed.
 
 Each GET to `web.qatarpost.qa/QPAPPDBN/api/CustomerOrdersDetails/track-order-details/{number}`
 sends `Platform: Mobile` and a fresh `Guest-API-Token`. The app creates that header by encrypting
@@ -17,7 +17,8 @@ keeps all returned scans, including rows marked invisible to a digital channel, 
 mapping does. It drops contact, address, payment and proof fields. Scan clocks stay local: the
 reply relays overseas facilities too. `expected_time` repeats the scan clock and is not used as
 an estimate. A stated larger history count or a newer summary keeps the answer incomplete, so
-enabled providers can fill it.
+enabled providers can fill it. Recognized physical scan codes can stage a shipment whose
+workflow summary is unclassified; record-entry actions alone do not establish movement.
 
 Qatar is a destination-post lookup candidate for S10 mail. This does not change issuer
 detection or claim every foreign postal item. There is no broad recognition rule; a provider

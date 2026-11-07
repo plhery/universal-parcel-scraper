@@ -16,7 +16,8 @@ across Korea through its branches. Tracked through the lookup its tracking page 
   The page reports it as a wrong waybill or a failed lookup, and adds that waybills older than
   four months cannot be looked up, so an expired parcel and a failed lookup get the same answer.
   It is therefore inconclusive (`portal_not_found`), not a missing parcel. A 404 or a redirect is a moved route.
-- The parcel's `prodCode` must be the number asked.
+- The parcel's whole `prodCode` must be the number asked. An oversized echo is rejected before
+  text cleaning, so a truncated prefix cannot establish identity.
 
 ## Notes
 

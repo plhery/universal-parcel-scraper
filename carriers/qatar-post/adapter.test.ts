@@ -35,6 +35,54 @@ describe('Qatar Post guest history', () => {
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
+  it('stages partner EDI scans while retaining their clocks and unclassified workflow rows', () => {
+    const d = fixture();
+    d.currentStatus = { currentStatusCode: 311, currentStatusDescription: 'Deliver item (Inb)', currentStatusCategory: 'Delivered' };
+    const rows = [
+      scan('QPS0042', 'Received at Qatar Post', '06/01/2026 09:00:00'),
+      scan('QPS0029', 'Received at Qatar Post', '06/01/2026 09:10:00'),
+      scan('QPS0051', 'Record item details at office of exchange Otb', '06/01/2026 09:20:00'),
+      scan('QPS0293', 'Dispatched to Branch', '06/01/2026 09:30:00'),
+      scan('QPS0305', 'Received at Qatar Post', '06/01/2026 09:40:00'),
+      scan('QPS0048', 'Dispatched to Destination Country', '06/01/2026 09:50:00'),
+      scan('EDI0030', 'Received at Qatar Post', '06/02/2026 10:00:00'),
+      scan('EDI0031', 'Awaiting Customs Inspection', '06/02/2026 10:10:00'),
+      scan('EDI0038', 'Cleared from Customs', '06/02/2026 10:20:00'),
+      scan('EDI0035', 'Dispatched to Branch', '06/02/2026 10:30:00'),
+      scan('EDI0036', 'Unsuccessful Delivery', '06/03/2026 11:00:00'),
+      scan('EDI0035', 'Dispatched to Branch', '06/03/2026 11:10:00'),
+      scan('EDI0037', 'Delivered', '06/03/2026 11:20:00'),
+    ].map((row, i) => ({ ...row, branch: i >= 6 ? 'Overseas Example Office' : 'Example Branch' }));
+    d.otherDetails.response[0]!.track_trace_details = rows;
+    d.otherDetails.response[0]!.total_count = rows.length;
+    const result = parseQatarPost(d, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map',
+      last_status_text: 'Delivered', provider_code: '311', last_update: null, last_update_local: '2026-06-03T11:20:00' });
+    expect(result.events).toHaveLength(13);
+    expect(result.events?.map(event => event.stage)).toEqual([
+      'delivered', 'in_transit', 'failed_attempt', 'in_transit', 'in_transit', 'customs', 'in_transit',
+      'in_transit', 'in_transit', 'in_transit', undefined, 'in_transit', 'in_transit',
+    ]);
+    expect(result.events?.map(event => event.local_time)).toEqual([...rows].reverse().map(row =>
+      row.date_time.replace(/^(\d{2})\/(\d{2})\/(\d{4}) /, '$3-$1-$2T')));
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'EDI0037', location: 'Overseas Example Office' });
+    expect(result.events?.every(event => !event.time)).toBe(true);
+    expect(result).not.toHaveProperty('delivered_at');
+    expect(result).not.toHaveProperty('expected_delivery');
+    expect(result).not.toHaveProperty('history_truncated');
+  });
+
+  it('keeps unfamiliar scan and workflow codes unstaged despite a familiar label or category', () => {
+    const d = fixture();
+    d.currentStatus = { currentStatusCode: 311, currentStatusDescription: 'Deliver item (Inb)', currentStatusCategory: 'Delivered' };
+    d.otherDetails.response[0]!.track_trace_details = [scan('UNKNOWN', 'Delivered')];
+    d.otherDetails.response[0]!.total_count = 1;
+    const result = parseQatarPost(d, NUMBER);
+    expect(result.status).toBe('unknown');
+    expect(result).not.toHaveProperty('current_stage');
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+  });
+
   it('requires both root identities and one unique whole-number nested record', () => {
     for (const mutate of [
       (d: ReturnType<typeof fixture>) => { d.trackingNumber = OTHER; },

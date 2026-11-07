@@ -16,6 +16,69 @@
       "confirmedBy": "portal"
     },
     {
+      "code": "EDI0030",
+      "wording": "Received at Qatar Post",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0031",
+      "wording": "Awaiting Customs Inspection",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0035",
+      "wording": "Dispatched to Branch",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0036",
+      "wording": "Unsuccessful Delivery",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0037",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EDI0038",
+      "wording": "Cleared from Customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0042",
+      "wording": "Received at Qatar Post",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0048",
+      "wording": "Dispatched to Destination Country",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "QPS0305",
+      "wording": "Received at Qatar Post",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
       "code": "QPS0055",
       "wording": "Received at Destenation Country",
       "stage": "in_transit",

@@ -82,6 +82,7 @@ export function parseKyoungdong(payload: unknown, raw: string): CarrierResult {
   }
   const data = payload.data;
   if (payload.result !== 'suc' || !isRecord(data)) throw new SchemaError(PROVIDER, 'Kyungdong Express returned an unexpected answer');
+  if (typeof data.prodCode === 'string' && data.prodCode.length > 64) throw new SchemaError(PROVIDER, 'Kyungdong Express returned an oversized waybill');
   const echoed = cleanScalar(data.prodCode, 64);
   if (!echoed) throw new SchemaError(PROVIDER, 'Kyungdong Express returned a parcel without its waybill');
   if (normalizeTrackingNumber(echoed) !== number) throw new IndeterminateError(PROVIDER, 'Kyungdong Express answered for another parcel');

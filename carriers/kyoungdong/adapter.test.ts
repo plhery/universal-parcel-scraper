@@ -121,6 +121,16 @@ describe('Kyungdong Express HTTP adapter', () => {
     expect(parseKyoungdong(changed('in-transit', (data) => { data.prodCode = '2000-0000-00002'; }), IN_TRANSIT).events).toHaveLength(3);
   });
 
+  it('checks the whole returned waybill before limiting its length', () => {
+    const malformed = IN_TRANSIT + '-'.repeat(80) + DELIVERED;
+    expect(() => parseKyoungdong(changed('in-transit', (data) => { data.prodCode = malformed; }), IN_TRANSIT))
+      .toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseKyoungdong(changed('in-transit', (data) => { data.prodCode = ' '.repeat(80) + IN_TRANSIT; }), IN_TRANSIT))
+      .toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(parseKyoungdong(changed('in-transit', (data) => { data.prodCode = IN_TRANSIT + '-'.repeat(64 - IN_TRANSIT.length); }), IN_TRANSIT).events)
+      .toHaveLength(3);
+  });
+
   it('rejects a changed reply', () => {
     for (const change of [
       (_data: Parcel, body: Reply) => { delete (body as Row).result; },
