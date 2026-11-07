@@ -54,6 +54,11 @@ function partnerOf(card: unknown): string | undefined {
 // after the +08:00 measurement, labelled +02:00.
 const TRANSMITTED = /^order information has been transmitted to /i;
 
+// 4PX's own record that a returned parcel is back from the destination
+// country, written at its origin facility. It comes without a zone; on the
+// destination's clock it reads hours after the reply that lists it.
+const BACK_FROM_ABROAD = 'FPX_O_RTOC';
+
 // 4PX copies La Poste's arrival in France and its transit there with La
 // Poste's UTC digits under Paris's offset, two hours early in summer: arrived
 // at destination at Roissy, handled by local carrier, transport to delivery
@@ -149,9 +154,10 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
     }
     const description = clean(wording.replace(QUALIFIER, ''), 500);
     const location = clean(raw.tkLocation, 200);
-    const time = eventTime(facility && TRANSMITTED.test(description) ? { ...raw, tkTimezone: facility }
-      : laPosteTransitCopy(raw, description, country) || ASENDIA.test(location) ? { ...raw, tkTimezone: 'UTC' } : raw);
     const code = clean(raw.tkCode, 64);
+    const facilityClock = TRANSMITTED.test(description) || (code === BACK_FROM_ABROAD && !clean(raw.tkTimezone, 64));
+    const time = eventTime(facility && facilityClock ? { ...raw, tkTimezone: facility }
+      : laPosteTransitCopy(raw, description, country) || ASENDIA.test(location) ? { ...raw, tkTimezone: 'UTC' } : raw);
     const key = JSON.stringify([time, description, location, code]);
     if (seen.has(key)) continue;
     seen.add(key);

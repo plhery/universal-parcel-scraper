@@ -180,6 +180,15 @@
       "note": "The decision to send the parcel back to its sender for that address, at the instant La Poste says it will be returned; the parcel is not back yet."
     },
     {
+      "code": "FPX_O_RTOC",
+      "wording": "Returned from overseas",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The returned parcel is back at 4PX in the country it left, after the destination post sent it back."
+    },
+    {
       "code": "FPX_F_ST",
       "wording": "Shipment in transit",
       "language": "en",

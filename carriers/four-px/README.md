@@ -16,10 +16,12 @@ The portal displays each scan's `tkDateStr` with `tkTimezone`, an offset or,
 for some partners' scans, a zone name. The adapter uses that pair because
 `tkDate` carries different clock digits. A scan without a zone, or with a zone
 name the clock database does not know, is retained as `local_time`, without an
-invented instant. The one exception is "Order information has been transmitted to
-…": 4PX sends the partner the order data when its facility measures the parcel
-and keeps the facility's clock for it, but labels it with the partner's zone, so
-it takes the offset of 4PX's own facility scans. On a parcel to France, 4PX's
+invented instant. Two exceptions take the offset of 4PX's own facility scans.
+"Order information has been transmitted to …": 4PX sends the partner the order
+data when its facility measures the parcel and keeps the facility's clock for
+it, but labels it with the partner's zone. "Returned from overseas", 4PX's
+record that a returned parcel is back in the country it left, comes without a
+zone; on the destination's clock it would read hours after the reply listing it. On a parcel to France, 4PX's
 copies of La Poste's arrival and transit (arrived at destination, handled by
 local carrier, transport to delivery centre, stamped to the second) carry La
 Poste's UTC digits under Paris's offset, two hours before La Poste's own scans,

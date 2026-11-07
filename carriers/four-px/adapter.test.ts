@@ -82,6 +82,16 @@ describe('4PX result projection', () => {
       .toBe('2026-03-08T14:30:06+02:00');
   });
 
+  it("reads 4PX's zoneless record of a return back from abroad on the facility's clock, not the destination's", () => {
+    const payload = fixture();
+    payload.data[0].tracks.unshift({ ...payload.data[0].tracks[0], tkCode: 'FPX_O_RTOC', tkDesc: 'Returned from overseas',
+      tkDateStr: '2026-04-07 10:27:00', tkTimezone: null, tkLocation: '' });
+    expect(parse(payload, NUMBER).events![0]).toMatchObject({ time: '2026-04-07T10:27:00+08:00', stage: 'returned' });
+    // Without a facility scan it keeps its wall clock.
+    payload.data[0].tracks = payload.data[0].tracks.filter((raw: { tkCode: string }) => !raw.tkCode.startsWith('FPX_C_'));
+    expect(parse(payload, NUMBER).events![0]).toMatchObject({ local_time: '2026-04-07T10:27:00' });
+  });
+
   it("reads 4PX's copies of La Poste's arrival and transit in France as UTC, not on the Paris offset they are labelled with", () => {
     const payload = fixture();
     payload.data[0].ctEndCode = 'FR';
@@ -225,6 +235,7 @@ describe('4PX result projection', () => {
     ['FPX_D_FD', 'Delivery attempt unsuccessful', 'exception', 'failed_attempt', 'carrier_map'],
     ['FPX_D_FDIA', 'Delivery attempt (incorrect address)', 'exception', 'failed_attempt', 'carrier_map'],
     ['FPX_M_PRTS', 'Returned (incorrect address)', 'exception', 'exception', 'carrier_map'],
+    ['FPX_O_RTOC', 'Returned from overseas', 'exception', 'returned', 'carrier_map'],
     ['FPX_F_ST', 'Shipment in transit', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_D_AOPC', 'Arrive in transit center', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_M_PT', 'Pending transportation', 'in_transit', 'in_transit', 'carrier_map'],

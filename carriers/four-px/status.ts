@@ -12,6 +12,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['FPX_D_FDIA', { status: 'exception', stage: 'failed_attempt' }],
   // The partner's decision to send the parcel back for that address: the return is under way, not yet with the sender.
   ['FPX_M_PRTS', { status: 'exception', stage: 'exception' }],
+  // The returned parcel is back at 4PX in the country it left.
+  ['FPX_O_RTOC', { status: 'exception', stage: 'returned' }],
   ['FPX_L_RPIF', { status: 'pending', stage: 'registered' }],
   ['FPX_L_SC', { status: 'in_transit', stage: 'accepted' }],
   ['FPX_C_SPLS', { status: 'in_transit', stage: 'accepted' }],
