@@ -263,6 +263,8 @@ describe('HuaHan status map', () => {
       [null, 'Pre-Shipment Info Sent to USPS, USPS Awaiting Item', 'registered'],
       ['ND', 'Accepted at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
       ['ND', 'Arrived at USPS Facility, EXAMPLE CITY, CA 90000', 'in_transit'],
+      ['ND', 'In Transit to Next Facility, ', 'in_transit'],
+      ['ND', 'In Transit, Arriving On Time, ', 'in_transit'],
       // HuaHan puts its out-for-delivery code on USPS's departure from a distribution centre.
       ['CB', 'Departed USPS Facility, EXAMPLE CITY IL DISTRIBUTION CENTER', 'in_transit'],
       ['CB', 'Out for Delivery', 'out_for_delivery'],

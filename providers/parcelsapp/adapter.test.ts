@@ -2812,6 +2812,20 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-14T08:19:55.000Z', '2026-10-08T09:45:58.000Z']);
   });
 
+  it('reads GOFO Canada\'s label on Toronto time and GOFO\'s US labels on Pacific time', () => {
+    // GOFO CA's own reply dates the label -04:00, seconds after the origin scan that YunExpress
+    // relays on China time; read on Pacific, the label came three hours after it.
+    const label = (destinationCode: string) => parseParcelsAppResponse({ carriers: ['Yun Express', 'GoFo Express'], destinationCode, states: [
+      { date: '2030-07-02T07:34:08Z', status: 'Shipping Label Created', carrier: 1 },
+      { date: '2030-07-02T19:34:05Z', status: 'Arrived at origin facility', carrier: 0, location: 'Example City, China' },
+    ] }, number, identity()).events?.map((scan) => [scan.description, scan.time]);
+    expect(label('CA')).toEqual([
+      ['Shipping Label Created', '2030-07-02T11:34:08.000Z'],
+      ['Arrived at origin facility', '2030-07-02T11:34:05.000Z'],
+    ]);
+    expect(label('US')?.[0]).toEqual(['Shipping Label Created', '2030-07-02T14:34:08.000Z']);
+  });
+
   it('holds back a scan with no place that only a guess dates, until a read catches up with it', () => {
     // On EcoScooting's catalog clock, UTC, a step on China's wall clock comes out hours after the read.
     const payload = { carriers: ['Example Forwarder', 'DPD'], states: [

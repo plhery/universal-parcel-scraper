@@ -270,7 +270,10 @@ const CAINIAO_LAST_MILE = [
 /**
  * The clocks of some wall-clock scans whatever their neighbours', from each
  * carrier's own offsets. GOFO's feed dates its labels on Pacific time
- * wherever the parcel is injected (a Florida parcel's at -07:00; 2026-10-10).
+ * wherever the parcel is injected (a Florida parcel's at -07:00; 2026-10-10),
+ * and GOFO Canada's on Toronto's, also for a parcel bound for British Columbia
+ * (`to`: the parcel's destination); read on Pacific, a Canadian label came
+ * three hours after the origin scan it followed by seconds.
  *
  * Cainiao's own feed (checked 2026-10-11 on parcels to the UK, Belgium,
  * Spain, Italy, Japan, Brazil and the US) dates its origin leg on China time
@@ -331,9 +334,12 @@ const CAINIAO_LAST_MILE = [
  * single clock (`wallClockZones`).
  */
 const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
-  wording: RegExp; zone: string; except?: string; otherwise?: string; via?: Readonly<Record<string, string>>;
+  wording: RegExp; zone: string; except?: string; otherwise?: string; via?: Readonly<Record<string, string>>; to?: string;
 }[]> = new Map([
-  ['gofoexpress', [{ wording: /^shipping label created$/i, zone: 'America/Los_Angeles' }]],
+  ['gofoexpress', [
+    { wording: /^shipping label created$/i, zone: 'America/Toronto', to: 'CA' },
+    { wording: /^shipping label created$/i, zone: 'America/Los_Angeles' },
+  ]],
   ['cainiao', [
     { wording: wordings(CAINIAO_CHINA_LEG), zone: CAINIAO_CHINA_ZONE },
     // The consolidation warehouse's arrival and receipt in ParcelsApp's words, which Cainiao states +08:00.
@@ -381,7 +387,7 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
  * names for it.
  */
 function knownClock(name: unknown, status: string, destination: string | null, origin: string | null = null): { zone: string | null; country?: string } | null {
-  const known = KNOWN_CLOCKS.get(nameKey(name))?.find(({ wording }) => wording.test(status.trim()));
+  const known = KNOWN_CLOCKS.get(nameKey(name))?.find(({ wording, to }) => wording.test(status.trim()) && (!to || to === destination));
   if (known?.zone === ORIGIN) return origin ? { zone: countryTimeZone(origin) } : null;
   if (!known || known.zone !== DESTINATION) return known ? { zone: known.zone } : null;
   if (!destination) return known.otherwise ? { zone: known.otherwise } : null;

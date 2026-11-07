@@ -271,7 +271,9 @@ step exists for future protocol changes.
   under a Chicago postcode in a reply that names neither the US nor a state.
 - Known clocks, from each carrier's own offsets. GOFO's feed dates its labels ("Shipping
   Label Created") on Pacific time wherever the parcel is injected (a Florida parcel's at
-  -07:00; 2026-10-10). Cainiao's own feed (2026-10-11, parcels to the UK, Belgium, Spain,
+  -07:00), and GOFO Canada's on Toronto time, also for a parcel bound for British Columbia:
+  read on Pacific, a Canadian label came three hours after the origin scan it followed by
+  seconds. Cainiao's own feed (2026-10-11, parcels to the UK, Belgium, Spain,
   Italy, Japan, Brazil and the US) dates its origin leg on China time, from "Order
   received successfully" to "Left from departure country/region", and its return
   warehouse too. That leg includes the warehouse's own steps ("Shipment information
