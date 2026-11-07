@@ -54,6 +54,32 @@ describe('PostNL transient failures', () => {
       expect(JSON.parse(String(init?.body))).toEqual({ items: [POSTNL_WRONG_NUMBER], language_code: 'en' });
     }
   });
+
+  const refusal = (wait: string) => new Response('', { status: 429, headers: { 'Retry-After': wait } });
+
+  it('replays the tracking call a second time when PostNL refuses its replay with a wait of 2 s or less', async () => {
+    const responses = [jsonResponse({ access_token: 'visitor-token' }), refusal('1'), refusal('2'),
+      jsonResponse({ data: { items: [{ item: POSTNL_WRONG_NUMBER, events: [{ category: 'Processing', datetime_local: '2026-08-30T12:00:00Z', country_code: 'NL' }] }] } })];
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => responses.shift()!);
+    const result = fetchPostNL(POSTNL_WRONG_NUMBER);
+    await vi.advanceTimersByTimeAsync(2_999);
+    expect(fetcher).toHaveBeenCalledTimes(3);
+    await vi.advanceTimersByTimeAsync(1);
+    await expect(result).resolves.toMatchObject({ status: 'in_transit', events: [{ stage: 'accepted' }] });
+    expect(fetcher).toHaveBeenCalledTimes(4);
+  });
+
+  it.each([
+    [['1', '1', '1'], 'on its second replay, asking to wait 1 s'],
+    [['1', '3'], 'on its replay, asking to wait 3 s'],
+  ])('says which try met the 429 it leaves standing (Retry-After %j)', async (waits, wording) => {
+    const responses = [jsonResponse({ access_token: 'visitor-token' }), ...waits.map(refusal)];
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockImplementation(async () => responses.shift()!);
+    const result = fetchPostNL(POSTNL_WRONG_NUMBER).catch((caught: unknown) => caught);
+    await vi.advanceTimersByTimeAsync(10_000);
+    expect(await result).toMatchObject({ kind: 'rate_limited', status: 429, message: `PostNL tracking refused the request with HTTP 429 ${wording}` });
+    expect(fetcher).toHaveBeenCalledTimes(waits.length + 1);
+  });
 });
 
 describe('PostNL wrong-number handling', () => {
@@ -557,14 +583,14 @@ describe('PostNL complete lookup budget', () => {
       ? new Response('', { status: 429, headers: { 'Retry-After': '46' } }) : jsonResponse({ access_token: 'visitor-token' }));
     const started = performance.now();
     const error = await new PostNLTracker({ fetcher }).fetch(POSTNL_WRONG_NUMBER, { budgetMs: 25_000 }).catch((caught: unknown) => caught);
-    expect(error).toMatchObject({ kind: 'rate_limited', message: 'PostNL tracking refused the request with HTTP 429, asking to wait 46 s', retryAfterMs: 46_000 });
+    expect(error).toMatchObject({ kind: 'rate_limited', message: 'PostNL tracking refused the request with HTTP 429 on the first try, asking to wait 46 s', retryAfterMs: 46_000 });
     expect(performance.now() - started).toBeLessThan(5_000);
     expect(fetcher.mock.calls.filter(([url]) => String(url).endsWith('/tracking-items'))).toHaveLength(1);
   });
 
   it.each([
-    ['120', 'tracking', 'PostNL tracking refused the request with HTTP 429, asking to wait 120 s', 120_000],
-    [null, 'authentication', 'PostNL authentication refused the request with HTTP 429, without saying how long to wait', undefined],
+    ['120', 'tracking', 'PostNL tracking refused the request with HTTP 429 on the first try, asking to wait 120 s', 120_000],
+    [null, 'authentication', 'PostNL authentication refused the request with HTTP 429 on the first try, without saying how long to wait', undefined],
   ])('says how long PostNL asked to wait when it refuses a request as too many (Retry-After %s)', async (header, step, message, wait) => {
     const refusal = () => new Response('', { status: 429, headers: header === null ? {} : { 'Retry-After': header } });
     const fetcher = vi.fn<typeof fetch>(async (url) => step === 'authentication' || String(url).endsWith('/tracking-items')

@@ -11,8 +11,9 @@
  * then accepts a batch tracking request with it. The tracker keeps the token
  * for its later lookups. Both calls replay once after a transport failure or an
  * HTTP 502/503/504, and an HTTP 429 only when it supplies a short, valid
- * `Retry-After` that ends before the lookup does. A 429 left standing names the
- * wait PostNL asked for.
+ * `Retry-After` that ends before the lookup does. The tracking call replays a
+ * second time when its replay meets a 429 asking for 2 s or less. A 429 left
+ * standing names the try it met and the wait PostNL asked for.
  *
  * The response echoes the requested barcodes, so the item whose `item` equals
  * the requested number is the only one read. PostNL answers an unknown barcode
@@ -48,6 +49,10 @@ const TOKEN_TIMEOUT_MS = 10_000;
 const DOMESTIC_TIMEOUT_MS = 10_000;
 const TRACK_TIMEOUT_MS = 15_000;
 const LOOKUP_TIMEOUT_MS = 25_000;
+/** The longest wait PostNL may ask for after the tracking call's replay for it to be replayed once more. */
+const SHORT_WAIT_MS = 2_000;
+/** A request in a call: its first try, its replay and the tracking call's second replay. */
+const TRIES = ['on the first try', 'on its replay', 'on its second replay'];
 const MAX_TOKEN_LENGTH = 16_384;
 // Visitor tokens last a day (`expires_in: 86400`); one is renewed this long before it expires.
 const MAX_TOKEN_LIFETIME_MS = 86_400_000;
@@ -294,14 +299,44 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
 }
 
 /**
- * PostNL's refusal of a request for being too many, with the wait it asked for in its wording, so a host's
- * log shows whether waiting longer would have served the lookup. A wait of up to a minute was waited once.
+ * PostNL's refusal of a request for being too many, with the try it met and the wait it asked for in its wording, so
+ * a host's log shows whether a replay met it and whether waiting longer would have served the lookup. A wait of up to
+ * a minute was waited once.
  */
-function rateLimited(error: UpstreamHttpError): RateLimitedError {
+function rateLimited(error: UpstreamHttpError, tries: number): RateLimitedError {
   const wait = error.retryAfterMs === undefined ? 'without saying how long to wait'
     : `asking to wait ${Math.round(error.retryAfterMs / 1000)} s`;
-  return new RateLimitedError(PROVIDER, error.retryAfterMs, `${error.provider} refused the request with HTTP 429, ${wait}`,
-    { cause: error, status: 429 });
+  const attempt = TRIES[tries - 1];
+  return new RateLimitedError(PROVIDER, error.retryAfterMs,
+    `${error.provider} refused the request with HTTP 429${attempt ? ` ${attempt}` : ''}, ${wait}`, { cause: error, status: 429 });
+}
+
+/** A fetcher that counts the requests it makes, so a refusal can say which try met it. */
+function counting(fetcher: typeof fetch | undefined): { fetcher: typeof fetch; tries: () => number } {
+  let tries = 0;
+  return {
+    fetcher: (input, init) => {
+      tries += 1;
+      return (fetcher ?? fetch)(input, init);
+    },
+    tries: () => tries,
+  };
+}
+
+/** Wait before the second replay. False when the lookup's signal ended the wait. */
+async function waited(delayMs: number, signal: AbortSignal): Promise<boolean> {
+  if (signal.aborted) return false;
+  return await new Promise<boolean>((resolve) => {
+    const abort = () => {
+      clearTimeout(timer);
+      resolve(false);
+    };
+    const timer = setTimeout(() => {
+      signal.removeEventListener('abort', abort);
+      resolve(true);
+    }, delayMs);
+    signal.addEventListener('abort', abort, { once: true });
+  });
 }
 
 /**
@@ -352,6 +387,7 @@ export class PostNLTracker {
     const requestedAt = this.now().getTime();
     if (this.cachedToken && requestedAt < this.cachedToken.expiresAt) return { value: this.cachedToken.value, reused: true };
     this.cachedToken = null;
+    const counted = counting(this.fetcher);
     const { bytes } = await fetchBounded(
       TOKEN_URL,
       { method: 'POST', headers: this.headers, body: '{}', signal },
@@ -361,9 +397,11 @@ export class PostNLTracker {
         maxBytes: 50_000,
         retryTransient: true,
         deadline,
-        fetcher: this.fetcher,
+        fetcher: counted.fetcher,
       },
-    );
+    ).catch((error: unknown) => {
+      throw error instanceof UpstreamHttpError && error.status === 429 ? rateLimited(error, counted.tries()) : error;
+    });
     const reply = record(parseJsonBytes(bytes, 'PostNL authentication'));
     const accessToken = text(reply.access_token);
     if (!accessToken || accessToken.length > MAX_TOKEN_LENGTH) {
@@ -378,9 +416,13 @@ export class PostNLTracker {
     return { value: accessToken, reused: false };
   }
 
-  /** The tracking request. A token PostNL refuses with HTTP 401 is not kept. */
+  /**
+   * The tracking request. A token PostNL refuses with HTTP 401 is not kept. Its quota often lets a request through a
+   * second or two after refusing the replay, so a replay refused with a wait of 2 s or less is replayed once more.
+   */
   private async track(trackingNumber: string, accessToken: string, signal: AbortSignal, deadline: number): Promise<Uint8Array> {
-    const { bytes } = await fetchBounded(
+    const counted = counting(this.fetcher);
+    const request = async (retryTransient: boolean) => (await fetchBounded(
       TRACK_URL,
       {
         method: 'POST',
@@ -392,33 +434,48 @@ export class PostNLTracker {
         provider: 'PostNL tracking',
         timeoutMs: TRACK_TIMEOUT_MS,
         maxBytes: 1_000_000,
-        retryTransient: true,
+        retryTransient,
         deadline,
-        fetcher: this.fetcher,
+        fetcher: counted.fetcher,
       },
-    ).catch((error: unknown) => {
+    )).bytes;
+    let refusal: UpstreamHttpError;
+    try {
+      return await request(true);
+    } catch (error) {
       if (error instanceof UpstreamHttpError && error.status === 401 && this.cachedToken?.value === accessToken) this.cachedToken = null;
-      throw error;
-    });
-    return bytes;
+      if (!(error instanceof UpstreamHttpError) || error.status !== 429) throw error;
+      refusal = error;
+    }
+    const wait = Math.max(1_000, refusal.retryAfterMs ?? Infinity);
+    if (counted.tries() === 2 && wait <= SHORT_WAIT_MS && performance.now() + wait < deadline && await waited(wait, signal)) {
+      try {
+        return await request(false);
+      } catch (error) {
+        if (!(error instanceof UpstreamHttpError) || error.status !== 429) throw error;
+        refusal = error;
+      }
+    }
+    throw rateLimited(refusal, counted.tries());
   }
 
   /** The domestic tracker's answer for a 3S barcode and the country and postcode of its delivery address. */
   private async domestic(trackingNumber: string, address: string, signal: AbortSignal, timeoutMs: number, deadline: number): Promise<CarrierResult> {
     const key = `${encodeURIComponent(trackingNumber)}-${address}`;
     let bytes: Uint8Array;
+    const counted = counting(this.fetcher);
     try {
       ({ bytes } = await fetchBounded(
         `${DOMESTIC_URL}/${key}?language=en`,
         { method: 'GET', headers: { Accept: 'application/json', 'Accept-Language': 'en-US,en;q=0.9', 'User-Agent': this.userAgent }, signal },
-        { provider: 'PostNL domestic tracking', timeoutMs, maxBytes: 1_000_000, retryTransient: true, deadline, fetcher: this.fetcher },
+        { provider: 'PostNL domestic tracking', timeoutMs, maxBytes: 1_000_000, retryTransient: true, deadline, fetcher: counted.fetcher },
       ));
     } catch (error) {
       if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
         throw new TransportError(PROVIDER, 'PostNL domestic tracking is unavailable', { status: error.status });
       }
       const stripped = withoutPostcode(error);
-      throw stripped instanceof UpstreamHttpError && stripped.status === 429 ? rateLimited(stripped) : stripped;
+      throw stripped instanceof UpstreamHttpError && stripped.status === 429 ? rateLimited(stripped, counted.tries()) : stripped;
     }
     signal.throwIfAborted();
     return parsePostNLDomesticResponse(parseJsonBytes(bytes, 'PostNL domestic tracking'), trackingNumber);
@@ -442,7 +499,6 @@ export class PostNLTracker {
       if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {
         throw new TransportError(PROVIDER, 'PostNL tracking endpoint is unavailable', { cause: error });
       }
-      if (error instanceof UpstreamHttpError && error.status === 429) throw rateLimited(error);
       throw error;
     }
   }
@@ -497,7 +553,7 @@ export const adapter: AdapterFactory = (environment) => {
     recordsSteps: true,
     // The domestic tracker runs only for a 3S barcode with a postcode it can take. The
     // international visitor token and lookup are one step: both are keyless HTTP
-    // on the same host, and each replays once inside the step.
+    // on the same host, and each replays once inside the step, the tracking call twice after a short 429.
     steps: ['domestic', 'direct'],
     track: (input, context) => tracker.fetch(input.number, context, input.postcode, input.postcodeCountry),
     // Only the series the catalog's recognition pattern names: a 3S barcode PostNL

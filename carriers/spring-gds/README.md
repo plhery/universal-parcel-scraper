@@ -33,9 +33,11 @@ it; everything user-facing says PostNL.
    - Each call replays once after a transport failure or HTTP 502/503/504, and after a 429
      only when it carries a short, valid `Retry-After` that ends before the lookup does;
      a longer wait fails the lookup at once, leaving the rest of the host's budget to other
-     sources. Both calls share a cancellable deadline; other errors are not retried. A 429 left standing is a rate limit whose
-     message names the call and the wait PostNL asked for, or that it named none, so a
-     host's log shows whether waiting longer would have served the lookup.
+     sources. A tracking call whose replay meets a 429 asking for 2 s or less replays once
+     more. Both calls share a cancellable deadline; other errors are not retried. A 429 left
+     standing is a rate limit whose message names the call, the try it met and the wait PostNL
+     asked for, or that it named none, so a host's log shows whether a replay met it and
+     whether waiting longer would have served the lookup.
    - Unknown barcode: an ordinary item with no events and "barcode was not found" in
      `message`. "Barcode was incorrect" means the same only for a 15-character `3S` barcode
      with a four-letter customer code, the layout the endpoint reads, where it marks a code
@@ -121,7 +123,8 @@ it; everything user-facing says PostNL.
   customer code. The lookup then stays inconclusive.
 - The tracking endpoint enforces a per-minute call quota shared beyond one client, so a
   lookup can meet HTTP 429 at a low request rate. The replay after its one-second
-  `Retry-After` can meet the same quota; the lookup then fails as a rate limit.
+  `Retry-After` can meet the same quota, and so can the second replay; the lookup then fails
+  as a rate limit.
 - A `3S` parcel sent within the Netherlands is only on PostNL's domestic tracker, which shows
   it only with its delivery postcode. Without one, the lookup asks for it and other sources
   are asked. The domestic tracker also shows parcels PostNL delivers abroad, under the
