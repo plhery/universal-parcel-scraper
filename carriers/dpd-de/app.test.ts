@@ -108,6 +108,14 @@ describe('DPD Germany app service', () => {
     expect((await empty.track()).expected_delivery).toBeNull();
   });
 
+  it('withdraws the estimate when the app changes the date without giving a new day or window', async () => {
+    const withdrawn = await service({ getTrackingData: [() => xml(withForecast(planned('', 'false', 'true')))] }).track();
+    expect(withdrawn).toMatchObject({ expected_delivery: null, expected_delivery_withdrawn: true });
+    const unchanged = await service({ getTrackingData: [() => xml(withForecast(planned('', 'false', 'false')))] }).track();
+    expect(unchanged.expected_delivery).toBe('2026-01-03');
+    expect(unchanged).not.toHaveProperty('expected_delivery_withdrawn');
+  });
+
   it('prefers a changed planned date over an old window, else uses the precise window', async () => {
     const fields = window('2026-01-04T10:00:00+01:00', '2026-01-04T12:00:00+01:00') + planned('2026-01-05T00:00:00+01:00', '1', '1');
     const changed = await service({ getTrackingData: [() => xml(withForecast(fields))] }).track();

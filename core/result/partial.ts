@@ -123,7 +123,7 @@ function fuller(answer: ResolvedResult, direct: ResolvedResult, carriers: readon
 
 /** What the carrier states about the parcel beside its scans, recipient details aside; each group is kept whole. */
 const CARRIER_FACTS = [
-  ['expected_delivery', 'expected_delivery_from'], ['delivery_carrier', 'delivery_tracking_number'],
+  ['expected_delivery', 'expected_delivery_from', 'expected_delivery_withdrawn'], ['delivery_carrier', 'delivery_tracking_number'],
   ['destination_country', 'destination_country_name'], ['canonical_tracking_number'], ['international_tracking_number'],
   ['sender_name'], ['pickup_point'], ['delivered_at'], ['weight_kg'], ['dimensions_text'], ['service_name'], ['import_charges'],
 ] as const;

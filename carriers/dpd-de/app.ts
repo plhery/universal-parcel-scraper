@@ -47,9 +47,10 @@ function announcedDay(wording: string): string | null {
 
 /**
  * Specified dates are forecasts, never scans; delivered display dates are actuals. The live window
- * is a slot within one day and its days across several.
+ * is a slot within one day and its days across several. A changed date the app gives no new day
+ * or window for withdraws the earlier one, an announcement's among them.
  */
-function deliveryEstimate(tracking: XmlNode, announced: string | null): WindowEstimate {
+function deliveryEstimate(tracking: XmlNode, announced: string | null): WindowEstimate & { expected_delivery_withdrawn?: true } {
   const planned = optional(tracking, 'NewDeliveryInfo');
   const day = planned && affirmative(scalar(planned, 'PlannedDeliveryDateSpecified', 8))
     ? estimateDay(scalar(planned, 'PlannedDeliveryDate', 64)) : null;
@@ -72,7 +73,11 @@ function deliveryEstimate(tracking: XmlNode, announced: string | null): WindowEs
     }
   }
   // DeliveryDateTime is display text and can omit the year: never invent it.
-  return { expected_delivery: day ?? announced ?? estimateDay(scalar(tracking, 'DeliveryDateTime', 64)) };
+  const shown = estimateDay(scalar(tracking, 'DeliveryDateTime', 64));
+  if (!day && planned && affirmative(scalar(planned, 'DateChanged', 8))) {
+    return shown ? { expected_delivery: shown } : { expected_delivery: null, expected_delivery_withdrawn: true };
+  }
+  return { expected_delivery: day ?? announced ?? shown };
 }
 
 /** A two-letter country, where the service puts a placeholder three-letter one for an unknown depot. */

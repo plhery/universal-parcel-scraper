@@ -773,6 +773,13 @@
               "null"
             ]
           },
+          "expected_delivery_withdrawn": {
+            "type": "boolean",
+            "enum": [
+              true
+            ],
+            "description": "The carrier states that its earlier delivery estimate no longer holds and gives none in its place."
+          },
           "summary_only": {
             "type": "boolean",
             "description": "A current status without a scan history."

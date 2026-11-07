@@ -31,6 +31,9 @@ describe('partial carrier answers', () => {
       import_charges });
     // The provider's events are not resolved: hosts classify them as they persist them.
     expect(filled?.events).toEqual(history.events);
+    // A carrier's withdrawn estimate is one of its facts too.
+    const withdrawn = { ...summary, expected_delivery: null, expected_delivery_withdrawn: true as const };
+    expect(fillPartialAnswer('ups', NUMBER, withdrawn, history)).toMatchObject({ expected_delivery_withdrawn: true });
   });
 
   it('stand against a history that is no fuller, names another carrier or is behind the carrier', () => {

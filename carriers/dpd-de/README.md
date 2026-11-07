@@ -170,7 +170,8 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
   changing tracking freshness.
 - Estimates use the flagged live delivery window, a specified planned date,
   or a fully dated announcement. A changed planned date replaces the previous
-  window, as in the app. Placeholder dates, incomplete windows and display
+  window, as in the app. A changed date without a new day or window withdraws
+  the estimate (`expected_delivery_withdrawn`), an announced day included. Placeholder dates, incomplete windows and display
   dates without a year are ignored; completed delivery and pickup availability
   clear the forecast. Offset-bearing windows use German civil time; unresolved
   window clocks retain their supplied digits. A window within one day is its

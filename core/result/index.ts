@@ -100,6 +100,12 @@ export interface CarrierResult extends JsonObject {
   expected_delivery?: string | null;
   expected_delivery_from?: string | null;
   /**
+   * The carrier states that its earlier delivery estimate no longer holds and gives none in its
+   * place: a caller that keeps an estimate across answers without one drops it. Absent says
+   * nothing, as an answer without an estimate says nothing about an earlier one.
+   */
+  expected_delivery_withdrawn?: true;
+  /**
    * Who sent the parcel. Null when the name the carrier gives is not its sender, as the account
    * a return goes back to: a name an earlier answer gave no longer stands. Absent says nothing.
    */
@@ -277,6 +283,8 @@ export function normalizeCarrierResult(value: unknown): CarrierResult {
   for (const flag of ['summary_only', 'history_truncated'] as const) {
     if (typeof normalized[flag] !== 'boolean') delete normalized[flag];
   }
+  // A withdrawal stands only beside no estimate.
+  if (normalized.expected_delivery_withdrawn !== true || normalized.expected_delivery != null) delete normalized.expected_delivery_withdrawn;
   const ahead = normalized.written_ahead;
   if (!Array.isArray(ahead) || !ahead.length || ahead.length > MAX_WRITTEN_AHEAD
     || !ahead.every((clock) => typeof clock === 'string' && WRITTEN_AHEAD_CLOCK.test(clock))) delete normalized.written_ahead;
