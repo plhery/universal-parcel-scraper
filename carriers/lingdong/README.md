@@ -26,7 +26,8 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   sentence after it: when both give one stage, only the fuller row is kept.
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held
-  back.
+  back. The partner's relayed scans are on it too: the platform wrote a Poste Italiane scan
+  hours after its Beijing clock, and before the same clock read on Rome's.
 
 ## Limitations
 

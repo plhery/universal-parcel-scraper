@@ -85,6 +85,16 @@ describe('Lingdong International tracking adapter', () => {
     expect(repeatsLingdongRow('Synthetic', 'Synthetic, the same')).toBe(false);
   });
 
+  it('reads Poste Italiane’s relayed scans on Beijing time, the clock the platform writes them on', () => {
+    const payload = structuredClone(fixture('track')) as Array<{ data: Array<{ trackDetails: Array<Record<string, string>> }> }>;
+    const details = payload[0]!.data[0]!.trackDetails;
+    // Written at 16:53 in Beijing, 09:53 in Rome: read on Rome's clock, the scan would come after its own writing.
+    details.unshift({ ...details[0]!, track_content: 'In transito, la spedizione è in transito', track_kind: '', track_location: 'SYNTHETIC HUB',
+      track_date: '2026-03-05 13:34:09', track_createdate: '2026-03-05 16:53:11' });
+    const [scan] = parseLingdongTrack(payload, NUMBER, Date.parse('2026-03-05T09:00:00Z'))!.events ?? [];
+    expect(scan).toMatchObject({ time: '2026-03-05T13:34:09+08:00', written_at: '2026-03-05T16:53:11+08:00', stage: 'in_transit' });
+  });
+
   it('reads the page’s unknown-number answer as not found', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('no-track'))).mockResolvedValueOnce(html(page('page-unknown')));
     await expect(adapter(environment(fetcher)).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
