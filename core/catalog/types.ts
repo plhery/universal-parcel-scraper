@@ -58,6 +58,8 @@ export interface CarrierRequirementRule {
   validator: CarrierInputValidator;
   whenTrackingNumber?: string;
   optional?: boolean;
+  /** An optional input the carrier shows more of the parcel with (`CarrierInputRequirement.showsMore`). */
+  showsMore?: boolean;
 }
 
 export interface CarrierCatalogRequirement

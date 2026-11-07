@@ -187,6 +187,9 @@ describe('the catalog lookups the server reads', () => {
 
   it('tells optional postcodes from required ones', () => {
     expect(activeRequirements('dpd', '06080000000001')).toMatchObject([{ field: 'postcode', optional: true }]);
+    // The server's rule says when an optional postcode shows more of the parcel.
+    const [rule] = activeRequirements('dpd-de', '06080000000001');
+    expect(rule?.showsMore).toBe(true);
     // Paack's numbers for Evri International parcels track without one.
     expect(activeRequirements('paack', 'PAACK12345')).toMatchObject([{ field: 'postcode', optional: true }]);
     for (const [carrier, number] of [
