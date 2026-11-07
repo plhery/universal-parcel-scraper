@@ -11,7 +11,7 @@ import { isRecord } from '../../core/types.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { jsExpressChinaClock } from './clock.js';
 import { IMILE_RECEIVER, LIST_PLACE } from './identity.js';
-import { jsExpressEnglish, jsExpressStage } from './status.js';
+import { isJsExpressDepotReceipt, jsExpressEnglish, jsExpressStage } from './status.js';
 
 export const PROVIDER = 'JS Express';
 // A reply is a few kilobytes; five hundred rows stay under 256 kB.
@@ -254,11 +254,19 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     };
   });
 
+  // Oldest first: the depot's receipt after a missed delivery is the parcel back from that round, waiting for the next
+  // one or for the recipient's request. It keeps the missed delivery's stage with no source of its own.
+  let previous: Stage | undefined;
+  for (const event of [...events].reverse()) {
+    if (previous === 'failed_attempt' && isJsExpressDepotReceipt(event.description ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
+    previous = (event.stage as Stage | undefined) ?? previous;
+  }
+
   // The reply's order stands: a history mixes the clocks of several countries.
   // The newest row's instant, when it has one, is the last update, and a dated
   // delivery's is the delivery time.
   const newest = events[0]!;
-  const current = events.find((event) => event.stage);
+  const current = events.find((event) => event.stage && event.stage_source !== 'none');
   const stage = current?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

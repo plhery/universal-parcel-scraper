@@ -54,6 +54,9 @@ export function jsExpressMappedStage(wording: string): Stage | undefined {
   return mappedStage(normalizeStatusWording(wording));
 }
 
+/** The delivering depot's receipt, before each round and again after a missed delivery (see the parser). */
+export const isJsExpressDepotReceipt = (wording: string): boolean => normalizeStatusWording(wording) === 'received at local depot';
+
 /** The English shown for a row's wording in Chinese, or undefined. */
 export const jsExpressEnglish = (wording: string): string | undefined => WORDINGS.english(normalizeStatusWording(wording));
 

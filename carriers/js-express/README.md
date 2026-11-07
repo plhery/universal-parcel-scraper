@@ -76,6 +76,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.
+- The delivering depot's receipt comes before each round and again after a missed delivery. After
+  one, the parcel waits for the next round or the recipient's request, so the receipt keeps the
+  missed delivery's stage with no source of its own, and the parcel does not step back to in transit.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.

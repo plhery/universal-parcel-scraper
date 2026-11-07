@@ -996,6 +996,7 @@ describe('classifyWording', () => {
       ['Collo is reloaded by the nox branch. Consignment reloaded', 'in_transit'],
       ["La spedizione e' regolarmente partita", 'in_transit'], ['Tendered to International Gateway.', 'in_transit'],
       ['Received at international processing center', 'in_transit'], ['Received at the International Processing Centre.', 'in_transit'],
+      ['Item has left the overseas International Processing Centre', 'in_transit'],
       ['Spedizione affidata a una FedEx Location in attesa di ritiro del corriere', 'accepted'],
       ['Pending shipping by the seller', 'registered'], ['Connecting flights flight takeoff', 'in_transit'],
       ['Initial landing', 'in_transit'], ['Item flight landing', 'in_transit'],

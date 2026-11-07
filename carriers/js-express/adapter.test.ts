@@ -370,6 +370,28 @@ describe('JS Express tracking adapter', () => {
     expect(recorded).toMatchObject({ current_stage: 'accepted', last_status_text: 'Processed' });
   });
 
+  it("keeps a missed delivery's stage on the depot's receipt after it, without a source of its own", () => {
+    const coded = (date: string, status: string, code: string) => ({ ...row(date, 'Sample Depot', status), timeZone: '+01:00', code }) as Row;
+    const rows = [
+      coded('2026-11-06 18:21:54', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      coded('2026-11-06 13:25:48', 'DELIVERY ATTEMPTED: 3RD DELIVERY ATTEMPT', 'DDE'),
+      coded('2026-11-06 08:30:04', 'OUT FOR DELIVERY', 'DIG'),
+      coded('2026-11-06 08:26:27', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      coded('2026-11-05 19:44:55', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      coded('2026-11-05 12:25:08', 'DELIVERY ATTEMPTED: 2ND DELIVERY ATTEMPT', 'DDF'),
+      coded('2026-11-05 08:05:17', 'OUT FOR DELIVERY', 'DIG'),
+      coded('2026-11-05 08:00:44', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+    ];
+    const result = parseJsExpress(waybill(rows, { country: 'Germany' }), DELIVERED);
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map'], ['failed_attempt', 'none'],
+      ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map'], ['in_transit', 'carrier_map'],
+    ]);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map', last_status_text: 'RECEIVED AT LOCAL DEPOT' });
+    // The map alone, as a replay reads a stored row, still gives the receipt its own stage.
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'RECEIVED AT LOCAL DEPOT' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it("dates a row without a place on the destination's one clock when the offset it states is that clock's, and keeps its code", () => {
     const stated = (date: string, address: string, status: string, timeZone: string, code?: string): Row & { code?: string } =>
       ({ ...row(date, address, status), timeZone, ...(code ? { code } : {}) });
