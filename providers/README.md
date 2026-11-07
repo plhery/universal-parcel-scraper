@@ -71,7 +71,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   no rule reads and that is dated within five minutes of the lookup: providers stamp their
   notices with the moment they answer. A result made only of input prompts raises `input_required`.
   A generic "On the way" beside a specific scan at the same instant and place, as FedEx
-  writes it, is a copy of that scan and is dropped. Cainiao's "Pending shipping by the
+  writes it, is a copy of that scan and is dropped. A location that only repeats the scan's
+  wording names no place and is dropped too. Cainiao's "Pending shipping by the
   seller" and the sentence of GLS's progress bar that points to the detailed tracking below
   keep no time when dated after the lookup: the seller's deadline and GLS's delivery estimate.
   Cainiao's "Last-mile delivery forecast", its order data sent ahead to the courier, keeps the

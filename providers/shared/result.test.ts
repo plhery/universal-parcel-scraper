@@ -51,6 +51,21 @@ describe('shared provider result', () => {
     ]);
   });
 
+  it('drops a location that only repeats the wording, as 17TRACK relays a customs step', () => {
+    const at = (time: string, description: string, location: string) => ({ ...event(time, description)!, location });
+    const relayed = result([
+      at('2030-01-02T22:48:13Z', 'Customs clearance in progress', 'Customs clearance in progress'),
+      at('2030-01-02T10:00:00Z', 'Arrived at sorting center.', 'arrived at  sorting center'),
+      at('2030-01-01T10:00:00Z', 'Customs clearance in progress', 'Example City'),
+    ], '17TRACK');
+    expect(relayed.events?.map(({ description, location }) => [description, location])).toEqual([
+      ['Customs clearance in progress', undefined],
+      ['Arrived at sorting center.', undefined],
+      ['Customs clearance in progress', 'Example City'],
+    ]);
+    expect(relayed.events?.[0]).not.toHaveProperty('location');
+  });
+
   it("keeps no time for the seller's step or GLS's progress sentence when dated after the lookup", () => {
     const now = Date.now();
     const at = (offset: number) => new Date(now + offset).toISOString();

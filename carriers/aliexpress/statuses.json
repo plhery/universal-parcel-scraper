@@ -423,7 +423,7 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-10-25",
-      "note": "Cainiao's advance notice of the parcel to the courier that delivers it, sent after a scan and carrying no date, not a forecast of one: it keeps the stage of the scan before it. Its standard wording is the placeholder \"Carrier update\"."
+      "note": "Cainiao's advance notice of the parcel to the courier that delivers it, sent seconds after a scan and naming no delivery date: no planned step, it moves nothing and keeps the stage of the scan before it. Its standard wording is the placeholder \"Carrier update\"."
     },
     {
       "code": "LAST_MILE_ASN_NOTIFY",

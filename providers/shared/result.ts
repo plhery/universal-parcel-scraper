@@ -704,6 +704,18 @@ function aheadStep(value: CarrierEvent, now: number): CarrierEvent {
   return undated;
 }
 
+const WORDING_KEY = (value: string) => value.trim().replace(/\s+/g, ' ').replace(/[.!]$/, '').toLowerCase();
+
+/** A location that only repeats the scan's wording, as 17TRACK relays a customs step of Juxi Express's, names no place. */
+function withoutWordingAsPlace(value: CarrierEvent): CarrierEvent {
+  if (!value.location) return value;
+  const location = WORDING_KEY(value.location);
+  if (![value.description, value.original_description].some((wording) => wording && WORDING_KEY(wording) === location)) return value;
+  const unplaced = { ...value };
+  delete unplaced.location;
+  return unplaced;
+}
+
 // GLS's ParcelShop scan as Postal Ninja relays it, which the wording alone leaves open.
 const PARCELSHOP_SCAN = /^the parcel has reached the parcelshop[.!]?$/i;
 const PAST_LABEL = (stage: Stage | undefined) => !!stage && stage !== 'pending' && stage !== 'registered';
@@ -807,7 +819,7 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
   const scans = new Map<string, CarrierEvent>();
   const now = Date.now();
   for (const entry of events) {
-    const event = aheadStep(entry, now);
+    const event = withoutWordingAsPlace(aheadStep(entry, now));
     if (lookupNotice(event, now)) continue;
     const key = `${moment(event)}|${event.description}`;
     const earlier = scans.get(key);
