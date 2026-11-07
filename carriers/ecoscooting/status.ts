@@ -24,6 +24,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['RT_WH_INBOUND', RETURNED],
   ['GTMS_DO_DEPART', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['GTMS_DEL_FAILURE', { status: 'exception', stage: 'failed_attempt' }],
+  // The courier could not leave the parcel at the pickup point ("Service point closed"), as PUDO_DELIVERY_FAILURE.
+  ['GTMS_STA_SIGN_FAILURE', { status: 'exception', stage: 'failed_attempt' }],
   // The last-mile carrier taking the parcel over, after the sorting and line-haul
   // scans: Cainiao accepted it long before, as AliExpress's map reads it.
   ['GTMS_ACCEPT', { status: 'in_transit', stage: 'in_transit' }],

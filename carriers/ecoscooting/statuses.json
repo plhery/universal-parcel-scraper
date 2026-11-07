@@ -182,6 +182,14 @@
       "note": "The parcel did not reach the parcelshop; the reason in brackets varies."
     },
     {
+      "code": "GTMS_STA_SIGN_FAILURE",
+      "wording": "Service point closed",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The GTMS twin of PUDO_DELIVERY_FAILURE: the courier could not leave the parcel at the pickup point, after failed attempts at the door."
+    },
+    {
       "code": "PUDO_INBOUND",
       "wording": "Your shipment has arrived at parcelshop and you‘ll receive pickup instructions shortly",
       "language": "en",

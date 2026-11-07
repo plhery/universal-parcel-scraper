@@ -158,6 +158,12 @@ describe('Ecoscooting parcel history', () => {
     value.statuses[0].description = 'Delivery attempt failure, Not at home';
     expect(parseEcoscooting(value, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
     expect(parseEcoscooting(value, NUMBER).events?.[0]?.stage).toBe('failed_attempt');
+    // A pickup point closed when the courier came: the parcel is not there.
+    value.statuses.unshift({ ...value.statuses[0], actionCode: 'GTMS_STA_SIGN_FAILURE', statusName: 'Delivery Failure',
+      description: 'Service point closed', opTimestamp: '1767910000000' });
+    const closed = parseEcoscooting(value, NUMBER);
+    expect(closed).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', last_status_text: 'Service point closed' });
+    expect(closed).not.toHaveProperty('pickup_point');
   });
   it('puts the return ahead of the station exception listed first at the same second', () => {
     const value = fixture(); value.statuses.shift();

@@ -32,7 +32,9 @@ family's exception wording ("[Parcel lost]"), which reads as a problem rather th
 failed attempt. The courier leaving the parcel
 at a pickup point ("Delivered to PUDO") ends its round: the shop checks the
 parcel in minutes or an hour later, so it reads as out for delivery, and the
-shop's check-in as ready for pickup. A parcel left at a pickup point past its deadline, and its whole
+shop's check-in as ready for pickup. A pickup point the courier finds closed
+(`GTMS_STA_SIGN_FAILURE`, `PUDO_DELIVERY_FAILURE`) is a failed attempt: the
+parcel is not there. A parcel left at a pickup point past its deadline, and its whole
 journey back to the sender, read as returned. The last-mile station lists its
 exception or failed attempt first and the return it decides at the same
 second; the return then leads the history. The web client names the GTMS
