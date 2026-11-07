@@ -629,6 +629,7 @@ import { adapter as starlinksGlobal } from '../carriers/starlinks-global/adapter
 import { adapter as sto } from '../carriers/sto/adapter.js';
 import { adapter as stone3pl } from '../carriers/stone3pl/adapter.js';
 import { adapter as straightship } from '../carriers/straightship/adapter.js';
+import { adapter as suhu } from '../carriers/suhu/adapter.js';
 import { adapter as sundarbanCourier } from '../carriers/sundarban-courier/adapter.js';
 import { adapter as sunyou } from '../carriers/sunyou/adapter.js';
 import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
@@ -1373,6 +1374,7 @@ export const REGISTRY: RegistryDefinition = {
     "sto": sto,
     "stone3pl": stone3pl,
     "straightship": straightship,
+    "suhu": suhu,
     "sundarban-courier": sundarbanCourier,
     "sunyou": sunyou,
     "surat-kargo": suratKargo,
@@ -2626,6 +2628,7 @@ export const REGISTRY: RegistryDefinition = {
     "stone3pl": "stone3pl",
     "stop-start": "universal",
     "straightship": "straightship",
+    "suhu": "suhu",
     "sumxpress": "universal",
     "sundarban-courier": "sundarban-courier",
     "suning-logistics": "universal",

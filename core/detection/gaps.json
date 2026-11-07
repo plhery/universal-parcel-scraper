@@ -3460,6 +3460,12 @@
     "reason": "Sundarban CN numbers are bare fourteen-digit runs, a length many carriers share."
   },
   {
+    "carrier": "suhu",
+    "pattern": "^[A-Z]{3}\\d{13}[A-Z]{2}$",
+    "kind": "open",
+    "reason": "One parcel the app tracked shows Suhu's order numbers as three letters, thirteen digits and two letters; with no public number the layout is not established, so recognition asks Suhu's tracker instead."
+  },
+  {
     "carrier": "sunyou",
     "pattern": "^LP\\d{14}$",
     "kind": "collision",

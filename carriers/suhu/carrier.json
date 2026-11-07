@@ -1,0 +1,79 @@
+{
+  "id": "suhu",
+  "displayName": "Suhu Express",
+  "aliases": [
+    "suhu supply chain",
+    "SUHU",
+    "速虎",
+    "速虎速运",
+    "速虎物流"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#e8501a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "suhu",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 721,
+      "pattern": "^[A-Z]{3}\\d{13}[A-Z]{2}$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "url": "https://www.suhusupplychain.com/",
+    "searchUrl": "https://www.suhusupplychain.com/",
+    "canaryUrl": "https://www.suhusupplychain.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "offset_timestamps",
+      "service_name",
+      "pickup_point",
+      "recipient_name",
+      "recipient_address"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

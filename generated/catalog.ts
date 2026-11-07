@@ -44078,6 +44078,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "suhu": {
+    "displayName": "Suhu Express",
+    "color": "#e8501a",
+    "aliases": [
+      "suhu supply chain",
+      "SUHU",
+      "速虎",
+      "速虎速运",
+      "速虎物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "suhu",
+      "recognitionRank": 721,
+      "recognitionPattern": "^[A-Z]{3}\\d{13}[A-Z]{2}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.suhusupplychain.com/",
+    "trackingUrlTemplate": "https://www.suhusupplychain.com/",
+    "trackingSearchUrl": "https://www.suhusupplychain.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sumxpress": {
     "displayName": "Sumxpress",
     "color": "#f08300",
@@ -52894,6 +52922,7 @@ export const CARRIER_IDS = [
   "stone3pl",
   "stop-start",
   "straightship",
+  "suhu",
   "sumxpress",
   "sundarban-courier",
   "suning-logistics",
@@ -54273,6 +54302,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "stone3pl": ["stone3pl-s18"],
   "stop-start": [],
   "straightship": ["straightship-1","straightship-2"],
+  "suhu": [],
   "sumxpress": [],
   "sundarban-courier": [],
   "suning-logistics": [],

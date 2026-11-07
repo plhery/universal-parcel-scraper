@@ -44074,6 +44074,34 @@
       }
     ]
   },
+  "suhu": {
+    "displayName": "Suhu Express",
+    "color": "#e8501a",
+    "aliases": [
+      "suhu supply chain",
+      "SUHU",
+      "速虎",
+      "速虎速运",
+      "速虎物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "suhu",
+      "recognitionRank": 721,
+      "recognitionPattern": "^[A-Z]{3}\\d{13}[A-Z]{2}$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.suhusupplychain.com/",
+    "trackingUrlTemplate": "https://www.suhusupplychain.com/",
+    "trackingSearchUrl": "https://www.suhusupplychain.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sumxpress": {
     "displayName": "Sumxpress",
     "color": "#f08300",

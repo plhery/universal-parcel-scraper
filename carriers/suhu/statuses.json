@@ -1,0 +1,19 @@
+{
+  "carrier": "suhu",
+  "entries": [
+    {"code": "1004", "wording": "Shipment data received.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order's data, before Suhu has the parcel."},
+    {"code": "1002", "wording": "Domestic sorting center inbound", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Suhu's sorting center in China has the parcel."},
+    {"code": "1003", "wording": "Domestic sorting center outbound", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "1009", "wording": "Arrival transit center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "1010", "wording": "Cargo leaves operation center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "1099", "wording": "The shipment is in transit in origin country", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "2001", "wording": "Arrived at departure transport hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "2004", "wording": "Handover to airline", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "2003", "wording": "Export clearance success", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Written in China before the flight, and at the destination after the arrival and clearance scan."},
+    {"code": "2005", "wording": "Flight departed from origin country", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "2006", "wording": "The flight arrived at the destination port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "2008", "wording": "Arrive at the destination and clear the customs", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The destination's clearance starts; its release comes as 2003 a little later."},
+    {"code": "3099", "wording": "Delivery to local courier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Handed to the line that delivers in the destination country."},
+    {"code": "3001", "wording": "Accepted by last-mile carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The line's first scan; the line's own tracker follows the parcel from there."}
+  ]
+}

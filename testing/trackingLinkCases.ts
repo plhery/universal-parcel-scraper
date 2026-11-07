@@ -1413,6 +1413,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'zecheng', number: 'ZCGJ0000000002CN',
     route: /^https:\/\/api\.zecwl\.com\/index\/tracknumber\/track\?nos=ZCGJ0000000002CN$/,
     marker: /快件跟踪|跟踪\(Track\)/ },
+  // The home page carries the waybill form; its link holds no number.
+  { carrier: 'suhu', number: 'SUH0000000000002AB',
+    route: /^https:\/\/www\.suhusupplychain\.com\/$/,
+    marker: /运单查询/, forwarding: 'none' },
   // The page moves the number into its hash route, through a bare `#/` first, looks it up on load
   // and lists it, with a notice while it has no data.
   { carrier: 'dayone', number: 'DOT0990000000000001',
