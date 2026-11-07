@@ -33,7 +33,8 @@ Kuehne+Nagel's own references: tracking, house waybill, booking, file and shipme
 Blue Anchor Line bills. A match only under a customer reference, a package reference, a container
 or another carrier's bill is left undecided, because anyone can hold those references.
 
-The myKN app is not needed, since the web tracker answers anonymously.
+The myKN app is not needed, since the web tracker answers anonymously. Providers that relay
+myKN name it for Kuehne+Nagel's own numbers, so "myKN" is an alias.
 
 ## Numbers
 

@@ -336,6 +336,12 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('uda International')).toBe('yunda');
   });
 
+  it('reads Hermes Borderguru as Hermes Germany and myKN as Kuehne+Nagel', () => {
+    expect(carrierIdFromName('Hermes Borderguru')).toBe('hermes-de');
+    expect(carrierIdFromName('Hermes BorderGuru')).toBe('hermes-de');
+    expect(carrierIdFromName('myKN')).toBe('kuehne-nagel');
+  });
+
   it.each(['Example Parcel Co', 'Example Express Italy', 'Postexample Courier'])('treats %s as new', (name) => {
     expect(isKnownCarrierName(name)).toBe(false);
   });

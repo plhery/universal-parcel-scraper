@@ -34,6 +34,9 @@ tracking page shows them in the visitor's zone like Hermes's own.
 
 ## Notes
 
+- Hermes Borderguru, the Hermes Group's cross-border unit, drew its services from Hermes
+  Germany, and universal providers name it beside myHermes for Hermes Germany's own numbers, so
+  that name is an alias.
 - Barcodes shared with Evri remain ambiguous across services. Longer Hermes
   barcodes retain their existing recognition. Numeric detection uses the
   published checksum as a preference, since other carriers can pass it too.
