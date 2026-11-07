@@ -47,6 +47,9 @@ const STRAIGHTSHIP = /straightship/i;
 const STRAIGHTSHIP_RECORD = /^package information is created in the system$/i;
 // A town and the code of its province or state, as a courier's wording ends with them.
 const PROVINCE = /,\s*([A-Z]{2})$/;
+// USPS's scans, relayed from two feeds: to the minute with the town, state and postal code, on the town's clock, or to
+// the second on UTC's.
+const USPS = /\busps\b/i;
 // The offset a row states, as "+02:00".
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
 // A row's code, as "OIT" or "DSD".
@@ -108,12 +111,13 @@ function canadianTown(location: string, label: string): boolean {
  * keeps its wall clock. In a history that names Straightship, its rows are on
  * UTC, as its own page writes them: those that name it, those whose wording
  * ended with a town and a Canadian province, and its record of the parcel's
- * data. Null otherwise: airports' codes, other rows without a place and other
- * couriers' rows.
+ * data. USPS's scans relayed to the second are on UTC too. Null otherwise:
+ * airports' codes, other rows without a place and other couriers' rows.
  */
-function scanZone(description: string, location: string, label: string, straightship: boolean): string | null {
+function scanZone(local: string, description: string, location: string, label: string, straightship: boolean): string | null {
   if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label)
     || (!location && STRAIGHTSHIP_RECORD.test(description)))) return 'UTC';
+  if (USPS.test(description) && !local.endsWith(':00')) return 'UTC';
   return jsExpressChinaClock(description, location) ?? null;
 }
 
@@ -242,7 +246,7 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
 
   const straightship = scans.some((scan) => STRAIGHTSHIP.test(scan.description));
   const events = scans.map(({ local, label, description, location, offset, code }): CarrierEvent => {
-    const zone = scanZone(description, location, label, straightship) ?? (location ? null : statedZone(local, offset, country));
+    const zone = scanZone(local, description, location, label, straightship) ?? (location ? null : statedZone(local, offset, country));
     const time = zone ? isoTime(local, zone)?.iso : undefined;
     const staged = jsExpressStage(description, code);
     return {
@@ -254,11 +258,12 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
     };
   });
 
-  // Oldest first: the depot's receipt after a missed delivery is the parcel back from that round, waiting for the next
-  // one or for the recipient's request. It keeps the missed delivery's stage with no source of its own.
+  // Oldest first: the depot's receipt keeps the stage of the scan before it with no source of its own. Before a round
+  // the parcel is in transit; after a missed delivery it is back from that round, waiting for the next one or for the
+  // recipient's request.
   let previous: Stage | undefined;
   for (const event of [...events].reverse()) {
-    if (previous === 'failed_attempt' && isJsExpressDepotReceipt(event.description ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
+    if (previous && isJsExpressDepotReceipt(event.description ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
     previous = (event.stage as Stage | undefined) ?? previous;
   }
 

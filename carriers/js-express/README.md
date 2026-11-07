@@ -52,6 +52,11 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   Straightship's record of the parcel's data comes within a minute of the Chinese warehouse's
   inbound scan only when the one is read on UTC and the other on Beijing time, and its
   deliveries then come before the 9 pm its round promises.
+- USPS's scans come from two feeds. Those to the minute, with the town, state and postal code,
+  are on the town's clock, as USPS's own delivery at the same minute shows. Those to the second,
+  such as "Arrived at USPS Facility" at a distribution centre, are on UTC: a copy of USPS's label
+  came at the instant USPS gave it read on UTC, and an arrival read on Chicago's clock would have
+  come hours before it happened.
 - Each row also carries an offset, often another place's: Straightship's rows carry China's,
   Amsterdam's carry its winter offset in summer, and Gatwick's and Singapore's others. A row
   without a place is read on the destination's clock when the destination keeps one clock and the
@@ -76,10 +81,11 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.
-- The delivering depot's receipt comes before each round and again after a missed delivery. After
-  one, the parcel waits for the next round or the recipient's request, so the receipt keeps the
-  missed delivery's stage with no source of its own, and the parcel does not step back to in transit.
-  The recipient's redirect after the third miss moves the parcel on.
+- The delivering depot's receipt comes before each round and again after a missed delivery. It is a
+  notice that keeps the stage of the scan before it with no source of its own: in transit before a
+  round, and after a missed delivery the miss, as the parcel waits for the next round or the
+  recipient's request, so it does not step back to in transit. The recipient's redirect after the
+  third miss moves the parcel on.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.

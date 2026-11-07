@@ -378,7 +378,7 @@ describe('JS Express tracking adapter', () => {
     expect(recorded).toMatchObject({ current_stage: 'accepted', last_status_text: 'Processed' });
   });
 
-  it("keeps a missed delivery's stage on the depot's receipt after it, without a source of its own", () => {
+  it("keeps the stage of the scan before it on the depot's receipt, a missed delivery's included, without a source of its own", () => {
     const coded = (date: string, status: string, code: string) => ({ ...row(date, 'Sample Depot', status), timeZone: '+01:00', code }) as Row;
     const rows = [
       coded('2026-11-06 18:21:54', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
@@ -389,22 +389,35 @@ describe('JS Express tracking adapter', () => {
       coded('2026-11-05 12:25:08', 'DELIVERY ATTEMPTED: 2ND DELIVERY ATTEMPT', 'DDF'),
       coded('2026-11-05 08:05:17', 'OUT FOR DELIVERY', 'DIG'),
       coded('2026-11-05 08:00:44', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      coded('2026-11-04 21:10:00', 'DEPARTED FROM DEPOT', 'OIT'),
     ];
     const result = parseJsExpress(waybill(rows, { country: 'Germany' }), DELIVERED);
     expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
       ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map'], ['failed_attempt', 'none'],
-      ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map'], ['in_transit', 'carrier_map'],
+      ['failed_attempt', 'none'], ['failed_attempt', 'carrier_map'], ['out_for_delivery', 'carrier_map'], ['in_transit', 'none'],
+      ['in_transit', 'carrier_map'],
     ]);
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map', last_status_text: 'RECEIVED AT LOCAL DEPOT' });
-    // The map alone, as a replay reads a stored row, still gives the receipt its own stage.
-    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'RECEIVED AT LOCAL DEPOT' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The map declares the receipt a notice, so a replay restages a stored row on the scan before it.
+    const answer = statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'RECEIVED AT LOCAL DEPOT' });
+    expect(answer.kind).toBe('intentional_gap');
+    expect(answer.kind === 'intentional_gap' && answer.note).toContain('keeps the stage of the scan before it');
     // The recipient's redirect after the third miss moves the parcel on, and a receipt after it is the depot's again.
     const redirected = parseJsExpress(waybill([coded('2026-11-07 09:30:00', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
       coded('2026-11-07 08:08:48', "SHIPMENT REDIRECTED: ON CONSIGNEE'S REQUEST", 'OIT'), coded('2026-11-07 08:08:04', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
       ...rows], { country: 'Germany' }), DELIVERED);
     expect(redirected.events?.slice(0, 3).map((event) => [event.stage, event.stage_source])).toEqual([
-      ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['failed_attempt', 'none']]);
+      ['in_transit', 'none'], ['in_transit', 'carrier_map'], ['failed_attempt', 'none']]);
     expect(redirected).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+  });
+
+  it("reads USPS's scans relayed to the second on UTC, and those to the minute on their town's clock", () => {
+    const result = parseJsExpress(waybill([
+      { ...row('2026-11-07 14:39:42', 'EXAMPLE IL DISTRIBUTION CENTER', 'Arrived at USPS Facility'), timeZone: '-06:00', code: 'OIT' },
+      { ...row('2026-11-06 12:16:00', 'EXAMPLE, WA', 'Arrived at USPS Facility'), timeZone: '-08:00', code: 'OIT' },
+    ], { country: 'United States' }), DELIVERED);
+    expect(result.events?.map((event) => [event.time, event.local_time])).toEqual([
+      ['2026-11-07T14:39:42Z', undefined], [undefined, '2026-11-06T12:16:00']]);
   });
 
   it("dates a row without a place on the destination's one clock when the offset it states is that clock's, and keeps its code", () => {
