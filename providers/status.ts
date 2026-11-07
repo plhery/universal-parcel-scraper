@@ -50,6 +50,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   // released it, whether a driver collects or delivers, or which forwarder's warehouse scanned it.
   ['item received', 'A bare receipt that names no receiver: ParcelsApp reads it by its place, the wording alone cannot.'],
   ['received.', 'A bare receipt that names no receiver: a store, a centre or a carrier.'],
+  ['received', 'A bare receipt that names no receiver: a store, a centre or a carrier.'],
   ['package received', 'A bare receipt that names no receiver: a store, a centre or a carrier.'],
   ['shipped', "A dispatch that does not say whether the seller or a carrier sent the parcel on."],
   ['released', 'A release that does not say from customs or from a hold.'],
@@ -64,6 +65,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['the parcel has reached the parcelshop', "GLS's ParcelShop scan as Postal Ninja relays it: the sender's drop-off or a parcel waiting for collection. A provider's result reads it by the carrier scans around it."],
   ['barcode scanning', "A Shenzhen forwarder's warehouse scan that First Line reads as its intake and PFC Express as transit: the wording names neither."],
   ['packaged', "A forwarder's packing, or a seller's: the wording does not say whose."],
+  ['ready for dispatch', "A parcel made ready to go, by a shop before any carrier has it or by a carrier on its way: the wording does not say whose."],
 ];
 
 export const statusMap: CarrierStatusMap = {

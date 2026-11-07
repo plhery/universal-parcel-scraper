@@ -499,6 +499,10 @@ function providerWordingStage(description: string): Stage | undefined {
   // Its export steps after that, as ParcelsApp relays them: the logistics centre, the outward office of
   // exchange holding the item for dispatch, and the dispatch before the item leaves Latvia.
   if (/^received at the logistics cent(?:er|re)[.!]?$|^item held at outward office of exchange[.!]?$|^sending the package[.!]?$/i.test(value)) return 'in_transit';
+  // The UPU's events in ParcelsApp's own words, as it relays them beside the post's: the outward office of exchange
+  // holding the item for dispatch (EXD), the destination's inward office of exchange taking it in (EMD), and the
+  // item sent on from there towards the office that delivers it.
+  if (/^the shipment has been held at the exit exchange point[.!]?$|^entered the exchange point of the destination country[.!]?$|^sent to the delivery point[.!]?$/i.test(value)) return 'in_transit';
   // The origin post's dispatch from its outward office of exchange (UPU's EMC), as ParcelsApp relays China Post's
   // after the export release and beside "Departed country of origin".
   if (/^dispatch from outward office of exchange[.!]?$/i.test(value)) return 'in_transit';
