@@ -250,9 +250,10 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (/^shipment accepted at (?:the )?dhl shipping terminal[.!]?$/i.test(description)) return 'accepted';
   // Česká pošta's English, as aggregators relay it and its own map reads it: the sender's data, the posting, the
   // way to the delivery office, an item left for collection at a post office or Balíkovna, and one sent back unclaimed.
+  // An item from abroad is first "sent to the destination country", the day the sending post dispatches it.
   if (/^receipt of data about consignment[.!]?$/i.test(description)) return 'registered';
   if (/^the consignment was sent for transportation[.!]?$/i.test(description)) return 'accepted';
-  if (/^the consignment (?:left the logistics hub|is being prepared for delivery)[.!]?$/i.test(description)) return 'in_transit';
+  if (/^the consignment (?:left the logistics hub|is being prepared for delivery|was sent to the destination country)[.!]?$/i.test(description)) return 'in_transit';
   if (/^the consignment was deposited(?: - addressee not at home| to balíkovna)[.!]?$/iu.test(description)) return 'ready_for_pickup';
   if (/^the consignment was sent back(?: to the sender)? - the consignment was not picked up by the addressee\b/i.test(description)) return 'exception';
   // DobroPost's record of a parcel its customer announced, as 17TRACK relays it without a code: it comes before

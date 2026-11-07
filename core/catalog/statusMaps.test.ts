@@ -1771,7 +1771,7 @@ describe("universal providers' answers", () => {
       ['Tendered to delivery service provider, allow 1-3 days for updates for packages within the US', 'in_transit'],
       ['Shipment manifest received', 'registered'], ['Parcel received by Maersk', 'in_transit'], ['Package relabeled', 'in_transit'],
       ['Reception in the delegation', 'accepted'], ['OUT IN NATIONAL ROUTE', 'in_transit'],
-      ['Item received at exchange office', 'in_transit'], ['Your delivery is in EXAMPLE TOWN, POST OFFICE', 'ready_for_pickup'],
+      ['Item received at exchange office', 'in_transit'], ['The consignment was sent to the destination country.', 'in_transit'], ['Your delivery is in EXAMPLE TOWN, POST OFFICE', 'ready_for_pickup'],
       ['Delivery scheduled during the day.', 'out_for_delivery'], ['USPS in possession of the item, EXAMPLE, NY', 'accepted'],
       ['Order registered', 'registered'], ['Pickup scheduled for 01/02/2026', 'registered'],
       ['Pickup completed, No exceptions', 'accepted'], ['Furniture Received by Metro-<Warehouse>-Hub', 'in_transit'],

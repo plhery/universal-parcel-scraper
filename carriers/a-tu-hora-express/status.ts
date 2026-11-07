@@ -23,6 +23,7 @@ const INCIDENTS: ReadonlyMap<string, Stage> = new Map([
   ['rechazado', 'failed_attempt'], // The recipient refused the parcel.
   ['no cumplimiento agencia', 'exception'], // The delivering agency did not deliver.
   ['incumplimiento de la agencia', 'exception'],
+  ['falta parcial', 'exception'], // Part of the shipment's packages is missing.
 ]);
 
 /** Wordings quoted from the tracker without their code. */

@@ -54,6 +54,16 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DPD (BE)'], '06080000000002').discovered_carrier).toBeUndefined();
   });
 
+  it('names DPD France for its own labels when a provider names DPD in France', () => {
+    // A `250` label with its GS1 check digit fits DPD France's rules and no other DPD network's.
+    const label = '2500000000000016';
+    expect(universalCarrierHints(['DPD (FR)'], label)).toEqual({ reported_carriers: ['DPD (FR)'], discovered_carrier: 'dpd-fr' });
+    // Another country, a failing check digit or a number several DPD networks fit leaves no hint.
+    expect(universalCarrierHints(['DPD (BE)'], label).discovered_carrier).toBeUndefined();
+    expect(universalCarrierHints(['DPD (FR)'], '2500000000000017').discovered_carrier).toBeUndefined();
+    expect(universalCarrierHints(['DPD (FR)'], '06080000000002').discovered_carrier).toBeUndefined();
+  });
+
   it('proposes the carrier whose leg of the journey the number belongs to', () => {
     // The number fits DPD's rules and no Swiss Post one.
     expect(universalCarrierHints(['Swiss Post', 'DPD Group'], '06080000000002')).toEqual({

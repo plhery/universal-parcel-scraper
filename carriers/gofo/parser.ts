@@ -6,14 +6,11 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { gofoStatus } from './status.js';
+import { withoutGofoSupportLine } from './support.js';
 
 const LABEL_CREATED = '100';
 /** The clock the adapter requests from GOFO US: GOFO prints Pacific clocks with their real offset. */
 export const GOFO_CLOCK_ZONE = 'America/Los_Angeles';
-// GOFO appends its support phone and email to some scans, in English or
-// Spanish; the public page removes that line before display.
-const CONTACT = String.raw`(?:\+?\(?\d[\d ().-]*\d|[\w.+-]+@[\w-]+(?:\.[\w-]+)+)`;
-const SUPPORT_LINE = new RegExp(String.raw`\s*(?:For delivery issues (?:&|and) tracking support, contact GOFO at|Para problemas de entrega y soporte de seguimiento, comun[ií]quese con GOFO al) ${CONTACT}(?:,? (?:or|and|o|y) ${CONTACT})*\.?$`, 'iu');
 
 /** GOFO US waybills: GFUS numbers, and the older GF and CR series its tracker still serves. */
 const WAYBILL = /^(?:GFUS\d{14}|GF\d{13}|CR\d{12})$/;
@@ -98,7 +95,7 @@ export const GOFO_ENDED_STAGES: ReadonlySet<string> = new Set(['delivered', 'ret
 /** Scan wording without a trailing support line; a scan worded only by that line keeps it. */
 function scanText(value: unknown): string {
   const text = clean(value, 1_000);
-  return (text.replace(SUPPORT_LINE, '') || text).slice(0, 500);
+  return withoutGofoSupportLine(text).slice(0, 500);
 }
 
 export function parseGofo(payload: unknown, rawNumber: string, site: GofoSite = GOFO_US): CarrierResult {

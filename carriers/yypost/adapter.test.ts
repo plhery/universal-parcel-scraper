@@ -274,4 +274,17 @@ describe('YYpost status vocabulary', () => {
     expect(statusMap.stage('QGWC', 'flight arrival')).toBeUndefined();
     for (const wording of ['constructor', 'toString', 'Sample Status Note']) expect(yypostStage(wording), wording).toBeNull();
   });
+
+  it("reads GOFO's relayed scans without the support line GOFO appends, and its failed attempts by their headline", () => {
+    const support = ' For Delivery Issues & Tracking Support, Contact GOFO at +1 000 000-0000 or support@example.com';
+    for (const [wording, stage] of [
+      [`Delivery Exception, Incorrect/Insufficient Address.${support}`, 'failed_attempt'],
+      [`Address Corrected.${support}`, 'in_transit'],
+      ['Delivery Exception, Business Closed', 'failed_attempt'],
+      [`Arrived at GOFO Delivery Station.${support}`, 'in_transit'],
+    ] as const) {
+      expect(yypostStage(wording), wording).toEqual({ stage, source: 'carrier_map' });
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
+    }
+  });
 });

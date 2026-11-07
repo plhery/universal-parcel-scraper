@@ -291,6 +291,7 @@
       "SWISS_POST_GLOBAL_STATUSES",
       "activeTrackingCarrierId",
       "brandCarrierIds",
+      "brandNameCountry",
       "brandTimeZones",
       "carrierBrand",
       "carrierIdFromName",

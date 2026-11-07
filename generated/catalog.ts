@@ -31064,6 +31064,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       },
       {
+        "pattern": "^ML[A-Z]{2}\\d{7}R$",
+        "confidence": "low",
+        "preferred": true
+      },
+      {
         "pattern": "^MMXQP\\d{9}[ENR]$",
         "confidence": "high"
       },
@@ -53860,7 +53865,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "magic-trans": [],
   "magnum-transportation": [],
   "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic","magyar-posta-package","magyar-posta-letter","magyar-posta-europe-standard"],
-  "mailamericas": ["mailamericas-ml","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
+  "mailamericas": ["mailamericas-ml","mailamericas-ml-7","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
   "mailex": [],
   "mailplus-au": ["mailplus-au-1"],
   "mainfreight": ["mainfreight-1"],

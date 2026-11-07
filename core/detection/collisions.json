@@ -7740,5 +7740,13 @@
       "meest"
     ],
     "reason": "iHerb numbers its parcels IHB and ten digits, and the partners that deliver them, HR Parcel in Italy and Meest, both track that number; both rules are low confidence, so recognition asks them in turn, with the reader's country first."
+  },
+  {
+    "shape": "ML, two letters, 9{7} and R",
+    "carriers": [
+      "colis-prive",
+      "mailamericas"
+    ],
+    "reason": "MailAmericas' tracker answers labels with ML, the country's code, seven digits and R, which Colis Privé's rule for any 12-character alphanumeric also takes. The MailAmericas rule follows MailAmericas' own layout, which no Colis Privé record has, so it is preferred; the number stays a suggestion, MailAmericas first."
   }
 ]

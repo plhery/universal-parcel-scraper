@@ -369,6 +369,22 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of a MailAmericas parcel to the Dominican Republic the app tracked: DOMC, nine digits and R. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "MLPE9999998R",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-06",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mailamericas",
+          "colis-prive"
+        ]
+      },
+      "note": "Made-up number in the shape of a MailAmericas label to Peru the app tracked, which the tracker answered: ML, PE, seven digits and R. Its serial sits far beyond the range in use."
     }
   ]
 }

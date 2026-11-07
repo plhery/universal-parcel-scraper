@@ -111,7 +111,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   unresolved. So does DPD: its networks
   share one guest service that answers for any DPD parcel, and 17TRACK writes "DPD (BE)" for
   parcels DPD places in the Netherlands. Recognition names the network from DPD's current
-  country for the parcel.
+  country for the parcel. Such a brand still names its network when that network's rules are
+  the only ones of the brand to fit the number and it serves the country: "DPD (FR)" names DPD
+  France for its `250` labels, which recognition cannot ask.
 - Several names can be the legs of one journey, such as DHLink and SwiftX, its last-mile
   partner. When every name is in the catalog, the hint is the one carrier whose rules fit
   the number, or the one a preferred rule backs. When no rule fits, Cainiao, which follows a

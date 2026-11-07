@@ -10,7 +10,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { followsPartnerNumbers, partnerNumberOwner, tracksPartnerNumbers } from '../../core/catalog/partners.js';
-import { brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
+import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
 import { checksumFailures } from '../../core/detection/detect.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { sharedClockZone } from '../../core/time/index.js';
@@ -32,6 +32,18 @@ export function brandCarrierForNumber(name: string, trackingNumber: string, leg?
   if (matching.length === 1) return matching[0];
   const preferred = matching.filter((id) => detected.preferred.includes(id as CarrierId));
   return preferred.length === 1 ? preferred[0] : undefined;
+}
+
+/**
+ * A brand named with a country ("DPD (FR)") whose networks the name alone does not tell apart,
+ * as DPD's, names the one network the number fits when that network serves the country:
+ * DPD France for its own `250` labels. A number several networks fit stays unresolved, since
+ * 17TRACK's "DPD (BE)" also covers parcels DPD places in the Netherlands.
+ */
+function countryBrandCarrierForNumber(name: string, trackingNumber: string, leg?: (network: string) => boolean): string | undefined {
+  const named = brandNameCountry(name);
+  const network = named && brandCarrierForNumber(named.brand, trackingNumber, leg);
+  return network && CARRIER_DEFINITIONS[network as CarrierId].countries?.includes(named.country) ? network : undefined;
 }
 
 /** A courier name's clock: its catalog carrier's, the country it names, or its brand's shared one. */
@@ -96,7 +108,8 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
   let group = false;
   for (const name of names) {
     const own = carrierIdFromName(name);
-    const named = own ?? (trackingNumber ? brandCarrierForNumber(name, trackingNumber, leg) : undefined);
+    const named = own ?? (trackingNumber ? brandCarrierForNumber(name, trackingNumber, leg)
+      ?? countryBrandCarrierForNumber(name, trackingNumber, leg) : undefined);
     const partner = named && trackingNumber ? partnerNumberOwner(named, trackingNumber) : undefined;
     // A brand's network none of whose rules fits the number names the network of the
     // brand the number points to: ParcelsApp files DPD UK's depot numbers under DPD France.

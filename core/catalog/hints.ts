@@ -166,6 +166,12 @@ function brandNetwork(brand: string, country: string): string | undefined {
   return local.length === 1 ? local[0]![0] : undefined;
 }
 
+/** "DPD (FR)": a brand with several networks named with a country, and that country's ISO code. */
+export function brandNameCountry(name: string): { brand: string; country: string } | undefined {
+  const qualified = countryQualified(name);
+  return qualified && brandCarrierIds(qualified.base).length ? { brand: qualified.base, country: qualified.country } : undefined;
+}
+
 /** A name is only a lookup hint; the destination adapter still has to verify the parcel. */
 export function carrierIdFromName(name: string): string | undefined {
   const exact = catalogCarrier(key(name));

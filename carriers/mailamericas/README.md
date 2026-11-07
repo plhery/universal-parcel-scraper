@@ -89,7 +89,10 @@ tracking page uses one of each as its examples, and no other carrier's numbers h
 shapes, so `mailamericas-ml` and `mailamericas-mmxqp` claim them. Parcels for the Dominican
 Republic have `DOMC`, nine digits and `R`: the tracker answers them, a public question about a
 parcel to the Dominican Republic quotes one beside MailAmericas, and no other carrier's numbers
-have the shape, so `mailamericas-domc` claims it.
+have the shape, so `mailamericas-domc` claims it. The tracker also answers labels with `ML`, the
+country's code, seven digits and `R`. No public number has that layout, and other carriers'
+generic twelve-character layouts fit it, so `mailamericas-ml-7` only suggests MailAmericas, and
+recognition asks it.
 
 The tracker also answers parcels under UPU S10 numbers with the Mexican, Marshall Islands and
 Mauritius codes. Mexican and Mauritius numbers stay with their own posts. The catalog has no

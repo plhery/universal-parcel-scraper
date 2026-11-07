@@ -115,6 +115,12 @@
       "confidence": "high"
     },
     {
+      "id": "mailamericas-ml-7",
+      "pattern": "^ML[A-Z]{2}\\d{7}R$",
+      "confidence": "low",
+      "preferred": true
+    },
+    {
       "id": "mailamericas-mmxqp",
       "pattern": "^MMXQP\\d{9}[ENR]$",
       "confidence": "high"

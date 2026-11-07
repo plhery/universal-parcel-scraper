@@ -357,6 +357,16 @@ describe('MailAmericas numbers', () => {
     }
   });
 
+  it('suggests MailAmericas for its seven-digit labels without claiming them', () => {
+    for (const number of ['MLPE0000001R', 'MLAR9999999R']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+      expect(detectCarrierMatch(number).candidates, number).toContain('mailamericas');
+    }
+    for (const number of ['MLPE000001R', 'MLPE00000001R', 'MLPE0000001E', 'MLPE0000001EX', 'MXPE0000001R', 'ML1E0000001R']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('mailamericas');
+    }
+  });
+
   it('turns the name ParcelsApp reports beside Cainiao into MailAmericas', () => {
     expect(universalCarrierHints(['MailAmericas', 'Cainiao'], 'MLPE000000001R')).toMatchObject({ discovered_carrier: 'mailamericas' });
     expect(universalCarrierHints(['Mail Americas'], 'MMXQP000000004R')).toMatchObject({ discovered_carrier: 'mailamericas' });
