@@ -630,6 +630,14 @@
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-07"
+    },
+    {
+      "wording": "Under Clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Import clearance at the destination, after the flight arrived."
     }
   ]
 }
