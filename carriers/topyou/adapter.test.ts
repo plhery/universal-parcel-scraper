@@ -304,6 +304,16 @@ describe('TopYou status vocabulary', () => {
     expect(topyouStage('20', notice('【Sample Point】'))).toEqual({ stage: 'ready_for_pickup', source: 'carrier_map' });
   });
 
+  it('reads DPD’s relayed scans in Austria, up to a parcel left uncollected at a Pickup parcelshop', () => {
+    const relayed = [
+      ['In parcel delivery center', 'in_transit'], ['In delivery', 'out_for_delivery'],
+      ['Unfortunately, consignee not present. Notification was left.', 'failed_attempt'],
+      ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],
+      ['Parcel was not picked up', 'exception'],
+    ] as const;
+    for (const [wording, stage] of relayed) expect(topyouStage('20', wording), wording).toEqual({ stage, source: 'carrier_map' });
+  });
+
   it('lets a delivered or returned code settle a scan, then the shared rules, then the code', () => {
     expect(topyouStage('30', 'Synthetic note')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(topyouStage('40', 'Out for delivery')).toEqual({ stage: 'returned', source: 'carrier_map' });

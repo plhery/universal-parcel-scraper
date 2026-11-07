@@ -30,8 +30,8 @@ uses the direct connection. A missing API route is a transport failure, not a mi
 TopYou's own scans carry `+08:00`. The delivery carrier's scans it relays, USPS's in the United
 States, come without an offset and keep their wall clock, which their place dates. GOFO's in France
 and Italy come with the destination's offset on a UTC wall clock: stated `+01:00`, each came an hour
-before GOFO's own instant for it and showed twice beside GOFO's scan, so a relayed scan's clock
-other than `+08:00` is read as UTC. iMile's in Germany state TopYou's own `+08:00` on a UTC wall
+before GOFO's own instant for it and showed twice beside GOFO's scan. DPD's in Austria come the same
+way, each at DPD's own instant read as UTC. So a relayed scan's clock other than `+08:00` is read as UTC. iMile's in Germany state TopYou's own `+08:00` on a UTC wall
 clock, eight hours before iMile's instants, so a scan relayed from iMile is read as UTC whatever
 it states. TopYou's hand-over and delivery rows on such a parcel had UTC wall clocks too, but they
 are worded as on its other lines, so they keep their reading. TopYou's own end of the
@@ -49,7 +49,9 @@ the parcel moves, and USPS's acceptance after the flight is no first acceptance.
 for delivery" is the hand-over to GOFO, at GOFO's first sorting-centre scan days before its
 delivery round, so it is transit. iMile's scans, in Germany, come as iMile's label for the step,
 a comma and iMile's sentence ("Delivery, Our delivery associate is out for delivery."), and iMile's
-own map stages the sentence. On a line a post delivers, the first-mile warehouse's outbound scan
+own map stages the sentence. DPD's scans in Austria come in DPD Austria's English wording, up to
+its notice that a parcel left at a Pickup parcelshop was not collected, a problem before DPD sends
+it back. On a line a post delivers, the first-mile warehouse's outbound scan
 ends with ", Lastmile Number:" and the post's number, which the map leaves aside. The tracker's
 summary code settles a delivered or returned parcel.
 
