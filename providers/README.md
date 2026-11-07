@@ -98,6 +98,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - An exactly worded voided label ("Parcel Void", "Shipment voided") is an exception even
   when a provider files it as generic transit: it was cancelled before shipping. A
   relabel that mentions a void is not.
+- 17TRACK and Postal Ninja name the carrier behind each scan in `reporting_carrier`. Postal
+  Ninja stages a scan by that carrier's map where the map reads wording without a code whole
+  ([status model](../ARCHITECTURE.md#status-model)).
 - A carrier name reported by a provider is a hint. A consumer may try that carrier's
   adapter, and adopts the carrier only when that adapter confirms the shipment. A name is
   not proposed as `discovered_carrier` when the number fails a check digit that the

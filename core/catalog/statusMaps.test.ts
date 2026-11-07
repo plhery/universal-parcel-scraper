@@ -2,7 +2,7 @@ import { readdirSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { normalizeStatusWording, statusMapAnswer } from '../../app.js';
+import { normalizeStatusWording, relayedWordingStage, statusMapAnswer } from '../../app.js';
 import { seventeenTrackEvent } from '../../providers/seventeentrack/events.js';
 import { event } from '../../providers/shared/result.js';
 import { statusMap as universal } from '../../providers/status.js';
@@ -25,6 +25,16 @@ describe('status map answers', () => {
     expect(normalizeStatusWording(long)).toBe(`${'a'.repeat(499)} `);
     // Stored wording can be asked again as it is.
     expect(normalizeStatusWording('parcel handed to dpd')).toBe('parcel handed to dpd');
+  });
+
+  it('reads a relayed wording by a carrier\'s map only where the map reads wording without a code whole', () => {
+    expect(relayedWordingStage('spring-gds', 'Driver is en route')).toBe('out_for_delivery');
+    expect(relayedWordingStage('spring-gds', 'Example wording')).toBeUndefined();
+    // Royal Mail's map reads such wording by keywords: asked, it would read a redelivery request as an acceptance.
+    expect(answer('royal-mail', null, 'Delivery request received')).toEqual(mapped('accepted'));
+    expect(relayedWordingStage('royal-mail', 'Delivery request received')).toBeUndefined();
+    expect(relayedWordingStage('unknown', 'Driver is en route')).toBeUndefined();
+    expect(relayedWordingStage('example-carrier', 'Driver is en route')).toBeUndefined();
   });
 
   it("answers DPD's codes, and the codes and labels it leaves unmapped on purpose", () => {

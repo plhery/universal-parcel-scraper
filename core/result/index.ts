@@ -45,6 +45,8 @@ export interface CarrierEvent extends JsonObject {
   /** Explicit map, wording rule, or unresolved fallback used by the adapter. */
   stage_source?: string;
   provider_code?: string;
+  /** The carrier a universal provider says reported the scan, by the name the provider gives it (`carrierIdFromName`). */
+  reporting_carrier?: string;
   /**
    * Where the carrier itself puts the scanning facility, when it says so. The
    * map uses it only where it agrees with the town in `location`.

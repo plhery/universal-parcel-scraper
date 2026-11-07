@@ -166,7 +166,13 @@ capture failure.
   in every zone, up to UTC+14.
 - The services that reported the scans (`ds`) are the reply's carrier names, hints as other
   providers' are ([providers](../README.md)): a single catalog carrier among them, such as
-  Raben, is the `discovered_carrier` even where no detection rule claims the number.
+  Raben, is the `discovered_carrier` even where no detection rule claims the number. Each
+  scan names its service in `reporting_carrier`. Postal Ninja relays the service's wording
+  without its code, so a scan is staged by that carrier's map where the map reads wording
+  whole (`relayedWordingStage()`), as PostNL's domestic labels are: the shared rules read
+  "Driver is en route" as in transit. A map that reads such wording by keywords is not
+  asked, since Royal Mail's would read a redelivery request after a missed delivery as an
+  acceptance. Other scans go through the wording rules every provider applies.
 - `track.toAddress` is never read. At most 1000 events.
 
 ## Rejected approaches

@@ -892,6 +892,17 @@ function carrierStatusMap(carrier: string): CarrierStatusMap | undefined {
  * `mapped` with the stage the providers' reading gives it, as the sync does,
  * and `unknown` when neither its code nor a rule stages it.
  */
+/**
+ * The stage a carrier's map gives a scan a universal provider relays under the carrier's name, keeping its
+ * wording and dropping its code. Only a map that reads such a wording whole answers (`wholeWording`): a keyword
+ * reading can mistake a relayed sentence, as Royal Mail's reads a redelivery request as an acceptance.
+ */
+export function relayedWordingStage(carrier: string, description: string): Stage | undefined {
+  const map = carrier === UNIVERSAL_CARRIER ? undefined : carrierStatusMap(carrier);
+  const wording = normalizeStatusWording(description);
+  return map?.wholeWording && wording ? map.stage(null, wording) : undefined;
+}
+
 export function statusMapAnswer(observed: ObservedStatus): StatusMapAnswer {
   const map = carrierStatusMap(observed.carrier);
   const wording = normalizeStatusWording(observed.description);

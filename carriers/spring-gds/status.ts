@@ -114,7 +114,7 @@ export function postNLCode(status: string, category: unknown): string {
  * What the map says about one scan. An international scan stored with its category is staged by
  * that category, its label (the stored wording) and its status number, as the adapter stages it.
  * A domestic observation, or an international scan stored with its status number alone, is read by the
- * domestic tracker's labels.
+ * domestic tracker's labels, whole, as a universal provider relays them under PostNL's name.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
@@ -122,4 +122,5 @@ export const statusMap: CarrierStatusMap = {
     return category === undefined ? postNLDomesticStage(wording) : postNLStatus(category, wording, status)?.stage;
   },
   gaps: [],
+  wholeWording: true,
 };

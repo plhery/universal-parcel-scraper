@@ -425,6 +425,11 @@ which put their own vocabulary around the shared language rules. A scan neither 
 nor a rule stages is `unknown`, except notices that are no scan, such as Chronopost's notice
 to the recipient or SEUR's delay, which are left out on purpose. After a release the app can ask it about every open review entry and close
 those the map now stages or leaves out on purpose, under the version it runs.
+A provider that names the service behind each scan, as Postal Ninja does (`reporting_carrier`),
+stages the scan by that carrier's map when the map declares that it reads wording without a code
+whole (`wholeWording`), with the source `carrier_map` (`relayedWordingStage()`). A map that reads
+such wording by keywords is left out: a relayed sentence can carry its words in another sense.
+The `unknown` map cannot tell those scans apart, so it can read them otherwise.
 
 Some carrier categories cover several milestones. Exact carrier labels refine those cases;
 explanatory reasons and future delivery instructions do not establish a new milestone.

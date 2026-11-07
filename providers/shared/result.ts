@@ -13,7 +13,7 @@ import { trackingLanguageStage } from '../../core/status/index.js';
 import { countryCode, countryKeepsOffset, usStateTimeZone } from '../../core/time/index.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from './china.js';
 import { deliveryForecastRemainder, nonterminalEnglishReturn } from '../../core/status/language.js';
-import type { Stage } from '../../generated/catalog.js';
+import { STAGES as CATALOG_STAGES, type Stage } from '../../generated/catalog.js';
 import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
@@ -648,7 +648,9 @@ function describe(description: unknown, stage?: unknown): { description: string;
   const label = sunYouWording(relayedNotice(text(description)).replace(CLEARANCE_STATUS, ''));
   if (!label || isNotice(label) || flightToCome(label) || SCHEDULE.test(label) || BARE_TIME.test(label)
     || EMPTY_LABEL.test(label)) return null;
-  const declared = typeof stage === 'string' && Object.hasOwn(STAGES, stage) ? STAGES[stage] : undefined;
+  // A provider's name for the stage (InTransit), or a catalog stage a carrier's map gave the scan.
+  const declared = typeof stage !== 'string' ? undefined : Object.hasOwn(STAGES, stage) ? STAGES[stage]
+    : (CATALOG_STAGES as readonly string[]).includes(stage) ? stage as Stage : undefined;
   // Established source semantics (e.g. handoff/negation) remain first. A real
   // provider stage outranks the new intuitive translation fallback.
   const classified = classifyEvent(label, declared);

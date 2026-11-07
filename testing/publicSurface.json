@@ -312,6 +312,7 @@
       "parcelTrackingLinks",
       "parcelTrackingNumbers",
       "recognitionAskedCarriers",
+      "relayedWordingStage",
       "resultTimezone",
       "sameInstantIdentityPolicy",
       "statusMapAnswer",

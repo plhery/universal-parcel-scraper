@@ -21,8 +21,10 @@ describe('Postal Ninja result parsing', () => {
     expect(parsed).toMatchObject({ status: 'delivered', current_stage: 'delivered', tracking_provider: 'Postal Ninja' });
     // Wall-clock scans never fabricate a UTC instant, so the summary has no last_update.
     expect(parsed.last_update).toBeNull();
-    expect(parsed.events?.[0]).toEqual({ local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:provider' });
-    expect(parsed.events?.[1]).toEqual({ local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery', stage_source: 'wording:provider' });
+    expect(parsed.events?.[0]).toEqual({ local_time: '2026-08-17T11:17:00', description: 'Delivered', stage: 'delivered', stage_source: 'wording:provider',
+      reporting_carrier: 'DPD' });
+    expect(parsed.events?.[1]).toEqual({ local_time: '2026-08-17T07:22:00', description: 'Out for delivery', stage: 'out_for_delivery', stage_source: 'wording:provider',
+      reporting_carrier: 'DPD' });
     // An explicit offset can be persisted as a real instant.
     expect(parsed.events?.[2]).toMatchObject({ time: '2026-08-16T04:00:00.000Z', stage: 'in_transit' });
     expect(JSON.stringify(parsed)).not.toContain('PRIVATE');
@@ -66,6 +68,27 @@ describe('Postal Ninja result parsing', () => {
     const other = parsePostalNinjaResponse(withEvents([{ ds: 'Example Unlisted Courier', dt: '2026-08-12T08:00:00', dsc: 'Collected' }]), number);
     expect(other.reported_carriers).toEqual(['Example Unlisted Courier']);
     expect(other.discovered_carrier).toBeUndefined();
+  });
+
+  it('names the service behind each scan and reads its wording by that carrier\'s map where the map reads it whole', () => {
+    const scans = [
+      { ds: 'PostNL', dt: '2026-08-12T08:00:00Z', dsc: 'Shipment received by PostNL' },
+      { ds: 'PostNL', dt: '2026-08-13T08:00:00', dsc: 'Driver is en route' },
+      { ds: 'Example', dt: '2026-08-13T09:00:00', dsc: 'Driver is en route' },
+      { ds: 'Royal Mail', dt: '2026-08-14T08:00:00', dsc: 'Delivery request received' },
+    ];
+    const read = parsePostalNinjaResponse(withEvents(scans), number).events?.map(({ stage, stage_source, reporting_carrier }) =>
+      [reporting_carrier, stage, stage_source]);
+    expect(read).toEqual([
+      // Royal Mail's map reads wording without a code by keywords, which would take this redelivery request for an
+      // acceptance: the shared rules read it.
+      ['Royal Mail', 'pending', 'none'],
+      // A name outside the catalog is still named; the shared rules read its wording.
+      ['Example', 'in_transit', 'wording:language'],
+      // PostNL's domestic labels, which the shared rules read as in transit, on its wall clock and with its offset.
+      ['PostNL', 'out_for_delivery', 'carrier_map'],
+      ['PostNL', 'accepted', 'carrier_map'],
+    ]);
   });
 
   const times = (parsed: { events?: { time?: string | null; local_time?: string | null }[] }) =>

@@ -15,6 +15,8 @@ import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { ChallengeError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { carrierIdFromName } from '../../core/catalog/hints.js';
+import { relayedWordingStage } from '../../core/catalog/statusMaps.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient, TrawlScrapeResponse } from '../../core/transport/index.js';
@@ -99,6 +101,15 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // some services' wall clocks (wallClock).
   const destination = text(payload.track.destCn) || null;
   const services = new Set((rawEvents as unknown[]).map((raw) => isRecord(raw) ? text(raw.ds) : ''));
+  // The services that reported the scans are discovery hints, as other providers' carrier names. Each scan names
+  // its service (reporting_carrier), and a service in the catalog whose map reads its wording whole stages it, as
+  // the carrier's own adapter would (relayedWordingStage): Postal Ninja relays the wording without the code.
+  const hints = universalCarrierHints([...services].filter(Boolean).slice(0, 20), number);
+  const named = new Set(hints.reported_carriers);
+  const serviceStage = (service: string, description: string) => {
+    const carrier = carrierIdFromName(service);
+    return carrier ? relayedWordingStage(carrier, description) : undefined;
+  };
   const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier),
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
@@ -111,17 +122,18 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
       || !DateTime.fromISO(raw.dt, { zone: 'UTC' }).isValid) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event date');
     const service = text(raw.ds);
     const wall = wallClock(service, raw.dt, text(raw.loc));
+    const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
-      const parsed = event(wall, description);
-      if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: parsed });
+      const parsed = event(wall, description, serviceStage(service, description));
+      if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: { ...parsed, ...reporting } });
     } else {
-      const classified = classifyEvent(description);
+      const classified = classifyEvent(description, serviceStage(service, description));
       const { stage } = classified;
       if (stage !== 'delivered' && hasPrivateDeliveryDetails(description)) continue;
       // A scan's location (loc) is read only for its clock.
       const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
       scans.push({ wall, service, origin: originLeg(scan), zone: serviceZone(scan, journey),
-        event: { description: stage === 'delivered' ? 'Delivered' : description, ...classified } });
+        event: { description: stage === 'delivered' ? 'Delivered' : description, ...classified, ...reporting } });
     }
   }
   // A scan whose service's clock is unknown here borrows a zone: that of the
@@ -157,10 +169,8 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     : Date.parse(`${String(scan.local_time)}Z`) - EARLIEST_ZONE_MS) > readAt + CLOCK_SKEW_MS;
   const kept = events.filter((scan) => !after(scan));
   // Services on different clocks interleave in Postal Ninja's order. Once
-  // every scan has an instant, they are ordered by it. The services that
-  // reported the scans are discovery hints, as other providers' carrier names.
-  return { ...result(kept, SOURCE, kept.some((scan) => !scan.time)),
-    ...universalCarrierHints([...services].filter(Boolean).slice(0, 20), number) };
+  // every scan has an instant, they are ordered by it.
+  return { ...result(kept, SOURCE, kept.some((scan) => !scan.time)), ...hints };
 }
 
 export interface PostalNinjaOptions extends Omit<UniversalBrowserOptions, 'signal'> {

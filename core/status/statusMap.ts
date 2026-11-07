@@ -36,6 +36,12 @@ export interface CarrierStatusMap {
    * carries a date; undefined for any other scan.
    */
   readonly gapNote?: (code: string | null, wording: string) => string | undefined;
+  /**
+   * Whether `stage` reads a wording that comes without a code whole, as the carrier words it, rather than by
+   * keywords. A universal provider that names the carrier behind a scan then reads its wording by this map
+   * (`relayedWordingStage`).
+   */
+  readonly wholeWording?: boolean;
 }
 
 /** Lower case, single spaces and at most 500 characters: the form the app keys its observations on. */
