@@ -106,7 +106,8 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   not proposed as `discovered_carrier` when the number fails a check digit that the
   carrier's adapter verifies before any request (`ADAPTER_CHECKED_RULES` in
   [shared/hints.ts](shared/hints.ts)), whatever other carriers' rules match it, because
-  that adapter would refuse it as invalid input. The postal union's feed, which an
+  that adapter would refuse it as invalid input. Nor is FedEx for a number of any length
+  its adapter refuses, such as an 18-digit SSCC a shipper prints. The postal union's feed, which an
   aggregator lists as "UPU" or "Universal Postal Union", is not a carrier.
 - A carrier followed by its country, such as "BRT (IT)", names that carrier when the
   country keeps one clock and it is the carrier's clock or home. A brand followed by a

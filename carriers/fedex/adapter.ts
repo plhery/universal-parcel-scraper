@@ -6,7 +6,7 @@ import { DateTime } from 'luxon';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { fillPartialAnswer } from '../../core/result/partial.js';
 import { withoutShortenedScans } from '../../core/result/repeats.js';
-import { fedexBarcodeTrackingNumber, fedexGroundEconomyUspsNumber } from '../../core/detection/fedex.js';
+import { fedexGroundEconomyUspsNumber, fedexTrackedNumber } from '../../core/detection/fedex.js';
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import {
   ChallengeError,
@@ -68,17 +68,14 @@ const MAX_EVENTS_TO_RETURN = 100;
 const HOUR_MS = 3_600_000;
 
 export function normalizeFedExTrackingNumber(raw: string): string {
-  const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
-  // A scanned label barcode is tracked by the tracking number it carries.
-  const embedded = fedexBarcodeTrackingNumber(value);
-  if (embedded) return embedded;
-  // Twelve or fifteen digits, or a twenty-digit Ground Economy number. Its check
-  // digit is not enforced here: detection already ranks by it, and a number a
-  // caller insists on still reaches FedEx.
-  if (!/^(?:\d{12}|\d{15}|\d{20})$/.test(value)) {
+  // A scanned label barcode is tracked by the tracking number it carries. A
+  // Ground Economy number's check digit is not enforced here: detection already
+  // ranks by it, and a number a caller insists on still reaches FedEx.
+  const number = fedexTrackedNumber(raw);
+  if (!number) {
     throw new InvalidInputError('FedEx', 'FedEx tracking numbers must contain 12, 15 or 20 digits, or be a checksum-valid 22- or 34-digit FedEx label barcode');
   }
-  return value;
+  return number;
 }
 
 export function fedexTrackingUrl(trackingNumber: string): string {

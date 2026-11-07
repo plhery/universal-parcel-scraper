@@ -205,6 +205,12 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['FedEx'], '100000039595').discovered_carrier).toBe('fedex');
   });
 
+  it('proposes no FedEx for a length its adapter refuses before any request', () => {
+    // A shipper's synthetic 18-digit SSCC that a provider files as FedEx's.
+    expect(universalCarrierHints(['FedEx'], '340000000000000014')).toEqual({ reported_carriers: ['FedEx'] });
+    expect(universalCarrierHints(['FedEx'], '00340000000000000014').discovered_carrier).toBe('fedex');
+  });
+
   it('proposes no such carrier when another carrier claims the number with high confidence', async () => {
     // No catalog rule claims ten or twelve digits with high confidence yet. A
     // synthetic one hides the failed waybill and GLS France checks from the

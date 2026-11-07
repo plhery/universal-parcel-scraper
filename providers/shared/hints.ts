@@ -13,6 +13,7 @@ import { followsPartnerNumbers, partnerNumberOwner, tracksPartnerNumbers } from 
 import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isAmbiguousBrandName } from '../../core/catalog/hints.js';
 import { checksumFailures } from '../../core/detection/detect.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
+import { fedexTrackedNumber } from '../../core/detection/fedex.js';
 import { sharedClockZone } from '../../core/time/index.js';
 
 export { isKnownCarrierName } from '../../core/catalog/hints.js';
@@ -79,10 +80,19 @@ export const ADAPTER_CHECKED_RULES: ReadonlySet<string> = new Set([
 const NAME_CHECKED_RULES: ReadonlySet<string> = new Set(['fedex-1']);
 
 /**
+ * Carriers whose adapter refuses any number outside these shapes as invalid
+ * input before any request. Providers name FedEx for 18-digit SSCCs that
+ * shippers print, which FedEx's tracker does not know.
+ */
+const ADAPTER_NUMBERS: Readonly<Record<string, (trackingNumber: string) => boolean>> = {
+  fedex: (trackingNumber) => fedexTrackedNumber(trackingNumber) !== null,
+};
+
+/**
  * Names are hints only. A direct adapter must confirm the shipment before
  * adoption. The looked-up number resolves a bare brand name, and rules out a
- * carrier whose adapter would refuse it for a failed check digit, or whose
- * numbers all pass a check it fails. A tracker
+ * carrier whose adapter would refuse it for a failed check digit or its shape,
+ * or whose numbers all pass a check it fails. A tracker
  * that also finds parcels by their delivery partner's number ("Global Eco",
  * Evri International's tracker) names the partner whose rule claims it.
  * Several names that all map to the catalog can be one journey's legs; see
@@ -95,8 +105,9 @@ const NAME_CHECKED_RULES: ReadonlySet<string> = new Set(['fedex-1']);
 export function universalCarrierHints(raw: unknown[], trackingNumber?: string): { reported_carriers: string[]; discovered_carrier?: string } {
   const names = [...new Set(raw.filter((value): value is string => typeof value === 'string'
     && value.length <= 80 && /^[\p{L}\p{N} .&'()-]+$/u.test(value)).map((value) => value.trim()))].filter(Boolean).slice(0, 10);
-  const refused = new Set(trackingNumber ? checksumFailures(trackingNumber)
-    .filter(({ rule }) => ADAPTER_CHECKED_RULES.has(rule) || NAME_CHECKED_RULES.has(rule)).map(({ carrier }) => carrier as string) : []);
+  const refused = new Set(trackingNumber ? [...checksumFailures(trackingNumber)
+    .filter(({ rule }) => ADAPTER_CHECKED_RULES.has(rule) || NAME_CHECKED_RULES.has(rule)).map(({ carrier }) => carrier as string),
+  ...Object.keys(ADAPTER_NUMBERS).filter((carrier) => !ADAPTER_NUMBERS[carrier]!(trackingNumber))] : []);
   const fitting = trackingNumber ? detectCarrierMatch(trackingNumber).candidates as readonly string[] : [];
   const detected = new Set<string>();
   const inFull = new Set<string>();

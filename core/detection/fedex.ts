@@ -47,3 +47,14 @@ export function fedexBarcodeTrackingNumber(value: string): string | null {
   if (isValidFedEx1DBarcode(value)) return value.slice(22);
   return null;
 }
+
+/**
+ * The number FedEx's tracker is asked for: twelve or fifteen digits, a twenty-digit
+ * Ground Economy number, or the one a whole label barcode carries, with spaces, dots
+ * and dashes stripped; null for any other number, which FedEx's adapter refuses before
+ * any request. FedEx issues no other length: an 18-digit SSCC is the shipper's.
+ */
+export function fedexTrackedNumber(raw: string): string | null {
+  const value = raw.toLocaleUpperCase('en-US').replace(/[\s.-]/g, '');
+  return fedexBarcodeTrackingNumber(value) ?? (/^(?:\d{12}|\d{15}|\d{20})$/.test(value) ? value : null);
+}
