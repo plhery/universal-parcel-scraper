@@ -134,6 +134,18 @@ const clockDay = (event: CarrierEvent) => {
   return typeof clock === 'string' ? /^\d{4}-\d{2}-\d{2}/.exec(clock)?.[0] ?? '' : '';
 };
 
+/**
+ * The coming Monday that "Livraison prévue lundi prochain" (IS) plans the delivery for. Chronopost writes it
+ * after the delivery depot's Saturday sort. From Friday to Sunday "lundi prochain" can only be the coming
+ * Monday; earlier in the week it could be a week later, so the scan names no day.
+ */
+function nextMonday(code: string, description: string, event: CarrierEvent): string | undefined {
+  if (code !== 'IS' || description.trim().toLowerCase() !== 'livraison prévue lundi prochain') return undefined;
+  const day = clockDay(event);
+  const date = day ? DateTime.fromISO(day, { zone: 'UTC' }) : null;
+  return date?.isValid && date.weekday >= 5 ? date.plus({ days: 8 - date.weekday }).toISODate() ?? undefined : undefined;
+}
+
 /** Stages on the way to a planned delivery. */
 const ONGOING = new Set<Stage>(['pending', 'registered', 'accepted', 'in_transit', 'customs', 'out_for_delivery']);
 /** How soon a scan written again is the same scan. */
@@ -222,6 +234,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     };
     const mapped = chronopostStage(code, description);
     return { event, mapped, notification: isChronopostNotification(description), index, redelivery,
+      monday: nextMonday(code, description, event),
       appointment: start === undefined && end === undefined ? undefined : appointmentWindow(start ?? '', end ?? ''),
       dropOff: isPickupDropOff(code, description), returnStart: isReturnToSender(code, description),
       otherPoint: isOtherPickupPoint(code, description),
@@ -260,13 +273,14 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
     scan.event.stage = kept ? stage : mapped.stage;
     scan.event.stage_source = kept ? 'none' : mapped.source;
   }
-  // The newest scan that names a redelivery day or an appointment window
-  // decides, even when its value is unreadable; a redelivery day replaces the
-  // window on the same scan. A later scan that is not progress towards that
-  // delivery, or that falls after its last day, ends it.
+  // The newest scan that names a redelivery day, an appointment window or the
+  // coming Monday decides, even when its value is unreadable; a redelivery day
+  // replaces the window on the same scan. A later scan that is not progress
+  // towards that delivery, or that falls after its last day, ends it.
   let promised: WindowEstimate | null = null;
   for (const scan of projected) {
     if (scan.redelivery !== undefined) promised = scan.redelivery ? { expected_delivery: scan.redelivery } : null;
+    else if (scan.monday) promised = { expected_delivery: scan.monday };
     else if (scan.appointment !== undefined) promised = scan.appointment;
     else if (promised && (clockDay(scan.event) > (promised.expected_delivery ?? '').slice(0, 10)
       || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {

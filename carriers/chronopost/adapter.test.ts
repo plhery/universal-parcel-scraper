@@ -301,6 +301,20 @@ describe('Chronopost direct tracking', () => {
     }
   });
 
+  it('plans the delivery for the coming Monday from a weekend "lundi prochain" until Monday passes', () => {
+    // 27 June 2026 is a Saturday.
+    const sorted = scan('SD', '2026-06-27T04:46:04+02:00', "Tri effectué dans l'agence de distribution");
+    const monday = scan('IS', '2026-06-27T04:47:04+02:00', 'Livraison prévue lundi prochain');
+    expect(parseChronopostTrackingXml(history(sorted, monday), number)).toMatchObject({ current_stage: 'in_transit', expected_delivery: '2026-06-29' });
+    const round = scan('TA', '2026-06-29T07:05:00+02:00', 'Colis en cours de livraison par le livreur');
+    expect(parseChronopostTrackingXml(history(sorted, monday, round), number)).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-06-29' });
+    const tuesday = scan('SD', '2026-06-30T06:25:00+02:00', "Tri effectué dans l'agence de distribution");
+    expect(parseChronopostTrackingXml(history(sorted, monday, tuesday), number).expected_delivery).toBeNull();
+    // Early in the week "lundi prochain" could be a week on: no day.
+    const midweek = scan('IS', '2026-06-30T06:26:00+02:00', 'Livraison prévue lundi prochain');
+    expect(parseChronopostTrackingXml(history(tuesday, midweek), number).expected_delivery).toBeNull();
+  });
+
   it('keeps both days of an appointment across two days until its last day passes', () => {
     const twoDays = { 'Début créneau RDV': '27/06/2026 08:00', 'Fin créneau RDV': '28/06/2026 18:00:00' };
     const booked = scan('DC', '2026-06-26T18:00:00+02:00', "Colis en cours de préparation chez l'expéditeur", twoDays);

@@ -194,7 +194,7 @@
       "code": "IS",
       "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "Chronopost trackSkybillV2; code mapping requires matching wording.",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Written after the delivery depot's Saturday sort: from Friday to Sunday it plans the delivery for the coming Monday, which becomes the expected delivery.",
       "wording": "Livraison prévue lundi prochain",
       "language": "fr"
     },
