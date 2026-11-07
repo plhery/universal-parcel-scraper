@@ -587,6 +587,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // Helthjem sending a home delivery on to a pickup point, as Ship24 relays it: the parcel prepared for
   // the pickup point, and sorted again before it goes there.
   if (/^pakken (?:din )?behandles for sending til (?:et )?hentested[.!]?$|^pakken sorteres pa nytt før den sendes til (?:et )?hentested[.!]?$/i.test(value)) return 'in_transit';
+  // Poczta Polska's Polish rows as providers relay them without the code: the transport (P_PZL), the departure from
+  // Poland (P_WYPL) and the receipt in the destination country, all in transit as its map reads its codes.
+  if (/^przesyłka w transporcie[.!]?$|^wysłanie przesyłki z polski[.!]?$|^przyjeta w kraju przeznaczenia[.!]?$/i.test(value)) return 'in_transit';
   // A cross-border line's pallet scanned at a warehouse on its way, and the parcel cleared at the second of its customs
   // release, as Ship24 relays them.
   if (/^pallet scan event at warehouse[.!]?$|^parcel has been cleared[.!]?$/i.test(value)) return 'in_transit';

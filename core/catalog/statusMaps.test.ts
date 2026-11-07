@@ -1667,6 +1667,8 @@ describe("universal providers' answers", () => {
       ['Airline received【Example】', 'in_transit'], ['Airline received', 'in_transit'],
       // Helthjem sending a home delivery on to a pickup point, as Ship24 relays it.
       ['Pakken din behandles for sending til hentested.', 'in_transit'], ['Pakken sorteres på nytt før den sendes til et hentested.', 'in_transit'],
+      // Poczta Polska's Polish rows, relayed without the code.
+      ['Przesyłka w transporcie', 'in_transit'], ['Wysłanie przesyłki z Polski', 'in_transit'], ['Przyjęta w kraju przeznaczenia', 'in_transit'],
       // A cross-border line's pallet scan and customs release, as Ship24 relays them.
       ['Pallet scan event at warehouse', 'in_transit'], ['Parcel has been cleared', 'in_transit'],
       ['Instruction data transmitted to DPD', 'registered'], ['Order confirmed.', 'registered'], ['Order received successfully', 'registered'],
@@ -1843,7 +1845,8 @@ describe("universal providers' answers", () => {
       // A store receipt that is a drop-off or a collection, and a retailer's order sent to its store.
       'Received at Example Store', 'Your order has been shipped from Example center to the store',
       'The shipment was taken care of at the post office by the sender', 'The shipment is on delivery hold',
-      'Parcel has been cleared for return', 'Pallet scan event at warehouse for return']) {
+      'Parcel has been cleared for return', 'Pallet scan event at warehouse for return', 'Wysłanie przesyłki z Polski wstrzymane',
+      'Przyjęta w kraju przeznaczenia do zwrotu']) {
       expect(answer('unknown', null, wording), wording).toEqual(unknown);
     }
   });
