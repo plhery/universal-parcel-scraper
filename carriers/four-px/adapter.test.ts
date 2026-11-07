@@ -251,7 +251,7 @@ describe('4PX result projection', () => {
     ['FPX_O_IRI', 'Picked up by shipping partner, usps awaiting item', 'in_transit', 'accepted', 'wording:language'],
     ['FPX_O_IR', 'Order data transmitted', 'pending', 'registered', 'carrier_map'],
     // iMile's order and its hand-over to iMile's regional centre, which 4PX relays with and without a code.
-    ['FPX_O_IR', 'Order Submited.', 'pending', 'registered', 'wording:language'],
+    ['FPX_O_IR', 'Order Submited.', 'pending', 'registered', 'carrier_map'],
     ['', 'Shipment delivered to iMile RDC or lastmile vendor', 'in_transit', 'in_transit', 'carrier_map'],
     ['FPX_I_CP', 'Customs clearance in progress.', 'in_transit', 'customs', 'carrier_map'],
     ['FPX_D_SASPS', 'Parcel was handed over to pickup parcel shop_shop', 'out_for_delivery', 'ready_for_pickup', 'carrier_map'],
@@ -331,6 +331,7 @@ describe('4PX result projection', () => {
     expect(statusMap.stage('FPX_O_IR', 'manifest created')).toBe('in_transit');
     expect(statusMap.stage('FPX_O_IR', 'parcel arrival notified')).toBe('registered');
     expect(statusMap.stage('FPX_O_IR', 'shipment info received')).toBe('registered');
+    expect(statusMap.stage('FPX_O_IR', 'order submited.')).toBe('registered');
     expect(statusMap.stage(null, 'shipment info received')).toBe('registered');
     expect(statusMap.stage(null, 'export customs clearance started')).toBe('customs');
     expect(statusMap.stage('FPX_NEW', 'manifest created')).toBeUndefined();
