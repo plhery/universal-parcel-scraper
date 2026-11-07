@@ -384,6 +384,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "ptt": 400,
   "pullman-cargo": 638,
   "purolator": 560,
+  "qatar-post": 563,
   "quantium-solutions": 809,
   "quick-rabbit": 68,
   "qwintry": 707,

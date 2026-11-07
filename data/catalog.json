@@ -38494,6 +38494,7 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "qatar-post",
+      "recognitionRank": 563,
       "localClocks": true
     },
     "canaryUrl": "https://www.qatarpost.qa/TrackAndTrace",
@@ -38511,7 +38512,14 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^EM\\d{9}QA$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
+      }
+    ]
   },
   "qls-quince": {
     "displayName": "QLS",

@@ -20,10 +20,14 @@ an estimate. A stated larger history count or a newer summary keeps the answer i
 enabled providers can fill it. Recognized physical scan codes can stage a shipment whose
 workflow summary is unclassified; record-entry actions alone do not establish movement.
 
-Qatar is a destination-post lookup candidate for S10 mail. This does not change issuer
-detection or claim every foreign postal item. There is no broad recognition rule; a provider
-hint alone does not schedule a direct preflight query. The retained public sample proves
-retrieval, and is too old to prove recent recognition settlement.
+Checksum-valid `EM…QA` identifiers offer Qatar as an HTTP recognition candidate. The guest
+lookup must confirm the whole number and satisfy the shared activity-age policy before
+recognition assigns it. The checksum alone keeps the international-postal detection; other
+Qatar-issued service indicators have no recognition rule.
+
+Qatar is also a destination-post lookup candidate for S10 mail. Foreign issuers keep their
+detection, and a provider hint alone does not schedule a direct preflight query. The retained
+public sample proves retrieval, and is too old to prove recent recognition settlement.
 
 The website link stays on the public TrackAndTrace page. That page uses reCAPTCHA v3 and can
 refuse a fresh token; the native adapter uses the separate mobile guest route.

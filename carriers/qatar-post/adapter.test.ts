@@ -5,6 +5,7 @@ import { normalizeQatarPostNumber, parseQatarPost, parseQatarPostResponse } from
 import { deliveryHandoff, hasDirectHandoffAdapter } from '../../core/catalog/handoff.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { createTracker } from '../../facade/index.js';
 
 const NUMBER = 'RH904826153GB', OTHER = 'RH904826153QA';
 const scan = (event_code = 'QPS0288', event_name_en = 'Picked up by Customer', date_time = '06/07/2026 10:20:30') => ({
@@ -20,6 +21,13 @@ const fixture = () => ({ trackingNumber: NUMBER, orderAWBNumber: NUMBER, custome
       scan('QPS0063', 'Item Returned to customs', '06/06/2026 09:00:00'), scan(),
     ],
   }] } });
+const ISSUED = 'EM' + NUMBER.slice(2, 11) + 'QA';
+const issuedFixture = () => {
+  const data = fixture();
+  data.trackingNumber = ISSUED; data.orderAWBNumber = ISSUED;
+  data.otherDetails.response[0]!.line_item_dtls.tracking_number = ISSUED;
+  return data;
+};
 afterEach(() => { vi.useRealTimers(); });
 
 describe('Qatar Post guest history', () => {
@@ -156,12 +164,68 @@ describe('Qatar Post guest transport and routing', () => {
     expect(limited).toHaveBeenCalledTimes(1);
   });
 
-  it('does not claim foreign postal issuers, and offers Qatar only as a confirmed-destination handoff candidate', () => {
+  it('preserves foreign postal issuers and offers Qatar for confirmed-destination handoffs', () => {
     expect(detectCarrierMatch(NUMBER).carrier).not.toBe('qatar-post');
     expect(recognitionAskedCarriers(NUMBER, { hint: 'qatar-post' })).not.toContain('qatar-post');
     expect(deliveryHandoff('royal-mail', NUMBER, { destination_country: 'QA' })).toEqual({ carrier: 'qatar-post', number: NUMBER, basis: 'destination' });
     expect(deliveryHandoff('royal-mail', NUMBER, {}, 'QA')?.carrier).toBe('qatar-post');
     expect(hasDirectHandoffAdapter('qatar-post', 'LOCAL12345')).toBe(false);
+  });
+
+  it('offers its observed issued EMS shape for HTTP confirmation without assigning an issuer from its checksum', () => {
+    expect(detectCarrierMatch(ISSUED)).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
+    expect(recognitionAskedCarriers(ISSUED)[0]).toBe('qatar-post');
+    expect(recognitionAskedCarriers(ISSUED.toLowerCase())).toContain('qatar-post');
+    expect(recognitionAskedCarriers(ISSUED, { phase: 'browser' })).not.toContain('qatar-post');
+    for (const number of [OTHER, 'CP' + ISSUED.slice(2), 'EM' + NUMBER.slice(2), ISSUED.slice(0, 10) + '0QA']) {
+      expect(recognitionAskedCarriers(number, { hint: 'qatar-post' })).not.toContain('qatar-post');
+    }
+  });
+
+  it('confirms recent issued history before a normal lookup and keeps old history from settling recognition', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-06-08T12:00:00Z'));
+    let reads = 0;
+    const fetcher = vi.fn(async (url: string | URL | Request, init?: RequestInit) => {
+      const target = new URL(String(url));
+      if (target.origin !== new URL(QATAR_GUEST_TRACKING).origin) throw new Error('Unrelated candidate has no fixture');
+      expect(target.href).toBe(QATAR_GUEST_TRACKING + ISSUED);
+      expect(init?.signal).toBeInstanceOf(AbortSignal); reads++;
+      return Response.json(issuedFixture());
+    }) as unknown as typeof fetch;
+    const tracker = createTracker({ providers: [], fetcher });
+    expect(await tracker.recognize(ISSUED)).toMatchObject({ carrier: 'qatar-post', asked: expect.arrayContaining(['qatar-post']) });
+    expect(reads).toBe(1);
+    const answer = await tracker.track({ number: ISSUED });
+    expect(answer).toMatchObject({ carrier: 'qatar-post', source: 'qatar-post', result: { status: 'delivered' } });
+    expect(answer.result.events).toHaveLength(3);
+    expect(reads).toBe(3);
+    vi.setSystemTime(new Date('2026-10-01T12:00:00Z'));
+    const old = await tracker.recognize(ISSUED);
+    expect(old.asked).toContain('qatar-post');
+    expect(old).not.toHaveProperty('carrier');
+  });
+
+  it('keeps missing, refused and malformed issued lookups distinct during recognition', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date('2026-06-08T12:00:00Z'));
+    for (const [status, body, failed] of [
+      [404, `Order with tracking number : ${ISSUED} Does not exist`, false],
+      [400, JSON.stringify({ message: 'Invalid token' }), true],
+      [403, 'Forbidden', true],
+      [429, 'Too many requests', true],
+      [200, '<h1>Request Rejected</h1>', true],
+      [200, JSON.stringify(fixture()), true],
+    ] as const) {
+      let reads = 0;
+      const fetcher = (async (url: string | URL | Request) => {
+        if (!String(url).startsWith(QATAR_GUEST_TRACKING)) throw new Error('Unrelated candidate has no fixture');
+        reads++; return new Response(body, { status });
+      }) as typeof fetch;
+      const answer = await createTracker({ providers: [], fetcher }).recognize(ISSUED);
+      expect(reads).toBe(1);
+      expect(answer.asked).toContain('qatar-post');
+      expect(answer.unanswered.includes('qatar-post')).toBe(failed);
+      expect(answer).not.toHaveProperty('carrier');
+    }
   });
 
   it('cancels before any request', async () => {

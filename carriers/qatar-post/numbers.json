@@ -19,6 +19,18 @@
         "carrier": "royal-mail",
         "confidence": "high"
       }
+    },
+    {
+      "number": "EM904826153QA",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-07",
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Made-up Qatar-issued EMS identifier with the UPU S10 check digit."
     }
   ]
 }

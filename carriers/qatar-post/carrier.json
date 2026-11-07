@@ -23,6 +23,9 @@
       "direct",
       "retry"
     ],
+    "recognition": {
+      "rank": 563
+    },
     "localClocks": true
   },
   "capabilities": [
@@ -71,5 +74,13 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "qatar-post-ems-s10",
+      "pattern": "^EM\\d{9}QA$",
+      "confidence": "low",
+      "checksum": "s10",
+      "preferred": true
+    }
+  ]
 }

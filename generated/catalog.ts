@@ -38498,6 +38498,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "qatar-post",
+      "recognitionRank": 563,
       "localClocks": true
     },
     "canaryUrl": "https://www.qatarpost.qa/TrackAndTrace",
@@ -38515,7 +38516,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^EM\\d{9}QA$",
+        "confidence": "low",
+        "checksum": "s10",
+        "preferred": true
+      }
+    ]
   },
   "qls-quince": {
     "displayName": "QLS",
@@ -54066,7 +54074,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "puntopost": [],
   "pushpak-courier": [],
   "pxc-pacific": [],
-  "qatar-post": [],
+  "qatar-post": ["qatar-post-ems-s10"],
   "qls-quince": [],
   "quality-post": [],
   "quantium-solutions": [],
