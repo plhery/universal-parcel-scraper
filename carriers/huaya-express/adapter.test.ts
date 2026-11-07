@@ -6,6 +6,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter, HuayaTracker } from './adapter.js';
 import { HUAYA_ORIGIN, parseHuayaPage, parseHuayaTrack } from './parser.js';
 import { ENTRIES, statusMap } from './status.js';
@@ -155,6 +156,42 @@ describe('Huaya Express tracking adapter', () => {
     record.trackDetails.splice(0, 4);
     record.trackDetails.unshift(row('2026-11-02 13:42:00', '2026-11-02 22:33:02', 'The shipment has been sent directly from the parcel center to the business customer.'));
     expect(parseHuayaTrack(reply, NUMBER, Date.parse('2026-11-05T00:00:00Z'))).toMatchObject({ current_stage: 'delivered' });
+  });
+
+  it('dates the US delivery partner’s rows on the wall clock of the town each names', () => {
+    const reply = structuredClone(fixture('track')) as [{ data: [{ consigneeCountry: string; trackDetails: Record<string, string>[] }] }];
+    const record = reply[0].data[0];
+    const template = record.trackDetails.at(-1)!;
+    const row = (date: string, created: string, content: string, location: string) =>
+      ({ ...template, track_date: date, track_createdate: created, track_content: content, track_location: location, track_kind: '' });
+    record.consigneeCountry = 'US';
+    // Newest first. Each was written at the platform's next 4-hourly poll after its American time; on
+    // Beijing time it would have waited 14 to 17 hours, and the round would start the evening before.
+    record.trackDetails = [
+      row('2026-12-04 08:42:39', '2026-12-04 22:43:08', 'Out for Delivery', 'US, EDISON, EWR Warehouse'),
+      row('2026-12-04 00:49:20', '2026-12-04 14:43:05', 'Arrived At Warehouse', 'US, EDISON, EWR Warehouse'),
+      row('2026-12-03 23:11:42', '2026-12-04 14:43:05', 'Departed Destination Hub', 'US, CARTERET, EWR HUB'),
+      row('2026-12-03 13:41:59', '2026-12-04 06:43:03', 'Arrived at Destination Hub', 'US, CARTERET, EWR HUB'),
+      row('2026-12-02 20:31:48', '2026-12-03 10:42:05', 'Departed Origin Hub', 'US, BENSENVILLE, ORD HUB'),
+      row('2026-12-01 22:36:52', '2026-12-02 14:42:02', 'Arrived at Origin Hub', 'US, BENSENVILLE, ORD HUB'),
+      row('2026-11-23 08:45:25', '2026-11-26 14:40:06', 'US, SYSTEM, SYSTEM, Shipping Label Created', 'US, SYSTEM, SYSTEM'),
+    ];
+    const result = dateLocalClocks('huaya-express', parseHuayaTrack(reply, NUMBER, Date.parse('2026-12-04T16:00:00Z'))!);
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: '2026-12-04T08:42:39-05:00' });
+    expect(result.events!.map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis])).toEqual([
+      ['2026-12-04T08:42:39-05:00', 'America/New_York', 'place'],
+      ['2026-12-04T00:49:20-05:00', 'America/New_York', 'place'],
+      ['2026-12-03T23:11:42-05:00', 'America/New_York', 'place'],
+      ['2026-12-03T13:41:59-05:00', 'America/New_York', 'place'],
+      ['2026-12-02T20:31:48-06:00', 'America/Chicago', 'place'],
+      ['2026-12-01T22:36:52-06:00', 'America/Chicago', 'place'],
+      // The label row names no town and stays on the platform's clock.
+      ['2026-11-23T08:45:25+08:00', undefined, undefined],
+    ]);
+    for (const event of result.events!.slice(0, 6)) {
+      const wait = Date.parse(event.written_at!) - Date.parse(event.time!);
+      expect(wait > 0 && wait < 4.5 * 3_600_000, event.description).toBe(true);
+    }
   });
 
   it('holds back a row dated after the lookup', () => {

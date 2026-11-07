@@ -29,4 +29,10 @@ export const isHuayaDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wor
 /** Whether a DHL row is one from Germany, before the parcel leaves for the destination country. */
 export const isHuayaDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);
 
+// The US delivery partner's rows name the country, the town and the partner's facility: "US, BENSENVILLE, ORD HUB".
+// The destination carrier's label row at "US, SYSTEM, SYSTEM" names no town.
+const US_PLACE = /^\s*US\s*,(?!\s*SYSTEM\s*,)[^,]*[A-Z][^,]*,/i;
+/** Whether a row is the US delivery partner's, at a town in the United States, on that town's wall clock. */
+export const isHuayaUsRow = (place: string): boolean => US_PLACE.test(place);
+
 export const statusMap: CarrierStatusMap = { stage: huayaStage, gaps: [] };

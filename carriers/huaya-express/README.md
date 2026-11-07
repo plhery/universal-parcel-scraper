@@ -36,8 +36,12 @@ browser is needed.
 - DHL's "The shipment is returned to the sender" row starts the way back: a move or a delivery
   after it reads as returned. DHL's delivery "from the parcel center to the business customer" is
   then the return delivered to the sender.
-- Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
-  it; a row dated after the lookup is held back.
+- On the line into the United States the delivery partner's rows name the country, town and
+  facility ("US, BENSENVILLE, ORD HUB") and come on that town's wall clock: each is written at the
+  platform's next 4-hourly poll after its American time, where Beijing time would put the round
+  on the evening before. They keep their wall clocks, which the town dates.
+- Other scan times are wall clocks without an offset on the platform's Beijing clock and are read
+  on it; a row dated after the lookup is held back.
 - 17TRACK names the forwarder GZHY, which is kept as an alias.
 
 ## Limitations
