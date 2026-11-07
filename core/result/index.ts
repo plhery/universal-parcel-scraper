@@ -34,6 +34,8 @@ export interface CarrierEvent extends JsonObject {
   /**
    * The zone a deduced `time` reads `local_time` in, and how it was chosen:
    * `place`, `neighbour`, `destination` or `carrier` (`dateLocalClocks` in `/places`).
+   * A universal provider's copy that its adapter read on a zone, the provider stating
+   * none, names it beside its instant; `label` keeps the provider's UTC label.
    */
   time_zone?: string;
   time_zone_basis?: string;

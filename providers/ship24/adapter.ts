@@ -339,13 +339,20 @@ function upuZone(journey: Journey, scan: Record<string, unknown>, wall: string):
  * its own name. So for a parcel that crosses a border, those are all.
  * Otherwise the feed's home clock follows. Null when none of them places it.
  */
-function placedZone(journey: Journey, scan: Record<string, unknown>, wall: string, feed: Feed | null): string | null {
+function placedZone(journey: Journey, scan: Record<string, unknown>, wall: string, feed: Feed | null): Placed | null {
   const location = typeof scan.location === 'string' ? scan.location.trim() : '';
   const located = feed?.place?.(location, journey, typeof scan.status === 'string' ? scan.status : '')
     ?? locationZone(location, journey.northAmerican || northAmericanCourier(scan), feed?.country ?? null)
     ?? courierCountryZone(scan, location) ?? (journey.domestic ? countryTimeZone(journey.domestic) : null) ?? upuZone(journey, scan, wall);
-  return located || journey.international ? located : feed?.home?.(location) ?? null;
+  const home = located || journey.international ? null : feed?.home?.(location);
+  return located ? { zone: located, basis: 'place' } : home ? { zone: home, basis: 'carrier' } : null;
 }
+
+/** A zone and how it was chosen, as a carrier's deduced clock says it (`time_zone_basis`). */
+interface Placed { zone: string; basis: 'place' | 'neighbour' | 'carrier' }
+
+/** The zone, carrier's, of a clock a step other than the scan's place gives. */
+const carrierZone = (zone: string | null | undefined): Placed | null => zone ? { zone, basis: 'carrier' } : null;
 
 /**
  * For a parcel that stays in one country, the clock every courier the reply
@@ -375,7 +382,7 @@ function zoneCountry(zone: string): string | null {
 }
 
 /** A scan read so far: a wall clock, with its feed, the country it names and the zone that places it. */
-interface Reading { event: CarrierEvent; wall: string | null; feed: Feed | null; country: string | null; zone: string | null }
+interface Reading { event: CarrierEvent; wall: string | null; feed: Feed | null; country: string | null; zone: string | null; basis?: Placed['basis'] }
 
 /**
  * The zone a relabelling feed's scan borrows when nothing places it, a guess:
@@ -455,15 +462,19 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     const unnamed = feed || (forwarding && isRecord(raw.courier) && raw.courier.crawler_code === 'mainfreight-tracking');
     // Correos's copy of an origin post's scan takes that post's clock, or keeps its wall clock.
     const sent = wall ? correosOriginCopy(raw, journey) : undefined;
-    readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location),
-      zone: wall ? relayed ?? (sent !== undefined ? sent : placedZone(journey, raw, wall, feed) ?? (unnamed ? null : namedZone(journey, wall))) : null });
+    const placed = !wall ? null : carrierZone(relayed)
+      ?? (sent !== undefined ? carrierZone(sent) : placedZone(journey, raw, wall, feed) ?? (unnamed ? null : carrierZone(namedZone(journey, wall))));
+    readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location), zone: placed?.zone ?? null, basis: placed?.basis });
   }
+  // A scan the feed dated without an offset is read on a zone chosen here, which it names.
   const events = readings.map((reading): CarrierEvent => {
     const { event, wall, feed } = reading;
-    const zone = reading.zone ?? (wall && feed && !feed.walls ? borrowedZone(readings, reading, journey) ?? namedZone(journey, wall) ?? feed.own ?? null : null);
-    const instant = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
+    const borrowed = reading.zone || !wall || !feed || feed.walls ? null : borrowedZone(readings, reading, journey);
+    const chosen: Placed | null = reading.zone ? { zone: reading.zone, basis: reading.basis ?? 'carrier' }
+      : borrowed ? { zone: borrowed, basis: 'neighbour' } : wall && feed && !feed.walls ? carrierZone(namedZone(journey, wall) ?? feed.own) : null;
+    const instant = wall && chosen ? firstOccurrence(DateTime.fromISO(wall, { zone: chosen.zone })) : null;
     if (!instant?.isValid) return event;
-    const timed: CarrierEvent = { ...event, time: instant.toUTC().toISO() };
+    const timed: CarrierEvent = { ...event, time: instant.toUTC().toISO(), time_zone: chosen!.zone, time_zone_basis: chosen!.basis };
     delete timed.local_time;
     return timed;
   });

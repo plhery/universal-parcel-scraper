@@ -163,6 +163,11 @@ No account, cookie, fingerprint or issued token is used.
   relay the destination's scans under their own name. So a cross-border parcel's
   unlocated scan stays a `local_time`, which the timeline cannot place, rather than a
   guessed UTC instant. A reply made only of such scans is inconclusive.
+
+  A scan read on a zone names it in `time_zone`, and in `time_zone_basis` how it was
+  chosen: `place` (its location, its courier's country or the parcel's), `neighbour` (a
+  borrowed zone) or `carrier` (the others). A scan whose offset Ship24 gives as sent says
+  neither.
 - A scan dated without a time (GLS Italy's announcement) is left out: it has no place
   among the others.
 - ECMS dates a flight row by the flight's day alone, at midnight sharp, and Ship24 gives

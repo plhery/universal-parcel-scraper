@@ -462,7 +462,10 @@ it keeps that hour in `local_time`. Node lookups (`trackCarrier()`, `createTrack
 date such a scan on a deduced zone with `dateLocalClocks()` ([places](places/README.md#clocks)):
 its place, the leg the parcel was on, the destination the carrier delivers in, else the
 carrier's home clock. The scan keeps `local_time` and gains `time_zone` and
-`time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A zone
+`time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A
+universal provider's copy that its adapter read on a zone, the provider stating none, names the
+zone and basis beside its instant too, with `label` for a provider's UTC label it kept because
+nothing placed the scan. A zone
 that would date a scan more than a few minutes after the read is not its clock, so the scan
 keeps its wall clock alone. A scan dated by its day alone keeps that day. A universal
 provider's result lists it above the newest scan of its day at an earlier stage, else below the

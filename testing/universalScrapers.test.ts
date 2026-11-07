@@ -95,14 +95,18 @@ describe('Postal Ninja and Ship24 result parsing', () => {
     } }, number, timezone).events?.[0];
     // La Poste and its Chronopost leg keep one clock: 19:32 in Paris is 17:32 UTC.
     expect(withCouriers(['La Poste', 'Chronopost'])).toEqual({
-      time: '2026-09-11T17:32:00.000Z', description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit', stage_source: 'wording:language',
+      time: '2026-09-11T17:32:00.000Z', time_zone: 'Europe/Paris', time_zone_basis: 'carrier',
+      description: 'DEPOT CHRONOPOST, Shipment in transit', stage: 'in_transit', stage_source: 'wording:language',
     });
     // Couriers on different clocks cannot say which one scanned; the place can.
     expect(withCouriers(['Swiss Post', 'USPS'])?.local_time).toBe('2026-09-11T19:32:00');
-    expect(withCouriers(['Swiss Post', 'USPS'], { location: 'Example Hub, United Kingdom' })?.time).toBe('2026-09-11T18:32:00.000Z');
+    expect(withCouriers(['Swiss Post', 'USPS'], { location: 'Example Hub, United Kingdom' })).toMatchObject({
+      time: '2026-09-11T18:32:00.000Z', time_zone: 'Europe/London', time_zone_basis: 'place',
+    });
     // Otherwise the zone routing passes for the parcel's carrier.
     expect(withCouriers([], {}, 'Europe/Zurich')?.time).toBe('2026-09-11T17:32:00.000Z');
     // A scan that names its offset keeps it.
+    expect(withCouriers(['USPS'], { timestamp: '2026-09-11T19:32:00+02:00' }, 'America/New_York')).not.toHaveProperty('time_zone_basis');
     expect(withCouriers(['USPS'], { timestamp: '2026-09-11T19:32:00+02:00' }, 'America/New_York')?.time).toBe('2026-09-11T17:32:00.000Z');
   });
 

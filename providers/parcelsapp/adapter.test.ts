@@ -777,6 +777,18 @@ describe('ParcelsApp result parsing', () => {
     expect(time('RUSSIA: RUMOWA')).toEqual(['local 2026-10-29T19:14:00.000']);
   });
 
+  it('says how it chose the zone it read a scan on', () => {
+    const clock = (carrier: string, location?: string) => parseParcelsAppResponse({
+      carriers: [carrier], states: [{ date: '2026-10-29T19:14:00Z', status: 'Item accepted', carrier: 0, ...(location ? { location } : {}) }],
+    }, number, identity()).events?.map(({ time, time_zone, time_zone_basis }) => ({ time, time_zone, time_zone_basis }));
+    expect(clock('Universal Postal Union', 'EXAMPLE, Latvia')).toEqual([{ time: '2026-10-29T17:14:00.000Z', time_zone: 'Europe/Riga', time_zone_basis: 'place' }]);
+    expect(clock('Royal Mail')).toEqual([{ time: '2026-10-29T19:14:00.000Z', time_zone: 'Europe/London', time_zone_basis: 'carrier' }]);
+    // Nothing placed it, so it keeps ParcelsApp's label.
+    expect(clock('Universal Postal Union')).toEqual([{ time: '2026-10-29T19:14:00.000Z', time_zone: 'UTC', time_zone_basis: 'label' }]);
+    // Austrian Post's dates are its instants.
+    expect(clock('Austrian Post')).toEqual([{ time: '2026-10-29T19:14:00.000Z' }]);
+  });
+
   it('reads scans named "Evri" on Evri UK\'s London clock and proposes Evri UK', () => {
     // Live shape (2026-10-16): Evri UK's wall clocks labelled "+00:00", an hour
     // after the instants of Evri UK's own history in summer.

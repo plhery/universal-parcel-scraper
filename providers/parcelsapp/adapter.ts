@@ -1252,6 +1252,8 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const nationwide = placed === undefined && zone === null && LOCAL_CLOCK_CARRIERS.has(nameKey(name)) && (country === 'US' || country === 'CA');
   return { name, date: relay?.date ?? raw.date, zone, placed: placed ?? null, sited: sited ?? null, guessed: placed === undefined && !wallClock,
     offset, location, wallClock, nationwide, office,
+    // How the zone was chosen (`zoneBasis`), and whether the date is an instant the carrier stated.
+    basis: own === undefined && sited !== undefined ? 'place' as const : 'carrier' as const, instant: own === null,
     local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica)?.zone,
     fallback: wallClock || office ? fitsPlace(fallback, location) : null, known: known?.zone ?? null, arrival: known?.country ?? null,
     // With no zone, a scan whose label nothing vouches for keeps its wall clock.
@@ -1259,6 +1261,22 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
 }
 
 type ZoneStep = 'carrier' | 'place' | 'copy' | 'borrowed' | 'routing' | 'known' | 'labeled';
+
+/**
+ * How a scan's zone was chosen, as a carrier's deduced clock says it
+ * (`time_zone_basis`): its place, a neighbouring or copied scan, the
+ * destination's clock, or its carrier's; `label` for a date read on
+ * ParcelsApp's UTC label because nothing placed it. A date its carrier states
+ * as an instant, or with an offset, has none.
+ */
+function zoneBasis(entry: { basis: 'place' | 'carrier'; instant: boolean; offset: unknown; office: string | null; arrival: string | null; zone: string | null },
+  step: ZoneStep, zone: string | null): string | undefined {
+  if (!zone) return entry.instant || entry.offset ? undefined : 'label';
+  if (step === 'copy' || step === 'borrowed') return 'neighbour';
+  if (step === 'known') return entry.arrival ? 'destination' : 'carrier';
+  if (step === 'routing') return 'carrier';
+  return step === 'place' && !entry.zone && entry.office ? 'place' : entry.basis;
+}
 
 /**
  * The zone of each scan. One from a network that is not a wall clock keeps
@@ -1839,6 +1857,8 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
         parsed.description = english;
         if (named) parsed.location = named;
       }
+      const basis = parsed.time && !day ? zoneBasis(entry, zones[index]!.step, zone) : undefined;
+      if (basis) Object.assign(parsed, { time_zone: zone ?? 'UTC', time_zone_basis: basis });
       events.push(parsed);
       carried.push({ event: parsed, carrier: nameKey(name) });
       scanCarriers.add(name);
@@ -1963,12 +1983,15 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
   // placed scan of its network to borrow from: routing's zone, its known
   // clock or its label, else the clock its copies show, as in the JSON reply.
   const zones = rows.map(({ state }) => state.zone ?? state.fallback ?? state.known);
+  const zoneSteps = rows.map(({ state }): ZoneStep => state.zone ? 'carrier' : state.fallback ? 'routing' : state.known ? 'known' : 'labeled');
   copiedNetworkZones(rows.map(({ name, description, state, scan }, index) => {
     const wall = mislabeledWallTime(state.date);
     const text = wall ? localEvent(state.date, scan?.wording ?? description)?.description : undefined;
     return { name, key: wall && text ? `${wall}|${text}` : '', zone: zones[index]!,
       fixed: Boolean(state.offset) || relaysFacilityClock(name), location: '' };
-  })).forEach((zone, index) => { if (zone) zones[index] = zone; });
+  })).forEach((zone, index) => {
+    if (zone) [zones[index], zoneSteps[index]] = [zone, 'copy'];
+  });
   const dayOnly = dayOnlyNetworks(rows.map(({ name, state }) => ({ name, date: state.date, offset: state.offset })), true);
   const steps = new Set<CarrierEvent>();
   for (const [index, { name, description, state, scan }] of rows.entries()) {
@@ -1988,6 +2011,8 @@ export function parseParcelsAppHtml(html: string, trackingNumber: string, timezo
         : event((zone ? mislabeledLocalTime(state.date, zone)?.iso : undefined) ?? state.date, scan?.wording ?? description);
     if (parsed && guessedAhead(parsed, '', zone, timezone, readAt)) continue;
     if (parsed && scan?.location) parsed.location = scan.location;
+    const basis = parsed?.time && !day ? zoneBasis(state, zoneSteps[index]!, zone) : undefined;
+    if (parsed && basis) Object.assign(parsed, { time_zone: zone ?? 'UTC', time_zone_basis: basis });
     if (parsed) events.push(parsed);
     if (parsed) carried.push({ event: parsed, carrier: nameKey(name) });
     if (parsed && step) steps.add(parsed);

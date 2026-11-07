@@ -351,6 +351,20 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(feed('example-tracking', 'Example Courier', [['2026-10-10T12:43:21-05:00', 'EXAMPLE TOWN ON']])).toEqual(['2026-10-10T17:43:21.000Z']);
   });
 
+  it('says how it chose the zone it read a scan on, and gives an offset the feed sent none', () => {
+    const clocks = (crawler: string, name: string, scans: [string, string | undefined][]) => {
+      const courier = { crawler_code: crawler, translation: { name } };
+      return parseShip24Response({ data: { tracking_number: number, couriers: [{ translation: { name } }],
+        events: scans.map(([timestamp, location], index) => ({ timestamp, location, status: `Scan ${index}`, courier })) } }, number)
+        .events!.map(({ time, time_zone, time_zone_basis }) => ({ time, time_zone, time_zone_basis }));
+    };
+    expect(clocks('canada-post-tracking', 'Canada Post', [['2026-10-10T12:43:21-05:00', 'EXAMPLE TOWN ON'], ['2026-10-03T11:28:48-05:00', undefined]])).toEqual([
+      { time: '2026-10-10T16:43:21.000Z', time_zone: 'America/Toronto', time_zone_basis: 'place' },
+      { time: '2026-10-03T15:28:48.000Z', time_zone: 'America/Toronto', time_zone_basis: 'neighbour' },
+    ]);
+    expect(clocks('example-tracking', 'Example Courier', [['2026-10-10T12:43:21-05:00', 'EXAMPLE TOWN ON']])).toEqual([{ time: '2026-10-10T17:43:21.000Z' }]);
+  });
+
   it('reads the destination post\'s scans Swiss Post\'s feed relays on that office\'s clock, under Swiss Post\'s offset', () => {
     // UPU has China's arrival at 08:15 in Beijing; Swiss Post's own scans keep their offset.
     const scans: [string, string | undefined, string][] = [['2026-09-04T06:21:49+02:00', undefined, 'Enquiry initiated'],

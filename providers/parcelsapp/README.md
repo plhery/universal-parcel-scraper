@@ -134,7 +134,11 @@ step exists for future protocol changes.
   digits of EMS's at "Sydney". Copies on different clocks give none.
 
   With no zone, an offset is taken as given, which for the carriers whose dates are never
-  instants (Wall clocks below) is only the last guess. Steps 3 and 4 choose a zone only:
+  instants (Wall clocks below) is only the last guess.
+  A scan read on a zone names it in `time_zone`, and in `time_zone_basis` the step that
+  chose it: `place` (step 2), `neighbour` (a copy or a borrowed zone), `destination` (a known
+  clock in the destination) or `carrier` (the others). One that keeps ParcelsApp's UTC label
+  because nothing placed it says `label`; a carrier's instant or offset says neither. Steps 3 and 4 choose a zone only:
   `carrierIdFromName` still treats these brands as ambiguous, so discovery and routing
   are unchanged.
 
