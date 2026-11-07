@@ -107,6 +107,8 @@ describe('Correos Spain response parsing', () => {
       ['B170000V', 'in_transit', 'customs'],
       ['E510000V', 'in_transit', 'in_transit'],
       ['E500000V', 'in_transit', 'customs'],
+      ['E040000V', 'in_transit', 'customs'],
+      ['E050000V', 'in_transit', 'in_transit'],
       ['E819300V', 'in_transit', 'customs'],
       ['E508700V', 'in_transit', 'customs'],
       ['E134630V', 'in_transit', 'customs'],
