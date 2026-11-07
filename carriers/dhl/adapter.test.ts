@@ -160,8 +160,41 @@ describe('DHL public tracking normalization', () => {
       { datum: '2026-08-11T15:04:25+02:00', status: 'The recipient could not be found at the address on the shipment.' },
       { datum: '2026-08-11T15:04:26+02:00', status: 'Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.' });
     const result = parseDHLTrackingResponse(payload, NUMBER);
-    expect(result).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Delivery not possible' });
-    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['exception', 'failed_attempt']);
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Delivery not possible', expected_delivery: null });
+    expect(result.events?.slice(0, 2).map((event) => event.stage)).toEqual(['returned', 'failed_attempt']);
+  });
+
+  it('reads the moves after the latest return start as the way back, until a round or a failed attempt ends it', () => {
+    const returnStart = 'Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.';
+    const rounds = [
+      { datum: '2026-08-11T08:04:31+02:00', status: 'The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.' },
+      { datum: '2026-08-11T15:04:25+02:00', status: 'The recipient could not be found at the address on the shipment.' },
+      { datum: '2026-08-11T15:04:26+02:00', status: returnStart },
+      { datum: '2026-08-11T18:39:57+02:00', status: 'The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.' },
+      { datum: '2026-08-12T08:58:33+02:00', status: 'The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.' },
+      { datum: '2026-08-12T12:37:35+02:00', status: returnStart },
+    ];
+    const read = (...after: { datum: string; status: string }[]) => {
+      const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
+      const last = after.at(-1) ?? rounds.at(-1)!;
+      const payload = shipment({ sendungsverlauf: { ...timeline, status: last.status, datumAktuellerStatus: last.datum },
+        zustellung: { zustellzeitfensterVon: '2026-08-14T10:45:00+02:00', zustellzeitfensterBis: '2026-08-14T13:45:00+02:00' } });
+      payload.sendungen[0]!.sendungsdetails.sendungsverlauf.events.push(...rounds, ...after);
+      return parseDHLTrackingResponse(payload, NUMBER);
+    };
+    const origin = { datum: '2026-08-13T15:37:44+02:00', status: 'The shipment has been processed in the parcel center of origin' };
+    const back = read(origin);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'returned', expected_delivery: null,
+      last_status_text: 'The shipment has been processed in the parcel center of origin' });
+    expect(back).not.toHaveProperty('expected_delivery_from');
+    // The return started the day before went to the recipient again: its move keeps its stage.
+    expect(back.events?.slice(0, 5).map((event) => event.stage)).toEqual(['returned', 'returned', 'out_for_delivery', 'in_transit', 'returned']);
+    // A round after the return ends it, and so does a failed attempt.
+    const round = read(origin, { datum: '2026-08-14T08:10:00+02:00', status: 'The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.' });
+    expect(round).toMatchObject({ current_stage: 'out_for_delivery', expected_delivery: '2026-08-14T13:45:00+02:00' });
+    expect(round.events?.slice(0, 2).map((event) => event.stage)).toEqual(['out_for_delivery', 'in_transit']);
+    const attempt = read(origin, { datum: '2026-08-14T15:00:00+02:00', status: 'The recipient could not be found at the address on the shipment.' });
+    expect(attempt.events?.slice(0, 2).map((event) => event.stage)).toEqual(['failed_attempt', 'in_transit']);
   });
 
   it('keeps the correct event order, stages and dates without private recipient data', () => {
@@ -268,15 +301,16 @@ describe('DHL public tracking normalization', () => {
     ['The shipment was handed over to DHL.', 'accepted', 'in_transit'],
     ['The shipment has been posted by the sender at the retail outlet', 'accepted', 'in_transit'],
     ['The shipment is being prepared for delivery in the delivery depot', 'in_transit', 'in_transit'],
-    ['The shipment is returning to sender', 'exception', 'exception'],
+    ['The shipment is returning to sender', 'returned', 'exception'],
     ['The recipient has not picked up the shipment from the retail outlet within the seven-day storage period', 'exception', 'exception'],
     ['Der Empfänger hat die Sendung innerhalb der siebentägigen Lagerfrist nicht in der Filiale abgeholt.', 'exception', 'exception'],
-    ['Die Sendung wurde nicht abgeholt und wird zurückgesandt.', 'exception', 'exception'],
-    ['Die Sendung befindet sich auf dem Weg zurück zum Absender.', 'exception', 'exception'],
+    ['Die Sendung wurde nicht abgeholt und wird zurückgesandt.', 'returned', 'exception'],
+    ['Die Sendung befindet sich auf dem Weg zurück zum Absender.', 'returned', 'exception'],
     ['The shipment will be returned.', 'exception', 'exception'],
     ['The shipment has been returned to the sender', 'returned', 'exception'],
     // The English of "wird an den Absender zurückgesandt", after a failed round: the return starts.
-    ['Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.', 'exception', 'exception'],
+    ['Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.', 'returned', 'exception'],
+    ['Die Zustellung war nicht möglich. Die Sendung wird an den Absender zurückgesandt.', 'returned', 'exception'],
     ['The recipient could not be found at the address on the shipment.', 'failed_attempt', 'exception'],
     ['The shipment has been delivered', 'delivered', 'delivered'],
     ['Die Sendung wurde erfolgreich zugestellt.', 'delivered', 'delivered'],

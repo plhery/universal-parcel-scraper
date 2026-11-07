@@ -54,17 +54,38 @@ export function preAdvice(text: string): boolean {
 
 const MOVED = new Set(['accepted', 'in_transit', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'delivered', 'returned']);
 
+/** Stages of the scans that carry the parcel back once its return started. */
+const RETURN_TRIP: ReadonlySet<string> = new Set(['in_transit', 'customs']);
+
+/**
+ * The scans, newest first, that carry the parcel back after DHL's latest return start: the moves
+ * since it, while nothing else came after it. A round, a failed attempt or a delivery after the
+ * return ends it, and the moves before that went to the recipient again.
+ */
+export function returnTrip(stages: readonly (string | undefined)[]): number {
+  const moves = stages.findIndex((stage) => !RETURN_TRIP.has(stage ?? ''));
+  return moves > 0 && stages[moves] === 'returned' ? moves : 0;
+}
+
 /** Whether the wording reads as a step that moved the parcel; unknown wording does not. */
 export function movedParcel(text: string): boolean {
   return MOVED.has(stageForText(text, ''));
 }
 
+/**
+ * The return starting or under way: "The shipment is returned to the sender" after a failed round,
+ * the English of "wird … an den Absender zurückgesandt", "is returning to sender" and "auf dem Weg
+ * zurück zum Absender". The parcel goes back from here, so it is returned, as the scans after it
+ * that carry it back are (`returnTrip`).
+ */
+const RETURN_UNDER_WAY = /\bis (?:being )?returned to (?:the )?sender\b|\bis returning to (?:the )?sender\b|\bauf dem weg zurück zum absender\b|\bwird\b[^.]*\bzurück(?:gesandt|geschickt)\b/;
+
 export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase();
-  // A return still to come or under way, such as a parcel left uncollected past its storage period:
-  // the parcel is not back yet, so it is an exception, never its acceptance or the final return.
-  // "The shipment is returned to the sender" after a failed round is the English of "wird … zurückgesandt".
-  if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bis (?:being )?returned to (?:the )?sender\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
+  if (RETURN_UNDER_WAY.test(value)) return 'returned';
+  // A return still to come, such as a parcel left uncollected past its storage period: the parcel
+  // has not started back yet, so it is an exception, never its acceptance or the return itself.
+  if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
   if (/returned to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
   // "Delivery not possible" comes after the loading onto the delivery vehicle, before the parcel
   // waits at a retail outlet: a failed attempt, as the partner posts' copies of the scan read it.

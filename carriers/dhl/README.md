@@ -125,6 +125,11 @@ how a consumer learns that DHL holds one behind a postcode.
   posts' copies of the scan read it so. As the summary of a round whose newest scan
   starts the return ("The shipment is returned to the sender", "wird … zurückgesandt"),
   it gives way to that scan: the parcel is going back.
+- A return started or under way is returned, as is a return delivered to the sender. DHL then
+  keeps scanning the parcel on its way back, in its parcel centres: the moves after the latest
+  return start are returned too, and the parcel gets no delivery date. A round, a failed
+  attempt or a delivery after the return ends it, as DHL can try the recipient again after
+  announcing one.
 - `fortschritt` is only the fallback for unmapped wording (`<= 1` means the
   parcel is still announced); the wording explains progress better.
 - Timestamps carry an offset and are kept verbatim, except on scans DHL places
