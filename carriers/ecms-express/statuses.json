@@ -8,6 +8,7 @@
     {"wording": "ID information has been reviewed and verified", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The consignee's ID for import clearance was checked, before the parcel reached ECMS."},
     {"code": "EVENT_201", "wording": "Shipment arrived at carrier facility.", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "First scan at ECMS's origin warehouse."},
     {"wording": "Shipment arrived at origin facility.", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "Wording of the newer oms page for the same scan."},
+    {"code": "S04N401", "wording": "Parcel has arrived at export distribution warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ECMS's export warehouse at the origin, the same day as its arrival scan there; seen relayed by ePost Global."},
     {"code": "EVENT_202", "wording": "Shipment departed from carrier facility.", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
     {"wording": "Shipment departed from origin facility.", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Wording of the newer oms page."},
     {"code": "EVENT_313", "wording": "Flight departure", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
