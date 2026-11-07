@@ -176,9 +176,19 @@ function datedOnly(name: unknown, status: string, date: unknown): string | null 
 function dayOnlyNetworks(entries: readonly { name: unknown; date: unknown; offset?: string | null }[], minutes = false): Set<string> {
   const walls = new Map<string, (string | null)[]>();
   for (const { name, date, offset } of entries) walls.set(nameKey(name), [...walls.get(nameKey(name)) ?? [], offset ? null : mislabeledWallTime(date)]);
-  return new Set([...walls].filter(([, list]) => list.length >= 3 && dayClock(list, minutes)
-    && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2).map(([key]) => key));
+  return new Set([...walls].filter(([key, list]) => STEP_COUNTED_NETWORKS.has(key)
+    ? list.every((wall) => wall !== null && STEP_COUNT.test(wall))
+    : list.length >= 3 && dayClock(list, minutes) && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2).map(([key]) => key));
 }
+
+/**
+ * Networks whose steps ParcelsApp always dates by their day alone, at the top of an hour with
+ * seconds that count the steps, however few the reply has: myBRT.it's progress bar ("Spedizione
+ * consegnata a BRT" at 01:00:01, "In viaggio" at 01:00:02 the next day), steps BRT's own
+ * tracker does not list. Read as instants, they came seconds after midnight.
+ */
+const STEP_COUNTED_NETWORKS = new Set(['mybrtit']);
+const STEP_COUNT = /T\d{2}:00(?::0\d(?:\.0+)?)?$/;
 
 /**
  * Whether a network's wall clocks, in the reply's order, stand for no time:

@@ -2725,6 +2725,28 @@ describe('ParcelsApp result parsing', () => {
     expect(read([{ ...states[0]!, date: '2026-10-22T06:30:01Z' }, ...states.slice(1)])).toEqual(['Parcel out for delivery', 'FOR DELIVERY', 'In transit']);
   });
 
+  it("reads myBRT's progress bar by its days, and its hand-over to BRT as BRT's collection", () => {
+    // Live shape: ParcelsApp counts the steps in the seconds, at the top of an hour; BRT's own tracker lists neither step.
+    const read = (states: Record<string, unknown>[]) => parseParcelsAppResponse({ carriers: ['myBRT.it'], states }, number, identity());
+    const bar = read([
+      { date: '2030-01-03T01:00:02Z', status: 'In viaggio', carrier: 0 },
+      { date: '2030-01-02T01:00:01Z', status: 'Spedizione consegnata a BRT', carrier: 0 },
+    ]);
+    expect(bar).toMatchObject({ current_stage: 'in_transit', last_update: null });
+    expect(bar.events?.map((event) => [event.description, event.time, event.local_time, event.stage])).toEqual([
+      ['In viaggio', undefined, '2030-01-03', 'in_transit'],
+      ['Spedizione consegnata a BRT', undefined, '2030-01-02', 'accepted'],
+    ]);
+    // A single step is the bar's too; "consegnata" there is never the delivery.
+    expect(read([{ date: '2030-01-02T01:00:01Z', status: 'Spedizione consegnata a BRT', carrier: 0 }]).events?.[0])
+      .toMatchObject({ local_time: '2030-01-02', stage: 'accepted' });
+    // Another network's two steps at such times keep their clocks.
+    expect(parseParcelsAppResponse({ carriers: ['Example Network'], states: [
+      { date: '2030-01-03T01:00:02Z', status: 'In transit', carrier: 0 },
+      { date: '2030-01-02T01:00:01Z', status: 'Accepted', carrier: 0 },
+    ] }, number, identity()).events?.every((event) => !/^\d{4}-\d{2}-\d{2}$/.test(String(event.local_time ?? '')))).toBe(true);
+  });
+
   it('leaves out a bare delivery a later scan moves the parcel past', () => {
     // Live shapes: a first carrier's "Delivered" on its hand-over to the next, and an
     // airline's delivery to the line carrier, days before the destination's scans.

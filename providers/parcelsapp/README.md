@@ -189,6 +189,9 @@ step exists for future protocol changes.
   ParcelsApp writes CDEK's and SEUR's while CDEK's own lookup has each scan's instant; the
   rendered page prints no seconds, so there one minute for all is enough. The day is that
   of ParcelsApp's digits, the network's clock, not the UTC day of the instant they read as.
+  myBRT.it's progress bar is dated that way however few its steps: at the top of an hour,
+  the seconds counting the steps. Its "Spedizione consegnata a BRT" is BRT taking the
+  parcel, which BRT's own page calls its collection, not a delivery.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
   skip the steps above and take the zone the
@@ -271,7 +274,7 @@ step exists for future protocol changes.
   under a Chicago postcode in a reply that names neither the US nor a state.
 - Known clocks, from each carrier's own offsets. GOFO's feed dates its labels ("Shipping
   Label Created") on Pacific time wherever the parcel is injected (a Florida parcel's at
-  -07:00; 2026-10-10), and GOFO Canada's on Toronto time, also for a parcel bound for British Columbia:
+  -07:00), and GOFO Canada's on Toronto time, also for a parcel bound for British Columbia:
   read on Pacific, a Canadian label came three hours after the origin scan it followed by
   seconds. Cainiao's own feed (2026-10-11, parcels to the UK, Belgium, Spain,
   Italy, Japan, Brazil and the US) dates its origin leg on China time, from "Order

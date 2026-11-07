@@ -22,7 +22,10 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: npm
       - run: npm ci --ignore-scripts
+      # Type-aware lint of the whole tree outgrows Node 24's default heap.
       - run: npm run lint
+        env:
+          NODE_OPTIONS: --max-old-space-size=8192
       - run: npm run typecheck
       - run: npm run build
       - run: npm test

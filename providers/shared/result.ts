@@ -210,6 +210,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   if (anPost) return anPost;
   // A sender's parcel left at a pick-up point for a courier to collect: an acceptance, not a parcel awaiting its recipient.
   if (/^the (?:parcel|package) has been delivered to the pick-?up point\. a courier will pick it up\b/i.test(description)) return 'accepted';
+  // myBRT's progress bar, as ParcelsApp relays it: the shipment handed to BRT, which BRT's own page calls its collection
+  // (RITIRATA). "Consegnata" names the hand-over to BRT, not the delivery.
+  if (/^spedizione consegnata a brt[.!]?$/i.test(description)) return 'accepted';
   // Posti's handling labels survive in aggregator histories. Registration is
   // a repeated physical scan here, and the reason can describe future customs
   // or delivery without making either the event's stage.
