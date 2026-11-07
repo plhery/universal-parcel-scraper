@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { UpstreamHttpError } from '../../core/errors/index.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
@@ -854,6 +855,10 @@ describe('La Poste status vocabulary', () => {
     expect(eventStatus('DESPAY', 'DO4', paidAtDoor, true)).toBe('delivered');
     expect(eventStage('AARPAY', 'DO4', 'Les droits et taxes de douane de cet envoi ont été payés en ligne.')).toBe('customs');
     expect(eventStage('EDRINT', 'PC2', "Votre colis a été déposé par l'expéditeur chez notre partenaire postal dans son pays d'origine.")).toBe('accepted');
+    // The recipient chose a postal point: on its way there, not yet waiting.
+    const chosen = 'Vous avez choisi de vous faire livrer dans un point postal. Votre colis va y être acheminé. Vous recevrez une notification dès que votre colis sera disponible.';
+    expect(eventStage('DISILIEU', 'MD2', chosen)).toBe('in_transit');
+    expect(statusMapAnswer({ carrier: 'la-poste', providerCode: 'DISILIEU/MD2', description: chosen })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 });
 

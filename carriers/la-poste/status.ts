@@ -44,6 +44,8 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
  * `RE1` the decision to send the item back. `MD1` under `DISTOU` is the morning
  * sort into the delivery round: "nous le préparons pour le mettre en
  * livraison" is followed the same day by the delivery or a failed attempt.
+ * `MD2` under `DISILIEU` is the recipient's choice of a postal point: the parcel
+ * is routed there, and its arrival there is a later scan.
  */
 export const CODE_STATUSES = new Map<string, CarrierStatus>([
   ['DR1', 'pending'],
@@ -51,6 +53,7 @@ export const CODE_STATUSES = new Map<string, CarrierStatus>([
   ['ET1', 'in_transit'],
   ['EP1', 'in_transit'],
   ['MD1', 'out_for_delivery'],
+  ['MD2', 'in_transit'],
   ['PB1', 'exception'],
   ['DO2', 'in_transit'],
   ['RE1', 'exception'],
