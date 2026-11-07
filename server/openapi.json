@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Universal Parcel Scraper",
-    "version": "0.1004.1"
+    "version": "0.1005.0"
   },
   "paths": {
     "/health": {
@@ -850,6 +850,10 @@
                   "type": "integer",
                   "minimum": 0,
                   "description": "The scan's place among the answer's scans at its instant, from the oldest, in the carrier's order. Set only on scans that share their instant with another."
+                },
+                "reporting_carrier": {
+                  "type": "string",
+                  "description": "The carrier a universal provider says reported the scan, by the name the provider gives it."
                 }
               },
               "additionalProperties": true
