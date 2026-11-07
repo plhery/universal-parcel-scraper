@@ -21,6 +21,7 @@
     {"code": "1239", "wording": "The item is tied to a MAWB and ready for shipment", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from PostNL through Spring, after ePost Global shipped the parcel."},
     {"code": "2024", "wording": "The item has been manifested and ready to transport", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from PostNL through Spring, after ePost Global shipped the parcel."},
     {"code": "EPG-1272", "wording": "Your item has been dropped off by the sender with our postal partner in the country of origin.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "La Poste's wording for a parcel PostNL brings to France, relayed after PostNL accepted it."},
-    {"code": "EPG-1270", "wording": "Your item is ready to be forwarded from its foreign territory. It will be given to the carrier for forwarding.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "La Poste's wording, relayed for a parcel bound for France."}
+    {"code": "EPG-1270", "wording": "Your item is ready to be forwarded from its foreign territory. It will be given to the carrier for forwarding.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "La Poste's wording, relayed for a parcel bound for France."},
+    {"code": "5", "wording": "The parcel has left the parcel center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "GLS's European network leaving its hub, relayed after the hand-over to GLS under GLS's code."}
   ]
 }

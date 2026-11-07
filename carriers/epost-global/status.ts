@@ -6,8 +6,8 @@ import { osmCodeStage } from '../osm-worldwide/status.js';
  * ePost Global's English wording. Its rows carry a code, but rows it relays
  * from the partner that delivers the parcel keep the partner's code, so a code
  * alone names no scan: PostNL's 30 is ePost Global's 30. The map reads the
- * wording: ePost Global's own, then the partners' that the shared wording
- * rules leave without a stage. Other partner wording goes to those rules.
+ * wording: ePost Global's own, then the partners' seen on its parcels. Other
+ * partner wording goes to the shared wording rules.
  * OSM Worldwide's codes name it ("OSM04"), so its rows read as OSM's own do.
  */
 const STAGES: ReadonlyMap<string, Stage> = new Map([
@@ -32,6 +32,8 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   // La Poste's wording for parcels PostNL brings to France, after they left the United States.
   ['your item has been dropped off by the sender with our postal partner in the country of origin.', 'in_transit'],
   ['your item is ready to be forwarded from its foreign territory. it will be given to the carrier for forwarding.', 'in_transit'],
+  // GLS's European network, after the hand-over: its hub's departure.
+  ['the parcel has left the parcel center.', 'in_transit'],
 ]);
 
 // The handover a minute after shipping: "In transit to {service} tracking #: {number}".
