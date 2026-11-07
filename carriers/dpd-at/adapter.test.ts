@@ -282,7 +282,7 @@ describe('DPD Austria status vocabulary', () => {
     // The numeric codes are DPD's group tracker's scan types, which this adapter does not read.
     const states = (statuses.entries as { code?: string; wording: string; stage?: string }[])
       .filter((entry) => entry.stage && /^[A-Z_]+(?:\/[A-Z_]+)?$/.test(entry.code ?? ''));
-    expect(states).toHaveLength(15);
+    expect(states).toHaveLength(17);
     for (const entry of states) {
       expect(statusMap.stage(entry.code!, entry.wording.toLowerCase()), entry.code).toBe(entry.stage);
       expect(dpdAtStage(entry.code!, entry.wording)?.stage, entry.code).toBe(entry.stage);

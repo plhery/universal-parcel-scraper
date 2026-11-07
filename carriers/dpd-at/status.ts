@@ -15,6 +15,8 @@ const NAMES: ReadonlyMap<string, Stage> = new Map([
   ['NAB', 'failed_attempt'], // The recipient was not in.
   ['RECEIVER_PICKUP', 'delivered'], // Collected by the recipient from a Pickup point.
   ['DELIVERED', 'delivered'], // Qualified `ASG` when left at the recipient's chosen place.
+  ['NOT_PICKED_UP', 'exception'], // Not collected from the Pickup point it waited at.
+  ['RETURN_TO_SENDER', 'exception'], // On its way back to the sender.
 ]);
 
 /** States whose stage depends on the qualifier: a hand-over is a delivery only when it says where to. */

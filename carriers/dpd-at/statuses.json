@@ -113,6 +113,24 @@
       "note": "The round did not deliver the parcel. It comes back to the depot, which scans it again before another round."
     },
     {
+      "code": "NOT_PICKED_UP",
+      "wording": "Parcel was not picked up",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The recipient did not collect the parcel from the Pickup parcelshop it waited at in time. The return to the sender follows in the same minute."
+    },
+    {
+      "code": "RETURN_TO_SENDER",
+      "wording": "Parcel will be returned to the sender.",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The way back to the sender begins: a problem until the sender has the parcel back."
+    },
+    {
       "code": "RECEIVER_PICKUP",
       "wording": "Paket durch Empfänger abgeholt",
       "stage": "delivered",

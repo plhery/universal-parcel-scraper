@@ -42,6 +42,8 @@ Austria.
   place after a slash (`HANDOVER/BOX`). A driver's collection from a Pickup parcelshop
   (`DRIVER_PICKUP/SHOP`) is the sender's drop-off collected, an acceptance or a hand-over in
   transit; after the parcel waited at a Pickup point for its recipient it starts the way back.
+  A parcel left uncollected there (`NOT_PICKED_UP`) goes back to its sender (`RETURN_TO_SENDER`):
+  a problem until the sender has it back.
 - Once the postcode is verified, the page adds details to some scans: the Pickup shop, who
   took the parcel, where it was left. The adapter reads none of them, nor the sender and
   recipient fields, which are empty without the postcode.
