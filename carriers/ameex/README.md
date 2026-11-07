@@ -15,7 +15,7 @@ varies, and the few public codes do not fix the layout well enough.
 
 ## Links
 
-The tracker opens one parcel at `/{locale}/tracking/{code}` on ameex.ma; the French site uses
+The tracker opens one parcel at `/{locale}/tracking/{code}`; the French site uses
 `suivi-colis` in place of `tracking`. The site's search markup and its scripts build that
 address with the code in upper case.
 

@@ -7600,7 +7600,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [
       {
         "domains": [
-          "ameex.ma"
+          "ameex.ma",
+          "ameex.com"
         ],
         "path": "^/(?:en|fr|ar)/(?:tracking|suivi-colis)/([^/?#]+)/?$"
       }
