@@ -39,7 +39,7 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
           run: ({ signal, remainingMs }) => registered.track(input, ...(passed ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs), ...known }] as const : [])) }]);
       const answer = normalizeCarrierResult(result);
       return readNewestStage(readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
-        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer)))));
+        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer), Date.now()))));
     } catch (error) {
       // A caller's cancellation is the caller's reason, not a carrier failure.
       if (options.signal?.aborted) throw options.signal.reason;

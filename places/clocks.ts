@@ -5,6 +5,7 @@
  */
 import { DateTime, IANAZone } from 'luxon';
 import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
+import { CLOCK_SKEW_MS } from '../core/result/due.js';
 import type { CarrierEvent, CarrierResult } from '../core/result/index.js';
 import { EXPLICIT_OFFSET_PATTERN, firstOccurrence } from '../core/time/index.js';
 import { airportTimeZone, placesForEvents, placeTimeZone, type EventPlace } from './index.js';
@@ -77,9 +78,11 @@ function destinationZone(carrier: string, country: string): string | null {
  * the scans that follow its leg. The scan keeps `local_time` and gains
  * `time`, `time_zone` and `time_zone_basis`. `last_update_local` gives a
  * missing `last_update` the same way. Scans dated by their day alone and
- * offset-less `time` values are left as they are.
+ * offset-less `time` values are left as they are. With `readAt`, the time of
+ * the read, a zone that would date a scan more than a few minutes after it is
+ * not the scan's clock, and the scan keeps its wall clock alone.
  */
-export function dateLocalClocks(carrier: string, result: CarrierResult): CarrierResult {
+export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?: number): CarrierResult {
   const events = result.events ?? [];
   const latestLocal = text(result.last_update_local);
   const latestMissing = instant(result.last_update) === null && WALL_CLOCK.test(latestLocal);
@@ -152,8 +155,10 @@ export function dateLocalClocks(carrier: string, result: CarrierResult): Carrier
     const zone = zoneAt(at);
     if (zone) zones.set(event, zone);
   });
-  const at = (local: string, zone: string) =>
-    firstOccurrence(DateTime.fromISO(local, { zone })).toISO({ suppressMilliseconds: true });
+  const at = (local: string, zone: string) => {
+    const time = firstOccurrence(DateTime.fromISO(local, { zone }));
+    return readAt !== undefined && time.toMillis() > readAt + CLOCK_SKEW_MS ? null : time.toISO({ suppressMilliseconds: true });
+  };
   const dates = events.map((event) => {
     const zone = zones.get(event);
     const time = zone && at(text(event.local_time), zone.zone);

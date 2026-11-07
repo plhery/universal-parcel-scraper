@@ -280,6 +280,19 @@ describe('dateLocalClocks', () => {
     expect(result.events![0]!.time).toBe('2026-10-25T02:30:00+02:00');
   });
 
+  it('leaves a scan its place would date after the read on its wall clock alone', () => {
+    const result = { status: 'in_transit' as const, last_update_local: '2026-10-20T09:00:00', events: [
+      { local_time: '2026-10-20T09:00:00', description: 'Arrived', location: 'Madrid' },
+      { local_time: '2026-10-19T18:00:00', description: 'Departed', location: 'Madrid' },
+    ] };
+    const read = dateLocalClocks('china-post', result, Date.parse('2026-10-20T06:00:00Z'));
+    expect(read.events!.map(dated)).toEqual([[undefined, undefined, undefined], ['2026-10-19T18:00:00+02:00', 'Europe/Madrid', 'place']]);
+    expect(read.events![0]!.local_time).toBe('2026-10-20T09:00:00');
+    expect(read.last_update).toBeUndefined();
+    expect(dateLocalClocks('china-post', result, Date.parse('2026-10-20T07:04:00Z')).events![0]!.time).toBe('2026-10-20T09:00:00+02:00');
+    expect(dateLocalClocks('china-post', result).last_update).toBe('2026-10-20T09:00:00+02:00');
+  });
+
   it('leaves instants, offset-less times and scans dated by their day alone as they are', () => {
     const events: CarrierEvent[] = [
       { time: '2026-03-02T11:00:00+01:00', description: 'Delivered', location: 'Madrid' },

@@ -462,9 +462,11 @@ it keeps that hour in `local_time`. Node lookups (`trackCarrier()`, `createTrack
 date such a scan on a deduced zone with `dateLocalClocks()` ([places](places/README.md#clocks)):
 its place, the leg the parcel was on, the destination the carrier delivers in, else the
 carrier's home clock. The scan keeps `local_time` and gains `time_zone` and
-`time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A
-scan dated by its day alone keeps that day. A universal provider's result lists it above the
-newest scan of its day at an earlier stage, else below the day's timed scans, and a consumer
+`time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A zone
+that would date a scan more than a few minutes after the read is not its clock, so the scan
+keeps its wall clock alone. A scan dated by its day alone keeps that day. A universal
+provider's result lists it above the newest scan of its day at an earlier stage, else below the
+day's timed scans, and a consumer
 dating it by its neighbours follows that order. A carrier that gives such scans no clock by design,
 as BRT does a delivery round or a portal that lists its history under day headings, sets
 `tracking.dateOnlyScans`: a consumer need not ask fallback providers for a clock no copy has. A

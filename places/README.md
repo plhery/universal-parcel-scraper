@@ -209,8 +209,11 @@ clock, unless the last one is on a clock the destination keeps. With none before
 one, unless the parcel lands on the way there; else from the parcel's
 destination, when the carrier delivers there; else from the carrier's home clock: its catalog
 zone, or with UTC there, its first country's. The scan keeps `local_time` and gains `time`,
-`time_zone` and `time_zone_basis` (`place`, `neighbour`, `destination` or `carrier`). Node lookups through
-`trackCarrier()` and `createTracker()` apply it to a carrier's own answer. Scans dated by their
+`time_zone` and `time_zone_basis` (`place`, `neighbour`, `destination` or `carrier`). Given the read
+time, `dateLocalClocks(carrier, result, readAt)` leaves a scan its wall clock alone when the zone
+would date it more than a few minutes after the read: that zone is not the scan's clock. Node lookups
+through `trackCarrier()` and `createTracker()` apply it to a carrier's own answer at the time of the
+read. Scans dated by their
 day alone keep it; `carrierHomeZone(carrier, result)` gives the home clock a host can start
 such a day on.
 

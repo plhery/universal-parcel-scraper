@@ -280,7 +280,7 @@ export function createTracker(options: TrackerOptions = {}) {
         : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
           { id: adapter.steps[0] ?? 'direct', run: ({ signal: stepSignal, remainingMs }) => adapter.track(
             directInput, { signal: stepSignal, budgetMs: remainingMs, ...known }) },
-        ])))))) : null;
+        ])))), Date.now())) : null;
     let source: string = carrier;
     // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.
     const ahead = result ? [] : writtenAheadClocks(lastError);
