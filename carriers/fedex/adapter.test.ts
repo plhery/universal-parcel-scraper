@@ -956,7 +956,8 @@ describe('FedEx lookup steps', () => {
       expect(result).toMatchObject({ status: 'in_transit', tracking_url: fedexTrackingUrl(number) });
       fetcher.mockRestore();
     }
-    for (const number of ['6129999999990000001', '612999999999000000100']) {
+    // Nor a shipper's 18-digit SSCC, which providers file as FedEx's.
+    for (const number of ['340000000000000014', '6129999999990000001', '612999999999000000100']) {
       await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(number)).rejects.toMatchObject({ kind: 'invalid_input' });
     }
   });
