@@ -245,6 +245,29 @@ describe('SPX Express Brazil HTTP adapter', () => {
     }
   });
 
+  it('asks the orders for a marketplace label whole, the fleet feed for its shipment number, and binds both answers to it', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    try {
+      vi.setSystemTime(new Date('2026-05-20T00:00:00Z'));
+      const label = `${IN_TRANSIT}SPXLM00000001`;
+      expect(normalizeSpxBrNumber(label.toLowerCase())).toBe(label);
+      const direct = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('in-transit')));
+      await expect(carrier(direct).track({ number: label })).resolves.toMatchObject({ current_stage: 'customs' });
+      expect(String(direct.mock.calls[0]![0])).toBe(`${SPX_BR_API}?spx_tn=${label}&language_code=pt`);
+      const fleet = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(NOT_HELD)).mockResolvedValueOnce(reply(fixture('fleet-delivered')));
+      await expect(carrier(fleet).track({ number: `${FLEET}SPXLM00000001` })).resolves.toMatchObject({ current_stage: 'delivered' });
+      expect(String(fleet.mock.calls[1]![0])).toContain(`sls_tracking_number=${FLEET}%7C`);
+      // Another shipment's label is not this one.
+      expect(() => parseSpxBr(fixture('in-transit'), `${DELIVERED}SPXLM00000001`)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+      expect(() => parseSpxBrFleet(fixture('fleet-delivered'), `${IN_TRANSIT}SPXLM00000001`)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+      for (const number of [`${IN_TRANSIT}SPXLM0000001`, `${IN_TRANSIT}SPXLX00000001`]) {
+        expect(() => normalizeSpxBrNumber(number), number).toThrow();
+      }
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
   it('asks the fleet feed, with its checksum and in the page’s Portuguese, for a number the order lookup does not hold', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     try {

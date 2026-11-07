@@ -11,8 +11,9 @@ import { spxBrStage } from './status.js';
 export const PROVIDER = 'SPX Express Brazil';
 // A long cross-border history in Portuguese is under fifty kilobytes.
 export const SPX_BR_MAX_BYTES = 1_000_000;
-// BR, twelve digits and a final digit or letter: the numbers the tracker's links carry.
-const NUMBER = /^BR\d{12}[0-9A-Z]$/;
+// BR, twelve digits and a final digit or letter: the numbers the tracker's links carry. A
+// marketplace label follows one with SPXLM and eight digits, and the orders answer it whole.
+const NUMBER = /^BR\d{12}[0-9A-Z](?:SPXLM\d{8})?$/;
 // The order index's own count of parcels under the number: none.
 const UNKNOWN = /GetLogisticOrderIndexMap[\s\S]*\bfind \[0\]/;
 // The orders' answer for a number they do not hold, the parcel only the fleet feed may know, or none yet.
@@ -47,6 +48,9 @@ export function normalizeSpxBrNumber(raw: string): string {
   if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'SPX Express Brazil numbers are BR, twelve digits and a final digit or letter');
   return number;
 }
+
+/** The shipment number a number names: a label's first fifteen characters, which the replies give. */
+export const spxBrShipment = (number: string): string => number.slice(0, 15);
 
 // Who took the parcel: "Recebido por: …" after a delivery, or the bracketed
 // name the tracker's pt-BR wording puts after "entregue a", which a partner
@@ -135,7 +139,7 @@ export function parseSpxBr(payload: unknown, raw: string): CarrierResult {
   const tracking = payload.data.sls_tracking_info;
   if (tracking === undefined || tracking === null) throw new NoHistoryError(PROVIDER);
   if (!isRecord(tracking) || typeof tracking.sls_tn !== 'string') throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a shipment without its number');
-  if (normalizeTrackingNumber(clean(tracking.sls_tn, 64)) !== number) throw new IndeterminateError(PROVIDER, 'SPX Express Brazil answered for another shipment');
+  if (normalizeTrackingNumber(clean(tracking.sls_tn, 64)) !== spxBrShipment(number)) throw new IndeterminateError(PROVIDER, 'SPX Express Brazil answered for another shipment');
   const rows = tracking.records ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a shipment with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an oversized history');
@@ -247,7 +251,7 @@ export function parseSpxBrFleet(payload: unknown, raw: string): CarrierResult {
   const data = payload.data;
   if (!Object.keys(data).length) throw new IndeterminateError(PROVIDER, "SPX Express Brazil's fleet feed returned an empty reply");
   if (typeof data.sls_tracking_number !== 'string') throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a shipment without its number');
-  if (normalizeTrackingNumber(clean(data.sls_tracking_number, 64)) !== number) throw new IndeterminateError(PROVIDER, 'SPX Express Brazil answered for another shipment');
+  if (normalizeTrackingNumber(clean(data.sls_tracking_number, 64)) !== spxBrShipment(number)) throw new IndeterminateError(PROVIDER, 'SPX Express Brazil answered for another shipment');
   const rows = data.tracking_list ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a shipment with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an oversized history');

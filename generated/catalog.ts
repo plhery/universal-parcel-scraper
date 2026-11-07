@@ -43280,6 +43280,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^BR\\d{12}[0-9A-Z]$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^BR\\d{12}[0-9A-Z]SPXLM\\d{8}$",
+        "confidence": "high"
       }
     ]
   },
@@ -54205,7 +54209,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "spfly": [],
   "spt-logistics": [],
   "sptexp": ["sptexp-1"],
-  "spx-br": ["spx-br-1"],
+  "spx-br": ["spx-br-1","spx-br-2"],
   "spx-id": ["spx-id-1","spx-id-2"],
   "spx-my": ["spx-my-1","spx-my-2"],
   "spx-ph": ["spx-ph-prefixed","spx-ph-shopee-express","spx-ph-domestic"],

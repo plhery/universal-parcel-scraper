@@ -95,6 +95,18 @@
         "confidence": "high"
       },
       "note": "An archived lookup on SPX Express Brazil's own tracker address; the capture was not opened for history, which the page loads by script, so the history was not visible."
+    },
+    {
+      "number": "BR999999999999XSPXLM99999999",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-07",
+      "expect": {
+        "carrier": "spx-br",
+        "confidence": "high"
+      },
+      "note": "Made-up marketplace label in the shape of the parcels the app tracked: a shipment number, SPXLM and eight digits. SPX's own order lookup answered the whole label and named the shipment number in it. Its serials sit far beyond the ranges in use."
     }
   ]
 }

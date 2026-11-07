@@ -5,7 +5,7 @@ import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { normalizeSpxBrNumber, parseSpxBr, parseSpxBrFleet, PROVIDER, SPX_BR_MAX_BYTES } from './parser.js';
+import { normalizeSpxBrNumber, parseSpxBr, parseSpxBrFleet, PROVIDER, SPX_BR_MAX_BYTES, spxBrShipment } from './parser.js';
 
 /** The lookup the tracker on spx.com.br makes for the number in its address. */
 export const SPX_BR_API = 'https://spx.com.br/shipment/order/open/order/get_order_info';
@@ -49,9 +49,9 @@ export class SpxBrTracker {
     // `pt` is the page's own language code: its wording names no recipient.
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => parseSpxBr(await get(
       `${SPX_BR_API}?${new URLSearchParams({ spx_tn: number, language_code: 'pt' })}`, {}, signal, timeoutMs), number);
-    // The page's Portuguese, as it asks for it.
+    // The page's Portuguese, as it asks for it. The feed knows a label by its shipment number alone.
     const fleet = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => parseSpxBrFleet(await get(
-      `${SPX_BR_FLEET_API}?${new URLSearchParams({ sls_tracking_number: spxBrFleetQuery(number, Math.floor(Date.now() / 1000)) })}`,
+      `${SPX_BR_FLEET_API}?${new URLSearchParams({ sls_tracking_number: spxBrFleetQuery(spxBrShipment(number), Math.floor(Date.now() / 1000)) })}`,
       { 'x-language': 'br' }, signal, timeoutMs), number);
     return runSteps({ carrier: 'spx-br', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [

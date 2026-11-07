@@ -6,6 +6,11 @@ customs, and delivers to the door.
 Tracked through the lookup its tracker makes. `spx-ph` covers the Philippine network, whose
 numbers carry a PH prefix.
 
+A marketplace label of 28 characters is a shipment number followed by `SPXLM` and eight
+digits. The orders answer the whole label and name the shipment number in it, which they do
+not hold alone; the fleet feed holds the shipment number only. Both answers are bound to the
+label's first fifteen characters.
+
 ## How it works
 
 1. `direct`: one `GET https://spx.com.br/shipment/order/open/order/get_order_info` with
