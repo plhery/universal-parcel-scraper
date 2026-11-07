@@ -93,13 +93,13 @@ describe('WeDo Czech guest tracker', () => {
     }
   });
 
-  it('does not expose unknown prose and marks the result incomplete for provider completion', () => {
+  it('does not expose unknown prose, and a hidden wording does not cut the history short', () => {
     const payload = fixture();
     payload.status[1]!.description = 'Signed by PRIVATE person at PRIVATE address';
     const result = parseWedo(payload, NUMBER);
     expect(result.events![1]).toMatchObject({ description: 'Tracking update' });
     expect(result.events![1]!.stage).toBeUndefined();
-    expect(result.history_truncated).toBe(true);
+    expect(result.history_truncated).toBeUndefined();
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 

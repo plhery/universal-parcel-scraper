@@ -13,8 +13,8 @@ with Allegro One while keeping the Czech endpoint and label scope separate.
 
 The reply contains scans without repeating the label. Retrieval therefore binds the
 whole query to the official Czech route and rejects a changed response URL or redirect.
-Only standard logistics wording is projected; unknown prose becomes a generic update
-and marks the history incomplete so another source can complete it.
+Only standard logistics wording is projected; unknown prose becomes a generic update. The
+scan is still there, so the history is not marked cut short.
 
 Scan clocks keep their stated offsets and precision. Duplicate scans are removed and
 history is sorted by its instants. A parcel waiting at a pickup point is ready for

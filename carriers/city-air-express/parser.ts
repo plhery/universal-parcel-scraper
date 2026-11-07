@@ -81,7 +81,6 @@ export function parseCityAirExpress(html: string, raw: string): CarrierResult {
   }
   if (!rows.length) throw new NoHistoryError(PROVIDER, 'City Air Express knows the waybill but returned no dated history', { reason: 'parcel_found' });
   const events: CarrierEvent[] = [], seen = new Set<string>();
-  let partial = false;
   for (const row of rows.toArray()) {
     const content = $(row).children('.event-content'), status = content.children('.event-status');
     const date = content.children('.event-date-time'), time = date.children('.event-time');
@@ -93,7 +92,6 @@ export function parseCityAirExpress(html: string, raw: string): CarrierResult {
     if (!wording || wording.length > 1000) throw new SchemaError(PROVIDER, 'City Air Express returned an invalid scan description');
     const local_time = clock(clean(time.text(), 80));
     const description = publicWording(wording, local_time);
-    if (description === 'Tracking update') partial = true;
     const stage = cityAirExpressStage(null, description);
     const key = JSON.stringify([local_time, wording]);
     if (!seen.has(key)) {
@@ -107,7 +105,7 @@ export function parseCityAirExpress(html: string, raw: string): CarrierResult {
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: newest.description, last_update: null, last_update_local: newest.local_time,
     expected_delivery: null,
-    ...(partial || events.length > 100 ? { history_truncated: true } : {}),
+    ...(events.length > 100 ? { history_truncated: true } : {}),
     events: events.slice(0, 100),
   };
 }

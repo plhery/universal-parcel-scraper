@@ -18,7 +18,7 @@ The adapter reads the dated logistics rows, removes exact duplicates and preserv
 The progress rail, recipient and signature prose, hidden forms and postcode-protected details
 are excluded. Scan times retain their full year and minute precision without an inferred zone;
 no delivery instant or estimate is supplied. Data processing records label activity, not custody.
-Unrecognized wording becomes a generic update and marks history partial for provider completion.
+Unrecognized wording becomes a generic update; the scan is still there, so the history is not marked cut short.
 All source rows are validated before the output cap.
 
 ## Scope

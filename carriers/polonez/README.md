@@ -26,7 +26,7 @@ remain transit. Recipient delivery needs the Polish leg; final-mile pre-advice a
 a delivery expectation establish no new stage. The explicit GLS label note gives
 the Polish delivery partner and its reference only when the shipment also
 establishes a consistent Polish destination. Unknown wording stays a generic
-update and marks the answer partial for enabled provider enrichment. Contacts, detail messages, internal references and proof links are omitted.
+update; the scan is still there, so the history is not marked cut short. Contacts, detail messages, internal references and proof links are omitted.
 
 Clocks retain their wall digits and source precision without an offset. Relayed
 scans span countries and do not share a proven zone. Date-only rows stay dates;

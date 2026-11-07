@@ -48,12 +48,12 @@ describe('City Air Express guest history', () => {
     expect(() => parseCityAirExpress(empty(), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'parcel_found' }));
   });
 
-  it('keeps unknown wording generic and incomplete without guessing its latest stage', () => {
+  it('keeps unknown wording generic without guessing its latest stage or cutting the history short', () => {
     const result = parseCityAirExpress(fixture().replace('<div class="event-status">' + DELIVERY + '</div>',
       '<div class="event-status">SYNTHETIC PERSON received update, private@example.invalid</div>'), NUMBER);
     expect(result.status).toBe('unknown'); expect(result.current_stage).toBeUndefined();
     expect(result.events![0]).toMatchObject({ description: 'Tracking update', local_time: '2026-07-15T13:42' });
-    expect(result.history_truncated).toBe(true); expect(JSON.stringify(result)).not.toMatch(/PERSON|example.invalid/);
+    expect(result.history_truncated).toBeUndefined(); expect(JSON.stringify(result)).not.toMatch(/PERSON|example.invalid/);
     expect(cityAirExpressStage(null, 'Data processed at CAEBFS')).toBe('registered');
     expect(cityAirExpressStage(null, 'Job received at Belfast Depot')).toBe('accepted');
     expect(cityAirExpressStage(null, 'Expected delivery')).toBeUndefined();

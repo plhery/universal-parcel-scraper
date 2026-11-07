@@ -124,7 +124,7 @@ describe('Polonez bound guest history', () => {
       .replace('<City_EN>Czeladz</City_EN>', '<City_EN>19 Example Road</City_EN>');
     const result = parsePolonez(body, NUMBER);
     expect(result.events!.some(event => event.description === 'Tracking update')).toBe(true);
-    expect(result.history_truncated).toBe(true);
+    expect(result.history_truncated).toBeUndefined();
     expect(JSON.stringify(result)).not.toMatch(/SYNTHETIC PERSON|19995550143|example\.invalid|Example Road/);
   });
 });

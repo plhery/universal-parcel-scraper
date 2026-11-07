@@ -28,7 +28,6 @@ export function parseWedo(payload: unknown, raw: string): CarrierResult {
   if (!isRecord(payload) || Object.keys(payload).some(key => key !== 'status')) {
     throw new SchemaError(PROVIDER, 'The Czech tracker changed its status-list reply');
   }
-  let partial = false;
   const rows = payload.status;
   const projected = Array.isArray(rows) && rows.length <= ALLEGRO_TRACKING_MAX_ROWS
     ? rows.map((row: unknown) => {
@@ -38,12 +37,11 @@ export function parseWedo(payload: unknown, raw: string): CarrierResult {
       }
       if (!row.description.trim() || row.description.length > 1000) throw new SchemaError(PROVIDER, 'The Czech tracker returned invalid wording');
       const description = WORDINGS.get(normalizeStatusWording(row.description));
-      if (!description) partial = true;
       // Only standard logistics wording leaves the page: unknown prose can name a recipient.
       return { eventTimestamp: row.eventTimestamp, description: description ?? 'Tracking update' };
     }) : rows;
-  const result = parseAllegroTrackingHistory({ status: projected }, PROVIDER, () => {
+  // A scan whose wording stays hidden is still a scan, so the history is not cut short.
+  return parseAllegroTrackingHistory({ status: projected }, PROVIDER, () => {
     throw new NoHistoryError(PROVIDER, 'The Czech tracker has no retained scans for this number');
   }, true);
-  return partial ? { ...result, history_truncated: true } : result;
 }

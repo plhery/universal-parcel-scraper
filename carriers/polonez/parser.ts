@@ -143,6 +143,6 @@ export function parsePolonez(xml: string, raw: string): CarrierResult {
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: newest.event.description ?? null, last_update: null, last_update_local: newest.local,
     expected_delivery: null, events: shown.slice(0, MAX_EVENTS).map(row => row.event),
-    ...(shown.length > MAX_EVENTS || shown.some(row => row.event.description === 'Tracking update') ? { history_truncated: true } : {}),
+    ...(shown.length > MAX_EVENTS ? { history_truncated: true } : {}),
     ...(partner && polishDelivery ? { delivery_carrier: 'gls-pl', delivery_tracking_number: partner } : {}) };
 }
