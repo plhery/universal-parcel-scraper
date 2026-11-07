@@ -58,7 +58,8 @@ describe('X-Cargo group tracking parser', () => {
     }
   });
 
-  it('distinguishes route assignment, actual dispatch, failed delivery and a return to the station', () => {
+  it('distinguishes acceptance, a station receipt, route assignment, actual dispatch, failed delivery and a return to the station', () => {
+    expect(xcargoState('199')?.stage).toBe('accepted'); expect(xcargoState('200')?.stage).toBe('in_transit');
     expect(xcargoState('301')?.stage).toBe('in_transit'); expect(xcargoState('303')?.stage).toBe('out_for_delivery');
     expect(xcargoState('311')?.stage).toBe('failed_attempt'); expect(xcargoState('206')?.stage).toBe('in_transit');
     expect(statusMap.stage('360', 'ignored private wording')).toBe('delivered');

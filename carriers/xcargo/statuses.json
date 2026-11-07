@@ -11,9 +11,10 @@
     {
       "code": "199",
       "wording": "Aceptación de envío",
-      "stage": "in_transit",
+      "stage": "accepted",
       "language": "es",
-      "confirmedBy": "portal"
+      "confirmedBy": "portal",
+      "note": "The line-haul scan after the order's creation and before containerization: X-Cargo takes the shipment in."
     },
     {
       "code": "130",
@@ -27,7 +28,8 @@
       "wording": "Recibido",
       "stage": "in_transit",
       "language": "es",
-      "confirmedBy": "portal"
+      "confirmedBy": "portal",
+      "note": "A station's receipt after the container leg, as Big Smart's platform uses code 200; the parcel is already in X-Cargo's hands."
     },
     {
       "code": "201",

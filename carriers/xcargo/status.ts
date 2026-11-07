@@ -4,9 +4,11 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 interface State { description: string; stage: Stage; type: 'line_haul' | 'last_mile' }
 const STATES: Readonly<Record<string, State>> = {
   '101': { description: 'Shipment registered', stage: 'registered', type: 'line_haul' },
-  '199': { description: 'Shipment accepted', stage: 'in_transit', type: 'line_haul' },
+  // The first scan after the order's creation: X-Cargo takes the shipment in, before it is put in a container.
+  '199': { description: 'Shipment accepted', stage: 'accepted', type: 'line_haul' },
   '130': { description: 'Container closed', stage: 'in_transit', type: 'line_haul' },
   '131': { description: 'Container opened', stage: 'in_transit', type: 'line_haul' },
+  // A station's receipt after the container leg, like Big Smart's own code 200, so the parcel is already in transit.
   '200': { description: 'Received at station', stage: 'in_transit', type: 'line_haul' },
   '201': { description: 'At station', stage: 'in_transit', type: 'line_haul' },
   '210': { description: 'At last-mile station', stage: 'in_transit', type: 'last_mile' },

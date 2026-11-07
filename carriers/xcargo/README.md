@@ -24,7 +24,8 @@ One network-only retry restarts the two-request flow inside the caller's deadlin
 
 ## History and clocks
 
-Registration does not establish custody. Assignment to a route stays in transit;
+Registration does not establish custody; the acceptance that follows it does. A
+station's later receipt stays in transit. Assignment to a route stays in transit;
 the operator's actual dispatch establishes out for delivery. A return to the
 delivery station is not a return to sender. All source rows are validated before
 projected deduplication and the output cap; unknown codes keep history partial.
