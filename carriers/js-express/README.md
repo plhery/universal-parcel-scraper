@@ -79,6 +79,7 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - The delivering depot's receipt comes before each round and again after a missed delivery. After
   one, the parcel waits for the next round or the recipient's request, so the receipt keeps the
   missed delivery's stage with no source of its own, and the parcel does not step back to in transit.
+  The recipient's redirect after the third miss moves the parcel on.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.

@@ -398,6 +398,13 @@ describe('JS Express tracking adapter', () => {
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map', last_status_text: 'RECEIVED AT LOCAL DEPOT' });
     // The map alone, as a replay reads a stored row, still gives the receipt its own stage.
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'RECEIVED AT LOCAL DEPOT' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The recipient's redirect after the third miss moves the parcel on, and a receipt after it is the depot's again.
+    const redirected = parseJsExpress(waybill([coded('2026-11-07 09:30:00', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      coded('2026-11-07 08:08:48', "SHIPMENT REDIRECTED: ON CONSIGNEE'S REQUEST", 'OIT'), coded('2026-11-07 08:08:04', 'RECEIVED AT LOCAL DEPOT', 'OIT'),
+      ...rows], { country: 'Germany' }), DELIVERED);
+    expect(redirected.events?.slice(0, 3).map((event) => [event.stage, event.stage_source])).toEqual([
+      ['in_transit', 'carrier_map'], ['in_transit', 'carrier_map'], ['failed_attempt', 'none']]);
+    expect(redirected).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
   });
 
   it("dates a row without a place on the destination's one clock when the offset it states is that clock's, and keeps its code", () => {
