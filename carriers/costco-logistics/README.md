@@ -1,30 +1,30 @@
 # Costco Logistics
 
-Costco Logistics parcels use enabled universal providers. There is no dedicated adapter yet.
+Tracks Costco Logistics' own `1I` references for its US big and bulky delivery network,
+formerly Innovel Solutions. Costco retail orders carried by another courier are outside
+this adapter's scope.
 
-Costco Logistics, formerly Innovel Solutions, delivers and installs Costco's big and bulky
-orders in the United States. Its site is logistics.costco.com.
+The `trawl` step opens the official `logistics.costco.com/tracking?id=` page and captures
+its `GET /api/tracking/api/v2/tracking/{number}` reply. The interface enforces browser-origin
+access; copying its two fixed headers into a direct request does not replace that flow.
+No account, recipient input or saved session is needed. Configure `FLARESOLVERR_URL` for
+the browser service; enabled universal providers remain available.
 
-## Numbers
+Both the response's number list and its single detail must match the complete requested
+tracking number. The parser keeps every dated milestone using `resultStatus`, the current
+page's wording: the legacy `status` repeats the same text for arrival and out for delivery.
+Scan clocks retain the delivering market's wall time; the API states no offset.
+General clock resolution can add a separately labelled deduction without replacing that wall time.
 
-A tracking number is `1I`, the order date as eight digits and nine digits. Archived lookups and
-scheduling pages of its site give six numbers, and its tracker answers one, so
-`costco-logistics-1` has high confidence. Nine-digit orders and ten-digit work orders share
-their layouts with many carriers and get no rule.
+Location strings can contain the delivery address, so they are omitted along with contact,
+order, payment and scheduling fields. Delivery slots are not interpreted as estimates.
+Nine-digit orders, work-order searches, scheduling capabilities and account pages are not
+used. Only the API's exact `98` / `NODATAFOUND` envelope is a missing parcel; verification,
+rate limits, empty histories and changed replies retain their failure kinds.
 
-## Tracker
+Run live tests with `COSTCO_LOGISTICS_TRACKING_NUMBER`, optionally
+`COSTCO_LOGISTICS_UNKNOWN_NUMBER`, and `FLARESOLVERR_URL` in an environment file outside Git:
 
-The tracking page publishes two fixed headers for its JSON interface, which also enforces
-browser-origin access. Sending those headers alone is insufficient; a dedicated browser flow
-is not implemented. Replies include the delivery address, which an adapter must leave out.
-Clocks have no zone and are local to the delivering market.
-
-## Links
-
-The tracking page opens a number from its `id` parameter. Scheduling links carry an order key,
-which the catalog never reads.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:carriers:live -- carriers/costco-logistics/adapter.live.test.ts
+```

@@ -1,4 +1,41 @@
 {
   "carrier": "costco-logistics",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Order Placed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Processing Order",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Departed from Costco Distribution Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Arrived at Costco Delivery Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Out for Delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Delivery Completed",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "portal"
+    }
+  ]
 }

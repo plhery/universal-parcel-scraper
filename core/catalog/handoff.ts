@@ -33,6 +33,7 @@ import { isFxdcPostReference } from '../detection/fxdcPost.js';
 import { isFrontierCaReference } from '../detection/frontierCa.js';
 import { isExpedicoReference } from '../detection/expedico.js';
 import { isFanCourierReference } from '../detection/fanCourier.js';
+import { isCostcoLogisticsReference } from '../detection/costcoLogistics.js';
 import { countryCode } from '../time/index.js';
 
 export interface DeliveryHandoff {
@@ -44,6 +45,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
+  'costco-logistics': isCostcoLogisticsReference,
   'seino-super-express': isSeinoSuperExpressReference,
   skladusa: isSkladusaReference,
   xcargo: isXcargoReference,

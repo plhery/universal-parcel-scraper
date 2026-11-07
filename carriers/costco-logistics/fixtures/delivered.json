@@ -1,0 +1,92 @@
+{
+  "status": {
+    "statusCode": "00",
+    "statusMessage": "SUCCESS"
+  },
+  "errorDetails": null,
+  "serviceResponse": {
+    "trackingNumbers": [
+      "1I20260907000000017"
+    ],
+    "address": "17 Synthetic Recipient Street, Example City",
+    "msc_phone_number": "+1 202-555-0117",
+    "zipCd": "00000",
+    "trackingDetails": [
+      {
+        "trackingNumber": "1I20260907000000017",
+        "orderNumber": "000000017",
+        "address": "17 Synthetic Recipient Street, Example City",
+        "shipDate": "09/10/2026",
+        "appointment": "Y",
+        "targetWindowFrom": "8:00 am",
+        "targetWindowTo": "5:00 pm",
+        "showLink": "https://example.invalid/private-scheduling-capability",
+        "statCode": "DEL",
+        "mainStatus": "Delivered",
+        "orderDetailList": [
+          {
+            "date": "09/11/26",
+            "orderList": [
+              {
+                "time": "1:04 pm",
+                "status": "Delivery Complete",
+                "resultStatus": "Delivery Completed",
+                "location": "17 Synthetic Recipient Street, Example City"
+              }
+            ]
+          },
+          {
+            "date": "09/10/26",
+            "orderList": [
+              {
+                "time": "7:45 am",
+                "status": "Received at MDO",
+                "resultStatus": "Out for Delivery",
+                "location": null
+              }
+            ]
+          },
+          {
+            "date": "09/09/26",
+            "orderList": [
+              {
+                "time": "10:30 am",
+                "status": "Received at MDO",
+                "resultStatus": "Arrived at Costco Delivery Center",
+                "location": "123 Example Depot Road"
+              }
+            ]
+          },
+          {
+            "date": "09/08/26",
+            "orderList": [
+              {
+                "time": "12:15 pm",
+                "status": "Shipped/Loaded DDC Xdock",
+                "resultStatus": "Departed from Costco Distribution Center",
+                "location": "456 Example Depot Road"
+              }
+            ]
+          },
+          {
+            "date": "09/07/26",
+            "orderList": [
+              {
+                "time": "12:00 am",
+                "status": "Registered w/ Vndr",
+                "resultStatus": "Processing Order",
+                "location": null
+              },
+              {
+                "time": "12:00 am",
+                "status": "Order Placed",
+                "resultStatus": "Order Placed",
+                "location": null
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

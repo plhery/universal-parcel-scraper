@@ -127,6 +127,7 @@ import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapte
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
 import { adapter as correosExpress } from '../carriers/correos-express/adapter.js';
 import { adapter as correosSpain } from '../carriers/correos-spain/adapter.js';
+import { adapter as costcoLogistics } from '../carriers/costco-logistics/adapter.js';
 import { adapter as courierCenter } from '../carriers/courier-center/adapter.js';
 import { adapter as couriersplease } from '../carriers/couriersplease/adapter.js';
 import { adapter as cruzDelSur } from '../carriers/cruz-del-sur/adapter.js';
@@ -872,6 +873,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-el-salvador": correosElSalvador,
     "correos-express": correosExpress,
     "correos-spain": correosSpain,
+    "costco-logistics": costcoLogistics,
     "courier-center": courierCenter,
     "couriersplease": couriersplease,
     "cruz-del-sur": cruzDelSur,
@@ -1743,7 +1745,7 @@ export const REGISTRY: RegistryDefinition = {
     "correos-nicaragua": "universal",
     "correos-spain": "correos-spain",
     "coship": "universal",
-    "costco-logistics": "universal",
+    "costco-logistics": "costco-logistics",
     "coupang-logistics": "universal",
     "courier-center": "courier-center",
     "courier-it": "universal",

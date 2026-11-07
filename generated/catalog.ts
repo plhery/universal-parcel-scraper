@@ -13880,7 +13880,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "costco-logistics",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://logistics.costco.com/",
     "trackingUrlTemplate": "https://logistics.costco.com/tracking?id={trackingNumber}",
