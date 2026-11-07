@@ -69,6 +69,11 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   if (carrierId === 'noest' && NOEST_LAYOUT.test(normalized)) return noestRequestNumber(normalized);
   // Paperfly's page finds a number only with the hyphens between its parts.
   if (carrierId === 'paperfly' && PAPERFLY_LAYOUT.test(normalized)) return paperflyRequestNumber(normalized);
+  // Paxel's form submits the printed AWB, including its dot and hyphens.
+  if (carrierId === 'paxel') {
+    const awb = /^EM([A-Z0-9]{10})(20\d{6})(\d)([A-Z0-9]{6})$/.exec(normalized);
+    if (awb) return `EM.${awb[1]}-${awb[2]}-${awb[3]}-${awb[4]}`;
+  }
   if (carrierId === 'gofo-fr') return regionalGofoRequestNumber(normalized);
   // Border Express's tracker takes a consignment, not the barcode of one of its units.
   if (carrierId === 'border-express') return borderExpressBarcodeConsignment(normalized) ?? raw;

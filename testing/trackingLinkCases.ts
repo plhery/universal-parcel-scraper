@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'paxel', number: 'EM.ABCDEFGHJK-20261107-1-ZZZZZZ',
+    route: /^https:\/\/paxel\.co\/id\/lacak-pengiriman(?:\?awb_req=EM\.ABCDEFGHJK-20261107-1-ZZZZZZ)?$/,
+    marker: /Lacak Pengiriman|AWB Tidak Valid/ },
   { carrier: 'costco-logistics', number: '1I20261001999999999',
     route: /^https:\/\/logistics\.costco\.com\/tracking\?id=1I20261001999999999$/,
     marker: /Track My Delivery/ },

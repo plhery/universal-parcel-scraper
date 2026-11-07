@@ -22,9 +22,9 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://paxel.co/id/track-shipments?awb_req={trackingNumber}",
-    "searchUrl": "https://paxel.co/en/track-shipments",
-    "canaryUrl": "https://paxel.co/en/track-shipments",
+    "url": "https://paxel.co/id/lacak-pengiriman?awb_req={trackingNumber}",
+    "searchUrl": "https://paxel.co/id/lacak-pengiriman",
+    "canaryUrl": "https://paxel.co/id/lacak-pengiriman",
     "shows": [],
     "scraped": [],
     "discarded": [],
@@ -35,7 +35,7 @@
       "domains": [
         "paxel.co"
       ],
-      "pathPattern": "^/(?:id|en)/track-shipments/?$",
+      "pathPattern": "^/(?:id/lacak-pengiriman|(?:id|en)/track-shipments)/?$",
       "params": [
         "awb_req"
       ]

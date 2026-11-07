@@ -35893,15 +35893,15 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://paxel.co/en/track-shipments",
-    "trackingUrlTemplate": "https://paxel.co/id/track-shipments?awb_req={trackingNumber}",
-    "trackingSearchUrl": "https://paxel.co/en/track-shipments",
+    "canaryUrl": "https://paxel.co/id/lacak-pengiriman",
+    "trackingUrlTemplate": "https://paxel.co/id/lacak-pengiriman?awb_req={trackingNumber}",
+    "trackingSearchUrl": "https://paxel.co/id/lacak-pengiriman",
     "linkRules": [
       {
         "domains": [
           "paxel.co"
         ],
-        "pathPattern": "^/(?:id|en)/track-shipments/?$",
+        "pathPattern": "^/(?:id/lacak-pengiriman|(?:id|en)/track-shipments)/?$",
         "params": [
           "awb_req"
         ]

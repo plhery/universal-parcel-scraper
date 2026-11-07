@@ -15,21 +15,20 @@ letters or digits. No other carrier's numbers or rules use that layout.
 
 ## Links
 
-`paxel.co/id/track-shipments?awb_req={number}`, the address archived lookups use, fills the
-tracker's form with the number and submits it. The English page, `/en/track-shipments`, is the
-same page.
+The canonical Indonesian page, `paxel.co/id/lacak-pengiriman?awb_req={number}`, fills the
+tracker's form and submits it. Links restore the AWB's printed dot and hyphens after
+normalization. The older Indonesian `/id/track-shipments` address redirects without
+preserving the number. Pasted links from that address and the English tracker remain readable.
 
 ## Why there is no adapter
 
-Cloudflare puts an interactive check, a Turnstile checkbox, in front of every page on
-`paxel.co` for visitors outside Indonesia, so a server elsewhere gets HTTP 403 before it
-reaches the tracker. Behind the check the tracker is a server-rendered form: the page posts
-the numbers, with their dot and hyphens, and its session's form token to
-`/{id|en}/track-shipments`, and renders the histories in the reply.
+The public page can require Cloudflare verification. TRAWL's ordinary browser tiers can
+reach the form and complete its automatic submission. The page posts the printed numbers
+and its session's form token to `/id/lacak-pengiriman`, then renders the result.
 
 The Paxel Android app (`com.paxel`) shows the history of the signed-in account's own
 shipments only, and shares the web tracker's link for any other. A dedicated public-page
-verification flow is not implemented, so Paxel stays on universal providers.
+found-shipment parser is not implemented, so Paxel stays on universal providers.
 
 ## Testing
 

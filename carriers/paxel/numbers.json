@@ -133,6 +133,86 @@
         "confidence": "high"
       },
       "note": "An archived lookup on Paxel's own tracker address; the capture was opened, but it shows only the form filled with this number and no history."
+    },
+    {
+      "number": "EM.K5SL6DIEJO-20260422-1-PY7STY",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2026/05/02/surat-pembaca/klaim-kerusakan-laptop-di-paxel-ditolak-dan-tidak-ada-transparansi",
+        "date": "2026-05-02",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "paxel",
+        "confidence": "high"
+      },
+      "note": "A public complaint attributes this shipment to Paxel; whole-number guest history is unconfirmed."
+    },
+    {
+      "number": "EM.BIDHRMUMEA-20260707-1-KMD2DG",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2026/07/18/surat-pembaca/lalai-kirim-sameday-paxel-tawarkan-ganti-rugi-10x-ongkir-padahal-nilai-barang-hampir-3-kali-lipatnya",
+        "date": "2026-07-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "paxel",
+        "confidence": "high"
+      },
+      "note": "A public complaint attributes this shipment to Paxel; whole-number guest history is unconfirmed."
+    },
+    {
+      "number": "EM.BIDHRMUMEA-20260707-1-H7VK8S",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2026/07/18/surat-pembaca/lalai-kirim-sameday-paxel-tawarkan-ganti-rugi-10x-ongkir-padahal-nilai-barang-hampir-3-kali-lipatnya",
+        "date": "2026-07-18",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "paxel",
+        "confidence": "high"
+      },
+      "note": "A public complaint attributes this shipment to Paxel; whole-number guest history is unconfirmed."
+    },
+    {
+      "number": "TSPX-00601960304",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2026/05/17/surat-pembaca/tiktok-shop-x-tokopedia-menahan-dana-hasil-penjualan-atas-barang-yang-sudah-diterima-konsumen-dengan-paxel-sameday",
+        "date": "2026-05-17",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "assessment": "review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A public complaint attributes this shipment to Paxel; whole-number guest history is unconfirmed."
     }
   ]
 }
