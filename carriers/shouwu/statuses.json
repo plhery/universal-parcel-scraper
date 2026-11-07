@@ -567,6 +567,69 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-05",
       "note": "A delivering partner's failed attempt; another delivery run follows. The link the wording points to is not relayed."
+    },
+    {
+      "wording": "SHIPMENT INFORMATION SUBMITTED",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The order's data, written a second before \"Shipment information received\"."
+    },
+    {
+      "wording": "其他 | Client Order Shipped",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The delivering partner's data row, beside its \"Shipment Announced\", with Shouwu's 其他 (other) before it. Dated after the parcel moved, it reads as in transit."
+    },
+    {
+      "wording": "The warehouse is currently processing the goods.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The flying carrier's warehouse handling the parcel, days after it arrived there."
+    },
+    {
+      "wording": "The shipment begins at the point of origin.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "Leaving the warehouse at the origin, seconds after its processing."
+    },
+    {
+      "wording": "Estimated time of take-off",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The flight booked, before the export clearance."
+    },
+    {
+      "wording": "因中港查验延误，需安排新航班。",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "An inspection on the road to Hong Kong delayed the parcel, so a new flight is booked: it waits for that flight, not on a problem."
+    },
+    {
+      "wording": "Export Clearance",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "China's export clearance, a day before the flight; the parcel is not held in customs."
+    },
+    {
+      "wording": "The flight has departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07"
     }
   ]
 }

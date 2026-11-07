@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NoHistoryError } from '../../core/errors/index.js';
+import { readLateRegistrations } from '../../core/result/registration.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
@@ -374,6 +375,11 @@ describe('Shouwu International status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     expect(shouwuStage('预计航班')).toBeNull();
+    // The delivering partner's data row is no step back once the parcel moved.
+    const late = readLateRegistrations({ status: 'in_transit', last_status_text: '', last_update: null, expected_delivery: null, events: [
+      { time: '2026-01-02T22:49:56Z', description: '其他 | Client Order Shipped', stage: 'registered', stage_source: 'carrier_map' },
+      { time: '2026-01-02T12:40:18Z', description: 'Shipment arrived at a carrier facility', stage: 'in_transit', stage_source: 'carrier_map' }] });
+    expect(late.events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
     // iMile, the delivering partner in Italy, opens its rows with its centre: its sentences read them whatever the centre.
     for (const [wording, stage] of [['【NAP 03】Arrived.', 'in_transit'], ['【NAP 03】Shipment out for delivery.', 'out_for_delivery'],
       ['【NAP 03】 Back To DS.', 'failed_attempt'], ['【Example Transit Center】Order Closed.', 'exception']] as const) {
