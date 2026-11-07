@@ -89,6 +89,8 @@ describe('carrier names reported by universal providers', () => {
     // SwiftX is named for the last leg and DHLink, whose numbers have no layout of their own, is left.
     expect(universalCarrierHints(['DHLink', 'SwiftX'], 'QQT0000000000HZ').discovered_carrier).toBe('dhlink');
     expect(universalCarrierHints(['DHLink', 'SwiftX'], 'SWX000000000000000000').discovered_carrier).toBe('swiftx');
+    // 17TRACK names Korea Post by its ePOST site beside China Post for mail from China; the S10 number is China Post's.
+    expect(universalCarrierHints(['China Post', 'ePOST (인터넷우체국)'], 'LX123456785CN').discovered_carrier).toBe('china-post');
     // Two carriers without a layout of their own, a name outside the catalog, or no number: no hint.
     expect(universalCarrierHints(['DHLink', 'Nova Poshta'], 'QQT0000000000HZ').discovered_carrier).toBeUndefined();
     expect(universalCarrierHints(['Some Forwarder', 'SwiftX'], 'EYT0000000000HZ').discovered_carrier).toBeUndefined();

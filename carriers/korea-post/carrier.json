@@ -2,7 +2,9 @@
   "id": "korea-post",
   "displayName": "Korea Post",
   "aliases": [
-    "South Korea Post"
+    "South Korea Post",
+    "ePOST (인터넷우체국)",
+    "ePOST (인터넷우체국)(Domestic)"
   ],
   "region": {
     "countries": [

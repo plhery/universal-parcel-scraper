@@ -4585,7 +4585,9 @@
     "displayName": "Korea Post",
     "color": "#da291c",
     "aliases": [
-      "South Korea Post"
+      "South Korea Post",
+      "ePOST (인터넷우체국)",
+      "ePOST (인터넷우체국)(Domestic)"
     ],
     "countries": [
       "KR"
@@ -43242,7 +43244,8 @@
       "Shopee Express Brasil",
       "Shopee Xpress Brasil",
       "Shopee Express Brazil",
-      "SPX Brasil"
+      "SPX Brasil",
+      "SPX Express (BR)"
     ],
     "countries": [
       "BR"
@@ -43336,7 +43339,8 @@
     "aliases": [
       "Shopee Express Malaysia",
       "Shopee Xpress Malaysia",
-      "SPX Malaysia"
+      "SPX Malaysia",
+      "SPX Express (MY)"
     ],
     "countries": [
       "MY"

@@ -323,6 +323,15 @@ describe('carrier names reported by universal providers', () => {
     for (const name of ['示例国际物流', 'Пример Доставка', 'Express']) expect(isKnownCarrierName(name)).toBe(false);
   });
 
+  it('reads 17TRACK\'s names for Korea Post\'s ePOST site and for SPX networks with a country code', () => {
+    expect(carrierIdFromName('ePOST (인터넷우체국)')).toBe('korea-post');
+    expect(carrierIdFromName('ePOST (인터넷우체국)(Domestic)')).toBe('korea-post');
+    expect(carrierIdFromName('ePost Global')).toBe('epost-global');
+    expect(carrierIdFromName('SPX EXPRESS (BR)')).toBe('spx-br');
+    expect(carrierIdFromName('SPX EXPRESS (MY)')).toBe('spx-my');
+    expect(carrierIdFromName('SPX Express')).toBeUndefined();
+  });
+
   it.each(['Example Parcel Co', 'Example Express Italy', 'Postexample Courier'])('treats %s as new', (name) => {
     expect(isKnownCarrierName(name)).toBe(false);
   });

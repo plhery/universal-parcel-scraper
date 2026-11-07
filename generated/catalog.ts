@@ -4589,7 +4589,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Korea Post",
     "color": "#da291c",
     "aliases": [
-      "South Korea Post"
+      "South Korea Post",
+      "ePOST (인터넷우체국)",
+      "ePOST (인터넷우체국)(Domestic)"
     ],
     "countries": [
       "KR"
@@ -43246,7 +43248,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Shopee Express Brasil",
       "Shopee Xpress Brasil",
       "Shopee Express Brazil",
-      "SPX Brasil"
+      "SPX Brasil",
+      "SPX Express (BR)"
     ],
     "countries": [
       "BR"
@@ -43340,7 +43343,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Shopee Express Malaysia",
       "Shopee Xpress Malaysia",
-      "SPX Malaysia"
+      "SPX Malaysia",
+      "SPX Express (MY)"
     ],
     "countries": [
       "MY"
