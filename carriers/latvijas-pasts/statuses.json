@@ -20,6 +20,7 @@
     { "code": "1120", "wording": "Item received at delivery office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The item can still go out for delivery from there." },
     { "code": "39", "wording": "Item handed over for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "Seen from foreign posts' events in the destination country." },
     { "code": "1134", "wording": "Notification - pick-up invitation printed", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "The delivery office printed the invitation to collect the item there; its office is the pickup point." },
+    { "code": "75", "wording": "Item arrived at pick-up point", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "A foreign post's event: the item waits at its collection point, as UPU's EDH. It names the country, not the point." },
     { "code": "37", "wording": "Item delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Also the foreign post's delivery of an item sent abroad." }
   ]
 }

@@ -42,7 +42,8 @@ Each scan carries a numeric event code, its wording, a clock and the Latvian off
 country of an event a foreign post relayed. Both share one code list, which the adapter maps;
 codes it does not know go to the shared wording rules. "Item returned from Customs" is a customs
 release, not a return. The pickup point is the office that printed the invitation to collect the
-item, while it waits there or once it was collected there.
+item, while it waits there or once it was collected there. A foreign post's arrival at its
+collection point names only the country, so the item waits for collection without a pickup point.
 
 Clocks carry no offset. A Latvian office's scan is on Riga's clock, and a foreign post's event on
 its country's when the country keeps one zone; other events, and a clock that summer time makes

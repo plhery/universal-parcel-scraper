@@ -30,6 +30,8 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   39: 'out_for_delivery',
   // The delivery office printed the invitation to collect the item there.
   1134: 'ready_for_pickup',
+  // A foreign post's item waiting at its collection point, UPU's EDH.
+  75: 'ready_for_pickup',
   37: 'delivered',
 };
 

@@ -124,6 +124,11 @@ describe('Latvijas Pasts tracking adapter', () => {
     expect(collected).toMatchObject({ current_stage: 'delivered' });
     expect(collected.events![1]).toMatchObject({ stage: 'ready_for_pickup', location: 'FRANCE' });
     expect(collected.pickup_point).toBeUndefined();
+    const waiting = edited('abroad', payload => {
+      payload.data!.unshift({ ...payload.data![0]!, event_timestamp: '2026-02-22 12:00:00', event_code: '75', event: 'Item arrived at pick-up point' });
+    });
+    expect(parseLatvijasPasts(waiting, ABROAD)).toMatchObject({ current_stage: 'ready_for_pickup', current_stage_source: 'carrier_map' });
+    expect(parseLatvijasPasts(waiting, ABROAD).pickup_point).toBeUndefined();
   });
 
   it('answers only for the requested number and rejects malformed histories', () => {
@@ -243,6 +248,8 @@ describe('Latvijas Pasts status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '7', description: 'Item returned from Customs' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '1134', description: 'Notification - pick-up invitation printed' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '75', description: 'Item arrived at pick-up point' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
   });
 });
