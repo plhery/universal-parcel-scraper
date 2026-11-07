@@ -29,6 +29,23 @@ describe('placeTimeZone', () => {
     expect(splitRegionTownZone('US', 'TX', 'Hankamer')).toBe('America/Chicago');
   });
 
+  it('keeps Eastern time in eastern Tennessee and Central time in western Kentucky, on either side of the county lines', () => {
+    for (const town of ['Bristol, TN', 'Knoxville, TN', 'Chattanooga, TN', 'Oneida, TN', 'Harriman, TN', 'Dayton, TN']) {
+      expect(zoneOf(town), town).toBe('America/New_York');
+    }
+    for (const town of ['Nashville, TN', 'Crossville, TN', 'Jamestown, TN', 'Pikeville, TN', 'Jasper, TN']) {
+      expect(zoneOf(town), town).toBe('America/Chicago');
+    }
+    for (const town of ['Bowling Green, KY', 'Paducah, KY', 'Hardinsburg, KY', 'Columbia, KY', 'Albany, KY']) {
+      expect(zoneOf(town), town).toBe('America/Chicago');
+    }
+    for (const town of ['Louisville, KY', 'Brandenburg, KY', 'Campbellsville, KY', 'Somerset, KY', 'Monticello, KY']) {
+      expect(zoneOf(town), town).toBe('America/New_York');
+    }
+    expect(splitRegionTownZone('US', 'TN', 'BRISTOL')).toBe('America/New_York');
+    expect(splitRegionTownZone('US', 'KY', 'BOWLING GREEN')).toBe('America/Chicago');
+  });
+
   it('reads a country of one clock, a state or province, or the nearest zone of a large country', () => {
     expect(zoneOf('Leipzig/Halle Hub')).toBe('Europe/Berlin');
     expect(zoneOf('Changsha')).toBe('Asia/Shanghai');

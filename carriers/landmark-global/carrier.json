@@ -24,7 +24,8 @@
     "steps": [
       "direct"
     ],
-    "localClocks": true
+    "localClocks": true,
+    "pageClock": true
   },
   "capabilities": [
     "history",

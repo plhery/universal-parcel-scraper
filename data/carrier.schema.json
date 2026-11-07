@@ -183,6 +183,10 @@
           "description": "True when the adapter can return scans without an instant: a wall clock with no UTC offset, or provider text. Consumers can keep that history beside instants and ask fallback providers for dated scans.",
           "type": "boolean"
         },
+        "pageClock": {
+          "description": "True when the carrier's page states every scan on one clock of its own rather than the clock where the scan happened, as Landmark Global's states US Central time. A consumer reads the day of such a scan on the clock of its place.",
+          "const": true
+        },
         "dateOnlyScans": {
           "description": "True when every scan the adapter dates by its day alone is one the carrier gives no clock by design, such as a delivery round or a history listed under day headings. Fallback providers have no clock to add to such a scan.",
           "const": true

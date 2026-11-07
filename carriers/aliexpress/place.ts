@@ -41,7 +41,9 @@ const US_TOWN = /^([^,]+),\s*([A-Z]{2})\s+(\d{5})$/u;
 
 /**
  * The place of a bracket, or ''. A town can follow its country, "[USA,Example City]",
- * and keeps a trailing postcode, "[Example Town 00000]". A town in the United States
+ * and keeps a trailing postcode, "[Example Town 00000]". Cainiao writes the scan's town
+ * in that bracket, so a town in capitals counts alone too ("[EXAMPLE CITY]"), with five
+ * letters or more or several words. A town in the United States
  * can come with its state and ZIP code, "[Example City, CA 00000]". A country alone
  * is the place too, "[ES]" or "[Spain 00000]", with the postcode put first so the
  * country stays last.
@@ -58,7 +60,7 @@ function bracketPlace(value: string, carriers: ReadonlySet<string>): string {
   const [, name = '', postcode] = /^(.*?)(?:\s+(\d{4,5}))?$/u.exec((rest ?? head).trim())!;
   const alone = country ? '' : countryLabel(name);
   if (alone) return postcode ? `${postcode}, ${alone}` : alone;
-  const town = townName(name, carriers, Boolean(country));
+  const town = townName(name, carriers, true);
   const place = town && postcode ? `${town} ${postcode}` : town;
   return place && country ? `${place}, ${country}` : place;
 }
@@ -67,10 +69,11 @@ function bracketPlace(value: string, carriers: ReadonlySet<string>): string {
  * Cainiao's global feed has no place field: it writes a scan's town in front
  * of its standard wording, "[Bordeaux] Out for delivery", in every language,
  * sometimes after its country, "[USA,Example City]", or its country alone, "[ES]".
- * A bracket that reads as a place becomes the location and the wording keeps the rest.
+ * A bracket that reads as a place becomes the location and the wording keeps the rest;
+ * `original` is then the wording as Cainiao wrote it.
  */
-export function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string } {
+export function placedWording(wording: string, carriers: ReadonlySet<string>): { description: string; location: string; original?: string } {
   const match = /^\s*\[([^[\]]{1,80})\]\s*(\S[\s\S]*)$/.exec(wording);
   const place = match ? bracketPlace(match[1]!, carriers) : '';
-  return place ? { description: match![2]!.trim(), location: place } : { description: wording, location: '' };
+  return place ? { description: match![2]!.trim(), location: place, original: wording } : { description: wording, location: '' };
 }

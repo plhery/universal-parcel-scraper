@@ -814,6 +814,10 @@
                 "location": {
                   "type": "string"
                 },
+                "original_description": {
+                  "type": "string",
+                  "description": "The carrier's wording as it came, when the adapter moved part of it out, such as a town into location."
+                },
                 "stage": {
                   "type": "string"
                 },

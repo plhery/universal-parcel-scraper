@@ -21,7 +21,9 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
 - The forwarder writes its scans in English: its Shenzhen warehouse's arrival (`ARRIVAL`) and
   departure (`SHIPMENT`) rows, each with a place, then the flight, customs and hand-over rows in
   Chinese and English, and the delivery partner's scans as it relays them, such as Poste
-  Italiane's. The stage comes from the wording in [status.ts](status.ts).
+  Italiane's. The stage comes from the wording in [status.ts](status.ts). A partner's scan can be
+  listed twice at one clock and place, its headline alone ("In transito") and with the partner's
+  sentence after it: when both give one stage, only the fuller row is kept.
 - Scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held
   back.

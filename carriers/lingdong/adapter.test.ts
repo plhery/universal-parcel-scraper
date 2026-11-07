@@ -6,7 +6,7 @@ import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/ind
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, LingdongTracker } from './adapter.js';
-import { LINGDONG_ORIGIN, parseLingdongPage, parseLingdongTrack } from './parser.js';
+import { LINGDONG_ORIGIN, parseLingdongPage, parseLingdongTrack, repeatsLingdongRow } from './parser.js';
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 import carrier from './carrier.json' with { type: 'json' };
@@ -62,6 +62,27 @@ describe('Lingdong International tracking adapter', () => {
     expect(result.canonical_tracking_number ?? result.delivery_tracking_number).toBeUndefined();
     const text = JSON.stringify(result);
     for (const value of ['Synthetic Recipient', 'Synthetic Shop', 'LD-TEST-001', 'LDTEST0000000000001']) expect(text, value).not.toContain(value);
+  });
+
+  it('keeps the fuller of the two rows it lists for one partner scan, headline alone and with its sentence', () => {
+    const payload = structuredClone(fixture('track')) as Array<{ data: Array<{ trackDetails: Array<Record<string, string>> }> }>;
+    const details = payload[0]!.data[0]!.trackDetails;
+    const row = (content: string, date: string) => ({ ...details[0]!, track_content: content, track_kind: '', track_location: 'SYNTHETIC HUB',
+      track_date: date, track_createdate: date });
+    // Newest first, as the tracker lists them: the fuller row above the headline alone, then an earlier scan.
+    details.unshift(row('In transito, la spedizione è in transito', '2026-03-05 10:00:00'), row('In transito', '2026-03-05 10:00:00'),
+      row('In transito', '2026-03-05 09:00:00'));
+    const events = parseLingdongTrack(payload, NUMBER, Date.parse('2026-03-05T06:00:00Z'))!.events ?? [];
+    expect(events.slice(0, 2).map(({ time, description, stage }) => [time, description, stage])).toEqual([
+      ['2026-03-05T10:00:00+08:00', 'In transito, la spedizione è in transito', 'in_transit'],
+      ['2026-03-05T09:00:00+08:00', 'In transito', 'in_transit'],
+    ]);
+    expect(events).toHaveLength(4);
+    expect(repeatsLingdongRow('In transito', 'In transito, la spedizione è in transito')).toBe(true);
+    expect(repeatsLingdongRow('In transito, la spedizione è in transito', 'In transito')).toBe(false);
+    // A headline whose fuller row gives another stage, or a headline the map does not know, stays its own row.
+    expect(repeatsLingdongRow('In consegna', 'In consegna, la spedizione è stata consegnata')).toBe(false);
+    expect(repeatsLingdongRow('Synthetic', 'Synthetic, the same')).toBe(false);
   });
 
   it('reads the page’s unknown-number answer as not found', async () => {

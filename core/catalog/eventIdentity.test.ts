@@ -434,6 +434,10 @@ describe('same-instant identity policies', () => {
     const moved = { ...countryFirst, description: 'Arrived at local delivery center', location: 'EXAMPLE CITY, USA' };
     expect(policy?.matches?.(moved, countryFirst)).toBe(true);
     expect(policy?.matches?.({ ...moved, location: 'ANOTHER CITY, USA' }, countryFirst)).toBe(false);
+    // So did a town in capitals alone, "[EXAMPLE CITY]".
+    const capitals = { ...stored, stage: 'in_transit', description: '[EXAMPLE CITY] Departed from destination country/region sorting center' };
+    expect(policy?.matches?.({ ...capitals, description: 'Departed from destination country/region sorting center', location: 'EXAMPLE CITY' }, capitals))
+      .toBe(true);
     // So did a country alone, with or without a postcode.
     const country = { ...stored, stage: 'in_transit', description: '[Spain 00000] Arrived at pick-up point' };
     expect(policy?.matches?.({ ...country, description: 'Arrived at pick-up point', location: '00000, Spain' }, country)).toBe(true);

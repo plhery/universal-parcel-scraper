@@ -39,6 +39,8 @@ export interface CarrierEvent extends JsonObject {
   time_zone_basis?: string;
   location?: string;
   description?: string;
+  /** The carrier's wording as it came, when the adapter moved part of it out, such as a town into `location`. */
+  original_description?: string;
   stage?: string;
   /** Explicit map, wording rule, or unresolved fallback used by the adapter. */
   stage_source?: string;
@@ -171,7 +173,7 @@ const OPTIONAL_TEXT_FIELDS = [
   'international_tracking_number',
   'timezone',
 ] as const;
-const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'stage', 'stage_source'] as const;
+const EVENT_TEXT_FIELDS = ['time', 'location', 'description', 'original_description', 'stage', 'stage_source'] as const;
 // A comma with nothing before or after it, or between it and the next.
 const EMPTY_PART = /^\s*,|,\s*(?:,|$)/;
 const NUMBER_FIELDS = ['delivery_tracking_number', 'canonical_tracking_number', 'international_tracking_number'] as const;

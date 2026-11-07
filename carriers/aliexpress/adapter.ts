@@ -269,6 +269,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
       // Cainiao Express's tracker states a town or a country code in `location`.
       location: placed.location || placeName(text(event.location), carriers),
       description: placed.description,
+      ...(placed.original ? { original_description: placed.original } : {}),
       // The code keys the app's review of a scan the map does not stage.
       ...(/^[A-Z0-9_]{1,64}$/.test(code) ? { provider_code: code } : {}),
       ...(stage ? { stage } : {}),

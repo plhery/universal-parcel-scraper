@@ -497,7 +497,8 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     expect(merged.events).toHaveLength(own.events!.length + 8);
     const scan = (code: string) => merged.events!.find((event) => event.provider_code === code);
     expect(scan('SC_OUTBOUND_SUCCESS')).toEqual({ time: '2026-05-14T23:50:00+08:00', location: 'Sampletown',
-      description: 'Departed from sorting center', provider_code: 'SC_OUTBOUND_SUCCESS', stage: 'in_transit', stage_source: 'carrier_map' });
+      description: 'Departed from sorting center', original_description: '[Sampletown] Departed from sorting center',
+      provider_code: 'SC_OUTBOUND_SUCCESS', stage: 'in_transit', stage_source: 'carrier_map' });
     expect(scan('PU_PICKUP_SUCCESS')).toMatchObject({ time: '2026-05-14T15:30:00+08:00', stage: 'accepted' });
     // Cainiao's handover to the airline has a day and no clock.
     expect(scan('LH_HO_AIRLINE')).toMatchObject({ local_time: '2026-05-17', stage: 'in_transit' });

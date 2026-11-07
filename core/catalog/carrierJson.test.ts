@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Ajv, type SchemaObject } from 'ajv';
 import { describe, expect, it } from 'vitest';
+import { CARRIER_DEFINITIONS } from './definitions.js';
 
 const catalogDirectory = path.dirname(fileURLToPath(import.meta.url));
 const carriersDirectory = path.resolve(catalogDirectory, '..', '..', 'carriers');
@@ -51,6 +52,13 @@ describe('carrier.json', () => {
     const dayOnly = folders.filter((folder) => tracking(folder).dateOnlyScans);
     expect(dayOnly).toContain('brt');
     expect(dayOnly.filter((folder) => !tracking(folder).localClocks)).toEqual([]);
+  });
+
+  it("says which carriers' pages state every scan on a clock of their own, and the catalog carries it", () => {
+    const pageClocks = folders.filter((folder) => (readCarrier(folder).tracking as { pageClock?: boolean }).pageClock);
+    expect(pageClocks).toEqual(['landmark-global']);
+    expect(CARRIER_DEFINITIONS['landmark-global'].tracking.pageClock).toBe(true);
+    expect(CARRIER_DEFINITIONS['dhl-express'].tracking).not.toHaveProperty('pageClock');
   });
 
   it('flags local clocks wherever an adapter writes a scan without an instant', () => {

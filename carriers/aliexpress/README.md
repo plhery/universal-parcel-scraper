@@ -116,14 +116,14 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   notice stays the last update.
 - The global feed has no place field. It writes a scan's town in brackets before the standard
   wording, `[Town] Out for delivery`, in every language. That town becomes the location and the
-  wording keeps the rest. A bracket holding other digits than a trailing postcode, capitals only,
-  fewer than three letters or a carrier the module names stays in the text, unless it names a
-  country. Explicit numbered arrondissements of Paris, Lyon and Marseille are accepted even in
-  uppercase. Cainiao Express's tracker puts a town or a country code in `location`; the town rule
-  reads it when the wording has no bracket. A bracket can name the country first,
+  wording keeps the rest, and the event's `original_description` the wording as it came. A
+  bracket holding other digits than a trailing postcode, fewer than three letters, a name in
+  capitals with fewer than five letters and one word, or a carrier the module names stays in the
+  text, unless it names a country. Explicit numbered arrondissements of Paris, Lyon and Marseille are accepted even in
+  uppercase. Cainiao Express's tracker puts a town or a country code in `location`, read when the
+  wording has no bracket by the same rule, except that a name in capitals alone is none there. A bracket can name the country first,
   `[USA,Example City]` or `[ES,Town 00000]`: the location is then the town, with a trailing
-  postcode, followed by that country, and a town in capitals counts when it has five letters or
-  several words. A US town can come with its state and ZIP code, `[Town, CA 00000]`, and keeps
+  postcode, followed by that country. A US town can come with its state and ZIP code, `[Town, CA 00000]`, and keeps
   them, as USPS writes its places. A bracket can also name a country alone, `[ES]` or `[Spain 00000]`, which puts
   the postcode first so the country stays last. A country code a state shares is written out
   ("Canada"). Otherwise the location is the town alone.

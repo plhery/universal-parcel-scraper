@@ -3738,7 +3738,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "landmark-global",
-      "localClocks": true
+      "localClocks": true,
+      "pageClock": true
     },
     "canaryUrl": "https://track.landmarkglobal.com/",
     "trackingUrlTemplate": "https://track.landmarkglobal.com/?search={trackingNumber}",

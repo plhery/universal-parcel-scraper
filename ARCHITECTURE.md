@@ -461,7 +461,9 @@ as BRT does a delivery round or a portal that lists its history under day headin
 `tracking.dateOnlyScans`: a consumer need not ask fallback providers for a clock no copy has. A
 carrier whose scans usually carry a clock and only sometimes lack one leaves it unset, and leaves
 `tracking.localClocks` unset too when its other scans are instants, so a consumer does not hold
-its answer back for a dated copy. A
+its answer back for a dated copy. A carrier whose page states every scan on one clock of its own,
+as Landmark Global's does US Central time wherever the scan was, sets `tracking.pageClock`: the
+instant stands, but a consumer reads the scan's day on its place's clock. A
 zone the carrier states, or one learned for it from copies that carry an instant, belongs in
 its adapter. More rows alone do not prove a fresher or more complete history.
 

@@ -87,7 +87,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   nearest the scans around it wins. A state split between zones keeps either, so Florida's
   Panhandle keeps Central time; a carrier that states one offset everywhere tells nothing.
   A scan without an offset there takes its town's: Central west of the Apalachicola River,
-  except Gulf County south of the Intracoastal Waterway, as 49 CFR 71.5 draws the line.
+  except Gulf County south of the Intracoastal Waterway, as 49 CFR 71.5 draws the line, and
+  along the county lines it names, Eastern in eastern Tennessee and Central in western Kentucky.
 - Context does not outweigh a city of a million people, or a town of 100,000 ten times the
   size of the namesake context picks, when it lies nearer the way between the scans around
   it: "Warsaw" between Lviv and New York is in Poland.

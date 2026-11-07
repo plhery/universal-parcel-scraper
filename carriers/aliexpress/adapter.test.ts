@@ -295,9 +295,18 @@ describe('Cainiao projection', () => {
     expect(scan('[FR] Arrived').events?.[0]).toMatchObject({ location: 'France', description: 'Arrived' });
     expect(scan('[Spain 99999] Arrived at pick-up point').events?.[0])
       .toMatchObject({ location: '99999, Spain', description: 'Arrived at pick-up point' });
+    // The bracket is where Cainiao writes the town, so a town in capitals counts alone too, with five
+    // letters or several words, and the event keeps the wording as it came.
+    expect(scan('[EXAMPLE CITY] Departed from destination country/region sorting center').events?.[0]).toEqual(expect.objectContaining({
+      location: 'EXAMPLE CITY', description: 'Departed from destination country/region sorting center',
+      original_description: '[EXAMPLE CITY] Departed from destination country/region sorting center',
+    }));
+    expect(scan('[EXAMPLEVILLE] Arrived').events?.[0]).toMatchObject({ location: 'EXAMPLEVILLE', description: 'Arrived' });
+    expect(scan('[EXAMPLEVILLE 99999] Arrived').events?.[0]).toMatchObject({ location: 'EXAMPLEVILLE 99999', description: 'Arrived' });
+    expect(scan('Arrived').events?.[0]).not.toHaveProperty('original_description');
     // Other codes, abbreviations, carrier names, numbers and a bracket alone are no place.
     for (const wording of ['[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
-      '[Hub 12] Arrived', '[Hub 123456] Arrived', '[EXAMPLEVILLE 99999] Arrived', '[Exampleville]', 'Arrived [Exampleville]',
+      '[Hub 12] Arrived', '[Hub 123456] Arrived', '[ABCD] Arrived', '[Exampleville]', 'Arrived [Exampleville]',
       '[USA,GOFO] Arrived', '[USA,Example Post] Arrived', '[Exampleville,Example City] Arrived',
       '[Exampleville, ZZ 00000] Arrived', '[Example Post, CA 00000] Arrived', '[Exampleville, CA 0000] Arrived', '[GOFO, CA 00000] Arrived']) {
       expect(scan(wording).events?.[0]).toMatchObject({ location: '', description: wording });
@@ -499,9 +508,11 @@ describe('Cainiao projection', () => {
     const event = project('PARIS 12E ARRONDISSEMENT').events?.[0];
     expect(event).toMatchObject({ location: 'PARIS 12E ARRONDISSEMENT', description: 'Package delivered' });
     expect(locatePlace(event!.location, { countries: ['FR'] })).toMatchObject({ country: 'FR', precision: 'city' });
-    for (const place of ['HUB 12', 'PARIS 75012', 'GOFO', 'PARIS 99E ARRONDISSEMENT']) {
+    for (const place of ['HUB 12', 'GOFO', 'PARIS 99E ARRONDISSEMENT']) {
       expect(project(place).events?.[0]?.location).toBeUndefined();
     }
+    // A town in capitals with its postcode is the town's place.
+    expect(project('PARIS 75012').events?.[0]?.location).toBe('PARIS 75012');
     expect(project('PARIS 12E ARRONDISSEMENT', 'PARIS 12E ARRONDISSEMENT').events?.[0]?.location).toBeUndefined();
   });
 

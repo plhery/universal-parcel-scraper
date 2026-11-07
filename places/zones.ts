@@ -164,13 +164,54 @@ function along(line: readonly (readonly [number, number])[], at: number): number
 // line, 104.92°W in the Census Bureau's TIGER county outlines; only those two counties' towns lie west of it.
 const CULBERSON_COUNTY_WEST = -104.918;
 
+// Eastern Tennessee and Central Kentucky as 49 CFR 71.5(c) and (d) draw them: Tennessee east of the
+// west lines of Scott, Morgan, Roane, Rhea and Hamilton counties keeps Eastern time, Kentucky west of
+// Meade, Hardin, Larue, Taylor, Casey, Pulaski and Wayne counties Central time. The line follows the
+// Census Bureau's cartographic county outlines to within a kilometre, [latitude, longitude] from its
+// north end, and each ring closes beyond the state's borders on that side.
+const TENNESSEE_EASTERN = [
+  [37.2, -84.785], [36.603, -84.785], [36.395, -84.659], [36.371, -84.701], [36.377, -84.723], [36.354, -84.727],
+  [36.351, -84.745], [36.338, -84.74], [36.325, -84.787], [36.298, -84.796], [36.28, -84.879], [36.239, -84.884],
+  [36.208, -84.914], [36.156, -84.908], [36.137, -84.871], [36.084, -84.832], [36.091, -84.805],
+  [36.059, -84.792], [35.995, -84.721], [35.908, -84.681], [35.825, -84.782], [35.774, -84.905],
+  [35.682, -84.99], [35.675, -84.982], [35.571, -85.108], [35.534, -85.099], [35.491, -85.146],
+  [35.476, -85.116], [35.446, -85.149], [35.456, -85.168], [35.319, -85.246], [35.147, -85.387],
+  [35.12, -85.392], [35.088, -85.362], [35.045, -85.382], [35.041, -85.409], [35.007, -85.428],
+  [34.983, -85.474], [34.5, -85.474], [34.5, -81], [37.2, -81]
+] as const;
+
+const KENTUCKY_CENTRAL = [
+  [38.9, -86.491], [38.046, -86.491], [37.799, -86.151], [37.594, -86.275], [37.585, -86.268], [37.602, -86.246],
+  [37.575, -86.233], [37.555, -86.176], [37.567, -86.114], [37.496, -86.054], [37.476, -86.05],
+  [37.458, -86.067], [37.422, -85.657], [37.437, -85.665], [37.471, -85.635], [37.46, -85.61], [37.47, -85.583],
+  [37.433, -85.585], [37.364, -85.478], [37.249, -85.393], [37.226, -85.411], [37.221, -85.372],
+  [37.192, -85.353], [37.227, -85.308], [37.247, -85.311], [37.272, -85.193], [37.312, -85.176],
+  [37.256, -85.057], [37.197, -85.053], [37.113, -84.97], [37.102, -84.954], [37.116, -84.901],
+  [37.047, -84.906], [36.998, -84.836], [36.945, -84.908], [36.961, -84.943], [36.91, -84.973],
+  [36.859, -85.064], [36.756, -85.004], [36.69, -85.019], [36.677, -85.001], [36.625, -84.999],
+  [36.616, -84.975], [36, -84.975], [36, -90], [38.9, -90]
+] as const;
+
+/** Whether a point lies inside a ring of [latitude, longitude] points. */
+function insideRing(ring: readonly (readonly [number, number])[], latitude: number, longitude: number): boolean {
+  let inside = false;
+  for (let index = 0, previous = ring.length - 1; index < ring.length; previous = index++) {
+    const [latA, lonA] = ring[index]!;
+    const [latB, lonB] = ring[previous]!;
+    if ((latA > latitude) !== (latB > latitude) && longitude < lonA + (lonB - lonA) * (latitude - latA) / (latB - latA)) inside = !inside;
+  }
+  return inside;
+}
+
 /**
  * The zone of a point in a state split between zones, where its place decides: Florida's
- * Panhandle keeps Central time, Texas's El Paso and Hudspeth counties Mountain time. Null where
- * the state's main zone holds.
+ * Panhandle keeps Central time, Texas's El Paso and Hudspeth counties Mountain time, eastern
+ * Tennessee Eastern time and western Kentucky Central time. Null where the state's main zone holds.
  */
 export function splitRegionZone(country: string, region: string, latitude: number, longitude: number): string | null {
   if (country === 'US' && region === 'TX') return longitude < CULBERSON_COUNTY_WEST ? 'America/Denver' : null;
+  if (country === 'US' && region === 'TN') return insideRing(TENNESSEE_EASTERN, latitude, longitude) ? 'America/New_York' : null;
+  if (country === 'US' && region === 'KY') return insideRing(KENTUCKY_CENTRAL, latitude, longitude) ? 'America/Chicago' : null;
   if (country !== 'US' || region !== 'FL') return null;
   const central = longitude < GULF_COUNTY_WEST
     || (longitude < along(APALACHICOLA_RIVER, latitude) && latitude > along(GULF_WATERWAY, longitude));
