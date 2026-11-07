@@ -14,6 +14,7 @@ import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrie
 import { checksumFailures } from '../../core/detection/detect.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { fedexTrackedNumber } from '../../core/detection/fedex.js';
+import { isYundaDomesticWaybill } from '../../core/detection/yunda.js';
 import { sharedClockZone } from '../../core/time/index.js';
 
 export { isKnownCarrierName } from '../../core/catalog/hints.js';
@@ -82,10 +83,13 @@ const NAME_CHECKED_RULES: ReadonlySet<string> = new Set(['fedex-1']);
 /**
  * Carriers whose adapter refuses any number outside these shapes as invalid
  * input before any request. Providers name FedEx for 18-digit SSCCs that
- * shippers print, which FedEx's tracker does not know.
+ * shippers print, which FedEx's tracker does not know. 17TRACK's "uda
+ * International" entry stands for Yunda, whose domestic feed refuses its
+ * international identifiers.
  */
 const ADAPTER_NUMBERS: Readonly<Record<string, (trackingNumber: string) => boolean>> = {
   fedex: (trackingNumber) => fedexTrackedNumber(trackingNumber) !== null,
+  yunda: isYundaDomesticWaybill,
 };
 
 /**

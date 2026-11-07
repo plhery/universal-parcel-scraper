@@ -1,5 +1,6 @@
 import { returnedTrackingNumber } from '../../core/detection/returned.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
+import { isYundaDomesticWaybill } from '../../core/detection/yunda.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { zonedTime } from '../../core/time/index.js';
@@ -12,9 +13,7 @@ const ZONE = 'Asia/Shanghai';
 
 export function normalizeYundaNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  // The domestic client's documented lengths. It routes 76/77 international
-  // identifiers to the international website instead of this consumer feed.
-  if (!/^\d{13}(?:\d{2})?$/.test(number) || /^(?:76|77)/.test(number)) {
+  if (!isYundaDomesticWaybill(number)) {
     throw new InvalidInputError(PROVIDER, 'Yunda direct tracking requires a domestic waybill number');
   }
   return number;

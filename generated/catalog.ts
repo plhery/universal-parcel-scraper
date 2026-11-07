@@ -4409,6 +4409,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   "yunda": {
     "displayName": "Yunda Express",
     "color": "#ffce00",
+    "aliases": [
+      "uda International"
+    ],
     "countries": [
       "CN"
     ],

@@ -211,6 +211,15 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['FedEx'], '00340000000000000014').discovered_carrier).toBe('fedex');
   });
 
+  it('proposes Yunda for its domestic waybills only', () => {
+    // Synthetic: 17TRACK files Yunda's waybills under "uda International".
+    expect(universalCarrierHints(['uda International'], '430000000000001').discovered_carrier).toBe('yunda');
+    expect(universalCarrierHints(['uda International'], '1000000000001').discovered_carrier).toBe('yunda');
+    // Its domestic feed refuses international 76/77 identifiers and other lengths.
+    expect(universalCarrierHints(['uda International'], '760000000000001')).toEqual({ reported_carriers: ['uda International'] });
+    expect(universalCarrierHints(['uda International'], '43000000000001')).toEqual({ reported_carriers: ['uda International'] });
+  });
+
   it('keeps DPD France for the eighteen-digit 1660 numbers its adapter takes', () => {
     // Synthetic: ParcelsApp files these numbers under DPD France, which tracks them.
     expect(universalCarrierHints(['DPD France'], '166000000000000017').discovered_carrier).toBe('dpd-fr');

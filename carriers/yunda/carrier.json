@@ -1,7 +1,9 @@
 {
   "id": "yunda",
   "displayName": "Yunda Express",
-  "aliases": [],
+  "aliases": [
+    "uda International"
+  ],
   "region": {
     "countries": [
       "CN"

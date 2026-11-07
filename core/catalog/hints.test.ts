@@ -332,6 +332,10 @@ describe('carrier names reported by universal providers', () => {
     expect(carrierIdFromName('SPX Express')).toBeUndefined();
   });
 
+  it('reads 17TRACK\'s Yunda Express entry, which it names "uda International"', () => {
+    expect(carrierIdFromName('uda International')).toBe('yunda');
+  });
+
   it.each(['Example Parcel Co', 'Example Express Italy', 'Postexample Courier'])('treats %s as new', (name) => {
     expect(isKnownCarrierName(name)).toBe(false);
   });

@@ -12,6 +12,9 @@ the same session, within the original deadline. Changed image layouts stop the l
 
 ## Notes
 
+17TRACK files Yunda Express waybills under its "uda International" (韵达国际) entry,
+so that name is an alias; its "Yunda Express" entry is Yunda's freight network.
+
 Domestic scan clocks use China time. Provider order is preserved across missing or
 invalid clocks, which remain unresolved. Exact scan status labels drive the current
 state. Return movement remains active until a sender delivery is confirmed.
