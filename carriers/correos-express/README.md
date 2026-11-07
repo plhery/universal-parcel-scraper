@@ -1,6 +1,6 @@
 # Correos Express
 
-Tracks 16-digit shipment references through the anonymous public tracking form,
+Its former name, Chronoexprés, is an alias. Tracks 16-digit shipment references through the anonymous public tracking form,
 and the 23-digit parcel labels. Other reference formats use the universal
 providers. Both lengths end in a GS1 check digit, which detection requires. The
 tracker also answers some 16-digit shipments that fail it; detection does not

@@ -1,7 +1,7 @@
 # FedEx International Connect
 
 FedEx International Connect (FIC) is FedEx's economy cross-border service, which grew out of P2P
-Mailing. It carries a parcel from its hubs in Europe or the United States abroad and hands it to a
+Mailing: P2P's TrakPak tracker forwarded to FIC's, so P2P Mailing and TrakPak are aliases. It carries a parcel from its hubs in Europe or the United States abroad and hands it to a
 partner carrier, usually the destination's post, which delivers it under its own number. FedEx
 International Connect Plus is a different service on FedEx Express's network, tracked by FedEx with
 FedEx's numbers. The old FedEx Cross Border front door now leads to FedEx's American eCommerce

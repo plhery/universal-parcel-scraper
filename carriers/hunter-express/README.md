@@ -1,7 +1,7 @@
 # Hunter Express
 
-Hunter Express is an Australian express freight and parcel carrier. Tracked through its public
-tracker's own page.
+Hunter Express is an Australian express freight and parcel carrier. E-Go, part of Hunter Express,
+tracks on the same tracker, so its name is an alias. Tracked through its public tracker's own page.
 
 ## How it works
 

@@ -2,7 +2,10 @@
   "id": "fedex-international-connect",
   "displayName": "FedEx International Connect",
   "aliases": [
-    "FedEx International Connect (FIC)"
+    "FedEx International Connect (FIC)",
+    "P2P Mailing",
+    "P2P TrakPak",
+    "TrakPak"
   ],
   "region": {
     "countries": [

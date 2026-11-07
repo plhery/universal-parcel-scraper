@@ -1,7 +1,8 @@
 # Postmedia Parcel Services
 
 Postmedia Parcel Services is the parcel delivery network of Postmedia, the Canadian news
-publisher, and continues the parcel business of Brunswick News Inc. Amazon.ca names it BNI. It
+publisher, and continues the parcel business of Brunswick News Inc. Amazon.ca names it BNI, and
+Brunswick News's logistics arm also goes by Bonshaw Logistics. It
 delivers across Canada, including Amazon parcels. Its parcels are tracked by number and the
 recipient's postal code through the API its tracking page asks.
 

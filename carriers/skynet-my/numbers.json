@@ -1,0 +1,114 @@
+{
+  "carrier": "skynet-my",
+  "gap": "Its twelve-digit air waybills share their shape with many carriers' numbers.",
+  "records": [
+    {
+      "number": "201029271122",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.skynet.com.my/api-documentation",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "sf-express",
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "gls-at",
+          "gls-pl",
+          "j-and-t-cargo",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "SkyNet Malaysia's API documentation gives this air waybill in its example tracking reply."
+    },
+    {
+      "number": "201613685744",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.skynet.com.my/guide",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "j-and-t-cargo",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "SkyNet Malaysia's guide to filling in its air waybill shows this number on a sample waybill."
+    },
+    {
+      "number": "201660090015",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.skynet.com.my/guide",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "j-and-t-cargo",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "SkyNet Malaysia's guide to filling in its air waybill shows this number on a sample waybill."
+    }
+  ]
+}

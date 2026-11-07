@@ -1,7 +1,9 @@
 {
   "id": "correos-express",
   "displayName": "Correos Express",
-  "aliases": [],
+  "aliases": [
+    "Chronoexprés"
+  ],
   "region": {
     "countries": [
       "ES",

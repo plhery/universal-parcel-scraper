@@ -414,8 +414,8 @@ step exists for future protocol changes.
   country rules out. So is "Yanwen Logistics"'s, China's: its shipment information came at
   the minute of Yanwen's own row, stated +08:00. So was "Japan Post" (2026-10-11): Japan Post's portal gives local
   times, 10:27 for a delivery in Japan that Cainiao dates 10:27 GMT+9 and Ship24 01:27Z.
-  So were "Yodel" and "InPost UK", InPost's UK network, and "Collect+", Yodel's shop
-  network, on London time: InPost's own offsets give the same instants. So was "XZG", a
+  So were "Yodel" and "InPost UK", InPost's UK network, and "Collect+", PayPoint's
+  shop network, on London time: InPost's own offsets give the same instants. So was "XZG", a
   Shenzhen line provider that DHLink relays, on China time: XZG's own tracker and DHLink's
   give its digits, and DHLink records its warehouse scans within seconds on its system
   clock, which is China's. DHLink's copies take DHLink's catalog zone, so XZG's scans stay

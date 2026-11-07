@@ -1,6 +1,6 @@
 # CTT Express
 
-Tracks single-piece Spanish shipment references and complete package codes through the anonymous JSON route
+Its former name, Tourline Express, is an alias. Tracks single-piece Spanish shipment references and complete package codes through the anonymous JSON route
 used by the official public tracking app.
 
 ## How it works

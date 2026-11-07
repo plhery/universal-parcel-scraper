@@ -2767,6 +2767,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   "correos-express": {
     "displayName": "Correos Express",
     "color": "#ffcd00",
+    "aliases": [
+      "Chronoexprés"
+    ],
     "countries": [
       "ES",
       "PT"
@@ -2965,7 +2968,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "CTT Express",
     "color": "#df0024",
     "aliases": [
-      "CTT Express Tracking"
+      "CTT Express Tracking",
+      "Tourline Express"
     ],
     "countries": [
       "ES",
@@ -7423,6 +7427,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
     "trackingSearchUrl": "https://worldtrak.shipalliance.com/cvportal/shipinquiry/quicktrack.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "allied-express": {
+    "displayName": "Allied Express",
+    "color": "#e7333e",
+    "aliases": [
+      "Allied Express Transport",
+      "Allied Express Transport Pty Ltd",
+      "Allied Overnight Express"
+    ],
+    "countries": [
+      "AU"
+    ],
+    "selectable": true,
+    "timezone": "Australia/Sydney",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.alliedexpress.com.au/",
+    "trackingSearchUrl": "https://www.alliedexpress.com.au/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20519,7 +20545,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "FedEx International Connect",
     "color": "#4d148c",
     "aliases": [
-      "FedEx International Connect (FIC)"
+      "FedEx International Connect (FIC)",
+      "P2P Mailing",
+      "P2P TrakPak",
+      "TrakPak"
     ],
     "countries": [
       "GB"
@@ -25138,7 +25167,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Hunter Express",
     "color": "#f7aa3a",
     "aliases": [
-      "Hunter Express Australia"
+      "Hunter Express Australia",
+      "E-Go"
     ],
     "countries": [
       "AU"
@@ -34865,7 +34895,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#ff4f00",
     "aliases": [
       "Packlink PRO",
-      "Packlink Shipping"
+      "Packlink Shipping",
+      "Keavo",
+      "Keavo Express"
     ],
     "countries": [
       "ES",
@@ -37828,7 +37860,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "BNI",
       "BNICA",
       "Brunswick News",
-      "Brunswick News Inc."
+      "Brunswick News Inc.",
+      "Bonshaw Logistics"
     ],
     "countries": [
       "CA"
@@ -42282,6 +42315,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "skynet-my": {
+    "displayName": "SkyNet Malaysia",
+    "color": "#ec1c24",
+    "aliases": [
+      "SkyNet MY",
+      "Skynet (MY)",
+      "Skynet Worldwide (M) Sdn. Bhd."
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.skynet.com.my/track",
+    "trackingSearchUrl": "https://www.skynet.com.my/track",
+    "linkRules": [],
     "detectionRules": []
   },
   "skynet-sa": {
@@ -51933,6 +51988,7 @@ export const CARRIER_IDS = [
   "alil-post",
   "allegro-one",
   "alliance-air-freight",
+  "allied-express",
   "alljoy",
   "am-home-delivery",
   "amalgamated-distribution",
@@ -52888,6 +52944,7 @@ export const CARRIER_IDS = [
   "skybox",
   "skyex-ae",
   "skyking",
+  "skynet-my",
   "skynet-sa",
   "skynet-worldwide",
   "skypostal",
@@ -53313,6 +53370,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alil-post": [],
   "allegro-one": ["allegro-one-1","allegro-one-2"],
   "alliance-air-freight": [],
+  "allied-express": [],
   "alljoy": ["alljoy-1","alljoy-2"],
   "am-home-delivery": [],
   "amalgamated-distribution": [],
@@ -54268,6 +54326,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skybox": [],
   "skyex-ae": [],
   "skyking": [],
+  "skynet-my": [],
   "skynet-sa": [],
   "skynet-worldwide": [],
   "skypostal": ["skypostal-1","skypostal-2"],

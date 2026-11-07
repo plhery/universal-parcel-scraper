@@ -4643,5 +4643,11 @@
     "pattern": "^KTXF\\d{6}$",
     "kind": "open",
     "reason": "Only an aggregator's example shows a XFM number of KTXF and six digits, so there is no rule."
+  },
+  {
+    "carrier": "skynet-my",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "SkyNet Malaysia's twelve-digit air waybills carry no published structure or check digit, and many carriers issue twelve digits."
   }
 ]

@@ -7745,5 +7745,53 @@
       "mailamericas"
     ],
     "reason": "MailAmericas' tracker answers labels with ML, the country's code, seven digits and R, which Colis Privé's rule for any 12-character alphanumeric also takes. The MailAmericas rule follows MailAmericas' own layout, which no Colis Privé record has, so it is preferred; the number stays a suggestion, MailAmericas first."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the GLS and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "gls-at",
+      "gls-ch",
+      "gls-de",
+      "gls-fr",
+      "gls-pl",
+      "j-and-t",
+      "j-and-t-cargo",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sending",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "Passing check digits add GLS, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting with 20 that pass the Identcode and mod 7 checks",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "dhl",
+      "j-and-t",
+      "j-and-t-cargo",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sending",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto"
+    ],
+    "reason": "A passing Identcode check digit adds DHL, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   }
 ]

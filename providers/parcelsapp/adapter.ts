@@ -551,7 +551,7 @@ function cttZone(payload: Record<string, unknown>, location: string, date: unkno
  * in Japan that Cainiao dates 10:27 GMT+9 and Ship24 01:27Z (2026-10-11). Pekaes' are the offset-less digits its own
  * history gives and its page labels Polish time (2026-10-13). Yodel's, InPost's
  * UK network, are London's: InPost's own offsets give the same instants
- * (2026-10-16), as they do for Collect+'s, Yodel's shop network, which Ship24
+ * (2026-10-16), as they do for Collect+'s, PayPoint's shop network, which Ship24
  * dates "+01:00" in summer. XZG's, a Shenzhen line provider's, are China's:
  * XZG's own tracker and DHLink's, which relays it, give the same digits, and
  * DHLink records its warehouse scans within seconds on its system clock,

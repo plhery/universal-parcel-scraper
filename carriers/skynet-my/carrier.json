@@ -1,0 +1,35 @@
+{
+  "id": "skynet-my",
+  "displayName": "SkyNet Malaysia",
+  "aliases": [
+    "SkyNet MY",
+    "Skynet (MY)",
+    "Skynet Worldwide (M) Sdn. Bhd."
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#ec1c24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.skynet.com.my/track",
+    "canaryUrl": "https://www.skynet.com.my/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

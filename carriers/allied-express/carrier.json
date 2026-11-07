@@ -1,0 +1,35 @@
+{
+  "id": "allied-express",
+  "displayName": "Allied Express",
+  "aliases": [
+    "Allied Express Transport",
+    "Allied Express Transport Pty Ltd",
+    "Allied Overnight Express"
+  ],
+  "region": {
+    "countries": [
+      "AU"
+    ]
+  },
+  "brand": {
+    "color": "#e7333e"
+  },
+  "selectable": true,
+  "timezone": "Australia/Sydney",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.alliedexpress.com.au/",
+    "canaryUrl": "https://www.alliedexpress.com.au/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

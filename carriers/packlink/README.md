@@ -1,8 +1,8 @@
 # Packlink
 
 Packlink sells shipping with other carriers, such as Correos Express, SEUR and UPS, from its
-consumer site and from Packlink PRO for businesses, in Spain and other European markets. Its
-reference names the booking; the carrier that collects the parcel gives it its own number.
+consumer site and from Packlink PRO for businesses, in Spain and other European markets. Keavo, its
+own-label service sold only through Packlink, is an alias. Its reference names the booking; the carrier that collects the parcel gives it its own number.
 Tracked through the lookup its tracking pages make.
 
 ## How it works
