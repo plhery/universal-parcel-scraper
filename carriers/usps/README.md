@@ -103,8 +103,9 @@ Parsing, in order:
   resolvable state the event keeps an offset-free `local_time`, and the page's newest-first
   order is kept rather than re-sorted. USPS writes its international service centre at JFK as
   "JAMAICA" alone; the [place reader](../../places/README.md) puts it in Jamaica, New York,
-  unless the parcel goes to Jamaica. A step USPS dates by its day alone, as it does
-  pre-shipment info, keeps that day as `local_time`.
+  unless the parcel goes to Jamaica. A scan abroad names its country, the United Kingdom by
+  its official name, and is read on that country's clock. A step USPS dates by its day
+  alone, as it does pre-shipment info, keeps that day as `local_time`.
 - USPS enters some departures at their scheduled time, before they happen. A scan dated more
   than five minutes after the lookup is held back until it is due (`plannedScans`).
 - A mailer can write its labels on UTC. A label row that the facility's zone dates after the

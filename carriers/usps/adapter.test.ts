@@ -200,6 +200,17 @@ describe('USPS rendered page', () => {
     }
   });
 
+  it('reads a scan abroad on the clock of the country it names, not on a US town of the same name', () => {
+    for (const [place, time, zone] of [
+      ['UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND', '2025-03-14T12:17:00+00:00', 'Europe/London'],
+      ['LANGLEY HWDC, UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND', '2025-03-14T12:17:00+00:00', 'Europe/London'],
+      ['NETHERLANDS', '2025-03-14T12:17:00+01:00', 'Europe/Amsterdam']] as const) {
+      const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replace('EXAMPLE CITY, NY 00000', place), DELIVERED_NUMBER);
+      expect(result.events?.[0], place).toMatchObject({ location: place, local_time: '2025-03-14T12:17:00' });
+      expect(dateLocalClocks('usps', result).events?.[0], place).toMatchObject({ time, time_zone: zone, time_zone_basis: 'place' });
+    }
+  });
+
   it('keeps the day of a date-only update without inventing a clock time', () => {
     const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replace('March 14, 2025 12:17 PM', 'March 14, 2025'), DELIVERED_NUMBER);
     expect(result.events?.[0]).toMatchObject({ description: 'Delivered', local_time: '2025-03-14' });

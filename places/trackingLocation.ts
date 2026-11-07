@@ -6,7 +6,8 @@ export const ambiguousAddressCodes: ReadonlySet<string> = new Set('AL AZ AR CA C
 // Carrier spellings no region name matches. Display only: Passport evidence
 // stays in step with private.passport_country, which Friends stamps use.
 const carrierSpellings = new Map([
-  ['united states of america', 'US'], ['great britain', 'GB'], ['czech republic', 'CZ'], ['holland', 'NL'],
+  ['united states of america', 'US'], ['great britain', 'GB'], ['united kingdom of great britain and northern ireland', 'GB'],
+  ['czech republic', 'CZ'], ['holland', 'NL'],
   ['hong kong', 'HK'], ['macau', 'MO'], ['macao', 'MO'], ['turkey', 'TR'], ['russian federation', 'RU'],
   ['korea', 'KR'], ['republic of korea', 'KR'],
 ]);
