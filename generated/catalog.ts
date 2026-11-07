@@ -3348,6 +3348,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "usps",
       "browserRecognitionRank": 650,
+      "refresh": {
+        "minMinutes": 30,
+        "afterFailureMinutes": 60
+      },
       "browser": true
     },
     "canaryUrl": "https://www.usps.com/",
@@ -3856,6 +3860,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "gofo",
       "recognitionRank": 475,
+      "refresh": {
+        "minMinutes": 10,
+        "afterFailureMinutes": 30
+      },
       "localClocks": true
     },
     "canaryUrl": "https://www.gofo.com/us/track",

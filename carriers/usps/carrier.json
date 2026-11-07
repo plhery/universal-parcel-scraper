@@ -23,7 +23,11 @@
     "browserRecognition": {
       "rank": 650
     },
-    "browser": true
+    "browser": true,
+    "refresh": {
+      "minMinutes": 30,
+      "afterFailureMinutes": 60
+    }
   },
   "capabilities": [
     "history",

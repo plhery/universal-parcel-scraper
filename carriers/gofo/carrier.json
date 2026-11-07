@@ -23,7 +23,11 @@
     "recognition": {
       "rank": 475
     },
-    "localClocks": true
+    "localClocks": true,
+    "refresh": {
+      "minMinutes": 10,
+      "afterFailureMinutes": 30
+    }
   },
   "capabilities": [
     "history",
