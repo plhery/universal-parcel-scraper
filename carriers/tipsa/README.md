@@ -48,8 +48,8 @@ Links to tip-sa.com's home page and its `datos`, `datos_env` and
 
 ## Limitations
 
-- Ten-digit waybills can't be looked up without their agency codes, so recognition asks
-  TIPSA only about 22-digit references and ten digits stay a suggestion.
+- Ten-digit waybills can't be looked up without their agency codes, so detection does not offer
+  TIPSA for them and recognition asks it only about 22-digit references.
 - References of the `000010` account stay ambiguous with CTT Express, and recognition
   asks TIPSA first. Any other reference starting `00` matches CTT Express's
   high-confidence rule and is filed there until a universal provider names TIPSA.

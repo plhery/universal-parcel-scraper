@@ -1,0 +1,21 @@
+{
+  "carrier": "zecheng",
+  "entries": [
+    {
+      "wording": "Order information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The shipment data has arrived; Zecheng does not hold the parcel yet."
+    },
+    {
+      "wording": "查询不到",
+      "language": "zh",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "unmapped": true,
+      "note": "\"Cannot be found\": the summary status for a number the tracker does not know, with no scans. The adapter reads it as not found."
+    }
+  ]
+}

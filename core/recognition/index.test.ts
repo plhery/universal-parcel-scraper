@@ -206,8 +206,8 @@ describe('recognition candidates', () => {
     for (const options of [{}, { hint: 'saia' }, { countryHint: 'US', priorities: { saia: 1e6 } }]) {
       expect(recognitionCandidates(number, options).map(({ carrier }) => carrier)).not.toContain('saia');
     }
-    // TIPSA's lookup needs its full 22-digit reference; ten digits stay a suggestion.
-    expect(detectCarrierMatch('1234567890').candidates).toContain('tipsa');
+    // TIPSA's lookup needs its full 22-digit reference, so ten digits are not offered to it.
+    expect(detectCarrierMatch('1234567890').candidates).not.toContain('tipsa');
     expect(recognitionCandidates('1234567890', { hint: 'tipsa' }).map(({ carrier }) => carrier)).not.toContain('tipsa');
     expect(recognitionCandidates('0123450123451234567890').map(({ carrier }) => carrier)).toContain('tipsa');
     // bpost documents its numeric barcodes with their 3232 and 3299 prefixes; other digits stay a suggestion.

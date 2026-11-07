@@ -4597,6 +4597,12 @@
     "reason": "South Post numbers are at most seven digits, too short to name any carrier."
   },
   {
+    "carrier": "tipsa",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "TIPSA's tracker needs the full 22-digit reference with its agency codes, so detection does not offer TIPSA for a ten-digit waybill it cannot look up."
+  },
+  {
     "carrier": "tma-companies",
     "pattern": "^T\\d{8}$",
     "kind": "open",

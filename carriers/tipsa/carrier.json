@@ -83,11 +83,6 @@
   ],
   "detection": [
     {
-      "id": "tipsa-1",
-      "pattern": "^\\d{10}$",
-      "confidence": "low"
-    },
-    {
       "id": "tipsa-2",
       "pattern": "^0\\d{5}0\\d{5}\\d{10}$",
       "confidence": "low",

@@ -10,7 +10,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import { carrierTimezone } from '../../core/catalog/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { followsPartnerNumbers, partnerNumberOwner, tracksPartnerNumbers } from '../../core/catalog/partners.js';
-import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone } from '../../core/catalog/hints.js';
+import { brandCarrierIds, brandNameCountry, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isAmbiguousBrandName } from '../../core/catalog/hints.js';
 import { checksumFailures } from '../../core/detection/detect.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { sharedClockZone } from '../../core/time/index.js';
@@ -88,8 +88,9 @@ const NAME_CHECKED_RULES: ReadonlySet<string> = new Set(['fedex-1']);
  * Several names that all map to the catalog can be one journey's legs; see
  * `journeyOwner`. Beside Cainiao, a bare brand names its network that
  * delivers at home. A bare brand none of whose networks fits the number names
- * a group, such as "DPD Group" beside BRT, its network in Italy: beside a
- * carrier whose rule fits the number, it leaves that carrier's hint.
+ * a group, such as "DPD Group" beside BRT, its network in Italy, and so does one
+ * with no network of its own, such as "Cirro" beside GOFO: beside a carrier
+ * whose rule fits the number, it leaves that carrier's hint.
  */
 export function universalCarrierHints(raw: unknown[], trackingNumber?: string): { reported_carriers: string[]; discovered_carrier?: string } {
   const names = [...new Set(raw.filter((value): value is string => typeof value === 'string'
@@ -119,6 +120,8 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
     const carrier = partner ?? sibling ?? named;
     const networks = carrier || !trackingNumber ? [] : brandCarrierIds(name);
     if (networks.length && !networks.some((id) => fitting.includes(id))) group = true;
+    // A bare brand without networks of its own ("Cirro", "CTT") stands for a group too.
+    else if (!carrier && isAmbiguousBrandName(name)) group = true;
     else if (!carrier) unmapped = true;
     else if (!refused.has(carrier)) {
       detected.add(carrier);

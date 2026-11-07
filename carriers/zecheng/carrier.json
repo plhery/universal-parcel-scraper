@@ -1,0 +1,81 @@
+{
+  "id": "zecheng",
+  "displayName": "Zecheng International Logistics",
+  "aliases": [
+    "ZHECHENG",
+    "择诚国际物流",
+    "深圳市择诚国际物流有限公司",
+    "Shenzhen Zecheng International Logistics Co., Ltd"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0b467e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "zecheng",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 725,
+      "pattern": "^ZCGJ\\d{10}CN$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "destination_country",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://api.zecwl.com/index/tracknumber/track?nos={trackingNumber}",
+    "searchUrl": "https://api.zecwl.com/index/tracknumber/track",
+    "canaryUrl": "https://api.zecwl.com/index/tracknumber/track",
+    "shows": [
+      "status",
+      "history",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "destination_country"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "provider_code",
+      "eta",
+      "weight",
+      "delivered_at",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "api.zecwl.com"
+      ],
+      "pathPattern": "^/index/tracknumber/track/?$",
+      "params": [
+        "nos"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "zecheng-1",
+      "pattern": "^ZCGJ\\d{10}CN$",
+      "confidence": "low"
+    }
+  ]
+}

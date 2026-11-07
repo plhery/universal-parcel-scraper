@@ -3280,10 +3280,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^\\d{10}$",
-        "confidence": "low"
-      },
-      {
         "pattern": "^0\\d{5}0\\d{5}\\d{10}$",
         "confidence": "low",
         "preferred": true
@@ -51361,6 +51357,48 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "zecheng": {
+    "displayName": "Zecheng International Logistics",
+    "color": "#0b467e",
+    "aliases": [
+      "ZHECHENG",
+      "择诚国际物流",
+      "深圳市择诚国际物流有限公司",
+      "Shenzhen Zecheng International Logistics Co., Ltd"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "zecheng",
+      "recognitionRank": 725,
+      "recognitionPattern": "^ZCGJ\\d{10}CN$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://api.zecwl.com/index/tracknumber/track",
+    "trackingUrlTemplate": "https://api.zecwl.com/index/tracknumber/track?nos={trackingNumber}",
+    "trackingSearchUrl": "https://api.zecwl.com/index/tracknumber/track",
+    "linkRules": [
+      {
+        "domains": [
+          "api.zecwl.com"
+        ],
+        "pathPattern": "^/index/tracknumber/track/?$",
+        "params": [
+          "nos"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^ZCGJ\\d{10}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "zeleris": {
     "displayName": "Zeleris",
     "color": "#9be51b",
@@ -53064,6 +53102,7 @@ export const CARRIER_IDS = [
   "z-leading",
   "zajel",
   "zajil",
+  "zecheng",
   "zeleris",
   "zes-express",
   "zheldor",
@@ -53135,7 +53174,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "poste-italiane": ["poste-italiane-1","poste-italiane-2","poste-italiane-plate","poste-italiane-3","poste-italiane-posta1","poste-italiane-4","poste-italiane-delivery-web","poste-italiane-delivery-europe","poste-italiane-international-express","poste-italiane-own","poste-italiane-s10","poste-italiane-deliverybox","poste-italiane-sda-domestic","poste-italiane-promopacco","poste-italiane-d","poste-italiane-gf","poste-italiane-registered"],
   "brt": ["brt-1","brt-shipment-number","brt-parcel-id","brt-customer-parcel-id"],
   "ecoscooting": ["ecoscooting-postcode-label","ecoscooting-postcode","ecoscooting-1","ecoscooting-2","ecoscooting-without-cn","ecoscooting-shein-package"],
-  "tipsa": ["tipsa-1","tipsa-2"],
+  "tipsa": ["tipsa-2"],
   "ukrposhta": ["ukrposhta-1","ukrposhta-own","ukrposhta-s10"],
   "usps": ["usps-impb","usps-impb-26","usps-3","usps-1","usps-2","usps-impb-routing","usps-4","usps-own","usps-s10"],
   "canada-post": ["canada-post-1","canada-post-2"],
@@ -54442,6 +54481,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "z-leading": ["z-leading-1"],
   "zajel": [],
   "zajil": [],
+  "zecheng": ["zecheng-1"],
   "zeleris": ["zeleris-1"],
   "zes-express": ["zes-express-1"],
   "zheldor": [],

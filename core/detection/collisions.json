@@ -7,7 +7,6 @@
       "mondial-relay",
       "packeta",
       "relais-colis",
-      "tipsa",
       "dhl-ecommerce-es",
       "box-now"
     ],
@@ -21,7 +20,6 @@
       "mondial-relay",
       "packeta",
       "relais-colis",
-      "tipsa",
       "dhl-ecommerce-es",
       "box-now",
       "fragilepak"
@@ -35,7 +33,6 @@
       "estafeta",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "dhl-ecommerce-es",
       "box-now"
     ],
@@ -1570,7 +1567,6 @@
       "mondial-relay",
       "packeta",
       "relais-colis",
-      "tipsa",
       "dhl-express",
       "dhl-ecommerce-es",
       "acs-courier",
@@ -1586,7 +1582,6 @@
       "estafeta",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "dhl-express",
       "dhl-ecommerce-es",
       "acs-courier",
@@ -1602,7 +1597,6 @@
       "estafeta",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "dhl-express",
       "dhl-ecommerce-es",
       "box-now"
@@ -5143,7 +5137,6 @@
       "estafeta",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "box-now"
     ],
     "reason": "Without its hyphen CDL's order number is ten digits, which DHL, Estafeta, Mondial Relay, Relais Colis, Tipsa and DHL eCommerce Spain also print; CDL stays a low-confidence suggestion."
@@ -6621,7 +6614,6 @@
       "mondial-relay",
       "packeta",
       "relais-colis",
-      "tipsa",
       "box-now",
       "cargus"
     ],
@@ -6638,7 +6630,6 @@
       "mondial-relay",
       "packeta",
       "relais-colis",
-      "tipsa",
       "acs-courier",
       "geniki-taxydromiki",
       "box-now",
@@ -6655,7 +6646,6 @@
       "gls-es",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "box-now",
       "cargus"
     ],
@@ -6671,7 +6661,6 @@
       "gls-es",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "box-now",
       "cargus"
     ],
@@ -7260,7 +7249,6 @@
       "estafeta",
       "mondial-relay",
       "relais-colis",
-      "tipsa",
       "box-now"
     ],
     "reason": "orian numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."

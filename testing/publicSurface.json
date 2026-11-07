@@ -304,6 +304,7 @@
       "countryName",
       "displayedCarrierId",
       "eventTimestamp",
+      "isAmbiguousBrandName",
       "isCarrierFeedName",
       "isKnownCarrierName",
       "latestResultTime",

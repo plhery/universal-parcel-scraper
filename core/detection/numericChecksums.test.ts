@@ -28,7 +28,7 @@ describe('numeric checksum candidates', () => {
     expect(recognitionAskedCarriers('1234567890')).not.toContain('dhl-express');
     expect(recognitionCandidates('1234567890', { phase: 'browser' })).toEqual([]);
     // A failed DHL check excludes that candidate, not other carriers' ten-digit formats.
-    expect(detectCarrierMatch('1234567890').candidates).toEqual(expect.arrayContaining(['relais-colis', 'tipsa', 'dhl']));
+    expect(detectCarrierMatch('1234567890').candidates).toEqual(expect.arrayContaining(['relais-colis', 'dhl']));
   });
 
   it('accepts both TNT schemes, including Mod 11 substitutions and leading zeros', () => {

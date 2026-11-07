@@ -201,6 +201,15 @@ export function isKnownCarrierName(name: string): boolean {
 }
 
 /**
+ * Whether a reported name is a bare brand the catalog cannot pin to one carrier
+ * ("CTT", "Cirro", "GLS"): it names one of several networks, or a carrier
+ * outside the catalog, and only the number can tell which.
+ */
+export function isAmbiguousBrandName(name: string): boolean {
+  return AMBIGUOUS_BRANDS.includes(key(name));
+}
+
+/**
  * Whether a reported name is the postal union's shared feed ("UPU", "Universal
  * Postal Union"). The feed relays every postal operator's scans and names no
  * carrier: it has no catalog id and is not a known carrier name, so a reply

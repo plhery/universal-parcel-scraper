@@ -128,6 +128,11 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DPD Group', 'Royal Mail'], 'QQ000000000QQ').discovered_carrier).toBeUndefined();
     // A network of the brand that fits keeps it a name of its own.
     expect(universalCarrierHints(['Evri Group', 'Royal Mail'], 'H00A0B0000000003').discovered_carrier).toBeUndefined();
+    // A bare brand with no network of its own names a group too: GOFO's number, beside GOFO's French and Dutch name.
+    expect(universalCarrierHints(['GoFo Express', 'Yun Express', '4PX Express', 'Cirro'], 'GFUS01000000000001').discovered_carrier).toBe('gofo');
+    expect(universalCarrierHints(['Cirro', 'Royal Mail'], 'GFUS01000000000001').discovered_carrier).toBeUndefined();
+    expect(universalCarrierHints(['Cirro'], 'GFUS01000000000001').discovered_carrier).toBeUndefined();
+    expect(universalCarrierHints(['CTT'], 'RR000000000PT').discovered_carrier).toBeUndefined();
   });
 
   it('prefers a carrier named in full to a network a bare brand leaves to the number', () => {
