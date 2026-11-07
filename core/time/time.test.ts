@@ -136,7 +136,13 @@ describe('time policies', () => {
     expect(countryTimeZone('South Africa')).toBe('Africa/Johannesburg');
     expect(countryTimeZone('RE')).toBe('Indian/Reunion');
     expect(countryTimeZone('Réunion')).toBe('Indian/Reunion');
-    for (const value of ['GA', 'TN', 'PA', 'Georgia']) expect(countryTimeZone(value)).toBeNull();
+    for (const value of ['GA', 'TN', 'PA', 'AZ', ' az ', 'Georgia']) expect(countryTimeZone(value), value).toBeNull();
+    // Their written names are no state's.
+    expect(countryTimeZone('Azerbaijan')).toBe('Asia/Baku');
+    expect(countryTimeZone(' AZERBAIJAN ')).toBe('Asia/Baku');
+    expect(countryTimeZone('Tunisia')).toBe('Africa/Tunis');
+    expect(countryTimeZone('Marokko')).toBe('Africa/Casablanca');
+    expect(countryTimeZone('Panama')).toBe('America/Panama');
     expect(countryTimeZone(undefined)).toBeNull();
   });
 
@@ -144,6 +150,8 @@ describe('time policies', () => {
     expect(postalOfficeZone('GBLALA')).toBe('Europe/London');
     expect(postalOfficeZone('DEFRAA')).toBe('Europe/Berlin');
     expect(postalOfficeZone('JPTYO1')).toBe('Asia/Tokyo');
+    // A code's letters name its country, not a state.
+    expect(postalOfficeZone('AZBAKA')).toBe('Asia/Baku');
     // Several zones, islands on clocks of their own, and no office code.
     for (const code of ['AUSYDB', 'USJFKA', 'ESMADA', 'PTLISA', 'ZZXMPA', 'GBLAL', 'GBLALAX', 'gblala', 'AL1066', 'LONDON BPI']) {
       expect(postalOfficeZone(code), code).toBeNull();

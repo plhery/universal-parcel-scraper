@@ -762,6 +762,21 @@ describe('ParcelsApp result parsing', () => {
     expect(time()).toEqual(['2026-11-02T08:25:14.000Z']);
   });
 
+  it("reads Azerbaijan Post's copies of a sending post's scans on the clock of the country before the office", () => {
+    const time = (location: string, carrier = 1) => parseParcelsAppResponse({
+      carriers: ['Universal Postal Union', 'Azerbaijan Post'], origin: 'Latvia', destination: 'Azerbaijan',
+      states: [{ date: '2026-10-29T19:14:00Z', status: 'Arrived at the sender country\'s exchange point', carrier, location }],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // Latvian Post's and UPU's rows of the same scan at Riga's office of exchange are at 17:14 UTC.
+    expect(time('LATVIA: LVRIXA')).toEqual(['2026-10-29T17:14:00.000Z']);
+    expect(time('LATVİYA: Latvia')).toEqual(['2026-10-29T17:14:00.000Z']);
+    // Its own scans name a town before the office, on Baku's clock, as does UPU's copy at Baku's office of exchange.
+    expect(time('Baku: AZBAKA')).toEqual(['2026-10-29T15:14:00.000Z']);
+    expect(time('BAKU A OE AND MU, Azerbaijan', 0)).toEqual(['2026-10-29T15:14:00.000Z']);
+    // A country of several clocks leaves the wall clock.
+    expect(time('RUSSIA: RUMOWA')).toEqual(['local 2026-10-29T19:14:00.000']);
+  });
+
   it('reads scans named "Evri" on Evri UK\'s London clock and proposes Evri UK', () => {
     // Live shape (2026-10-16): Evri UK's wall clocks labelled "+00:00", an hour
     // after the instants of Evri UK's own history in summer.

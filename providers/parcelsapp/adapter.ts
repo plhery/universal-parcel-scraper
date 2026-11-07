@@ -1002,9 +1002,12 @@ function placeClockLine(carrier: string, status: string, location: string): stri
  * names ("CHINA", "TAIWAN"), on that post's clock, by their home country. Read
  * on Montevideo's clock, China Post's posting came eleven hours after China
  * Post's own row of it; read on Bratislava's, Chunghwa Post's came seven
- * hours after Slovak Post's own row, which states +08:00.
+ * hours after Slovak Post's own row, which states +08:00. Azerbaijan Post
+ * names the country before the office ("LATVIA: LVRIXA", "LATVİYA: Latvia"),
+ * as it does a town at home ("Baku: AZBAKA"): read on Baku's clock, its
+ * copies of Latvian Post's scans came two hours before Latvian Post's own.
  */
-const RELAYING_POSTS: Readonly<Record<string, string>> = { 'correo-uruguayo': 'UY', 'slovenska-posta': 'SK' };
+const RELAYING_POSTS: Readonly<Record<string, string>> = { azerpost: 'AZ', 'correo-uruguayo': 'UY', 'slovenska-posta': 'SK' };
 
 /**
  * The clock of a sending post's scan a relaying post names abroad: that
@@ -1013,8 +1016,9 @@ const RELAYING_POSTS: Readonly<Record<string, string>> = { 'correo-uruguayo': 'U
  */
 function relayedPostZone(carrier: string | undefined, location: string): string | null | undefined {
   const home = carrier && Object.hasOwn(RELAYING_POSTS, carrier) ? RELAYING_POSTS[carrier] : undefined;
-  const country = home ? countryCode(lastPlace(location)) : undefined;
-  return country && country !== home ? countryTimeZone(country) : undefined;
+  const named = home ? [lastPlace(location), ...location.split(':')].find((part) => countryCode(part)) : undefined;
+  const country = countryCode(named);
+  return country && country !== home ? countryTimeZone(named) : undefined;
 }
 
 /**

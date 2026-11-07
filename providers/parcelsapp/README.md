@@ -506,7 +506,9 @@ step exists for future protocol changes.
   ([Correo Uruguayo](../../carriers/correo-uruguayo/README.md)), or stay wall times when it
   has several. Read on Montevideo's clock, China Post's posting came eleven hours after China
   Post's own row of it; read on Bratislava's, Chunghwa Post's came seven hours after Slovak
-  Post's own row, which states +08:00.
+  Post's own row, which states +08:00. Azerbaijan Post names the country before the office
+  ("LATVIA: LVRIXA") as it names a town at home: read on Baku's clock, its copies of Latvian
+  Post's scans came two hours before Latvian Post's own.
 - Speedaf's dates are its sites' wall clocks under a UTC label. Its own feed dates the
   scans up to the departing flight ("Cargo flight departured") on China time and the rest
   on the destination's, and Cainiao's copies of the same scans agree once read that way.

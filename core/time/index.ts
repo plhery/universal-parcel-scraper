@@ -156,7 +156,8 @@ export function settleGuessedClocks(scans: readonly FeedClock[], readAt: number)
 // (US, CA, BR, RU, AU, MX, ID...) are absent: they need a finer location.
 // The rest of the list is every country or territory with a single zone in
 // the IANA database, except those whose code a US state or Canadian province
-// also uses (GA, PA, TN...) and Georgia, whose name a state has: "Atlanta, GA"
+// also uses (GA, PA, TN...), read by name only (`NAMED_COUNTRY_ZONES`), and
+// Georgia, whose name a state has: "Atlanta, GA"
 // and "Atlanta, Georgia" are in the US. CO, DE, IL, IN, MT, NL and SK keep
 // town lists that tell the two apart (`regionHasTown`).
 const COUNTRY_ZONES: Record<string, string> = {
@@ -202,6 +203,16 @@ const COUNTRY_ZONES: Record<string, string> = {
   UY: 'America/Montevideo', VC: 'America/St_Vincent', VE: 'America/Caracas', VG: 'America/Tortola', VU: 'Pacific/Efate',
   WF: 'Pacific/Wallis', WS: 'Pacific/Apia', YE: 'Asia/Aden', ZA: 'Africa/Johannesburg', ZM: 'Africa/Lusaka', ZW: 'Africa/Harare',
 };
+// Single-zone countries and territories whose code a US state, territory or Canadian province
+// also uses: "Phoenix, AZ" is in Arizona, so they are read by their name alone ("Azerbaijan").
+// Georgia's name is a state's too, so it has neither.
+const NAMED_COUNTRY_ZONES: Record<string, string> = {
+  AL: 'Europe/Tirane', AS: 'Pacific/Pago_Pago', AZ: 'Asia/Baku', GA: 'Africa/Libreville', GU: 'Pacific/Guam',
+  KY: 'America/Cayman', LA: 'Asia/Vientiane', MA: 'Africa/Casablanca', MD: 'Europe/Chisinau', ME: 'Europe/Podgorica',
+  MO: 'Asia/Macau', MP: 'Pacific/Saipan', MS: 'America/Montserrat', NC: 'Pacific/Noumea', NE: 'Africa/Niamey',
+  NU: 'Pacific/Niue', PA: 'America/Panama', PE: 'America/Lima', PR: 'America/Puerto_Rico', SC: 'Indian/Mahe',
+  SD: 'Africa/Khartoum', TN: 'Africa/Tunis', VA: 'Europe/Vatican', VI: 'America/St_Thomas', YT: 'Indian/Mayotte',
+};
 const ENGLISH_REGIONS = new Intl.DisplayNames(['en'], { type: 'region' });
 // Every region Intl names. Retired codes ("FX", "UK") repeat a current
 // region's name and are left out.
@@ -245,10 +256,16 @@ export function countryCode(country: unknown): string | null {
   return REGION_CODES.has(value) ? value : REGION_BY_NAME.get(regionKey(value)) ?? null;
 }
 
-/** The zone of a single-zone country, from an ISO code or a name `countryCode` reads; null otherwise. */
+/**
+ * The zone of a single-zone country, from an ISO code or a name `countryCode`
+ * reads; null otherwise. A country whose code a state also uses has one by
+ * name only (`NAMED_COUNTRY_ZONES`).
+ */
 export function countryTimeZone(country: unknown): string | null {
   const code = countryCode(country);
-  return code && Object.hasOwn(COUNTRY_ZONES, code) ? COUNTRY_ZONES[code]! : null;
+  if (!code) return null;
+  if (Object.hasOwn(COUNTRY_ZONES, code)) return COUNTRY_ZONES[code]!;
+  return Object.hasOwn(NAMED_COUNTRY_ZONES, code) && String(country).trim().toUpperCase() !== code ? NAMED_COUNTRY_ZONES[code]! : null;
 }
 
 // A UPU office code (IMPC): two letters for its country, three for its place and one more.
@@ -259,11 +276,12 @@ const POSTAL_OFFICE = /^([A-Z]{2})[A-Z]{3}[A-Z0-9]$/;
  * an office of exchange: its country's, when the country keeps one civil time.
  * Scans the posts relay through the postal union carry the office's wall clock.
  * Spain's and Portugal's islands keep clocks of their own, so their offices
- * have none.
+ * have none. An office code's letters name no state ("AZBAKA" is in Baku).
  */
 export function postalOfficeZone(code: string): string | null {
   const country = POSTAL_OFFICE.exec(code)?.[1];
-  return country && country !== 'ES' && country !== 'PT' ? countryTimeZone(country) : null;
+  if (!country || country === 'ES' || country === 'PT') return null;
+  return countryTimeZone(country) ?? (Object.hasOwn(NAMED_COUNTRY_ZONES, country) ? NAMED_COUNTRY_ZONES[country]! : null);
 }
 
 /** The single-zone country keeping this civil time ("Europe/Zurich" is Switzerland's); null for UTC. */
