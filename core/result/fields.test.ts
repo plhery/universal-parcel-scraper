@@ -89,7 +89,7 @@ describe('a withdrawn estimate', () => {
     expect(normalizeCarrierResult({ expected_delivery: null, expected_delivery_withdrawn: true, events: [] }))
       .toMatchObject({ expected_delivery_withdrawn: true });
     for (const result of [{ expected_delivery: '2026-01-05', expected_delivery_withdrawn: true }, { expected_delivery_withdrawn: 'true' }]) {
-      expect(normalizeCarrierResult({ ...result, events: [] } as never)).not.toHaveProperty('expected_delivery_withdrawn');
+      expect(normalizeCarrierResult({ ...result, events: [] })).not.toHaveProperty('expected_delivery_withdrawn');
     }
   });
 });
