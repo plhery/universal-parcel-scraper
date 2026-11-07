@@ -377,7 +377,10 @@ including on `pending` events. Universal summaries carry `current_stage_source` 
 the event that establishes the current stage. Consumers can review wording and
 fallback decisions without mistaking them for explicit maps. `resultStage()` reads a result
 that states no status by its newest scan with a stage, unless that scan is a delivery or a
-return the newer scans without a stage may have undone.
+return the newer scans without a stage may have undone. Every adapter's answer reads the same
+way when it states neither status nor stage, as one whose status comes from a newest scan its
+map does not know: one new code does not blank the parcel, and that scan keeps no stage, so
+its wording stays open for review ([unstaged.ts](core/result/unstaged.ts)).
 
 A registration (a label created, data received, a pre-advice) dated after a scan that moved
 the parcel is no step back: a partner's label or a line's order row is often written once the

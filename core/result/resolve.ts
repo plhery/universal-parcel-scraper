@@ -3,6 +3,7 @@ import { classifyWording } from '../status/index.js';
 import { explicitOffsetTime } from '../time/index.js';
 import { normalizeCarrierResult, type CarrierEvent, type CarrierResult } from './index.js';
 import { readLateRegistrations } from './registration.js';
+import { newestStagedScan } from './unstaged.js';
 
 const stages = new Set<string>(STAGES);
 
@@ -13,25 +14,10 @@ export function resultStage(result: CarrierResult): Stage | null {
     delivered: 'delivered', exception: 'failed_attempt',
   };
   const base = fallback[result.status ?? 'unknown'];
-  if (!base) return newestScanStage(result.events ?? []);
+  if (!base) return (newestStagedScan(result.events ?? [])?.stage as Stage | undefined) ?? null;
   const stage = classifyWording(result.last_status_text ?? '', base).stage;
   const first = result.events?.[0]?.stage;
   return stage === 'pending' && stages.has(first ?? '') ? first as Stage : stage;
-}
-
-/**
- * The stage of the newest scan that has one, for a result that states no status: a carrier can
- * leave its newest scans without a stage. Not a delivery or a return, which the scans after it may
- * have undone.
- */
-function newestScanStage(events: readonly CarrierEvent[]): Stage | null {
-  let newest: Stage | null = null;
-  let newestAt = -Infinity;
-  for (const event of events) {
-    const at = Date.parse(event.time ?? event.local_time ?? '');
-    if (stages.has(event.stage ?? '') && at > newestAt) [newest, newestAt] = [event.stage as Stage, at];
-  }
-  return newest === 'delivered' || newest === 'returned' ? null : newest;
 }
 
 export function resultHasUpdate(result: CarrierResult): boolean {

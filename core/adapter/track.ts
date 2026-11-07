@@ -4,6 +4,7 @@ import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
 import { dueScans } from '../result/due.js';
 import { readLateRegistrations } from '../result/registration.js';
 import { withoutRepeatedScans } from '../result/repeats.js';
+import { readNewestStage } from '../result/unstaged.js';
 import { runSteps } from '../runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
@@ -37,8 +38,8 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
           recorder: options.recorder ?? NOOP_RECORDER }, [{ id: registered.steps[0] ?? 'direct',
           run: ({ signal, remainingMs }) => registered.track(input, ...(passed ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs), ...known }] as const : [])) }]);
       const answer = normalizeCarrierResult(result);
-      return readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
-        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer))));
+      return readNewestStage(readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
+        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer)))));
     } catch (error) {
       // A caller's cancellation is the caller's reason, not a carrier failure.
       if (options.signal?.aborted) throw options.signal.reason;
