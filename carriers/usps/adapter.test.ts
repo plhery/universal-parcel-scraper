@@ -79,6 +79,7 @@ describe('USPS status vocabulary', () => {
     expect(uspsStage('Cleared Customs')).toBe('in_transit');
     expect(uspsStage('Customs Clearance')).toBe('customs');
     expect(uspsStage('Held at Post Office, At Customer Request')).toBe('ready_for_pickup');
+    expect(uspsStage('Held at Delivery Depot/Delivery Office')).toBe('ready_for_pickup');
     expect(uspsStage('Accepted at USPS Origin Facility')).toBe('accepted');
     expect(uspsStage('Acceptance')).toBe('accepted');
     expect(uspsStage('Acceptance Pending')).toBe('registered');

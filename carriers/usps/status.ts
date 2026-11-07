@@ -28,8 +28,10 @@ const EXCEPTION_TERMS = ['alert', 'exception', 'damaged', 'lost', 'seized', 'dis
 const DELIVERED_TERMS = ['delivered'];
 const OUT_FOR_DELIVERY_TERMS = ['out for delivery'];
 // The delivering post office's arrival ("Arrived at Post Office") comes before the delivery round, so it is transit;
-// a parcel waits there for its recipient only once it is held.
-const READY_FOR_PICKUP_TERMS = ['available for pickup', 'available for pick-up', 'pickup', 'pick up', 'held at post office'];
+// a parcel waits there for its recipient only once it is held. A destination post's office abroad
+// holding an international item ("Held at Delivery Depot/Delivery Office") is the same wait.
+const READY_FOR_PICKUP_TERMS = ['available for pickup', 'available for pick-up', 'pickup', 'pick up', 'held at post office',
+  'held at delivery depot', 'held at delivery office'];
 // A label printed at the counter is dated by its day alone; the item's acceptance is the scan of it that follows.
 const REGISTERED_TERMS = [
   'pre-shipment', 'preshipment', 'shipping label created', 'label created', 'shipping label printed',

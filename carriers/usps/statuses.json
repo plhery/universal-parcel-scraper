@@ -6,6 +6,7 @@
     { "wording": "Delivered, In/At Mailbox", "language": "en", "stage": "delivered", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "Sandbox example from the official API examples repository." },
     { "wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "Official Tracking API vocabulary." },
     { "wording": "Available for Pickup", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "Adapter result status: out_for_delivery." },
+    { "wording": "Held at Delivery Depot/Delivery Office", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "International mail: the destination post's office holds the item for the recipient, minutes after its arrival there and beside that post's own pickup notice." },
     { "wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-20", "note": "The delivering post office's arrival, followed by the delivery round or the delivery, not a wait for collection." },
     { "wording": "In Transit", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "Official Tracking API vocabulary." },
     { "wording": "Arrived at USPS Regional Facility", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "" },
