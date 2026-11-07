@@ -517,15 +517,16 @@ describe('USPS lookup steps', () => {
     fetcher.mockResolvedValueOnce(trawlReply(TIMELINE_PAGE));
     expect((await tracker.fetch(DELIVERED_NUMBER)).events).toHaveLength(5);
     expect(fetcher).toHaveBeenCalledTimes(3);
-    // The third redirect in a row ends its lookup without the second read, and the next lookup reads nothing.
+    // The third redirect in a row ends its lookup without the second read, and the next lookup reads nothing:
+    // it ends as the adapter's own pacing with the wait, not as a failure of USPS.
     await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject(redirected);
     await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject(redirected);
     expect(fetcher).toHaveBeenCalledTimes(6);
     records.length = 0;
-    await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'maintenance_page',
+    await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', reason: 'self_paced',
       retryAfterMs: expect.any(Number) });
     expect(fetcher).toHaveBeenCalledTimes(6);
-    expect(records).toEqual(['trawl:indeterminate', 'lookup:trawl:indeterminate']);
+    expect(records).toEqual(['trawl:rate_limited', 'lookup:trawl:rate_limited']);
     // Another browser service is not paused.
     await expect(new USPSTracker({ trawl: ownTrawl() }).fetch(DELIVERED_NUMBER)).rejects.toMatchObject(redirected);
     expect(fetcher).toHaveBeenCalledTimes(8);
@@ -533,7 +534,7 @@ describe('USPS lookup steps', () => {
     vi.spyOn(Date, 'now').mockReturnValue(Date.now() + 5 * 60_000 + 1);
     await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject(redirected);
     expect(fetcher).toHaveBeenCalledTimes(9);
-    await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ retryAfterMs: 5 * 60_000 });
+    await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 5 * 60_000 });
     expect(fetcher).toHaveBeenCalledTimes(9);
   });
 
@@ -602,10 +603,10 @@ describe('USPS lookup steps', () => {
       expect(fetcher).toHaveBeenCalledTimes(6);
       // Both routes are paused: no read, and the wait is the shorter of the two.
       records.length = 0;
-      await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ reason: 'maintenance_page',
+      await expect(tracker.fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', reason: 'self_paced',
         retryAfterMs: expect.any(Number) });
       expect(fetcher).toHaveBeenCalledTimes(6);
-      expect(records).toEqual(['trawl:indeterminate:none', 'lookup:indeterminate']);
+      expect(records).toEqual(['trawl:rate_limited:none', 'lookup:rate_limited']);
     });
 
     it('keeps the proxy\'s challenges to the existing retries', async () => {

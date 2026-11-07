@@ -40,13 +40,15 @@ FLARESOLVERR_URL for browser fallback')`.
 
 The verification wrapper can stay blank when its tracking request redirects to
 USPS's service outage page. The service captures that exact redirect. It concerns one
-read, but redirects come in runs: a second read loads the page about one time in three
-and a third about one in ten, and after a lookup whose reads were all redirected the
-next lookup's first read loads about one time in ten. So a redirected read gets one more
-read, and once three reads in a row through one browser service are redirected, its
-reads pause for five minutes: lookups end at once with the wait, and enabled providers
-take over. The first read after the pause pauses them again if it is redirected; a page
-that loads ends the run. A lookup whose every read is redirected ends as temporary
+read, but redirects come in runs that do not follow how often we read: a read straight
+after one redirect usually loads, and after three in a row the next read is redirected
+more often than not, whether it comes seconds or minutes later. So a redirected read gets
+one more read, and once three reads in a row through one browser service are redirected,
+its reads pause for five minutes. A lookup during the pause reads nothing and ends as the
+adapter's own pacing, `rate_limited` with `self_paced` and the wait, so a consumer can
+hold its checks until the pause ends rather than count a failure of USPS. The first read after the pause
+pauses them again if it is redirected; a page that loads ends the run, and reads go on at
+the consumer's own rate. A lookup whose every read is redirected ends as temporary
 unavailability. An unresolved verification page remains a challenge; a complete matching
 history takes precedence over an earlier outage reply.
 

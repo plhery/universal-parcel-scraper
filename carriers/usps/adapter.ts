@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepContext } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecord, type StepRecorder } from '../../core/telemetry/index.js';
@@ -32,19 +32,20 @@ const MAX_EVENTS_TO_RETURN = 100;
 /** Pages a second browser read within the same budget can complete. */
 const RECOVERABLE_PAGES = new Set(['incomplete_page', 'interstitial_page']);
 
-/** A read the verification wrapper sent to the outage page, or one not made while reads pause. */
+/** A read the verification wrapper sent to the outage page. */
 function outageRedirect(error: unknown): boolean {
   return error instanceof IndeterminateError && error.reason === 'maintenance_page';
 }
 
 /**
- * Redirects come in runs: after a lookup whose reads were all redirected, the next lookup's
- * first read loads tracking about one time in ten, against more than four after a read that
- * loaded. So once three reads in a row through one route land on the outage page, its reads
- * pause for five minutes. While the browser service's own route is paused, reads go through
- * the fallback proxy when one is configured; otherwise lookups end at once, for enabled
- * providers to answer. The next read after the pause pauses them again if it is redirected
- * too; a loaded page ends the run.
+ * Redirects come in runs: after three in a row, the next read is redirected more often than
+ * not, whether it comes seconds or minutes later. So once three reads in a row through one
+ * route land on the outage page, its reads pause for five minutes. While the browser
+ * service's own route is paused, reads go through the fallback proxy when one is configured;
+ * otherwise lookups end before any read, as the adapter's own pacing (`self_paced`) with the
+ * wait, so a consumer can hold its checks until then rather than count a failure of USPS. The
+ * next read after the pause pauses them again if it is redirected too; a loaded page ends the
+ * run.
  */
 const OUTAGE_RUN = 3;
 const OUTAGE_PAUSE_MS = 5 * 60_000;
@@ -471,8 +472,8 @@ export class USPSTracker {
     const fallback = this.#fallbackRun(trawl);
     const run = fallback ?? own;
     if (pausedMs(run) > 0) {
-      throw new IndeterminateError('USPS', 'USPS sent the last lookups to its service outage page; no read until the pause ends',
-        { reason: 'maintenance_page', retryAfterMs: fallback ? Math.min(pausedMs(own), pausedMs(fallback)) : pausedMs(own) });
+      throw new RateLimitedError('USPS', fallback ? Math.min(pausedMs(own), pausedMs(fallback)) : pausedMs(own),
+        'USPS sent the last reads to its service outage page; no read until the pause ends', { reason: 'self_paced' });
     }
     read.route = fallback ? 'residential' : 'default';
     read.reads += 1;
