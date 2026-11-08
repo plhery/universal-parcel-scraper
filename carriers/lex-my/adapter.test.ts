@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { statusMap as lexIdMap } from '../lex-id/status.js';
@@ -29,5 +30,13 @@ describe('LEX Malaysia tracking', () => {
       .toEqual(lexIdStatuses.entries.map(({ code, stage, wording }) => [code, stage, wording]));
     for (const { code, stage } of statuses.entries) expect(lexIdMap.stage(code, ''), code).toBe(stage);
     expect(statusMapAnswer({ carrier: 'lex-my', providerCode: 'domestic_delivered', description: 'Delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+  });
+
+  it('is asked by recognition about its numbers, and knows one only when the search lists it', async () => {
+    expect(recognitionAskedCarriers(NUMBER)).toEqual(['lex-my']);
+    const reply = (body: unknown) => carrier(vi.fn<typeof fetch>().mockImplementation(async () =>
+      new Response(JSON.stringify(body), { headers: { 'Content-Type': 'application/json' } })));
+    await expect(reply(found()).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
+    await expect(reply({ success: true, data: [] }).recognize!(NUMBER)).resolves.toEqual({ known: false });
   });
 });

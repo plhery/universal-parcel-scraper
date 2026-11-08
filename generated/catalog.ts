@@ -29909,7 +29909,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kuala_Lumpur",
     "tracking": {
       "mode": "automatic",
-      "adapter": "lex-my"
+      "adapter": "lex-my",
+      "recognitionRank": 11
     },
     "canaryUrl": "https://lex.com.my/",
     "trackingUrlTemplate": "https://lex.com.my/tracking?references={trackingNumber}",
