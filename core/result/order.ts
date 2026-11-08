@@ -2,6 +2,8 @@ import type { CarrierEvent } from './index.js';
 
 // A time that names its offset is an instant; one without is a wall clock.
 const OFFSET = /(?:Z|[+-]\d{2}:?\d{2})$/i;
+// A date and its time apart, "2026-03-01 08:00", as an ISO date-time joins them.
+const SPACED = /^(\d{4}-\d{2}-\d{2}) +(?=\d{2}:\d{2})/;
 
 interface ScanTime { wall: boolean; at: number }
 
@@ -14,7 +16,9 @@ export function scanTime(event: CarrierEvent): ScanTime | null {
   for (const time of [event.time, event.local_time]) {
     if (typeof time !== 'string' || !time) continue;
     const wall = !OFFSET.test(time);
-    const at = Date.parse(wall && time.includes('T') ? `${time}Z` : time);
+    // A wall clock's date and time read as UTC, as a date alone does, so no host zone moves it.
+    const written = wall ? time.replace(SPACED, '$1T') : time;
+    const at = Date.parse(wall && written.includes('T') ? `${written}Z` : written);
     if (Number.isFinite(at)) return { wall, at };
   }
   return null;

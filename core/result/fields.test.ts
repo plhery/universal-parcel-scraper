@@ -155,6 +155,8 @@ describe('a summary without a stage', () => {
     const accepted = { time: '2026-01-02T08:00:00Z', description: 'Accepted', stage: 'accepted' };
     const out = { local_time: '2026-01-02T08:00:00', description: 'Out for delivery', stage: 'out_for_delivery' };
     const older = { local_time: '2026-01-01T09:00:00', description: 'Arrived', stage: 'in_transit' };
+    // Written with a space, an hour before `out`: read in New York's zone it would come after it.
+    const spaced = { local_time: '2026-01-02 07:00', description: 'Sorted', stage: 'in_transit' };
     const seen: unknown[][] = [];
     const parsed = new Set<number>();
     try {
@@ -162,8 +164,8 @@ describe('a summary without a stage', () => {
         process.env.TZ = host;
         // The host reads an offset-free clock in its own zone.
         parsed.add(Date.parse(out.local_time));
-        seen.push([[out, accepted], [accepted, out], [out, older, accepted], [accepted, older, out]]
-          .map((events) => resultStage({ status: 'unknown', events })));
+        seen.push([[out, accepted], [accepted, out], [out, older, accepted], [accepted, older, out], [out, spaced, accepted],
+          [accepted, spaced, out]].map((events) => resultStage({ status: 'unknown', events })));
       }
     } finally {
       if (zone === undefined) delete process.env.TZ;
@@ -171,7 +173,9 @@ describe('a summary without a stage', () => {
     }
     expect(parsed.size).toBe(3);
     // Newest first, unless the wall clocks show the answer lists its scans oldest first.
-    for (const stages of seen) expect(stages).toEqual(['out_for_delivery', 'accepted', 'out_for_delivery', 'out_for_delivery']);
+    for (const stages of seen) {
+      expect(stages).toEqual(['out_for_delivery', 'accepted', 'out_for_delivery', 'out_for_delivery', 'out_for_delivery', 'out_for_delivery']);
+    }
   });
 
   it('keeps a stage the carrier gave, and borrows no delivery or return the newer scans may have undone', () => {
