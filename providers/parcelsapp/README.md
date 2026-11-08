@@ -467,8 +467,8 @@ step exists for future protocol changes.
   destination's single clock, else kept as wall clocks. So are its English copies whose
   place is in the destination, by the country's name or, on an item to the US or Canada, a
   state or province. Its own lines for those scans, a processing centre in brackets
-  ("邮件到达处理中心【…】") or a clearance named by the country's code, keep China's clock:
-  China Post's tracker gives them "+08:00". Its labels in Chinese show in English where China
+  ("邮件到达处理中心【…】"), its trunk transit ("干线中转") or a clearance named by the country's
+  code, keep China's clock: China Post's tracker gives them "+08:00". Its labels in Chinese show in English where China
   Post's map knows them, staged as the Chinese was, with their place left to the location,
   as 17TRACK's copies of them are. A copy at a place of China Post's own ("Final delivery" at a code)
   takes the zone of another network's scan at the same minute in the destination, the

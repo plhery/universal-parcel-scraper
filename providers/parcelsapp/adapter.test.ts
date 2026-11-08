@@ -2393,6 +2393,10 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-10-31T15:03:00Z', status: 'Customs clearance completed in FR', carrier: 0, location: 'France' },
       { date: '2026-10-30T09:00:00Z', status: 'Arrive at the place of destination', carrier: 0, location: 'France' },
     ])).toEqual(['2026-10-31T23:29:00.000Z', '2026-10-31T07:03:00.000Z', '2026-10-30T08:00:00.000Z']);
+    // Its trunk transit too, as 17TRACK's "+08:00" copy has it.
+    expect(times('ES', ['China Post'], [
+      { date: '2026-10-27T03:17:52Z', status: '干线中转', carrier: 0, location: 'Spain' },
+    ])).toEqual(['2026-10-26T19:17:52.000Z']);
   });
 
   it("shows China Post's Chinese labels in English, staged as the Chinese was, with the place the label names where none is given", () => {
