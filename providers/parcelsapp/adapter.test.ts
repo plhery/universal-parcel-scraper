@@ -2188,6 +2188,13 @@ describe('ParcelsApp result parsing', () => {
     expect(clocks(states)).toEqual(['2026-11-06T05:30:09.000Z', '2026-11-04T08:21:34.000Z', '2026-11-04T02:22:34.000', '2026-11-03T08:43:30.000']);
     // Without ePost Global's label or handover, an EasyShip feed is read as before.
     expect(clocks([states[0]!])).toEqual(['2026-11-06T14:30:09.000Z']);
+    // Royal Mail's British partner's rows on London's clock, even one placed in the United States.
+    expect(clocks([
+      state('2026-11-07T14:30:00Z', 'Ready for Collection'),
+      state('2026-11-03T18:58:00Z', 'Departed Hub', 'US'),
+      state('2026-11-02T23:56:32Z', 'In transit to ROYALMAIL 48 TRACKED tracking #: GB000000005GB'),
+      state('2026-11-02T23:55:32Z', 'Parcel Shipped', 'Example City IL'),
+    ])).toEqual(['2026-11-07T14:30:00.000Z', '2026-11-03T18:58:00.000Z', '2026-11-03T05:55:32.000Z', '2026-11-02T23:56:32.000']);
   });
 
   it('reads the networks ParcelsApp names its own way on their home clock', () => {

@@ -54,6 +54,24 @@
       "note": "A delivery attempt that failed; the reason after the comma varies."
     },
     {
+      "code": "322",
+      "wording": "Incorrect/Insufficient Address, Additional Details Required for Delivery.",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Minutes after a regional hub's arrival: the address is wrong or incomplete, and the parcel waits until someone adds details."
+    },
+    {
+      "code": "225",
+      "wording": "Address Corrected.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "The address fixed after code 322; the parcel is loaded and moves on."
+    },
+    {
       "code": "612",
       "wording": "Arrived at Sorting Center",
       "language": "en",

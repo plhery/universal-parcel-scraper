@@ -145,6 +145,7 @@
     {"code": "OIT", "wording": "SHIPMENT REDIRECTED: ON CONSIGNEE'S REQUEST", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The recipient's own arrangement after the third missed delivery, whose scan asked them to book one: the parcel moves on to it, so no longer a missed delivery."},
     {"wording": "Arrived at Origin Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's first hub, by the airport the parcel flew to, after JS Express's hand-over to the local courier."},
     {"wording": "Departed Destination Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's hub sends the parcel on to its last-mile warehouse."},
-    {"wording": "Arrived At Warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's last-mile warehouse, before the delivery round."}
+    {"wording": "Arrived At Warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's last-mile warehouse, before the delivery round."},
+    {"wording": "Parcel scan delays", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-08", "note": "A note under OIT, hours after the parcel reached a USPS facility, while no scan follows: the parcel stays on its way."}
   ]
 }

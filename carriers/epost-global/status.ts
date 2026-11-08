@@ -34,6 +34,13 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['your item is ready to be forwarded from its foreign territory. it will be given to the carrier for forwarding.', 'in_transit'],
   // GLS's European network, after the hand-over: its hub's departure.
   ['the parcel has left the parcel center.', 'in_transit'],
+  // Royal Mail's British partner, after the hand-over: its hub, depots and the collection point. Its codes are
+  // Intersoft's Intelligent Shipper buckets, which file "Arrived in customs" as misrouted (ISMI).
+  ['departed hub', 'in_transit'],
+  ['shipment received in depot', 'in_transit'],
+  ['arrived in customs', 'customs'],
+  ['shipment departed depot', 'in_transit'],
+  ['ready for collection', 'ready_for_pickup'],
 ]);
 
 // The handover a minute after shipping: "In transit to {service} tracking #: {number}".
@@ -64,21 +71,26 @@ export function epostGlobalOwnRow(wording: string): boolean {
 
 /** GLS's European network's clock: its tracking runs on Central European time wherever the depot is. */
 export const EPOST_GLOBAL_GLS_ZONE = 'Europe/Berlin';
+/** The clock of Royal Mail's British partner, whose feed dates its rows to the minute in no zone. */
+export const EPOST_GLOBAL_ROYAL_MAIL_ZONE = 'Europe/London';
 
 // The handover to GLS's European network: "In transit to GLSEU tracking #: …".
 const GLS_HANDED_OVER = /^in transit (?:to|via) gls ?eu(?:rope)? tracking ?#:/;
+// The handover to a Royal Mail service: "In transit to ROYALMAIL 48 TRACKED tracking #: …", "… to RM48 DDP …".
+const ROYAL_MAIL_HANDED_OVER = /^in transit (?:to|via) (?:royal ?mail|rm ?\d{2})\b.* tracking ?#:/;
 
 /**
  * How a universal provider's copy of ePost Global's feed reads a row's clock: undefined for a
  * processing center's scan, which its place dates, or a feed that is not ePost Global's (it has
- * neither the label nor a handover); null for ePost Global's own row, a wall clock; GLS's zone for
- * a partner's row once ePost Global handed the parcel to GLS's European network.
+ * neither the label nor a handover); null for ePost Global's own row, a wall clock; the partner's
+ * zone for a partner's row once ePost Global handed the parcel to GLS's European network or to Royal Mail.
  */
 export function epostGlobalCopyZone(wording: string, feed: readonly string[]): string | null | undefined {
   const rows = feed.map(normalizeStatusWording);
   if (!rows.some((row) => row === 'shipment in transit to the epost global processing center' || HANDED_OVER.test(row))) return undefined;
   if (epostGlobalOwnRow(wording)) return epostGlobalFacilityScan(wording) ? undefined : null;
-  return rows.some((row) => GLS_HANDED_OVER.test(row)) ? EPOST_GLOBAL_GLS_ZONE : undefined;
+  if (rows.some((row) => GLS_HANDED_OVER.test(row))) return EPOST_GLOBAL_GLS_ZONE;
+  return rows.some((row) => ROYAL_MAIL_HANDED_OVER.test(row)) ? EPOST_GLOBAL_ROYAL_MAIL_ZONE : undefined;
 }
 
 /** A scan at one of ePost Global's processing centers. */

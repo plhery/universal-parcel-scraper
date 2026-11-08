@@ -680,6 +680,20 @@ describe('status map answers', () => {
     ] as const) expect(answer('shouwu', '', wording), wording).toEqual(mapped(stage));
   });
 
+  it("answers Royal Mail's British partner through ePost Global, JS Express's delay note and GOFO's address exception", () => {
+    for (const [code, wording, stage] of [
+      ['DFSF', 'Departed Hub', 'in_transit'],
+      ['PRID', 'Shipment Received in Depot', 'in_transit'],
+      // Its code files the row as misrouted; ePost Global's wording is what happened.
+      ['ISMI', 'Arrived in customs', 'customs'],
+      ['PSDD', 'Shipment Departed Depot', 'in_transit'],
+      ['DRFC', 'Ready for Collection', 'ready_for_pickup'],
+    ] as const) expect(answer('epost-global', code, wording), wording).toEqual(mapped(stage));
+    expect(answer('js-express', 'OIT', 'Parcel scan delays')).toEqual(mapped('in_transit'));
+    expect(answer('gofo', '322', 'Incorrect/Insufficient Address, Additional Details Required for Delivery.')).toEqual(mapped('exception'));
+    expect(answer('gofo', '225', 'Address Corrected.')).toEqual(mapped('in_transit'));
+  });
+
   it('answers SF Express by its operation code, and code 99 by its remark', () => {
     expect(answer('sf-express', '10', 'The shipment has departed from the transit place【CN,EXAMPLE】, flight departure')).toEqual(mapped('in_transit'));
     expect(answer('sf-express', '11', 'The shipment has arrived at the transit place【CH,EXAMPLE】, flight arrival')).toEqual(mapped('in_transit'));

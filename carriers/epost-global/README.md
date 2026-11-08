@@ -38,10 +38,15 @@ it on ppxtrack.com, so that name counts as ePost Global's.
   reads them on, Amsterdam or UTC by code, with `time_zone_basis` `carrier`. GLS's European
   network runs its tracking on Central European time, as [GLS Germany's](../gls-de/README.md)
   notes, so the rows ePost Global relays from it take Berlin's clock, even at GLS's gateway in the
-  United States, whose zone would date its departure after the lookup. Every other row keeps its
+  United States, whose zone would date its departure after the lookup. Royal Mail's rows come from
+  a British partner's feed, dated to the minute in no zone under the codes of Intersoft's
+  [Intelligent Shipper](https://kb.intersoft.co.uk/hubfs/Intelligent%20Shipper%20Tracking%20SFTP%20Access%20Specification%20v2.4.pdf),
+  so they take London's clock, even one placed in the United States; read on the processing center's
+  clock, a Saturday's collection notice would come in the evening. The codes are the feed's buckets,
+  not the scan: "Arrived in customs" comes as ISMI, a misrouted shipment. Every other row keeps its
   wall clock: the data rows carry no place, and partners' rows are copied from the partner's feed
   in its own zone.
-  ParcelsApp's copies, filed under "EasyShip", are read the same way.
+  ParcelsApp's copies, filed under "EasyShip", are read the same way, a partner's by the handover.
 - The delivering partner is named for Spring's PostNL service, which spring-gds tracks under the
   same number, and for partners the catalog knows by name whose link, if any, is their own. The
   partner's number is the delivery tracking number. GLS's European network is not named, since
@@ -70,8 +75,8 @@ number at the end of a shop's `/t/{shop}/{number}` page.
 ## Limitations
 
 - No delivery estimate, delivery time, weight, service, sender or recipient.
-- Partners' scans keep the wall clocks ePost Global copies from them, except PostNL's own records
-  and GLS's rows.
+- Partners' scans keep the wall clocks ePost Global copies from them, except PostNL's own records,
+  GLS's rows and Royal Mail's.
 
 ## Testing
 

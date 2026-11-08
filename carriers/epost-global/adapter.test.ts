@@ -78,11 +78,12 @@ describe('ePost Global HTTP adapter', () => {
     const result = parseEpostGlobal(text('royal-mail-in-transit'), ROYAL);
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_update_local: '2026-07-15T08:56:00',
       delivery_carrier: 'royal-mail', delivery_tracking_number: 'GB000000005GB', destination_country: 'GB' });
+    // Royal Mail's British partner dates its rows on British time; ePost Global's handover and label keep their wall clocks.
     expect(result.events!.map((event) => [event.time ?? event.local_time, event.location ?? null])).toEqual([
-      ['2026-07-15T08:56:00', null],
-      ['2026-07-14T08:11:00', 'Hubton'],
-      ['2026-07-12T16:56:00', 'GB'],
-      ['2026-07-12T14:45:00', null],
+      ['2026-07-15T08:56:00+01:00', null],
+      ['2026-07-14T08:11:00+01:00', 'Hubton'],
+      ['2026-07-12T16:56:00+01:00', 'GB'],
+      ['2026-07-12T14:45:00+01:00', null],
       ['2026-07-11T23:14:13', null],
       ['2026-07-11T23:13:13-07:00', 'Sampleville CA'],
       ['2026-07-11T21:43:47-07:00', 'Sampleville CA'],
@@ -119,7 +120,7 @@ describe('ePost Global HTTP adapter', () => {
     expect(elsewhere.events![7]).toMatchObject({ provider_code: '1233', local_time: '2026-03-05T17:47:00' });
     expect(elsewhere.events![7]!.time).toBeUndefined();
     const other = parseEpostGlobal(rewrite('spring-delivered', (details) => {
-      Object.assign(details, { Vendor: 'ROYAL MAIL', VendorTrackingUrl: '', VendorBaseUrl: 'https://www.royalmail.com/track-your-item' });
+      Object.assign(details, { Vendor: 'DAI POST', VendorTrackingUrl: '', VendorBaseUrl: '' });
     }), SPRING);
     expect(other.events![7]!.time).toBeUndefined();
   });

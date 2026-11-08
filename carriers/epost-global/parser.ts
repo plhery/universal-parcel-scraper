@@ -10,7 +10,7 @@ import { firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { postnlRecordZone } from '../spring-gds/adapter.js';
-import { EPOST_GLOBAL_GLS_ZONE, epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
+import { EPOST_GLOBAL_GLS_ZONE, EPOST_GLOBAL_ROYAL_MAIL_ZONE, epostGlobalFacilityScan, epostGlobalOwnRow, epostGlobalStage } from './status.js';
 
 export const PROVIDER = 'ePost Global';
 // A delivered parcel's reply is up to a hundred kilobytes: its history twice,
@@ -80,7 +80,7 @@ type ScanClock = Pick<CarrierEvent, 'time' | 'local_time' | 'time_zone' | 'time_
 
 /**
  * A scan's clock: an instant in the center's zone, or in the partner's for a
- * row on its clock (PostNL's own records, GLS's rows), else the wall clock as stamped.
+ * row on its clock (PostNL's own records, GLS's and Royal Mail's rows), else the wall clock as stamped.
  */
 function clockOf(stamp: string, zone: string | null, partner: string | null): ScanClock {
   const wall = WALL_CLOCK.exec(stamp)?.[1];
@@ -183,8 +183,10 @@ export function parseEpostGlobal(html: string, raw: string): CarrierResult {
   // The shipper's country, where ePost Global places the records Spring's PostNL service keeps without one.
   const shipper = text(details, 'OCt', 8).toUpperCase();
   const origin = VENDORS.get(text(details, 'Vendor', 80).toUpperCase()) === 'spring-gds' && /^[A-Z]{2}$/.test(shipper) ? shipper : null;
-  // GLS's rows, even one placed at its gateway in the United States, on GLS's clock.
-  const partnerZone = GLS_EUROPE.test(text(details, 'Vendor', 80)) ? EPOST_GLOBAL_GLS_ZONE : null;
+  // GLS's rows, even one placed at its gateway in the United States, on GLS's clock; Royal Mail's, which its
+  // British partner dates, on the United Kingdom's.
+  const partnerZone = GLS_EUROPE.test(text(details, 'Vendor', 80)) ? EPOST_GLOBAL_GLS_ZONE
+    : partner === 'royal-mail' ? EPOST_GLOBAL_ROYAL_MAIL_ZONE : null;
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
   for (const row of rows) {
