@@ -82,6 +82,12 @@ Italiane for a number issued abroad.
   plates for that hand-off. DHL issues them, so no detection rule names Poste for them.
 - Poste Delivery Business Internazionale Plus codes start with `8UW`, as `1UW` and `3UW` codes
   do for Poste's other parcels. Poste's tracker follows them.
+- AliExpress parcels to Italy can carry a `5P` code before Poste has them. Aggregators then name
+  SENGI Express, Poste's line from China, beside Cainiao. Its keyless tracker, a POST of
+  `{"trackingNumberList": [number], "type": 1}` to `https://portal.sengiexpress.com/api-v2/tracking/web`,
+  answers with the line's channel (`PI`) and Cainiao's advance notice to the last mile, which
+  [AliExpress / Cainiao](../aliexpress/README.md) already gives as the earlier leg, and with an
+  empty object for a number it does not know. No adapter reads it.
 - Poste Italiane also prints its codes inside an ISO 15459 plate: `J`, the UPU's issuing-agency
   code `J`, Poste's UPU operator code `ITA` and the thirteen-character code. Poste's tracker
   follows the whole plate and echoes it, so `poste-italiane-plate` claims it at high confidence.
