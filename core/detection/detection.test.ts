@@ -332,6 +332,17 @@ describe('normalization', () => {
     }
   });
 
+  it('reads a letter O typed after JRT as a stray letter in a JRT number', () => {
+    for (const typed of ['jrto 0000000001 mm', 'JRTO0000000001MM']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe('JRT0000000001MM');
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'jrt', confidence: 'high' });
+    }
+    // Only JRT's own length and suffix: anything else stays as typed.
+    for (const typed of ['JRTO000000001MM', 'JRTO00000000001MM', 'JRTO0000000001AB', 'JRTOO0000000001MM']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('drops the slashes of a NO LIMIT shipment number, which reads the same without them', () => {
     for (const typed of ['P/40017/LSMP/2026', ' p/40017/lsmp/2026 ', 'P40017/LSMP/2026', 'P 40017 LSMP 2026']) {
       expect(normalizeTrackingNumber(typed), typed).toBe('P40017LSMP2026');
