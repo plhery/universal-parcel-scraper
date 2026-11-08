@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { searchPageVerdict, trackingPageVerdict } from './trackingLinkProbe.js';
+import { landedAddress, searchPageVerdict, trackingPageVerdict } from './trackingLinkProbe.js';
 
 const route = /^https:\/\/carrier\.example\/tracking(?:\?|$)/;
 const marker = /track your parcel/i;
@@ -74,5 +74,14 @@ describe('search page validation', () => {
   });
   it('keeps a field shown above a human check', () => {
     expect(searchPageVerdict({ ...search, text: 'Enter your tracking number. Verify you are human.' }, 1)).toBe('search-page');
+  });
+});
+
+describe('landing address in a failure message', () => {
+  it('keeps the origin and path of a redirect, never its query, fragment or credentials', () => {
+    expect(landedAddress('https://user:pass@carrier.example:8443/track/done?session=SECRET&challenge=SECRET#SECRET'))
+      .toBe('https://carrier.example:8443/track/done');
+    expect(landedAddress('chrome-error://chromewebdata/')).toBe('chrome-error://chromewebdata/');
+    expect(landedAddress('not an address')).toBe('an unreadable address');
   });
 });

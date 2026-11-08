@@ -81,7 +81,7 @@ test('asks for a look at a check failing two days running, and at a carrier down
   });
   const body = renderBody(state, '2026-11-04', runUrl);
   assert.match(body, /^### Needs a look\n/);
-  assert.match(body, /### Carrier down for two weeks\n[\s\S]*algerie-poste opens a tracking page`: TimeoutError[^\n]*\(failing since 2026-10-21, on 15 days\)/);
+  assert.match(body, /### Carrier down for two weeks\n[\s\S]*algerie-poste opens a tracking page`: `TimeoutError[^`\n]*` \(failing since 2026-10-21, on 15 days\)/);
   assert.match(body, /<details><summary>Carrier down \(1\)<\/summary>/);
   assert.match(body, /<details><summary>Failed once \(1\)<\/summary>[\s\S]*spx-br[^\n]*\(failed 2026-11-04\)/);
   assert.ok(body.indexOf('#### Rendered UI tracking links') > 0);
@@ -90,10 +90,25 @@ test('asks for a look at a check failing two days running, and at a carrier down
 test('keeps the record in the body, whatever the reasons hold', () => {
   const state = { notified: ['tracking-links\nx'], checks: { adapters: { 'A > b': { reason: 'expected a --> b <!-- c', down: false, since: '2026-11-01', last: '2026-11-02', days: 2 } } } };
   const body = renderBody(state, '2026-11-02', runUrl);
-  assert.equal(body.match(/<!--/g).length, 1);
-  assert.match(body, /expected a --> b &lt;!-- c/);
+  // The reason sits in a code span, where a comment cannot open; the record is the only comment.
+  assert.match(body, /: `expected a --> b <!-- c` \(/);
+  assert.equal(body.replace(/`[^`\n]*`/g, '').match(/<!--/g).length, 1);
   assert.deepEqual(readState(body), state);
   assert.deepEqual(readState('An older body without a record'), empty);
+});
+
+test('shows a page title\'s links, mentions and references as text', () => {
+  const reason = 'AssertionError: Expected a field; landed on https://carrier.example/track with HTTP 200, titled "[Win](https://evil.example/x) ![p](https://evil.example/p.png) @someone example/repo#12 a \\| b": expected \'broken\' to be \'search-page\'';
+  const failures = lines([[link('seur'), reason]]);
+  const day1 = nextState(empty, linksFailing([link('seur'), reason]), '2026-11-04');
+  const day2 = nextState(day1, linksFailing([link('seur'), reason]), '2026-11-05');
+  assert.equal(parseFailures(failures)[0].reason, reason);
+  const body = renderBody(day2, '2026-11-05', runUrl);
+  const shown = /seur opens a tracking page`: (.*) \(failing since/.exec(body)[1];
+  assert.equal(shown, `\`${reason.replace('\\|', '|')}\``);
+  // Outside code spans and the hidden record, the body names no one and links nothing.
+  assert.doesNotMatch(body.replace(/`[^`\n]*`/g, '').replace(/<!-- canary-state\n[\s\S]*?\n-->/, ''), /@someone|#12|\]\(/);
+  assert.deepEqual(readState(body).checks, day2.checks);
 });
 
 test('closes the issue when nothing needs a look, keeping the record', () => {

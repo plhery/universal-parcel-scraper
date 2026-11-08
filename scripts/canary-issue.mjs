@@ -119,6 +119,17 @@ const HEADINGS = {
   once: ['Failed once', 'Failed on one day only so far.'],
 };
 
+/**
+ * A reason as a code span. A carrier's page title or an error can hold a link, an image, an
+ * @mention, an issue reference or a `<` that opens an HTML comment; inside the span GitHub
+ * renders none of them. Its table escape is undone, and a backtick, which would end the span,
+ * becomes a quote.
+ */
+function codeSpan(reason) {
+  const text = String(reason).replace(/\\\|/g, '|').replace(/`/g, "'").trim();
+  return text ? `\`${text}\`` : '';
+}
+
 function list(items, withReasons = true) {
   const lines = [];
   for (const job of Object.keys(JOBS)) {
@@ -127,8 +138,7 @@ function list(items, withReasons = true) {
     lines.push(`#### ${JOBS[job]}`, '');
     for (const item of own) {
       const record = item.days > 1 ? `failing since ${item.since}, on ${item.days} days` : `failed ${item.last}`;
-      // A `<` in a page's title or an error could open an HTML comment that hides the rest.
-      lines.push(`- \`${item.check}\`${withReasons ? `: ${item.reason.replace(/</g, '&lt;')}` : ''} (${record})`);
+      lines.push(`- \`${item.check}\`${withReasons ? `: ${codeSpan(item.reason)}` : ''} (${record})`);
     }
     lines.push('');
   }

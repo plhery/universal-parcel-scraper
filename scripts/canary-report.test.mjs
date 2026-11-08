@@ -39,8 +39,8 @@ test('lists failed and inconclusive checks but counts gated ones', (t) => {
 
   const summary = fs.readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8');
   assert.match(summary, /^### Adapters\n\n1 passed · 2 failed · 1 unverified · 1 not run/);
-  assert.match(summary, /\| ❌ failed \| PostNL > maps a wrong number to a 404 \| AssertionError: expected 429 to be \\\| 404 \|/);
-  assert.match(summary, /\| ⚠️ unverified \| UPS > opens a tracking page \| Carrier bot protection \|/);
+  assert.match(summary, /\| ❌ failed \| PostNL > maps a wrong number to a 404 \| `AssertionError: expected 429 to be \\\| 404` \|/);
+  assert.match(summary, /\| ⚠️ unverified \| UPS > opens a tracking page \| `Carrier bot protection` \|/);
   assert.doesNotMatch(summary, /FedEx|CTT/);
   assert.match(fs.readFileSync(env.GITHUB_OUTPUT, 'utf8'),
     /^failures<<(EOF_[\w-]+)\n- `PostNL > maps a wrong number to a 404`: AssertionError: expected 429 to be \\\| 404\n- `Hermes > returns a delivered order`: AssertionError: promise rejected "UpstreamHttpError: Hermes tracking return… \{ …\(7\) \}" instead of resolving · caused by UpstreamHttpError: Hermes tracking returned HTTP 400\n\1\n$/);
@@ -52,4 +52,24 @@ test('writes nothing outside GitHub Actions and no output without failures', () 
   writeCanaryReport({ title: 'Probe', totals: '1/1 reachable', rows: [] }, env);
   assert.equal(fs.readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8'), '### Probe\n\n1/1 reachable\n\n');
   assert.equal(fs.existsSync(env.GITHUB_OUTPUT), false);
+});
+
+test('publishes a landing address without its query and a page title as inert text', () => {
+  const env = githubFiles();
+  const reason = 'Error: navigating to "https://carrier.example/r?next=SECRET-TOKEN", landed on '
+    + 'https://carrier.example/track/done?session=SECRET-TOKEN&challenge=SECRET-TOKEN#SECRET-TOKEN with HTTP 200, '
+    + 'titled "[Claim](https://evil.example/x) ![p](https://evil.example/p.png) @someone example/repo#12 | `x`"';
+  writeCanaryReport({ title: 'Links', totals: '0 passed', rows: [{ result: 'failed', check: 'Links > seur opens a tracking page', reason }] }, env);
+  const summary = fs.readFileSync(env.GITHUB_STEP_SUMMARY, 'utf8');
+  const output = fs.readFileSync(env.GITHUB_OUTPUT, 'utf8');
+  for (const text of [summary, output]) {
+    assert.doesNotMatch(text, /SECRET-TOKEN/);
+    assert.match(text, /landed on https:\/\/carrier\.example\/track\/done with HTTP 200/);
+    assert.match(text, /navigating to "https:\/\/carrier\.example\/r", landed/);
+  }
+  // The summary's reason is one code span: GitHub renders no link, image or mention in it.
+  const cells = /\| Links > seur opens a tracking page \| (.*) \|\n/.exec(summary)[1];
+  assert.match(cells, /^`[^`]*\[Claim\]\(https:\/\/evil\.example\/x\) [^`]*@someone example\/repo#12 \\\| 'x'[^`]*`$/);
+  // The issue job reads the reason back as one line, and shows it as a code span.
+  assert.match(output, /\n- `Links > seur opens a tracking page`: Error: [^\n`]*@someone[^\n`]*\n/);
 });

@@ -211,7 +211,7 @@ describe('carrier front-door canaries', () => {
     })));
 
     expect(await carrierCanaryMain(['--attempts', '1'])).toBe(1);
-    expect(fs.readFileSync(summary, 'utf8')).toMatch(/\| ❌ failed \| swiss-post[a-z,-]* \(service\.post\.ch\) \| HTTP 404 \|/);
+    expect(fs.readFileSync(summary, 'utf8')).toMatch(/\| ❌ failed \| swiss-post[a-z,-]* \(service\.post\.ch\) \| `HTTP 404` \|/);
     expect(fs.readFileSync(output, 'utf8')).toMatch(/^failures<<(EOF_[\w-]+)\n- `swiss-post[a-z,-]* \(service\.post\.ch\)`: HTTP 404\n\1\n$/);
   });
 
@@ -240,7 +240,7 @@ describe('carrier front-door canaries', () => {
       const hostname = new URL(url).hostname;
       expect(probed.has(url), carrierId).toBe(false);
       expect(lines).toContain(`SKIP ${carrierId} ${hostname} Not probed: ${unreachableFrontDoors[carrierId as keyof typeof unreachableFrontDoors]!}`);
-      expect(report).toContain(`| ⚠️ unverified | ${carrierId} (${hostname}) | Not probed: `);
+      expect(report).toContain(`| ⚠️ unverified | ${carrierId} (${hostname}) | \`Not probed: `);
     }
     // Only failures reach the issue.
     expect(fs.existsSync(output)).toBe(false);

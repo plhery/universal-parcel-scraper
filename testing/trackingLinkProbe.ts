@@ -49,3 +49,20 @@ export function searchPageVerdict(page: TrackingPageSnapshot, numberFields: numb
   if (!page.title.trim() && !page.text.trim()) return 'unverified';
   return 'broken';
 }
+
+/**
+ * Where a page landed, for a failure message: its origin and path. A redirect's query or
+ * fragment can carry a session or challenge token, and failure messages are published.
+ */
+export function landedAddress(url: string): string {
+  try {
+    const address = new URL(url);
+    address.username = '';
+    address.password = '';
+    address.search = '';
+    address.hash = '';
+    return address.href;
+  } catch {
+    return 'an unreadable address';
+  }
+}

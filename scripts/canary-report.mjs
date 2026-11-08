@@ -6,8 +6,19 @@ import { randomUUID } from 'node:crypto';
 // failures become the `failures` step output read by the issue job. Outside
 // Actions (no GITHUB_STEP_SUMMARY or GITHUB_OUTPUT) nothing is written.
 
+// An address's query or fragment can carry a session or challenge token, and these lines are published.
+const ADDRESS_TAIL = /(\b[a-z][a-z\d+.-]*:\/\/[^\s?#]*)[?#][^\s"']*/gi;
+
 function cell(text) {
-  return String(text).replace(/\s+/g, ' ').replace(/\|/g, '\\|').replace(/`/g, "'").trim().slice(0, 240);
+  return String(text).replace(/\s+/g, ' ').replace(ADDRESS_TAIL, '$1').replace(/\|/g, '\\|').replace(/`/g, "'").trim().slice(0, 240);
+}
+
+/**
+ * A cell's text as a code span, in which GitHub renders no link, image, mention or issue
+ * reference; `cell` leaves it no backtick to end the span early.
+ */
+function code(text) {
+  return text ? `\`${text}\`` : '';
 }
 
 /**
@@ -20,7 +31,7 @@ export function writeCanaryReport({ title, totals, rows }, env = process.env) {
     if (rows.length) {
       summary += '\n| Result | Check | Reason |\n| --- | --- | --- |\n';
       for (const row of rows) {
-        summary += `| ${row.result === 'failed' ? '❌ failed' : '⚠️ unverified'} | ${cell(row.check)} | ${cell(row.reason)} |\n`;
+        summary += `| ${row.result === 'failed' ? '❌ failed' : '⚠️ unverified'} | ${cell(row.check)} | ${code(cell(row.reason))} |\n`;
       }
     }
     fs.appendFileSync(env.GITHUB_STEP_SUMMARY, `${summary}\n`);

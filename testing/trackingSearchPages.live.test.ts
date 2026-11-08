@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, it } from 'vitest';
 import { chromium, devices, type Browser, type Frame, type Page, type Response } from 'playwright-core';
 import { CARRIERS } from '../core/catalog/index.js';
 import type { CarrierId } from '../generated/catalog.js';
-import { searchPageVerdict } from './trackingLinkProbe.js';
+import { landedAddress, searchPageVerdict } from './trackingLinkProbe.js';
 import { countNumberFields, FIELD_SELECTOR, uncheckedSearchPages } from './trackingSearchPages.js';
 
 const RENDER_WINDOW_MS = 15_000;
@@ -78,7 +78,7 @@ describe('carrier search pages (rendered at phone size)', () => {
           : 'The page rendered nothing to an automated browser: search page remains unverified');
       }
       // Address and title only, like the tracking links.
-      context.expect(verdict, `Expected a field to type a tracking number in; landed on ${page.url()} with HTTP ${documentStatus ?? response?.status() ?? 'status unknown'}, titled ${JSON.stringify(title)}`)
+      context.expect(verdict, `Expected a field to type a tracking number in; landed on ${landedAddress(page.url())} with HTTP ${documentStatus ?? response?.status() ?? 'status unknown'}, titled ${JSON.stringify(title)}`)
         .toBe('search-page');
     } finally {
       await phoneContext.close();

@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, it } from 'vitest';
 import { chromium, type Browser } from 'playwright-core';
 import { parcelTrackingLinks } from '../core/catalog/parcel.js';
 import { trackingLinkCases } from './trackingLinkCases.js';
-import { trackingPageVerdict } from './trackingLinkProbe.js';
+import { landedAddress, trackingPageVerdict } from './trackingLinkProbe.js';
 
 // Navigation and the HTTP fallback get 25 s on top of the longest render window.
 const TEST_TIMEOUT_MS = 25_000 + Math.max(...trackingLinkCases.map(testCase => testCase.renderTimeoutMs ?? 10_000));
@@ -120,8 +120,8 @@ describe('UI tracking links (rendered public pages)', () => {
         console.warn(testCase.carrier + ': carrier bot protection; tracking link unverified');
         context.skip('Carrier bot protection: tracking link remains unverified');
       }
-      // Address and title only: page text can hold other people's shipments.
-      const landed = `landed on ${page.url()} with HTTP ${documentStatus ?? 'status unknown'}, titled ${JSON.stringify(await page.title())}`;
+      // Origin, path and title only: page text can hold other people's shipments.
+      const landed = `landed on ${landedAddress(page.url())} with HTTP ${documentStatus ?? 'status unknown'}, titled ${JSON.stringify(await page.title())}`;
       context.expect(verdict, `Expected a rendered tracker on its known route, not a homepage/error/challenge; ${landed}`).toBe('tracking-page');
       context.expect(inputBound, `The deep link must prefill, display or submit the synthetic tracking number; ${landed}`).toBe(true);
     } finally {
