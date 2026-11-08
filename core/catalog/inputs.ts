@@ -1,5 +1,6 @@
 /** Validate parcel credentials against the catalog and pure carrier URL validators. */
 import { activeRequirements, carrierDefinition, type CarrierRequirementRule } from './index.js';
+import type { CarrierInputField } from './types.js';
 import { isValidMondialRelayBarcode } from '../detection/index.js';
 import { validateDachserTrackingUrl } from './urls.js';
 import { validatePlanzerSharedUrl } from './urls.js';
@@ -36,33 +37,40 @@ export function carrierTakesPostcode(carrierId: string, trackingNumber: string):
     || activeRequirements(carrierId, trackingNumber).some((item) => item.field === 'postcode');
 }
 
+/** Whether the carrier reads the last digits of a phone number for this number. */
+export function carrierTakesPhoneDigits(carrierId: string, trackingNumber: string): boolean {
+  return activeRequirements(carrierId, trackingNumber).some((item) => item.field === 'phoneDigits');
+}
+
 export function normalizeCarrierInputs(
   carrierId: string,
   trackingNumber: string,
   trackingUrl: string,
   postcode: string,
-): { trackingUrl: string | null; postcode: string | null } {
-  const supplied: Record<'trackingUrl' | 'postcode', string | null> = {
+  phoneDigits = '',
+): Record<CarrierInputField, string | null> {
+  const supplied: Record<CarrierInputField, string | null> = {
     trackingUrl: trackingUrl.trim() || null,
     postcode: postcode.trim() || null,
+    phoneDigits: phoneDigits.trim() || null,
   };
   const mondialBarcode = carrierId === 'mondial-relay' && /^\d{26}$/.test(trackingNumber);
   if (mondialBarcode && !isValidMondialRelayBarcode(trackingNumber)) {
     throw new TypeError('Invalid Mondial Relay barcode');
   }
-  const requirements = new Map<'trackingUrl' | 'postcode', CarrierRequirementRule>(
+  const requirements = new Map<CarrierInputField, CarrierRequirementRule>(
     activeRequirements(carrierId, trackingNumber).map((item) => [item.field, item]),
   );
   if (mondialWithoutPostcode(carrierId, trackingNumber) && supplied.postcode) {
     requirements.set('postcode', { field: 'postcode', validator: 'internationalPostcode' });
   }
-  for (const [field, value] of Object.entries(supplied) as Array<[
-    'trackingUrl' | 'postcode',
-    string | null,
-  ]>) {
+  for (const [field, value] of Object.entries(supplied) as Array<[CarrierInputField, string | null]>) {
     if (value !== null && !requirements.has(field)) {
       if (field === 'trackingUrl') {
         throw new TypeError('A tracking URL is not used for this carrier or tracking number');
+      }
+      if (field === 'phoneDigits') {
+        throw new TypeError('Phone digits are not used for this carrier or tracking number');
       }
       throw new TypeError('A delivery postcode is not used for this carrier or tracking number');
     }
@@ -74,6 +82,9 @@ export function normalizeCarrierInputs(
       if (requirement.optional) continue;
       if (field === 'trackingUrl') {
         throw new TypeError(`${carrierDefinition(carrierId).displayName} requires its complete tracking URL`);
+      }
+      if (field === 'phoneDigits') {
+        throw new TypeError(`${carrierDefinition(carrierId).displayName} requires the last four digits of a phone number`);
       }
       if (requirement.validator === 'swissPostcode') {
         throw new TypeError(
@@ -153,6 +164,12 @@ export function normalizeCarrierInputs(
         supplied[field] = normalized;
         break;
       }
+      case 'phoneLastFour':
+        // The digits are a credential: the message never repeats them.
+        if (!/^\d{4}$/.test(value)) {
+          throw new TypeError(`${carrierDefinition(carrierId).displayName} takes the last four digits of a phone number`);
+        }
+        break;
       default:
         requirement.validator satisfies never;
     }

@@ -328,7 +328,8 @@
           "description": "Input name. The generator checks that the validator is one this input accepts.",
           "enum": [
             "trackingUrl",
-            "postcode"
+            "postcode",
+            "phoneDigits"
           ]
         },
         "validator": {

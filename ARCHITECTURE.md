@@ -134,7 +134,8 @@ S10 serial as a zero when the check digit then holds, since the serial holds onl
 drops the slashes of a NO LIMIT shipment number, which reads the same without them, and NO
 LIMIT's adapter puts them back for its form. A
 postcode the carrier does not read goes to the enabled fallbacks only, since ParcelsApp and
-17TRACK can ask for one.
+17TRACK can ask for one. Phone digits reach only a carrier whose catalog entry asks for them,
+never a fallback, and its adapter's errors never repeat them.
 A number whose shape fits several carriers, or only
 identifies an international postal item, is settled by asking the carriers that can recognize
 it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.

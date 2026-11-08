@@ -247,8 +247,8 @@ describe('ArrowXL references and postcode', () => {
     for (const value of ['SW1A 1AA', 'sw1a1aa', 'M1 1AE', 'B33 8TH', 'DN55 1PT']) expect(requirementSatisfied(requirement!, value), value).toBe(true);
     for (const value of ['8000', '75001', 'SW1A 1AI', 'SW1A1']) expect(requirementSatisfied(requirement!, value), value).toBe(false);
     expect(() => new RegExp(requirement!.pattern!, 'v')).not.toThrow();
-    expect(normalizeCarrierInputs('arrow-xl', NUMBER, '', '')).toEqual({ trackingUrl: null, postcode: null });
-    expect(normalizeCarrierInputs('arrow-xl', LABEL, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA' });
+    expect(normalizeCarrierInputs('arrow-xl', NUMBER, '', '')).toEqual({ trackingUrl: null, postcode: null, phoneDigits: null });
+    expect(normalizeCarrierInputs('arrow-xl', LABEL, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA', phoneDigits: null });
   });
 });
 

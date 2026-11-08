@@ -1,0 +1,59 @@
+{
+  "code": 1,
+  "msg": "success",
+  "succ": true,
+  "fail": false,
+  "data": [
+    {
+      "keyword": "JT9000000000017",
+      "code": "SYNTHETICSTAGECODE",
+      "senderCityName": "示例市",
+      "receiverCityName": "样本市",
+      "exceptionToast": null,
+      "details": [
+        {
+          "scanTime": "2026-05-14 16:42:10",
+          "status": "已签收",
+          "customerTracking": "您的快件已签收，签收人：示例收件人。如有疑问请电联快递员：示例快递员【13000000000】",
+          "sigPicUrl": "https://example.invalid/signature.jpg",
+          "isSignPicturePush": 1
+        },
+        {
+          "scanTime": "2026-05-14 09:05:33",
+          "status": "派件中",
+          "customerTracking": "【样本市示例网点】的快递员【示例快递员 13000000000】正在为您派件",
+          "sigPicUrl": null,
+          "isSignPicturePush": 0
+        },
+        {
+          "scanTime": "2026-05-13 22:18:02",
+          "status": "运送中",
+          "customerTracking": "快件已到达【样本市转运中心】",
+          "sigPicUrl": null,
+          "isSignPicturePush": 0
+        },
+        {
+          "scanTime": "2026-05-13 22:18:02",
+          "status": "运送中",
+          "customerTracking": "快件已到达【样本市转运中心】",
+          "sigPicUrl": null,
+          "isSignPicturePush": 0
+        },
+        {
+          "scanTime": "2026-05-12 19:47:51",
+          "status": "运送中",
+          "customerTracking": "快件离开【示例市转运中心】，发往【样本市转运中心】",
+          "sigPicUrl": null,
+          "isSignPicturePush": 0
+        },
+        {
+          "scanTime": "2026-05-12 11:30:00",
+          "status": "已揽件",
+          "customerTracking": "【示例市示例网点】的快递员【示例快递员】已揽收",
+          "sigPicUrl": null,
+          "isSignPicturePush": 0
+        }
+      ]
+    }
+  ]
+}

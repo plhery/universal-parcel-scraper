@@ -29,6 +29,13 @@ export interface TrackingInput {
    * one, an adapter reads the postcode as its home country's.
    */
   postcodeCountry?: string | null;
+  /**
+   * The last digits of the recipient's or sender's phone for carriers that
+   * show a parcel only with them, as many as the catalog's `phoneDigits`
+   * input asks for. A credential: never sent to universal providers, and
+   * adapters keep it out of errors and diagnostics.
+   */
+  phoneDigits?: string | null;
   /** @deprecated Accepted for compatibility; no adapter or provider reads it. */
   countryHint?: string | null;
   /**

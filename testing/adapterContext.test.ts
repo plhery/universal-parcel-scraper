@@ -99,6 +99,8 @@ function credential(validator: string, number: string, carrier: string): string 
     case 'francePostcode': case 'colisPrivePostcode': return '75001';
     case 'germanyPostcode': return '00000';
     case 'paackPostcode': return '28001';
+    // Made-up digits: the test never reaches a site.
+    case 'phoneLastFour': return '0000';
     case 'planzerSharedUrl':
       return `https://trackandtrace.planzergroup.com/shared/sendungen/${number}?accessKey=${'A'.repeat(32)}`;
     case 'dachserCapabilityUrl':
@@ -121,7 +123,9 @@ function carrierInputs(carrier: string): TrackingInput[] {
     const input: TrackingInput = { number };
     for (const requirement of activeRequirements(carrier, number)) {
       const value = credential(requirement.validator, number, carrier);
-      if (requirement.field === 'trackingUrl') input.trackingUrl = value; else input.postcode = value;
+      if (requirement.field === 'trackingUrl') input.trackingUrl = value;
+      else if (requirement.field === 'phoneDigits') input.phoneDigits = value;
+      else input.postcode = value;
     }
     return input;
   });

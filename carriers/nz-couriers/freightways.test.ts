@@ -55,9 +55,9 @@ describe.each(NETWORKS)('$provider tracking links with the sender’s account', 
 
   it('offers the link as an optional input and keeps it as a receiver link bound to the network and the number', () => {
     expect(activeRequirements(network.carrier, NUMBER)).toMatchObject([{ field: 'trackingUrl', validator: 'freightwaysCapabilityUrl', optional: true }]);
-    expect(normalizeCarrierInputs(network.carrier, NUMBER, '', '')).toEqual({ trackingUrl: null, postcode: null });
+    expect(normalizeCarrierInputs(network.carrier, NUMBER, '', '')).toEqual({ trackingUrl: null, postcode: null, phoneDigits: null });
     expect(normalizeCarrierInputs(network.carrier, NUMBER, ` ${composite.toLowerCase().replace('cu..', 'CU..')}&token=synthetic `, ''))
-      .toEqual({ trackingUrl: composite, postcode: null });
+      .toEqual({ trackingUrl: composite, postcode: null, phoneDigits: null });
     expect(validateFreightwaysTrackingUrl(servlet, NUMBER.toLowerCase(), network.carrier)).toBe(customerLabel);
     expect(validateFreightwaysTrackingUrl(
       `https://receiver.${domain}/?key_type=customerlabel&customer_id=${ACCOUNT}&consignment_id_ref=${NUMBER}`, NUMBER, network.carrier))

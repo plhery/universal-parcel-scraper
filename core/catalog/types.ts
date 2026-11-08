@@ -11,7 +11,7 @@ import type { CarrierId } from '../../generated/catalog.js';
 import type { DetectionConfidence } from '../detection/types.js';
 
 export type CarrierTrackingMode = 'automatic' | 'link-only';
-export type CarrierInputField = 'trackingUrl' | 'postcode';
+export type CarrierInputField = 'trackingUrl' | 'postcode' | 'phoneDigits';
 export type CarrierInputValidator =
   | 'planzerSharedUrl'
   | 'dachserCapabilityUrl'
@@ -23,7 +23,8 @@ export type CarrierInputValidator =
   | 'swissOrFrancePostcode'
   | 'internationalPostcode'
   | 'paackPostcode'
-  | 'colisPrivePostcode';
+  | 'colisPrivePostcode'
+  | 'phoneLastFour';
 
 /** What the "add a parcel" forms render for a carrier that needs extra input. */
 export interface CarrierInputRequirement {

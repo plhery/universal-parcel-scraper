@@ -1,0 +1,16 @@
+{
+  "code": 1,
+  "msg": "success",
+  "succ": true,
+  "fail": false,
+  "data": [
+    {
+      "keyword": "JT9000000000017",
+      "code": "SYNTHETICSTAGECODE",
+      "senderCityName": "示例市",
+      "receiverCityName": "样本市",
+      "exceptionToast": null,
+      "details": []
+    }
+  ]
+}

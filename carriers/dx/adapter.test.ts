@@ -291,8 +291,8 @@ describe('DX numbers and postcode', () => {
     for (const value of ['ZZ1/1ZZ', 'SW1A 1AAA', 'ABCDEF', 'A']) expect(requirementSatisfied(requirement!, value), value).toBe(false);
     // Browsers compile the field's pattern with the `v` flag.
     expect(() => new RegExp(requirement!.pattern!, 'v')).not.toThrow();
-    expect(normalizeCarrierInputs('dx', DELIVERED, '', '')).toEqual({ trackingUrl: null, postcode: null });
-    expect(normalizeCarrierInputs('dx', DELIVERED, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA' });
+    expect(normalizeCarrierInputs('dx', DELIVERED, '', '')).toEqual({ trackingUrl: null, postcode: null, phoneDigits: null });
+    expect(normalizeCarrierInputs('dx', DELIVERED, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA', phoneDigits: null });
     expect(() => normalizeCarrierInputs('dx', DELIVERED, '', 'ZZ1/1ZZ')).toThrow('DX requires a valid delivery postcode');
   });
 });

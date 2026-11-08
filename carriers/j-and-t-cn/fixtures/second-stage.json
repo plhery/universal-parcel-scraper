@@ -1,0 +1,23 @@
+{
+  "code": 1,
+  "msg": "success",
+  "succ": true,
+  "fail": false,
+  "data": [
+    {
+      "keyword": "JT9000000000017",
+      "details": [
+        {
+          "scanTime": "2026-07-01 17:03:09",
+          "status": "运送中",
+          "customerTracking": "快件离开【示例市转运中心】，发往【样本市转运中心】"
+        },
+        {
+          "scanTime": "2026-07-01 09:00:00",
+          "status": "已揽件",
+          "customerTracking": "【示例市示例网点】的快递员【示例快递员 13000000000】已揽收"
+        }
+      ]
+    }
+  ]
+}

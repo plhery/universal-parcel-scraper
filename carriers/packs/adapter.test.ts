@@ -193,7 +193,7 @@ describe('Packs tracking adapter', () => {
     // Browsers compile the field's pattern with the `v` flag.
     expect(() => new RegExp(requirement!.pattern!, 'v')).not.toThrow();
     expect(() => normalizeCarrierInputs('packs', DELIVERED, '', '')).toThrow('Packs requires the delivery postcode');
-    expect(normalizeCarrierInputs('packs', DELIVERED, '', ' 9999 zz ')).toEqual({ trackingUrl: null, postcode: '9999 ZZ' });
+    expect(normalizeCarrierInputs('packs', DELIVERED, '', ' 9999 zz ')).toEqual({ trackingUrl: null, postcode: '9999 ZZ', phoneDigits: null });
   });
 
   it('keeps a rate limit with its retry window', async () => {

@@ -1,0 +1,42 @@
+{
+  "code": 1,
+  "msg": "success",
+  "succ": true,
+  "fail": false,
+  "data": {
+    "senderCityName": "Origin Town",
+    "receiverCityName": "Sample City",
+    "details": [
+      {
+        "scanTime": "2026-05-14 16:42:10",
+        "status": "Entregado",
+        "customerTracking": "【Sample City Branch】Tu envío fue entregado. Recibió: Sample Recipient"
+      },
+      {
+        "scanTime": "2026-05-14 09:05:33",
+        "status": "En ruta de entrega",
+        "customerTracking": "【Sample City Branch】El mensajero de J&T Express Sample Courier (5500000000) está en camino para entregar tu envío"
+      },
+      {
+        "scanTime": "2026-05-13 22:18:02",
+        "status": "En tránsito",
+        "customerTracking": "【Sample City Hub】Tu envío ha llegado a【Sample City Hub】"
+      },
+      {
+        "scanTime": "2026-05-13 22:18:02",
+        "status": "En tránsito",
+        "customerTracking": "【Sample City Hub】Tu envío ha llegado a【Sample City Hub】"
+      },
+      {
+        "scanTime": "2026-05-12 19:47:51",
+        "status": "En tránsito",
+        "customerTracking": "【Origin Town Hub】Tu envío ha salido de【Origin Town Hub】con destino a【Sample City Hub】"
+      },
+      {
+        "scanTime": "2026-05-12 11:30:00",
+        "status": "Recolectado",
+        "customerTracking": "【Origin Town Branch】【Origin Town Branch】¡Recolección exitosa!. El mensajero de J&T asignado Sample Courier"
+      }
+    ]
+  }
+}

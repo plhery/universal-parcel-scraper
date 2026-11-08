@@ -41,8 +41,8 @@ describe('Instabox notifications', () => {
 
   it('binds a notification to one carrier host, one full identifier and one verification code', () => {
     expect(validateInstaboxTrackingUrl(url + '&utm_source=Instabox', number)).toBe(url);
-    expect(normalizeCarrierInputs('instabox', number, url, '')).toEqual({ trackingUrl: url, postcode: null });
-    expect(normalizeCarrierInputs('instabox', number, '', '')).toEqual({ trackingUrl: null, postcode: null });
+    expect(normalizeCarrierInputs('instabox', number, url, '')).toEqual({ trackingUrl: url, postcode: null, phoneDigits: null });
+    expect(normalizeCarrierInputs('instabox', number, '', '')).toEqual({ trackingUrl: null, postcode: null, phoneDigits: null });
     expect(parseTrackingInput(url)).toMatchObject({ trackingNumber: number, carrier: 'instabox', trackingUrl: url });
     for (const invalid of [url.replace('https:', 'http:'), url.replace('track.instabox.com', 'example.test'),
       url.replace('track.instabox.com', 'user@track.instabox.com'), url + '#extra', url + '&authCode=' + code,

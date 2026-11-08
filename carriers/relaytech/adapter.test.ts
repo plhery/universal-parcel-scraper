@@ -268,9 +268,9 @@ describe('Relay numbers and postcode', () => {
     for (const value of ['8000', '75001', 'SW1A 1AI', 'QA1 1AA', 'SW1A1']) expect(requirementSatisfied(requirement!, value), value).toBe(false);
     // Browsers compile the field's pattern with the `v` flag.
     expect(() => new RegExp(requirement!.pattern!, 'v')).not.toThrow();
-    expect(normalizeCarrierInputs('relaytech', DELIVERED, '', '')).toEqual({ trackingUrl: null, postcode: null });
+    expect(normalizeCarrierInputs('relaytech', DELIVERED, '', '')).toEqual({ trackingUrl: null, postcode: null, phoneDigits: null });
     expect(() => normalizeCarrierInputs('relaytech', DELIVERED, '', 'ZZ1/1ZZ')).toThrow('Relay requires a valid delivery postcode');
-    expect(normalizeCarrierInputs('relaytech', DELIVERED, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA' });
+    expect(normalizeCarrierInputs('relaytech', DELIVERED, '', ' sw1a  1aa ')).toEqual({ trackingUrl: null, postcode: 'SW1A 1AA', phoneDigits: null });
   });
 });
 

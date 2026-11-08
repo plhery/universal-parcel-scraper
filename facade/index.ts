@@ -1,7 +1,7 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { AdapterRegistry, type AdapterEnvironment, type TrackingContext } from '../core/adapter/index.js';
 import { carrierDefinition, carrierTimezone } from '../core/catalog/index.js';
-import { carrierTakesPostcode, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
+import { carrierTakesPhoneDigits, carrierTakesPostcode, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
 import { deliveryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
 import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validTrackingNumber } from '../core/detection/index.js';
 import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
@@ -49,6 +49,8 @@ export interface ParcelInput {
   /** @deprecated Accepted for compatibility; it no longer affects a lookup. */
   countryHint?: string | null;
   trackingUrl?: string | null;
+  /** The last digits of the recipient's or sender's phone, for a carrier whose catalog entry asks for them. */
+  phoneDigits?: string | null;
   /** The reader's language as a BCP 47 tag ("fr", "de-CH"), for carriers whose tracker words its scans in it. */
   language?: string | null;
   /** Ask this enabled provider alone, whatever its coverage: no recognition, carrier lookup or hand-off. */
@@ -241,12 +243,15 @@ export function createTracker(options: TrackerOptions = {}) {
       throw new TypeError('Invalid postcode country');
     }
     if (input.trackingUrl != null && typeof input.trackingUrl !== 'string') throw new TypeError('Invalid tracking URL');
+    if (input.phoneDigits != null && typeof input.phoneDigits !== 'string') throw new TypeError('Invalid phone digits');
     if (input.language != null && (typeof input.language !== 'string' || input.language.length > 35)) throw new TypeError('Invalid language');
     const language = input.language ? { language: input.language } : {};
     // A provider can ask for a delivery postcode the carrier does not read; only the providers then get it.
     const postcode = input.postcode ?? '';
     const carrierPostcode = carrierTakesPostcode(carrier, number);
-    const fields = normalizeCarrierInputs(carrier, number, input.trackingUrl ?? '', carrierPostcode ? postcode : '');
+    // Phone digits reach only the carrier that asks for them, never a provider.
+    const phoneDigits = carrierTakesPhoneDigits(carrier, number) ? input.phoneDigits ?? '' : '';
+    const fields = normalizeCarrierInputs(carrier, number, input.trackingUrl ?? '', carrierPostcode ? postcode : '', phoneDigits);
     const providerPostcode = carrierPostcode || !postcode.trim() ? fields.postcode : normalizeDeliveryPostcode(postcode);
     const attempts: TrackingAttempt[] = [];
     let lastError: unknown = new IndeterminateError('Tracking', 'No configured source accepts this parcel');
@@ -269,7 +274,8 @@ export function createTracker(options: TrackerOptions = {}) {
     }
     const adapter = input.source ? undefined : registry.for(carrier);
     const postcodeCountry = fields.postcode && input.postcodeCountry ? { postcodeCountry: input.postcodeCountry.trim().toUpperCase() } : {};
-    const directInput = { number, postcode: fields.postcode, ...postcodeCountry, trackingUrl: fields.trackingUrl, ...language };
+    const directInput = { number, postcode: fields.postcode, ...postcodeCountry, trackingUrl: fields.trackingUrl,
+      ...(fields.phoneDigits ? { phoneDigits: fields.phoneDigits } : {}), ...language };
     const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
     const known = context.knownEstimate ? { knownEstimate: context.knownEstimate } : {};
     // A carrier that enters some scans at their planned time shows them once they are due.

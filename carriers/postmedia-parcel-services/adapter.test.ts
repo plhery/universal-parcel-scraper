@@ -212,7 +212,7 @@ describe('Postmedia Parcel Services HTTP adapter', () => {
     const pattern = new RegExp(requirement!.pattern!);
     expect(['Z9Z 9Z9', 'z9z9z9'].filter((postcode) => pattern.test(postcode))).toHaveLength(2);
     expect(['Z9Z  9Z9', '99Z 9Z9', 'Z9Z-9Z9'].some((postcode) => pattern.test(postcode))).toBe(false);
-    expect(normalizeCarrierInputs('postmedia-parcel-services', DELIVERED, '', ' z9z  9z9 ')).toEqual({ trackingUrl: null, postcode: POSTCODE });
+    expect(normalizeCarrierInputs('postmedia-parcel-services', DELIVERED, '', ' z9z  9z9 ')).toEqual({ trackingUrl: null, postcode: POSTCODE, phoneDigits: null });
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('delivered')));
     const answer = await createTracker({ fetcher, providers: [], env: {} })
       .track({ number: 'bni 999 999 980', carrier: 'postmedia-parcel-services', postcode: 'z9z9z9' }, { budgetMs: 3000 });

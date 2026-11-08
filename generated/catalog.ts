@@ -26747,7 +26747,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "j-and-t-cn",
+      "requirements": [
+        {
+          "field": "phoneDigits",
+          "validator": "phoneLastFour",
+          "optional": true,
+          "showsMore": true,
+          "label": "Last 4 digits of the phone number",
+          "type": "text",
+          "help": "J&T Express China shows a parcel only with the last four digits of the recipient's or sender's phone. Without them, other sources are asked.",
+          "pattern": "^[0-9]{4}$",
+          "maxLength": 4,
+          "inputMode": "numeric",
+          "autoComplete": "off"
+        }
+      ]
     },
     "canaryUrl": "https://www.jtexpress.com.cn/",
     "trackingUrlTemplate": "https://www.jtexpress.com.cn/service.html?indexIpt={trackingNumber}",
@@ -26951,7 +26966,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "j-and-t-mx",
+      "requirements": [
+        {
+          "field": "phoneDigits",
+          "validator": "phoneLastFour",
+          "optional": true,
+          "showsMore": true,
+          "label": "Last 4 digits of the phone number",
+          "type": "text",
+          "help": "J&T Express Mexico shows a parcel only with the last four digits of the recipient's or sender's phone. Without them, other sources are asked.",
+          "pattern": "^[0-9]{4}$",
+          "maxLength": 4,
+          "inputMode": "numeric",
+          "autoComplete": "off"
+        }
+      ]
     },
     "canaryUrl": "https://www.jtexpress.mx/trajectoryQuery",
     "trackingUrlTemplate": "https://www.jtexpress.mx/trajectoryQuery?waybillNo={trackingNumber}&flag=1",

@@ -1,0 +1,27 @@
+{
+  "code": 1,
+  "msg": "success",
+  "succ": true,
+  "fail": false,
+  "data": {
+    "senderCityName": "Origin Town",
+    "receiverCityName": "Sample City",
+    "details": [
+      {
+        "scanTime": "2026-07-02 06:12:40",
+        "status": "En tránsito",
+        "customerTracking": "[Sample City Hub] Tu envío ha llegado a [Sample City Hub]"
+      },
+      {
+        "scanTime": "2026-07-01 17:03:09",
+        "status": "En tránsito",
+        "customerTracking": "【Origin Town Hub】Tu envío ha salido de【Origin Town Hub】con destino a【Sample City Hub】"
+      },
+      {
+        "scanTime": "2026-07-01 09:00:00",
+        "status": "Recolectado",
+        "customerTracking": "【5500000000】¡Recolección exitosa!. El mensajero de J&T asignado Sample Courier"
+      }
+    ]
+  }
+}

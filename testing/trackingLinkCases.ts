@@ -2268,6 +2268,8 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'integral-pack': 'the page looks the guide in its address up with its parts padded and IPE- before them, and leaves its search form as it was, without the guide or a notice, for one it does not know, so only a real guide verifies the link',
   'j-and-t': 'the Philippine page the link opens asks for a Tencent CAPTCHA before it looks a waybill up, and the adapter reads the Indonesian network instead',
   'j-and-t-cargo': 'headless Chrome receives the page frame without the tracking form, which a regular browser shows with the waybill filled in',
+  'j-and-t-cn': 'the tracker asks for the last four digits of the recipient\'s or sender\'s phone before it looks a waybill up, so only a real parcel and its digits verify the link',
+  'j-and-t-mx': 'the tracker asks for the last four digits of the recipient\'s or sender\'s phone before it looks a waybill up, so only a real parcel and its digits verify the link',
   'evri-uk': 'the protected key request rejects the default automated browser and leaves the domestic result panel empty, so number forwarding cannot be verified',
   liccardi: 'my.liccarditrasporti.com answers automated Chrome with SafeLine\'s browser check (HTTP 468), which asks for a confirmation click before the tracking page, so number forwarding cannot be verified',
   logistiq: 'the gecko.logistiq.io tracker is a Flutter page drawn on a canvas, which exposes no visible body text until accessibility is enabled, so number forwarding cannot be verified',

@@ -65,6 +65,7 @@ const carrierInputValidators = {
     'paackPostcode',
     'colisPrivePostcode',
   ]),
+  phoneDigits: new Set(['phoneLastFour']),
 };
 
 /** Structural validation: the shape is owned by core/catalog/carrier.schema.json. */

@@ -543,6 +543,13 @@
               "null"
             ]
           },
+          "phoneDigits": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "The last digits of the recipient's or sender's phone, for a carrier whose catalog entry has a phoneDigits input. Only that carrier's own lookup reads them; carriers that do not ask for them ignore them."
+          },
           "language": {
             "type": [
               "string",

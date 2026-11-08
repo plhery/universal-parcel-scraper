@@ -341,8 +341,10 @@ import { adapter as israelPost } from '../carriers/israel-post/adapter.js';
 import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
 import { adapter as jAndTAu } from '../carriers/j-and-t-au/adapter.js';
 import { adapter as jAndTCargo } from '../carriers/j-and-t-cargo/adapter.js';
+import { adapter as jAndTCn } from '../carriers/j-and-t-cn/adapter.js';
 import { adapter as jAndTDe } from '../carriers/j-and-t-de/adapter.js';
 import { adapter as jAndTMiddleEast } from '../carriers/j-and-t-middle-east/adapter.js';
+import { adapter as jAndTMx } from '../carriers/j-and-t-mx/adapter.js';
 import { adapter as jAndTUk } from '../carriers/j-and-t-uk/adapter.js';
 import { adapter as janio } from '../carriers/janio/adapter.js';
 import { adapter as japanPost } from '../carriers/japan-post/adapter.js';
@@ -1087,8 +1089,10 @@ export const REGISTRY: RegistryDefinition = {
     "j-and-t": jAndT,
     "j-and-t-au": jAndTAu,
     "j-and-t-cargo": jAndTCargo,
+    "j-and-t-cn": jAndTCn,
     "j-and-t-de": jAndTDe,
     "j-and-t-middle-east": jAndTMiddleEast,
+    "j-and-t-mx": jAndTMx,
     "j-and-t-uk": jAndTUk,
     "janio": janio,
     "japan-post": japanPost,
@@ -2122,12 +2126,12 @@ export const REGISTRY: RegistryDefinition = {
     "j-and-t-au": "j-and-t-au",
     "j-and-t-br": "universal",
     "j-and-t-cargo": "j-and-t-cargo",
-    "j-and-t-cn": "universal",
+    "j-and-t-cn": "j-and-t-cn",
     "j-and-t-co": "universal",
     "j-and-t-de": "j-and-t-de",
     "j-and-t-eg": "universal",
     "j-and-t-middle-east": "j-and-t-middle-east",
-    "j-and-t-mx": "universal",
+    "j-and-t-mx": "j-and-t-mx",
     "j-and-t-uk": "j-and-t-uk",
     "jadlog": "universal",
     "jamaica-post": "universal",

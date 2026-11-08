@@ -13,7 +13,7 @@ The engine behind [Peek](https://peektracker.com) ([GitHub](https://github.com/p
 [![License: Apache-2.0](https://img.shields.io/badge/core-Apache--2.0-blue.svg)](LICENSE)
 
 <!-- GENERATED:summary -->
-**3,500+ carriers** through **743 dedicated adapters** and **5 universal fallbacks**
+**3,500+ carriers** through **745 dedicated adapters** and **5 universal fallbacks**
 
 <sub>1388 catalog entries · 159 countries represented</sub>
 <!-- /GENERATED:summary -->
@@ -50,7 +50,7 @@ npx universal-parcel-scraper track YOUR_TRACKING_NUMBER   # asks the carrier
 ```
 
 Add `--carrier dhl` when a number fits several carriers. Some carriers also want
-`--postcode` or `--tracking-url`.
+`--postcode`, `--phone-digits` or `--tracking-url`.
 
 ## Ways to run it
 
@@ -182,8 +182,9 @@ Wording nobody recorded yet goes through a classifier that reads seven European 
 
 ## Privacy and limits
 
-- A lookup sends the number to the carrier, with the postcode or tracking link when the
-  carrier requires one. Enabled fallbacks receive the number too, and any postcode you supply.
+- A lookup sends the number to the carrier, with the postcode, tracking link or phone digits
+  when the carrier asks for one. Enabled fallbacks receive the number too, and any postcode you
+  supply, never the phone digits.
 - No telemetry. Server logs hold route names and outcomes, never parcel inputs.
 - This is scraping: carriers change their sites and turn away automated requests. Keep to the
   catalog's refresh limits and to the retry advice in errors.
