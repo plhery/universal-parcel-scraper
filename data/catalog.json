@@ -3902,6 +3902,10 @@
       {
         "pattern": "^CR\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^MGP\\d{13}$",
+        "confidence": "low"
       }
     ]
   },

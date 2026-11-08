@@ -99,6 +99,11 @@
       "id": "gofo-3",
       "pattern": "^CR\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "gofo-4",
+      "pattern": "^MGP\\d{13}$",
+      "confidence": "low"
     }
   ]
 }

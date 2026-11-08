@@ -457,6 +457,21 @@
         ]
       },
       "note": "Archived lookup on CIRRO Track, the tracker of CIRRO E-Commerce (formerly Parcll); its tracking service names GOFO as the last-mile carrier."
+    },
+    {
+      "number": "MGP9999999999980",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gofo"
+        ]
+      },
+      "note": "Made-up number in the shape of the tracking number GOFO's tracker gives a GFUS waybill, MGP and thirteen digits. Its serial sits far beyond the range in use."
     }
   ]
 }

@@ -20,9 +20,10 @@ Cainiao's tracker follows the GFUS waybill from China, so recognition asks
 
 The waybill must be the requested number; the tracking number repeats it
 or is the shipper's own reference, never another GOFO number. The exception is a
-GFUS waybill whose tracking number is a CR number, or the [DHLink](../dhlink/README.md)
-number (`FC` and 13 digits) of a DHgate parcel GOFO delivers: asked for either, GOFO
-returns that one parcel, so both are tracked. Detection reads DHLink numbers as DHLink's;
+GFUS waybill whose tracking number is a CR number, an `MGP` and 13 digits number, or the
+[DHLink](../dhlink/README.md) number (`FC` and 13 digits) of a DHgate parcel GOFO delivers:
+asked for any of them, GOFO returns that one parcel, so each is tracked. Detection suggests
+GOFO for `MGP` numbers and recognition asks it. Detection reads DHLink numbers as DHLink's;
 the adapter takes them when the user picks GOFO or a tracking service names it. The
 latest summary must agree with the first scan.
 

@@ -18,12 +18,14 @@ const WAYBILL = /^(?:GFUS\d{14}|GF\d{13}|CR\d{12})$/;
 const CANADA_WAYBILL = /^GFCA\d{14}$/;
 /** DHLink's own numbers, which GOFO keeps as the tracking number of the DHgate parcels it delivers. */
 const DHLINK = /^FC\d{13}$/;
+/** MGP and 13 digits, which GOFO keeps as the tracking number of a GFUS waybill. */
+const MGP = /^MGP\d{13}$/;
 /**
- * GOFO files some parcels under a GFUS waybill with a CR tracking number or a
- * DHLink number. Asked for either, it returns that one parcel.
+ * GOFO files some parcels under a GFUS waybill with a CR, DHLink or MGP
+ * tracking number. Asked for any of them, it returns that one parcel.
  */
 const PAIRED_WAYBILL = /^GFUS\d{14}$/;
-const PAIRED_REFERENCE = new RegExp(`^CR\\d{12}$|${DHLINK.source}`);
+const PAIRED_REFERENCE = new RegExp(`^CR\\d{12}$|${DHLINK.source}|${MGP.source}`);
 /** YunExpress numbers GOFO delivers under the same number, as both waybill and tracking number. */
 const YUNEXPRESS = /^YT\d{16}$/;
 
@@ -44,8 +46,8 @@ export interface GofoSite {
   readonly country: string;
 }
 
-export const GOFO_US: GofoSite = { carrier: 'gofo', provider: 'GOFO', path: 'us', numbers: new RegExp(`${WAYBILL.source}|${DHLINK.source}|${YUNEXPRESS.source}`),
-  requirement: 'GOFO US requires a GOFO waybill (GFUS and 14 digits, GF and 13, or CR and 12), or a DHLink or YunExpress number it delivers',
+export const GOFO_US: GofoSite = { carrier: 'gofo', provider: 'GOFO', path: 'us', numbers: new RegExp(`${WAYBILL.source}|${DHLINK.source}|${YUNEXPRESS.source}|${MGP.source}`),
+  requirement: 'GOFO US requires a GOFO waybill (GFUS and 14 digits, GF and 13, or CR and 12), an MGP number (MGP and 13 digits), or a DHLink or YunExpress number it delivers',
   clockZone: GOFO_CLOCK_ZONE, toCountry: 'USA', country: 'US' };
 export const GOFO_CANADA: GofoSite = { carrier: 'gofo-ca', provider: 'GOFO CA', path: 'ca', numbers: CANADA_WAYBILL,
   requirement: 'GOFO Canada requires a GFCA waybill and 14 digits', clockZone: 'America/Toronto', toCountry: 'CA', country: 'CA' };

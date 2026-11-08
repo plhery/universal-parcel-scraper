@@ -148,6 +148,24 @@ describe('GOFO US history', () => {
     }
   });
 
+  it('tracks a GFUS waybill and the MGP number GOFO keeps as its tracking number as one parcel', () => {
+    const mgp = 'MGP0000000000001';
+    const value = fixture();
+    for (const row of [item(value), ...item(value).trackEventList]) if (row.trackingNumber != null) row.trackingNumber = mgp;
+    bind(value);
+    for (const asked of [NUMBER, mgp, mgp.toLowerCase()]) {
+      expect(parseGofo(value, asked)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    }
+    expect(() => parseGofo(value, 'MGP0000000000002')).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const older = structuredClone(value);
+    for (const row of [item(older), ...item(older).trackEventList]) if (row.waybillNo != null) row.waybillNo = 'GF0000000000001';
+    bind(older);
+    expect(() => parseGofo(older, mgp)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    for (const near of ['MGP000000000001', 'MGP00000000000001', 'MG00000000000001']) {
+      expect(() => normalizeGofoNumber(near)).toThrow(InvalidInputError);
+    }
+  });
+
   it('tracks a YunExpress number GOFO delivers under the same number, and only as that parcel', () => {
     const yt = 'YT0000000000000001';
     const value = fixture();
