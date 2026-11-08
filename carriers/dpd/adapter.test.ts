@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { isValidDpdParcelNumber } from '../../core/detection/dpd.js';
 import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { DPD_DE_APP_API } from '../dpd-de/service.js';
@@ -682,6 +683,38 @@ describe('DPD scan times', () => {
     expect(scanWithTwinAt('2026-03-29', '02:30:00', null)).toBe('2026-03-29T03:30:00+02:00');
     expect(scanWithTwinAt('2026-03-29', '02:30:00', '+01:00')).toBe('2026-03-29T03:30:00+02:00');
     expect(historyAt('2026-03-29T02:30:00', 'GMT+1')).toBe('2026-03-29T03:30:00+02:00');
+  });
+
+  it('takes the page for the requested number or its label form, never for a longer number holding it', () => {
+    const check = [...'0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'].find((character) => isValidDpdParcelNumber(`${TRACKING_NUMBER}${character}`))!;
+    const wrong = check === 'X' ? 'Y' : 'X';
+    const page = (shown: string) => `<html><body><div>Parcel ${shown}</div>
+      <li class="content-item-track"><span class="entry-date">15.07.2026</span><span class="entry-time">11:28</span>
+      <span class="entry-body">Parcel handed to DPD</span></li></body></html>`;
+    for (const shown of [TRACKING_NUMBER, `${TRACKING_NUMBER}${check}`, `${TRACKING_NUMBER}${check.toLowerCase()}`]) {
+      expect(parseDPDTrackingHtml(page(shown), TRACKING_NUMBER)).toMatchObject({ status: 'in_transit' });
+    }
+    for (const shown of [`1${TRACKING_NUMBER}`, `${TRACKING_NUMBER}7`.repeat(2), `${TRACKING_NUMBER}${wrong}`, `00${TRACKING_NUMBER}0001756`]) {
+      expect(() => parseDPDTrackingHtml(page(shown), TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
+  it('reads a page as a miss only when it shows no steps, and refuses a page with neither', () => {
+    const miss = parseDPDTrackingHtml(`<html><body><h1>${TRACKING_NUMBER}</h1>
+      <p class="alert">No parcel found.</p></body></html>`, TRACKING_NUMBER);
+    expect(miss).toMatchObject({ status: 'unknown', last_status_text: 'No parcel found', events: [] });
+    const banner = '<div class="cookies">Your saved settings were not found. <a href="#">Choose again</a></div>';
+    const faq = '<footer><h3>Help</h3><p>What if my parcel is not found?</p></footer>';
+    const steps = parseDPDTrackingHtml(`<html><body>${banner}<div>${TRACKING_NUMBER}</div>
+      <li class="content-item-track"><span class="entry-date">15.07.2026</span><span class="entry-time">11:28</span>
+      <span class="entry-body">Parcel handed to DPD</span></li>${faq}</body></html>`, TRACKING_NUMBER);
+    expect(steps).toMatchObject({ status: 'in_transit', last_status_text: 'Parcel handed to DPD' });
+    const labelled = parseDPDTrackingHtml(`<html><body>${banner}<div>${TRACKING_NUMBER}</div>
+      <span class="gray-out">Parcel handed to DPD</span></body></html>`, TRACKING_NUMBER);
+    expect(labelled).toMatchObject({ last_status_text: 'Parcel handed to DPD' });
+    // Without steps, status labels or a not-found message, the page is not understood, and no miss.
+    expect(() => parseDPDTrackingHtml(`<html><body><div>${TRACKING_NUMBER}</div><p>Welcome</p></body></html>`, TRACKING_NUMBER))
+      .toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('keeps a page row that shows only its date as that date, never midnight', () => {

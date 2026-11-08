@@ -133,6 +133,18 @@ describe('GLS Germany', () => {
     await expect(tracker.recognizes(NUMBER)).rejects.toThrow('different shipment');
   });
 
+  it('refuses an overview naming another Track ID before recognizing it or sending the postcode', async () => {
+    const other = { ...parcel(), references: [{ type: 'TRACKID', name: '', value: 'ZZ9ZZ99Z' }] };
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => Response.json({ tuStatus: [other] }));
+    const tracker = new GLSGermanyTracker({ fetcher });
+    await expect(tracker.recognizes('AB12CD34')).rejects.toThrow('different shipment');
+    await expect(tracker.fetch('AB12CD34', '10115')).rejects.toThrow('different shipment');
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    // The numeric parcel number alone is the translation GLS gives.
+    fetcher.mockImplementation(async () => Response.json({ tuStatus: [parcel()] }));
+    await expect(tracker.recognizes('AB12CD34')).resolves.toBe(true);
+  });
+
   it('keeps the positional timeout the carrier-detection route passes', async () => {
     const tracker = new GLSGermanyTracker(5_000);
     expect(tracker.timeoutMs).toBe(5_000);

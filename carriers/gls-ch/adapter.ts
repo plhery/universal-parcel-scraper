@@ -188,6 +188,12 @@ function responseIdentifiers(parcel: JsonObject): string[] {
   ].filter(Boolean);
 }
 
+/** A Track ID's kind, eight characters or a notification card's six letters; null for a parcel number. */
+function trackIdKind(identifier: string): 'track_id' | 'card' | null {
+  if (/^[A-Z]{6}$/.test(identifier)) return 'card';
+  return /^[A-Z0-9]{8}$/.test(identifier) ? 'track_id' : null;
+}
+
 function parcelRows(payload: unknown): JsonObject[] {
   if (!isRecord(payload)) throw new SchemaError(PROVIDER, 'GLS returned an invalid tracking response');
   if (Array.isArray(payload.tuStatus)) return records(payload.tuStatus);
@@ -211,8 +217,11 @@ export function selectGLSParcel(payload: unknown, rawTrackingNumber: string): Js
   if (matching.length === 1) return matching[0]!;
   // A Track ID, eight characters or the six letters of a notification card, is
   // translated by the overview endpoint to its numeric parcel number and is not
-  // echoed. A single result is unambiguous.
-  if (/^(?:[A-Z0-9]{8}|[A-Z]{6})$/.test(trackingNumber) && parcels.length === 1) return parcels[0]!;
+  // echoed. A single result is unambiguous, unless it names another Track ID of
+  // the same kind: that one is the parcel it belongs to.
+  const kind = trackIdKind(trackingNumber);
+  if (kind && parcels.length === 1
+    && !responseIdentifiers(parcels[0]!).some((identifier) => trackIdKind(identifier) === kind)) return parcels[0]!;
   if (matching.length > 1) throw new SchemaError(PROVIDER, 'GLS returned an ambiguous shipment');
   throw new SchemaError(PROVIDER, 'GLS returned a different shipment');
 }

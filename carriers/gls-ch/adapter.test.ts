@@ -122,6 +122,27 @@ describe('GLS Switzerland response normalization', () => {
     }
   });
 
+  it('takes a lone overview row for a Track ID unless it names another Track ID of the same kind', () => {
+    const overview = (references: JsonObject[]): JsonObject => {
+      const payload = deliveredOverviewFixture();
+      return { tuStatus: [{ ...(payload.tuStatus as JsonObject[])[0], references }] };
+    };
+    const card = 'ABCDEF';
+    // Only the numeric parcel number, or a Track ID of the other kind: the translation stands.
+    for (const [query, references] of [
+      [OFFICIAL_TEST_TRACK_ID, []],
+      [OFFICIAL_TEST_TRACK_ID, [{ type: 'PARCELNUMBER', name: '', value: OFFICIAL_TEST_PARCEL_NUMBER }]],
+      [card, [{ type: 'TRACKID', name: '', value: OFFICIAL_TEST_TRACK_ID }]],
+    ] as const) {
+      expect(parseGLSSwitzerlandTrackingResponse(overview([...references]), query))
+        .toMatchObject({ canonical_tracking_number: OFFICIAL_TEST_PARCEL_NUMBER });
+    }
+    for (const [query, other] of [[OFFICIAL_TEST_TRACK_ID, 'ZZ9ZZ99Z'], [card, 'ZYXWVU']] as const) {
+      expect(() => parseGLSSwitzerlandTrackingResponse(overview([{ type: 'TRACKID', name: '', value: other }]), query))
+        .toThrow('different shipment');
+    }
+  });
+
   it('normalizes detailed history and excludes recipient, address, and reference data', () => {
     const result = parseGLSSwitzerlandTrackingResponse(
       detailedFixture(),

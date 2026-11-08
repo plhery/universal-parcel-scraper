@@ -40,8 +40,9 @@ upstream error.
 - Identity: the parcel must echo the number on `tuNo`, `trackId`, `trackingId`
   or a track/parcel reference. A 12-digit printed number may come back as its
   first 11 digits (documented in GLS ShipIT), so that alias is accepted by exact
-  prefix only. A Track ID is not echoed, so a single result is accepted. Two
-  matches are ambiguous; none is a different shipment.
+  prefix only. A Track ID is not echoed, so a single result is accepted,
+  unless it names another Track ID of the same kind (8 characters, or a card's
+  6 letters). Two matches are ambiguous; none is a different shipment.
 - Swiss Post last mile: when the overview names owner `DELIVERY`/`CH01`, the
   result carries `delivery_carrier: 'swiss-post'`. The detail response omits
   the owner, so the overview's reference is merged back in.

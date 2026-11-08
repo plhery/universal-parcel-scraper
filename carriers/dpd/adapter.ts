@@ -1,7 +1,8 @@
 import { setTimeout as delay } from 'node:timers/promises';
 
 import { randomBytes } from 'node:crypto';
-import { load } from 'cheerio';
+import { load, type Cheerio, type CheerioAPI } from 'cheerio';
+import type { AnyNode } from 'domhandler';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
@@ -616,24 +617,30 @@ function requireGuestActivity(payload: JsonObject, result: CarrierResult): void 
   if (!result.events?.length) throw new IndeterminateError('DPD', 'DPD returned no shipment activity');
 }
 
+/**
+ * Whether the text shows the requested parcel number as a whole number: its fourteen digits
+ * alone or followed by their check character, never inside a longer number.
+ */
+function namesParcel(text: string, trackingNumber: string): boolean {
+  return (text.match(/[0-9A-Z]+/gi) ?? []).some((token) => dpdParcelNumber(token.toUpperCase()) === trackingNumber);
+}
+
+/** An element's words with its text nodes kept apart, so neighbouring elements never run into one number. */
+function spacedText($: CheerioAPI, element: Cheerio<AnyNode>): string {
+  return clean(element.find('*').addBack().contents().filter((_, node) => node.nodeType === 3)
+    .toArray().map((node) => $(node).text()).join(' '));
+}
+
+const PAGE_MISS = /no parcel|not found|nicht gefunden|aucun colis/i;
+
 export function parseDPDTrackingHtml(html: string, trackingNumber: string): CarrierResult {
   if (/Just a moment|cf-mitigated|Enable JavaScript and cookies/i.test(html)) {
     throw new DPDChallengeError();
   }
   const $ = load(html);
   $('script, style').remove();
-  const visible = clean($('body').text());
-  if (!visible.includes(trackingNumber)) {
+  if (!namesParcel(spacedText($, $('body')), trackingNumber)) {
     throw new SchemaError('DPD', 'DPD did not return the requested parcel');
-  }
-  if (/no parcel|not found|nicht gefunden|aucun colis/i.test(visible)) {
-    return {
-      status: 'unknown',
-      last_status_text: 'No parcel found',
-      last_update: null,
-      expected_delivery: null,
-      events: [],
-    };
   }
   const events: CarrierEvent[] = [];
   $('li.content-item-track').each((_, element) => {
@@ -662,6 +669,19 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
     events.reverse();
   }
   const labels = $('.gray-out').map((_, element) => clean($(element).text())).get().filter(Boolean);
+  if (events.length === 0 && labels.length === 0) {
+    // Steps and status labels win over not-found wording, which a banner or help text can carry.
+    if (PAGE_MISS.test(spacedText($, $('body')))) {
+      return {
+        status: 'unknown',
+        last_status_text: 'No parcel found',
+        last_update: null,
+        expected_delivery: null,
+        events: [],
+      };
+    }
+    throw new SchemaError('DPD', 'DPD returned a page without the parcel\'s tracking');
+  }
   const statusText = events[0]?.description ?? labels.at(-1) ?? 'Tracking information received';
   return {
     status: wordingStatus(statusText, events.length > 0),

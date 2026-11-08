@@ -56,6 +56,10 @@ signal.
   from an unrelated scan.
 - The page's summary, and a page row without a time, show a date alone. Such
   a step keeps its day in `local_time` rather than an invented midnight.
+- The page must show the requested number whole, alone or with its check
+  character; a longer number that contains it is another parcel. Steps and
+  status labels win over not-found wording, which a banner or help text can
+  carry. A page with none of the three is refused as malformed.
 - Scan codes take precedence over history enumerations. Unknown wording stays
   visible without an invented milestone. Scans are sorted newest first.
 - A scan code is mapped where a live lookup paired it with a history
