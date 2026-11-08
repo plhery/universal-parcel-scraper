@@ -170,12 +170,12 @@ describe('FedEx structured response', () => {
   });
 
   it('reads a parcel scanned in after the day\'s cutoff as picked up, not as delayed', () => {
-    /** A parcel whose newest scan is `newest`, with this package code and wording. */
-    const cutoff = (newest: readonly [string, string, string, string], details = '') => {
+    /** A parcel whose newest scan is `newest`, with this package wording and code. */
+    const cutoff = (newest: readonly [string, string, string, string], details = '', code = 'DY', keyStatus = 'We have your package') => {
       const payload = groundEconomyFixture([newest, ['2026-06-04', 'OC', 'Shipment information sent to FedEx', '']], DELIVERED_NUMBER);
       const shipment = (payload.output as { packages: Record<string, unknown>[] }).packages[0]!;
-      shipment.keyStatusCD = 'DY';
-      shipment.keyStatus = 'We have your package';
+      shipment.keyStatusCD = code;
+      shipment.keyStatus = keyStatus;
       shipment.statusWithDetails = details;
       return parseFedExTrackingResponse(payload, DELIVERED_NUMBER);
     };
@@ -188,10 +188,17 @@ describe('FedEx structured response', () => {
     expect(cutoff(['2026-06-05', 'DP', 'Left FedEx origin facility', ''])).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(cutoff(['2026-06-05', 'PU', 'Picked up', ''])).toMatchObject({ status: 'exception', current_stage: 'exception' });
     // A drop-off after the location's last pickup of the day.
-    const dropOff = cutoff(['2026-06-05', 'DO', 'Dropped off at FedEx Facility',
-      'Package received after final location pickup has occurred. Scheduled for pickup next business day.']);
+    const lateDropOff = ['2026-06-05', 'DO', 'Dropped off at FedEx Facility',
+      'Package received after final location pickup has occurred. Scheduled for pickup next business day.'] as const;
+    const dropOff = cutoff(lateDropOff);
     expect(dropOff).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(dropOff.events?.[0]).toMatchObject({ provider_code: 'DO', stage: 'accepted' });
+    // FedEx can flag it as a shipment exception instead, under the status "At dropoff point".
+    expect(cutoff(lateDropOff, 'At dropoff point: 6/05/2026 2:55 pm; MEMPHIS, TN', 'SE', 'At dropoff point'))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'At dropoff point' });
+    expect(cutoff(['2026-06-05', 'DP', 'Left FedEx origin facility', ''], '', 'SE')).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    // A cancellation is not explained by a late drop-off.
+    expect(cutoff(lateDropOff, '', 'CA', 'Shipment cancelled')).toMatchObject({ status: 'exception', current_stage: 'exception' });
   });
 
   it('orders scans by their instant, not by their local date, and an undated scan last', () => {

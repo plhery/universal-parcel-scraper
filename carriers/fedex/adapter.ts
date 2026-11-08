@@ -286,10 +286,11 @@ function holdLocation(nameValue: unknown, addressValue: unknown, residential: bo
 }
 
 // FedEx flags a parcel scanned in after the day's cutoff, or dropped off after the
-// location's last pickup, as delayed (`DY`) while its wording reads as an ordinary
-// pickup or drop-off: the parcel leaves on the next business day. Only that newest
-// scan explains the flag.
+// location's last pickup, as delayed (`DY`) or as a shipment exception (`SE`) while
+// its wording reads as an ordinary pickup or drop-off: the parcel leaves on the next
+// business day. Only that newest scan explains the flag.
 const AFTER_CUTOFF = /\breceived after (?:fedex cutoff|final location pickup)\b/i;
+const AFTER_CUTOFF_CODES = new Set(['DY', 'SE']);
 
 // Ground Economy can hand a parcel to the U.S. Postal Service for the last leg.
 // FedEx then relays USPS's scans, the first naming the package number USPS
@@ -391,7 +392,7 @@ function shipmentResult(shipment: FedExShipment, number: string): CarrierResult 
   const keyStatusCD = shipment.statusCode.toUpperCase();
   const statusText = keyStatus || newest?.description || 'Tracking information received';
   const wording = fedexStage(`${keyStatus} ${statusDetails}`);
-  const afterCutoff = keyStatusCD === 'DY' && newest?.stage === 'accepted'
+  const afterCutoff = AFTER_CUTOFF_CODES.has(keyStatusCD) && newest?.stage === 'accepted'
     && AFTER_CUTOFF.test(newest.description ?? '') && !(wording && statusForStage(wording) === 'exception');
   const stage = afterCutoff ? 'accepted' : FEDEX_CODE_STAGE[keyStatusCD] ?? wording ?? undefined;
   const status = afterCutoff ? 'in_transit' : fedexStatus(keyStatusCD, `${keyStatus} ${statusDetails}`, trimmed.length > 0);

@@ -3,7 +3,7 @@
   "entries": [
     { "code": "OC", "language": "en", "stage": "registered", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; shipment information sent to FedEx." },
     { "code": "PU", "language": "en", "stage": "accepted", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; picked up." },
-    { "code": "DO", "wording": "Dropped off at FedEx Facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The sender's drop-off; seen with the details \"Package received after final location pickup has occurred. Scheduled for pickup next business day.\" and the package flagged DY." },
+    { "code": "DO", "wording": "Dropped off at FedEx Facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The sender's drop-off; seen with the details \"Package received after final location pickup has occurred. Scheduled for pickup next business day.\" and the package flagged DY or SE." },
     { "code": "AR", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; arrived at FedEx location." },
     { "code": "DP", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; departed FedEx location." },
     { "code": "IT", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; in transit." },
@@ -16,7 +16,7 @@
     { "code": "DL", "language": "en", "stage": "delivered", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; terminal, outranks the wording." },
     { "code": "DE", "language": "en", "stage": "failed_attempt", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; drives the page's own delivery-exception flag. Adapter result status: exception." },
     { "code": "DY", "language": "en", "stage": "exception", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; drives the page's own delay flag. A pickup received after the day's cutoff carries it too and reads as accepted." },
-    { "code": "SE", "language": "en", "stage": "exception", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; shipment exception." },
+    { "code": "SE", "language": "en", "stage": "exception", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; shipment exception. A drop-off received after the location's last pickup carries it too, under the status \"At dropoff point\", and reads as accepted." },
     { "code": "CA", "language": "en", "stage": "exception", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; cancelled. The result vocabulary has no cancelled state, so it surfaces as exception." },
     { "wording": "Shipment information sent to FedEx", "language": "en", "stage": "registered", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "" },
     { "wording": "Picked up", "language": "en", "stage": "accepted", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "" },
