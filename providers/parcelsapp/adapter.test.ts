@@ -1355,6 +1355,18 @@ describe('ParcelsApp result parsing', () => {
     const mixed = read(['CDEK', 'Example Parcel Co'], [scan('2026-10-18T08:30:00Z', 'Delivered', 1), ...cdek]);
     expect(mixed?.[0]).toMatch(/^2026-10-18T08:30:00/);
     expect(mixed?.slice(1)).toEqual(['2026-10-17', '2026-10-16', '2026-10-15', '2026-10-14', '2026-10-13', '2026-10-12']);
+    // Another network's copy of such a day's scan at 00:00:00 that day, in the same words as read and with no place, is
+    // that scan, as Cainiao relays a national post's delivery. Its other words, another day, a place or a time stay.
+    const counted = [scan('2026-10-15T00:59:59Z', 'The parcel was delivered.'), scan('2026-10-14T00:59:58Z', 'In transit'),
+      scan('2026-10-13T00:59:57Z', 'Accepted')];
+    const relayed = (...states: Record<string, unknown>[]) => parse(['Example Post', 'Cainiao'], [...states, ...counted]).events
+      ?.map(({ time, local_time, description, location }) => `${time ?? local_time} ${description} ${location ?? ''}`.trim());
+    expect(relayed(scan('2026-10-15T00:00:00Z', 'Delivered', 1), scan('2026-10-15T00:00:00Z', 'Delivery in process', 1)))
+      .toEqual(['2026-10-15 Delivered', '2026-10-15T00:00:00.000Z Delivery in process', '2026-10-14 In transit', '2026-10-13 Accepted']);
+    for (const copy of [scan('2026-10-14T00:00:00Z', 'Delivered', 1), scan('2026-10-15T09:30:00Z', 'Delivered', 1),
+      { ...scan('2026-10-15T00:00:00Z', 'Delivered', 1), location: 'Example Hub' }]) {
+      expect(relayed(copy), JSON.stringify(copy)).toHaveLength(4);
+    }
     // The rendered page prints no seconds: there, a network's every scan on one minute, three or more over two days or more, is enough.
     const page = (rows: [string, string, string][]) => parseParcelsAppHtml(rendered(rows.map(([day, time, carrier], index) =>
       carrierRow(`${day} Oct 2026`, time, labels[5 - index]!, carrier)).join('')), number).events?.map(({ time, local_time }) => time ?? local_time);

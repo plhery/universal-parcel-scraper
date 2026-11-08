@@ -15,5 +15,6 @@ export { universalCarrierHints } from './providers/shared/hints.js';
 export { recognitionAskedCarriers } from './core/catalog/recognition.js';
 export { relayedWordingStage, statusMapAnswer, type ObservedStatus, type StatusMapAnswer } from './core/catalog/statusMaps.js';
 export { normalizeStatusWording } from './core/status/statusMap.js';
+export { withoutMinuteCopies } from './core/result/repeats.js';
 export { SWISS_POST_GLOBAL_STATUSES } from './carriers/swiss-post/status.js';
 export { countryFlag, countryName, trackingLocationCountry, trackingPlace, type TrackingPlace } from './places/trackingLocation.js';

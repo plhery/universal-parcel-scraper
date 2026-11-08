@@ -80,6 +80,10 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - `fetchSource()` treats a history in which no scan has an instant (only wall times with
   no known zone) as inconclusive: `indeterminate` with reason `undated_history`, so the
   chain moves on. UPU is exempt, because its local clocks are by design.
+- `fetchSource()` reads one scan an answer gives twice in one minute, once to the minute and
+  once to the second in the same words and place or with one place left out, as its copy to the
+  second ([ARCHITECTURE.md](../ARCHITECTURE.md)): ParcelsApp gives YFH's scans at :00 with their
+  place and Cainiao's copies of them at the second.
 - Privacy: a non-delivered event that mentions a PIN, access code, door number or
   signature is dropped, and a delivered event's text becomes `Delivered`. Recipient
   fields are never read. A place leaves out a branch's postcode, and a postcode given

@@ -397,7 +397,13 @@ A step a carrier records again within minutes is read once: every adapter's and 
 result leaves out a scan with an earlier scan's wording, place and stage at most ten minutes
 after it, as a gateway that scans one departure several times writes, unless a scan of another
 stage came between them ([repeats.ts](core/result/repeats.ts)). The first record stays, so a
-stored scan keeps its identity as the carrier adds copies.
+stored scan keeps its identity as the carrier adds copies. Before that, a universal provider's
+answer that lists one scan twice in one minute, from two of the networks it reads, once to the
+minute and once to the second, keeps the copy to the second (`withoutMinuteCopies`): the same
+wording apart from case and spacing, the same stage, places that agree or one left out, and a
+match unique both ways. The copy keeps its place, or takes the other's when it gives none.
+Answers of different providers are not merged. The app exports the rule, so stored rows of one
+provider can be read with it again.
 
 Each carrier's `statuses.json` records the codes and wordings seen from that carrier and the
 stage each one means. [CORPUS.md](CORPUS.md) describes those records.

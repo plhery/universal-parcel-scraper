@@ -1717,6 +1717,30 @@ function relayCopies<T extends { name: unknown; date: unknown }>(entries: readon
   }));
 }
 
+/**
+ * Another network's copy of a scan dated by its day alone (`datedOnly`, `dayOnlyNetworks`): the
+ * same words at 00:00:00 that day, as read (a delivery's are "Delivered"), with no place.
+ * Cainiao relayed Czech Post's delivery so, beside Czech Post's own with its day and office.
+ * The copy is not read as a scan.
+ */
+function midnightCopies<T extends { name: unknown; date: unknown; location: string; wording: string; raw: Record<string, unknown> }>(
+  entries: readonly T[],
+  dayOnly: ReadonlySet<string>,
+): Set<T> {
+  const words = (entry: T, wall: string) => (localEvent(wall, entry.wording)?.description ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const dayOf = (entry: T) => datedOnly(entry.name, relayedLabel(entry.raw.status), entry.date) ?? networkDay(dayOnly, entry.name, entry.date);
+  const dated = entries.flatMap((entry) => {
+    const [day, wall] = [dayOf(entry), mislabeledWallTime(entry.date)];
+    return day && wall ? [{ network: nameKey(entry.name), day, wording: words(entry, wall) }] : [];
+  });
+  return new Set(dated.length ? entries.filter((copy) => {
+    const wall = mislabeledWallTime(copy.date);
+    if (!wall || !/T00:00:00(?:\.0+)?$/.test(wall) || copy.location.trim() || dayOf(copy)) return false;
+    const wording = words(copy, wall);
+    return wording !== '' && dated.some((scan) => scan.network !== nameKey(copy.name) && scan.day === wall.slice(0, 10) && scan.wording === wording);
+  }) : []);
+}
+
 function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null, readAt = Date.now()): CarrierResult {
   if (isRecord(payload) && payload.error === 'RELOAD') throw new ChallengeError(SOURCE);
   if (isRecord(payload) && (payload.error === 'NO_DATA' || payload.error === 'NO_TRACKER')) {
@@ -1812,10 +1836,11 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   relayTwinZones(entries, zones).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   const relayed = relayCopies(entries);
   const dayOnly = dayOnlyNetworks(entries);
+  const midnight = midnightCopies(entries, dayOnly);
   const steps = new Set<CarrierEvent>();
   const latest = new LatestScan(SOURCE);
   for (const [index, entry] of entries.entries()) {
-    if (relayed.has(entry)) continue;
+    if (relayed.has(entry) || midnight.has(entry)) continue;
     const { raw, name, scan, date } = entry;
     const { zone } = zones[index]!;
     // A DHL Express scan whose facility the rule cannot place is a wall clock

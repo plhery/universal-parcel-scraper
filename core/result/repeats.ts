@@ -45,6 +45,48 @@ export function withoutRepeatedScans(result: CarrierResult): CarrierResult {
   return { ...result, events: events.filter((_, index) => !repeats.has(index)) as CarrierEvent[] };
 }
 
+const MINUTE_MS = 60_000;
+
+/** Two places that name one: the same, one left out, or one that goes on after the other ("Town, ST" and "Town, ST, Town ST 00000"). */
+const samePlace = (left: string, right: string): boolean => !left || !right || left === right
+  || (left.length < right.length ? right.startsWith(`${left},`) : left.startsWith(`${right},`));
+
+/**
+ * One scan a provider's answer lists twice in one minute, from two of the networks it reads:
+ * once to the minute and once to the second (YFH's scan at :00 and Cainiao's copy of it at :54).
+ * The copy to the minute is left out, and the copy to the second stays, with the other's place
+ * where it gives none. Both need the same wording apart from case and spacing, the same stage,
+ * places that agree or one left out, codes that agree where both carry one, and a match unique
+ * both ways. Scans of other words, stage or place in that minute stay, as do scans dated by day.
+ */
+export function withoutMinuteCopies(result: CarrierResult): CarrierResult {
+  const events: unknown[] = Array.isArray(result.events) ? result.events : [];
+  if (events.length < 2) return result;
+  const at = clocks(events);
+  const scans = events.map((event, index) => {
+    const record = isRecord(event) ? event : {};
+    return { index, at: at[index], wording: text(record.description), place: text(record.location), stage: text(record.stage),
+      code: typeof record.provider_code === 'string' ? record.provider_code : '' };
+  }).filter((scan) => scan.at !== null && scan.wording);
+  const copies = (minute: typeof scans[number], second: typeof scans[number]) => minute.at! % MINUTE_MS === 0
+    && second.at! % MINUTE_MS !== 0 && second.at! - (second.at! % MINUTE_MS) === minute.at
+    && minute.wording === second.wording && minute.stage === second.stage && samePlace(minute.place, second.place)
+    && (!minute.code || !second.code || minute.code === second.code);
+  const merged = new Map<number, number>();
+  for (const minute of scans) {
+    const seconds = scans.filter((second) => copies(minute, second));
+    if (seconds.length === 1 && scans.filter((other) => copies(other, seconds[0]!)).length === 1) merged.set(minute.index, seconds[0]!.index);
+  }
+  if (!merged.size) return result;
+  const listed = events as CarrierEvent[];
+  const places = new Map([...merged].map(([minute, second]) => [second, listed[minute]!.location]));
+  return { ...result, events: listed.flatMap((event, index) => {
+    if (merged.has(index)) return [];
+    const place = places.get(index);
+    return [place && !event.location ? { ...event, location: place } : event];
+  }) };
+}
+
 const clockKey = (event: CarrierEvent): string => {
   if (typeof event.time === 'string') {
     const at = Date.parse(event.time);

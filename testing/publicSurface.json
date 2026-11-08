@@ -319,7 +319,8 @@
       "statusMapAnswer",
       "trackingLocationCountry",
       "trackingPlace",
-      "universalCarrierHints"
+      "universalCarrierHints",
+      "withoutMinuteCopies"
     ],
     "types": [
       "ObservedStatus",

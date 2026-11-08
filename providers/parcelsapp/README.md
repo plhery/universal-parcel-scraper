@@ -197,7 +197,9 @@ step exists for future protocol changes.
   of ParcelsApp's digits, the network's clock, not the UTC day of the instant they read as.
   myBRT.it's progress bar is dated that way however few its steps: at the top of an hour,
   the seconds counting the steps. Its "Spedizione consegnata a BRT" is BRT taking the
-  parcel, which BRT's own page calls its collection, not a delivery.
+  parcel, which BRT's own page calls its collection, not a delivery. Another network's state
+  at 00:00:00 on the day of such a scan, in the same words as read and with no place, is a
+  copy of it and is not read: Cainiao relays a national post's delivery so.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
   skip the steps above and take the zone the

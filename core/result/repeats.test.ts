@@ -3,7 +3,7 @@ import type { AdapterRegistry } from '../adapter/index.js';
 import { trackCarrier } from '../adapter/track.js';
 import { UniversalTracker } from '../../providers/universal.js';
 import type { CarrierEvent, CarrierResult } from './index.js';
-import { withoutRepeatedScans, withoutShortenedScans } from './repeats.js';
+import { withoutMinuteCopies, withoutRepeatedScans, withoutShortenedScans } from './repeats.js';
 
 const scan = (time: string, description: string, stage = 'in_transit', more: Partial<CarrierEvent> = {}): CarrierEvent =>
   ({ time, description, stage, stage_source: 'carrier_map', ...more });
@@ -72,6 +72,56 @@ describe('withoutRepeatedScans', () => {
     const browserLookup = vi.fn().mockResolvedValue(result(events));
     const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher: vi.fn<typeof fetch>(), browserLookup });
     expect((await tracker.fetchSource('Ship24', 'ZZ12340678900')).events).toHaveLength(1);
+  });
+});
+
+describe('withoutMinuteCopies', () => {
+  // One answer's two networks: one dates a scan to the minute with its place, the other to the second.
+  const minute = scan('2030-01-10T07:54:00Z', 'EN REPARTO. Su envío se encuentra en reparto.', 'out_for_delivery', { location: 'EXAMPLE TOWN' });
+  const second = scan('2030-01-10T07:54:10Z', 'En reparto.  Su envío se encuentra en reparto.', 'out_for_delivery');
+
+  it('keeps the copy to the second, with the place the copy to the minute gives', () => {
+    const once = withoutMinuteCopies(result([second, minute]));
+    expect(once.events).toEqual([{ ...second, location: 'EXAMPLE TOWN' }]);
+    expect(withoutMinuteCopies(result([minute, second])).events).toEqual(once.events);
+    expect(withoutMinuteCopies(once)).toBe(once);
+    // The same place, or one that goes on after the other's parts; the copy to the second keeps its own.
+    for (const [place, own] of [['Example Town, ST, Example Town ST 99999', 'Example Town, ST'], ['', ''], ['Hub', 'hub'], ['', 'Hub']]) {
+      const copy = { ...second, location: own };
+      expect(withoutMinuteCopies(result([copy, { ...minute, location: place }])).events, `${place}|${own}`).toEqual([copy]);
+    }
+    const local = { local_time: '2030-01-10T09:04:00', description: 'Delivered', stage: 'delivered' };
+    const seconds = { ...local, local_time: '2030-01-10T09:04:41' };
+    expect(withoutMinuteCopies(result([seconds, local])).events).toEqual([seconds]);
+  });
+
+  it('leaves scans of other words, stage, place, code or minute alone, and copies it cannot pair one to one', () => {
+    for (const other of [
+      { ...minute, description: 'Arrived at Facility' },
+      { ...minute, stage: 'in_transit' },
+      { ...minute, location: 'Example Townsend' },
+      { ...minute, time: '2030-01-10T07:53:00Z' },
+      { ...minute, time: '2030-01-10T07:54:00.001Z' },
+      { ...minute, time: '2030-01-10T07:55:00Z' },
+      { ...minute, provider_code: 'A' },
+    ]) {
+      const answer = result([{ ...second, location: 'Example Town', provider_code: 'B' }, other]);
+      expect(withoutMinuteCopies(answer), JSON.stringify(other)).toBe(answer);
+    }
+    // Two places' scans in that minute and a copy that could be either's.
+    const twice = result([second, minute, { ...minute, location: 'OTHER TOWN' }]);
+    expect(withoutMinuteCopies(twice)).toBe(twice);
+    const both = result([second, { ...second, time: '2030-01-10T07:54:20Z' }, minute]);
+    expect(withoutMinuteCopies(both)).toBe(both);
+    const day = result([{ local_time: '2030-01-10', description: 'Delivered', stage: 'delivered' }, scan('2030-01-10T00:00:00Z', 'Delivered', 'delivered')]);
+    expect(withoutMinuteCopies(day)).toBe(day);
+  });
+
+  it("reads each provider's answer so, before a repeat keeps its first record", async () => {
+    const browserLookup = vi.fn().mockResolvedValue(result([second, minute, scan('2030-01-10T07:50:00Z', 'Arrived at the delivery station')]));
+    const tracker = new UniversalTracker({ providers: ['Ship24'], fetcher: vi.fn<typeof fetch>(), browserLookup });
+    expect((await tracker.fetchSource('Ship24', 'ZZ12340678900')).events!.map((event) => `${event.time} ${event.location ?? ''}`))
+      .toEqual(['2030-01-10T07:54:10Z EXAMPLE TOWN', '2030-01-10T07:50:00Z ']);
   });
 });
 
