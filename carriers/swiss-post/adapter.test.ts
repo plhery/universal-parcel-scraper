@@ -142,6 +142,27 @@ describe('Swiss Post historical event codes', () => {
     expect(result.events?.map((event) => event.provider_code)).toEqual(['PARCEL.*.1.9400', 'PARCEL.*.1.1001', 'PARCEL.*.1.3700']);
   });
 
+  it.each([
+    [99, 'oldest first'], [100, 'oldest first'], [101, 'oldest first'],
+    [99, 'newest first'], [100, 'newest first'], [101, 'newest first'],
+  ])('keeps the delivery and the newest scans of %i listed %s, and says when older ones were left out', (count, order) => {
+    // Sorting scans one minute apart, the delivery last; an oldest-first list puts it at the cutoff.
+    const sorting = Array.from({ length: count - 1 }, (_, minute) => ({
+      eventCode: 'PARCEL.*.1.1213', timestamp: new Date(Date.UTC(2026, 8, 1, 6, minute)).toISOString(),
+    }));
+    const delivery = { eventCode: 'PARCEL.*.1.4000', timestamp: '2026-09-02T09:00:00Z' };
+    const oldestFirst = [...sorting, delivery];
+    const result = parseSwissPostShipment({ globalStatus: 'DELIVERED' },
+      order === 'oldest first' ? oldestFirst : [...oldestFirst].reverse());
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: delivery.timestamp });
+    expect(result.events).toHaveLength(Math.min(count, 100));
+    expect(result.events?.[0]).toMatchObject({ time: delivery.timestamp, stage: 'delivered' });
+    // The oldest scan is the one left out.
+    expect(result.events?.at(-1)?.time).toBe(count > 100 ? sorting[1]!.timestamp : sorting[0]!.timestamp);
+    if (count > 100) expect(result.history_truncated).toBe(true);
+    else expect(result).not.toHaveProperty('history_truncated');
+  });
+
   it('never takes a stage from a revoked scan', () => {
     expect(swissPostEventStage('PARCEL.*.2.4000', 'CANPDS')).toBeUndefined();
     expect(swissPostEventStage('LETTER.*.1.4000', 'CAN1')).toBeUndefined();

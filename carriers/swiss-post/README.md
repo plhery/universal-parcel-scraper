@@ -93,6 +93,9 @@ row by provider code, instant and location, unless one of the two is revoked.
 - Timestamps are kept exactly as sent and parsed only to sort (offset-less
   values read as UTC for that comparison), but for the destination post's events
   and those of the origin offices and the pre-advice [clock.ts](clock.ts) lists.
+  The whole history is sorted before the newest 100 scans are kept, so the
+  newest scan sets the stage whichever way the reply lists them, and
+  `history_truncated` marks a history with older scans left out.
 - On a parcel Swiss Post sends abroad (`internationalExport`), the destination post's
   events (codes 901, 902, 909, 918–921, 923, 924, 926, 934, 938) come with no city,
   postcode or country, and carry that office's wall clock under Swiss Post's offset: an

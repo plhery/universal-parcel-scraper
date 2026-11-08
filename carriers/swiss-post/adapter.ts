@@ -25,6 +25,9 @@ const translationsUrl = (language: SwissPostLanguage) =>
   `https://service.post.ch/ekp-web/core/rest/translations/${language}/shipment-text-messages`;
 const PROVIDER = 'Swiss Post';
 const REQUEST_TIMEOUT_MS = 10_000;
+/** Scans read from one reply, and the newest of them returned once they are sorted. */
+const MAX_EVENTS_TO_INSPECT = 500;
+const MAX_EVENTS_TO_RETURN = 100;
 /** A wording table that failed to load, or came back empty, is asked for again after this. */
 const TRANSLATION_RETRY_MS = 10 * 60_000;
 /** The user, search, result, event, translation and pickup office calls, each at its own bound. */
@@ -309,7 +312,7 @@ export function parseSwissPostShipment(
   const abroad = item.internationalExport === true && !item.internationalImport && /^[A-Z]{2}$/.test(destination)
     && destination !== 'CH' ? destination : null;
   const events: CarrierEvent[] = [];
-  for (const rawEvent of rawEvents.slice(0, 100)) {
+  for (const rawEvent of rawEvents.slice(0, MAX_EVENTS_TO_INSPECT)) {
     if (!isRecord(rawEvent)) continue;
     const time = text(rawEvent.timestamp, 100);
     const eventCode = text(rawEvent.eventCode, 100);
@@ -331,8 +334,10 @@ export function parseSwissPostShipment(
   for (let index = events.length - 1; index >= 0; index -= 1) {
     if (!events[index]!.location && placed.has(scan(events[index]!))) events.splice(index, 1);
   }
+  // The whole history is ordered before it is capped, so the newest scans are the ones kept.
   if (listsNewestFirst(events) === false) events.reverse();
   events.sort((left, right) => timestamp(right.time ?? '') - timestamp(left.time ?? ''));
+  const truncated = rawEvents.length > MAX_EVENTS_TO_INSPECT || events.length > MAX_EVENTS_TO_RETURN;
   // The newest scan's own stage leads; the shipment summary fills in when that
   // scan has none (an enquiry note, an unmapped code, or no scans at all).
   let stage: Stage | undefined = (events[0]?.stage as Stage | undefined) ?? GLOBAL_STATUS_STAGE[globalStatus];
@@ -379,7 +384,8 @@ export function parseSwissPostShipment(
     delivery_time_interval: item.deliveryTimeInterval,
     // The summary without its events, as when their optional call fails; a provider may hold them.
     ...(events.length ? {} : { summary_only: true }),
-    events,
+    ...(truncated ? { history_truncated: true } : {}),
+    events: events.slice(0, MAX_EVENTS_TO_RETURN),
   };
 }
 
