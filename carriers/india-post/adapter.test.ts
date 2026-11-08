@@ -339,6 +339,21 @@ describe('India Post response normalization', () => {
     expect(times([takeOff('2026-07-11T01:40:00.000000Z', 'Office - DEL 00000002', 'Unknown')])).toEqual(['2026-07-11T01:40:00Z']);
   });
 
+  it("reads the mail's hand-over to the airport on that airport's clock, before its flight", () => {
+    const handOver = (trackedAt: string, office: string) => ({ tracked_at: trackedAt, event: 'Handed over to Airport facility by Airlines',
+      event_type: 'HandedOverToAirportFacility', office, pincode: '', remarks: '' });
+    const times = (events: Array<Record<string, unknown>>) =>
+      parseIndiaPostTrackingHtml(trackingHistoryHtml(SAMPLE_NUMBER, events), SAMPLE_NUMBER).events?.map((event) => [event.time, event.provider_code]);
+    // Labelled 09:57Z at Delhi's office of exchange: as UTC it would follow the 14:05 take-off there.
+    expect(times([
+      takeOff('2026-11-08T14:05:00.000000Z', 'Office - DEL 00000002'),
+      handOver('2026-11-08T09:57:00.000000Z', 'EXAMPLE FOREIGN POST OFFICE'),
+    ])).toEqual([['2026-11-08T14:05:00+05:30', 'AircraftTakeOff'], ['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
+    // At an airport the office names, its clock; an offset other than UTC stays.
+    expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - FRA 00000003')])).toEqual([['2026-11-08T09:57:00+01:00', 'HandedOverToAirportFacility']]);
+    expect(times([handOver('2026-11-08T09:57:00+05:30', 'EXAMPLE FOREIGN POST OFFICE')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
+  });
+
   it('keeps flight numbers and routes while ignoring unrelated or mismatched remarks', () => {
     const event = takeOff('2026-07-11T20:05:00Z', 'Office - FRA 00000003');
     const parse = (remarks: string, wording = 'UPLIFT') => parseIndiaPostTrackingHtml(

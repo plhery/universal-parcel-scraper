@@ -86,7 +86,10 @@ Outcomes:
   seen recorded hours before its labelled time. Its digits are read in the airport's zone, from a
   table of airport codes in the adapter. The row is found by its code because its wording changes.
   A take-off at an airport outside the table keeps its label, and one whose label is not UTC is
-  read like any other row.
+  read like any other row. The mail's hand-over to the airport (`HandedOverToAirportFacility`)
+  comes the same way, to the minute: labelled as UTC, a hand-over at Delhi's office of exchange
+  followed its flight's take-off there. It is read on its airport's clock when the office names
+  one, else on India's.
 - Take-offs use one wording even when the source switches labels. A strictly formatted flight remark
   supplies its flight number and route; other remarks are discarded. Known departure airports are
   named with their country so maps can locate the scan. A departure's route does not prove arrival.
