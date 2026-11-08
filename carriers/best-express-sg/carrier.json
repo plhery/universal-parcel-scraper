@@ -1,0 +1,48 @@
+{
+  "id": "best-express-sg",
+  "displayName": "BEST Express Singapore",
+  "aliases": [
+    "BEST Express SG",
+    "BEST Inc (SG)",
+    "BEST Logistics Technology (Singapore)"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#d80c18"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.best-inc.sg/track?bills={trackingNumber}",
+    "searchUrl": "https://www.best-inc.sg/track",
+    "canaryUrl": "https://www.best-inc.sg/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "best-inc.sg",
+        "www.best-inc.sg"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "bills",
+        "waybill"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "first-logistics",
+  "displayName": "First Logistics",
+  "aliases": [
+    "PT. Synergy First Logistics",
+    "PT Synergy First Logistics"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#ff6600"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.firstlogistics.co.id/trace/",
+    "canaryUrl": "https://www.firstlogistics.co.id/trace/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

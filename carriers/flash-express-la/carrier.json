@@ -1,0 +1,49 @@
+{
+  "id": "flash-express-la",
+  "displayName": "Flash Express Laos",
+  "aliases": [
+    "Flash Express (LA)",
+    "Flash Express LA",
+    "Flash Express Lao Sole Co., Ltd.",
+    "Flash Express (Laos) Company Limited",
+    "ແຟັຣດ ເອັກເພສ໌"
+  ],
+  "region": {
+    "countries": [
+      "LA"
+    ]
+  },
+  "brand": {
+    "color": "#ffea33"
+  },
+  "selectable": true,
+  "timezone": "Asia/Vientiane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.flashexpress.la/fle/tracking?se={trackingNumber}",
+    "searchUrl": "https://www.flashexpress.la/fle/tracking",
+    "canaryUrl": "https://www.flashexpress.la/fle/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "flashexpress.la",
+        "www.flashexpress.la"
+      ],
+      "pathPattern": "^/(?:(?:en|la|zh|th|ms)/)?(?:fle/)?tracking/?$",
+      "params": [
+        "se"
+      ]
+    }
+  ],
+  "detection": []
+}

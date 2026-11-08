@@ -1,0 +1,34 @@
+{
+  "id": "wmg-group",
+  "displayName": "WMG",
+  "aliases": [
+    "WMG Group",
+    "WMG Pte Ltd"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#123053"
+  },
+  "selectable": true,
+  "timezone": "Asia/Singapore",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.wmg-group.com/",
+    "canaryUrl": "https://www.wmg-group.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

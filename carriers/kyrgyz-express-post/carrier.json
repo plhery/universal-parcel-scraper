@@ -1,0 +1,34 @@
+{
+  "id": "kyrgyz-express-post",
+  "displayName": "Kyrgyz Express Post",
+  "aliases": [
+    "Kyrgyz Express Post LLC",
+    "Кыргыз Express Post"
+  ],
+  "region": {
+    "countries": [
+      "KG"
+    ]
+  },
+  "brand": {
+    "color": "#1680bd"
+  },
+  "selectable": true,
+  "timezone": "Asia/Bishkek",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://kep.kg/en/Tracking",
+    "canaryUrl": "https://kep.kg/en/Tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

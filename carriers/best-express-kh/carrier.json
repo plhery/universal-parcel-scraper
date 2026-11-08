@@ -1,0 +1,47 @@
+{
+  "id": "best-express-kh",
+  "displayName": "BEST Express Cambodia",
+  "aliases": [
+    "BEST Express KH",
+    "BEST Inc (KH)",
+    "BEST Express (Cambodia)"
+  ],
+  "region": {
+    "countries": [
+      "KH"
+    ]
+  },
+  "brand": {
+    "color": "#d80c18"
+  },
+  "selectable": true,
+  "timezone": "Asia/Phnom_Penh",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://kh.best-inc.com/track?bills={trackingNumber}",
+    "searchUrl": "https://kh.best-inc.com/track",
+    "canaryUrl": "https://kh.best-inc.com/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "kh.best-inc.com"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "bills",
+        "waybill"
+      ]
+    }
+  ],
+  "detection": []
+}

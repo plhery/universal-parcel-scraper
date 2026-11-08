@@ -9598,6 +9598,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "best-express-kh": {
+    "displayName": "BEST Express Cambodia",
+    "color": "#d80c18",
+    "aliases": [
+      "BEST Express KH",
+      "BEST Inc (KH)",
+      "BEST Express (Cambodia)"
+    ],
+    "countries": [
+      "KH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Phnom_Penh",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kh.best-inc.com/track",
+    "trackingUrlTemplate": "https://kh.best-inc.com/track?bills={trackingNumber}",
+    "trackingSearchUrl": "https://kh.best-inc.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "kh.best-inc.com"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "bills",
+          "waybill"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "best-express-my": {
     "displayName": "BEST Express Malaysia",
     "color": "#d80c18",
@@ -9637,6 +9671,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "best-express-sg": {
+    "displayName": "BEST Express Singapore",
+    "color": "#d80c18",
+    "aliases": [
+      "BEST Express SG",
+      "BEST Inc (SG)",
+      "BEST Logistics Technology (Singapore)"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.best-inc.sg/track",
+    "trackingUrlTemplate": "https://www.best-inc.sg/track?bills={trackingNumber}",
+    "trackingSearchUrl": "https://www.best-inc.sg/track",
+    "linkRules": [
+      {
+        "domains": [
+          "best-inc.sg",
+          "www.best-inc.sg"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "bills",
+          "waybill"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "best-express-th": {
     "displayName": "BEST Express Thailand",
@@ -20937,6 +21006,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "first-logistics": {
+    "displayName": "First Logistics",
+    "color": "#ff6600",
+    "aliases": [
+      "PT. Synergy First Logistics",
+      "PT Synergy First Logistics"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.firstlogistics.co.id/trace/",
+    "trackingSearchUrl": "https://www.firstlogistics.co.id/trace/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "flash-express": {
     "displayName": "Flash Express",
     "color": "#ffea33",
@@ -20976,6 +21066,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "flash-express-la": {
+    "displayName": "Flash Express Laos",
+    "color": "#ffea33",
+    "aliases": [
+      "Flash Express (LA)",
+      "Flash Express LA",
+      "Flash Express Lao Sole Co., Ltd.",
+      "Flash Express (Laos) Company Limited",
+      "ແຟັຣດ ເອັກເພສ໌"
+    ],
+    "countries": [
+      "LA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Vientiane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.flashexpress.la/fle/tracking",
+    "trackingUrlTemplate": "https://www.flashexpress.la/fle/tracking?se={trackingNumber}",
+    "trackingSearchUrl": "https://www.flashexpress.la/fle/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "flashexpress.la",
+          "www.flashexpress.la"
+        ],
+        "pathPattern": "^/(?:(?:en|la|zh|th|ms)/)?(?:fle/)?tracking/?$",
+        "params": [
+          "se"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "flash-express-ph": {
     "displayName": "Flash Express Philippines",
@@ -26627,6 +26753,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "j-and-t-co": {
+    "displayName": "J&T Express Colombia",
+    "color": "#e60000",
+    "aliases": [
+      "J&T Express (CO)",
+      "J&T Express CO",
+      "J&T Colombia"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.jtexpress.co/tracking",
+    "trackingSearchUrl": "https://www.jtexpress.co/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jtexpress.co",
+          "jtexpress.co"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "j-and-t-de": {
     "displayName": "J&T Express Germany",
     "color": "#e60000",
@@ -29026,6 +29185,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "kyrgyz-express-post": {
+    "displayName": "Kyrgyz Express Post",
+    "color": "#1680bd",
+    "aliases": [
+      "Kyrgyz Express Post LLC",
+      "Кыргыз Express Post"
+    ],
+    "countries": [
+      "KG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bishkek",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kep.kg/en/Tracking",
+    "trackingSearchUrl": "https://kep.kg/en/Tracking",
+    "linkRules": [],
     "detectionRules": []
   },
   "kyrgyz-post": {
@@ -50151,6 +50331,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wmg-group": {
+    "displayName": "WMG",
+    "color": "#123053",
+    "aliases": [
+      "WMG Group",
+      "WMG Pte Ltd"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Singapore",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.wmg-group.com/",
+    "trackingSearchUrl": "https://www.wmg-group.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wooliiporter": {
     "displayName": "WooliiPorter",
     "color": "#2c3053",
@@ -51277,6 +51478,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "yto-ph": {
+    "displayName": "YTO Express Philippines",
+    "color": "#47086c",
+    "aliases": [
+      "YTO Express (PH)",
+      "YTO Express PH",
+      "YTO Express (Philippines) Technology Group Corporation"
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.yto.com.ph/trackTrace",
+    "trackingSearchUrl": "https://www.yto.com.ph/trackTrace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yuema-express": {
     "displayName": "Yuema Express",
     "color": "#a81d30",
@@ -52140,7 +52363,9 @@ export const CARRIER_IDS = [
   "beexprss",
   "bel",
   "belpost",
+  "best-express-kh",
   "best-express-my",
+  "best-express-sg",
   "best-express-th",
   "best-express-vn",
   "best-overnite-express",
@@ -52445,7 +52670,9 @@ export const CARRIER_IDS = [
   "first-flight-me",
   "first-fly-express",
   "first-line",
+  "first-logistics",
   "flash-express",
+  "flash-express-la",
   "flash-express-ph",
   "flashbird-ca",
   "flecha-amarilla",
@@ -52604,6 +52831,7 @@ export const CARRIER_IDS = [
   "j-and-t-br",
   "j-and-t-cargo",
   "j-and-t-cn",
+  "j-and-t-co",
   "j-and-t-de",
   "j-and-t-eg",
   "j-and-t-middle-east",
@@ -52673,6 +52901,7 @@ export const CARRIER_IDS = [
   "kuqi",
   "kwick-box",
   "kyoungdong",
+  "kyrgyz-express-post",
   "kyrgyz-post",
   "l-post",
   "la-poste-burkina-faso",
@@ -53254,6 +53483,7 @@ export const CARRIER_IDS = [
   "wise-express",
   "wizmo",
   "wld-express",
+  "wmg-group",
   "wooliiporter",
   "world-package",
   "wp-ground",
@@ -53287,6 +53517,7 @@ export const CARRIER_IDS = [
   "yingtu",
   "yoseus",
   "youbang-express",
+  "yto-ph",
   "yuema-express",
   "yuexi-logistics",
   "yurtici-kargo",
@@ -53525,7 +53756,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "beexprss": [],
   "bel": [],
   "belpost": ["belpost-s10"],
+  "best-express-kh": [],
   "best-express-my": ["best-express-my-1"],
+  "best-express-sg": [],
   "best-express-th": ["best-express-th-1"],
   "best-express-vn": [],
   "best-overnite-express": [],
@@ -53830,7 +54063,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "first-flight-me": [],
   "first-fly-express": [],
   "first-line": ["first-line-1"],
+  "first-logistics": [],
   "flash-express": ["flash-express-1"],
+  "flash-express-la": [],
   "flash-express-ph": ["flash-express-ph-1"],
   "flashbird-ca": [],
   "flecha-amarilla": ["flecha-amarilla-1"],
@@ -53989,6 +54224,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-br": [],
   "j-and-t-cargo": ["j-and-t-cargo-1","j-and-t-cargo-2"],
   "j-and-t-cn": ["j-and-t-cn-1"],
+  "j-and-t-co": [],
   "j-and-t-de": ["j-and-t-de-1"],
   "j-and-t-eg": ["j-and-t-eg-1"],
   "j-and-t-middle-east": ["j-and-t-middle-east-1"],
@@ -54058,6 +54294,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kuqi": [],
   "kwick-box": [],
   "kyoungdong": [],
+  "kyrgyz-express-post": [],
   "kyrgyz-post": ["kyrgyz-post-s10"],
   "l-post": ["l-post-1"],
   "la-poste-burkina-faso": ["la-poste-burkina-faso-s10"],
@@ -54639,6 +54876,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wise-express": [],
   "wizmo": ["wizmo-1"],
   "wld-express": [],
+  "wmg-group": [],
   "wooliiporter": ["wooliiporter-1"],
   "world-package": [],
   "wp-ground": [],
@@ -54672,6 +54910,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yingtu": [],
   "yoseus": [],
   "youbang-express": ["youbang-express-1"],
+  "yto-ph": [],
   "yuema-express": [],
   "yuexi-logistics": [],
   "yurtici-kargo": [],

@@ -1,0 +1,46 @@
+{
+  "id": "j-and-t-co",
+  "displayName": "J&T Express Colombia",
+  "aliases": [
+    "J&T Express (CO)",
+    "J&T Express CO",
+    "J&T Colombia"
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#e60000"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.jtexpress.co/tracking",
+    "canaryUrl": "https://www.jtexpress.co/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.jtexpress.co",
+        "jtexpress.co"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "q"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "yto-ph",
+  "displayName": "YTO Express Philippines",
+  "aliases": [
+    "YTO Express (PH)",
+    "YTO Express PH",
+    "YTO Express (Philippines) Technology Group Corporation"
+  ],
+  "region": {
+    "countries": [
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#47086c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.yto.com.ph/trackTrace",
+    "canaryUrl": "https://www.yto.com.ph/trackTrace",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
