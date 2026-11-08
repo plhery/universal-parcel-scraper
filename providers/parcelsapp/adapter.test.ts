@@ -246,6 +246,16 @@ describe('ParcelsApp YTO scans', () => {
     }
   });
 
+  it("drops the flight a forwarder books on a GOFO parcel's Chinese leg, which is still to come", () => {
+    const result = parseParcelsAppResponse({ carriers: ['GOFO'], originCode: 'CN', destinationCode: 'US', states: [
+      { date: '2026-11-04T10:16:00Z', status: 'The flight has departed / Package in transit to destination country', carrier: 0 },
+      { date: '2026-11-03T02:49:00Z', status: '预计11.4航班/Scheduled flight on November 4st', carrier: 0 },
+      { date: '2026-10-31T14:53:25Z', status: 'Arriving at the airport - arranging flights', carrier: 0 },
+    ] }, number, identity());
+    expect(result.events?.map((event) => event.description)).toEqual([
+      'The flight has departed / Package in transit to destination country', 'Arriving at the airport - arranging flights']);
+  });
+
   it('reads the same scans from the rendered page', () => {
     const scan = (day: string, description: string) =>
       `<li class="event"><div class="event-time"><strong>0${day} May 2026</strong><span>18:00</span></div><div class="event-content"><strong>${description}</strong><span class="carrier">YTO Express</span></div></li>`;

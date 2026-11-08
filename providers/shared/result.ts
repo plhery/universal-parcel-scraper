@@ -654,10 +654,14 @@ const CLEARANCE_STATUS = /^B2C Clearance ?(?:Status ?)?\d{1,3}\. +(?=\S)/i;
 const EXPLICIT_OFFSET = /(?:Z|[+-]\d{2}:\d{2})$/;
 const LOCAL_WALL_TIME = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?$/;
 
+// A forwarder's flight booked for a month and day, in Chinese, English or both, as ParcelsApp relays
+// one on a GOFO parcel's Chinese leg: "预计11.4航班/Scheduled flight on November 4st".
+const BOOKED_FLIGHT = /^(?:预计\d{1,2}\.\d{1,2}航班(?:\s*\/\s*scheduled flight on [a-z]+ \d{1,2}(?:st|nd|rd|th)?)?|scheduled flight on [a-z]+ \d{1,2}(?:st|nd|rd|th)?)[.!]?$/i;
+
 // A flight written before it leaves is still to come: no scan, as the lines' own trackers drop it.
-// 17FEIA's estimated departure, and the flight DHLink, Intel-Valley and Mayi Yinfu book.
-const flightToCome = (label: string): boolean =>
-  FLIGHT_ESTIMATE.test(label) || DHLINK_FLIGHT.test(label) || intelValleyFlight(label) || MAYIYINFU_FLIGHT.test(label);
+// 17FEIA's estimated departure, and the flight DHLink, Intel-Valley, Mayi Yinfu and other forwarders book.
+const flightToCome = (label: string): boolean => FLIGHT_ESTIMATE.test(label) || DHLINK_FLIGHT.test(label)
+  || intelValleyFlight(label) || MAYIYINFU_FLIGHT.test(label) || BOOKED_FLIGHT.test(label);
 
 // A carrier's schedule, as 17TRACK relays it beside the milestones: an ocean line's estimated vessel departure and
 // arrival, each again once updated, and its cargo cut-off, and a flight's ETD or ETA. Each is dated when it is due,
