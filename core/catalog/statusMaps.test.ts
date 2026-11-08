@@ -660,6 +660,18 @@ describe('status map answers', () => {
     expect(answer('shipter', '', 'Depart origin airport')).toEqual(mapped('in_transit'));
   });
 
+  it("answers Shouwu's line from its warehouse through Hong Kong and Europe to the local courier", () => {
+    for (const [wording, stage] of [
+      ['Arrived at Transit logistics facility', 'accepted'],
+      ['Item inbound in sorting center', 'in_transit'],
+      ['Item outbound in sorting center', 'in_transit'],
+      ['Item is in transit in Hong Kong', 'in_transit'],
+      ['Item is in transit in European', 'in_transit'],
+      ['Item has started customs clearance process', 'customs'],
+      ['Parcel on its way', 'in_transit'],
+    ] as const) expect(answer('shouwu', '', wording), wording).toEqual(mapped(stage));
+  });
+
   it('answers SF Express by its operation code, and code 99 by its remark', () => {
     expect(answer('sf-express', '10', 'The shipment has departed from the transit place【CN,EXAMPLE】, flight departure')).toEqual(mapped('in_transit'));
     expect(answer('sf-express', '11', 'The shipment has arrived at the transit place【CH,EXAMPLE】, flight arrival')).toEqual(mapped('in_transit'));

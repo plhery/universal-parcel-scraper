@@ -662,6 +662,59 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-05",
       "note": "Import clearance at the destination, after the flight arrived."
+    },
+    {
+      "wording": "Arrived at Transit logistics facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "The first scan after the order data, before the sorting center's inbound: the forwarder's warehouse taking the parcel in."
+    },
+    {
+      "wording": "Item inbound in sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08"
+    },
+    {
+      "wording": "Item outbound in sorting center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08"
+    },
+    {
+      "wording": "Item is in transit in Hong Kong",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08"
+    },
+    {
+      "wording": "Item is in transit in European",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Shouwu's words for transit in Europe, before the import clearance."
+    },
+    {
+      "wording": "Item has started customs clearance process",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Import clearance at the destination, after the transit in Europe and before the local courier."
+    },
+    {
+      "wording": "Parcel on its way",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "The local courier's transit row, after the import clearance."
     }
   ]
 }
