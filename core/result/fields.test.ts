@@ -150,6 +150,30 @@ describe('a summary without a stage', () => {
     }
   });
 
+  it('orders an instant and a wall clock without a zone the same whatever the host\'s zone', () => {
+    const zone = process.env.TZ;
+    const accepted = { time: '2026-01-02T08:00:00Z', description: 'Accepted', stage: 'accepted' };
+    const out = { local_time: '2026-01-02T08:00:00', description: 'Out for delivery', stage: 'out_for_delivery' };
+    const older = { local_time: '2026-01-01T09:00:00', description: 'Arrived', stage: 'in_transit' };
+    const seen: unknown[][] = [];
+    const parsed = new Set<number>();
+    try {
+      for (const host of ['UTC', 'Europe/Zurich', 'America/New_York']) {
+        process.env.TZ = host;
+        // The host reads an offset-free clock in its own zone.
+        parsed.add(Date.parse(out.local_time));
+        seen.push([[out, accepted], [accepted, out], [out, older, accepted], [accepted, older, out]]
+          .map((events) => resultStage({ status: 'unknown', events })));
+      }
+    } finally {
+      if (zone === undefined) delete process.env.TZ;
+      else process.env.TZ = zone;
+    }
+    expect(parsed.size).toBe(3);
+    // Newest first, unless the wall clocks show the answer lists its scans oldest first.
+    for (const stages of seen) expect(stages).toEqual(['out_for_delivery', 'accepted', 'out_for_delivery', 'out_for_delivery']);
+  });
+
   it('keeps a stage the carrier gave, and borrows no delivery or return the newer scans may have undone', () => {
     expect(resultStage({ status: 'unknown', current_stage: 'in_transit', events: scans })).toBe('in_transit');
     expect(resultStage({ status: 'unknown', events: [scans[0]!] })).toBeNull();

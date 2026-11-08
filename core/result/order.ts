@@ -10,7 +10,7 @@ interface ScanTime { wall: boolean; at: number }
  * without a zone, read the same whatever the host's zone and compared only with the answer's other
  * wall clocks; null when it has no time.
  */
-function scanTime(event: CarrierEvent): ScanTime | null {
+export function scanTime(event: CarrierEvent): ScanTime | null {
   for (const time of [event.time, event.local_time]) {
     if (typeof time !== 'string' || !time) continue;
     const wall = !OFFSET.test(time);
@@ -24,7 +24,7 @@ function scanTime(event: CarrierEvent): ScanTime | null {
  * Whether an answer lists its newest scan first (true) or last (false), from its scans of
  * different instants; null when it dates every scan alike or lists them both ways as often.
  */
-export function listsNewestFirst(events: CarrierEvent[]): boolean | null {
+export function listsNewestFirst(events: readonly CarrierEvent[]): boolean | null {
   let [later, earlier] = [0, 0];
   const previous = new Map<boolean, number>();
   for (const time of events.map(scanTime)) {
