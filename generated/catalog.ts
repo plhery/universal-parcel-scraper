@@ -708,7 +708,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "DHL eCommerce Solutions",
       "DHL Global Mail",
-      "DHL eCommerce Global Mail"
+      "DHL eCommerce Global Mail",
+      "DHL eCommerce Asia",
+      "DHL eCommerce US"
     ],
     "countries": [
       "DE",
