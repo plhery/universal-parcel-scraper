@@ -8,7 +8,10 @@ describe('tracking places', () => {
     ['Zürich (Mülligen), CH', 'CH', 'Zürich (Mülligen)'], ['Hebron, KY, US, US', 'US', 'Hebron, KY'],
     ['Switzerland Haerkingen', 'CH', 'Haerkingen'], ['United Kingdom Coventry', 'GB', 'Coventry'],
     ['LANGLEY HWDC, UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND', 'GB', 'LANGLEY HWDC'],
-    ['Shenzhen-Futian, China', 'CN', 'Shenzhen-Futian'],
+    ['Shenzhen-Futian, China', 'CN', 'Shenzhen-Futian'], ['GREAT BRITAIN AND NORTHERN IRELAND', 'GB', ''],
+    ["Mainland China, People's Republic of China", 'CN', ''], ["SHENZHEN - THE PEOPLE'S REPUBLIC OF CHINA", 'CN', 'SHENZHEN'],
+    // A state's official name.
+    ['Riyadh, Kingdom of Saudi Arabia', 'SA', 'Riyadh'], ['Berlin, Federal Republic of Germany', 'DE', 'Berlin'],
     ['BENIN CITY - NIGERIA', 'NG', 'BENIN CITY'], ['AMSTERDAM - NETHERLANDS, THE', 'NL', 'AMSTERDAM'],
     ['HONG KONG - HONG KONG SAR, CHINA', 'HK', 'HONG KONG'], ['STERLING - Virginia - USA', 'US', 'STERLING - Virginia'],
     ['ATLANTA - GEORGIA - USA', 'US', 'ATLANTA - GEORGIA'],
@@ -29,7 +32,7 @@ describe('tracking places', () => {
     ['France', 'FR'], ['DE', 'DE'], ['CH ', 'CH'], ['THE NETHERLANDS', 'NL'], ['Czech Republic', 'CZ'], ['Hong Kong', 'HK'],
     ['DHL Netherlands', 'NL'], ['КИТАЙ', 'CN'], ['Україна', 'UA'], ['日本', 'JP'], ['美國', 'US'],
     // Between empty fields, and a partner's depot abroad by its number.
-    [',,,DE', 'DE'], ['FR,', 'FR'], ['SPAIN (12)', 'ES'],
+    [',,,DE', 'DE'], ['FR,', 'FR'], ['SPAIN (12)', 'ES'], ['Republic of Moldova', 'MD'], ['Kingdom of the Netherlands', 'NL'],
   ])('leaves no place when %s is only a country', (location, country) => {
     expect(trackingPlace(location)).toEqual({ country, place: '' });
   });
@@ -39,6 +42,8 @@ describe('tracking places', () => {
     'Zürich Briefzentrum', 'Mexico City', 'Andorra la Vella',
     'DHL Paris', 'DHL Netherlands distribution centre', 'JAMAICA NY INTERNATIONAL DISTRIBUTION CENTER', 'Panama City FL',
     'TBILISI - GEORGIA', 'CURITIBA - PR', 'ST.LOUIS', 'PT.ELIZABETH',
+    // A short name two states share.
+    'Republic of China', "Democratic People's Republic of Korea",
   ])('keeps %s whole without guessing a country', (location) => {
     expect(trackingPlace(location)).toEqual({ country: null, place: location });
   });

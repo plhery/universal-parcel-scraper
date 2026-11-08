@@ -6,17 +6,24 @@ export const ambiguousAddressCodes: ReadonlySet<string> = new Set('AL AZ AR CA C
 // Carrier spellings no region name matches. Display only: Passport evidence
 // stays in step with private.passport_country, which Friends stamps use.
 const carrierSpellings = new Map([
-  ['united states of america', 'US'], ['great britain', 'GB'], ['united kingdom of great britain and northern ireland', 'GB'],
-  ['czech republic', 'CZ'], ['holland', 'NL'],
+  ['united states of america', 'US'], ['great britain', 'GB'], ['great britain and northern ireland', 'GB'],
+  ['united kingdom of great britain and northern ireland', 'GB'], ['czech republic', 'CZ'], ['holland', 'NL'],
+  ['mainland china', 'CN'], ["people's republic of china", 'CN'],
   ['hong kong', 'HK'], ['macau', 'MO'], ['macao', 'MO'], ['turkey', 'TR'], ['russian federation', 'RU'],
   ['korea', 'KR'], ['republic of korea', 'KR'],
 ]);
 // DHL Express's own country names, after the article and any bracket are dropped.
 const dhlSpellings = new Map([
   ['hong kong sar, china', 'HK'], ['macau sar, china', 'MO'], ['macao sar, china', 'MO'], ['china mainland', 'CN'],
-  ['china, peoples republic', 'CN'], ["people's republic of china", 'CN'], ['korea, republic of', 'KR'],
+  ['china, peoples republic', 'CN'], ['korea, republic of', 'KR'],
   ['ireland, republic of', 'IE'],
 ]);
+// A state's official name: "Republic of Moldova", "Federal Republic of Germany", "Kingdom of the Netherlands",
+// one with its form last, "Hellenic Republic", or the form after its short name ("KOREA, REPUBLIC OF").
+// The short name after "of" is the country, unless two states share it: "Democratic People's Republic of
+// Korea", "Republic of China".
+const STATE_FORM = /^((?:\S+\s+)*)(?:republic|kingdom|federation|confederation|principality|sultanate)(\s+of(?:\s+(?:the\s+)?(.+))?)?$/;
+const sharedShortNames = new Set(['korea', 'china', 'congo']);
 // Apple's ICU (Safari, iOS) calls CN "China mainland" in every language; carriers write "China".
 const chinaNames = new Map([['en', 'China'], ['de', 'China'], ['fr', 'Chine'], ['it', 'Cina'], ['es', 'China'], ['pt', 'China'], ['pl', 'Chiny'], ['uk', 'Китай']]);
 // "Mexico City" is a city, not Mexico followed by one.
@@ -46,7 +53,18 @@ function namedCountry(name: string, display: boolean): string | null {
   const code = countryNames.get(key);
   if (code || !display) return code ?? null;
   const bare = key.replace(/^the /, '');
-  return countryNames.get(bare) ?? carrierSpellings.get(bare) ?? null;
+  const short = STATE_FORM.exec(bare)?.[3];
+  const official = short && !sharedShortNames.has(short) ? countryNames.get(short) ?? carrierSpellings.get(short) : undefined;
+  return countryNames.get(bare) ?? carrierSpellings.get(bare) ?? official ?? null;
+}
+
+/**
+ * Whether a field has the form of a state's official name, read or not: "Hellenic Republic",
+ * "Republic of China". "Republic" alone and "Kingdom City" are towns.
+ */
+export function stateFormName(field: string): boolean {
+  const form = STATE_FORM.exec(normalized(field).replace(/^the /, ''));
+  return Boolean(form && (form[1] || form[2]));
 }
 
 /**

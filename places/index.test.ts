@@ -509,6 +509,17 @@ describe('locatePlace', () => {
     expectPlace('Freiburg (Elbe), DE', { country: 'DE', name: 'Freiburg (Elbe)', latitude: 53.83, longitude: 9.29 });
   });
 
+  it("reads a state's official name as its country, and no town from one it cannot read", () => {
+    expect(place("Mainland China, People's Republic of China")).toMatchObject({ precision: 'country', country: 'CN' });
+    expect(place('Riyadh, Kingdom of Saudi Arabia')).toMatchObject({ precision: 'city', country: 'SA', name: 'Riyadh' });
+    expect(place('SEOUL, KOREA, REPUBLIC OF')).toMatchObject({ precision: 'city', country: 'KR', name: 'Seoul' });
+    // Not Republic, Missouri, nor a United in the United States.
+    for (const location of ['Hellenic Republic', 'Republic of China', 'United Kingdom of Great Britain and N. Ireland']) {
+      expect(locatePlace(location, { carriers: ['usps'] }), location).toBeNull();
+    }
+    expect(locatePlace('Republic, MO', { carriers: ['usps'] })).toMatchObject({ precision: 'city', country: 'US', name: 'Republic' });
+  });
+
   it('looks past facility words to the town', () => {
     expectPlace('Agence DPD de La Crau (283)', { country: 'FR', name: 'La Crau', latitude: 43.15, longitude: 6.07 });
     expectPlace('AGENCE PARIS', { country: 'FR', name: 'Paris', latitude: 48.85, longitude: 2.35 });

@@ -158,6 +158,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   followed only by facility words is a city of that name of 100,000 people or more, on a
   parcel in the city's country and not in the named one: GIG Logistics' "BENIN HUB" is in
   Benin City.
+- A state's official name ("Kingdom of Saudi Arabia", "KOREA, REPUBLIC OF") names its
+  country, unless two states share the short name, as the Koreas and the Chinas do. An
+  official name that names no country places nothing, so "Hellenic Republic" is not in
+  Republic, Missouri; a town before it is still read.
 
 ## Scans filed away from the parcel
 

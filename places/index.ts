@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import { CARRIER_DEFINITIONS } from '../core/catalog/definitions.js';
 import type { CarrierResult } from '../core/result/index.js';
 import { countryCode, timeZoneCountry } from '../core/time/index.js';
-import { ambiguousAddressCodes, militaryPostOffice, trackingPlace } from './trackingLocation.js';
+import { ambiguousAddressCodes, militaryPostOffice, stateFormName, trackingPlace } from './trackingLocation.js';
 import facilityList from './facilities.json' with { type: 'json' };
 import hubList from './hubs.json' with { type: 'json' };
 import { nameKey, nameKeys } from './names.mjs';
@@ -762,6 +762,13 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
   if (zip) return { place: zip, text: true };
   const data = gazetteer();
   const explicit = split ? trackingPlace(text) : { country: null, place: text };
+  // A state's official name no country is read from ("Paris, French Republic") names a state, not the
+  // town that shares one of its words ("Republic", Missouri): the place is what comes before it.
+  const last = split && !explicit.country ? [...text.matchAll(/[^,;|()]+/g)].filter((match) => match[0].trim()).at(-1) : undefined;
+  if (last && stateFormName(last[0])) {
+    const before = text.slice(0, last.index).replace(/[\s,;|(]+$/u, '');
+    return before ? locate(before, hints) : null;
+  }
   let country = explicit.country && data.countries.has(explicit.country) ? explicit.country : null;
   let rest = explicit.country ? explicit.place : text;
   const context = hints.countries ?? [];
