@@ -7,8 +7,8 @@ import { uspsStage } from './status.js';
 /** A place that ends its town with a state: "EXAMPLE CITY, NY 10001". */
 export const STATE_PATTERN = /,\s*([A-Z]{2})\b/;
 // A facility names its state before its kind: "EXAMPLE CITY NY DISTRIBUTION CENTER",
-// "EXAMPLE CITY PA PACKAGE SORTING CENTER", "ISC EXAMPLE CITY NY (USPS)".
-const FACILITY_STATE = /\s([A-Z]{2})\s*(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER|PACKAGE\s+SORTING\s+CENTER)$/;
+// "EXAMPLE CITY PA PACKAGE SORTING CENTER", "EXAMPLE CITY LA PROCESSING CENTER", "ISC EXAMPLE CITY NY (USPS)".
+const FACILITY_STATE = /\s([A-Z]{2})\s*(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER|PACKAGE\s+SORTING\s+CENTER|PROCESSING\s+CENTER)$/;
 // A place that gives only its ZIP code, after its town or alone: "EXAMPLE CITY 10001", "10001".
 const ZIP_ONLY = /^(?:[A-Z][A-Z .'-]*?,?\s+)?(\d{5}(?:-\d{4})?)$/i;
 

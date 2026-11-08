@@ -1143,6 +1143,12 @@ describe('ParcelsApp result parsing', () => {
       '2026-07-01T14:00:00.000Z', // Tennessee
       '2026-07-01T10:00:00.000Z', // Indiana
     ]);
+    // A French département by its number, as FedEx's own page dates the scan on Paris's clock.
+    expect(times(['FedEx'], [
+      scan('2026-11-07T04:29:00Z', 'EXAMPLE TOWN, 69, FR 12345'),
+      scan('2026-11-06T22:06:00Z', 'EXAMPLE HUB, 77, FR 12345'),
+      scan('2026-11-06T07:13:00Z', 'EXAMPLE CITY, GL, NL 1234'),
+    ])).toEqual(['2026-11-07T03:29:00.000Z', '2026-11-06T21:06:00.000Z', '2026-11-06T06:13:00.000Z']);
     // A location that names no place leaves the reply in North America.
     expect(times(['UNI Express'], [scan('2026-11-11T20:34:39Z', 'Example Town IL'), scan('2026-11-06T16:50:03Z', 'UNI DATA CENTER')]))
       .toEqual(['2026-11-12T02:34:39.000Z', '2026-11-06T16:50:03.000Z']);

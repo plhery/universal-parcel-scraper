@@ -99,7 +99,8 @@ Parsing, in order:
 - Scan times are facility-local. The state in the location maps to a zone (multi-zone states
   use their majority zone, except in a town of a part with its own clock: Florida's Panhandle
   keeps Central time); a facility without a comma names its state before its kind, as in
-  `EXAMPLE CITY NY DISTRIBUTION CENTER` or `EXAMPLE CITY PA PACKAGE SORTING CENTER`. A place
+  `EXAMPLE CITY NY DISTRIBUTION CENTER`, `EXAMPLE CITY PA PACKAGE SORTING CENTER` or
+  `EXAMPLE CITY LA PROCESSING CENTER`. A place
   that gives only a ZIP code is in that ZIP code's state, by its three-digit prefix. With no
   resolvable state the event keeps an offset-free `local_time`, and the page's newest-first
   order is kept rather than re-sorted. USPS writes its international service centre at JFK as

@@ -702,16 +702,18 @@ function regionClock(location: string): { zone: string; certain: boolean } | nul
  * Denmark, 4600" is in Denmark. Orange Connex names China and the United
  * States in full for SpeedPAK, Canada Post writes "USA", 4PX "US 12345", and
  * Hong Kong is not the name Intl gives it. FedEx writes a town, its region and
- * the country's code before the postcode ("EXAMPLE TOWN, RR, IT 12345"); with
- * two parts, "EXAMPLE TOWN, IN 12345" is a US state and its ZIP code. A
- * US military post office ("Fpo, AE") has none (`militaryPostOffice`).
+ * the country's code before the postcode ("EXAMPLE TOWN, RR, IT 12345"), a
+ * French département by its number ("EXAMPLE TOWN, 69, FR 12345"); with two
+ * parts, "EXAMPLE TOWN, IN 12345" is a US state and its ZIP code. A US
+ * military post office ("Fpo, AE") has none (`militaryPostOffice`).
  */
 function lastPlace(location: string): string | undefined {
   if (militaryPostOffice(location)) return undefined;
-  const parts = location.split(',').map((part) => part.trim()).filter((part) => part && !/^\d[\d\s-]*$/.test(part));
+  const named = location.split(',').map((part) => part.trim()).filter(Boolean);
+  const parts = named.filter((part) => !/^\d[\d\s-]*$/.test(part));
   const place = parts.at(-1);
   if (!place) return place;
-  const coded = parts.length > 2 ? COUNTRY_POSTCODE.exec(place)?.[1] : undefined;
+  const coded = named.length > 2 ? COUNTRY_POSTCODE.exec(place)?.[1] : undefined;
   return /^people['’]?s republic of china$/i.test(place) ? 'CN' : UNITED_STATES.test(place.replace(POSTAL_CODE, '')) ? 'US'
     : /^hong\s*kong$/i.test(place) ? 'HK' : coded ?? place;
 }

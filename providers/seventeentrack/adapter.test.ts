@@ -577,6 +577,9 @@ describe('17TRACK result parsing', () => {
     // A place that gives only its ZIP code is read in that ZIP code's state.
     expect(parse17TrackResponse(reply(21051, [row('2026-05-06', '14:03:00', '-05:00', '94000')]), number).events?.[0]?.time)
       .toBe('2026-05-06T21:03:00.000Z');
+    // A processing center names its state before its kind, as USPS's own page dates it.
+    expect(parse17TrackResponse(reply(21051, [row('2026-11-05', '23:15:00', '-05:00', 'EXAMPLE CITY LA PROCESSING CENTER', 'Departed USPS Facility')]),
+      number).events?.[0]?.time).toBe('2026-11-06T05:15:00.000Z');
     // A step USPS dates by its day alone keeps its day, whether 17TRACK writes no clock or midnight.
     const printed = row('2026-05-06', '00:00:00', '-04:00', 'EXAMPLE CITY, NY 00000', 'Shipping Label Printed at Post Office');
     for (const label of [printed, { ...printed, time_raw: { date: '2026-05-06', time: null, timezone: null } }]) {

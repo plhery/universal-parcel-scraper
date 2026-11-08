@@ -171,7 +171,7 @@ describe('USPS rendered page', () => {
   it('reads the state a facility names before its kind', () => {
     for (const [facility, time] of [['EXAMPLE NY DISTRIBUTION CENTER', '2025-03-14T12:17:00-04:00'],
       ['EXAMPLE CITY CA NETWORK DISTRIBUTION CENTER', '2025-03-14T12:17:00-07:00'], ['ISC EXAMPLE CITY IL (USPS)', '2025-03-14T12:17:00-05:00'],
-      ['EXAMPLE CITY PA PACKAGE SORTING CENTER', '2025-03-14T12:17:00-04:00']] as const) {
+      ['EXAMPLE CITY PA PACKAGE SORTING CENTER', '2025-03-14T12:17:00-04:00'], ['EXAMPLE CITY LA PROCESSING CENTER', '2025-03-14T12:17:00-05:00']] as const) {
       const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replace('EXAMPLE CITY, NY 00000', facility), DELIVERED_NUMBER);
       expect(result.events?.[0], facility).toMatchObject({ location: facility, time });
     }
@@ -181,6 +181,7 @@ describe('USPS rendered page', () => {
 
   it('reads a town of Florida\'s Panhandle on Central time, and the rest of the state on Eastern', () => {
     for (const [place, time] of [['PENSACOLA, FL 32501', '2025-03-14T12:17:00-05:00'], ['PENSACOLA FL DISTRIBUTION CENTER', '2025-03-14T12:17:00-05:00'],
+      ['PENSACOLA FL PROCESSING CENTER', '2025-03-14T12:17:00-05:00'],
       ['ORLANDO, FL 32801', '2025-03-14T12:17:00-04:00'], ['EXAMPLE CITY, FL 32000', '2025-03-14T12:17:00-04:00']] as const) {
       const result = parseUSPSTrackingHtml(TIMELINE_PAGE.replace('EXAMPLE CITY, NY 00000', place), DELIVERED_NUMBER);
       expect(result.events?.[0], place).toMatchObject({ location: place, time });

@@ -92,7 +92,7 @@ step exists for future protocol changes.
      UTC or CTT's, whose sites name their own clock (see CTT below);
   2. the country at the end of `location`, past a trailing postcode ("Example Town,
      Denmark, 4600") or by the code FedEx writes before one, after a town and its region
-     ("EXAMPLE TOWN, RR, IT 12345"), or the country the location reports once its "Country"
+     ("EXAMPLE TOWN, RR, IT 12345", a French département by its number), or the country the location reports once its "Country"
      label or a posting office's postcode alone ("PL99999") is read, if `COUNTRY_ZONES`
      ([core/time](../../core/time/index.ts)) gives it a single clock, else, for the North American scans of a few carriers, their state's
      or province's zone (see North American scans below), or for a scan in Australia, the
