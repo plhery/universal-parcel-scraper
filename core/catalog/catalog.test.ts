@@ -268,3 +268,48 @@ describe('tracking links', () => {
     }]);
   });
 });
+
+describe('saved tracking links', () => {
+  // Synthetic numbers and access key.
+  const UPS = '1Z9999999999999999';
+  const UPS_LINK = `https://www.ups.com/track?tracknum=${UPS}`;
+  const PLANZER = '9999012345678';
+  const PLANZER_SHARED = `https://trackandtrace.planzergroup.com/shared/sendungen/${PLANZER}?accessKey=${'synthetic_access_key_'.padEnd(40, '0')}`;
+  const linkOf = (trackingUrl: string, carrier: 'ups' | 'planzer' = 'ups', trackingNumber = UPS) =>
+    parcelTrackingLinks({ carrier, trackingNumber, trackingUrl })[0]?.url;
+
+  it('keeps a saved link on the carrier\'s own host', () => {
+    expect(linkOf(`https://www.ups.com/track?loc=fr_FR&tracknum=${UPS}`)).toBe(`https://www.ups.com/track?loc=fr_FR&tracknum=${UPS}`);
+    // A host the carrier's link rules name is the carrier's too.
+    expect(linkOf(`https://wwwapps.ups.com/WebTracking/track?trackNums=${UPS}`)).toBe(`https://wwwapps.ups.com/WebTracking/track?trackNums=${UPS}`);
+  });
+
+  it('replaces a saved link that is not the carrier\'s with its catalog link', () => {
+    for (const saved of [
+      'javascript:alert(document.domain)',
+      `https://tracking.example.com/${UPS}`,
+      `https://ups.com.example.net/track?tracknum=${UPS}`,
+      `http://www.ups.com/track?tracknum=${UPS}`,
+      `https://www.ups.com@tracking.example.com/${UPS}`,
+      'not a link',
+    ]) expect(linkOf(saved), saved).toBe(UPS_LINK);
+  });
+
+  it('keeps a capability link only when it passes the carrier\'s check', () => {
+    expect(linkOf(PLANZER_SHARED, 'planzer', PLANZER)).toBe(PLANZER_SHARED);
+    const catalog = `https://tracking.app.planzer.ch/delivery/info?deliveryNumber=${PLANZER}`;
+    // On the shared page's host, without its access key or for another shipment.
+    expect(linkOf(`https://trackandtrace.planzergroup.com/shared/sendungen/${PLANZER}`, 'planzer', PLANZER)).toBe(catalog);
+    expect(linkOf(PLANZER_SHARED.replace(PLANZER, '9999012345679'), 'planzer', PLANZER)).toBe(catalog);
+  });
+
+  it('checks the saved link of the earlier journey the same way', () => {
+    const parcel = { carrier: 'swiss-post' as const, trackingNumber: '99.00.000000.00000000', originalCarrier: 'ups' as const,
+      originalTrackingNumber: UPS };
+    const history = (originalTrackingUrl: string) => parcelTrackingLinks({ ...parcel, originalTrackingUrl })
+      .filter((link) => link.role === 'history').map((link) => link.url);
+    expect(history('javascript:alert(document.domain)')).toEqual([UPS_LINK]);
+    expect(history(`https://tracking.example.com/${UPS}`)).toEqual([UPS_LINK]);
+    expect(history(`https://www.ups.com/track?loc=de_DE&tracknum=${UPS}`)).toEqual([`https://www.ups.com/track?loc=de_DE&tracknum=${UPS}`]);
+  });
+});

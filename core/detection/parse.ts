@@ -27,7 +27,7 @@ let linkRulesByDomain: Map<string, number[]> | undefined;
  * the rules `matchesDomain` accepts, found by the host's own suffixes rather
  * than by testing every domain of the catalog.
  */
-function linkRulesForHost(host: string): TrackingLinkRule[] {
+export function linkRulesForHost(host: string): TrackingLinkRule[] {
   if (!linkRulesByDomain) {
     linkRulesByDomain = new Map();
     for (const [index, rule] of TRACKING_LINK_RULES.entries()) {

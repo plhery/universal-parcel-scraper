@@ -7,9 +7,11 @@
  * What it is not: part of the tracking contract. It follows that app.
  */
 import type { CarrierId } from '../../generated/catalog.js';
+import { linkRulesForHost } from '../detection/parse.js';
 import { supportsSwissPostHandoff } from '../detection/s10.js';
 import { amazonOrdersUrl, requiresAmazonAccount } from './amazon.js';
 import { carrierInfo, localizedCarrierUrl, tracksAutomatically } from './index.js';
+import { carrierCapabilityUrl } from './inputs.js';
 import type { CarrierInfo } from './types.js';
 
 export interface ParcelTrackingLink {
@@ -98,6 +100,37 @@ export function parcelTrackingLinks(
   return [primary, ...links.filter((link) => link.role !== 'active' && link.url !== primary.url)];
 }
 
+function parsedUrl(value: string | undefined): URL | undefined {
+  if (!value) return undefined;
+  try {
+    return new URL(value);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * A saved link shown as the carrier's own only when it is one: https, or the http origin of the
+ * carrier's catalog link; on the host of that link or a host the carrier's link rules name; and,
+ * for a number the carrier tracks through a capability URL, one that passes its check. Anything
+ * else, a `javascript:` URL or another site, gives way to the catalog link.
+ */
+function savedCarrierUrl(carrier: CarrierInfo, number: string, saved: string): string | undefined {
+  const url = parsedUrl(saved);
+  if (!url || url.username || url.password) return undefined;
+  const catalog = parsedUrl(carrier.trackingUrl?.(number));
+  const ownHttp = url.protocol === 'http:' && catalog?.protocol === 'http:' && url.origin === catalog.origin;
+  if (url.protocol !== 'https:' && !ownHttp) return undefined;
+  if (url.hostname !== catalog?.hostname && !linkRulesForHost(url.hostname).some((rule) => rule.carrier === carrier.id)) {
+    return undefined;
+  }
+  try {
+    return carrierCapabilityUrl(carrier.id, number, saved) ?? saved;
+  } catch {
+    return undefined;
+  }
+}
+
 /** Primary delivery tracker first, followed by the earlier international journey. */
 function carrierTrackingLinks(
   parcel: Pick<
@@ -135,16 +168,10 @@ function carrierTrackingLinks(
     let savedUrl = requiresAmazonAccount(carrier.id, number) || carrier.id === 'intl-post' || carrier.id !== parcel.carrier
       || number !== parcel.trackingNumber ? undefined : parcel.trackingUrl;
     if (parcel.carrier === 'spring-gds' && savedUrl) {
-      try {
-        const saved = new URL(savedUrl);
-        if (saved.hostname === 'postnl.post' && saved.pathname.startsWith('/details/')) {
-          savedUrl = undefined;
-        }
-      } catch {
-        // Leave other saved URLs to the existing link validation.
-      }
+      const saved = parsedUrl(savedUrl);
+      if (saved?.hostname === 'postnl.post' && saved.pathname.startsWith('/details/')) savedUrl = undefined;
     }
-    const url = savedUrl ?? carrier.trackingUrl?.(number);
+    const url = (savedUrl ? savedCarrierUrl(carrier, number, savedUrl) : undefined) ?? carrier.trackingUrl?.(number);
     return url ? [{
       carrier,
       name: carrier.trackingSiteName ?? carrier.name,

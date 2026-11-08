@@ -1,6 +1,6 @@
 /** Validate parcel credentials against the catalog and pure carrier URL validators. */
 import { activeRequirements, carrierDefinition, type CarrierRequirementRule } from './index.js';
-import type { CarrierInputField } from './types.js';
+import type { CarrierInputField, CarrierInputValidator } from './types.js';
 import { isValidMondialRelayBarcode } from '../detection/index.js';
 import { validateDachserTrackingUrl } from './urls.js';
 import { validatePlanzerSharedUrl } from './urls.js';
@@ -40,6 +40,26 @@ export function carrierTakesPostcode(carrierId: string, trackingNumber: string):
 /** Whether the carrier reads the last digits of a phone number for this number. */
 export function carrierTakesPhoneDigits(carrierId: string, trackingNumber: string): boolean {
   return activeRequirements(carrierId, trackingNumber).some((item) => item.field === 'phoneDigits');
+}
+
+/** A capability URL as its validator keeps it, or undefined for a validator of another input. */
+function capabilityUrl(validator: CarrierInputValidator, value: string, trackingNumber: string, carrierId: string): string | undefined {
+  switch (validator) {
+    case 'planzerSharedUrl': return validatePlanzerSharedUrl(value, trackingNumber);
+    case 'dachserCapabilityUrl': return validateDachserTrackingUrl(value, trackingNumber);
+    case 'instaboxCapabilityUrl': return validateInstaboxTrackingUrl(value, trackingNumber);
+    case 'freightwaysCapabilityUrl': return validateFreightwaysTrackingUrl(value, trackingNumber, carrierId);
+    default: return undefined;
+  }
+}
+
+/**
+ * A URL checked as the capability URL the carrier takes for this number: the URL as it is kept,
+ * or null when the carrier takes none for the number. A URL that fails the check throws a TypeError.
+ */
+export function carrierCapabilityUrl(carrierId: string, trackingNumber: string, url: string): string | null {
+  const requirement = activeRequirements(carrierId, trackingNumber).find((item) => item.field === 'trackingUrl');
+  return requirement ? capabilityUrl(requirement.validator, url, trackingNumber, carrierId) ?? null : null;
 }
 
 export function normalizeCarrierInputs(
@@ -108,16 +128,10 @@ export function normalizeCarrierInputs(
     }
     switch (requirement.validator) {
       case 'planzerSharedUrl':
-        supplied[field] = validatePlanzerSharedUrl(value, trackingNumber);
-        break;
       case 'dachserCapabilityUrl':
-        supplied[field] = validateDachserTrackingUrl(value, trackingNumber);
-        break;
       case 'instaboxCapabilityUrl':
-        supplied[field] = validateInstaboxTrackingUrl(value, trackingNumber);
-        break;
       case 'freightwaysCapabilityUrl':
-        supplied[field] = validateFreightwaysTrackingUrl(value, trackingNumber, carrierId);
+        supplied[field] = capabilityUrl(requirement.validator, value, trackingNumber, carrierId)!;
         break;
       case 'swissPostcode':
         if (!/^\d{4}$/.test(value)) {
