@@ -120,6 +120,21 @@ export function classifyStatus(description: string): ClassifiedStatus {
 const MERCHANT_DELIVERY = 'livre a l enseigne';
 export const isMerchantDelivery = (description: string): boolean => comparableText(description).includes(MERCHANT_DELIVERY);
 
+/**
+ * The headline's status over the scans, newest first, on the website and in the app alike. The
+ * merchant's receipt of a parcel whose scans started a return ends that return. The headline names
+ * the leg to the agency from the drop-off on, before the courier collects the parcel at the relay
+ * or locker: over a newest scan that is the drop-off, the drop-off's stage stays, so the result is
+ * never a step ahead of every scan.
+ */
+export function headlineStatus(headline: string, scans: readonly ClassifiedStatus[]): ClassifiedStatus {
+  const classified = classifyStatus(headline);
+  if (classified.stage === 'delivered' && isMerchantDelivery(headline) && scans.some((scan) => scan.stage === 'returned')) {
+    return { status: 'exception', stage: 'returned' };
+  }
+  return classified.stage === 'in_transit' && scans[0]?.stage === 'accepted' ? scans[0] : classified;
+}
+
 const LAST_LEG = 'colis en route vers le point de livraison';
 const OUT_FOR_DELIVERY: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery' };
 

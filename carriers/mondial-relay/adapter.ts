@@ -17,7 +17,7 @@ import { cleanScalar, TRAWL_TRANSPORT_ALLOWANCE_MS, trawlBody, type TrawlClient,
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { MondialRelayAppClient } from './app.js';
 import { inpostSpainTrackingUrl, isInpostSpainNumber, readInpostSpain } from './inpostSpain.js';
-import { classifyScan, classifyStatus, isMerchantDelivery, milestoneNumberStatus, scanSite, scanWording } from './status.js';
+import { classifyScan, classifyStatus, headlineStatus, milestoneNumberStatus, scanSite, scanWording } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://www.mondialrelay.fr/versioned-assets/2nMAiuVI9Rv9J3kZacblPYCfCABwzS-qZ3m7eFBQn4A/Scripts/vue/tracking/js/app.js
@@ -324,19 +324,11 @@ function parseTrackingResponse(payload: unknown, credential: MondialRelayCredent
   const events = parsedEvents.map(({ event }) => event);
   const contextual = plainText(expedition.SuiviContextuel);
   const statusText = contextual || events[0]?.description || 'Tracking information received';
-  const headline = classifyStatus(statusText);
-  // The merchant's receipt of a parcel whose history started a return ends that return.
-  const contextualStatus: ClassifiedStatus = headline.stage === 'delivered' && isMerchantDelivery(statusText)
-    && parsedEvents.some(({ classified }) => classified.stage === 'returned') ? { status: 'exception', stage: 'returned' } : headline;
-  // The headline names the leg to the agency from the drop-off on, before the courier
-  // collects the parcel at the relay or locker: over a newest scan that is the drop-off,
-  // the drop-off's stage stays, so the result is never a step ahead of every scan.
-  const droppedOff = contextualStatus.stage === 'in_transit' && parsedEvents[0]?.classified.stage === 'accepted';
-  const current = droppedOff ? parsedEvents[0]!.classified
-    : contextualStatus.status !== 'unknown'
-      ? contextualStatus
-      : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified
-        ?? milestoneStatus(expedition);
+  const headline = headlineStatus(statusText, parsedEvents.map(({ classified }) => classified));
+  const current = headline.status !== 'unknown'
+    ? headline
+    : parsedEvents.find((event) => event.classified.status !== 'unknown')?.classified
+      ?? milestoneStatus(expedition);
   const status = current?.status ?? 'unknown';
   // The scans since the parcel reached its pickup point, newest first: its
   // arrival there and the locker countdown, which names no relay. Drop-off and

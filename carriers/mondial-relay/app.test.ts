@@ -188,6 +188,30 @@ describe('Mondial Relay app service', () => {
     expect(() => parseMondialRelayApp({ steps: [] }, UID)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('keeps the drop-off\'s stage while the headline names the leg to the agency before any scan of it', () => {
+    const dropped = detail(UID, 'En transit vers notre agence');
+    const dropOff = { label: 'Colis pris en charge en Point Relais', date: '2026-01-02T15:00:00Z' };
+    const steps = (events: typeof dropOff[]) => [
+      { number: 3, status: "Colis sur l'agence de livraison", date: null, events: [] },
+      { number: 2, status: 'Colis pris en charge', date: '2026-01-02T15:00:00Z', events },
+    ];
+    dropped[0]!.detail.steps = steps([dropOff]);
+    expect(parseMondialRelayApp(dropped, UID))
+      .toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'En transit vers notre agence' });
+    dropped[0]!.detail.steps = steps([{ label: 'Colis expédié depuis le site logistique', date: '2026-01-03T06:00:00Z' }, dropOff]);
+    expect(parseMondialRelayApp(dropped, UID)).toMatchObject({ current_stage: 'in_transit' });
+  });
+
+  it('reads the merchant\'s receipt as the end of a return the scans started', () => {
+    const back = detail(UID, "Votre colis a été livré à l'enseigne.");
+    back[0]!.detail.steps = [{ number: 2, status: 'Colis pris en charge', date: '2026-01-02T15:00:00Z', events: [
+      { label: "Colis en retour à l'expéditeur", date: '2026-01-02T15:00:00Z' },
+    ] }];
+    const result = parseMondialRelayApp(back, UID);
+    expect(result.events?.[0]?.stage).toBe('returned');
+    expect(result).toMatchObject({ status: 'exception', current_stage: 'returned' });
+  });
+
   it('dates a delivery at its delivery scan', () => {
     const delivered = detail(UID, '');
     delivered[0]!.detail.steps = [
