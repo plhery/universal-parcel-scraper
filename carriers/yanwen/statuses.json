@@ -204,6 +204,20 @@
       "note": "Relayed from DHL a minute after DHL's record of the sender's data, while the parcel is still in China: the recipient's instruction, a notice that keeps the stage before it."
     },
     {
+      "wording": "Pre-shipment Info sent to carrier",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Relayed from InPost hours after Yanwen's pickup scan, while the parcel is still in China, with the code 03 where a place goes: the sender's data reaching the last-mile carrier, a notice that keeps the stage before it."
+    },
+    {
+      "wording": "Preference applied",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Relayed from InPost, with its name where a place goes, before the parcel leaves Yanwen's facility: the recipient's delivery choice, a notice that keeps the stage before it."
+    },
+    {
       "wording": "Shipment information received",
       "language": "en",
       "stage": "registered",
@@ -287,6 +301,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "The last-mile carrier's handover scan; Yanwen's pickup scan is the acceptance."
+    },
+    {
+      "wording": "Parcel Picked Up",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Relayed from InPost, with its name where a place goes, before Yanwen's outbound scan: the last-mile carrier collecting the parcel from Yanwen, a handover; Yanwen's pickup scan is the acceptance."
     },
     {
       "wording": "Your shipment has arrived at sorting center",

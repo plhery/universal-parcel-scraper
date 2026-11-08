@@ -327,6 +327,35 @@ describe('Yanwen result projection', () => {
     expect(history([['2026-03-07', '07:29:00 [GMT-08]', '', 'In Transit to Next Facility']]).events?.[0]?.time).toBe('2026-03-07T07:29:00-08:00');
   });
 
+  it("keeps InPost's records of the sender's data and the recipient's choice on the stage before them, its pickup from Yanwen in transit, and its code and name as no place", () => {
+    const result = history([
+      ['2026-03-04', '05:04:24 [GMT+08]', '', 'Arrived at domestic terminal station'],
+      ['2026-03-04', '04:57:00 [GMT+08]', '', 'Yanwen facility - Outbound'],
+      ['2026-03-03', '19:53:00 [GMT+00]', 'INPOST', 'Parcel Picked Up'],
+      ['2026-03-03', '19:06:44 [GMT+00]', 'INPOST', 'Preference applied'],
+      ['2026-03-04', '00:54:57 [GMT+08]', '03', 'Pre-shipment Info sent to carrier'],
+      ['2026-03-03', '20:48:56 [GMT+08]', '', 'Processing information input'],
+      ['2026-03-03', '20:48:38 [GMT+08]', '', 'Yanwen Pickup Scan'],
+      ['2026-03-02', '03:31:57 [GMT+08]', '', 'Shipment information received'],
+    ], '运输途中', 'GB');
+    expect(result.events?.slice(2, 5).map((event) => [event.description, event.stage, event.stage_source, event.location])).toEqual([
+      ['Parcel Picked Up', 'in_transit', undefined, ''],
+      ['Preference applied', 'accepted', 'none', ''],
+      ['Pre-shipment Info sent to carrier', 'accepted', 'none', ''],
+    ]);
+    for (const wording of ['Preference applied', 'Pre-shipment Info sent to carrier']) {
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBeUndefined();
+      expect(statusMap.gaps?.map((gap) => gap.wording), wording).toContain(normalizeStatusWording(wording));
+    }
+    expect(statusMap.stage(null, normalizeStatusWording('Parcel Picked Up'))).toBe('in_transit');
+    // A scan stored with the code or the name as its place, and the stage it had then, is the same scan.
+    const incoming = { stage: 'accepted', description: 'Pre-shipment Info sent to carrier', location: '', providerCode: '' };
+    expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: '03', stage: 'in_transit' })).toBe(true);
+    expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'INPOST', stage: 'in_transit' })).toBe(true);
+    expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: 'Example Town', stage: 'in_transit' })).toBe(false);
+    expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: '03', description: 'Preference applied' })).toBe(false);
+  });
+
   it("stages the delivering carrier's loading in Canada on the scan itself, as the category files it", () => {
     const result = history([
       ['2026-03-10', '07:43:04 [GMT-04]', 'EXAMPLE TOWN, ZZ', 'Loaded on Truck'],

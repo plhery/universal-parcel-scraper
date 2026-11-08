@@ -29,10 +29,13 @@ centre deals with before it sends the parcel on. China Post's receipt follows
 Yanwen's outbound scan, so it is a hand-over in transit. J&T Express
 Australia's scans, relayed with its customer service line, read as J&T's map
 reads them, except its pickup after Yanwen's batch handover at the destination
-port: that is a hand-over in transit too.
+port: that is a hand-over in transit too, as is InPost's "Parcel Picked Up"
+before Yanwen's outbound scan.
 USPS's "Shipping Label Created, USPS Awaiting Item", relayed while Yanwen still
 has the parcel in China, is a notice: it keeps the stage of the scan before it
 and loses its place, the label's US origin, where the parcel has not been.
+DHL's and InPost's records of the sender's data and of the recipient's delivery
+choice are notices too.
 USPS dates its "In Transit to Next Facility" steps by their day alone; Yanwen
 relays them at midnight, so one at 00:00:00 keeps its day as `local_time`.
 
@@ -64,9 +67,11 @@ The parcel summary provides the last-mile reference. The notes name its
 distributor and site; that carrier becomes `delivery_carrier` when the catalog
 knows it and its own detection offers the reference. Contact numbers and the
 customer's order number are not read. Scan locations keep the town and region
-without Canadian postcodes or US ZIP codes, a partner's "Not Available" or
-bare "AA" is no place, and relayed wording drops GOFO's PIN and door-number
-fragments. Scans stored with such a placeholder as their place keep their row.
+without Canadian postcodes or US ZIP codes. A partner's "Not Available", bare
+"AA", a code of one or two digits and the partner's own name ("INPOST") are no
+place, and relayed wording drops GOFO's PIN and door-number fragments. Scans
+stored with such a placeholder as their place keep their row, on the stage the
+map now gives them.
 
 Run `npm run test:carriers:live -- carriers/yanwen`.
 Set `YANWEN_TRACKING_NUMBER` outside the repository to check a real parcel.
