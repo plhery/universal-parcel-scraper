@@ -33,16 +33,48 @@ export const TRACKING_CANDIDATE_PATTERNS = [
   /\b[A-Z0-9]{4,40}\b/gi,
 ];
 
-/** The first candidate in the text that one carrier claims confidently. */
-export function recognizedNumberInText(raw: string): string | undefined {
+/**
+ * The most distinct candidates one reading of a text asks the detection
+ * engine about. A shipping email or an order page offers a few hundred, and
+ * the 16 KB a caller accepts, written as dense prose, about seven hundred; a
+ * paste of thousands of distinct numbers would otherwise hold the thread for
+ * a second. The first ones met are asked, in the order the scans meet them.
+ */
+export const MOST_TEXT_CANDIDATES = 1500;
+
+/**
+ * The candidates one reading has asked about. Detection reads a candidate in
+ * capitals, so a spelling in other letter cases needs no second answer, and
+ * one that no carrier claimed confidently is skipped by every later scan.
+ */
+export interface CandidateScan { readonly asked: Set<string> }
+
+export function candidateScan(): CandidateScan {
+  return { asked: new Set() };
+}
+
+/**
+ * The first candidate in the text that one carrier claims confidently, among
+ * those `scan` has not asked about yet.
+ */
+export function recognizedNumberInScan(raw: string, scan: CandidateScan): string | undefined {
   for (const pattern of TRACKING_CANDIDATE_PATTERNS) {
     pattern.lastIndex = 0;
     for (const match of raw.matchAll(pattern)) {
       const candidate = match[0].trim();
+      const key = candidate.toUpperCase();
+      if (scan.asked.has(key)) continue;
+      if (scan.asked.size >= MOST_TEXT_CANDIDATES) return undefined;
+      scan.asked.add(key);
       if (detectCarrierMatch(candidate).confidence === 'high') return candidate;
     }
   }
   return undefined;
+}
+
+/** The first candidate in the text that one carrier claims confidently. */
+export function recognizedNumberInText(raw: string): string | undefined {
+  return recognizedNumberInScan(raw, candidateScan());
 }
 
 // The second word of a label. "No" and "ID" also start numbers, so they belong
@@ -59,7 +91,8 @@ const LABELLED_NUMBER = new RegExp(
   String.raw`(?:track(?:ing)?(?:\s*${LABEL_SUFFIX}|(?!\p{L}))`
   + String.raw`|(?:parcel|shipment|waybill|awb)(?:\s+(?:tracking(?!\p{L})|${LABEL_SUFFIX})|(?!\p{L}))`
   + String.raw`|(?:(?:${NUMBER_WORDS})\s*(?:(?:de|du|di|del|do|da)\s+|d')?)?(?:${PARCEL_WORDS})(?!\p{L})(?:\s*(?:${NUMBER_WORDS}))?`
-  + String.raw`|\p{L}*(?:sendungs|paket|tracking|zending)nummer)`
+  // A joined word is read from its start: a later start in the same word reads no more, and would try every letter.
+  + String.raw`|(?<!\p{L})\p{L}*(?:sendungs|paket|tracking|zending)nummer)`
   + String.raw`(?:\s+(?:is|est|es|ist|lautet|è|é|jest)(?:\s+(?:le|el|il|o))?(?![\p{L}0-9]))?\s*[:#-]?\s*`
   // The token holds a digit, so a label followed by a plain word does not end the search. Groups
   // printed apart may follow it: "1Z 999 AA1 01 2345 6784".

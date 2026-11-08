@@ -10,7 +10,7 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules.js';
-import { ALTERNATIVE_WORDS, keywordNumberInText, recognizedNumberInText } from './candidates.js';
+import { ALTERNATIVE_WORDS, candidateScan, keywordNumberInText, recognizedNumberInScan } from './candidates.js';
 import { detectCarrierMatch } from './detect.js';
 import { validTrackingNumber } from './valid.js';
 import type { TrackingInputMatch } from './types.js';
@@ -18,6 +18,38 @@ import type { TrackingInputMatch } from './types.js';
 function trimPastedUrl(raw: string): string {
   return raw.replace(/^[\s<'"(\x5b]+/, '').replace(/[\s>'")\],;.!?]+$/, '');
 }
+
+/** Each link rule's position in TRACKING_LINK_RULES, under every domain it names. */
+let linkRulesByDomain: Map<string, number[]> | undefined;
+
+/**
+ * The link rules naming the host or a domain it belongs to, in catalog order:
+ * the rules `matchesDomain` accepts, found by the host's own suffixes rather
+ * than by testing every domain of the catalog.
+ */
+function linkRulesForHost(host: string): TrackingLinkRule[] {
+  if (!linkRulesByDomain) {
+    linkRulesByDomain = new Map();
+    for (const [index, rule] of TRACKING_LINK_RULES.entries()) {
+      for (const domain of new Set(rule.domains)) {
+        const indexes = linkRulesByDomain.get(domain);
+        if (indexes) indexes.push(index);
+        else linkRulesByDomain.set(domain, [index]);
+      }
+    }
+  }
+  const found = new Set(linkRulesByDomain.get(host));
+  for (let dot = host.indexOf('.'); dot >= 0; dot = host.indexOf('.', dot + 1)) {
+    for (const index of linkRulesByDomain.get(host.slice(dot + 1)) ?? []) found.add(index);
+  }
+  return [...found].sort((left, right) => left - right).map((index) => TRACKING_LINK_RULES[index]!);
+}
+
+/**
+ * The most distinct links one paste reads, in the order written. An email
+ * prints a few dozen; the rest of a longer list is still read as text.
+ */
+const MOST_PASTED_URLS = 200;
 
 /**
  * Links printed without their scheme, as text messages and labels give them
@@ -30,7 +62,7 @@ function bareTrackingLinks(input: string): string[] {
     .filter((link) => {
       try {
         const host = new URL(trimPastedUrl(link)).hostname.toLowerCase();
-        return TRACKING_LINK_RULES.some((rule) => rule.domains.some((domain) => matchesDomain(host, domain)));
+        return linkRulesForHost(host).length > 0;
       } catch {
         return false;
       }
@@ -139,15 +171,15 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
     };
   }
 
-  const pastedUrls = [...input.match(/https?:\/\/[^\s<>"']+/gi) ?? [], ...bareTrackingLinks(input)];
+  // A link met again reads as it did the first time, and a candidate met again was no carrier's.
+  const pastedUrls = [...new Set([...input.match(/https?:\/\/[^\s<>"']+/gi) ?? [], ...bareTrackingLinks(input)])].slice(0, MOST_PASTED_URLS);
+  const scan = candidateScan();
   for (const pastedUrl of pastedUrls) {
     const trackingUrl = trimPastedUrl(pastedUrl);
     try {
       const url = new URL(trackingUrl);
-      const rules = TRACKING_LINK_RULES.filter((candidate) =>
-        candidate.domains.some((domain) => matchesDomain(url.hostname.toLowerCase(), domain))
-        && (!candidate.pathPattern || candidate.pathPattern.test(url.pathname)),
-      );
+      const rules = linkRulesForHost(url.hostname.toLowerCase()).filter((candidate) =>
+        !candidate.pathPattern || candidate.pathPattern.test(url.pathname));
       // The longer matching domain comes first, then a rule bound to a path on it.
       const specificity = (rule: TrackingLinkRule) => Math.max(...rule.domains.filter((domain) => matchesDomain(url.hostname.toLowerCase(), domain)).map((domain) => domain.length));
       rules.sort((a, b) => specificity(b) - specificity(a) || Number(Boolean(b.pathPattern)) - Number(Boolean(a.pathPattern)));
@@ -183,14 +215,14 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
         }
       }
 
-      const trackingNumber = recognizedNumberInText(decodeURIComponent(url.href));
+      const trackingNumber = recognizedNumberInScan(decodeURIComponent(url.href), scan);
       if (trackingNumber) return trackingMatch(trackingNumber, 'link');
     } catch {
       // Keep looking: pasted prose can contain a truncated or malformed URL.
     }
   }
 
-  const recognized = recognizedNumberInText(input);
+  const recognized = recognizedNumberInScan(input, scan);
   if (recognized) {
     return trackingMatch(recognized, input === recognized ? 'number' : 'text');
   }

@@ -16,7 +16,7 @@ import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { CHECKSUMS } from './checksums.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { normalizeTrackingNumber } from './normalize.js';
-import { ruleFits } from './rules.js';
+import { compiledRule, compiledRuleFits, ruleFits, type CompiledRule } from './rules.js';
 import type { CarrierDetection, ChecksumRejection } from './types.js';
 
 function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
@@ -25,18 +25,59 @@ function checksumPasses(rule: DetectionRule, trackingNumber: string): boolean {
 
 interface RejectedRule { carrier: CarrierId; id: string; rule: DetectionRule }
 
+/** A carrier that declares rules, with their expressions. */
+interface CarrierRules { carrier: CarrierId; rules: readonly DetectionRule[]; expressions: readonly CompiledRule[] }
+
 /**
  * A carrier's first rule whose pattern, rawPattern and checksum all pass: it
  * decides the carrier's confidence and preference. The rules before it that
  * fit the number but failed their checksum are added to `rejected`.
  */
-function decisiveRule(carrier: CarrierId, trackingNumber: string, printed: string, rejected: RejectedRule[]): DetectionRule | undefined {
-  for (const [index, rule] of CARRIER_DEFINITIONS[carrier].detectionRules.entries()) {
-    if (!ruleFits(rule, trackingNumber, printed)) continue;
+function decisiveRule(entry: CarrierRules, trackingNumber: string, printed: string, rejected: RejectedRule[]): DetectionRule | undefined {
+  for (const [index, rule] of entry.rules.entries()) {
+    if (!compiledRuleFits(entry.expressions[index]!, trackingNumber, printed)) continue;
     if (checksumPasses(rule, trackingNumber)) return rule;
-    rejected.push({ carrier, id: DETECTION_RULE_IDS[carrier][index]!, rule });
+    rejected.push({ carrier: entry.carrier, id: DETECTION_RULE_IDS[entry.carrier][index]!, rule });
   }
   return undefined;
+}
+
+/** Consecutive carriers of the catalog, with one expression joining every pattern of their rules. */
+interface RuleGroup { carriers: readonly CarrierRules[]; anyPattern: RegExp }
+
+// Sixteen rules to a group: few expressions to test, and few rules left
+// to try one by one in a group that fits.
+const RULES_PER_GROUP = 16;
+let ruleGroups: RuleGroup[] | undefined;
+/** A backreference counts groups, which joining patterns renumbers: such a pattern joins as one that fits anything. */
+const BACKREFERENCE = /\\[1-9]|\\k</;
+
+/**
+ * Most strings a pasted text offers fit no rule. The expression joining a
+ * group's patterns fits exactly when one of them does, so a group it does not
+ * fit holds no carrier a rule would offer and no checksum to reject, and its
+ * carriers are skipped. Carriers without rules are left out the same way.
+ */
+function groupsOfRules(): RuleGroup[] {
+  if (ruleGroups) return ruleGroups;
+  const groups: RuleGroup[] = [];
+  let carriers: CarrierRules[] = [];
+  let patterns: string[] = [];
+  const close = () => {
+    if (carriers.length > 0) groups.push({ carriers, anyPattern: new RegExp(patterns.map((pattern) => `(?:${pattern})`).join('|')) });
+    carriers = [];
+    patterns = [];
+  };
+  for (const carrier of Object.keys(CARRIER_DEFINITIONS) as CarrierId[]) {
+    const rules = CARRIER_DEFINITIONS[carrier].detectionRules;
+    if (rules.length === 0) continue;
+    if (patterns.length > 0 && patterns.length + rules.length > RULES_PER_GROUP) close();
+    carriers.push({ carrier, rules, expressions: rules.map(compiledRule) });
+    patterns.push(...rules.map((rule) => BACKREFERENCE.test(rule.pattern) ? '' : rule.pattern));
+  }
+  close();
+  ruleGroups = groups;
+  return groups;
 }
 
 function detect(raw: string): { detection: CarrierDetection; rejections: ChecksumRejection[] } {
@@ -48,10 +89,13 @@ function detect(raw: string): { detection: CarrierDetection; rejections: Checksu
 
   const matches: { carrier: CarrierId; confidence: 'high' | 'low'; preferred: boolean }[] = [];
   const rejected: RejectedRule[] = [];
-  for (const carrier of Object.keys(CARRIER_DEFINITIONS) as CarrierId[]) {
-    if (carrier === 'ctt-express' && !isCttExpressTrackingNumber(trackingNumber)) continue;
-    const rule = decisiveRule(carrier, trackingNumber, printed, rejected);
-    if (rule) matches.push({ carrier, confidence: rule.confidence, preferred: rule.preferred === true });
+  for (const group of groupsOfRules()) {
+    if (!group.anyPattern.test(trackingNumber)) continue;
+    for (const entry of group.carriers) {
+      if (entry.carrier === 'ctt-express' && !isCttExpressTrackingNumber(trackingNumber)) continue;
+      const rule = decisiveRule(entry, trackingNumber, printed, rejected);
+      if (rule) matches.push({ carrier: entry.carrier, confidence: rule.confidence, preferred: rule.preferred === true });
+    }
   }
 
   const highConfidence = matches.filter((match) => match.confidence === 'high');
