@@ -1,16 +1,10 @@
 import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { BudgetExceededError } from '../errors/index.js';
 import { normalizeCarrierResult, type CarrierResult } from '../result/index.js';
-import { dueScans } from '../result/due.js';
-import { readLateRegistrations } from '../result/registration.js';
-import { withoutRepeatedScans } from '../result/repeats.js';
-import { readNewestStage } from '../result/unstaged.js';
-import { runSteps } from '../runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../telemetry/index.js';
-import { dateLocalClocks } from '../../places/clocks.js';
-import { restoreLostLetters } from '../../places/index.js';
 import type { UniversalTracker } from '../../providers/universal.js';
 import type { AdapterRegistry, TrackingContext, TrackingInput } from './index.js';
+import { runAdapter } from './run.js';
 
 /**
  * One carrier lookup, leaving provider selection and scheduling to the consumer.
@@ -28,18 +22,11 @@ export async function trackCarrier(carrier: string, typed: TrackingInput, option
   const input = { ...typed, number: normalizeTrackingNumber(typed.number) };
   const registered = options.registry.for(carrier);
   if (registered) {
-    const known = options.knownEstimate ? { knownEstimate: options.knownEstimate } : {};
-    const context = { signal: options.signal, budgetMs: options.budgetMs === undefined ? undefined : Math.min(60_000, options.budgetMs), ...known };
-    const passed = Boolean(options.signal || options.budgetMs !== undefined || options.knownEstimate);
     try {
-      const result = registered.recordsSteps || registered.steps.length > 1
-        ? await registered.track(input, ...(passed ? [context] as const : []))
-        : await runSteps({ carrier, budgetMs: options.budgetMs ?? 120_000, signal: options.signal,
-          recorder: options.recorder ?? NOOP_RECORDER }, [{ id: registered.steps[0] ?? 'direct',
-          run: ({ signal, remainingMs }) => registered.track(input, ...(passed ? [{ signal, budgetMs: context.budgetMs === undefined ? undefined : Math.min(context.budgetMs, remainingMs), ...known }] as const : [])) }]);
-      const answer = normalizeCarrierResult(result);
-      return readNewestStage(readLateRegistrations(withoutRepeatedScans(dateLocalClocks(carrier,
-        restoreLostLetters(registered.plannedScans ? dueScans(answer, carrier) : answer), Date.now()))));
+      // The adapter has a minute at most; the step runner it may run in, the whole budget or two minutes.
+      return await runAdapter(registered, { carrier, input, signal: options.signal,
+        budgetMs: options.budgetMs === undefined ? undefined : Math.min(60_000, options.budgetMs), runnerBudgetMs: options.budgetMs ?? 120_000,
+        ...(options.knownEstimate ? { knownEstimate: options.knownEstimate } : {}), recorder: options.recorder ?? NOOP_RECORDER });
     } catch (error) {
       // A caller's cancellation is the caller's reason, not a carrier failure.
       if (options.signal?.aborted) throw options.signal.reason;

@@ -183,9 +183,10 @@ not issue and `schema` is a reply that was not the expected shape, so neither is
 repeating at once.
 
 When a result names a delivery partner, the tracker also asks that partner's adapter. Its
-answer comes back separately, checked against the number on its own. Adopting it is the
-consumer's choice. A provider's answer names one only by a number that the own rule of its
-newest scan's carrier claims, as ParcelsApp's next number for the parcel. A checksum-valid
+answer comes back separately, checked against the number on its own and finished as a direct
+lookup's answer is. Adopting it is the consumer's choice. A provider's answer names one only
+by a number that the own rule of its newest scan's carrier claims, as ParcelsApp's next
+number for the parcel. A checksum-valid
 S10 item with no partner named proposes the post of the destination country its answer
 reports, or for a DHL Paket parcel the partner DHL names there, if that partner looks up
 DHL's number. When none is reported, a consumer may give
@@ -248,11 +249,16 @@ reference and explicit German destination propose a DPD Germany confirmation loo
 
 Consumers with their own router can call `trackCarrier` from `/node` with an
 `AdapterRegistry`, their configured `UniversalTracker` and a `StepRecorder`. It dispatches one
-carrier lookup and normalizes the result, and leaves scheduling and provider choice to the
-caller. It and `UniversalTracker` hand adapters and providers the normalized number, as
-`createTracker()` does: a number stored as typed, with a letter O for a zero in an S10 serial,
-reaches them corrected. A caller that holds a delivery estimate can pass it as `knownEstimate`
-with the `last_update` it came with: an adapter whose estimate costs a request of its own, as
+carrier lookup and leaves scheduling and provider choice to the caller. It runs the adapter as
+`createTracker()` runs its direct lookup and a delivery partner's
+([run.ts](core/adapter/run.ts)): a single-step adapter runs in `runSteps`, which records the
+lookup, and the answer is normalized, then its planned scans are held back until due, lost
+letters restored, local clocks dated, repeats read once, and late registrations and an
+unstaged newest scan read as no step back. It and `UniversalTracker` hand adapters and
+providers the normalized number, as `createTracker()` does: a number stored as typed, with a
+letter O for a zero in an S10 serial, reaches them corrected. A caller that holds a delivery
+estimate can pass it as `knownEstimate` with the `last_update` it came with: an adapter whose
+estimate costs a request of its own, as
 Mondial Relay's website does after its app, keeps it while its day is ahead and no newer scan
 shows. An answer without an estimate says nothing about an earlier one; a carrier that states its
 estimate no longer holds, without a new one, marks the answer `expected_delivery_withdrawn`. An adapter with `recordsSteps` reports its own lookup, so dispatch
@@ -471,10 +477,11 @@ not establish in `local_time`: a consumer reads an offset-less `time` in the res
 else in the carrier's catalog zone. A wall time the clocks repeat when they go back reads as
 its first occurrence in every season: Luxon would pick by the season the code runs in, so a
 parser reads a wall clock in a zone through `firstOccurrence()`, which lint enforces, unless
-it keeps that hour in `local_time`. Node lookups (`trackCarrier()`, `createTracker()`) then
-date such a scan on a deduced zone with `dateLocalClocks()` ([places](places/README.md#clocks)):
-its place, the leg the parcel was on, the destination the carrier delivers in, else the
-carrier's home clock. The scan keeps `local_time` and gains `time_zone` and
+it keeps that hour in `local_time`. Node lookups (`trackCarrier()`, `createTracker()` and its
+delivery partner's) then date such a scan on a deduced zone with `dateLocalClocks()`
+([places](places/README.md#clocks)): its place, the leg the parcel was on, the destination
+the carrier delivers in, else the carrier's home clock. The scan keeps `local_time` and gains
+`time_zone` and
 `time_zone_basis`, so a consumer can tell a deduced instant from one the carrier stated. A
 universal provider's copy that its adapter read on a zone, the provider stating none, names the
 zone and basis beside its instant too, with `label` for a provider's UTC label it kept because

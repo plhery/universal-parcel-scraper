@@ -3,12 +3,14 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter as chinaPostAdapter } from '../carriers/china-post/adapter.js';
 import { CHINA_POST_CHECK_PATH } from '../carriers/china-post/app.js';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
+import { trackCarrier } from '../core/adapter/track.js';
 import { InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
-import type { CarrierResult } from '../core/result/index.js';
+import type { CarrierEvent, CarrierResult } from '../core/result/index.js';
 import { resolveResult } from '../core/result/resolve.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { DEFAULT_USER_AGENT } from '../core/transport/userAgent.js';
 import type { UniversalSource } from '../providers/types.js';
+import type { UniversalTracker } from '../providers/universal.js';
 import { fakeBudgetClock } from '../testing/budgetClock.js';
 import { createTracker, TrackingError } from './index.js';
 
@@ -106,6 +108,47 @@ describe('standalone tracker', () => {
     const answer = await createTracker({ registry: planned, providers: [] }).track({ number });
     expect(answer.result).toMatchObject({ last_status_text: 'Arrived at facility', events: [{ description: 'Arrived at facility' }] });
     expect(answer.result.events).toHaveLength(1);
+  });
+
+  describe('finishes an adapter answer alike on every path', () => {
+    const place = 'Louisville, KY, US';
+    const scan = (time: string, description: string, stage: string): CarrierEvent => ({ time, description, stage, location: place });
+    const answer = (events: CarrierEvent[], status: CarrierResult['status'] = 'in_transit'): CarrierResult =>
+      ({ status, current_stage: status, last_status_text: events[0]!.description ?? null, last_update: events[0]!.time ?? null, events });
+    const cases: { name: string; plannedScans?: boolean; reply: () => CarrierResult; stage: string; rows: string[]; instants: (string | null)[] }[] = [
+      { name: 'a delivery a planned-scan carrier dates ahead', plannedScans: true, stage: 'in_transit', rows: ['Sorted at facility'],
+        instants: ['2026-01-02T09:00:00.000Z'], reply: () => answer([scan(new Date(Date.now() + 2 * 3_600_000).toISOString(), 'Delivered', 'delivered'),
+          scan('2026-01-02T09:00:00Z', 'Sorted at facility', 'in_transit')], 'delivered') },
+      { name: 'one depot scan recorded twice', stage: 'in_transit', rows: ['Arrived at depot'], instants: ['2026-01-02T09:00:00.000Z'],
+        reply: () => answer([scan('2026-01-02T09:03:00Z', 'ARRIVED AT  DEPOT', 'in_transit'), scan('2026-01-02T09:00:00Z', 'Arrived at depot', 'in_transit')]) },
+      { name: 'a scan on the facility\'s clock', stage: 'in_transit', rows: ['Arrived at facility'], instants: ['2026-01-02T14:00:00.000Z'],
+        reply: () => answer([{ local_time: '2026-01-02T09:00:00', description: 'Arrived at facility', stage: 'in_transit', location: place }]) },
+    ];
+    const postal = 'RR123456799GB';
+
+    it.each(cases)('$name', async ({ plannedScans, reply, stage, rows, instants }) => {
+      const fixture = reply();
+      // Royal Mail names UPS as the partner that delivers the item under the UPS number.
+      const handedOver = { ...answer([{ time: '2026-01-01T12:00:00Z', description: 'Handed over to the delivery partner', stage: 'in_transit' }]),
+        delivery_carrier: 'ups', delivery_tracking_number: number };
+      const carriers = new AdapterRegistry({ factories: {
+        ups: () => ({ id: 'ups', steps: ['direct'], ...(plannedScans ? { plannedScans } : {}), track: async () => structuredClone(fixture) }),
+        'royal-mail': () => ({ id: 'royal-mail', steps: ['direct'], track: async () => handedOver }),
+      }, carriers: { ups: 'ups', 'royal-mail': 'royal-mail' } }, environment);
+      const dispatched = resolveResult(await trackCarrier('ups', { number }, { registry: carriers, universal: {} as UniversalTracker }));
+      const direct = await createTracker({ registry: carriers, providers: [] }).track({ number, carrier: 'ups' });
+      const lookups: string[] = [];
+      const recorder = { step() {}, lookup: ({ carrier }: { carrier: string }) => { lookups.push(carrier); } };
+      const partner = await createTracker({ registry: carriers, providers: [], recorder }).track({ number: postal, carrier: 'royal-mail' });
+      expect(partner.handoff).toMatchObject({ carrier: 'ups', number, confirmed: true });
+      // The single-step partner runs in the step runner, as the direct lookup does.
+      expect(lookups).toEqual(['royal-mail', 'ups']);
+      expect(direct.result).toEqual(dispatched);
+      expect(partner.handoff!.result).toEqual(dispatched);
+      expect(dispatched).toMatchObject({ status: stage, current_stage: stage });
+      expect(dispatched.events.map(event => event.description)).toEqual(rows);
+      expect(dispatched.events.map(event => event.instant && new Date(event.instant).toISOString())).toEqual(instants);
+    });
   });
 
   it('confirms the direct carrier for a generic postal number before tracking', async () => {

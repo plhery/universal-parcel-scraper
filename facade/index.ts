@@ -1,5 +1,6 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { AdapterRegistry, type AdapterEnvironment, type TrackingContext } from '../core/adapter/index.js';
+import { AdapterRegistry, type AdapterEnvironment, type CarrierAdapter, type TrackingContext, type TrackingInput } from '../core/adapter/index.js';
+import { runAdapter } from '../core/adapter/run.js';
 import { carrierDefinition, carrierTimezone } from '../core/catalog/index.js';
 import { carrierTakesPhoneDigits, carrierTakesPostcode, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
 import { deliveryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
@@ -7,17 +8,13 @@ import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validT
 import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
 import { failureHint, failureKind, type FailureHint } from '../core/errors/hint.js';
 import { MAX_RECOGNITIONS, recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from '../core/recognition/index.js';
-import { normalizeCarrierResult, type CarrierResult } from '../core/result/index.js';
-import { dueScans } from '../core/result/due.js';
 import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from '../core/result/partial.js';
 import { resolveResult, resultHasUpdate, type ResolvedResult } from '../core/result/resolve.js';
-import { runSteps } from '../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/trawl.js';
 import { sendsThrough } from '../core/transport/transportOf.js';
 import { userAgentOf } from '../core/transport/userAgent.js';
 import { REGISTRY } from '../generated/registry.js';
-import { dateLocalClocks } from '../places/clocks.js';
 import { universalPlan, universalSourceBudget } from '../providers/plan.js';
 import type { UniversalSource } from '../providers/types.js';
 import { UniversalTracker } from '../providers/universal.js';
@@ -277,16 +274,12 @@ export function createTracker(options: TrackerOptions = {}) {
     const directInput = { number, postcode: fields.postcode, ...postcodeCountry, trackingUrl: fields.trackingUrl,
       ...(fields.phoneDigits ? { phoneDigits: fields.phoneDigits } : {}), ...language };
     const directBudget = () => Math.min(remaining() + DEADLINE_SLACK_MS, 60_000);
-    const known = context.knownEstimate ? { knownEstimate: context.knownEstimate } : {};
-    // A carrier that enters some scans at their planned time shows them once they are due.
-    const due = (answer: CarrierResult) => adapter?.plannedScans ? dueScans(answer, carrier) : answer;
-    let result = adapter ? await attempt(carrier, async () => dateLocalClocks(carrier, due(normalizeCarrierResult(
-      await (adapter.recordsSteps || adapter.steps.length > 1
-        ? adapter.track(directInput, { signal, budgetMs: directBudget(), ...known })
-        : runSteps({ carrier, budgetMs: directBudget(), signal, recorder: environment.recorder }, [
-          { id: adapter.steps[0] ?? 'direct', run: ({ signal: stepSignal, remainingMs }) => adapter.track(
-            directInput, { signal: stepSignal, budgetMs: remainingMs, ...known }) },
-        ])))), Date.now())) : null;
+    /** One adapter's lookup on the budget left, its answer finished as `trackCarrier` finishes it. */
+    const lookUp = (id: string, registered: CarrierAdapter, lookupInput: TrackingInput, knownEstimate?: TrackingContext['knownEstimate']) => {
+      const budgetMs = directBudget();
+      return runAdapter(registered, { carrier: id, input: lookupInput, signal, budgetMs, runnerBudgetMs: budgetMs, knownEstimate, recorder: environment.recorder });
+    };
+    let result = adapter ? await attempt(carrier, () => lookUp(carrier, adapter, directInput, context.knownEstimate)) : null;
     let source: string = carrier;
     // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.
     const ahead = result ? [] : writtenAheadClocks(lastError);
@@ -332,7 +325,8 @@ export function createTracker(options: TrackerOptions = {}) {
     if (proposal && !signal.aborted) {
       const partner = registry.for(proposal.carrier);
       if (partner) {
-        const confirmed = await attempt(proposal.carrier, () => partner.track({ number: proposal.number, ...language }, { signal, budgetMs: directBudget() }));
+        // The partner's answer is finished as a direct one is. The caller's estimate is the parcel's under its own carrier, not the partner's.
+        const confirmed = await attempt(proposal.carrier, () => lookUp(proposal.carrier, partner, { number: proposal.number, ...language }));
         response.handoff = { ...proposal, confirmed: Boolean(confirmed), ...(confirmed ? { result: confirmed } : {}) };
       }
     }

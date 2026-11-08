@@ -670,7 +670,8 @@ describe('Chronopost direct tracking', () => {
       carrier: 'dpd-de', number: '12340678901235R', confirmed: known }, attempts: [
       { source: 'chronopost', kind: 'ok' }, { source: 'dpd-de', kind: known ? 'ok' : 'not_found' },
     ] });
-    expect(response.result.events).toHaveLength(7);
+    // The hub's second forwarding scan, five minutes after the first, is one step with it.
+    expect(response.result.events).toHaveLength(6);
     expect(Boolean(response.handoff?.result)).toBe(known);
     expect(partner).toHaveBeenCalledWith({ number: '12340678901235R' },
       expect.objectContaining({ signal: expect.any(AbortSignal), budgetMs: expect.any(Number) }));
