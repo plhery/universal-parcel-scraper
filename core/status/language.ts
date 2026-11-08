@@ -259,6 +259,39 @@ const WAYBILL_CREATED = /^(?:the |your |a |new )?(?:(?:air ?|e )?way ?bill|awb|(
  */
 const CANCELLED = new RegExp(String.raw`^(?:(?:the |your |this )?(?:shipment|parcel|package|order|consignment|item|delivery|(?:shipping )?label|envoi|colis|commande|livraison|sendung|paket|auftrag|bestellung|lieferung|spedizione|pacco|ordine|consegna|envio|paquete|pedido|entrega|encomenda|objeto|przesylka|paczka|zamowienie|gonderi|kargo|siparis) )?(?:(?:has been|was|is|a ete|est|wurde|ist|e stat[oa]|e|ha sido|fue|foi|zostal[ao]?) )?(?:cancell?ed|annulee?s?|storniert|annulliert|annullat[oa]|cancelad[oa]|anulad[oa]|anulowan[aeoy]|iptal edildi)$`);
 
+// The start of a Chinese scan: the place in brackets, then the item ("您的邮件", "快件"), in
+// simplified or traditional characters.
+const ZH_LEAD = String.raw`^(?:【[^【】]{0,80}】 ?)?(?:[您你]的)?(?:[邮郵]件|快件|包裹|快[递遞]|[货貨]物|[订訂]单|[邮郵]包)? ?`;
+// The end of its verb: the end of the scan, or a note after a comma or in brackets, such as who signed.
+const ZH_END = String.raw` ?(?:$|[，,。;；:：（(【!！])`;
+// Who signs for the recipient at the door.
+const ZH_SIGNER = String.raw`(?:本人|收件人|家人|他人|同事|门卫|門衛|前台|物业|物業|保安|邻居|鄰居|收发室|收發室)`;
+// A locker or a pickup point that keeps the parcel for the recipient.
+const ZH_PICKUP_PLACE = String.raw`(?:快[递遞]柜|快[递遞]櫃|智能柜|智能櫃|快件箱|快[递遞]箱|包裹柜|包裹櫃|自提柜|自提櫃|丰巢|豐巢|[驿驛]站|自提点|自提點|代收点|代收點|服[务務]站)`;
+/** China Post's and other Chinese carriers' final scans, as forwarders and providers relay them with no code. */
+const ZH_FINAL: ReadonlyArray<readonly [RegExp, Stage]> = [
+  // Returned to the sender ("已退回", "已退回寄件人"), delivered back to it ("退回妥投", "退件签收"), or
+  // signed for by the sender. A centre sending an item back ("【…】退回") and a return under way
+  // ("退回中") are not.
+  [new RegExp(String.raw`${ZH_LEAD}已[经經]?被?(?:退回|退[还還]|返[还還]|退件)(?:(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|寄件网点|寄件網點|原寄地|原寄局|[卖賣]家|商家))?${ZH_END}`), 'returned'],
+  [new RegExp(String.raw`${ZH_LEAD}(?:退回|退件|退[还還])件?已?[经經]?(?:妥投|妥收|[签簽]收)${ZH_END}|${ZH_LEAD}(?:退回|退[还還])(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|原寄地)${ZH_END}|[签簽]收人 ?(?:是|为|為|[:：]) ?(?:原?寄件人|[发發]件人)`), 'returned'],
+  // Not delivered after a try: "未妥投", "投递失败", China Post's "已试投/投递失败".
+  [new RegExp(String.raw`${ZH_LEAD}(?:未能?妥投|妥投失[败敗]|(?:投[递遞]|派送|配送|派件)失[败敗]|已[试試]投)`), 'failed_attempt'],
+  // Kept in a locker or at a pickup point ("已投递至【…智能快件箱】", "已存放至【…驿站】，请您及时取件",
+  // "已由【…驿站】代收"), or waiting there for the recipient or with a pickup code. A parcel waiting
+  // for a courier, sent out of a warehouse ("已出库待取件") or ordered by the sender ("预计取件时间"),
+  // is no pickup point.
+  [new RegExp(String.raw`^(?!.*(?:揽|攬|寄件人|下单|下單|预约|預約|上门|上門|预计|預計|出库|出庫)).*(?:取件码|取件碼|提[货貨]码|提[货貨]碼|请您?(?:及时|及時|尽快|儘快)?(?:前往|到|凭|憑)?[^，,。；;]{0,20}?(?:取件|[领領]取|自取|取[货貨])|(?:待|等待)(?:客户|客戶|收件人|您)(?:到?(?:网点|網點|自提点|自提點))?(?:取件|[领領]取|自提)|到达待取|到達待取|(?:投[递遞]|放入|存入|存放|放置|投放|送达|送達|到达|到達|投入)(?:至|到|在|于|於|进|進)?[^，,。；;]{0,40}${ZH_PICKUP_PLACE}|${ZH_PICKUP_PLACE}[^，,。；;]{0,10}(?:代收|代[签簽]收?|[签簽]收)|已投柜|已投櫃)`), 'ready_for_pickup'],
+  // Delivered ("已妥投", "邮件已妥投", "【…】已妥投"), signed for ("已签收", "本人签收", "他人代收"), or
+  // handed over ("已送达"). "未妥投", "请签收" and "签收后" are not deliveries.
+  [new RegExp(String.raw`${ZH_LEAD}(?:已[经經]?被?|已由|已在【[^【】]{0,80}】)?(?:${ZH_SIGNER}代?)?(?:成功)?(?:妥投|妥收|[签簽]收|代[签簽]收?|代收)(?:成功)?${ZH_END}|${ZH_LEAD}已[经經]?送[达達]${ZH_END}|${ZH_LEAD}(?:投[递遞]|派送|配送)成功${ZH_END}`), 'delivered'],
+];
+
+/** The stage of a Chinese final scan, or undefined for other wording. */
+function chineseFinalStage(text: string): Stage | undefined {
+  return ZH_FINAL.find(([pattern]) => pattern.test(text))?.[1];
+}
+
 /**
  * INFERRED language rules, not captured carrier codes. EN/FR/DE/IT/ES/PT/PL equivalents
  * are intuitive and overridable: an adapter must resolve verified codes and
@@ -505,6 +538,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // China Post's arrival at the office it names in brackets, a processing centre or the delivery office, abroad too,
   // as providers relay it with no carrier: in transit, as YunExpress's, PFC Express's and DHLink's maps read it.
   if (/^邮件到达(?:处理中心|投递点)? ?【[^【】]{1,80}】$/.test(text)) return 'in_transit';
+  const chinese = chineseFinalStage(text);
+  if (chinese) return chinese;
   // A forwarder relabelling a parcel under its next carrier's number, as ParcelsApp relays it with the carrier's
   // note: the parcel is in hand on its way. Without the note, a changed number may be data alone.
   if (/^tracking number changed, carrier note: (?:the )?package (?:was |has been )?relabell?ed$/.test(text)) return 'in_transit';

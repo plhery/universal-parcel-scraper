@@ -148,7 +148,8 @@ describe('YYpost HTTP adapter', () => {
       item.details = [{ ...scan('2026-05-16 08:00:00', ''), track_description: '已签收', track_location: 'SAMPLE TOWN 0000' },
         scan('2026-05-16 07:00:00', '')];
     }), PARCEL);
-    expect(result.events).toEqual([{ local_time: '2026-05-16T08:00:00', location: 'SAMPLE TOWN', description: '已签收' }]);
+    expect(result.events).toEqual([{ local_time: '2026-05-16T08:00:00', location: 'SAMPLE TOWN', description: '已签收',
+      stage: 'delivered', stage_source: 'wording:language' }]);
     expect(result).not.toHaveProperty('destination_country');
     expect(result).not.toHaveProperty('delivery_tracking_number');
     expect(parseYypost(changed((item) => { item.channel_hawbcode = PARCEL; }), PARCEL)).not.toHaveProperty('delivery_tracking_number');

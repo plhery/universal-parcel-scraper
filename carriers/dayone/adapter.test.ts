@@ -140,7 +140,8 @@ describe('DayOne HTTP adapter', () => {
       item.details = [{ ...scan('2026-04-16 08:00:00', '', '+10:00'), track_description: '已签收', track_location: 'SAMPLE TOWN NSW 2000' },
         { ...scan('2026-04-16 07:00:00', '', '+10:00') }];
     }), DELIVERED);
-    expect(result.events).toEqual([{ time: '2026-04-16T08:00:00+10:00', location: 'SAMPLE TOWN NSW', description: '已签收' }]);
+    expect(result.events).toEqual([{ time: '2026-04-16T08:00:00+10:00', location: 'SAMPLE TOWN NSW', description: '已签收',
+      stage: 'delivered', stage_source: 'wording:language' }]);
     expect(result).toMatchObject({ destination_country: 'AU' });
     expect(result).not.toHaveProperty('delivery_tracking_number');
     const unnamed = parseDayone(changed((item) => { item.destination_country = ''; item.destination_country_enname = 'Sample Land'; }), DELIVERED);

@@ -1048,6 +1048,31 @@ describe('classifyWording', () => {
     expect(wordingStage('Item received by customs', 'pending')).toBe('customs');
   });
 
+  it("reads China Post's and other Chinese carriers' final scans as providers relay them", () => {
+    for (const [wording, stage] of [
+      ['已妥投', 'delivered'], ['邮件已妥投', 'delivered'], ['【示例国】已妥投', 'delivered'], ['妥投', 'delivered'],
+      ['【示例市】 您的邮件已妥投，签收人：本人收，如有疑问请电联投递员', 'delivered'], ['邮件已在【示例】妥投', 'delivered'],
+      ['您的快件已妥收【本人签收，示例人】', 'delivered'], ['已签收', 'delivered'], ['已簽收', 'delivered'], ['您的快件已签收', 'delivered'],
+      ['已签收（本人）', 'delivered'], ['本人签收', 'delivered'], ['他人代收', 'delivered'], ['已由门卫代收', 'delivered'],
+      ['成功签收', 'delivered'], ['已送达', 'delivered'], ['投递成功', 'delivered'],
+      ['已投递至【示例智能快件箱】，请凭取件码取件', 'ready_for_pickup'], ['您的快件已存放至【示例驿站】，请您及时取件', 'ready_for_pickup'],
+      ['已由【示例驿站】代收', 'ready_for_pickup'], ['已到达【示例自提点】', 'ready_for_pickup'], ['已放入丰巢柜', 'ready_for_pickup'],
+      ['邮件已到达【示例营业部】，请您前往领取', 'ready_for_pickup'], ['等待客户网点取件', 'ready_for_pickup'], ['到达待取', 'ready_for_pickup'],
+      ['已退回', 'returned'], ['已退回寄件人', 'returned'], ['退回寄件人', 'returned'], ['退回妥投', 'returned'], ['退件签收', 'returned'],
+      ['【示例】签收人是寄件人', 'returned'],
+      ['未妥投', 'failed_attempt'], ['未妥投，原因：收件人不在', 'failed_attempt'], ['投递失败', 'failed_attempt'],
+      ['已试投/投递失败（/已通知客户）', 'failed_attempt'],
+    ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // A centre sending the item back, a return under way, a round asking the recipient to sign, a note
+    // about after the signature, an abnormal signature, a parcel waiting for a courier, a courier's
+    // pickup from the sender and cash on delivery are no final scan.
+    for (const wording of ['【示例市处理中心】退回', '退回中', '您的快件正在派送中，请您准备签收', '签收后第一时间开箱', 'PDA异常签收扫描',
+      '待签收', '待取件', '已出库待取件', '京东快件已取件', '寄件人已修改寄件信息，预计取件时间是：2026-01-02', '已下单，待取件', '代收货款', '如需退回请联系派件员',
+      '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', '签收人：示例']) {
+      expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
+    }
+  });
+
   it('reads a waybill or label generated as registration, unless the scan reports more', () => {
     for (const wording of ['Waybill generated', 'WAYBILL GENERATED', 'Waybill generated for 4PX0000000000001CN',
       'Waybill created', 'Waybill has been created', 'E-waybill generated', 'Air waybill created', 'AWB created at origin',
