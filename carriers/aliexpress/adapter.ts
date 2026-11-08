@@ -24,11 +24,12 @@ import { lookupBudget, recognizeFromLookup, type AdapterFactory, type LookupBudg
 import { detectCarrierMatch } from '../../core/detection/detect.js';
 import { normalizeTrackingNumber } from '../../core/detection/normalize.js';
 import { validTrackingNumber } from '../../core/detection/valid.js';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
+import { transportOf } from '../../core/transport/transportOf.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import {
   CAINIAO_ACTION_STATUS,
@@ -317,6 +318,28 @@ function sliderPage(body: string): boolean {
   return /^\s*</.test(body) && /rgv587_flag|<punish-component\b|\/_____tmd_____\//.test(body);
 }
 
+/**
+ * How long after a slider page no read is sent. The slider comes in spells: once it shows, nearly
+ * every read from the address meets it for about an hour, however few are sent, and then none
+ * does. The first read after the pause pauses them again if it meets the slider too.
+ */
+export const SLIDER_PAUSE_MS = 15 * 60_000;
+
+/**
+ * Until when one transport sends no read. Cainiao judges an address, so every tracker in the
+ * process that sends through the same fetcher shares this: recognition, and iMile's reads of
+ * Cainiao's leg. A restart forgets it.
+ */
+const sliderPauses = new WeakMap<object, { until: number }>();
+const GLOBAL_FETCH = {};
+
+function sliderPause(fetcher: typeof fetch | undefined): { until: number } {
+  const key = transportOf(fetcher) ?? GLOBAL_FETCH;
+  let pause = sliderPauses.get(key);
+  if (!pause) sliderPauses.set(key, pause = { until: 0 });
+  return pause;
+}
+
 export class CainiaoTracker {
   private readonly fetcher: typeof fetch | undefined;
   private readonly timeoutMs: number;
@@ -360,12 +383,22 @@ export class CainiaoTracker {
   }
 
   private async payload(url: string, referer: string, budget: LookupBudget): Promise<unknown> {
+    // During a pause the lookup fails as our own pacing, with the wait, and sends nothing.
+    const pause = sliderPause(this.fetcher);
+    const waitMs = pause.until - Date.now();
+    if (waitMs > 0) {
+      throw new RateLimitedError(PROVIDER, waitMs, 'Cainiao showed its slider page to a recent read; no read until the pause ends',
+        { reason: 'self_paced' });
+    }
     const { bytes } = await fetchBounded(
       url,
       { signal: budget.signal, headers: { ...BASE_HEADERS, 'User-Agent': this.userAgent, Referer: referer } },
       { provider: UPSTREAM, timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()), fetcher: this.fetcher },
     );
-    if (sliderPage(decodeText(bytes))) throw new ChallengeError(PROVIDER);
+    if (sliderPage(decodeText(bytes))) {
+      pause.until = Math.max(pause.until, Date.now() + SLIDER_PAUSE_MS);
+      throw new ChallengeError(PROVIDER);
+    }
     return parseJsonBytes(bytes, UPSTREAM);
   }
 }

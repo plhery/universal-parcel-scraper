@@ -26,7 +26,11 @@
       "rank": 580
     },
     "localClocks": true,
-    "dateOnlyScans": true
+    "dateOnlyScans": true,
+    "refresh": {
+      "minMinutes": 30,
+      "afterFailureMinutes": 60
+    }
   },
   "capabilities": [
     "history",

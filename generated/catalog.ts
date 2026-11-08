@@ -205,6 +205,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "aliexpress",
       "upstreamName": "AliExpress",
       "recognitionRank": 580,
+      "refresh": {
+        "minMinutes": 30,
+        "afterFailureMinutes": 60
+      },
       "localClocks": true,
       "dateOnlyScans": true
     },

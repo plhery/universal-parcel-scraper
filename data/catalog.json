@@ -201,6 +201,10 @@
       "adapter": "aliexpress",
       "upstreamName": "AliExpress",
       "recognitionRank": 580,
+      "refresh": {
+        "minMinutes": 30,
+        "afterFailureMinutes": 60
+      },
       "localClocks": true,
       "dateOnlyScans": true
     },

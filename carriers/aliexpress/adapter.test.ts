@@ -6,7 +6,7 @@ import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeCarrierResult, type CarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
-import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse } from './adapter.js';
+import { adapter, CainiaoTracker, fetchCainiao, parseCainiaoTrackingResponse, SLIDER_PAUSE_MS } from './adapter.js';
 import { CAINIAO_ACTION_STATUS, CAINIAO_NOTICE_ACTIONS, CAINIAO_STATUS, cainiaoActionStage, cainiaoStageByStatus, statusMap } from './status.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { locatePlace } from '../../places/index.js';
@@ -110,11 +110,44 @@ describe('Cainiao wrong-number handling', () => {
       name: 'ChallengeError', kind: 'challenge', provider: 'Cainiao',
     });
     // Any other page is still no tracking response, and JSON is read even when its wording names the flag.
-    fetcher.mockResolvedValueOnce(new Response('<!DOCTYPE html><html><body>Maintenance</body></html>'));
-    await expect(new CainiaoTracker({ fetcher }).fetch(CAINIAO_WRONG_NUMBER)).rejects.not.toMatchObject({ kind: 'challenge' });
-    fetcher.mockResolvedValueOnce(jsonResponse({ module: [{ mailNo: CAINIAO_WRONG_NUMBER, mailNoSource: 'INTERNAL',
+    const maintenance = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response('<!DOCTYPE html><html><body>Maintenance</body></html>'));
+    await expect(new CainiaoTracker({ fetcher: maintenance }).fetch(CAINIAO_WRONG_NUMBER)).rejects.toThrow('invalid tracking response');
+    const flagged = vi.fn<typeof fetch>().mockResolvedValueOnce(jsonResponse({ module: [{ mailNo: CAINIAO_WRONG_NUMBER, mailNoSource: 'INTERNAL',
       detailList: [], statusDesc: '<!--rgv587_flag:sm-->' }] }));
-    await expect(new CainiaoTracker({ fetcher }).fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
+    await expect(new CainiaoTracker({ fetcher: flagged }).fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
+  });
+
+  it('sends no read for a while after a slider page, through any tracker on the same transport', async () => {
+    let now = Date.parse('2026-01-05T08:00:00Z');
+    vi.spyOn(Date, 'now').mockImplementation(() => now);
+    const slider = () => new Response('<!DOCTYPE html><html><body><punish-component />\n<!--rgv587_flag:sm-->\n</body></html>',
+      { headers: { 'Content-Type': 'text/html' } });
+    const pending = () => jsonResponse({ module: [{ mailNo: CAINIAO_WRONG_NUMBER, mailNoSource: 'INTERNAL', detailList: [] }] });
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(async () => slider());
+    const tracker = new CainiaoTracker({ fetcher });
+    const recognition = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    now += 60_000;
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({
+      name: 'RateLimitedError', kind: 'rate_limited', reason: 'self_paced', provider: 'Cainiao', retryAfterMs: SLIDER_PAUSE_MS - 60_000,
+    });
+    await expect(recognition.recognize!('LP00000000000001', { budgetMs: 1000 })).rejects.toMatchObject({ kind: 'rate_limited' });
+    await expect(new CainiaoTracker({ fetcher }).detail(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    // Another transport is judged on its own.
+    const other = vi.fn<typeof fetch>(async () => pending());
+    await expect(new CainiaoTracker({ fetcher: other }).fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
+    // The first read after the pause meets the slider again and pauses the reads again; once one loads, they go on.
+    now += SLIDER_PAUSE_MS - 60_000;
+    fetcher.mockImplementationOnce(async () => slider());
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    now += SLIDER_PAUSE_MS - 1;
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 1 });
+    now += 1;
+    fetcher.mockImplementation(async () => pending());
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
+    await expect(tracker.fetch(CAINIAO_WRONG_NUMBER)).resolves.toMatchObject({ status: 'pending' });
+    expect(fetcher).toHaveBeenCalledTimes(4);
   });
 
   it('uses the environment fetcher the factory hands the tracker', async () => {
@@ -204,17 +237,14 @@ describe('Cainiao Express home-delivery numbers', () => {
   it('keeps either feed\'s slider and a stranger\'s module from reading as an answer', async () => {
     const slider = () => new Response('<!DOCTYPE html><html><body><punish-component />\n<!--rgv587_flag:sm-->\n</body></html>',
       { headers: { 'Content-Type': 'text/html' } });
-    const fetcher = vi.fn<typeof fetch>()
-      .mockResolvedValueOnce(slider())
-      .mockResolvedValueOnce(empty('EXTERNAL'))
-      .mockResolvedValueOnce(slider())
-      .mockResolvedValueOnce(empty('EXTERNAL'))
-      .mockResolvedValueOnce(empty('EXTERNAL', 'DOFR0000000000004HD'));
-    const tracker = new CainiaoTracker({ fetcher });
-    await expect(tracker.fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(tracker.fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'challenge' });
-    await expect(tracker.fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'schema' });
-    expect(fetcher).toHaveBeenCalledTimes(5);
+    // Each on its own transport: a slider pauses the reads of the transport that met it.
+    const global = vi.fn<typeof fetch>().mockResolvedValueOnce(slider());
+    const express = vi.fn<typeof fetch>().mockResolvedValueOnce(empty('EXTERNAL')).mockResolvedValueOnce(slider());
+    const stranger = vi.fn<typeof fetch>().mockResolvedValueOnce(empty('EXTERNAL')).mockResolvedValueOnce(empty('EXTERNAL', 'DOFR0000000000004HD'));
+    await expect(new CainiaoTracker({ fetcher: global }).fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(new CainiaoTracker({ fetcher: express }).fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(new CainiaoTracker({ fetcher: stranger }).fetch(HOME_DELIVERY)).rejects.toMatchObject({ kind: 'schema' });
+    expect([global, express, stranger].map((fetcher) => fetcher.mock.calls.length)).toEqual([1, 2, 2]);
   });
 });
 
