@@ -89,6 +89,8 @@ describe('SpeedX tracking page', () => {
     expect(speedxStatus('59999', 'LAST_MILE_RETURNS')).toEqual({ status: 'exception', stage: 'returned' });
     expect(speedxStatus('59999', 'LAST_MILE_ATTEMPTED')).toEqual({ status: 'exception', stage: 'failed_attempt' });
     expect(speedxStatus('50002', 'PICKUP')).toBeUndefined();
+    // The day's delay note on a parcel not delivered that day goes out again: its code outranks an undelivered category.
+    expect(speedxStatus('57409', 'LAST_MILE_UNDELIVERED')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     const result = parse(withData((_data, events) => {
       Object.assign(events[0]!, { eventCode: '59999', category: 'CLEARANCE', eventDescription: 'Held for review', eventSupplementalInfo: null });
     }));

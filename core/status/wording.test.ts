@@ -901,6 +901,7 @@ describe('classifyWording', () => {
       ['Delivery information has been updated.', 'in_transit'],
       ['Package shipment', 'in_transit'],
       ["We're expecting your parcel to arrive with us soon and we'll update your tracking once we've received it", 'registered'],
+      ["We're expecting your parcel from your sender. We will provide updates here once we receive it.", 'registered'],
       ['The shipment was created by the sender, we are waiting for it to be entrusted to us for sending to its destination', 'registered'],
       ['The shipment has been created by the sender, we are waiting for it to be entrusted to us for dispatch to its destination.', 'registered'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });

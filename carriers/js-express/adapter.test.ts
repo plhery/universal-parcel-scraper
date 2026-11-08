@@ -329,6 +329,11 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressStage('In Transit to Next Facility', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
+  it("reads SpeedX's day-end delay, relayed under DDE, as the parcel still on its way", () => {
+    expect(jsExpressStage('Delay in transit', 'DDE')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DDE', description: 'Delay in transit' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it("reads FedEx's status between its facilities on the line it delivers", () => {
     expect(jsExpressStage('On the way', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'On the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });

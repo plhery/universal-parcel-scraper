@@ -412,7 +412,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^快件电子信息已经?收到/.test(text)) return 'registered';
   // GEODIS's notice that the sender's data reached it, as ParcelsApp relays it: "Transferred Data".
   if (/shipment information (?:received|sent to)|\binformation about the (?:shipment|parcel|package) (?:has been |was )?received\b|\bdata received\b|^transferred data$|(?:package|parcel|shipment) data (?:was |has been )?sent to|\bpre ?notification\b|informations d'expedition recues|sendungsinformationen erhalten|informazioni.*spedizione ricevute|(?:consignment|shipment|parcel|package) recorded by|envoi enregistre par|sendung.*absender.*erfasst|spedizione registrata dal/.test(text)) return 'registered';
-  if (/\b(?:we're|we are) expecting (?:your|the) (?:parcel|package|item|shipment) to arrive with us\b/.test(text)) return 'registered';
+  // A carrier's notice before it has the parcel: "We're expecting your parcel to arrive with us", or
+  // "from your sender. We will provide updates here once we receive it", as ParcelsApp relays one.
+  if (/\b(?:we're|we are) expecting (?:your|the) (?:parcel|package|item|shipment) (?:to arrive with us|from (?:your|the) (?:sender|shipper|seller|retailer)\b)/.test(text)) return 'registered';
   // GLS's shipment the sender created and has not entrusted to it yet, as GLS Italy and relays word it.
   if (/\bcreated by the sender\b.*\bwaiting for it to be (?:entrusted|handed(?: over)?) to us\b/.test(text)) return 'registered';
   // The shipment's pre-alert, its electronic notice: "Pre-alerted shipment enriched by PostNL management".

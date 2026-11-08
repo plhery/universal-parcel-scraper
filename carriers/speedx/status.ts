@@ -28,6 +28,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['57104', OUT_FOR_DELIVERY],
   ['57607', FAILED_ATTEMPT],
   ['57614', FAILED_ATTEMPT],
+  // The day's note on a parcel not delivered that day; it goes out again the next morning.
+  ['57409', IN_TRANSIT],
   ['57201', DELIVERED],
   ['57413', EXCEPTION],
   ['57504', EXCEPTION],
