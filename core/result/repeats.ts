@@ -12,6 +12,10 @@ const REPEAT_MS = 10 * 60_000;
 
 const text = (value: unknown): string => typeof value === 'string' ? value.trim().replace(/\s+/g, ' ').toLowerCase() : '';
 
+/** A place as two copies of one scan are compared: case, accents, spacing and punctuation aside. */
+export const comparablePlace = (value: unknown): string =>
+  text(value).normalize('NFD').replace(/\p{Diacritic}/gu, '').replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+
 /**
  * A scan with an earlier scan's wording, place and stage, at most ten minutes after it, is left
  * out: a gateway that records one departure several times, or a failed attempt written once by

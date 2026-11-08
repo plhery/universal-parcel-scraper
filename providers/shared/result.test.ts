@@ -132,6 +132,48 @@ describe('shared provider result', () => {
     expect(result([...oldestFirst].reverse(), 'ParcelsApp').events?.map(({ description }) => description)).toEqual(newest);
   });
 
+  it('keeps rows of one instant and wording apart when their stages or codes disagree, in either order', () => {
+    const scan = (stage: string, code: string, location?: string) => ({
+      time: '2026-01-05T20:41:00Z', description: 'Processed', stage, stage_source: 'carrier_map', provider_code: code,
+      ...(location ? { location } : {}),
+    });
+    const rows = [scan('customs', 'C1', 'EXAMPLE HUB'), scan('accepted', 'A1', 'OTHER HUB')];
+    const read = (events: Parameters<typeof result>[0]) => result(events, 'Ship24').events?.map(({ stage, provider_code, location }) => [stage, provider_code, location]);
+    for (const events of [rows, [...rows].reverse()]) {
+      expect(read(events)).toHaveLength(2);
+      expect(read(events)).toEqual(expect.arrayContaining([['customs', 'C1', 'EXAMPLE HUB'], ['accepted', 'A1', 'OTHER HUB']]));
+    }
+    // A code on one copy only does not part it from the copy without one.
+    const coded = [scan('customs', 'C1', 'EXAMPLE HUB'), { ...scan('customs', 'C1'), provider_code: undefined }];
+    for (const events of [coded, [...coded].reverse()]) expect(read(events)).toEqual([['customs', 'C1', 'EXAMPLE HUB']]);
+  });
+
+  it('keeps two steps of one day at other places apart, in either order', () => {
+    const step = (location: string) => ({ local_time: '2026-01-05', description: 'In transit', stage: 'in_transit', stage_source: 'wording:provider', location });
+    const rows = [step('Example City, FR'), step('Other Town, FR')];
+    for (const events of [rows, [...rows].reverse()]) {
+      expect(result(events, 'ParcelsApp').events?.map(({ location }) => location).sort()).toEqual(['Example City, FR', 'Other Town, FR']);
+    }
+  });
+
+  it('reads a copy without a place, or with its place spelt otherwise or in part, as one scan with it, in either order', () => {
+    const step = (location?: string) => ({
+      local_time: '2026-01-05', description: 'In transit', stage: 'in_transit', stage_source: 'wording:provider', ...(location ? { location } : {}),
+    });
+    const placed = [step('Example City, FR'), step()];
+    const forward = result(placed, 'ParcelsApp').events;
+    expect(forward).toEqual([step('Example City, FR')]);
+    expect(result([...placed].reverse(), 'ParcelsApp').events).toEqual(forward);
+    for (const other of ['EXAMPLE  CITY FR.', 'Example City']) {
+      const rows = [step('Example City, FR'), step(other)];
+      for (const events of [rows, [...rows].reverse()]) expect(result(events, 'ParcelsApp').events).toHaveLength(1);
+    }
+    // A timed copy without a place keeps the place of the other copy, whichever came first.
+    const timed = [{ ...event('2026-01-05T09:00:00Z', 'Arrived at sorting center')!, location: 'Example City' }, event('2026-01-05T09:00:00Z', 'Arrived at sorting center')!];
+    expect(result(timed, 'ParcelsApp').events).toEqual(result([...timed].reverse(), 'ParcelsApp').events);
+    expect(result(timed, 'ParcelsApp').events?.map(({ location }) => location)).toEqual(['Example City']);
+  });
+
   it("reads a copy of SunYou's departure without the last-mile number, as SunYou's own result does", () => {
     expect(event('2026-01-07T12:45:00+08:00', 'Departed Sunyou Facility, Carrier Tracking Number:  ZZ000000005GB'))
       .toMatchObject({ description: 'Departed Sunyou Facility' });

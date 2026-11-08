@@ -18,6 +18,7 @@ import type { CarrierEvent, CarrierResult, CarrierStatus } from '../../core/resu
 import { listsNewestFirst } from '../../core/result/order.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import { PROGRESS } from '../../core/result/partial.js';
+import { comparablePlace } from '../../core/result/repeats.js';
 import { isPostiAbroadLabel } from '../../carriers/posti/identity.js';
 import { anPostWordingStage } from '../../carriers/an-post/status.js';
 import { CHRONOPOST_NOTIFICATION } from '../../carriers/chronopost/status.js';
@@ -845,25 +846,65 @@ function keepStages(events: CarrierEvent[]): void {
   }
 }
 
+/** The stage a row's wording or code gave it; `pending` by no rule is none. */
+const readStage = (value: CarrierEvent): string | undefined =>
+  value.stage && !(value.stage === 'pending' && (value.stage_source ?? 'none') === 'none') ? value.stage : undefined;
+
+/** Whether one place's words are all among another's, as "Example City" in "Example City, FL". */
+function withinPlace(one: unknown, other: unknown): boolean {
+  const words = (value: unknown) => new Set(comparablePlace(value).split(' ').filter(Boolean));
+  const [left, right] = [words(one), words(other)];
+  return !left.size || !right.size || [...left].every((word) => right.has(word)) || [...right].every((word) => left.has(word));
+}
+
+/**
+ * Two rows of one clock and wording that can be copies of one scan: the stage and code each
+ * supplies agree, and a row dated by its day alone names the other's place or a part of it,
+ * compared without case, accents, spacing or punctuation. A row without one of them can be a copy
+ * of a row with it. Rows that disagree are separate scans: two "In transit" steps of one day at two
+ * depots, or two "Processed" scans at one instant under other codes. A place does not part two
+ * rows at one instant: feeds copying a scan name its place each their own way, a postcode, a
+ * hub's code or the country.
+ */
+function sameScan(left: CarrierEvent, right: CarrierEvent): boolean {
+  const agree = (one: string | undefined, other: string | undefined) => !one || !other || one === other;
+  return (!dayAlone(left) || withinPlace(left.location, right.location))
+    && agree(readStage(left), readStage(right)) && agree(left.provider_code, right.provider_code);
+}
+
+/** One scan from two copies: the later copy, with what only the earlier one supplied, as a place a carrier's copy lacks. */
+function mergedCopy(earlier: CarrierEvent, later: CarrierEvent): CarrierEvent {
+  const scan: CarrierEvent = { ...earlier };
+  for (const [field, value] of Object.entries(later)) if (value !== undefined && value !== '') scan[field] = value;
+  if (!readStage(later) && readStage(earlier)) Object.assign(scan, { stage: earlier.stage, stage_source: earlier.stage_source });
+  return scan;
+}
+
 export function result(events: CarrierEvent[], source: UniversalSource, preserveOrder = false): CarrierResult {
   // Wall times sort alongside UTC instants only approximately; providers that
   // omit offsets everywhere pass preserveOrder instead.
-  const scans = new Map<string, CarrierEvent>();
+  const scans: CarrierEvent[] = [];
+  const copies = new Map<string, number[]>();
   const now = Date.now();
   for (const entry of events) {
     const event = withoutWordingAsPlace(aheadStep(entry, now));
     if (lookupNotice(event, now)) continue;
     const key = `${moment(event)}|${event.description}`;
-    const earlier = scans.get(key);
-    // A carrier's copy can lack the place another copy of the same scan reported.
-    scans.set(key, !event.location && earlier?.location ? { ...event, location: earlier.location } : event);
+    const rows = copies.get(key) ?? [];
+    const copy = rows.find((index) => sameScan(scans[index]!, event));
+    if (copy !== undefined) {
+      scans[copy] = mergedCopy(scans[copy]!, event);
+      continue;
+    }
+    copies.set(key, [...rows, scans.length]);
+    scans.push(event);
   }
-  const written = scheduled([...scans.values()]);
+  const written = scheduled(scans);
   // A generic "On the way" beside a specific scan at its instant and place, as FedEx writes it
   // beside "Departed FedEx hub", is a second copy of that scan.
   const at = (event: CarrierEvent) => `${moment(event)}|${event.location ?? ''}`;
-  const specific = new Set([...scans.values()].filter((event) => !GENERIC_TRANSIT.test(event.description ?? '')).map(at));
-  const kept = [...scans.values()].filter((event) => !written.has(instantOf(event) ?? NaN)
+  const specific = new Set(scans.filter((event) => !GENERIC_TRANSIT.test(event.description ?? '')).map(at));
+  const kept = scans.filter((event) => !written.has(instantOf(event) ?? NaN)
     && !(GENERIC_TRANSIT.test(event.description ?? '') && specific.has(at(event))));
   const ordered = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
   const unique = ordered.map((event) => parcelShopScan(event, ordered));
