@@ -3867,8 +3867,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "gofo",
       "recognitionRank": 475,
       "refresh": {
-        "minMinutes": 10,
-        "afterFailureMinutes": 30
+        "minMinutes": 30,
+        "afterFailureMinutes": 60
       },
       "localClocks": true
     },

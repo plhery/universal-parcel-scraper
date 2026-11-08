@@ -40,9 +40,10 @@ Only the explicit US error list proves absence. A failed envelope with numeric
 code `20002` and explicit rate-limit wording raises `rate_limited` so callers can
 back off. The code alone stays inconclusive, and no retry delay is invented.
 GOFO's limit follows the overall rate from one address, not one parcel's: its refusals come in
-spells, for parcels last read long before too, and ease once the address asks less often. So the
-catalog asks for a refresh at most every ten minutes, and half an hour after a failed one; the
-adapter makes one request per lookup, never retries a refusal and adds no pause of its own.
+spells that ease over half an hour to an hour, for parcels last read long before too. A pause
+after a refusal would also hold back the many requests a spell still answers, so the catalog
+lowers the overall rate instead: it asks for a refresh at most every half hour, and an hour after
+a failed one. The adapter makes one request per lookup and never retries a refusal.
 Failed replies retain their code and the message GOFO's page shows; a long message
 or one quoting a number is left out.
 
