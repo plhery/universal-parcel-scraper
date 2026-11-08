@@ -180,14 +180,15 @@ function flightDetails(providerCode: string, remarks: unknown, office: string): 
  * at Delhi's office of exchange labelled 09:57Z came after its flight took off
  * at 14:05 there. A take-off's office names the airport first, as in
  * "Office - DEL 00000000"; a hand-over names the office of exchange, on India's
- * clock. Null for every other row, for an airport outside the table and for a
- * value not labelled UTC: those are read as any row is.
+ * clock. The destination's hand-over, beside the flight's arrival, names no
+ * office and no clock. Null for every other row, for an airport outside the
+ * table and for a value not labelled UTC: those are read as any row is.
  */
 function airportClockZone(providerCode: string, office: string, trackedAt: string): string | null {
   if ((providerCode !== TAKE_OFF_CODE && providerCode !== HAND_OVER_CODE) || !UTC_LABEL.test(trackedAt)) return null;
   const airport = officeAirport(office);
   if (airport) return AIRPORT_ZONES[airport] ?? null;
-  return providerCode === HAND_OVER_CODE ? INDIA_ZONE : null;
+  return providerCode === HAND_OVER_CODE && office ? INDIA_ZONE : null;
 }
 
 /**

@@ -352,6 +352,8 @@ describe('India Post response normalization', () => {
     // At an airport the office names, its clock; an offset other than UTC stays.
     expect(times([handOver('2026-11-08T09:57:00.000000Z', 'Office - FRA 00000003')])).toEqual([['2026-11-08T09:57:00+01:00', 'HandedOverToAirportFacility']]);
     expect(times([handOver('2026-11-08T09:57:00+05:30', 'EXAMPLE FOREIGN POST OFFICE')])).toEqual([['2026-11-08T09:57:00+05:30', 'HandedOverToAirportFacility']]);
+    // The destination's hand-over names no office: its clock is unknown, so it keeps its label.
+    expect(times([handOver('2026-11-08T09:57:00.000000Z', '')])).toEqual([['2026-11-08T09:57:00Z', 'HandedOverToAirportFacility']]);
   });
 
   it('keeps flight numbers and routes while ignoring unrelated or mismatched remarks', () => {
