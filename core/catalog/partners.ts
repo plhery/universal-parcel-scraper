@@ -17,10 +17,11 @@ export function followsPartnerNumbers(carrier: string): boolean {
 /**
  * Carriers whose tracker also finds a parcel by the number its delivery
  * partner gave it. Evri International answers Paack's, Hermes Germany's or
- * DHL's number with its own history of the parcel. That number is still the
+ * DHL's number with its own history of the parcel, and Sengi Express Poste
+ * Italiane's code for a parcel it carries to Italy. That number is still the
  * partner's, unlike an origin's above.
  */
-const PARTNER_NUMBER_TRACKERS: ReadonlySet<string> = new Set(['evri']);
+const PARTNER_NUMBER_TRACKERS: ReadonlySet<string> = new Set(['evri', 'sengi-express']);
 
 /** Whether the carrier's tracker also finds parcels by their delivery partner's number. */
 export function tracksPartnerNumbers(carrier: string): boolean {

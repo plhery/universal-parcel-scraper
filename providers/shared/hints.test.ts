@@ -184,6 +184,10 @@ describe('carrier names reported by universal providers', () => {
       expect(universalCarrierHints([name], 'PK000000000000000001')).toEqual({ reported_carriers: [name], discovered_carrier: 'paack' });
     }
     expect(universalCarrierHints(['Paack'], 'PK000000000000000001').discovered_carrier).toBe('paack');
+    // Sengi Express carries parcels to Italy under Poste Italiane's code, which its tracker also answers;
+    // its own numbers for Malta keep its name.
+    expect(universalCarrierHints(['SENGI Express'], '5P00D00000000')).toEqual({ reported_carriers: ['SENGI Express'], discovered_carrier: 'poste-italiane' });
+    expect(universalCarrierHints(['SENGI Express'], 'ABCDE000000000MT').discovered_carrier).toBe('sengi-express');
   });
 
   it('proposes no carrier whose adapter would refuse the number for its check digit', () => {
