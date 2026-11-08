@@ -48,8 +48,8 @@ export class AcsCourierTracker {
   }
 
   private async lookup(number: string, step: StepContext, refresh: boolean) {
-    const started = performance.now();
-    const timeoutMs = () => Math.max(1, Math.floor(step.remainingMs - (performance.now() - started)));
+    const deadline = performance.now() + step.remainingMs;
+    const timeoutMs = () => Math.max(1, Math.floor(deadline - performance.now()));
     const kept = !refresh && this.key && this.key.until > Date.now() ? this.key : undefined;
     let key = kept?.value;
     if (!key) {
@@ -57,7 +57,7 @@ export class AcsCourierTracker {
       const { response, bytes } = await fetchBounded(ACS_PAGE, { signal: step.signal,
         headers: { Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent) } },
       { provider: PROVIDER, timeoutMs: timeoutMs(), maxBytes: PAGE_MAX_BYTES, fetcher: this.options.fetcher,
-        allowHttpStatuses: [404, 410], retryTransient: true });
+        allowHttpStatuses: [404, 410], retryTransient: true, deadline });
       // A missing page is a moved tracker, not a missing parcel.
       if (!response.ok) throw new TransportError(PROVIDER, 'ACS Courier tracking page is unavailable');
       key = acsPageKey(decodeText(bytes));
@@ -69,7 +69,7 @@ export class AcsCourierTracker {
       // The Cypriot site's country header brings every scan; the Greek one, five milestones.
       'X-Country': 'CY', 'Accept-Language': 'en-US',
     } }, { provider: PROVIDER, timeoutMs: timeoutMs(), maxBytes: ACS_MAX_BYTES, fetcher: this.options.fetcher,
-      allowHttpStatuses: [404, 406], retryTransient: true });
+      allowHttpStatuses: [404, 406], retryTransient: true, deadline });
     if (response.status === 406) {
       if (this.key?.value === key) this.key = undefined;
       if (kept) throw new AcsKeyExpiredError();

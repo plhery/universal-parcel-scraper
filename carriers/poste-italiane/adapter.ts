@@ -395,6 +395,7 @@ export class PosteItalianeTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
+      deadline: budget.deadline,
       allowHttpError: true,
       fetcher: this.fetcher,
     });

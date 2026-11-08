@@ -2,7 +2,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { decodeText, fetchBounded, parseJsonBytes, UpstreamNetworkError } from './boundedFetch.js';
 
 const URL = 'https://carrier.example/tracking';
-const OPTIONS = { provider: 'Carrier tracking', retryTransient: true };
+// Without a lookup budget, as a caller with no deadline passes it.
+const OPTIONS = { provider: 'Carrier tracking', retryTransient: true, deadline: undefined };
 
 beforeEach(() => vi.useFakeTimers());
 afterEach(() => {
@@ -94,10 +95,12 @@ describe('bounded carrier request retries', () => {
 
   it('fails at once when the wait Retry-After asks for reaches the lookup\'s end', async () => {
     const fetcher = vi.fn<typeof fetch>()
-      .mockResolvedValue(new Response('Too many requests', { status: 429, headers: { 'Retry-After': '46' } }));
-    const result = fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 25_000 });
-    await expect(result).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 429, retryAfterMs: 46_000 });
+      .mockResolvedValue(new Response('Too many requests', { status: 429, headers: { 'Retry-After': '30' } }));
+    const result = fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 20_000 });
+    // No wait is started: the rate limit and its window are the answer, not the spent budget.
+    await expect(result).rejects.toMatchObject({ name: 'UpstreamHttpError', kind: 'rate_limited', status: 429, retryAfterMs: 30_000 });
     expect(fetcher).toHaveBeenCalledOnce();
+    expect(vi.getTimerCount()).toBe(0);
     // A wait that ends before the lookup does is still made.
     fetcher.mockReset().mockResolvedValueOnce(new Response('', { status: 429, headers: { 'Retry-After': '6' } }))
       .mockResolvedValueOnce(new Response('tracking data'));
@@ -162,6 +165,20 @@ describe('bounded carrier request retries', () => {
     const result = fetchBounded(URL, {}, { ...OPTIONS, fetcher });
     await vi.advanceTimersByTimeAsync(1_000);
     await expect(result).resolves.toMatchObject({ response: { status: 200 } });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not pause before a retry after a network failure when the lookup ends first', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('fetch failed'));
+    await expect(fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 500 }))
+      .rejects.toMatchObject({ name: 'UpstreamNetworkError', kind: 'transport' });
+    expect(fetcher).toHaveBeenCalledOnce();
+    expect(vi.getTimerCount()).toBe(0);
+    // With time for the pause, the request is tried again.
+    fetcher.mockReset().mockRejectedValueOnce(new TypeError('fetch failed')).mockResolvedValueOnce(new Response('ok'));
+    const retried = fetchBounded(URL, {}, { ...OPTIONS, fetcher, deadline: performance.now() + 5_000 });
+    await vi.advanceTimersByTimeAsync(1_000);
+    await expect(retried).resolves.toMatchObject({ response: { status: 200 } });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
 

@@ -217,6 +217,7 @@ export class InpostTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
+      deadline: budget.deadline,
       allowHttpStatuses: [404],
       fetcher: this.fetcher,
     });

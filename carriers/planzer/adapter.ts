@@ -203,6 +203,7 @@ export class PlanzerTracker {
         // One replay after a transport failure, HTTP 502/503/504, or a 429
         // with a short Retry-After; parsing and validation are never retried.
         retryTransient: true,
+        deadline: budget.deadline,
         fetcher: this.fetcher,
       },
     );

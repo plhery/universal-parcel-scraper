@@ -66,27 +66,43 @@ async function cancelQuietly(body: ReadableStream<Uint8Array> | null): Promise<v
   }
 }
 
+interface BoundedFetchBaseOptions {
+  provider: string;
+  timeoutMs?: number;
+  maxBytes?: number;
+  redirect?: RequestRedirect;
+  fetcher?: typeof fetch;
+  allowHttpError?: boolean;
+  /** Inspect specific non-success replies without bypassing other HTTP errors. */
+  allowHttpStatuses?: readonly number[];
+}
+
+/** A request that may retry has to say when its lookup ends. */
+type BoundedFetchRetryOptions =
+  | { retryTransient?: false; deadline?: number }
+  | {
+    /** One retry for replayable reads only; never retry parsing or validation. */
+    retryTransient: boolean;
+    /**
+     * When the lookup ends, on `performance.now()`'s clock, or `undefined` for a
+     * request without a budget. A retry whose wait reaches it is not made: the
+     * first failure stands at once, with its kind and retry window, rather than
+     * when the lookup's signal ends the wait.
+     */
+    deadline: number | undefined;
+  };
+
+type BoundedFetchOptions = BoundedFetchBaseOptions & BoundedFetchRetryOptions;
+
+/** Whether a wait of `delayMs` ends before the lookup does. */
+function fitsBeforeDeadline(delayMs: number, deadline: number | undefined): boolean {
+  return deadline === undefined || performance.now() + delayMs < deadline;
+}
+
 export async function fetchBounded(
   url: string | URL,
   init: RequestInit,
-  options: {
-    provider: string;
-    timeoutMs?: number;
-    maxBytes?: number;
-    redirect?: RequestRedirect;
-    fetcher?: typeof fetch;
-    allowHttpError?: boolean;
-    /** Inspect specific non-success replies without bypassing other HTTP errors. */
-    allowHttpStatuses?: readonly number[];
-    /** One retry for replayable reads only; never retry parsing or validation. */
-    retryTransient?: boolean;
-    /**
-     * When the lookup ends, on `performance.now()`'s clock. A retry whose wait
-     * reaches it is not made: the first failure stands at once rather than
-     * when the lookup's signal ends the wait.
-     */
-    deadline?: number;
-  },
+  options: BoundedFetchOptions,
 ): Promise<{ response: Response; bytes: Uint8Array }> {
   const maxBytes = options.maxBytes ?? DEFAULT_MAX_BYTES;
   let response: Response;
@@ -101,7 +117,8 @@ export async function fetchBounded(
         signal: init.signal ? AbortSignal.any([init.signal, timeout]) : timeout,
       });
     } catch (error) {
-      if (options.retryTransient && attempt === 0 && await pausedBeforeRetry(DEFAULT_RETRY_DELAY_MS, init.signal)) continue;
+      if (options.retryTransient && attempt === 0 && fitsBeforeDeadline(DEFAULT_RETRY_DELAY_MS, options.deadline)
+        && await pausedBeforeRetry(DEFAULT_RETRY_DELAY_MS, init.signal)) continue;
       throw new UpstreamNetworkError(options.provider, error, requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
     }
     if (response.ok || options.allowHttpError || options.allowHttpStatuses?.includes(response.status)) break;
@@ -114,7 +131,7 @@ export async function fetchBounded(
       requestDiagnostics(url, init, options.timeoutMs ?? 15_000));
     if (options.retryTransient && attempt === 0
       && TRANSIENT_HTTP_STATUSES.has(response.status) && delay !== null
-      && (options.deadline === undefined || performance.now() + delay < options.deadline)) {
+      && fitsBeforeDeadline(delay, options.deadline)) {
       await cancelQuietly(response.body);
       if (await pausedBeforeRetry(delay, init.signal)) continue;
       // The body is gone, but the status the provider gave is still the answer.

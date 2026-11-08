@@ -110,6 +110,9 @@ after a challenge, a transport failure or an inconclusive answer, and never afte
 one. An adapter whose own read fails to reach the carrier or hangs can send it once more
 through [networkRetry](core/runner/networkRetry.ts): the first try gets at most half of the
 time left, so the retry fits in the budget. An HTTP status or a reply is never sent again.
+A read that opts into [fetchBounded](core/transport/boundedFetch.ts)'s own retry passes the
+lookup's deadline with it. A pause that would reach it is not taken: a rate limit then fails
+at once with its kind and `Retry-After` window, rather than when the budget runs out.
 
 ## A lookup
 

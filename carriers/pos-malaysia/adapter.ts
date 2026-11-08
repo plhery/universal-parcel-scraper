@@ -169,6 +169,7 @@ export class PosMalaysiaTracker {
     if (!Number.isFinite(budgetMs) || budgetMs <= 0) throw new TypeError('Pos Malaysia budget must be positive');
     return runSteps({ carrier: 'pos-malaysia', budgetMs, signal: context.signal, recorder: this.recorder }, [{
       id: 'direct', run: async ({ signal, remainingMs }) => {
+        const deadline = performance.now() + remainingMs;
         try {
           const { bytes } = await fetchBounded(TRACKING_ENDPOINT, {
             method: 'POST', signal,
@@ -182,7 +183,7 @@ export class PosMalaysiaTracker {
             body: JSON.stringify({ connote_ids: [trackingNumber], culture: 'en' }),
           }, {
             provider: 'Pos Malaysia tracking', timeoutMs: Math.max(1, Math.floor(remainingMs)),
-            maxBytes: MAX_RESPONSE_BYTES, retryTransient: true, fetcher: this.fetcher,
+            maxBytes: MAX_RESPONSE_BYTES, retryTransient: true, deadline, fetcher: this.fetcher,
           });
           return parsePosMalaysiaTrackingResponse(parseJsonBytes(bytes, 'Pos Malaysia tracking'), trackingNumber);
         } catch (error) {

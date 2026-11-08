@@ -318,6 +318,7 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
+      deadline: budget.deadline,
       allowHttpStatuses: [403],
       fetcher: this.fetcher,
     });
@@ -363,6 +364,7 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_RESPONSE_BYTES,
       retryTransient: true,
+      deadline: budget.deadline,
       fetcher: this.fetcher,
     });
     const payload = parseJsonBytes(bytes, 'CTT tracking');
@@ -402,6 +404,7 @@ export class CttTracker {
       timeoutMs: Math.min(this.timeoutMs, budget.remainingMs()),
       maxBytes: MAX_SCRIPT_BYTES,
       retryTransient: true,
+      deadline: budget.deadline,
       fetcher: this.fetcher,
     });
     return { bytes };

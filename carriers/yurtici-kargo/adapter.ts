@@ -33,7 +33,7 @@ export class YurticiKargoTracker {
 
   private async lookup(number: string, { signal, remainingMs }: StepContext): Promise<CarrierResult> {
     const deadline = performance.now() + remainingMs;
-    const get = (url: string, id: string) => this.get(url, id, signal, Math.max(1, Math.floor(deadline - performance.now())));
+    const get = (url: string, id: string) => this.get(url, id, signal, deadline);
     const search = parseYurticiSearch(await get(YURTICI_SEARCH_URL, number), number);
     const detail = await get(YURTICI_DETAIL_URL, search.id);
     // The tracker lists movements until the parcel is delivered or returned, and only asks then.
@@ -41,13 +41,14 @@ export class YurticiKargoTracker {
     return parseYurtici(detail, movements, number, search);
   }
 
-  private async get(url: string, id: string, signal: AbortSignal, timeoutMs: number): Promise<unknown> {
+  private async get(url: string, id: string, signal: AbortSignal, deadline: number): Promise<unknown> {
     signal.throwIfAborted();
     let bytes: Uint8Array;
     try {
       ({ bytes } = await fetchBounded(`${url}?${new URLSearchParams({ id, language: 'en' })}`,
         { signal, headers: { Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent) } },
-        { provider: PROVIDER, timeoutMs, maxBytes: YURTICI_MAX_BYTES, fetcher: this.options.fetcher, retryTransient: true }));
+        { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: YURTICI_MAX_BYTES,
+          fetcher: this.options.fetcher, retryTransient: true, deadline }));
     } catch (error) {
       // A missing route is not a missing shipment.
       if (error instanceof UpstreamHttpError && [404, 410].includes(error.status)) {

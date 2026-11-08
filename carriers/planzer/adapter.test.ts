@@ -50,6 +50,20 @@ describe('Planzer and Quickpac transient failures', () => {
   });
 });
 
+describe('Planzer rate limits', () => {
+  it('fails at once as rate limited when the wait Retry-After asks for outlasts the lookup', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('Too many requests', {
+      status: 429, headers: { 'Retry-After': '30' },
+    }));
+    const started = performance.now();
+    await expect(new PlanzerTracker({ fetcher }).fetch(QUICKPAC_NUMBER, { budgetMs: 3_000 }))
+      .rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 30_000 });
+    // The budget is not spent waiting for a retry that could not be made.
+    expect(performance.now() - started).toBeLessThan(1_000);
+    expect(fetcher).toHaveBeenCalledOnce();
+  });
+});
+
 describe('Planzer and Quickpac no-data responses', () => {
   it('keeps both direct tracking number formats and surfaces the API 404', async () => {
     const fetcher = vi.spyOn(globalThis, 'fetch')

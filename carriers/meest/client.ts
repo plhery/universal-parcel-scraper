@@ -66,8 +66,8 @@ export class MeestPortalTracker {
   }
 
   private async lookup(number: string, step: StepContext, refresh: boolean, attemptMs = step.remainingMs): Promise<CarrierResult> {
-    const started = performance.now();
-    const timeoutMs = () => Math.max(1, Math.floor(Math.min(step.remainingMs, attemptMs) - (performance.now() - started)));
+    const deadline = performance.now() + Math.min(step.remainingMs, attemptMs);
+    const timeoutMs = () => Math.max(1, Math.floor(deadline - performance.now()));
     const userAgent = userAgentOf(this.options.userAgent);
     const kept = !refresh && this.salt && this.salt.until > Date.now() ? this.salt : undefined;
     let salt = kept?.value;
@@ -77,7 +77,7 @@ export class MeestPortalTracker {
         headers: { Accept: 'text/html', 'User-Agent': userAgent } },
       { provider: this.options.provider, timeoutMs: timeoutMs(), maxBytes: PAGE_MAX_BYTES, fetcher: this.options.fetcher,
         redirect: this.options.strictRoute ? 'manual' : 'error',
-        allowHttpStatuses: this.options.strictRoute ? [301, 302, 303, 307, 308, 404, 410] : [404, 410], retryTransient: !this.options.networkOnlyRetry });
+        allowHttpStatuses: this.options.strictRoute ? [301, 302, 303, 307, 308, 404, 410] : [404, 410], retryTransient: !this.options.networkOnlyRetry, deadline });
       // A missing page is a moved tracker, not a missing parcel.
       if (!response.ok) throw new TransportError(this.options.provider, 'Meest tracking page is unavailable');
       this.checkRoute(response, MEEST_PAGE);
@@ -90,7 +90,7 @@ export class MeestPortalTracker {
       headers: { Accept: 'application/xml, text/xml', 'User-Agent': userAgent } },
     { provider: this.options.provider, timeoutMs: timeoutMs(), maxBytes: this.options.maxBytes, fetcher: this.options.fetcher,
       redirect: this.options.strictRoute ? 'manual' : 'error',
-      allowHttpStatuses: this.options.strictRoute ? [301, 302, 303, 307, 308, 400, 404, 410] : [400, 404, 410], retryTransient: !this.options.networkOnlyRetry });
+      allowHttpStatuses: this.options.strictRoute ? [301, 302, 303, 307, 308, 400, 404, 410] : [400, 404, 410], retryTransient: !this.options.networkOnlyRetry, deadline });
     // The lookup answers a check made with any other salt with an empty 400.
     if (response.status === 400) {
       if (this.salt?.value === salt) this.salt = undefined;

@@ -14,8 +14,8 @@ decides the route; it is not a fallback tier.
 
 1. API: `GET https://api.tracking.app.planzer.ch/api/v1/shipments/{shipment}/Pak`,
    10 s timeout. One replay after a transport failure or HTTP 502/503/504, or
-   after a 429 with a `Retry-After` of at most 60 s. An unknown number is an
-   HTTP 404.
+   after a 429 with a `Retry-After` of at most 60 s, when the pause ends before
+   the lookup does. An unknown number is an HTTP 404.
 2. Shared link: `GET https://trackandtrace.planzergroup.com/shared/sendungen/{number}?accessKey=…`,
    15 s timeout. The page has no status code; its five route steps are read from
    the markup (tooltip label names the stage, `text-primary` marks reached
