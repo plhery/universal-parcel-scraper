@@ -54,6 +54,14 @@ describe('SpeedPAK response projection', () => {
     expect(parseSpeedpak(payload, NUMBER).delivery_tracking_number).toBeUndefined();
   });
 
+  it('names PostNL for a hand-off to "Nl Post" with a PostNL reference', () => {
+    const payload = fixture();
+    for (const trace of payload.result.waybills[0].traces) {
+      if (String(trace.eventDesc).startsWith('LM Carrier')) trace.eventDesc = 'LM Carrier: [Nl Post] , LM tracking No.：[RR000000005NL]';
+    }
+    expect(parseSpeedpak(payload, NUMBER)).toMatchObject({ delivery_carrier: 'spring-gds', delivery_tracking_number: 'RR000000005NL' });
+  });
+
   it('classifies a last-mile carrier\'s wording by SpeedPAK\'s own Chinese label', () => {
     const payload = JSON.parse(readFileSync(new URL('./fixtures/last-mile.json', import.meta.url), 'utf8'));
     const result = parseSpeedpak(payload, 'EE0000000000000UN00000000G0N');

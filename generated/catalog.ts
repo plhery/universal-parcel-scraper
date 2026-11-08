@@ -422,7 +422,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Mailing Technology",
       "PostNL - Netherlands Post",
       "Spring Global Mail",
-      "PostNL International Mail"
+      "PostNL International Mail",
+      "NL Post"
     ],
     "countries": [
       "NL"
