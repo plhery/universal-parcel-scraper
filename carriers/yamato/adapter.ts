@@ -1,9 +1,11 @@
 
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import {
+  ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError,
+} from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
@@ -55,6 +57,13 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   if (['伝票番号未登録', '伝票番号誤り'].includes(wording)) {
     if (rows.length) throw new SchemaError(PROVIDER, 'Yamato returned history alongside a missing-shipment state');
     throw new NotFoundError(PROVIDER);
+  }
+  // A number of a service the page does not track (クロネコゆうメール): its range is
+  // Yamato's, but nothing says such a parcel exists.
+  if (wording === '問い合わせ対象外') {
+    if (rows.length) throw new SchemaError(PROVIDER, 'Yamato returned history alongside an untracked-service state');
+    throw new IndeterminateError(PROVIDER, 'Yamato’s inquiry page does not track the service this number belongs to',
+      { reason: 'unsupported_service' });
   }
   if (history.length !== 1 || !rows.length || rows.length > 1000) {
     throw new SchemaError(PROVIDER, 'Yamato returned missing or excessive shipment history');
@@ -126,5 +135,11 @@ export class YamatoTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new YamatoTracker({ fetcher: environment.fetcher, userAgent: environment.userAgent });
-  return { id: 'yamato', steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return {
+    id: 'yamato', steps: ['direct'],
+    track: (input, context) => tracker.fetch(input.number, context),
+    // A parcel the page holds lists its scans; one it does not hold is named missing.
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+      () => accepted(() => normalizeYamatoNumber(number))),
+  };
 };

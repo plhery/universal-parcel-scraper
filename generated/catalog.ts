@@ -4591,6 +4591,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "yamato",
+      "recognitionRank": 14,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://toi.kuronekoyamato.co.jp/cgi-bin/tneko",

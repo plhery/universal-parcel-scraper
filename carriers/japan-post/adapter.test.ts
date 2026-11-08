@@ -376,9 +376,10 @@ describe('Japan Post retrieval', () => {
     await expect(new JapanPostTracker({ fetcher: slow }).fetch(NUMBER, { budgetMs: 20.5 })).rejects.toMatchObject({ kind: 'transport' });
   });
 
-  it('is asked first about twelve digits passing mod 7 from Japan, and recognizes from the same lookup', async () => {
+  it('is asked with Yamato about twelve digits passing mod 7 from Japan, and recognizes from the same lookup', async () => {
     // Synthetic: the first eleven digits leave 4 divided by seven.
-    expect(recognitionAskedCarriers('100000000004', { countryHint: 'JP' })[0]).toBe('japan-post');
+    expect(recognitionAskedCarriers('100000000004', { countryHint: 'JP' }).slice(0, 2)).toEqual(['yamato', 'japan-post']);
+    expect(recognitionAskedCarriers('100000000004', { countryHint: 'FR' })).not.toContain('yamato');
     expect(recognitionAskedCarriers('100000000005', { countryHint: 'JP' })).not.toContain('japan-post');
     const answering = (body: string) => adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(new Response(body)),
       trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });

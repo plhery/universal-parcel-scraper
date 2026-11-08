@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, normalizeYamatoNumber, parse, YamatoTracker } from './adapter.js';
@@ -123,6 +124,16 @@ describe('Yamato parser', () => {
     expect(() => parse($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('reads a number of a service the page does not track as inconclusive, bound to the number', () => {
+    const $ = load(fixture());
+    $('.tracking-invoice-block-state-title').text('問い合わせ対象外');
+    expect(() => parse($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    $('.tracking-invoice-block-detail').remove();
+    expect(() => parse($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', reason: 'unsupported_service' }));
+    $('.tracking-invoice-block-title').text('1件目：9999-9999-9999');
+    expect(() => parse($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('rejects contradictory missing-shipment states with positive history', () => {
     const $ = load(fixture());
     $('.tracking-invoice-block-state-title').text('伝票番号未登録');
@@ -182,6 +193,26 @@ describe('Yamato retrieval', () => {
       expect(new Headers(init?.headers).has('cookie')).toBe(false);
       expect(init?.signal).toBeInstanceOf(AbortSignal);
     }
+  });
+
+  it('is asked only from Japan, and recognizes from the same lookup', async () => {
+    // Synthetic: the first eleven digits leave 4 divided by seven.
+    expect(recognitionAskedCarriers('100000000004', { countryHint: 'JP' })).toContain('yamato');
+    expect(recognitionAskedCarriers('100000000004')).not.toContain('yamato');
+    expect(recognitionAskedCarriers('100000000005', { countryHint: 'JP' })).not.toContain('yamato');
+    const answering = (state?: string, history = true) => {
+      const $ = load(fixture());
+      if (state) $('.tracking-invoice-block-state-title').text(state);
+      if (!history) $('.tracking-invoice-block-detail').remove();
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response($.html()));
+      return { fetcher, instance: adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null }) };
+    };
+    await expect(answering().instance.recognize!(NUMBER)).resolves.toMatchObject({ known: true, lastActivityAt: null });
+    await expect(answering('伝票番号未登録', false).instance.recognize!(NUMBER)).resolves.toEqual({ known: false });
+    await expect(answering('問い合わせ対象外', false).instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    const { fetcher, instance } = answering();
+    await expect(instance.recognize!('UL000000005JP')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
   });
 
   it.each(['123', '1234567890123', 'ABC123456789', '123456789012&number02=123'])('rejects unsupported input %s before I/O', async (number) => {

@@ -18,6 +18,10 @@
     "steps": [
       "direct"
     ],
+    "recognition": {
+      "rank": 14,
+      "servedCountriesOnly": true
+    },
     "localClocks": true
   },
   "capabilities": [
