@@ -414,6 +414,28 @@ describe('Yanwen result projection', () => {
     expect(yanwenStatus('The parcel has been successfully picked up. Customer service:130000')).toBeUndefined();
   });
 
+  it("reads YWE's relayed scans as YWE's map does, its hub's receipt after Yanwen's batch handover as transit", () => {
+    for (const [wording, stage] of [
+      ['Parcel received by ORD01.', 'in_transit'],
+      ['Parcel received by in LAX01.', 'in_transit'],
+      ['Container received', 'in_transit'],
+      ['Parcel received by local Facility.', 'in_transit'],
+      ['Parcel is out for delivery.', 'out_for_delivery'],
+      ['Parcel has been delivered.(Front door)', 'delivered'],
+    ] as const) {
+      expect(yanwenStatus(wording)?.stage, wording).toBe(stage);
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe(stage);
+    }
+    const result = history([
+      ['2026-11-08', '07:55:07 [GMT-06]', 'EXAMPLE CITY, IL, US', 'Parcel is out for delivery.'],
+      ['2026-11-07', '17:00:01 [GMT-06]', 'EXAMPLE CITY, IL, US', 'Parcel received by local Facility.'],
+      ['2026-11-07', '16:59:56 [GMT-06]', 'EXAMPLE CITY, IL, US', 'Parcel received by ORD01.'],
+      ['2026-11-07', '15:37:00 [GMT-06]', '', 'Batch delivery to carrier', 'LH40'],
+    ], '正在派送', 'US');
+    expect(result.events?.map((event) => event.stage)).toEqual(['out_for_delivery', 'in_transit', 'in_transit', 'in_transit']);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);

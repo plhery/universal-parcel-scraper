@@ -950,6 +950,30 @@
       "note": "GOFO's round from its delivery station, as the forwarder relays it."
     },
     {
+      "wording": "Parcel received by ORD01.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "YWE's hub receiving the parcel after Yanwen's batch handover at the destination port, relayed without YWE's code: a handover, not the parcel's acceptance, which YWE's own history reads it as. Other hubs' codes take ORD01's place."
+    },
+    {
+      "wording": "Parcel received by local Facility.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "YWE's delivery station receiving the parcel, relayed without YWE's code; read as YWE's map reads it."
+    },
+    {
+      "wording": "Parcel is out for delivery.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "YWE's round from its delivery station, relayed without YWE's code; read as YWE's map reads it."
+    },
+    {
       "code": "LM40",
       "stage": "delivered",
       "confirmedBy": "live",

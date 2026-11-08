@@ -4,6 +4,7 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 import { chinaPostRelayedStage } from '../china-post/status.js';
 import { withoutCourtesy } from '../j-and-t-au/identity.js';
 import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
+import { yweMappedStage } from '../ywe/status.js';
 
 const WORDING = new Map<string, ClassifiedStatus>([
   ['Delivered.', { status: 'delivered', stage: 'delivered' }],
@@ -185,9 +186,19 @@ function jAndTAuRelayedStage(wording: string): Stage | undefined {
 /** A relayed scan's wording without J&T Australia's customer service line and the courtesy that offers it, as J&T's own adapter keeps neither. */
 export const yanwenWording = (description: string): string => withoutCourtesy(description.replace(HOTLINE, '.')).trim();
 
+// YWE's scans in the United States after Yanwen's batch handover at the destination port, relayed without YWE's codes:
+// read as YWE's own map reads them, but its hub's receipt of the container and of the parcel is Yanwen's handover, not
+// the parcel's acceptance.
+function yweRelayedStage(wording: string): Stage | undefined {
+  const stage = yweMappedStage(wording);
+  return stage === 'accepted' ? 'in_transit' : stage;
+}
+
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
-// map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T Australia's.
-const relayedStage = (normalized: string): Stage | undefined => chinaPostRelayedStage(normalized) ?? jAndTAuRelayedStage(normalized);
+// map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T
+// Australia's, then YWE's.
+const relayedStage = (normalized: string): Stage | undefined => chinaPostRelayedStage(normalized) ?? jAndTAuRelayedStage(normalized)
+  ?? yweRelayedStage(normalized);
 
 function relayedStatus(description: string): ClassifiedStatus | undefined {
   const stage = relayedStage(normalizeStatusWording(description));
