@@ -1,7 +1,9 @@
 {
   "id": "austrian-post",
   "displayName": "Austrian Post",
-  "aliases": [],
+  "aliases": [
+    "Österreichische Post"
+  ],
   "region": {
     "countries": [
       "AT"

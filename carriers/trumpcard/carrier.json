@@ -1,0 +1,45 @@
+{
+  "id": "trumpcard",
+  "displayName": "TrumpCard",
+  "aliases": [
+    "TrumpCard Inc.",
+    "TCard"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#a90000"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ace2.trumpcardinc.com/searchairbill?SearchByAirbill={trackingNumber}&SearchByRefPO=",
+    "searchUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "canaryUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ace2.trumpcardinc.com"
+      ],
+      "pathPattern": "^/searchairbill/?$",
+      "params": [
+        "SearchByAirbill"
+      ]
+    }
+  ],
+  "detection": []
+}

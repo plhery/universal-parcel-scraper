@@ -1,0 +1,42 @@
+{
+  "id": "fastship-th",
+  "displayName": "FastShip",
+  "aliases": [
+    "FastShip Co., Ltd.",
+    "บริษัท ฟาสต์ชิป จำกัด"
+  ],
+  "region": {
+    "countries": [
+      "TH"
+    ]
+  },
+  "brand": {
+    "color": "#ff5e1f"
+  },
+  "selectable": true,
+  "timezone": "Asia/Bangkok",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.fastship.co/{trackingNumber}",
+    "searchUrl": "https://track.fastship.co/",
+    "canaryUrl": "https://track.fastship.co/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.fastship.co"
+      ],
+      "path": "^/([A-Za-z0-9]+)/?$"
+    }
+  ],
+  "detection": []
+}

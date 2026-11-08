@@ -1,0 +1,46 @@
+{
+  "id": "runforint",
+  "displayName": "Runforint Logistics",
+  "aliases": [
+    "Runforint",
+    "RFL",
+    "润峯物流",
+    "润峯",
+    "江苏润峯国际物流有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#c51e32"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
+    "searchUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137",
+    "canaryUrl": "https://www.runforint.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.runforint.com"
+      ],
+      "pathPattern": "^/index\\.php$",
+      "query": "^(?=(?:.*&)?tid=137(?:&|$))(?:.*&)?key=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}

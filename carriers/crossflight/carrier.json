@@ -1,0 +1,53 @@
+{
+  "id": "crossflight",
+  "displayName": "Crossflight",
+  "aliases": [
+    "Crossflight Limited"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#18355d"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://my.crossflight.com/shipping/tracking/tracking.jsp?shipmentNumbers={trackingNumber}",
+    "searchUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "canaryUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "my.crossflight.com"
+      ],
+      "pathPattern": "^/shipping/tracking/tracking\\.jsp$",
+      "params": [
+        "shipmentNumbers"
+      ]
+    },
+    {
+      "domains": [
+        "my.crossflight.com"
+      ],
+      "pathPattern": "^/tracking/tracking\\.action$",
+      "params": [
+        "shipmentNumbers"
+      ]
+    }
+  ],
+  "detection": []
+}

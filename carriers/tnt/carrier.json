@@ -1,7 +1,10 @@
 {
   "id": "tnt",
   "displayName": "TNT",
-  "aliases": [],
+  "aliases": [
+    "TNT Netherlands",
+    "TNT NL"
+  ],
   "region": {
     "countries": []
   },

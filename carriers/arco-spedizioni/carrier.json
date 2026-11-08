@@ -1,0 +1,34 @@
+{
+  "id": "arco-spedizioni",
+  "displayName": "Arco Spedizioni",
+  "aliases": [
+    "Arco Spedizioni S.p.A.",
+    "Arco Spedizioni SpA"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#151c42"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.arcospedizioni.it/",
+    "canaryUrl": "https://www.arcospedizioni.it/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

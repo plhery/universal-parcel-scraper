@@ -1,0 +1,35 @@
+{
+  "id": "the-delivery-group",
+  "displayName": "The Delivery Group",
+  "aliases": [
+    "TDG",
+    "The Delivery Group Limited"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#87b04a"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",
+    "searchUrl": "https://tracking.dockethub.com/shipment/?style=TDG",
+    "canaryUrl": "https://tracking.dockethub.com/shipment/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "brauns-express",
+  "displayName": "Braun's Express",
+  "aliases": [
+    "Braun's Express, Inc.",
+    "Brauns Express"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#155196"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.braunsexpress.com/tracking/?tracking_number={trackingNumber}",
+    "searchUrl": "https://www.braunsexpress.com/tracking/",
+    "canaryUrl": "https://www.braunsexpress.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.braunsexpress.com",
+        "braunsexpress.com"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "tracking_number"
+      ]
+    }
+  ],
+  "detection": []
+}

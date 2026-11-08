@@ -1,0 +1,34 @@
+{
+  "id": "aeronet",
+  "displayName": "Aeronet Worldwide",
+  "aliases": [
+    "Aeronet",
+    "Aeronet Worldwide, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#00529b"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.aeronet.com/tracking/",
+    "canaryUrl": "https://www.aeronet.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

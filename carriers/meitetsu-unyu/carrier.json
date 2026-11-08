@@ -1,0 +1,36 @@
+{
+  "id": "meitetsu-unyu",
+  "displayName": "Meitetsu NX Unyu",
+  "aliases": [
+    "名鉄運輸",
+    "名鉄NX運輸",
+    "Meitetsu Unyu",
+    "Meitetsu Transportation"
+  ],
+  "region": {
+    "countries": [
+      "JP"
+    ]
+  },
+  "brand": {
+    "color": "#004da0"
+  },
+  "selectable": true,
+  "timezone": "Asia/Tokyo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "canaryUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

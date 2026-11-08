@@ -1738,7 +1738,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Heppner",
     "color": "#005baa",
     "aliases": [
-      "Heppner Group"
+      "Heppner Group",
+      "Heppner Internationale Spedition GmbH & Co."
     ],
     "countries": [
       "FR",
@@ -2577,6 +2578,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   "austrian-post": {
     "displayName": "Austrian Post",
     "color": "#ffdc00",
+    "aliases": [
+      "Österreichische Post"
+    ],
     "countries": [
       "AT"
     ],
@@ -5263,6 +5267,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   "tnt": {
     "displayName": "TNT",
     "color": "#ff6600",
+    "aliases": [
+      "TNT Netherlands",
+      "TNT NL"
+    ],
     "selectable": true,
     "timezone": "Europe/Paris",
     "tracking": {
@@ -6607,6 +6615,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "mod7"
       }
     ]
+  },
+  "aeronet": {
+    "displayName": "Aeronet Worldwide",
+    "color": "#00529b",
+    "aliases": [
+      "Aeronet",
+      "Aeronet Worldwide, Inc."
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.aeronet.com/tracking/",
+    "trackingSearchUrl": "https://www.aeronet.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "aeropost": {
     "displayName": "Aeropost",
@@ -8671,6 +8700,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "arco-spedizioni": {
+    "displayName": "Arco Spedizioni",
+    "color": "#151c42",
+    "aliases": [
+      "Arco Spedizioni S.p.A.",
+      "Arco Spedizioni SpA"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.arcospedizioni.it/",
+    "trackingSearchUrl": "https://www.arcospedizioni.it/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ark-express": {
     "displayName": "ARK Express",
     "color": "#0168b7",
@@ -9545,7 +9595,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "北俄国际",
       "北俄物流",
       "北俄供应链",
-      "北俄供应链（深圳）有限公司"
+      "北俄供应链（深圳）有限公司",
+      "BEL North Russia",
+      "North Russia Supply Chain (Shenzhen) Co."
     ],
     "countries": [
       "CN",
@@ -10672,6 +10724,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "boxc": {
+    "displayName": "BoxC",
+    "color": "#2e8049",
+    "aliases": [
+      "BoxC Logistics",
+      "BoxC Logistics, Inc."
+    ],
+    "countries": [
+      "US",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://boxc.com/track",
+    "trackingUrlTemplate": "https://boxc.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://boxc.com/track",
+    "linkRules": [
+      {
+        "domains": [
+          "boxc.com",
+          "www.boxc.com"
+        ],
+        "path": "^/track/([^/?#]+)/?$",
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": []
+  },
   "boxtal": {
     "displayName": "Boxtal",
     "color": "#1e5fa6",
@@ -10830,6 +10914,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.braspress.com/",
     "trackingSearchUrl": "https://www.braspress.com/rastreie-sua-encomenda/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "brauns-express": {
+    "displayName": "Braun's Express",
+    "color": "#155196",
+    "aliases": [
+      "Braun's Express, Inc.",
+      "Brauns Express"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/New_York",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.braunsexpress.com/tracking/",
+    "trackingUrlTemplate": "https://www.braunsexpress.com/tracking/?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.braunsexpress.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.braunsexpress.com",
+          "braunsexpress.com"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "bridge-intl": {
@@ -14325,6 +14442,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "crossflight": {
+    "displayName": "Crossflight",
+    "color": "#18355d",
+    "aliases": [
+      "Crossflight Limited"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "trackingUrlTemplate": "https://my.crossflight.com/shipping/tracking/tracking.jsp?shipmentNumbers={trackingNumber}",
+    "trackingSearchUrl": "https://my.crossflight.com/shipping/tracking/tracking.jsp",
+    "linkRules": [
+      {
+        "domains": [
+          "my.crossflight.com"
+        ],
+        "pathPattern": "^/shipping/tracking/tracking\\.jsp$",
+        "params": [
+          "shipmentNumbers"
+        ]
+      },
+      {
+        "domains": [
+          "my.crossflight.com"
+        ],
+        "pathPattern": "^/tracking/tracking\\.action$",
+        "params": [
+          "shipmentNumbers"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cruz-del-sur": {
     "displayName": "Cruz del Sur",
     "color": "#2a367c",
@@ -16592,6 +16749,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "doora-logistics": {
+    "displayName": "Doora Logistics",
+    "color": "#e27c34",
+    "aliases": [
+      "DOORA LOGISTICS CO., LTD.",
+      "Doora",
+      "두라로지스틱스",
+      "(주)두라로지스틱스"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.doora.co.kr/",
+    "trackingUrlTemplate": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff&bl={trackingNumber}",
+    "trackingSearchUrl": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff",
+    "linkRules": [
+      {
+        "domains": [
+          "www.doora.co.kr",
+          "doora.co.kr"
+        ],
+        "pathPattern": "^/?$",
+        "query": "^(?=(?:.*&)?p=43bf98f0-5801-4251-89ff-f22199d58dff(?:&|$))(?:.*&)?bl=([^&]+)(?=&|$)"
+      },
+      {
+        "domains": [
+          "lms.doora.co.kr"
+        ],
+        "pathPattern": "^/script/users/tracking\\.php$",
+        "query": "^(?=(?:.*&)?mode=search(?:&|$))(?:.*&)?search_no=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
   },
   "dpd-at": {
     "displayName": "DPD Austria",
@@ -20548,6 +20745,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "fastship-th": {
+    "displayName": "FastShip",
+    "color": "#ff5e1f",
+    "aliases": [
+      "FastShip Co., Ltd.",
+      "บริษัท ฟาสต์ชิป จำกัด"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.fastship.co/",
+    "trackingUrlTemplate": "https://track.fastship.co/{trackingNumber}",
+    "trackingSearchUrl": "https://track.fastship.co/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.fastship.co"
+        ],
+        "path": "^/([A-Za-z0-9]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "fasttrack-ar": {
     "displayName": "Fast Track",
     "color": "#ba172a",
@@ -21006,7 +21232,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "一代国际集团",
       "深圳市一代国际物流（集团）有限公司",
       "壹号专线",
-      "深圳市壹号专线供应链有限公司"
+      "深圳市壹号专线供应链有限公司",
+      "Shenzhen 1st International Logistics",
+      "Shenzhen 1st International Logistics (Group) Co."
     ],
     "countries": [
       "CN"
@@ -23689,7 +23917,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "GoGoXpress",
       "GGX",
       "QuadX",
-      "QuadX Inc."
+      "QuadX Inc.",
+      "XPost",
+      "Xpost.ph"
     ],
     "countries": [
       "PH"
@@ -32186,6 +32416,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "meitetsu-unyu": {
+    "displayName": "Meitetsu NX Unyu",
+    "color": "#004da0",
+    "aliases": [
+      "名鉄運輸",
+      "名鉄NX運輸",
+      "Meitetsu Unyu",
+      "Meitetsu Transportation"
+    ],
+    "countries": [
+      "JP"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Tokyo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "trackingSearchUrl": "https://ap.meitetsuunyu.co.jp/webtrace/webtsuiseki/webtsuiseki.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mensajeros-urbanos": {
     "displayName": "Mensajeros Urbanos",
     "color": "#27adb8",
@@ -40291,6 +40544,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "runforint": {
+    "displayName": "Runforint Logistics",
+    "color": "#c51e32",
+    "aliases": [
+      "Runforint",
+      "RFL",
+      "润峯物流",
+      "润峯",
+      "江苏润峯国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.runforint.com/",
+    "trackingUrlTemplate": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
+    "trackingSearchUrl": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137",
+    "linkRules": [
+      {
+        "domains": [
+          "www.runforint.com"
+        ],
+        "pathPattern": "^/index\\.php$",
+        "query": "^(?=(?:.*&)?tid=137(?:&|$))(?:.*&)?key=([^&]+)(?=&|$)"
+      }
+    ],
+    "detectionRules": []
+  },
   "runner-express": {
     "displayName": "Runner Express",
     "color": "#e71c22",
@@ -41133,7 +41419,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "セイノースーパーエクスプレス株式会社",
       "Seino Super Express Co., Ltd.",
       "西武運輸",
-      "Seibu Unyu"
+      "Seibu Unyu",
+      "西濃スーパーエキスプレス"
     ],
     "countries": [
       "JP"
@@ -41568,7 +41855,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Send From China",
       "SFC Express",
       "三态速递",
-      "深圳三态现代物流有限公司"
+      "深圳三态现代物流有限公司",
+      "SFC Fulfillment"
     ],
     "countries": [
       "CN"
@@ -42725,7 +43013,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "SkyNet WWE",
       "Skynet Express",
       "Deltec International Courier",
-      "Deltec Courier"
+      "Deltec Courier",
+      "SkyNet UAE",
+      "SkyNet Worldwide Express UAE"
     ],
     "countries": [
       "GB"
@@ -45597,7 +45887,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "MyTeamGE",
       "Toll Global Express",
       "Toll IPEC",
-      "Toll Priority"
+      "Toll Priority",
+      "Toll New Zealand",
+      "Toll NZ"
     ],
     "countries": [
       "AU",
@@ -45981,6 +46273,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/track-shipment/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "the-delivery-group": {
+    "displayName": "The Delivery Group",
+    "color": "#87b04a",
+    "aliases": [
+      "TDG",
+      "The Delivery Group Limited"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.dockethub.com/shipment/",
+    "trackingUrlTemplate": "https://tracking.dockethub.com/shipment/{trackingNumber}?style=TDG",
+    "trackingSearchUrl": "https://tracking.dockethub.com/shipment/?style=TDG",
+    "linkRules": [],
     "detectionRules": []
   },
   "the-human-express": {
@@ -46422,7 +46736,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "TNT Italy",
     "color": "#ff6600",
     "aliases": [
-      "TNT Italia"
+      "TNT Italia",
+      "TNT-Click Italy",
+      "TNT-Click"
     ],
     "countries": [
       "IT"
@@ -47551,6 +47867,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/?$",
         "params": [
           "t"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "trumpcard": {
+    "displayName": "TrumpCard",
+    "color": "#a90000",
+    "aliases": [
+      "TrumpCard Inc.",
+      "TCard"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "trackingUrlTemplate": "https://ace2.trumpcardinc.com/searchairbill?SearchByAirbill={trackingNumber}&SearchByRefPO=",
+    "trackingSearchUrl": "https://ace2.trumpcardinc.com/searchairbill",
+    "linkRules": [
+      {
+        "domains": [
+          "ace2.trumpcardinc.com"
+        ],
+        "pathPattern": "^/searchairbill/?$",
+        "params": [
+          "SearchByAirbill"
         ]
       }
     ],
@@ -52341,6 +52689,7 @@ export const CARRIER_IDS = [
   "acex",
   "aci-express-kr",
   "acs-courier",
+  "aeronet",
   "aeropost",
   "aex-paraguay",
   "afghan-post",
@@ -52399,6 +52748,7 @@ export const CARRIER_IDS = [
   "aramex-au",
   "aramex-nz",
   "aras-kargo",
+  "arco-spedizioni",
   "ark-express",
   "arrow-express",
   "arrow-xl",
@@ -52452,11 +52802,13 @@ export const CARRIER_IDS = [
   "bosta",
   "botswana-post",
   "box-now",
+  "boxc",
   "boxtal",
   "boyuan",
   "bqc-logistics",
   "branding-worldwide",
   "braspress",
+  "brauns-express",
   "bridge-intl",
   "bringer-parcel",
   "brink-transport",
@@ -52556,6 +52908,7 @@ export const CARRIER_IDS = [
   "cpszy",
   "crane-worldwide",
   "credifin",
+  "crossflight",
   "cruz-del-sur",
   "cse-russia",
   "cst-italia",
@@ -52617,6 +52970,7 @@ export const CARRIER_IDS = [
   "domesa",
   "domex",
   "dongdu",
+  "doora-logistics",
   "dpd-at",
   "dpd-be",
   "dpd-de",
@@ -52717,6 +53071,7 @@ export const CARRIER_IDS = [
   "faster-shipe",
   "fastfrate",
   "fastgo",
+  "fastship-th",
   "fasttrack-ar",
   "fastwl",
   "fedex-freight",
@@ -53044,6 +53399,7 @@ export const CARRIER_IDS = [
   "meest",
   "megacity-courier",
   "meihoo-pegasus",
+  "meitetsu-unyu",
   "mensajeros-urbanos",
   "meso-global",
   "messenger-cz",
@@ -53265,6 +53621,7 @@ export const CARRIER_IDS = [
   "rr-express-sg",
   "rrs-logistics",
   "rtt",
+  "runforint",
   "runner-express",
   "russian-post",
   "rxo",
@@ -53419,6 +53776,7 @@ export const CARRIER_IDS = [
   "tforce-integrated-solutions",
   "tforce-logistics",
   "thabit-logistics",
+  "the-delivery-group",
   "the-human-express",
   "thelorry",
   "thhy",
@@ -53464,6 +53822,7 @@ export const CARRIER_IDS = [
   "transportes-rapex",
   "trendyol-express",
   "trexity",
+  "trumpcard",
   "trunkrs",
   "tsb-es",
   "tsjy",
@@ -53734,6 +54093,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "acex": [],
   "aci-express-kr": [],
   "acs-courier": ["acs-courier-1"],
+  "aeronet": [],
   "aeropost": ["aeropost-1"],
   "aex-paraguay": [],
   "afghan-post": [],
@@ -53792,6 +54152,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aramex-au": ["aramex-au-1"],
   "aramex-nz": ["aramex-nz-mx","aramex-nz-1","aramex-nz-2"],
   "aras-kargo": ["aras-kargo-1"],
+  "arco-spedizioni": [],
   "ark-express": ["ark-express-1"],
   "arrow-express": [],
   "arrow-xl": [],
@@ -53845,11 +54206,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bosta": [],
   "botswana-post": [],
   "box-now": ["box-now-1"],
+  "boxc": [],
   "boxtal": ["boxtal-1"],
   "boyuan": ["boyuan-1"],
   "bqc-logistics": [],
   "branding-worldwide": [],
   "braspress": [],
+  "brauns-express": [],
   "bridge-intl": [],
   "bringer-parcel": ["bringer-parcel-1"],
   "brink-transport": [],
@@ -53949,6 +54312,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cpszy": [],
   "crane-worldwide": [],
   "credifin": [],
+  "crossflight": [],
   "cruz-del-sur": [],
   "cse-russia": [],
   "cst-italia": ["cst-italia-1","cst-italia-2"],
@@ -54010,6 +54374,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "domesa": [],
   "domex": [],
   "dongdu": ["dongdu-1"],
+  "doora-logistics": [],
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
   "dpd-de": ["dpd-de-3","dpd-de-4","dpd-de-1","dpd-de-2"],
@@ -54110,6 +54475,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "faster-shipe": [],
   "fastfrate": [],
   "fastgo": ["fastgo-1"],
+  "fastship-th": [],
   "fasttrack-ar": [],
   "fastwl": [],
   "fedex-freight": [],
@@ -54437,6 +54803,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "meest": ["meest-1","meest-2"],
   "megacity-courier": [],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
+  "meitetsu-unyu": [],
   "mensajeros-urbanos": [],
   "meso-global": ["meso-global-1"],
   "messenger-cz": [],
@@ -54658,6 +55025,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rr-express-sg": [],
   "rrs-logistics": [],
   "rtt": [],
+  "runforint": [],
   "runner-express": [],
   "russian-post": ["russian-post-1","russian-post-s10"],
   "rxo": [],
@@ -54812,6 +55180,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tforce-integrated-solutions": [],
   "tforce-logistics": ["tforce-logistics-1"],
   "thabit-logistics": [],
+  "the-delivery-group": [],
   "the-human-express": ["the-human-express-1"],
   "thelorry": ["thelorry-1"],
   "thhy": ["thhy-1"],
@@ -54857,6 +55226,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transportes-rapex": [],
   "trendyol-express": [],
   "trexity": [],
+  "trumpcard": [],
   "trunkrs": [],
   "tsb-es": [],
   "tsjy": ["tsjy-1"],

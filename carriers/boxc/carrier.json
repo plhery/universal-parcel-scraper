@@ -1,0 +1,45 @@
+{
+  "id": "boxc",
+  "displayName": "BoxC",
+  "aliases": [
+    "BoxC Logistics",
+    "BoxC Logistics, Inc."
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#2e8049"
+  },
+  "selectable": true,
+  "timezone": "America/New_York",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://boxc.com/track/{trackingNumber}",
+    "searchUrl": "https://boxc.com/track",
+    "canaryUrl": "https://boxc.com/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "boxc.com",
+        "www.boxc.com"
+      ],
+      "path": "^/track/([^/?#]+)/?$",
+      "ownNumbersOnly": true
+    }
+  ],
+  "detection": []
+}

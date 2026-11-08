@@ -1,0 +1,53 @@
+{
+  "id": "doora-logistics",
+  "displayName": "Doora Logistics",
+  "aliases": [
+    "DOORA LOGISTICS CO., LTD.",
+    "Doora",
+    "두라로지스틱스",
+    "(주)두라로지스틱스"
+  ],
+  "region": {
+    "countries": [
+      "KR"
+    ]
+  },
+  "brand": {
+    "color": "#e27c34"
+  },
+  "selectable": true,
+  "timezone": "Asia/Seoul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff&bl={trackingNumber}",
+    "searchUrl": "https://www.doora.co.kr/?p=43bf98f0-5801-4251-89ff-f22199d58dff",
+    "canaryUrl": "https://www.doora.co.kr/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.doora.co.kr",
+        "doora.co.kr"
+      ],
+      "pathPattern": "^/?$",
+      "query": "^(?=(?:.*&)?p=43bf98f0-5801-4251-89ff-f22199d58dff(?:&|$))(?:.*&)?bl=([^&]+)(?=&|$)"
+    },
+    {
+      "domains": [
+        "lms.doora.co.kr"
+      ],
+      "pathPattern": "^/script/users/tracking\\.php$",
+      "query": "^(?=(?:.*&)?mode=search(?:&|$))(?:.*&)?search_no=([^&]+)(?=&|$)"
+    }
+  ],
+  "detection": []
+}
