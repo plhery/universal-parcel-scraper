@@ -626,13 +626,13 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/(?<!\b(?:no|nao) )\badmitid[oa]s?\b|\badmision (?:en origen|pais de origen)\b/.test(text)) return 'accepted';
   // Accepted by CTT: its "Aceite" state, and "O envio foi aceite" in its scans. A return request accepted is no parcel.
   if (/^aceite(?:\.|$)|\b(?:envio|objeto|objecto|encomenda|remessa) foi aceite\b/.test(text)) return 'accepted';
-  // A cross-dock transfer, a flight taking off or landing, a tally in a bonded
+  // A cross-dock transfer, a flight taking off, gone or landing, a tally in a bonded
   // warehouse, a hand-over to the last mile being prepared or to an airline, a
   // parcel bagged, unbagged or consolidated onto a master air waybill, a parcel
   // ready for a facility's outbound dispatch or leaving a warehouse, and a
   // forwarder's inbound scan at a facility, which may follow in brackets, move
   // the parcel on.
-  if (/\bcross ?dock(?:ed|ing)?\b|\bready for outbound\b|^(?:(?:item|parcel|package|shipment) )?inbound scan(?:ned|ning)?\b|\b(?:un)?bagg(?:ed|ing)\b|\bmaster (?:air ?way ?bill|awb)(?: (?:number|no))? (?:received|assigned|allocated)\b|\bhand ?over to (?:the |an )?(?:airline|air carrier)\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has )?left (?:the|our) warehouse$|\b(?:flight|leg)\b[^.;]*\b(?:is taking off|took off|has taken off|landed)\b|\bflight (?:take ?off|landing)\b|^(?:initial|final) landing$|\bcargo tally in the supervised warehouse\b|\bprepared for (?:the )?last[- ]mile hand ?over\b/.test(text)) return 'in_transit';
+  if (/\bcross ?dock(?:ed|ing)?\b|\bready for outbound\b|^(?:(?:item|parcel|package|shipment) )?inbound scan(?:ned|ning)?\b|\b(?:un)?bagg(?:ed|ing)\b|\bmaster (?:air ?way ?bill|awb)(?: (?:number|no))? (?:received|assigned|allocated)\b|\bhand ?over to (?:the |an )?(?:airline|air carrier)\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has )?left (?:the|our) warehouse$|\b(?:flight|leg)\b[^.;]*\b(?:is taking off|took off|has taken off|has left|landed)\b|\bflight (?:take ?off|landing)\b|^(?:initial|final) landing$|\bcargo tally in the supervised warehouse\b|\bprepared for (?:the )?last[- ]mile hand ?over\b/.test(text)) return 'in_transit';
   // The airline's notice of arrival (NOA) reaching the destination agent, after the landing and
   // before clearance, as Shouwu, JRT and the ground handlers word it.
   if (/^(?:the )?noa (?:has been |was )?received$|^noa-notification of arrival\b/.test(text)) return 'in_transit';
