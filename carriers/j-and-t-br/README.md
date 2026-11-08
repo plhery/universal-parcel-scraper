@@ -1,28 +1,33 @@
 # J&T Express Brazil
 
-J&T Express Brazil parcels use enabled universal providers. There is no dedicated adapter.
+The domestic Brazil network has its own tracker, separate from the Southeast Asian J&T
+operations and J&T Cargo. Native retrieval uses its public number-only guest form through
+TRAWL. The page owns request signing, Tencent verification and the final tracking POST.
+
+The scoped browser helper matches the jigsaw's native-image texture and silhouette, measures
+the piece's movement against the knob, and keeps generation checks through the held drag.
+An ambiguous image abstains. It permits at most two drags and two bound tracking requests,
+within the caller's deadline, and closes its fresh context. Unsupported puzzles and refused
+verification leave enabled universal providers available.
+
+The request and positive reply must name the whole domestic waybill. A successful empty
+reply is no history, rather than a confirmed missing waybill. Malformed replies, verification
+refusals, rate limits and other HTTP failures stay distinct. The adapter
+retains every dated milestone and its provider code, preserving offset-free wall clocks.
+Staff, recipient fields, free-form remarks, signatures and proof-of-delivery data are omitted.
 
 ## Numbers
 
-J&T Express Brazil runs its own network, site and tracker, apart from the Southeast Asian J&T
-operations in `j-and-t`. Its waybills in archived lookups and complaints are fifteen digits
-starting with 888. Detection does not offer them, since fifteen digits are shared with other
-carriers' rules.
+The guest flow accepts the fifteen-digit domestic waybills beginning with 888. This format
+alone does not prove ownership. There is no broad detection rule or HTTP recognizer; explicit
+carrier selection and a named matching handoff can use the adapter. Other aliases and the
+CPF/CNPJ, account and proof-of-delivery branches are outside this adapter.
 
-## Links
-
-Archived lookups on `www.jtexpress.com.br/trajectoryQuery` and the mobile page
-`/mobile/expressTracking` carry the waybill in `waybillNo`. The current pages search only what
-their tracking form submits, so such an address opens an empty tracker.
-
-## Limitations
-
-Both pages show a Tencent slider captcha before they look a waybill up, and J&T Brazil's lookup
-refuses a missing or wrong captcha answer. The pages' other search needs the recipient's CPF or
-CNPJ. The J&T Brasil app embeds the same captcha, so J&T Express Brazil stays on universal
-providers.
+Samples and provenance live in [`numbers.json`](numbers.json). The current portal's query
+only opens the form; the browser helper fills it instead of assuming the query submitted it.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/j-and-t-br`, with `JT_BR_TRACKING_NUMBER` and optionally
+`JT_BR_UNKNOWN_NUMBER` supplied outside the repository. Use the compatible TRAWL service
+with the J&T Brazil helper.

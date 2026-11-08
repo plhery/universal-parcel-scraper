@@ -275,6 +275,29 @@
         ]
       },
       "note": "A shared printout of J&T Express Brasil's tracking page shows this waybill with its scans from collection to the delivery round."
+    },
+    {
+      "number": "888002423592016",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.reclameaqui.com.br/jet-express/atraso-na-entrega-de-encomenda-com-codigo-de-rastreio-2016_qP_FYfq3tc_2zH9s/",
+        "date": "2026-08-19",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "brt",
+          "yunda"
+        ]
+      },
+      "note": "The public complaint names this domestic waybill and the carrier replies about delivery. Native guest history echoes the whole identifier."
     }
   ]
 }

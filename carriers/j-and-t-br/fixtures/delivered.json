@@ -1,0 +1,112 @@
+{
+  "code": 1,
+  "succ": true,
+  "data": [
+    {
+      "keyword": "888746193820571",
+      "details": [
+        {
+          "code": 100,
+          "scanTime": "2026-01-20 16:33:39",
+          "scanTypeName": "快件签收",
+          "status": "Pedido Entregue",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 94,
+          "scanTime": "2026-01-19 15:44:52",
+          "scanTypeName": "出仓扫描",
+          "status": "Em Rota de Entrega",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 94,
+          "scanTime": "2026-01-19 15:44:39",
+          "scanTypeName": "出仓扫描",
+          "status": "Em Rota de Entrega",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 92,
+          "scanTime": "2026-01-19 07:34:12",
+          "scanTypeName": "到件扫描",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 50,
+          "scanTime": "2026-01-18 11:17:26",
+          "scanTypeName": "发件扫描",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 90,
+          "scanTime": "2026-01-18 09:52:40",
+          "scanTypeName": "中心到件",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 50,
+          "scanTime": "2026-01-18 01:01:00",
+          "scanTypeName": "发件扫描",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 90,
+          "scanTime": "2026-01-18 00:54:29",
+          "scanTypeName": "中心到件",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 90,
+          "scanTime": "2026-01-18 00:10:59",
+          "scanTypeName": "中心到件",
+          "status": "Em transferencia",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        },
+        {
+          "code": 10,
+          "scanTime": "2026-01-17 17:20:09",
+          "scanTypeName": "快件揽收",
+          "status": "Coletado",
+          "deliveryName": "PRIVATE_RECIPIENT",
+          "remark1": "PRIVATE_ADDRESS",
+          "staffCode": "PRIVATE_STAFF",
+          "sigPicUrl": "https://private.invalid/pod"
+        }
+      ],
+      "recipient": "PRIVATE_RECIPIENT"
+    }
+  ]
+}

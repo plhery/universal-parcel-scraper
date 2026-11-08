@@ -1,5 +1,7 @@
 // Embed the reviewable source in one compressed payload so Coolify's base64
 // SSH command stays below Linux's per-argument limit as helpers grow.
+import { createHash } from 'node:crypto';
+import { installPinnedSources } from './pinned-source.mjs';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -13,6 +15,22 @@ const revision = `${git('rev-parse', 'HEAD')}${git('status', '--porcelain', '--'
 const dockerfile = read('Dockerfile');
 const copies = [...dockerfile.matchAll(/^COPY (\S+) (\S+)$/gm)];
 const sources = Object.fromEntries(copies.map(([, name, target]) => [target, read(name)]));
+let pinned = null;
+// Coolify passes its base64 Dockerfile as one SSH argument. Large builds fetch
+// unchanged files from an immutable public revision and check every byte.
+if (Buffer.byteLength(encodeSource(brotliCompressSync(JSON.stringify(sources), { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } }))) > 88_000) {
+  const head = git('rev-parse', 'HEAD'), files = [];
+  for (const [, name, target] of copies) {
+    let original;
+    try { original = execFileSync('git', ['show', `${head}:trawl/${name}`], { cwd: new URL('.', import.meta.url), stdio: ['ignore', 'pipe', 'pipe'] }); }
+    catch { continue; }
+    if (!original.equals(Buffer.from(sources[target]))) continue;
+    files.push({ name, target, sha256: createHash('sha256').update(original).digest('hex') });
+    delete sources[target];
+  }
+  if (!files.length) throw Error('Commit the TRAWL sources before rendering this large Dockerfile');
+  pinned = { revision: head, files };
+}
 const compressed = brotliCompressSync(JSON.stringify(sources), { params: { [constants.BROTLI_PARAM_QUALITY]: 11 } });
 const payload = encodeSource(compressed);
 const decoder = decodeSource.toString().replaceAll(/\s+/g, ' ').replaceAll("'", '"');
@@ -26,9 +44,14 @@ const commands = dockerfile.slice(dockerfile.lastIndexOf('\nRUN ') + 5).trim();
 if (!copies.length || commands !== 'bun /tmp/install-tracking-capture.mjs && rm /tmp/install-tracking-capture.mjs') {
   throw new Error('Review the TRAWL Dockerfile before rendering');
 }
-console.log(`${header}
+const installer = pinned ? `# Pinned sources: ${JSON.stringify(pinned)}
+RUN bun -e '(${installPinnedSources.toString().replaceAll(/\s+/g, " ").replaceAll("'", "\"")})(${JSON.stringify(pinned)}).catch(()=>{console.error("Pinned TRAWL source installation failed");process.exit(1)})'
+` : '';
+const rendered = `${header}
 LABEL org.opencontainers.image.revision="${revision}"
-RUN printf '%s' ${chunks} > /tmp/upc-trawl-sources.b91 \\
+${installer}RUN printf '%s' ${chunks} > /tmp/upc-trawl-sources.b91 \\
  && bun -e 'import{readFileSync,writeFileSync,mkdirSync}from"node:fs";import{dirname}from"node:path";import{brotliDecompressSync}from"node:zlib";for(const[path,text]of Object.entries(JSON.parse(brotliDecompressSync((${decoder})(readFileSync("/tmp/upc-trawl-sources.b91","utf8"),${compressed.length},"${alphabet}")).toString("utf8")))){mkdirSync(dirname(path),{recursive:true});writeFileSync(path,text)}' \\
  && rm /tmp/upc-trawl-sources.b91 \\
- && ${commands}`);
+ && ${commands}`;
+if (Buffer.byteLength(Buffer.from(rendered).toString('base64')) >= 124_000) throw Error('TRAWL Dockerfile exceeds the Coolify argument budget');
+console.log(rendered);

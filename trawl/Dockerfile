@@ -43,6 +43,8 @@ COPY mailamericas-browser.mjs /app/packages/tiers/src/utils/mailamericas-browser
 COPY poste-italiane-browser.mjs /app/packages/tiers/src/utils/poste-italiane-browser.mjs
 COPY sf-express-session.mjs /app/packages/tiers/src/utils/sf-express-session.mjs
 COPY sf-express-gap.mjs /app/packages/tiers/src/utils/sf-express-gap.mjs
+COPY j-and-t-br-browser.mjs /app/packages/tiers/src/utils/j-and-t-br-browser.mjs
+COPY j-and-t-br-slider.mjs /app/packages/tiers/src/utils/j-and-t-br-slider.mjs
 COPY zto-browser.mjs /app/packages/tiers/src/utils/zto-browser.mjs
 COPY zto-slider.mjs /app/packages/tiers/src/utils/zto-slider.mjs
 COPY zto-ocr.mjs /app/packages/tiers/src/utils/zto-ocr.mjs

@@ -18,8 +18,12 @@
   "timezone": "America/Sao_Paulo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "j-and-t-br",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {

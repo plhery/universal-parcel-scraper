@@ -27062,7 +27062,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "j-and-t-br",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://www.jtexpress.com.br/trajectoryQuery",
     "trackingUrlTemplate": "https://www.jtexpress.com.br/trajectoryQuery?waybillNo={trackingNumber}&type=0",

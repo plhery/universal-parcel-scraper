@@ -2212,6 +2212,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'j-and-t-br': 'the current page ignores the waybill query and searches only after its number-only form and Tencent callback; native retrieval fills that form in a scoped browser helper',
   zheldor: 'the printed-number page submits a picture code; native tracking uses the separate official QR guest flow, which the rendered-link canary does not submit',
   skladusa: 'the empty-history view has no visible whole-reference confirmation; native retrieval binds the canonical route and matching found-result headings, which a synthetic rendered check cannot establish',
   'post-one': 'an unknown item redirects home without its query or an absence notice, so a synthetic rendered-page check cannot prove forwarding; known-item retrieval checks the whole returned item identity',

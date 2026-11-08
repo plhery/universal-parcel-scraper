@@ -1,3 +1,4 @@
+import { createHash } from 'node:crypto';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -11,12 +12,23 @@ test('Coolify installs every Dockerfile source with identical bytes and build st
   const match = /printf '%s' ([\s\S]+?) > \/tmp\/upc-trawl-sources.b91/.exec(rendered);
   assert.ok(match);
   const chunks = [...match[1].matchAll(/'([^']+)'/g)].map(row => row[1]);
-  assert.ok(chunks.length > 1);
+  assert.ok(chunks.length >= 1);
   const length = Number(/"utf8"\),(\d+),/.exec(rendered)?.[1]);
   const sources = JSON.parse(brotliDecompressSync(decodeSource(chunks.join(''), length, alphabet)).toString('utf8'));
   const copies = [...dockerfile.matchAll(/^COPY (\S+) (\S+)$/gm)];
-  assert.equal(Object.keys(sources).length, copies.length);
-  for (const [, file, target] of copies) assert.equal(sources[target], readFileSync(new URL(file, import.meta.url), 'utf8'), file);
+  const pinned = JSON.parse(/^# Pinned sources: (.+)$/m.exec(rendered)?.[1] ?? 'null');
+  const pinnedFiles = pinned?.files ?? [];
+  assert.equal(Object.keys(sources).length + pinnedFiles.length, copies.length);
+  for (const [, file, target] of copies) {
+    const expected = readFileSync(new URL(file, import.meta.url));
+    if (target in sources) assert.equal(sources[target], expected.toString('utf8'), file);
+    else {
+      const entry = pinnedFiles.find(f => f.target === target);
+      assert.equal(entry.name, file);
+      assert.equal(entry.sha256, createHash('sha256').update(expected).digest('hex'));
+      assert.equal(pinned.revision, execFileSync('git', ['rev-parse', 'HEAD'], {encoding:'utf8',cwd:new URL('.',import.meta.url)}).trim());
+    }
+  }
   assert.ok(rendered.includes(dockerfile.slice(dockerfile.lastIndexOf('\nRUN ') + 5).trim()));
   assert.ok(rendered.includes(dockerfile.slice(0, copies[0].index).trimEnd()));
   assert.ok(rendered.includes('mkdirSync(dirname(path),{recursive:true})'));

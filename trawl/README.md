@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK and ZTO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil and ZTO. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -144,7 +144,10 @@ docker build -t universal-parcel-scraper-trawl trawl
 ```
 
 A host that keeps a Dockerfile without its build context, such as Coolify, takes the output of
-`node trawl/render-coolify.mjs` instead: the same image with its sources embedded. It labels
+`node trawl/render-coolify.mjs` instead. It embeds sources while they fit Coolify’s argument
+budget; larger builds fetch unchanged files from a pinned public commit and verify their
+SHA-256 hashes before installation. Changed files stay embedded. Download or hash failures
+stop the build. It labels
 the image `org.opencontainers.image.revision` with the commit it was rendered from, followed by
 `-dirty` when the sources differ from that commit.
 
@@ -243,3 +246,10 @@ fail after its deadline. The `fedex.gateway-refusal` warning counts a lookup's r
 tunnels, those for the page and API among them, and gives the gateway's last status and
 the plain-token reason it names in an `x-…-reason` header, such as Webshare's
 `x-webshare-reason`.
+
+J&T Brazil opens a fresh number-only guest form and solves its supported Tencent jigsaw in
+the page. The match requires texture and shape agreement, stable native-image geometry and
+a measured slider movement. A refreshed challenge cancels the held drag. The helper keeps
+verification and tracking separate, waits for the page callback after the widget disappears,
+and captures only the matching whole-waybill POST. It enters no CPF/CNPJ or account/POD
+flow, and retains no images, tokens, remarks, staff or recipient fields.

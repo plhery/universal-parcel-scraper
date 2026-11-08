@@ -61,6 +61,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     return await runPosteItalianeBrowser({ ...carrierRun, signal: budget.signal,
       solveCaptcha: (page, timeout, signal, report) => solveDhlPolandNative(page, timeout, AbortSignal.any([budget.signal, signal]), report) })
   }
+  if (carrierPage && jAndTBrBrowserNumber(url, capture)) return await runJAndTBrBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && ztoBrowserNumber(url, capture)) return await runZtoBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && chinaPostBrowserNumber(url, capture)) return await runChinaPostBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && jdDomesticNumber(url, capture)) return await runJdDomestic({ ...carrierRun, signal: budget.signal })
@@ -107,6 +108,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { lbcBrowserNumber, runLbcBrowser } from "../utils/lbc-browser.mjs"\n'
     + 'import { mailamericasBrowserNumber, runMailamericasBrowser } from "../utils/mailamericas-browser.mjs"\n'
     + 'import { posteItalianeBrowserNumber, runPosteItalianeBrowser } from "../utils/poste-italiane-browser.mjs"\n'
+    + 'import { jAndTBrBrowserNumber, runJAndTBrBrowser } from "../utils/j-and-t-br-browser.mjs"\n'
     + 'import { ztoBrowserNumber, runZtoBrowser } from "../utils/zto-browser.mjs"\n'
     + 'import { chinaPostBrowserNumber, runChinaPostBrowser } from "../utils/china-post-browser.mjs"\n'
     + 'import { jdDomesticNumber, runJdDomestic } from "../utils/jd-domestic-browser.mjs"\n'
