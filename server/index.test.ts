@@ -1,8 +1,10 @@
 import type { AddressInfo } from 'node:net';
 import type { Server } from 'node:http';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { AdapterRegistry, type CarrierAdapter } from '../core/adapter/index.js';
 import { InputRequiredError, type CarrierErrorKind } from '../core/errors/index.js';
-import { TrackingError, type ParcelInput, type Tracker, type TrackingResponse } from '../facade/index.js';
+import { NOOP_RECORDER } from '../core/telemetry/index.js';
+import { createTracker, TrackingError, type ParcelInput, type Tracker, type TrackingResponse } from '../facade/index.js';
 import { createTrackingServer } from './index.js';
 
 const servers: Server[] = [];
@@ -85,18 +87,41 @@ describe('tracking HTTP API', () => {
     expect(track).toHaveBeenCalledTimes(5);
   });
 
-  it('detects the carrier on the number as printed and shares the answer by the normalized number', async () => {
+  it('keys a lookup on the detection of the number as printed and shares the answer by the normalized number', async () => {
     const track = vi.fn().mockResolvedValue({ ...answer, carrier: 'postlogistics', source: 'postlogistics' });
     const url = await started({ tracker: tracker(track) });
-    // The dash makes the reference PostLogistics's own; the tracker gets it as printed.
+    // The dash makes the reference PostLogistics's own; the tracker gets it as printed and detects it itself.
     expect((await post(url, { number: '19999980-001' })).status).toBe(200);
-    expect(track.mock.calls[0]![0]).toMatchObject({ number: '19999980-001', carrier: 'postlogistics' });
+    expect(track.mock.calls[0]![0]).toMatchObject({ number: '19999980-001', carrier: undefined });
     expect((await post(url, { number: ' 19999980-001 ' })).status).toBe(200);
     expect(track).toHaveBeenCalledTimes(1);
     // Compact, the same digits leave the carrier open and are a lookup of their own.
     expect((await post(url, { number: '12345678001' })).status).toBe(200);
     expect(track).toHaveBeenCalledTimes(2);
     expect(track.mock.calls[1]![0]).toMatchObject({ number: '12345678001', carrier: undefined });
+  });
+
+  it('confirms the carrier of a generic postal number as the SDK does, and keeps a chosen carrier a lookup of its own', async () => {
+    const lookup = vi.fn<CarrierAdapter['track']>().mockResolvedValue({ status: 'delivered', events: [
+      { time: new Date().toISOString(), description: 'Delivered', stage: 'delivered' },
+    ] });
+    const posti = vi.fn<NonNullable<CarrierAdapter['recognize']>>().mockResolvedValue({ known: true });
+    const chronopost = vi.fn<NonNullable<CarrierAdapter['recognize']>>().mockResolvedValue({ known: false });
+    const adapter = (id: string, recognize: CarrierAdapter['recognize']) => (): CarrierAdapter => ({ id, steps: ['direct'], track: lookup, recognize });
+    const registry = new AdapterRegistry({ factories: { posti: adapter('posti', posti), chronopost: adapter('chronopost', chronopost) },
+      carriers: { posti: 'posti', chronopost: 'chronopost' } }, { trawl: null, browserExecutablePath: null, recorder: NOOP_RECORDER, env: {} });
+    const url = await started({ tracker: createTracker({ registry, providers: [] }) });
+    const s10 = { number: 'RR123456799FI' };
+    for (let repeat = 0; repeat < 2; repeat++) {
+      expect(await (await post(url, s10)).json()).toMatchObject({ carrier: 'posti', source: 'posti', attempts: [{ source: 'posti', kind: 'ok' }] });
+    }
+    expect(posti).toHaveBeenCalledOnce();
+    expect(chronopost).toHaveBeenCalledOnce();
+    expect(lookup).toHaveBeenCalledOnce();
+    // The caller's choice skips recognition and is not answered from the automatic lookup.
+    expect(await (await post(url, { ...s10, carrier: 'posti' })).json()).toMatchObject({ carrier: 'posti', source: 'posti' });
+    expect(posti).toHaveBeenCalledOnce();
+    expect(lookup).toHaveBeenCalledTimes(2);
   });
 
   it('keeps country hints in the cache identity and forwards them to the tracker', async () => {

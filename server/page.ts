@@ -10,7 +10,7 @@ export const demoPage = `<!doctype html>
 <button>Track parcel</button></form><p id="detection" role="status"></p><pre id="result"></pre>
 <small>Detection runs in your browser. Tracking sends the number and any required inputs to this server and its enabled sources.</small>
 <script type="module">
-import { parseTrackingInput, CARRIER_CATALOG } from '/assets/scraper.js';
+import { detectCarrierMatch, parseTrackingInput, CARRIER_CATALOG } from '/assets/scraper.js';
 const field = id => document.getElementById(id);
 for (const [id, carrier] of Object.entries(CARRIER_CATALOG)) {
  if (!carrier.selectable) continue;
@@ -24,8 +24,11 @@ document.querySelector('form').addEventListener('submit', async event => {
  event.preventDefault(); const button = document.querySelector('button'); button.disabled = true; field('result').textContent = 'Looking up history…';
  try {
   const match = parseTrackingInput(field('number').value);
+  // A link that names the parcel's carrier where the number alone does not is the carrier to ask.
+  const shown = detectCarrierMatch(match.trackingNumber);
+  const linked = match.source === 'link' && match.confidence === 'high' && !(shown.confidence === 'high' && shown.carrier === match.carrier) ? match.carrier : undefined;
   const token = field('token').value;
-  const response = await fetch('/v1/track', { method:'POST', headers:{'Content-Type':'application/json', ...(token ? {Authorization:'Bearer '+token} : {})}, body:JSON.stringify({number:match.trackingNumber, carrier:field('carrier').value || undefined, postcode:field('postcode').value || undefined, trackingUrl:match.trackingUrl}) });
+  const response = await fetch('/v1/track', { method:'POST', headers:{'Content-Type':'application/json', ...(token ? {Authorization:'Bearer '+token} : {})}, body:JSON.stringify({number:match.trackingNumber, carrier:field('carrier').value || linked, postcode:field('postcode').value || undefined, trackingUrl:match.trackingUrl}) });
   field('result').textContent = JSON.stringify(await response.json(), null, 2);
  } catch { field('result').textContent = 'The tracking server could not be reached.'; }
  finally { button.disabled = false; }

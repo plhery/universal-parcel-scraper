@@ -167,11 +167,12 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     if (typeof input.number !== 'string' || input.number.length > 80 || !validTrackingNumber(input.number)) throw new TypeError('Invalid tracking number');
     if (input.carrier !== undefined && (typeof input.carrier !== 'string' || !input.carrier)) throw new TypeError('Invalid carrier');
     const number = normalizeTrackingNumber(input.number);
-    // Detection reads the number as printed, and so does the tracker's recognition of it.
+    // Without a carrier the tracker detects one and recognition confirms it, both on the number as
+    // printed, so the printed form's detection belongs to the lookup's identity. A carrier the caller
+    // chose is a lookup of its own, even when detection names the same one.
     const detected = detectCarrierMatch(input.number);
-    input = { ...input, carrier: input.carrier ?? (detected.confidence === 'high' ? detected.carrier : undefined) };
-    // Without a carrier, the printed form decides which carriers recognition asks.
-    const key = createHash('sha256').update(JSON.stringify([number, input.carrier ?? detected.candidates, input.postcode, input.postcodeCountry, input.trackingUrl, input.countryHint, input.language])).digest('hex');
+    const route = input.carrier ?? { carrier: detected.carrier, candidates: detected.candidates };
+    const key = createHash('sha256').update(JSON.stringify([number, route, input.postcode, input.postcodeCountry, input.trackingUrl, input.countryHint, input.language])).digest('hex');
     const previous = cache.get(key);
     if (previous && previous.until > now()) {
       if (previous.error) throw previous.error;
