@@ -211,6 +211,12 @@ const HOLD = String.raw`\b(?:on hold|held|hold|holding|retenu(?:e|s|es)?|en atte
 const RECIPIENT_HOLD = new RegExp(`${HOLD}${SENTENCE}*?${RECIPIENT_REQUEST}|${RECIPIENT_REQUEST}${SENTENCE}*?${HOLD}`);
 /** Where a held parcel waits for the recipient to collect it. */
 const COUNTER = /post office|postal outlet|pick ?up|collection|counter|retail (?:location|outlet)|bureau de poste|point (?:de )?retrait|point relais|filiale|abholung|ufficio postale|ritiro|oficina|recogida|levantamento|agencia/;
+/**
+ * The recipient's request to collect at a parcel shop, before the parcel is there: "We've received your
+ * request to deliver your parcel to a ParcelShop", "ParcelShop Divert Requested".
+ */
+const SHOP = String.raw`(?:parcel ?shop|pick ?up point|locker)`;
+const SHOP_REQUEST = new RegExp(String.raw`\bwe(?: have|'ve)? received your request to deliver (?:your |the )?(?:parcel|package|item) to (?:a |an |the |your )?${SHOP}\b|^${SHOP} divert requested$`);
 
 /** The recipient's side by its role, not a service desk or an agent acting for it. */
 const RECIPIENT = String.raw`(?:recipient|addressee|consignee|customer|receiver)s?\b(?!'| (?:service|care|support)\b)`;
@@ -319,8 +325,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (RECIPIENT_HOLD.test(text)) return COUNTER.test(text) ? 'ready_for_pickup' : 'in_transit';
   // So is a new delivery date someone asked for, even under FedEx's "Delivery exception".
   if (/\ba request was made to change (?:this|the|your) delivery date\b/.test(text)) return 'in_transit';
-  // And a delivery to a parcel shop the recipient asked for, as Evri acknowledges it.
-  if (/\bwe(?: have|'ve)? received your request to deliver (?:your |the )?(?:parcel|package|item) to (?:a |an |the |your )?(?:parcel ?shop|pick ?up point|locker)\b/.test(text)) return 'in_transit';
+  // And a delivery to a parcel shop the recipient asked for, as Evri acknowledges it and as its
+  // tracking point names the request.
+  if (SHOP_REQUEST.test(text)) return 'in_transit';
   // A centre sending the parcel on to a station it names, as iMile's Italian centres word it:
   // "Parcel has been sent to AST 03". A parcel sent back, or to customs, is read above or below.
   if (/\b(?:parcel|package|shipment|item) has been sent to (?!(?:the |your )?(?:recipient|customer|consignee|addressee|buyer|customs|sender|shipper|seller|merchant|origin)\b)/.test(text)) return 'in_transit';

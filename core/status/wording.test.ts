@@ -890,6 +890,7 @@ describe('classifyWording', () => {
       // A new delivery date someone asked for, and a parcel the carrier has not received yet.
       ['Delivery exception, A request was made to change this delivery date.', 'in_transit'],
       ["We've received your request to deliver your parcel to a ParcelShop", 'in_transit'],
+      ['ParcelShop Divert Requested', 'in_transit'],
       // On its way from abroad to the carrier that has yet to receive it, as relayed without its code.
       ['En tránsito internacional. Pendiente de recepción en CTT Express', 'in_transit'],
       ['Pendiente de recepción en CTT Express', 'registered'],
