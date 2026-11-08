@@ -399,8 +399,8 @@ step exists for future protocol changes.
   ("+02:00" for Spain, where EcoScooting's own instants agree), so those scans take the
   destination's single clock, or else only a guess. "iMile" has the digits of iMile's
   page, which writes every scan on the recipient country's clock, wherever it was: they
-  take the destination's single clock, or else keep their wall clock, as iMile's own
-  lookup does. A Chinese forwarder's copies of them under the same name, the centre in
+  take the clock iMile's own lookup reads them on, the destination's single one or Sydney's
+  for Australia, or else keep their wall clock. A Chinese forwarder's copies of them under the same name, the centre in
   brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
   hours ahead of iMile's own in Italy. "FAR" has the digits of FAR International's tracker,
   which states each scan's offset, China's or the last-mile carrier's abroad: its copies

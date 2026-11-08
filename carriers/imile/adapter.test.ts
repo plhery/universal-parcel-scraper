@@ -230,9 +230,17 @@ describe('iMile HTTP adapter', () => {
     expect(result.events!.at(-1)).toMatchObject({ provider_code: '1001' });
   });
 
-  it('places New Zealand’s scans on Auckland’s clock and Peru’s on Lima’s', () => {
+  it('places New Zealand’s scans on Auckland’s clock, Australia’s on Sydney’s and Peru’s on Lima’s', () => {
     const placed = (country: string) => parseImile(changed('in-transit', (shipment) => { shipment.country = country; }), IN_TRANSIT);
     expect(placed('NZL')).toMatchObject({ last_update: '2026-06-04T02:15:00+12:00', destination_country: 'NZ' });
+    expect(placed('AUS')).toMatchObject({ last_update: '2026-06-04T02:15:00+10:00', destination_country: 'AU' });
+    // A Queensland hub's scan on Sydney's summer time, which Brisbane does not keep.
+    const queensland = parseImile(changed('in-transit', (shipment) => {
+      shipment.country = 'AUS';
+      shipment.trackInfos[0]!.time = '2026-11-05 19:11:40';
+      shipment.trackInfos[0]!.operateStationName = 'Example Coast Hub';
+    }), IN_TRANSIT);
+    expect(queensland.events![0]).toMatchObject({ time: '2026-11-05T19:11:40+11:00' });
     expect(placed('PER')).toMatchObject({ last_update: '2026-06-04T02:15:00-05:00', destination_country: 'PE' });
     // A delivery at an Auckland station on New Zealand's summer time, not China's clock.
     const delivered = parseImile(changed('delivered', (shipment) => {

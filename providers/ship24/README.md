@@ -91,6 +91,10 @@ No account, cookie, fingerprint or issued token is used.
     `tkDate`. Read back on China's clock, it gives the wall clock.
 
   Their offset is dropped and the wall clock read like an offset-less one.
+- `imile-tracking` gives iMile's wall clocks with no offset and no location. iMile shows
+  every scan on the recipient country's clock ([iMile](../../carriers/imile/README.md)), so they
+  are read on it (`destination_country_code`), before any other reading, or keep their wall
+  clock where that country has several, rather than iMile's catalog clock, Dubai's.
 - `inpost-uk-tracking` gives UTC instants with no offset: InPost's hub dates the same
   scans with one, and Collect+'s copies say `+01:00` on London's summer clock. They are
   read as UTC, not as wall clocks.

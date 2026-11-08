@@ -30,6 +30,7 @@ import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { seventeenFeiaCopyZone } from '../../carriers/17feia/clock.js';
 import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { gofoScanZone } from '../../carriers/gofo/clock.js';
+import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
@@ -177,7 +178,9 @@ interface Journey {
  * - Amazon UK's say Z on the marketplace's clock, which Amazon shows without one;
  * - CTT's say Z, as CTT's own tracker does (carriers/ctt/clock.ts);
  * - 17FEIA's say Z on the wall clocks its own rows keep, and drop the country
- *   of its order data and warehouse steps (carriers/17feia/clock.ts).
+ *   of its order data and warehouse steps (carriers/17feia/clock.ts);
+ * - iMile's say none, on the recipient country's clock, which iMile's own
+ *   tracker shows every scan on (carriers/imile/clock.ts).
  */
 interface Feed {
   /** Ship24's crawler code, which keeps one feed's scans together. */
@@ -189,6 +192,8 @@ interface Feed {
    * GOFO's US feed names towns without a state, and "Jamaica" is one.
    */
   country?: string;
+  /** The one clock the feed shows every scan on, wherever it is, before any other reading. */
+  clock?: (journey: Journey) => string | null;
   /** The clock a scan's location and wording name, before any other reading. */
   place?: (location: string, journey: Journey, status: string) => string | null;
   /** Where the feed's scans are, for a parcel that stays in one country, when nothing else places them. */
@@ -212,6 +217,8 @@ const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   '4px-tracking': { shift: 'Asia/Shanghai' },
   // A status is 17FEIA's words, then its label or "OTHER".
   'feia-tracking': { place: (location, _journey, status) => seventeenFeiaCopyZone(status.replace(/,\s*[^,]*$/, ''), location), walls: true },
+  // A country of several clocks keeps its wall clocks, as iMile's adapter does, not iMile's Dubai clock.
+  'imile-tracking': { clock: (journey) => journey.destination ? imileCountryClock(journey.destination) : null, walls: true },
 };
 
 function feedOf(scan: Record<string, unknown>): Feed | null {
@@ -462,7 +469,7 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     const unnamed = feed || (forwarding && isRecord(raw.courier) && raw.courier.crawler_code === 'mainfreight-tracking');
     // Correos's copy of an origin post's scan takes that post's clock, or keeps its wall clock.
     const sent = wall ? correosOriginCopy(raw, journey) : undefined;
-    const placed = !wall ? null : carrierZone(relayed)
+    const placed = !wall ? null : carrierZone(relayed) ?? carrierZone(feed?.clock?.(journey))
       ?? (sent !== undefined ? carrierZone(sent) : placedZone(journey, raw, wall, feed) ?? (unnamed ? null : carrierZone(namedZone(journey, wall))));
     readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location), zone: placed?.zone ?? null, basis: placed?.basis });
   }

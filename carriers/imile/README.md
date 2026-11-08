@@ -55,10 +55,12 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   recipient country's time. In a Saudi history the take-off and landing scans read five hours
   behind the clocks of the flight's own schedule line, which are China's, so the scans are
   Saudi time, and a Colombian take-off reads just after its flight's departure on Colombia's
-  clock. A recipient country with one zone places every scan as an instant, and so does New
-  Zealand, whose other zone is the Chatham Islands': its delivery stations keep Auckland's clock,
-  as Australia's keep their own. Australia, Brazil, Mexico and the United States span several
-  zones and the reply does not say which, so their clocks stay `local_time`.
+  clock. A recipient country with one zone places every scan as an instant, and so do New
+  Zealand, whose other zone is the Chatham Islands' (its delivery stations keep Auckland's clock),
+  and Australia, whose scans are all on Sydney's clock: read on Brisbane's, a Queensland hub's
+  arrival would come after a consumer first saw it. Brazil, Mexico and the United States span
+  several zones and the reply does not say which, so their clocks stay `local_time`. Ship24 and
+  ParcelsApp relay these digits and read them on the same clock ([`clock.ts`](clock.ts)).
 - The order record (`1001`) is on the recipient's clock too. On a parcel with Cainiao's leg it
   lands seconds after Cainiao's last sorting-centre dispatch, when Cainiao notifies iMile; read
   on China's clock it would come hours before that dispatch.

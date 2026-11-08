@@ -303,6 +303,20 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(reply.events?.map((event) => event.time)).toEqual(['2026-10-14T18:18:43.000Z', '2026-10-14T18:18:43.000Z']);
   });
 
+  it("reads iMile's feed on the recipient country's clock, as iMile's tracker shows it, and keeps it where that country has several", () => {
+    // Live shape: no offset, no location, no origin; iMile's catalog clock is Dubai's.
+    const scan = (timestamp: string, status: string) => ({ timestamp, datetime: `${timestamp}.000Z`, status,
+      courier: { crawler_code: 'imile-tracking', translation: { name: 'iMile' } } });
+    const read = (destination: string) => parseShip24Response({ data: { tracking_number: number, couriers: [{ translation: { name: 'iMile' } }],
+      origin_country_code: null, destination_country_code: destination,
+      events: [scan('2026-11-08T21:06:11', 'Our delivery associate is out for delivery.'),
+        scan('2026-11-05T19:11:40', 'Your order has arrived at 【Example Hub】')] } }, number, 'Asia/Dubai').events;
+    expect(read('AU')?.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-11-08T10:06:11.000Z', 'Australia/Sydney', 'carrier'], ['2026-11-05T08:11:40.000Z', 'Australia/Sydney', 'carrier']]);
+    expect(read('AE')?.[0]?.time).toBe('2026-11-08T17:06:11.000Z');
+    expect(read('US')?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-08T21:06:11', '2026-11-05T19:11:40']);
+  });
+
   it('leaves out a milestone Mainfreight\'s feed relays before its clock has come anywhere', () => {
     // Live shape: an air job's arrival a day ahead, without the tracker's "(Estimated)".
     const scan = (timestamp: string, status: string) => ({ timestamp, status, courier: { crawler_code: 'mainfreight-tracking' } });

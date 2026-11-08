@@ -3,10 +3,10 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { calendarDay, countryTimeZone, isoTime } from '../../core/time/index.js';
+import { calendarDay, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { countryZones } from '../../places/zones.js';
+import { imileCountryClock } from './clock.js';
 import { imileStage } from './status.js';
 import { imileDisplayWording } from './wording.js';
 
@@ -32,18 +32,6 @@ const COUNTRIES: Readonly<Record<string, string>> = {
   HND: 'HN', HUN: 'HU', ITA: 'IT', KWT: 'KW', LBN: 'LB', MEX: 'MX', NZL: 'NZ', MKD: 'MK', OMN: 'OM', PER: 'PE',
   POL: 'PL', QAT: 'QA', KSA: 'SA', SRB: 'RS', SVK: 'SK', RSA: 'ZA', ESP: 'ES', TUR: 'TR', UAE: 'AE', GBR: 'GB', USA: 'US',
 };
-
-// New Zealand's other zone is the Chatham Islands': its delivery stations keep Auckland's clock.
-const MAINLAND_ZONES: Readonly<Record<string, string>> = { NZ: 'Pacific/Auckland' };
-
-/**
- * The zone of the recipient country's clock, where iMile delivers on one. iMile
- * names a country, never a state or province, so Peru's code is Peru's.
- */
-function countryClock(country: string): string | null {
-  const zones = countryZones(country);
-  return countryTimeZone(country) ?? (zones.length === 1 ? zones[0]! : MAINLAND_ZONES[country] ?? null);
-}
 
 /** A number for iMile's tracker, in upper case; anything else is not one it answers. */
 export function normalizeImileNumber(raw: string): string {
@@ -173,7 +161,7 @@ export function parseImile(payload: unknown, raw: string): CarrierResult {
   const country = Object.hasOwn(COUNTRIES, code) ? COUNTRIES[code] : undefined;
   // Every scan shows the recipient country's clock: a country of one zone
   // places them all, and one of several leaves them local.
-  const zone = country ? countryClock(country) : null;
+  const zone = country ? imileCountryClock(country) : null;
   const placed = zone ? newestFirst.map(({ local_time, ...event }): CarrierEvent => {
     const time = isoTime(local_time, zone)?.iso;
     return time ? { time, ...event } : { local_time, ...event };

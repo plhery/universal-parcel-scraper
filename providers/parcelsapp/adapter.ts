@@ -39,6 +39,7 @@ import { DHLINK_RECORD_ZONE, usClockCopy } from '../../carriers/dhlink/clock.js'
 import { epostGlobalCopyZone } from '../../carriers/epost-global/status.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from '../../carriers/first-line/clock.js';
 import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.js';
+import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
@@ -1045,7 +1046,10 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
   if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
-  if (carrier === 'imile') return IMILE_FORWARDER_COPY.test(status.trim()) ? 'Asia/Shanghai' : countryTimeZone(destination);
+  if (carrier === 'imile') {
+    const country = countryCode(destination);
+    return IMILE_FORWARDER_COPY.test(status.trim()) ? 'Asia/Shanghai' : country ? imileCountryClock(country) : null;
+  }
   if (carrier === 'mailamericas' && MAILAMERICAS_DESTINATION_CUSTOMS.test(status.trim())) {
     return MAILAMERICAS_DESTINATION_ZONES[countryCode(destination) ?? ''] ?? undefined;
   }

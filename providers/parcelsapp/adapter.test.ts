@@ -957,8 +957,10 @@ describe('ParcelsApp result parsing', () => {
     ] }, number, identity(), 'Asia/Dubai');
     expect(parse('IT').events?.map((scan) => scan.time)).toEqual(['2026-09-24T15:14:34.000Z', '2026-09-19T17:00:00.000Z', '2026-09-17T17:16:16.000Z']);
     expect(parse('CO').events?.map((scan) => scan.time)).toEqual(['2026-09-24T22:14:34.000Z', '2026-09-20T00:00:00.000Z', '2026-09-18T00:16:16.000Z']);
+    // Australia's are on Sydney's clock, Queensland's included, as iMile's own lookup reads them.
+    expect(parse('AU').events?.map((scan) => scan.time)).toEqual(['2026-09-24T07:14:34.000Z', '2026-09-19T09:00:00.000Z', '2026-09-17T09:16:16.000Z']);
     // A destination of several clocks leaves them wall clocks, as iMile's own lookup does.
-    expect(parse('AU').events?.map((scan) => [scan.time, scan.local_time])).toEqual([
+    expect(parse('US').events?.map((scan) => [scan.time, scan.local_time])).toEqual([
       [undefined, '2026-09-24T17:14:34.000'], [undefined, '2026-09-19T19:00:00.000'], [undefined, '2026-09-17T19:16:16.000'],
     ]);
   });
