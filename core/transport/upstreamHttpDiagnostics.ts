@@ -6,7 +6,9 @@ const ERROR_CODES = new Set(['ACCESS_DENIED', 'FORBIDDEN', 'UNAUTHORIZED', 'RATE
 
 export interface UpstreamHttpDiagnostics {
   content_type: string;
+  /** On an error, credential header values (cookies, authorization, keys, tokens) read `[redacted]`. */
   headers: Record<string, string>;
+  /** On an error, its user info, query values and fragment read `[redacted]`. */
   response_url: string;
   status_text: string;
   server?: string;
@@ -15,6 +17,7 @@ export interface UpstreamHttpDiagnostics {
   bytes_inspected: number;
   /** Recognized signatures, not a definitive explanation of the rejection. */
   body_signals: string[];
+  /** The raw text. On an error it is not enumerable: read it by name; serializers leave it out. */
   body_excerpt?: string;
   error_code?: string;
 }
@@ -42,7 +45,7 @@ function recognizedCode(text: string): string | undefined {
   return undefined;
 }
 
-/** Keep original response details; byte/time bounds prevent diagnostics delaying recovery. */
+/** Keep original response details; byte/time bounds prevent diagnostics delaying recovery. An error redacts them. */
 export async function readUpstreamHttpDiagnostics(response: Response): Promise<UpstreamHttpDiagnostics> {
   const mediaType = response.headers.get('content-type')?.split(';', 1)[0]!.trim().toLowerCase();
   const diagnostics: UpstreamHttpDiagnostics = {

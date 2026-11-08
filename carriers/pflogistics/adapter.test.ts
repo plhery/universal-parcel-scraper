@@ -217,7 +217,8 @@ describe('Parcel Freight Logistics adapter', () => {
       expect(error).toMatchObject({ kind, provider: 'Parcel Freight Logistics', status, retryAfterMs: 23_000,
         diagnostics: { content_type: 'text/html', body_read: 'complete', body_signals: ['rate_limit_message'],
           request_ids: { 'x-request-id': 'synthetic-request' }, body_excerpt: undefined },
-        request: { url: pflogisticsUrl(DELIVERED), method: 'GET', headers: { accept: 'text/html', 'user-agent': 'SyntheticHost/1.0' } },
+        request: { url: 'https://pflogistics.com.au/tracking-result?tracking=[redacted]&timezone=[redacted]', method: 'GET',
+          headers: { accept: 'text/html', 'user-agent': 'SyntheticHost/1.0' } },
       });
       expect(error).not.toHaveProperty('cause');
       expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: kind, error }));

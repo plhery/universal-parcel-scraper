@@ -14,6 +14,7 @@
  */
 
 import type { UpstreamHttpDiagnostics } from '../transport/upstreamHttpDiagnostics.js';
+import { redactedReply, redactedRequest } from './redaction.js';
 
 export type { UpstreamHttpDiagnostics };
 
@@ -184,7 +185,11 @@ export class BudgetExceededError extends CarrierError {
   }
 }
 
-/** Request details kept on transport errors for diagnostics. Bodies are truncated. */
+/**
+ * Request details kept on transport errors for diagnostics. On an error, credential headers
+ * (authorization, cookies, keys, tokens), the address's user info, query values and fragment,
+ * and the body read `[redacted]`.
+ */
 export interface UpstreamRequestDiagnostics {
   url: string;
   method: string;
@@ -203,28 +208,39 @@ function kindForStatus(status: number): CarrierErrorKind {
   return 'transport';
 }
 
-/** A rejected HTTP response from a provider. Kind is derived from the status. */
+/**
+ * A rejected HTTP response from a provider. Kind is derived from the status. The details
+ * passed in are copied without credentials, so serializing the error cannot leak them.
+ */
 export class UpstreamHttpError extends CarrierError {
   /** Always present for HTTP errors; narrowed from the optional base field. */
   declare readonly status: number;
+  /** Credential header values and the response address's query read `[redacted]`; `body_excerpt` is read by name. */
+  readonly diagnostics?: UpstreamHttpDiagnostics;
+  readonly request?: UpstreamRequestDiagnostics;
 
   constructor(
     provider: string,
     status: number,
     retryAfterMs?: number,
-    readonly diagnostics?: UpstreamHttpDiagnostics,
-    readonly request?: UpstreamRequestDiagnostics,
+    diagnostics?: UpstreamHttpDiagnostics,
+    request?: UpstreamRequestDiagnostics,
   ) {
     super(kindForStatus(status), provider, `${provider} returned HTTP ${status}`, { status, retryAfterMs });
     this.name = 'UpstreamHttpError';
+    this.diagnostics = diagnostics && redactedReply(diagnostics);
+    this.request = request && redactedRequest(request);
   }
 }
 
 /** A network failure (DNS, TLS, timeout, interrupted body) while talking to a provider. */
 export class UpstreamNetworkError extends CarrierError {
-  constructor(provider: string, cause: unknown, readonly request?: UpstreamRequestDiagnostics) {
+  readonly request?: UpstreamRequestDiagnostics;
+
+  constructor(provider: string, cause: unknown, request?: UpstreamRequestDiagnostics) {
     super('transport', provider, `${provider} is unreachable`, { cause });
     this.name = 'UpstreamNetworkError';
+    this.request = request && redactedRequest(request);
   }
 }
 

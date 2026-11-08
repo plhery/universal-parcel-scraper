@@ -6,6 +6,13 @@
  * Every attempt of every step produces one `StepRecord`; every lookup produces
  * one `LookupRecord` whose `finalStep` says which tier served the result. That
  * single field answers "is this fallback tier worth keeping".
+ *
+ * Records carry errors as thrown. The transport's errors, wherever they sit in a
+ * `cause` chain or an aggregate, keep no credential in an enumerable field:
+ * credential headers (authorization, cookies, keys, tokens), an address's user
+ * info, query values and fragment, and request bodies read `[redacted]`, and a
+ * reply's body is read by name but left out of serialization. Fields an adapter
+ * adds to its own errors are its own to keep clean.
  */
 import { carrierErrorKind, errorTypeOf, type CarrierErrorKind } from '../errors/index.js';
 
@@ -25,7 +32,7 @@ export interface StepRecord {
   fallbackErrorType: string | null;
   /** The previous step's error when this step is a recovery; for sinks that report before-fallback warnings. */
   fallbackError?: unknown;
-  /** The original error, for sinks that keep stacks. Never serialize it into metrics. */
+  /** The original error, for sinks that keep stacks. Never serialize it into metrics. Transport errors hold no credentials (above). */
   error?: unknown;
   /** Selected network path, independently of the observed connection family. */
   networkRoute?: 'default' | 'datacenter' | 'residential';

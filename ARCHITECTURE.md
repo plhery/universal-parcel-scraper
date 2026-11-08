@@ -252,7 +252,10 @@ with the `last_update` it came with: an adapter whose estimate costs a request o
 Mondial Relay's website does after its app, keeps it while its day is ahead and no newer scan
 shows. An answer without an estimate says nothing about an earlier one; a carrier that states its
 estimate no longer holds, without a new one, marks the answer `expected_delivery_withdrawn`. An adapter with `recordsSteps` reports its own lookup, so dispatch
-does not wrap its telemetry a second time. `CarrierError.reason` separates expected details,
+does not wrap its telemetry a second time. The errors a `StepRecorder` receives keep no
+credential where a serializer finds it: `UpstreamHttpError` and `UpstreamNetworkError` redact
+credential headers, an address's user info, query values and fragment, and the request body,
+and a reply's body excerpt is read by name only. `CarrierError.reason` separates expected details,
 such as Amazon Shipping's expired history, from transport failures. An inconclusive error
 for the carrier's own answer that it holds no history under the number, an empty result or
 not-found notice, carries `portal_not_found`, so a consumer can tell that answer from an

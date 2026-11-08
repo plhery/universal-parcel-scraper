@@ -6,6 +6,7 @@
  * core/errors.
  */
 import { IndeterminateError, UpstreamHttpError, UpstreamNetworkError, type UpstreamRequestDiagnostics } from '../errors/index.js';
+import { defineHidden } from '../errors/redaction.js';
 import { readUpstreamHttpDiagnostics } from './upstreamHttpDiagnostics.js';
 
 const DEFAULT_MAX_BYTES = 2_000_000;
@@ -171,10 +172,12 @@ export function parseJsonBytes(bytes: Uint8Array, provider: string): unknown {
   try {
     return JSON.parse(decodeText(bytes).replace(/^\uFEFF/, ''));
   } catch (error) {
-    throw Object.assign(new TypeError(`${provider} returned an invalid tracking response`, { cause: error }), {
-      provider, response_body: decodeText(bytes.subarray(0, MAX_DIAGNOSTIC_BODY)),
-      response_body_truncated: bytes.byteLength > MAX_DIAGNOSTIC_BODY,
+    const invalid = Object.assign(new TypeError(`${provider} returned an invalid tracking response`, { cause: error }), {
+      provider, response_body_truncated: bytes.byteLength > MAX_DIAGNOSTIC_BODY,
     });
+    // Read by name; a serialized error leaves the reply out.
+    defineHidden(invalid, 'response_body', decodeText(bytes.subarray(0, MAX_DIAGNOSTIC_BODY)));
+    throw invalid;
   }
 }
 
