@@ -477,6 +477,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
       "note": "The airline refused the parcel over its weight; the origin facility measured it again the next day."
+    },
+    {
+      "wording": "In transit to destination facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Relayed without a code: SpeedX's scan 57112 on its way to the delivering facility, at the same second as SpeedX's own."
     }
   ]
 }

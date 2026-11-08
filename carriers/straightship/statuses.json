@@ -7,6 +7,7 @@
     {"wording": "Package is received at a Straightship station", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The history row adds the town and province in brackets."},
     {"wording": "Arrived at Facility", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Older pages; the history row adds the town and province in brackets."},
     {"wording": "Package arrived at transit station", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Package is in transit to a Straightship station", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-08", "note": "Between stations, before the station that delivers."},
     {"wording": "Loading", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "At the station before the delivery round, sometimes twice a few seconds apart."},
     {"wording": "Delivery is in progress", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Seen after a delivery attempt, before a return; the history row adds the town and province in brackets."},
     {"wording": "Your order is in Progress", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Seen days after a delivery round that did not deliver, before a return."},

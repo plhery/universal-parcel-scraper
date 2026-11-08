@@ -660,6 +660,14 @@ describe('status map answers', () => {
     expect(answer('shipter', '', 'Depart origin airport')).toEqual(mapped('in_transit'));
   });
 
+  it("answers Chronopost's export scans, Straightship's way between stations and 4PX's copy of SpeedX's", () => {
+    expect(answer('chronopost', 'EE', "Colis en cours de traitement dans l'agence export")).toEqual(mapped('in_transit'));
+    expect(answer('chronopost', 'TS', 'Colis en transit')).toEqual(mapped('in_transit'));
+    expect(answer('chronopost', 'ST', 'Colis dédouané')).toEqual(mapped('in_transit'));
+    expect(answer('straightship', '', 'Package is in transit to a Straightship station')).toEqual(mapped('in_transit'));
+    expect(answer('four-px', '', 'In transit to destination facility')).toEqual(mapped('in_transit'));
+  });
+
   it("answers Shouwu's line from its warehouse through Hong Kong and Europe to the local courier", () => {
     for (const [wording, stage] of [
       ['Arrived at Transit logistics facility', 'accepted'],

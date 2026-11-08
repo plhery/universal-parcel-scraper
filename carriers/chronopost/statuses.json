@@ -94,6 +94,33 @@
       "language": "fr"
     },
     {
+      "code": "EE",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. An export parcel's first depot after the sender's preparation.",
+      "wording": "Colis en cours de traitement dans l'agence export",
+      "language": "fr"
+    },
+    {
+      "code": "TS",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. An export parcel on its way, under the code of the usual transit wording.",
+      "wording": "Colis en transit",
+      "language": "fr"
+    },
+    {
+      "code": "ST",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. Customs released the export parcel before it entered the destination country; it moves on.",
+      "wording": "Colis dédouané",
+      "language": "fr"
+    },
+    {
       "code": "TS",
       "stage": "in_transit",
       "confirmedBy": "live",

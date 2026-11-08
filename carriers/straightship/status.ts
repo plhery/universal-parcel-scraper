@@ -19,6 +19,8 @@ const RULES: readonly (readonly [RegExp, Stage])[] = [
   [/^package is received at a straightship station$/, 'in_transit'],
   [/^arrived at facility$/, 'in_transit'],
   [/^package arrived at transit station$/, 'in_transit'],
+  // Between stations, before the station that delivers.
+  [/^package is in transit to a straightship station$/, 'in_transit'],
   // Loaded at the station for the delivery round.
   [/^loading$/, 'in_transit'],
   // Seen after a round that did not deliver, before another round or a return.

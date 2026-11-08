@@ -17,6 +17,10 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   // The first depot's sort, under either code, as it takes the parcel over.
   ['SC', "Tri effectué dans l'agence de départ", 'in_transit'],
   ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
+  // An export parcel's first depot, its transit and its customs release on the way abroad.
+  ['EE', "Colis en cours de traitement dans l'agence export", 'in_transit'],
+  ['TS', 'Colis en transit', 'in_transit'],
+  ['ST', 'Colis dédouané', 'in_transit'],
   ['TS', "Colis en cours d'acheminement", 'in_transit'],
   ['O', "Colis en cours d'acheminement", 'in_transit'],
   ['TP', "Colis en cours d'acheminement", 'in_transit'],
