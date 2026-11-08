@@ -6477,12 +6477,12 @@
     "reason": "Wizmo's WD references fall in the Aramex rules for two letters and ten digits and in Colis Privé's generic rule; recognition asks them in turn."
   },
   {
-    "shape": "ESUS and nine digits",
+    "shape": "ESUS and nine digits, or EEUS, nine digits, a country code and a digit",
     "carriers": [
       "asendia",
       "dhl-ecommerce"
     ],
-    "reason": "eBay International Standard Delivery numbers. eBay names DHL Global Mail's tracker for them, and Asendia carries some. Direct tracking must confirm the carrier."
+    "reason": "eBay's international shipping numbers. eBay names DHL Global Mail's tracker for its Standard Delivery ESUS numbers, and Asendia carries some; of the EEUS numbers, Asendia's tracker answers some and DHL eCommerce's others. Direct tracking must confirm the carrier."
   },
   {
     "shape": "Twenty-four digits starting 35814",

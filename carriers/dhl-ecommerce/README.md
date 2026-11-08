@@ -87,6 +87,8 @@ starting with `GM`. Other carriers' generic rules fit eight to fifteen digits af
 so detection only suggests DHL eCommerce first for them.
 eBay International Standard Delivery's `ESUS` numbers are a low suggestion shared with
 [Asendia](../asendia/README.md), since eBay names Webtrack for them and Asendia carries some.
+So are eBay International Shipping's `EEUS` numbers, with nine digits, the destination's
+country code and a digit: Webtrack answers some and Asendia's tracker others.
 S10 numbers starting `UU` and ending `DE` are a low suggestion too. The `U` range marks
 letter-post items with goods and no customer tracking, and Deutsche Post's offices abroad,
 such as DHL eCommerce's in Chicago, issue them under `DE`, so the series is not DHL

@@ -74,7 +74,11 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "asendia"
+        ]
       },
       "note": "Published eBay International Shipping number attributed to Asendia; A1 had no data for it on 2026-09-22. On 2026-09-30 ParcelsApp filed its Asendia scans under EasyShip on local clocks, matching Ship24's instants and Swiss Post's own scan when read in each place's zone."
     },
@@ -87,7 +91,11 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "asendia"
+        ]
       },
       "note": "Published eBay International Shipping number carried by Asendia USA; A1 returned its delivered history on 2026-09-22."
     },
@@ -249,7 +257,11 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "asendia"
+        ]
       },
       "note": "An eBay International Shipping number for the United Arab Emirates, reported on Asendia's review page. Asendia USA's tracking had no data for it."
     },

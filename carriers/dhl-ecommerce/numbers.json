@@ -448,6 +448,22 @@
         "confidence": "high"
       },
       "note": "Synthetic number with a valid S10 check digit in the UU series issued under DE, which Webtrack answers for. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "EEUS999999990GB9",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-08",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "asendia"
+        ]
+      },
+      "note": "Made-up number in the shape of an eBay International Shipping number DHL eCommerce's tracker answered: EEUS, nine digits, the destination's country code and a digit. Its serial sits far beyond the range in use."
     }
   ]
 }

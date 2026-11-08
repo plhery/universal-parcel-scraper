@@ -604,4 +604,15 @@ describe('Asendia recognition', () => {
       expect(recognitionAskedCarriers(number)).not.toContain('asendia');
     }
   });
+
+  it('is asked about eBay EEUS numbers before DHL eCommerce', () => {
+    for (const number of ['EEUS000000001GB1', 'EEUS123456780JP0']) {
+      expect(recognitionAskedCarriers(number)).toEqual(['asendia', 'dhl-ecommerce']);
+      expect(recognitionAskedCarriers(number, { hint: 'dhl-ecommerce' })).toEqual(['dhl-ecommerce', 'asendia']);
+    }
+    for (const number of ['EEUS00000001GB1', 'EEUS000000001GB', 'EEUS000000001G11', 'EEGB000000001US1']) {
+      expect(recognitionAskedCarriers(number)).not.toContain('asendia');
+      expect(recognitionAskedCarriers(number)).not.toContain('dhl-ecommerce');
+    }
+  });
 });

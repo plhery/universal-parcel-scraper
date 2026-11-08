@@ -84,11 +84,13 @@ a summary through universal providers (see [routing](https://github.com/plhery/d
 - An A1 scan without an explicit offset is dropped.
 - `AS` + 9 digits + `US` needs no S10 checksum: a real A1 number fails it. The generic postal
   rule excludes this shape.
-- A1 also accepts customer references, eBay `EEUS…` numbers, merchant references
-  and last-mile numbers. They are not specific to Asendia, so there is no detection rule for
-  them. S10 numbers issued by a partner post stay with that post.
+- A1 also accepts customer references, merchant references and last-mile numbers. They are
+  not specific to Asendia, so there is no detection rule for them. S10 numbers issued by a
+  partner post stay with that post.
 - eBay International Standard Delivery's `ESUS` + 9 digits are a low suggestion with DHL
-  eCommerce: eBay names DHL Global Mail's tracker for them, and A1 answers some. Recognition
+  eCommerce: eBay names DHL Global Mail's tracker for them, and A1 answers some. eBay
+  International Shipping's `EEUS`, nine digits, the destination's country code and a digit are
+  the same suggestion: A1 answers some and DHL eCommerce's tracker others. Recognition
   asks Asendia first: A1, as the lookup does, but never the global portal's browser. Asendia's other layouts are selected outright and need no recognition.
 - Events keep time, wording, code and city/province/country only. Address lines, postal codes,
   service name and order reference are never read.

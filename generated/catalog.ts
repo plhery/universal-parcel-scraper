@@ -780,6 +780,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^EEUS\\d{9}[A-Z]{2}\\d$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^UU\\d{9}DE$",
         "confidence": "low",
         "checksum": "s10"
@@ -1960,6 +1964,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^ESUS\\d{9}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^EEUS\\d{9}[A-Z]{2}\\d$",
         "confidence": "low"
       }
     ]
@@ -53557,7 +53565,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "postlogistics": ["postlogistics-dashed-reference","postlogistics-compact-reference"],
   "dachser": [],
   "dhl": ["dhl-1","dhl-14","dhl-16","dhl-15","dhl-9","dhl-8","dhl-10","dhl-3","dhl-13","dhl-12","dhl-7"],
-  "dhl-ecommerce": ["dhl-ecommerce-1","dhl-ecommerce-8","dhl-ecommerce-2","dhl-ecommerce-4","dhl-ecommerce-5","dhl-ecommerce-6","dhl-ecommerce-7"],
+  "dhl-ecommerce": ["dhl-ecommerce-1","dhl-ecommerce-8","dhl-ecommerce-2","dhl-ecommerce-4","dhl-ecommerce-5","dhl-ecommerce-6","dhl-ecommerce-9","dhl-ecommerce-7"],
   "ups": ["ups-1","ups-3"],
   "amazon-logistics": ["amazon-logistics-1"],
   "amazon-shipping": [],
@@ -53577,7 +53585,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "heppner": ["heppner-1"],
   "ciblex": ["ciblex-1","ciblex-full-barcode"],
   "paack": ["paack-1","paack-5340","paack-shein"],
-  "asendia": ["asendia-1","asendia-2","asendia-3","asendia-4"],
+  "asendia": ["asendia-1","asendia-2","asendia-3","asendia-4","asendia-5"],
   "shipup": [],
   "india-post": ["india-post-1"],
   "hermes-de": ["hermes-de-1","hermes-de-022","hermes-de-2","hermes-de-padded","hermes-de-3"],

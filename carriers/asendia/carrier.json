@@ -116,6 +116,11 @@
       "id": "asendia-4",
       "pattern": "^ESUS\\d{9}$",
       "confidence": "low"
+    },
+    {
+      "id": "asendia-5",
+      "pattern": "^EEUS\\d{9}[A-Z]{2}\\d$",
+      "confidence": "low"
     }
   ]
 }
