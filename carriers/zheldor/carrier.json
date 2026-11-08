@@ -21,8 +21,12 @@
   "timezone": "Europe/Moscow",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "zheldor",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
   "capabilities": [],
   "portal": {

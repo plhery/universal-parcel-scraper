@@ -51947,7 +51947,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "zheldor",
+      "localClocks": true
     },
     "canaryUrl": "https://i.jde.ru/track/",
     "trackingUrlTemplate": "https://i.jde.ru/track/?ttn={trackingNumber}",

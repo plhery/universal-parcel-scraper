@@ -1,0 +1,198 @@
+{
+  "ID_TTN": "3746192837054612",
+  "result": [
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_0",
+      "TIP": "7",
+      "DTIME": "21.01.2026 13:18:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 1",
+      "TEXT": "Выдано",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_1",
+      "TIP": "31",
+      "DTIME": "20.01.2026 16:51:49",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 1",
+      "TEXT": "Недозвон Клиенту",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_2",
+      "TIP": "6",
+      "DTIME": "20.01.2026 15:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 1",
+      "TEXT": "Прибыло и помещено на склад",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_3",
+      "TIP": "11",
+      "DTIME": "20.01.2026 15:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 1",
+      "TEXT": "Ожидается выгрузка в пункте назначения \"Примерск 1\"",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_4",
+      "TIP": "12",
+      "DTIME": "20.01.2026 14:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 2",
+      "TEXT": "Убыло в г.Примерск 1",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_5",
+      "TIP": "11",
+      "DTIME": "20.01.2026 9:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 2",
+      "TEXT": "Прибыло на транзитную станцию в г.Примерск 2",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_6",
+      "TIP": "12",
+      "DTIME": "19.01.2026 1:47:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 3",
+      "TEXT": "Убыло в г.Примерск 2",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_7",
+      "TIP": "12",
+      "DTIME": "14.01.2026 18:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 4",
+      "TEXT": "Убыло в г.Примерск 3",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_8",
+      "TIP": "11",
+      "DTIME": "13.01.2026 10:00:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 4",
+      "TEXT": "Прибыло на транзитную станцию в г.Примерск 4",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_9",
+      "TIP": "12",
+      "DTIME": "13.01.2026 4:18:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 3",
+      "TEXT": "Убыло в г.Примерск 4",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_10",
+      "TIP": "11",
+      "DTIME": "12.01.2026 21:03:12",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 3",
+      "TEXT": "Прибыло на транзитную станцию в г.Примерск 3",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_11",
+      "TIP": "12",
+      "DTIME": "12.01.2026 12:30:00",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 5",
+      "TEXT": "Убыло в г.Примерск 3",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_12",
+      "TIP": "33",
+      "DTIME": "12.01.2026 11:46:17",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 5",
+      "TEXT": "Погружено в транспортное средство",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_13",
+      "TIP": "52",
+      "DTIME": "10.01.2026 13:16:08",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 5",
+      "TEXT": "Отправлена СМС Получателю об отправке",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    },
+    {
+      "ID_TTN": "3746192837054612",
+      "ID_GM": "SYNTHETIC_EVENT_14",
+      "TIP": "37",
+      "DTIME": "10.01.2026 12:50:51",
+      "DT": "synthetic display day",
+      "MST_NAME": "Примерск 5",
+      "TEXT": "Оформление документов (ТТН)",
+      "HIDE": "0",
+      "KG_SHIR": "PRIVATE_COORDINATE",
+      "KG_DOLG": "PRIVATE_COORDINATE"
+    }
+  ],
+  "SROK_MIN": "PRIVATE_ESTIMATE",
+  "SROK_MAX": "PRIVATE_ESTIMATE",
+  "MST_NAME": "Примерск 1",
+  "mstobj_adr": "PRIVATE_ADDRESS",
+  "mstobj_tel": "PRIVATE_PHONE",
+  "KG_NAME_OTPR": "PRIVATE_SENDER",
+  "documents": [
+    "PRIVATE_DOCUMENT"
+  ],
+  "MST_DATE_CHANGE": [
+    "PRIVATE_SCHEDULE"
+  ],
+  "TEXT": "PRIVATE_SERVER_MESSAGE"
+}

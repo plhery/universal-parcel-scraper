@@ -69,6 +69,29 @@
         ]
       },
       "note": "An archived lookup of this ЭР number, typed without dashes, on JDE's own tracker address; the capture was not opened, so the history was not visible."
+    },
+    {
+      "number": "2280-9411-9324-4702",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://otzovik.com/review_18515149.html",
+        "date": "2026-07-18",
+        "dateKind": "comment",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The author publishes this receipt reference in a comment, and the carrier replies about its route. The public guest result names the whole reference in its root and scan identities."
     }
   ]
 }

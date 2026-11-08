@@ -1,6 +1,80 @@
 {
   "carrier": "zheldor",
   "entries": [
-    {"wording": "Выдан", "stage": "delivered", "language": "ru", "confirmedBy": "official-doc", "note": "Issued to the consignee; the tracker's own script (i.jde.ru track.js) prints it, with the issue date, when the history ends in issue. Other history wordings come from the server and were not seen."}
+    {
+      "wording": "Выдан",
+      "stage": "delivered",
+      "language": "ru",
+      "confirmedBy": "official-doc",
+      "note": "The public tracking page labels a consignment issued to the consignee this way."
+    },
+    {
+      "code": "7",
+      "wording": "Выдано",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "delivered"
+    },
+    {
+      "code": "6",
+      "wording": "Прибыло и помещено на склад",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "in_transit"
+    },
+    {
+      "code": "11",
+      "wording": "Ожидается выгрузка в пункте назначения \"Северодвинск\"",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "in_transit",
+      "note": "The destination city varies; awaiting unloading is not a pickup-ready declaration."
+    },
+    {
+      "code": "11",
+      "wording": "Прибыло на транзитную станцию в г.Москва",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "in_transit",
+      "note": "The transit city varies."
+    },
+    {
+      "code": "12",
+      "wording": "Убыло в г.Москва",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "in_transit",
+      "note": "The next city varies."
+    },
+    {
+      "code": "33",
+      "wording": "Погружено в транспортное средство",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "in_transit"
+    },
+    {
+      "code": "37",
+      "wording": "Оформление документов (ТТН)",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "stage": "registered"
+    },
+    {
+      "code": "31",
+      "wording": "Недозвон Клиенту",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "unmapped": true,
+      "note": "A telephone contact attempt, without evidence of a delivery attempt; it keeps the preceding shipment stage."
+    },
+    {
+      "code": "52",
+      "wording": "Отправлена СМС Получателю об отправке",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "unmapped": true,
+      "note": "A dispatch message keeps the preceding shipment stage; the code does not establish customs activity."
+    }
   ]
 }
