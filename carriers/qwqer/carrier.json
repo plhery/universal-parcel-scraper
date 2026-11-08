@@ -1,0 +1,35 @@
+{
+  "id": "qwqer",
+  "displayName": "QWQER",
+  "aliases": [
+    "QWQER EU SIA"
+  ],
+  "region": {
+    "countries": [
+      "LV",
+      "LT",
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#261865"
+  },
+  "selectable": true,
+  "timezone": "Europe/Riga",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
+    "canaryUrl": "https://qwqer.eu/lv/en/sutijumu-izsekosana",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

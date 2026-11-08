@@ -1,0 +1,40 @@
+{
+  "id": "hlog-transportes",
+  "displayName": "HLOG",
+  "aliases": [
+    "HLOG Transportes e Logística",
+    "HLOG Transportes"
+  ],
+  "region": {
+    "countries": [
+      "BR"
+    ]
+  },
+  "brand": {
+    "color": "#ff8000"
+  },
+  "selectable": true,
+  "timezone": "America/Bahia",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://hlogtransportes.com.br/buscar",
+    "canaryUrl": "https://hlogtransportes.com.br/buscar",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "hlog-transportes-1",
+      "pattern": "^HL\\d{10}BR$",
+      "confidence": "low"
+    }
+  ]
+}

@@ -2,7 +2,8 @@
   "id": "la-poste",
   "displayName": "La Poste / Colissimo",
   "aliases": [
-    "Colissimo"
+    "Colissimo",
+    "Coliposte"
   ],
   "region": {
     "countries": [

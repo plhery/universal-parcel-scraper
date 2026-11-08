@@ -1,0 +1,44 @@
+{
+  "id": "borzo",
+  "displayName": "Borzo",
+  "aliases": [
+    "WeFast",
+    "WEFAST India Pvt Ltd"
+  ],
+  "region": {
+    "countries": [
+      "IN",
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#0048ff"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://borzodelivery.com/in/track/{trackingNumber}",
+    "searchUrl": "https://borzodelivery.com/in/track",
+    "canaryUrl": "https://borzodelivery.com/in/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "borzodelivery.com",
+        "www.borzodelivery.com"
+      ],
+      "path": "^/(?:in|id)/track/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

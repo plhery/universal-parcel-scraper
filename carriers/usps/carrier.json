@@ -2,7 +2,8 @@
   "id": "usps",
   "displayName": "USPS",
   "aliases": [
-    "United States Postal Service"
+    "United States Postal Service",
+    "U.S. Postal Service"
   ],
   "region": {
     "countries": [

@@ -1,0 +1,36 @@
+{
+  "id": "fillo",
+  "displayName": "Fillo",
+  "aliases": [
+    "Fillo Kargo",
+    "Fillo Lojistik",
+    "Fillo Lojistik A.Ş.",
+    "Fillo Logistics"
+  ],
+  "region": {
+    "countries": [
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#5d2784"
+  },
+  "selectable": true,
+  "timezone": "Europe/Istanbul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://takip.fillo.com.tr/",
+    "canaryUrl": "https://takip.fillo.com.tr/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

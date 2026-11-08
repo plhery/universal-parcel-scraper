@@ -1,0 +1,26 @@
+{
+  "carrier": "hlog-transportes",
+  "gap": "No real HLOG shipment number is public; the only sample is its tracker's example.",
+  "records": [
+    {
+      "number": "HL2020101015Br",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://hlogtransportes.com.br/buscar",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "hlog-transportes"
+        ]
+      },
+      "note": "HLOG's tracker page prints it as the example code to look up; not a known shipment."
+    }
+  ]
+}

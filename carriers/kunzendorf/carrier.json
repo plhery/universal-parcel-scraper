@@ -1,0 +1,35 @@
+{
+  "id": "kunzendorf",
+  "displayName": "Kunzendorf Spedition",
+  "aliases": [
+    "Kunzendorf",
+    "Kunzendorf Spedition GmbH",
+    "Die fixen Kunzendorfer"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#f36a10"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.diefixenkunzendorfer.de/tracking",
+    "canaryUrl": "https://www.diefixenkunzendorfer.de/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

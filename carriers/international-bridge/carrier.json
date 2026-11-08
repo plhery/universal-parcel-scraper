@@ -1,0 +1,45 @@
+{
+  "id": "international-bridge",
+  "displayName": "International Bridge",
+  "aliases": [
+    "International Bridge, Inc.",
+    "ParcelPool"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#002e5d"
+  },
+  "selectable": true,
+  "timezone": "America/Denver",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.myib.com/?trackingnumber={trackingNumber}",
+    "searchUrl": "https://tracking.myib.com/",
+    "canaryUrl": "https://tracking.myib.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.myib.com"
+      ],
+      "pathPattern": "^/$",
+      "params": [
+        "trackingnumber"
+      ]
+    }
+  ],
+  "detection": []
+}

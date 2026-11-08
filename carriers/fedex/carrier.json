@@ -1,7 +1,9 @@
 {
   "id": "fedex",
   "displayName": "FedEx",
-  "aliases": [],
+  "aliases": [
+    "FedEx SmartPost"
+  ],
   "region": {
     "countries": []
   },

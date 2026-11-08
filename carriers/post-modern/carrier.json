@@ -1,0 +1,33 @@
+{
+  "id": "post-modern",
+  "displayName": "PostModern",
+  "aliases": [
+    "MEDIA Logistik GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#ec254a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.post-modern.de/tracking/",
+    "canaryUrl": "https://paketversand.post-modern.de/index.php/tracking/search",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,45 @@
+{
+  "id": "zippee",
+  "displayName": "Zippee",
+  "aliases": [
+    "ZFW Hospitality Private Limited"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#9f3da8"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.zippee.delivery/track-order?awb={trackingNumber}",
+    "searchUrl": "https://www.zippee.delivery/track-order",
+    "canaryUrl": "https://www.zippee.delivery/track-order",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.zippee.delivery",
+        "zippee.delivery"
+      ],
+      "pathPattern": "^/track-order/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": []
+}

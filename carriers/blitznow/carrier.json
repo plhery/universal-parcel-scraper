@@ -1,0 +1,48 @@
+{
+  "id": "blitznow",
+  "displayName": "Blitz",
+  "aliases": [
+    "GrowSimplee",
+    "BigShort Tails Private Limited"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#231f20"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.blitznow.in/{trackingNumber}",
+    "searchUrl": "https://track.blitznow.in/",
+    "canaryUrl": "https://track.blitznow.in/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.blitznow.in"
+      ],
+      "path": "^/track/([A-Za-z0-9-]+)/?$"
+    },
+    {
+      "domains": [
+        "track.blitznow.in"
+      ],
+      "path": "^/((?=[A-Za-z]*\\d)[A-Za-z0-9]{6,40})/?$"
+    }
+  ],
+  "detection": []
+}

@@ -196,6 +196,16 @@ describe('evidence-backed tracking formats', () => {
     }
   });
 
+  it('suggests HLOG for HL, ten digits and BR, the code its tracking page gives as its example', () => {
+    // Synthetic codes in the layout of the tracker's own example.
+    for (const number of ['HL0000000001BR', 'hl0000000001br']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['hlog-transportes'] });
+    }
+    for (const number of ['HL000000001BR', 'HL00000000001BR', 'HB0000000001BR', 'HL0000000001BA', 'XHL0000000001BR']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('hlog-transportes');
+    }
+  });
+
   it("suggests Express.Ru for its Web- orders and WEBN waybills", () => {
     // Synthetic numbers in the layouts its tracker hint and API guide give.
     for (const number of ['Web-0000000001', 'WEB0000000001', 'WEBN0000001', 'WEBN0000000001']) {

@@ -1,0 +1,34 @@
+{
+  "id": "mzz-briefdienst",
+  "displayName": "MZZ-Briefdienst",
+  "aliases": [
+    "MZZ Briefdienst",
+    "MZZ Briefdienst GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#003562"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://portal.sent24.de/index.php/tracking/search",
+    "canaryUrl": "https://portal.sent24.de/index.php/tracking/search",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

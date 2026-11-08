@@ -1,7 +1,9 @@
 {
   "id": "canpar",
   "displayName": "Canpar",
-  "aliases": [],
+  "aliases": [
+    "Canpar Express"
+  ],
   "region": {
     "countries": [
       "CA"

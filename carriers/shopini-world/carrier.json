@@ -1,0 +1,36 @@
+{
+  "id": "shopini-world",
+  "displayName": "ShopiniWorld",
+  "aliases": [
+    "Shopini World",
+    "Shopini Logistics",
+    "Shopini Logistics INC.",
+    "Shopini Logistics LLC"
+  ],
+  "region": {
+    "countries": [
+      "AE"
+    ]
+  },
+  "brand": {
+    "color": "#00eb8c"
+  },
+  "selectable": true,
+  "timezone": "Asia/Dubai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.shopiniworld.com/track-shipments",
+    "canaryUrl": "https://www.shopiniworld.com/track-shipments",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

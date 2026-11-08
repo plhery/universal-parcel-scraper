@@ -1,0 +1,42 @@
+{
+  "id": "wpx",
+  "displayName": "WPX Delivery Solutions",
+  "aliases": [
+    "WPX"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#1b1b69"
+  },
+  "selectable": true,
+  "timezone": "America/Los_Angeles",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://01000.cxtsoftware.net/rapidship/#/track-order;trackingId={trackingNumber}",
+    "searchUrl": "https://01000.cxtsoftware.net/rapidship/#/track-order",
+    "canaryUrl": "https://01000.cxtsoftware.net/rapidship/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "01000.cxtsoftware.net"
+      ],
+      "pathPattern": "^/rapidship/?$",
+      "fragment": "^/track-order;(?:[^;]*;)*trackingId=([^;/?&]+)"
+    }
+  ],
+  "detection": []
+}

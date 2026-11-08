@@ -1,7 +1,9 @@
 {
   "id": "spee-dee",
   "displayName": "Spee-Dee",
-  "aliases": [],
+  "aliases": [
+    "Spee-Dee Delivery Service"
+  ],
   "region": {
     "countries": [
       "US"
