@@ -656,6 +656,10 @@ describe('status map answers', () => {
     expect(answer('ppl', null, 'We have delivered the shipment to the recipient')).toEqual(unknown);
   });
 
+  it("answers Shipter's flight out of the origin airport", () => {
+    expect(answer('shipter', '', 'Depart origin airport')).toEqual(mapped('in_transit'));
+  });
+
   it('answers SF Express by its operation code, and code 99 by its remark', () => {
     expect(answer('sf-express', '10', 'The shipment has departed from the transit place【CN,EXAMPLE】, flight departure')).toEqual(mapped('in_transit'));
     expect(answer('sf-express', '11', 'The shipment has arrived at the transit place【CH,EXAMPLE】, flight arrival')).toEqual(mapped('in_transit'));
