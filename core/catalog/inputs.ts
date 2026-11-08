@@ -62,6 +62,29 @@ export function carrierCapabilityUrl(carrierId: string, trackingNumber: string, 
   return requirement ? capabilityUrl(requirement.validator, url, trackingNumber, carrierId) ?? null : null;
 }
 
+/**
+ * A required input the parcel lacks. It stays a TypeError for callers of `normalizeCarrierInputs`;
+ * the tracker reports it as the `InputRequiredError` it is.
+ */
+export class MissingCarrierInputError extends TypeError {
+  constructor(readonly field: CarrierInputField, readonly carrier: string, message: string) {
+    super(message);
+  }
+}
+
+function missingInputMessage(carrierId: string, field: CarrierInputField, requirement: CarrierRequirementRule): string {
+  const name = carrierDefinition(carrierId).displayName;
+  if (field === 'trackingUrl') return `${name} requires its complete tracking URL`;
+  if (field === 'phoneDigits') return `${name} requires the last four digits of a phone number`;
+  if (requirement.validator === 'swissPostcode') return `${name} requires the four-digit delivery postcode`;
+  if (requirement.validator === 'francePostcode' || requirement.validator === 'germanyPostcode') {
+    return `${name} requires the five-digit delivery postcode`;
+  }
+  if (requirement.validator === 'swissOrFrancePostcode') return `${name} requires a four- or five-digit delivery postcode`;
+  if (requirement.validator === 'paackPostcode') return 'Paack requires the delivery postcode';
+  return `${name} requires the delivery postcode`;
+}
+
 export function normalizeCarrierInputs(
   carrierId: string,
   trackingNumber: string,
@@ -100,31 +123,7 @@ export function normalizeCarrierInputs(
     if (!value) {
       // An optional input only unlocks extra detail; a supplied one is still checked below.
       if (requirement.optional) continue;
-      if (field === 'trackingUrl') {
-        throw new TypeError(`${carrierDefinition(carrierId).displayName} requires its complete tracking URL`);
-      }
-      if (field === 'phoneDigits') {
-        throw new TypeError(`${carrierDefinition(carrierId).displayName} requires the last four digits of a phone number`);
-      }
-      if (requirement.validator === 'swissPostcode') {
-        throw new TypeError(
-          `${carrierDefinition(carrierId).displayName} requires the four-digit delivery postcode`,
-        );
-      }
-      if (requirement.validator === 'francePostcode' || requirement.validator === 'germanyPostcode') {
-        throw new TypeError(
-          `${carrierDefinition(carrierId).displayName} requires the five-digit delivery postcode`,
-        );
-      }
-      if (requirement.validator === 'swissOrFrancePostcode') {
-        throw new TypeError(
-          `${carrierDefinition(carrierId).displayName} requires a four- or five-digit delivery postcode`,
-        );
-      }
-      if (requirement.validator === 'paackPostcode') {
-        throw new TypeError('Paack requires the delivery postcode');
-      }
-      throw new TypeError(`${carrierDefinition(carrierId).displayName} requires the delivery postcode`);
+      throw new MissingCarrierInputError(field, carrierId, missingInputMessage(carrierId, field, requirement));
     }
     switch (requirement.validator) {
       case 'planzerSharedUrl':

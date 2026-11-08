@@ -156,6 +156,29 @@ describe('HTTP contract', () => {
       .toMatchObject({ status: 400, body: { error: 'Invalid lookup budget' } });
   });
 
+  it('reports what the caller can do when sources fail differently', async () => {
+    // Royal Mail's own lookup, then UPU's empty answer for the postal item.
+    const postal = (error: Error) => {
+      const registry = new AdapterRegistry({ factories: { 'royal-mail': () => ({ id: 'royal-mail', steps: ['direct'],
+        track: async () => { throw error; } }) }, carriers: { 'royal-mail': 'royal-mail' } }, environment);
+      return serve({ tracker: createTracker({ registry, fetcher: async () => Response.json([]) }), now: () => 0 });
+    };
+    const parcel = { number: 'RR123456799GB', carrier: 'royal-mail' };
+    // A provider's miss leaves the carrier's rate limit, and its wait, standing.
+    const throttled = await call(await postal(new RateLimitedError('Royal Mail', 7_200_000)), 'track', { body: parcel });
+    expect(throttled).toMatchObject({ status: 429, body: { hint: { kind: 'rate_limited', retryAfterMs: 7_200_000 },
+      attempts: [{ source: 'royal-mail', kind: 'rate_limited', retryAfterMs: 7_200_000 }, { source: 'UPU', kind: 'not_found' }] } });
+    expect(throttled.headers.get('retry-after')).toBe('7200');
+    // An input a source asks for is the request to change, with no wait to advertise.
+    const gated = await call(await postal(new InputRequiredError('Royal Mail', 'postcode')), 'track', { body: parcel });
+    expect(gated).toMatchObject({ status: 400, body: { field: 'postcode', carrier: 'royal-mail',
+      hint: { kind: 'input_required', field: 'postcode', carrier: 'royal-mail' } } });
+    expect(gated.headers.get('retry-after')).toBeNull();
+    // So is one the carrier's catalog entry requires, before any lookup.
+    expect(await call(await serve(), 'track', { body: { number: '9999012345678', carrier: 'planzer' } }))
+      .toMatchObject({ status: 400, body: { error: 'Additional carrier input required', field: 'trackingUrl', carrier: 'planzer' } });
+  });
+
   it('answers a lookup that needs a carrier chosen, or finds every slot taken, as documented', async () => {
     // The one reply that carries `field`: unrelated carriers both know the number.
     const undecided: Tracker = { ...tracker(), track: async () => { throw new InputRequiredError('Tracking', 'carrier', 'Choose a carrier for this number'); } };

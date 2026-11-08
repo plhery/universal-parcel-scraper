@@ -2,10 +2,18 @@ import type { AddressInfo } from 'node:net';
 import type { Server } from 'node:http';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry, type CarrierAdapter } from '../core/adapter/index.js';
+import { detectCarrierMatch } from '../core/detection/index.js';
 import { InputRequiredError, type CarrierErrorKind } from '../core/errors/index.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
 import { createTracker, TrackingError, type ParcelInput, type Tracker, type TrackingResponse } from '../facade/index.js';
 import { createTrackingServer } from './index.js';
+
+// Every tracking request detects its number before it joins or starts a lookup, so the calls count the requests that have.
+vi.mock(import('../core/detection/index.js'), async (importOriginal) => {
+  const actual = await importOriginal();
+  return { ...actual, detectCarrierMatch: vi.fn(actual.detectCarrierMatch) };
+});
+const detections = () => vi.mocked(detectCarrierMatch).mock.calls.length;
 
 const servers: Server[] = [];
 const answer: TrackingResponse = { carrier: 'ups', source: 'ups', result: { current_stage: 'delivered', events: [] }, attempts: [] };
@@ -19,8 +27,17 @@ async function started(options: Parameters<typeof createTrackingServer>[0]) {
   await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
   return `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
 }
-const post = (url: string, value: Record<string, unknown> = input, token?: string) => fetch(`${url}/v1/track`, { method: 'POST',
-  headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: JSON.stringify(value) });
+const post = (url: string, value: Record<string, unknown> = input, token?: string, signal?: AbortSignal) => fetch(`${url}/v1/track`, { method: 'POST',
+  headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: JSON.stringify(value), signal });
+/** A tracker whose lookups wait for their signal, keeping each signal. */
+function held() {
+  const signals: AbortSignal[] = [];
+  const track = vi.fn().mockImplementation((_parcel: ParcelInput, context: { signal: AbortSignal }) => {
+    signals.push(context.signal);
+    return new Promise<TrackingResponse>((_, reject) => context.signal.addEventListener('abort', () => reject(context.signal.reason), { once: true }));
+  });
+  return { track, signals };
+}
 const failed = (kind: CarrierErrorKind, retryAfterMs?: number, source = 'ups') =>
   new TrackingError([{ source, kind, durationMs: 1 }], { kind, ...(retryAfterMs === undefined ? {} : { retryAfterMs }) });
 // A test that fails while a lookup is held leaves its requests open; dropping them lets the server close.
@@ -124,15 +141,37 @@ describe('tracking HTTP API', () => {
     expect(lookup).toHaveBeenCalledTimes(2);
   });
 
-  it('keeps country hints in the cache identity and forwards them to the tracker', async () => {
+  it('shares one lookup among inputs the tracker reads alike, whatever their country hint', async () => {
     const track = vi.fn().mockResolvedValue(answer);
     const url = await started({ tracker: tracker(track) });
-    for (const countryHint of [undefined, 'FR', 'CH', 'FR']) {
-      expect((await post(url, { ...input, ...(countryHint ? { countryHint } : {}) })).status).toBe(200);
+    const alike = [{ ...input, countryHint: 'FR' }, input, input, { ...input, countryHint: 'CH' }, { ...input, countryHint: null },
+      { ...input, postcode: null, trackingUrl: '', phoneDigits: '  ', language: '' },
+      // The tracker reads a postcode's country only beside a postcode.
+      { ...input, postcode: ' ', postcodeCountry: 'es' }];
+    for (const parcel of alike) expect((await post(url, parcel)).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(1);
+    // The hint changes no lookup, so a shared one is not handed one caller's.
+    expect(track.mock.calls[0]![0]).not.toHaveProperty('countryHint');
+    // It is still checked.
+    expect((await post(url, { ...input, countryHint: 7 })).status).toBe(400);
+    expect(track).toHaveBeenCalledTimes(1);
+  });
+
+  it('keeps apart each field that changes access or language, as the tracker reads it', async () => {
+    const track = vi.fn().mockResolvedValue(answer);
+    const url = await started({ tracker: tracker(track) });
+    const lookups = [
+      [{ postcode: '8000' }, { postcode: ' 8000 ' }], [{ postcode: '8001' }],
+      [{ trackingUrl: 'https://example.com/a' }, { trackingUrl: 'https://example.com/a ' }], [{ trackingUrl: 'https://example.com/A' }],
+      [{ phoneDigits: '1234' }, { phoneDigits: ' 1234' }], [{ phoneDigits: '4321' }],
+      // The tracker hands the reader's language on as it came.
+      [{ language: 'fr' }], [{ language: 'FR' }],
+      [{ postcode: '8000', postcodeCountry: 'CH' }, { postcode: '8000', postcodeCountry: ' ch ' }],
+    ];
+    for (const [index, parcels] of lookups.entries()) {
+      for (const parcel of parcels) expect((await post(url, { ...input, ...parcel })).status).toBe(200);
+      expect(track).toHaveBeenCalledTimes(index + 1);
     }
-    expect(track).toHaveBeenCalledTimes(3);
-    expect(track.mock.calls[1]![0]).toMatchObject({ countryHint: 'FR' });
-    expect(track.mock.calls[2]![0]).toMatchObject({ countryHint: 'CH' });
   });
 
   it("keeps the reader's language in the cache identity and forwards it to the tracker", async () => {
@@ -150,7 +189,7 @@ describe('tracking HTTP API', () => {
     const track = vi.fn().mockResolvedValue(answer);
     const url = await started({ tracker: tracker(track) });
     for (const postcodeCountry of [undefined, 'ES', 'BE', 'ES']) {
-      expect((await post(url, { ...input, ...(postcodeCountry ? { postcodeCountry } : {}) })).status).toBe(200);
+      expect((await post(url, { ...input, postcode: '28001', ...(postcodeCountry ? { postcodeCountry } : {}) })).status).toBe(200);
     }
     expect(track).toHaveBeenCalledTimes(3);
     expect(track.mock.calls[1]![0]).toMatchObject({ postcodeCountry: 'ES' });
@@ -211,6 +250,66 @@ describe('tracking HTTP API', () => {
     expect([recognize.mock.calls.length, track.mock.calls.length, peak]).toEqual([2, 2, 1]);
   });
 
+  it('keeps a shared lookup running for the clients still waiting when one leaves', async () => {
+    let finish!: (value: TrackingResponse) => void, signal!: AbortSignal;
+    const track = vi.fn().mockImplementation((_parcel: ParcelInput, context: { signal: AbortSignal }) => {
+      signal = context.signal;
+      return new Promise<TrackingResponse>(resolve => { finish = resolve; });
+    });
+    const log = vi.fn();
+    const url = await started({ tracker: tracker(track), maxConcurrent: 1, log });
+    const before = detections();
+    // The client that started the lookup leaves once another waits on it.
+    const leaving = new AbortController();
+    const leaver = post(url, input, undefined, leaving.signal).catch(() => 'left');
+    await vi.waitFor(() => expect(track).toHaveBeenCalledTimes(1));
+    const staying = post(url);
+    await vi.waitFor(() => expect(detections()).toBe(before + 2));
+    leaving.abort();
+    await vi.waitFor(() => expect(log).toHaveBeenCalledWith(expect.objectContaining({ route: '/v1/track', status: 499 })));
+    expect(await leaver).toBe('left');
+    expect(signal.aborted).toBe(false);
+    finish(answer);
+    expect(await (await staying).json()).toEqual(answer);
+    expect((await post(url)).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(1);
+  });
+
+  it('cancels a lookup every waiting client left, frees its slot and remembers nothing of it', async () => {
+    const { track, signals } = held();
+    const url = await started({ tracker: tracker(track), maxConcurrent: 1 });
+    const before = detections();
+    const clients = [new AbortController(), new AbortController()];
+    const requests = clients.map(client => post(url, input, undefined, client.signal).catch(() => 'left'));
+    await vi.waitFor(() => expect(detections()).toBe(before + 2));
+    expect(track).toHaveBeenCalledTimes(1);
+    for (const client of clients) client.abort();
+    await vi.waitFor(() => expect(signals[0]!.aborted).toBe(true));
+    expect(await Promise.all(requests)).toEqual(['left', 'left']);
+    // The only slot is free again, and the same parcel is asked again.
+    track.mockResolvedValue(answer);
+    expect((await post(url, { ...input, postcode: '0000' })).status).toBe(200);
+    expect((await post(url)).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(3);
+  });
+
+  it('cancels a recognition whose client left and frees its slot', async () => {
+    const signals: AbortSignal[] = [];
+    const recognize = vi.fn().mockImplementation((_number: string, context: { signal: AbortSignal }) => {
+      signals.push(context.signal);
+      return new Promise((_, reject) => context.signal.addEventListener('abort', () => reject(context.signal.reason), { once: true }));
+    });
+    const url = await started({ tracker: { ...tracker(), recognize }, maxConcurrent: 1 });
+    const leaving = new AbortController();
+    const left = fetch(`${url}/v1/recognize`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ number: input.number }), signal: leaving.signal }).catch(() => 'left');
+    await vi.waitFor(() => expect(recognize).toHaveBeenCalledTimes(1));
+    leaving.abort();
+    await vi.waitFor(() => expect(signals[0]!.aborted).toBe(true));
+    expect(await left).toBe('left');
+    expect((await post(url)).status).toBe(200);
+  });
+
   it('counts clients behind trusted proxies separately and ignores the header otherwise', async () => {
     const from = (url: string, forwarded: string) => fetch(`${url}/v1/track`, { method: 'POST',
       headers: { 'Content-Type': 'application/json', 'X-Forwarded-For': forwarded }, body: JSON.stringify(input) });
@@ -254,6 +353,23 @@ describe('tracking HTTP API', () => {
     track.mockResolvedValue(answer);
     expect((await post(url)).status).toBe(200);
     expect(track).toHaveBeenCalledTimes(4);
+  });
+
+  it('holds a rate limit beside a source its share cut short, but not an input request the budget may hide an answer behind', async () => {
+    const track = vi.fn().mockRejectedValue(new TrackingError(
+      [{ source: 'ups', kind: 'rate_limited', durationMs: 1, retryAfterMs: 120_000 }, { source: 'Ship24', kind: 'budget', durationMs: 9 }],
+      { kind: 'rate_limited', retryAfterMs: 120_000 }));
+    const url = await started({ tracker: tracker(track), rateLimit: 1_000 });
+    expect((await post(url)).status).toBe(429);
+    expect((await post(url)).status).toBe(429);
+    expect(track).toHaveBeenCalledTimes(1);
+    track.mockRejectedValue(new TrackingError(
+      [{ source: 'ParcelsApp', kind: 'input_required', durationMs: 1 }, { source: 'Ship24', kind: 'budget', durationMs: 9 }],
+      { kind: 'input_required', field: 'postcode' }));
+    const asking = { ...input, postcode: '0000' };
+    expect((await post(url, asking)).status).toBe(400);
+    expect((await post(url, asking)).status).toBe(400);
+    expect(track).toHaveBeenCalledTimes(3);
   });
 
   it('remembers no failure of a lookup that ran on the caller\'s own budget', async () => {
@@ -352,6 +468,26 @@ describe('tracking HTTP API', () => {
     await post(url, { ...undecided, postcode: '0000', budgetMs: 5_000 });
     await post(url, { ...undecided, postcode: '0000', budgetMs: 5_000 });
     expect(track).toHaveBeenCalledTimes(4);
+  });
+
+  it('answers a lookup a source needs an input for as the input request it is, held but without a wait to advertise', async () => {
+    let time = 0;
+    const gated = new TrackingError([{ source: 'ups', kind: 'rate_limited', durationMs: 1, retryAfterMs: 120_000 },
+      { source: 'ParcelsApp', kind: 'input_required', durationMs: 1 }, { source: 'UPU', kind: 'not_found', durationMs: 1 }],
+    { kind: 'input_required', field: 'postcode', carrier: 'ups', retryAfterMs: 120_000 });
+    const track = vi.fn().mockRejectedValue(gated);
+    const url = await started({ tracker: tracker(track), now: () => time });
+    const response = await post(url);
+    expect(response.status).toBe(400);
+    expect(response.headers.get('retry-after')).toBeNull();
+    expect(await response.json()).toEqual({ error: gated.message, field: 'postcode', carrier: 'ups', attempts: gated.attempts, hint: gated.hint });
+    // The same request gets the same answer until the carrier's wait is over; the input makes it another.
+    time = 119_999;
+    expect((await post(url)).status).toBe(400);
+    expect(track).toHaveBeenCalledTimes(1);
+    track.mockResolvedValue(answer);
+    expect((await post(url, { ...input, postcode: '0000' })).status).toBe(200);
+    expect(track).toHaveBeenCalledTimes(2);
   });
 
   it('leaves a carrier that failed alone for its own after-failure interval, whoever answered last', async () => {

@@ -1,13 +1,13 @@
 export const demoPage = `<!doctype html>
 <html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Universal Parcel Scraper</title>
-<style>body{max-width:44rem;margin:10vh auto;padding:1.5rem;font:16px system-ui;color:#173a36;background:#f4f6ef}h1{font-size:2.5rem}form{display:grid;gap:.8rem}input,select,button{font:inherit;padding:.8rem;border:1px solid #a0b8ae;border-radius:.5rem}button{background:#173a36;color:white;cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere}small{color:#516862}</style>
+<style>body{max-width:44rem;margin:10vh auto;padding:1.5rem;font:16px system-ui;color:#173a36;background:#f4f6ef}h1{font-size:2.5rem}form{display:grid;gap:.8rem}input,select,button{font:inherit;padding:.8rem;border:1px solid #a0b8ae;border-radius:.5rem}button{background:#173a36;color:white;cursor:pointer}pre{white-space:pre-wrap;overflow-wrap:anywhere}small{color:#516862}#needed{color:#a3361f}</style>
 <h1>A parcel. One timeline.</h1><p>Look up a parcel with the sources enabled on this server.</p>
 <form><input id="number" placeholder="Tracking number or carrier link" required aria-label="Tracking input">
 <select id="carrier" aria-label="Carrier"><option value="">Detect carrier</option></select>
 <input id="postcode" placeholder="Delivery postcode, if required" aria-label="Delivery postcode">
 <input id="token" type="password" placeholder="Server token, if required" aria-label="Server token">
-<button>Track parcel</button></form><p id="detection" role="status"></p><pre id="result"></pre>
+<button>Track parcel</button><small id="needed" role="alert" hidden></small></form><p id="detection" role="status"></p><pre id="result"></pre>
 <small>Detection runs in your browser. Tracking sends the number and any required inputs to this server and its enabled sources.</small>
 <script type="module">
 import { detectCarrierMatch, parseTrackingInput, CARRIER_CATALOG } from '/assets/scraper.js';
@@ -29,7 +29,19 @@ document.querySelector('form').addEventListener('submit', async event => {
   const linked = match.source === 'link' && match.confidence === 'high' && !(shown.confidence === 'high' && shown.carrier === match.carrier) ? match.carrier : undefined;
   const token = field('token').value;
   const response = await fetch('/v1/track', { method:'POST', headers:{'Content-Type':'application/json', ...(token ? {Authorization:'Bearer '+token} : {})}, body:JSON.stringify({number:match.trackingNumber, carrier:field('carrier').value || linked, postcode:field('postcode').value || undefined, trackingUrl:match.trackingUrl}) });
-  field('result').textContent = JSON.stringify(await response.json(), null, 2);
+  const answer = await response.json();
+  field('result').textContent = JSON.stringify(answer, null, 2);
+  // A lookup that needs an input names it: say so beside the control that takes it.
+  const needed = field('needed'), wanted = typeof answer.field === 'string' ? answer.field : '';
+  needed.hidden = !wanted;
+  if (wanted) {
+   const control = /carrier/i.test(wanted) ? field('carrier') : /url|link/i.test(wanted) ? field('number')
+    : /post|zip/i.test(wanted) ? field('postcode') : document.querySelector('button');
+   const asking = CARRIER_CATALOG[answer.carrier]?.displayName;
+   needed.textContent = 'Needed' + (asking ? ' by ' + asking : '') + ': ' + wanted;
+   control.after(needed);
+   if (control.tagName !== 'BUTTON') control.focus();
+  }
  } catch { field('result').textContent = 'The tracking server could not be reached.'; }
  finally { button.disabled = false; }
 });

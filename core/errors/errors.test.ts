@@ -65,6 +65,13 @@ describe('carrier error taxonomy', () => {
     expect(failureHint(new TypeError('bad payload'))).toEqual({ kind: 'schema' });
   });
 
+  it('names the input a source asks for, through cause chains', () => {
+    expect(failureHint(new InputRequiredError('ParcelsApp', 'postcode', undefined, { carrier: 'seur' })))
+      .toEqual({ kind: 'input_required', field: 'postcode', carrier: 'seur' });
+    expect(failureHint(new Error('outer', { cause: new InputRequiredError('Heppner', 'the delivery postcode') })))
+      .toEqual({ kind: 'input_required', field: 'the delivery postcode' });
+  });
+
   it('clamps negative retry windows and keeps custom statuses', () => {
     expect(new RateLimitedError('X', -5).retryAfterMs).toBe(0);
     expect(new CarrierError('transport', 'X', 'custom', { status: 599 }).status).toBe(599);

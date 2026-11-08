@@ -4,7 +4,8 @@ import { adapter as chinaPostAdapter } from '../carriers/china-post/adapter.js';
 import { CHINA_POST_CHECK_PATH } from '../carriers/china-post/app.js';
 import { AdapterRegistry, type AdapterEnvironment, type AdapterFactory, type CarrierAdapter } from '../core/adapter/index.js';
 import { trackCarrier } from '../core/adapter/track.js';
-import { InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
+import { normalizeCarrierInputs } from '../core/catalog/inputs.js';
+import { IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, UpstreamNetworkError } from '../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../core/result/index.js';
 import { resolveResult } from '../core/result/resolve.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -82,6 +83,31 @@ describe('standalone tracker', () => {
     for (const postcodeCountry of [42, 'ESP', 'E1']) {
       await expect(tracker.track({ number, postcodeCountry: postcodeCountry as string })).rejects.toThrow('Invalid postcode country');
     }
+  });
+
+  it('refuses an invalid field before asking any carrier to recognize the number', async () => {
+    const asked = vi.fn().mockResolvedValue({ known: true });
+    const tracker = createTracker({ providers: [], registry: recognizers({ dpd: asked, seur: asked, brt: asked, ciblex: asked }) });
+    for (const parcel of [{ postcode: '8000', postcodeCountry: 'ESP' }, { language: 'x'.repeat(36) }, { countryHint: 7 as unknown as string }]) {
+      await expect(tracker.track({ number: ambiguous, ...parcel })).rejects.toBeInstanceOf(TypeError);
+    }
+    expect(asked).not.toHaveBeenCalled();
+  });
+
+  it('asks for an input the carrier requires before any lookup, with the field and the carrier', async () => {
+    const lookup = vi.fn();
+    const planzer = new AdapterRegistry({ factories: { planzer: () => ({ id: 'planzer', steps: ['direct'], track: lookup }) },
+      carriers: { planzer: 'planzer' } }, environment);
+    const failure = await createTracker({ registry: planzer, providers: [] }).track({ number: '9999012345678', carrier: 'planzer' })
+      .catch((error: unknown) => error);
+    expect(failure).toBeInstanceOf(InputRequiredError);
+    expect(failure).toMatchObject({ field: 'trackingUrl', carrier: 'planzer', message: 'Planzer requires its complete tracking URL' });
+    expect(lookup).not.toHaveBeenCalled();
+    // A postcode the catalog requires is asked for the same way.
+    await expect(createTracker({ providers: [] }).track({ number: '12345678901', carrier: 'gls-es' }))
+      .rejects.toMatchObject({ name: 'InputRequiredError', field: 'postcode', carrier: 'gls-es' });
+    // Read directly, the catalog's check still throws a TypeError.
+    expect(() => normalizeCarrierInputs('planzer', '9999012345678', '', '')).toThrow(TypeError);
   });
 
   it('records a single-step lookup once, leaving it to an adapter that records its own steps', async () => {
@@ -431,7 +457,7 @@ describe('standalone tracker', () => {
         : [{ date: '2026-01-01T00:00:00', status: 'Enter recipient details', require_fields: [{ name: 'zipcode', type: 'text' }] }],
     }));
     const tracker = createTracker({ registry: registry(lookup), fetcher, providers: ['ParcelsApp'] });
-    await expect(tracker.track({ number, carrier: 'ups' })).rejects.toMatchObject({ hint: { kind: 'input_required' },
+    await expect(tracker.track({ number, carrier: 'ups' })).rejects.toMatchObject({ hint: { kind: 'input_required', field: 'postcode' },
       attempts: [{ source: 'ups', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'input_required' }] });
     await expect(tracker.track({ number, carrier: 'ups', postcode: ' 01234 ' })).resolves.toMatchObject({ source: 'ParcelsApp',
       result: { status: 'delivered' }, attempts: [{ source: 'ups', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'ok' }] });
@@ -480,6 +506,42 @@ describe('standalone tracker', () => {
     });
     // A direct adapter that refuses the format itself is still the answer.
     expect(await failure(new InvalidInputError('NACEX'))).toMatchObject({ hint: { kind: 'invalid_input' } });
+  });
+
+  describe('when its sources fail differently', () => {
+    const postal = 'RR123456799GB';
+    /** Royal Mail's own lookup failing as given, then UPU, the default provider, answering as given: an empty list unless told. */
+    const failure = (error: Error, upu: () => Response = () => Response.json([])) => createTracker({
+      fetcher: vi.fn<typeof fetch>().mockImplementation(async () => upu()),
+      registry: new AdapterRegistry({ factories: { 'royal-mail': () => ({ id: 'royal-mail', steps: ['direct'], track: vi.fn().mockRejectedValue(error) }) },
+        carriers: { 'royal-mail': 'royal-mail' } }, environment),
+    }).track({ number: postal, carrier: 'royal-mail' }).then(() => { throw new Error('Expected a failure'); }, (reason: TrackingError) => reason);
+
+    it("keeps the carrier's rate limit and its wait over a provider's miss", async () => {
+      expect(await failure(new RateLimitedError('Royal Mail', 7_200_000))).toMatchObject({ hint: { kind: 'rate_limited', retryAfterMs: 7_200_000 },
+        attempts: [{ source: 'royal-mail', kind: 'rate_limited', retryAfterMs: 7_200_000 }, { source: 'UPU', kind: 'not_found' }] });
+    });
+
+    it('takes the longest wait among the sources that could not answer', async () => {
+      const throttled = () => new Response('', { status: 429, headers: { 'Retry-After': '3600' } });
+      expect(await failure(new RateLimitedError('Royal Mail', 30_000), throttled)).toMatchObject({ hint: { kind: 'rate_limited', retryAfterMs: 3_600_000 },
+        attempts: [{ source: 'royal-mail', retryAfterMs: 30_000 }, { source: 'UPU', kind: 'rate_limited', retryAfterMs: 3_600_000 }] });
+      expect((await failure(new UpstreamNetworkError('Royal Mail', new Error('ECONNRESET')), throttled)).hint)
+        .toEqual({ kind: 'rate_limited', retryAfterMs: 3_600_000 });
+    });
+
+    it('names the input a source asks for, and the carrier asking, over a later miss', async () => {
+      expect(await failure(new InputRequiredError('Royal Mail', 'postcode'))).toMatchObject({
+        hint: { kind: 'input_required', field: 'postcode', carrier: 'royal-mail' },
+        attempts: [{ source: 'royal-mail', kind: 'input_required' }, { source: 'UPU', kind: 'not_found' }] });
+    });
+
+    it('reports a negative only when every source that could take the number gives one', async () => {
+      expect((await failure(new NotFoundError('Royal Mail'))).hint).toEqual({ kind: 'not_found' });
+      // A carrier that could not answer leaves a provider's miss unproven.
+      expect((await failure(new UpstreamNetworkError('Royal Mail', new Error('ECONNRESET')))).hint).toEqual({ kind: 'transport' });
+      expect((await failure(new IndeterminateError('Royal Mail'))).hint).toEqual({ kind: 'indeterminate' });
+    });
   });
 
   it('tells a rejected number and a malformed reply apart from a transport failure', async () => {

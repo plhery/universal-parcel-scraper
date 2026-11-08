@@ -127,9 +127,9 @@ carrier refuses the service's own address, and WanbExpress makes one read throug
 after a refused one. Each records its reads' routes the same way. A proxied read solves no
 challenge.
 
-`createTracker()` validates the input. A number is four to forty letters and digits and
-normally holds a digit. Without one it must be six to ten unbroken letters that a carrier's
-detection rule claims, as on a GLS notification card. Such a number is never read out of
+`createTracker()` validates the input, its optional fields before recognition asks any
+carrier. A number is four to forty letters and digits and normally holds a digit. Without
+one it must be six to ten unbroken letters that a carrier's detection rule claims, as on a GLS notification card. Such a number is never read out of
 pasted text, and the universal providers refuse it. Detection and recognition read the number
 as typed, so a separator a rule needs, such as the dash in a PostLogistics reference, still
 counts; adapters and providers get the normalized number. Normalization reads a letter O in an
@@ -181,6 +181,17 @@ attempt with its source and outcome.
 A failure's kind says what a retry can change. `invalid_input` is a number the carrier does
 not issue and `schema` is a reply that was not the expected shape, so neither is worth
 repeating at once.
+
+When its sources fail differently, the lookup reports the first kind in this order that one of
+them gave: `input_required`, `budget`, `rate_limited`, `challenge`, `maintenance`, `transport`,
+`schema`, `indeterminate`, `not_found`, `invalid_input`. An input a source asks for is the
+caller's next step, so it leads, and the hint names the `field` and, when known, the `carrier`
+asking. A deadline that ended the lookup comes next, since the sources it cut short said
+nothing. A source that could not answer leaves another's miss unproven, so `not_found` means
+every source that could take the number said so. The hint's `retryAfterMs` is the longest wait
+a source asked for while it could not answer, and each attempt keeps its own. An input the
+carrier's catalog entry requires and the parcel lacks is an `InputRequiredError` before any
+request.
 
 When a result names a delivery partner, the tracker also asks that partner's adapter. Its
 answer comes back separately, checked against the number on its own and finished as a direct
@@ -550,12 +561,20 @@ with nothing has no history, with the reason `written_ahead`.
 The server adds bounded in-memory caching, duplicate-request sharing, provider spacing,
 request limits and optional bearer authentication. It has no database.
 
+Requests share a lookup, and its cached answer, when the tracker reads their inputs alike. A
+missing field and a blank one are the same, values are trimmed where the tracker trims them,
+and a postcode's country counts only beside a postcode. The deprecated `countryHint` is
+checked but changes no lookup. Expired entries are swept at most once a minute.
+
 A failed lookup is held too, for at least `failureCacheMs` and longer when the upstream or
 the carrier's own after-failure interval asks for it. `Retry-After` says when the server will
-ask again. A failure on a caller's own `budgetMs` is never held, nor is an answer whose
-sources that budget cut short. Only requests on the same budget share a lookup in progress.
-`maxConcurrent` counts recognitions and tracking lookups together. Limits count the socket
-address unless `trustedProxies` says how many proxies append to `X-Forwarded-For`.
+ask again. A lookup that needs an input answers 400 with its `field`, and the `carrier` when
+known, without `Retry-After`: the request has to change first. A failure on a caller's own
+`budgetMs` is never held, nor is an answer whose sources that budget cut short. Only requests
+on the same budget share a lookup in progress. A client that leaves stops waiting and is
+logged with status 499. The last one to leave cancels the lookup, which frees its slot and is
+never held. `maxConcurrent` counts recognitions and tracking lookups together. Limits count
+the socket address unless `trustedProxies` says how many proxies append to `X-Forwarded-For`.
 
 Its logs carry route names, status codes and durations only. Library consumers connect their
 own observability through `StepRecorder`. The routes are in [openapi.json](server/openapi.json).

@@ -7,6 +7,7 @@ import { detectCarrierMatch, normalizeTrackingNumber, validTrackingNumber } from
 import { InputRequiredError } from '../core/errors/index.js';
 import type { FailureHint } from '../core/errors/hint.js';
 import { createTracker, TrackingError, type ParcelInput, type Tracker, type TrackerOptions, type TrackingAttempt, type TrackingResponse } from '../facade/index.js';
+import { checkParcelFields } from '../facade/input.js';
 import { CARRIER_CATALOG, type CarrierId } from '../generated/catalog.js';
 import { demoPage } from './page.js';
 
@@ -32,7 +33,7 @@ export interface TrackingServerOptions extends TrackerOptions {
    * leaves every client in one bucket.
    */
   trustedProxies?: number;
-  /** Receives route names and status only; input and error objects never enter logs. */
+  /** Receives route names and status only; input and error objects never enter logs. A client that left before its answer is status 499. */
   log?: (record: { method: string; route: string; status: number; durationMs: number }) => void;
   now?: () => number;
 }
@@ -48,6 +49,9 @@ function positive(value: number, name: string): number {
 
 /** What the cache holds for one lookup: its answer, or the failure it ended in. */
 interface Remembered { until: number; value?: TrackingResponse; error?: TrackingError | InputRequiredError }
+
+/** A lookup in progress and how many requests wait on it; the last one to leave cancels it. */
+interface Flight { answer: Promise<TrackingResponse>; controller: AbortController; waiters: number }
 
 /** Attempts that are no failure of the source: it answered, or the lookup ran out of time. */
 const SPARED: ReadonlySet<TrackingAttempt['kind']> = new Set(['ok', 'not_found', 'invalid_input', 'budget']);
@@ -67,15 +71,29 @@ function forwardedAddress(entry: string): string {
 }
 
 /**
- * How a failed lookup is answered; the status follows what the caller can do about it.
+ * How a failed lookup is answered; the status follows what the caller can do about it. A 400
+ * asks for a changed request, so only the other statuses advertise a wait in `Retry-After`.
  * `retryAfterMs` is the wait the header and the hint both advertise: the upstream's own
  * advice unless the server knows when it will ask again.
  */
-function failure(error: TrackingError, retryAfterMs = error.hint.retryAfterMs): { status: number; retryAfterMs?: number; body: { error: string; attempts: TrackingError['attempts']; hint: FailureHint } } {
-  const status = error.hint.kind === 'not_found' ? 404 : error.hint.kind === 'rate_limited' ? 429
-    : error.hint.kind === 'invalid_input' ? 400 : 502;
-  return { status, retryAfterMs, body: { error: error.message, attempts: error.attempts,
+function failure(error: TrackingError, retryAfterMs = error.hint.retryAfterMs): { status: number; retryAfterMs?: number;
+  body: { error: string; field?: string; carrier?: string; attempts: TrackingError['attempts']; hint: FailureHint } } {
+  const { kind, field, carrier } = error.hint;
+  const status = kind === 'not_found' ? 404 : kind === 'rate_limited' ? 429
+    : kind === 'invalid_input' || kind === 'input_required' ? 400 : 502;
+  return { status, ...(status === 400 ? {} : { retryAfterMs }), body: { error: error.message,
+    ...(field === undefined ? {} : { field }), ...(carrier === undefined ? {} : { carrier }), attempts: error.attempts,
     hint: retryAfterMs === undefined ? error.hint : { ...error.hint, retryAfterMs } } };
+}
+
+/** Settles as `work` does, or rejects with the signal's reason once it aborts. */
+function until<T>(work: Promise<T>, signal: AbortSignal): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    const stop = () => reject(signal.reason);
+    if (signal.aborted) stop();
+    else signal.addEventListener('abort', stop, { once: true });
+    work.then(resolve, reject).finally(() => signal.removeEventListener('abort', stop));
+  });
 }
 
 async function body(request: IncomingMessage): Promise<Record<string, unknown>> {
@@ -125,9 +143,19 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
   const cache = new Map<string, Remembered>();
   /** When repeating a held failure can next get a new answer. */
   const retryAt = new WeakMap<TrackingError, number>();
-  const pending = new Map<string, Promise<TrackingResponse>>();
+  const pending = new Map<string, Flight>();
   const routes = new Set(['/v1/carriers', '/v1/detect', '/v1/recognize', '/v1/track', '/health', '/openapi.json', '/', '/assets/scraper.js']);
   let active = 0;
+  let swept = now();
+
+  /** Drops expired answers and rate windows, at most once a minute, so memory follows the live ones. */
+  function sweep() {
+    const time = now();
+    if (time - swept < 60_000) return;
+    swept = time;
+    for (const [key, held] of cache) if (held.until <= time) cache.delete(key);
+    for (const [key, window] of clients) if (window.until <= time) clients.delete(key);
+  }
 
   /**
    * The address rate limits count. Each trusted proxy appended the peer it
@@ -155,24 +183,48 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     return ++window.count > rateLimit;
   }
 
-  /** One online lookup, a tracking or a recognition, within the server's concurrency. */
-  async function admitted<T>(run: () => Promise<T>): Promise<T> {
+  /**
+   * One online lookup, a tracking or a recognition, within the server's concurrency. Once `signal`
+   * aborts, nobody waits for the lookup and its slot is free, whenever the tracker stops.
+   */
+  async function admitted<T>(run: () => Promise<T>, signal: AbortSignal): Promise<T> {
+    signal.throwIfAborted();
     if (active >= maxConcurrent) throw new HttpError(429, 'Tracking is busy; retry later');
     active++;
-    try { return await run(); }
+    try { return await until(run(), signal); }
     finally { active--; }
   }
 
-  async function tracked(input: ParcelInput, budgetMs?: number): Promise<TrackingResponse> {
+  /** One request waiting on a shared lookup. It stops waiting when its client leaves, and the last to leave cancels the lookup. */
+  function waitOn(flight: Flight, gone: AbortSignal): Promise<TrackingResponse> {
+    flight.waiters++;
+    return new Promise<TrackingResponse>((resolve, reject) => {
+      const leave = () => {
+        reject(gone.reason);
+        if (--flight.waiters === 0) flight.controller.abort(new Error('Every client waiting on the lookup left'));
+      };
+      gone.addEventListener('abort', leave, { once: true });
+      flight.answer.then(resolve, reject).finally(() => gone.removeEventListener('abort', leave));
+    });
+  }
+
+  async function tracked(input: ParcelInput, budgetMs: number | undefined, gone: AbortSignal): Promise<TrackingResponse> {
     if (typeof input.number !== 'string' || input.number.length > 80 || !validTrackingNumber(input.number)) throw new TypeError('Invalid tracking number');
     if (input.carrier !== undefined && (typeof input.carrier !== 'string' || !input.carrier)) throw new TypeError('Invalid carrier');
+    checkParcelFields(input);
+    gone.throwIfAborted();
     const number = normalizeTrackingNumber(input.number);
     // Without a carrier the tracker detects one and recognition confirms it, both on the number as
     // printed, so the printed form's detection belongs to the lookup's identity. A carrier the caller
     // chose is a lookup of its own, even when detection names the same one.
     const detected = detectCarrierMatch(input.number);
     const route = input.carrier ?? { carrier: detected.carrier, candidates: detected.candidates };
-    const key = createHash('sha256').update(JSON.stringify([number, route, input.postcode, input.postcodeCountry, input.trackingUrl, input.countryHint, input.language, input.phoneDigits])).digest('hex');
+    // The other fields as the tracker reads them: absent, null and blank alike, trimmed, and the
+    // postcode's country upper-cased and read only beside a postcode. The country hint changes nothing.
+    const text = (value: string | null | undefined) => value?.trim() ?? '';
+    const postcode = text(input.postcode);
+    const key = createHash('sha256').update(JSON.stringify([number, route, postcode, postcode ? text(input.postcodeCountry).toUpperCase() : '',
+      text(input.trackingUrl), text(input.phoneDigits), input.language || ''])).digest('hex');
     const previous = cache.get(key);
     if (previous && previous.until > now()) {
       if (previous.error) throw previous.error;
@@ -180,9 +232,9 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
     }
     if (previous) cache.delete(key);
     // A caller waits on a lookup already running only when it runs on the same budget.
-    const flight = `${key}:${budgetMs ?? ''}`;
-    const inFlight = pending.get(flight);
-    if (inFlight) return await inFlight;
+    const flightKey = `${key}:${budgetMs ?? ''}`;
+    const running = pending.get(flightKey);
+    if (running) return await waitOn(running, gone);
     const remember = (entry: Remembered) => {
       if (cache.size >= 1_000) {
         // Entries past their time go first; a live one is given up only when none is.
@@ -192,9 +244,15 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       }
       cache.set(key, entry);
     };
+    // The country hint changes no lookup, so one that callers share does not carry one caller's.
+    const parcel: ParcelInput = { ...input };
+    delete parcel.countryHint;
+    const controller = new AbortController();
     const operation = admitted(async () => {
       try {
-        const value = await tracker.track(input, { budgetMs });
+        const value = await tracker.track(parcel, { budgetMs, signal: controller.signal });
+        // A lookup every waiting client left is not remembered, whatever it came to.
+        if (controller.signal.aborted) return value;
         const refresh = (carrierDefinition(value.carrier).tracking as { refresh?: { minMinutes: number } }).refresh;
         // An answer the caller's own budget cut short, such as a carrier summary whose provider
         // history was still loading, is not what the next caller would get either.
@@ -205,36 +263,55 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       } catch (error) {
         // A failure is remembered only when the lookup ran on the server's own budget and did not
         // spend it: the key carries no budget, and how long one caller waited says nothing about
-        // what the next one would get.
-        if (budgetMs === undefined && error instanceof TrackingError && error.hint.kind !== 'budget') {
+        // what the next one would get. Nor is a lookup every waiting client left. An input request
+        // outranks a spent budget, so a source that budget cut short can stand behind one.
+        const spent = error instanceof TrackingError && (error.hint.kind === 'budget'
+          || (error.hint.kind === 'input_required' && error.attempts.some(attempt => attempt.kind === 'budget')));
+        if (controller.signal.aborted || budgetMs !== undefined || spent) throw error;
+        if (error instanceof TrackingError) {
           const time = now();
           const retry = error.hint.retryAfterMs ?? 0;
           // A carrier that failed is left alone for the wait it asks for, whatever a fallback then said.
           const hold = Math.max(failureCacheMs, Math.min(cacheMs, retry),
             ...error.attempts.filter(attempt => !SPARED.has(attempt.kind)).map(attempt => afterFailureMs(attempt.source)));
           remember({ until: time + hold, error });
-          // No wait changes the answer for a number the carrier does not issue.
-          if (error.hint.kind !== 'invalid_input') retryAt.set(error, time + Math.max(hold, retry));
-        } else if (budgetMs === undefined && error instanceof InputRequiredError) {
-          // Every candidate carrier was asked before the choice was left to the caller.
+          // No wait changes the answer for a number the carrier does not issue, or for a request
+          // without the input a source asks for.
+          if (error.hint.kind !== 'invalid_input' && error.hint.kind !== 'input_required') retryAt.set(error, time + Math.max(hold, retry));
+        } else if (error instanceof InputRequiredError) {
+          // Every candidate carrier was asked before the choice was left to the caller, or the
+          // catalog says what the carrier needs.
           remember({ until: now() + failureCacheMs, error });
         }
         throw error;
       }
-    });
-    pending.set(flight, operation);
-    try { return await operation; }
-    finally { pending.delete(flight); }
+    }, controller.signal);
+    const flight: Flight = { answer: operation, controller, waiters: 0 };
+    pending.set(flightKey, flight);
+    // A lookup its last waiter left is not one to join.
+    const finished = () => { if (pending.get(flightKey) === flight) pending.delete(flightKey); };
+    operation.then(finished, finished);
+    controller.signal.addEventListener('abort', finished, { once: true });
+    return await waitOn(flight, gone);
   }
 
   async function handleRequest(request: IncomingMessage, response: ServerResponse): Promise<void> {
     const started = performance.now();
     let route = 'unknown';
-    response.on('finish', () => {
-      try { options.log?.({ method: request.method ?? 'unknown', route, status: response.statusCode, durationMs: Math.round(performance.now() - started) }); }
+    const record = (status: number) => {
+      try { options.log?.({ method: request.method ?? 'unknown', route, status, durationMs: Math.round(performance.now() - started) }); }
       catch { /* Logging cannot change an answer. */ }
+    };
+    // The request's own 'close' comes once its body is read; the response's, before the answer is written, means the client left.
+    const client = new AbortController();
+    response.on('close', () => {
+      if (response.writableFinished) return;
+      client.abort(new Error('The client closed the connection'));
+      record(499);
     });
+    response.on('finish', () => record(response.statusCode));
     try {
+      sweep();
       const path = new URL(request.url ?? '/', 'http://localhost').pathname;
       route = routes.has(path) ? path : 'unknown';
       if (request.method === 'GET' && path === '/health') { json(response, 200, { ok: true }); return; }
@@ -260,12 +337,18 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
       if (Object.keys(input).some(key => !allowed.includes(key))) throw new HttpError(400, 'Unknown request field');
       if (path === '/v1/detect') { json(response, 200, tracker.detect(input.text as string)); return; }
       if (input.budgetMs !== undefined && (typeof input.budgetMs !== 'number' || !Number.isInteger(input.budgetMs) || input.budgetMs < 1 || input.budgetMs > 120_000)) throw new HttpError(400, 'Invalid lookup budget');
-      if (path === '/v1/recognize') { json(response, 200, await admitted(() => tracker.recognize(input.number as string, { budgetMs: input.budgetMs as number | undefined }))); return; }
+      if (path === '/v1/recognize') {
+        json(response, 200, await admitted(() => tracker.recognize(input.number as string,
+          { budgetMs: input.budgetMs as number | undefined, signal: client.signal }), client.signal));
+        return;
+      }
       const result = await tracked({ number: input.number as string, carrier: input.carrier as string | undefined,
         postcode: input.postcode as string | null | undefined, postcodeCountry: input.postcodeCountry as string | null | undefined, trackingUrl: input.trackingUrl as string | null | undefined, countryHint: input.countryHint as string | null | undefined,
-        phoneDigits: input.phoneDigits as string | null | undefined, language: input.language as string | null | undefined }, input.budgetMs);
+        phoneDigits: input.phoneDigits as string | null | undefined, language: input.language as string | null | undefined }, input.budgetMs, client.signal);
       json(response, 200, result);
     } catch (error) {
+      // Nobody is left to read an answer.
+      if (client.signal.aborted) return;
       if (error instanceof HttpError) {
         if (error.status === 429) response.setHeader('Retry-After', '60');
         json(response, error.status, { error: error.message });
@@ -275,7 +358,7 @@ export function createTrackingServer(options: TrackingServerOptions = {}) {
         if (answer.retryAfterMs !== undefined) response.setHeader('Retry-After', String(Math.ceil(answer.retryAfterMs / 1_000)));
         json(response, answer.status, answer.body);
       } else if (error instanceof InputRequiredError) {
-        json(response, 400, { error: 'Additional carrier input required', field: error.field });
+        json(response, 400, { error: 'Additional carrier input required', field: error.field, ...(error.carrier === undefined ? {} : { carrier: error.carrier }) });
       } else if (error instanceof TypeError || error instanceof RangeError) {
         json(response, 400, { error: 'Invalid tracking input' });
       } else {

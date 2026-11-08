@@ -325,7 +325,7 @@
             }
           },
           "400": {
-            "description": "Invalid or required input",
+            "description": "Invalid input, or an input a source requires, named in field",
             "content": {
               "application/json": {
                 "schema": {
@@ -345,7 +345,7 @@
             }
           },
           "404": {
-            "description": "No enabled source knows the parcel",
+            "description": "Every source that could take the number says it does not know the parcel",
             "content": {
               "application/json": {
                 "schema": {
@@ -899,6 +899,11 @@
           "durationMs": {
             "type": "integer",
             "minimum": 0
+          },
+          "retryAfterMs": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The wait this source asked for after its failure, as it came, when it named one."
           }
         },
         "additionalProperties": false
@@ -923,12 +928,20 @@
               "transport",
               "budget"
             ],
-            "description": "What failed; `invalid_input` and `not_found` are answers, not outages."
+            "description": "What failed; `invalid_input` and `not_found` are answers, not outages. Sources that fail differently report the first kind in this order that one of them gave: input_required, budget, rate_limited, challenge, maintenance, transport, schema, indeterminate, not_found, invalid_input."
           },
           "retryAfterMs": {
             "type": "integer",
             "minimum": 0,
-            "description": "Milliseconds to wait before repeating the request; what `Retry-After` says in seconds."
+            "description": "Milliseconds to wait before repeating the request, what `Retry-After` says in seconds. A held failure gives the time until the server asks again, which is no sooner than the longest wait a source that could not answer asked for; otherwise it is that wait. A 400 leaves the header out, since the request has to change first."
+          },
+          "field": {
+            "type": "string",
+            "description": "With input_required, the input a source asks for, as the source names it."
+          },
+          "carrier": {
+            "type": "string",
+            "description": "With field, the catalog id of the carrier that asks for it, when it is known."
           }
         },
         "additionalProperties": false
@@ -944,7 +957,11 @@
           },
           "field": {
             "type": "string",
-            "description": "The input a carrier still needs."
+            "description": "The input a carrier still needs; also in the hint of a failed lookup."
+          },
+          "carrier": {
+            "type": "string",
+            "description": "The catalog id of the carrier that asks for field, when it is known."
           },
           "attempts": {
             "type": "array",

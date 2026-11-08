@@ -2,11 +2,11 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { AdapterRegistry, type AdapterEnvironment, type CarrierAdapter, type TrackingContext, type TrackingInput } from '../core/adapter/index.js';
 import { runAdapter } from '../core/adapter/run.js';
 import { carrierDefinition, carrierTimezone } from '../core/catalog/index.js';
-import { carrierTakesPhoneDigits, carrierTakesPostcode, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
+import { carrierTakesPhoneDigits, carrierTakesPostcode, MissingCarrierInputError, normalizeCarrierInputs, normalizeDeliveryPostcode } from '../core/catalog/inputs.js';
 import { deliveryHandoff, type DeliveryHandoff } from '../core/catalog/handoff.js';
 import { detectCarrierMatch, normalizeTrackingNumber, parseTrackingInput, validTrackingNumber } from '../core/detection/index.js';
 import { BudgetExceededError, IndeterminateError, InputRequiredError, NoHistoryError, writtenAheadClocks, type CarrierErrorKind } from '../core/errors/index.js';
-import { failureHint, failureKind, type FailureHint } from '../core/errors/hint.js';
+import { failureHint, type FailureHint } from '../core/errors/hint.js';
 import { MAX_RECOGNITIONS, recognitionCandidates, recognizeAll, settleRecognition, type RecognitionOutcome } from '../core/recognition/index.js';
 import { fillPartialAnswer, isPartialAnswer, withoutWrittenAhead } from '../core/result/partial.js';
 import { resolveResult, resultHasUpdate, type ResolvedResult } from '../core/result/resolve.js';
@@ -18,6 +18,7 @@ import { REGISTRY } from '../generated/registry.js';
 import { universalPlan, universalSourceBudget } from '../providers/plan.js';
 import type { UniversalSource } from '../providers/types.js';
 import { UniversalTracker } from '../providers/universal.js';
+import { checkParcelFields } from './input.js';
 
 export interface TrackerOptions {
   trawlUrl?: string;
@@ -58,6 +59,8 @@ export interface TrackingAttempt {
   source: string;
   kind: CarrierErrorKind | 'ok';
   durationMs: number;
+  /** The wait this source asked for after its failure, when it named one. */
+  retryAfterMs?: number;
 }
 
 export interface TrackingResponse {
@@ -79,6 +82,32 @@ export class TrackingError extends Error {
 }
 
 const sources: readonly UniversalSource[] = ['Ship24', 'ParcelsApp', '17TRACK', 'Postal Ninja', 'Track718', 'Track123', 'UPU'];
+
+/**
+ * Which failure a lookup reports when its sources fail differently, first to last: the input a
+ * source asks for, a deadline that ended the lookup, a source that limited, blocked or could not
+ * be reached, a reply that proves nothing, and only then a negative or a refused number.
+ */
+const PRECEDENCE: readonly CarrierErrorKind[] = ['input_required', 'budget', 'rate_limited', 'challenge', 'maintenance',
+  'transport', 'schema', 'indeterminate', 'not_found', 'invalid_input'];
+
+/** Failures that answer for the parcel or the input as supplied: no wait changes them. */
+const ANSWERS: ReadonlySet<CarrierErrorKind> = new Set(['input_required', 'not_found', 'invalid_input']);
+
+/**
+ * The lookup's failure from each failed source's, in the order they were asked: the first of the
+ * kind `PRECEDENCE` puts first, with the longest wait a source asked for while it could not answer.
+ */
+function lookupFailure(failures: readonly FailureHint[], spent: boolean): FailureHint {
+  const reported = spent ? [...failures, { kind: 'budget' as const }] : failures;
+  const chosen = reported.reduce<FailureHint | undefined>((best, next) =>
+    !best || PRECEDENCE.indexOf(next.kind) < PRECEDENCE.indexOf(best.kind) ? next : best, undefined)
+    ?? failureHint(new IndeterminateError('Tracking', 'No configured source accepts this parcel'));
+  const waits = failures.flatMap(({ kind, retryAfterMs }) => ANSWERS.has(kind) || retryAfterMs === undefined ? [] : [retryAfterMs]);
+  const { kind, field, carrier } = chosen;
+  return { kind, ...(waits.length ? { retryAfterMs: Math.max(...waits) } : {}),
+    ...(field === undefined ? {} : { field }), ...(carrier === undefined ? {} : { carrier }) };
+}
 
 function budget(value: number | undefined, fallback: number): number {
   const ms = value ?? fallback;
@@ -213,6 +242,8 @@ export function createTracker(options: TrackerOptions = {}) {
     if (!input || typeof input.number !== 'string' || !validTrackingNumber(input.number)) throw new TypeError('Invalid tracking number');
     if (input.carrier !== undefined && (typeof input.carrier !== 'string' || !input.carrier)) throw new TypeError('Invalid carrier');
     if (input.source !== undefined && !enabled.includes(input.source)) throw new TypeError('Unknown or disabled universal provider');
+    // Before recognition, so an input no lookup could take costs no carrier a request.
+    checkParcelFields(input);
     const number = normalizeTrackingNumber(input.number);
     const ms = budget(context.budgetMs, 90_000);
     const end = Date.now() + ms;
@@ -234,24 +265,28 @@ export function createTracker(options: TrackerOptions = {}) {
         if (signal.aborted) throw new TrackingError([], failureHint(new BudgetExceededError('Tracking', ms)));
       }
     }
-    if (input.countryHint != null && typeof input.countryHint !== 'string') throw new TypeError('Invalid country hint');
-    if (input.postcode != null && typeof input.postcode !== 'string') throw new TypeError('Invalid postcode');
-    if (input.postcodeCountry != null && (typeof input.postcodeCountry !== 'string' || !/^\s*[A-Za-z]{2}\s*$/.test(input.postcodeCountry))) {
-      throw new TypeError('Invalid postcode country');
-    }
-    if (input.trackingUrl != null && typeof input.trackingUrl !== 'string') throw new TypeError('Invalid tracking URL');
-    if (input.phoneDigits != null && typeof input.phoneDigits !== 'string') throw new TypeError('Invalid phone digits');
-    if (input.language != null && (typeof input.language !== 'string' || input.language.length > 35)) throw new TypeError('Invalid language');
     const language = input.language ? { language: input.language } : {};
     // A provider can ask for a delivery postcode the carrier does not read; only the providers then get it.
     const postcode = input.postcode ?? '';
     const carrierPostcode = carrierTakesPostcode(carrier, number);
     // Phone digits reach only the carrier that asks for them, never a provider.
     const phoneDigits = carrierTakesPhoneDigits(carrier, number) ? input.phoneDigits ?? '' : '';
-    const fields = normalizeCarrierInputs(carrier, number, input.trackingUrl ?? '', carrierPostcode ? postcode : '', phoneDigits);
+    let fields: ReturnType<typeof normalizeCarrierInputs>;
+    try {
+      fields = normalizeCarrierInputs(carrier, number, input.trackingUrl ?? '', carrierPostcode ? postcode : '', phoneDigits);
+    } catch (error) {
+      // An input the carrier's catalog entry requires is the caller's to supply, as a carrier's own gate is.
+      if (error instanceof MissingCarrierInputError) {
+        throw new InputRequiredError(carrier, error.field, error.message, { carrier: error.carrier, cause: error });
+      }
+      throw error;
+    }
     const providerPostcode = carrierPostcode || !postcode.trim() ? fields.postcode : normalizeDeliveryPostcode(postcode);
     const attempts: TrackingAttempt[] = [];
-    let lastError: unknown = new IndeterminateError('Tracking', 'No configured source accepts this parcel');
+    /** Each failed source's hint, in the order asked, that the lookup's failure is chosen from. */
+    const failures: FailureHint[] = [];
+    /** The newest source's error: the carrier's own until a provider is asked. */
+    let lastError: unknown;
     const remaining = () => Math.max(1, end - Date.now());
     /** One source's answer, or null. `cut` can end it before the lookup does; either ending is a spent budget. */
     async function attempt(source: string, run: () => Promise<unknown>, cut: AbortSignal = signal): Promise<ResolvedResult | null> {
@@ -262,9 +297,13 @@ export function createTracker(options: TrackerOptions = {}) {
         attempts.push({ source, kind: 'ok', durationMs: Math.round(performance.now() - start) });
         return result;
       } catch (error) {
-        // A source that cannot take this number says nothing about the failure an earlier source reported.
-        if (!attempts.some(entry => entry.kind !== 'ok') || failureKind(error) !== 'invalid_input') lastError = error;
-        attempts.push({ source, kind: cut.aborted ? 'budget' : failureKind(error), durationMs: Math.round(performance.now() - start) });
+        lastError = error;
+        const hint: FailureHint = cut.aborted ? { kind: 'budget' } : failureHint(error);
+        // A carrier's adapter that asks for an input is the carrier asking; a provider names the carrier it relays, if any.
+        const own = hint.kind === 'input_required' && hint.carrier === undefined && !sources.includes(source as UniversalSource);
+        failures.push(own ? { ...hint, carrier: source } : hint);
+        attempts.push({ source, kind: hint.kind, durationMs: Math.round(performance.now() - start),
+          ...(hint.retryAfterMs === undefined ? {} : { retryAfterMs: hint.retryAfterMs }) });
         if (context.signal?.aborted) throw context.signal.reason;
         return null;
       }
@@ -317,8 +356,7 @@ export function createTracker(options: TrackerOptions = {}) {
         if (timer?.aborted) break;
       }
     }
-    if (!result) throw new TrackingError(attempts, signal.aborted
-      ? failureHint(new BudgetExceededError('Tracking', ms)) : failureHint(lastError));
+    if (!result) throw new TrackingError(attempts, lookupFailure(failures, signal.aborted));
     const direct = partial && relayed ? partial : null;
     const response: TrackingResponse = { carrier, source, result, attempts, ...(direct ? { direct } : {}) };
     const proposal = input.source ? null : named || deliveryHandoff(carrier, number, relayed ?? result);
