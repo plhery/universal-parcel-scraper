@@ -69,6 +69,12 @@ it('keeps scan locations from the API while excluding a delivery-service label a
   expect(parse('EXAMPLE TOWN, Example Town, DE')?.location).toBe('EXAMPLE TOWN, DE');
   expect(parse('Mexico, Mexico')?.location).toBe('Mexico, Mexico');
   expect(parse('00000,00000')).not.toHaveProperty('location');
+  // A town given again as its region, spaced, before the letters that end the place.
+  expect(parse('Exampleton Exampleton Gb')?.location).toBe('Exampleton Gb');
+  expect(parse('New Example New Example Us')?.location).toBe('New Example Us');
+  for (const location of ['Exampleton Exampleshire Gb', 'Example Town Va', 'Example Example', 'Example Example Wa', 'Example Example Example Kr']) {
+    expect(parse(location)?.location).toBe(location);
+  }
 });
 
 it('keeps the reported place when another carrier repeats a delivery without a location', () => {

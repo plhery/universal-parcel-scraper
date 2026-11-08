@@ -75,8 +75,10 @@ step exists for future protocol changes.
   ("abroad") and China Post's "目的国" ("destination country"). A Post Office branch's postcode, which Royal Mail appends in brackets and
   ParcelsApp copies, is left out, as Royal Mail's own adapter does, and so is the "Country"
   label ParcelsApp translates from Correios Brazil's "País" before a unit abroad, and the
-  eight-digit code of the China Post office after a town. A repeat
-  without a place keeps the location another copy of the same scan reported.
+  eight-digit code of the China Post office after a town. A town given again as its region
+  before its country's code, between spaces ("Example Example Gb"), is read once; the code
+  stays as given, since the same letters name a province or state when the region is left out.
+  A repeat without a place keeps the location another copy of the same scan reported.
 - Identity: the API reply does not echo the number, so a direct result is bound to the
   single POST that sent it. A different `correctId` is rejected as an unverified alias.
   A browser capture must render exactly one matching `Tracking number` row in the result

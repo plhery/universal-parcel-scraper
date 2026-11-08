@@ -129,10 +129,27 @@ function withoutAddedCountry(location: string): string {
 }
 
 /**
+ * A town ParcelsApp spells again as its region, between spaces, before its country's code
+ * ("Example Example Gb"), read once. The code stays as given: the same two letters name a
+ * province or state when the region is left out ("Example Town Va"), and a town whose name
+ * doubles itself is given with its state's code ("Example Example Wa").
+ */
+function withoutSpacedRepeat(location: string): string {
+  const words = location.split(' ');
+  const code = words.at(-1) ?? '';
+  const name = words.slice(0, -1);
+  const half = name.length / 2;
+  const repeated = /^\p{Lu}\p{Ll}$/u.test(code) && countryCode(code.toUpperCase()) !== null && Number.isInteger(half) && half > 0
+    && name.slice(0, half).join(' ').toLowerCase() === name.slice(half).join(' ').toLowerCase();
+  return repeated ? [...name.slice(0, half), code].join(' ') : location;
+}
+
+/**
  * A place with each part given once in a row ("SH,SH,CN"), except a country
  * after a town of its name ("Mexico, Mexico").
  */
 function withoutRepeatedParts(location: string): string {
+  if (!location.includes(',')) return withoutSpacedRepeat(location);
   const parts = location.split(',').map((part) => part.trim());
   const repeated = (part: string, at: number) => part !== '' && part.toLowerCase() === parts[at - 1]?.toLowerCase()
     && !(at === parts.length - 1 && countryCode(part));
