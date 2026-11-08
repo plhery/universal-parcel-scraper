@@ -415,6 +415,17 @@ describe('standalone tracker', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
+  it('does not file another carrier\'s delivery under a short number its carrier does not find', async () => {
+    const seur = new AdapterRegistry({ factories: { seur: () => ({ id: 'seur', steps: ['direct'],
+      track: vi.fn().mockRejectedValue(new NotFoundError('SEUR')) }) }, carriers: { seur: 'seur' } }, environment);
+    const yesterday = new Date(Date.now() - 86_400_000).toISOString();
+    const track = (carriers: string[]) => createTracker({ registry: seur, providers: ['ParcelsApp'], fetcher: vi.fn<typeof fetch>()
+      .mockImplementation(async () => Response.json({ carriers, states: [{ date: yesterday, status: 'Delivered', carrier: 0, location: 'Paris, France' }] })) })
+      .track({ number: '58471', carrier: 'seur' });
+    await expect(track(['Colissimo'])).rejects.toMatchObject({ attempts: [{ source: 'seur', kind: 'not_found' }, { source: 'ParcelsApp', kind: 'indeterminate' }] });
+    await expect(track(['SEUR'])).resolves.toMatchObject({ carrier: 'seur', source: 'ParcelsApp', result: { current_stage: 'delivered' } });
+  });
+
   it('keeps an earlier source\'s failure as the hint when a later source only refuses the number\'s format', async () => {
     const composite = '1234/12345678';
     const nacex = (error: Error) => new AdapterRegistry({ factories: { nacex: () => ({ id: 'nacex', steps: ['direct'],

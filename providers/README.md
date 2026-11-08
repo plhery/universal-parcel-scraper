@@ -57,7 +57,11 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   A number of seven characters or fewer is sent only with its carrier: many carriers issue
   numbers that short, and a provider's guess of the carrier can change between lookups, each
   time to another shipment's history. Without one, or with `unknown`, `fetchSource()` throws
-  `NoHistoryError` with reason `short_number` before any request.
+  `NoHistoryError` with reason `short_number` before any request. ParcelsApp guesses even
+  when given the carrier, and Ship24 and 17TRACK until they miss, so an answer that names
+  another carrier, or none, is `NoHistoryError` with reason `unattributed_history`. Another
+  network of the carrier's brand counts as the carrier, and so does the partner the answer
+  hands the parcel to when it names the carrier's own leg too.
 - A supplied postcode is passed to every provider; ParcelsApp and 17TRACK use it. The
   carrier's time zone is passed too. It is used only for scans with no trustworthy zone of
   their own. So is the carrier's catalog id: 17TRACK asks again for that carrier when its own

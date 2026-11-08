@@ -1,6 +1,8 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
 import { carrierErrorKind } from '../core/errors/index.js';
+import type { CarrierResult } from '../core/result/index.js';
+import { parcelOwners } from '../core/result/partial.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../core/telemetry/index.js';
 import { TrawlClient } from '../core/transport/index.js';
 import { UniversalTracker, UniversalTrackingError, universalPlan, universalSources, UNIVERSAL_SOURCES } from './universal.js';
@@ -295,6 +297,41 @@ describe('universal discovery chain', () => {
     // With its carrier named, the number is sent.
     await expect(tracker.fetchSource('Ship24', '50417', 20_000, null, null, undefined, null, 'seur')).rejects.not.toMatchObject({ reason: 'short_number' });
     expect(fetcher).toHaveBeenCalled();
+  });
+
+  it('takes an answer for a number that short only when it names the carrier, its brand or the partner after its own leg', async () => {
+    const answer = (names: string[], discovered?: string, partner?: string): CarrierResult => ({
+      status: 'delivered', current_stage: 'delivered', last_update: '2026-01-02T12:00:00.000Z',
+      events: [{ time: '2026-01-02T12:00:00.000Z', description: 'Delivered', stage: 'delivered' }],
+      reported_carriers: names, ...(discovered ? { discovered_carrier: discovered } : {}),
+      ...(partner ? { delivery_carrier: partner, delivery_tracking_number: 'PARTNER12345' } : {}),
+    });
+    const lookup = (result: CarrierResult, carrier: string, typed = '58471') => new UniversalTracker({ providers: ['Ship24'],
+      browserLookup: vi.fn().mockResolvedValue(result) }).fetchSource('Ship24', typed, 20_000, null, null, undefined, null, carrier);
+    const refused = { kind: 'indeterminate', name: 'NoHistoryError', provider: 'Ship24', reason: 'unattributed_history' };
+    // Another carrier's parcel, or a parcel the answer names no carrier for.
+    await expect(lookup(answer(['Colissimo'], 'la-poste'), 'seur')).rejects.toMatchObject(refused);
+    await expect(lookup(answer([]), 'seur')).rejects.toMatchObject(refused);
+    await expect(lookup(answer(['Example Courier']), 'seur')).rejects.toMatchObject(refused);
+    // The carrier, or another network of its brand.
+    await expect(lookup(answer(['SEUR'], 'seur'), 'seur')).resolves.toMatchObject({ current_stage: 'delivered' });
+    await expect(lookup(answer(['DPD Austria'], 'dpd-at'), 'dpd-de')).resolves.toMatchObject({ discovered_carrier: 'dpd-at' });
+    // The partner it hands the parcel to, beside the carrier's own leg; not that partner alone.
+    await expect(lookup(answer(['SEUR', 'Correos'], 'correos-spain', 'correos-spain'), 'seur')).resolves.toMatchObject({ discovered_carrier: 'correos-spain' });
+    await expect(lookup(answer(['Correos'], 'correos-spain', 'correos-spain'), 'seur')).rejects.toMatchObject(refused);
+    // A longer number keeps any carrier the provider names, and an S10 item is every post's that carries it.
+    await expect(lookup(answer(['Colissimo'], 'la-poste'), 'seur', '58471000')).resolves.toMatchObject({ discovered_carrier: 'la-poste' });
+    await expect(lookup(answer(['Royal Mail'], 'royal-mail'), 'la-poste', 'RR102938478FR')).resolves.toMatchObject({ discovered_carrier: 'royal-mail' });
+    expect(parcelOwners('la-poste', 'RR102938478FR', answer(['Royal Mail'], 'royal-mail'))).toBeNull();
+  });
+
+  it('turns down ParcelsApp\'s guess of another carrier for a number that short', async () => {
+    const delivered = (carriers: string[]) => vi.fn<typeof fetch>().mockResolvedValue(reply({ carriers,
+      states: [{ date: '2026-01-02T12:00:00Z', status: 'Delivered', carrier: 0, location: 'Paris, France' }] }));
+    const lookup = (fetcher: typeof fetch) => new UniversalTracker({ providers: ['ParcelsApp'], fetcher })
+      .fetchSource('ParcelsApp', '58471', 20_000, null, null, undefined, null, 'seur');
+    await expect(lookup(delivered(['Colissimo']))).rejects.toMatchObject({ name: 'NoHistoryError', reason: 'unattributed_history' });
+    await expect(lookup(delivered(['SEUR']))).resolves.toMatchObject({ discovered_carrier: 'seur', current_stage: 'delivered' });
   });
 
   it('treats a history without one dated scan as inconclusive and moves on', async () => {

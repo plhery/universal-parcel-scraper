@@ -89,9 +89,20 @@ function reached(answer: ResolvedResult, direct: ResolvedResult, stage: string):
  * providers name the brand ("gofo" for a GOFO France parcel), so another network of the same
  * brand counts as that carrier.
  */
-function namesOneOf(named: string, carriers: readonly string[]): boolean {
+export function namesOneOf(named: string, carriers: readonly string[]): boolean {
   const brand = carrierBrand(named);
   return carriers.some((id) => id === named || (brand !== undefined && carrierBrand(id) === brand));
+}
+
+/**
+ * The carriers a fallback's answer about a parcel filed under `carrier` may name, by `evidence`,
+ * an answer about the parcel: the carrier, the one it hands the parcel to or the partner it names
+ * (`deliveryHandoff`), each with the other networks of its brand (`namesOneOf`). Null for a
+ * checksum-valid S10 number, one postal item for every operator that carries it.
+ */
+export function parcelOwners(carrier: string, number: string, evidence: CarrierResult): string[] | null {
+  return isValidS10TrackingNumber(number) ? null
+    : [carrier, evidence.delivery_carrier, deliveryHandoff(carrier, number, evidence)?.carrier].filter((id): id is string => typeof id === 'string');
 }
 
 /**
@@ -179,9 +190,7 @@ export function fillPartialAnswer<T extends CarrierResult>(carrier: string, numb
   if (!relayed) return null;
   const ours = resolveResult(direct);
   const theirs = resolveResult(relayed);
-  const owners = isValidS10TrackingNumber(number) ? null
-    : [carrier, ours.delivery_carrier, deliveryHandoff(carrier, number, ours)?.carrier].filter((id): id is string => typeof id === 'string');
-  return fuller(theirs, ours, owners) ? withCarrierFacts(relayed, theirs, ours) : null;
+  return fuller(theirs, ours, parcelOwners(carrier, number, ours)) ? withCarrierFacts(relayed, theirs, ours) : null;
 }
 
 /** A clock's wall time, its minute and its seconds when it states them, or null without a date and a time of day. */

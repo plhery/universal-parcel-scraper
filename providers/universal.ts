@@ -17,11 +17,13 @@
  * lives in the provider folder next to it.
  */
 import type { AdapterEnvironment, CarrierAdapter, TrackingContext } from '../core/adapter/index.js';
+import { carrierIdFromName } from '../core/catalog/hints.js';
 import { normalizeTrackingNumber } from '../core/detection/normalize.js';
 import { isPlaceholderNumber } from '../core/detection/placeholder.js';
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../core/detection/usps.js';
 import { BudgetExceededError, IndeterminateError, InvalidInputError, NoHistoryError } from '../core/errors/index.js';
 import type { CarrierResult } from '../core/result/index.js';
+import { namesOneOf, parcelOwners } from '../core/result/partial.js';
 import { readLateRegistrations } from '../core/result/registration.js';
 import { withoutMinuteCopies, withoutRepeatedScans } from '../core/result/repeats.js';
 import { NOOP_RECORDER } from '../core/telemetry/index.js';
@@ -70,6 +72,26 @@ interface SourceFailure {
   source: Source;
   reason: string;
   error: unknown;
+}
+
+/**
+ * Whether an answer about a number of seven characters or fewer, sent only with its carrier, is
+ * that carrier's parcel. Providers guess the carrier of such a number themselves (ParcelsApp
+ * always, Ship24 and 17TRACK until they miss), so the answer must name the carrier or another
+ * network of its brand. It can name the partner the parcel is handed to (`parcelOwners`) when it
+ * names the carrier's own leg too. A checksum-valid S10 number is any postal operator's.
+ */
+function carriersParcel(result: CarrierResult, carrier: string, number: string): boolean {
+  const owners = parcelOwners(carrier, number, result);
+  if (!owners) return true;
+  const named = result.discovered_carrier;
+  if (typeof named !== 'string') return false;
+  if (namesOneOf(named, [carrier])) return true;
+  const reported = Array.isArray(result.reported_carriers) ? result.reported_carriers : [];
+  return namesOneOf(named, owners) && reported.some((name) => {
+    const id = typeof name === 'string' ? carrierIdFromName(name) : undefined;
+    return id !== undefined && namesOneOf(id, [carrier]);
+  });
 }
 
 export class UniversalTrackingError extends AggregateError {
@@ -169,6 +191,9 @@ export class UniversalTracker {
     // its stage and carrier as before. UPU's local clocks are by design.
     if (source !== 'UPU' && result.events?.length && !result.events.some((event) => event.time)) {
       throw new IndeterminateError(source, 'No dated tracking events', { reason: 'undated_history' });
+    }
+    if (number.length <= SHORT_NUMBER_LENGTH && !carriersParcel(result, carrier!, number)) {
+      throw new NoHistoryError(source, `${source} names another carrier, or none, for a number this short`, { reason: 'unattributed_history' });
     }
     return readLateRegistrations(withoutRepeatedScans(withoutMinuteCopies(result)));
   }

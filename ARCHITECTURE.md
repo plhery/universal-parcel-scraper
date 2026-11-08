@@ -521,7 +521,9 @@ default. `universalPlan()` picks and orders the eligible providers from recorded
 [providers/COMPARISON.md](providers/COMPARISON.md) explains the order and
 [providers/COVERAGE.md](providers/COVERAGE.md) holds the evidence. A number of seven
 characters or fewer reaches them only with its carrier: a provider that guesses the carrier
-of a number that short can answer with another shipment at each lookup.
+of a number that short can answer with another shipment at each lookup. Most guess even when
+given the carrier, so an answer stands only when it names that carrier or another network of
+its brand, or names the partner it hands the parcel to beside the carrier's own leg.
 
 A provider can relay a timeline a carrier wrote to a schedule. Rows a fixed time apart, each
 within a second of the one before, four or more, are no scans and are dropped. The step is an

@@ -84,7 +84,8 @@ export class IndeterminateError extends CarrierError {
 /**
  * A universal provider looked the number up and has no history for it yet (not
  * announced, not handed over). An answer about the parcel, not an outage. With the
- * reason `short_number`, the number was too short to send without its carrier.
+ * reason `short_number`, the number was too short to send without its carrier; with
+ * `unattributed_history`, the provider's answer for a number that short named another carrier or none.
  */
 export class NoHistoryError extends IndeterminateError {
   /**
