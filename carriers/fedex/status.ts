@@ -28,6 +28,8 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 export const FEDEX_CODE_STAGE: Readonly<Record<string, Stage>> = {
   OC: 'registered',
   PU: 'accepted',
+  // The sender dropped the parcel off at a FedEx location, after its last pickup of the day at times.
+  DO: 'accepted',
   AR: 'in_transit',
   DP: 'in_transit',
   IT: 'in_transit',
@@ -83,7 +85,7 @@ const REGISTERED_TERMS = [
 // "In FedEx possession — At FedEx location": FedEx has taken the parcel in at one of its
 // locations. A hold for the recipient carries its own codes (HL, HP) and wording. "Arrived at
 // FedEx location" is the wording of AR, a hub arrival in transit, and stays one without its code.
-const ACCEPTED_TERMS = ['picked up', 'pickedup', 'tendered at fedex', 'accepted at', 'in fedex possession'];
+const ACCEPTED_TERMS = ['picked up', 'pickedup', 'tendered at fedex', 'accepted at', 'in fedex possession', 'dropped off at fedex'];
 const IN_TRANSIT_TERMS = [
   'in transit',
   'on the way',

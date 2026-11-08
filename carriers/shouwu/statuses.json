@@ -393,6 +393,30 @@
       "note": "DHL's first scan in Germany, relayed after the sort that follows customs at the destination."
     },
     {
+      "wording": "Shipment is out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The delivering partner's round in Germany."
+    },
+    {
+      "wording": "Loaded to movement / tour vehicle",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "Loaded onto a line haul's vehicle or a delivery round's, which it does not tell apart; seen after the out-for-delivery scan."
+    },
+    {
+      "wording": "The shipment has been successfully delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "The delivering partner's delivery in Germany."
+    },
+    {
       "wording": "Arrived at hub",
       "stage": "in_transit",
       "language": "en",

@@ -103,8 +103,9 @@ fallback')`.
   without a code is staged by its wording. The code is not part of a stored scan's identity,
   which the app keys on its time, place and wording.
 - `DY` (delayed) is an exception, except while the newest scan is a pickup "received after
-  FedEx cutoff" and the wording names no problem. FedEx flags such a parcel, which leaves on the
-  next business day, so it reads as picked up.
+  FedEx cutoff", or a drop-off (`DO`) "received after final location pickup", and the wording
+  names no problem. FedEx flags such a parcel, which leaves on the next business day, so it
+  reads as picked up.
 - Hold at location: `HL` and `HP` (FedEx's "Ready for pickup (Hold at Location)") are
   `ready_for_pickup`; `RR` (delivery option requested) and `HA` (hold accepted) stay in
   transit. A hold for a problem, such as clearance or a wrong address, carries another code

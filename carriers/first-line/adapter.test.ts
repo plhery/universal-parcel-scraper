@@ -244,6 +244,13 @@ describe('FIRST LINE status vocabulary', () => {
     }
   });
 
+  it("reads GOFO's delivery, wherever it left the parcel", () => {
+    for (const spot of ['Door/Yard', 'Front Door/Porch']) {
+      const description = `Delivered, ${spot}. For delivery issues & tracking support, contact GOFO at +1 000 000-0000 or support@example.com`;
+      expect(statusMapAnswer({ carrier: 'first-line', providerCode: null, description }), spot).toEqual({ kind: 'mapped', stage: 'delivered' });
+    }
+  });
+
   it('leaves the delivering partner’s wording to the shared rules', () => {
     expect(firstLineStage(null, 'delivered')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'first-line', providerCode: null, description: 'Sample note' })).toEqual({ kind: 'unknown' });

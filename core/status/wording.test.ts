@@ -889,6 +889,12 @@ describe('classifyWording', () => {
       ['Your shipment is ready to leave the foreign territory. It will be handed over to the carrier for delivery', 'in_transit'],
       // A new delivery date someone asked for, and a parcel the carrier has not received yet.
       ['Delivery exception, A request was made to change this delivery date.', 'in_transit'],
+      ["We've received your request to deliver your parcel to a ParcelShop", 'in_transit'],
+      // On its way from abroad to the carrier that has yet to receive it, as relayed without its code.
+      ['En tránsito internacional. Pendiente de recepción en CTT Express', 'in_transit'],
+      ['Pendiente de recepción en CTT Express', 'registered'],
+      // A centre sending the parcel on to a station.
+      ['Example center Parcel has been sent to AST 01.', 'in_transit'],
       // Updated delivery details and a local carrier's bare shipment scan, relayed mid-route.
       ['Delivery details updated', 'in_transit'],
       ['Delivery information has been updated.', 'in_transit'],

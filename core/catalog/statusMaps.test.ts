@@ -774,6 +774,8 @@ describe('status map answers', () => {
     expect(answer('seur', 'LI511', 'el envío está pendiente de llegar a destino. en cuanto se reciba, actualizaremos la situación.')).toEqual(mapped('in_transit'));
     expect(answer('seur', 'LI582', 'el envío ha sufrido un retraso provocando una posible demora en la entrega. disculpa las molestias.')).toEqual(gap);
     expect(answer('seur', 'LI300', 'Any wording at all')).toEqual(gap);
+    // The delay sentence under a code the map does not list.
+    expect(answer('seur', 'LI533', 'el envío ha sufrido un retraso provocando una posible demora en la entrega. disculpa las molestias.')).toEqual(gap);
     expect(answer('seur', 'LI557', 'el envío ha sufrido un retraso provocando una posible demora en la entrega. disculpa las molestias.')).toEqual(gap);
     expect(answer('seur', 'LI521', 'el envío está entregado.')).toEqual(unknown);
   });

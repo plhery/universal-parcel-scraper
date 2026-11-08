@@ -137,6 +137,15 @@
       "note": "LI582's wording without its last full stop, under another code, read like it. The parcel seen with it listed it alone."
     },
     {
+      "code": "LI533",
+      "wording": "EL ENVÍO HA SUFRIDO UN RETRASO PROVOCANDO UNA POSIBLE DEMORA EN LA ENTREGA. DISCULPA LAS MOLESTIAS.",
+      "language": "es",
+      "confirmedBy": "live",
+      "unmapped": true,
+      "firstSeen": "2026-11-07",
+      "note": "LI582's wording under another code. The delay wording in the EN DEMORA group is read as a delay notice whatever its code."
+    },
+    {
       "code": "LI511",
       "wording": "EL ENVÍO ESTÁ PENDIENTE DE LLEGAR A DESTINO. EN CUANTO SE RECIBA, ACTUALIZAREMOS LA SITUACIÓN.",
       "language": "es",

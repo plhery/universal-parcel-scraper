@@ -285,10 +285,11 @@ function holdLocation(nameValue: unknown, addressValue: unknown, residential: bo
   return [name, street[0], street.slice(1).join(', '), town].filter(Boolean).join('\n');
 }
 
-// FedEx flags a parcel scanned in after the day's cutoff as delayed (`DY`) while
-// its wording reads as an ordinary pickup: the parcel leaves on the next business
-// day. Only that newest pickup scan explains the flag.
-const AFTER_CUTOFF = /\breceived after fedex cutoff\b/i;
+// FedEx flags a parcel scanned in after the day's cutoff, or dropped off after the
+// location's last pickup, as delayed (`DY`) while its wording reads as an ordinary
+// pickup or drop-off: the parcel leaves on the next business day. Only that newest
+// scan explains the flag.
+const AFTER_CUTOFF = /\breceived after (?:fedex cutoff|final location pickup)\b/i;
 
 // Ground Economy can hand a parcel to the U.S. Postal Service for the last leg.
 // FedEx then relays USPS's scans, the first naming the package number USPS

@@ -13,8 +13,9 @@ The returned search identifier must exactly match and have nonempty history.
 ## Notes
 
 Current status follows the first native scan other than a delay notice. A
-delay notice (LI300, LI582, LI557, LI587) is no movement: the row keeps the stage of the
-scan before it. SEUR delays a shipment on its way, so a notice with no stage before it, at
+delay notice is no movement: the row keeps the stage of the scan before it. SEUR files
+its two delay sentences under ever more codes of its EN DEMORA group, so the sentence
+there marks a notice whatever its code. SEUR delays a shipment on its way, so a notice with no stage before it, at
 times all SEUR lists, reads as in transit. Only observed code, group and wording combinations are mapped,
 so planned delivery or unfamiliar codes do not inherit an older terminal state.
 At a SEUR Pickup shop, LI569 says the parcel can soon be collected, with the details still to

@@ -36,10 +36,11 @@ describe('SEUR simplified anonymous tracking', () => {
   });
 
   it('keeps the stage a parcel had through each delay notice', () => {
-    for (const code of ['LI300', 'LI582', 'LI557', 'LI587']) {
+    // LI533 and LI599 stand for a code SEUR files the notice under that the map does not list.
+    for (const code of ['LI300', 'LI582', 'LI557', 'LI587', 'LI533', 'LI599']) {
       const body = copy();
       const delay = { fecha: '2026-01-24T10:00:00Z', cod_situacion: code, grupo_situacion: 'EN DEMORA',
-        descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording };
+        descripcion_situacion: statuses.entries.find(entry => entry.code === code)?.wording ?? statuses.entries.find(entry => entry.code === 'LI300')!.wording };
       body.situaciones = [delay, ...body.situaciones.slice(3)] as typeof body.situaciones;
       const result = parseSeur(body, NUMBER);
       expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update_local: '2026-01-24T10:00:00' });

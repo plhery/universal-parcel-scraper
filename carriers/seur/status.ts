@@ -1,5 +1,5 @@
 import type { ClassifiedStatus } from '../../core/status/index.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 const delivered: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
 const inTransit: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };
@@ -48,6 +48,14 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   SC999: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: { status: 'pending', stage: 'registered' } },
 };
 
+// SEUR's delay notices, which it files under ever more codes of its EN DEMORA group, with or without the last full stop.
+const DELAY_WORDINGS = new Set([
+  'el envío ha sufrido un retraso y es posible que se demore la entrega. disculpa las molestias',
+  'el envío ha sufrido un retraso provocando una posible demora en la entrega. disculpa las molestias',
+]);
+const DELAY_NOTE = 'A delay notice, not a movement: the parcel keeps the stage it had.';
+const delayWording = (wording: string) => DELAY_WORDINGS.has(normalizeStatusWording(wording).replace(/\.$/, ''));
+
 function entry(code: string, group: string, wording: string) {
   if (!Object.hasOwn(observed, code)) return undefined;
   const found = observed[code]!;
@@ -58,9 +66,10 @@ export function classifySeurStatus(code: string, group: string, wording: string)
   return entry(code, group, wording)?.mapped ?? undefined;
 }
 
-/** Whether the scan is one of SEUR's delay notices, which keep the stage the parcel had. */
+/** Whether the scan is one of SEUR's delay notices, which keep the stage the parcel had, under a code seen or not. */
 export function isSeurDelay(code: string, group: string, wording: string): boolean {
-  return entry(code, group, wording)?.mapped === null;
+  const found = entry(code, group, wording);
+  return found ? found.mapped === null : group.toUpperCase() === 'EN DEMORA' && delayWording(wording);
 }
 
 /** The status group SEUR sent with an observed code. */
@@ -71,5 +80,6 @@ export function seurStatusGroup(code: string): string | undefined {
 /** What the map says about one scan, read with the group SEUR sends with its code. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? classifySeurStatus(code, seurStatusGroup(code) ?? '', wording)?.stage : undefined),
-  gaps: ['LI300', 'LI582', 'LI557', 'LI587'].map((code) => ({ code, note: 'A delay notice, not a movement: the parcel keeps the stage it had.' })),
+  gaps: ['LI300', 'LI582', 'LI557', 'LI587'].map((code) => ({ code, note: DELAY_NOTE })),
+  gapNote: (_code, wording) => (delayWording(wording) ? DELAY_NOTE : undefined),
 };

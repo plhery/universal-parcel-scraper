@@ -187,6 +187,11 @@ describe('FedEx structured response', () => {
     expect(cutoff(pickup, 'Delay: weather')).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(cutoff(['2026-06-05', 'DP', 'Left FedEx origin facility', ''])).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(cutoff(['2026-06-05', 'PU', 'Picked up', ''])).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    // A drop-off after the location's last pickup of the day.
+    const dropOff = cutoff(['2026-06-05', 'DO', 'Dropped off at FedEx Facility',
+      'Package received after final location pickup has occurred. Scheduled for pickup next business day.']);
+    expect(dropOff).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(dropOff.events?.[0]).toMatchObject({ provider_code: 'DO', stage: 'accepted' });
   });
 
   it('orders scans by their instant, not by their local date, and an undated scan last', () => {

@@ -3,6 +3,7 @@
   "entries": [
     { "code": "OC", "language": "en", "stage": "registered", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; shipment information sent to FedEx." },
     { "code": "PU", "language": "en", "stage": "accepted", "confirmedBy": "bundle", "firstSeen": "2026-09-20", "note": "keyStatusCD; picked up." },
+    { "code": "DO", "wording": "Dropped off at FedEx Facility", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The sender's drop-off; seen with the details \"Package received after final location pickup has occurred. Scheduled for pickup next business day.\" and the package flagged DY." },
     { "code": "AR", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; arrived at FedEx location." },
     { "code": "DP", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; departed FedEx location." },
     { "code": "IT", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-20", "note": "keyStatusCD; in transit." },
