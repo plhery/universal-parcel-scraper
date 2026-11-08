@@ -116,7 +116,9 @@ page makes.
 
 DHLink is DHgate's logistics platform. Its tracker labels its own logistics number, `FC` and
 thirteen digits, as the DHLink number. On some channels that number is also the tracking
-number, as on a parcel ParcelPanel's DHLink page offers. `dhlink-1` suggests DHLink for it at
+number, as on a parcel ParcelPanel's DHLink page offers. GOFO keeps it as the tracking number
+of a DHgate parcel it delivers in the US, so the [GOFO](../gofo/README.md) adapter tracks it
+too. `dhlink-1` suggests DHLink for it at
 low confidence, since a two-letter prefix and a digit run can come from other systems. Other
 parcels travel under the international number of the line DHLink books: a China Post number,
 which postal detection handles, or a line provider's number in the same layout whose check

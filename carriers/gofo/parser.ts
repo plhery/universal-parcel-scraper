@@ -16,12 +16,14 @@ export const GOFO_CLOCK_ZONE = 'America/Los_Angeles';
 const WAYBILL = /^(?:GFUS\d{14}|GF\d{13}|CR\d{12})$/;
 /** GOFO Canada waybills. */
 const CANADA_WAYBILL = /^GFCA\d{14}$/;
+/** DHLink's own numbers, which GOFO keeps as the tracking number of the DHgate parcels it delivers. */
+const DHLINK = /^FC\d{13}$/;
 /**
- * GOFO files some parcels under a GFUS waybill with a CR tracking number.
- * Asked for either, it returns that one parcel.
+ * GOFO files some parcels under a GFUS waybill with a CR tracking number or a
+ * DHLink number. Asked for either, it returns that one parcel.
  */
 const PAIRED_WAYBILL = /^GFUS\d{14}$/;
-const PAIRED_REFERENCE = /^CR\d{12}$/;
+const PAIRED_REFERENCE = new RegExp(`^CR\\d{12}$|${DHLINK.source}`);
 /** YunExpress numbers GOFO delivers under the same number, as both waybill and tracking number. */
 const YUNEXPRESS = /^YT\d{16}$/;
 
@@ -42,8 +44,8 @@ export interface GofoSite {
   readonly country: string;
 }
 
-export const GOFO_US: GofoSite = { carrier: 'gofo', provider: 'GOFO', path: 'us', numbers: new RegExp(`${WAYBILL.source}|${YUNEXPRESS.source}`),
-  requirement: 'GOFO US requires a GOFO waybill (GFUS and 14 digits, GF and 13, or CR and 12) or a YunExpress number it delivers',
+export const GOFO_US: GofoSite = { carrier: 'gofo', provider: 'GOFO', path: 'us', numbers: new RegExp(`${WAYBILL.source}|${DHLINK.source}|${YUNEXPRESS.source}`),
+  requirement: 'GOFO US requires a GOFO waybill (GFUS and 14 digits, GF and 13, or CR and 12), or a DHLink or YunExpress number it delivers',
   clockZone: GOFO_CLOCK_ZONE, toCountry: 'USA', country: 'US' };
 export const GOFO_CANADA: GofoSite = { carrier: 'gofo-ca', provider: 'GOFO CA', path: 'ca', numbers: CANADA_WAYBILL,
   requirement: 'GOFO Canada requires a GFCA waybill and 14 digits', clockZone: 'America/Toronto', toCountry: 'CA', country: 'CA' };
@@ -121,8 +123,8 @@ export function parseGofo(payload: unknown, rawNumber: string, site: GofoSite = 
   if (!entries.length && error.errorCount === 1 && Array.isArray(own) && own.length === 1 && own[0] === number
     && Object.keys(error).every(key => ['errorCount', site.path].includes(key))) throw new NotFoundError(site.provider);
   if (!entries.length) throw new IndeterminateError(site.provider, 'GOFO returned no matching history');
-  // The requested number is the waybill, or the CR tracking number of its
-  // GFUS waybill. Otherwise the tracking number repeats the waybill or is the
+  // The requested number is the waybill, or the CR or DHLink tracking number of
+  // its GFUS waybill. Otherwise the tracking number repeats the waybill or is the
   // shipper's own reference, which must not name another GOFO parcel.
   const waybill = entries[0]!.waybillNo;
   const reference = entries[0]!.trackingNumber;

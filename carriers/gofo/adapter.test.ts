@@ -130,6 +130,24 @@ describe('GOFO US history', () => {
     expect(() => parseGofo(older, cr)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('tracks a GFUS waybill and the DHLink number GOFO keeps as its tracking number as one parcel', () => {
+    const fc = 'FC0000000000001';
+    const value = fixture();
+    for (const row of [item(value), ...item(value).trackEventList]) if (row.trackingNumber != null) row.trackingNumber = fc;
+    bind(value);
+    for (const asked of [NUMBER, fc, fc.toLowerCase()]) {
+      expect(parseGofo(value, asked)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    }
+    expect(() => parseGofo(value, 'FC0000000000002')).toThrow(expect.objectContaining({ kind: 'schema' }));
+    const older = structuredClone(value);
+    for (const row of [item(older), ...item(older).trackEventList]) if (row.waybillNo != null) row.waybillNo = 'GF0000000000001';
+    bind(older);
+    expect(() => parseGofo(older, fc)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    for (const near of ['FC000000000001', 'FC00000000000001', 'FCA000000000001']) {
+      expect(() => normalizeGofoNumber(near)).toThrow(InvalidInputError);
+    }
+  });
+
   it('tracks a YunExpress number GOFO delivers under the same number, and only as that parcel', () => {
     const yt = 'YT0000000000000001';
     const value = fixture();
