@@ -61,9 +61,10 @@ traffic stays at the consumer's own refresh rate during a spell. The proxy keeps
 a redirect through it ends the lookup, and three in a row pause it too. Each read's step
 record names its route, `default` or `residential`, without the proxy's address.
 
-Each lookup opens a browser, and USPS refuses reads as rate-limited when followed parcels are
-checked every ten minutes. The catalog asks for a refresh at most every half hour, and an hour
-after a failed one, out for delivery included.
+USPS sends no rate limit of its own: a lookup that ends as `rate_limited` is the outage pause,
+`self_paced`, and sent nothing. Each lookup opens a browser, and checking followed parcels every
+ten minutes kept the pause coming back for hours. The catalog asks for a refresh at most every
+half hour, and an hour after a failed one, out for delivery included.
 
 Parsing, in order:
 
