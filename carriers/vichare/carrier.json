@@ -1,0 +1,35 @@
+{
+  "id": "vichare",
+  "displayName": "Vichare Loginext",
+  "aliases": [
+    "Vichare",
+    "Vichare Courier",
+    "Vichare Loginext Pvt. Ltd."
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#f48120"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.vichareloginext.com/track-shipment",
+    "canaryUrl": "https://www.vichareloginext.com/track-shipment",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "f2-logistics",
+  "displayName": "F2 Logistics",
+  "aliases": [
+    "F2 Logistics Philippines",
+    "F2 Logistics Philippines, Inc."
+  ],
+  "region": {
+    "countries": [
+      "PH"
+    ]
+  },
+  "brand": {
+    "color": "#ec1c24"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.f2logistics.com/tnt/",
+    "canaryUrl": "https://tnt.f2logistics.com/second.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1367,7 +1367,8 @@
     "color": "#ffcf00",
     "aliases": [
       "Colissimo",
-      "Coliposte"
+      "Coliposte",
+      "Lettre Suivie"
     ],
     "countries": [
       "FR"
@@ -14990,6 +14991,26 @@
     ],
     "detectionRules": []
   },
+  "dago-express": {
+    "displayName": "DAGO Express",
+    "color": "#ed1c24",
+    "aliases": [
+      "DAGO Express GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.dagoexpress.com/find-order",
+    "trackingSearchUrl": "https://app.dagoexpress.com/find-order",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dai-post": {
     "displayName": "DAI Post",
     "color": "#008faf",
@@ -17729,7 +17750,8 @@
       "DB Schenker",
       "Schenker",
       "DSV Road",
-      "DSV Schenker"
+      "DSV Schenker",
+      "DB Schenker Logistics"
     ],
     "countries": [
       "DK",
@@ -20278,6 +20300,27 @@
     },
     "canaryUrl": "https://www.ezship.com.tw/index.jsp",
     "trackingSearchUrl": "https://www.ezship.com.tw/receiver_query/ezship_query_shipstatus_2017.jsp",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "f2-logistics": {
+    "displayName": "F2 Logistics",
+    "color": "#ec1c24",
+    "aliases": [
+      "F2 Logistics Philippines",
+      "F2 Logistics Philippines, Inc."
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tnt.f2logistics.com/second.php",
+    "trackingSearchUrl": "https://www.f2logistics.com/tnt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28259,6 +28302,37 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "jlog": {
+    "displayName": "JLog",
+    "color": "#1a2e26",
+    "aliases": [
+      "JetLog",
+      "JetLog (Pty) Ltd"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jlog.co.za/tracking/",
+    "trackingUrlTemplate": "https://jlog.co.za/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://jlog.co.za/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "jlog.co.za",
+          "www.jlog.co.za"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$",
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": []
+  },
   "jne": {
     "displayName": "JNE",
     "color": "#1e3378",
@@ -30395,6 +30469,37 @@
       }
     ]
   },
+  "lexship": {
+    "displayName": "LEXSHIP",
+    "color": "#0097d6",
+    "aliases": [
+      "LogiLink India Pvt Ltd"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.lexship.biz/",
+    "trackingUrlTemplate": "https://track.lexship.biz/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://track.lexship.biz/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.lexship.biz"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "lhtex": {
     "displayName": "LHT Express",
     "color": "#004da1",
@@ -32041,6 +32146,40 @@
       }
     ]
   },
+  "makesend": {
+    "displayName": "MAKESEND",
+    "color": "#f5782a",
+    "aliases": [
+      "Makesend",
+      "Makesend Express",
+      "Makesend Express Co., Ltd.",
+      "บริษัท เมคเซนด์ เอ็กซ์เพรส จำกัด"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.makesend.asia/tracking",
+    "trackingUrlTemplate": "https://app.makesend.asia/tracking?t={trackingNumber}",
+    "trackingSearchUrl": "https://app.makesend.asia/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "app.makesend.asia"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "t"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "maltapost": {
     "displayName": "MaltaPost",
     "color": "#d43b2c",
@@ -33653,6 +33792,26 @@
         "path": "^/(?:reperage|tracking)/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "navata": {
+    "displayName": "Navata Road Transport",
+    "color": "#e72a05",
+    "aliases": [
+      "Navata"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://navata.com/track-consignment",
+    "trackingSearchUrl": "https://navata.com/track-consignment",
+    "linkRules": [],
     "detectionRules": []
   },
   "ncs-courier": {
@@ -40226,7 +40385,9 @@
     "aliases": [
       "RIVIGO",
       "Rivigo by Mahindra Logistics",
-      "Rivigo Services"
+      "Rivigo Services",
+      "MLL Express Services",
+      "MLL Express"
     ],
     "countries": [
       "IN"
@@ -42853,7 +43014,8 @@
       "Shree Maruti Courier Services",
       "Shree Maruti Courier Services Private Limited",
       "Shree Maruti Courier Service",
-      "Innofulfill"
+      "Innofulfill",
+      "Maruti Courier"
     ],
     "countries": [
       "IN"
@@ -45954,7 +46116,8 @@
       "TCIEXPRESS",
       "TCI Express Limited",
       "Transport Corporation of India Express",
-      "TCI"
+      "TCI",
+      "TCI XPS"
     ],
     "countries": [
       "IN"
@@ -45992,6 +46155,26 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "tci-freight": {
+    "displayName": "TCI Freight",
+    "color": "#674023",
+    "aliases": [
+      "TCI Freight Division"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tcifreight.in/tracking-consignment/",
+    "trackingSearchUrl": "https://tcifreight.in/tracking-consignment/",
+    "linkRules": [],
     "detectionRules": []
   },
   "tcs-pakistan": {
@@ -46298,6 +46481,41 @@
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "trackingSearchUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "teleport": {
+    "displayName": "Teleport",
+    "color": "#152cff",
+    "aliases": [
+      "Teleport Next Day",
+      "Teleport Platforms",
+      "Teleport Platforms Sdn Bhd",
+      "Teleport Commerce"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.teleport.asia/track",
+    "trackingUrlTemplate": "https://www.teleport.asia/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.teleport.asia/track",
+    "linkRules": [
+      {
+        "domains": [
+          "www.teleport.asia",
+          "teleport.asia"
+        ],
+        "pathPattern": "^/track(?:/|/index\\.html)?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "teleship": {
@@ -46737,6 +46955,35 @@
           "www.tiki.id"
         ],
         "path": "^/id/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "time-matters": {
+    "displayName": "time:matters",
+    "color": "#ffad00",
+    "aliases": [
+      "time matters",
+      "time:matters GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://booking.time-matters.com/en-US/tracking",
+    "trackingUrlTemplate": "https://booking.time-matters.com/en-US/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://booking.time-matters.com/en-US/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "booking.time-matters.com"
+        ],
+        "path": "^/[a-z]{2}-[A-Z]{2}/tracking/([^/?#]+)/?$"
       }
     ],
     "detectionRules": []
@@ -49754,6 +50001,28 @@
     },
     "canaryUrl": "https://viaxpress.es/envios/",
     "trackingSearchUrl": "https://viaxpress.es/envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "vichare": {
+    "displayName": "Vichare Loginext",
+    "color": "#f48120",
+    "aliases": [
+      "Vichare",
+      "Vichare Courier",
+      "Vichare Loginext Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.vichareloginext.com/track-shipment",
+    "trackingSearchUrl": "https://www.vichareloginext.com/track-shipment",
     "linkRules": [],
     "detectionRules": []
   },

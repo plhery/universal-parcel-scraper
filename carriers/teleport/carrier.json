@@ -1,0 +1,48 @@
+{
+  "id": "teleport",
+  "displayName": "Teleport",
+  "aliases": [
+    "Teleport Next Day",
+    "Teleport Platforms",
+    "Teleport Platforms Sdn Bhd",
+    "Teleport Commerce"
+  ],
+  "region": {
+    "countries": [
+      "MY"
+    ]
+  },
+  "brand": {
+    "color": "#152cff"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kuala_Lumpur",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.teleport.asia/track?tracking_number={trackingNumber}",
+    "searchUrl": "https://www.teleport.asia/track",
+    "canaryUrl": "https://www.teleport.asia/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "www.teleport.asia",
+        "teleport.asia"
+      ],
+      "pathPattern": "^/track(?:/|/index\\.html)?$",
+      "params": [
+        "tracking_number"
+      ]
+    }
+  ],
+  "detection": []
+}

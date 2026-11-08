@@ -1,0 +1,42 @@
+{
+  "id": "time-matters",
+  "displayName": "time:matters",
+  "aliases": [
+    "time matters",
+    "time:matters GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#ffad00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://booking.time-matters.com/en-US/tracking/{trackingNumber}",
+    "searchUrl": "https://booking.time-matters.com/en-US/tracking",
+    "canaryUrl": "https://booking.time-matters.com/en-US/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "booking.time-matters.com"
+      ],
+      "path": "^/[a-z]{2}-[A-Z]{2}/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

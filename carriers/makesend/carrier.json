@@ -1,0 +1,47 @@
+{
+  "id": "makesend",
+  "displayName": "MAKESEND",
+  "aliases": [
+    "Makesend",
+    "Makesend Express",
+    "Makesend Express Co., Ltd.",
+    "บริษัท เมคเซนด์ เอ็กซ์เพรส จำกัด"
+  ],
+  "region": {
+    "countries": [
+      "TH"
+    ]
+  },
+  "brand": {
+    "color": "#f5782a"
+  },
+  "selectable": true,
+  "timezone": "Asia/Bangkok",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://app.makesend.asia/tracking?t={trackingNumber}",
+    "searchUrl": "https://app.makesend.asia/tracking",
+    "canaryUrl": "https://app.makesend.asia/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "app.makesend.asia"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "t"
+      ]
+    }
+  ],
+  "detection": []
+}

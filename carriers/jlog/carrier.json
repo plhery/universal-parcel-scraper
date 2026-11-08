@@ -1,0 +1,44 @@
+{
+  "id": "jlog",
+  "displayName": "JLog",
+  "aliases": [
+    "JetLog",
+    "JetLog (Pty) Ltd"
+  ],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#1a2e26"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://jlog.co.za/tracking/{trackingNumber}",
+    "searchUrl": "https://jlog.co.za/tracking/",
+    "canaryUrl": "https://jlog.co.za/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "jlog.co.za",
+        "www.jlog.co.za"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$",
+      "ownNumbersOnly": true
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,33 @@
+{
+  "id": "navata",
+  "displayName": "Navata Road Transport",
+  "aliases": [
+    "Navata"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#e72a05"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://navata.com/track-consignment",
+    "canaryUrl": "https://navata.com/track-consignment",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

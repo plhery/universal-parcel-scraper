@@ -1371,7 +1371,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#ffcf00",
     "aliases": [
       "Colissimo",
-      "Coliposte"
+      "Coliposte",
+      "Lettre Suivie"
     ],
     "countries": [
       "FR"
@@ -14994,6 +14995,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dago-express": {
+    "displayName": "DAGO Express",
+    "color": "#ed1c24",
+    "aliases": [
+      "DAGO Express GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.dagoexpress.com/find-order",
+    "trackingSearchUrl": "https://app.dagoexpress.com/find-order",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dai-post": {
     "displayName": "DAI Post",
     "color": "#008faf",
@@ -17733,7 +17754,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "DB Schenker",
       "Schenker",
       "DSV Road",
-      "DSV Schenker"
+      "DSV Schenker",
+      "DB Schenker Logistics"
     ],
     "countries": [
       "DK",
@@ -20282,6 +20304,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.ezship.com.tw/index.jsp",
     "trackingSearchUrl": "https://www.ezship.com.tw/receiver_query/ezship_query_shipstatus_2017.jsp",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "f2-logistics": {
+    "displayName": "F2 Logistics",
+    "color": "#ec1c24",
+    "aliases": [
+      "F2 Logistics Philippines",
+      "F2 Logistics Philippines, Inc."
+    ],
+    "countries": [
+      "PH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tnt.f2logistics.com/second.php",
+    "trackingSearchUrl": "https://www.f2logistics.com/tnt/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -28263,6 +28306,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "jlog": {
+    "displayName": "JLog",
+    "color": "#1a2e26",
+    "aliases": [
+      "JetLog",
+      "JetLog (Pty) Ltd"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jlog.co.za/tracking/",
+    "trackingUrlTemplate": "https://jlog.co.za/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://jlog.co.za/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "jlog.co.za",
+          "www.jlog.co.za"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$",
+        "ownNumbersOnly": true
+      }
+    ],
+    "detectionRules": []
+  },
   "jne": {
     "displayName": "JNE",
     "color": "#1e3378",
@@ -30399,6 +30473,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "lexship": {
+    "displayName": "LEXSHIP",
+    "color": "#0097d6",
+    "aliases": [
+      "LogiLink India Pvt Ltd"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.lexship.biz/",
+    "trackingUrlTemplate": "https://track.lexship.biz/?tracking={trackingNumber}",
+    "trackingSearchUrl": "https://track.lexship.biz/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.lexship.biz"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "tracking"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "lhtex": {
     "displayName": "LHT Express",
     "color": "#004da1",
@@ -32045,6 +32150,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "makesend": {
+    "displayName": "MAKESEND",
+    "color": "#f5782a",
+    "aliases": [
+      "Makesend",
+      "Makesend Express",
+      "Makesend Express Co., Ltd.",
+      "บริษัท เมคเซนด์ เอ็กซ์เพรส จำกัด"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.makesend.asia/tracking",
+    "trackingUrlTemplate": "https://app.makesend.asia/tracking?t={trackingNumber}",
+    "trackingSearchUrl": "https://app.makesend.asia/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "app.makesend.asia"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "t"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "maltapost": {
     "displayName": "MaltaPost",
     "color": "#d43b2c",
@@ -33657,6 +33796,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/(?:reperage|tracking)/([^/?#]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "navata": {
+    "displayName": "Navata Road Transport",
+    "color": "#e72a05",
+    "aliases": [
+      "Navata"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://navata.com/track-consignment",
+    "trackingSearchUrl": "https://navata.com/track-consignment",
+    "linkRules": [],
     "detectionRules": []
   },
   "ncs-courier": {
@@ -40230,7 +40389,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "RIVIGO",
       "Rivigo by Mahindra Logistics",
-      "Rivigo Services"
+      "Rivigo Services",
+      "MLL Express Services",
+      "MLL Express"
     ],
     "countries": [
       "IN"
@@ -42857,7 +43018,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Shree Maruti Courier Services",
       "Shree Maruti Courier Services Private Limited",
       "Shree Maruti Courier Service",
-      "Innofulfill"
+      "Innofulfill",
+      "Maruti Courier"
     ],
     "countries": [
       "IN"
@@ -45958,7 +46120,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "TCIEXPRESS",
       "TCI Express Limited",
       "Transport Corporation of India Express",
-      "TCI"
+      "TCI",
+      "TCI XPS"
     ],
     "countries": [
       "IN"
@@ -45996,6 +46159,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "tci-freight": {
+    "displayName": "TCI Freight",
+    "color": "#674023",
+    "aliases": [
+      "TCI Freight Division"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tcifreight.in/tracking-consignment/",
+    "trackingSearchUrl": "https://tcifreight.in/tracking-consignment/",
+    "linkRules": [],
     "detectionRules": []
   },
   "tcs-pakistan": {
@@ -46302,6 +46485,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "trackingSearchUrl": "https://www.tejcouriers.com/shipment-tracking.php",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "teleport": {
+    "displayName": "Teleport",
+    "color": "#152cff",
+    "aliases": [
+      "Teleport Next Day",
+      "Teleport Platforms",
+      "Teleport Platforms Sdn Bhd",
+      "Teleport Commerce"
+    ],
+    "countries": [
+      "MY"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.teleport.asia/track",
+    "trackingUrlTemplate": "https://www.teleport.asia/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://www.teleport.asia/track",
+    "linkRules": [
+      {
+        "domains": [
+          "www.teleport.asia",
+          "teleport.asia"
+        ],
+        "pathPattern": "^/track(?:/|/index\\.html)?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "teleship": {
@@ -46741,6 +46959,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.tiki.id"
         ],
         "path": "^/id/track/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "time-matters": {
+    "displayName": "time:matters",
+    "color": "#ffad00",
+    "aliases": [
+      "time matters",
+      "time:matters GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://booking.time-matters.com/en-US/tracking",
+    "trackingUrlTemplate": "https://booking.time-matters.com/en-US/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://booking.time-matters.com/en-US/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "booking.time-matters.com"
+        ],
+        "path": "^/[a-z]{2}-[A-Z]{2}/tracking/([^/?#]+)/?$"
       }
     ],
     "detectionRules": []
@@ -49758,6 +50005,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://viaxpress.es/envios/",
     "trackingSearchUrl": "https://viaxpress.es/envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "vichare": {
+    "displayName": "Vichare Loginext",
+    "color": "#f48120",
+    "aliases": [
+      "Vichare",
+      "Vichare Courier",
+      "Vichare Loginext Pvt. Ltd."
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.vichareloginext.com/track-shipment",
+    "trackingSearchUrl": "https://www.vichareloginext.com/track-shipment",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53256,6 +53525,7 @@ export const CARRIER_IDS = [
   "czl-express",
   "d-express",
   "daewoo-fastex",
+  "dago-express",
   "dai-post",
   "daiichi",
   "daily-xpress",
@@ -53393,6 +53663,7 @@ export const CARRIER_IDS = [
   "express-one-bg",
   "express-ru",
   "ezship",
+  "f2-logistics",
   "famafutar",
   "famiport",
   "fan-courier",
@@ -53617,6 +53888,7 @@ export const CARRIER_IDS = [
   "jikuaida",
   "jitsu",
   "jiufang",
+  "jlog",
   "jne",
   "joom-logistics",
   "jordan-post",
@@ -53678,6 +53950,7 @@ export const CARRIER_IDS = [
   "lex-id",
   "lex-my",
   "lex-vn",
+  "lexship",
   "lhtex",
   "libang-logistics",
   "libanpost",
@@ -53722,6 +53995,7 @@ export const CARRIER_IDS = [
   "mainfreight",
   "major-express",
   "makati-express",
+  "makesend",
   "maltapost",
   "mandae",
   "maple-logistics",
@@ -53773,6 +54047,7 @@ export const CARRIER_IDS = [
   "nas-express",
   "national-delivery-systems",
   "nationex",
+  "navata",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -54105,6 +54380,7 @@ export const CARRIER_IDS = [
   "tcc-co",
   "tccs",
   "tci-express",
+  "tci-freight",
   "tcs-pakistan",
   "tdn",
   "tealca",
@@ -54113,6 +54389,7 @@ export const CARRIER_IDS = [
   "team-worldwide",
   "techlink",
   "tej-couriers",
+  "teleport",
   "teleship",
   "tfm-express",
   "tforce-freight",
@@ -54125,6 +54402,7 @@ export const CARRIER_IDS = [
   "thhy",
   "tig-freight",
   "tiki",
+  "time-matters",
   "timely-titan",
   "tinypack",
   "tiptop",
@@ -54212,6 +54490,7 @@ export const CARRIER_IDS = [
   "via-cargo",
   "viadireta",
   "viaxpress",
+  "vichare",
   "victorian-freight-specialists",
   "viet-an-express",
   "viettel-post",
@@ -54672,6 +54951,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "czl-express": [],
   "d-express": [],
   "daewoo-fastex": [],
+  "dago-express": [],
   "dai-post": ["dai-post-1","dai-post-2"],
   "daiichi": [],
   "daily-xpress": [],
@@ -54809,6 +55089,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "express-one-bg": [],
   "express-ru": ["express-ru-1"],
   "ezship": [],
+  "f2-logistics": [],
   "famafutar": [],
   "famiport": [],
   "fan-courier": ["fan-courier-2","fan-courier-1"],
@@ -55033,6 +55314,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jikuaida": [],
   "jitsu": [],
   "jiufang": [],
+  "jlog": [],
   "jne": ["jne-1"],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
@@ -55094,6 +55376,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lex-id": ["lex-id-1"],
   "lex-my": ["lex-my-1"],
   "lex-vn": ["lex-vn-1","lex-vn-2"],
+  "lexship": [],
   "lhtex": [],
   "libang-logistics": [],
   "libanpost": [],
@@ -55138,6 +55421,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mainfreight": ["mainfreight-1"],
   "major-express": [],
   "makati-express": ["makati-express-1"],
+  "makesend": [],
   "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
   "maple-logistics": [],
@@ -55189,6 +55473,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nas-express": [],
   "national-delivery-systems": [],
   "nationex": [],
+  "navata": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],
@@ -55521,6 +55806,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tcc-co": [],
   "tccs": [],
   "tci-express": [],
+  "tci-freight": [],
   "tcs-pakistan": [],
   "tdn": [],
   "tealca": [],
@@ -55529,6 +55815,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "team-worldwide": [],
   "techlink": ["techlink-1"],
   "tej-couriers": [],
+  "teleport": [],
   "teleship": ["teleship-ts"],
   "tfm-express": [],
   "tforce-freight": ["tforce-freight-1","tforce-freight-2","tforce-freight-3"],
@@ -55541,6 +55828,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "thhy": ["thhy-1"],
   "tig-freight": [],
   "tiki": [],
+  "time-matters": [],
   "timely-titan": ["timely-titan-1"],
   "tinypack": [],
   "tiptop": [],
@@ -55628,6 +55916,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "via-cargo": [],
   "viadireta": ["viadireta-1","viadireta-2"],
   "viaxpress": [],
+  "vichare": [],
   "victorian-freight-specialists": [],
   "viet-an-express": [],
   "viettel-post": ["viettel-post-1"],

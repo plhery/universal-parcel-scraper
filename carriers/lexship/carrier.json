@@ -1,0 +1,44 @@
+{
+  "id": "lexship",
+  "displayName": "LEXSHIP",
+  "aliases": [
+    "LogiLink India Pvt Ltd"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#0097d6"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.lexship.biz/?tracking={trackingNumber}",
+    "searchUrl": "https://track.lexship.biz/",
+    "canaryUrl": "https://track.lexship.biz/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.lexship.biz"
+      ],
+      "pathPattern": "^/$",
+      "params": [
+        "tracking"
+      ]
+    }
+  ],
+  "detection": []
+}

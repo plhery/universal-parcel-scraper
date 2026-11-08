@@ -1,0 +1,33 @@
+{
+  "id": "tci-freight",
+  "displayName": "TCI Freight",
+  "aliases": [
+    "TCI Freight Division"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#674023"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://tcifreight.in/tracking-consignment/",
+    "canaryUrl": "https://tcifreight.in/tracking-consignment/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

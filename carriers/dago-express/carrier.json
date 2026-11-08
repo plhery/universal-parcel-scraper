@@ -1,0 +1,33 @@
+{
+  "id": "dago-express",
+  "displayName": "DAGO Express",
+  "aliases": [
+    "DAGO Express GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#ed1c24"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.dagoexpress.com/find-order",
+    "canaryUrl": "https://app.dagoexpress.com/find-order",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
