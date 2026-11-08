@@ -13,7 +13,10 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
    is JSON, served as HTML: the waybill, the country it goes to, the destination courier's
    number once it has one, and the scans newest first.
 2. `retry`: a lookup that fails to reach the tracker, or hangs, is sent once more within the
-   budget. The first try gets half of the budget.
+   budget. With TRAWL configured, the HTTP attempts leave time for browser recovery.
+3. `trawl`: after a browser check, the optional TRAWL service opens the same guest lookup
+   with `card_num` in its GET query. It reads the JSON text the browser renders and applies
+   the same whole-waybill, history and clock checks. No custom browser helper is needed.
 
 - An unknown number gets `code` 1 and "未获取到任何数据,请提供有效单号!", which is not found. A
   waybill without scans, which the page's script shows as "暂无轨迹数据", has no history. An
@@ -21,7 +24,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   refusal alone in place of the answer is a challenge. A 404 or a redirect is a moved route.
 - The reply must name the whole requested number as `jsWaybillNo`. The tracker matches whole
   numbers only.
-- Recognition makes the same request.
+- Recognition stays on HTTP and opens no browser session. A rate limit, explicit missing
+  parcel or changed schema does not start browser recovery.
 
 ## Notes
 

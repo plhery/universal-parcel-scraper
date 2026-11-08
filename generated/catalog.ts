@@ -27918,7 +27918,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "js-express",
       "recognitionRank": 916,
-      "localClocks": true
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://www.js-exp.com/",
     "trackingSearchUrl": "https://www.js-exp.com/index.php?catid=19",
