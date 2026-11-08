@@ -40033,8 +40033,13 @@
   {
     "input": "3CAA5082900010",
     "carrier": "unknown",
-    "confidence": "none",
-    "candidates": []
+    "confidence": "low",
+    "candidates": [
+      "kuayuan-express"
+    ],
+    "asked": [
+      "kuayuan-express"
+    ]
   },
   {
     "input": "3M0MI9",

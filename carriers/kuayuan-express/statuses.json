@@ -1,4 +1,14 @@
 {
   "carrier": "kuayuan-express",
-  "entries": []
+  "entries": [
+    {"code": "AF", "wording": "Express Arrive at The Job Center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrival at a Kuayuan centre: its first scan, and again after the handling scan. The page names the shipment status AF 已上网 (in the network)."},
+    {"code": "DF", "wording": "Express Operation Is Complete", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ECKSBG", "wording": "Customs declaration", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The export declaration in China."},
+    {"code": "ECYDG", "wording": "Arrived at port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "JH", "wording": "Submitted to the airline", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "ND", "wording": "中国邮政已收取邮件", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "The scans of the line Kuayuan hands the parcel to, in its own words. The page names ND 运输途中 (in transit)."},
+    {"code": "CC", "wording": "已妥投", "stage": "delivered", "language": "zh", "confirmedBy": "bundle", "note": "The home page's status name for CC."},
+    {"code": "CF", "wording": "妥投失败", "stage": "failed_attempt", "language": "zh", "confirmedBy": "bundle", "note": "The home page's status name for CF."},
+    {"code": "UE", "wording": "已退件", "stage": "returned", "language": "zh", "confirmedBy": "bundle", "note": "The home page's status name for UE."}
+  ]
 }

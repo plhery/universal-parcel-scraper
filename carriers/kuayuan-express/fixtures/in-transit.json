@@ -1,0 +1,246 @@
+{
+  "code": 200,
+  "message": "OK",
+  "error": [],
+  "data": {
+    "status": {
+      "": {
+        "status": "",
+        "status_name": "全部",
+        "count": 1
+      },
+      "AF": {
+        "status": "AF",
+        "status_name": "already online",
+        "count": 0
+      },
+      "ND": {
+        "status": "ND",
+        "status_name": "in transit",
+        "count": 1
+      },
+      "CC": {
+        "status": "CC",
+        "status_name": "Delivered",
+        "count": 0
+      },
+      "CF": {
+        "status": "CF",
+        "status_name": "Failed to deliver",
+        "count": 0
+      },
+      "UE": {
+        "status": "UE",
+        "status_name": "Returned",
+        "count": 0
+      }
+    },
+    "detail": {
+      "": [
+        {
+          "ask": 1,
+          "code": "3ZZZ6010100001",
+          "message": "Success",
+          "data": {
+            "server_hawbcode": "ZS00000000001",
+            "shipper_hawbcode": "3ZZZ6010100001",
+            "refer_hawbcode": "000000000000001",
+            "create_date": "2025-12-30 04:45:18",
+            "country_code": "CA",
+            "country_name": "CANADA",
+            "shipping_country_code": "CN",
+            "shipping_country_code_name": "CHINA",
+            "shipping_location": "1",
+            "shipp_to_location": "Sample Town",
+            "consignee_name": "Sample Recipient",
+            "track_status": "ND",
+            "track_sign": {
+              "title": "in transit",
+              "icon": "icon-yunshuzhong"
+            },
+            "track_type": "OTH",
+            "newest_track_date": "2026-01-06 21:17:12",
+            "newest_track_location": "广州",
+            "newest_track_content": "邮件离开处理中心【广州】",
+            "total_count": "1",
+            "show_fbaid_track": false,
+            "child_track_info": [],
+            "track_detail_list": [
+              {
+                "track_date": "2026-01-06 21:17:12",
+                "track_location": "广州",
+                "track_content": "邮件离开处理中心【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 21:11:29",
+                "track_location": "广州",
+                "track_content": "邮件到达处理中心【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:54:50",
+                "track_location": "深圳",
+                "track_content": "邮件离开【深圳】，正在发往【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:51:34",
+                "track_location": "深圳",
+                "track_content": "邮件已在【深圳】完成分拣，准备发出",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:42:42",
+                "track_location": "深圳",
+                "track_content": "中国邮政已收取邮件",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-05 08:38:26",
+                "track_location": "中国香港  ",
+                "track_content": "Submitted to the airline",
+                "track_code": "JH"
+              },
+              {
+                "track_date": "2026-01-04 08:38:26",
+                "track_location": "中国香港  ",
+                "track_content": "Arrived at port",
+                "track_code": "ECYDG"
+              },
+              {
+                "track_date": "2026-01-03 16:38:26",
+                "track_location": "中国  ",
+                "track_content": "Customs declaration",
+                "track_code": "ECKSBG"
+              },
+              {
+                "track_date": "2026-01-03 04:38:26",
+                "track_location": "中国  ",
+                "track_content": "Express Arrive at The Job Center",
+                "track_code": "AF"
+              },
+              {
+                "track_date": "2026-01-02 22:38:26",
+                "track_location": "SHENZHEN",
+                "track_content": "Express Operation Is Complete",
+                "track_code": "DF"
+              },
+              {
+                "track_date": "2026-01-02 22:14:19",
+                "track_location": "SHENZHEN",
+                "track_content": "Express Arrive at The Job Center",
+                "track_code": "AF"
+              }
+            ]
+          }
+        }
+      ],
+      "AF": [],
+      "ND": [
+        {
+          "ask": 1,
+          "code": "3ZZZ6010100001",
+          "message": "Success",
+          "data": {
+            "server_hawbcode": "ZS00000000001",
+            "shipper_hawbcode": "3ZZZ6010100001",
+            "refer_hawbcode": "000000000000001",
+            "create_date": "2025-12-30 04:45:18",
+            "country_code": "CA",
+            "country_name": "CANADA",
+            "shipping_country_code": "CN",
+            "shipping_country_code_name": "CHINA",
+            "shipping_location": "1",
+            "shipp_to_location": "Sample Town",
+            "consignee_name": "Sample Recipient",
+            "track_status": "ND",
+            "track_sign": {
+              "title": "in transit",
+              "icon": "icon-yunshuzhong"
+            },
+            "track_type": "OTH",
+            "newest_track_date": "2026-01-06 21:17:12",
+            "newest_track_location": "广州",
+            "newest_track_content": "邮件离开处理中心【广州】",
+            "total_count": "1",
+            "show_fbaid_track": false,
+            "child_track_info": [],
+            "track_detail_list": [
+              {
+                "track_date": "2026-01-06 21:17:12",
+                "track_location": "广州",
+                "track_content": "邮件离开处理中心【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 21:11:29",
+                "track_location": "广州",
+                "track_content": "邮件到达处理中心【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:54:50",
+                "track_location": "深圳",
+                "track_content": "邮件离开【深圳】，正在发往【广州】",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:51:34",
+                "track_location": "深圳",
+                "track_content": "邮件已在【深圳】完成分拣，准备发出",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-06 20:42:42",
+                "track_location": "深圳",
+                "track_content": "中国邮政已收取邮件",
+                "track_code": "ND"
+              },
+              {
+                "track_date": "2026-01-05 08:38:26",
+                "track_location": "中国香港  ",
+                "track_content": "Submitted to the airline",
+                "track_code": "JH"
+              },
+              {
+                "track_date": "2026-01-04 08:38:26",
+                "track_location": "中国香港  ",
+                "track_content": "Arrived at port",
+                "track_code": "ECYDG"
+              },
+              {
+                "track_date": "2026-01-03 16:38:26",
+                "track_location": "中国  ",
+                "track_content": "Customs declaration",
+                "track_code": "ECKSBG"
+              },
+              {
+                "track_date": "2026-01-03 04:38:26",
+                "track_location": "中国  ",
+                "track_content": "Express Arrive at The Job Center",
+                "track_code": "AF"
+              },
+              {
+                "track_date": "2026-01-02 22:38:26",
+                "track_location": "SHENZHEN",
+                "track_content": "Express Operation Is Complete",
+                "track_code": "DF"
+              },
+              {
+                "track_date": "2026-01-02 22:14:19",
+                "track_location": "SHENZHEN",
+                "track_content": "Express Arrive at The Job Center",
+                "track_code": "AF"
+              }
+            ]
+          }
+        }
+      ],
+      "CC": [],
+      "CF": [],
+      "UE": []
+    }
+  },
+  "cost": 0.05
+}

@@ -4,7 +4,8 @@
   "aliases": [
     "跨源速递",
     "深圳市跨源速递供应链有限公司",
-    "KuaYuan Express"
+    "KuaYuan Express",
+    "KUAYUAN SUPPLY CHAIN"
   ],
   "region": {
     "countries": [
@@ -18,18 +19,64 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "kuayuan-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 714
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "searchUrl": "https://www.kuayuanexpress.com.cn/",
     "canaryUrl": "https://www.kuayuanexpress.com.cn/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "recipient_name",
+      "recipient_address"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "recipient_name",
+      "recipient_address"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "offset_timestamps",
+      "service_name",
+      "pickup_point",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "kuayuan-express-1",
+      "pattern": "^3[A-Z]{3}\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -4327,12 +4327,6 @@
     "reason": "Global Delivery Network numbers are twelve digits, a shape FedEx, Sending, BRT and other networks print, so the shape cannot name Global Delivery Network."
   },
   {
-    "carrier": "kuayuan-express",
-    "pattern": "^\\d[A-Z]{3}\\d{10}$",
-    "kind": "open",
-    "reason": "One example on Kuayuan Express's tracker page, a digit and three letters followed by ten digits; the family is not established."
-  },
-  {
     "carrier": "2ebox",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

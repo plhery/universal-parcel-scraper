@@ -28930,7 +28930,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "跨源速递",
       "深圳市跨源速递供应链有限公司",
-      "KuaYuan Express"
+      "KuaYuan Express",
+      "KUAYUAN SUPPLY CHAIN"
     ],
     "countries": [
       "CN"
@@ -28939,12 +28940,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "kuayuan-express",
+      "recognitionRank": 714,
+      "localClocks": true
     },
     "canaryUrl": "https://www.kuayuanexpress.com.cn/",
     "trackingSearchUrl": "https://www.kuayuanexpress.com.cn/",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^3[A-Z]{3}\\d(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{5}$",
+        "confidence": "low"
+      }
+    ]
   },
   "kuayue-express": {
     "displayName": "Kuayue Express",
@@ -54339,7 +54347,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "korexgarant": [],
   "kronos-express": [],
   "ktd": ["ktd-1"],
-  "kuayuan-express": [],
+  "kuayuan-express": ["kuayuan-express-1"],
   "kuayue-express": ["kuayue-express-1"],
   "kuehne-nagel": ["kuehne-nagel-1","kuehne-nagel-2","kuehne-nagel-3"],
   "kun-express": ["kun-express-1"],

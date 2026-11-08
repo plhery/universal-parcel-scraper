@@ -13,7 +13,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "kuayuan-express"
+        ]
       },
       "note": "The example Kuayuan Express's home page prints beside its tracker, which answers it with its scans."
     }

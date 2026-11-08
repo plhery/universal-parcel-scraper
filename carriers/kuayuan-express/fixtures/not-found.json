@@ -1,0 +1,55 @@
+{
+  "code": 200,
+  "message": "OK",
+  "error": [],
+  "data": {
+    "status": {
+      "": {
+        "status": "",
+        "status_name": "全部",
+        "count": 1
+      },
+      "AF": {
+        "status": "AF",
+        "status_name": "already online",
+        "count": 0
+      },
+      "ND": {
+        "status": "ND",
+        "status_name": "in transit",
+        "count": 0
+      },
+      "CC": {
+        "status": "CC",
+        "status_name": "Delivered",
+        "count": 0
+      },
+      "CF": {
+        "status": "CF",
+        "status_name": "Failed to deliver",
+        "count": 0
+      },
+      "UE": {
+        "status": "UE",
+        "status_name": "Returned",
+        "count": 0
+      }
+    },
+    "detail": {
+      "": [
+        {
+          "ask": 0,
+          "code": "3ZZZ6010100002",
+          "message": "Trajectory Information does not exist",
+          "data": []
+        }
+      ],
+      "AF": [],
+      "ND": [],
+      "CC": [],
+      "CF": [],
+      "UE": []
+    }
+  },
+  "cost": 0.02
+}
