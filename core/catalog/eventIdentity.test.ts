@@ -1029,6 +1029,15 @@ describe('same-instant identity policies', () => {
     for (const description of ['Arrived at USPS Regional Facility', 'Departed USPS Facility', '']) {
       expect(policy?.matches?.({ ...step, description }, step)).toBe(false);
     }
+    // A departure USPS re-dates up to a day on.
+    expect(policy?.redatedScans?.withinHours).toBe(24);
+    for (const description of ['Departed USPS Facility', 'Departed USPS Regional Facility', 'Departed Post Office']) {
+      expect(policy?.redatedScans?.scan({ ...step, description })).toBe(true);
+    }
+    for (const description of ['Arrived at USPS Regional Facility', 'In Transit to Next Facility', '']) {
+      expect(policy?.redatedScans?.scan({ ...step, description })).toBe(false);
+    }
+    expect(sameInstantIdentityPolicy('fedex', { supportsScanMatching: true })?.redatedScans).toBeUndefined();
   });
 
   it('keeps UPS disabled for apps that cannot check scan evidence', () => {

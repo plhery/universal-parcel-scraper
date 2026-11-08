@@ -121,6 +121,13 @@ export interface SameInstantIdentityPolicy {
    * that row and the match is unique both ways.
    */
   readonly matchWithinMinute?: boolean;
+  /**
+   * The source re-dates some scans, those `scan` accepts, up to `withinHours` later, after first
+   * listing them, and then lists them only at their new time. A consumer can let such a scan take
+   * over the stored row the answer no longer lists, in the same wording and place, up to that much
+   * earlier, whenever the row was stored.
+   */
+  readonly redatedScans?: { readonly withinHours: number; readonly scan: (scan: SameInstantScan) => boolean };
 }
 
 const policies: ReadonlyMap<string, SameInstantIdentityPolicy> = new Map(

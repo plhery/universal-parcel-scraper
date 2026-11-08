@@ -15,7 +15,8 @@ function lastingWording(description: string): string {
 
 // A scan takes over the row stored in its earlier wording at its instant and place. A place-less
 // scan is dated on a deduced zone that a later scan can change: it takes over the row showing its
-// wall clock under another offset.
+// wall clock under another offset. USPS re-dates a facility's departure up to a day on, after
+// listing it, and then lists only the new time: it moved one ten and a half hours on.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'usps', storedSources: ['usps'], requireProviderCode: false,
   matchEachScan: true,
@@ -23,4 +24,5 @@ export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
     && lastingWording(incoming.description) === lastingWording(stored.description)
     && incoming.location.trim() === stored.location.trim(),
   matchWallClock: true,
+  redatedScans: { withinHours: 24, scan: scan => /^departed\b/.test(lastingWording(scan.description)) },
 };
