@@ -127,10 +127,11 @@ const nameKey = (name: unknown) => typeof name === 'string' ? name.toLowerCase()
 // step beyond the ones below.
 const LOCAL_CLOCK_CARRIERS = new Set(['ups', 'fedex', 'uniuni', 'uniexpress', 'easyship', 'dhlecommerce']);
 /**
- * Of those, the carriers whose scans with no location are on a local clock
- * too, so that one nothing places is a wall time, not the label's instant.
- * Their own trackers date UPS's "Shipper created a label" and FedEx's "Order
- * Created" at the same digits, on a clock that is not always the pickup's
+ * Of those, the carriers whose scans with no location, or placed only in the
+ * US or Canada, are on a local clock too, so that one nothing places is a wall
+ * time, not the label's instant. Their own trackers date UPS's "Shipper
+ * created a label" and FedEx's "Order Created" (at "US" alone in ParcelsApp's
+ * copy) at the same digits, on a clock that is not always the pickup's
  * (Eastern time for a parcel picked up on Pacific time), and UPS's customs
  * scan at the clearing agency on the destination's: read as labeled, it came
  * 11 hours after UPS's own instant. UniUni's "UNI DATA CENTER" scans, by
@@ -1311,7 +1312,8 @@ function zoneBasis(entry: { basis: 'place' | 'carrier'; instant: boolean; offset
  *
  * A scan of a carrier with local clocks (`LOCAL_CLOCK_CARRIERS`) that its
  * location places only in the US or Canada borrows as in step 3, from a scan
- * of its network that a place gives a zone, and otherwise keeps its label.
+ * of its network that a place gives a zone, and otherwise keeps its label,
+ * except UPS's and FedEx's (`UNLOCATED_LOCAL_CLOCKS`), which are wall times.
  * FedEx's "Shipment information sent to FedEx" under the shipper's ZIP code
  * took the zone of the pickup's state after it, as FedEx's own page dates it
  * (checked 2026-10-11).
@@ -1848,8 +1850,9 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     const { raw, name, scan, date } = entry;
     const { zone } = zones[index]!;
     // A DHL Express scan whose facility the rule cannot place is a wall clock
-    // with no instant, and so is a UPS or FedEx scan with no location that
-    // nothing places. A scan at a US military post office, of a network no
+    // with no instant, and so is a UPS or FedEx scan with no location, or
+    // placed only in the US or Canada (`nationwide`), that nothing places.
+    // A scan at a US military post office, of a network no
     // table knows (`unknownNetwork`), of a bare brand on local clocks
     // (`localClockBrand`), of iMile for a destination of several zones, of
     // Croatia Post without an office or at an office abroad that its code does not place, of UPU at
@@ -1858,7 +1861,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     // its wall clock as its local time. Any other
     // scan with no zone keeps ParcelsApp's label.
     const facility = !zone && relaysFacilityClock(name);
-    const unplaced = facility || (!zone && !entry.location && UNLOCATED_LOCAL_CLOCKS.has(nameKey(name)));
+    const unplaced = facility || (!zone && (!entry.location || entry.nationwide) && UNLOCATED_LOCAL_CLOCKS.has(nameKey(name)));
     const localOnly = !zone && !unplaced && entry.wallOnly;
     // A step or network its carrier dates by the day alone keeps the day (`datedOnly`, `dayOnlyNetworks`).
     const step = datedOnly(name, relayedLabel(raw.status), date);

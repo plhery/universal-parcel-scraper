@@ -602,10 +602,11 @@ step exists for future protocol changes.
   of its network that a place gives a zone: FedEx's "Shipment information sent to FedEx"
   under the shipper's ZIP code took the zone of the pickup's state, as FedEx's own page
   dates it. Their other scans that nothing places, and those with nothing to borrow, still
-  stay as labeled, except a UPS or FedEx scan with no location. Their own trackers date
-  those at the same digits on a local clock: "Shipper created a label" and "Order
-  Created" not always on the pickup's, UPS's customs scan at the clearing agency on the
-  destination's. So such a scan is a wall time, left out and counted like an undated
+  stay as labeled, except a UPS or FedEx scan with no location or placed only in the US or
+  Canada. Their own trackers date those at the same digits on a local clock: "Shipper
+  created a label" and "Order Created" (at "US" alone in ParcelsApp's copy) not always on
+  the pickup's, UPS's customs scan at the clearing agency on the destination's. So such a
+  scan is a wall time, left out and counted like an undated
   state, unless routing's zone dates it. UniUni's "UNI DATA CENTER" scans have the UTC
   instants of UniUni's own feed and keep their label. Adding a carrier, a town or a
   province moves stored scans (see Limitations).

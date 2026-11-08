@@ -1211,11 +1211,14 @@ describe('ParcelsApp result parsing', () => {
       scan('2026-07-01T08:00:00Z', 'Canada'),
       scan('2026-06-30T14:05:00Z', 'Example City, ON, CA'),
     ])).toEqual(['2026-07-02T16:00:00.000Z', '2026-07-02T05:10:00.000Z', '2026-07-01T12:00:00.000Z', '2026-06-30T18:05:00.000Z']);
-    // No scan of its network in that country, or only another network's: as labeled.
-    expect(times(['FedEx'], [scan('2026-07-02T09:00:00Z', 'US 12345'), scan('2026-07-01T14:05:00Z', 'Example City, ON, CA')]))
+    // No scan of its network in that country, or only another network's: as labeled, except UPS's and
+    // FedEx's, which are wall times then (below).
+    expect(times(['DHL eCommerce'], [scan('2026-07-02T09:00:00Z', 'US 12345'), scan('2026-07-01T14:05:00Z', 'Example City, ON, CA')]))
       .toEqual(['2026-07-02T09:00:00.000Z', '2026-07-01T18:05:00.000Z']);
-    expect(times(['FedEx', 'UPS'], [scan('2026-07-02T09:00:00Z', 'US 12345'), scan('2026-07-01T22:10:00Z', 'Example City, NY', 'In transit', 1)]))
+    expect(times(['DHL eCommerce', 'UPS'], [scan('2026-07-02T09:00:00Z', 'US 12345'), scan('2026-07-01T22:10:00Z', 'Example City, NY', 'In transit', 1)]))
       .toEqual(['2026-07-02T09:00:00.000Z', '2026-07-02T02:10:00.000Z']);
+    expect(times(['FedEx'], [scan('2026-07-02T09:00:00Z', 'US 12345'), scan('2026-07-01T14:05:00Z', 'Example City, ON, CA')]))
+      .toEqual(['2026-07-01T18:05:00.000Z']);
   });
 
   it('leaves a UPS or FedEx scan with no location that nothing places a wall time, not the label\'s instant', () => {
@@ -1240,6 +1243,12 @@ describe('ParcelsApp result parsing', () => {
     const fedex = parse(['FedEx'], [scan('2026-07-02T09:00:00Z', 'Example City, NY'), scan('2026-07-01T21:40:00Z', '', 'Order Created')]);
     expect(fedex.events?.map((event) => event.time)).toEqual(['2026-07-02T13:00:00.000Z']);
     expect(fedex.undated_event_count).toBe(1);
+    // Live shape: ParcelsApp places FedEx's "Order Created" at "US" alone, on the shipper's clock under
+    // its UTC label (Central time on one parcel, Eastern on another); read as labeled, it came hours early.
+    const created = parse(['FedEx'], [scan('2026-07-02T09:00:00Z', 'Example City, ON, CA'), scan('2026-07-01T13:06:00Z', 'US', 'Order Created')]);
+    expect(created.events?.map((event) => event.time)).toEqual(['2026-07-02T13:00:00.000Z']);
+    expect(created.undated_event_count).toBe(1);
+    expect(() => parse(['FedEx'], [scan('2026-07-01T13:06:00Z', 'US', 'Order Created')])).toThrow('No usable tracking events');
     // Another carrier's scan with no location keeps its label.
     expect(parse(['OnTrac'], [scan('2026-07-01T21:40:00Z', '')]).events?.map((event) => event.time)).toEqual(['2026-07-01T21:40:00.000Z']);
   });
