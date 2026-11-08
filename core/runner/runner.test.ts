@@ -206,6 +206,21 @@ describe('takeTurn', () => {
     expect(seen.budgetMs).toBeLessThanOrEqual(5_000);
   });
 
+  it('keeps the rest of the context when it hands the lookup the budget left', async () => {
+    const serialize = singleFlight();
+    const front = held();
+    const first = takeTurn(serialize, 'ups', {}, () => front.done);
+    const knownEstimate = { expectedDelivery: '2030-01-02', lastUpdate: null };
+    const controller = new AbortController();
+    const waiting = takeTurn(serialize, 'ups', { signal: controller.signal, budgetMs: 5_000, knownEstimate }, async (left) => left);
+    front.release();
+    await first;
+    const seen = await waiting;
+    expect(seen.knownEstimate).toBe(knownEstimate);
+    expect(seen.signal).toBe(controller.signal);
+    expect(seen.budgetMs).toBeLessThanOrEqual(5_000);
+  });
+
   it('leaves the default budget to the lookup and ends the wait only on cancellation', async () => {
     const serialize = singleFlight();
     const front = held();

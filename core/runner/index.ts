@@ -197,7 +197,7 @@ export async function takeTurn<T>(
     return await serialize(() => {
       const left = deadline - performance.now();
       if (left < 1) throw spent();
-      return lookup({ signal, budgetMs: left });
+      return lookup({ ...context, budgetMs: left });
     }, signal ? AbortSignal.any([signal, timer]) : timer);
   } catch (error) {
     // Only the wait takes the timer, so its reason means the budget ran out there.
