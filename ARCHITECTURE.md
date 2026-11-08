@@ -144,6 +144,10 @@ identifies an international postal item, is settled by asking the carriers that 
 it cheaply. A postal issuer is a lookup candidate, not proof of the delivery carrier.
 The tracker then tries the carrier's
 dedicated adapter, and after that the fallbacks the caller enabled, in the coverage order.
+Detection can list `origins` beside the carrier its high-confidence rule names: carriers that
+follow some parcels under that carrier's number from an earlier leg, as Cainiao follows GOFO's
+GFUS waybills. While the carrier's answer holds only the label, the tracker asks them first;
+movement files the parcel under the origin, and the hand-off proposes the carrier.
 A direct answer marked `summary_only` or `history_truncated` asks them too. The first
 fallback with more scans that names no other carrier and is not behind the carrier's state
 replaces it; another network of the carrier's brand (`gofo` for `gofo-fr`) is not another

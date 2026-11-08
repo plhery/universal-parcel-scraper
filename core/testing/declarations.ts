@@ -52,7 +52,8 @@ export function collisionKey(carriers: readonly string[]): string {
 
 function offered(record: CorpusRecord): boolean {
   const match = detectCarrierMatch(record.number);
-  return match.carrier === record.carrier || (match.candidates as readonly string[]).includes(record.carrier);
+  return match.carrier === record.carrier || (match.candidates as readonly string[]).includes(record.carrier)
+    || (match.origins as readonly string[] | undefined)?.includes(record.carrier) === true;
 }
 
 /**

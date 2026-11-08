@@ -9,12 +9,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/gofo.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -26,12 +22,8 @@
         "url": "https://github.com/jkeen/tracking_number_data/blob/main/couriers/gofo.json"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "Open-source project example, not a real shipment."
     },
@@ -44,12 +36,8 @@
         "date": "2026-08-31"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified."
     },
@@ -62,12 +50,8 @@
         "date": "2026-09-09"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "Tracking number in a public court complaint that does not name the carrier; the GFUS prefix is GOFO's."
     },
@@ -86,12 +70,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
     },
@@ -110,12 +90,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
     },
@@ -134,12 +110,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
     },
@@ -158,12 +130,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
     },
@@ -182,12 +150,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A GOFO tracking link archived by the Wayback Machine. GOFO's tracker returns its history."
     },
@@ -296,12 +260,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "GOFO's tracking returned this parcel's history, from an archived GOFO tracking link."
     },

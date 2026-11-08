@@ -764,12 +764,8 @@
         "service": "Cainiao tracking leg"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "aliexpress",
-          "gofo"
-        ]
+        "carrier": "gofo",
+        "confidence": "high"
       },
       "note": "A Cainiao tracking link for a GOFO waybill, archived by the Wayback Machine. Cainiao's tracker returns its history: an AliExpress parcel GOFO delivers in the United States."
     },

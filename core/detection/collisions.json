@@ -5794,7 +5794,7 @@
       "aliexpress",
       "gofo"
     ],
-    "reason": "GOFO delivers AliExpress parcels in the United States under its own GFUS waybills, and Cainiao's tracker follows them from China while GOFO shows only the label. Other senders' GOFO parcels are GOFO's alone. Both rules are low confidence; the one that knows the number confirms it, and once both know it, it is filed under AliExpress, which proposes GOFO as the delivery carrier."
+    "reason": "GFUS waybills are GOFO's: its tracker knows each one from the label. GOFO delivers AliExpress parcels in the United States under them, and Cainiao's tracker follows those from China while GOFO shows only the label. GOFO's rule is high confidence; AliExpress's low rule names Cainiao as an origin beside GOFO, asked when GOFO shows only the label."
   },
   {
     "shape": "1MCAINIXX followed by ten digits",

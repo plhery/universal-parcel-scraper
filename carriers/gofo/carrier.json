@@ -88,7 +88,7 @@
     {
       "id": "gofo-1",
       "pattern": "^GFUS\\d{14}$",
-      "confidence": "low"
+      "confidence": "high"
     },
     {
       "id": "gofo-2",

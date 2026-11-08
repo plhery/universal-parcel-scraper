@@ -3916,7 +3916,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^GFUS\\d{14}$",
-        "confidence": "low"
+        "confidence": "high"
       },
       {
         "pattern": "^GF\\d{13}$",

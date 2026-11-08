@@ -17,6 +17,13 @@ export interface CarrierDetection {
   candidates: CarrierId[];
   /** Candidates a `preferred` rule backs with number evidence, listed first. */
   preferred: CarrierId[];
+  /**
+   * Carriers that follow some parcels under this number from an earlier leg,
+   * beside the one high-confidence carrier that issues it, such as Cainiao
+   * under GOFO's GFUS waybills. They are no candidates: asking one may add the
+   * scans before the issuer's. Absent when there is none.
+   */
+  origins?: CarrierId[];
 }
 
 export interface TrackingInputMatch extends CarrierDetection {

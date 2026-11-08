@@ -133,23 +133,63 @@ describe('partner numbers Cainiao follows', () => {
     });
   });
 
-  it('files a GOFO waybill both know under AliExpress, proposing GOFO, and one only GOFO knows under GOFO', async () => {
+  describe('GOFO GFUS waybills, which Cainiao follows for AliExpress parcels', () => {
     const gfus = 'GFUS00000000000001';
-    const gofo = readFileSync(new URL('../gofo/fixtures/delivered.json', import.meta.url), 'utf8');
-    const fetcher = (cainiao: boolean) => vi.fn<typeof fetch>((input) => Promise.resolve(new Response(
-      !String(input).startsWith('https://global.cainiao.com/') ? gofo : JSON.stringify({ ...inTransit, module: [cainiao
-        ? { ...inTransit.module[0], mailNo: gfus, destCountry: 'USA' }
-        : { mailNo: gfus, mailNoSource: 'EXTERNAL', detailList: [] }] }),
+    const delivered = JSON.parse(readFileSync(new URL('../gofo/fixtures/delivered.json', import.meta.url), 'utf8')) as {
+      data: { success: Record<string, unknown>[] };
+    };
+    // GOFO's answer before its first scan: the label alone.
+    const labelled = (() => {
+      const shipment = delivered.data.success[0]!;
+      const list = shipment.trackEventList as Record<string, unknown>[];
+      const label = list[list.length - 1]!;
+      return { ...delivered, data: { ...delivered.data, success: [{ ...shipment, status: 'Label Created', trackEventCount: 1,
+        lastTrackEvent: label, trackEventList: [label] }] } };
+    })();
+    const cainiaoMoving = { ...inTransit, module: [{ ...inTransit.module[0], mailNo: gfus, destCountry: 'USA' }] };
+    const cainiaoUnknown = { ...inTransit, module: [{ mailNo: gfus, mailNoSource: 'EXTERNAL', detailList: [] }] };
+    const fetcher = (gofo: unknown, cainiao: unknown) => vi.fn<typeof fetch>((input) => Promise.resolve(new Response(
+      JSON.stringify(String(input).startsWith('https://global.cainiao.com/') ? cainiao : gofo),
       { headers: { 'Content-Type': 'application/json' } })));
-    expect(detectCarrierMatch(gfus)).toEqual({ carrier: 'unknown', confidence: 'low', candidates: ['aliexpress', 'gofo'], preferred: [] });
-    expect(recognitionAskedCarriers(gfus)).toEqual(['aliexpress', 'gofo']);
-    const tracker = createTracker({ fetcher: fetcher(true), providers: [] });
-    await expect(tracker.recognize(gfus)).resolves.toMatchObject({ carrier: 'aliexpress', choices: [] });
-    await expect(tracker.track({ number: gfus })).resolves.toMatchObject({
-      carrier: 'aliexpress', source: 'aliexpress', handoff: { carrier: 'gofo', number: gfus, confirmed: true },
+    const asked = (calls: ReturnType<typeof fetcher>) => calls.mock.calls
+      .map(([input]) => String(input).startsWith('https://global.cainiao.com/') ? 'aliexpress' : 'gofo');
+
+    it("names GOFO, which issues them, and keeps Cainiao as an origin beside it", () => {
+      expect(detectCarrierMatch(gfus)).toEqual({
+        carrier: 'gofo', confidence: 'high', candidates: ['gofo'], preferred: [], origins: ['aliexpress'],
+      });
+      expect(parseTrackingInput(`gfus 0000 0000 0000 01`)).toMatchObject({ carrier: 'gofo', confidence: 'high', origins: ['aliexpress'] });
+      expect(recognitionAskedCarriers(gfus)).toEqual([]);
+      // Cainiao's own numbers and another carrier's alone list no origin.
+      expect(detectCarrierMatch('CNG00000000000001')).not.toHaveProperty('origins');
+      expect(detectCarrierMatch('GF0000000000001')).not.toHaveProperty('origins');
     });
-    await expect(createTracker({ fetcher: fetcher(false), providers: [] }).recognize(gfus))
-      .resolves.toMatchObject({ carrier: 'gofo', choices: [] });
+
+    it("files one Cainiao follows under AliExpress while GOFO shows only the label, proposing GOFO", async () => {
+      const calls = fetcher(labelled, cainiaoMoving);
+      await expect(createTracker({ fetcher: calls, providers: [] }).track({ number: gfus })).resolves.toMatchObject({
+        carrier: 'aliexpress', source: 'aliexpress', handoff: { carrier: 'gofo', number: gfus, confirmed: true },
+      });
+      expect(asked(calls)).toEqual(['gofo', 'aliexpress', 'gofo']);
+    });
+
+    it("keeps GOFO's label when Cainiao does not know the number", async () => {
+      const calls = fetcher(labelled, cainiaoUnknown);
+      const answer = await createTracker({ fetcher: calls, providers: [] }).track({ number: gfus });
+      expect(answer).toMatchObject({ carrier: 'gofo', source: 'gofo', result: { current_stage: 'registered' } });
+      expect(answer.attempts.map(({ source, kind }) => `${source} ${kind}`)).toEqual(['gofo ok', 'aliexpress not_found']);
+    });
+
+    it("asks only GOFO once it has scanned the parcel, or when the user picks it", async () => {
+      const scanned = fetcher(delivered, cainiaoMoving);
+      await expect(createTracker({ fetcher: scanned, providers: [] }).track({ number: gfus }))
+        .resolves.toMatchObject({ carrier: 'gofo', source: 'gofo', result: { status: 'delivered' } });
+      expect(asked(scanned)).toEqual(['gofo']);
+      const picked = fetcher(labelled, cainiaoMoving);
+      await expect(createTracker({ fetcher: picked, providers: [] }).track({ number: gfus, carrier: 'gofo' }))
+        .resolves.toMatchObject({ carrier: 'gofo', source: 'gofo' });
+      expect(asked(picked)).toEqual(['gofo']);
+    });
   });
 
   it('names AliExpress for AP and fourteen digits, a Cainiao reference no other carrier prints', () => {
@@ -160,7 +200,7 @@ describe('partner numbers Cainiao follows', () => {
 
   it.each(['CNUSUP00000000001', 'CNBR00000000001', 'CNMEX0000000001', 'CACAINIAO00000000001',
     'RLV00000001', 'RLDW00000001', 'JNCN000000000001', 'ECSC00AARO00000001', 'PA0000000001', 'F00000000000001',
-    '9C0000I000001', '9C0000J999980', 'RTZ5P00D99999980', 'FMP5P00D99999980', 'GFUS00000000000001'])('asks Cainiao about %s', (value) => {
+    '9C0000I000001', '9C0000J999980', 'RTZ5P00D99999980', 'FMP5P00D99999980'])('asks Cainiao about %s', (value) => {
     expect(detectCarrierMatch(value)).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: [] });
     expect(recognitionAskedCarriers(value)).toContain('aliexpress');
   });

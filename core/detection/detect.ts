@@ -8,11 +8,15 @@
  * failed checksum kept their carrier out of those candidates.
  * What it is not: no network lookup, no provider I/O, no carrier ranking by
  * popularity — only the rules declared in the catalog decide. A `preferred`
- * rule only moves its carrier to the front of the suggestions.
+ * rule only moves its carrier to the front of the suggestions. A carrier that
+ * follows parcels under their delivery carrier's number is no rival to the one
+ * carrier that issues it: the issuer's high-confidence rule names the issuer,
+ * and the follower is kept in `origins`.
  */
 import { DETECTION_RULE_IDS, type CarrierId } from '../../generated/catalog.js';
 import type { DetectionRule } from '../catalog/types.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { followsPartnerNumbers } from '../catalog/origins.js';
 import { CHECKSUMS } from './checksums.js';
 import { isCttExpressTrackingNumber } from './cttExpress.js';
 import { normalizeTrackingNumber } from './normalize.js';
@@ -109,7 +113,11 @@ function detect(raw: string): { detection: CarrierDetection; rejections: Checksu
     .filter(({ carrier, rule }) => !candidates.includes(carrier) && (rule.confidence === 'high' || highConfidence.length === 0))
     .map(({ carrier, id, rule }) => ({ carrier, rule: id, checksum: rule.checksum! }));
   if (highConfidence.length === 1) {
-    return { detection: { carrier: highConfidence[0]!.carrier, confidence: 'high', candidates, preferred }, rejections };
+    const issuer = highConfidence[0]!.carrier;
+    // Cainiao following GOFO's GFUS waybills holds the legs before the issuer's.
+    const origins = matches.filter((match) => match.confidence === 'low' && match.carrier !== issuer
+      && followsPartnerNumbers(match.carrier)).map((match) => match.carrier);
+    return { detection: { carrier: issuer, confidence: 'high', candidates, preferred, ...(origins.length ? { origins } : {}) }, rejections };
   }
   return {
     detection: { carrier: 'unknown', confidence: matches.length > 0 ? 'low' : 'none', candidates, preferred },

@@ -631,6 +631,12 @@
               "type": "string"
             }
           },
+          "origins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "source": {
             "type": "string",
             "enum": [

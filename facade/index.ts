@@ -320,6 +320,22 @@ export function createTracker(options: TrackerOptions = {}) {
     };
     let result = adapter ? await attempt(carrier, () => lookUp(carrier, adapter, directInput, context.knownEstimate)) : null;
     let source: string = carrier;
+    // While the issuer shows only the label, a carrier that follows the parcel under its number
+    // from an earlier leg holds the history: Cainiao under GOFO's GFUS waybills. Its movement
+    // files the parcel under it, and the hand-off below proposes the issuer.
+    if (result && !input.carrier && !input.source && labelAlone(result)) {
+      for (const origin of detectCarrierMatch(input.number).origins ?? []) {
+        const followed = registry.for(origin);
+        if (!followed || signal.aborted) continue;
+        const answer = await attempt(origin, () => lookUp(origin, followed, { number, ...language }));
+        if (answer && !labelAlone(answer)) {
+          carrier = origin;
+          result = answer;
+          source = origin;
+          break;
+        }
+      }
+    }
     // Rows the carrier holds back as written ahead of their clocks are no scans when a provider relays them.
     const ahead = result ? [] : writtenAheadClocks(lastError);
     const scansOf = (candidate: UniversalSource, answer: ResolvedResult) => {
@@ -374,3 +390,8 @@ export function createTracker(options: TrackerOptions = {}) {
 }
 
 export type Tracker = ReturnType<typeof createTracker>;
+
+/** An answer that holds the label and nothing after it: the carrier has not scanned the parcel yet. */
+function labelAlone(result: ResolvedResult): boolean {
+  return result.current_stage === 'registered' && result.events.every((event) => event.stage === 'registered');
+}
