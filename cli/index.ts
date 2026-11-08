@@ -18,7 +18,8 @@ const help = `Universal Parcel Scraper
   parcel-scraper royal-mail-browser
 
 SCRAPER_PROVIDERS selects comma-separated providers; default: UPU. --source asks one alone,
-without the carrier: Ship24, ParcelsApp, 17TRACK, Postal Ninja, Track718 (Juxi only) or UPU.
+without the carrier: Ship24, ParcelsApp, 17TRACK, Postal Ninja, Track718 (Juxi only),
+Track123 (FedEx only) or UPU.
 FLARESOLVERR_URL and TRACKING_CHROMIUM_PATH enable browser transports.
 SCRAPER_USER_AGENT replaces the client name adapters send to carriers.
 SCRAPER_TOKEN protects the HTTP API. SCRAPER_DEMO_PAGE=true enables its one-off page.

@@ -114,7 +114,7 @@ parcel-scraper serve --port 8080
 ```
 
 ```sh
-docker run --rm -p 127.0.0.1:8080:8080 ghcr.io/plhery/universal-parcel-scraper:0.3.0
+docker run --rm -p 127.0.0.1:8080:8080 ghcr.io/plhery/universal-parcel-scraper:$(npm view universal-parcel-scraper version)
 ```
 
 ```sh
@@ -124,7 +124,8 @@ curl http://127.0.0.1:8080/v1/track \
 ```
 
 The server caches answers in memory and rate-limits callers. It has no database and never
-polls. The image ships Chromium. Routes are in the [OpenAPI file](server/openapi.json) and
+polls. Images are tagged with stable release versions only, and `npm view` prints the newest
+one. The image ships Chromium. Routes are in the [OpenAPI file](server/openapi.json) and
 settings, such as `SCRAPER_TOKEN` and `SCRAPER_TRUSTED_PROXIES`, in [.env.example](.env.example).
 
 ## What you can build with it
