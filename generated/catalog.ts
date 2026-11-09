@@ -16328,7 +16328,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "驼飞侠",
       "駝飛俠",
       "XZG",
-      "QYEXP"
+      "QYEXP",
+      "Asus International"
     ],
     "countries": [
       "CN"
@@ -46403,7 +46404,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Toll IPEC",
       "Toll Priority",
       "Toll New Zealand",
-      "Toll NZ"
+      "Toll NZ",
+      "Team Global Express (MyTeamGE)",
+      "Team Global Express(NZ)",
+      "Team Global Express Australia",
+      "Team Global Express New Zealand"
     ],
     "countries": [
       "AU",

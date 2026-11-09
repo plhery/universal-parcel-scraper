@@ -24,6 +24,11 @@ describe('brand networks', () => {
     // Providers name the line providers whose numbers DHLink tracks.
     expect(carrierIdFromName('XZG')).toBe('dhlink');
     expect(carrierIdFromName('QYEXP')).toBe('dhlink');
+    expect(carrierIdFromName('Asus International')).toBe('dhlink');
+    // 17TRACK's names for Team Global Express, and the ones readers give it, which name a multi-zone country or not its home.
+    for (const name of ['Team Global Express (MyTeamGE)', 'Team Global Express(NZ)', 'Team Global Express Australia', 'Team Global Express New Zealand']) {
+      expect(carrierIdFromName(name), name).toBe('team-global-express');
+    }
     // Providers also name Correios by the English name of the country's post.
     expect(carrierIdFromName('Brazil Post')).toBe('correios-br');
     // ParcelsApp names South Africa's post after the country.
