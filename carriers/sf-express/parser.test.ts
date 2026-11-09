@@ -115,6 +115,7 @@ describe('SF Express public route parsing', () => {
       ['570', '', 'in_transit', 'in_transit'], // Vehicle departed, between two centres
       ['605', '', 'customs', 'in_transit'], // Under customs clearance
       ['16', '', 'customs', 'in_transit'], // Under customs clearance, please wait
+      ['18', '', 'customs', 'in_transit'], // Under customs clearance, please wait patiently, before code 14's completion
       ['10', '', 'in_transit', 'in_transit'], // Departed from a transit place on a flight
       ['11', '', 'in_transit', 'in_transit'], // Arrived at a transit place off a flight
       ['1105', '', 'in_transit', 'in_transit'], // In transit at an airport or town, please wait

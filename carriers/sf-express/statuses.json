@@ -324,6 +324,13 @@
       "note": "Official Taiwan routes opCode; the remark says the shipment is under customs clearance and asks the recipient to wait."
     },
     {
+      "code": "18",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Official Taiwan routes opCode; the remark says the shipment is under customs clearance and asks the recipient to wait patiently, before code 14's clearance completed."
+    },
+    {
       "code": "10",
       "stage": "in_transit",
       "confirmedBy": "live",

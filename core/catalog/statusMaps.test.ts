@@ -1707,10 +1707,14 @@ describe("universal providers' answers", () => {
       ['Example Processing Center has received it [Example City]', 'accepted'],
       ['parcel leaves processing center [Example]', 'in_transit'], ['The shipment leaves the processing center [Example]', 'in_transit'],
       ['Airline received【Example】', 'in_transit'], ['Airline received', 'in_transit'],
+      // The Chinese copy ParcelsApp sends beside its English "In transit / heading to the next stop", at the same second.
+      ['前往下一站', 'in_transit'],
       // Helthjem sending a home delivery on to a pickup point, as Ship24 relays it.
       ['Pakken din behandles for sending til hentested.', 'in_transit'], ['Pakken sorteres på nytt før den sendes til et hentested.', 'in_transit'],
       // Poczta Polska's Polish rows, relayed without the code.
       ['Przesyłka w transporcie', 'in_transit'], ['Wysłanie przesyłki z Polski', 'in_transit'], ['Przyjęta w kraju przeznaczenia', 'in_transit'],
+      // DPD Poland's export to its partner abroad, in ParcelsApp's English.
+      ['Sending a package abroad', 'in_transit'],
       // A cross-border line's pallet scan and customs release, as Ship24 relays them.
       ['Pallet scan event at warehouse', 'in_transit'], ['Parcel has been cleared', 'in_transit'],
       ['Instruction data transmitted to DPD', 'registered'], ['Order confirmed.', 'registered'], ['Order received successfully', 'registered'],
