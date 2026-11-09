@@ -44,6 +44,7 @@ import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { destinationRelay, europeanAbroad, ROYAL_MAIL_RELAY_CLOCK } from '../../carriers/royal-mail/clock.js';
+import { USPS_FACILITY_KIND } from '../../carriers/usps/clock.js';
 import { YUNEXPRESS_ORIGIN_ZONE, yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
@@ -692,8 +693,9 @@ const UNITED_STATES = /^(?:us|usa|united states(?: of america)?)$/i;
 const POSTAL_CODE = /\s*\b(?:\d{5}(?:-\d{4})?|[A-Z]\d[A-Z] ?\d[A-Z]\d)$/i;
 // A country's code before a postcode, as FedEx ends a location: "EXAMPLE TOWN, RR, IT 12345".
 const COUNTRY_POSTCODE = /^([A-Z]{2})\s+(?=[A-Z\d -]*\d)[A-Z\d][A-Z\d -]{1,9}$/;
-// USPS facilities: "EXAMPLE CITY IL DISTRIBUTION CENTER", "ISC EXAMPLE CITY IL (USPS)".
-const US_FACILITY = /\s+(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER)$/i;
+// USPS facilities, their kind after their state, as USPS's adapter reads them: "EXAMPLE CITY IL
+// DISTRIBUTION CENTER", "EXAMPLE CITY LA PROCESSING CENTER", "ISC EXAMPLE CITY IL (USPS)".
+const US_FACILITY = new RegExp(String.raw`\s+${USPS_FACILITY_KIND}$`, 'i');
 // States written out, as Orange Connex does for SpeedPAK ("Example City Minnesota, United States").
 const US_STATE_NAMES: ReadonlyMap<string, string> = new Map(Object.entries({
   alabama: 'AL', alaska: 'AK', arizona: 'AZ', arkansas: 'AR', california: 'CA', colorado: 'CO', connecticut: 'CT',

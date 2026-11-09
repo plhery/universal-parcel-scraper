@@ -1438,6 +1438,13 @@ describe('ParcelsApp result parsing', () => {
       scan('2026-09-02T08:53:00Z', 'EXAMPLE CITY MI DISTRIBUTION CENTER'),
       scan('2026-08-28T05:01:00Z', 'EXAMPLE CITY CA NETWORK DISTRIBUTION CENTER'),
     ])).toEqual(['2026-09-11T12:25:00.000Z', '2026-09-02T12:53:00.000Z', '2026-08-28T12:01:00.000Z']);
+    // Its processing and package sorting centres name their state too, with USPS's digits. Read on
+    // the clock of the scan in Georgia before them, a Louisiana centre's came an hour early.
+    expect(times(['USPS'], [
+      scan('2026-11-05T21:36:00Z', 'EXAMPLE CITY LA PROCESSING CENTER'),
+      scan('2026-11-05T02:12:00Z', 'EXAMPLE CITY PA PACKAGE SORTING CENTER'),
+      scan('2026-11-04T09:23:00Z', 'EXAMPLE CITY, GA 12345'),
+    ])).toEqual(['2026-11-06T03:36:00.000Z', '2026-11-05T07:12:00.000Z', '2026-11-04T14:23:00.000Z']);
     expect(times(['Canada Post'], [
       scan('2026-10-03T11:55:00Z', 'ISC EXAMPLE CITY IL (USPS), USA'),
       scan('2026-10-01T12:58:00Z', 'EXAMPLE CITY, ON, Canada'),
