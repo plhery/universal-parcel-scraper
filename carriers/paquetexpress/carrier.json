@@ -24,7 +24,8 @@
       "retry"
     ],
     "recognition": {
-      "rank": 35
+      "rank": 35,
+      "servedCountriesOnly": true
     }
   },
   "capabilities": [
@@ -93,6 +94,11 @@
     {
       "id": "paquetexpress-1",
       "pattern": "^[A-Z]{3}\\d{2}[A-Z]{2}\\d{5,7}$",
+      "confidence": "low"
+    },
+    {
+      "id": "paquetexpress-2",
+      "pattern": "^\\d{11,13}$",
       "confidence": "low"
     }
   ]

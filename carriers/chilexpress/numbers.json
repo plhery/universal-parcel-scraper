@@ -31,6 +31,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -97,6 +98,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -131,6 +133,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -166,6 +169,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -202,6 +206,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -237,6 +242,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -272,6 +278,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -311,6 +318,7 @@
           "gls-pl",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -376,6 +384,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -443,6 +452,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -476,7 +486,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Chilexpress's help-centre tracking page, as an archived address shows; the capture was not opened."
@@ -507,6 +518,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -539,6 +551,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -572,6 +585,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -605,6 +619,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -638,6 +653,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -677,6 +693,7 @@
           "gls-pl",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]

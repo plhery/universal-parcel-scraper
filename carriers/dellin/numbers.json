@@ -23,7 +23,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The archived page of Dellin's own tracker shows this order as completed and the cargo handed out, with waybill 21-00781013582."
@@ -50,7 +51,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened."
@@ -77,7 +79,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened."
@@ -103,7 +106,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened."
@@ -130,7 +134,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened."
@@ -157,7 +162,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened. Typed with the hyphen of the printed waybill."
@@ -184,7 +190,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Dellin's own tracker, as an archived address shows; the capture was not opened. Typed with the hyphen of the printed waybill."
@@ -211,7 +218,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The waybill number of a damaged consignment, quoted in a complaint about Delovye Linii. Dellin's order search knows it as a completed order."
@@ -237,7 +245,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The transport waybill quoted in an Otzovik review of the Delovye Linii transport company."
@@ -264,7 +273,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The waybill number quoted in an Otzovik review of the Delovye Linii transport company about a marketplace delivery."
@@ -291,7 +301,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "The forwarding receipt number of a consignment Delovye Linii accepted, quoted in a legal question about cargo it lost."
@@ -315,7 +326,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "One of two waybills quoted in an Irecommend review of Delovye Linii. Dellin's order search knows both as one completed order."
@@ -340,7 +352,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The second waybill quoted in the same review, an additional waybill of the same order."
@@ -365,7 +378,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The waybill quoted in an Otzovik review of the Delovye Linii holding. Dellin's order search knows it as a completed order."

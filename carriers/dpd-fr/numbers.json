@@ -76,7 +76,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Published integration example, not a real shipment. The source attributes it to DPD France, which stays one candidate among several."

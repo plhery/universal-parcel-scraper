@@ -27,6 +27,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -57,6 +58,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -87,6 +89,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -117,6 +120,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -141,7 +145,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "PEC's API documentation uses it as the example cargo code of a request."
@@ -175,6 +180,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -208,6 +214,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -241,6 +248,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -274,6 +282,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -306,6 +315,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -338,6 +348,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },

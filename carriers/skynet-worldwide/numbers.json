@@ -31,6 +31,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -67,6 +68,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -102,6 +104,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -143,6 +146,7 @@
           "gls-pl",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -198,6 +202,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -233,6 +238,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -291,6 +297,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },

@@ -30,6 +30,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl",
           "speedy"
         ]
@@ -64,6 +65,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -97,6 +99,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -131,6 +134,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -164,7 +168,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Fukuyama Transporting's own tracker, as an archived address shows; the capture was not opened."
@@ -197,6 +202,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -230,6 +236,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl",
           "speedy"
         ]
@@ -265,6 +272,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -299,6 +307,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -332,6 +341,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },

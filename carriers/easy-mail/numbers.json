@@ -25,7 +25,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history up to delivery."
@@ -55,7 +56,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -85,7 +87,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -114,7 +117,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -143,7 +147,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -172,7 +177,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -201,7 +207,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -230,7 +237,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -259,7 +267,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's own tracker; the opened capture shows the voucher's history."
@@ -292,6 +301,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -321,7 +331,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's web-tracking page; the opened capture shows the page with the voucher passed to the tracker frame, so the history was not visible."
@@ -354,7 +365,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on Easy Mail's web-tracking page; the opened capture shows the page with the voucher passed to the tracker frame, so the history was not visible."

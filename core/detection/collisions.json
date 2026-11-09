@@ -1445,7 +1445,8 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1465,7 +1466,8 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy"
+      "speedy",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1483,7 +1485,8 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1502,7 +1505,8 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy"
+      "speedy",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1520,7 +1524,8 @@
       "gls-pl",
       "japan-post",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1537,7 +1542,8 @@
       "gls-pl",
       "japan-post",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1555,7 +1561,8 @@
       "gls-pl",
       "japan-post",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the mod 7 carriers and the carriers that accept any eleven digits; nothing in the number decides between them, so it stays a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1618,7 +1625,8 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1638,7 +1646,8 @@
       "old-dominion",
       "postlogistics",
       "ppl",
-      "speedy"
+      "speedy",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -1656,7 +1665,8 @@
       "japan-post",
       "mainfreight",
       "old-dominion",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape and the mod 7 check Aramex, Blue Dart and Japan Post share. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -1667,7 +1677,8 @@
       "delhivery",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers are shared by five carriers; the number stays a low-confidence suggestion."
   },
@@ -1677,7 +1688,8 @@
       "correos-chile",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers are shared by four carriers; the number stays a low-confidence suggestion."
   },
@@ -1688,7 +1700,8 @@
       "ukrposhta",
       "yunda",
       "econt",
-      "fan-courier"
+      "fan-courier",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -1699,7 +1712,8 @@
       "dpd-fr",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 0 add DPD France to the four carriers already sharing that length; the number stays a suggestion."
   },
@@ -1712,7 +1726,8 @@
       "korea-post",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the five carriers already sharing that length; the number stays a suggestion."
   },
@@ -1724,7 +1739,8 @@
       "korea-post",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the four carriers already sharing that length; the number stays a suggestion."
   },
@@ -1736,7 +1752,8 @@
       "korea-post",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 6, Korea Post's domestic parcels and registered letters among them, are shared by six carriers; the number stays a low-confidence suggestion."
   },
@@ -1749,7 +1766,8 @@
       "ukrposhta",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -1762,7 +1780,8 @@
       "yunda",
       "econt",
       "fan-courier",
-      "imile"
+      "imile",
+      "paquetexpress"
     ],
     "reason": "Thirteen digits starting with 3 are iMile's undated waybills as well as FAN Courier's AWBs and other carriers' counters; iMile's low rule joins theirs, as most such parcels the app tracked were iMile's, and its tracker has to confirm the number."
   },
@@ -1774,7 +1793,8 @@
       "ukrposhta",
       "yunda",
       "liccardi",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Liccardi's label numbers start 660, inside thirteen digits other carriers share; the number stays a low-confidence suggestion that recognition settles."
   },
@@ -1786,7 +1806,8 @@
       "ukrposhta",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -3121,7 +3142,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3143,7 +3165,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3181,7 +3204,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3198,7 +3222,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
@@ -3216,7 +3241,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3236,7 +3262,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3257,7 +3284,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3278,7 +3306,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3300,7 +3329,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3322,7 +3352,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3347,7 +3378,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3373,7 +3405,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3394,7 +3427,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3416,7 +3450,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3426,7 +3461,8 @@
       "correos-chile",
       "delhivery",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Without Ukrposhta's check digit, 13-digit numbers are shared by four carriers; the number stays a low-confidence suggestion."
   },
@@ -3435,7 +3471,8 @@
     "carriers": [
       "correos-chile",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Without Ukrposhta's check digit, 13-digit numbers are shared by three carriers; the number stays a low-confidence suggestion."
   },
@@ -3445,7 +3482,8 @@
       "correos-chile",
       "yunda",
       "econt",
-      "fan-courier"
+      "fan-courier",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -3461,7 +3499,8 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3476,7 +3515,8 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3492,7 +3532,8 @@
       "mainfreight",
       "postlogistics",
       "ppl",
-      "speedy"
+      "speedy",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -3507,7 +3548,8 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3521,7 +3563,8 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3537,7 +3580,8 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the carriers that accept any eleven digits; compact numbers stay a low-confidence suggestion. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3552,7 +3596,8 @@
       "gls-fr",
       "gls-pl",
       "mainfreight",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "CDEK's own numbers count up from 10, so it joins the carriers that accept any eleven digits; compact numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -3582,7 +3627,8 @@
       "dpd-fr",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the four carriers sharing that length; the number stays a suggestion."
   },
@@ -3593,7 +3639,8 @@
       "dpd-fr",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 1 or 250 add DPD France and Korea Post's registered letters to the three carriers sharing that length; the number stays a suggestion."
   },
@@ -3611,7 +3658,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3630,7 +3678,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3653,7 +3702,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx and GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3677,7 +3727,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx, GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3696,7 +3747,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx and DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3707,7 +3759,8 @@
       "delhivery",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "13-digit numbers starting with 6, Korea Post's domestic parcels and registered letters among them, are shared by five carriers; the number stays a low-confidence suggestion."
   },
@@ -3719,7 +3772,8 @@
       "korea-post",
       "yunda",
       "liccardi",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Liccardi's label numbers start 660, inside thirteen digits other carriers share; the number stays a low-confidence suggestion that recognition settles."
   },
@@ -3731,7 +3785,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -3742,7 +3797,8 @@
       "korea-post",
       "yunda",
       "liccardi",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Liccardi's label numbers start 660, inside thirteen digits other carriers share; the number stays a low-confidence suggestion that recognition settles."
   },
@@ -3753,7 +3809,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -3766,7 +3823,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "iMile's dated waybills sit inside the thirteen-digit space Korea Post's domestic parcels and four other carriers' counters share; the date does not establish ownership, so the number stays a low-confidence suggestion. Aras Kargo's thirteen-digit numbers start with 60 or 65, so its low rule joins them there; recognition asks it first from Turkey."
   },
@@ -3778,7 +3836,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "iMile's dated waybills sit inside the thirteen-digit space Korea Post's domestic parcels and three other carriers' counters share; the date does not establish ownership, so the number stays a low-confidence suggestion. Aras Kargo's thirteen-digit numbers start with 60 or 65, so its low rule joins them there; recognition asks it first from Turkey."
   },
@@ -3800,7 +3859,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3823,7 +3883,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3846,7 +3907,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3870,7 +3932,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds GLS to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3895,7 +3958,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, DHL and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3913,7 +3977,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
@@ -3932,7 +3997,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -3951,7 +4017,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3970,7 +4037,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -3990,7 +4058,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4011,7 +4080,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4034,7 +4104,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds GLS and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4081,7 +4152,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion."
   },
@@ -4100,7 +4172,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Only the carriers that accept any twelve digits remain, SF Express first when its own check passes; the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4117,7 +4190,8 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4133,7 +4207,8 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4150,7 +4225,8 @@
       "old-dominion",
       "postlogistics",
       "ppl",
-      "speedy"
+      "speedy",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. Speedy joins them for its 6 series, first for the 63 series that only its numbers show."
   },
@@ -4166,7 +4242,8 @@
       "gls-pl",
       "mainfreight",
       "old-dominion",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. PPL drops out: its numbers start with a product digit from 2 to 9. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4181,7 +4258,8 @@
       "gls-pl",
       "mainfreight",
       "old-dominion",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. PPL drops out: its numbers start with a product digit from 2 to 9. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4197,7 +4275,8 @@
       "gls-pl",
       "mainfreight",
       "old-dominion",
-      "postlogistics"
+      "postlogistics",
+      "paquetexpress"
     ],
     "reason": "CDEK's own numbers count up from 10 and Old Dominion's Luhn check adds it as a suggestion; neither decides, so the number stays a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States."
   },
@@ -4207,7 +4286,8 @@
       "correos-chile",
       "planzer",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "The Planzer 99990 range sits inside the 13-digit space three carriers match broadly; the Planzer rule decides."
   },
@@ -4259,7 +4339,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4279,7 +4360,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4297,7 +4379,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4316,7 +4399,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4335,7 +4419,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4355,7 +4440,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4509,7 +4595,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4528,7 +4615,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4547,7 +4635,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4567,7 +4656,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4586,7 +4676,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4605,7 +4696,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add DHL and Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4626,7 +4718,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4648,7 +4741,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4674,7 +4768,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS and DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4696,7 +4791,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add DHL and Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4719,7 +4815,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add DHL and Purolator, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4886,7 +4983,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4906,7 +5004,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing check digit adds Purolator to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -4924,7 +5023,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Saia check digit adds Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4943,7 +5043,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Saia check digit adds Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4964,7 +5065,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add FedEx, DHL and Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -4986,7 +5088,8 @@
       "orlen-paczka",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "ORLEN Paczka's parcel numbers sit inside the thirteen-digit space that Correos de Chile, Delhivery, Korea Post and Yunda match broadly; the number stays a low-confidence suggestion. FAN Courier's rule for AWBs starting with 2 joins them; recognition asks it first from Romania."
   },
@@ -4998,7 +5101,8 @@
       "orlen-paczka",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "ORLEN Paczka's parcel numbers sit inside the thirteen-digit space that Correos de Chile, Korea Post and Yunda match broadly; the number stays a low-confidence suggestion. FAN Courier's rule for AWBs starting with 2 joins them; recognition asks it first from Romania."
   },
@@ -5012,7 +5116,8 @@
       "ukrposhta",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "When the number also carries a valid Ukrposhta check digit, Ukrposhta joins the carriers sharing ORLEN Paczka's thirteen digits; the number stays a low-confidence suggestion. FAN Courier's rule for AWBs starting with 2 joins them; recognition asks it first from Romania."
   },
@@ -5025,7 +5130,8 @@
       "ukrposhta",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "When the number also carries a valid Ukrposhta check digit, Ukrposhta joins the carriers sharing ORLEN Paczka's thirteen digits; the number stays a low-confidence suggestion. FAN Courier's rule for AWBs starting with 2 joins them; recognition asks it first from Romania."
   },
@@ -5036,7 +5142,8 @@
       "delhivery",
       "shiprocket",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "ShiprocketX's AWBs sit inside the thirteen-digit space that Correos de Chile, Delhivery and Yunda match broadly. Its preferred rule lists Shiprocket first, and recognition asks Shiprocket's tracker; the number stays a low-confidence suggestion."
   },
@@ -5046,7 +5153,8 @@
       "correos-chile",
       "shiprocket",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "ShiprocketX's AWBs sit inside the thirteen-digit space that Correos de Chile and Yunda match broadly. Its preferred rule lists Shiprocket first, and recognition asks Shiprocket's tracker; the number stays a low-confidence suggestion."
   },
@@ -5057,7 +5165,8 @@
       "shiprocket",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "When the number also carries a valid Ukrposhta check digit, Ukrposhta joins the carriers sharing ShiprocketX's thirteen digits; the number stays a low-confidence suggestion."
   },
@@ -5322,7 +5431,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "courier-center numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5358,7 +5468,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "lotte-global numbers of this shape fall in each of these carriers' rules; recognition asks them in turn. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -5382,7 +5493,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "shree-maruti numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5408,7 +5520,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "skynet-worldwide numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5432,7 +5545,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "trackon numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5457,7 +5571,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, Purolator and Saia to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -5467,7 +5582,8 @@
       "correos-chile",
       "dpd-fr",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "vasp-expresso numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5866,7 +5982,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "gs-postbox numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5894,7 +6011,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "tcs-pakistan numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5916,7 +6034,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "pelican-express numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -5938,7 +6057,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "pelican-express numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -6123,7 +6243,8 @@
       "korea-post",
       "ozon-logistics",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Without hyphens an Ozon posting number is thirteen digits, a length these carriers share; the hyphenated print selects Ozon's high-confidence rule."
   },
@@ -6136,7 +6257,8 @@
       "ozon-logistics",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -6147,7 +6269,8 @@
       "dpd-fr",
       "ozon-logistics",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Without hyphens an Ozon posting number is thirteen digits, a length these carriers share; the hyphenated print selects Ozon's high-confidence rule."
   },
@@ -6203,7 +6326,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "SCG Express numbers carry the mod 7 check digit that Japan Post, Sagawa and Yamato share, inside the twelve digits that several carriers accept; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -6281,7 +6405,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Some SCG Express numbers also pass FedEx's twelve-digit check, so FedEx joins the carriers whose rules take twelve digits and the mod 7 group; every rule is low-confidence, so recognition asks each of them."
   },
@@ -6304,7 +6429,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Some SCG Express numbers also pass Purolator's twelve-digit check, so Purolator joins the carriers whose rules take twelve digits and the mod 7 group; every rule is low-confidence, so recognition asks each of them."
   },
@@ -6328,7 +6454,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "Some SCG Express numbers also pass Purolator's twelve-digit check, so Purolator joins the carriers whose rules take twelve digits and the mod 7 group; every rule is low-confidence, so recognition asks each of them. Poste Italiane's registered-mail check digit adds Poste Italiane as well."
   },
@@ -6551,7 +6678,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, DHL's Identcode and Poste Italiane's registered mail, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -6811,7 +6939,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "sagawa-global numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -6910,7 +7039,8 @@
       "fedex-pl",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FedEx Poland's domestic numbers are thirteen digits starting with 6 and ending in a GS1 check digit, as some of these carriers' numbers also are, so its low rule joins theirs and recognition settles the carrier."
   },
@@ -6923,7 +7053,8 @@
       "korea-post",
       "yunda",
       "liccardi",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Liccardi's label numbers start 660, inside thirteen digits other carriers share; the number stays a low-confidence suggestion that recognition settles."
   },
@@ -6936,7 +7067,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -6947,7 +7079,8 @@
       "fedex-pl",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FedEx Poland's domestic numbers are thirteen digits starting with 6 and ending in a GS1 check digit, as some of these carriers' numbers also are, so its low rule joins theirs and recognition settles the carrier."
   },
@@ -6959,7 +7092,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -6972,7 +7106,8 @@
       "imile",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FedEx Poland's domestic numbers are thirteen digits starting with 6 and ending in a GS1 check digit, as some of these carriers' numbers also are, so its low rule joins theirs and recognition settles the carrier."
   },
@@ -6986,7 +7121,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Aras Kargo's numbers are thirteen digits starting with 60 or 65, so its low rule joins the carriers sharing this shape; recognition asks it first from Turkey and settles the carrier."
   },
@@ -6999,7 +7135,8 @@
       "korea-post",
       "yunda",
       "aras-kargo",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FedEx Poland's domestic numbers are thirteen digits starting with 6 and ending in a GS1 check digit, as some of these carriers' numbers also are, so its low rule joins theirs and recognition settles the carrier. Aras Kargo's thirteen-digit numbers start with 60 or 65, so its low rule joins them there; recognition asks it first from Turkey."
   },
@@ -7012,7 +7149,8 @@
       "korea-post",
       "ukrposhta",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FedEx Poland's domestic numbers are thirteen digits starting with 6 and ending in a GS1 check digit, as some of these carriers' numbers also are, so its low rule joins theirs and recognition settles the carrier."
   },
@@ -7056,7 +7194,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "domain-logistics numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7076,7 +7215,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "domain-logistics numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7096,7 +7236,8 @@
       "sf-express",
       "sto",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "domain-logistics numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7134,7 +7275,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "airpak-express numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7156,7 +7298,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "airpak-express numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7209,7 +7352,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "winion-logis numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7235,7 +7379,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "dpex numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },
@@ -7302,7 +7447,8 @@
       "korea-post",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7315,7 +7461,8 @@
       "yunda",
       "fan-courier",
       "econt",
-      "imile"
+      "imile",
+      "paquetexpress"
     ],
     "reason": "Thirteen digits starting with 3 are iMile's undated waybills as well as FAN Courier's AWBs and other carriers' counters; iMile's low rule joins theirs, as most such parcels the app tracked were iMile's, and its tracker has to confirm the number."
   },
@@ -7328,7 +7475,8 @@
       "yunda",
       "fan-courier",
       "tforce-freight",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "TForce Freight's PARS numbers for the Canadian border are its carrier code 2205 and a PRO, inside the thirteen-digit space these carriers match broadly; its preferred low rule puts it first when the PRO's check passes, and recognition asks it first from Canada."
   },
@@ -7339,7 +7487,8 @@
       "korea-post",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7351,7 +7500,8 @@
       "yunda",
       "fan-courier",
       "econt",
-      "imile"
+      "imile",
+      "paquetexpress"
     ],
     "reason": "Thirteen digits starting with 3 are iMile's undated waybills as well as FAN Courier's AWBs and other carriers' counters; iMile's low rule joins theirs, as most such parcels the app tracked were iMile's, and its tracker has to confirm the number."
   },
@@ -7364,7 +7514,8 @@
       "korea-post",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7377,7 +7528,8 @@
       "ukrposhta",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7391,7 +7543,8 @@
       "yunda",
       "fan-courier",
       "econt",
-      "imile"
+      "imile",
+      "paquetexpress"
     ],
     "reason": "Thirteen digits starting with 3 are iMile's undated waybills as well as FAN Courier's AWBs and other carriers' counters; iMile's low rule joins theirs, as most such parcels the app tracked were iMile's, and its tracker has to confirm the number."
   },
@@ -7402,7 +7555,8 @@
       "delhivery",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7415,7 +7569,8 @@
       "ozon-logistics",
       "yunda",
       "fan-courier",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "FAN Courier's AWBs are thirteen digits starting with 2 to 5 or 7, inside the space these carriers match broadly; its low rule joins theirs, and recognition asks FAN Courier first from Romania."
   },
@@ -7432,7 +7587,8 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "An IATA air waybill with Amerijet's 810 prefix printed with its dash also fits several carriers' broad eleven-digit candidates; the dashed Amerijet rule decides. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -7452,7 +7608,8 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -7471,7 +7628,8 @@
       "japan-post",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "The mod 7 check digit that Aramex, Blue Dart and Japan Post's registered mail share adds all three to the carriers that accept any eleven digits; a check digit does not establish ownership, so a compact number stays a low-confidence suggestion. The printed eight-plus-three dash is high-confidence evidence for PostLogistics. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -7488,7 +7646,8 @@
       "mainfreight",
       "old-dominion",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Old Dominion's prefixes decide when its Luhn check digit passes. Elsewhere the check only adds it as a suggestion beside the broad PostLogistics compact shape. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -7504,7 +7663,8 @@
       "gls-pl",
       "mainfreight",
       "postlogistics",
-      "ppl"
+      "ppl",
+      "paquetexpress"
     ],
     "reason": "Without the mod 7 check digit Aramex, Blue Dart and Japan Post drop out; compact 11-digit numbers stay a low-confidence suggestion. DHL eCommerce Poland drops out: its check digit fails. Mainfreight joins them as a suggestion, asked only for lookups in New Zealand, Australia or the United States. DPD Romania joins them for eleven digits starting with 8, asked only for lookups in Romania."
   },
@@ -7532,7 +7692,8 @@
       "foxpost",
       "korea-post",
       "yunda",
-      "econt"
+      "econt",
+      "paquetexpress"
     ],
     "reason": "Foxpost gives its home deliveries numbers starting 66639 without saying how long they are; the other carriers take thirteen digits of any kind. Foxpost leads, and direct tracking must confirm the carrier."
   },
@@ -7681,7 +7842,8 @@
       "sto",
       "yamato",
       "zto",
-      "sending"
+      "sending",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL, and the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -7708,7 +7870,8 @@
       "zto",
       "sending",
       "gls-at",
-      "gls-pl"
+      "gls-pl",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS and Poste Italiane's registered mail, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -7768,7 +7931,8 @@
       "sf-express",
       "sto",
       "yamato",
-      "zto"
+      "zto",
+      "paquetexpress"
     ],
     "reason": "Passing check digits add GLS, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
@@ -7790,7 +7954,8 @@
       "sf-express",
       "sto",
       "yamato",
-      "zto"
+      "zto",
+      "paquetexpress"
     ],
     "reason": "A passing Identcode check digit adds DHL, the mod 7 check that Japan Post, Sagawa and Yamato share adds all three, and the 20 prefix adds J&T Cargo, to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   }

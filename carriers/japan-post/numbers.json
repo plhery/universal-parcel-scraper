@@ -193,6 +193,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -231,6 +232,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -266,6 +268,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -301,6 +304,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -342,6 +346,7 @@
           "gls-pl",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -378,6 +383,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -413,6 +419,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -448,6 +455,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -483,6 +491,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -517,7 +526,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A Tokyo District Court judgment cites this registered letter and Japan Post's delivery certificate for it."
@@ -552,7 +562,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A Tokyo District Court decision quotes the acceptance number of a registered letter one party sent the other."
@@ -586,7 +597,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived university page shows the sender's registered mail receipt and Japan Post's tracking result for this number."
@@ -615,6 +627,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -648,6 +661,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -681,6 +695,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -714,6 +729,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -747,6 +763,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },
@@ -780,6 +797,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl",
           "speedy"
         ]
@@ -804,6 +822,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ],
         "not": [
@@ -844,6 +863,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -880,6 +900,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -916,6 +937,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -955,6 +977,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]

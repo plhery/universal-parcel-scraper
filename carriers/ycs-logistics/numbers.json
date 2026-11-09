@@ -23,7 +23,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A customer comment on Track.TW's YCS page asks whether 音速物流 delivered the parcel with this barcode. YCS's tracker does not know it."
@@ -53,6 +54,7 @@
           "gls-at",
           "gls-pl",
           "mainfreight",
+          "paquetexpress",
           "ppl"
         ]
       },

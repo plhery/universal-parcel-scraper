@@ -50,7 +50,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on ASE's own tracker shows this shipment from Uzbekistan to Russia."
@@ -83,7 +84,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on ASE's own tracker shows this shipment delivered from Turkmenistan to the United Arab Emirates."
@@ -133,7 +135,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on ASE's own tracker shows this shipment from Türkiye to Russia."

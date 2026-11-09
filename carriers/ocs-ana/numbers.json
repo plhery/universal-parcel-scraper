@@ -25,7 +25,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill entered and picked up in Korea for Osaka."
@@ -57,7 +58,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill from Higashi-Osaka to the United States through export declaration."
@@ -89,7 +91,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill from Higashi-Osaka to the United States through export declaration."
@@ -121,7 +124,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill cleared for export and in transit from Tokyo to the United States."
@@ -153,7 +157,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill entered at the shipper's site in Higashi-Osaka for the United States."
@@ -186,7 +191,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill from Higashi-Osaka to the United States through export declaration."
@@ -219,7 +225,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "OCS's own tracker, archived by the Wayback Machine, shows this waybill entered at the shipper's site in Higashi-Osaka for Canada."
@@ -253,6 +260,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -288,6 +296,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]

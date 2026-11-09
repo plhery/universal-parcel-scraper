@@ -21,7 +21,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Publicly reported domestic parcel. Korea Post's tracker returns its history. Thirteen digits stay a suggestion shared with other carriers."
@@ -93,7 +94,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its parcel history."
@@ -120,7 +122,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its parcel history from label printing to delivery."
@@ -146,7 +149,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the parcel accepted."
@@ -174,7 +178,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history. Thirteen digits stay a suggestion shared with other carriers."
@@ -200,7 +205,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. The capture is Korea Post's own tracker showing the express registered item accepted. Thirteen digits stay a suggestion shared with other carriers."
@@ -228,7 +234,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its express registered-mail history up to delivery."
@@ -254,7 +261,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its registered-mail history, held after failed delivery attempts."
@@ -282,7 +290,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A Korea Post domestic tracking link archived by the Wayback Machine. Korea Post's tracker returns its registered-mail history between sorting centres."

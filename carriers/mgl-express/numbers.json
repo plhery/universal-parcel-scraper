@@ -50,7 +50,8 @@
           "dpd-fr",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An example in MGL Express's user guide, shown in screenshots of its app with a parcel's scans in Mandalay; its tracker no longer finds it."

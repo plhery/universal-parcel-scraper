@@ -275,16 +275,25 @@ describe('Paquetexpress tracking adapter', () => {
     expect(slow.mock.calls.every(([, init]) => init?.signal?.aborted)).toBe(true);
   });
 
-  it('asks Paquetexpress about a guía and routes a tracking code to it when the caller names the carrier', async () => {
+  it('asks Paquetexpress about a guía from any country, and about a tracking code only from Mexico', async () => {
     for (const number of [GUIA, 'syn01we10002', 'SYN01WE1000002']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ confidence: 'low', candidates: expect.arrayContaining(['paquetexpress']) });
-      expect(recognitionAskedCarriers(number), number).toContain('paquetexpress');
+      for (const countryHint of [undefined, 'MX', 'US']) {
+        expect(recognitionAskedCarriers(number, { countryHint }), `${number} ${countryHint}`).toContain('paquetexpress');
+      }
     }
-    // Tracking codes share their lengths with other carriers, and a guía's sequence is five to seven digits.
-    for (const number of [DELIVERED, PICKUP, REQUEST, 'SYN01WE1000', 'SYN01WE10000002', 'SYN1WE100002']) {
-      expect(detectCarrierMatch(number)?.carrier, number).not.toBe('paquetexpress');
-      expect(detectCarrierMatch(number).candidates, number).not.toContain('paquetexpress');
-      expect(recognitionAskedCarriers(number), number).not.toContain('paquetexpress');
+    // Tracking codes share their lengths with other carriers: suggested, and asked first only for a lookup in Mexico.
+    for (const number of [DELIVERED, PICKUP, REQUEST, '12345678901', '1234567890123']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', candidates: expect.arrayContaining(['paquetexpress']) });
+      expect(recognitionAskedCarriers(number, { countryHint: 'MX' })[0], number).toBe('paquetexpress');
+      for (const countryHint of [undefined, 'US', 'ES']) {
+        expect(recognitionAskedCarriers(number, { countryHint }), `${number} ${countryHint}`).not.toContain('paquetexpress');
+      }
+    }
+    // Ten or fourteen digits, and a guía's sequence of four or eight digits, are not offered.
+    for (const number of ['1234567890', '12345678901234', 'SYN01WE1000', 'SYN01WE10000002', 'SYN1WE100002']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('paquetexpress');
+      expect(recognitionAskedCarriers(number, { countryHint: 'MX' }), number).not.toContain('paquetexpress');
     }
     for (const link of [`https://www.paquetexpress.com.mx/rastreo/${DELIVERED}`, `https://www.paquetexpress.com.mx/en/rastreo/${DELIVERED}/`]) {
       expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: DELIVERED, carrier: 'paquetexpress', source: 'link' });

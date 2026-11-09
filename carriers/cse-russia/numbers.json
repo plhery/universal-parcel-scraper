@@ -125,6 +125,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -152,7 +153,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "The archived reply of CSE's own tracking API at lk.cse.ru shows a thirteen-digit waybill in transit."
@@ -179,7 +181,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "The archived reply of CSE's own tracking API at lk.cse.ru shows a thirteen-digit waybill in transit."
@@ -257,6 +260,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -290,6 +294,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -317,7 +322,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on CSE's own tracking page at cse.ru, as an archived address shows; the page loads the result in an embedded frame that the capture does not hold, so the history is not visible."
@@ -373,6 +379,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },

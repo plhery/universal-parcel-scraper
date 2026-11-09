@@ -157,7 +157,7 @@
               "minLength": 1
             },
             "servedCountriesOnly": {
-              "description": "Recognition asks the carrier only when the caller's country hint is one of its countries: its numbers are bare runs that carriers elsewhere print too. Absent: asked whatever the hint.",
+              "description": "Recognition asks the carrier about a bare run of digits only when the caller's country hint is one of its countries: carriers elsewhere print those runs too. Absent: asked whatever the hint.",
               "const": true
             }
           }

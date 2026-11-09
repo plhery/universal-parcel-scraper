@@ -18,7 +18,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to Correos de Chile, which stays one candidate among several."
@@ -58,7 +59,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A thirteen-digit domestic code whose Correos de Chile tracking page the Wayback Machine archived. Not confirmed by the tracker."
@@ -85,7 +87,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A thirteen-digit domestic code whose Correos de Chile tracking page the Wayback Machine archived. Not confirmed by the tracker."
@@ -112,7 +115,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A thirteen-digit domestic code whose Correos de Chile tracking page the Wayback Machine archived. Not confirmed by the tracker."
@@ -139,7 +143,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A thirteen-digit domestic code whose Correos de Chile tracking page the Wayback Machine archived. Not confirmed by the tracker."
@@ -166,7 +171,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A thirteen-digit domestic code whose Correos de Chile tracking page the Wayback Machine archived. Not confirmed by the tracker."

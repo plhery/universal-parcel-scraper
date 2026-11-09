@@ -23,7 +23,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker; the opened capture names the number, but the history loaded by script and is not in it."
@@ -50,7 +51,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."
@@ -77,7 +79,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."
@@ -103,7 +106,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."
@@ -130,7 +134,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."
@@ -157,7 +162,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Kyungdong Express's old tracker address, as an archived address shows; the old address redirected by then and the capture was not opened."
@@ -182,7 +188,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question titled about Kyungdong Express gives it; an answer quotes its arrival and dispatch scans."
@@ -206,7 +213,8 @@
         "candidates": [
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question about a Kyungdong Express lookup gives it as the waybill number."
@@ -230,7 +238,8 @@
         "candidates": [
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question asks when this Kyungdong Express parcel will arrive. Kyungdong's tracker answers it with its scans."
@@ -256,7 +265,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question about a Kyungdong Express lookup gives it. Kyungdong's tracker answers it with its scans."
@@ -281,7 +291,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question about a stalled Kyungdong Express parcel gives it as the waybill number. Kyungdong's tracker answers it with its scans."
@@ -306,7 +317,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Naver KnowledgeiN question tagged Kyungdong Express gives it as the waybill being tracked. Kyungdong's tracker answers it with its scans."

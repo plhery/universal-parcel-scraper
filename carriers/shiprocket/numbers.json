@@ -22,7 +22,8 @@
           "shiprocket",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived Shiprocket tracking page names SRX Premium as the courier for this AWB. Shiprocket's tracker no longer knows it."
@@ -49,7 +50,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived Shiprocket tracking page names SRX Premium as the courier for this AWB: Delhivery's hubs in India, Shiprocket's export hub in Delhi, then USPS in the United States."
@@ -76,7 +78,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived Shiprocket tracking page names Air Cargo X as the courier, with a scan at Shiprocket's export hub in Delhi."
@@ -103,7 +106,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived Shiprocket tracking page names SRX Economy Pro as the courier. Shiprocket's tracker now gives its archived view, delivered."
@@ -130,7 +134,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived by the Wayback Machine as a merchant's Shiprocket tracking link. Shiprocket's tracker gives its archived view: SRX Premium Pro, delivered."
@@ -157,7 +162,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived by the Wayback Machine as a merchant's Shiprocket tracking link. Shiprocket's tracker gives its archived view: SRX Premium Plus Pro, fulfilled."
@@ -183,7 +189,8 @@
           "shiprocket",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "The AWB in the example reply of Shiprocket's international forward-shipment API, for the courier it names Shiprocket Premium, which its international serviceability example calls SRX Premium."
@@ -210,7 +217,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived as a Shiprocket tracking link, but the captures hold no page, so nothing shows its courier. Shiprocket's tracker no longer knows it."

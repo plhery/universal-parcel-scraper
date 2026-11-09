@@ -46,7 +46,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Om Logistics' former tracker shows this surface consignment from Wagholi, Pune, to Peenya, delivered."
@@ -87,7 +88,8 @@
         "candidates": [
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Public complaint on the carrier company post; its current guest tracker returns the same whole docket and dated dispatch history."

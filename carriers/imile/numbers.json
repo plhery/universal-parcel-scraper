@@ -23,7 +23,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the tracking service reply captured with the page shows its Australian history from order creation to a failed delivery attempt."
@@ -50,7 +51,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the tracking service reply captured with the page shows its Australian history up to out for delivery."
@@ -78,7 +80,8 @@
           "korea-post",
           "aras-kargo",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the tracking service reply captured with the page shows an Australian history (order created, received and arrived at a centre), though looked up from the AE-en page."
@@ -106,7 +109,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the tracking service reply captured with the page shows its Brazilian history through to delivery."
@@ -134,7 +138,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the tracking service reply captured with the page shows its Italian history (order created, received at a centre)."
@@ -161,7 +166,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's own tracker; the capture was not opened."
@@ -188,7 +194,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's Saudi tracker page; the capture was not opened."
@@ -216,7 +223,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on iMile's Colombian tracker page; the capture was not opened."
@@ -244,7 +252,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "iMile's reply to a complaint about an Italian delivery names it as the waybill number; iMile's tracker shows its history to the delivery."
@@ -272,7 +281,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A complaint gives it as the tracking number of a Shein order for Italy; iMile's tracker shows its history to the return."
@@ -299,7 +309,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A complaint about a Shein order calls it the order number; iMile's tracker shows its South African history to the delivery."
@@ -328,7 +339,8 @@
           "korea-post",
           "aras-kargo",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "A complaint about a delayed parcel gives it as the order number; iMile's tracker shows its Saudi history from the flight to the delivery."
@@ -356,7 +368,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A complaint about a YesStyle order gives it as the order and tracking number; iMile's tracker shows the order for Brazil and nothing after."

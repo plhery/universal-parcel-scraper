@@ -23,7 +23,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Next Level's own API reference returns this AWB as a shipment with its movements and status 'Delivered to sender'; the example comes from a test account. Next Level's tracker answers it with the same history."

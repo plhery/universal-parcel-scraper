@@ -21,7 +21,8 @@
           "correos-chile",
           "yunda",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The EURODIS shipment number of the sample result EURODIS's own results page showed without a search, delivered in Spain with two colli listed; it is the page's example, not a lookup."
@@ -121,7 +122,8 @@
           "correos-chile",
           "yunda",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "The EURODIS shipment number the same archived result page gives that collo's shipment."

@@ -185,7 +185,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Made-up PARS number in the layout TForce Freight's Canada page gives: its carrier code 2205 and a PRO that passes the check. Its serial sits far beyond the range in use."

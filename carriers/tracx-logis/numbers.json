@@ -335,6 +335,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -372,6 +373,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]
@@ -401,7 +403,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Qxpress's own tracker, opened but without visible history; thirteen digits starting with 6 is also Korea Post's domestic layout, so it may be a partner's number."
@@ -428,7 +431,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Qxpress's own tracker, opened but without visible history; thirteen digits starting with 6 is also Korea Post's domestic layout, so it may be a partner's number."

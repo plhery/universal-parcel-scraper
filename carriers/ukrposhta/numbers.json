@@ -20,7 +20,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Public report of a domestic parcel attributed to Ukrposhta, whose tracking returns its history. Thirteen digits are shared with other carriers, so Ukrposhta is one suggestion among several."
@@ -76,7 +77,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Domestic parcel a seller names in a public review. Ukrposhta's tracker returns its history; thirteen digits stay one candidate among several."
@@ -102,7 +104,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Domestic parcel named in a public review, which quotes Ukrposhta's reply. Ukrposhta's tracker returns its history; thirteen digits stay one candidate among several."
@@ -127,7 +130,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Parcel named in a public review. Ukrposhta's tracker still returns its history; thirteen digits stay one candidate among several."
@@ -153,7 +157,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's tracker returns its history."
@@ -179,7 +184,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's tracker returns its history."
@@ -205,7 +211,8 @@
           "ukrposhta",
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."
@@ -233,7 +240,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."
@@ -259,7 +267,8 @@
           "correos-chile",
           "yunda",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."
@@ -285,7 +294,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Ukrposhta tracking link archived by the Wayback Machine. Ukrposhta's status API no longer returns it."

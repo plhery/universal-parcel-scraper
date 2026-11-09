@@ -29,7 +29,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A complaint article on vc.ru that names CDEK gives it as the internal CDEK track number."
@@ -79,7 +80,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the shipment number."
@@ -110,7 +112,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the shipment number."
@@ -140,7 +143,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the shipment number."
@@ -170,7 +174,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the order number."
@@ -199,7 +204,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the order number, with its status."
@@ -229,7 +235,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the order number."
@@ -262,7 +269,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the delivery number."
@@ -293,7 +301,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the order number."
@@ -323,7 +332,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A review on crmindex.ru's CDEK page gives it as the CDEK waybill of an AliExpress parcel."

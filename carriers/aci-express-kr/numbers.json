@@ -30,6 +30,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -57,7 +58,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on ACI's e-commerce tracker shows this Korea Post registered number with ACI's pickup in New York, the flight to Incheon and customs clearance in Korea."
@@ -84,7 +86,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."
@@ -111,7 +114,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."
@@ -137,7 +141,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."
@@ -164,7 +169,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."
@@ -190,7 +196,8 @@
           "yunda",
           "korea-post",
           "aras-kargo",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."
@@ -218,7 +225,8 @@
           "korea-post",
           "aras-kargo",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup of a Korea Post registered number on ACI's e-commerce tracker. The capture was not opened."

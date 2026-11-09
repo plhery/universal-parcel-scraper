@@ -23,7 +23,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Shree Maruti's former tracker at shreemaruticourier.com; the opened capture shows the parcel's booking and delivery entries."
@@ -62,6 +63,7 @@
           "gls-pl",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -94,6 +96,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -122,7 +125,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Shree Maruti's own tracker at shreemaruti.com, as an archived address shows; the capture was not opened."

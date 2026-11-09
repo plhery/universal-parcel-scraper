@@ -2640,12 +2640,6 @@
     "reason": "A Pannon XP manual waybill's six printed digits are a short digit run many carriers share."
   },
   {
-    "carrier": "paquetexpress",
-    "pattern": "^\\d{11,13}$",
-    "kind": "by_design",
-    "reason": "Eleven, twelve and thirteen digits are each shared by several carriers, GLS and PostLogistics among them, and Paquetexpress publishes no layout or check digit that would set its tracking codes apart."
-  },
-  {
     "carrier": "parcelforce",
     "pattern": "^[A-Z]{2}\\d{7}$",
     "kind": "by_design",

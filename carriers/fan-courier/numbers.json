@@ -21,7 +21,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "AWB in a sample request of FAN Courier's API 2.0 documentation."
@@ -46,7 +47,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "AWB in a sample request of FAN Courier's API 2.0 documentation."
@@ -70,7 +72,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "AWB in a sample response of FAN Courier's API 2.0 documentation."
@@ -95,7 +98,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Usage example of an open-source FAN Courier API client; not a real shipment."
@@ -123,7 +127,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker under its old path form, as an archived address shows; the capture was not opened."
@@ -150,7 +155,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; the capture was not opened."
@@ -176,7 +182,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; FAN Courier's tracking returns its history."
@@ -202,7 +209,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; FAN Courier's tracking returns its history."
@@ -228,7 +236,8 @@
           "correos-chile",
           "delhivery",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's own tracker, as an archived address shows; FAN Courier's tracking returns its history."
@@ -255,7 +264,8 @@
           "korea-post",
           "econt",
           "fan-courier",
-          "imile"
+          "imile",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's English tracker, as an archived address shows; FAN Courier's tracking returns its delivered history."
@@ -275,7 +285,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Made-up number in the layout of a parcel from Romania starting with 5 whose history FAN Courier's tracker returned."
@@ -301,7 +312,8 @@
           "delhivery",
           "yunda",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on FAN Courier's English tracker, as an archived address shows; FAN Courier's tracking returns its delivered history."

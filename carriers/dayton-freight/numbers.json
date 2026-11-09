@@ -25,7 +25,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Dayton Freight's former status page shows the shipment's history, in the eleven-digit form."
@@ -54,7 +55,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Dayton Freight's former PRO status page; the capture was not opened."
@@ -203,7 +205,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Dayton Freight's own tracker of a PRO in its eleven-digit barcode form; the capture was not opened."
@@ -235,7 +238,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Dayton Freight's own tracker of a PRO in its eleven-digit barcode form; the capture was not opened."

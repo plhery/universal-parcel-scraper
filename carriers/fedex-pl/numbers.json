@@ -22,7 +22,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows Polish branch scans, a rescheduled delivery and delivery to the recipient."
@@ -49,7 +50,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows a refused delivery in Warsaw and the return to the sender."
@@ -76,7 +78,8 @@
           "korea-post",
           "aras-kargo",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows collection from the sender, a refused delivery and the return to the sender."
@@ -103,7 +106,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows a three-piece shipment between Polish branches and a refused delivery."
@@ -130,7 +134,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived lookup on FedEx Poland's former domestic tracker; the opened capture shows collection in Warsaw and delivery the next day."
@@ -157,7 +162,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: collection from the sender and scans at two Polish branches."
@@ -184,7 +190,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: hub scans on the day of dispatch."
@@ -211,7 +218,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived reply of the tracking service behind FedEx Poland's domestic tracking page: branch scans and the shipment out for delivery."

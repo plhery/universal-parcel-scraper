@@ -36341,7 +36341,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "paquetexpress",
-      "recognitionRank": 35
+      "recognitionRank": 35,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://www.paquetexpress.com.mx/rastreo",
     "trackingUrlTemplate": "https://www.paquetexpress.com.mx/rastreo/{trackingNumber}",
@@ -36357,6 +36358,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^[A-Z]{3}\\d{2}[A-Z]{2}\\d{5,7}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{11,13}$",
         "confidence": "low"
       }
     ]
@@ -55592,7 +55597,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pannon-xp": ["pannon-xp-1"],
   "paositra-malagasy": [],
   "paperfly": ["paperfly-1","paperfly-2","paperfly-3"],
-  "paquetexpress": ["paquetexpress-1"],
+  "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "parcel-one": [],
   "parcelabc": [],
   "parceljet": [],

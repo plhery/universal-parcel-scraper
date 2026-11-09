@@ -21,7 +21,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A complaint on Şikayetvar's PTT Kargo page gives it as the parcel's tracking number. PTT's shipment query returns its history; no rule claims thirteen digits."
@@ -46,7 +47,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A complaint on Şikayetvar's PTT Kargo page gives it as the parcel's tracking number."
@@ -87,7 +89,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A complaint on Şikayetvar's PTT Kargo page gives it as the parcel's barcode number."
@@ -146,7 +149,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fedex-pl"
+          "fedex-pl",
+          "paquetexpress"
         ]
       },
       "note": "A complaint on Şikayetvar's PTT Kargo page gives it as the parcel's tracking number."
@@ -171,7 +175,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "A complaint on Şikayetvar's PTT Kargo page gives it as the parcel's tracking number."

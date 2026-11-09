@@ -132,12 +132,14 @@ export function recognitionCandidates(
   };
   // A carrier whose recognition answers fewer numbers than its rules offer is
   // only suggested for the rest: Saia's reply cannot bind a twelfth digit.
-  // A carrier whose numbers are bare runs that carriers elsewhere print too is
-  // only asked for its own countries: Coordinadora's eleven digits are GLS's abroad.
+  // A carrier whose numbers are bare runs of digits that carriers elsewhere print too is
+  // only asked about such a run for its own countries: Coordinadora's eleven digits are GLS's
+  // abroad. Paquetexpress's guías, letters and digits, are asked whatever the country.
+  const bareRun = /^\d+$/.test(normalized);
   const answers = (carrier: string) => {
     if (options.phase === 'browser') return true;
     const tracking = CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking;
-    if (tracking?.recognitionServedCountriesOnly && countryScore(carrier) === 0) return false;
+    if (tracking?.recognitionServedCountriesOnly && bareRun && countryScore(carrier) === 0) return false;
     return RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;
   };
   const asked = candidates.filter((carrier) => ranks[carrier] !== undefined && AUTOMATIC_CARRIER_IDS.has(carrier)

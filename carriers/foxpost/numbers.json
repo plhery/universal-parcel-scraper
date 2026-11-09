@@ -244,7 +244,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Made-up number with the prefix Foxpost's tracking page and help give its home deliveries. No source gives their length; Foxpost's API caps a parcel's barcode at twenty characters. Its serial sits far beyond the range in use."

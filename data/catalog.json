@@ -36337,7 +36337,8 @@
     "tracking": {
       "mode": "automatic",
       "adapter": "paquetexpress",
-      "recognitionRank": 35
+      "recognitionRank": 35,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://www.paquetexpress.com.mx/rastreo",
     "trackingUrlTemplate": "https://www.paquetexpress.com.mx/rastreo/{trackingNumber}",
@@ -36353,6 +36354,10 @@
     "detectionRules": [
       {
         "pattern": "^[A-Z]{3}\\d{2}[A-Z]{2}\\d{5,7}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{11,13}$",
         "confidence": "low"
       }
     ]

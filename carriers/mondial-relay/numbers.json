@@ -163,6 +163,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -464,7 +465,8 @@
           "delhivery",
           "yunda",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "Reported as a Mondial Relay tracking reference on a GLS partner return. Its thirteen digits do not match the documented public shipment formats, so its representation remains unresolved and must not be split into a lookup credential.",

@@ -23,7 +23,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Shree Nandan's own tracker shows this document booked at Valsad, sent through the Valsad hub to Vapi and delivered."
@@ -51,7 +52,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Shree Nandan's own tracker shows this document booked at Palanpur and moving between the Ahmedabad, Mumbai and Bangalore hubs."
@@ -78,7 +80,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Archived as a web-tracking address on the carrier's Connecting Nandan platform and as a lookup on its own tracker the same day; the opened capture is the application shell without the history."
@@ -104,7 +107,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Shree Nandan's own tracker carries this consignment number; the capture was not opened, so its history was not seen."
@@ -131,7 +135,8 @@
           "yunda",
           "korea-post",
           "econt",
-          "fan-courier"
+          "fan-courier",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Shree Nandan's own tracker carries this consignment number; the capture was not opened, so its history was not seen."
@@ -157,7 +162,8 @@
           "correos-chile",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "An archived lookup on Shree Nandan's own tracker carries this consignment number; the capture was not opened, so its history was not seen."
@@ -184,7 +190,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "A Voxya complaint against Shree Nandan Courier gives it, in Hindi, as the number of a parcel not delivered for five days."

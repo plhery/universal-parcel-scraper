@@ -98,6 +98,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -132,6 +133,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -161,7 +163,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -190,7 +193,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -219,7 +223,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Opened from a Paquetexpress SMS link to its own tracker, as the archived address shows; the capture was not opened."
@@ -248,7 +253,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -305,6 +311,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -335,7 +342,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -365,7 +373,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Opened from a Paquetexpress SMS link to its own tracker, as the archived address shows; the capture was not opened."
@@ -394,7 +403,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -423,7 +433,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -452,7 +463,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened."
@@ -484,6 +496,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -513,7 +526,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Opened from a Paquetexpress SMS link to its own tracker, as the archived address shows; the capture was not opened. Paquetexpress's history service knows it."
@@ -545,7 +559,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened. Paquetexpress's history service knows it."
@@ -574,7 +589,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Paquetexpress's own tracker, as an archived address shows; the capture was not opened. Paquetexpress's history service knows it."
@@ -630,6 +646,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -664,6 +681,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -699,6 +717,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -732,6 +751,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -756,7 +776,8 @@
         "candidates": [
           "correos-chile",
           "yunda",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "ParcelPanel's Paquet Express page offered it as a sample to try on 13 Oct 2026. Paquetexpress's history service knows it."
@@ -789,6 +810,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sending"
         ]
       },
@@ -824,6 +846,7 @@
           "j-and-t",
           "lbc-express",
           "metropolitan-warehouse",
+          "paquetexpress",
           "sagawa",
           "sending"
         ]

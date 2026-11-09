@@ -29,7 +29,8 @@
           "dhl-ecommerce-pl",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived reply of Pullman Cargo's own tracker; it lists this ODT with its scans from the sale at a distribution centre to dispatch."
@@ -58,7 +59,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived reply of Pullman Cargo's own tracker; it lists this ODT with its scans from the sale in Iquique to delivery."
@@ -87,7 +89,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived reply of Pullman Cargo's own tracker; it lists this ODT with its scans from the sale at a distribution centre to dispatch."
@@ -116,7 +119,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "An archived reply of Pullman Cargo's own tracker; it lists this ODT with its scans from the sale to the trip between regions."
@@ -143,7 +147,8 @@
           "coordinadora",
           "gls-at",
           "gls-pl",
-          "mainfreight"
+          "mainfreight",
+          "paquetexpress"
         ]
       },
       "note": "A reclamos.cl complaint filed under Pullman Cargo whose title gives this shipment number; seen as a search-index title, since the page refuses plain requests. Pullman Cargo's tracker knows it."

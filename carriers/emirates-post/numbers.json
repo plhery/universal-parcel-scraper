@@ -119,7 +119,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Emirates Post's own tracker, as an archived address shows; the opened capture shows the page without the shipment, whose results load later. Thirteen digits is Emirates Post's domestic layout."
@@ -146,7 +147,8 @@
           "delhivery",
           "yunda",
           "korea-post",
-          "econt"
+          "econt",
+          "paquetexpress"
         ]
       },
       "note": "Looked up on Emirates Post's earlier tracker, as an archived address shows; the capture was not opened. Thirteen digits is Emirates Post's domestic layout."
