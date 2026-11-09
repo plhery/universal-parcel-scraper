@@ -177,6 +177,34 @@
       "note": "The destination network's sorting centre handles the parcel, coded 2 (Shipping), after its arrival there."
     },
     {
+      "wording": "Your shipment has been processed at sorting center and ready for shipping",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The destination network's sorting centre sends the parcel on, coded 2 (Shipping)."
+    },
+    {
+      "wording": "Your shipment has departed from the transit origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel leaves for the delivery carrier's station, coded 2 (Shipping)."
+    },
+    {
+      "wording": "Your shipment has arrived at the transit destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The parcel reaches the delivery carrier's station before the delivery run, coded 2 (Shipping)."
+    },
+    {
+      "wording": "Your shipment delivery attempt failed [Recipient not at home]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The courier found no one at home, coded 9 (Exception); the delivery is tried again."
+    },
+    {
       "code": "1",
       "wording": "Shipping",
       "language": "en",

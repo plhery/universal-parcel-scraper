@@ -23,6 +23,10 @@ const WORDING: Readonly<Record<string, Stage>> = {
   // Last-mile labels the shared rules miss; the courier's van takes the parcel on board.
   'On Board with Courier': 'out_for_delivery', 'Parcel Unloaded From Container': 'in_transit',
   'Your shipment has arrived at sorting center': 'in_transit', 'Your shipment is in process at sorting center': 'in_transit',
+  'Your shipment has been processed at sorting center and ready for shipping': 'in_transit',
+  'Your shipment has departed from the transit origin': 'in_transit', 'Your shipment has arrived at the transit destination': 'in_transit',
+  // A delivery that found no one at home, under CNE's exception code: the delivery is tried again.
+  'Your shipment delivery attempt failed [Recipient not at home]': 'failed_attempt',
   // Arrival in the destination country, before its sorting and customs, not at the delivery office.
   'Arrived at destination': 'in_transit',
   // CNE's hand-over to the destination network, before that network's own acceptance.

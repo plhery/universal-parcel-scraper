@@ -95,11 +95,17 @@ describe('CNE response projection', () => {
 
   it('reads its own labels in any capitalisation, the arrival in the destination country and at its sorting centre as transit', () => {
     for (const details of ['Arrived at destination', 'Arrived At Destination', 'ARRIVED AT CNE FACILITY', 'your shipment has arrived at sorting center',
-      'Your shipment is in process at sorting center', 'Handled by local carrier']) {
+      'Your shipment is in process at sorting center', 'Handled by local carrier',
+      'Your shipment has been processed at sorting center and ready for shipping', 'Your shipment has departed from the transit origin',
+      'Your shipment has arrived at the transit destination']) {
       const payload = handoffFixture();
       payload.trackingEventList.push({ date: '2026-02-11 09:00:00', details, place: 'Example City', state: '2' });
       expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
     }
+    // The courier found no one at home: a failed attempt under CNE's exception code.
+    const payload = handoffFixture();
+    payload.trackingEventList.push({ date: '2026-02-11 15:00:00', details: 'Your shipment delivery attempt failed [Recipient not at home]', place: 'Example City', state: '9' });
+    expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'carrier_map' });
   });
 
   it('reads its labels for the destination network’s arrival and hand-over on Beijing time, and leaves its other rows abroad on wall clocks', () => {
