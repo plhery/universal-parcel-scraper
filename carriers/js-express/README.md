@@ -82,6 +82,10 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - iMile's scans as the destination courier open with the centre's name in 【】, so each pair of
   centres makes a new wording. They take the stage iMile's own sentences give, as its adapter
   reads them.
+- J&T Express Germany's scans as the destination courier, in German, open with the district in
+  【】 and name its sites in 【】. Emptied of those names, they take their entry in
+  [statuses.json](statuses.json). Its first scan, when it takes the parcel from the line's hand-over,
+  is in transit.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.

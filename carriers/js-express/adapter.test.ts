@@ -364,6 +364,23 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressMappedStage('【Sample Hub】Inventory count scan.')).toBeUndefined();
   });
 
+  it("reads J&T Express Germany's German scans by their entries, whichever district and sites they name", () => {
+    for (const wording of [
+      '【Sample District】【Sample000】Ihr Sendung wurde abgeholt.',
+      '【Sample District】Die Sendung hat【Sample000】verlassen. Weiterversand nach【Sample HUB】',
+      '【Other District】Die Sendung hat【Sample HUB】verlassen. Weiterversand nach【SMP001】',
+      '【Other District】Die Sendung ist bei【Sample HUB】 angekommen.',
+      '【Sample, Stadt】Die Sendung ist bei【SMP001】 angekommen.',
+    ]) {
+      expect(jsExpressMappedStage(wording), wording).toBe('in_transit');
+      expect(jsExpressStage(wording, 'OIT'), wording).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: wording }), wording).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    // The places are dropped only from a wording that opens with one; the sentence itself must match.
+    expect(jsExpressMappedStage('Die Sendung ist bei【Sample HUB】 angekommen.')).toBeUndefined();
+    expect(jsExpressMappedStage('【Sample District】Die Sendung wurde umgeleitet.')).toBeUndefined();
+  });
+
   it("reads a destination post's rows as JS Express relays them, its collection point as waiting for pickup", () => {
     const waiting = parseJsExpress(withList([
       row('2026-05-06 08:00:00', 'Array', 'Item arrival at collection point for pick-up'),

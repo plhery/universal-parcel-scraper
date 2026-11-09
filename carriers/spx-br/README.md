@@ -74,7 +74,8 @@ label's first fifteen characters.
   line drops who took the parcel.
 - Tracking codes give the stages, and fleet statuses read like the order codes live parcels
   paired them with. Brazilian customs holding or inspecting a parcel is customs, its refusal to
-  import is an exception, and every leg of a return is returned.
+  import is an exception, and every leg of a return is returned. A parcel lost (F969) or disposed
+  of (F996, "Pedido descartado") is an exception: it reaches neither the buyer nor the seller.
 
 ## Limitations
 

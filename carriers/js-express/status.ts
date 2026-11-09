@@ -42,9 +42,16 @@ const uspsSentenceStage = (normalized: string): Stage | undefined => {
 // entry recorded without one.
 const WAYBILL_REFERENCE = /^(waybill generated for) [a-z]{0,4}\d{6,30}$/;
 
+// J&T Express Germany's scans as the destination courier open with the district in 【】 and name its sites in 【】,
+// so each place makes a new wording: emptied of those names, they take their entry.
+const BRACKETED = /【[^】]*】/g;
+const bracketedStage = (normalized: string): Stage | undefined =>
+  normalized.startsWith('【') ? WORDINGS.stage(normalized.replace(BRACKETED, '【】')) : undefined;
+
 // iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading.
 const mappedStage = (normalized: string): Stage | undefined =>
-  WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1')) ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
+  WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1')) ?? bracketedStage(normalized)
+    ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
     ?? uspsSentenceStage(normalized)
     ?? chinaPostRelayedStage(normalized)
     ?? imileRelayedStage(normalized);

@@ -104,7 +104,7 @@ describe('SPX Express Brazil HTTP adapter', () => {
     expect(result.events!.some((event) => event.point)).toBe(false);
   });
 
-  it('reads a return, a refused import, a lost parcel and a code it does not know', () => {
+  it('reads a return, a refused import, a lost or discarded parcel and a code it does not know', () => {
     const returned = parseSpxBr(changed('delivered', (tracking) => {
       Object.assign(tracking.records[0]!, { tracking_code: 'F999', tracking_name: 'Returned to Sender', description: 'Pedido devolvido' });
     }), DELIVERED);
@@ -121,6 +121,12 @@ describe('SPX Express Brazil HTTP adapter', () => {
     }), IN_TRANSIT);
     expect(lost).toMatchObject({ status: 'exception', current_stage: 'exception' });
     expect(lost.events![0]).toMatchObject({ stage: 'exception', stage_source: 'carrier_map' });
+    // A parcel disposed of after a failed delivery is neither delivered nor returned.
+    const discarded = parseSpxBr(changed('in-transit', (tracking) => {
+      tracking.records.unshift({ ...tracking.records[0]!, tracking_code: 'F996', actual_time: 1_780_000_000, description: 'Pedido descartado' });
+    }), IN_TRANSIT);
+    expect(discarded).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Pedido descartado' });
+    expect(discarded.events![0]).toMatchObject({ stage: 'exception', stage_source: 'carrier_map' });
     const unmapped = parseSpxBr(changed('in-transit', (tracking) => {
       tracking.records.unshift({ ...tracking.records[0]!, tracking_code: 'F777', actual_time: 1_780_000_000, description: 'Aviso sintético' });
     }), IN_TRANSIT);

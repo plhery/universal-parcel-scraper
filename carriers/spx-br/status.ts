@@ -35,6 +35,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['F671', 'returned'], ['F672', 'returned'], ['F674', 'returned'], ['F677', 'returned'], ['F680', 'returned'], // On the way back.
   ['F969', 'exception'], // "Pedido extraviado": the parcel is lost and the buyer refunded.
   ['F979', 'exception'], // Customs refused the import; the parcel goes back or is seized.
+  ['F996', 'exception'], // "Pedido descartado": the parcel was disposed of, not delivered or sent back.
   ['F980', 'delivered'],
   ['F999', 'returned'], // Back with the seller.
 ]);

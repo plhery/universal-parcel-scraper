@@ -256,6 +256,14 @@
       "note": "Customs refused the import."
     },
     {
+      "code": "F996",
+      "wording": "Pedido descartado",
+      "language": "pt",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "note": "The parcel was disposed of after a failed delivery, days after it went back to the last-mile hub: neither delivered nor returned to the seller, whose return is F999. Shopee lists a disposed parcel as a problem parcel, with lost and damaged ones, that the buyer can claim as not delivered (https://help.shopee.com.my/portal/4/article/153780)."
+    },
+    {
       "code": "F440",
       "wording": "Seu pedido chegou ao centro logístico: <location>",
       "language": "pt",
