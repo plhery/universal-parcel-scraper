@@ -16,7 +16,9 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Arrived at origin facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Departed from sort facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment is in transit to next facility', { status: 'in_transit', stage: 'in_transit' }],
-  ['The country of origin commences customs declaration.', { status: 'in_transit', stage: 'customs' }],
+  // China's export declaration, before and after the flight is booked: the parcel leaves on its way, held by no
+  // customs, as its release ("Clearence processing completed - Export") and other lines' export declarations read.
+  ['The country of origin commences customs declaration.', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at the origin international airport', { status: 'in_transit', stage: 'in_transit' }],
   ['Clearence processing completed - Export', { status: 'in_transit', stage: 'in_transit' }],
   ['International flight has departed', { status: 'in_transit', stage: 'in_transit' }],

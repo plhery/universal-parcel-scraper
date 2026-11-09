@@ -67,10 +67,11 @@
     },
     {
       "wording": "The country of origin commences customs declaration.",
-      "stage": "customs",
+      "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "firstSeen": "2026-09-28"
+      "firstSeen": "2026-09-28",
+      "note": "China's export declaration, written at origin before and after the airport scan: the parcel is on its way, as its release (Clearence processing completed - Export) reads. Import customs is the destination's."
     },
     {
       "wording": "Shipment is in transit to next facility",

@@ -828,7 +828,7 @@
           "local_time": "2026-03-12T13:39:00",
           "description": "The country of origin commences customs declaration.",
           "location": "Example facility",
-          "stage": "customs",
+          "stage": "in_transit",
           "time": "2026-03-12T13:39:00+08:00",
           "time_zone": "Asia/Shanghai",
           "time_zone_basis": "carrier"

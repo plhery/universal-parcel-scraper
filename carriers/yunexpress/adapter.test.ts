@@ -64,6 +64,11 @@ describe('YunExpress captured response projection', () => {
     expect(withoutRepeatedParts('Example facility')).toBe('Example facility');
   });
 
+  it("reads China's export declaration in transit, as its release reads, and the destination's import customs as customs", () => {
+    expect(['The country of origin commences customs declaration.', 'Clearence processing completed - Export', 'Start Customs Clearence', 'In clearance processing - Import']
+      .map((wording) => yunExpressStatus(wording)?.stage)).toEqual(['in_transit', 'in_transit', 'customs', 'customs']);
+  });
+
   it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
     expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
