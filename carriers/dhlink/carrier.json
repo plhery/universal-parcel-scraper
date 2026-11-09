@@ -142,6 +142,11 @@
       "confidence": "low"
     },
     {
+      "id": "dhlink-aus",
+      "pattern": "^AUS[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low"
+    },
+    {
       "id": "dhlink-cys",
       "pattern": "^CYS\\d{11}$",
       "confidence": "low"

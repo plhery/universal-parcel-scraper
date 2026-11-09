@@ -23,7 +23,8 @@ page makes.
   are others. Boyuan's `BY`, fourteen digits and `CN`, which ParcelsApp attributes to DHLink
   on a US line, and Tuodatong's `TDT`, ten digits and `CN`, which it attributes to DHLink on an
   air line from China, are asked too, as is `YLE`, two letters, ten digits and `YQ`, a line ParcelsApp names
-  YLE beside DHLink, and `CYS` and eleven digits, on a US line UniUni delivers, which it names
+  YLE beside DHLink, `AUS`, two letters, ten digits and `YQ`, on a US line GOFO delivers, which
+  it names Asus International beside DHLink, and `CYS` and eleven digits, on a US line UniUni delivers, which it names
   beside DHLink and UniUni. Juxi Express's waybills on two of its lines, `JXC`, `YI` or `ZO`,
   ten digits and `YQ`, are numbers DHLink's tracker knows, so that rule is preferred and DHLink
   is asked and named first; the tracker does not know Juxi's other lines. Their rules are low confidence, so
