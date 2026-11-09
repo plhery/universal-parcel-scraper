@@ -12,7 +12,7 @@
     {"wording": "The order has information pending customer confirmation.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from 17FEIA, whose warehouse holds the parcel."},
     {"wording": "Order Confirmed.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from 17FEIA, whose warehouse holds the parcel."},
     {"wording": "Order dispatched from warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker."},
-    {"wording": "Export declaration in progress.", "stage": "customs", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker: export customs in China."},
+    {"wording": "Export declaration in progress.", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker: export declaration in China, a routine step before the flight."},
     {"wording": "Flight has departed.", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker."},
     {"wording": "Flight delayed.", "language": "en", "confirmedBy": "live", "unmapped": true, "firstSeen": "2026-10-22", "note": "17FEIA's delayed flight, between the estimated departure and the take-off: not a movement, so the row keeps the stage of the one before it."},
     {"wording": "Flight Arrived at Transit Hub.", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker."},

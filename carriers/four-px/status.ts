@@ -70,8 +70,9 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['your shipment has departed from the transit origin', 'in_transit'],
   ['your shipment has arrived at the transit destination', 'in_transit'],
   ['shipment info received', 'registered'],
-  // Export customs taking the parcel, before 4PX's coded release ("Export customs clearance complete").
-  ['export customs clearance started', 'customs'],
+  // Export clearance started, a routine step before the flight and 4PX's coded release ("Export customs clearance
+  // complete"): the parcel goes on its way, held by no customs.
+  ['export customs clearance started', 'in_transit'],
   // The hand-over to iMile's regional centre for the last mile, not a delivery to the recipient.
   ['shipment delivered to imile rdc or lastmile vendor', 'in_transit'],
   // SpeedX's scan on its way to the delivering facility, at the same second as SpeedX's own.

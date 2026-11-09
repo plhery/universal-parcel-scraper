@@ -9,7 +9,7 @@
     {"wording": "Arrive at the sorting center for operation and transfer", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "arrive at international airport to abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Waiting to be loaded", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight."},
-    {"wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Export clearance in China."},
+    {"wording": "Shipment started the customs clearance process at origin", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Export clearance in China, a routine step before the flight, not a hold."},
     {"wording": "departed from airport of origin", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "U.S. Postal Service, The goods are in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Kun Express's own row at the airports of the flight, naming the delivery carrier; not a USPS scan."},
     {"wording": "arrived at airport of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},

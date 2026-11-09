@@ -261,7 +261,7 @@ describe('status map answers', () => {
   });
 
   it("answers SFC's origin clearance and Allegro One's refusal at the door by their wording", () => {
-    expect(answer('sfc', null, 'shipment started the customs clearance process at origin')).toEqual(mapped('customs'));
+    expect(answer('sfc', null, 'shipment started the customs clearance process at origin')).toEqual(mapped('in_transit'));
     expect(answer('allegro-one', null, 'recipient has refused to accept')).toEqual(mapped('failed_attempt'));
   });
 
@@ -1728,7 +1728,7 @@ describe("universal providers' answers", () => {
       ['The order has information pending customer confirmation.', 'registered'],
       // Ship24's copies carry the feed's category or original wording after the sentence.
       ['Order confirmed., OTHER', 'registered'], ['Warehouse receipt., 仓库收货', 'accepted'], ['仓库收货', 'accepted'],
-      ['Export declaration in progress., OTHER', 'customs'], ['Flight delayed., OTHER', 'in_transit'],
+      ['Export declaration in progress., OTHER', 'in_transit'], ['Flight delayed., OTHER', 'in_transit'],
       ['Flight delay. The flight scheduled for the 7th is expected to be delayed', 'in_transit'],
       ['Airline delay', 'in_transit'], ['Flight delay', 'in_transit'], ['Parcel shipped', 'in_transit'], ['Customer information manifested', 'registered'],
       ['Order has been placed successfully.', 'registered'], ['已成功下单', 'registered'], ['We have your parcel', 'accepted'],

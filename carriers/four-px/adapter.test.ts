@@ -317,7 +317,7 @@ describe('4PX result projection', () => {
   it('stages the transit scans a partner relays without a code, and only those', () => {
     for (const [tkDesc, expected] of [['Your shipment has arrived at the transit destination', 'in_transit'],
       ['Your shipment has departed from the transit origin', 'in_transit'], ['Order creation, order submitted, pending to receive.', 'registered'],
-      ['Export customs clearance started', 'customs'], ['Task assigned', undefined]] as const) {
+      ['Export customs clearance started', 'in_transit'], ['Task assigned', undefined]] as const) {
       const payload = fixture(); Object.assign(payload.data[0].tracks[0], { tkCode: '', tkDesc });
       expect(parse(payload, NUMBER).events?.[0]?.stage, tkDesc).toBe(expected);
     }
@@ -333,7 +333,7 @@ describe('4PX result projection', () => {
     expect(statusMap.stage('FPX_O_IR', 'shipment info received')).toBe('registered');
     expect(statusMap.stage('FPX_O_IR', 'order submited.')).toBe('registered');
     expect(statusMap.stage(null, 'shipment info received')).toBe('registered');
-    expect(statusMap.stage(null, 'export customs clearance started')).toBe('customs');
+    expect(statusMap.stage(null, 'export customs clearance started')).toBe('in_transit');
     expect(statusMap.stage('FPX_NEW', 'manifest created')).toBeUndefined();
   });
 

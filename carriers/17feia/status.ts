@@ -16,7 +16,8 @@ const LABELS: ReadonlyMap<string, Stage> = new Map([
   ['订单待客户确认', 'accepted'],
   ['订单已确认', 'accepted'],
   ['订单已出库', 'in_transit'],
-  ['出口报关中', 'customs'],
+  // Export declaration under way, a routine step before the flight: the parcel goes on its way, held by no customs.
+  ['出口报关中', 'in_transit'],
   // The road to Europe by truck: the domestic leg, whose wording carries an estimated arrival at
   // the exit port, not the row's time; export customs released; the border crossings.
   ['国内运输中，预计到达出境口岸时间', 'in_transit'],

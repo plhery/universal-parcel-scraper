@@ -481,7 +481,9 @@ as a departure at its schedule, has an adapter with `plannedScans`: its scans da
 five minutes after the lookup are held back until they are due. Other scans dated ahead keep
 their time for the host to flag.
 Customs that cleared or released a parcel puts it back in transit; holds, inspections,
-submissions and a clearance still to come or negated stay `customs`. A customs problem is an
+submissions and a clearance still to come or negated stay `customs`. An export clearance or
+declaration started or under way is a routine step before the flight and reads `in_transit`,
+unless customs holds, inspects or detains the parcel there. A customs problem is an
 `exception`.
 Universal providers preserve Posti's handling labels, where registration can record repeated
 physical handling rather than electronic pre-advice.

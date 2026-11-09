@@ -455,10 +455,10 @@
     {
       "wording": "Export customs clearance started",
       "language": "en",
-      "stage": "customs",
+      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
-      "note": "Uncoded; a few minutes before the coded release."
+      "note": "Uncoded; a few minutes before the coded release. A routine export step before the flight, not a hold."
     },
     {
       "code": "FPX_Q_ECC",

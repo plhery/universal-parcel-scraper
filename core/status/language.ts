@@ -188,6 +188,14 @@ const CUSTOMS_RELEASED = new RegExp([
   // Ukrainian and Russian: released from customs, clearance completed, customs passed or left.
   String.raw`${CYRILLIC_START}(?:випущен|выпущен)[а-яієґ]*(?: [а-яієґ']+){0,3}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_CUSTOMS}[а-яієґ]* (?:оформлення|оформление|контроль|очищення|очистка)(?: [а-яієґ']+)? (?:завершен|пройден|закінчен|успішно завершен|успешно завершен)|${CYRILLIC_START}(?:завершен[оа]?|пройден[оа]?|закінчен[оа]?) ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:прошл[оаи]|проишл[оаи]|покинул[оаи]?|залишил[оаи]?) ${CYRILLIC_CUSTOMS}`,
 ].join('|'));
+/** An export clearance or declaration started or under way in the country the parcel leaves, in English and Chinese. */
+const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
+  String.raw`\bexport (?:customs? )?(?:clearance|declaration)(?: (?:has |is |was )?(?:started|commenced|begun|in progress|processing|under ?way|ongoing))\b`,
+  String.raw`\b(?:started|commenced|began|begun) (?:the )?(?:export (?:customs? )?(?:clearance|declaration)|customs clearance process at origin)\b`,
+  String.raw`(?:开始)?出口(?:报关|清关)(?:中|进行中)|开始出口(?:报关|清关)`,
+].join('|'));
+/** Customs holding, inspecting or detaining a parcel, which an export clearance under way does not end. */
+const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|查验|扣留|扣押|滞留|留存/;
 /** A parcel customs holds, detains or retains, in each language. */
 const CUSTOMS_HOLD = new RegExp(String.raw`\bcustoms (?:hold|detention)\b|\b(?:held|on hold|detained|retained) (?:by|in|at) (?:the )?${CUSTOMS_SIDE}customs?\b|retenu en douane|vom zoll zuruckgehalten|fermo in dogana|retenido en aduana|retido na alfandega|zatrzyman[ay] przez (?:urzad celny|cel)`);
 /** Import charges named on a scan: duties, import taxes or customs fees. */
@@ -418,6 +426,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // YunExpress's export declaration in China, read as its own map reads it wherever a provider relays it: the
   // parcel goes on its way, held by no customs, as the release that follows reads.
   if (/^the country of origin commences customs declaration\.?$/.test(text)) return 'in_transit';
+  // So is an export clearance or declaration started or under way, a routine step before the flight: "Export
+  // customs clearance started", "出口报关中". Customs holding, inspecting or detaining the parcel there still counts.
+  if (EXPORT_CLEARANCE_UNDER_WAY.test(text) && !EXPORT_HOLD.test(text)) return 'in_transit';
   // A carrier taking the parcel over, as Colis Privé words it: "Your package is taken care of by Colis Privé".
   if (/^(?:your |the )?(?:package|parcel|shipment) (?:is|has been|was) taken care of by\b/.test(text)) return 'in_transit';
   // A hand-over still to come to the delivery driver is not one to the carrier.

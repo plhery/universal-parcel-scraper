@@ -58,7 +58,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
 ]);
 // Milestones in Chinese with the English after them, and lines with a day, a flight, a time or a place.
 const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
-  [/^快件从转运仓发出至机场，出口报关中/, 'customs'],
+  // On the way to the airport with the export declaration under way, a routine step before the flight.
+  [/^快件从转运仓发出至机场，出口报关中/, 'in_transit'],
   [/^快件抵达机场，预计\d{1,2}号航班飞/, 'in_transit'],
   [/^航班延误，重新配载至\d{1,2}号航班飞/, 'in_transit'],
   [/^目的国清关完成/, 'in_transit'],

@@ -17,7 +17,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['transfer to airport of origin', 'in_transit'],
   ['arrived at airport of origin', 'in_transit'],
   ['departed from airport of origin', 'in_transit'],
-  ['shipment started the customs clearance process at origin', 'customs'],
+  // Export clearance started, or finished as its code says: a routine step before the flight, not a hold.
+  ['shipment started the customs clearance process at origin', 'in_transit'],
   ['arrived at airport of destination', 'in_transit'],
   ['shipment arrived in the destination country', 'in_transit'],
   ['customs clearance in progress', 'customs'],

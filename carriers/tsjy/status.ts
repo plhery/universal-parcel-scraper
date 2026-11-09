@@ -27,7 +27,8 @@ const RELAYED: ReadonlyMap<string, Stage> = new Map([
   ['the order has information pending customer confirmation.', 'in_transit'],
   ['order confirmed.', 'in_transit'],
   ['order dispatched from warehouse.', 'in_transit'],
-  ['export declaration in progress.', 'customs'],
+  // 17FEIA's export declaration under way, a routine step before the flight, not a customs hold.
+  ['export declaration in progress.', 'in_transit'],
   ['flight has departed.', 'in_transit'],
   ['flight arrived at transit hub.', 'in_transit'],
   ['flight departed from transit hub.', 'in_transit'],

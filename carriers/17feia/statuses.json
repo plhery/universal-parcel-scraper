@@ -7,7 +7,7 @@
     {"code": "订单待客户确认", "wording": "The order has information pending customer confirmation.", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The warehouse has the parcel and waits for the customer to confirm the order."},
     {"code": "订单已确认", "wording": "Order Confirmed.", "stage": "accepted", "language": "en", "confirmedBy": "live"},
     {"code": "订单已出库", "wording": "Order dispatched from warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
-    {"code": "出口报关中", "wording": "Export declaration in progress.", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "Export customs in China."},
+    {"code": "出口报关中", "wording": "Export declaration in progress.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Export declaration in China, a routine step before the flight, not a hold."},
     {"code": "国内运输中，预计到达出境口岸时间", "wording": "Domestic transit in progress; estimated arrival at exit port on: …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The road leg to the border by truck; the date in its wording is an estimate, not the row's time."},
     {"code": "到达出境口岸", "wording": "Arrived at exit port.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The border crossing the truck leaves China by."},
     {"code": "出口报关放行", "wording": "Export cleared & released. …", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "China's export release at the border, followed by its own time; the parcel is not held in customs."},

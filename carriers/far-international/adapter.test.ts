@@ -84,7 +84,7 @@ describe('FAR International HTTP adapter', () => {
       ['2025-11-29T11:33:19', 'Exampleton', 'Import Scan', 'in_transit'],
       ['2025-11-28T14:25:00', 'Chek Lap Kok', 'Departed from Facility', 'in_transit'],
       ['2025-11-25T00:20:34', 'Chek Lap Kok', 'Export Scan', 'in_transit'],
-      ['2025-11-23T18:47:35', 'Yiwu', 'Export Custom Clearance Processing and Flight Booking', 'customs'],
+      ['2025-11-23T18:47:35', 'Yiwu', 'Export Custom Clearance Processing and Flight Booking', 'in_transit'],
       ['2025-11-22T21:07:47', 'Yiwu', 'Pickup Scan', 'in_transit'],
       ['2025-11-19T10:16:41', 'Yiwu', 'Arrived at Warehouse', 'accepted'],
     ]);

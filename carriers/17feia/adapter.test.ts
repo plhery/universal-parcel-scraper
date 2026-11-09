@@ -135,7 +135,7 @@ describe('17FEIA HTTP adapter', () => {
       ['2026-03-14T11:20:00', '航班到达中转地', 'in_transit', null],
       ['2026-03-14T03:35:00', '航班已起飞', 'in_transit', null],
       // The steps at the warehouse in China are on Beijing time, whatever offset they carry.
-      ['2026-03-12T10:01:33+08:00', '出口报关中', 'customs', null],
+      ['2026-03-12T10:01:33+08:00', '出口报关中', 'in_transit', null],
       ['2026-03-11T19:00:00+08:00', '订单已出库', 'in_transit', null],
       ['2026-03-09T15:22:08+08:00', '订单已确认', 'accepted', 'Bayside'],
       ['2026-03-08T11:47:52+08:00', '仓库收货', 'accepted', 'Bayside, CN'],
@@ -194,7 +194,7 @@ describe('17FEIA HTTP adapter', () => {
       ['2026-04-12T21:39:00', 'customs'],
       ['2026-04-12T06:00:00', 'in_transit'],
       ['2026-04-10T09:51:00', 'in_transit'],
-      ['2026-04-08T09:26:27+08:00', 'customs'],
+      ['2026-04-08T09:26:27+08:00', 'in_transit'],
       ['2026-04-07T18:00:00+08:00', 'in_transit'],
       ['2026-04-03T17:29:42+08:00', 'accepted'],
       ['2026-04-03T10:56:54+08:00', 'registered'],
@@ -262,8 +262,8 @@ describe('17FEIA HTTP adapter', () => {
     const result = parseSeventeenFeia(changed('dhl-relayed', (order) => {
       order.currentOrderTrackInfos.splice(9, 0, { status: '航班延误', description: 'Flight delayed.', createTime: '2026-03-13 09:00:00', timeZone: '+01:00', country: '' });
     }), RELAYED, Date.parse('2026-03-13T20:00:00+08:00'));
-    expect(result.events![0]).toMatchObject({ description: 'Flight delayed.', provider_code: '航班延误', stage: 'customs', stage_source: 'none' });
-    expect(result).toMatchObject({ current_stage: 'customs', current_stage_source: 'carrier_map', last_status_text: 'Flight delayed.' });
+    expect(result.events![0]).toMatchObject({ description: 'Flight delayed.', provider_code: '航班延误', stage: 'in_transit', stage_source: 'none' });
+    expect(result).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: 'Flight delayed.' });
   });
 
   it('hands over to a partner only through the table, with a number of the partner’s own', () => {

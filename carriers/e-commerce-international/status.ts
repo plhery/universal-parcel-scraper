@@ -43,7 +43,8 @@ const CODES: ReadonlyMap<string, readonly [wording: string, stage: Stage | null]
   ['000000035', 'Shipment accepted at the branch', 'accepted'],
   ['000000036', 'Shipment on its way to the sorting office', 'in_transit'],
   ['000000037', 'The shipment has arrived at the warehouse', 'in_transit'],
-  ['000000038', 'The shipment has been declared for customs clearance', 'customs'],
+  // Declared for export clearance in Ukraine, a routine step before the release that follows, not a hold.
+  ['000000038', 'The shipment has been declared for customs clearance', 'in_transit'],
   // Released by export customs, which sends the item on, as a completed clearance reads.
   ['000000039', 'Export customs clearance in Ukraine has been completed', 'in_transit'],
   ['000000040', 'The shipment left Ukraine', 'in_transit'],

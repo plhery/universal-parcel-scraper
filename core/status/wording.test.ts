@@ -950,6 +950,15 @@ describe('classifyWording', () => {
       ['Send item to domestic location (Inb)', 'in_transit'],
       // YunExpress's export declaration in China, as its own map reads it.
       ['The country of origin commences customs declaration.', 'in_transit'],
+      // An export clearance started or under way is a routine step before the flight; a hold there is customs.
+      ['Export customs clearance started', 'in_transit'], ['Export declaration in progress.', 'in_transit'],
+      ['Export Custom Clearance Processing and Flight Booking', 'in_transit'],
+      ['Shipment started the customs clearance process at origin', 'in_transit'],
+      ['The package is shipped from the transfer warehouse to the airport Export customs clearance in progress', 'in_transit'],
+      ['出口报关中', 'in_transit'], ['出口清关中', 'in_transit'], ['快件从转运仓发出至机场，出口报关中', 'in_transit'],
+      ['Export customs clearance in progress, held for inspection', 'customs'], ['Held for export customs inspection', 'customs'],
+      ['出口清关中，海关查验', 'customs'], ['Import customs clearance in progress', 'customs'],
+      ['Shipment started the customs clearance process at destination', 'customs'],
       ['Shipment is tendering to third party carrier for final delivery.', 'in_transit'],
       ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.

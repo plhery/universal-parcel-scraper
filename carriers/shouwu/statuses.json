@@ -333,10 +333,10 @@
     },
     {
       "wording": "Shipment started the customs clearance process at origin",
-      "stage": "customs",
+      "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
-      "note": "Export clearance in China."
+      "note": "Export clearance in China, a routine step before the flight, not a hold."
     },
     {
       "wording": "Shipment departed from a carrier facility",
@@ -718,7 +718,7 @@
     },
     {
       "wording": "The package is shipped from the transfer warehouse to the airport Export customs clearance in progress",
-      "stage": "customs",
+      "stage": "in_transit",
       "language": "en",
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
