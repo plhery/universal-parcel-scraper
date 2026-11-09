@@ -56,7 +56,7 @@ describe('J&T Brazil guest history', () => {
       .toThrow(expect.objectContaining({ kind: 'schema', message: expect.stringContaining('another waybill') }));
   });
   it('keeps empty successes inconclusive and typed refusals separate', () => {
-    for (const data of [{ code: 1, succ: true, data: [] }, { code: 1, succ: true, data: [{ keyword: NUMBER, details: [] }] }]) {
+    for (const data of [{ code: 1, succ: true, data: [] }, { code: 1, succ: true, data: null }, { code: 1, succ: true, data: [{ keyword: NUMBER, details: [] }] }]) {
       expect(() => parseJAndTBr(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
     }
     for (const [failureKind, kind] of [['challenge', 'challenge'], ['rate_limited', 'rate_limited']]) {

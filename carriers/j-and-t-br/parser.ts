@@ -37,9 +37,11 @@ export function parseJAndTBr(data: unknown, raw: string): CarrierResult {
     throw new SchemaError(PROVIDER, `J&T Brazil answered without success (code ${replyScalar(data.code)}, succ ${replyScalar(data.succ)})`);
   }
   if (isRecord(data) && data.identityMismatch) throw new SchemaError(PROVIDER, 'J&T Brazil answered for another waybill');
+  // An empty success, an empty list or none for a waybill it has no record of, has no response identity or explicit absence claim.
+  if (isRecord(data) && (data.data === null || (Array.isArray(data.data) && data.data.length === 0))) {
+    throw new NoHistoryError(PROVIDER, 'J&T Brazil returned no dated history');
+  }
   if (!isRecord(data) || !Array.isArray(data.data) || data.data.length > 1) throw new SchemaError(PROVIDER, 'J&T Brazil changed its guest tracking reply');
-  // An empty success has no response identity or explicit absence claim.
-  if (data.data.length === 0) throw new NoHistoryError(PROVIDER, 'J&T Brazil returned no dated history');
   const record: unknown = data.data[0];
   if (!isRecord(record) || record.keyword !== number || !Array.isArray(record.details) || record.details.length > 1000) {
     throw new SchemaError(PROVIDER, 'J&T Brazil returned another waybill or changed its history');
