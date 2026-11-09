@@ -9,6 +9,9 @@ import { dhlPolandScanStage } from './status.js';
 const PROVIDER = 'DHL eCommerce Poland';
 const ENDPOINT = 'https://sprawdz.dhl.com.pl/';
 const MAX_BODY = 300_000;
+/** The languages the history page words its scans in, as its `lang` names them. */
+const PAGE_LANGUAGES = { en: 'en-gb', pl: 'pl-pl' } as const;
+export type DhlPolandLanguage = keyof typeof PAGE_LANGUAGES;
 
 /** Facility clocks remain local: international rows do not identify their zone. */
 export function parseDhlPolandHistory(payload: unknown, waybill: string): CarrierResult {
@@ -40,12 +43,13 @@ export function parseDhlPolandHistory(payload: unknown, waybill: string): Carrie
     ...(events.length > 100 ? { history_truncated: true } : {}) };
 }
 
-export async function dhlPolandBrowser(trawl: TrawlClient, waybill: string, signal: AbortSignal, remainingMs: number): Promise<CarrierResult> {
+export async function dhlPolandBrowser(trawl: TrawlClient, waybill: string, signal: AbortSignal, remainingMs: number,
+  language: DhlPolandLanguage = 'en'): Promise<CarrierResult> {
   const timeoutMs = Math.floor(remainingMs - 2000);
   if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, remainingMs);
   // Leave room for the carrier's already-confirmed summary if the service stalls.
   const bounded = AbortSignal.any([signal, AbortSignal.timeout(Math.max(1, Math.floor(remainingMs - 500)))]);
-  const page = await trawl.scrape({ url: `${ENDPOINT}?sn=${waybill}&lang=en-gb`, skipHttp: true, maxTier: 3,
+  const page = await trawl.scrape({ url: `${ENDPOINT}?sn=${waybill}&lang=${PAGE_LANGUAGES[language]}`, skipHttp: true, maxTier: 3,
     captureResponses: [ENDPOINT], maxTimeout: timeoutMs, settleTimeout: timeoutMs },
   { provider: PROVIDER, timeoutMs, signal: bounded, requireSolved: false, captureWindow: 'last', maxBytes: 4 * MAX_BODY });
   signal.throwIfAborted();

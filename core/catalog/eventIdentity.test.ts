@@ -524,6 +524,11 @@ describe('same-instant identity policies', () => {
     const unplaced = { ...stored, location: '' };
     expect(policy?.matches?.({ ...unplaced, description: ' the shipment has reached DHL terminal  in Example Town. ' }, unplaced)).toBe(true);
     expect(policy?.matches?.({ ...incoming, location: '' }, unplaced)).toBe(false);
+    // Or the same scan in the page's other language, as its map reads both.
+    const english = { ...unplaced, stage: 'delivered', description: 'Delivered to customer.' };
+    expect(policy?.matches?.({ ...english, description: 'Przesyłka doręczona do Odbiorcy.' }, english)).toBe(true);
+    expect(policy?.matches?.({ ...english, description: 'Przesyłka w transporcie do oddziału doręczającego.' }, english)).toBe(false);
+    expect(policy?.matches?.({ ...english, description: 'Unread wording' }, { ...english, description: 'Other unread wording' })).toBe(false);
   });
 
   it('lets a DHL Express record take over the row the other feed stored, by wall clock, place and wording', () => {

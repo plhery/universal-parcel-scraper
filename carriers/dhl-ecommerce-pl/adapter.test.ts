@@ -281,6 +281,16 @@ describe('DHL Poland optional history enrichment', () => {
     expect(requests[0]).toMatchObject({ url: `${endpoint}?sn=${WAYBILL}&lang=en-gb`, skipHttp: true, captureResponses: [endpoint] });
   });
 
+  it('asks the portal in Polish for a Polish reader and in English for any other, and the history page in English', async () => {
+    for (const [language, asked] of [['pl-PL', 'pl'], ['de', 'en'], [undefined, 'en']] as const) {
+      const requests: unknown[] = [];
+      const seen: { url: string; init?: RequestInit }[] = [];
+      await adapter({ ...environment(portal(() => Response.json(clone()), seen)), trawl: browser([capture], requests) }).track({ number: NUMBER, language });
+      expect(seen.map((request) => new Headers(request.init?.headers).get('accept-language'))).toEqual([asked, asked]);
+      expect(requests).toEqual([expect.objectContaining({ url: `${endpoint}?sn=${WAYBILL}&lang=en-gb` })]);
+    }
+  });
+
   it('returns the already-confirmed summary with challenge provenance and no second proof', async () => {
     const calls: { url: string; init?: RequestInit }[] = [];
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };

@@ -81,6 +81,16 @@ describe('DHL Poland browser history', () => {
     payload.events[0]!.description = 'The recipient was informed about something new.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]).not.toHaveProperty('stage');
   });
+  it('opens the page in the language it is asked for, English by default', async () => {
+    const urls: string[] = [];
+    const client = new TrawlClient('https://browser.example.test', async (_url, init) => {
+      urls.push(JSON.parse(String(init?.body)).url);
+      return Response.json({ success: true, tier: 2, statusCode: 200, html: '', capturedResponses: [capture()] });
+    });
+    await dhlPolandBrowser(client, WAYBILL, new AbortController().signal, 30_000);
+    await dhlPolandBrowser(client, WAYBILL, new AbortController().signal, 30_000, 'pl');
+    expect(urls).toEqual([`${ENDPOINT}?sn=${WAYBILL}&lang=en-gb`, `${ENDPOINT}?sn=${WAYBILL}&lang=pl-pl`]);
+  });
   it('requires request binding and lets the latest refusal override an earlier success', async () => {
     const signal = new AbortController().signal;
     await expect(dhlPolandBrowser(service(), WAYBILL, signal, 5000)).resolves.toMatchObject({ summary_only: false });

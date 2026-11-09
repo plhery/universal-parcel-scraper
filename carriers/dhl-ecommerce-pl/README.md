@@ -18,10 +18,12 @@ its form. The captured POST and the returned history must both name the
 waybill. Recipient acknowledgements, form tokens and self-service links are
 excluded before the browser response leaves the service.
 
-The history page words its scans in English or Polish, as the `lang` it is
-opened with (`en-gb` or `pl-pl`) says, and keeps that language in a cookie for
-the form. The helper opens it only with `lang=en-gb`, so every lookup reads
-English history whatever its `language`.
+The API and the history page answer in English or Polish. The API is asked in
+Polish (`Accept-Language: pl`) for a Polish reader (`language` `pl`) and in
+English for every other. The page words its scans as the `lang` it is opened
+with (`en-gb` or `pl-pl`) says, and keeps that language in a cookie for the
+form; the browser service opens either. The adapter opens it in English for
+every reader until the map has the page's Polish scans from a live answer.
 
 The browser step includes the API confirmation. If history retrieval fails,
 `direct` returns the confirmed summary with the browser failure recorded.
@@ -41,7 +43,9 @@ unclassified.
 DHL rewords a scan in place: a terminal arrival later gains its planned
 delivery day. History scans carry no code, so the identity policy in
 [identity.ts](identity.ts) lets a scan at the same instant and named place take
-over its stored row, when the match is unique both ways.
+over its stored row, when the match is unique both ways. A scan without a place
+takes it over when the map reads both wordings as one scan, as it reads a scan in
+either language.
 
 The DHL-specific helper uses TRAWL's native checkbox and audio solver.
 A carrier-scoped copy retains the upstream algorithm and replaces its raw debug

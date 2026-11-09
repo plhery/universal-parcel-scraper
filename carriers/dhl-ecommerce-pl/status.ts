@@ -81,6 +81,12 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^Shipment collected from DHL (?:Parcelstation|POP|Point|BOX)\b.{0,120}$/i, 'delivered'],
 ];
 
+/** Which of the map's scans a wording is, in English or Polish: one number for a scan in either language. */
+export function dhlPolandScanKind(description: string): number | undefined {
+  const index = SCAN_STAGES.findIndex(([pattern]) => pattern.test(description));
+  return index < 0 ? undefined : index;
+}
+
 /** The stage of one history scan's wording, once the recipient's acknowledgement is cut off. */
 export function dhlPolandScanStage(description: string): Stage | undefined {
   return SCAN_STAGES.find(([pattern]) => pattern.test(description))?.[1];

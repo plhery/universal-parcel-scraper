@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
+import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -8,7 +8,7 @@ import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../cor
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { isRecord } from '../../core/types.js';
-import { dhlPolandBrowser } from './browser.js';
+import { dhlPolandBrowser, type DhlPolandLanguage } from './browser.js';
 import { normalizeDhlEcommercePlNumber, parseDhlEcommercePl, parseDhlEcommercePlChallenge, parseDhlEcommercePlRejection,
   type DhlEcommercePlChallenge } from './parser.js';
 
@@ -40,7 +40,11 @@ export async function solveDhlEcommercePlChallenge(task: DhlEcommercePlChallenge
 export class DhlEcommercePlTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
 
-  fetch(raw: string, context: TrackingContext = {}) {
+  /**
+   * `language` words the portal's status: Polish, or English for every other reader. The history page stays in
+   * English: its Polish scans wait on a live sample for the map.
+   */
+  fetch(raw: string, context: TrackingContext = {}, language: DhlPolandLanguage = 'en') {
     const number = normalizeDhlEcommercePlNumber(raw);
     const budgetMs = context.budgetMs ?? (this.options.trawl ? 65_000 : 15_000);
     let confirmed: CarrierResult | undefined;
@@ -74,7 +78,7 @@ export class DhlEcommercePlTracker {
           throw error;
         }
       };
-      const headers = { Accept: 'application/json', 'Accept-Language': 'en', 'User-Agent': userAgentOf(this.options.userAgent) };
+      const headers = { Accept: 'application/json', 'Accept-Language': language, 'User-Agent': userAgentOf(this.options.userAgent) };
       const issued = await request(`${BASE}/auth/captcha/challenge`, { signal, headers }, {
         provider: PROVIDER, timeoutMs: left(), maxBytes: 20_000, fetcher: this.options.fetcher,
       });
@@ -103,7 +107,7 @@ export class DhlEcommercePlTracker {
         const started = performance.now();
         const summary = await read(signal, Math.min(15_000, firstAttemptMs(remainingMs)));
         if (!waybill) throw new IndeterminateError(PROVIDER, 'DHL Poland returned no waybill for its history page');
-        const history = await dhlPolandBrowser(this.options.trawl!, waybill, signal, remainingMs - (performance.now() - started) - 500);
+        const history = await dhlPolandBrowser(this.options.trawl!, waybill, signal, remainingMs - (performance.now() - started) - 500, 'en');
         return { ...summary, ...history };
       } },
       { id: 'direct', recovers: error => confirmed !== undefined || recoverableByDefault(error),
@@ -117,7 +121,7 @@ export const adapter: AdapterFactory = (environment) => {
   const options = { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent };
   const tracker = new DhlEcommercePlTracker({ ...options, trawl: environment.trawl });
   const http = new DhlEcommercePlTracker(options);
-  return { id: 'dhl-ecommerce-pl', recordsSteps: true, steps: ['trawl', 'direct', 'retry'], track: (input, context) => tracker.fetch(input.number, context),
+  return { id: 'dhl-ecommerce-pl', recordsSteps: true, steps: ['trawl', 'direct', 'retry'], track: (input, context) => tracker.fetch(input.number, context, readerLanguage(input, ['pl']) ?? 'en'),
     recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
       () => accepted(() => normalizeDhlEcommercePlNumber(number))) };
 };
