@@ -934,6 +934,20 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply([scan('Aircraft departure scheduled', '02:50:00')]), number).events).toHaveLength(1);
   });
 
+  it("reads India Post's rows from the destination's post on that country's clock, or as wall times, not India's", () => {
+    // Shape of India Post's leg on an item to Australia: the office of exchange's wall clock under India's offset.
+    const scan = (description: string, time: string, location: string) => ({ time_iso: `2026-11-05T${time}+05:30`, time_utc: null,
+      time_raw: { date: '2026-11-05', time, timezone: null }, description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (country: string | null): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, ...(country ? { shipping_info: { recipient_address: { country } } } : {}),
+      tracking: { providers: [{ provider: { key: 9021, name: 'India Post' }, events: [
+        scan('Item received at office of exchange (Inb)', '14:04:00', 'EXAMPLE EMS'), scan('Dispatched', '11:04:48', 'EXAMPLE EMS')] }] } } }] });
+    const read = (country: string | null) => parse17TrackResponse(reply(country), number).events?.map((event) => [event.time, event.local_time]);
+    expect(read(null)).toEqual([[undefined, '2026-11-05T14:04:00'], ['2026-11-05T05:34:48.000Z', undefined]]);
+    // A recipient country of one clock dates it there; India's own rows keep 17TRACK's reading.
+    expect(read('GB')).toEqual([['2026-11-05T14:04:00.000Z', undefined], ['2026-11-05T05:34:48.000Z', undefined]]);
+  });
+
   it('requires a completed identity-matched NotFound and an empty history for a negative answer', () => {
     expect(thrown(() => parse17TrackResponse(postalHistory([], 'NotFound'), number)))
       .toMatchObject({ name: 'NotFoundError', kind: 'not_found', status: 404 });

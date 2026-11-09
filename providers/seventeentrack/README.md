@@ -231,6 +231,10 @@ carrier.
   late. India Post rows worded `Aircraft Departure` or `UPLIFT` are counted in
   `undated_event_count` instead of dated. The scans before one still describe the parcel,
   so the reply stays conclusive. India Post's own adapter places take-offs.
+- India Post's rows from the destination's post, marked `(Inb)`, have that office's wall clock
+  under India's offset: Sydney's office of exchange came five and a half hours late against
+  India Post's own row and Australia Post's scan. As India Post's adapter reads them, they take
+  the recipient country's clock when it keeps one, else stay wall times for their place to date.
 - DHL eCommerce US's leg (carrier key 7047) adds an `EN ROUTE` row without a place each time
   17TRACK asks Webtrack again, stamped with that moment. It echoes the status, so it is left
   out, as [DHL eCommerce's adapter](../../carriers/dhl-ecommerce/README.md) leaves it out.
