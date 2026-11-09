@@ -166,4 +166,12 @@ describe('numeric checksum candidates', () => {
     expect(detectCarrierMatch('00340435330000000007')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
     expect(detectCarrierMatch('00340435330000000007').candidates).toContain('dhl');
   });
+
+  it('selects DHL for one of its SSCCs typed without the 00, and leaves out the rest of the 18-digit range', () => {
+    expect(detectCarrierMatch('340433830000000004')).toMatchObject({ carrier: 'dhl', confidence: 'high' });
+    expect(detectCarrierMatch('3404 3383 0000 0000 04')).toMatchObject({ carrier: 'dhl', confidence: 'high' });
+    for (const number of ['340433830000000005', '340435330000000007', '340433820000000005']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('dhl');
+    }
+  });
 });

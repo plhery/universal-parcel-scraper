@@ -31,6 +31,7 @@ import {
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
+import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -66,10 +67,16 @@ function clean(value: unknown, limit = 500): string {
   return typeof value === 'string' ? cleanText(value.replace(/<[^>]*>/g, ''), limit) : '';
 }
 
+/**
+ * An SSCC under DHL Paket's GS1 company prefixes typed without its `00` application identifier.
+ * It is the same SSCC, so DHL is asked for the whole one and its answer is bound to it.
+ */
+const BARE_SSCC = /^34043\d{13}$/;
+
 export function normalizeDHLTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{5,40}$/.test(value)) throw new InvalidInputError(PROVIDER, 'DHL tracking number is invalid');
-  return value;
+  return BARE_SSCC.test(value) && hasGs1CheckDigit(value) ? `00${value}` : value;
 }
 
 export function dhlTrackingUrl(number: string): string {

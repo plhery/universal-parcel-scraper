@@ -489,6 +489,19 @@ describe('DHL public tracking normalization', () => {
     expect(dhlTrackingUrl(NUMBER)).toBe(`https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode=${NUMBER}`);
     expect(() => normalizeDHLTrackingNumber('https://evil.example')).toThrow('invalid');
   });
+
+  it('asks DHL for an SSCC typed without its (00) as the whole SSCC, and binds the answer to it', () => {
+    const sscc = '00340434509999999994';
+    expect(normalizeDHLTrackingNumber('3404 3450 9999 9999 94')).toBe(sscc);
+    expect(dhlTrackingUrl('340434509999999994')).toBe(`https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode=${sscc}`);
+    // A failing check digit, or eighteen digits outside DHL Paket's prefixes, is asked as typed.
+    expect(normalizeDHLTrackingNumber('340434509999999995')).toBe('340434509999999995');
+    expect(normalizeDHLTrackingNumber('340424509999999997')).toBe('340424509999999997');
+    const payload = { sendungen: [{ id: sscc, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] };
+    expect(parseDHLTrackingResponse(payload, '340434509999999994')).toMatchObject({ status: 'unknown', events: [] });
+    expect(() => parseDHLTrackingResponse({ sendungen: [{ id: '00340434509999999987', sendungNichtGefunden: { keineDatenVerfuegbar: true } }] }, '340434509999999994'))
+      .toThrow('matching shipment');
+  });
 });
 
 describe('DHL sessions and browser fallback', () => {

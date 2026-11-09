@@ -218,6 +218,16 @@
     "reason": "18-digit numbers are shared by bpost and Ecoscooting. Ecoscooting's postcode layout names it; any other 18-digit number stays a low-confidence suggestion."
   },
   {
+    "shape": "9{18}",
+    "carriers": [
+      "bpost",
+      "ecoscooting",
+      "gls-es",
+      "dhl"
+    ],
+    "reason": "DHL claims the 34043-prefixed 18-digit range that bpost, Ecoscooting and GLS Spain match broadly: an SSCC under DHL Paket's own GS1 prefixes typed without its 00. The DHL rule and its GS1 check digit decide."
+  },
+  {
     "shape": "AA9{9}AA",
     "carriers": [
       "bring-posten",

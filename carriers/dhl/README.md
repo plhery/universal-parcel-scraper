@@ -79,6 +79,10 @@ how a consumer learns that DHL holds one behind a postcode.
   with a known manufacturer, or below `4043383`, only suggests DHL, as does a
   failing GS1 check digit. No DHL rule claims `4043366`, a wholesaler's prefix
   seen on DB Schenker road shipments.
+- Readers also type those SSCCs without their `00` application identifier.
+  Eighteen digits in DHL Paket's own prefixes whose GS1 check digit holds are
+  the same SSCC, so they are DHL's; the adapter asks DHL for the twenty-digit
+  form and binds the answer to it.
 - Twelve-digit parcel numbers are Identcodes, closed by Deutsche Post's check
   digit (weights 4 and 9 from the left, mod 10). FedEx, Japan Post, Sagawa and
   others also use twelve digits, so a passing check only adds DHL to the
