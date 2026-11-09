@@ -1,4 +1,82 @@
 {
   "carrier": "western-bid",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Label Created",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Arrived at WB Facility, Kyiv, UA",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Export Scan, Kyiv, UA",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Departed WB Facility, Kyiv, UA",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Shipment departed from Ukraine:",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Shipment unloaded in Poland, preparing for flight:",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Arrived at WB Facility, FL, US",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Departed WB Facility, FL, US",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "On the Way",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "The delivery has been successfully completed.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Public guest milestone; dates and destinations can follow the wording."
+    }
+  ]
 }

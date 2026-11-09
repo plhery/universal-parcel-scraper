@@ -29,6 +29,16 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'western-bid', number: 'WBX000000000199',
+    route: /^https:\/\/track\.westparcel\.com\/\?trackNumber=WBX000000000199$/,
+    marker: /Enter your tracking number|We did not find a parcel with this number/ },
+  { carrier: 'libanpost', number: 'RR000000005LB',
+    route: /^https:\/\/www\.libanpost\.com\/TrackandTraceMobile\.aspx\?sn=RR000000005LB&lang=2$/,
+    marker: /No results matching your tracking number|Track.*Trace|Shipment number/,
+    forwarding: { notFound: /No results matching your tracking number/ } },
+  { carrier: 'aeropost', number: 'CR0000000199',
+    route: /^https:\/\/aeropost\.com\/en\/tracking\/CR0000000199$/,
+    marker: /Tracking|Tracking information not found/ },
   { carrier: 'paxel', number: 'EM.ABCDEFGHJK-20261107-1-ZZZZZZ',
     route: /^https:\/\/paxel\.co\/id\/lacak-pengiriman(?:\?awb_req=EM\.ABCDEFGHJK-20261107-1-ZZZZZZ)?$/,
     marker: /Lacak Pengiriman|AWB Tidak Valid/ },

@@ -1,0 +1,60 @@
+import type { Stage } from '../../core/status/index.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+
+// The page's status ids distinguish a local-courier handoff from recipient delivery.
+const CODES: ReadonlyMap<string, Stage> = new Map([
+  ['100', 'customs'],
+  ['110', 'customs'],
+  ['120', 'customs'],
+  ['130', 'customs'],
+  ['140', 'exception'],
+  ['200', 'customs'],
+  ['220', 'in_transit'],
+  ['250', 'in_transit'],
+  ['260', 'in_transit'],
+  ['270', 'in_transit'],
+  ['280', 'registered'],
+  ['300', 'out_for_delivery'],
+  ['310', 'out_for_delivery'],
+  ['320', 'out_for_delivery'],
+  ['400', 'in_transit'],
+  ['420', 'in_transit'],
+  ['450', 'in_transit'],
+  ['500', 'ready_for_pickup'],
+  ['550', 'ready_for_pickup'],
+  ['570', 'in_transit'],
+  ['600', 'exception'],
+  ['700', 'failed_attempt'],
+  ['701', 'failed_attempt'],
+  ['702', 'failed_attempt'],
+  ['703', 'failed_attempt'],
+  ['704', 'failed_attempt'],
+  ['705', 'failed_attempt'],
+  ['706', 'exception'],
+  ['707', 'exception'],
+  ['708', 'failed_attempt'],
+  ['709', 'failed_attempt'],
+  ['800', 'in_transit'],
+  ['1000', 'delivered'],
+  ['1020', 'returned'],
+  ['1100', 'exception'],
+  ['1110', 'exception'],
+  ['1120', 'exception'],
+  ['1200', 'exception'],
+  ['1201', 'exception'],
+  ['1202', 'exception'],
+  ['1203', 'exception'],
+  ['1204', 'exception'],
+  ['1205', 'exception'],
+  ['1206', 'exception'],
+  ['1207', 'exception'],
+  ['1208', 'exception'],
+  ['1209', 'exception'],
+]);
+
+export const aeropostStage = (code: string): Stage | undefined => CODES.get(code);
+
+export const statusMap: CarrierStatusMap = {
+  stage: code => code ? aeropostStage(code) : undefined,
+  gaps: [{ code: '1500', note: 'A processing placeholder without a shipment milestone.' }],
+};

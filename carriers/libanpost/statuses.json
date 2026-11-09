@@ -1,4 +1,53 @@
 {
   "carrier": "libanpost",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Item collected at Post Office",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item departed to final destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item received at Sorting Center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item handed over to Customs for clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item handed over to Customs for clearance Retention Reason: Awaiting presentation to customs commissioner",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item received back from Customs",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item sent to Distribution Office",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Item delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -1,23 +1,30 @@
 # Western Bid
 
-Western Bid and WestParcel consolidate cross-border parcels and hand them to delivery partners.
-Enabled universal providers supply tracking; there is no dedicated adapter.
+Reads Western Bid and WestParcel shipments through the public guest tracker and TRAWL.
+The result must identify one WBX shipment and explicitly list the requested reference.
+A complete USPS routing barcode can identify its package through the shared checksum
+validator; arbitrary suffixes cannot establish an alias.
 
 ## Retrieval
 
-The official whole-number link executes reCAPTCHA Enterprise for action `TRACK`, then asks
-`trackservice.wbapi.systems/api/track/currentStatus` with `trackingNumber` and a
-`Recaptcha-Token` header. A public result identifies its own WBX shipment and related delivery
-numbers. Some related values are complete USPS routing barcodes; their validated package
-identifier can identify the same parcel without treating an arbitrary suffix as an alias.
-The optional public details view contains additional history.
+The browser opens the whole-number link. The official client executes reCAPTCHA Enterprise
+for action `TRACK` and calls its `currentStatus` endpoint with the verification header.
+The adapter reads the rendered milestones because the service can omit an API capture body
+whose size is unknown. A later captured refusal takes precedence over the rendered result.
+Only the exact missing notice attached to the requested query establishes absence.
+
+Reached, dated milestones retain the displayed wall clock and minute precision without a
+guessed offset. Recipient details, external links and verification material are discarded.
+The optional details view contains additional history, so the result stays partial and enabled
+providers can supply a fuller timeline.
 
 ## Limitations
 
-The cached browser path can stop at a generic form error before issuing the tracking request.
-That error proves neither existence nor absence. A native adapter needs reliable guest
-verification and a bound result across this path; opening the page alone is insufficient.
+A configured TRAWL service is required. HTTP recognition does not open this browser flow.
+Generic form errors and incomplete results remain inconclusive.
 
 ## Testing
 
-Provider live-test inputs and commands are in the [provider READMEs](../../providers/README.md).
+```sh
+FLARESOLVERR_URL=… WESTERN_BID_TRACKING_NUMBER=… npm run test:carriers:live -- carriers/western-bid
+```

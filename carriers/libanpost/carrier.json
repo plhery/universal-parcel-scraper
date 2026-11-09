@@ -17,18 +17,51 @@
   "timezone": "Asia/Beirut",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "libanpost",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
-    "url": "https://www.libanpost.com/english/tools-support/track-and-trace?sn={trackingNumber}",
+    "url": "https://www.libanpost.com/TrackandTraceMobile.aspx?sn={trackingNumber}&lang=2",
     "searchUrl": "https://www.libanpost.com/english/tools-support/track-and-trace",
     "canaryUrl": "https://www.libanpost.com/english/tools-support/track-and-trace",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "origin_country",
+      "destination_country",
+      "signatory",
+      "sending_date"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "origin_country",
+      "signatory",
+      "sending_date"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps",
+      "recipient_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
@@ -37,6 +70,16 @@
         "libanpost.com"
       ],
       "pathPattern": "^/(?:english|arabic)/tools-support/track-and-trace/?$",
+      "params": [
+        "sn"
+      ]
+    },
+    {
+      "domains": [
+        "www.libanpost.com",
+        "libanpost.com"
+      ],
+      "pathPattern": "^/TrackandTraceMobile\\.aspx$",
       "params": [
         "sn"
       ]

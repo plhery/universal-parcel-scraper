@@ -6,8 +6,8 @@
     "West Parcel",
     "Western Bid, Inc.",
     "Western Bid Europe",
-    "Вестерн Бід",
-    "Вест Парсел"
+    "\u0412\u0435\u0441\u0442\u0435\u0440\u043d \u0411\u0456\u0434",
+    "\u0412\u0435\u0441\u0442 \u041f\u0430\u0440\u0441\u0435\u043b"
   ],
   "region": {
     "countries": [
@@ -23,10 +23,16 @@
   "timezone": "Europe/Kyiv",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "western-bid",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://track.westparcel.com/?trackNumber={trackingNumber}",
     "searchUrl": "https://track.westparcel.com/",

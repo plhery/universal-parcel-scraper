@@ -34,13 +34,13 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "china-post",
         "confidence": "high"
       },
-      "note": "Archived lookup on LibanPost's own tracker for an inbound item from China; the capture was not opened, so the history was not visible."
+      "note": "An archived lookup on LibanPost's tracker for an inbound item from China; the mobile guest tracker returns the exact shipment number and its Lebanese postal delivery history."
     },
     {
       "number": "RB587275870SG",
@@ -72,13 +72,13 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "dhl",
         "confidence": "high"
       },
-      "note": "A customer review on LibanPost's TrackingMore page asks where this inbound item from Germany is."
+      "note": "A customer review on LibanPost's TrackingMore page asks about this inbound item from Germany; LibanPost's mobile guest tracker returns its exact shipment number and Lebanese postal delivery history."
     },
     {
       "number": "3244683326",

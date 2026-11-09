@@ -34,6 +34,7 @@ import { isFrontierCaReference } from '../detection/frontierCa.js';
 import { isExpedicoReference } from '../detection/expedico.js';
 import { isFanCourierReference } from '../detection/fanCourier.js';
 import { isCostcoLogisticsReference } from '../detection/costcoLogistics.js';
+import { isAeropostReference } from '../detection/aeropost.js';
 import { isJAndTBrReference } from '../detection/jAndTBr.js';
 import { isZheldorReference } from '../detection/zheldor.js';
 import { countryCode } from '../time/index.js';
@@ -47,6 +48,7 @@ export interface DeliveryHandoff {
 // Adapters that refuse every other reference before a request: asking them
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
+  aeropost: isAeropostReference,
   'j-and-t-br': isJAndTBrReference,
   zheldor: isZheldorReference,
   'costco-logistics': isCostcoLogisticsReference,

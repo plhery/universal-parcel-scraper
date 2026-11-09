@@ -14,6 +14,7 @@ import { adapter as abCourier } from '../carriers/ab-courier/adapter.js';
 import { adapter as abfFreight } from '../carriers/abf-freight/adapter.js';
 import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
+import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
 import { adapter as aexParaguay } from '../carriers/aex-paraguay/adapter.js';
 import { adapter as airpakExpress } from '../carriers/airpak-express/adapter.js';
 import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
@@ -393,6 +394,7 @@ import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as leopardsCourier } from '../carriers/leopards-courier/adapter.js';
 import { adapter as lexId } from '../carriers/lex-id/adapter.js';
 import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
+import { adapter as libanpost } from '../carriers/libanpost/adapter.js';
 import { adapter as liccardi } from '../carriers/liccardi/adapter.js';
 import { adapter as lietuvosPastas } from '../carriers/lietuvos-pastas/adapter.js';
 import { adapter as lightningExpress } from '../carriers/lightning-express/adapter.js';
@@ -715,6 +717,7 @@ import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
+import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
 import { adapter as whistl } from '../carriers/whistl/adapter.js';
 import { adapter as whizDelivery } from '../carriers/whiz-delivery/adapter.js';
 import { adapter as wiio } from '../carriers/wiio/adapter.js';
@@ -766,6 +769,7 @@ export const REGISTRY: RegistryDefinition = {
     "abf-freight": abfFreight,
     "aci-express-kr": aciExpressKr,
     "acs-courier": acsCourier,
+    "aeropost": aeropost,
     "aex-paraguay": aexParaguay,
     "airpak-express": airpakExpress,
     "airspeed": airspeed,
@@ -1145,6 +1149,7 @@ export const REGISTRY: RegistryDefinition = {
     "leopards-courier": leopardsCourier,
     "lex-id": lexId,
     "lex-my": lexMy,
+    "libanpost": libanpost,
     "liccardi": liccardi,
     "lietuvos-pastas": lietuvosPastas,
     "lightning-express": lightningExpress,
@@ -1467,6 +1472,7 @@ export const REGISTRY: RegistryDefinition = {
     "wanbexpress": wanbexpress,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
+    "western-bid": westernBid,
     "whistl": whistl,
     "whiz-delivery": whizDelivery,
     "wiio": wiio,
@@ -1532,7 +1538,7 @@ export const REGISTRY: RegistryDefinition = {
     "aci-express-kr": "aci-express-kr",
     "acs-courier": "acs-courier",
     "aeronet": "universal",
-    "aeropost": "universal",
+    "aeropost": "aeropost",
     "aex-paraguay": "aex-paraguay",
     "afghan-post": "universal",
     "agt-kurye": "universal",
@@ -2252,7 +2258,7 @@ export const REGISTRY: RegistryDefinition = {
     "lexship": "universal",
     "lhtex": "universal",
     "libang-logistics": "universal",
-    "libanpost": "universal",
+    "libanpost": "libanpost",
     "libya-post": "universal",
     "liccardi": "liccardi",
     "lietuvos-pastas": "lietuvos-pastas",
@@ -2854,7 +2860,7 @@ export const REGISTRY: RegistryDefinition = {
     "wedo": "wedo",
     "welivery": "universal",
     "wepost": "universal",
-    "western-bid": "universal",
+    "western-bid": "western-bid",
     "westweg": "universal",
     "whistl": "whistl",
     "whiz-delivery": "whiz-delivery",

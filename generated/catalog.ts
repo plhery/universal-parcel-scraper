@@ -6675,7 +6675,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Costa_Rica",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "aeropost",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://aeropost.com/en/tracking",
     "trackingUrlTemplate": "https://aeropost.com/en/tracking/{trackingNumber}",
@@ -30602,10 +30604,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Beirut",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "libanpost",
+      "localClocks": true
     },
     "canaryUrl": "https://www.libanpost.com/english/tools-support/track-and-trace",
-    "trackingUrlTemplate": "https://www.libanpost.com/english/tools-support/track-and-trace?sn={trackingNumber}",
+    "trackingUrlTemplate": "https://www.libanpost.com/TrackandTraceMobile.aspx?sn={trackingNumber}&lang=2",
     "trackingSearchUrl": "https://www.libanpost.com/english/tools-support/track-and-trace",
     "linkRules": [
       {
@@ -30614,6 +30617,16 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "libanpost.com"
         ],
         "pathPattern": "^/(?:english|arabic)/tools-support/track-and-trace/?$",
+        "params": [
+          "sn"
+        ]
+      },
+      {
+        "domains": [
+          "www.libanpost.com",
+          "libanpost.com"
+        ],
+        "pathPattern": "^/TrackandTraceMobile\\.aspx$",
         "params": [
           "sn"
         ]
@@ -50928,7 +50941,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Kyiv",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "western-bid",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://track.westparcel.com/",
     "trackingUrlTemplate": "https://track.westparcel.com/?trackNumber={trackingNumber}",

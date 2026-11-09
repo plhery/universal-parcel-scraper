@@ -27,18 +27,40 @@
   "timezone": "America/Costa_Rica",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "aeropost",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
   "portal": {
     "url": "https://aeropost.com/en/tracking/{trackingNumber}",
     "searchUrl": "https://aeropost.com/en/tracking",
     "canaryUrl": "https://aeropost.com/en/tracking",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "recipient details",
+      "verification tokens"
+    ],
+    "unavailable": [
+      "eta"
+    ]
   },
   "links": [
     {

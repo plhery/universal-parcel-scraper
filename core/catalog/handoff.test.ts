@@ -385,3 +385,19 @@ describe('partner link handoff candidates', () => {
     })).toBeNull();
   });
 });
+
+
+describe('new guest adapter handoff eligibility', () => {
+  it('offers Aeropost only for its supported Costa Rican shipper references', () => {
+    expect(hasDirectHandoffAdapter('aeropost', 'CR0000000199')).toBe(true);
+    for (const number of ['RR000000005CR', '1Z999AA10123456784', 'CR00000001990']) {
+      expect(hasDirectHandoffAdapter('aeropost', number)).toBe(false);
+    }
+  });
+
+  it('offers the native postal leg and explicitly named forwarder without replacing issuer detection', () => {
+    expect(hasDirectHandoffAdapter('libanpost', 'RR000000005GB')).toBe(true);
+    expect(hasDirectHandoffAdapter('western-bid', 'WBX000000000199')).toBe(true);
+    expect(detectCarrierMatch('RR000000005GB').carrier).not.toBe('libanpost');
+  });
+});

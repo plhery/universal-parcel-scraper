@@ -1,23 +1,26 @@
 # Aeropost
 
-Aeropost parcels use enabled universal providers. There is no dedicated adapter.
+The native adapter reads Costa Rican shipper histories from the
+[public tracking page](https://aeropost.com/en/tracking). Other Aeropost services,
+courier identifiers and Temu order numbers use enabled universal providers.
 
-## Numbers
+TRAWL opens a fresh guest page and lets its own reCAPTCHA verification run. The
+reply carries no shipment identifier, so capture requires the exact whole-number
+shipper POST from that page's main frame. The browser helper retains only bounded
+tracking fields; verification tokens, cookies and rendered recipient details stay
+inside its context. Recognition stays disabled because the history states no instant.
 
-Aeropost carries parcels from Miami to Central America, the Caribbean and South America.
-Archived answers from its own tracking API show Costa Rican shipments numbered `CR` and ten
-digits. `aeropost-1` suggests Aeropost for that layout at low confidence, because Aramex
-Australia, Aramex New Zealand and Colis Privé accept any two letters and ten digits or any
-twelve characters. The tracking page asks courier customers for a number starting `MIA`, shown
-only as a mask, so no rule claims it. Temu orders delivered by Aeropost keep Temu's own number.
+The page's event codes distinguish a local-courier handoff from final delivery.
+Scan clocks carry no offset and remain local wall times, including on histories
+that cross countries. Processing placeholders are not shipment events.
 
-## Links
+[Aeropost's Android app](https://play.google.com/store/apps/details?id=com.aeropost.courierapp)
+links its Temu tracking action to the public tracking portal. Its package-management
+API uses customer account state and supplies no verified guest alternative.
 
-Aeropost's tracking page builds `aeropost.com/{language}/tracking/{number}`, also under a
-gateway code such as `aeropost.com/SJO/es/tracking/{number}`. Its older shipment tracker opened
-one parcel at `tracking.aeropost.com/{number}`. The library reads the number from each form.
+Live checks use `FLARESOLVERR_URL`, `AEROPOST_TRACKING_NUMBER` and
+`AEROPOST_UNKNOWN_NUMBER`:
 
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:carriers:live -- carriers/aeropost/adapter.live.test.ts
+```

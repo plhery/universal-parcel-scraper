@@ -10,6 +10,9 @@
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as aeropost } from '../../carriers/aeropost/status.js';
+import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
+import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
 import { statusMap as fourSeventyTwo } from '../../carriers/4-72/status.js';
@@ -765,6 +768,9 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  aeropost,
+  'western-bid': westernBid,
+  libanpost,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

@@ -15,6 +15,7 @@ RUN /opt/zto-ocr/bin/python -c 'import ddddocr, rapidocr_onnxruntime, cv2'
 COPY license.mjs /app/packages/tiers/src/utils/license.mjs
 COPY tracking-capture.mjs /app/packages/tiers/src/utils/tracking-capture.mjs
 COPY lbc-browser.mjs /app/packages/tiers/src/utils/lbc-browser.mjs
+COPY aeropost-browser.mjs /app/packages/tiers/src/utils/aeropost-browser.mjs
 COPY evri-uk-browser.mjs /app/packages/tiers/src/utils/evri-uk-browser.mjs
 COPY usps-tracking.mjs /app/packages/tiers/src/utils/usps-tracking.mjs
 COPY swiftx-slider.mjs /app/packages/tiers/src/utils/swiftx-slider.mjs
