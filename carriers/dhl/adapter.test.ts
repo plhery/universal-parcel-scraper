@@ -468,6 +468,22 @@ describe('DHL public tracking normalization', () => {
     }
   });
 
+  it('reads a failed search behind the page as no answer, whatever not-found flag it sets', () => {
+    for (const missing of [{ keineDatenVerfuegbar: true }, { keineDhlPaketSendung: true }, { sendungsnummerNichtSuchbar: true }]) {
+      const payload = { sendungen: [{ id: NUMBER, hasCompleteDetails: true, shipmentSearchBackendError: true, sendungNichtGefunden: missing }] };
+      expect(() => parseDHLTrackingResponse(payload, NUMBER))
+        .toThrow(expect.objectContaining({ kind: 'indeterminate', reason: undefined, message: 'DHL’s shipment search failed' }));
+    }
+    // A record that lists scans despite the flag is still DHL's answer.
+    const listed = parseDHLTrackingResponse({ sendungen: [{
+      id: NUMBER, shipmentSearchBackendError: true,
+      sendungsdetails: { sendungsverlauf: { status: 'The shipment has been processed in the parcel center', events: [
+        { datum: '2026-03-02T08:00:00.000+01:00', ort: 'Sample Town', status: 'The shipment has been processed in the parcel center' },
+      ] } },
+    }] }, NUMBER);
+    expect(listed).toMatchObject({ current_stage: 'in_transit', events: [{ description: 'The shipment has been processed in the parcel center' }] });
+  });
+
   it('normalizes safe identifiers and builds an official tracking link', () => {
     expect(normalizeDHLTrackingNumber('lf 999.999-987 de')).toBe(NUMBER);
     expect(dhlTrackingUrl(NUMBER)).toBe(`https://www.dhl.de/en/privatkunden/dhl-sendungsverfolgung.html?piececode=${NUMBER}`);

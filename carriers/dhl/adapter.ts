@@ -135,6 +135,13 @@ function destination(details: Record<string, unknown>): Pick<CarrierResult, 'des
   return code ? { destination_country: code } : { destination_country_name: name };
 }
 
+/** Whether the record lists a scan. */
+function hasScans(shipment: JsonObject): boolean {
+  const details = isRecord(shipment.sendungsdetails) ? shipment.sendungsdetails : {};
+  const timeline = isRecord(details.sendungsverlauf) ? details.sendungsverlauf : {};
+  return Array.isArray(timeline.events) && timeline.events.some(isRecord);
+}
+
 function noData(): CarrierResult {
   return { status: 'unknown', last_status_text: 'DHL has not published tracking information for this shipment yet', last_update: null, expected_delivery: null, events: [] };
 }
@@ -192,6 +199,11 @@ function refusedPostcode(value: unknown): InputRequiredError | null {
 export function parseDHLTrackingResponse(payload: unknown, trackingNumber: string): CarrierResult {
   const shipment = matchingShipment(payload, trackingNumber);
   const missing = isRecord(shipment.sendungNichtGefunden) ? shipment.sendungNichtGefunden : {};
+  // DHL's search behind the page failed: the record names the number, but its not-found flags
+  // say nothing about the parcel, which DHL's page then shows no scans for, however many it has.
+  if (shipment.shipmentSearchBackendError === true && !hasScans(shipment)) {
+    throw new IndeterminateError(PROVIDER, 'DHL’s shipment search failed');
+  }
   if (shipment.plzBenoetigt === true || shipment.versandDatumBenoetigt === true) {
     // DHL asks the recipient's postcode to show a parcel it holds; a record it also calls not found names none.
     const held = shipment.plzBenoetigt === true && !Object.values(missing).some((flag) => flag === true);

@@ -94,6 +94,9 @@ how a consumer learns that DHL holds one behind a postcode.
   end the lookup. A browser would only hide a provider problem.
 - DHL answers unknown numbers with explicit `sendungNichtGefunden` flags. An
   empty or unmatched `sendungen` array is a schema error, not "no data yet".
+- A record with `shipmentSearchBackendError` and no scans is DHL's search failing behind
+  the page, for parcels with scans too, so it is inconclusive whatever not-found flag it
+  sets.
 - The endpoint has no status codes: stages come from English or German wording,
   and the `istZugestellt` / `ruecksendung` flags outrank it. The German wording
   is DHL's own, not a translation of the English: a parcel being prepared for
