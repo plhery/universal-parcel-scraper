@@ -3039,6 +3039,11 @@ describe('ParcelsApp result parsing', () => {
       ['Order has been cancelled', '2030-01-02T05:24:16.000Z'],
       ['Order received successfully', '2030-01-02T03:39:08.000Z'],
     ]);
+    // So does its closed pickup order, which Cainiao's own feed dates by Beijing's digits.
+    const closed = parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode: 'AE', states: [
+      { date: '2030-01-03T02:05:49Z', status: 'Shipment cancelled', carrier: 0 },
+    ] }, number, identity(), 'UTC');
+    expect(closed.events?.map((scan) => scan.time)).toEqual(['2030-01-02T18:05:49.000Z']);
   });
 
   it('keeps the UTC instants ParcelsApp gives Asendia USA scans wherever they happened', () => {

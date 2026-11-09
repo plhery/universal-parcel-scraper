@@ -28,14 +28,21 @@ export function uspsScanZone(location: string): string | null {
   return splitRegionTownZone('US', state, location.slice(0, named.index)) ?? usStateTimeZone(state);
 }
 
+// A mailer's label as USPS words it, its place apart. Its digits are UTC's: read on its place's
+// clock, each one read soon enough to tell came after that read, and their hours gather past
+// UTC's midnight, America's evening, rather than in its business hours.
+const MAILER_LABEL = /^shipping label created$/i;
+
 /**
- * The zone of a row's wall clock, given its facility's zone. A mailer can write its labels on
- * UTC: a label row ("Shipping Label Created", "Pre-Shipment Info Sent") that the facility's zone
- * dates after `readAt`, and UTC does not, is read on UTC. Any other row keeps the facility's
- * zone, and so does a label older than the gap between the two, which nothing tells apart.
+ * The zone of a row's wall clock, given its facility's zone. A mailer writes its label
+ * ("Shipping Label Created") on UTC. Another label row ("Shipping Label Created, USPS Awaiting
+ * Item", "Pre-Shipment Info Sent") that the facility's zone dates after `readAt`, and UTC does
+ * not, is read on UTC. Any other row keeps the facility's zone, and so does such a label older
+ * than the gap between the two, which nothing tells apart.
  */
 export function uspsRowZone(wall: string, facility: string, description: string, readAt: number): string {
   if (uspsStage(description) !== 'registered') return facility;
+  if (MAILER_LABEL.test(description.trim())) return 'UTC';
   const ahead = (zone: string) => firstOccurrence(DateTime.fromISO(wall, { zone })).toMillis() > readAt + CLOCK_SKEW_MS;
   return ahead(facility) && !ahead('UTC') ? 'UTC' : facility;
 }

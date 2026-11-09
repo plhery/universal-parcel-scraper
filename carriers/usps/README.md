@@ -110,8 +110,11 @@ Parsing, in order:
   alone, as it does pre-shipment info, keeps that day as `local_time`.
 - USPS enters some departures at their scheduled time, before they happen. A scan dated more
   than five minutes after the lookup is held back until it is due (`plannedScans`).
-- A mailer can write its labels on UTC. A label row that the facility's zone dates after the
-  lookup, and UTC does not, is read on UTC. Once both date it in the past, nothing tells them
+- A mailer writes its label, "Shipping Label Created" with its place apart, on UTC: read on
+  the place's clock, each label read soon enough to tell came after the lookup, and their hours
+  gather in America's evening. ParcelsApp's copy of it is read the same way. Another label row,
+  such as "Shipping Label Created, USPS Awaiting Item", is read on UTC when the facility's zone
+  dates it after the lookup and UTC does not. Once both date it in the past, nothing tells them
   apart and it keeps the facility's zone; its row takes over the stored one by its wall clock.
 - Delivered lines are rewritten to "Delivered" because USPS names the signatory.
 - Incoming international mail shows "Origin Post is Preparing Shipment", undated, from the

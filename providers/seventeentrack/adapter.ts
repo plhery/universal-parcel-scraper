@@ -255,8 +255,9 @@ const QUICK_RABBIT = 101309;
  * On Time", or with the country alone, as 17TRACK labels some, gives no state
  * to guess from: it keeps USPS's wall clock as its local time, as USPS's
  * adapter gives it, so both copies are dated alike. A place that names neither
- * keeps 17TRACK's reading, the last guess. A label row its facility's zone
- * dates after the read, and UTC does not, is on UTC, as USPS's adapter reads it.
+ * keeps 17TRACK's reading, the last guess. A mailer's label, and another label
+ * row its facility's zone dates after the read when UTC does not, is on UTC, as
+ * USPS's adapter reads it.
  * A step USPS dates by its day alone, such as a label printed at a post office,
  * comes at midnight under 17TRACK's offset; it keeps its day, as on USPS's page.
  */

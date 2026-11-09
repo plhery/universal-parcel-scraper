@@ -616,6 +616,8 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-11-03T12:40:00.000Z');
     vi.setSystemTime(new Date('2026-11-03T13:00:00Z'));
     expect(parse17TrackResponse(reply([label]), number).events?.[0]?.time).toBe('2026-11-03T12:40:00.000Z');
+    // A mailer's own label, worded alone, stays on UTC.
+    expect(parse17TrackResponse(reply([row('Shipping Label Created', 'InfoReceived')]), number).events?.[0]?.time).toBe('2026-11-03T04:40:00.000Z');
   });
 
   it('leaves out the EN ROUTE row DHL eCommerce US stamps with each request', () => {
