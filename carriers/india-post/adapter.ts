@@ -404,7 +404,9 @@ const FLIGHT_TO = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From [A-Z]{3,5} To
  * worded, are the country's it landed in, on its wall clock under India's
  * label as on MySpeedPost's page, unless that is India or a country the
  * airport does not tell. A take-off names only its next airport, often a hub on the way, so it
- * places nothing; flight rows keep their own reading.
+ * places nothing; flight rows keep their own reading. Without an arrival, the
+ * scans the destination's post marks inbound ("(Inb)") are still its own, on
+ * a clock the reply does not name.
  */
 function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone: string | null } {
   const labelled = rows.map((row) => isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? Number.NaN);
@@ -419,6 +421,7 @@ function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone
     country = to.length === 5 ? to.slice(0, 2) : airportCountry(to);
   }
   const abroad = new Set<number>();
+  if (!country) return { abroad: scannedAbroad(rows, { code: null, name: '' }), zone: null };
   if (!country || country === 'IN') return { abroad, zone: null };
   flown.forEach((to, index) => {
     if (!to && code(rows[index]!) !== TAKE_OFF_CODE && labelled[index]! > latest) abroad.add(index);

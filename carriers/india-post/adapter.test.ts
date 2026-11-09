@@ -734,6 +734,10 @@ describe('India Post Livewire session', () => {
     const hub = track91Result();
     (hub.events as Array<Record<string, unknown>>).splice(1, 1);
     expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]?.time).toBe('2026-07-19T08:34:00Z');
+    // Unless the destination's post marks it inbound: its office's wall clock, in a zone the reply does not name.
+    (hub.events as Array<Record<string, unknown>>)[0]!.event = 'Item received at office of exchange (Inb)';
+    expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]).toMatchObject({ local_time: '2026-07-19T14:04:00' });
+    expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]).not.toHaveProperty('time');
     expect(() => parseIndiaPostTrack91Result(track91Result(WRONG_VALID_NUMBER), SAMPLE_NUMBER)).toThrow(SchemaError);
   });
 

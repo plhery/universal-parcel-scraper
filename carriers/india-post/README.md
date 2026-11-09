@@ -78,7 +78,8 @@ Outcomes:
 - track91 gives no Destination card, article type or office PIN. The country its latest flight
   arrival lands in (an airport or a UN/LOCODE such as `AUSYD`) stands in for the destination: the
   rows after that arrival are that country's, unless it is India. A take-off names only its next
-  airport, often a hub on the way, so it places no rows; they keep India's label. Its replies alternate between
+  airport, often a hub on the way, so it places no rows; they keep India's label, but for the rows
+  marked `(Inb)`, which keep their wall time in `local_time`. Its replies alternate between
   codes and prose; a prose take-off reads "Aircraft Departure" and is typed as a take-off, and a
   prose "Bag unloaded at destination Airport" counts as an arrival, as its code does.
 - A take-off row (`event_type` `AircraftTakeOff`, whose office starts with the airport's code as in
