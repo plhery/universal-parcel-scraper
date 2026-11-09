@@ -20,6 +20,8 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   // Recorded after the day's delivery round, which starts again the next day.
   LI521: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO SE HA ENTREGADO PORQUE LA DIRECCIÓN DE ENTREGA ESTÁ INCOMPLETA O ERRÓNEA.', mapped: { status: 'exception', stage: 'failed_attempt' } },
   LI523: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO SE HA ENTREGADO POR AUSENCIA O CIERRE. SE PUEDE REPROGRAMAR UNA NUEVA ENTREGA.', mapped: { status: 'exception', stage: 'failed_attempt' } },
+  // During the round to a SEUR Pickup point, the point could not take the parcel; SEUR names another point a minute later.
+  LI503: { group: 'EN INCIDENCIA', wording: 'NO SE HA PODIDO DEPOSITAR EL ENVÍO EN EL PUNTO SOLICITADO', mapped: { status: 'exception', stage: 'failed_attempt' } },
   LI524: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO SE HA ENTREGADO PORQUE NO ES LA DIRECCIÓN ACTUAL DEL DESTINATARIO.', mapped: exception },
   // The recipient has to act: pick another point, or send customs the invoice.
   LI573: { group: 'EN INCIDENCIA', wording: 'EL ENVÍO NO HA SIDO DEPOSITADO EN EL LOCKER SELECCIONADO. SE DEBE ELEGIR OTRO PUNTO SEUR PICKUP.', mapped: exception },

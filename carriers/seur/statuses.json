@@ -187,6 +187,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "LI503",
+      "wording": "NO SE HA PODIDO DEPOSITAR EL ENVÍO EN EL PUNTO SOLICITADO",
+      "language": "es",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "In the EN INCIDENCIA group, an hour into the delivery round to the SEUR Pickup point asked for: the point could not take the parcel, and a minute later SEUR changed the delivery to another SEUR Pickup point (LJ105)."
+    },
+    {
       "code": "LI524",
       "wording": "EL ENVÍO NO SE HA ENTREGADO PORQUE NO ES LA DIRECCIÓN ACTUAL DEL DESTINATARIO.",
       "language": "es",

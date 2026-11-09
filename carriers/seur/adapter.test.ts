@@ -116,6 +116,16 @@ describe('SEUR simplified anonymous tracking', () => {
     expect(parseSeur(body, NUMBER).events?.map(e => e.stage)).toEqual(['failed_attempt', 'out_for_delivery']);
   });
 
+  it('reads a SEUR Pickup point that could not take the parcel on the round as a failed attempt, and the new point after it as transit', () => {
+    const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
+      descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
+    const body = copy();
+    body.situaciones = [scan('LI503', '2026-01-23T09:57:00Z'), scan('LC003', '2026-01-23T08:52:00Z')] as typeof body.situaciones;
+    expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    body.situaciones.unshift(scan('LJ105', '2026-01-23T09:58:00Z') as never);
+    expect(parseSeur(body, NUMBER).events?.map(e => e.stage)).toEqual(['in_transit', 'failed_attempt', 'out_for_delivery']);
+  });
+
   it('requires exact identity, nonempty single-piece history and the supported numeric shapes', () => {
     for (const n of ['9900002', '990000000002', '99000000000002', '990000000000000000002', '9900000000000000000002']) expect(normalizeSeurNumber(n)).toBe(n);
     expect(normalizeSeurNumber('990 0002')).toBe(NUMBER);
