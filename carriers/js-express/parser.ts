@@ -52,6 +52,9 @@ const PROVINCE = /,\s*([A-Z]{2})$/;
 const USPS = /\busps\b/i;
 // The offset a row states, as "+02:00".
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
+// J&T Express Germany's rows in German, as the destination courier: its scans opening with the district in 【】, its
+// round, its delivery and its record of the order's data.
+const J_AND_T_GERMANY = /^【[^】]*】.*\b(?:Sendung|Paket)\b|^Die Sendung von 【[^】]*】 in 【[^】]*】 ist unterwegs zur Zustellung\b|^Ihr Paket wurde erfolgreich zugestellt\b|^Die Auftragsdaten für diese Sendung wurden elektronisch an J&T Express übermittelt\b/u;
 // A row's code, as "OIT" or "DSD".
 const CODE = /^[A-Z]{2,4}$/;
 const MAX_ROWS = 500;
@@ -131,6 +134,17 @@ function scanZone(local: string, description: string, location: string, label: s
 function statedZone(local: string, offset: string, country: string | null): string | null {
   const zone = country && OFFSET.test(offset) && !hasSeveralClocks(country) ? mainZone(country) : null;
   return zone && firstOccurrence(DateTime.fromISO(local, { zone })).toFormat('ZZ') === offset ? zone : null;
+}
+
+/**
+ * The instant of J&T Express Germany's rows, their wall clock at the offset they state. Neither is Germany's
+ * clock, but together they give the instant J&T Express Germany's own tracker gives the same scan, to the
+ * second; read on Berlin's clock, its scans would come two hours early.
+ */
+function statedInstant(local: string, offset: string, description: string): string | undefined {
+  if (!OFFSET.test(offset) || !J_AND_T_GERMANY.test(description)) return undefined;
+  const instant = DateTime.fromISO(`${local}${offset}`, { setZone: true });
+  return instant.isValid ? instant.toISO({ suppressMilliseconds: true }) ?? undefined : undefined;
 }
 
 /** An optional string a row can carry; anything else counts as none. */
@@ -246,8 +260,9 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
 
   const straightship = scans.some((scan) => STRAIGHTSHIP.test(scan.description));
   const events = scans.map(({ local, label, description, location, offset, code }): CarrierEvent => {
-    const zone = scanZone(local, description, location, label, straightship) ?? (location ? null : statedZone(local, offset, country));
-    const time = zone ? isoTime(local, zone)?.iso : undefined;
+    const stated = statedInstant(local, offset, description);
+    const zone = stated ? null : scanZone(local, description, location, label, straightship) ?? (location ? null : statedZone(local, offset, country));
+    const time = stated ?? (zone ? isoTime(local, zone)?.iso : undefined);
     const staged = jsExpressStage(description, code);
     return {
       ...(time ? { time } : { local_time: local }),

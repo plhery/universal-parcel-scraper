@@ -715,6 +715,54 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-08",
       "note": "The local courier's transit row, after the import clearance."
+    },
+    {
+      "wording": "The package is shipped from the transfer warehouse to the airport Export customs clearance in progress",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Sent from the transfer warehouse to the airport, where export clearance in China is in progress; its completion follows."
+    },
+    {
+      "wording": "Export customs clearance completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "China's export clearance done, after the parcel left for the airport and before it is loaded; the parcel is not held in customs."
+    },
+    {
+      "wording": "The parcel has arrived at the airport and is currently being loaded onto a flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "At the departure airport after export clearance, being loaded before the flight."
+    },
+    {
+      "wording": "Currently undergoing customs clearance in the destination country",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Import clearance at the destination, after the flight's arrival."
+    },
+    {
+      "wording": "Customs clearance in the destination country has been completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Import clearance done; the hand-over to the delivering carrier follows."
+    },
+    {
+      "wording": "The goods have been delivered to the carrier",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The hand-over to the delivering carrier after import clearance, before its own scans; not a delivery to the recipient."
     }
   ]
 }

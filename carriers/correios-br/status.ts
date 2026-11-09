@@ -39,6 +39,10 @@ const codes: Record<string, ClassifiedStatus> = {
   // The recipient answered customs (its tax number), and the answer is under review.
   'PAR/12': { status: 'in_transit', stage: 'customs' },
   'PAR/24': { status: 'exception', stage: 'returned' },
+  // An item posted for abroad sent to Brazil's export customs inspection; a transfer follows its release.
+  'PAR/04': { status: 'in_transit', stage: 'customs' },
+  // An item received at a unit along its way, which the reply may leave without an address.
+  'PAR/15': { status: 'in_transit', stage: 'in_transit' },
 };
 
 export function classifyCorreiosStatus(code: string): ClassifiedStatus | undefined {

@@ -27,6 +27,8 @@
     { "code": "FC/82", "wording": "Etiqueta emitida", "language": "pt", "stage": "registered", "confirmedBy": "live", "note": "A label was issued; Correios does not have the parcel yet." },
     { "code": "FC/03", "wording": "Objeto em correção de rota", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "A missorted item that Correios will forward again; transfers follow." },
     { "code": "PO/09", "wording": "Objeto postado após o horário limite da unidade", "language": "pt", "stage": "accepted", "confirmedBy": "live", "note": "Posted after the counter's cut-off time." },
-    { "code": "PAR/24", "wording": "Devolução determinada pela autoridade competente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Customs ordered the parcel back to its sender." }
+    { "code": "PAR/24", "wording": "Devolução determinada pela autoridade competente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Customs ordered the parcel back to its sender." },
+    { "code": "PAR/04", "wording": "Objeto encaminhado para fiscalização aduaneira de exportação", "language": "pt", "stage": "customs", "confirmedBy": "live", "note": "An item posted for abroad sent to export customs inspection, after its posting and before a transfer; while it is there Correios does not hold it (https://www.fazcomex.com.br/npe/objeto-encaminhado-para-fiscalizacao-aduaneira-de-exportacao/)." },
+    { "code": "PAR/15", "wording": "Objeto recebido em", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "Received at a unit along the way, after export inspection and a transfer; the reply gave no unit address, so the place is missing from the wording too." }
   ]
 }

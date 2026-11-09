@@ -85,7 +85,11 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 - J&T Express Germany's scans as the destination courier, in German, open with the district in
   【】 and name its sites in 【】. Emptied of those names, they take their entry in
   [statuses.json](statuses.json). Its first scan, when it takes the parcel from the line's hand-over,
-  is in transit.
+  is in transit. Its German rows, its round, delivery and record of the order's data among them, are
+  dated at the offset they state. Neither the wall clock nor that offset is Germany's, but together
+  they give the instant J&T Express Germany's own tracker gives each scan, to the second, and the
+  order's data then comes as JS Express's sorting centre takes the parcel in. Read on Berlin's clock,
+  they would come two hours early.
 - Each row carries a code, kept as its `provider_code`. Most rows are `OIT` whatever happened, so a
   code gives a stage only to a wording the map lacks, and only where it settles one alone: the
   order's data, the collection, the round, the pickup point, a failed attempt and the delivery.

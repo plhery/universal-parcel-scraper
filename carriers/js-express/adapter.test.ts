@@ -381,6 +381,30 @@ describe('JS Express tracking adapter', () => {
     expect(jsExpressMappedStage('【Sample District】Die Sendung wurde umgeleitet.')).toBeUndefined();
   });
 
+  it("dates J&T Express Germany's rows by the offset they state, and other rows as before", () => {
+    const stated = (date: string, address: string, status: string, timeZone: string, code = 'OIT') => ({ ...row(date, address, status), timeZone, code });
+    const result = parseJsExpress(waybill([
+      stated('2026-11-04 12:17:18', 'SMP001', 'Ihr Paket wurde erfolgreich zugestellt. Die Zustellart ist 【Sample】 .', '-01:00', 'DSD'),
+      stated('2026-11-04 05:58:24', 'SMP001', 'Die Sendung von 【Sample GmbH】 in 【Sample District】 ist unterwegs zur Zustellung.', '-01:00', 'DIG'),
+      stated('2026-11-04 05:53:00', 'Sample HUB', '【Sample District】Die Sendung ist bei【Sample HUB】 angekommen.', '-01:00'),
+      stated('2026-11-03 09:46:00', 'Sample Town', 'Delivery to local courier', '+01:00'),
+      stated('2026-11-02 14:30:00', 'AMS', 'Item Flight landing', '+01:00'),
+      stated('2026-10-30 17:52:27', '', 'Die Auftragsdaten für diese Sendung wurden elektronisch an J&T Express übermittelt', '-01:00'),
+      stated('2026-10-30 16:59:57', 'Sample Center', 'Item has been collected', '+08:00', 'OPU'),
+    ], { country: 'Germany' }), DELIVERED);
+    expect(result.events?.map((event) => event.time ?? event.local_time)).toEqual([
+      '2026-11-04T12:17:18-01:00', '2026-11-04T05:58:24-01:00', '2026-11-04T05:53:00-01:00',
+      '2026-11-03T09:46:00', '2026-11-02T14:30:00', '2026-10-30T17:52:27-01:00', '2026-10-30T16:59:57',
+    ]);
+    expect(result).toMatchObject({ current_stage: 'delivered', delivered_at: '2026-11-04T12:17:18-01:00', last_update: '2026-11-04T12:17:18-01:00' });
+    // iMile's rows open with a centre in 【】 too, in English: they keep their wall clock whatever offset they state.
+    const imile = parseJsExpress(waybill([stated('2026-11-04 12:00:00', 'Sample DS', '【Sample DS】Arrived.', '-01:00')], { country: 'Germany' }), DELIVERED);
+    expect(imile.events?.[0]).toMatchObject({ local_time: '2026-11-04T12:00:00' });
+    // A J&T sentence without an offset keeps its wall clock.
+    const unstated = parseJsExpress(waybill([stated('2026-11-04 12:00:00', 'SMP001', '【Sample District】Die Sendung ist bei【Sample HUB】 angekommen.', '')], { country: 'Germany' }), DELIVERED);
+    expect(unstated.events?.[0]).toMatchObject({ local_time: '2026-11-04T12:00:00' });
+  });
+
   it("reads a destination post's rows as JS Express relays them, its collection point as waiting for pickup", () => {
     const waiting = parseJsExpress(withList([
       row('2026-05-06 08:00:00', 'Array', 'Item arrival at collection point for pick-up'),

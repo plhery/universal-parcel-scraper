@@ -58,6 +58,20 @@ describe('Correios parser', () => {
     expect(answer(null, 'Synthetic wording')).toEqual({ kind: 'unknown' });
   });
 
+  it('reads an item posted for abroad through export customs and a receipt without a unit address', () => {
+    const clock = (date: string) => ({ date: `${date}.000000`, timezone_type: 3, timezone: 'America/Sao_Paulo' });
+    const result = parseCorreios({ ...fixture, eventos: [
+      scan('PAR', '15', 'Objeto recebido em', clock('2026-01-08 09:00:00')),
+      scan('RO', '01', 'Objeto em transferência - por favor aguarde', clock('2026-01-06 18:00:00')),
+      scan('PAR', '04', 'Objeto encaminhado para fiscalização aduaneira de exportação', clock('2026-01-05 15:00:00')),
+      scan('PO', '01', 'Objeto postado', clock('2026-01-05 10:00:00')),
+    ] }, NUMBER);
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['PAR/15', 'in_transit'], ['RO/01', 'in_transit'], ['PAR/04', 'customs'], ['PO/01', 'accepted'],
+    ]);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it('requires one exact response identity and structurally complete bounded scans', () => {
     expect(normalizeCorreiosNumber('aa 000000005 br')).toBe(NUMBER);
     for (const raw of ['AA000000000BR', '123', '', 'AA000000005BR?']) expect(() => normalizeCorreiosNumber(raw)).toThrow(InvalidInputError);

@@ -103,6 +103,19 @@ describe('Bulgarian Posts tracking adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/999\d/);
   });
 
+  it('reads the second visit, the second notice after ten days at the post office, as still waiting for collection', () => {
+    const result = parseBulgarianPosts({ parcels: [
+      row('2026-03-03T13:25:00', 'БЪЛГАРИЯ, 9999  ОБРАЗЕЦ 7', 'Приемане'),
+      row('2026-03-04T08:50:00', 'БЪЛГАРИЯ, 9999  ОБРАЗЕЦ 7', 'Първо посещение'),
+      row('2026-03-04T09:02:00', 'БЪЛГАРИЯ, 9999  ОБРАЗЕЦ 7', 'За получаване в ПС'),
+      row('2026-03-14T08:02:00', 'БЪЛГАРИЯ, 9999  ОБРАЗЕЦ 7', 'Второ посещение'),
+    ], bulpost: { is_bulpost: false, html: null } }, DOMESTIC);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup', last_status_text: 'Второ посещение' });
+    expect(result.events!.map(event => [event.stage, event.stage_source])).toEqual([
+      ['ready_for_pickup', 'carrier_map'], ['ready_for_pickup', 'carrier_map'], ['failed_attempt', 'carrier_map'], ['in_transit', 'carrier_map'],
+    ]);
+  });
+
   it('dates a repeated autumn hour by its first occurrence and keeps a skipped spring hour as a wall clock', () => {
     const scans = (rows: Row[]) => parseBulgarianPosts({ parcels: rows, bulpost: { is_bulpost: false, html: null } }, DOMESTIC).events!;
     expect(scans([row('2026-10-25T03:30:00', 'БЪЛГАРИЯ, 9999  ПРИМЕРНО', 'Приемане')])[0]).toMatchObject({ time: '2026-10-25T03:30:00+03:00' });

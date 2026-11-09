@@ -54,6 +54,8 @@ const BULGARIAN: ReadonlyMap<string, Stage> = new Map([
   // The first visit, which left a notice: the item goes to the post office for collection.
   ['първо посещение', 'failed_attempt'],
   ['за получаване в пс', 'ready_for_pickup'],
+  // The second written notice, sent when the item has waited ten days at the post office uncollected: it waits on.
+  ['второ посещение', 'ready_for_pickup'],
   ['доставена', 'delivered'],
   // The former tracker's domestic scans, with a Latin e in the first.
   ['пратката e получена', 'accepted'],
