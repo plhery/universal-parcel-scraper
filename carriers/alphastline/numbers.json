@@ -1,0 +1,21 @@
+{
+  "carrier": "alphastline",
+  "gap": "No public page shows a whole Alphastline tracking number.",
+  "records": [
+    {
+      "number": "AF999999999999999999980",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-09",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "alphastline"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked, which 17TRACK reported from Alphastline: AF, the initials of 傲飞, and 21 digits. Its serial sits far beyond the range in use."
+    }
+  ]
+}

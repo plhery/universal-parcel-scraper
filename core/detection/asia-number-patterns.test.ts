@@ -397,6 +397,15 @@ describe('Chinese fulfilment warehouse numbers', () => {
     }
   });
 
+  it('suggests Alphastline for AF and 21 digits, and only that layout', () => {
+    for (const number of ['AF999999999999999999980', 'af 9999 9999 9999 9999 99980']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['alphastline'] });
+    }
+    for (const number of ['AF99999999999999999998', 'AF9999999999999999999801', 'AE999999999999999999980', 'AF99999999999999999998X']) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('alphastline');
+    }
+  });
+
   it('suggests Pengyou for three letters, nine digits and PY, and only that layout', () => {
     for (const number of ['ZZZ999999980PY', 'zzz 000 000 017 py']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['pengyou'] });

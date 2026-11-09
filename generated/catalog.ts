@@ -7566,6 +7566,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "alphastline": {
+    "displayName": "Alphastline",
+    "color": "#2637ba",
+    "aliases": [
+      "Alphast",
+      "Alphast Line",
+      "傲飞国际快线",
+      "傲飞物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.alphastline.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^AF\\d{21}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "am-home-delivery": {
     "displayName": "AM Home Delivery",
     "color": "#013e81",
@@ -53324,6 +53351,7 @@ export const CARRIER_IDS = [
   "alliance-air-freight",
   "allied-express",
   "alljoy",
+  "alphastline",
   "am-home-delivery",
   "amalgamated-distribution",
   "ambro-express",
@@ -54750,6 +54778,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alliance-air-freight": [],
   "allied-express": [],
   "alljoy": ["alljoy-1","alljoy-2"],
+  "alphastline": ["alphastline-1"],
   "am-home-delivery": [],
   "amalgamated-distribution": [],
   "ambro-express": [],

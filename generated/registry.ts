@@ -1558,6 +1558,7 @@ export const REGISTRY: RegistryDefinition = {
     "alliance-air-freight": "universal",
     "allied-express": "universal",
     "alljoy": "universal",
+    "alphastline": "universal",
     "am-home-delivery": "am-home-delivery",
     "amalgamated-distribution": "universal",
     "amazon-logistics": null,
