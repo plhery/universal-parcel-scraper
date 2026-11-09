@@ -655,7 +655,11 @@ describe('Cainiao projection', () => {
   it('reads an order the seller is still preparing, before any scan, as registered', () => {
     const preparing = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000005', status: 'SELLER_PREPARING', detailList: [] }] },
       'LP00000000000005');
-    expect(preparing).toMatchObject({ status: 'pending', current_stage: 'registered', events: [] });
+    expect(preparing).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'SELLER_PREPARING', events: [] });
+    // Cainiao words the token beside it; the status text takes those words.
+    const worded = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000005', status: 'SELLER_PREPARING',
+      statusDesc: 'Awaiting seller dispatch', detailList: [] }] }, 'LP00000000000005');
+    expect(worded).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Awaiting seller dispatch', events: [] });
   });
 
   it('claims no stage for an order token it does not know before any scan', () => {

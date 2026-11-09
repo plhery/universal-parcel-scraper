@@ -296,7 +296,8 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   return {
     status,
     ...(currentStage ? { current_stage: currentStage } : {}),
-    last_status_text: placedWording(scanWording(latest), carriers).description || rawStatus,
+    // Before any scan, Cainiao words its order token in `statusDesc` ("Awaiting seller dispatch").
+    last_status_text: placedWording(scanWording(latest), carriers).description || text(trackingModule.statusDesc) || rawStatus,
     last_update: 'time' in latestClock ? latestClock.time || null : null,
     ...('local_time' in latestClock ? { last_update_local: latestClock.local_time } : {}),
     expected_delivery: status === 'delivered' ? null : expected,

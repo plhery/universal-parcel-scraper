@@ -87,6 +87,7 @@ activity confirms the Cainiao tracking leg; an empty internal pending module doe
   not shipped yet and the parcel stays pending at the `registered` stage; a 404 would make the sync
   give up on an early parcel. Neither that stage nor a seller token such as `SELLER_PREPARING`
   before any scan comes with a time, so a consumer that dates stages dates it when it first sees it.
+  The status text is then Cainiao's wording of the token (`statusDesc`), else the token.
 - `DOFR…HD` and `CNFR…HD` are Cainiao Express's home-delivery numbers in France. Partners such as
   4PX hand their own parcels over under them, and AliExpress's feed does not hold those. Cainiao
   Express's tracker holds them from the moment it receives the parcel; before that only the partner
