@@ -1,6 +1,16 @@
 {
   "carrier": "alphastline",
   "entries": [
-    {"code": "Created", "wording": "The electronic information of the goods has been received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order's data received, while the shipment's status is ToPickuped (Awaiting Pickup, 待揽收)."}
+    {"code": "Created", "wording": "The electronic information of the goods has been received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order's data received, while the shipment's status is ToPickuped (Awaiting Pickup, 待揽收)."},
+    {"code": "PickedUp_CollectedParcel", "wording": "Item has been collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The parcel collected from the shop, before the sorting centre's inbound scan."},
+    {"code": "InTransit_Other", "wording": "Item inbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The sorting centre's inbound scan, after the collection."},
+    {"code": "InTransit_Other", "wording": "Item outbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The sorting centre's outbound scan."},
+    {"code": "InTransit_Other", "wording": "Item departed from origin.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The departure from the origin, after the sorting centre."},
+    {"code": "InTransit_Other", "wording": "RECEIVED SHIPMENT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line's receipt of the parcel, after its departure from the origin."},
+    {"code": "InTransit_Other", "wording": "PROCESSED AT ORIGIN HUB", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line's origin hub, a minute after its receipt."},
+    {"code": "InTransit_Other", "wording": "WEIGHED AT WAREHOUSE", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line weighing the parcel at its origin hub."},
+    {"code": "InTransit_Other", "wording": "ITEM DESPATCHED TO TRANSSHIPMENT HUB", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line sending the parcel on from its origin hub."},
+    {"code": "InTransit_Other", "wording": "EXPECTED DELIVERY DATE UPDATED", "unmapped": true, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line's notice of a new expected delivery date, at the second of its record of the shipper's data: it moves nothing and keeps the stage of the scan before it."},
+    {"code": "InTransit_Other", "wording": "ELECTRONIC INFORMATION SUBMITTED BY SHIPPER", "unmapped": true, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The line's record of the shipper's data, written after the sorting centre's scans: it moves nothing and keeps the stage of the scan before it."}
   ]
 }

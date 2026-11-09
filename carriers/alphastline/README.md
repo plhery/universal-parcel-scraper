@@ -29,9 +29,12 @@ Tracked through the tracking form on its home page.
 - Each scan gives its wall clock and its instant. Its time is that instant on the offset the two give
   together, Beijing time in the scans seen. When they give no zone's offset, the instant is kept in UTC;
   a scan with only its wall clock is read on Beijing time.
-- The map stages scans by their node: `Created` is the order's data received. Other nodes fall to the
-  shared wording rules. The shipment's status gives the stage when it is further on: `Sented`
-  (shipped), `Finished` (delivered) and `Failed` (exception).
+- The map stages scans by their node: `Created` is the order's data received,
+  `PickedUp_CollectedParcel` the collection, and `InTransit_Other` the sorting centre's scans, the
+  departure and the line's scans on the way. The line also files its record of the shipper's data and
+  its expected delivery date under `InTransit_Other`; they move nothing and have no stage. Other nodes
+  fall to the shared wording rules. The shipment's status gives the stage when it is further on:
+  `Sented` (shipped), `Finished` (delivered) and `Failed` (exception).
 - The reply does not name the line. The line's number names it when one carrier's high-confidence
   rule claims it.
 

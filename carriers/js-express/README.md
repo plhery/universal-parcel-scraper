@@ -120,8 +120,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
 JS Express waybills are `JSE`, two capital letters, ten digits and `YQ`, the layout 17FEIA,
 WanbExpress, SFC and CJ Packet use with prefixes of their own. The `JSE` prefix is JS
 Express's own, so `js-express-1` claims the layout and the adapter takes nothing else. A
-letter O typed among the ten digits is a zero: the tracker knows such a waybill only with the
-zero, and `normalizeTrackingNumber` reads it so. The samples and their sources are in
+letter O typed among the ten digits is a zero, and a zero typed for the second letter is the
+letter O: the tracker knows such a waybill only as JS Express writes it, and
+`normalizeTrackingNumber` reads it so. The samples and their sources are in
 [`numbers.json`](numbers.json).
 
 ## Testing

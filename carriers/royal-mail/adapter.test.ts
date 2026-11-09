@@ -14,7 +14,7 @@ import {
   royalMailTrackingUrl,
 } from './adapter.js';
 import { fetchRoyalMailInBrowser } from './browser.js';
-import { royalMailStage, royalMailStatus, statusMap } from './status.js';
+import { royalMailScanStage, royalMailStage, royalMailStatus, statusMap } from './status.js';
 
 vi.mock(import('./browser.js'), async (importOriginal) => {
   const actual = await importOriginal();
@@ -198,8 +198,21 @@ describe('Royal Mail structured response', () => {
       [undefined, undefined], [undefined, undefined],
       ['ready_for_pickup', 'carrier_map'], ['failed_attempt', 'carrier_map'], ['in_transit', 'carrier_map'],
     ]);
-    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['EVNSC', 'EVNCE']);
+    expect(statusMap.gaps.map(gap => gap.code)).toEqual(['EVNSC', 'EVNCE', 'EVNRT']);
     expect(statusMap.stage('EVNCE', 'collected from your customer service point')).toBeUndefined();
+  });
+
+  it('leaves the delivery office’s retention after a hold for a fee without a stage of its own', () => {
+    const result = parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit' },
+      events: [
+        { eventCode: 'EVNRT', eventName: '**Item Retention**', eventDateTime: '2026-01-20T07:12:40+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVNCF', eventName: '**Held as Customs fee to pay**', eventDateTime: '2026-01-20T07:12:00+00:00', locationName: 'Example DO' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => event.stage)).toEqual([undefined, 'customs']);
+    expect(royalMailScanStage('EVNRT', 'Item Retention')).toBeUndefined();
   });
 
   it('reads a postbox posting and its proof as the acceptance', () => {

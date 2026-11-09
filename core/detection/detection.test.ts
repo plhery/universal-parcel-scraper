@@ -354,6 +354,17 @@ describe('normalization', () => {
     }
   });
 
+  it('reads a zero typed for a JS Express waybill\'s second letter as the letter O', () => {
+    for (const [typed, waybill] of [['JSEA00000000001YQ', 'JSEAO0000000001YQ'], ['jsea0 000000001o yq', 'JSEAO0000000010YQ']] as const) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(waybill);
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'js-express', confidence: 'high' });
+    }
+    // Only a zero in that place, after one letter and before ten digits: other digits and lengths stay as typed.
+    for (const typed of ['JSEA10000000001YQ', 'JSEA0000000001YQ', 'JSEA000000000001YQ', 'JSE000000000001YQ', 'FEIA00000000001YQ']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('drops the slashes of a NO LIMIT shipment number, which reads the same without them', () => {
     for (const typed of ['P/40017/LSMP/2026', ' p/40017/lsmp/2026 ', 'P40017/LSMP/2026', 'P 40017 LSMP 2026']) {
       expect(normalizeTrackingNumber(typed), typed).toBe('P40017LSMP2026');

@@ -75,10 +75,11 @@ export function royalMailEventStage(code: string): Stage | null {
   return EVENT_STAGES.get(code) ?? null;
 }
 
-// Codes the map leaves without a stage on purpose, so their "collected" is not read as an acceptance.
+// Codes the map leaves without a stage on purpose: a "collected" that is not an acceptance, and a retention that moves nothing.
 const UNSTAGED_EVENTS: ReadonlyMap<string, string> = new Map([
   ['EVNSC', 'Collected and signed at a Customer Service Point: seen just before a booked redelivery, and it could as well be the recipient collecting the item.'],
   ['EVNCE', 'Collected from a Customer Service Point: seen just before a booked redelivery, and it could as well be the recipient collecting the item.'],
+  ['EVNRT', 'The delivery office keeps the item, seconds after holding it for a fee to pay: no movement, so the item keeps the stage of the scan before it.'],
 ]);
 
 /** A scan's stage by its code, else by its wording, unless the code leaves it without one on purpose. */

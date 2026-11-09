@@ -367,6 +367,15 @@
       "note": "Seen seconds after EVNSC, just before a booked redelivery's round; it could as well be the recipient's own collection, so it gets no stage."
     },
     {
+      "code": "EVNRT",
+      "wording": "Item Retention",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The delivery office's retention, 40 seconds after \"Held as Customs fee to pay\" at the same office and before the charge was paid: no movement, so the item keeps the stage of the scan before it."
+    },
+    {
       "code": "EVNFS",
       "wording": "Delivery Scan Recorded at Customer Service Point",
       "language": "en",

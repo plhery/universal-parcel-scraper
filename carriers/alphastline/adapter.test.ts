@@ -238,12 +238,45 @@ describe('Alphastline HTTP adapter', () => {
 });
 
 describe('Alphastline status vocabulary', () => {
-  it('records every node the map knows with the stage it gives', () => {
-    for (const entry of statuses.entries as { code: string; wording: string; stage: string }[]) {
-      expect(statusMapAnswer({ carrier: 'alphastline', providerCode: entry.code, description: entry.wording }), entry.code)
-        .toEqual({ kind: 'mapped', stage: entry.stage });
-      expect(alphastlineStage(entry.code, entry.wording), entry.code).toEqual({ stage: entry.stage, source: 'carrier_map' });
+  it('records every node the map knows with the stage it gives, and the line’s notices as gaps', () => {
+    for (const entry of statuses.entries as { code: string; wording: string; stage?: string; unmapped?: boolean; note?: string }[]) {
+      const answer = statusMapAnswer({ carrier: 'alphastline', providerCode: entry.code, description: entry.wording });
+      if (entry.unmapped) {
+        expect(answer, entry.wording).toEqual({ kind: 'intentional_gap', note: entry.note });
+        expect(alphastlineStage(entry.code, entry.wording), entry.wording).toBeNull();
+        continue;
+      }
+      expect(answer, entry.wording).toEqual({ kind: 'mapped', stage: entry.stage });
+      expect(alphastlineStage(entry.code, entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
     }
+  });
+
+  it('reads the collection as accepted and the scans on the way by their node, and the line’s notices move nothing', () => {
+    const hour = 3600;
+    const result = parseAlphastline(changed((shipment) => {
+      shipment.status = 'Sented';
+      shipment.detail.unshift(
+        scan(CREATED_AT + 15 * hour, 'EXPECTED DELIVERY DATE UPDATED', 'InTransit_Other'),
+        scan(CREATED_AT + 15 * hour, 'ELECTRONIC INFORMATION SUBMITTED BY SHIPPER', 'InTransit_Other'),
+        scan(CREATED_AT + 14 * hour, 'ITEM DESPATCHED TO TRANSSHIPMENT HUB', 'InTransit_Other'),
+        scan(CREATED_AT + 2 * hour, 'Item inbound in sorting center.', 'InTransit_Other'),
+        scan(CREATED_AT + hour, 'Item has been collected', 'PickedUp_CollectedParcel'),
+      );
+    }), KNOWN);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'EXPECTED DELIVERY DATE UPDATED' });
+    expect(result.events!.map((event) => [event.provider_code, event.stage ?? null])).toEqual([
+      ['InTransit_Other', null],
+      ['InTransit_Other', null],
+      ['InTransit_Other', 'in_transit'],
+      ['InTransit_Other', 'in_transit'],
+      ['PickedUp_CollectedParcel', 'accepted'],
+      ['Created', 'registered'],
+    ]);
+    // Collected while the order's status still awaits pickup: accepted.
+    expect(parseAlphastline(changed((shipment) => {
+      shipment.detail.unshift(scan(CREATED_AT + hour, 'Item has been collected', 'PickedUp_CollectedParcel'));
+    }), KNOWN)).toMatchObject({ current_stage: 'accepted', current_stage_source: 'carrier_map' });
   });
 
   it('leaves an unknown node to the shared rules, and the shipment statuses to the shipment', () => {
