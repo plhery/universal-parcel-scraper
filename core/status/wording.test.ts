@@ -959,6 +959,7 @@ describe('classifyWording', () => {
       ['Export customs clearance in progress, held for inspection', 'customs'], ['Held for export customs inspection', 'customs'],
       ['出口清关中，海关查验', 'customs'], ['Import customs clearance in progress', 'customs'],
       ['Shipment started the customs clearance process at destination', 'customs'],
+      ['LM Carrier: [DHL] , LM Tracking No.: [1234567890]', 'in_transit'],
       ['Shipment is tendering to third party carrier for final delivery.', 'in_transit'],
       ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.
