@@ -43,6 +43,7 @@ describe('classifyWording', () => {
 
   it.each(["Il va être retourné à l'expéditeur", "Retour à l'expéditeur en cours", "Votre colis est en cours de retour vers l'expéditeur",
     "Le colis sera livré à son expéditeur", 'Die Sendung wird an den Absender zurückgesendet', 'Die Sendung ist auf dem Rückweg zum Absender',
+    'Aufgrund einer Beschädigung der Umverpackung wurde die Sendung von DHL nachverpackt und befindet sich jetzt auf dem Weg zum Absender.',
     'Sendung wird retourniert', 'Il pacco sarà restituito al mittente', 'In restituzione al mittente',
     'Het pakket wordt teruggestuurd naar de afzender', 'Przesyłka zostanie zwrócona do nadawcy', 'Zwrot do nadawcy',
     'Devolver a origen', 'Will be returned to the shipper', 'Your parcel will be returned to its origin', 'Return in progress',
@@ -68,6 +69,11 @@ describe('classifyWording', () => {
     expect(wordingStage('Die Sendung wird morgen zugestellt')).toBe('in_transit');
     expect(wordingStage('Uw pakket wordt vandaag bezorgd')).toBe('in_transit');
     expect(wordingStage('Die Sendung konnte nicht zugestellt werden und wurde an den Absender zurückgeschickt')).toBe('returned');
+  });
+
+  it('reads the way to the sender as a return only for the parcel, not for a courier collecting it', () => {
+    expect(wordingStage('Das Paket ist auf dem Weg zum Absender')).toBe('exception');
+    expect(wordingStage('Der Fahrer ist auf dem Weg zum Absender, um die Sendung abzuholen')).not.toBe('exception');
   });
 
   it.each(['Returned to sender', 'Has been returned to the sender', 'Delivered back to sender',

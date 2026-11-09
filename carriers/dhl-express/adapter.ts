@@ -82,7 +82,7 @@ function unifiedShipment(payload: unknown, matches: (shipment: Record<string, un
   }
   if (matching.length !== 1) throw new IndeterminateError(PROVIDER, wording.reused);
   const shipment = matching[0]!;
-  if (shipment.service !== 'express') throw new IndeterminateError(PROVIDER, 'DHL returned a different division');
+  if (shipment.service !== 'express') throw new IndeterminateError(PROVIDER, `DHL returned a different division (${clean(shipment.service, 40) || 'unnamed'})`);
   return shipment;
 }
 
