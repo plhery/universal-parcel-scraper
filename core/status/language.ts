@@ -546,9 +546,11 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^京东快[递遞]已收取件(?:[，,].*)?$/.test(text)) return 'accepted';
   const chinese = chineseFinalStage(text);
   if (chinese) return chinese;
-  // JD Express's arrival at a site, waiting to be loaded or not, as providers relay it without the site's name:
-  // in transit, as JD's map reads its own states 200077 and 200000. A locker or a pickup point is read above.
+  // JD Express's arrival at a site, waiting to be loaded or not, and its departure on the road, as providers relay
+  // them without the sites' names: in transit, as JD's map reads its own states 200077 and 200000. A locker or a
+  // pickup point is read above.
   if (/^(?:[您你]的)?快件已到[达達](?:【[^【】]{1,80}】)?(?:[，,] ?准[备備]装[车車])?$/.test(text)) return 'in_transit';
+  if (/^(?:[您你]的)?快件已[离離][开開](?:【[^【】]{1,80}】)?的?路上$/.test(text)) return 'in_transit';
   // A forwarder relabelling a parcel under its next carrier's number, as ParcelsApp relays it with the carrier's
   // note: the parcel is in hand on its way. Without the note, a changed number may be data alone.
   if (/^tracking number changed, carrier note: (?:the )?package (?:was |has been )?relabell?ed$/.test(text)) return 'in_transit';

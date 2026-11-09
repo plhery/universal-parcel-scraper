@@ -37,7 +37,7 @@ order; the page's language does not establish its zone. Contact and recipient cl
 removed from scan wording, a station's phone too. Each scan keeps its `state` as its provider
 code, and the states recorded in `status.ts` give its stage; the newest scan decides the
 status. Providers relay these scans without the state or the site's name, and the shared
-wording rules read JD Express's collection and arrivals as those states do. Wordless or contact-only rows with
+wording rules read JD Express's collection, arrivals and departures as those states do. Wordless or contact-only rows with
 valid clocks are omitted; the remaining history is marked incomplete so enabled providers can
 fill it. A reply with no readable scans stays inconclusive. Invalid clocks and malformed rows
 still fail, and a capped history is also marked incomplete.
