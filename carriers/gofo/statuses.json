@@ -54,6 +54,15 @@
       "note": "A delivery attempt that failed; the reason after the comma varies."
     },
     {
+      "code": "209",
+      "wording": "Package Returned to GOFO Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "The day after code 206's failed attempt: the parcel is back at GOFO's facility for another try. GOFO's own summary for the parcel stays Transit, not its Returned."
+    },
+    {
       "code": "322",
       "wording": "Incorrect/Insufficient Address, Additional Details Required for Delivery.",
       "language": "en",

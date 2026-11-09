@@ -142,18 +142,42 @@ function consignmentResult(articles: readonly Record<string, unknown>[], consign
   return results.reduce((last, result) => reached(result) > reached(last) ? result : last);
 }
 
+const SLOT_CLOCK = /^([01]\d|2[0-3])([0-5]\d)([0-5]\d)$/;
+const SLOT_OFFSET = /^[+-](?:[01]\d|2[0-3]):[0-5]\d$/;
+
 /**
- * The days an article's details expect delivery on, `estimatedDeliveryDateRange` from its
- * `fromDate` to its `toDate`, else the day they expect it by, `deliveredByDateISO`; with the
- * estimate fields they fill that are not read, a slot on the day (`timeWindow`) among them.
+ * The slot a `timeWindow` gives on its `deliveryDate`, from `start` to `end` (HHmmss), at the
+ * offset its `timeZone` states, else on that day's wall clock. Once `passedWindow` says the slot
+ * is over, the day alone stands. Null for a window in another shape.
+ */
+function slotEstimate(slot: unknown): WindowEstimate | null {
+  if (!isRecord(slot) || typeof slot.deliveryDate !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(slot.deliveryDate)) return null;
+  const day = slot.deliveryDate;
+  const offset = typeof slot.timeZone === 'string' && SLOT_OFFSET.test(slot.timeZone) ? slot.timeZone : '';
+  const at = (clock: unknown) => {
+    const match = typeof clock === 'string' ? SLOT_CLOCK.exec(clock) : null;
+    return match ? `${day}T${match[1]}:${match[2]}:${match[3]}${offset}` : null;
+  };
+  const [start, end] = [at(slot.start), at(slot.end)];
+  const estimate = slot.passedWindow === true || !start || !end ? windowEstimate(null, day) : windowEstimate(start, end);
+  return estimate.expected_delivery ? estimate : null;
+}
+
+/**
+ * When an article's details expect delivery: the slot on the day (`timeWindow`) the courier's
+ * run gives, else the days `estimatedDeliveryDateRange` gives from its `fromDate` to its
+ * `toDate`, else the day they expect it by, `deliveredByDateISO`; with the estimate fields they
+ * fill that are not read, a countdown on the run (`minutesAway`, `stopsAway`) among them.
  */
 function deliveryEstimate(details: Record<string, unknown>): { estimate: WindowEstimate; unread: Pick<CarrierResult, 'unread_estimates'> } {
   const range = isRecord(details.estimatedDeliveryDateRange) ? details.estimatedDeliveryDateRange : {};
   const window = windowEstimate(range.fromDate, range.toDate);
+  const slot = slotEstimate(details.timeWindow);
+  const run = slot && isRecord(details.timeWindow) ? details.timeWindow : {};
   return {
-    estimate: window.expected_delivery ? window : windowEstimate(null, details.deliveredByDateISO),
-    unread: unreadEstimates({ estimatedDeliveryDateRange: window.expected_delivery ? null : details.estimatedDeliveryDateRange,
-      timeWindow: details.timeWindow }),
+    estimate: slot ?? (window.expected_delivery ? window : windowEstimate(null, details.deliveredByDateISO)),
+    unread: unreadEstimates({ estimatedDeliveryDateRange: window.expected_delivery || slot ? null : details.estimatedDeliveryDateRange,
+      timeWindow: slot ? null : details.timeWindow, 'timeWindow.minutesAway': run.minutesAway, 'timeWindow.stopsAway': run.stopsAway }),
   };
 }
 

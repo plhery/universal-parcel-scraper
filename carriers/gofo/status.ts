@@ -14,6 +14,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['208', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // A delivery attempt that failed, whatever reason follows the comma.
   ['206', { status: 'exception', stage: 'failed_attempt' }],
+  // Back at GOFO's facility after a failed attempt, for another: GOFO's own summary stays Transit, not its Returned.
+  ['209', { status: 'in_transit', stage: 'in_transit' }],
   // The address is wrong or incomplete: the parcel waits for details. Once they are in, the corrected address moves it on.
   ['322', { status: 'exception', stage: 'exception' }],
   ['225', { status: 'in_transit', stage: 'in_transit' }],

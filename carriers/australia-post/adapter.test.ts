@@ -278,7 +278,27 @@ describe('Australia Post status codes and places', () => {
     expect(delivered).not.toHaveProperty('expected_delivery_from');
   });
 
-  it('names a slot on the day, and a range in a shape it does not read, as estimates it does not read yet', () => {
+  it("expects the parcel in the slot the courier's run gives, before any range, until the slot has passed", () => {
+    const onboard = scan('AFP-ER13', 'Onboard for delivery', 'EXAMPLE QLD', '2026-06-10T08:12:40+10:00', "It's coming today");
+    const slot = { start: '094512', end: '114512', stopsAway: null, minutesAway: null, timeZone: '+10:00', onTimeStatus: null,
+      passedWindow: false, deliveryDate: '2026-06-10' };
+    const range = { estimatedDeliveryDateRange: { fromDate: '2026-06-10', toDate: '2026-06-11' } };
+    const result = journey('AU', [onboard], 'In transit', { ...range, timeWindow: slot });
+    expect(result).toMatchObject({ status: 'out_for_delivery', expected_delivery_from: '2026-06-10T09:45:12+10:00',
+      expected_delivery: '2026-06-10T11:45:12+10:00' });
+    expect(result).not.toHaveProperty('unread_estimates');
+    // Without its offset the slot keeps the day's wall clock; once it has passed, the day alone stands.
+    expect(journey('AU', [onboard], 'In transit', { timeWindow: { ...slot, timeZone: null } }))
+      .toMatchObject({ expected_delivery: '2026-06-10 09:45–11:45' });
+    const passed = journey('AU', [onboard], 'In transit', { ...range, timeWindow: { ...slot, passedWindow: true } });
+    expect(passed.expected_delivery).toBe('2026-06-10');
+    expect(passed).not.toHaveProperty('expected_delivery_from');
+    // A countdown on the run is not read yet.
+    expect(journey('AU', [onboard], 'In transit', { timeWindow: { ...slot, stopsAway: 4, minutesAway: 25 } }))
+      .toMatchObject({ expected_delivery: '2026-06-10T11:45:12+10:00', unread_estimates: ['timeWindow.minutesAway', 'timeWindow.stopsAway'] });
+  });
+
+  it('names a slot in another shape, and a range in a shape it does not read, as estimates it does not read yet', () => {
     const departed = scan('AA-0001', 'Item processed at facility', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
     expect(journey('AU', [departed], 'In transit', { timeWindow: { startTime: '09:00', endTime: '12:00' } }))
       .toMatchObject({ expected_delivery: null, unread_estimates: ['timeWindow'] });

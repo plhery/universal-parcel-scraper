@@ -121,10 +121,13 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
   refuses a request without its `AUTH-KEY`, so the address is not looked up.
 - `statusModificationDateTime` and summary milestone timestamps are not scan times (they can be hours
   off the delivery scan). `last_update` and `delivered_at` come from events.
-- The estimate is the article's `estimatedDeliveryDateRange`, from its `fromDate` to its `toDate`, or
-  else the day `deliveredByDateISO` names, until the parcel is delivered, returned or waits for
-  collection. A filled `timeWindow`, a slot on the day, is not read yet and is named in
-  `unread_estimates`, as is a range in another shape.
+- The estimate is the article's `timeWindow`, the slot the courier's run gives on its
+  `deliveryDate` from `start` to `end` (HHmmss) at its `timeZone` offset; else its
+  `estimatedDeliveryDateRange`, from its `fromDate` to its `toDate`; else the day
+  `deliveredByDateISO` names. It holds until the parcel is delivered, returned or waits for
+  collection. The range can be gone once the parcel is on board, and the slot is the newer, finer
+  word. A slot whose `passedWindow` is set keeps its day alone. The run's `minutesAway` and
+  `stopsAway`, and a slot or range in another shape, are named in `unread_estimates`.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.
 - `service_name` is the article's product (`productSubType`, such as a satchel size); its family
   (`articleType`) is not read.
