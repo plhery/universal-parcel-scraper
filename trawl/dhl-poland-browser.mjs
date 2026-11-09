@@ -5,13 +5,15 @@ import { recaptchaAudioBackoff } from './recaptcha-backoff.mjs';
 const ORIGIN = 'https://sprawdz.dhl.com.pl';
 const ENDPOINT = `${ORIGIN}/`;
 const MAX_BODY = 500_000;
+/** The page words its scans in English or Polish, as the language it is opened with says. */
+const LANGUAGES = new Set(['en-gb', 'pl-pl']);
 
 export function dhlPolandBrowserNumber(rawUrl, capture = {}) {
   let url;
   try { url = new URL(rawUrl); } catch { return null; }
   const number = url.searchParams.get('sn');
   if (url.origin !== ORIGIN || url.pathname !== '/' || url.username || url.password || url.hash
-    || !/^\d{11}$/.test(number ?? '') || url.searchParams.get('lang') !== 'en-gb'
+    || !/^\d{11}$/.test(number ?? '') || !LANGUAGES.has(url.searchParams.get('lang'))
     || [...url.searchParams].length !== 2 || capture.captureResponses?.length !== 1
     || capture.captureResponses[0] !== ENDPOINT) return null;
   return number;
@@ -42,6 +44,8 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
   logDiagnostic = record => console.info(JSON.stringify(record)) }) {
   const number = dhlPolandBrowserNumber(url, capture);
   if (!number) return undefined;
+  // The form keeps the language the page was opened with.
+  const language = new URL(url).searchParams.get('lang');
   const start = Date.now();
   const attemptId = randomUUID();
   const nativeDiagnostics = [];
@@ -113,7 +117,7 @@ export async function runDhlPolandBrowser({ url, capture, handle, tier, maxTimeo
         };
         page.on('response', onResponse);
         phase = 'navigation';
-        statusCode = (await page.goto(`${ENDPOINT}?lang=en-gb`, { waitUntil: 'domcontentloaded', timeout: remaining() }))?.status() ?? 0;
+        statusCode = (await page.goto(`${ENDPOINT}?lang=${language}`, { waitUntil: 'domcontentloaded', timeout: remaining() }))?.status() ?? 0;
         if (statusCode >= 400) { outcome = httpOutcome(statusCode); return result(); }
         phase = 'consent';
         const reject = page.locator('#onetrust-reject-all-handler');

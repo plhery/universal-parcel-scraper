@@ -38,7 +38,9 @@ function fixture() {
 }
 test('only the exact carrier URL, canonical waybill and capture endpoint select the helper', () => {
   assert.equal(dhlPolandBrowserNumber(url, capture), number);
+  assert.equal(dhlPolandBrowserNumber(url.replace('en-gb', 'pl-pl'), capture), number);
   for (const candidate of [url + '#x', url + '&sn=' + number, url.replace(number, 'JJD00000000000000000'),
+    url.replace('en-gb', 'de-de'), url.replace('&lang=en-gb', ''),
     url.replace('sprawdz.dhl.com.pl', 'other.test'), url.replace('sprawdz.dhl.com.pl', 'user@sprawdz.dhl.com.pl')]) {
     assert.equal(dhlPolandBrowserNumber(candidate, capture), null);
   }
@@ -63,6 +65,16 @@ test('native verification owns the initial checkbox and requires the page proof 
   active.options.solveNativeCaptcha = async () => true;
   await runDhlPolandBrowser(active.options);
   assert.equal(active.state.submitted, 1);
+});
+test('the page opens in the language the request names, which its form keeps', async () => {
+  for (const language of ['en-gb', 'pl-pl']) {
+    const active = fixture();
+    active.options.url = `${endpoint}?sn=${number}&lang=${language}`;
+    const opened = [];
+    active.page.goto = async target => { opened.push(target); return { status: () => 200 }; };
+    assert.equal((await runDhlPolandBrowser(active.options)).capturedResponses.length, 1);
+    assert.deepEqual(opened, [`${endpoint}?lang=${language}`]);
+  }
 });
 test('failed native solving retains a challenge without submitting the form', async () => {
   const active = fixture(); active.options.maxTimeout = 15000;
