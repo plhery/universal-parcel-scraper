@@ -40,12 +40,13 @@ function outageRedirect(error: unknown): boolean {
 /**
  * Redirects come in runs: after three in a row, the next read is redirected more often than
  * not, whether it comes seconds or minutes later. So once three reads in a row through one
- * route land on the outage page, its reads pause for five minutes. While the browser
- * service's own route is paused, reads go through the fallback proxy when one is configured;
- * otherwise lookups end before any read, as the adapter's own pacing (`self_paced`) with the
- * wait, so a consumer can hold its checks until then rather than count a failure of USPS. The
- * next read after the pause pauses them again if it is redirected too; a loaded page ends the
- * run.
+ * route land on the outage page, its reads pause for five minutes. The pause spares reads; it
+ * does not wait a spell out, as a read twenty minutes on fares about as a read five minutes on.
+ * While the browser service's own route is paused, reads go through the fallback proxy when one
+ * is configured; otherwise lookups end before any read, as the adapter's own pacing
+ * (`self_paced`) with the wait, so a consumer can hold its checks until then rather than count a
+ * failure of USPS. The next read after the pause pauses them again if it is redirected too; a
+ * loaded page ends the run.
  */
 const OUTAGE_RUN = 3;
 const OUTAGE_PAUSE_MS = 5 * 60_000;
@@ -437,15 +438,18 @@ export class USPSTracker {
       recorder,
     }, [
       { id: 'trawl', run },
-      // A read after a redirect loads tracking about one time in three; one after two, one in ten.
-      // A redirect that pauses the service's own route is read once more through the fallback
-      // proxy; a redirect through the proxy is not read again.
+      // A read straight after a redirect loads tracking more often than not, and one after two still
+      // about half the time, within seconds. So a redirect on the service's own route is read again,
+      // up to three reads, through its own route until three redirects in a row pause it, then
+      // through the fallback proxy; a redirect through the proxy is not read again.
       { id: 'trawl', recovers: error => (error instanceof ChallengeError && RECOVERABLE_PAGES.has(error.reason ?? ''))
-        || (outageRedirect(error) && read.route === 'default' && this.#readable(trawl)),
+        || this.#readsAgain(error, read, trawl),
         run },
       // A second read stays on the interstitial about as often as a first one, so
       // a third read passes as often as the second.
-      { id: 'trawl', recovers: error => error instanceof ChallengeError && error.reason === 'interstitial_page', run },
+      { id: 'trawl', recovers: error => (error instanceof ChallengeError && error.reason === 'interstitial_page')
+        || this.#readsAgain(error, read, trawl),
+        run },
     ]);
     // A typed routing barcode opens with the recipient's ZIP code. The package
     // identifier after it is the number USPS tracks, so consumers can keep that.
@@ -461,6 +465,11 @@ export class USPSTracker {
   #readable(trawl: TrawlClient): boolean {
     const fallback = this.#fallbackRun(trawl);
     return pausedMs(fallback ?? outageRun(trawl)) === 0;
+  }
+
+  /** Whether a read the service's own route sent to the outage page is read again. */
+  #readsAgain(error: unknown, read: ReadRoute, trawl: TrawlClient): boolean {
+    return outageRedirect(error) && read.route === 'default' && this.#readable(trawl);
   }
 
   /** Read the browser's rendered page without replaying its session. An

@@ -41,10 +41,12 @@ FLARESOLVERR_URL for browser fallback')`.
 The verification wrapper can stay blank when its tracking request redirects to
 USPS's service outage page. The service captures that exact redirect. It concerns one
 read, but redirects come in runs that do not follow how often we read: a read straight
-after one redirect usually loads, and after three in a row the next read is redirected
-more often than not, whether it comes seconds or minutes later. So a redirected read gets
-one more read, and once three reads in a row through one browser service are redirected,
-its reads pause for five minutes. A lookup during the pause reads nothing and ends as the
+after one redirect usually loads, one after two about half the time, and after three in a
+row the next read is redirected more often than not, whether it comes seconds or minutes
+later. So a lookup reads up to three times while it is redirected, and once three reads in
+a row through one browser service are redirected, its reads pause for five minutes. The
+pause spares reads rather than waiting a spell out: twenty minutes on, the next read fares
+about as it does five minutes on. A lookup during the pause reads nothing and ends as the
 adapter's own pacing, `rate_limited` with `self_paced` and the wait, so a consumer can
 hold its checks until the pause ends rather than count a failure of USPS. The first read after the pause
 pauses them again if it is redirected; a page that loads ends the run, and reads go on at
@@ -55,9 +57,10 @@ history takes precedence over an earlier outage reply.
 USPS turns some server addresses away for hours while others load. With
 `USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, such as a residential connection, reads
 go through it while the service's own reads are paused, starting with the lookup whose
-redirect began the pause. The browser service carries the whole context through the proxy
-and never falls back to its own address. Outside a pause the proxy carries nothing, so its
-traffic stays at the consumer's own refresh rate during a spell. The proxy keeps its own run:
+redirect began the pause; read then, it loads more often than the paused route would. The
+browser service carries the whole context through the proxy and never falls back to its own
+address. Outside a pause the proxy carries nothing, so its traffic stays at the consumer's
+own refresh rate during a spell. The proxy keeps its own run:
 a redirect through it ends the lookup, and three in a row pause it too. Each read's step
 record names its route, `default` or `residential`, without the proxy's address.
 
@@ -146,7 +149,7 @@ Parsing, in order:
   telemetry retains the first failure. The bot check's blank interstitial, an untitled
   page holding only its script, which the browser can capture before the script reloads
   into the tracking page, gets up to two more: a second read stays on it about as often as
-  a first one. A read redirected to the outage page gets one more. Other challenges,
+  a first one. A read redirected to the outage page gets up to two more. Other challenges,
   identity errors and rate limits are not repeated. Pasted legacy query links remain
   supported.
 
