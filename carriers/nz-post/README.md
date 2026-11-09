@@ -17,7 +17,9 @@ that shape and the adapter sends it unchanged.
 
 The short status and depot name provide the timeline. International mail scans
 carry their own EDIFACT codes; the border agency's hold is customs and its
-release resumes transit. The depot placeholder for a scan with no place is
+release resumes transit. Pending border clearance comes hours before an item
+from abroad reaches the office of exchange, so it stays in transit; the item's
+presentation to the border agency after its arrival is customs. The depot placeholder for a scan with no place is
 dropped. Longer descriptions,
 signatures and delivery assets contain recipient data and are excluded.
 Pickup requests remain pre-advice until a collection scan occurs. Empty history

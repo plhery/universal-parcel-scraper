@@ -134,10 +134,19 @@
       "code": "5057",
       "wording": "Pending border clearance",
       "language": "en",
-      "stage": "customs",
+      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-31",
-      "note": "An item from abroad unloaded at Auckland's international gateway for border clearance."
+      "note": "Noted hours before the item's arrival at the office of exchange, which the origin post's relay dates to the same minute as NZ Post's: the item is still on its way."
+    },
+    {
+      "code": "5208",
+      "wording": "Presented for border clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The item presented to the border agency after its arrival at the office of exchange."
     },
     {
       "code": "5017",

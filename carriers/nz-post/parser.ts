@@ -38,8 +38,8 @@ function clock(value: unknown): Pick<CarrierEvent, 'time'> & Record<string, stri
 const INTERNATIONAL_DEPARTURE = '5007';
 /** An airline's scan, "In transit with airline": 5064, or a 528x code (5280 to 5285 seen on an EMS item). */
 const AIRLINE = /^(?:5064|528\d)$/;
-/** An item from abroad in New Zealand: its arrival, the border clearance pending, the border agency and its hold. */
-const ARRIVED = new Set(['5015', '5057', '5016', '5019']);
+/** NZ Post's own scans of an item from abroad: its arrival, the border clearance pending, the border agency, its hold and the presentation to it. */
+const ARRIVED = new Set(['5015', '5057', '5016', '5019', '5208']);
 
 /** A scan abroad: its index in the source and the country its depot names, if any but New Zealand. */
 interface Abroad { index: number; country: string | null; wall: string | null }

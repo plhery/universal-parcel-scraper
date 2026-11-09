@@ -129,7 +129,7 @@ describe('NZ Post exact-reference projection', () => {
       parseNzPost({ success: true, status_code: 1, results: [{ tracking_reference: item, tracking_events: scans }] }, item);
     // NZ Post read 14:51 at the origin post as 14:51 in Auckland (+13:00). The issuer's country gives the clock back.
     expect(parse('ZZ123456785CN').events?.map(event => [event.time, event.stage])).toEqual([
-      ['2026-10-13T23:50:32Z', 'delivered'], ['2026-10-12T05:38:00Z', 'in_transit'], ['2026-10-12T00:07:13Z', 'customs'],
+      ['2026-10-13T23:50:32Z', 'delivered'], ['2026-10-12T05:38:00Z', 'in_transit'], ['2026-10-12T00:07:13Z', 'in_transit'],
       ['2026-10-09T09:57:00+08:00', 'in_transit'], ['2026-10-09T09:34:00+08:00', 'in_transit'], ['2026-10-01T14:51:00+08:00', 'accepted']]);
     // A depot naming its country outranks the issuer, and a country of several clocks keeps the Auckland reading.
     const named = parse('ZZ123456785CN', events.map(event => event.edifact_code === '5002' ? { ...event, depot_name: 'Japan' } : event));
@@ -187,6 +187,15 @@ describe('NZ Post courier labels and international mail', () => {
     expect(result.events?.at(-1)).not.toHaveProperty('location');
     expect(result.events?.at(-2)).toMatchObject({ location: 'Example Post Shop' });
     expect(classifyNzPostStatus('5023')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    // Border clearance pending comes hours before the arrival: the item is on its way until it is presented to the border agency.
+    const inbound = 'ZZ123456785CN';
+    const presented = parseNzPost({ success: true, status_code: 1, results: [{ tracking_reference: inbound, tracking_events: [
+      { date_time: '2026-01-07T21:04:15Z', status: 'Pending border clearance', edifact_code: '5057', depot_name: 'AUCKLAND' },
+      { date_time: '2026-01-08T02:17:58Z', status: 'International arrival', edifact_code: '5015', depot_name: 'AUCKLAND' },
+      { date_time: '2026-01-08T02:19:37Z', status: 'Presented for border clearance', edifact_code: '5208', depot_name: 'AUCKLAND' },
+    ] }] }, inbound);
+    expect(presented).toMatchObject({ status: 'in_transit', current_stage: 'customs', last_status_text: 'Presented for border clearance' });
+    expect(presented.events?.map(event => event.stage)).toEqual(['customs', 'in_transit', 'in_transit']);
     expect(classifyNzPostStatus('6908')).toEqual({ status: 'pending', stage: 'registered' });
     // A carded parcel handed over to an outlet is not yet ready for collection.
     expect(classifyNzPostStatus('144')).toEqual({ status: 'in_transit', stage: 'in_transit' });

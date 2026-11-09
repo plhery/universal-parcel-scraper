@@ -23,7 +23,11 @@ const REGISTERED = new Set(['5303', '6908']);
 const MOVEMENT = new Set(['144', '591', '595', '5002', '5007', '5015', '5017', '5020', '5023', '5041', '5042',
   '5064', '5199', '5213', '5280', '5282', '5283', '5284', '5285', '5292', '5360', '6025', '6028', '6049',
   '6054', '6063', '6068', '6069', '6071']);
-const BORDER = new Set(['5016', '5019', '5057']);
+// The border agency's hold, and the item presented to it after its arrival.
+const BORDER = new Set(['5016', '5019', '5208']);
+// Border clearance pending, which NZ Post notes hours before an item from abroad reaches the office of
+// exchange: the item is still on its way, and its presentation to the border agency (5208) follows the arrival.
+const PENDING_CLEARANCE = '5057';
 
 export function classifyNzPostStatus(code: string): ClassifiedStatus | undefined {
   if (Object.hasOwn(CODES, code)) return CODES[code];
@@ -33,7 +37,7 @@ export function classifyNzPostStatus(code: string): ClassifiedStatus | undefined
   if (COLLECTION.has(code)) return { status: 'in_transit', stage: 'ready_for_pickup' };
   if (REGISTERED.has(code)) return { status: 'pending', stage: 'registered' };
   if (code === '5000') return { status: 'in_transit', stage: 'accepted' };
-  if (MOVEMENT.has(code)) return { status: 'in_transit', stage: 'in_transit' };
+  if (MOVEMENT.has(code) || code === PENDING_CLEARANCE) return { status: 'in_transit', stage: 'in_transit' };
   if (BORDER.has(code)) return { status: 'in_transit', stage: 'customs' };
   return undefined;
 }
