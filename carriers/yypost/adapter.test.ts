@@ -122,6 +122,23 @@ describe('YYpost HTTP adapter', () => {
     }
   });
 
+  it('reads the first round Ecoscooting carries the parcel on as its acceptance, and the later ones as rounds', () => {
+    const relayed = (channel: string, ...details: Row[]) => parseYypost(changed((item) => {
+      item.channel_hawbcode = channel;
+      item.details = details;
+    }), PARCEL);
+    const sorted = scan('2026-05-06 17:32:24', 'Shipment been picked up by the destination partner', '', 'WCLS');
+    const accepted = scan('2026-05-07 05:40:10', 'Out of delivery', '', 'OK');
+    const round = scan('2026-05-09 11:15:40', 'Out of delivery', '', 'OK');
+    const stages = (result: ReturnType<typeof parseYypost>) => result.events!.map((event) => [event.local_time ?? event.time, event.stage]);
+    expect(relayed(ONWARD, accepted, sorted)).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(stages(relayed(ONWARD, round, accepted, sorted))).toEqual([['2026-05-09T11:15:40', 'out_for_delivery'],
+      ['2026-05-07T05:40:10', 'in_transit'], ['2026-05-06T17:32:24', 'in_transit']]);
+    expect(relayed(ONWARD, round, accepted, sorted)).toMatchObject({ current_stage: 'out_for_delivery' });
+    // Another onward network's round is its round.
+    expect(relayed('SAMPLEREF0001', accepted, sorted)).toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'carrier_map' });
+  });
+
   it('checks every clock, stages new wording through the shared rules, and drops who took a delivery', () => {
     for (const date of ['2026-05-10 24:00:00', '2026-02-30 08:00:00', '2026-05-10T08:00:00', '2026-05-10 08:00', '', null]) {
       expect(() => parseYypost(changed((item) => { item.details = [{ ...scan('', 'Flight arrival'), track_occur_date: date }]; }), PARCEL), String(date))

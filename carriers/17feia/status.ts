@@ -40,6 +40,8 @@ const LABELS: ReadonlyMap<string, Stage> = new Map([
   // rules would read "delivered to warehouse" as a delivery.
   ['清关行提货到仓', 'customs'],
   ['清关中', 'customs'],
+  // Customs inspect the shipment and have not released it.
+  ['海关查验，暂未放行', 'customs'],
   ['清关完成', 'in_transit'],
   // Handed in at the partner's depot, before the partner's own first scan.
   ['已交仓，等待上网', 'in_transit'],

@@ -2,6 +2,7 @@ import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detectio
 import { InvalidInputError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { countryCode, isoTime } from '../../core/time/index.js';
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -19,6 +20,12 @@ const MAX_EVENTS = 100;
 // carrier the onward number belongs to. Ecoscooting's order creation falls to
 // the second of Ecoscooting's own record of it on Spain's clock.
 const ONWARD_CLOCKS: Readonly<Record<string, string>> = { ecoscooting: 'Europe/Madrid' };
+// YYpost words the onward network's acceptance of the parcel for its last mile and that network's
+// rounds alike, "Out of delivery" under its out-for-delivery code. Ecoscooting accepts every parcel
+// before its first round, so in its histories the first such row is the acceptance, in transit,
+// and the later ones the rounds.
+const ACCEPTANCE_AS_ROUND: ReadonlySet<string> = new Set(['ecoscooting']);
+const ROUND = 'out of delivery';
 
 /** A YYpost parcel number; anything else is not one its tracker answers. */
 export function normalizeYypostNumber(raw: string): string {
@@ -68,6 +75,14 @@ export function parseYypost(payload: unknown, raw: string): CarrierResult {
     });
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
+  if (detected?.confidence === 'high' && ACCEPTANCE_AS_ROUND.has(detected.carrier)) {
+    // The scans come newest first: the acceptance is the last.
+    for (let index = events.length - 1; index >= 0; index -= 1) {
+      if (normalizeStatusWording(events[index]!.description!) !== ROUND) continue;
+      events[index] = { ...events[index]!, stage: 'in_transit', stage_source: 'carrier_map' };
+      break;
+    }
+  }
 
   const newest = events[0]!;
   // The shipment order the line records once the parcel has left the warehouse is no step back.

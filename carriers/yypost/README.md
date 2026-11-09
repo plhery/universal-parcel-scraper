@@ -27,6 +27,10 @@ CN.
   the onward number is Ecoscooting's, such a row is dated on Spain's clock: so read, its
   shipment order falls to the second of Ecoscooting's own record of it, while China's clock,
   which the row's neighbours would give it, puts it hours earlier.
+- YYpost words the onward network's acceptance of the parcel for its last mile and that network's
+  rounds alike, "Out of delivery" under its out-for-delivery code. Ecoscooting accepts every parcel
+  before its first round, so in an Ecoscooting history the first such row is the acceptance, in
+  transit, and the later ones are rounds. Behind GOFO, the row is GOFO's round.
 - Scans are English wording from YYpost's warehouse in Shenzhen, its air line through Hong Kong
   and the destination's clearance, staged by the wording recorded in
   [statuses.json](statuses.json), then the shared rules. Scan codes only mark a row as

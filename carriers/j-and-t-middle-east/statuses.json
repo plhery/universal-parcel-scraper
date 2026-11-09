@@ -7,6 +7,7 @@
     {"code": "5", "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-02"},
     {"code": "5", "wording": "Picked-up", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-02", "note": "J&T collected the parcel. After an earlier scan moved it, as an import's clearance and transit at the gateway branch, it is J&T's collection for the last mile and reads as in transit."},
     {"code": "5", "wording": "Delivering", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "The courier's delivery round, the courier delivering the parcel; the code groups it with the transit labels."},
+    {"code": "5", "wording": "Signed", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The delivery, the scan J&T calls a sign scan, after the courier's round: its sentence says the recipient it names signed for the parcel. The code groups it with the transit labels."},
     {"code": "6", "wording": "Abnormal Parcel", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-03", "note": "J&T's problem parcel, after a delivery round that did not deliver it; the reason is in the sentence under it, which is not read."}
   ]
 }

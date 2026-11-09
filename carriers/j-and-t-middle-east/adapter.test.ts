@@ -105,6 +105,18 @@ describe('J&T Express Middle East HTTP adapter', () => {
     expect(collected).toMatchObject({ current_stage: 'accepted', current_stage_source: 'carrier_map' });
   });
 
+  it('reads the signed scan after the courier’s rounds as the delivery', () => {
+    const result = parseJAndTMiddleEast(changed('in-transit', (answer) => {
+      const first = answer.details.at(-1)!;
+      answer.details = ([['2026-07-01 09:00:00', 'Order creation', 1], ['2026-07-02 10:08:40', 'Delivering', 5],
+        ['2026-07-02 12:30:50', 'Abnormal Parcel', 6], ['2026-07-03 10:24:49', 'Delivering', 5], ['2026-07-03 15:28:56', 'Signed', 5]] as const)
+        .map(([scanTime, status, statusCode]) => ({ ...first, scanTime, status, statusCode })).reverse();
+    }), IN_TRANSIT);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map', last_status_text: 'Signed',
+      delivered_at: '2026-07-03T15:28:56+03:00' });
+    expect(result.events!.map((event) => event.stage)).toEqual(['delivered', 'out_for_delivery', 'exception', 'out_for_delivery', 'registered']);
+  });
+
   it('reads the unknown-waybill code as not found, a captcha request as a challenge and a waybill without scans as no history', () => {
     expect(() => parseJAndTMiddleEast(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const refusal = (code: number, msg: string) => ({ code, msg, data: null, succ: false, fail: true });

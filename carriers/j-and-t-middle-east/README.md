@@ -32,7 +32,7 @@ lookup its tracking page makes.
 - A scan's description is the label the page heads it with, such as `Order creation`, and its
   `statusCode` is the provider code. The page reads the code only to pick an icon, and one code
   groups several labels, so the label stages the scan: through the map in `statuses.json`, else
-  the shared wording rules.
+  the shared wording rules. The delivery is labelled `Signed`, under the code of the transit labels.
 - A pickup after a scan that moved the parcel, as an import's clearance and transit at the
   gateway branch, is J&T collecting it for the last mile, so it reads as in transit.
 - A scan's location is its branch's town and province. The sentence under each label
