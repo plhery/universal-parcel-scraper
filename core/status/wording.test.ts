@@ -960,6 +960,8 @@ describe('classifyWording', () => {
       ['出口清关中，海关查验', 'customs'], ['Import customs clearance in progress', 'customs'],
       ['Shipment started the customs clearance process at destination', 'customs'],
       ['LM Carrier: [DHL] , LM Tracking No.: [1234567890]', 'in_transit'],
+      // Australia Post's scan by the post abroad, as Ship24 relays it without the code.
+      ['Received by postal carrier for delivery', 'in_transit'], ['Item received by the destination postal carrier for delivery', 'in_transit'],
       ['Shipment is tendering to third party carrier for final delivery.', 'in_transit'],
       ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.

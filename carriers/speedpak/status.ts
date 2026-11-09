@@ -56,6 +56,17 @@ const LABELS: Readonly<Record<string, ClassifiedStatus>> = {
   目的国小包收货确认: MOVING,
   开始派送: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   派送完成: { status: 'delivered', stage: 'delivered' },
+  // The labels it gives DHL Express's scans on the parcels DHL carries all the way.
+  已取件: { status: 'in_transit', stage: 'accepted' },
+  尾程供应商信息: MOVING,
+  服务站已处理: MOVING,
+  到达操作中心: MOVING,
+  离开操作中心: MOVING,
+  清关放行: MOVING,
+  到达配送中心: MOVING,
+  由递送快递员携带: { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  无人在家: { status: 'exception', stage: 'failed_attempt' },
+  等待收货人取货: { status: 'out_for_delivery', stage: 'ready_for_pickup' },
 };
 
 const DELIVERED = /^Delivered(?:$|\. \()/;

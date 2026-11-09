@@ -44250,7 +44250,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^E[ES][A-Z0-9]{26}$",
+        "pattern": "^E[ESX][A-Z0-9]{26}$",
         "confidence": "high"
       }
     ]

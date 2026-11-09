@@ -12,7 +12,8 @@ verification leave enabled universal providers available.
 
 The request and positive reply must name the whole domestic waybill. A successful empty
 reply is no history, rather than a confirmed missing waybill. Malformed replies, verification
-refusals, rate limits and other HTTP failures stay distinct. The adapter
+refusals, rate limits and other HTTP failures stay distinct. A refusal that is neither a
+challenge nor a rate limit stays a schema failure that keeps J&T's code and flag. The adapter
 retains every dated milestone and its provider code, preserving offset-free wall clocks.
 Staff, recipient fields, free-form remarks, signatures and proof-of-delivery data are omitted.
 

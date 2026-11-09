@@ -23,12 +23,21 @@ function clock(raw: unknown): Pick<CarrierEvent, 'time' | 'local_time'> {
   if (!explicitOffsetTime(time)) throw new SchemaError(PROVIDER, 'J&T Brazil returned an invalid stated offset');
   return { time };
 }
+/** A reply's code or flag as the message shows it: a short number, word or boolean, else its type. */
+function replyScalar(value: unknown): string {
+  if (typeof value === 'boolean' || (typeof value === 'number' && Number.isSafeInteger(value))) return String(value);
+  return typeof value === 'string' && /^[A-Za-z0-9_.-]{1,20}$/.test(value) ? value : value === null ? 'null' : typeof value;
+}
 export function parseJAndTBr(data: unknown, raw: string): CarrierResult {
   const number = normalizeJAndTBrNumber(raw);
   if (isRecord(data) && data.failureKind === 'challenge') throw new ChallengeError(PROVIDER, 'J&T Brazil refused guest verification');
   if (isRecord(data) && data.failureKind === 'rate_limited') throw new RateLimitedError(PROVIDER);
-  if (!isRecord(data) || data.code !== 1 || data.succ !== true || data.identityMismatch || !Array.isArray(data.data)
-    || data.data.length > 1) throw new SchemaError(PROVIDER, 'J&T Brazil changed its guest tracking reply');
+  // A refusal the page's helper could not type keeps J&T's code in the message, the only trace of what it said.
+  if (isRecord(data) && (data.code !== 1 || data.succ !== true)) {
+    throw new SchemaError(PROVIDER, `J&T Brazil answered without success (code ${replyScalar(data.code)}, succ ${replyScalar(data.succ)})`);
+  }
+  if (isRecord(data) && data.identityMismatch) throw new SchemaError(PROVIDER, 'J&T Brazil answered for another waybill');
+  if (!isRecord(data) || !Array.isArray(data.data) || data.data.length > 1) throw new SchemaError(PROVIDER, 'J&T Brazil changed its guest tracking reply');
   // An empty success has no response identity or explicit absence claim.
   if (data.data.length === 0) throw new NoHistoryError(PROVIDER, 'J&T Brazil returned no dated history');
   const record: unknown = data.data[0];

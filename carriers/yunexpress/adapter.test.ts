@@ -74,6 +74,9 @@ describe('YunExpress captured response projection', () => {
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
+    // A European last-mile carrier's steps after the flight, and its return of an unclaimed item.
+    expect(['Departure transit facility', 'Sorting in hub', 'Transport to destination', 'Returned (Unclaimed item)']
+      .map((wording) => statusMap.stage(null, wording.toLowerCase()))).toEqual(['in_transit', 'in_transit', 'in_transit', 'returned']);
     expect(['Arrived at GOFO Regional Hub', 'Loaded on Vehicle', 'Arrived at GOFO Delivery Station', 'Out for Delivery']
       .map((wording) => yunExpressStatus(wording)?.stage)).toEqual(['in_transit', 'in_transit', 'in_transit', 'out_for_delivery']);
     // Yuntrack's capitals and spacing vary; the wording does not.

@@ -533,6 +533,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // The same handover seen from the network that delivers the parcel, not the first carrier's acceptance.
   if (/(?<!\bnot (?:yet )?(?:been )?)\b(?:picked up|collected|received) by (?:the |a |our )?(?:last|final)[- ]mile (?:carrier|courier|(?:delivery )?partner|provider)s?\b/.test(text)
     || /^hand(?:ed )?over to (?:the )?(?:last|final)[- ]mile(?: (?:carrier|courier|(?:delivery )?partner|provider))?$/.test(text)) return 'in_transit';
+  // The post abroad taking the item in for delivery, as Australia Post words it (INT-0035) and Ship24
+  // relays it without the code: the item reached the destination's network, not yet its round.
+  if (/^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:(?:has been|was) )?received by (?:the |a |an )?(?:local |destination )?postal carrier for delivery$/.test(text)) return 'in_transit';
   // Posting/collection by the carrier, not recipient pickup or data submission.
   if (/^(?:the |your )?(?:item|package|parcel|shipment) (?:has been |was |is )?(?:received for transport|(?:dropped off|deposited) by (?:the )?sender (?:at|with) (?:our |the |a )?postal partner)\b/.test(text)) return 'accepted';
   // A vehicle load and a gateway scan prove handling, but do not name the delivery round. So does an

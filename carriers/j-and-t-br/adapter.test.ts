@@ -48,6 +48,13 @@ describe('J&T Brazil guest history', () => {
     const data = fixture(); change(data);
     expect(() => parseJAndTBr(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+  it("keeps J&T's code in an untyped refusal's message, and names a reply for another waybill", () => {
+    expect(() => parseJAndTBr({ code: 0, succ: false, data: null, failureKind: null }, NUMBER))
+      .toThrow(expect.objectContaining({ kind: 'schema', message: expect.stringContaining('without success (code 0, succ false)') }));
+    expect(() => parseJAndTBr({ code: '<b>', succ: null, data: null }, NUMBER)).toThrow(expect.objectContaining({ message: expect.stringContaining('(code string, succ null)') }));
+    expect(() => parseJAndTBr({ code: 1, succ: true, data: null, identityMismatch: true }, NUMBER))
+      .toThrow(expect.objectContaining({ kind: 'schema', message: expect.stringContaining('another waybill') }));
+  });
   it('keeps empty successes inconclusive and typed refusals separate', () => {
     for (const data of [{ code: 1, succ: true, data: [] }, { code: 1, succ: true, data: [{ keyword: NUMBER, details: [] }] }]) {
       expect(() => parseJAndTBr(data, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));

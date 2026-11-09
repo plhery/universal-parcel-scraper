@@ -290,6 +290,76 @@
       "stage": "delivered",
       "confirmedBy": "live",
       "note": "SpeedPAK's own label (eventDescCn), also beside a last-mile carrier's wording."
+    },
+    {
+      "wording": "已取件",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "尾程供应商信息",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "服务站已处理",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "到达操作中心",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "离开操作中心",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "清关放行",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "到达配送中心",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "由递送快递员携带",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "无人在家",
+      "language": "zh",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
+    },
+    {
+      "wording": "等待收货人取货",
+      "language": "zh",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "The label beside DHL Express's scans (eventDescCn) on the parcels DHL carries all the way."
     }
   ]
 }

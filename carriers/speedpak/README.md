@@ -12,13 +12,13 @@ Each scan is classified by its English wording, else by SpeedPAK's own Chinese l
 
 SpeedPAK can send its Chinese label as the English wording too, such as 货物运输中; the adapter shows its English. A scan's place is its city and country, but a partner's scan can give a country's code as its city and the destination as its country, before the parcel leaves for it: the code is where the scan happened, and it is the place. A departure for the destination country that gives no such code has no place: the country it names is where the parcel goes.
 
-Labelled last-mile references, in English or Chinese, are retained for handoff discovery. A USPS routing barcode opens with the recipient's ZIP code, so the hand-off line, the status summary and the reference keep only the package identifier after it (`wording.ts`); the identity policy in `identity.ts` lets a line stored with the barcode take the trimmed wording. The named carrier is reported when the catalog knows it and its detection offers the reference. Conflicting references do not select a partner. `delivered_at` is the newest scan's time when it is a delivery.
+Labelled last-mile references, in English or Chinese, are retained for handoff discovery. A USPS routing barcode opens with the recipient's ZIP code, so the hand-off line, the status summary and the reference keep only the package identifier after it (`wording.ts`); the identity policy in `identity.ts` lets a line stored with the barcode take the trimmed wording. The named carrier is reported when the catalog knows it and its detection offers the reference. A bare brand names the brand's network that the reference fits: `DHL` on the parcels DHL Express carries from Japan names DHL Express for its waybill. Conflicting references do not select a partner. `delivered_at` is the newest scan's time when it is a delivery.
 
 Orange Connex tracking links (`orangeconnex.com`, `orangeconnex.cn`) name SpeedPAK only for a number its detection claims (`ownNumbersOnly`). Any other number they hold is detected on its own.
 
 ## Limitations
 
-Only SpeedPAK identifiers are accepted; `EX` numbers seen in archives are not, and the tracker answers not found for them. Older numbers expire within months. Recipient postcodes are discarded. An unknown status remains unmapped, and a missing scan timestamp stays unresolved.
+Only SpeedPAK's 28-character `EE`, `ES` and `EX` numbers are accepted. [eBay Japan](https://wwwcojp.ebay.com/speedpak/detail) also names `EM` as a SpeedPAK prefix, but its shape is unknown, so `EM` numbers are refused. Older numbers expire within months. Recipient postcodes are discarded. An unknown status remains unmapped, and a missing scan timestamp stays unresolved.
 
 ## Testing
 

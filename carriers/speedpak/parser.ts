@@ -5,6 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { brandCarrierForNumber } from '../../providers/shared/hints.js';
 import { HANDOFF, speedpakEnglish, speedpakScanStatus } from './status.js';
 import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 
@@ -14,7 +15,7 @@ const DEPARTURE_TO_DESTINATION = /^departure to (?:the )?country of destination\
 
 export function normalizeSpeedpakNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
-  if (!/^E[ES][A-Z0-9]{26}$/.test(number)) throw new InvalidInputError(PROVIDER, 'SpeedPAK requires a 28-character EE or ES tracking number');
+  if (!/^E[ESX][A-Z0-9]{26}$/.test(number)) throw new InvalidInputError(PROVIDER, 'SpeedPAK requires a 28-character EE, ES or EX tracking number');
   return number;
 }
 
@@ -68,8 +69,9 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
   if (country) output.destination_country = country;
   if (handoffs.size === 1) {
     const [reference, name] = [...handoffs][0]!;
-    // Named only when the catalog knows the carrier and its detection offers the reference.
-    const partner = carrierIdFromPartner(name);
+    // Named only when the catalog knows the carrier and its detection offers the reference. A bare
+    // brand, such as DHL for the parcels DHL Express carries, names the network the reference fits.
+    const partner = carrierIdFromPartner(name) ?? brandCarrierForNumber(name, reference);
     if (partner && partner !== 'speedpak' && (detectCarrierMatch(reference).candidates as string[]).includes(partner)) {
       output.delivery_carrier = partner;
     }

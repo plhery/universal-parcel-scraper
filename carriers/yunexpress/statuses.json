@@ -851,6 +851,38 @@
       "confirmedBy": "bundle",
       "firstSeen": "2026-10-08",
       "note": "Also labelled Transit by the page; used like 20."
+    },
+    {
+      "wording": "Departure transit facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Relayed from the last-mile carrier in Europe, without a code."
+    },
+    {
+      "wording": "Sorting in hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Relayed from the last-mile carrier in Europe, without a code."
+    },
+    {
+      "wording": "Transport to destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Relayed from the last-mile carrier in Europe, without a code."
+    },
+    {
+      "wording": "Returned (Unclaimed item)",
+      "stage": "returned",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The last-mile carrier sending back an item nobody collected."
     }
   ]
 }

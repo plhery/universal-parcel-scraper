@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SpeedpakTracker } from './adapter.js';
 import { normalizeSpeedpakNumber, parseSpeedpak } from './parser.js';
@@ -103,6 +104,35 @@ describe('SpeedPAK response projection', () => {
     const result = parseSpeedpak(payload, NUMBER);
     expect(result.delivery_tracking_number).toBe('UUS00T0000000000000');
     expect(result.delivery_carrier).toBeUndefined();
+  });
+
+  it('tracks an EX number DHL Express carries, staged by its labels, and names DHL Express for the waybill', () => {
+    const number = 'EX0000000000000DL00000000A0N';
+    const scans: [string, string, string?][] = [
+      ['Awaiting collection by the consignee', '等待收货人取货', 'IT'],
+      ['Delivery attempted but no response at Consignee address', '无人在家', 'IT'],
+      ['Shipment is out with courier for delivery', '由递送快递员携带', 'IT'],
+      ['Arrived at DHL Delivery Facility  EXAMPLE CITY-ITALY', '到达配送中心', 'IT'],
+      ['Clearance processing complete at EXAMPLE HUB-ITALY', '清关放行', 'IT'],
+      ['Arrived at DHL Sort Facility  EXAMPLE HUB-ITALY', '到达操作中心', 'IT'],
+      ['Shipment has departed from a DHL facility OSAKA-JAPAN', '离开操作中心', 'JP'],
+      ['LM Carrier: [DHL] , LM tracking No.: [1234567891]', '尾程供应商信息'],
+      ['Processed at OSAKA-JAPAN', '服务站已处理', 'JP'],
+      ['Processed at OSAKA-JAPAN', '已取件', 'JP'],
+      ['Order Created', '订单已创建', 'JP'],
+    ];
+    const traces = scans.map(([eventDesc, eventDescCn, oprCountry], index) => ({ eventDesc, eventDescCn, oprTimestamp: 1767362400000 - index * 3_600_000, ...(oprCountry ? { oprCountry } : {}) }));
+    const payload = { success: true, result: { notExistsTrackingNumbers: [], waybills: [{ trackingNumber: number, consigneeCountryCode: 'IT',
+      lastStatus: 'Awaiting collection by the consignee', lastStatusCn: '等待收货人取货', traces }] } };
+    const result = parseSpeedpak(payload, number);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', destination_country: 'IT',
+      delivery_carrier: 'dhl-express', delivery_tracking_number: '1234567891' });
+    expect(result.events?.map(event => event.stage)).toEqual([
+      'ready_for_pickup', 'failed_attempt', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'registered',
+    ]);
+    expect(normalizeSpeedpakNumber(number.toLowerCase())).toBe(number);
+    expect(() => normalizeSpeedpakNumber(`EM${number.slice(2)}`)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+    expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'speedpak', confidence: 'high' });
   });
 
   it('rejects malformed scans and bounds history', () => {

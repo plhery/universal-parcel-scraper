@@ -54,6 +54,11 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Arrived at GOFO Delivery Station', { status: 'in_transit', stage: 'in_transit' }],
   ['Out for Delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Departure from the international sorting center', { status: 'in_transit', stage: 'in_transit' }],
+  // A European last-mile carrier's steps it relays after the flight, and its return of an item nobody collected.
+  ['Departure transit facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Sorting in hub', { status: 'in_transit', stage: 'in_transit' }],
+  ['Transport to destination', { status: 'in_transit', stage: 'in_transit' }],
+  ['Returned (Unclaimed item)', { status: 'exception', stage: 'returned' }],
   ['Shipment in transit to DHL', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment is in transit to carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Preparing for delivery', { status: 'in_transit', stage: 'in_transit' }],
