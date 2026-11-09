@@ -6,9 +6,9 @@ Portugal. It runs its own tracker on `tracking.dpd.pt`, apart from the `dpd.com`
 
 ## How it works
 
-1. `direct`: one `GET https://tracking.dpd.pt/?reference={number}`, the address the page's
-   search form sends the browser to; the older `/track-and-trace?reference=` address redirects
-   there. It needs no cookie, token or browser. The server-rendered page in Portuguese names the
+1. `direct`: one `GET https://tracking.dpd.pt/pt?reference={number}`, the address the page's
+   search form sends the browser to; the root and the older `/track-and-trace?reference=` address
+   redirect there. It needs no cookie, token or browser. The server-rendered page in Portuguese names the
    reference asked and lists the parcel's scans, newest first, with a code, a day, a time, a
    wording, a comment and a map link.
 2. `retry`: one more try when the request fails to reach DPD Portugal or hangs. The first try
@@ -77,8 +77,9 @@ a range DPD Portugal issues too.
 
 ## Links
 
-The tracker reads the number from `reference` on `tracking.dpd.pt/`, so
-`?reference={number}` opens one parcel; `/track-and-trace?reference={number}` redirects there. DPD's Portuguese pages build the same address on
+The tracker reads the number from `reference` on `tracking.dpd.pt/pt`, so
+`/pt?reference={number}` opens one parcel; `/?reference={number}` and
+`/track-and-trace?reference={number}` redirect there. DPD's Portuguese pages build the same address on
 `dpd.pt`, which forwards to the tracker, and archived lookups also use the English page
 `/en/getting-parcel/track-trace`.
 

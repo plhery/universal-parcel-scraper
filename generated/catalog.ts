@@ -17345,9 +17345,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true,
       "browser": true
     },
-    "canaryUrl": "https://tracking.dpd.pt/",
-    "trackingUrlTemplate": "https://tracking.dpd.pt/?reference={trackingNumber}",
-    "trackingSearchUrl": "https://tracking.dpd.pt/",
+    "canaryUrl": "https://tracking.dpd.pt/pt",
+    "trackingUrlTemplate": "https://tracking.dpd.pt/pt?reference={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.dpd.pt/pt",
     "linkRules": [
       {
         "domains": [

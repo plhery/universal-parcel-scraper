@@ -45,7 +45,7 @@ describe('DPD Portugal tracking adapter', () => {
   });
 
   it('asks the page the old address now redirects to, over the global fetch without a fetcher', async () => {
-    expect(dpdPtLookupUrl(DELIVERED)).toBe(`https://tracking.dpd.pt/?reference=${DELIVERED}`);
+    expect(dpdPtLookupUrl(DELIVERED)).toBe(`https://tracking.dpd.pt/pt?reference=${DELIVERED}`);
     const global = vi.fn<typeof fetch>().mockImplementation(async () => reply(delivered));
     vi.stubGlobal('fetch', global);
     try {

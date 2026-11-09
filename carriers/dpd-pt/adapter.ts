@@ -9,8 +9,8 @@ import type { TrawlClient } from '../../core/transport/trawl.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { DPD_PT_MAX_BYTES, normalizeDpdPtNumber, parseDpdPt, PROVIDER } from './parser.js';
 
-/** DPD Portugal's tracker; its search form sends the browser to this address with the reference. */
-export const DPD_PT_TRACKER = 'https://tracking.dpd.pt/';
+/** DPD Portugal's tracker in Portuguese; its search form sends the browser to this address with the reference. */
+export const DPD_PT_TRACKER = 'https://tracking.dpd.pt/pt';
 const REDIRECTS = [301, 302, 303, 307, 308];
 // The page answers an unknown reference itself: a missing page is not a missing parcel.
 const GONE = [404, 410];
