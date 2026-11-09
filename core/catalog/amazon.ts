@@ -23,18 +23,20 @@ const STORES: Readonly<Record<string, string>> = {
   HR: 'de', SI: 'de', EE: 'de', LV: 'de', LT: 'de', GR: 'de', IS: 'co.uk',
 };
 
-const DELIVERY_STORES: Readonly<Record<string, string>> = { ...STORES, CA: 'ca', MX: 'com.mx' };
+const DELIVERY_STORES: Readonly<Record<string, string>> = { ...STORES, CA: 'ca', MX: 'com.mx', AU: 'com.au' };
 
 /**
  * The Amazon store whose order history holds the parcel. A number's country
- * prefix decides. TBA names no country, and amazon.ca orders ship under it too,
- * so the delivery country decides there, and when there is no number.
+ * prefix decides; TBAU is Amazon Australia's. TBA names no country, and amazon.ca
+ * orders ship under it too, so the delivery country decides there, and when there
+ * is no number.
  */
 export function amazonMarketplace(raw: string, country = ''): string {
   const number = raw.replace(/[\s.-]/g, '').toUpperCase();
   const destination = country.trim().toUpperCase();
   if (number.startsWith('TBC')) return 'ca';
   if (number.startsWith('TBM')) return 'com.mx';
+  if (number.startsWith('TBAU')) return 'com.au';
   if (number.startsWith('TBA')) return destination === 'CA' ? 'ca' : 'com';
   if (!number) return DELIVERY_STORES[destination] ?? 'com';
   return STORES[number.slice(0, 2)] ?? 'com';

@@ -25,6 +25,13 @@ describe('Amazon order-history store', () => {
     expect(amazonMarketplace('')).toBe('com');
   });
 
+  it('sends TBAU numbers and parcels delivered in Australia to amazon.com.au', () => {
+    expect(amazonOrdersUrl('TBAU999999980')).toBe('https://www.amazon.com.au/gp/your-account/order-history');
+    // TBAU names Australia, so a delivery country does not override it.
+    expect(amazonMarketplace('TBAU999999980', 'CA')).toBe('com.au');
+    expect(amazonMarketplace('', 'AU')).toBe('com.au');
+  });
+
   it('links a parcel delivered in Canada under TBA to amazon.ca', () => {
     const parcel = { carrier: 'amazon-logistics' as const, trackingNumber: 'TBA123456789012' };
     expect(parcelTrackingLinks({ ...parcel, destinationCountry: 'CA' })[0]?.url).toBe('https://www.amazon.ca/gp/your-account/order-history');

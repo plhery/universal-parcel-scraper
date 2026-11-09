@@ -253,6 +253,11 @@ describe('evidence-backed tracking formats', () => {
     expect(detectCarrierMatch('TBB123456789012').carrier).toBe('unknown');
   });
 
+  it('files Amazon Australia\'s TBAU and nine digits with Amazon Logistics, and no other length', () => {
+    expect(detectCarrierMatch('TBAU999999980')).toMatchObject({ carrier: 'amazon-logistics', confidence: 'high' });
+    for (const number of ['TBAU99999998', 'TBAU9999999801']) expect(detectCarrierMatch(number).carrier).not.toBe('amazon-logistics');
+  });
+
   it('suggests J&T Cargo for a twelve-digit waybill starting with 20 and reads its link', () => {
     expect(detectCarrierMatch('200123456789').candidates).toContain('j-and-t-cargo');
     expect(detectCarrierMatch('210123456789').candidates).not.toContain('j-and-t-cargo');

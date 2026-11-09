@@ -11,7 +11,7 @@ check proves the tracker knows it.
 1. `direct`: `GET {origin}/api/tracker/{number}` with the public tracking page as `Referer`
    (15 s timeout, 2 MB cap). The origin comes from the number's prefix
    (`core/catalog/amazon.ts`): `IT`, `ES` and `UK`/`GB` have their own `track.amazon.*`
-   host, `TBA`, `TBC` and `TBM` use `.com`, every other European prefix uses `track.amazon.fr`.
+   host, `TBA`, `TBC`, `TBM` and `TBAU` use `.com`, every other European prefix uses `track.amazon.fr`.
    `track.amazon.com` is Amazon's North American tracker. Its page lists only the US, so the
    European tracker's list of sites (GB, IT, IN, FR, ES) leaves it out, and the European hosts
    answer not found for TBA parcels it knows. Canada and Mexico have no tracker host of their own.
@@ -47,7 +47,7 @@ Checks, before any history is read:
   of what expiry means.
 - The tracker gives clocks without an offset in UTC, on every host: it promises US deliveries
   for 3 AM, the evening before in every US zone. The number's prefix gives the `timezone`
-  (default `Europe/Paris`) and the day of `expected_delivery`. `TBA`, `TBC` and `TBM` numbers
+  (default `Europe/Paris`) and the day of `expected_delivery`. `TBA`, `TBC`, `TBM` and `TBAU` numbers
   identify no zone and have neither, since a promise's day is the recipient's. A clock that
   cannot be read keeps its text.
 - `delivered_at` is the newest delivery scan's time. A delivered parcel has no

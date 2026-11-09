@@ -77,6 +77,8 @@ describe('Amazon Shipping France input', () => {
       'ZZ1234567890',
       'TBA12345678901',
       'TBA1234567890123',
+      'TBAU12345678',
+      'TBAU1234567890',
       'FR123456789A',
       'FR9999999981?admin=true',
       'FR123456789É',

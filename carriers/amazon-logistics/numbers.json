@@ -553,6 +553,37 @@
       "note": "An Amazon tracking link archived by the Wayback Machine. Amazon's public tracker does not know it now, so it is an account-only parcel or an Amazon Shipping one whose history has gone."
     },
     {
+      "number": "TBAU193065397",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250827124213/https://track.amazon.com/tracking/TBAU193065397",
+        "date": "2025-08-27",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "An Amazon tracking link archived by the Wayback Machine. Australian buyers report TBAU numbers on Amazon's own deliveries."
+    },
+    {
+      "number": "TBAU999999980",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-09",
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "note": "Invented placeholder for Amazon Australia's TBAU numbers."
+    },
+    {
       "number": "ES2414474381",
       "role": "shipment",
       "evidence": "public_shipment_report",
