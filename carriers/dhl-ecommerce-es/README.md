@@ -43,7 +43,8 @@ the gateway behind its customer tracking page. German DHL Paket is
   stays once the recipient collects the parcel there: a pickup scan (`RS`) on a
   shipment marked `DeliveredInServicePoint`. A door delivery never gets one.
 - When CTT Express delivers the parcel, its label code is passed on as the
-  delivery partner's number.
+  delivery partner's number. The handover is a row without a code that links
+  to CTT Express's tracker, read as in transit.
 - Ten-digit numbers overlap with DHL Express and other carriers, so detection
   only suggests this carrier and the portal's answer attributes the parcel.
   Twelve and twenty-two digits, `JJD` plates and S10 numbers are accepted when

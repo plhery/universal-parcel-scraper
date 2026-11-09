@@ -10,6 +10,7 @@ import { fedexGroundEconomyUspsNumber, fedexTrackedNumber } from '../../core/det
 import { uspsPackageIdentifier } from '../../core/detection/usps.js';
 import {
   ChallengeError,
+  IndeterminateError,
   InputRequiredError,
   InvalidInputError,
   RateLimitedError,
@@ -359,6 +360,21 @@ interface FedExShipment {
 
 const GENERIC_TRANSIT = 'On the way';
 
+/** Stages of a parcel on its way, which a status FedEx gives without any scan does not establish. */
+const MOVING = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
+
+/**
+ * A result whose status says the parcel moves while no scan shows it, refused as inconclusive: FedEx has
+ * answered "On the way" without scans for a shipment it held only a label for, and "Label created" with
+ * that label again in the next lookup.
+ */
+function withScanEvidence(result: CarrierResult): CarrierResult {
+  if (result.summary_only === true && MOVING.has(result.current_stage ?? '')) {
+    throw new IndeterminateError('FedEx', 'FedEx gave a status of movement without any scan');
+  }
+  return result;
+}
+
 function shipmentResult(shipment: FedExShipment, number: string): CarrierResult {
   const listed: ListedScan[] = [];
   const seen = new Set<string>();
@@ -701,7 +717,7 @@ export class FedExTracker {
     const result = parseFedExApiResponse(await api.track(number, signal, timeoutMs), number);
     result.tracking_url = fedexTrackingUrl(number);
     result.tracking_source = 'official-api-response';
-    return result;
+    return withScanEvidence(result);
   }
 
   /**
@@ -792,7 +808,7 @@ export class FedExTracker {
             } catch { /* An earlier unreadable reply supplies no history. */ }
           }
         }
-        return result;
+        return withScanEvidence(result);
       } catch (error) {
         if (error instanceof InputRequiredError) throw error;
         // An unreadable or unrelated reply; the rendered page may still name a challenge.

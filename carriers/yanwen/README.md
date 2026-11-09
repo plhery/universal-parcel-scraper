@@ -30,7 +30,8 @@ Yanwen's outbound scan, so it is a hand-over in transit. J&T Express
 Australia's scans, relayed with its customer service line, read as J&T's map
 reads them, except its pickup after Yanwen's batch handover at the destination
 port: that is a hand-over in transit too, as is InPost's "Parcel Picked Up"
-before Yanwen's outbound scan. YWE's scans in the United States, relayed
+before Yanwen's outbound scan, and Yanwen's "Despatched and en route to
+Inpost" after it. YWE's scans in the United States, relayed
 without YWE's codes, read as YWE's map reads them, its hub's receipt of the
 container and of the parcel as that handover, in transit.
 USPS's "Shipping Label Created, USPS Awaiting Item", relayed while Yanwen still

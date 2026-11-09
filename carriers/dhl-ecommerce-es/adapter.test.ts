@@ -2,13 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { STAGES } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import delivered from './fixtures/delivered.json' with { type: 'json' };
 import fixture from './fixtures/service-point.en.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { DhlEcommerceEsTracker, adapter } from './adapter.js';
 import { normalizeDhlEcommerceEsNumber, parseDhlEcommerceEs } from './parser.js';
-import { dhlEcommerceEsStatus, dhlEcommerceEsSummaryStage } from './status.js';
+import { dhlEcommerceEsStatus, dhlEcommerceEsSummaryStage, statusMap } from './status.js';
 
 const NUMBER = '2899999980';
 const INBOUND = 'CC000000005DE';
@@ -136,6 +137,11 @@ describe('DHL eCommerce Iberia parser', () => {
     payload.Tracking = [{ Date: '20/03/2026', Time: '08:50', Description: 'Shipment received at DHL Depot', Town: 'Valencia' } as typeof payload.Tracking[number]];
     expect(parseDhlEcommerceEs(payload, NUMBER).events?.[0]).toMatchObject({ description: 'Shipment received at DHL Depot', stage: 'in_transit' });
     expect(parseDhlEcommerceEs(payload, NUMBER).events?.[0]?.provider_code).toBeUndefined();
+    // The handover to CTT Express comes without a code, with a link to CTT Express's tracker.
+    const handover = 'Your shipment will be delivered by our logistics partner CTT. You can check the delivery status here:';
+    payload.Tracking = [{ Date: '20/03/2026', Time: '09:10', Description: handover, Town: '', TrackingUrl: 'https://www.cttexpress.com/localizador-de-envios/?sc=0099990099990000000001', DataType: 'EV' } as unknown as typeof payload.Tracking[number]];
+    expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ current_stage: 'in_transit', events: [{ description: handover, stage: 'in_transit' }] });
+    expect(statusMap.stage(null, normalizeStatusWording(handover))).toBe('in_transit');
   });
 
   it('takes the stage of an unknown code from the shipment status', () => {

@@ -243,6 +243,16 @@ describe('FedEx official API lookup', () => {
     expect(records).toEqual(['api:ok', 'lookup:api:ok', 'api:ok', 'lookup:api:ok']);
   });
 
+  it('refuses a status of movement without any scan', async () => {
+    const moving = apiFixture((result) => {
+      result.scanEvents = [];
+      result.latestStatusDetail = { code: 'IT', description: 'On the way' };
+      result.dateAndTimes = [];
+    });
+    const { fetcher } = fetchSequence(tokenReply(), Response.json(moving));
+    await expect(new FedExTracker({ api: CREDENTIALS, fetcher }).fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ name: 'IndeterminateError' });
+  });
+
   it('asks for a new token once when FedEx no longer accepts the one it gave', async () => {
     const { fetcher, calls } = fetchSequence(
       tokenReply('first-token'), new Response('{}', { status: 401 }), tokenReply('second-token'), Response.json(apiFixture()));

@@ -89,6 +89,9 @@ fallback')`.
 - An empty `packages` array or `TRACKING.TRACKINGNUMBER.NOTFOUND` error returns an unlocated
   `unknown`. The coded error can echo the number with a default status and an empty scan;
   its placeholders never establish movement or identify FedEx as the carrier.
+- A status of movement without any scan, which no earlier reply of the same lookup fills, is
+  inconclusive: FedEx has answered "On the way" without scans for a shipment it held only a
+  label for, then "Label created" again. A scan-less status before movement stays a summary.
 - A recipient-gated shipment (`TRACKING.AUTHORIZATION.ERROR`) raises `InputRequiredError`
   instead of retrying a verification the adapter cannot supply.
 - Results bind strictly to `trackingNbr`. Several matches (same digits, different

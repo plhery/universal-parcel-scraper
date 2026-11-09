@@ -311,6 +311,14 @@
       "note": "Relayed from InPost, with its name where a place goes, before Yanwen's outbound scan: the last-mile carrier collecting the parcel from Yanwen, a handover; Yanwen's pickup scan is the acceptance."
     },
     {
+      "wording": "Despatched and en route to Inpost",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The day after Yanwen's outbound scan on a parcel InPost delivers: the parcel sent on to InPost."
+    },
+    {
       "wording": "Your shipment has arrived at sorting center",
       "language": "en",
       "stage": "in_transit",

@@ -329,6 +329,7 @@ describe('Yanwen result projection', () => {
 
   it("keeps InPost's records of the sender's data and the recipient's choice on the stage before them, its pickup from Yanwen in transit, and its code and name as no place", () => {
     const result = history([
+      ['2026-03-05', '04:28:00 [GMT+08]', '', 'Despatched and en route to Inpost'],
       ['2026-03-04', '05:04:24 [GMT+08]', '', 'Arrived at domestic terminal station'],
       ['2026-03-04', '04:57:00 [GMT+08]', '', 'Yanwen facility - Outbound'],
       ['2026-03-03', '19:53:00 [GMT+00]', 'INPOST', 'Parcel Picked Up'],
@@ -338,7 +339,8 @@ describe('Yanwen result projection', () => {
       ['2026-03-03', '20:48:38 [GMT+08]', '', 'Yanwen Pickup Scan'],
       ['2026-03-02', '03:31:57 [GMT+08]', '', 'Shipment information received'],
     ], '运输途中', 'GB');
-    expect(result.events?.slice(2, 5).map((event) => [event.description, event.stage, event.stage_source, event.location])).toEqual([
+    expect(result.events?.[0]).toMatchObject({ description: 'Despatched and en route to Inpost', stage: 'in_transit' });
+    expect(result.events?.slice(3, 6).map((event) => [event.description, event.stage, event.stage_source, event.location])).toEqual([
       ['Parcel Picked Up', 'in_transit', undefined, ''],
       ['Preference applied', 'accepted', 'none', ''],
       ['Pre-shipment Info sent to carrier', 'accepted', 'none', ''],
@@ -347,7 +349,7 @@ describe('Yanwen result projection', () => {
       expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBeUndefined();
       expect(statusMap.gaps?.map((gap) => gap.wording), wording).toContain(normalizeStatusWording(wording));
     }
-    expect(statusMap.stage(null, normalizeStatusWording('Parcel Picked Up'))).toBe('in_transit');
+    for (const wording of ['Parcel Picked Up', 'Despatched and en route to Inpost']) expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
     // A scan stored with the code or the name as its place, and the stage it had then, is the same scan.
     const incoming = { stage: 'accepted', description: 'Pre-shipment Info sent to carrier', location: '', providerCode: '' };
     expect(sameInstantIdentityPolicy.matches?.(incoming, { ...incoming, location: '03', stage: 'in_transit' })).toBe(true);

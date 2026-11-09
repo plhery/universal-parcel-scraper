@@ -630,6 +630,19 @@ describe('FedEx lookup steps', () => {
     await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(DELIVERED_NUMBER)).rejects.toMatchObject({ name });
   });
 
+  it('refuses a status of movement no scan shows, and keeps a scan-less label status as a summary', async () => {
+    const moving = inTransitFixture();
+    (moving.output as { packages: Record<string, unknown>[] }).packages[0]!.scanEventList = [];
+    const capture = (body: unknown) => vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200,
+      html: '<body>Tracking</body>', capturedResponses: [{ url: TRACK_API, status: 200, body: JSON.stringify(body) }] }));
+    capture(moving);
+    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).rejects.toMatchObject({ name: 'IndeterminateError' });
+    const label = structuredClone(moving);
+    Object.assign((label.output as { packages: Record<string, unknown>[] }).packages[0]!, { keyStatus: 'Label created', keyStatusCD: 'OC', statusWithDetails: '' });
+    capture(label);
+    expect(await new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).toMatchObject({ summary_only: true, current_stage: 'registered', events: [] });
+  });
+
   it('does not fill a summary with another qualified shipment using the same number', async () => {
     const full = inTransitFixture();
     const summary = structuredClone(full);
@@ -637,7 +650,8 @@ describe('FedEx lookup steps', () => {
     Object.assign((summary.output as { packages: Record<string, unknown>[] }).packages[0]!, { trackingQualifier: 'later', scanEventList: [] });
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>',
       capturedResponses: [full, summary].map(body => ({ url: TRACK_API, status: 200, body: JSON.stringify(body) })) }));
-    expect(await new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).toMatchObject({ summary_only: true, events: [] });
+    // The summary alone shows no scan of the movement it states.
+    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).rejects.toMatchObject({ name: 'IndeterminateError', kind: 'indeterminate' });
   });
 
   it.each([undefined, null, '', ' ', 1])('does not combine replies without a nonempty shipment qualifier (%s)', async qualifier => {
@@ -646,7 +660,8 @@ describe('FedEx lookup steps', () => {
     Object.assign((summary.output as { packages: Record<string, unknown>[] }).packages[0]!, { trackingQualifier: qualifier, scanEventList: [] });
     vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(Response.json({ tier: 3, statusCode: 200, html: '<body>Tracking</body>',
       capturedResponses: [full, summary].map(body => ({ url: TRACK_API, status: 200, body: JSON.stringify(body) })) }));
-    expect(await new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).toMatchObject({ summary_only: true, events: [] });
+    // The summary alone shows no scan of the movement it states.
+    await expect(new FedExTracker({ trawl: new TrawlClient(TRAWL_URL) }).fetch(IN_TRANSIT_NUMBER)).rejects.toMatchObject({ name: 'IndeterminateError', kind: 'indeterminate' });
   });
 
   it('reads the tracking reply the browser captured', async () => {
