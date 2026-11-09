@@ -374,6 +374,10 @@ describe('JRT tracking adapter', () => {
     // Landed, the parcel is still the flight's, until the next row says customs has it.
     expect(answer('The flight has landed, and the package is ready to be handed over to customs for clearance.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('and the package has been handed over to customs for clearance')).toEqual({ kind: 'mapped', stage: 'customs' });
+    // DHL's arrival in the destination country, its import parcel centre's departure and its round, as DHL's own map reads them.
+    expect(answer('The shipment has arrived in the destination country/destination area.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The shipment has left the import parcel center in the destination country/destination area.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('The shipment has been loaded onto the delivery vehicle')).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     // The destination's completed clearance lets the parcel go on.
     expect(answer('Customs clearance in destination country completed')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // J&T Express Mexico's rows read alike whatever their towns, sites, courier and phone; its collection after the

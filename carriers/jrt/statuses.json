@@ -799,6 +799,30 @@
       "note": "Copied from DHL, whose own adapter reads the same sentence in transit."
     },
     {
+      "wording": "The shipment has arrived in the destination country/destination area.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from DHL, whose own adapter reads the same sentence in transit."
+    },
+    {
+      "wording": "The shipment has left the import parcel center in the destination country/destination area.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from DHL, whose own adapter reads the same sentence in transit."
+    },
+    {
+      "wording": "The shipment has been loaded onto the delivery vehicle",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from DHL, whose own adapter reads the same sentence as out for delivery: the round with the parcel."
+    },
+    {
       "wording": "The shipment has arrived at the parcel center.",
       "language": "en",
       "stage": "in_transit",
