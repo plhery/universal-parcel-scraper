@@ -67,10 +67,10 @@ describe('YWE HTTP adapter', () => {
       ['2026-05-10T21:15:22-07:00', 'EXAMPLE TOWN, CA, US', 'Parcel is out for delivery.', '03', 'out_for_delivery'],
       ['2026-05-10T07:09:18-07:00', 'EXAMPLE STATION CITY, CA, US', 'Parcel received by local Facility.', '67', 'in_transit'],
       ['2026-05-09T09:45:44-07:00', 'EXAMPLE HUB CITY, CA, US', 'Parcel departed from Facility.', '19', 'in_transit'],
-      ['2026-05-08T14:13:45-07:00', 'EXAMPLE HUB CITY, CA, US', 'Parcel received by in LAX01.', '01', 'accepted'],
-      ['2026-05-08T11:44:31-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container picked up by YWE,LAX01 Awaiting Item.', '33', 'accepted'],
-      ['2026-05-08T11:44:28-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container received', '25', 'accepted'],
-      ['2026-05-08T11:14:11-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container picked up by YWE,LAX01 Awaiting Item.', '67', 'accepted'],
+      ['2026-05-08T14:13:45-07:00', 'EXAMPLE HUB CITY, CA, US', 'Parcel received by in LAX01.', '01', 'in_transit'],
+      ['2026-05-08T11:44:31-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container picked up by YWE,LAX01 Awaiting Item.', '33', 'in_transit'],
+      ['2026-05-08T11:44:28-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container received', '25', 'in_transit'],
+      ['2026-05-08T11:14:11-07:00', 'EXAMPLE HUB CITY, CA, US', 'Container picked up by YWE,LAX01 Awaiting Item.', '67', 'in_transit'],
       ['2026-05-08T01:00:00-07:00', 'EXAMPLE HUB CITY, CA, US', 'Shipping Order Created.', '11', 'registered'],
     ]);
     expect(result.events!.every((event) => event.stage_source === 'carrier_map' && !('local_time' in event))).toBe(true);
@@ -79,9 +79,10 @@ describe('YWE HTTP adapter', () => {
   });
 
   it('maps the recorded wording whatever hub, reason or place it names, and stages new wording through the shared rules', () => {
-    expect(yweStage('Container picked up by YWE,JFK02 Awaiting Item.')).toEqual({ stage: 'accepted', source: 'carrier_map' });
-    expect(yweStage('Parcel received by in ORD01.')).toEqual({ stage: 'accepted', source: 'carrier_map' });
-    expect(yweStage('Parcel received by SFO02.')).toEqual({ stage: 'accepted', source: 'carrier_map' });
+    // Its hubs' receipts are handovers of parcels flown in from China, already on their way.
+    expect(yweStage('Container picked up by YWE,JFK02 Awaiting Item.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(yweStage('Parcel received by in ORD01.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(yweStage('Parcel received by SFO02.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     // A failed delivery goes back to YWE's warehouse, not to the sender, with or without a space after its full stop.
     for (const wording of ['Parcel delivery abnormal [Business Closed].Parcel will be returned to the warehouse.',
       'Parcel delivery abnormal [No Access]. Parcel will be returned to the warehouse.',

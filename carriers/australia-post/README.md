@@ -126,8 +126,9 @@ every outgoing request unless the consumer sets `tracePropagationTargets: []`. T
   `estimatedDeliveryDateRange`, from its `fromDate` to its `toDate`; else the day
   `deliveredByDateISO` names. It holds until the parcel is delivered, returned or waits for
   collection. The range can be gone once the parcel is on board, and the slot is the newer, finer
-  word. A slot whose `passedWindow` is set keeps its day alone. The run's `minutesAway` and
-  `stopsAway`, and a slot or range in another shape, are named in `unread_estimates`.
+  word. A slot whose `passedWindow` is set keeps its day alone. The run's `minutesAway`,
+  `stopsAway` and `onTimeStatus`, and a slot or range in another shape, are named in
+  `unread_estimates`.
 - Delivered wording is replaced with `Delivered` so signature or safe-place text can't leak a name.
 - `service_name` is the article's product (`productSubType`, such as a satchel size); its family
   (`articleType`) is not read.

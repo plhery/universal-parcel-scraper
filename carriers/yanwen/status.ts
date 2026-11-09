@@ -187,12 +187,8 @@ function jAndTAuRelayedStage(wording: string): Stage | undefined {
 export const yanwenWording = (description: string): string => withoutCourtesy(description.replace(HOTLINE, '.')).trim();
 
 // YWE's scans in the United States after Yanwen's batch handover at the destination port, relayed without YWE's codes:
-// read as YWE's own map reads them, but its hub's receipt of the container and of the parcel is Yanwen's handover, not
-// the parcel's acceptance.
-function yweRelayedStage(wording: string): Stage | undefined {
-  const stage = yweMappedStage(wording);
-  return stage === 'accepted' ? 'in_transit' : stage;
-}
+// read as YWE's own map reads them, its hub's receipt of the container and of the parcel as that handover, in transit.
+const yweRelayedStage = (wording: string): Stage | undefined => yweMappedStage(wording);
 
 // China Post's domestic scans, which Yanwen relays in Chinese with the centre in 【】, read as China Post's own
 // map reads them: "邮件离开【…】，正在发往下一站" in transit, the security check's "【…】退回" an exception. Then J&T

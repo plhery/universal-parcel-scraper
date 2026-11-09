@@ -22,6 +22,9 @@ for numbers of YWE and fourteen digits.
   it names, then
   the shared rules. The category the page groups parcels by is not read: it files a delivery
   station's receipt under Alert. The scan code becomes `provider_code`.
+- A hub's receipt of the container and of the parcel is in transit, not an acceptance: every YWE
+  parcel is flown in from China, already on its way, and the receipt is its handover from the line
+  that flew it in. Yanwen and Techlink relay these scans with the same stage.
 - A scan's place is its town, state and country. Its street lines, the proof-of-delivery photos,
   the delivery window and the driver's position, which the page asks for separately, are not read.
 - A number the tracker has nothing for comes back with its `expressCode` alone, which is no

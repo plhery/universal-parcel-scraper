@@ -6,7 +6,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, GofoTracker } from './adapter.js';
 import { GOFO_CANADA, GOFO_US, normalizeGofoNumber, parseGofo } from './parser.js';
-import { gofoStatus } from './status.js';
+import { gofoStatus, gofoSummaryStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
 const NUMBER = 'GFUS00000000000001';
@@ -306,6 +306,22 @@ describe('GOFO US history', () => {
     expect(parseGofo(value, NUMBER).events?.[0]).toMatchObject({ provider_code: '202', stage: 'accepted' });
     expect(gofoStatus('202', 'Arrived at GOFO Regional Hub')?.stage).toBe('in_transit');
     expect(gofoStatus('203', 'Arrived at GOFO Regional Origin Hub')?.stage).toBe('in_transit');
+  });
+
+  it("reads GOFO's Transit summary for a newest scan whose code the map does not know, and no other summary", () => {
+    const value = fixture();
+    item(value).status = 'Transit';
+    item(value).trackEventList.unshift({ ...item(value).trackEventList.at(-1), processCode: '999', processContent: 'Held at GOFO Facility' });
+    item(value).trackEventList.splice(1, item(value).trackEventList.length - 2);
+    bind(value);
+    const result = parseGofo(value, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Held at GOFO Facility' });
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+    // A known code stands over the summary, and the other summaries say nothing yet.
+    expect(gofoSummaryStatus('Transit')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    for (const summary of ['Processing', 'Delivered', 'Alert', 'Returned', 'transit', null]) expect(gofoSummaryStatus(summary)).toBeUndefined();
+    item(value).status = 'Returned';
+    expect(parseGofo(value, NUMBER)).toMatchObject({ status: 'unknown' });
   });
 
   it('requires affirmative delivered wording and preserves unknown scans, equal clocks and provider order', () => {

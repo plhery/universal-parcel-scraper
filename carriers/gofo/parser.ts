@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { gofoStatus } from './status.js';
+import { gofoStatus, gofoSummaryStatus } from './status.js';
 import { withoutGofoSupportLine } from './support.js';
 
 const LABEL_CREATED = '100';
@@ -177,7 +177,8 @@ export function parseGofo(payload: unknown, rawNumber: string, site: GofoSite = 
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   const latest = events[0]!;
-  const current = gofoStatus(String(latest.provider_code), latest.description);
+  // A newest scan the map does not know keeps no stage, and GOFO's summary of the parcel stands in for it.
+  const current = gofoStatus(String(latest.provider_code), latest.description) ?? gofoSummaryStatus(item.status);
   const service = clean(item.serviceName, 80);
   return { status: current?.status ?? 'unknown', ...(current ? { current_stage: current.stage } : {}),
     last_status_text: latest.description, last_update: latest.time ?? null, last_update_local: latest.local_time ?? null,

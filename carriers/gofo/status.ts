@@ -29,6 +29,15 @@ export function gofoStatus(code: string, wording = ''): ClassifiedStatus | undef
   return code === '202' && ORIGIN_HUB.test(wording.trim()) ? { status: 'in_transit', stage: 'accepted' } : CODES.get(code);
 }
 
+/**
+ * GOFO's summary of a parcel, one of the groups its page sorts parcels into: Processing, Transit, Delivered, Alert
+ * or Returned. Only Transit is read, for a newest scan whose code the map does not know: a delivery needs its
+ * wording, and what the other groups hold has not been seen.
+ */
+export function gofoSummaryStatus(summary: unknown): ClassifiedStatus | undefined {
+  return summary === 'Transit' ? { status: 'in_transit', stage: 'in_transit' } : undefined;
+}
+
 /** By code; the parser refuses a delivery code whose wording is not a delivery. */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {

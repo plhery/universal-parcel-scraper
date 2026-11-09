@@ -167,7 +167,8 @@ function slotEstimate(slot: unknown): WindowEstimate | null {
  * When an article's details expect delivery: the slot on the day (`timeWindow`) the courier's
  * run gives, else the days `estimatedDeliveryDateRange` gives from its `fromDate` to its
  * `toDate`, else the day they expect it by, `deliveredByDateISO`; with the estimate fields they
- * fill that are not read, a countdown on the run (`minutesAway`, `stopsAway`) among them.
+ * fill that are not read, a countdown on the run (`minutesAway`, `stopsAway`) and whether it runs on
+ * time (`onTimeStatus`) among them.
  */
 function deliveryEstimate(details: Record<string, unknown>): { estimate: WindowEstimate; unread: Pick<CarrierResult, 'unread_estimates'> } {
   const range = isRecord(details.estimatedDeliveryDateRange) ? details.estimatedDeliveryDateRange : {};
@@ -177,7 +178,8 @@ function deliveryEstimate(details: Record<string, unknown>): { estimate: WindowE
   return {
     estimate: slot ?? (window.expected_delivery ? window : windowEstimate(null, details.deliveredByDateISO)),
     unread: unreadEstimates({ estimatedDeliveryDateRange: window.expected_delivery || slot ? null : details.estimatedDeliveryDateRange,
-      timeWindow: slot ? null : details.timeWindow, 'timeWindow.minutesAway': run.minutesAway, 'timeWindow.stopsAway': run.stopsAway }),
+      timeWindow: slot ? null : details.timeWindow, 'timeWindow.minutesAway': run.minutesAway, 'timeWindow.stopsAway': run.stopsAway,
+      'timeWindow.onTimeStatus': run.onTimeStatus }),
   };
 }
 

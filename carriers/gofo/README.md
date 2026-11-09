@@ -56,7 +56,10 @@ three hours late. Each requested clock must carry Pacific's offset at that time,
 and the instant is expressed in the scan's own zone when GOFO names a valid one.
 Clocks without offsets remain local; incomplete clocks retain provider text
 without advancing freshness. Current status comes from the latest scan, and
-delivery requires confirming wording.
+delivery requires confirming wording. For a latest scan whose code the map does not know,
+GOFO's summary of the parcel stands in when it is `Transit`; the scan keeps no stage. The
+page's other summaries (`Processing`, `Alert`, `Returned`) are not read until a reply shows what
+they hold, and `Delivered` still needs the wording.
 As on the public page, scan wording drops the support contact line GOFO appends
 to some scans.
 `service_name` is the `serviceName` GOFO gives, as written.

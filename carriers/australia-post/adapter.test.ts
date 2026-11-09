@@ -293,9 +293,10 @@ describe('Australia Post status codes and places', () => {
     const passed = journey('AU', [onboard], 'In transit', { ...range, timeWindow: { ...slot, passedWindow: true } });
     expect(passed.expected_delivery).toBe('2026-06-10');
     expect(passed).not.toHaveProperty('expected_delivery_from');
-    // A countdown on the run is not read yet.
-    expect(journey('AU', [onboard], 'In transit', { timeWindow: { ...slot, stopsAway: 4, minutesAway: 25 } }))
-      .toMatchObject({ expected_delivery: '2026-06-10T11:45:12+10:00', unread_estimates: ['timeWindow.minutesAway', 'timeWindow.stopsAway'] });
+    // A countdown on the run, and whether it runs on time, are not read yet.
+    expect(journey('AU', [onboard], 'In transit', { timeWindow: { ...slot, stopsAway: 4, minutesAway: 25, onTimeStatus: 'SAMPLE' } }))
+      .toMatchObject({ expected_delivery: '2026-06-10T11:45:12+10:00',
+        unread_estimates: ['timeWindow.minutesAway', 'timeWindow.stopsAway', 'timeWindow.onTimeStatus'] });
   });
 
   it('names a slot in another shape, and a range in a shape it does not read, as estimates it does not read yet', () => {
