@@ -610,9 +610,12 @@ function providerWordingStage(description: string): Stage | undefined {
   // the pickup point, and sorted again before it goes there.
   if (/^pakken (?:din )?behandles for sending til (?:et )?hentested[.!]?$|^pakken sorteres pa nytt før den sendes til (?:et )?hentested[.!]?$/i.test(value)) return 'in_transit';
   // Poczta Polska's Polish rows as providers relay them without the code: the transport (P_PZL), the departure from
-  // Poland (P_WYPL) and the receipt in the destination country, all in transit as its map reads its codes. DPD Poland's
-  // export to its partner abroad, as ParcelsApp words it in English, came at the second of the partner's first transport.
-  if (/^przesyłka w transporcie[.!]?$|^wysłanie przesyłki z polski[.!]?$|^przyjeta w kraju przeznaczenia[.!]?$|^sending a package abroad[.!]?$/i.test(value)) return 'in_transit';
+  // Poland (P_WYPL) and the receipt in the destination country, all in transit as its map reads its codes.
+  if (/^przesyłka w transporcie[.!]?$|^wysłanie przesyłki z polski[.!]?$|^przyjeta w kraju przeznaczenia[.!]?$/i.test(value)) return 'in_transit';
+  // DPD Poland's courier collecting a parcel bound abroad, as ParcelsApp words it in English. It comes at the minute of
+  // DPD Poland's own "Parcel collected", which its map reads as the acceptance. Its partner abroad marks its first
+  // transport at the same second from DPD's data, while the parcel is still in Poland.
+  if (/^sending a package abroad[.!]?$/i.test(value)) return 'accepted';
   // A cross-border line's pallet scanned at a warehouse on its way, and the parcel cleared at the second of its customs
   // release, as Ship24 relays them.
   if (/^pallet scan event at warehouse[.!]?$|^parcel has been cleared[.!]?$/i.test(value)) return 'in_transit';

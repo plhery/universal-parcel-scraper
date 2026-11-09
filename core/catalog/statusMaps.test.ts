@@ -1713,8 +1713,8 @@ describe("universal providers' answers", () => {
       ['Pakken din behandles for sending til hentested.', 'in_transit'], ['Pakken sorteres på nytt før den sendes til et hentested.', 'in_transit'],
       // Poczta Polska's Polish rows, relayed without the code.
       ['Przesyłka w transporcie', 'in_transit'], ['Wysłanie przesyłki z Polski', 'in_transit'], ['Przyjęta w kraju przeznaczenia', 'in_transit'],
-      // DPD Poland's export to its partner abroad, in ParcelsApp's English.
-      ['Sending a package abroad', 'in_transit'],
+      // DPD Poland's courier collecting a parcel bound abroad, in ParcelsApp's English.
+      ['Sending a package abroad', 'accepted'],
       // A cross-border line's pallet scan and customs release, as Ship24 relays them.
       ['Pallet scan event at warehouse', 'in_transit'], ['Parcel has been cleared', 'in_transit'],
       ['Instruction data transmitted to DPD', 'registered'], ['Order confirmed.', 'registered'], ['Order received successfully', 'registered'],
