@@ -44,6 +44,9 @@ Other outcomes:
   `carrier_unavailable`) and end the lookup without a browser attempt, which would ask the
   same lookup. They say nothing about the shipment or ParcelsApp's other carriers.
 - An error code the adapter does not know is a schema failure that names the code.
+- A reply whose only state is ParcelsApp's own check of the number's form, "One digit is
+  missing from the tracking number." with no carrier or place, is an invalid input: the
+  number as typed cannot be found, and it is no scan.
 - A reply that only asks for a postcode raises `input_required`. Browser recovery cannot
   submit a postcode and never retries a known input gate. A gate row names the carrier
   asking, as a scan does (`states[].carrier`); when every gate names the same one and it

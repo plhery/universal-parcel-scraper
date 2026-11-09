@@ -71,6 +71,9 @@ export const STATUSES: Record<string, Milestone> = {
   PARCELSHOP_ITEMS_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at the ParcelShop'),
   READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection'),
   PARCELSHOP_READY_FOR_COLLECTION: milestone('ready_for_pickup', 'out_for_delivery', 'Ready for collection at the ParcelShop'),
+  // The round ran out of time before the parcel: nobody tried the recipient, and the next working day's round
+  // carries it again.
+  DELIVERY_ABORTED_LACK_OF_TIME: milestone('in_transit', 'in_transit', 'Not delivered today; another attempt follows on the next working day'),
   DELIVERY_FAILED: milestone('failed_attempt', 'exception', 'Delivery attempt unsuccessful'),
   DELIVERY_FAILED_ADDRESS_PROBLEM: milestone('failed_attempt', 'exception', 'Delivery address not found'),
   DELIVERY_FAILED_NOT_MET_1X: milestone('failed_attempt', 'exception', 'Recipient not met; another attempt follows'),

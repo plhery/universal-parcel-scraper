@@ -323,6 +323,7 @@ describe('Hermes Germany', () => {
     ['INTERNATIONAL_PUDO_READY_FOR_COLLECTION', 'ready_for_pickup', 'out_for_delivery'],
     ['INTERNATIONAL_PUDO_NOT_COLLECTED', 'exception', 'exception'],
     ['INTERNATIONAL_UNDELIVERABLE', 'exception', 'exception'],
+    ['DELIVERY_ABORTED_LACK_OF_TIME', 'in_transit', 'in_transit'],
     ['DELIVERY_FAILED_ADDRESS_PROBLEM', 'failed_attempt', 'exception'],
     ['DELIVERY_FAILED_NOT_MET_1X', 'failed_attempt', 'exception'],
     ['DELIVERY_FAILED_NOT_MET_2X', 'failed_attempt', 'exception'],

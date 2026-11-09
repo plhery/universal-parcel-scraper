@@ -17,7 +17,7 @@ import {
   brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isCarrierFeedName, isKnownCarrierName,
 } from '../../core/catalog/hints.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
-import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
@@ -1833,6 +1833,14 @@ function midnightCopies<T extends { name: unknown; date: unknown; location: stri
   }) : []);
 }
 
+/**
+ * ParcelsApp's own check of the number's form, sent as the reply's only state with no carrier
+ * or place: "One digit is missing from the tracking number." It is no scan.
+ */
+const NUMBER_FORM = /^(?:one|two|three|\d+) digits? (?:is|are) missing from the tracking number\.?$/i;
+const numberFormNotice = (raw: unknown): boolean => isRecord(raw) && typeof raw.status === 'string'
+  && NUMBER_FORM.test(raw.status.trim()) && !raw.carrier && !raw.location;
+
 function parseHistory(payload: unknown, trackingNumber: string, timezone: string | null = null, readAt = Date.now()): CarrierResult {
   if (isRecord(payload) && payload.error === 'RELOAD') throw new ChallengeError(SOURCE);
   if (isRecord(payload) && (payload.error === 'NO_DATA' || payload.error === 'NO_TRACKER')) {
@@ -1845,6 +1853,9 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     // An error code the adapter does not know is named, to tell drift from a new answer.
     const code = isRecord(payload) && typeof payload.error === 'string' && /^[A-Z][A-Z_]{0,39}$/.test(payload.error) ? `: ${payload.error}` : '';
     throw new SchemaError(SOURCE, `ParcelsApp lookup unavailable${code}`);
+  }
+  if (payload.states.length && payload.states.every(numberFormNotice)) {
+    throw new InvalidInputError(SOURCE, 'ParcelsApp reports the tracking number is incomplete');
   }
   const number = numberOf(trackingNumber);
   const events: CarrierEvent[] = [];

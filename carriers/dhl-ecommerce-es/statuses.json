@@ -22,6 +22,7 @@
     {"code": "DIA", "wording": "New delivery date requested", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"code": "EC", "wording": "Delivery agreed with recipient", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The portal appends the agreed day."},
     {"code": "CR", "wording": "Receiver closed: delivery not possible", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"},
+    {"code": "DI", "wording": "Incorrect address details: delivery not possible", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "After the round: the address details do not let the courier deliver, an incidence the sender or recipient settles before the parcel moves on. Absence and a closed business are failed attempts instead."},
     {"code": "CH", "wording": "Not delivered today: delivery expected for the next working day", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "PE", "wording": "The expected delivery date might be postponed one working day", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "FM", "wording": "Force Majeure: delivery not possible", "language": "en", "stage": "exception", "confirmedBy": "live"},

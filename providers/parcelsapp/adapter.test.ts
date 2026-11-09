@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { TrawlClient } from '../../core/transport/index.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
-import { carrierErrorKind, IndeterminateError, InputRequiredError, NoHistoryError } from '../../core/errors/index.js';
+import { carrierErrorKind, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
 import type { LookupRecord, StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { dateLocalClocks } from '../../places/clocks.js';
@@ -3298,6 +3298,18 @@ describe('ParcelsApp direct lookup', () => {
     expect(carrierErrorKind(error)).toBe('indeterminate');
     expect(error).toBeInstanceOf(NoHistoryError);
     expect(fetcher).toHaveBeenCalledOnce();
+  });
+
+  it("reads its check of the number's form as an incomplete number, not a scan", async () => {
+    const notice = { date: '2026-11-09T13:52:03+00:00', status: 'One digit is missing from the tracking number.' };
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply({ states: [notice], status: 'transit' }));
+    const error = await new ParcelsAppTracker({ fetcher, trawl: new TrawlClient('http://browser.test', fetcher) }).fetch(number).catch((error: unknown) => error);
+    expect(error).toBeInstanceOf(InvalidInputError);
+    expect(carrierErrorKind(error)).toBe('invalid_input');
+    expect(fetcher).toHaveBeenCalledOnce();
+    // A carrier's scan in those words is still a scan.
+    fetcher.mockResolvedValue(reply({ states: [{ ...notice, carrier: 0 }, { date: '2026-11-08T10:00:00+00:00', status: 'Shipment information received', carrier: 0 }], carriers: ['Sample Post'], status: 'transit' }));
+    await expect(new ParcelsAppTracker({ fetcher }).fetch(number)).resolves.toMatchObject({ events: expect.any(Array) });
   });
 
   it.each([{ correctId: 'OTHER123', ...announced }, { states: [{}] }, { states: [null] }, { states: Array(1001).fill({}) }, { uuid: 'unfinished' }])('rejects aliases, malformed and intermediate replies', async (payload) => {

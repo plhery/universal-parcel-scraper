@@ -127,6 +127,9 @@ describe('DHL eCommerce Iberia parser', () => {
     expect(reopened.events?.map((event) => event.stage)).toEqual(['in_transit', 'failed_attempt', 'delivered', 'exception']);
     payload.Tracking = payload.Tracking.slice(2);
     expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    // Wrong address details stop the parcel until someone corrects them: an incidence, not a missed recipient.
+    payload.Tracking = [scan('DI', 'Incorrect address details: delivery not possible', '09:00'), scan('A', 'Out for delivery', '07:00')];
+    expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
     payload.Tracking = [scan('RT', 'Shipment being returned to sender', '09:00', 'DEV'), scan('FA', 'Shipment with incidence', '08:00', 'DHL')];
     expect(parseDhlEcommerceEs(payload, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'Shipment being returned to sender' });
     payload.Tracking = [scan('ZZZ', 'Picked up', '08:00'), scan('BS', 'Parcel dropped off at DHL ServicePoint', '07:00')];

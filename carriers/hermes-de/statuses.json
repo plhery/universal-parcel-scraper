@@ -225,6 +225,13 @@
       "note": "Ready for collection"
     },
     {
+      "code": "DELIVERY_ABORTED_LACK_OF_TIME",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The round ran out of time before the parcel, after it started: nobody tried the recipient, and the next working day's round carries the parcel again"
+    },
+    {
       "code": "DELIVERY_FAILED",
       "stage": "failed_attempt",
       "confirmedBy": "fixture",

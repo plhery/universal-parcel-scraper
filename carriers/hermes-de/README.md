@@ -94,6 +94,9 @@ tracking page shows them in the visitor's zone like Hermes's own.
   dropped: they are the recipient's delivery preference (a safe place, a
   ParcelShop, a delivery day), not a movement, and as the newest row they would
   move the parcel backwards.
+- `DELIVERY_ABORTED_LACK_OF_TIME`, a round that ran out of time before the
+  parcel, is in transit: nobody tried the recipient, and the next working day's
+  round carries the parcel again.
 - A Hermes Box is a pickup locker: the recipient asks the tracking page for a
   pickup code and takes the parcel out within 72 hours, as the
   [Hermes Box terms](https://www.myhermes.de/content/pdf/hermesbox_nutzungsbedingungen.pdf)
