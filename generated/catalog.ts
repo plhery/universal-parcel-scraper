@@ -17562,6 +17562,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dpdex": {
+    "displayName": "DpdEx",
+    "color": "#003da5",
+    "aliases": [
+      "Dpdex",
+      "Duopuda",
+      "多普达国际",
+      "多普达",
+      "深圳市多普达智慧物流有限公司",
+      "Shenzhen Duopuda Smart Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.duopudaexpress.com/",
+    "trackingSearchUrl": "https://www.duopudaexpress.com/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^DPE\\d{11}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "dpe-express": {
     "displayName": "DPE Express",
     "color": "#4f3282",
@@ -53657,6 +53687,7 @@ export const CARRIER_IDS = [
   "dpd-ro",
   "dpd-uk",
   "dpd-za",
+  "dpdex",
   "dpe-express",
   "dpex",
   "dpx-logistics",
@@ -55084,6 +55115,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-ro": ["dpd-ro-1"],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "dpd-za": [],
+  "dpdex": ["dpdex-1"],
   "dpe-express": [],
   "dpex": [],
   "dpx-logistics": [],

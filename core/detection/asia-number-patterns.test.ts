@@ -537,6 +537,23 @@ describe('First Flight (Middle East) and DD Express links', () => {
   });
 });
 
+describe('DpdEx tracking numbers', () => {
+  it('suggests DpdEx for DPE and eleven digits, and only that layout', () => {
+    for (const number of ['DPE99999999990', 'dpe 1000 0000 017']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dpdex'] });
+    }
+    for (const number of ['DPE1000000017', 'DPE100000000017', 'DPZ10000000017', 'DPE10000000017CN']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dpdex');
+    }
+  });
+
+  it('names DpdEx from a provider without making it a DPD network', () => {
+    expect(carrierIdFromName('DpdEx')).toBe('dpdex');
+    expect(carrierIdFromName('多普达国际')).toBe('dpdex');
+    expect(carrierIdFromName('DPD')).toBeUndefined();
+  });
+});
+
 describe('Boyuan tracking numbers', () => {
   it('suggests Boyuan and DHLink for BY, fourteen digits and CN, and only that layout', () => {
     for (const number of ['BY19999999999980CN', 'by 10000000000017 cn']) {

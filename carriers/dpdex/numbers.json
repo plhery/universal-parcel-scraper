@@ -1,0 +1,20 @@
+{
+  "carrier": "dpdex",
+  "records": [
+    {
+      "number": "DPE99999999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-09",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpdex"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel the app tracked from China to Italy, for which ParcelsApp named DpdEx, with its pickup, export and flight scans, and iMile, which delivered it: DPE and eleven digits. Its serial sits far beyond the range in use."
+    }
+  ]
+}

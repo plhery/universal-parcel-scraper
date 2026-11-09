@@ -1872,6 +1872,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-ro": "dpd-ro",
     "dpd-uk": "dpd-uk",
     "dpd-za": "dpd-za",
+    "dpdex": "universal",
     "dpe-express": "universal",
     "dpex": "dpex",
     "dpx-logistics": "universal",

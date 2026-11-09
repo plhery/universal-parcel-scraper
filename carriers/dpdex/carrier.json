@@ -1,0 +1,44 @@
+{
+  "id": "dpdex",
+  "displayName": "DpdEx",
+  "aliases": [
+    "Dpdex",
+    "Duopuda",
+    "多普达国际",
+    "多普达",
+    "深圳市多普达智慧物流有限公司",
+    "Shenzhen Duopuda Smart Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#003da5"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.duopudaexpress.com/",
+    "canaryUrl": "https://www.duopudaexpress.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "dpdex-1",
+      "pattern": "^DPE\\d{11}$",
+      "confidence": "low"
+    }
+  ]
+}
