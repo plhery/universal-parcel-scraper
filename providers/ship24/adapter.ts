@@ -393,8 +393,46 @@ function zoneCountry(zone: string): string | null {
   return timeZoneCountry(zone) ?? (US_ZONES.has(zone) ? 'US' : CANADA_ZONES.has(zone) ? 'CA' : null);
 }
 
+/**
+ * Feeds that write Z on the delivering post's wall clocks abroad, by their home country, where their
+ * own scans' Z is an instant: Australia Post's gives DHL's delivery in Germany at its Berlin digits
+ * with Z, where Australia Post's own tracker gives +01:00, and its scans in Australia as instants.
+ */
+const ABROAD_WALL_FEEDS: ReadonlyMap<string, string> = new Map([['australia-post-tracking', 'AU']]);
+const UPU_FEED = 'upu-tracking';
+const ZULU = /(?:\.\d+)?Z$/;
+
+/**
+ * A scan of a feed in `ABROAD_WALL_FEEDS` dated with Z: its digits, and its feed's home country.
+ * Ship24 lists the postal union's copy of the scan beside it, at the same digits without an offset.
+ */
+function zuluWall(scan: Record<string, unknown>): { digits: string; home: string } | null {
+  const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
+  const home = typeof code === 'string' ? ABROAD_WALL_FEEDS.get(code) : undefined;
+  return home && typeof scan.timestamp === 'string' && ZULU.test(scan.timestamp)
+    ? { digits: scan.timestamp.replace(ZULU, ''), home } : null;
+}
+
 /** A scan read so far: a wall clock, with its feed, the country it names and the zone that places it. */
-interface Reading { event: CarrierEvent; wall: string | null; feed: Feed | null; country: string | null; zone: string | null; basis?: Placed['basis'] }
+interface Reading {
+  event: CarrierEvent; wall: string | null; feed: Feed | null; country: string | null; zone: string | null; basis?: Placed['basis'];
+  /** Whether it is the postal union's copy of a scan. */
+  upu?: boolean;
+  zulu?: { digits: string; home: string } | null;
+}
+
+/**
+ * A scan dated with Z by a feed that writes Z on wall clocks abroad, read on the zone its postal
+ * union copy at the same minute is placed on, when that zone is outside the feed's home country.
+ */
+function zuluAbroad(reading: Reading, readings: readonly Reading[]): CarrierEvent | null {
+  const { zulu } = reading;
+  if (!zulu) return null;
+  const zone = readings.find((other) => other.upu && other.zone && other.wall?.slice(0, 16) === zulu.digits.slice(0, 16)
+    && zoneCountry(other.zone) !== zulu.home)?.zone;
+  const instant = zone ? firstOccurrence(DateTime.fromISO(zulu.digits, { zone })) : null;
+  return zone && instant?.isValid ? { ...reading.event, time: instant.toUTC().toISO(), time_zone: zone, time_zone_basis: 'neighbour' } : null;
+}
 
 /**
  * The zone a relabelling feed's scan borrows when nothing places it, a guess:
@@ -476,10 +514,13 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     const sent = wall ? correosOriginCopy(raw, journey) : undefined;
     const placed = !wall ? null : carrierZone(relayed) ?? carrierZone(feed?.clock?.(journey))
       ?? (sent !== undefined ? carrierZone(sent) : placedZone(journey, raw, wall, feed) ?? (unnamed ? null : carrierZone(namedZone(journey, wall))));
-    readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location), zone: placed?.zone ?? null, basis: placed?.basis });
+    readings.push({ event: parsed, wall, feed, country: feed?.country ?? locationCountry(raw.location), zone: placed?.zone ?? null, basis: placed?.basis,
+      upu: isRecord(raw.courier) && raw.courier.crawler_code === UPU_FEED, zulu: zuluWall(raw) });
   }
   // A scan the feed dated without an offset is read on a zone chosen here, which it names.
   const events = readings.map((reading): CarrierEvent => {
+    const abroad = zuluAbroad(reading, readings);
+    if (abroad) return abroad;
     const { event, wall, feed } = reading;
     const borrowed = reading.zone || !wall || !feed || feed.walls ? null : borrowedZone(readings, reading, journey);
     const chosen: Placed | null = reading.zone ? { zone: reading.zone, basis: reading.basis ?? 'carrier' }

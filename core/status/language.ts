@@ -3,8 +3,11 @@ import type { CarrierStatus } from '../result/index.js';
 
 /** Where an English return goes back to. */
 const ORIGIN = String.raw`(?:the |its |their )?(?:sender|shipper|origin)\b`;
-/** A return to come, under way, negated or uncertain. */
-const ENGLISH_RETURN_UNDER_WAY = new RegExp(String.raw`\breturn(?:ing)? (?:back )?to ${ORIGIN}|\b(?:will|would|should|shall|must|may|might|can|could|ought to|needs? to|to) (?:(?:not|never|yet|still|already|soon|shortly|eventually|possibly|probably) )*(?:be|have been) returned (?:back )?to ${ORIGIN}|\b(?:not|never)(?: yet| already| still)? (?:(?:have|has|be|been|being) )*returned (?:back )?to ${ORIGIN}|\bbeing returned (?:back )?to ${ORIGIN}|\b(?:on (?:its|the) way|in transit|en route) back to ${ORIGIN}|\breturn (?:has been |was |is )?(?:initiated|requested|started|in progress|under ?way)\b|\b(?:start(?:s|ed|ing)?|begin(?:s|ning)?|began) (?:the |a )?return(?:ing)?\b`);
+/**
+ * A return to come, under way, negated or uncertain. A UPU unsuccessful delivery names its reason, then
+ * after a slash the action decided, which a later round can still overtake.
+ */
+const ENGLISH_RETURN_UNDER_WAY = new RegExp(String.raw`\bunsuccessful (?:item )?delivery\b[^/]*/ ?item returned to ${ORIGIN}|\breturn(?:ing)? (?:back )?to ${ORIGIN}|\b(?:will|would|should|shall|must|may|might|can|could|ought to|needs? to|to) (?:(?:not|never|yet|still|already|soon|shortly|eventually|possibly|probably) )*(?:be|have been) returned (?:back )?to ${ORIGIN}|\b(?:not|never)(?: yet| already| still)? (?:(?:have|has|be|been|being) )*returned (?:back )?to ${ORIGIN}|\bbeing returned (?:back )?to ${ORIGIN}|\b(?:on (?:its|the) way|in transit|en route) back to ${ORIGIN}|\breturn (?:has been |was |is )?(?:initiated|requested|started|in progress|under ?way)\b|\b(?:start(?:s|ed|ing)?|begin(?:s|ning)?|began) (?:the |a )?return(?:ing)?\b`);
 
 /** Instructions, uncertainty and a return in progress do not prove sender delivery. */
 export function nonterminalEnglishReturn(description: string): boolean {

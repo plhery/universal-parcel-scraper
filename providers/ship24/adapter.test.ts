@@ -184,6 +184,22 @@ describe('Ship24 result parsing', () => {
     expect(walls('DE').at(-1)).toBe('2026-09-04T10:00:00');
   });
 
+  it('reads Australia Post\'s Z on a scan abroad as the clock of the postal union\'s copy, and its own scans as instants', () => {
+    const auPost = { crawler_code: 'australia-post-tracking', translation: { name: 'Australia Post' } };
+    const upu = { crawler_code: 'upu-tracking', translation: { name: 'UPU' } };
+    const events = parseShip24Response({ data: { tracking_number: 'ZZ123456785AU', origin_country_code: 'AU', destination_country_code: 'DE',
+      events: [
+        { timestamp: '2026-11-07T14:20:00Z', status: 'Unsuccessful delivery - Address issue', location: 'EXAMPLE', courier: auPost },
+        { timestamp: '2026-11-07T14:20:00', status: 'Unsuccessful delivery, Incorrect Address/Item returned to sender', courier: upu },
+        { timestamp: '2026-10-27T05:50:00Z', status: 'Received and ready for processing', location: 'EXAMPLE', courier: auPost },
+      ] } }, 'ZZ123456785AU').events!;
+    expect(events.map((scan) => [scan.time, scan.time_zone, scan.time_zone_basis])).toEqual([
+      ['2026-11-07T13:20:00.000Z', 'Europe/Berlin', 'neighbour'], ['2026-11-07T13:20:00.000Z', 'Europe/Berlin', expect.any(String)],
+      ['2026-10-27T05:50:00.000Z', undefined, undefined]]);
+    // The return the union's copy names is the action decided at a failed round, which a later round can overtake.
+    expect(events[1]!.stage).toBe('exception');
+  });
+
   it('places EMS\'s origin leg in the origin post\'s country, at a place written as a code', () => {
     // China Post's scans in China share these digits; read as UTC, export customs would follow the release.
     const ems = { crawler_code: 'ems-tracking', translation: { name: 'EMS' } };

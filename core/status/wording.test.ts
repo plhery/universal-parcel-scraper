@@ -46,7 +46,7 @@ describe('classifyWording', () => {
     'Aufgrund einer Beschädigung der Umverpackung wurde die Sendung von DHL nachverpackt und befindet sich jetzt auf dem Weg zum Absender.',
     'Sendung wird retourniert', 'Il pacco sarà restituito al mittente', 'In restituzione al mittente',
     'Het pakket wordt teruggestuurd naar de afzender', 'Przesyłka zostanie zwrócona do nadawcy', 'Zwrot do nadawcy',
-    'Devolver a origen', 'Will be returned to the shipper', 'Your parcel will be returned to its origin', 'Return in progress',
+    'Devolver a origen', 'Will be returned to the shipper', 'Unsuccessful delivery, Incorrect Address/Item returned to sender', 'Your parcel will be returned to its origin', 'Return in progress',
     "Retour à l'expéditeur", 'Retour expéditeur', 'Zurück an Absender', 'Rücksendung an den Absender', 'Ritorno al mittente',
     'Retour afzender', 'Terug naar de afzender', 'Retorno al remitente'])(
     'keeps a return under way nonterminal in any language: %s', wording => {
