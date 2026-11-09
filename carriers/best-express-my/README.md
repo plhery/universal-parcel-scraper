@@ -20,12 +20,15 @@ tracking form builds that address, and archived lookups use it.
 
 ## Why there is no adapter
 
-The tracker runs on the same build as BEST Express Vietnam's and posts the waybills to
-`www.best-inc.my/express-cc/express/expresslistinfo`. Without a solved captcha the gateway
-answers `risk_001`, "request has risk", for every lookup, from a browser's headers or the
-BEST apps' alike, and the page then shows BEST's own captcha, a picture to slide into place.
-The variant with a phone step answers "Forbidden". So BEST Express Malaysia stays on universal
-providers.
+The tracker posts waybills to `www.best-inc.my/express-cc/express/expresslistinfo`.
+Its gateway can answer `risk_001` before verification. The web client selects Cloudflare
+Turnstile, Aliyun CAPTCHA or BEST's picture slider from its runtime configuration, and can
+move to another verifier when one cannot start. Opening the page or completing a checkbox
+does not establish that the gateway accepted the tracking request.
+
+The official [BEST Express MY Android app](https://play.google.com/store/apps/details?id=com.best.android.malaysiauser)
+is another endpoint lead. Its guest tracking flow uses the same lookup and BEST's picture
+verification, rather than a separate tracking API.
 
 ## Testing
 

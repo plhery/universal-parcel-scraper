@@ -35,6 +35,7 @@ import { isExpedicoReference } from '../detection/expedico.js';
 import { isFanCourierReference } from '../detection/fanCourier.js';
 import { isCostcoLogisticsReference } from '../detection/costcoLogistics.js';
 import { isAeropostReference } from '../detection/aeropost.js';
+import { isOmLogisticsReference } from '../detection/omLogistics.js';
 import { isJAndTBrReference } from '../detection/jAndTBr.js';
 import { isZheldorReference } from '../detection/zheldor.js';
 import { countryCode } from '../time/index.js';
@@ -49,6 +50,7 @@ export interface DeliveryHandoff {
 // about a partner's number only fails, however often the hand-off is retried.
 const REFERENCES_LOOKED_UP: Readonly<Record<string, (number: string) => boolean>> = {
   aeropost: isAeropostReference,
+  'om-logistics': isOmLogisticsReference,
   'j-and-t-br': isJAndTBrReference,
   zheldor: isZheldorReference,
   'costco-logistics': isCostcoLogisticsReference,

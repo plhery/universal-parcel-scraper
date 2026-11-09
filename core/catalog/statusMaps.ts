@@ -13,6 +13,7 @@
 import { statusMap as aeropost } from '../../carriers/aeropost/status.js';
 import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
+import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
 import { statusMap as fourSeventyTwo } from '../../carriers/4-72/status.js';
@@ -771,6 +772,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   aeropost,
   'western-bid': westernBid,
   libanpost,
+  'om-logistics': omLogistics,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

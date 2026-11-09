@@ -15,6 +15,21 @@ delivery order number or the parcel's barcode, and an archived lookup shows such
 number. One public sample of each is known and both are digit runs that other carriers share,
 so no rule claims them.
 
+## Retrieval
+
+The express page reads `/api/CargoTrackingSearch/GetShipments` with the tenant resolved by
+the site's branding bootstrap and the search key. It follows the selected result's
+`SecurityKey` to `GetShipment` for details. Results list house and customer references
+together, so the complete requested reference must match before following a result.
+
+The search can return an image CAPTCHA with its result. This is separate from the domestic
+form's reCAPTCHA.
+
+The [Shlager Android app](https://play.google.com/store/apps/details?id=shlager.il.swipbox.consigneeapp)
+handles locker parcels after registration. The [official locker site](https://www.shlager.com/)
+requires signing in with the phone used for the purchase; this is separate from express guest
+tracking.
+
 ## Links
 
 `tracking-ecom.orian.com/CargoTracking/public-tracking/search?searchKey={number}` opens one

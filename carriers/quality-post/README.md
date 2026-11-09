@@ -2,22 +2,20 @@
 
 Quality Post parcels use enabled universal providers. There is no dedicated adapter.
 
-Grupo Qualitypost is a Mexican parcel group based in Nuevo León, with national delivery and a
-last-mile service for e-commerce. Its site is qualitypost.com.mx.
+Grupo Qualitypost operates Mexican parcel and last-mile delivery services.
 
-## Numbers
+## Retrieval
 
-The only public number, from an archived lookup on its former tracker, is three letters and
-seven digits; the letters look like a sender's code, so no rule names it.
+The [guest tracker](https://wstracking.qualitypost.com.mx/portal_seguimiento) opens a
+number from `info`. Its form posts `action=tracking`, `id_rastreo` and a reCAPTCHA v2
+response to the same page. Opening the deep link only fills the form.
 
-## Why there is no adapter
+The [former tracker](https://tracking.qualitypost.com.mx/newtracking/seguimiento_envio)
+reads `id` without a CAPTCHA. No current public reference establishes a dated history
+through either route. Archived evidence remains quarantined in `numbers.json`.
 
-The current tracker shows a CAPTCHA before any result. The former one answers without it, but
-no current number has been found to check it with.
-
-## Links
-
-The tracker opens a number from its `info` parameter, and the former one from `id`.
+[Zeus](https://app.qualitypost.com.mx/) asks for an employee identifier and PIN.
+No official Android guest-tracking package has been identified.
 
 ## Testing
 

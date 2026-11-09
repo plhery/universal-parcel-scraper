@@ -1,4 +1,11 @@
 {
   "carrier": "om-logistics",
-  "entries": []
+  "entries": [
+    {
+      "wording": "OUT FOR DELIVERY",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

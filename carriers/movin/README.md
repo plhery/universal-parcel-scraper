@@ -2,21 +2,28 @@
 
 MOVIN parcels use enabled universal providers. There is no dedicated adapter.
 
-MOVIN is a business-to-business express carrier in India, a joint venture of UPS and InterGlobe Enterprises,
-moving shipments by air and road between Indian cities. Its site is movin.in.
+MOVIN operates business-to-business express delivery in India, through a joint venture
+of UPS and InterGlobe Enterprises.
 
-## Numbers
+## Retrieval
 
-Its tracker asks for a tracking ID entered as a reference number. No public page shows one, so there is no rule.
+The [official tracking page](https://www.movin.in/shipment/track) embeds Shipsy's
+`/track/result` page. It asks for the new tracking ID as a reference number and opens
+it from `refNum`, with `searchBy=referenceNumber`. The `/p/track` route also accepts
+those parameters.
 
-## Why there is no adapter
+The guest page handles Turnstile and posts to
+`https://onlinebookingmultitenantbackend.shipsy.in/agent/consignment/getAgentPublicConsignments`.
+Its body contains `numbers`, `searchMeta.searchBy=reference_number` and `captcha`;
+`organisation-pretty-name` and `organisation-url` select MOVIN's portal. A request
+without the verification token is rejected. No usable public shipment reference
+establishes the dated event schema.
 
-Its tracking page embeds its tracker on Shipsy, whose lookup API refuses a request without a Cloudflare
-Turnstile token.
-
-## Links
-
-The Shipsy tracker opens numbers from its `refNum` parameter.
+The [official Android app](https://play.google.com/store/apps/details?id=org.movin.logistics)
+uses `https://movinocrapiprod.movin.in/api/` for shipment creation and label printing.
+Its `Shipment/Details` POST sends `shipment_number` and returns booking and label data,
+without a tracking-event model. Driver login and OTP operations belong to the app's
+account flow.
 
 ## Testing
 

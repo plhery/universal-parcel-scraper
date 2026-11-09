@@ -470,6 +470,7 @@ import { adapter as ocasa } from '../carriers/ocasa/adapter.js';
 import { adapter as ocsAna } from '../carriers/ocs-ana/adapter.js';
 import { adapter as oldDominion } from '../carriers/old-dominion/adapter.js';
 import { adapter as olvaCourier } from '../carriers/olva-courier/adapter.js';
+import { adapter as omLogistics } from '../carriers/om-logistics/adapter.js';
 import { adapter as omgo } from '../carriers/omgo/adapter.js';
 import { adapter as omniva } from '../carriers/omniva/adapter.js';
 import { adapter as oneWorldExpress } from '../carriers/one-world-express/adapter.js';
@@ -1225,6 +1226,7 @@ export const REGISTRY: RegistryDefinition = {
     "ocs-ana": ocsAna,
     "old-dominion": oldDominion,
     "olva-courier": olvaCourier,
+    "om-logistics": omLogistics,
     "omgo": omgo,
     "omniva": omniva,
     "one-world-express": oneWorldExpress,
@@ -2391,7 +2393,7 @@ export const REGISTRY: RegistryDefinition = {
     "okay-parcel": "universal",
     "old-dominion": "old-dominion",
     "olva-courier": "olva-courier",
-    "om-logistics": "universal",
+    "om-logistics": "om-logistics",
     "omgo": "omgo",
     "omniva": "omniva",
     "ondot-courier": "universal",

@@ -33496,14 +33496,14 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "universal"
     },
     "canaryUrl": "https://www.movin.in/shipment/track",
-    "trackingUrlTemplate": "https://movin.portal.shipsy.io/p/track?searchBy=referenceNumber&refNum={trackingNumber}",
+    "trackingUrlTemplate": "https://movin.portal.shipsy.io/track/result?searchBy=referenceNumber&refNum={trackingNumber}",
     "trackingSearchUrl": "https://www.movin.in/shipment/track",
     "linkRules": [
       {
         "domains": [
           "movin.portal.shipsy.io"
         ],
-        "pathPattern": "^/p/track/?$",
+        "pathPattern": "^/(?:p/track|track/result)/?$",
         "params": [
           "refNum"
         ]
@@ -35136,7 +35136,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "om-logistics",
+      "localClocks": true
     },
     "canaryUrl": "https://omlogisticssupplychain.com/",
     "trackingSearchUrl": "https://omlogisticssupplychain.com/track-shipment",

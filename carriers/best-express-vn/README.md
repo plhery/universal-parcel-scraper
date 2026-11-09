@@ -18,12 +18,14 @@ archived lookups use; the tracker script also reads `waybill`.
 
 ## Why there is no adapter
 
-The tracker posts the waybills to `www.best-inc.vn/express-cc/express/expresslistinfoWithPhone`,
-or `expresslistinfo` without its phone step. Without a solved captcha the gateway answers
-`risk_001`, "request has risk", for every lookup, real or made up and from a browser too, and
-the page then shows BEST's own captcha, a picture to rotate upright. The BEST Express VN
-Android app (`com.best.android.vietuser`) calls the same lookup and shows the same captcha,
-so BEST Express Vietnam stays on universal providers.
+The tracker posts waybills to `www.best-inc.vn/express-cc/express/expresslistinfoWithPhone`,
+or `expresslistinfo` without its phone step. Its gateway can answer `risk_001` before BEST's
+picture verification, which rotates an image upright. A later `notMatchCodeList` response
+can require recipient phone completion; that input is separate from CAPTCHA verification.
+
+The official [BEST Express VN Android app](https://play.google.com/store/apps/details?id=com.best.android.vietuser)
+uses the same guest lookup and BEST verification parameters, rather than a separate tracking
+API.
 
 ## Testing
 

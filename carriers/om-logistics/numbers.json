@@ -69,6 +69,28 @@
         "confidence": "none"
       },
       "note": "An archived lookup on Om Logistics' former tracker shows this express consignment from Delhi to Nelamangala out for delivery."
+    },
+    {
+      "number": "8788261001627",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.linkedin.com/posts/om-logistics-supply-chain_omlogisticssupplychain-supplychainmanagement-activity-7473602697502314496-f2hb",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "yunda",
+          "econt"
+        ]
+      },
+      "note": "Public complaint on the carrier company post; its current guest tracker returns the same whole docket and dated dispatch history."
     }
   ]
 }

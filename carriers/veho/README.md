@@ -15,8 +15,22 @@ tracking ids have six characters and no rule.
 
 ## Why there is no adapter
 
-The tracker's GraphQL interface needs a Firebase App Check token that the page mints in the
-browser after an invisible reCAPTCHA Enterprise check; a request without one is refused.
+The guest page calls `getOrderByTrackingIdCWA` at
+`https://esus.graph.shipveho.com/graphql`. Its authorization header carries a Firebase App Check
+token obtained after an invisible reCAPTCHA Enterprise check. A rejected attestation prevents
+the lookup; the page's fallback authorization marker is refused too. These authorization
+failures do not establish that a parcel is missing.
+
+An accepted guest query can return package history while denying recipient address and
+consumer identity fields. Those field errors do not invalidate the returned package events;
+errors on the tracking container or its required history fields must be checked separately.
+
+The [official recipient Android app](https://play.google.com/store/apps/details?id=com.veho.consumermobile)
+calls `getOrderByTrackingId` on the same service. Its guest request builder uses native Firebase
+App Check with Play Integrity. Signed-in requests add a Firebase Auth token. The app therefore
+also depends on accepted attestation for this guest route. Its signing certificate is published
+by the official Firebase project in
+[asset links](https://veho-consumer-mobile.web.app/.well-known/assetlinks.json).
 
 ## Links
 
