@@ -3,6 +3,8 @@
   "entries": [
     {"wording": "Package information is created in the system", "stage": "registered", "language": "en", "confirmedBy": "portal"},
     {"wording": "Customs Released", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "Relayed by universal providers between the shipper's details and the first scan in Canada."},
+    {"wording": "Customs Rejected", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "Customs holding the parcel before its first scan in Canada: an examination and the release followed two days later."},
+    {"wording": "Customs Held For Examination", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "Customs examining the parcel, minutes before its release."},
     {"wording": "Package Received with Origin Scan warehouse", "stage": "accepted", "language": "en", "confirmedBy": "portal", "note": "The first scan in Canada, at the same time as the first station row. The history row adds the town and province in brackets."},
     {"wording": "Package is received at a Straightship station", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The history row adds the town and province in brackets."},
     {"wording": "Arrived at Facility", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "Older pages; the history row adds the town and province in brackets."},

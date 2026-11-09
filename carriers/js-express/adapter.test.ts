@@ -334,6 +334,13 @@ describe('JS Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DDE', description: 'Delay in transit' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
+  it("reads USPS's address problem after its round as a missed delivery, and the return it starts as not yet back", () => {
+    expect(jsExpressStage('Insufficient Address', 'DDE')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DDE', description: 'Insufficient Address' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(jsExpressStage('Return to Sender', 'DRS')).toEqual({ stage: 'exception', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DRS', description: 'Return to Sender' })).toEqual({ kind: 'mapped', stage: 'exception' });
+  });
+
   it("reads FedEx's status between its facilities on the line it delivers", () => {
     expect(jsExpressStage('On the way', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'On the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });

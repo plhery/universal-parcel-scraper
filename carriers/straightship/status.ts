@@ -14,6 +14,8 @@ const RULES: readonly (readonly [RegExp, Stage])[] = [
   [/^ready ?for ?shipping$/, 'registered'],
   // Relayed by universal providers between the label and the first scan in Canada.
   [/^customs released$/, 'in_transit'],
+  // Customs holding the parcel before its release, after a rejection or for an examination.
+  [/^customs (?:rejected|held for examination)$/, 'customs'],
   // The first scan once the parcel reaches Straightship in Canada; a station row at the same time follows.
   [/^package received with origin scan warehouse$/, 'accepted'],
   [/^package is received at a straightship station$/, 'in_transit'],
