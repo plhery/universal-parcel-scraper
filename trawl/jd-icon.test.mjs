@@ -112,13 +112,15 @@ function page(t) {
     getBoundingClientRect: () => ({ width: 216, height: 72 }) };
   const old = { document: globalThis.document, location: globalThis.location, getComputedStyle: globalThis.getComputedStyle };
   globalThis.location = { origin: 'https://www.jdl.com', pathname: '/orderSearch/' };
-  globalThis.document = { querySelectorAll: selector => selector === 'img.tip_pic' ? [tip] : [scene] };
+  const modal = { images: [scene, tip], controls: [],
+    querySelectorAll: selector => selector === 'img' ? modal.images : modal.controls };
+  globalThis.document = { querySelectorAll: selector => selector === '#captcha_dom #captcha_modal' ? [modal] : [] };
   globalThis.getComputedStyle = image => ({ visibility: 'visible', opacity: image.opacity ?? '1' });
   scene.getClientRects = tip.getClientRects = () => [{}];
   t.after(() => { for (const key of ['document', 'location', 'getComputedStyle']) {
     if (old[key] === undefined) delete globalThis[key]; else globalThis[key] = old[key];
   } });
-  return { scene, tip };
+  return { scene, tip, modal };
 }
 
 test('click geometry binds both images, their layout, visibility and official page', t => {
@@ -163,13 +165,49 @@ test('puzzle readiness and click geometry reject a fading or hidden ancestor', t
 });
 
 test('refresh geometry binds the official control, both images and ancestor readiness', t => {
-  const { scene } = page(t), original = document.querySelectorAll;
-  const control = { getClientRects: () => [{}], getBoundingClientRect: () => ({ x: 10, y: 20, width: 30, height: 40 }) };
-  document.querySelectorAll = selector => selector === '.jcap_refresh' ? [control] : original(selector);
+  const { scene, modal } = page(t);
+  const control = { textContent: '刷新', contains: () => false, getClientRects: () => [{}],
+    getBoundingClientRect: () => ({ x: 10, y: 20, width: 30, height: 40 }) };
+  modal.controls = [control];
   assert.deepEqual(jdRefreshGeometry(challenge), { x: 25, y: 40 });
   control.parentElement = { opacity: '0' };
   assert.equal(jdRefreshGeometry(challenge), null);
   control.parentElement.opacity = '1';
   scene.src = 'data:image/png;base64,Ag==';
+  assert.equal(jdRefreshGeometry(challenge), null);
+});
+
+
+test('changing inner classes does not change the scoped puzzle or its click geometry', t => {
+  const { scene, tip } = page(t);
+  for (const classes of ['', 'cpc-img-container', '_jSynthetic']) {
+    scene.className = tip.className = classes;
+    assert.deepEqual(jdDisplayedPuzzle(), challenge);
+    assert.deepEqual(jdIconGeometry({ challenge, point: { x: 40, y: 50 } }), { x: 100, y: 130 });
+  }
+  document.querySelectorAll = () => [];
+  assert.equal(jdDisplayedPuzzle(), null);
+  assert.equal(jdIconGeometry({ challenge, point: { x: 40, y: 50 } }), null);
+});
+
+test('multiple visible images or modals remain ambiguous; hidden retired images are ignored', t => {
+  const { scene, modal } = page(t), duplicate = { ...scene };
+  modal.images.push(duplicate);
+  assert.equal(jdDisplayedPuzzle(), null);
+  assert.equal(jdIconGeometry({ challenge, point: { x: 40, y: 50 } }), null);
+  duplicate.getClientRects = () => [];
+  assert.deepEqual(jdDisplayedPuzzle(), challenge);
+  document.querySelectorAll = () => [modal, modal];
+  assert.equal(jdDisplayedPuzzle(), null);
+});
+
+test('nested refresh text identifies one leaf, while separate refresh controls are refused', t => {
+  const { modal } = page(t);
+  const leaf = { textContent: '刷新', contains: () => false, getClientRects: () => [{}],
+    getBoundingClientRect: () => ({ x: 10, y: 20, width: 30, height: 40 }) };
+  const parent = { ...leaf, contains: other => other === leaf };
+  modal.controls = [parent, leaf];
+  assert.deepEqual(jdRefreshGeometry(challenge), { x: 25, y: 40 });
+  modal.controls.push({ ...leaf });
   assert.equal(jdRefreshGeometry(challenge), null);
 });

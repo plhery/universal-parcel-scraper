@@ -50,28 +50,39 @@ export function jdDisplayedPuzzle() {
     }
     return true;
   };
-  const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
-  if (scenes.length !== 1 || tips.length !== 1 || !shown(scenes[0]) || !shown(tips[0])) return null;
-  if (scenes[0].naturalWidth !== 275 || scenes[0].naturalHeight !== 170
-    || tips[0].naturalWidth !== 108 || tips[0].naturalHeight !== 36) return null;
+  if (location.origin !== 'https://www.jdl.com' || !/^\/orderSearch\/?$/.test(location.pathname)) return null;
+  const modals = document.querySelectorAll('#captcha_dom #captcha_modal');
+  if (modals.length !== 1) return null;
+  // Inner classes vary by widget build. Keep selection inside the official modal.
+  const images = [...modals[0].querySelectorAll('img')].filter(shown);
+  const scenes = images.filter(e => e.naturalWidth === 275 && e.naturalHeight === 170);
+  const tips = images.filter(e => e.naturalWidth === 108 && e.naturalHeight === 36);
+  if (scenes.length !== 1 || tips.length !== 1) return null;
   return { scene: scenes[0].src, tip: tips[0].src };
 }
 
 /** Bind the native refresh control to the still-displayed, unanswered puzzle. */
 export function jdRefreshGeometry(challenge) {
   if (location.origin !== 'https://www.jdl.com' || !/^\/orderSearch\/?$/.test(location.pathname)) return null;
-  const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
-  const controls = document.querySelectorAll('.jcap_refresh');
-  if (scenes.length !== 1 || tips.length !== 1 || controls.length !== 1
-    || scenes[0].src !== challenge?.scene || tips[0].src !== challenge?.tip
-    || !scenes[0].complete || !tips[0].complete) return null;
-  for (const target of [scenes[0], tips[0], controls[0]]) {
-    if (!target.getClientRects().length) return null;
+  const shown = target => {
+    if (!target.getClientRects().length) return false;
     for (let element = target; element; element = element.parentElement) {
       const style = getComputedStyle(element);
-      if (style.visibility !== 'visible' || style.opacity !== '1') return null;
+      if (style.visibility !== 'visible' || style.opacity !== '1') return false;
     }
-  }
+    return true;
+  };
+  const modals = document.querySelectorAll('#captcha_dom #captcha_modal');
+  if (modals.length !== 1) return null;
+  const images = [...modals[0].querySelectorAll('img')].filter(e => e.complete && shown(e));
+  const scenes = images.filter(e => e.naturalWidth === 275 && e.naturalHeight === 170);
+  const tips = images.filter(e => e.naturalWidth === 108 && e.naturalHeight === 36);
+  if (scenes.length !== 1 || tips.length !== 1
+    || scenes[0].src !== challenge?.scene || tips[0].src !== challenge?.tip) return null;
+  // The refresh label can sit inside nested spans; click its unique visible leaf.
+  const labels = [...modals[0].querySelectorAll('span,button')].filter(e => e.textContent.trim() === '刷新' && shown(e));
+  const controls = labels.filter(e => !labels.some(other => other !== e && e.contains(other)));
+  if (controls.length !== 1) return null;
   const rect = controls[0].getBoundingClientRect();
   return rect.width > 0 && rect.height > 0 ? { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 } : null;
 }

@@ -53,9 +53,6 @@ export function jdIconGeometry({ challenge, point }) {
   if (location.origin !== 'https://www.jdl.com' || !/^\/orderSearch\/?$/.test(location.pathname)
     || !Number.isFinite(point?.x) || !Number.isFinite(point?.y)
     || point.x <= 0 || point.x >= 275 || point.y <= 0 || point.y >= 170) return null;
-  const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
-  if (scenes.length !== 1 || tips.length !== 1) return null;
-  const scene = scenes[0], tip = tips[0];
   const shown = element => {
     if (!element.getClientRects().length) return false;
     for (let current = element; current; current = current.parentElement) {
@@ -64,7 +61,13 @@ export function jdIconGeometry({ challenge, point }) {
     }
     return true;
   };
-  if (!shown(scene) || !shown(tip)) return null;
+  const modals = document.querySelectorAll('#captcha_dom #captcha_modal');
+  if (modals.length !== 1) return null;
+  const images = [...modals[0].querySelectorAll('img')].filter(e => e.complete && shown(e));
+  const scenes = images.filter(e => e.naturalWidth === 275 && e.naturalHeight === 170);
+  const tips = images.filter(e => e.naturalWidth === 108 && e.naturalHeight === 36);
+  if (scenes.length !== 1 || tips.length !== 1) return null;
+  const scene = scenes[0], tip = tips[0];
   if (!scene.complete || !tip.complete || scene.src !== challenge?.scene || tip.src !== challenge?.tip
     || scene.naturalWidth !== 275 || scene.naturalHeight !== 170 || tip.naturalWidth !== 108 || tip.naturalHeight !== 36) return null;
   const rect = scene.getBoundingClientRect(), prompt = tip.getBoundingClientRect();

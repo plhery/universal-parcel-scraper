@@ -91,7 +91,8 @@ of a second icon. Both shape and colour need a margin over other locations.
 It declines ambiguous images and layouts outside its supported geometry, and its
 `jd.verification` line names which (`geometry`, `image`, `foreground`, `matching` or
 `ambiguous`). Its worker has a deadline and concurrency limit; click geometry binds both
-displayed images.
+displayed images. Readiness and clicks identify the unique image pair inside JD’s
+verification modal, so changing inner widget classes does not break the helper.
 Its official page retains the original guest session and submits tracking only after
 accepted verification. After a visual abstention, the helper may refresh once in the same session when
 the remaining lookup budget permits it. Both new images must load and settle before analysis;
