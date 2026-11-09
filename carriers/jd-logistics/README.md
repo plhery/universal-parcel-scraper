@@ -14,15 +14,16 @@ match the requested number and contain one waybill with dated scans. Multiple pi
 rejected because selecting one could return another parcel's progress.
 
 The domestic step, `trawl`, opens the official order-search page in a fresh context and uses its
-own search, guest session and service-selected verification branch. Its single-icon worker makes one
-bounded attempt. An uncertain match stops without clicking, refreshing the puzzle or sending
-a history request. Accepted verification must still belong to the original guest session;
+own search, guest session and service-selected verification branch. Its single-icon worker may
+refresh once after an uncertain match, within the same session and lookup deadline. A second
+uncertainty stops without submitting an answer or sending a history request. Worker failures
+and submitted refusals are not retried. Accepted verification must still belong to the original guest session;
 only then may the page query `trackNoPin`. The helper also permits the normal proxy request
 when the service itself selects the branch without verification.
 When a prompt mask falls outside the accepted foreground size, verification diagnostics
 keep only its pixel count; puzzle images and mask data are not logged.
 
-The matcher declines most puzzles. After it declines a waybill, the page is not opened for that
+After the bounded attempt declines a waybill, the page is not opened for that
 waybill for 6 hours, then twice as long after each next decline in a row, up to a day. Those
 lookups fail as the same declined verification, so enabled providers answer them. A bound
 answer clears the wait; a restart forgets it.

@@ -42,11 +42,38 @@ export function jdDomesticReply(payload) {
 }
 
 export function jdDisplayedPuzzle() {
-  const shown = image => image?.complete && image.getClientRects().length > 0
-    && getComputedStyle(image).visibility === 'visible' && getComputedStyle(image).opacity === '1';
+  const shown = image => {
+    if (!image?.complete || !image.getClientRects().length) return false;
+    for (let element = image; element; element = element.parentElement) {
+      const style = getComputedStyle(element);
+      if (style.visibility !== 'visible' || style.opacity !== '1') return false;
+    }
+    return true;
+  };
   const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
   if (scenes.length !== 1 || tips.length !== 1 || !shown(scenes[0]) || !shown(tips[0])) return null;
+  if (scenes[0].naturalWidth !== 275 || scenes[0].naturalHeight !== 170
+    || tips[0].naturalWidth !== 108 || tips[0].naturalHeight !== 36) return null;
   return { scene: scenes[0].src, tip: tips[0].src };
+}
+
+/** Bind the native refresh control to the still-displayed, unanswered puzzle. */
+export function jdRefreshGeometry(challenge) {
+  if (location.origin !== 'https://www.jdl.com' || !/^\/orderSearch\/?$/.test(location.pathname)) return null;
+  const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
+  const controls = document.querySelectorAll('.jcap_refresh');
+  if (scenes.length !== 1 || tips.length !== 1 || controls.length !== 1
+    || scenes[0].src !== challenge?.scene || tips[0].src !== challenge?.tip
+    || !scenes[0].complete || !tips[0].complete) return null;
+  for (const target of [scenes[0], tips[0], controls[0]]) {
+    if (!target.getClientRects().length) return null;
+    for (let element = target; element; element = element.parentElement) {
+      const style = getComputedStyle(element);
+      if (style.visibility !== 'visible' || style.opacity !== '1') return null;
+    }
+  }
+  const rect = controls[0].getBoundingClientRect();
+  return rect.width > 0 && rect.height > 0 ? { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 } : null;
 }
 
 const pause = (ms, signal) => new Promise(resolve => {
@@ -70,7 +97,7 @@ async function within(operation, ms, fallback = null, signal) {
   } finally { clearTimeout(timer); if (aborted) signal.removeEventListener('abort', aborted); }
 }
 
-/** One official puzzle. Abstention makes no history request and does not refresh it. */
+/** At most two official puzzles in the original session and caller deadline. */
 export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, signal, installPolicy,
   locate = locateJdIcon, onVerification = reportVerification }) {
   const number = jdDomesticNumber(url, capture);
@@ -82,7 +109,8 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
   const entries = [], pending = new Set(), allowed = new WeakSet();
   let context, page, timer, navigationStatus = 0, needVerify, session = '', sessionCount = 0;
   let accepting = true, requests = 0, blocked = 0, clicked = false, analysis = 'not_started', outcome = 'unprepared', lastResponse = 0;
-  let foregroundPixels;
+  let foregroundPixels, refreshes = 0;
+  const attempts = [];
   const marker = () => ({ url: PAGE, status: navigationStatus, body: null, headers: {}, truncated: false,
     base64Encoded: false, error: `jd-domestic-${outcome}` });
   const result = () => ({ tier, status: 'success', statusCode: navigationStatus, effectiveUrl: url,
@@ -187,16 +215,52 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
         await pause(80, combined);
       }
       if (!puzzle || sessionCount !== 1) { outcome = 'unreadable'; return result(); }
-      const point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), (value, count) => {
-        if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable',
-          'geometry', 'image', 'foreground', 'matching', 'ambiguous'].includes(value)) {
-          analysis = value;
-          foregroundPixels = value === 'foreground' && Number.isSafeInteger(count)
-            && count >= 0 && count <= 108 * 36 && (count < 60 || count > 900) ? count : undefined;
+      let point;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        analysis = 'not_started'; foregroundPixels = undefined;
+        point = await locate(puzzle, combined, Math.max(0, Math.min(3000, left() - 1500)), (value, count) => {
+          if (['planned', 'cancelled', 'capacity', 'input_or_budget', 'timeout', 'output_limit', 'worker_error', 'unreadable',
+            'geometry', 'image', 'foreground', 'matching', 'ambiguous'].includes(value)) {
+            analysis = value;
+            foregroundPixels = value === 'foreground' && Number.isSafeInteger(count)
+              && count >= 0 && count <= 108 * 36 && (count < 60 || count > 900) ? count : undefined;
+          }
+        });
+        attempts.push(analysis);
+        if (combined.aborted) { outcome = 'budget'; return result(); }
+        if (sessionCount !== 1) { outcome = 'guest_session_changed'; return result(); }
+        if (blocked || requests) { outcome = 'verification_refused'; return result(); }
+        if (point) break;
+        // Refresh only a visual abstention, never a submitted refusal or a worker failure.
+        // Leave time for image loading, a second analysis, tracking and context cleanup.
+        if (attempt || left() < 14000 || !['foreground', 'matching', 'ambiguous'].includes(analysis)) break;
+        const refresh = await during(() => page.evaluate(jdRefreshGeometry, puzzle), Math.min(1000, left()));
+        if (combined.aborted) { outcome = 'budget'; return result(); }
+        if (sessionCount !== 1) { outcome = 'guest_session_changed'; return result(); }
+        if (!refresh) { outcome = 'stale_puzzle'; return result(); }
+        refreshes++;
+        await during(() => page.mouse.click(refresh.x, refresh.y), Math.min(1000, left()));
+        const refreshUntil = Date.now() + Math.min(5000, left() - 7000);
+        let previous, fresh;
+        while (!combined.aborted && Date.now() < refreshUntil && !blocked) {
+          if (sessionCount !== 1) { outcome = 'guest_session_changed'; return result(); }
+          const next = await during(() => page.evaluate(jdDisplayedPuzzle), Math.min(1000, left()));
+          if (next && next.scene !== puzzle.scene && next.tip !== puzzle.tip) {
+            if (previous?.scene === next.scene && previous?.tip === next.tip) { fresh = next; break; }
+            previous = next;
+          } else previous = undefined;
+          await pause(80, combined);
         }
-      });
-      if (!point || combined.aborted) { outcome = combined.aborted ? 'budget' : 'unreadable'; return result(); }
+        if (combined.aborted) { outcome = 'budget'; return result(); }
+        if (blocked) { outcome = 'verification_refused'; return result(); }
+        if (!fresh) { outcome = 'stale_puzzle'; return result(); }
+        puzzle = fresh;
+      }
+      if (!point) { outcome = 'unreadable'; return result(); }
       const geometry = await during(() => page.evaluate(jdIconGeometry, { challenge: puzzle, point }), Math.min(1000, left()));
+      if (combined.aborted) { outcome = 'budget'; return result(); }
+      if (sessionCount !== 1) { outcome = 'guest_session_changed'; return result(); }
+      if (blocked || requests) { outcome = 'verification_refused'; return result(); }
       if (!geometry) { outcome = 'stale_puzzle'; return result(); }
       clicked = true;
       await during(() => page.mouse.click(geometry.x, geometry.y), Math.min(3000, left()));
@@ -219,7 +283,7 @@ export async function runJdDomestic({ url, capture, handle, tier, maxTimeout, si
       if (!closed) handle.requestBrowserReplacement?.('JD domestic context cleanup failed');
     }
     try { onVerification({ outcome, analysis, ...(foregroundPixels === undefined ? {} : { foregroundPixels }),
-      clicked, trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
+      puzzles: attempts.length, refreshes, attempts, clicked, trackingRequests: requests, blockedRequests: blocked, durationMs: Date.now() - started }); }
     catch { /* Telemetry cannot change the result. */ }
   }
 }

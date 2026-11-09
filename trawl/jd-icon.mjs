@@ -56,8 +56,14 @@ export function jdIconGeometry({ challenge, point }) {
   const scenes = document.querySelectorAll('.cpc-img-container img'), tips = document.querySelectorAll('img.tip_pic');
   if (scenes.length !== 1 || tips.length !== 1) return null;
   const scene = scenes[0], tip = tips[0];
-  const shown = element => element.getClientRects().length > 0 && getComputedStyle(element).visibility === 'visible'
-    && getComputedStyle(element).opacity === '1';
+  const shown = element => {
+    if (!element.getClientRects().length) return false;
+    for (let current = element; current; current = current.parentElement) {
+      const style = getComputedStyle(current);
+      if (style.visibility !== 'visible' || style.opacity !== '1') return false;
+    }
+    return true;
+  };
   if (!shown(scene) || !shown(tip)) return null;
   if (!scene.complete || !tip.complete || scene.src !== challenge?.scene || tip.src !== challenge?.tip
     || scene.naturalWidth !== 275 || scene.naturalHeight !== 170 || tip.naturalWidth !== 108 || tip.naturalHeight !== 36) return null;

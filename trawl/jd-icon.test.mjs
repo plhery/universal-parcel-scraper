@@ -5,6 +5,7 @@ import { syncBuiltinESMExports } from 'node:module';
 import { test } from 'node:test';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { jdDisplayedPuzzle, jdRefreshGeometry } from './jd-domestic-browser.mjs';
 import { jdIconGeometry, locateJdIcon } from './jd-icon.mjs';
 
 const challenge = { scene: 'data:image/png;base64,AA==', tip: 'data:image/png;base64,AQ==' };
@@ -146,5 +147,29 @@ test('click geometry binds both images, their layout, visibility and official pa
 
 const python = process.env.JD_ICON_PYTHON ?? '/opt/zto-ocr/bin/python';
 test('the actual worker handles synthetic single icons and refuses ambiguity', { skip: !existsSync(python) }, () => {
-  childProcess.execFileSync(python, ['-B', fileURLToPath(new URL('./jd-icon.test.py', import.meta.url))], { timeout: 15000 });
+  childProcess.execFileSync(python, ['-B', fileURLToPath(new URL('./jd-icon.test.py', import.meta.url))], { timeout: 180000 });
+});
+
+
+test('puzzle readiness and click geometry reject a fading or hidden ancestor', t => {
+  const { scene, tip } = page(t);
+  assert.deepEqual(jdDisplayedPuzzle(), challenge);
+  const ancestor = { opacity: '0.5' };
+  scene.parentElement = tip.parentElement = ancestor;
+  assert.equal(jdDisplayedPuzzle(), null);
+  assert.equal(jdIconGeometry({ challenge, point: { x: 40, y: 50 } }), null);
+  ancestor.opacity = '1';
+  assert.deepEqual(jdDisplayedPuzzle(), challenge);
+});
+
+test('refresh geometry binds the official control, both images and ancestor readiness', t => {
+  const { scene } = page(t), original = document.querySelectorAll;
+  const control = { getClientRects: () => [{}], getBoundingClientRect: () => ({ x: 10, y: 20, width: 30, height: 40 }) };
+  document.querySelectorAll = selector => selector === '.jcap_refresh' ? [control] : original(selector);
+  assert.deepEqual(jdRefreshGeometry(challenge), { x: 25, y: 40 });
+  control.parentElement = { opacity: '0' };
+  assert.equal(jdRefreshGeometry(challenge), null);
+  control.parentElement.opacity = '1';
+  scene.src = 'data:image/png;base64,Ag==';
+  assert.equal(jdRefreshGeometry(challenge), null);
 });

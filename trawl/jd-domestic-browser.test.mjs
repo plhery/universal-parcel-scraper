@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { jdDomesticNumber, jdDomesticReply, jdDisplayedPuzzle, runJdDomestic } from './jd-domestic-browser.mjs';
+import { jdDomesticNumber, jdDomesticReply, jdDisplayedPuzzle, jdRefreshGeometry, runJdDomestic } from './jd-domestic-browser.mjs';
 import { jdIconGeometry } from './jd-icon.mjs';
 
 const number = 'JDJ146283975062', other = 'JDJ257394086173';
@@ -11,11 +11,12 @@ const verify = 'https://api.jdl.com/waybillQuery/needVerify';
 const sessionUrl = 'https://www.jdl.com/ecology/getSession';
 const url = `${pageUrl}?waybillCodes=${number}`, capture = { captureResponses: [track, proxy] };
 const puzzle = { scene: 'data:image/png;base64,AA==', tip: 'data:image/png;base64,AQ==' };
+const secondPuzzle = { scene: 'data:image/png;base64,Ag==', tip: 'data:image/png;base64,Aw==' };
 const payload = () => ({ code: 1, token: 'PRIVATE', obj: [{ rawWaybillCode: number, exists: true, receiverName: 'PRIVATE', map: 'PRIVATE',
   traceAllVoList: [{ categoryName: 'In transit', traceVoList: [{ operateMessage: 'In transit', trackDay: '2026-04-03', trackTime: '12:00:00',
     recipientName: 'PRIVATE', phone: 'PRIVATE', attachments: ['PRIVATE'] }] }] }] });
 
-function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, wrongRequest = false, wrongSession = false, proof = 'PRIVATE-PROOF', body = payload(), status = 200, stale = false } = {}) {
+function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, wrongRequest = false, wrongSession = false, proof = 'PRIVATE-PROOF', body = payload(), status = 200, stale = false, plans, decline = 'unreadable', refreshStale = false, refreshSession = false } = {}) {
   const state = { contexts: 0, closed: 0, plans: 0, clicks: 0, requests: 0, blocked: 0, started: 0, captures: [], refreshes: 0 };
   const listeners = new Map();
   const request = (target, method = 'GET', data) => ({ url: () => target, method: () => method, postDataJSON: () => data });
@@ -46,17 +47,25 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
       return { status: () => 200 };
     },
     evaluate: async fn => {
-      if (fn === jdDisplayedPuzzle) return puzzle;
+      if (fn === jdDisplayedPuzzle) return state.refreshes && !refreshStale ? secondPuzzle : puzzle;
+      if (fn === jdRefreshGeometry) return { x: 500, y: 20 };
       if (fn === jdIconGeometry) return stale ? null : { x: 30, y: 40 };
       throw new Error('Unexpected page operation');
     },
-    mouse: { click: async () => { state.clicks++; await history(); } },
+    mouse: { click: async x => {
+      if (x === 500) {
+        state.refreshes++;
+        if (refreshSession) await emit(sessionUrl, { code: 1, obj: 'PRIVATE-NEW-SESSION' });
+      } else { state.clicks++; await history(); }
+    } },
   };
   const context = { newPage: async () => tab, close: async () => { state.closed++; } };
   const options = { url, capture, tier: 3, maxTimeout: 8000,
     handle: { browser: { newContext: async () => { state.contexts++; return context; } } },
     installPolicy: async () => {}, locate: async (input, _signal, budget, report) => {
-      state.plans++; assert.deepEqual(input, puzzle); assert.ok(budget <= 3000); report(plan ? 'planned' : 'unreadable'); return plan;
+      const selected = plans ? plans[state.plans] : plan;
+      state.plans++; assert.deepEqual(input, state.refreshes ? secondPuzzle : puzzle); assert.ok(budget <= 3000);
+      report(selected ? 'planned' : decline); return selected;
     }, onVerification: event => state.captures.push(event) };
   return { state, options, tab };
 }
@@ -174,4 +183,81 @@ test('a context created after caller cancellation is closed without opening a pa
   await release(); await lookup; await new Promise(resolve => setImmediate(resolve));
   assert.ok(result); assert.equal(active.state.closed, 1);
   assert.equal(active.state.started, 0); assert.equal(active.state.requests, 0);
+});
+
+
+test('a visual abstention refreshes once in the same session and captures accepted history', async () => {
+  const active = fixture({ plans: [null, { x: 30, y: 40 }], decline: 'ambiguous' });
+  const result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+  assert.equal(active.state.plans, 2); assert.equal(active.state.refreshes, 1);
+  assert.equal(active.state.started, 1); assert.equal(active.state.contexts, 1); assert.equal(active.state.closed, 1);
+  assert.equal(active.state.clicks, 1); assert.equal(active.state.requests, 1);
+  assert.equal(JSON.parse(result.capturedResponses[0].body).obj[0].rawWaybillCode, number);
+  assert.deepEqual(active.state.captures[0].attempts, ['ambiguous', 'planned']);
+  assert.equal(active.state.captures[0].puzzles, 2);
+});
+
+test('two visual abstentions stop after one refresh without submitting an answer', async () => {
+  for (const decline of ['foreground', 'matching', 'ambiguous']) {
+    const active = fixture({ plan: null, decline });
+    const result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+    assert.equal(active.state.plans, 2); assert.equal(active.state.refreshes, 1);
+    assert.equal(active.state.clicks, 0); assert.equal(active.state.requests, 0); assert.equal(active.state.closed, 1);
+    assert.equal(result.capturedResponses[0].error, 'jd-domestic-unreadable');
+  }
+});
+
+test('worker failures and insufficient headroom never refresh', async () => {
+  for (const decline of ['capacity', 'cancelled', 'timeout', 'worker_error', 'input_or_budget', 'image', 'geometry', 'unreadable']) {
+    const active = fixture({ plan: null, decline });
+    await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+    assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 0); assert.equal(active.state.closed, 1);
+  }
+  const active = fixture({ plan: null, decline: 'ambiguous' });
+  await runJdDomestic({ ...active.options, maxTimeout: 13000 });
+  assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 0);
+});
+
+test('a session replacement during refresh prevents a second analysis or answer', async () => {
+  const active = fixture({ plan: null, decline: 'ambiguous', refreshSession: true });
+  const result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+  assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 1); assert.equal(active.state.clicks, 0);
+  assert.equal(result.capturedResponses[0].error, 'jd-domestic-guest_session_changed');
+});
+
+test('a stale generation cannot start a second analysis and cancellation closes promptly', async () => {
+  const active = fixture({ plan: null, decline: 'ambiguous', refreshStale: true }), abort = new AbortController();
+  const evaluate = active.tab.evaluate;
+  let staleReads = 0;
+  active.tab.evaluate = async fn => {
+    if (fn === jdDisplayedPuzzle && active.state.refreshes && ++staleReads === 3) abort.abort();
+    return evaluate(fn);
+  };
+  const result = await runJdDomestic({ ...active.options, maxTimeout: 40000, signal: abort.signal });
+  assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 1); assert.equal(active.state.clicks, 0);
+  assert.equal(active.state.closed, 1); assert.equal(result.capturedResponses[0].error, 'jd-domestic-budget');
+  assert.ok(result.durationMs < 1000);
+});
+
+test('a submitted answer is never refreshed after a tracking refusal', async () => {
+  const active = fixture({ status: 403 });
+  const result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+  assert.equal(result.capturedResponses[0].status, 403);
+  assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 0); assert.equal(active.state.clicks, 1);
+});
+
+
+test('an unchanged puzzle expires its refresh wait without a second analysis', async t => {
+  t.mock.timers.enable({ apis: ['Date'] });
+  const active = fixture({ plan: null, decline: 'ambiguous', refreshStale: true });
+  const evaluate = active.tab.evaluate;
+  active.tab.evaluate = async fn => {
+    const value = await evaluate(fn);
+    if (fn === jdDisplayedPuzzle && active.state.refreshes) t.mock.timers.tick(5001);
+    return value;
+  };
+  const result = await runJdDomestic({ ...active.options, maxTimeout: 40000 });
+  assert.equal(result.capturedResponses[0].error, 'jd-domestic-stale_puzzle');
+  assert.equal(active.state.plans, 1); assert.equal(active.state.refreshes, 1);
+  assert.equal(active.state.clicks, 0); assert.equal(active.state.closed, 1);
 });

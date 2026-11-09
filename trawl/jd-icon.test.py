@@ -25,7 +25,7 @@ def png(image):
     )
 
 
-def puzzle(angle=40, scale=1.3, duplicate=False, absent=False):
+def puzzle(angle=40, scale=1.3, duplicate=False, absent=False, positions=None):
     yy, xx = np.mgrid[:170, :275]
     scene = np.stack(
         (170 + 10 * np.sin(xx / 20), 100 + 10 * np.cos(yy / 30), 40 + 0 * xx), axis=2
@@ -41,19 +41,61 @@ def puzzle(angle=40, scale=1.3, duplicate=False, absent=False):
     matrix[:, 2] += 14
     transformed_mask = cv2.warpAffine(mask, matrix, (64, 64), flags=cv2.INTER_NEAREST)
     transformed = cv2.warpAffine(glyph, matrix, (64, 64))
-    positions = [] if absent else [(170, 100)]
+    positions = (
+        [] if absent else list(positions if positions is not None else [(170, 100)])
+    )
     if duplicate:
         positions.append((70, 55))
     for x, y in positions:
-        scene[y - 32 : y + 32, x - 32 : x + 32][transformed_mask > 0] = transformed[
-            transformed_mask > 0
-        ]
+        left, top, right, bottom = (
+            max(0, x - 32),
+            max(0, y - 32),
+            min(275, x + 32),
+            min(170, y + 32),
+        )
+        sx, sy = left - (x - 32), top - (y - 32)
+        crop = transformed[sy : sy + bottom - top, sx : sx + right - left]
+        mask_crop = transformed_mask[sy : sy + bottom - top, sx : sx + right - left] > 0
+        scene[top:bottom, left:right][mask_crop] = crop[mask_crop]
     # A same-colour but differently shaped distractor must not win by colour.
     cv2.fillPoly(scene, [np.array([[40, 120], [25, 150], [55, 150]])], (20, 190, 245))
     return {"scene": png(scene), "tip": png(tip)}
 
 
 class IconTests(unittest.TestCase):
+    def test_complete_icons_near_edges_are_not_excluded_by_empty_canvas(self):
+        for x, y in [(19, 70), (255, 70), (120, 19), (120, 150), (19, 19)]:
+            with self.subTest(x=x, y=y):
+                result = icon.locate(puzzle(positions=[(x, y)]))
+                self.assertIsNotNone(result)
+                self.assertAlmostEqual(result["x"], x, delta=4)
+                self.assertAlmostEqual(result["y"], y, delta=4)
+
+    def test_clipped_icons_and_edge_competitors_do_not_become_certain_matches(self):
+        for positions in [
+            [(0, 70)],
+            [(120, 0)],
+            [(19, 70), (170, 100)],
+            [(x, y) for x in (40, 110, 180) for y in (40, 100)],
+        ]:
+            with self.subTest(positions=positions):
+                self.assertIsNone(icon.locate(puzzle(positions=positions)))
+
+    def test_background_colours_need_the_icon_pattern_and_shape(self):
+        for absent in [False, True]:
+            with self.subTest(absent=absent):
+                data = puzzle(absent=absent)
+                scene = icon.decode(data["scene"], (275, 170))
+                scene[:100, :90] = (20, 190, 245)
+                data["scene"] = png(scene)
+                result = icon.locate(data)
+                if absent:
+                    self.assertIsNone(result)
+                else:
+                    self.assertIsNotNone(result)
+                    self.assertAlmostEqual(result["x"], 170, delta=4)
+                    self.assertAlmostEqual(result["y"], 100, delta=4)
+
     def test_rotated_scaled_icon_uses_one_consistent_pose(self):
         for angle, scale in [(40, 1.3), (120, 0.9), (270, 1.5)]:
             with self.subTest(angle=angle, scale=scale):
@@ -87,7 +129,9 @@ class IconTests(unittest.TestCase):
                 input=data,
                 text=True,
                 capture_output=True,
-                timeout=3,
+                # Protocol checks tolerate host contention; the JS worker tests
+                # enforce the separate three-second production deadline.
+                timeout=10,
                 check=True,
             )
             value = json.loads(result.stdout)
@@ -114,7 +158,9 @@ class IconTests(unittest.TestCase):
                 input=json.dumps(data),
                 text=True,
                 capture_output=True,
-                timeout=3,
+                # Protocol checks tolerate host contention; the JS worker tests
+                # enforce the separate three-second production deadline.
+                timeout=10,
                 check=True,
             )
             self.assertEqual(json.loads(result.stdout), expected)

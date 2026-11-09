@@ -83,15 +83,20 @@ with its phase retained in a `china-post.verification` warning.
 The `china-post.form-reload` warning records whether the form recovered and
 a bound scan reply arrived, without identifiers or page content. Its two-scan guest window stays marked
 incomplete; the helper enters no phone digits and signs into no account.
-JD's domestic single-icon helper segments the opaque prompt and requires shape
-and colour to match in the same rotated pose, with a margin over other locations.
+JD's domestic single-icon helper matches the prompt's foreground colour pattern,
+then independently segments each candidate region to check its shape in the same
+rotated pose. Empty rotation padding does not exclude icons near an image edge.
+Competing colour matches remain ambiguous even when scene segmentation loses part
+of a second icon. Both shape and colour need a margin over other locations.
 It declines ambiguous images and layouts outside its supported geometry, and its
 `jd.verification` line names which (`geometry`, `image`, `foreground`, `matching` or
 `ambiguous`). Its worker has a deadline and concurrency limit; click geometry binds both
 displayed images.
 Its official page retains the original guest session and submits tracking only after
-accepted verification. The helper makes one puzzle attempt; abstention closes the context
-without a click, refresh or tracking request. Both the request and response bind the whole
+accepted verification. After a visual abstention, the helper may refresh once in the same session when
+the remaining lookup budget permits it. Both new images must load and settle before analysis;
+worker failures and submitted refusals are not retried. Diagnostics retain only the bounded
+attempt reasons and refresh count. Both the request and response bind the whole
 waybill. A planned click alone is not accepted verification.
 DHL Poland uses TRAWL's native checkbox and audio solver, on a page opened in the language the
 request names (`lang=en-gb` or `pl-pl`), which words its scans.
