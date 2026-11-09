@@ -1959,6 +1959,10 @@ describe('ParcelsApp result parsing', () => {
     const split = read('Perth Western Australia Au');
     expect(split?.find(([description]) => description === 'Arrived at sort facility')?.[2]).toBe('UTC');
     expect(split?.find(([description]) => description === 'Delivered to local carrier')?.[2]).toBe('Australia/Perth');
+    // Its export declaration in China reads as its own map reads it.
+    expect(parseParcelsAppResponse({ carriers: ['Yun Express'], states: [
+      scan('2026-11-05T10:07:37Z', 'The country of origin commences customs declaration.', 'Example City, People\'s Republic of China'),
+    ] }, number, identity()).events?.[0]?.stage).toBe('in_transit');
   });
 
   it('reads 4PX\'s Spanish copies of GOFO\'s scans at the same second once, as GOFO\'s', () => {

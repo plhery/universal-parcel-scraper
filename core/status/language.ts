@@ -415,6 +415,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/(?<!\b(?:sera|seran|ser|sea|for) )\bentregad[oa]s? (?:(?:el|su|tu) (?:paquete|envio|pedido|bulto) )?(?:a|al|en) (?:el |la |un |una |nuestr[oa] )?(?:transportista|agencia (?:de )?(?:transporte|colaboradora|destino|origen)|operador(?: postal| logistico)?|mensajer(?:o|ia)|courier|empresa de (?:transporte|mensajeria|paqueteria)|compania (?:aerea|de transporte)|aerolinea|distribuidora?|centro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones)|almacen|delegacion|plataforma|hub|correos|seur|mrw|nacex|tipsa|ctt|gls|dhl|dpd|ups|fedex|tnt|envialia|zeleris|paack|celeritas|inpost)\b|\bentregad[oa] por (?:el remitente|la aerolinea|aerolinea)\b|(?<!\b(?:sera|serao|ser|seja|for) )\bentregues? (?:(?:a|o) (?:encomenda|envio|objeto) )?(?:a|ao|aos|as|na|no|nos|em) (?:transportadora|transportador|operador(?: postal| logistico)?|parceiro|companhia aerea|centro (?:de )?(?:distribuicao|tratamento|triagem|operacional|logistico)|armazem|plataforma|hub|ctt|correios|dpd|gls|dhl|ups|fedex|tnt|seur|mrw|nacex|tipsa|inpost)\b|\bentregue pelo remetente\b/.test(text)) return 'in_transit';
   // Cleared to leave the country of origin, whoever then carries it on.
   if (/\bready to leave (?:the )?foreign territory\b/.test(text)) return 'in_transit';
+  // YunExpress's export declaration in China, read as its own map reads it wherever a provider relays it: the
+  // parcel goes on its way, held by no customs, as the release that follows reads.
+  if (/^the country of origin commences customs declaration\.?$/.test(text)) return 'in_transit';
   // A carrier taking the parcel over, as Colis Privé words it: "Your package is taken care of by Colis Privé".
   if (/^(?:your |the )?(?:package|parcel|shipment) (?:is|has been|was) taken care of by\b/.test(text)) return 'in_transit';
   // A hand-over still to come to the delivery driver is not one to the carrier.

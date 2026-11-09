@@ -948,6 +948,8 @@ describe('classifyWording', () => {
       ['Send item abroad (EDI-received)', 'in_transit'], ['Send item to destination country', 'in_transit'],
       ['Item received at office of exchange (Inb)', 'in_transit'], ['Receive item at office of exchange (Otb)', 'in_transit'],
       ['Send item to domestic location (Inb)', 'in_transit'],
+      // YunExpress's export declaration in China, as its own map reads it.
+      ['The country of origin commences customs declaration.', 'in_transit'],
       ['Shipment is tendering to third party carrier for final delivery.', 'in_transit'],
       ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.
