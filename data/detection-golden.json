@@ -94609,6 +94609,17 @@
     "candidates": []
   },
   {
+    "input": "QYEAA1999999980YQ",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhlink"
+    ],
+    "asked": [
+      "dhlink"
+    ]
+  },
+  {
     "input": "R080065106202",
     "carrier": "unknown",
     "confidence": "low",

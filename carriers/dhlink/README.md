@@ -24,12 +24,13 @@ page makes.
   on a US line, and Tuodatong's `TDT`, ten digits and `CN`, which it attributes to DHLink on an
   air line from China, are asked too, as is `YLE`, two letters, ten digits and `YQ`, a line ParcelsApp names
   YLE beside DHLink, `AUS`, two letters, ten digits and `YQ`, on a US line GOFO delivers, which
-  it names Asus International beside DHLink, and `CYS` and eleven digits, on a US line UniUni delivers, which it names
+  it names Asus International beside DHLink, `QYE`, two letters, ten digits and `YQ`, on a US line
+  17TRACK names QYEXP beside DHLink, and `CYS` and eleven digits, on a US line UniUni delivers, which it names
   beside DHLink and UniUni. Juxi Express's waybills on two of its lines, `JXC`, `YI` or `ZO`,
   ten digits and `YQ`, are numbers DHLink's tracker knows, so that rule is preferred and DHLink
   is asked and named first; the tracker does not know Juxi's other lines. Their rules are low confidence, so
-  DHLink is asked before it is named. Providers name XZG for its numbers, so XZG is an
-  alias and their hint asks DHLink.
+  DHLink is asked before it is named. Providers name XZG and QYEXP for their numbers, so
+  both are aliases and their hint asks DHLink.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:
   the search can find a parcel by its other numbers.
 - An empty parcel with state 1 is the unknown-number answer. For a DHLink number or a last

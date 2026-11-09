@@ -230,6 +230,21 @@
       "note": "Made-up number in the shape of a parcel on a US line GOFO delivered, which DHLink's tracker answered under that tracking number and ParcelsApp named Asus International beside DHLink: AUS, two letters, ten digits and YQ. Its serial sits far beyond the range in use."
     },
     {
+      "number": "QYEAA1999999980YQ",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-09",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhlink"
+        ]
+      },
+      "note": "Made-up number in the shape of a parcel on a US line, which DHLink's tracker answered under that tracking number and 17TRACK named QYEXP beside DHLink: QYE, two letters, ten digits and YQ. Its serial sits far beyond the range in use."
+    },
+    {
       "number": "CYS99999999999",
       "role": "shipment",
       "evidence": "synthetic",

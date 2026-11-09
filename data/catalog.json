@@ -16323,7 +16323,8 @@
       "Dhlink",
       "驼飞侠",
       "駝飛俠",
-      "XZG"
+      "XZG",
+      "QYEXP"
     ],
     "countries": [
       "CN"
@@ -16387,6 +16388,10 @@
       },
       {
         "pattern": "^AUS[A-Z]{2}\\d{10}YQ$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^QYE[A-Z]{2}\\d{10}YQ$",
         "confidence": "low"
       },
       {

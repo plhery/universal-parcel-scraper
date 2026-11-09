@@ -21,8 +21,9 @@ describe('brand networks', () => {
     expect(carrierIdFromName('Innofulfill')).toBe('shree-maruti');
     expect(carrierIdFromName('Nova Poshta Global')).toBe('nova-global');
     expect(carrierIdFromName('Nova Poshta')).toBe('nova-poshta');
-    // Providers name the line provider whose numbers DHLink tracks.
+    // Providers name the line providers whose numbers DHLink tracks.
     expect(carrierIdFromName('XZG')).toBe('dhlink');
+    expect(carrierIdFromName('QYEXP')).toBe('dhlink');
     // Providers also name Correios by the English name of the country's post.
     expect(carrierIdFromName('Brazil Post')).toBe('correios-br');
     // ParcelsApp names South Africa's post after the country.

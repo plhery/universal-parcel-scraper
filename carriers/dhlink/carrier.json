@@ -6,7 +6,8 @@
     "Dhlink",
     "驼飞侠",
     "駝飛俠",
-    "XZG"
+    "XZG",
+    "QYEXP"
   ],
   "region": {
     "countries": [
@@ -144,6 +145,11 @@
     {
       "id": "dhlink-aus",
       "pattern": "^AUS[A-Z]{2}\\d{10}YQ$",
+      "confidence": "low"
+    },
+    {
+      "id": "dhlink-qye",
+      "pattern": "^QYE[A-Z]{2}\\d{10}YQ$",
       "confidence": "low"
     },
     {

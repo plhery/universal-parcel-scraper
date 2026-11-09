@@ -281,6 +281,15 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     }
   });
 
+  it('asks DHLink about QYEXP line numbers, two letters, ten digits and YQ, without naming it from the shape', () => {
+    expect(detectCarrierMatch('QYEAA1000000017YQ')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(detectCarrierMatch('qyeaa 1000000017 yq')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
+    expect(recognitionAskedCarriers('QYEAA1000000017YQ')).toEqual(['dhlink']);
+    for (const number of ['QYEAA100000017YQ', 'QYEAA10000000017YQ', 'QYEA1000000017YQ', 'QYXAA1000000017YQ', 'QYEAA1000000017YX', 'QYEAA1000000017']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhlink');
+    }
+  });
+
   it('asks DHLink about CYS and eleven digits on its UniUni line without naming it from the shape', () => {
     expect(detectCarrierMatch('CYS00000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
     expect(detectCarrierMatch('cys 0000 0000 001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhlink'] });
