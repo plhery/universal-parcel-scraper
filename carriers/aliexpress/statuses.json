@@ -489,6 +489,15 @@
       "note": "Reclassified to exception 2026-09-12."
     },
     {
+      "code": "PICKUP_ORDER_CLOSED_NOTIFY",
+      "wording": "Shipment cancelled",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The seller's pickup order closed before any pickup, in Cainiao's AE_GROUP_CANCELLED group, the order's only trace under its \"Abnormal status\": the shipment is cancelled and will not be delivered."
+    },
+    {
       "code": "EXCEPTION",
       "stage": "exception",
       "confirmedBy": "prior-art",

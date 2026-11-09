@@ -652,6 +652,10 @@ describe('Cainiao projection', () => {
     expect(sentBack.events?.map((event) => event.stage)).toEqual(['returned', 'exception', 'exception', 'exception', 'in_transit', 'accepted']);
   });
 
+  it('reads a pickup order the seller closed as a cancellation', () => {
+    expect(journey(['PICKUP_ORDER_CLOSED_NOTIFY'])).toMatchObject({ status: 'exception', current_stage: 'exception' });
+  });
+
   it('reads an order the seller is still preparing, before any scan, as registered', () => {
     const preparing = parseCainiaoTrackingResponse({ module: [{ mailNo: 'LP00000000000005', status: 'SELLER_PREPARING', detailList: [] }] },
       'LP00000000000005');
