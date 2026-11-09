@@ -202,6 +202,31 @@ function twelveHourDial(name: unknown): boolean {
 }
 
 /**
+ * A twelve-hour dial's copy of another network's scan in the same reply: the sending post's scan,
+ * which Morocco Post relays in its own words at that scan's minute (Barid Al-Maghrib's relayed labels). Australia Post's "Received by
+ * our network" at 09:18:52 came as "Shipment picked up" at 09:18, and its 22:21:11 clearance
+ * awaiting departure as "Package shipped" at 10:21. A clock whole hours from the label keeps the
+ * minute, and the dial is within a day of the label. Read by its day alone, the copy would stand
+ * beside the scan, so it is not read.
+ */
+function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<string, unknown> }>(entries: readonly T[]): Set<T> {
+  const at = (date: unknown) => {
+    const wall = mislabeledWallTime(date);
+    const read = wall ? DateTime.fromISO(wall, { zone: 'utc' }) : null;
+    return read?.isValid ? read : null;
+  };
+  return new Set(entries.filter((copy) => {
+    const relay = twelveHourDial(copy.name) && typeof copy.name === 'string'
+      && carrierScan(carrierIdFromName(copy.name), relayedLabel(copy.raw.status)) !== undefined;
+    const dial = relay ? at(copy.date) : null;
+    return dial !== null && entries.some((own) => {
+      const scan = twelveHourDial(own.name) ? null : at(own.date);
+      return scan !== null && scan.minute === dial.minute && Math.abs(dial.diff(scan, 'hours').hours) <= 24;
+    });
+  }));
+}
+
+/**
  * Networks whose steps ParcelsApp always dates by their day alone, at the top of an hour with
  * seconds that count the steps, however few the reply has: myBRT.it's progress bar ("Spedizione
  * consegnata a BRT" at 01:00:01, "In viaggio" at 01:00:02 the next day), steps BRT's own
@@ -1905,10 +1930,11 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const relayed = relayCopies(entries);
   const dayOnly = dayOnlyNetworks(entries);
   const midnight = midnightCopies(entries, dayOnly);
+  const dialed = twelveHourCopies(entries);
   const steps = new Set<CarrierEvent>();
   const latest = new LatestScan(SOURCE);
   for (const [index, entry] of entries.entries()) {
-    if (relayed.has(entry) || midnight.has(entry)) continue;
+    if (relayed.has(entry) || midnight.has(entry) || dialed.has(entry)) continue;
     const { raw, name, scan, date } = entry;
     const { zone } = zones[index]!;
     // A DHL Express scan whose facility the rule cannot place is a wall clock

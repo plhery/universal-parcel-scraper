@@ -174,12 +174,17 @@ describe('ParcelsApp YTO scans', () => {
       { date: '2026-10-28T02:37:00Z', status: 'Shipment received for export', location: 'Example, Australia', carrier: 1 },
       { date: '2026-10-27T09:18:00Z', status: 'Shipment picked up', location: 'Example, Australia', carrier: 1 },
     ] }, number, identity());
-    expect(parsed.events?.filter((event) => event.local_time).map((event) => [event.description, event.stage, event.stage_source, event.time, event.local_time, event.time_zone]))
+    // The relay at the minute of the sending post's own scan is that scan's copy.
+    expect(parsed.events?.map((event) => [event.description, event.stage, event.stage_source, event.time, event.local_time, event.time_zone]))
       .toEqual([
-        ['Package shipped', 'in_transit', 'carrier_map', undefined, '2026-11-03', undefined],
+        ['Cleared and awaiting international departure', 'in_transit', expect.any(String), '2026-11-03T11:21:11.000Z', undefined, 'UTC'],
         ['Shipment received for export', 'in_transit', 'carrier_map', undefined, '2026-10-28', undefined],
         ['Shipment picked up', 'accepted', 'carrier_map', undefined, '2026-10-27', undefined],
       ]);
+    // Without the sending post's scan it keeps its day.
+    expect(parseParcelsAppResponse({ carriers: ['Morocco Post'], states: [
+      { date: '2026-11-03T10:21:00Z', status: 'Package shipped', location: 'Example, Australia', carrier: 0 },
+    ] }, number, identity()).events?.map((event) => [event.description, event.local_time])).toEqual([['Package shipped', '2026-11-03']]);
   });
 
   it("reads Croatia Post's relayed labels by its own map and a post abroad on that office's clock", () => {
