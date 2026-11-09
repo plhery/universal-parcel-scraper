@@ -5,10 +5,10 @@
     "Eshun",
     "Eshun International Logistics",
     "Eshun (ZES Express)",
-    "俄顺国际物流",
-    "俄顺国际",
-    "俄顺物流",
-    "Эшун"
+    "\u4fc4\u987a\u56fd\u9645\u7269\u6d41",
+    "\u4fc4\u987a\u56fd\u9645",
+    "\u4fc4\u987a\u7269\u6d41",
+    "\u042d\u0448\u0443\u043d"
   ],
   "region": {
     "countries": [
@@ -23,17 +23,42 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "zes-express",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 13
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://www.zes-express.com/",
     "canaryUrl": "https://www.zes-express.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
   },
   "links": [],
   "detection": [

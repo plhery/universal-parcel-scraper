@@ -13,12 +13,26 @@ so they have no rule.
 
 ## Why there is no adapter
 
-Each lookup on its tracker asks for a Tencent CAPTCHA or the last four digits of the sender's or
-recipient's phone.
+The official mobile guest client first calls `web.query.waybill.getVisitorAuthToken`
+at `https://api.ky-express.com/router/rest`. It sends the whole waybill, a fresh
+visitor session id and a source marker, then receives a verification mode and token.
+`web.query.waybill.officialMobileRoute` sends the whole waybill and `captchaParam`
+with the native Tencent ticket and verification state. A recipient-phone branch is
+a separate input requirement.
+
+The framed desktop client uses its own `u.ky-express.com/router/rest` gateway.
+`web.query.waybill.officialRoute` sends `waybillNumber` as a one-item array,
+and its visitor bootstrap uses source `10`. These contracts differ from the
+mobile page's scalar waybill and source `30`. The frame's Tencent constructor
+belongs to the page context; an isolated evaluation world need not expose it.
+
+The customer Android package is `com.oxbix.spanlogistics`. Its protected business
+code has not established a simpler guest tracking API. The operations and driver
+apps are separate from customer guest tracking.
 
 ## Links
 
-The tracker opens waybills from the `orders` parameter of its search page on www.ky-express.com
+The tracker opens waybills from the `orders` parameter of its search page at `/88.html` or `/website/88.html` on www.ky-express.com
 and of the frame it loads from u.ky-express.com, and its mobile route page from `waybillNo` in
 its address's fragment.
 

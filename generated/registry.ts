@@ -748,6 +748,7 @@ import { adapter as yypost } from '../carriers/yypost/adapter.js';
 import { adapter as zajil } from '../carriers/zajil/adapter.js';
 import { adapter as zecheng } from '../carriers/zecheng/adapter.js';
 import { adapter as zeleris } from '../carriers/zeleris/adapter.js';
+import { adapter as zesExpress } from '../carriers/zes-express/adapter.js';
 import { adapter as zheldor } from '../carriers/zheldor/adapter.js';
 import { adapter as znlogic } from '../carriers/znlogic/adapter.js';
 import { adapter as zoomVe } from '../carriers/zoom-ve/adapter.js';
@@ -1504,6 +1505,7 @@ export const REGISTRY: RegistryDefinition = {
     "zajil": zajil,
     "zecheng": zecheng,
     "zeleris": zeleris,
+    "zes-express": zesExpress,
     "zheldor": zheldor,
     "znlogic": znlogic,
     "zoom-ve": zoomVe,
@@ -2924,7 +2926,7 @@ export const REGISTRY: RegistryDefinition = {
     "zajil": "zajil",
     "zecheng": "zecheng",
     "zeleris": "zeleris",
-    "zes-express": "universal",
+    "zes-express": "zes-express",
     "zheldor": "zheldor",
     "zimpost": "universal",
     "zippd": "universal",

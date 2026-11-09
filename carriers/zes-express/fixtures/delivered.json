@@ -1,0 +1,44 @@
+{
+  "success": 1,
+  "data": [
+    {
+      "server_hawbcode": "ZESZE7312064859YQ",
+      "shipper_hawbcode": "MERCHANT-SYNTHETIC",
+      "channel_hawbcode": "71000000000139",
+      "destination_country": "RU",
+      "track_status": "CC",
+      "signatory_name": "PRIVATE SYNTHETIC",
+      "pod_url": "https://private.invalid/document",
+      "details": [
+        {
+          "track_occur_date": "2031-01-04 11:58:49",
+          "gmt_offset": "",
+          "track_location": "SYNTHETIC DELIVERY DEPOT",
+          "track_description_en": "Вручение адресату",
+          "track_code": "O010"
+        },
+        {
+          "track_occur_date": "2031-01-03 14:56:09",
+          "gmt_offset": "",
+          "track_location": "SYNTHETIC DELIVERY DEPOT",
+          "track_description_en": "Принят на склад доставки",
+          "track_code": "AADO"
+        },
+        {
+          "track_occur_date": "2031-01-02 09:41:07",
+          "gmt_offset": "+08:00",
+          "track_location": "МОСКВА",
+          "track_description_en": "Мешок с грузом отгружается со склада",
+          "track_code": "DF"
+        },
+        {
+          "track_occur_date": "2031-01-02 09:34:01",
+          "gmt_offset": "+08:00",
+          "track_location": "МОСКВА",
+          "track_description_en": "Груз получен на склад <ESHUN>",
+          "track_code": "AF"
+        }
+      ]
+    }
+  ]
+}

@@ -519,6 +519,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "yurtici-kargo": 430,
   "zecheng": 725,
   "zeleris": 230,
+  "zes-express": 13,
   "znlogic": 3,
   "zr-express": 801,
   "zto-international": 998,

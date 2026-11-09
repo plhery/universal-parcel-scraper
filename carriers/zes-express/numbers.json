@@ -44,6 +44,28 @@
         ]
       },
       "note": "A ZES Express number a public guide to its tracking quotes; its own tracker answers it with the hand-off to CDEK."
+    },
+    {
+      "number": "ZESZE2024178766YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.kuaidi100.com/all/zesexpress.shtml",
+        "date": "2026-11-09",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "zes-express"
+        ]
+      },
+      "note": "Public carrier-page example; the carrier-linked guest tenant returns the whole primary waybill, dated ESHUN and Russian postal scans, and an explicit onward reference."
     }
   ]
 }

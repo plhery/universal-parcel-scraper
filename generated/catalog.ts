@@ -29488,7 +29488,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.ky-express.com",
           "ky-express.com"
         ],
-        "pathPattern": "^/88\\.html$",
+        "pathPattern": "^/(?:website/)?88\\.html$",
         "params": [
           "orders"
         ]
@@ -52899,7 +52899,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "zes-express",
+      "recognitionRank": 13,
+      "localClocks": true
     },
     "canaryUrl": "https://www.zes-express.com/",
     "trackingSearchUrl": "https://www.zes-express.com/",

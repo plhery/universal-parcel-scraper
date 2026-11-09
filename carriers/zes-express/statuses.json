@@ -1,4 +1,57 @@
 {
   "carrier": "zes-express",
-  "entries": []
+  "entries": [
+    {
+      "code": "O010",
+      "wording": "Вручение адресату",
+      "stage": "delivered",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "AADO",
+      "wording": "Принят на склад доставки",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Покинуло сортировочный центр",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Прибыло в сортировочный центр",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Сортировка",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Покинуло место приёма",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DF",
+      "wording": "Мешок с грузом отгружается со склада",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "AF",
+      "wording": "Груз получен на склад <ESHUN>",
+      "stage": "accepted",
+      "language": "ru",
+      "confirmedBy": "live"
+    }
+  ]
 }

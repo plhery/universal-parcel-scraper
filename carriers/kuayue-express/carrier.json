@@ -6,11 +6,11 @@
     "KY Express",
     "Kua Yue Express",
     "KYE Group",
-    "跨越速运",
-    "跨越速运集团",
-    "跨越速运集团有限公司",
-    "跨越物流",
-    "跨越速递"
+    "\u8de8\u8d8a\u901f\u8fd0",
+    "\u8de8\u8d8a\u901f\u8fd0\u96c6\u56e2",
+    "\u8de8\u8d8a\u901f\u8fd0\u96c6\u56e2\u6709\u9650\u516c\u53f8",
+    "\u8de8\u8d8a\u7269\u6d41",
+    "\u8de8\u8d8a\u901f\u9012"
   ],
   "region": {
     "countries": [
@@ -43,7 +43,7 @@
         "www.ky-express.com",
         "ky-express.com"
       ],
-      "pathPattern": "^/88\\.html$",
+      "pathPattern": "^/(?:website/)?88\\.html$",
       "params": [
         "orders"
       ]
