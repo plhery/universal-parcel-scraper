@@ -95,6 +95,10 @@ No account, cookie, fingerprint or issued token is used.
   every scan on the recipient country's clock ([iMile](../../carriers/imile/README.md)), so they
   are read on it (`destination_country_code`), before any other reading, or keep their wall
   clock where that country has several, rather than iMile's catalog clock, Dubai's.
+- `dhl-express-tracking` relays the rows of DHL's German parcel network with no offset, and
+  without a place for the steps of the delivery base and vehicle and the sender's data. Its
+  offsets stand where it gives them; its unplaced wall clocks borrow a zone as the relabelling
+  feeds' do (below).
 - `inpost-uk-tracking` gives UTC instants with no offset: InPost's hub dates the same
   scans with one, and Collect+'s copies say `+01:00` on London's summer clock. They are
   read as UTC, not as wall clocks.

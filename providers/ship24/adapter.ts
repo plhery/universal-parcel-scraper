@@ -204,6 +204,8 @@ interface Feed {
   stated?: (status: string) => boolean;
   /** A scan nothing places keeps its wall clock instead of borrowing a neighbour's or the courier's. */
   walls?: true;
+  /** The feed's offsets are as the scans had them: only its offset-less scans are wall clocks, which borrow. */
+  keepsOffsets?: true;
 }
 
 const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
@@ -219,6 +221,9 @@ const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   'feia-tracking': { place: (location, _journey, status) => seventeenFeiaCopyZone(status.replace(/,\s*[^,]*$/, ''), location), walls: true },
   // A country of several clocks keeps its wall clocks, as iMile's adapter does, not iMile's Dubai clock.
   'imile-tracking': { clock: (journey) => journey.destination ? imileCountryClock(journey.destination) : null, walls: true },
+  // DHL's feed relays the rows of DHL's German parcel network with no offset and no place for the
+  // delivery base's and the delivery vehicle's steps ("loaded onto the delivery vehicle").
+  'dhl-express-tracking': { keepsOffsets: true },
 };
 
 function feedOf(scan: Record<string, unknown>): Feed | null {
@@ -281,7 +286,7 @@ function planned(scan: Record<string, unknown>, event: CarrierEvent, now: number
 
 /** A relabelling feed's timestamp as the scan's wall clock; any other is left as Ship24 sent it. */
 function feedClock(timestamp: unknown, feed: Feed | null, scan: Record<string, unknown>): unknown {
-  if (!feed || typeof timestamp !== 'string' || !EXPLICIT_OFFSET_PATTERN.test(timestamp)) return timestamp;
+  if (!feed || feed.keepsOffsets || typeof timestamp !== 'string' || !EXPLICIT_OFFSET_PATTERN.test(timestamp)) return timestamp;
   if (feed.stated && !place(scan.location) && typeof scan.status === 'string' && feed.stated(scan.status)) return timestamp;
   if (!feed.shift) return timestamp.replace(EXPLICIT_OFFSET_PATTERN, '');
   const shifted = DateTime.fromISO(timestamp, { setZone: true }).setZone(feed.shift);

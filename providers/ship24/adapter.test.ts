@@ -237,6 +237,14 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(feed('canada-post-tracking', 'Canada Post', [['2026-10-03T11:28:48-05:00', undefined]])).toEqual(['local 2026-10-03T11:28:48']);
   });
 
+  it('reads the unlocated rows of DHL\'s feed on the clock of its nearest placed row', () => {
+    // DHL's German parcel rows come with no offset; the delivery vehicle's and the sender's data name no place.
+    expect(feed('dhl-express-tracking', 'DHL Express', [['2026-11-09T09:00:00', ''], ['2026-11-09T02:25:00', 'Germany'],
+      ['2026-11-06T16:00:00', '']])).toEqual(['2026-11-09T08:00:00.000Z', '2026-11-09T01:25:00.000Z', '2026-11-06T15:00:00.000Z']);
+    // Its offsets stand.
+    expect(feed('dhl-express-tracking', 'DHL Express', [['2026-11-09T09:00:00+09:00', '']])).toEqual(['2026-11-09T00:00:00.000Z']);
+  });
+
   it('reads UniUni\'s Z as the depot\'s clock, in the states and provinces its catalog entry serves', () => {
     expect(feed('uniuni-tracking', 'UniUni', [['2026-10-09T10:20:54Z', 'Example Town MI'], ['2026-10-01T08:21:40Z', 'Example Town ON'],
       ['2026-09-30T13:02:00Z', 'EXAMPLE DATA CENTER']]))
