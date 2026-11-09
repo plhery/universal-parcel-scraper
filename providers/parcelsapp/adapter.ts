@@ -44,6 +44,7 @@ import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
 import { pitneyBowesPlatformClock, pitneyBowesPostalRelay } from '../../carriers/pitney-bowes/clock.js';
 import { pocztaPolskaPartnerClock } from '../../carriers/poczta-polska/clock.js';
 import { destinationRelay, europeanAbroad, ROYAL_MAIL_RELAY_CLOCK } from '../../carriers/royal-mail/clock.js';
+import { YUNEXPRESS_ORIGIN_ZONE, yunExpressOriginLeg } from '../../carriers/yunexpress/clock.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { CHINESE_CITIES, CHINESE_PROVINCES } from '../shared/china.js';
 import { brandCarrierForNumber, universalCarrierHints } from '../shared/hints.js';
@@ -1506,6 +1507,22 @@ function yunExpressDestinationZones(items: readonly { name: unknown; date: unkno
   });
 }
 
+/**
+ * The clock of YunExpress's scans with no place on China's leg, up to the flight out: China's, when
+ * its nearest scan with a place, the older one first, is in China, as YunExpress's own adapter dates
+ * them (`yunExpressOriginLeg`). Its flight out came at China's digits: as labeled, it left eight
+ * hours late, after the import clearance its destination's town dated.
+ */
+function yunExpressOriginZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined; wording: string }[],
+  zones: readonly { zone: string | null }[]): (string | null)[] {
+  const rows = items.flatMap((item, index) => nameKey(item.name) === 'yunexpress' ? [{ item, index, wall: mislabeledWallTime(item.date) ?? '' }] : [])
+    .sort((a, b) => (a.wall < b.wall ? 1 : a.wall > b.wall ? -1 : 0));
+  const leg = yunExpressOriginLeg(rows.map(({ item }) => ({ location: item.location.trim(), wording: item.wording })));
+  const found = items.map((): string | null => null);
+  rows.forEach(({ item, index }, at) => { if (leg[at] && !item.offset && !zones[index]!.zone) found[index] = YUNEXPRESS_ORIGIN_ZONE; });
+  return found;
+}
+
 function relayTwinZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined }[],
   zones: readonly { zone: string | null; step: ZoneStep }[]): (string | null)[] {
   const second = ({ date, offset }: typeof items[number]) => {
@@ -1938,6 +1955,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     .forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   relayTwinZones(entries, zones).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   yunExpressDestinationZones(entries, zones, destination).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'borrowed' }; });
+  yunExpressOriginZones(entries, zones).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'borrowed' }; });
   const relayed = relayCopies(entries);
   const dayOnly = dayOnlyNetworks(entries);
   const midnight = midnightCopies(entries, dayOnly);

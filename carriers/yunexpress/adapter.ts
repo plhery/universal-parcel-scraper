@@ -16,6 +16,7 @@ import { isRecord } from '../../core/types.js';
 import { airportTimeZone } from '../../places/index.js';
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
+import { YUNEXPRESS_ORIGIN_ZONE as ORIGIN_ZONE, yunExpressOriginLeg } from './clock.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressNotice, withoutMarkup, withoutRepeatedParts, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
 const API = 'https://services.yuntrack.com/Track/Query';
@@ -45,8 +46,6 @@ function eventClock(raw: string, offset?: string): Pick<CarrierEvent, 'time'> & 
 }
 
 const wording = (event: CarrierEvent) => (event.description ?? '').replace(/\s+/g, ' ').trim().toLowerCase();
-const IN_CHINA = /(?:^|[\s,])(?:CN|China)$/i;
-const ORIGIN_ZONE = 'Asia/Shanghai';
 /** The offset the latest-scan record states for China Post's scans. */
 const CHINA_OFFSET = '+08:00';
 const ARRIVAL = 'international flight has arrived';
@@ -69,22 +68,12 @@ const LA_POSTE_UTC = new Set(['arrived at destination', 'handled by local carrie
 /**
  * Dates the rows without a place that China's leg holds, up to the flight
  * out, on China's clock when the nearest row with a place, the older one
- * first, is in China. A departure stated as the latest scan carries +08:00,
- * and read on the destination's clock the flight would land hours too soon.
- * Events are newest first.
+ * first, is in China (`yunExpressOriginLeg`). Events are newest first.
  */
 function dateOriginLeg(events: CarrierEvent[]): CarrierEvent[] {
-  const arrival = events.map(wording).lastIndexOf(ARRIVAL);
-  const start = events.findIndex((event, at) => at > arrival
-    && (IN_CHINA.test(event.location ?? '') || wording(event) === 'international flight has departed'));
-  if (start < 0) return events;
-  const placed = (at: number) => events[at]?.location ?? '';
+  const leg = yunExpressOriginLeg(events.map((event) => ({ location: event.location ?? '', wording: event.description ?? '' })));
   return events.map((event, at) => {
-    if (at < start || event.location || !event.local_time || event.time) return event;
-    let place = '';
-    for (let older = at + 1; !place && older < events.length; older += 1) place = placed(older);
-    for (let newer = at - 1; !place && newer >= start; newer -= 1) place = placed(newer);
-    if (!IN_CHINA.test(place)) return event;
+    if (!leg[at] || !event.local_time || event.time) return event;
     const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone: ORIGIN_ZONE })).toISO({ suppressMilliseconds: true })!;
     return { ...event, time, time_zone: ORIGIN_ZONE, time_zone_basis: 'neighbour' };
   });

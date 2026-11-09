@@ -1931,7 +1931,7 @@ describe('ParcelsApp result parsing', () => {
       .events?.find((event) => event.description === 'In Transit')?.time).not.toBe('2026-10-27T09:10:52.000Z');
   });
 
-  it('reads YunExpress\'s scans in Australia on the clock of its scans at a town there', () => {
+  it('reads YunExpress\'s scans in Australia on the clock of its scans at a town there, and in China on China\'s', () => {
     // Live shape: the town, its state and the country's code with spaces alone, and the rest of the
     // destination's leg at the country alone or no place, all at that town's digits; its copy of
     // Australia Post's receipt came at Australia Post's own digits.
@@ -1954,12 +1954,15 @@ describe('ParcelsApp result parsing', () => {
       ['Delivered to local carrier', '2026-11-07T22:21:00.000Z', 'Australia/Brisbane'],
       ['Arrived at sort facility', '2026-11-07T21:21:00.000Z', 'Australia/Brisbane'],
       ['International flight has arrived', '2026-11-06T02:34:00.000Z', 'Australia/Brisbane'],
-      // Before its first scan in the destination, a scan with no place keeps its label.
-      ['International flight has departed', '2026-11-06T00:26:00.000Z', 'UTC'],
       ['Clearance processing completed - Import', '2026-11-05T21:31:00.000Z', 'Australia/Brisbane'],
       ['Start Customs Clearence', '2026-11-05T20:31:00.000Z', 'Australia/Brisbane'],
+      // On China's leg, a scan with no place is on China's clock, as YunExpress's own adapter reads it.
+      ['International flight has departed', '2026-11-05T16:26:00.000Z', 'Asia/Shanghai'],
       ['Arrived at the origin international airport', '2026-11-05T08:07:31.000Z', 'Asia/Shanghai'],
     ]);
+    // With no scan placed in China, it keeps its label.
+    expect(parseParcelsAppResponse({ carriers: ['Yun Express'], states: states(town).slice(0, -1) }, number, identity())
+      .events?.find((event) => event.description === 'International flight has departed')?.time_zone).toBe('UTC');
     // Towns on two clocks give the rest none.
     const split = read('Perth Western Australia Au');
     expect(split?.find(([description]) => description === 'Arrived at sort facility')?.[2]).toBe('UTC');

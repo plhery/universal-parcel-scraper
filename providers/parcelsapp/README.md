@@ -610,7 +610,9 @@ step exists for future protocol changes.
   and gives its other scans there the same digits: its copy of Australia Post's receipt, at
   the country alone, had Australia Post's own. Its scans at the country alone, and those
   with no place after its first scan in the destination, take the zone its scans there
-  share. Other carriers keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
+  share. Its scans with no place on China's leg, up to the flight out, are on China's clock
+  when its nearest scan with a place, the older one first, is in China, as in YunExpress's
+  adapter: as labeled, its flight out left eight hours late. Other carriers keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
   places only in the US or Canada
   ("US 12345", "United States") borrows like a wall-clock scan (step 3 above), from a scan
   of its network that a place gives a zone: FedEx's "Shipment information sent to FedEx"
