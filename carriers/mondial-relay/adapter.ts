@@ -35,6 +35,12 @@ const DEFAULT_TIMEOUT_MS = 90_000;
 const DEFAULT_DIRECT_TIMEOUT_MS = 10_000;
 /** The time kept for the app's answer when the website's estimate runs out. */
 const APP_RESERVE_MS = 500;
+/**
+ * How long the website may take to add its estimate to the app's answer. It answers within a few
+ * seconds, and a read that hangs would hold the app's answer, and every lookup queued behind it,
+ * for the rest of the budget.
+ */
+const DEFAULT_ESTIMATE_TIMEOUT_MS = 15_000;
 /** The stages of a parcel on its way, whose app answer the website's estimate completes. */
 const ON_THE_WAY = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
 const ZONE = 'Europe/Paris';
@@ -407,6 +413,8 @@ export interface MondialRelayTrackerOptions {
   timeoutMs?: number;
   /** How long the app step may take before the website is tried. */
   directTimeoutMs?: number;
+  /** How long the website may take to add its estimate to the app's answer. */
+  estimateTimeoutMs?: number;
   /** The browser service, or null when none is configured. */
   trawl?: TrawlClient | null;
   /** An InPost account's refresh token for the app step; without one the website answers alone. */
@@ -423,6 +431,7 @@ export interface MondialRelayTrackerOptions {
 export class MondialRelayTracker {
   readonly timeoutMs: number;
   readonly directTimeoutMs: number;
+  readonly estimateTimeoutMs: number;
   readonly #trawl: TrawlClient | null;
   readonly #app: MondialRelayAppClient | null;
   readonly #fetcher: typeof fetch | undefined;
@@ -437,6 +446,7 @@ export class MondialRelayTracker {
       this.timeoutMs,
       options.directTimeoutMs ?? DEFAULT_DIRECT_TIMEOUT_MS,
     ));
+    this.estimateTimeoutMs = Math.max(1, Math.min(this.timeoutMs, options.estimateTimeoutMs ?? DEFAULT_ESTIMATE_TIMEOUT_MS));
     this.#trawl = options.trawl ?? null;
     this.#app = options.app !== undefined ? options.app : options.appRefreshToken?.trim()
       // The client keeps its HTTP/1.1 transport under any fetcher: the backend's bot screen
@@ -504,8 +514,12 @@ export class MondialRelayTracker {
           const kept = keptEstimate(context.knownEstimate, result, this.#now());
           if (kept) return { ...result, expected_delivery: kept };
           // The app gives no delivery estimate and the website does: for a parcel on its way, its
-          // answer adds the estimate to the app's, which stands without it.
-          const website = await this.#trawlResult(trawl, credential, deadline - APP_RESERVE_MS, signal).catch(() => {
+          // answer adds the estimate to the app's, which stands without it. The browser service
+          // stops at the estimate's deadline, and the request is dropped there rather than waiting
+          // for its transport allowance.
+          const estimateDeadline = Math.min(deadline - APP_RESERVE_MS, performance.now() + this.estimateTimeoutMs);
+          const estimateSignal = AbortSignal.any([signal, AbortSignal.timeout(Math.max(1, Math.floor(estimateDeadline - performance.now())))]);
+          const website = await this.#trawlResult(trawl, credential, estimateDeadline, estimateSignal).catch(() => {
             context.signal?.throwIfAborted();
             return null;
           });

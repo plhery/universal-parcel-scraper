@@ -293,6 +293,22 @@ describe('Mondial Relay app step', () => {
     expect(failing).toHaveBeenCalled();
   });
 
+  it('answers from the app without an estimate when the website hangs past the estimate’s time', async () => {
+    const app = await new MondialRelayTracker({ app: service().client, trawl: null }).fetch(SHIPMENT, POSTCODE);
+    // A browser service that never answers: only the lookup's own signal ends its request.
+    const hanging = vi.fn<typeof fetch>((_input, init) => new Promise<Response>((_resolve, reject) => {
+      init?.signal?.addEventListener('abort', () => reject(init.signal!.reason), { once: true });
+    }));
+    const started = performance.now();
+    const result = await new MondialRelayTracker({ app: service().client, trawl: new TrawlClient(trawlServiceUrl, hanging), fetcher: hanging,
+      estimateTimeoutMs: 50 }).fetch(SHIPMENT, POSTCODE, { budgetMs: 60_000 });
+    expect(hanging).toHaveBeenCalled();
+    expect(result).toEqual(app);
+    // The estimate's time ended the wait, not the browser service failing at once.
+    expect(performance.now() - started).toBeGreaterThanOrEqual(45);
+    expect(performance.now() - started).toBeLessThan(5_000);
+  });
+
   it('keeps the caller’s estimate in place of the website’s while its day is ahead and no newer scan shows', async () => {
     const website = JSON.parse(readFileSync(new URL('./fixtures/available-at-relay.json', import.meta.url), 'utf8')) as { Expedition: Record<string, unknown> };
     website.Expedition.Numero = SHIPMENT;

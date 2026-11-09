@@ -7,6 +7,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js';
+import { repairMisreadUtf8 } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { WINIT_TABS, winitStage, winitTabStage } from './status.js';
 
@@ -30,8 +31,6 @@ const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
 // A run of nine or more digits, with spaces, brackets, dots or hyphens
 // between them, as phone numbers are written; a date stays.
 const PHONE = /(?<![A-Z\d])(?!\d{4}-\d{2}-\d{2}(?!\d))\+?\d(?:[\s().-]{0,2}\d){8,}(?![A-Z\d])/gi;
-// UTF-8 bytes read one by one as Latin-1, as some relayed UPS wording arrives ("Pointâ\u0084¢" for "Point™").
-const MISREAD_UTF8 = /[Â-ô][\u0080-¿]{1,3}/g;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
@@ -50,21 +49,12 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
   return cleanScalar(value, maxLength);
 }
 
-/** Wording whose UTF-8 was read as Latin-1, put right; anything else stays as it is. */
-function repairMisreadUtf8(value: string): string {
-  return value.replace(MISREAD_UTF8, (run) => {
-    try {
-      return new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(run, (char) => char.charCodeAt(0)));
-    } catch {
-      return run;
-    }
-  });
-}
 
 /**
  * A scan's wording: WINIT's English, else its Chinese, without phone
  * numbers, e-mail addresses or the name of whoever took the parcel. The
- * tracker shows the English as HTML.
+ * tracker shows the English as HTML, and some relayed UPS wording with its
+ * UTF-8 read as Latin-1 ("Pointâ\u0084¢" for "Point™"), which is put right.
  */
 export function winitWording(row: Record<string, unknown>): string {
   const raw = textFromHtml(text(row, 'eventDescription', 2000), 1000) || textFromHtml(text(row, 'eventStatus', 1000), 1000);

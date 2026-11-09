@@ -132,6 +132,38 @@
       "note": "The same partner's next move between facilities, relayed without a code."
     },
     {
+      "wording": "The shipment has been processed in the parcel center of origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "DHL's parcel centre on a parcel it delivers in Germany, relayed without a code; WanbExpress also sends it under SupplierAndLastMileReceive."
+    },
+    {
+      "wording": "The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "DHL's arrival in the delivery region, before its delivery base, relayed without a code."
+    },
+    {
+      "wording": "The shipment has been postponed and will probably be delivered on the next working day",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "DHL holding the parcel at its delivery base for another day, after its arrival in the region and before the next loading: no round, so no attempt."
+    },
+    {
+      "wording": "The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "DHL's delivery round, relayed without a code."
+    },
+    {
       "code": "LastMileInTransit",
       "wording": "In transit along Poste Italiane’s logistic network",
       "language": "en",
@@ -144,6 +176,15 @@
       "language": "en",
       "stage": "out_for_delivery",
       "confirmedBy": "live"
+    },
+    {
+      "code": "LastMileDeliveryFailed",
+      "wording": "Unfortunately, the delivery of the shipment was not possible.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "DHL's round that did not deliver, hours after the loading; the parcel went back to a parcel centre and out again days later."
     },
     {
       "code": "LastMileDelivered",

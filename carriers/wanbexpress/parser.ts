@@ -6,6 +6,7 @@ import { listsNewestFirst } from '../../core/result/order.js';
 import { classifyWording, languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { repairMisreadUtf8 } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { wanbStage } from './status.js';
 
@@ -30,7 +31,7 @@ const CURRENT: Readonly<Record<string, Stage>> = { Delivered: 'delivered', InTra
  * the destination's: neither is where the parcel was.
  */
 function wanbPlace(location: string, stage: Stage | null | undefined): string | undefined {
-  const place = clean(location, 300);
+  const place = clean(repairMisreadUtf8(location), 300);
   if (!place || /^linehaul agent$/i.test(place) || (stage === 'registered' && /^[A-Z]{2}$/.test(place))) return undefined;
   return place;
 }
@@ -59,10 +60,12 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
     const time = explicitOffsetTime(row.Time)?.iso;
     if (!time) throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid scan clock');
     const code = typeof row.Status === 'string' ? row.Status : '';
-    const mapped = wanbStage(code || null, row.Content);
-    const wording = mapped === undefined ? classifyWording(row.Content) : null;
+    // A partner's text can arrive with its UTF-8 read as Latin-1, as DHL's German places do ("KÃ¶ln").
+    const content = repairMisreadUtf8(row.Content);
+    const mapped = wanbStage(code || null, content);
+    const wording = mapped === undefined ? classifyWording(content) : null;
     const location = row.Location ? wanbPlace(row.Location, mapped ?? wording?.stage) : undefined;
-    return { description: clean(row.Content, 1000), time,
+    return { description: clean(content, 1000), time,
       ...(location ? { location } : {}),
       ...(code ? { provider_code: code.slice(0, 100) } : {}),
       ...(mapped ? { stage: mapped, stage_source: 'carrier' as const } : wording?.stage ? { stage: wording.stage, stage_source: wording.source } : {}) };

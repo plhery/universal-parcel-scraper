@@ -28,10 +28,12 @@ so only the Spanish names resolve here. InPost Spain's own `FV` numbers are read
    - The app gives no delivery estimate. For a parcel on its way (accepted, in
      transit, in customs or out for delivery) the website is read too, through
      `trawl`'s two requests, and only its estimate is added: one browser session
-     per such lookup. Without a browser service, or when the website fails, the
-     app's answer stands without an estimate. A caller's `knownEstimate` whose day
-     is after today in Paris stands in its place, and the website is not read, while
-     the app shows no scan newer than the estimate's `lastUpdate`.
+     per such lookup. Without a browser service, or when the website fails or
+     takes more than 15 seconds, the app's answer stands without an estimate:
+     lookups run one at a time, so a hanging read would hold the ones behind it.
+     A caller's `knownEstimate` whose day is after today in Paris stands in its
+     place, and the website is not read, while the app shows no scan newer than
+     the estimate's `lastUpdate`.
 2. `trawl`: two requests through the browser service, on one
    solved identity.
    - Load `/suivi-de-colis/` and read the `token` attribute of `#tracking` from

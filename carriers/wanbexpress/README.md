@@ -32,7 +32,9 @@ preparing it, which names the destination.
 The last-mile partner's scans, iMile's on a parcel to Germany, come in the partner's sentences
 and mostly without a code: they take the stage iMile's map gives those sentences. A sentence
 other trackers relay word for word, such as a partner's announcement that the sender is still
-preparing the parcel, takes the stage of the shared map (`SHARED_WORDINGS`).
+preparing the parcel, takes the stage of the shared map (`SHARED_WORDINGS`). DHL's scans on a
+parcel it delivers in Germany come in DHL's English, some with their UTF-8 read as Latin-1
+upstream ("KÃ¶ln"), which the parser puts right.
 Once WanbExpress has relabelled the parcel for its courier, the reply's metadata carries the
 courier's number, which the tracker shows as `TrackingNo`, and the shipping service. The
 tracker's last-mile panel names that service's courier from

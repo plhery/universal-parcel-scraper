@@ -191,6 +191,8 @@ describe('classifyWording', () => {
       'The label for the parcel has been created',
       // PostNL's pre-alert, as aggregators relay it.
       'Pre-alerted shipment enriched by PostNL management', 'Shipment pre-alerted',
+      // Paquetexpress's web-services label, as aggregators relay it with the account that made it.
+      'Documentación De Servicios Web', 'Documentación De Servicios Web POR Sampleuser',
     ]) expect(classifyWording(wording, 'pending')).toEqual({ stage: 'registered', source: 'wording:language' });
     // The carrier itself taking the parcel is still acceptance.
     expect(wordingStage('The parcel was handed over to GLS.')).toBe('accepted');

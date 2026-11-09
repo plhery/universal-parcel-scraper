@@ -8,11 +8,11 @@ const STAGES: Readonly<Record<string, Stage>> = {
   LinehaulAgencyReceive: 'in_transit', LinehaulAgencyDeparture: 'in_transit', LinehaulDeparture: 'in_transit',
   LinehaulArrival: 'in_transit', CustomsCleared: 'in_transit', SupplierAndLastMileReceive: 'in_transit',
   LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDeliveryReady: 'out_for_delivery',
-  LastMileDelivered: 'delivered',
+  LastMileDeliveryFailed: 'failed_attempt', LastMileDelivered: 'delivered',
 };
 
-// A US last-mile partner's scans between its receipt and the delivery run, relayed without a code,
-// by `normalizeStatusWording` wording.
+// The last-mile partners' scans relayed without a code, by `normalizeStatusWording` wording: a US
+// partner's between its receipt and the delivery run, and DHL's in Germany.
 const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['in processing at transit facility.', 'in_transit'],
   ['in transit to next facility.', 'in_transit'],
@@ -21,6 +21,11 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['in transit, arriving late', 'in_transit'],
   ['it is currently in transit to the next facility', 'in_transit'],
   ['the package is being transferred to the next facility', 'in_transit'],
+  ['the shipment has been processed in the parcel center of origin', 'in_transit'],
+  ['the shipment arrived in the region of recipient and will be transported to the delivery base in the next step.', 'in_transit'],
+  // Held at the delivery base for another day: no round, so no attempt.
+  ['the shipment has been postponed and will probably be delivered on the next working day', 'in_transit'],
+  ['the shipment has been loaded onto the delivery vehicle. delivery is expected to take place today.', 'out_for_delivery'],
 ]);
 
 /**

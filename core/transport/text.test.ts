@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { clean, cleanScalar, escapeRegExp, textFromHtml } from './text.js';
+import { clean, cleanScalar, escapeRegExp, repairMisreadUtf8, textFromHtml } from './text.js';
 
 describe('text helpers', () => {
   it('collapses whitespace and caps length', () => {
@@ -17,5 +17,11 @@ describe('text helpers', () => {
   it('extracts readable text from short HTML fragments', () => {
     expect(textFromHtml('<b>Delivered</b>&nbsp;to <i>neighbour</i>')).toBe('Delivered to neighbour');
     expect(textFromHtml(null)).toBe('');
+  });
+
+  it('puts right UTF-8 read as Latin-1 and leaves real Latin-1 letters alone', () => {
+    expect(repairMisreadUtf8('MÃ¼sterstadt, GroÃ\u009fdorf')).toBe('Müsterstadt, Großdorf');
+    expect(repairMisreadUtf8('Pointâ\u0084¢')).toBe('Point™');
+    expect(repairMisreadUtf8('Müsterstadt, São Paulo, Ãvila')).toBe('Müsterstadt, São Paulo, Ãvila');
   });
 });

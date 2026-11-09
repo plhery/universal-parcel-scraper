@@ -121,6 +121,25 @@ describe('WanbExpress', () => {
     expect(wanbStage('LastMileNew', 'In Transit to Next Facility.')).toBeUndefined();
   });
 
+  it('puts right DHL\'s relayed text whose UTF-8 was read as Latin-1, and stages its round that did not deliver as a failed attempt', () => {
+    const point = (Time: string, Content: string, Status: string | null, Location = '') => ({ Time, TimeZone: 1, Content, Status, Location });
+    const result = parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null, Metadata: null, TrackPoints: [
+      point('2031-04-20T14:00:00Z', 'Unfortunately, the delivery of the shipment was not possible.', 'LastMileDeliveryFailed'),
+      point('2031-04-20T19:00:00Z', 'The shipment has been processed in the parcel center of origin', null, 'MÃ¼sterstadt, Germany'),
+      point('2031-04-22T04:00:00Z', 'The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.', null, 'GroÃ\u009fdorf, Germany'),
+      point('2031-04-22T05:00:00Z', 'The shipment has been postponed and will probably be delivered on the next working day', null),
+      point('2031-04-23T06:00:00Z', 'The shipment has been loaded onto the delivery vehicle. Delivery is expected to take place today.', null),
+    ] } }, number);
+    expect(result.events?.map((event) => [event.stage, event.location])).toEqual([
+      ['out_for_delivery', undefined], ['in_transit', undefined], ['in_transit', 'Großdorf, Germany'],
+      ['in_transit', 'Müsterstadt, Germany'], ['failed_attempt', undefined],
+    ]);
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: 'LastMileDeliveryFailed', description: 'Unfortunately, the delivery of the shipment was not possible.' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'The shipment has been postponed and will probably be delivered on the next working day' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it('keeps the courier\'s number and names the courier the last-mile panel gives for the shipping service', async () => {
     const courierNumber = '0082800082801234567890';
     const relabelled = () => { const value = found(); Object.assign(value.Data.Metadata, { TrackingNumber: courierNumber, ShippingServiceId: 'SAMPLE_ES_48H' }); return value; };
