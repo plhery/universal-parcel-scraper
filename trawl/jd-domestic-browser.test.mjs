@@ -61,9 +61,13 @@ function fixture({ plan = { x: 30, y: 40 }, verified = true, restarted = false, 
   return { state, options, tab };
 }
 
-test('the helper is scoped to exact domestic identifiers and both official capture endpoints', () => {
+test('the helper is scoped to whole JD waybills outside the international series and both official capture endpoints', () => {
   assert.equal(jdDomesticNumber(url, capture), number);
+  for (const series of ['JD0146283975062', 'JDV146283975062', 'JDVA14628397506', 'JDAZ14628397506', 'JDQ146283975062']) {
+    assert.equal(jdDomesticNumber(url.replace(number, series), capture), series);
+  }
   for (const target of [url + '&waybillCodes=' + other, url + '#extra', url.replace(number, 'JDW146283975062'),
+    url.replace(number, 'JDAP14628397506'), url.replace(number, 'JD14628397506'), url.replace(number, 'VG14628397506'),
     url.replace('www.jdl.com', 'example.test'), url.replace('www.jdl.com', 'user@www.jdl.com')]) assert.equal(jdDomesticNumber(target, capture), null);
   assert.equal(jdDomesticNumber(url, { captureResponses: [track] }), null);
 });

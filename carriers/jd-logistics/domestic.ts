@@ -14,10 +14,20 @@ const PROVIDER = 'JD Logistics';
 export const JD_DOMESTIC_TRACK = 'https://www.jdl.com/waybill/trackNoPin';
 export const JD_DOMESTIC_PROXY = 'https://api.jdl.com/waybillQuery/trackWaybill';
 const PAGE = 'https://www.jdl.com/orderSearch/';
-const NUMBER = /^JD(?:J\d{12}|AZ\d{11})$/;
+const WAYBILL = /^JD(?:\d{13}|[A-Z]\d{12}|[A-Z]{2}\d{11})$/;
+const DOMESTIC = /^JD(?:0\d{12}|[JKVX]\d{12}|V[ABC]\d{11}|AZ\d{11})$/;
+const INTERNATIONAL = /^JD(?:W\d{12}|AP\d{11})$/;
 
-/** A route suggestion, never evidence that JD holds the number. */
-export const jdDomesticCandidate = (number: string): boolean => NUMBER.test(number);
+/**
+ * Where a JD waybill is asked, by its series: the domestic page for mainland series, the
+ * international feed for JDW and JDAP, both in that order for a series not seen yet, and the
+ * international feed alone for anything else. A route, never evidence that JD holds the number.
+ */
+export type JdRoute = 'domestic' | 'international' | 'either';
+export function jdRoute(number: string): JdRoute {
+  if (DOMESTIC.test(number)) return 'domestic';
+  return WAYBILL.test(number) && !INTERNATIONAL.test(number) ? 'either' : 'international';
+}
 export const jdDomesticUrl = (number: string): string => `${PAGE}?${new URLSearchParams({ waybillCodes: normalizeJdNumber(number) })}`;
 
 /** Drop the part naming a courier, contact or recipient; the scan's status remains. */

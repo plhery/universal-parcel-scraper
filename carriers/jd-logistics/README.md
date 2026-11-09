@@ -1,8 +1,11 @@
 # JD Logistics
 
-Tracks international waybills through the international website's anonymous feed. When that
-feed holds no history, the JDAZ and JDJ domestic series can use the public domestic tracker
-through TRAWL. A series is a route suggestion; the response must confirm the whole identifier.
+Each waybill is asked where its series is kept. Mainland series (`JD` followed by `0`, `JDJ`, `JDK`,
+`JDV`, `JDVA`–`JDVC`, `JDX`, `JDAZ`) go to the public domestic tracker through TRAWL; the
+international feed does not hold them. `JDW` and `JDAP` go to the international website's
+anonymous feed. A JD series not seen yet asks the feed first, then the domestic tracker when the
+feed holds nothing. Without TRAWL, and for HTTP recognition, every series asks the feed. A series
+is a route, not evidence: the response must confirm the whole identifier.
 
 ## How it works
 
@@ -10,9 +13,8 @@ One JSON POST queries the website's international tracking proxy. The parent ref
 match the requested number and contain one waybill with dated scans. Multiple pieces are
 rejected because selecting one could return another parcel's progress.
 
-For the domestic series, an inconclusive international answer can continue through `trawl`.
-The helper opens the official order-search page in a fresh context and uses its own search,
-guest session and service-selected verification branch. Its single-icon worker makes one
+The domestic step, `trawl`, opens the official order-search page in a fresh context and uses its
+own search, guest session and service-selected verification branch. Its single-icon worker makes one
 bounded attempt. An uncertain match stops without clicking, refreshing the puzzle or sending
 a history request. Accepted verification must still belong to the original guest session;
 only then may the page query `trackNoPin`. The helper also permits the normal proxy request

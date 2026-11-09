@@ -1,13 +1,13 @@
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
 import { adapter, DECLINE_HOLD_MS, JdLogisticsTracker, MAX_DECLINE_HOLD_MS } from './adapter.js';
-import { jdDomesticBrowser, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
+import { jdDomesticBrowser, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-const NUMBER = 'JDJ146283975062', OTHER = 'JDJ257394086173';
-const history = () => ({ code: 1, obj: [{ rawWaybillCode: NUMBER, exists: true, receiverName: 'PRIVATE',
+const NUMBER = 'JDJ146283975062', OTHER = 'JDJ257394086173', UNSEEN = 'JDQ146283975062';
+const history = (number = NUMBER) => ({ code: 1, obj: [{ rawWaybillCode: number, exists: true, receiverName: 'PRIVATE',
   traceAllVoList: [{ categoryName: 'Delivered', traceVoList: [
     { operateMessage: '已签收，签收人：PRIVATE', createTime: '2026-04-03 12:30:00', trackDay: '1999-01-01', trackTime: '01:00', state: '9' },
     { operateMessage: 'In transit', trackDay: '2026-04-02', trackTime: '10:20', attachment: 'PRIVATE' },
@@ -138,12 +138,32 @@ describe('JD domestic recovery boundaries', () => {
     expect(result.events).toHaveLength(1);
   });
 
-  it('uses the browser only after an inconclusive international answer for a supported domestic shape', async () => {
+  it('routes each series: mainland to the domestic page, JDW and JDAP to the international feed, unseen ones to both', () => {
+    for (const number of ['JD0146283975062', 'JDJ146283975062', 'JDK146283975062', 'JDV146283975062', 'JDX146283975062',
+      'JDVA14628397506', 'JDVB14628397506', 'JDVC14628397506', 'JDAZ14628397506']) expect(jdRoute(number), number).toBe('domestic');
+    for (const number of ['JDW146283975062', 'JDAP14628397506', 'VG14628397506', 'JD14628397506']) expect(jdRoute(number), number).toBe('international');
+    for (const number of ['JD1146283975062', 'JDQ146283975062', 'JDAB14628397506']) expect(jdRoute(number), number).toBe('either');
+  });
+
+  it('asks the domestic page alone for a mainland series, whose waybills the international feed never holds', async () => {
     const { trawl, scrape } = client();
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());
     const result = await new JdLogisticsTracker({ trawl, fetcher }).fetch(NUMBER);
-    expect(result.events).toHaveLength(2); expect(fetcher).toHaveBeenCalledTimes(1); expect(scrape).toHaveBeenCalledTimes(1);
+    expect(result.events).toHaveLength(2); expect(fetcher).not.toHaveBeenCalled(); expect(scrape).toHaveBeenCalledTimes(1);
     expect(scrape.mock.calls[0]?.[0]).toMatchObject({ captureResponses: [JD_DOMESTIC_TRACK, JD_DOMESTIC_PROXY], skipHttp: true });
+  });
+
+  it('asks the international feed for a mainland series when no browser service is configured', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());
+    await expect(new JdLogisticsTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ reason: 'portal_not_found' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('uses the browser only after an inconclusive international answer for an unseen series', async () => {
+    const { trawl, scrape } = client(history(UNSEEN), { trackingNumberSubmitted: UNSEEN });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());
+    const result = await new JdLogisticsTracker({ trawl, fetcher }).fetch(UNSEEN);
+    expect(result.events).toHaveLength(2); expect(fetcher).toHaveBeenCalledTimes(1); expect(scrape).toHaveBeenCalledTimes(1);
   });
 
   it('an abstention preserves a challenge for the provider fallback without another JD call', async () => {
@@ -152,7 +172,7 @@ describe('JD domestic recovery boundaries', () => {
       body: null, headers: {}, truncated: false, base64Encoded: false, error: 'jd-domestic-unreadable' }] } as never);
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => empty());
     await expect(new JdLogisticsTracker({ trawl, fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unreadable' });
-    expect(fetcher).toHaveBeenCalledTimes(1); expect(scrape).toHaveBeenCalledTimes(1);
+    expect(fetcher).not.toHaveBeenCalled(); expect(scrape).toHaveBeenCalledTimes(1);
   });
 
   it('leaves a waybill whose verification keeps declining to the providers for longer each time', async () => {
@@ -202,9 +222,9 @@ describe('JD domestic recovery boundaries', () => {
 
   it('a matching international answer takes precedence without any browser request', async () => {
     const { trawl, scrape } = client();
-    const data = { code: 1, data: [{ waybillNo: NUMBER, waybillNum: 1, wayBillTrackItemDtoList: [{ waybillNo: NUMBER,
+    const data = { code: 1, data: [{ waybillNo: UNSEEN, waybillNum: 1, wayBillTrackItemDtoList: [{ waybillNo: UNSEEN,
       trackNodeList: [{ operatorTime: '2026-04-03T12:00:00+08:00', operatorDesc: 'In transit' }] }] }] };
-    const result = await new JdLogisticsTracker({ trawl, fetcher: async () => new Response(JSON.stringify(data)) }).fetch(NUMBER);
+    const result = await new JdLogisticsTracker({ trawl, fetcher: async () => new Response(JSON.stringify(data)) }).fetch(UNSEEN);
     expect(result.events).toHaveLength(1); expect(scrape).not.toHaveBeenCalled();
   });
 
@@ -213,8 +233,10 @@ describe('JD domestic recovery boundaries', () => {
     const factory = adapter({ trawl, fetcher: async () => empty(), recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
     await expect(factory.recognize!(NUMBER, {})).rejects.toMatchObject({ kind: 'indeterminate' });
     expect(scrape).not.toHaveBeenCalled();
-    await expect(new JdLogisticsTracker({ trawl, fetcher: async () => empty() }).fetch('JDW146283975062'))
-      .rejects.toMatchObject({ reason: 'portal_not_found' });
+    for (const number of ['JDW146283975062', 'JDAP14628397506']) {
+      await expect(new JdLogisticsTracker({ trawl, fetcher: async () => empty() }).fetch(number))
+        .rejects.toMatchObject({ reason: 'portal_not_found' });
+    }
     expect(scrape).not.toHaveBeenCalled();
   });
 

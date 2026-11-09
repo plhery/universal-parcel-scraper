@@ -3,7 +3,7 @@ import { ChallengeError, IndeterminateError, NotFoundError, TransportError, Upst
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf, type TrawlClient } from '../../core/transport/index.js';
-import { jdDomesticBrowser, jdDomesticCandidate } from './domestic.js';
+import { jdDomesticBrowser, jdRoute } from './domestic.js';
 import { normalizeJdNumber, parseJdLogistics } from './parser.js';
 
 // Request builder in the official international Tracking page's proxy client.
@@ -59,10 +59,12 @@ export class JdLogisticsTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; trawl?: TrawlClient | null } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}, browser = true) {
-    const number = normalizeJdNumber(raw);
-    const domestic = browser && jdDomesticCandidate(number) && !!this.options.trawl;
+    const number = normalizeJdNumber(raw), route = jdRoute(number);
+    // Without the browser, a mainland series still asks the international feed, whose empty answer stays inconclusive.
+    const domestic = browser && route !== 'international' && !!this.options.trawl;
+    const international = !domestic || route !== 'domestic';
     return runSteps({ carrier: 'jd-logistics', signal: context.signal, budgetMs: context.budgetMs ?? (domestic ? 45_000 : 15_000),
-      recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
+      recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', enabled: international, run: async ({ signal, remainingMs }) => {
       try {
         const { bytes } = await fetchBounded(ENDPOINT, { method: 'POST', signal, headers: { ...HEADERS, 'User-Agent': userAgentOf(this.options.userAgent) },
           body: JSON.stringify([{ magicNoList: [number], clientIp: '$cooMrdGatewayIp$', lang: 'en', timeZone: 'UTC' }]),
@@ -85,7 +87,7 @@ export const adapter: AdapterFactory = environment => {
   const tracker = new JdLogisticsTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent, trawl: environment.trawl });
   return { id: 'jd-logistics', recordsSteps: true, steps: ['direct', 'trawl'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context, false)),
-    recognizeWithBrowser: (number, context) => jdDomesticCandidate(normalizeJdNumber(number))
+    recognizeWithBrowser: (number, context) => jdRoute(normalizeJdNumber(number)) !== 'international'
       ? recognizeFromBrowserLookup(() => tracker.fetch(number, context)) : Promise.resolve({ known: false, lastActivityAt: null }),
   };
 };

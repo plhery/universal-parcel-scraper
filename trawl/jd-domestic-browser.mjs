@@ -5,7 +5,8 @@ const TRACK = 'https://www.jdl.com/waybill/trackNoPin';
 const PROXY = 'https://api.jdl.com/waybillQuery/trackWaybill';
 const VERIFY = 'https://api.jdl.com/waybillQuery/needVerify';
 const SESSION = 'https://www.jdl.com/ecology/getSession';
-const NUMBER = /^JD(?:J\d{12}|AZ\d{11})$/;
+// The adapter sends mainland series and unseen ones; JD's international series never come here.
+const NUMBER = /^JD(?:\d{13}|[A-Z]\d{12}|[A-Z]{2}\d{11})$/, INTERNATIONAL = /^JD(?:W\d{12}|AP\d{11})$/;
 const MAX_BODY = 1_000_000;
 const MAX_RESPONSES = 3;
 const reportVerification = fields => console.warn(JSON.stringify({ level: 'warn', event: 'jd.verification', ...fields }));
@@ -15,7 +16,7 @@ export function jdDomesticNumber(raw, capture = {}) {
   try { url = new URL(raw); } catch { return null; }
   const number = url.searchParams.get('waybillCodes');
   return url.origin === new URL(PAGE).origin && url.pathname === '/orderSearch/' && !url.username && !url.password && !url.hash
-    && [...url.searchParams].length === 1 && NUMBER.test(number ?? '')
+    && [...url.searchParams].length === 1 && NUMBER.test(number ?? '') && !INTERNATIONAL.test(number)
     && capture.captureResponses?.length === 2 && capture.captureResponses[0] === TRACK && capture.captureResponses[1] === PROXY
     ? number : null;
 }
