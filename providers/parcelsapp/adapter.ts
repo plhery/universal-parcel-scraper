@@ -177,10 +177,28 @@ function datedOnly(name: unknown, status: string, date: unknown): string | null 
  */
 function dayOnlyNetworks(entries: readonly { name: unknown; date: unknown; offset?: string | null }[], minutes = false): Set<string> {
   const walls = new Map<string, (string | null)[]>();
-  for (const { name, date, offset } of entries) walls.set(nameKey(name), [...walls.get(nameKey(name)) ?? [], offset ? null : mislabeledWallTime(date)]);
+  const dials = new Set<string>();
+  for (const { name, date, offset } of entries) {
+    walls.set(nameKey(name), [...walls.get(nameKey(name)) ?? [], offset ? null : mislabeledWallTime(date)]);
+    if (twelveHourDial(name)) dials.add(nameKey(name));
+  }
   return new Set([...walls].filter(([key, list]) => STEP_COUNTED_NETWORKS.has(key)
     ? list.every((wall) => wall !== null && STEP_COUNT.test(wall))
-    : list.length >= 3 && dayClock(list, minutes) && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2).map(([key]) => key));
+    : dials.has(key) ? list.every((wall) => wall !== null)
+      : list.length >= 3 && dayClock(list, minutes) && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2).map(([key]) => key));
+}
+
+/**
+ * Carriers whose tracker prints a scan's clock on a twelve-hour dial without AM or PM, which
+ * ParcelsApp copies as it is. Barid Al-Maghrib's ("Morocco Post") copies of the sending post's
+ * scans have that post's digits on its own clock, folded: its copy of Australia Post's 22:21
+ * clearance awaiting departure came at 10:21, read on Casablanca's clock half a day early. Their
+ * scans keep their day, as the carrier's own adapter keeps them.
+ */
+const TWELVE_HOUR_DIALS = new Set(['barid-al-maghrib']);
+function twelveHourDial(name: unknown): boolean {
+  const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
+  return carrier !== undefined && TWELVE_HOUR_DIALS.has(carrier);
 }
 
 /**

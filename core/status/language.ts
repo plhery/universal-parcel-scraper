@@ -600,6 +600,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // The UPU's mail events as posts word them for providers: the despatch abroad, marked "(EDI-received)" by a
   // post that has it from the sending post's electronic data, and the despatch to the destination country.
   if (/^send item (?:abroad|to (?:the )?destination country)(?: \(edi received\))?$/.test(text)) return 'in_transit';
+  // Its events with the side in brackets, as posts' IPS trackers name them: an office of exchange receiving the
+  // item, bound abroad (Otb) or from abroad (Inb), and the destination's office sending it on to its own network.
+  if (/^(?:receive item|item received) at (?:the )?office of exchange \((?:inb|otb)\)$|^send item to domestic location \(inb\)$/.test(text)) return 'in_transit';
   // Sent on to another country: "Sent abroad".
   if (/^(?:(?:the )?(?:shipment|parcel|package|item) )?(?:(?:has been|was) )?(?:sent|dispatched|forwarded) abroad$/.test(text)) return 'in_transit';
   // A post's departure from its country, as ParcelsApp words Poczta Polska's:

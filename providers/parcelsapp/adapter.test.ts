@@ -165,6 +165,23 @@ describe('ParcelsApp YTO scans', () => {
     expect(parseParcelsAppResponse({ carriers: ['CDEK'], states: states(1) }, number, identity())).toMatchObject({ current_stage: 'accepted' });
   });
 
+  it("reads Morocco Post's relays of the sending post by Barid Al-Maghrib's map, on their day alone", () => {
+    // Shape of ParcelsApp's copies of Barid Al-Maghrib's tracker on an item from Australia: its English for the
+    // page's wordings, and the sending post's digits on a twelve-hour dial (22:21 written 10:21).
+    const parsed = parseParcelsAppResponse({ carriers: ['Australia Post', 'Morocco Post'], states: [
+      { date: '2026-11-03T11:21:11Z', status: 'Cleared and awaiting international departure', location: 'EXAMPLE NSW AUS', carrier: 0 },
+      { date: '2026-11-03T10:21:00Z', status: 'Package shipped', location: 'Example, Australia', carrier: 1 },
+      { date: '2026-10-28T02:37:00Z', status: 'Shipment received for export', location: 'Example, Australia', carrier: 1 },
+      { date: '2026-10-27T09:18:00Z', status: 'Shipment picked up', location: 'Example, Australia', carrier: 1 },
+    ] }, number, identity());
+    expect(parsed.events?.filter((event) => event.local_time).map((event) => [event.description, event.stage, event.stage_source, event.time, event.local_time, event.time_zone]))
+      .toEqual([
+        ['Package shipped', 'in_transit', 'carrier_map', undefined, '2026-11-03', undefined],
+        ['Shipment received for export', 'in_transit', 'carrier_map', undefined, '2026-10-28', undefined],
+        ['Shipment picked up', 'accepted', 'carrier_map', undefined, '2026-10-27', undefined],
+      ]);
+  });
+
   it("reads Croatia Post's relayed labels by its own map and a post abroad on that office's clock", () => {
     // Shape of ParcelsApp's copy of Hrvatska pošta's tracker: its wall clocks under a UTC label.
     const parcel = (rows: string[][]) => parseParcelsAppResponse({ carriers: ['Croatia Post'],

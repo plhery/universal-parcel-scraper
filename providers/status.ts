@@ -53,6 +53,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['received', 'A bare receipt that names no receiver: a store, a centre or a carrier.'],
   ['package received', 'A bare receipt that names no receiver: a store, a centre or a carrier.'],
   ['shipped', "A dispatch that does not say whether the seller or a carrier sent the parcel on."],
+  ['package shipped', "A dispatch that does not say whether the seller or a carrier sent the parcel on. ParcelsApp's relay of Morocco Post's under that name is read by Barid Al-Maghrib's map."],
   ['released', 'A release that does not say from customs or from a hold.'],
   ['driver assigned', 'A driver assigned, to a collection or to a delivery round: the wording does not say which.'],
   ['from one of our operators', "Poste Italiane's acceptance (\"Presa in carico da un nostro operatore\") as ParcelsApp relays it, without its verb: the wording alone names no step."],

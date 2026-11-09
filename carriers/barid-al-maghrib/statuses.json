@@ -9,6 +9,9 @@
     {"wording": "ENVOI DÉDOUANÉ", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Released by customs and sent on."},
     {"wording": "ENVOI ARRIVÉ À DESTINATION", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "At the delivery office, before it goes out."},
     {"wording": "ENVOI EN COURS DE LIVRAISON", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live", "note": "Out with the postman."},
-    {"wording": "ENVOI LIVRÉ", "stage": "delivered", "language": "fr", "confirmedBy": "live", "note": "Handed over."}
+    {"wording": "ENVOI LIVRÉ", "stage": "delivered", "language": "fr", "confirmedBy": "live", "note": "Handed over."},
+    {"wording": "Shipment picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "ParcelsApp's English for ENVOI PRIS EN CHARGE, relayed as Morocco Post's beside the sending post's receipt."},
+    {"wording": "Shipment received for export", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ParcelsApp's English for ENVOI REÇU POUR EXPORT, relayed as Morocco Post's beside the sending post's processing before export."},
+    {"wording": "Package shipped", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ParcelsApp's English for ENVOI ÉXPÉDIÉ, relayed as Morocco Post's beside the sending post's clearance awaiting departure."}
   ]
 }

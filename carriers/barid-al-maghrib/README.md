@@ -28,6 +28,9 @@ Morocco, through the tracking page on barid.ma and the lookup its search form ma
   `local_time` and the printed day and clock as `provider_time_text`; no hour or zone is
   inferred. Recognition therefore gives no last-activity instant.
 - Mail from abroad carries the sending post's scans, with that post's offices and days.
+- ParcelsApp relays the page as "Morocco Post", with its own English for the wordings and the
+  same twelve-hour clock. The map reads that English too, and the ParcelsApp adapter keeps the
+  relayed scans' days alone.
 - The adapter keeps the weight and maps the arrival position to a country code. It drops the
   item's kind, the cash-on-delivery amount, the departure position, the delivery phone and the
   progress rail. The lookup's entries carry the recipient's name and address, which it never

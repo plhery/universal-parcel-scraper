@@ -23,9 +23,29 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['ENVOI LIVRÉ', 'delivered'],
 ] as const).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
 
+/**
+ * The page's wordings as ParcelsApp relays them under "Morocco Post", in its own English. They
+ * pair with the sending post's own scans in order: Australia Post's receipt, its processing before
+ * export and its clearance awaiting departure.
+ */
+const RELAYED: ReadonlyMap<string, Stage> = new Map(([
+  // ENVOI PRIS EN CHARGE
+  ['Shipment picked up', 'accepted'],
+  // ENVOI REÇU POUR EXPORT
+  ['Shipment received for export', 'in_transit'],
+  // ENVOI ÉXPÉDIÉ
+  ['Package shipped', 'in_transit'],
+] as const).map(([label, stage]) => [normalizeStatusWording(label), stage]));
+
 /** The stage the map gives a scan's wording, if it knows it. */
 export function baridAlMaghribMappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(normalizeStatusWording(wording));
+  return WORDINGS.get(normalizeStatusWording(wording)) ?? RELAYED.get(normalizeStatusWording(wording));
+}
+
+/** The stage of one label a provider relays as Morocco Post's, with its wording unchanged. */
+export function baridAlMaghribScan(label: string): { stage: Stage; wording: string } | undefined {
+  const stage = RELAYED.get(normalizeStatusWording(label));
+  return stage && { stage, wording: label };
 }
 
 /** A scan's stage from its wording, else the shared wording rules, else nothing, which keeps it visible for review. */

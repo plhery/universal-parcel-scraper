@@ -10,6 +10,7 @@
  */
 import type { CarrierEvent } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
+import { baridAlMaghribScan } from '../../carriers/barid-al-maghrib/status.js';
 import { cdekScan } from '../../carriers/cdek/status.js';
 import { chunghwaPostScan } from '../../carriers/chunghwa-post/status.js';
 import { emileScan } from '../../carriers/emile/status.js';
@@ -32,6 +33,7 @@ export interface CarrierScan {
 }
 
 const VOCABULARIES: Readonly<Record<string, (label: string) => CarrierScan | undefined>> = {
+  'barid-al-maghrib': baridAlMaghribScan,
   cdek: cdekScan,
   'chunghwa-post': chunghwaPostScan,
   emile: emileScan,
