@@ -599,8 +599,13 @@ step exists for future protocol changes.
   relays a partner's scan in its own words with no place, at the partner's digits to the
   second: GOFO's "In Transit to Next Facility" came as its "In Transit", five hours early as
   labeled. Such a row takes the clock of the other networks' scans at that second when they
-  share one; a second of :00 places nothing, since minute-only clocks share it. Other carriers
-  keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
+  share one; a second of :00 places nothing, since minute-only clocks share it. In a
+  destination of several clocks outside North America, YunExpress writes a town, its state
+  and the country's code with spaces alone ("EXAMPLE TOWN STATE AU"), on the town's clock,
+  and gives its other scans there the same digits: its copy of Australia Post's receipt, at
+  the country alone, had Australia Post's own. Its scans at the country alone, and those
+  with no place after its first scan in the destination, take the zone its scans there
+  share. Other carriers keep their readings: OnTrac's dates are UTC. A scan of these carriers that its location
   places only in the US or Canada
   ("US 12345", "United States") borrows like a wall-clock scan (step 3 above), from a scan
   of its network that a place gives a zone: FedEx's "Shipment information sent to FedEx"

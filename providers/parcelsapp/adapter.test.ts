@@ -1926,6 +1926,41 @@ describe('ParcelsApp result parsing', () => {
       .events?.find((event) => event.description === 'In Transit')?.time).not.toBe('2026-10-27T09:10:52.000Z');
   });
 
+  it('reads YunExpress\'s scans in Australia on the clock of its scans at a town there', () => {
+    // Live shape: the town, its state and the country's code with spaces alone, and the rest of the
+    // destination's leg at the country alone or no place, all at that town's digits; its copy of
+    // Australia Post's receipt came at Australia Post's own digits.
+    const scan = (date: string, status: string, location?: string) => ({ date, status, carrier: 0, ...(location ? { location } : {}) });
+    const town = 'Brisbane Queensland Au';
+    const states = (destinationTown: string) => [
+      scan('2026-11-08T08:21:00Z', 'Received by Australia Post for transportation to processing ', 'Australia'),
+      scan('2026-11-08T08:21:00Z', 'Delivered to local carrier', destinationTown),
+      scan('2026-11-08T07:21:00Z', 'Arrived at sort facility'),
+      scan('2026-11-06T12:34:00Z', 'International flight has arrived', 'Australia'),
+      scan('2026-11-06T07:31:00Z', 'Clearance processing completed - Import', town),
+      scan('2026-11-06T06:31:00Z', 'Start Customs Clearence', town),
+      scan('2026-11-06T00:26:00Z', 'International flight has departed'),
+      scan('2026-11-05T16:07:31Z', 'Arrived at the origin international airport', 'Example City, People\'s Republic of China'),
+    ];
+    const read = (destinationTown: string) => parseParcelsAppResponse({ carriers: ['Yun Express'], originCode: 'CN', destinationCode: 'AU',
+      states: states(destinationTown) }, number, identity()).events?.map((event) => [event.description, event.time, event.time_zone]);
+    expect(read(town)).toEqual([
+      ['Received by Australia Post for transportation to processing', '2026-11-07T22:21:00.000Z', 'Australia/Brisbane'],
+      ['Delivered to local carrier', '2026-11-07T22:21:00.000Z', 'Australia/Brisbane'],
+      ['Arrived at sort facility', '2026-11-07T21:21:00.000Z', 'Australia/Brisbane'],
+      ['International flight has arrived', '2026-11-06T02:34:00.000Z', 'Australia/Brisbane'],
+      // Before its first scan in the destination, a scan with no place keeps its label.
+      ['International flight has departed', '2026-11-06T00:26:00.000Z', 'UTC'],
+      ['Clearance processing completed - Import', '2026-11-05T21:31:00.000Z', 'Australia/Brisbane'],
+      ['Start Customs Clearence', '2026-11-05T20:31:00.000Z', 'Australia/Brisbane'],
+      ['Arrived at the origin international airport', '2026-11-05T08:07:31.000Z', 'Asia/Shanghai'],
+    ]);
+    // Towns on two clocks give the rest none.
+    const split = read('Perth Western Australia Au');
+    expect(split?.find(([description]) => description === 'Arrived at sort facility')?.[2]).toBe('UTC');
+    expect(split?.find(([description]) => description === 'Delivered to local carrier')?.[2]).toBe('Australia/Perth');
+  });
+
   it('reads 4PX\'s Spanish copies of GOFO\'s scans at the same second once, as GOFO\'s', () => {
     // Live shape: 4PX relays each GOFO scan in Spanish at GOFO's digits, with another scan's
     // place or none, and adds a scan of its own.

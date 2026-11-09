@@ -1161,7 +1161,7 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   // A facility's clock, whatever the label: no other step applies to it.
   if (relaysFacilityClock(name)) return facilityZone(location);
   if (carrier === 'china-post' && inChina(location)) return CHINA_POST_ZONE;
-  const place = lastPlace(location);
+  const place = (key === 'yunexpress' ? spacedCountry(location) : null) ?? lastPlace(location);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").
   const region = regionScanZone(name, location, inNorthAmerica);
@@ -1440,6 +1440,47 @@ function chinaPostTwinZones(items: readonly { name: unknown; date: unknown; loca
  * :00 can be a minute-only clock's, so it places nothing.
  */
 const PARTNER_RELAYS = new Set(['yunexpress']);
+
+/**
+ * The country of a place YunExpress writes as a town, its state and the country's code with spaces
+ * alone ("EXAMPLE TOWN STATE AU"), which `lastPlace` reads as one name.
+ */
+function spacedCountry(location: string): string | null {
+  const code = /^[^,]+\s([A-Za-z]{2})$/.exec(location.trim())?.[1];
+  return code ? countryCode(code) : null;
+}
+
+/**
+ * The clock of YunExpress's scans in a destination of several clocks that nothing places: the
+ * flight's arrival at the country alone, a sorting with no place and its copy of the last-mile
+ * carrier's receipt. Its feed gives them the digits of the clock of its scans at a town there: its
+ * copy of Australia Post's receipt had Australia Post's own digits, eleven hours late as labeled.
+ * Such a scan takes the zone of YunExpress's scans placed in the destination when they share one:
+ * one at the country alone, or one with no place after the first of them. In the US and Canada its
+ * scans with no place are its partners' on their facilities' clocks (`relayTwinZones`).
+ */
+function yunExpressDestinationZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined }[],
+  zones: readonly { zone: string | null }[], destination: string | null): (string | null)[] {
+  const none = items.map(() => null);
+  if (!destination || countryTimeZone(destination) || destination === 'US' || destination === 'CA') return none;
+  const yun = (name: unknown) => nameKey(name) === 'yunexpress';
+  const placed = items.flatMap((item, index) => {
+    const zone = zones[index]!.zone;
+    return yun(item.name) && zone && (timeZoneCountry(zone) ?? STATE_ZONES.get(zone)) === destination
+      ? [{ wall: mislabeledWallTime(item.date) ?? '', zone }] : [];
+  });
+  const shared = new Set(placed.map(({ zone }) => zone));
+  if (shared.size !== 1) return none;
+  const [zone] = [...shared];
+  const first = placed.map(({ wall }) => wall).filter(Boolean).sort()[0] ?? '';
+  return items.map((item, index) => {
+    if (!yun(item.name) || item.offset || zones[index]!.zone) return null;
+    const location = item.location.trim();
+    const wall = mislabeledWallTime(item.date) ?? '';
+    return (location ? countryCode(location) === destination : Boolean(first && wall > first)) ? zone! : null;
+  });
+}
+
 function relayTwinZones(items: readonly { name: unknown; date: unknown; location: string; offset: string | null | undefined }[],
   zones: readonly { zone: string | null; step: ZoneStep }[]): (string | null)[] {
   const second = ({ date, offset }: typeof items[number]) => {
@@ -1860,6 +1901,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   chinaPostTwinZones(entries, zones.map(({ zone }) => zone), destination)
     .forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
   relayTwinZones(entries, zones).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'copy' }; });
+  yunExpressDestinationZones(entries, zones, destination).forEach((zone, index) => { if (zone) zones[index] = { zone, step: 'borrowed' }; });
   const relayed = relayCopies(entries);
   const dayOnly = dayOnlyNetworks(entries);
   const midnight = midnightCopies(entries, dayOnly);
