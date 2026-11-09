@@ -111,7 +111,8 @@ shipment → `SchemaError`.
 - From the drop-off on, the headline reads "En transit vers notre agence", up to two days
   before the courier's first scan of the leg. Over a newest scan that is the drop-off, the
   drop-off's `accepted` stays, so the result is never a step ahead of every scan. The app's
-  `stepHint` is read as the website's headline is, here and below.
+  `stepHint` is read as the website's headline is, here and below. The headline has no clock
+  of its own: the app's `tracingDate` is that of the newest event, and `tracingCode` its kind.
 - The headline "Votre colis a été livré à l'enseigne." is the merchant receiving the parcel. A
   return has its own number, addressed to the merchant, and there it is the delivery. On a parcel
   whose own scans started a return ("retour à l'expéditeur") it is the parcel back with its
