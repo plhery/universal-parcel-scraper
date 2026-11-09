@@ -20,6 +20,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "algerie-poste": 897,
   "aliexpress": 580,
   "allegro-one": 390,
+  "alphastline": 716,
   "am-home-delivery": 626,
   "amerijet": 636,
   "anc-delivers": 152,

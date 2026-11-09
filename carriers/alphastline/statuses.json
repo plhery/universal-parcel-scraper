@@ -1,4 +1,6 @@
 {
   "carrier": "alphastline",
-  "entries": []
+  "entries": [
+    {"code": "Created", "wording": "The electronic information of the goods has been received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order's data received, while the shipment's status is ToPickuped (Awaiting Pickup, 待揽收)."}
+  ]
 }

@@ -19,16 +19,54 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "alphastline",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 716
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "offset_timestamps",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
   "portal": {
+    "searchUrl": "https://www.alphastline.com/",
     "canaryUrl": "https://www.alphastline.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "offset_timestamps",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "delivered_at",
+      "location",
+      "service_name",
+      "pickup_point",
+      "proof_of_delivery",
+      "recipient_name",
+      "recipient_address"
+    ]
   },
   "links": [],
   "detection": [

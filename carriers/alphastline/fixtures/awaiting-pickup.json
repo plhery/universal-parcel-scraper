@@ -1,0 +1,77 @@
+{
+  "language": "en",
+  "statusCount": [
+    {
+      "status": "ToPickuped",
+      "statusDesc": "待揽收",
+      "count": "1"
+    },
+    {
+      "status": "Default",
+      "statusDesc": "全部",
+      "count": "1"
+    }
+  ],
+  "trackingData": {
+    "All": {
+      "arr": [
+        {
+          "erpOrderCode": "AF999999999999999999981",
+          "status": "ToPickuped",
+          "statusDesc": "Awaiting Pickup",
+          "shipFrom": "CN",
+          "shipTo": "US",
+          "syncTime": "2026-01-03 09:36:34",
+          "latestDetail": {
+            "operateTime": "2026-01-03 09:36:34",
+            "operateDesc": "The electronic information of the goods has been received",
+            "operateNode": "Created",
+            "operateTimestamp": "1767404194",
+            "operateStatus": "2"
+          },
+          "detail": [
+            {
+              "operateTime": "2026-01-03 09:36:34",
+              "operateDesc": "The electronic information of the goods has been received",
+              "operateNode": "Created",
+              "operateTimestamp": "1767404194",
+              "operateStatus": "2"
+            }
+          ],
+          "errMsg": "",
+          "mailNo": ""
+        }
+      ]
+    },
+    "Awaiting Pickup": {
+      "arr": [
+        {
+          "erpOrderCode": "AF999999999999999999981",
+          "status": "ToPickuped",
+          "statusDesc": "Awaiting Pickup",
+          "shipFrom": "CN",
+          "shipTo": "US",
+          "syncTime": "2026-01-03 09:36:34",
+          "latestDetail": {
+            "operateTime": "2026-01-03 09:36:34",
+            "operateDesc": "The electronic information of the goods has been received",
+            "operateNode": "Created",
+            "operateTimestamp": "1767404194",
+            "operateStatus": "2"
+          },
+          "detail": [
+            {
+              "operateTime": "2026-01-03 09:36:34",
+              "operateDesc": "The electronic information of the goods has been received",
+              "operateNode": "Created",
+              "operateTimestamp": "1767404194",
+              "operateStatus": "2"
+            }
+          ],
+          "errMsg": "",
+          "mailNo": ""
+        }
+      ]
+    }
+  }
+}

@@ -22,6 +22,7 @@ import { adapter as ajex } from '../carriers/ajex/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
 import { adapter as allegroOne } from '../carriers/allegro-one/adapter.js';
+import { adapter as alphastline } from '../carriers/alphastline/adapter.js';
 import { adapter as amHomeDelivery } from '../carriers/am-home-delivery/adapter.js';
 import { adapter as amazonShipping } from '../carriers/amazon-shipping/adapter.js';
 import { adapter as americanWestExpress } from '../carriers/american-west-express/adapter.js';
@@ -773,6 +774,7 @@ export const REGISTRY: RegistryDefinition = {
     "algerie-poste": algeriePoste,
     "aliexpress": aliexpress,
     "allegro-one": allegroOne,
+    "alphastline": alphastline,
     "am-home-delivery": amHomeDelivery,
     "amazon-shipping": amazonShipping,
     "american-west-express": americanWestExpress,
@@ -1558,7 +1560,7 @@ export const REGISTRY: RegistryDefinition = {
     "alliance-air-freight": "universal",
     "allied-express": "universal",
     "alljoy": "universal",
-    "alphastline": "universal",
+    "alphastline": "alphastline",
     "am-home-delivery": "am-home-delivery",
     "amalgamated-distribution": "universal",
     "amazon-logistics": null,

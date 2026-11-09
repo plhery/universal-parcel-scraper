@@ -1,0 +1,28 @@
+{
+  "language": "en",
+  "statusCount": [
+    {
+      "status": "Default",
+      "statusDesc": "全部",
+      "count": "1"
+    }
+  ],
+  "trackingData": {
+    "All": {
+      "arr": [
+        {
+          "erpOrderCode": "AF999999999999999999980",
+          "status": "Default",
+          "statusDesc": "",
+          "shipFrom": "",
+          "shipTo": "",
+          "syncTime": "",
+          "latestDetail": null,
+          "detail": [],
+          "errMsg": "Unable to find, the package's logistics status has not been updated yet or the order number is incorrect.",
+          "mailNo": ""
+        }
+      ]
+    }
+  }
+}
