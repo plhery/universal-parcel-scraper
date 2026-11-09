@@ -23,8 +23,11 @@ import { hasS10CheckDigit } from './s10CheckDigit.js';
  * and sixteen digits either: it is a DHL Express piece, JD01, with its zero
  * typed as a letter. Nor does any carrier issue "JRTO", ten digits and MM: it
  * is a JRT number with a letter O typed after its prefix, and JRT's tracker
- * knows it only without the O. A NO LIMIT shipment number, P/1234/LABC/2026,
- * reads the same without its slashes, which are dropped.
+ * knows it only without the O. A JS Express waybill, JSE, two letters, ten
+ * digits and YQ, holds only digits between its letters, so a letter O there is
+ * a zero typed as a letter: the tracker knows the number with the zero. A NO
+ * LIMIT shipment number, P/1234/LABC/2026, reads the same without its slashes,
+ * which are dropped.
  */
 export function normalizeTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
@@ -37,6 +40,8 @@ export function normalizeTrackingNumber(raw: string): string {
   if (piece) return `${piece[1]}0${piece[2]}`;
   const jrt = /^JRTO(\d{10}MM)$/.exec(value);
   if (jrt) return `JRT${jrt[1]}`;
+  const jsExpress = /^(JSE[A-Z]{2})([\dO]{10})YQ$/.exec(value);
+  if (jsExpress?.[2]!.includes('O')) return `${jsExpress[1]}${jsExpress[2]!.replace(/O/g, '0')}YQ`;
   const serial = /^([A-Z]{2})([\dO]{9})([A-Z]{2})$/.exec(value);
   if (!serial?.[2]!.includes('O')) return value;
   const digits = serial[2]!.replace(/O/g, '0');

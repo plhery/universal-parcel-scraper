@@ -589,6 +589,8 @@ describe('JS Express tracking adapter', () => {
     }
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeJsExpressNumber(' jsezz-0000 0000 01 yq ')).toBe(DELIVERED);
+    // A letter O among the digits is a zero typed as a letter, and the tracker is asked with the zero.
+    expect(normalizeJsExpressNumber('JSEZZOOOOOOOOO1YQ')).toBe(DELIVERED);
   });
 
   it('recognizes a known parcel and an unknown number from plain HTTP', async () => {
