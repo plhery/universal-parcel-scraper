@@ -381,7 +381,8 @@ describe('Shouwu International status vocabulary', () => {
   it('reads the last mile\'s return as on its way back, whatever reason it names', () => {
     expect(shouwuStage('Back to Sender for reason: refused by the recipient')).toEqual({ stage: 'exception', source: 'carrier_map' });
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
-    expect(shouwuStage('Failed delivery for reason: recipient was not at home')?.stage).toBe('failed_attempt');
+    expect(shouwuStage('Failed delivery for reason: recipient was not at home')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    expect(statusMap.stage(null, 'failed delivery for reason: sample reason')).toBe('failed_attempt');
   });
 
   it('maps every status it recorded to the stage recorded for it, and keeps the page’s labels off scan wording', () => {

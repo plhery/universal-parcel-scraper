@@ -1045,6 +1045,8 @@ describe('classifyWording', () => {
       ['开始长途运输，距离下一站1234KM。', 'in_transit'], ['开始长途运输，距离下一站56公里', 'in_transit'], ['开始长途运输', 'in_transit'],
       // Australia Post's lodgement and its landing in a country, as providers relay them without a carrier.
       ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
+      // A hub identifying a parcel as bulky, at the second it receives it.
+      ['INFORMATION. PARCEL IDENTIFIED AS BULKY GOOD (ESI)', 'in_transit'], ['Information. Parcel identified as bulky good', 'in_transit'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
       ['The goods leave the operation center', 'in_transit'], ['Goods leaving the operation center', 'in_transit'],
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],

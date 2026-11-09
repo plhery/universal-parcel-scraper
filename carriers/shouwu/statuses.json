@@ -771,6 +771,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
       "note": "The Italian last mile sending back a parcel it could not deliver, after its failed attempts: on its way back, not yet with the sender."
+    },
+    {
+      "wording": "Failed delivery for reason: recipient was not at home",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "The Italian last mile's attempt that found no one at home; the reason after the colon varies, and the delivery is tried again."
     }
   ]
 }

@@ -577,6 +577,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // with no carrier: accepted and in transit, as Australia Post's map reads them.
   if (/^item lodged$/.test(text)) return 'accepted';
   if (/^landed in(?: [a-z][a-z .'-]{1,60})?$/.test(text)) return 'in_transit';
+  // A hub identifying a parcel as bulky, as ParcelsApp relays Hermes's line into Germany at the second of the
+  // hub's receipt: the parcel is in hand there, in transit.
+  if (/^information\. parcel identified as bulky good(?: \(esi\))?$/.test(text)) return 'in_transit';
   // A forwarder relabelling a parcel under its next carrier's number, as ParcelsApp relays it with the carrier's
   // note: the parcel is in hand on its way. Without the note, a changed number may be data alone.
   if (/^tracking number changed, carrier note: (?:the )?package (?:was |has been )?relabell?ed$/.test(text)) return 'in_transit';

@@ -32,6 +32,8 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   // The Italian last mile's return of a parcel it could not deliver, whatever the reason it names:
   // on its way back, not yet with the sender.
   [/^back to sender for reason: \S/, 'exception'],
+  // Its attempt that found no one or could not deliver, whatever the reason it names: tried again.
+  [/^failed delivery for reason: \S/, 'failed_attempt'],
 ];
 
 /**
