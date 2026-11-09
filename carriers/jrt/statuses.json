@@ -969,6 +969,38 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
       "note": "Copied from FedEx's in-transit scan (code IT): a contractor carries the parcel between FedEx's facilities, a day before the local station's scan and the delivery run."
+    },
+    {
+      "wording": "Customs clearance in destination country completed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The destination's import clearance is done and the parcel goes on to the delivering carrier, as a completed clearance reads."
+    },
+    {
+      "wording": "【…】【…】¡Recolección exitosa!. El mensajero de J&T asignado … recolectó tu envío.",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from J&T Express Mexico, which delivers the last leg on the line into Mexico: its courier collects the cleared parcel. It is not the first acceptance. The town, the site, the courier and what follows the sentence are read as ellipses."
+    },
+    {
+      "wording": "【…】Tu envío ha salido de【…】con destino a【…】",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from J&T Express Mexico: the parcel leaves one of its sites for the next. The towns and sites are read as ellipses."
+    },
+    {
+      "wording": "【…】Tu envío ha llegado a【…】",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "Copied from J&T Express Mexico: the parcel reaches one of its sites."
     }
   ]
 }

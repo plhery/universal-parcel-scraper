@@ -48,6 +48,11 @@ browser is needed, and no portal link is published.
   Beijing time would fall before dawn there. Rows in UPS's words or at a place in the United
   States keep their wall clocks, which the scan's state dates, or a neighbouring scan's for a
   row without a place. The flight row names its month and day, read as an ellipsis.
+- The line into Mexico ends with J&T Express Mexico. The tracker copies J&T's rows in Spanish, the
+  town and the site in brackets, on J&T's clock in Mexico City, the one its own tracker answers on:
+  read on Beijing time, the night's sorting at J&T's centre would fall in the morning. The map reads
+  their towns and sites, and the courier and phone of the collection, as ellipses; J&T's collection
+  of the cleared parcel is in transit.
 - On the line into Europe the tracker also copies DHL's rows, in DHL's own English sentences or
   its lower case event texts ("loaded to movement / tour vehicle"). They come on DHL's wall clock
   where it scanned the parcel, the wall clocks DHL's own reply gives. A row at a town, as "hagen",

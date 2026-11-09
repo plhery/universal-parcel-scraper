@@ -37,8 +37,22 @@ const FLIGHT_EN_ROUTE = /^(the flight is en route to the airport in )[^\d…]{1,
 // sometimes with the month's full stop for the space ("Oct.24.").
 const DELAYED_FLIGHT = /^(航班延误[，,] ?预计)\d{1,2}\/\d{1,2}(号飞出 flight delayed, estimated departure on )[a-z]{3,9}(?:\. ?| )\d{1,2}(?:st|nd|rd|th)?\.?$/;
 
+// J&T Express Mexico's rows, which the tracker copies on the line into Mexico: its sentence after the town and
+// the site in brackets, "【Town】Tu envío ha salido de【SITE.pdv】con destino a【MEXICO.sc】".
+const JT_MEXICO_ROW = /【[^【】]{1,80}】\s*(?:【[^【】]{1,80}】\s*)?(?:tu envío\b|[¡?]?recolección exitosa\b|el mensajero de j&t\b)/i;
+const BRACKETED = /【[^【】]{1,80}】/g;
+// Its collection names the courier and J&T's phone, and the platform's GBK turns its "¡" into "?".
+const JT_MEXICO_COLLECTION = /^((?:【…】){1,2})[¡?]?(recolección exitosa!\. el mensajero de j&t asignado )\S.*?( recolectó tu envío\.).*$/;
+
+/** Whether a row is one J&T Express Mexico wrote that the tracker copies, on J&T's clock in Mexico. */
+export const isJrtJtMexicoRow = (wording: string): boolean => JT_MEXICO_ROW.test(wording);
+
+/** A J&T Express Mexico row's key: its towns and sites, and the courier and phone of its collection, as ellipses. */
+const jtMexicoKey = (wording: string): string => (JT_MEXICO_ROW.test(wording)
+  ? wording.replace(BRACKETED, '【…】').replace(JT_MEXICO_COLLECTION, '$1¡$2…$3') : wording);
+
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
-export const jrtScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
+export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')

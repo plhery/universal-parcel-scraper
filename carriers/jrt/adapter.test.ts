@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
-import { isJrtDhlRow, statusMap } from './status.js';
+import { isJrtDhlRow, isJrtJtMexicoRow, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -185,6 +185,36 @@ describe('JRT tracking adapter', () => {
     ]);
   });
 
+  it('reads J&T Express Mexico’s rows on the line into Mexico on J&T’s clock in Mexico City', () => {
+    const payload = fixture('track-dhl') as { data: Record<string, unknown>[] }[];
+    const record = payload[0]!.data[0]! as { trackDetails: Record<string, string>[] } & Record<string, unknown>;
+    const template = record.trackDetails.at(-1)!;
+    const row = (track_date: string, track_location: string, track_content: string) => ({ ...template, track_date, track_createdate: '2026-11-09 15:21:56',
+      track_location, track_content: track_location ? `${track_location}, ${track_content}` : track_content });
+    Object.assign(record, { trackingNumber: 'JMX000000000001', consigneeCountry: 'MX' });
+    record.trackDetails = [
+      row('2026-11-08 00:05:28', 'Centro, Villa Uno, México', '【Villa Uno】Tu envío ha salido de【MEXICO.sc】con destino a【SUR-CENTRO.cedis】'),
+      row('2026-11-07 23:57:42', 'Centro, Villa Uno, México', '【Villa Uno】Tu envío ha llegado a【MEXICO.sc】'),
+      row('2026-11-07 20:55:52', 'Norte, Villa Dos, México', '【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado CLC-NORTE1 recolectó tu envío. Si requieres mayor información, contáctanos al: 5500000000'),
+      row('2026-11-07 00:00:00', '', 'Customs clearance in destination country completed'),
+      row('2026-11-05 00:00:00', '', 'and the package has been handed over to customs for clearance'),
+    ];
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-11-09T08:00:00Z'))!;
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_update: '2026-11-08T00:05:28-06:00' });
+    expect(result).not.toHaveProperty('last_update_local');
+    expect(result.events?.map(({ time, time_zone, time_zone_basis, location, stage }) => [time, time_zone, time_zone_basis, location, stage])).toEqual([
+      // The night's sorting at J&T's centre, on its clock: read on Beijing's, it would fall fourteen hours early.
+      ['2026-11-08T00:05:28-06:00', 'America/Mexico_City', 'carrier', 'Centro, Villa Uno, México', 'in_transit'],
+      ['2026-11-07T23:57:42-06:00', 'America/Mexico_City', 'carrier', 'Centro, Villa Uno, México', 'in_transit'],
+      // J&T's collection of the cleared parcel is no first acceptance.
+      ['2026-11-07T20:55:52-06:00', 'America/Mexico_City', 'carrier', 'Norte, Villa Dos, México', 'in_transit'],
+      // JRT's own rows stay on the platform's clock, the completed clearance in transit.
+      ['2026-11-07T00:00:00+08:00', undefined, undefined, undefined, 'in_transit'],
+      ['2026-11-05T00:00:00+08:00', undefined, undefined, undefined, 'customs'],
+    ]);
+    expect(result.events?.[2]?.description).toBe('【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado CLC-NORTE1 recolectó tu envío. Si requieres mayor información, contáctanos al: 5500000000');
+  });
+
   it('reads DHL’s rows copied without a place on DHL’s wall clock, in Germany and then at the destination', async () => {
     const readAt = Date.parse('2026-03-15T00:00:00Z');
     const result = dateLocalClocks('jrt', parseJrtTrack(fixture('track-dhl-placeless'), 'UP0000000000000004', readAt)!);
@@ -344,6 +374,17 @@ describe('JRT tracking adapter', () => {
     // Landed, the parcel is still the flight's, until the next row says customs has it.
     expect(answer('The flight has landed, and the package is ready to be handed over to customs for clearance.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('and the package has been handed over to customs for clearance')).toEqual({ kind: 'mapped', stage: 'customs' });
+    // The destination's completed clearance lets the parcel go on.
+    expect(answer('Customs clearance in destination country completed')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // J&T Express Mexico's rows read alike whatever their towns, sites, courier and phone; its collection after the
+    // clearance is no first acceptance, with its "¡" or the "?" the platform's GBK leaves of it.
+    for (const description of ['【Villa Uno】Tu envío ha salido de【SITE.pdv】con destino a【MEXICO.sc】', '【Villa Uno】Tu envío ha llegado a【MEXICO.sc】',
+      '【Villa Dos】【CLC-Norte.pdv】?Recolección exitosa!. El mensajero de J&T asignado CLC-NORTE1 recolectó tu envío. Si requieres mayor información, contáctanos al: 5500000000',
+      '【Villa Dos】【CLC-Norte.pdv】¡Recolección exitosa!. El mensajero de J&T asignado OTRO.pcp recolectó tu envío.']) {
+      expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+      expect(isJrtJtMexicoRow(description), description).toBe(true);
+    }
+    expect(isJrtJtMexicoRow('Tu envío ha llegado')).toBe(false);
     // So is the hand-over to FedEx after the clearance, and the warehouse's receipt before it: neither is an acceptance.
     for (const description of ['It has been handed over to the service provider.',
       'The cargo has been picked up and arrived at the warehouse，awaiting outbound shipment', 'Arrived at FedEx hub', 'Departed FedEx hub', 'On the way']) {

@@ -1,13 +1,13 @@
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { HualeiTracker } from '../gzyl/hualei.js';
-import { dateJrtDhlRows, JRT } from './parser.js';
+import { dateJrtRows, JRT } from './parser.js';
 
 export class JrtTracker extends HualeiTracker {
   constructor(options: ConstructorParameters<typeof HualeiTracker>[1] = {}) { super(JRT, options); }
 
   override async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
-    return dateJrtDhlRows(await super.fetch(raw, context));
+    return dateJrtRows(await super.fetch(raw, context));
   }
 }
 

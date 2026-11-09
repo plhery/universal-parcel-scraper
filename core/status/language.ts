@@ -541,8 +541,14 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // China Post's arrival at the office it names in brackets, a processing centre or the delivery office, abroad too,
   // as providers relay it with no carrier: in transit, as YunExpress's, PFC Express's and DHLink's maps read it.
   if (/^邮件到达(?:处理中心|投递点)? ?【[^【】]{1,80}】$/.test(text)) return 'in_transit';
+  // JD Express's collection from the sender, as providers relay it with no carrier, its slogan and the start of
+  // its phone note after it: accepted, as JD's map reads its own state 200001.
+  if (/^京东快[递遞]已收取件(?:[，,].*)?$/.test(text)) return 'accepted';
   const chinese = chineseFinalStage(text);
   if (chinese) return chinese;
+  // JD Express's arrival at a site, waiting to be loaded or not, as providers relay it without the site's name:
+  // in transit, as JD's map reads its own states 200077 and 200000. A locker or a pickup point is read above.
+  if (/^(?:[您你]的)?快件已到[达達](?:【[^【】]{1,80}】)?(?:[，,] ?准[备備]装[车車])?$/.test(text)) return 'in_transit';
   // A forwarder relabelling a parcel under its next carrier's number, as ParcelsApp relays it with the carrier's
   // note: the parcel is in hand on its way. Without the note, a changed number may be data alone.
   if (/^tracking number changed, carrier note: (?:the )?package (?:was |has been )?relabell?ed$/.test(text)) return 'in_transit';

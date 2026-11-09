@@ -1023,6 +1023,9 @@ describe('classifyWording', () => {
       ['Shipping Order Created.', 'registered'], ['Parcel received by in ORD01.', 'in_transit'], ['到达收货点', 'accepted'],
       ['快件电子信息已经收到', 'registered'], ['中国邮政已收取快件', 'in_transit'],
       ['邮件到达投递点【zz sample town 00000】', 'in_transit'], ['邮件到达【示例市国际互换局】', 'in_transit'], ['邮件到达处理中心【示例】', 'in_transit'],
+      // JD Express's collection and its arrivals at a site, as providers relay them without the site's name.
+      ['京东快递已收取件，以守护之名，奔赴每一份信任！如有疑问请随时拨打', 'accepted'], ['京东快递已收取件', 'accepted'],
+      ['您的快件已到达，准备装车', 'in_transit'], ['您的快件已到达', 'in_transit'], ['您的快件已到达【示例营业部】，准备装车', 'in_transit'], ['您的快件已到达【示例驿站】', 'ready_for_pickup'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
       ['The goods leave the operation center', 'in_transit'], ['Goods leaving the operation center', 'in_transit'],
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],

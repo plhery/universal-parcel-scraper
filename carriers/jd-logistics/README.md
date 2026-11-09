@@ -35,8 +35,9 @@ The domestic page displays `createTime`, otherwise `trackDay` with `trackTime`. 
 explicit offset keeps its instant. A clock without an offset stays local, in the carrier's
 order; the page's language does not establish its zone. Contact and recipient clauses are
 removed from scan wording, a station's phone too. Each scan keeps its `state` as its provider
-code, and the states recorded in `status.ts` give its stage, since the shared wording rules
-do not read Chinese; the newest scan decides the status. Wordless or contact-only rows with
+code, and the states recorded in `status.ts` give its stage; the newest scan decides the
+status. Providers relay these scans without the state or the site's name, and the shared
+wording rules read JD Express's collection and arrivals as those states do. Wordless or contact-only rows with
 valid clocks are omitted; the remaining history is marked incomplete so enabled providers can
 fill it. A reply with no readable scans stays inconclusive. Invalid clocks and malformed rows
 still fail, and a capped history is also marked incomplete.
