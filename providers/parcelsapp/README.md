@@ -564,11 +564,13 @@ step exists for future protocol changes.
 - So do PostNL's scans in Britain. FedEx International Connect lists the same scans two hours
   after ParcelsApp's digits, on Dutch summer time, so those digits are their UTC instants. Read
   on PostNL's Amsterdam clock, they came out two hours early. PostNL's other scans keep it.
-- So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping
-  Label Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS
-  Awaiting Item" and keep its wall clock. Read on their place's clock, three such labels came
-  eight hours after ParcelsApp first returned them, and Juxi Express's rows of that shape
-  fall between 17TRACK's instants of the same warehouse's steps as labeled. Only a label is
+- So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping Label
+  Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS Awaiting
+  Item" and keep its wall clock. Read on their place's clock, three such labels came eight hours
+  after ParcelsApp first returned them, and Juxi Express's rows of that shape fall between
+  17TRACK's instants of the same warehouse's steps as labeled. So is a mailer's label as USPS
+  words it, "Shipping Label Created" with its place apart, which USPS's adapter reads on UTC:
+  read on its place's clock, the copy came a zone apart from USPS's own row. Only a label is
   read so. A shipping partner's steps ("Arrived Shipping Partner Facility, EXAMPLE CITY, NV
   12345") and USPS's own scans can repeat their place too; USPS's tracker dates them five or
   eight hours after ParcelsApp's digits, on their place's clock, which they keep. Read as an

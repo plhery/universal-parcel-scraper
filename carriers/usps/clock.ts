@@ -33,6 +33,9 @@ export function uspsScanZone(location: string): string | null {
 // UTC's midnight, America's evening, rather than in its business hours.
 const MAILER_LABEL = /^shipping label created$/i;
 
+/** Whether a USPS row is a mailer's label as USPS words it, which is dated on UTC wherever its place is. */
+export const uspsMailerLabel = (description: string): boolean => MAILER_LABEL.test(description.trim());
+
 /**
  * The zone of a row's wall clock, given its facility's zone. A mailer writes its label
  * ("Shipping Label Created") on UTC. Another label row ("Shipping Label Created, USPS Awaiting
@@ -42,7 +45,7 @@ const MAILER_LABEL = /^shipping label created$/i;
  */
 export function uspsRowZone(wall: string, facility: string, description: string, readAt: number): string {
   if (uspsStage(description) !== 'registered') return facility;
-  if (MAILER_LABEL.test(description.trim())) return 'UTC';
+  if (uspsMailerLabel(description)) return 'UTC';
   const ahead = (zone: string) => firstOccurrence(DateTime.fromISO(wall, { zone })).toMillis() > readAt + CLOCK_SKEW_MS;
   return ahead(facility) && !ahead('UTC') ? 'UTC' : facility;
 }
