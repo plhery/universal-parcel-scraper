@@ -198,6 +198,14 @@
       "note": "The parcel reaches the delivery carrier's station before the delivery run, coded 2 (Shipping)."
     },
     {
+      "wording": "Your shipment is out for delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "The delivery carrier's courier takes the parcel out, after its station, coded 2 (Shipping)."
+    },
+    {
       "wording": "Your shipment delivery attempt failed [Recipient not at home]",
       "language": "en",
       "stage": "failed_attempt",

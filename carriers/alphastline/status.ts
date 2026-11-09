@@ -7,6 +7,8 @@ const NODES: ReadonlyMap<string, Stage> = new Map([
   ['Created', 'registered'], // The order's data received, before pickup.
   ['PickedUp_CollectedParcel', 'accepted'], // The parcel collected from the shop.
   ['InTransit_Other', 'in_transit'], // The sorting centre's scans, the departure and the line's scans on the way.
+  ['InTransit_CustomsReleased', 'in_transit'], // The export clearance, before the flight.
+  ['InTransit_Departure', 'in_transit'], // The arrival at the delivery point, still on the way.
 ]);
 
 interface Entry { readonly code?: string; readonly wording: string; readonly stage?: Stage; readonly unmapped?: boolean; readonly note?: string }

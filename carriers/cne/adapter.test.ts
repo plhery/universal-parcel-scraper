@@ -102,6 +102,10 @@ describe('CNE response projection', () => {
       payload.trackingEventList.push({ date: '2026-02-11 09:00:00', details, place: 'Example City', state: '2' });
       expect(parseCne(payload, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
     }
+    // The courier takes the parcel out under CNE's shipping code.
+    const out = handoffFixture();
+    out.trackingEventList.push({ date: '2026-02-11 08:00:00', details: 'Your shipment is out for delivery', place: 'Example City', state: '2' });
+    expect(parseCne(out, HANDOFF_NUMBER).events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'carrier_map' });
     // The courier found no one at home: a failed attempt under CNE's exception code.
     const payload = handoffFixture();
     payload.trackingEventList.push({ date: '2026-02-11 15:00:00', details: 'Your shipment delivery attempt failed [Recipient not at home]', place: 'Example City', state: '9' });

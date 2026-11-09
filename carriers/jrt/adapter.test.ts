@@ -357,6 +357,9 @@ describe('JRT tracking adapter', () => {
     expect(answer('sorted')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(isJrtDhlRow('sorted')).toBe(true);
     expect(isJrtDhlRow('sorted at the airport')).toBe(false);
+    // DHL's row on the way to it, in DHL's own case, is DHL's too.
+    expect(answer('The shipment is in transit to DHL')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(isJrtDhlRow('The shipment is in transit to DHL')).toBe(true);
     // DHL's round that found no such address, and the return it starts, on DHL's clock.
     expect(answer('not delivered-bad address')).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(answer('shipment will be returned to origin-bad address')).toEqual({ kind: 'mapped', stage: 'returned' });

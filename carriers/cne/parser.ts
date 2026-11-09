@@ -25,6 +25,7 @@ const WORDING: Readonly<Record<string, Stage>> = {
   'Your shipment has arrived at sorting center': 'in_transit', 'Your shipment is in process at sorting center': 'in_transit',
   'Your shipment has been processed at sorting center and ready for shipping': 'in_transit',
   'Your shipment has departed from the transit origin': 'in_transit', 'Your shipment has arrived at the transit destination': 'in_transit',
+  'Your shipment is out for delivery': 'out_for_delivery',
   // A delivery that found no one at home, under CNE's exception code: the delivery is tried again.
   'Your shipment delivery attempt failed [Recipient not at home]': 'failed_attempt',
   // Arrival in the destination country, before its sorting and customs, not at the delivery office.

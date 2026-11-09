@@ -226,6 +226,14 @@
       "note": "Copied from DHL: the parcel, accepted by JRT, is on its way to DHL, before its flight."
     },
     {
+      "wording": "The shipment is in transit to DHL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-07",
+      "note": "Copied from DHL in its own case, a second before DHL's German row \"Die Sendung befindet sich im Weitertransport zu DHL.\": on its way to DHL."
+    },
+    {
       "wording": "the shipment has been processed in the parcel center of origin",
       "language": "en",
       "stage": "in_transit",
