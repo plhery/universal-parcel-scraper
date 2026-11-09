@@ -1041,6 +1041,10 @@ describe('classifyWording', () => {
       ['京东快递已收取件，以守护之名，奔赴每一份信任！如有疑问请随时拨打', 'accepted'], ['京东快递已收取件', 'accepted'],
       ['您的快件已到达，准备装车', 'in_transit'], ['您的快件已到达', 'in_transit'], ['您的快件已到达【示例营业部】，准备装车', 'in_transit'], ['您的快件已到达【示例驿站】', 'ready_for_pickup'],
       ['您的快件已离开的路上', 'in_transit'],
+      // JD Express starting a long haul, with the distance to its next site or without it.
+      ['开始长途运输，距离下一站1234KM。', 'in_transit'], ['开始长途运输，距离下一站56公里', 'in_transit'], ['开始长途运输', 'in_transit'],
+      // Australia Post's lodgement and its landing in a country, as providers relay them without a carrier.
+      ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
       ['The goods leave the operation center', 'in_transit'], ['Goods leaving the operation center', 'in_transit'],
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],
@@ -1090,7 +1094,7 @@ describe('classifyWording', () => {
     // pickup from the sender and cash on delivery are no final scan.
     for (const wording of ['【示例市处理中心】退回', '退回中', '您的快件正在派送中，请您准备签收', '签收后第一时间开箱', 'PDA异常签收扫描',
       '待签收', '待取件', '已出库待取件', '京东快件已取件', '寄件人已修改寄件信息，预计取件时间是：2026-01-02', '已下单，待取件', '代收货款', '如需退回请联系派件员',
-      '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', '签收人：示例']) {
+      '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', '签收人：示例', '开始长途运输前请确认地址', 'Landed in 3 days?']) {
       expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
     }
   });

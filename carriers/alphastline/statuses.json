@@ -2,6 +2,7 @@
   "carrier": "alphastline",
   "entries": [
     {"code": "Created", "wording": "The electronic information of the goods has been received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order's data received, while the shipment's status is ToPickuped (Awaiting Pickup, 待揽收)."},
+    {"wording": "Electronic cargo information received", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The order's data received, sent with no node: the first scan, before the collection."},
     {"code": "PickedUp_CollectedParcel", "wording": "Item has been collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The parcel collected from the shop, before the sorting centre's inbound scan."},
     {"code": "InTransit_Other", "wording": "Item inbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The sorting centre's inbound scan, after the collection."},
     {"code": "InTransit_Other", "wording": "Item outbound in sorting center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "The sorting centre's outbound scan."},

@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url';
 import { load } from 'cheerio';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { createTracker } from '../../facade/index.js';
 import { UniversalTracker } from '../../providers/universal.js';
@@ -94,7 +95,7 @@ describe('Ciblex status vocabulary', () => {
     expect(classifyCiblexStatus('Statut provider nouveau')).toMatchObject({
       status: 'unknown',
       stage: 'in_transit',
-      description: 'Ciblex tracking update',
+      description: 'Statut provider nouveau',
     });
     for (const wording of ['Colis livré demain', 'Sera remis au destinataire', 'Pas livraison effectuée', 'Retour expéditeur prévu']) {
       expect(classifyCiblexStatus(wording).status).toBe('unknown');
@@ -104,10 +105,16 @@ describe('Ciblex status vocabulary', () => {
   it('leaves the service notice and the ambiguous non-handover without a stage', () => {
     // Seen only before the first scan, where it can mean the shipper did not hand the parcel
     // over; the same words also say a parcel was not delivered.
-    expect(classifyCiblexStatus('COLIS NON REMIS')).toMatchObject({ status: 'unknown', description: 'Ciblex tracking update' });
+    expect(classifyCiblexStatus('COLIS NON REMIS')).toMatchObject({ status: 'unknown', description: 'COLIS NON REMIS' });
     expect(classifyCiblexStatus('Acheminement contractuel du colis en 48h00')).toMatchObject({ status: 'unknown' });
     expect(isCiblexNotice('Acheminement contractuel du colis en 48h00')).toBe(true);
     expect(isCiblexNotice('ACHEMINEMENT CONTRACTUEL DU COLIS EN 24H')).toBe(true);
+    // The app's review closes them, and the older rows' placeholder, as rows that keep the stage before them.
+    for (const description of ['COLIS NON REMIS', 'Acheminement contractuel du colis en 48h00', 'Ciblex tracking update']) {
+      expect(statusMapAnswer({ carrier: 'ciblex', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    }
+    expect(statusMapAnswer({ carrier: 'ciblex', providerCode: null, description: 'Statut provider nouveau' }).kind).toBe('unknown');
     for (const wording of ['COLIS NON REMIS', 'Colis Contrôle', 'Acheminement contractuel du colis en retard']) {
       expect(isCiblexNotice(wording)).toBe(false);
     }
@@ -215,7 +222,7 @@ describe('Ciblex response normalization', () => {
     ];
     const result = parseCiblexTrackingHtml(trackingPage({ rows }), TEST_TRACKING_NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit',
-      last_status_text: 'Ciblex tracking update', last_update: '2026-07-10T06:03:00+02:00' });
+      last_status_text: 'Acheminement contractuel du colis en 48h00', last_update: '2026-07-10T06:03:00+02:00' });
     expect(result.events?.map(event => event.stage)).toEqual([undefined, 'in_transit', undefined]);
     // Before its first scan, the parcel's state stays unknown.
     const waiting = parseCiblexTrackingHtml(trackingPage({ rows: rows.slice(2) }), TEST_TRACKING_NUMBER);
@@ -352,7 +359,7 @@ describe('Ciblex response normalization', () => {
         { description: 'Returned to sender', stage: 'returned' },
         { description: 'Ready for pickup', stage: 'ready_for_pickup' },
         { description: 'Shipment collected', stage: 'accepted' },
-        { description: 'Ciblex tracking update', provider_status: 'Statut provider nouveau' },
+        { description: 'Statut provider nouveau', provider_status: 'Statut provider nouveau' },
       ],
     });
   });

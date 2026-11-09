@@ -9,12 +9,16 @@ const NODES: ReadonlyMap<string, Stage> = new Map([
   ['InTransit_Other', 'in_transit'], // The sorting centre's scans, the departure and the line's scans on the way.
 ]);
 
-interface Entry { readonly wording: string; readonly unmapped?: boolean; readonly note?: string }
+interface Entry { readonly code?: string; readonly wording: string; readonly stage?: Stage; readonly unmapped?: boolean; readonly note?: string }
+const ENTRIES = statuses.entries as readonly Entry[];
 /** The line's notices, filed under a node on the way: no scan, so no stage, whatever the node. */
-const GAPS = (statuses.entries as readonly Entry[]).filter((entry) => entry.unmapped)
+const GAPS = ENTRIES.filter((entry) => entry.unmapped)
   .map((entry) => ({ wording: normalizeStatusWording(entry.wording), note: entry.note ?? '' }));
 const GAP_NOTES = new Map(GAPS.map((gap) => [gap.wording, gap.note]));
 const isGap = (wording: string): boolean => GAP_NOTES.has(normalizeStatusWording(wording));
+/** The scans that come with no node, by their wording. */
+const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !entry.code && entry.stage)
+  .map((entry) => [normalizeStatusWording(entry.wording), entry.stage!]));
 
 /**
  * The shipment statuses the home page's tracker sorts its answers by: `Pending` waits for a
@@ -39,18 +43,18 @@ export function alphastlineShipmentStage(status: string): Stage | undefined {
   return STATUSES.get(status);
 }
 
-/** A scan's stage: none for a notice, else its node, else the shared wording rules, else nothing. */
+/** A scan's stage: none for a notice, else its node or a scan's wording with no node, else the shared wording rules, else nothing. */
 export function alphastlineStage(node: string | null, wording: string): ClassifiedWording | null {
   if (isGap(wording)) return null;
-  const mapped = alphastlineMappedStage(node);
+  const mapped = node ? alphastlineMappedStage(node) : WORDINGS.get(normalizeStatusWording(wording));
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
 
-/** Every node seen is mapped; the line's notices are gaps by their wording, whatever the node. */
+/** Every node seen is mapped, and the wordings seen with no node; the line's notices are gaps by their wording, whatever the node. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => GAP_NOTES.has(wording) ? undefined : alphastlineMappedStage(code),
+  stage: (code, wording) => GAP_NOTES.has(wording) ? undefined : code ? alphastlineMappedStage(code) : WORDINGS.get(wording),
   gaps: GAPS,
   gapNote: (_code, wording) => GAP_NOTES.get(wording),
 };

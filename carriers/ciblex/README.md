@@ -33,10 +33,10 @@ parcel's status. "COLIS NON REMIS" has no stage either: seen only before the
 first scan, it can say the shipper did not hand the parcel over, while the same
 words also say a parcel was not delivered.
 
-Scans keep English wording for the labels the map reads, and "Ciblex tracking
-update" for any other. The parcel app's review (`statusMap`) reads that wording,
-or a copy's French label, so "Ciblex tracking update" stays open there, since
-the stored scan does not keep the label.
+Scans keep English wording for the labels the map reads, and Ciblex's own label
+for any other, so the parcel app's review (`statusMap`) sees each label it has
+not read. The review closes the service notice and "COLIS NON REMIS" as rows that
+keep the stage before them.
 
 Ciblex answers any number it has no scans for with the number's banner over an
 empty table, whether the label is not scanned yet or was never issued. That

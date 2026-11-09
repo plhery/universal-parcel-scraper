@@ -1357,10 +1357,12 @@ describe('status map answers', () => {
     expect(answer('ciblex', null, 'Colis pris en charge')).toEqual(mapped('accepted'));
     expect(answer('ciblex', null, 'COLIS LIVRE')).toEqual(mapped('delivered'));
     expect(answer('ciblex', null, 'Disponible au relais')).toEqual(mapped('ready_for_pickup'));
-    // A label the adapter does not read is stored in neutral wording, without the label.
-    expect(answer('ciblex', null, 'Ciblex tracking update')).toEqual(unknown);
-    expect(answer('ciblex', null, 'Acheminement contractuel du colis en 48h00')).toEqual(unknown);
+    // A label the adapter does not read keeps Ciblex's words and stays open; older rows' neutral wording for one
+    // and the service notice keep the stage before them.
     expect(answer('ciblex', null, 'Colis livré demain')).toEqual(unknown);
+    for (const wording of ['Ciblex tracking update', 'Acheminement contractuel du colis en 48h00']) {
+      expect(answer('ciblex', null, wording), wording).toMatchObject({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    }
   });
 
   it("answers Asendia by its own codes, a partner's scan by its wording, and a scan without a code by either tracker's wording", () => {

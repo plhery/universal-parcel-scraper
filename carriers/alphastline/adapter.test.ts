@@ -238,17 +238,19 @@ describe('Alphastline HTTP adapter', () => {
 });
 
 describe('Alphastline status vocabulary', () => {
-  it('records every node the map knows with the stage it gives, and the line’s notices as gaps', () => {
-    for (const entry of statuses.entries as { code: string; wording: string; stage?: string; unmapped?: boolean; note?: string }[]) {
+  it('records every node the map knows with the stage it gives, the scans with no node by their wording, and the line’s notices as gaps', () => {
+    for (const entry of statuses.entries as { code?: string; wording: string; stage?: string; unmapped?: boolean; note?: string }[]) {
       const answer = statusMapAnswer({ carrier: 'alphastline', providerCode: entry.code, description: entry.wording });
       if (entry.unmapped) {
         expect(answer, entry.wording).toEqual({ kind: 'intentional_gap', note: entry.note });
-        expect(alphastlineStage(entry.code, entry.wording), entry.wording).toBeNull();
+        expect(alphastlineStage(entry.code ?? null, entry.wording), entry.wording).toBeNull();
         continue;
       }
       expect(answer, entry.wording).toEqual({ kind: 'mapped', stage: entry.stage });
-      expect(alphastlineStage(entry.code, entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
+      expect(alphastlineStage(entry.code ?? null, entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
     }
+    // A node decides over the wording of a scan with no node.
+    expect(alphastlineStage('InTransit_Other', 'Electronic cargo information received')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
   });
 
   it('reads the collection as accepted and the scans on the way by their node, and the line’s notices move nothing', () => {

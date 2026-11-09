@@ -73,6 +73,8 @@ describe('USPS status vocabulary', () => {
     // A label printed at the counter, dated by its day alone; the scan of the item that follows is the acceptance.
     expect(uspsStage('Shipping Label Printed at Post Office')).toBe('registered');
     expect(uspsStage('Available for Pickup')).toBe('ready_for_pickup');
+    // The destination post holding international mail until the recipient pays its import charges.
+    expect(uspsStage('Payment of charges - Item being held, addressee being notified')).toBe('customs');
     // The delivering post office's arrival comes before the delivery round; a held parcel waits for collection.
     expect(uspsStage('Arrived at Post Office')).toBe('in_transit');
     // A cleared customs line, in either word order, is a step in transit.

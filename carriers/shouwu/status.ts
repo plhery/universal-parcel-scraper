@@ -21,13 +21,17 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !
   .map((entry) => [normalizeStatusWording(entry.wording!), entry.stage as Stage]));
 
 /**
- * Shouwu's own rows that name a batch or a flight's day: "1013C，申报过港中" for a batch declared
- * for the road to Hong Kong, and "预计23号的航班", or "二程预计27号的航班" for the second leg, for
- * the flight booked.
+ * Rows whose wording carries a variable part: Shouwu's own that name a batch or a flight's day,
+ * "1013C，申报过港中" for a batch declared for the road to Hong Kong, and "预计23号的航班", or
+ * "二程预计27号的航班" for the second leg, for the flight booked; and the last mile's return with
+ * its reason.
  */
 const PATTERNS: readonly [RegExp, Stage][] = [
   [/^[a-z0-9]{1,12}[，,] ?申报过港中$/, 'in_transit'],
   [/^(?:二程)?预计\d{1,2}号的航班$/, 'in_transit'],
+  // The Italian last mile's return of a parcel it could not deliver, whatever the reason it names:
+  // on its way back, not yet with the sender.
+  [/^back to sender for reason: \S/, 'exception'],
 ];
 
 /**

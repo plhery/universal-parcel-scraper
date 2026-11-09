@@ -763,6 +763,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
       "note": "The hand-over to the delivering carrier after import clearance, before its own scans; not a delivery to the recipient."
+    },
+    {
+      "wording": "Back to Sender for reason: wrong recipient address or address related problem",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The Italian last mile sending back a parcel it could not deliver, after its failed attempts: on its way back, not yet with the sender."
     }
   ]
 }

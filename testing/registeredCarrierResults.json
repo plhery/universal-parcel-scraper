@@ -2979,7 +2979,7 @@
         },
         {
           "time": "2026-01-10T06:02:00+01:00",
-          "description": "Ciblex tracking update",
+          "description": "Acheminement contractuel du colis en 48h00",
           "provider_status": "Acheminement contractuel du colis en 48h00",
           "location": "TEST DEPOT 99 (99)",
           "tie_order": 0
@@ -2993,7 +2993,7 @@
         },
         {
           "time": "2026-01-09T08:17:00+01:00",
-          "description": "Ciblex tracking update",
+          "description": "COLIS NON REMIS",
           "provider_status": "COLIS NON REMIS"
         }
       ]
@@ -3002,14 +3002,14 @@
   "ciblex/full-barcode.html/unknown": {
     "result": {
       "status": "unknown",
-      "last_status_text": "Ciblex tracking update",
+      "last_status_text": "Nouvelle formulation inconnue",
       "last_update": null,
       "expected_delivery": null,
       "timezone": "Europe/Paris",
       "events": [
         {
           "provider_time_text": "23/01/2026 invalid clock",
-          "description": "Ciblex tracking update",
+          "description": "Nouvelle formulation inconnue",
           "provider_status": "Nouvelle formulation inconnue"
         },
         {
@@ -3035,7 +3035,7 @@
         },
         {
           "time": "2026-01-10T06:02:00+01:00",
-          "description": "Ciblex tracking update",
+          "description": "Acheminement contractuel du colis en 48h00",
           "provider_status": "Acheminement contractuel du colis en 48h00",
           "location": "TEST DEPOT 99 (99)"
         },
@@ -3053,7 +3053,7 @@
         },
         {
           "time": "2026-01-09T08:17:00+01:00",
-          "description": "Ciblex tracking update",
+          "description": "COLIS NON REMIS",
           "provider_status": "COLIS NON REMIS"
         }
       ]

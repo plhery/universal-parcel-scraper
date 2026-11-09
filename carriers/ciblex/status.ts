@@ -8,9 +8,9 @@
  * portal alternates between ("Colis Livré" / "COLIS LIVRE") the same key.
  *
  * Order matters: return and delivery phrases are tested before the broader
- * transit ones. Rows whose wording is not mapped keep a neutral description
- * and no carrier-declared stage beyond the transit default, so the sync's
- * wording classifier records them for review.
+ * transit ones. Rows whose wording is not mapped keep Ciblex's own label and
+ * no carrier-declared stage beyond the transit default, so the sync's wording
+ * classifier records them for review.
  */
 import type { CarrierStatus } from '../../core/result/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
@@ -47,7 +47,8 @@ function includesAny(value: string, phrases: string[]): boolean {
   return phrases.some((phrase) => value.includes(phrase));
 }
 
-const UPDATE: ClassifiedCiblexStatus = { status: 'unknown', stage: 'in_transit', description: 'Ciblex tracking update' };
+/** A label the map does not read, kept in Ciblex's words. */
+const update = (label: string): ClassifiedCiblexStatus => ({ status: 'unknown', stage: 'in_transit', description: clean(label, 200) });
 const RETURNED: ClassifiedCiblexStatus = { status: 'exception', stage: 'returned', description: 'Returned to sender' };
 const DELIVERED: ClassifiedCiblexStatus = { status: 'delivered', stage: 'delivered', description: 'Delivered' };
 const OUT_FOR_DELIVERY: ClassifiedCiblexStatus = { status: 'out_for_delivery', stage: 'out_for_delivery', description: 'Out for delivery' };
@@ -62,7 +63,7 @@ export function classifyCiblexStatus(rawDescription: string): ClassifiedCiblexSt
   const value = comparableText(rawDescription);
   if (/\b(?:prevu|prevue|demain|prochainement|sera|seront|doit|doivent)\b/.test(value)
     || /\b(?:pas|jamais)\b/.test(value)) {
-    return UPDATE;
+    return update(rawDescription);
   }
   if (includesAny(value, ['retour expediteur', 'retourne a l expediteur', 'retour a l expediteur'])) {
     return RETURNED;
@@ -97,7 +98,7 @@ export function classifyCiblexStatus(rawDescription: string): ClassifiedCiblexSt
   if (includesAny(value, ['annonce', 'information recue'])) {
     return REGISTERED;
   }
-  return UPDATE;
+  return update(rawDescription);
 }
 
 /** The stage of the English wording the adapter stores for each label it reads. */
@@ -106,8 +107,7 @@ const STORED = new Map([RETURNED, DELIVERED, OUT_FOR_DELIVERY, READY_FOR_PICKUP,
 
 /**
  * What the map says about one scan: the English wording the adapter stores in place of a label
- * it reads, or a copy's French label. A label it does not read is stored as "Ciblex tracking
- * update", which stays open since the stored scan does not keep the label.
+ * it reads, or a French label, as the adapter stores one it does not read and copies relay them.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => {
@@ -115,4 +115,14 @@ export const statusMap: CarrierStatusMap = {
     return STORED.get(wording) ?? (classified.status === 'unknown' ? undefined : classified.stage);
   },
   gaps: [],
+  gapNote: (_code, wording) => {
+    if (isCiblexNotice(wording)) return 'The parcel\'s contractual transit time beside a depot scan, not a step: the parcel keeps the stage it had.';
+    if (comparableText(wording) === 'colis non remis') {
+      return 'Seen before the first scan, where the shipper had not handed the parcel over; the same words can say a parcel was not delivered, so the parcel keeps the stage it had.';
+    }
+    if (wording === 'ciblex tracking update') {
+      return 'Older rows carry these words for a label the map does not read, with the label as their provider status: the parcel keeps the stage it had.';
+    }
+    return undefined;
+  },
 };

@@ -44,7 +44,9 @@ const ACCEPTED_TERMS = [
   'accepted', 'acceptance', 'in possession of item', 'receipt of item for mailing', 'picked up', 'picked-up', 'tendered',
   'shipment received',
 ];
-const CUSTOMS_TERMS = ['customs', 'clearance'];
+// The destination post holding an international item until the recipient pays its import charges
+// ("Payment of charges - Item being held, addressee being notified"), as the post's own customs-fee hold reads it.
+const CUSTOMS_TERMS = ['customs', 'clearance', 'payment of charges'];
 // "Awaiting Delivery (Scan)" ends a delivery day without a delivery scan, at about 9 pm local time; USPS then
 // expects the delivery the next business day.
 const IN_TRANSIT_TERMS = [
