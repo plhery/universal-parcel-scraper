@@ -33,6 +33,7 @@ import { gofoScanZone } from '../../carriers/gofo/clock.js';
 import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
+import { keepsZone } from '../../places/zones.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
 import { localEvent, numberOf, place, result, type UniversalSource } from '../shared/result.js';
 import { ship24CourierCode } from './couriers.js';
@@ -429,7 +430,7 @@ function zuluAbroad(reading: Reading, readings: readonly Reading[]): CarrierEven
   const { zulu } = reading;
   if (!zulu) return null;
   const zone = readings.find((other) => other.upu && other.zone && other.wall?.slice(0, 16) === zulu.digits.slice(0, 16)
-    && zoneCountry(other.zone) !== zulu.home)?.zone;
+    && !keepsZone(zulu.home, other.zone))?.zone;
   const instant = zone ? firstOccurrence(DateTime.fromISO(zulu.digits, { zone })) : null;
   return zone && instant?.isValid ? { ...reading.event, time: instant.toUTC().toISO(), time_zone: zone, time_zone_basis: 'neighbour' } : null;
 }

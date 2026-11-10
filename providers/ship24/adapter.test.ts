@@ -198,6 +198,14 @@ describe('Ship24 result parsing', () => {
       ['2026-10-27T05:50:00.000Z', undefined, undefined]]);
     // The return the union's copy names is the action decided at a failed round, which a later round can overtake.
     expect(events[1]!.stage).toBe('exception');
+    // A copy on a clock Australia keeps, here the zone routing passes, does not move Australia Post's instant.
+    const home = parseShip24Response({ data: { tracking_number: 'ZZ123456785AU',
+      couriers: [{ translation: { name: 'Australia Post' } }, { translation: { name: 'UPU' } }],
+      events: [
+        { timestamp: '2026-11-07T14:20:00Z', status: 'Delivered', location: 'EXAMPLE', courier: auPost },
+        { timestamp: '2026-11-07T14:20:00', status: 'Final delivery', courier: upu },
+      ] } }, 'ZZ123456785AU', 'Australia/Sydney').events!;
+    expect(home.find((scan) => scan.description === 'Delivered' && !scan.time_zone)?.time).toBe('2026-11-07T14:20:00.000Z');
   });
 
   it('places EMS\'s origin leg in the origin post\'s country, at a place written as a code', () => {

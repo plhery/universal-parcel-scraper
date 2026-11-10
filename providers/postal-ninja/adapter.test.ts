@@ -300,6 +300,13 @@ describe('Postal Ninja result parsing', () => {
     expect(times(parsePostalNinjaResponse(unplaced, number, 'America/New_York'))).toEqual([
       '2026-11-02T08:00:29.000Z', '2026-10-28T14:00:00.000Z',
     ]);
+    // Nor a zone of another country with several clocks, or UTC.
+    for (const zone of ['Australia/Sydney', 'America/Toronto', 'UTC']) {
+      expect(times(parsePostalNinjaResponse(unplaced, number, zone))?.[0]).toBe('local 2026-11-02T03:00:29');
+    }
+    // The mailer writes its label on UTC, as USPS's adapter reads it: on the facility's clock, it would follow the read.
+    const label = withEvents([scans[0], { ds: 'USPS', dt: '2026-11-02T04:40:00', dsc: 'Shipping Label Created', loc: 'EXAMPLE CITY, CA 90001' }]);
+    expect(times(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds'))?.[0]).toBe('2026-11-02T04:40:00.000Z');
   });
 
   it('reads local clocks beside other services, or for a postal item that crosses a border, only in the carrier\'s zone', () => {

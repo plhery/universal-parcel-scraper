@@ -10,14 +10,15 @@
  */
 import { CAINIAO_CHINA_ZONE, cainiaoInChina } from '../../carriers/aliexpress/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
-import { uspsScanZone } from '../../carriers/usps/clock.js';
+import { uspsMailerLabel, uspsScanZone } from '../../carriers/usps/clock.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { DateTime } from 'luxon';
 import {
-  canadaProvinceTimeZone, countryCode, countryTimeZone, postalOfficeZone, sharedClockZone, timeZoneCountry, usStateTimeZone,
+  canadaProvinceTimeZone, countryCode, countryTimeZone, postalOfficeZone, sharedClockZone, usStateTimeZone,
 } from '../../core/time/index.js';
+import { keepsZone } from '../../places/zones.js';
 import { courierZone } from '../shared/hints.js';
 
 /** Services whose every scan is at one clock, wherever it happened and whatever other services the history names. */
@@ -140,7 +141,7 @@ const isUsps = (service: string) => carrierIdFromName(service) === 'usps';
  * and nine hours early. It keeps its wall time instead.
  */
 export function borrowsRoutingZone(service: string, zone: string): boolean {
-  return !isUsps(service) || timeZoneCountry(zone) === null;
+  return !isUsps(service) || keepsZone('US', zone);
 }
 
 /** A scan dated without a time is written as midnight (FedEx's pickup, Geodis's departure). */
@@ -236,7 +237,8 @@ export function serviceZone(scan: Scan, journey: Journey): string | null | false
   if (fixed) return fixed;
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;
   if (service === CAINIAO && originLeg(scan)) return CAINIAO_CHINA_ZONE;
-  if (isUsps(service)) return uspsScanZone(location) ?? locationZone(location);
+  // A mailer writes its label on UTC, as USPS's adapter reads it (uspsRowZone).
+  if (isUsps(service)) return uspsMailerLabel(description) ? 'UTC' : uspsScanZone(location) ?? locationZone(location);
   if (!journey.alone) return null;
   if (LOCATED_CLOCKS.has(service)) return locationZone(location);
   if (!LOCAL_CLOCKS.has(service)) return null;

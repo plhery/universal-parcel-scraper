@@ -131,7 +131,8 @@ capture failure.
   read on the Amsterdam zone routing passes for spring GDS they came eight and nine hours
   early. Each is placed by the state its location names, as [USPS's adapter](../../carriers/usps/clock.ts)
   reads it, and one that names none borrows from those that do. With none to borrow from it
-  keeps its wall time rather than a routing zone outside the US.
+  keeps its wall time rather than a routing zone outside the US. A mailer's label
+  ("Shipping Label Created") is on UTC, as USPS's adapter reads it.
 - Known clocks that are not established: DHL Express keeps each facility's clock, but
   names its newest US and Canadian scans without their state ("MARSHALL-USA"); Australia
   Post, Canada Post and Correios do Brasil keep the scan's clock in countries with
