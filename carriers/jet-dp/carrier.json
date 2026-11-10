@@ -1,0 +1,32 @@
+{
+  "id": "jet-dp",
+  "displayName": "JET DP",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "PL",
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#3b5159"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

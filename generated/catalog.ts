@@ -15037,6 +15037,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "crosswin": {
+    "displayName": "Crosswin",
+    "color": "#6ca62f",
+    "aliases": [
+      "Crosswin Courier & More",
+      "Romania Express"
+    ],
+    "countries": [
+      "PL",
+      "RO",
+      "HU",
+      "BG",
+      "CZ",
+      "SK",
+      "HR",
+      "SI",
+      "GR",
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://crosswin.app/tracking",
+    "trackingUrlTemplate": "https://crosswin.app/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://crosswin.app/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "crosswin.app"
+        ],
+        "pathPattern": "^/tracking/[^/]+/?$",
+        "path": "^/tracking/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "cruz-del-sur": {
     "displayName": "Cruz del Sur",
     "color": "#2a367c",
@@ -19619,6 +19658,42 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/tracking/?$",
         "params": [
           "tracking_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "emole-express": {
+    "displayName": "Emole Express",
+    "color": "#b02525",
+    "aliases": [
+      "Emole"
+    ],
+    "countries": [
+      "PL",
+      "DE",
+      "ES",
+      "UA",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.emole-express.com/pl/tracking",
+    "trackingUrlTemplate": "https://www.emole-express.com/pl/tracking?number={trackingNumber}&autoSearch=true",
+    "trackingSearchUrl": "https://www.emole-express.com/pl/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "emole-express.com",
+          "www.emole-express.com"
+        ],
+        "pathPattern": "^/(pl|en)/tracking/?$",
+        "params": [
+          "number"
         ]
       }
     ],
@@ -28716,6 +28791,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jet-dp": {
+    "displayName": "JET DP",
+    "color": "#3b5159",
+    "countries": [
+      "PL",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "trackingSearchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jet-global": {
     "displayName": "Jet Global Logistics",
     "color": "#1160ae",
@@ -33118,6 +33211,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.25431010.tw/",
     "trackingSearchUrl": "https://www.25431010.tw/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "maraton": {
+    "displayName": "Maraton",
+    "color": "#006f3b",
+    "aliases": [
+      "Maraton Przesyłki Kurierskie"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://maraton.poznan.pl/tracking",
+    "trackingSearchUrl": "https://maraton.poznan.pl/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55092,6 +55205,7 @@ export const CARRIER_IDS = [
   "crc-post",
   "credifin",
   "crossflight",
+  "crosswin",
   "cruz-del-sur",
   "cse-russia",
   "csomagpiac",
@@ -55211,6 +55325,7 @@ export const CARRIER_IDS = [
   "emirates-courier-express",
   "emirates-post",
   "emiro",
+  "emole-express",
   "emons",
   "ems-vietnam",
   "emu-express",
@@ -55466,6 +55581,7 @@ export const CARRIER_IDS = [
   "jdiex",
   "jeebly",
   "jersey-post",
+  "jet-dp",
   "jet-global",
   "jet-logistic",
   "jetizz",
@@ -55591,6 +55707,7 @@ export const CARRIER_IDS = [
   "maltapost",
   "mandae",
   "maple-logistics",
+  "maraton",
   "maritime-ontario",
   "mark-express",
   "maruti-air",
@@ -56575,6 +56692,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "crc-post": [],
   "credifin": [],
   "crossflight": [],
+  "crosswin": [],
   "cruz-del-sur": [],
   "cse-russia": [],
   "csomagpiac": [],
@@ -56694,6 +56812,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "emirates-courier-express": [],
   "emirates-post": ["emirates-post-own","emirates-post-s10"],
   "emiro": [],
+  "emole-express": [],
   "emons": [],
   "ems-vietnam": ["ems-vietnam-s10"],
   "emu-express": [],
@@ -56949,6 +57068,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jdiex": [],
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
+  "jet-dp": [],
   "jet-global": [],
   "jet-logistic": [],
   "jetizz": [],
@@ -57074,6 +57194,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
   "maple-logistics": [],
+  "maraton": [],
   "maritime-ontario": [],
   "mark-express": [],
   "maruti-air": [],

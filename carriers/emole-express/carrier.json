@@ -1,0 +1,49 @@
+{
+  "id": "emole-express",
+  "displayName": "Emole Express",
+  "aliases": [
+    "Emole"
+  ],
+  "region": {
+    "countries": [
+      "PL",
+      "DE",
+      "ES",
+      "UA",
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#b02525"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.emole-express.com/pl/tracking?number={trackingNumber}&autoSearch=true",
+    "searchUrl": "https://www.emole-express.com/pl/tracking",
+    "canaryUrl": "https://www.emole-express.com/pl/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "emole-express.com",
+        "www.emole-express.com"
+      ],
+      "pathPattern": "^/(pl|en)/tracking/?$",
+      "params": [
+        "number"
+      ]
+    }
+  ],
+  "detection": []
+}

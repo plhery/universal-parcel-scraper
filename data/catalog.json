@@ -15033,6 +15033,45 @@
     ],
     "detectionRules": []
   },
+  "crosswin": {
+    "displayName": "Crosswin",
+    "color": "#6ca62f",
+    "aliases": [
+      "Crosswin Courier & More",
+      "Romania Express"
+    ],
+    "countries": [
+      "PL",
+      "RO",
+      "HU",
+      "BG",
+      "CZ",
+      "SK",
+      "HR",
+      "SI",
+      "GR",
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://crosswin.app/tracking",
+    "trackingUrlTemplate": "https://crosswin.app/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://crosswin.app/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "crosswin.app"
+        ],
+        "pathPattern": "^/tracking/[^/]+/?$",
+        "path": "^/tracking/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "cruz-del-sur": {
     "displayName": "Cruz del Sur",
     "color": "#2a367c",
@@ -19615,6 +19654,42 @@
         "pathPattern": "^/tracking/?$",
         "params": [
           "tracking_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "emole-express": {
+    "displayName": "Emole Express",
+    "color": "#b02525",
+    "aliases": [
+      "Emole"
+    ],
+    "countries": [
+      "PL",
+      "DE",
+      "ES",
+      "UA",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.emole-express.com/pl/tracking",
+    "trackingUrlTemplate": "https://www.emole-express.com/pl/tracking?number={trackingNumber}&autoSearch=true",
+    "trackingSearchUrl": "https://www.emole-express.com/pl/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "emole-express.com",
+          "www.emole-express.com"
+        ],
+        "pathPattern": "^/(pl|en)/tracking/?$",
+        "params": [
+          "number"
         ]
       }
     ],
@@ -28712,6 +28787,24 @@
       }
     ]
   },
+  "jet-dp": {
+    "displayName": "JET DP",
+    "color": "#3b5159",
+    "countries": [
+      "PL",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "trackingSearchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jet-global": {
     "displayName": "Jet Global Logistics",
     "color": "#1160ae",
@@ -33114,6 +33207,26 @@
     },
     "canaryUrl": "https://www.25431010.tw/",
     "trackingSearchUrl": "https://www.25431010.tw/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "maraton": {
+    "displayName": "Maraton",
+    "color": "#006f3b",
+    "aliases": [
+      "Maraton Przesyłki Kurierskie"
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://maraton.poznan.pl/tracking",
+    "trackingSearchUrl": "https://maraton.poznan.pl/tracking",
     "linkRules": [],
     "detectionRules": []
   },

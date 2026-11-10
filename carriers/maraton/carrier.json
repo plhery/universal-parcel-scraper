@@ -1,0 +1,33 @@
+{
+  "id": "maraton",
+  "displayName": "Maraton",
+  "aliases": [
+    "Maraton Przesyłki Kurierskie"
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#006f3b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://maraton.poznan.pl/tracking",
+    "canaryUrl": "https://maraton.poznan.pl/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,52 @@
+{
+  "id": "crosswin",
+  "displayName": "Crosswin",
+  "aliases": [
+    "Crosswin Courier & More",
+    "Romania Express"
+  ],
+  "region": {
+    "countries": [
+      "PL",
+      "RO",
+      "HU",
+      "BG",
+      "CZ",
+      "SK",
+      "HR",
+      "SI",
+      "GR",
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#6ca62f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://crosswin.app/tracking/{trackingNumber}",
+    "searchUrl": "https://crosswin.app/tracking",
+    "canaryUrl": "https://crosswin.app/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "crosswin.app"
+      ],
+      "pathPattern": "^/tracking/[^/]+/?$",
+      "path": "^/tracking/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}
