@@ -1,0 +1,45 @@
+{
+  "id": "intime-hr",
+  "displayName": "In Time Croatia",
+  "aliases": [
+    "IN TIME d.o.o."
+  ],
+  "region": {
+    "countries": [
+      "HR"
+    ]
+  },
+  "brand": {
+    "color": "#00999b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zagreb",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.in-time.hr/pracenje?id={trackingNumber}",
+    "searchUrl": "https://www.in-time.hr/pracenje",
+    "canaryUrl": "https://www.in-time.hr/pracenje",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "in-time.hr",
+        "www.in-time.hr"
+      ],
+      "pathPattern": "^/pracenje/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

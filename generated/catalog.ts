@@ -24871,6 +24871,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "gordom-logistika": {
+    "displayName": "Gordom Logistika",
+    "color": "#1f4d76",
+    "aliases": [
+      "GORDOM logistika j.d.o.o."
+    ],
+    "countries": [
+      "HR",
+      "SI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zagreb",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gordomlogistika.hr/tracking/",
+    "trackingSearchUrl": "https://gordomlogistika.hr/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "grand-slam-express": {
     "displayName": "Grand Slam Express",
     "color": "#f1592a",
@@ -27751,6 +27772,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "courier.intime.bg"
         ],
         "path": "^/(?:bg|en)/tracking/code/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "intime-hr": {
+    "displayName": "In Time Croatia",
+    "color": "#00999b",
+    "aliases": [
+      "IN TIME d.o.o."
+    ],
+    "countries": [
+      "HR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zagreb",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.in-time.hr/pracenje",
+    "trackingUrlTemplate": "https://www.in-time.hr/pracenje?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.in-time.hr/pracenje",
+    "linkRules": [
+      {
+        "domains": [
+          "in-time.hr",
+          "www.in-time.hr"
+        ],
+        "pathPattern": "^/pracenje/?$",
+        "params": [
+          "id"
+        ]
       }
     ],
     "detectionRules": []
@@ -52288,6 +52341,44 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "webrinq": {
+    "displayName": "WebrinQ",
+    "color": "#2c5b5a",
+    "aliases": [
+      "WebrinQ A/S"
+    ],
+    "countries": [
+      "DK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Copenhagen",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.webrinq.com/",
+    "trackingUrlTemplate": "https://tracking.webrinq.com/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.webrinq.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.webrinq.com"
+        ],
+        "pathPattern": "^/[^/]+/?$",
+        "path": "^/([^/]+)/?$"
+      },
+      {
+        "domains": [
+          "tracking.webrinq.com"
+        ],
+        "pathPattern": "^/$",
+        "params": [
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "wedo": {
     "displayName": "One by Allegro CZ",
     "color": "#006d57",
@@ -55468,6 +55559,7 @@ export const CARRIER_IDS = [
   "golilla",
   "goodluck-courier",
   "goodmaji",
+  "gordom-logistika",
   "grand-slam-express",
   "greenway-vn",
   "groupe-guilbault",
@@ -55553,6 +55645,7 @@ export const CARRIER_IDS = [
   "intertown-transport",
   "intex-paketdienst",
   "intime-bg",
+  "intime-hr",
   "ipostel",
   "iran-post",
   "irs-romexpress",
@@ -56242,6 +56335,7 @@ export const CARRIER_IDS = [
   "ward-trucking",
   "wassel",
   "we-world-express",
+  "webrinq",
   "wedo",
   "welivery",
   "wepost",
@@ -56955,6 +57049,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "golilla": [],
   "goodluck-courier": [],
   "goodmaji": [],
+  "gordom-logistika": [],
   "grand-slam-express": [],
   "greenway-vn": [],
   "groupe-guilbault": [],
@@ -57040,6 +57135,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intertown-transport": [],
   "intex-paketdienst": [],
   "intime-bg": [],
+  "intime-hr": [],
   "ipostel": [],
   "iran-post": [],
   "irs-romexpress": [],
@@ -57729,6 +57825,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ward-trucking": [],
   "wassel": [],
   "we-world-express": ["we-world-express-1"],
+  "webrinq": [],
   "wedo": ["wedo-1"],
   "welivery": [],
   "wepost": [],

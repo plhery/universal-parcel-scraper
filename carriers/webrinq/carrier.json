@@ -1,0 +1,51 @@
+{
+  "id": "webrinq",
+  "displayName": "WebrinQ",
+  "aliases": [
+    "WebrinQ A/S"
+  ],
+  "region": {
+    "countries": [
+      "DK"
+    ]
+  },
+  "brand": {
+    "color": "#2c5b5a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Copenhagen",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.webrinq.com/{trackingNumber}",
+    "searchUrl": "https://tracking.webrinq.com/",
+    "canaryUrl": "https://tracking.webrinq.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.webrinq.com"
+      ],
+      "pathPattern": "^/[^/]+/?$",
+      "path": "^/([^/]+)/?$"
+    },
+    {
+      "domains": [
+        "tracking.webrinq.com"
+      ],
+      "pathPattern": "^/$",
+      "params": [
+        "q"
+      ]
+    }
+  ],
+  "detection": []
+}
