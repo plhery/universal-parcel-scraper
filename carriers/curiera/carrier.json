@@ -1,0 +1,33 @@
+{
+  "id": "curiera",
+  "displayName": "Curiera",
+  "aliases": [
+    "Curiera Transport Solutions"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#00784b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
+    "canaryUrl": "https://curiera.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "24curier",
+  "displayName": "24Curier",
+  "aliases": [
+    "24 Curier",
+    "24 Avangard Curier"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#0d2c89"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
+    "canaryUrl": "https://24curier.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

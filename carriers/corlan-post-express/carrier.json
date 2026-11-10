@@ -1,0 +1,52 @@
+{
+  "id": "corlan-post-express",
+  "displayName": "Corlan Post Express",
+  "aliases": [
+    "CORLAN Post Express",
+    "Corlan Trans"
+  ],
+  "region": {
+    "countries": [
+      "RO",
+      "AT",
+      "BG",
+      "CZ",
+      "HR",
+      "GR",
+      "IT",
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#2b52b6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.corlanpostexpress.ro/?lang=ro&tr={trackingNumber}",
+    "searchUrl": "https://track.corlanpostexpress.ro/",
+    "canaryUrl": "https://track.corlanpostexpress.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.corlanpostexpress.ro"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "tr"
+      ]
+    }
+  ],
+  "detection": []
+}

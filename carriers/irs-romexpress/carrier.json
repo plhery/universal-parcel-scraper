@@ -1,0 +1,33 @@
+{
+  "id": "irs-romexpress",
+  "displayName": "International Romexpress Service",
+  "aliases": [
+    "IRS.ro"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#0066b3"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.irs.ro/",
+    "canaryUrl": "https://www.irs.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

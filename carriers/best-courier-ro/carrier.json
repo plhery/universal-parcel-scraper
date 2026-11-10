@@ -1,0 +1,35 @@
+{
+  "id": "best-courier-ro",
+  "displayName": "Best Courier",
+  "aliases": [
+    "BestCourier",
+    "Best Letter Courier Expres Services",
+    "Blue Euro Courier"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#154687"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
+    "canaryUrl": "https://www.bestcourier.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

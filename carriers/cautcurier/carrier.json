@@ -1,0 +1,44 @@
+{
+  "id": "cautcurier",
+  "displayName": "CautCurier",
+  "aliases": [
+    "Caut Curier"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#f56000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.cautcurier.ro/?awb={trackingNumber}",
+    "searchUrl": "https://tracking.cautcurier.ro/",
+    "canaryUrl": "https://tracking.cautcurier.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.cautcurier.ro"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": []
+}

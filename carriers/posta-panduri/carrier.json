@@ -1,0 +1,46 @@
+{
+  "id": "posta-panduri",
+  "displayName": "Poșta Panduri",
+  "aliases": [
+    "Posta Panduri",
+    "Pachetomat",
+    "LivrariOnline"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#f1592a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://static.livrarionline.ro/Tracking/?awb={trackingNumber}",
+    "searchUrl": "https://static.livrarionline.ro/Tracking/",
+    "canaryUrl": "https://static.livrarionline.ro/Tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "static.livrarionline.ro"
+      ],
+      "pathPattern": "^/Tracking/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": []
+}

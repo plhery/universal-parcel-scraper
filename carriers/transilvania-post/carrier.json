@@ -1,0 +1,41 @@
+{
+  "id": "transilvania-post",
+  "displayName": "Transilvania Post",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#fdbe0f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.transilvaniapost.ro/awb/{trackingNumber}",
+    "searchUrl": "https://www.transilvaniapost.ro/awb",
+    "canaryUrl": "https://www.transilvaniapost.ro/awb",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "transilvaniapost.ro",
+        "www.transilvaniapost.ro"
+      ],
+      "pathPattern": "^/awb/[^/]+/?$",
+      "path": "^/awb/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}

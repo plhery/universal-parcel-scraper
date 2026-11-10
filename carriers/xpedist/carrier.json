@@ -1,0 +1,43 @@
+{
+  "id": "xpedist",
+  "displayName": "Xpedist",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#01152d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.xpedist.ro/awb?awb={trackingNumber}",
+    "searchUrl": "https://www.xpedist.ro/awb",
+    "canaryUrl": "https://www.xpedist.ro/awb",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "xpedist.ro",
+        "www.xpedist.ro"
+      ],
+      "pathPattern": "^/awb/?$",
+      "params": [
+        "awb"
+      ]
+    }
+  ],
+  "detection": []
+}

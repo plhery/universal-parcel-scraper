@@ -1,0 +1,33 @@
+{
+  "id": "intelligent-logistik",
+  "displayName": "Intelligent Logistik",
+  "aliases": [
+    "Intelligent Courier"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#93278f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
+    "canaryUrl": "https://intelligentlogistik.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

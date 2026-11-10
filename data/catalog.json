@@ -5679,6 +5679,27 @@
     ],
     "detectionRules": []
   },
+  "24curier": {
+    "displayName": "24Curier",
+    "color": "#0d2c89",
+    "aliases": [
+      "24 Curier",
+      "24 Avangard Curier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://24curier.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "2ebox": {
     "displayName": "2ebox",
     "color": "#dd0f32",
@@ -7308,6 +7329,27 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "albatomi": {
+    "displayName": "Albatomi",
+    "color": "#10386c",
+    "aliases": [
+      "Albatomi Serv"
+    ],
+    "countries": [
+      "RO",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.albatomi.ro/",
+    "trackingSearchUrl": "https://www.albatomi.ro/",
+    "linkRules": [],
     "detectionRules": []
   },
   "alem-tat": {
@@ -9718,6 +9760,28 @@
       }
     ]
   },
+  "best-courier-ro": {
+    "displayName": "Best Courier",
+    "color": "#154687",
+    "aliases": [
+      "BestCourier",
+      "Best Letter Courier Expres Services",
+      "Blue Euro Courier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.bestcourier.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "best-express-kh": {
     "displayName": "BEST Express Cambodia",
     "color": "#d80c18",
@@ -12051,6 +12115,37 @@
     ],
     "detectionRules": []
   },
+  "cautcurier": {
+    "displayName": "CautCurier",
+    "color": "#f56000",
+    "aliases": [
+      "Caut Curier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.cautcurier.ro/",
+    "trackingUrlTemplate": "https://tracking.cautcurier.ro/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.cautcurier.ro/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.cautcurier.ro"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cbl-logistica": {
     "displayName": "CBL Logística",
     "color": "#e31d1a",
@@ -13778,6 +13873,45 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "corlan-post-express": {
+    "displayName": "Corlan Post Express",
+    "color": "#2b52b6",
+    "aliases": [
+      "CORLAN Post Express",
+      "Corlan Trans"
+    ],
+    "countries": [
+      "RO",
+      "AT",
+      "BG",
+      "CZ",
+      "HR",
+      "GR",
+      "IT",
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.corlanpostexpress.ro/",
+    "trackingUrlTemplate": "https://track.corlanpostexpress.ro/?lang=ro&tr={trackingNumber}",
+    "trackingSearchUrl": "https://track.corlanpostexpress.ro/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.corlanpostexpress.ro"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tr"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "corporate-couriers": {
     "displayName": "Corporate Couriers",
     "color": "#e7212d",
@@ -14866,6 +15000,26 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "curiera": {
+    "displayName": "Curiera",
+    "color": "#00784b",
+    "aliases": [
+      "Curiera Transport Solutions"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://curiera.ro/",
+    "trackingSearchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
+    "linkRules": [],
     "detectionRules": []
   },
   "custom-companies": {
@@ -17454,7 +17608,8 @@
       "DPD Romania",
       "DPD România",
       "DPD (RO)",
-      "DPD RO"
+      "DPD RO",
+      "Dynamic Parcel Distribution"
     ],
     "countries": [
       "RO"
@@ -17775,7 +17930,8 @@
       "DSC",
       "DSC Dragon Star Curier",
       "DSC-DragonStarCurier",
-      "Dragon Star"
+      "Dragon Star",
+      "DSC Expres Logistic"
     ],
     "countries": [
       "RO"
@@ -26740,6 +26896,26 @@
       }
     ]
   },
+  "intelligent-logistik": {
+    "displayName": "Intelligent Logistik",
+    "color": "#93278f",
+    "aliases": [
+      "Intelligent Courier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://intelligentlogistik.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "inter-courier": {
     "displayName": "Intercourier",
     "color": "#76ba59",
@@ -27156,6 +27332,26 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "irs-romexpress": {
+    "displayName": "International Romexpress Service",
+    "color": "#0066b3",
+    "aliases": [
+      "IRS.ro"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.irs.ro/",
+    "trackingSearchUrl": "https://www.irs.ro/",
+    "linkRules": [],
     "detectionRules": []
   },
   "islandwide-express": {
@@ -32684,6 +32880,25 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "maty-express": {
+    "displayName": "Maty Express",
+    "color": "#005496",
+    "countries": [
+      "RO",
+      "ES",
+      "BE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://matyexpress.com/tracking/",
+    "trackingSearchUrl": "https://matyexpress.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mauritius-post": {
     "displayName": "Mauritius Post",
     "color": "#f5d800",
@@ -35693,6 +35908,38 @@
       }
     ]
   },
+  "optimus-courier": {
+    "displayName": "Optimus Courier",
+    "color": "#020065",
+    "aliases": [
+      "Optimus Courier Logistics"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://optimuscourier.ro/tracking/",
+    "trackingUrlTemplate": "https://optimuscourier.ro/tracking/?awb_nr={trackingNumber}",
+    "trackingSearchUrl": "https://optimuscourier.ro/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "optimuscourier.ro",
+          "www.optimuscourier.ro"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "awb_nr"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "orian": {
     "displayName": "Orian",
     "color": "#d01b21",
@@ -38069,6 +38316,28 @@
       }
     ]
   },
+  "pink-post": {
+    "displayName": "Pink Post",
+    "color": "#df306d",
+    "aliases": [
+      "ILRA Pink Post Operations",
+      "Pink Post Solutions"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackawb.izzygo.ro/",
+    "trackingUrlTemplate": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
+    "trackingSearchUrl": "https://trackawb.izzygo.ro/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",
@@ -38815,6 +39084,39 @@
         "preferred": true
       }
     ]
+  },
+  "posta-panduri": {
+    "displayName": "Poșta Panduri",
+    "color": "#f1592a",
+    "aliases": [
+      "Posta Panduri",
+      "Pachetomat",
+      "LivrariOnline"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://static.livrarionline.ro/Tracking/",
+    "trackingUrlTemplate": "https://static.livrarionline.ro/Tracking/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://static.livrarionline.ro/Tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "static.livrarionline.ro"
+        ],
+        "pathPattern": "^/Tracking/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "posta-romana": {
     "displayName": "Poșta Română",
@@ -41731,7 +42033,8 @@
     "aliases": [
       "Sameday Courier",
       "Sameday Bulgaria",
-      "easybox"
+      "easybox",
+      "Delivery Solutions S.A."
     ],
     "countries": [
       "RO",
@@ -43456,6 +43759,23 @@
     },
     "canaryUrl": "https://www.sicepat.com/",
     "trackingSearchUrl": "https://www.sicepat.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "sinapseria": {
+    "displayName": "Sinapseria",
+    "color": "#2b988b",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sinapseria.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
     "linkRules": [],
     "detectionRules": []
   },
@@ -47275,6 +47595,25 @@
     ],
     "detectionRules": []
   },
+  "time-critical-line": {
+    "displayName": "Time Critical Line",
+    "color": "#932c26",
+    "countries": [
+      "RO",
+      "HU",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.time-critical-line.com/track-order",
+    "trackingSearchUrl": "https://www.time-critical-line.com/track-order",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "time-matters": {
     "displayName": "time:matters",
     "color": "#ffad00",
@@ -48522,6 +48861,33 @@
           "tracking.transfera.com"
         ],
         "path": "^/package/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "transilvania-post": {
+    "displayName": "Transilvania Post",
+    "color": "#fdbe0f",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.transilvaniapost.ro/awb",
+    "trackingUrlTemplate": "https://www.transilvaniapost.ro/awb/{trackingNumber}",
+    "trackingSearchUrl": "https://www.transilvaniapost.ro/awb",
+    "linkRules": [
+      {
+        "domains": [
+          "transilvaniapost.ro",
+          "www.transilvaniapost.ro"
+        ],
+        "pathPattern": "^/awb/[^/]+/?$",
+        "path": "^/awb/([^/]+)/?$"
       }
     ],
     "detectionRules": []
@@ -51683,6 +52049,23 @@
       }
     ]
   },
+  "world-courier": {
+    "displayName": "World Courier",
+    "color": "#461e96",
+    "aliases": [
+      "Cencora World Courier"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "trackingSearchUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "world-package": {
     "displayName": "World Package",
     "color": "#120748",
@@ -52217,6 +52600,35 @@
     "canaryUrl": "https://xpectsameday.com/",
     "trackingSearchUrl": "https://xpectsameday.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "xpedist": {
+    "displayName": "Xpedist",
+    "color": "#01152d",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xpedist.ro/awb",
+    "trackingUrlTemplate": "https://www.xpedist.ro/awb?awb={trackingNumber}",
+    "trackingSearchUrl": "https://www.xpedist.ro/awb",
+    "linkRules": [
+      {
+        "domains": [
+          "xpedist.ro",
+          "www.xpedist.ro"
+        ],
+        "pathPattern": "^/awb/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "xpo-ltl": {

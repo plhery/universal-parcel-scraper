@@ -1,0 +1,33 @@
+{
+  "id": "time-critical-line",
+  "displayName": "Time Critical Line",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO",
+      "HU",
+      "AT"
+    ]
+  },
+  "brand": {
+    "color": "#932c26"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.time-critical-line.com/track-order",
+    "canaryUrl": "https://www.time-critical-line.com/track-order",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

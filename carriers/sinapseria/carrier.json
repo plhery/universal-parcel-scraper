@@ -1,0 +1,31 @@
+{
+  "id": "sinapseria",
+  "displayName": "Sinapseria",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#2b988b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
+    "canaryUrl": "https://sinapseria.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

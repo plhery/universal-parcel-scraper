@@ -1,0 +1,33 @@
+{
+  "id": "maty-express",
+  "displayName": "Maty Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO",
+      "ES",
+      "BE"
+    ]
+  },
+  "brand": {
+    "color": "#005496"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://matyexpress.com/tracking/",
+    "canaryUrl": "https://matyexpress.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

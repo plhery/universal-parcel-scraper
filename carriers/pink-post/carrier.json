@@ -1,0 +1,35 @@
+{
+  "id": "pink-post",
+  "displayName": "Pink Post",
+  "aliases": [
+    "ILRA Pink Post Operations",
+    "Pink Post Solutions"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#df306d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
+    "searchUrl": "https://trackawb.izzygo.ro/",
+    "canaryUrl": "https://trackawb.izzygo.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

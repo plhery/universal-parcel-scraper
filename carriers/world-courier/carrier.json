@@ -1,0 +1,31 @@
+{
+  "id": "world-courier",
+  "displayName": "World Courier",
+  "aliases": [
+    "Cencora World Courier"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#461e96"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "canaryUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

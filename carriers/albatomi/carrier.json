@@ -1,0 +1,34 @@
+{
+  "id": "albatomi",
+  "displayName": "Albatomi",
+  "aliases": [
+    "Albatomi Serv"
+  ],
+  "region": {
+    "countries": [
+      "RO",
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#10386c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.albatomi.ro/",
+    "canaryUrl": "https://www.albatomi.ro/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

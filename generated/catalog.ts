@@ -5683,6 +5683,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "24curier": {
+    "displayName": "24Curier",
+    "color": "#0d2c89",
+    "aliases": [
+      "24 Curier",
+      "24 Avangard Curier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://24curier.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=13",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "2ebox": {
     "displayName": "2ebox",
     "color": "#dd0f32",
@@ -7312,6 +7333,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "albatomi": {
+    "displayName": "Albatomi",
+    "color": "#10386c",
+    "aliases": [
+      "Albatomi Serv"
+    ],
+    "countries": [
+      "RO",
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.albatomi.ro/",
+    "trackingSearchUrl": "https://www.albatomi.ro/",
+    "linkRules": [],
     "detectionRules": []
   },
   "alem-tat": {
@@ -9722,6 +9764,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "best-courier-ro": {
+    "displayName": "Best Courier",
+    "color": "#154687",
+    "aliases": [
+      "BestCourier",
+      "Best Letter Courier Expres Services",
+      "Blue Euro Courier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.bestcourier.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=12",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "best-express-kh": {
     "displayName": "BEST Express Cambodia",
     "color": "#d80c18",
@@ -12055,6 +12119,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cautcurier": {
+    "displayName": "CautCurier",
+    "color": "#f56000",
+    "aliases": [
+      "Caut Curier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.cautcurier.ro/",
+    "trackingUrlTemplate": "https://tracking.cautcurier.ro/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://tracking.cautcurier.ro/",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.cautcurier.ro"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cbl-logistica": {
     "displayName": "CBL Logística",
     "color": "#e31d1a",
@@ -13782,6 +13877,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "corlan-post-express": {
+    "displayName": "Corlan Post Express",
+    "color": "#2b52b6",
+    "aliases": [
+      "CORLAN Post Express",
+      "Corlan Trans"
+    ],
+    "countries": [
+      "RO",
+      "AT",
+      "BG",
+      "CZ",
+      "HR",
+      "GR",
+      "IT",
+      "ES"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.corlanpostexpress.ro/",
+    "trackingUrlTemplate": "https://track.corlanpostexpress.ro/?lang=ro&tr={trackingNumber}",
+    "trackingSearchUrl": "https://track.corlanpostexpress.ro/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.corlanpostexpress.ro"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "tr"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "corporate-couriers": {
     "displayName": "Corporate Couriers",
     "color": "#e7212d",
@@ -14870,6 +15004,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "curiera": {
+    "displayName": "Curiera",
+    "color": "#00784b",
+    "aliases": [
+      "Curiera Transport Solutions"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://curiera.ro/",
+    "trackingSearchUrl": "https://app.curiera.ro/cscourier/Main?tracking=true&appcont=4416",
+    "linkRules": [],
     "detectionRules": []
   },
   "custom-companies": {
@@ -17458,7 +17612,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "DPD Romania",
       "DPD România",
       "DPD (RO)",
-      "DPD RO"
+      "DPD RO",
+      "Dynamic Parcel Distribution"
     ],
     "countries": [
       "RO"
@@ -17779,7 +17934,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "DSC",
       "DSC Dragon Star Curier",
       "DSC-DragonStarCurier",
-      "Dragon Star"
+      "Dragon Star",
+      "DSC Expres Logistic"
     ],
     "countries": [
       "RO"
@@ -26744,6 +26900,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "intelligent-logistik": {
+    "displayName": "Intelligent Logistik",
+    "color": "#93278f",
+    "aliases": [
+      "Intelligent Courier"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://intelligentlogistik.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=1311",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "inter-courier": {
     "displayName": "Intercourier",
     "color": "#76ba59",
@@ -27160,6 +27336,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "irs-romexpress": {
+    "displayName": "International Romexpress Service",
+    "color": "#0066b3",
+    "aliases": [
+      "IRS.ro"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.irs.ro/",
+    "trackingSearchUrl": "https://www.irs.ro/",
+    "linkRules": [],
     "detectionRules": []
   },
   "islandwide-express": {
@@ -32688,6 +32884,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "maty-express": {
+    "displayName": "Maty Express",
+    "color": "#005496",
+    "countries": [
+      "RO",
+      "ES",
+      "BE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://matyexpress.com/tracking/",
+    "trackingSearchUrl": "https://matyexpress.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mauritius-post": {
     "displayName": "Mauritius Post",
     "color": "#f5d800",
@@ -35697,6 +35912,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "optimus-courier": {
+    "displayName": "Optimus Courier",
+    "color": "#020065",
+    "aliases": [
+      "Optimus Courier Logistics"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://optimuscourier.ro/tracking/",
+    "trackingUrlTemplate": "https://optimuscourier.ro/tracking/?awb_nr={trackingNumber}",
+    "trackingSearchUrl": "https://optimuscourier.ro/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "optimuscourier.ro",
+          "www.optimuscourier.ro"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "awb_nr"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "orian": {
     "displayName": "Orian",
     "color": "#d01b21",
@@ -38073,6 +38320,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pink-post": {
+    "displayName": "Pink Post",
+    "color": "#df306d",
+    "aliases": [
+      "ILRA Pink Post Operations",
+      "Pink Post Solutions"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackawb.izzygo.ro/",
+    "trackingUrlTemplate": "https://trackawb.izzygo.ro/#/track/{trackingNumber}",
+    "trackingSearchUrl": "https://trackawb.izzygo.ro/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pitney-bowes": {
     "displayName": "Pitney Bowes",
     "color": "#3e53a4",
@@ -38819,6 +39088,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "preferred": true
       }
     ]
+  },
+  "posta-panduri": {
+    "displayName": "Poșta Panduri",
+    "color": "#f1592a",
+    "aliases": [
+      "Posta Panduri",
+      "Pachetomat",
+      "LivrariOnline"
+    ],
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://static.livrarionline.ro/Tracking/",
+    "trackingUrlTemplate": "https://static.livrarionline.ro/Tracking/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://static.livrarionline.ro/Tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "static.livrarionline.ro"
+        ],
+        "pathPattern": "^/Tracking/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "posta-romana": {
     "displayName": "Poșta Română",
@@ -41735,7 +42037,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Sameday Courier",
       "Sameday Bulgaria",
-      "easybox"
+      "easybox",
+      "Delivery Solutions S.A."
     ],
     "countries": [
       "RO",
@@ -43460,6 +43763,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.sicepat.com/",
     "trackingSearchUrl": "https://www.sicepat.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "sinapseria": {
+    "displayName": "Sinapseria",
+    "color": "#2b988b",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sinapseria.ro/",
+    "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
     "linkRules": [],
     "detectionRules": []
   },
@@ -47279,6 +47599,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "time-critical-line": {
+    "displayName": "Time Critical Line",
+    "color": "#932c26",
+    "countries": [
+      "RO",
+      "HU",
+      "AT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.time-critical-line.com/track-order",
+    "trackingSearchUrl": "https://www.time-critical-line.com/track-order",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "time-matters": {
     "displayName": "time:matters",
     "color": "#ffad00",
@@ -48526,6 +48865,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "tracking.transfera.com"
         ],
         "path": "^/package/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "transilvania-post": {
+    "displayName": "Transilvania Post",
+    "color": "#fdbe0f",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.transilvaniapost.ro/awb",
+    "trackingUrlTemplate": "https://www.transilvaniapost.ro/awb/{trackingNumber}",
+    "trackingSearchUrl": "https://www.transilvaniapost.ro/awb",
+    "linkRules": [
+      {
+        "domains": [
+          "transilvaniapost.ro",
+          "www.transilvaniapost.ro"
+        ],
+        "pathPattern": "^/awb/[^/]+/?$",
+        "path": "^/awb/([^/]+)/?$"
       }
     ],
     "detectionRules": []
@@ -51687,6 +52053,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "world-courier": {
+    "displayName": "World Courier",
+    "color": "#461e96",
+    "aliases": [
+      "Cencora World Courier"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "trackingSearchUrl": "https://portal.worldcourier.com/en/FastTrack-Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "world-package": {
     "displayName": "World Package",
     "color": "#120748",
@@ -52221,6 +52604,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://xpectsameday.com/",
     "trackingSearchUrl": "https://xpectsameday.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "xpedist": {
+    "displayName": "Xpedist",
+    "color": "#01152d",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xpedist.ro/awb",
+    "trackingUrlTemplate": "https://www.xpedist.ro/awb?awb={trackingNumber}",
+    "trackingSearchUrl": "https://www.xpedist.ro/awb",
+    "linkRules": [
+      {
+        "domains": [
+          "xpedist.ro",
+          "www.xpedist.ro"
+        ],
+        "pathPattern": "^/awb/?$",
+        "params": [
+          "awb"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "xpo-ltl": {
@@ -53652,6 +54064,7 @@ export const CARRIER_IDS = [
   "139express",
   "17feia",
   "247express",
+  "24curier",
   "2ebox",
   "2go",
   "360lion",
@@ -53697,6 +54110,7 @@ export const CARRIER_IDS = [
   "akis-express",
   "aks-express",
   "aland-post",
+  "albatomi",
   "alem-tat",
   "algerie-poste",
   "alil-post",
@@ -53762,6 +54176,7 @@ export const CARRIER_IDS = [
   "beexprss",
   "bel",
   "belpost",
+  "best-courier-ro",
   "best-express-kh",
   "best-express-my",
   "best-express-sg",
@@ -53828,6 +54243,7 @@ export const CARRIER_IDS = [
   "castle-parcels",
   "castores",
   "cathedis",
+  "cautcurier",
   "cbl-logistica",
   "ccfs",
   "cdek",
@@ -53874,6 +54290,7 @@ export const CARRIER_IDS = [
   "coordinadora",
   "copa-courier",
   "cope-sensitive-freight",
+  "corlan-post-express",
   "corporate-couriers",
   "corre",
   "correios-angola",
@@ -53907,6 +54324,7 @@ export const CARRIER_IDS = [
   "ctc-express",
   "cttyex",
   "cupost",
+  "curiera",
   "custom-companies",
   "cycloon",
   "cyprus-post",
@@ -54230,6 +54648,7 @@ export const CARRIER_IDS = [
   "integral-pack",
   "intel-valley",
   "intelcom",
+  "intelligent-logistik",
   "inter-courier",
   "inter-express-logistics",
   "intereuropa",
@@ -54242,6 +54661,7 @@ export const CARRIER_IDS = [
   "intime-bg",
   "ipostel",
   "iran-post",
+  "irs-romexpress",
   "islandwide-express",
   "israel-post",
   "j-and-t-au",
@@ -54396,6 +54816,7 @@ export const CARRIER_IDS = [
   "maruti-air",
   "matkahuolto",
   "matson",
+  "maty-express",
   "mauritius-post",
   "max-pakket",
   "maxzeego",
@@ -54483,6 +54904,7 @@ export const CARRIER_IDS = [
   "ontask-express",
   "opt-nc",
   "optima-overnight",
+  "optimus-courier",
   "orian",
   "orlen-paczka",
   "osm-worldwide",
@@ -54545,6 +54967,7 @@ export const CARRIER_IDS = [
   "piggy-express",
   "pilot-freight",
   "pin-ag",
+  "pink-post",
   "pitney-bowes",
   "pitt-ohio",
   "plycon",
@@ -54563,6 +54986,7 @@ export const CARRIER_IDS = [
   "posta-kenya",
   "posta-moldovei",
   "posta-north-macedonia",
+  "posta-panduri",
   "posta-romana",
   "posta-shqiptare",
   "posta-slovenije",
@@ -54694,6 +55118,7 @@ export const CARRIER_IDS = [
   "shree-nandan",
   "shunbang-express",
   "sicepat",
+  "sinapseria",
   "sjl-express",
   "skladusa",
   "skroutz-last-mile",
@@ -54797,6 +55222,7 @@ export const CARRIER_IDS = [
   "thhy",
   "tig-freight",
   "tiki",
+  "time-critical-line",
   "time-matters",
   "timely-titan",
   "tinypack",
@@ -54833,6 +55259,7 @@ export const CARRIER_IDS = [
   "transaher",
   "transcorp",
   "transfera",
+  "transilvania-post",
   "transmission",
   "transnatur",
   "transport-rdl",
@@ -54923,6 +55350,7 @@ export const CARRIER_IDS = [
   "wld-express",
   "wmg-group",
   "wooliiporter",
+  "world-courier",
   "world-package",
   "wp-ground",
   "wpx",
@@ -54939,6 +55367,7 @@ export const CARRIER_IDS = [
   "xlmiles",
   "xls-futar",
   "xpect-same-day",
+  "xpedist",
   "xpo-ltl",
   "xpress-courier-link",
   "xpress-freight-management",
@@ -55090,6 +55519,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "139express": [],
   "17feia": ["17feia-1","17feia-2"],
   "247express": [],
+  "24curier": [],
   "2ebox": [],
   "2go": ["2go-1"],
   "360lion": ["360lion-1"],
@@ -55135,6 +55565,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "akis-express": [],
   "aks-express": [],
   "aland-post": [],
+  "albatomi": [],
   "alem-tat": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
   "alil-post": [],
@@ -55200,6 +55631,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "beexprss": [],
   "bel": [],
   "belpost": ["belpost-s10"],
+  "best-courier-ro": [],
   "best-express-kh": [],
   "best-express-my": ["best-express-my-1"],
   "best-express-sg": [],
@@ -55266,6 +55698,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "castle-parcels": [],
   "castores": [],
   "cathedis": [],
+  "cautcurier": [],
   "cbl-logistica": [],
   "ccfs": [],
   "cdek": ["cdek-1"],
@@ -55312,6 +55745,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "coordinadora": ["coordinadora-1"],
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
+  "corlan-post-express": [],
   "corporate-couriers": [],
   "corre": ["corre-s10"],
   "correios-angola": [],
@@ -55345,6 +55779,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ctc-express": [],
   "cttyex": ["cttyex-1"],
   "cupost": [],
+  "curiera": [],
   "custom-companies": [],
   "cycloon": ["cycloon-1"],
   "cyprus-post": ["cyprus-post-s10"],
@@ -55668,6 +56103,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "integral-pack": [],
   "intel-valley": ["intel-valley-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],
+  "intelligent-logistik": [],
   "inter-courier": [],
   "inter-express-logistics": ["inter-express-logistics-1"],
   "intereuropa": ["intereuropa-1"],
@@ -55680,6 +56116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "intime-bg": [],
   "ipostel": [],
   "iran-post": [],
+  "irs-romexpress": [],
   "islandwide-express": [],
   "israel-post": ["israel-post-1","israel-post-s10"],
   "j-and-t-au": ["j-and-t-au-1"],
@@ -55834,6 +56271,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maruti-air": [],
   "matkahuolto": ["matkahuolto-1","matkahuolto-2","matkahuolto-3","matkahuolto-4"],
   "matson": [],
+  "maty-express": [],
   "mauritius-post": [],
   "max-pakket": [],
   "maxzeego": [],
@@ -55921,6 +56359,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ontask-express": [],
   "opt-nc": [],
   "optima-overnight": ["optima-overnight-1"],
+  "optimus-courier": [],
   "orian": [],
   "orlen-paczka": ["orlen-paczka-1"],
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
@@ -55983,6 +56422,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "piggy-express": [],
   "pilot-freight": [],
   "pin-ag": ["pin-ag-1"],
+  "pink-post": [],
   "pitney-bowes": ["pitney-bowes-1","pitney-bowes-2","pitney-bowes-3"],
   "pitt-ohio": [],
   "plycon": [],
@@ -56001,6 +56441,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "posta-kenya": [],
   "posta-moldovei": ["posta-moldovei-1"],
   "posta-north-macedonia": ["posta-north-macedonia-s10"],
+  "posta-panduri": [],
   "posta-romana": ["posta-romana-s10"],
   "posta-shqiptare": ["posta-shqiptare-own","posta-shqiptare-s10"],
   "posta-slovenije": ["posta-slovenije-own","posta-slovenije-s10"],
@@ -56132,6 +56573,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shree-nandan": [],
   "shunbang-express": [],
   "sicepat": [],
+  "sinapseria": [],
   "sjl-express": [],
   "skladusa": ["skladusa-1"],
   "skroutz-last-mile": [],
@@ -56235,6 +56677,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "thhy": ["thhy-1"],
   "tig-freight": [],
   "tiki": [],
+  "time-critical-line": [],
   "time-matters": [],
   "timely-titan": ["timely-titan-1"],
   "tinypack": [],
@@ -56271,6 +56714,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transaher": ["transaher-1"],
   "transcorp": [],
   "transfera": [],
+  "transilvania-post": [],
   "transmission": ["transmission-1"],
   "transnatur": [],
   "transport-rdl": [],
@@ -56361,6 +56805,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wld-express": [],
   "wmg-group": [],
   "wooliiporter": ["wooliiporter-1"],
+  "world-courier": [],
   "world-package": [],
   "wp-ground": [],
   "wpx": [],
@@ -56377,6 +56822,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xlmiles": [],
   "xls-futar": [],
   "xpect-same-day": [],
+  "xpedist": [],
   "xpo-ltl": ["xpo-ltl-1"],
   "xpress-courier-link": [],
   "xpress-freight-management": [],

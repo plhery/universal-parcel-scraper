@@ -1,0 +1,45 @@
+{
+  "id": "optimus-courier",
+  "displayName": "Optimus Courier",
+  "aliases": [
+    "Optimus Courier Logistics"
+  ],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#020065"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://optimuscourier.ro/tracking/?awb_nr={trackingNumber}",
+    "searchUrl": "https://optimuscourier.ro/tracking/",
+    "canaryUrl": "https://optimuscourier.ro/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "optimuscourier.ro",
+        "www.optimuscourier.ro"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "awb_nr"
+      ]
+    }
+  ],
+  "detection": []
+}
