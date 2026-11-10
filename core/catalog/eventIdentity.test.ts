@@ -768,6 +768,9 @@ describe('same-instant identity policies', () => {
     const label = { stage: 'registered', description: 'Shipping Label Created', location: '', providerCode: '' };
     expect(policy?.matches?.(label, { ...label, location: 'SYSTEM, US', stage: 'accepted' })).toBe(true);
     expect(policy?.matches?.(label, { ...label, location: 'SYSTEM, Sample Town' })).toBe(false);
+    // A forwarder's name stored as the place, with the destination's code.
+    const departed = { stage: 'in_transit', description: 'Package departed from the warehouse', location: '', providerCode: 'WH011' };
+    expect(policy?.matches?.(departed, { ...departed, location: 'SAMPLEEXP, US' })).toBe(true);
     for (const different of [
       { ...handed, location: 'Sample Town' },
       { ...handed, location: 'Canada', description: 'Package departed from the warehouse' },

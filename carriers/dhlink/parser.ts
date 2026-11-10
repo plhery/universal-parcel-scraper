@@ -49,6 +49,8 @@ const CHINA_NAMES = new RegExp(`^(?:${[
 ].join('|')})(?:shi|city)?$`);
 const COUNTRY = /^[A-Z]{2}$/;
 const PLACEHOLDERS = new Set(['', '.', '-', 'none', 'null', 'unknown', 'system']);
+// A forwarder's name a warehouse can write as its place ("SAMPLEEXP", "Sample Logistics"): it names no place.
+const FORWARDER = /(?:exp|express|logistics)$/;
 // A state with its ZIP code, as relayed USPS rows name the office: the state stays.
 const STATE_ZIP = /\b([A-Z]{2})[ ,;]+\d{5}(?:-\d{4})?\b/g;
 // British and Canadian postcodes.
@@ -109,13 +111,13 @@ function beforeDigits(part: string): string {
 }
 
 /**
- * A row's place without its postcode or placeholder, and whether it is in
- * China. Feeds append the destination's code to Chinese places ("广州市,GB",
- * "SHENZHEN, US"), and a code alone names no place.
+ * A row's place without its postcode, placeholder or forwarder's name, and
+ * whether it is in China. Feeds append the destination's code to Chinese places
+ * ("广州市,GB", "SHENZHEN, US"), and a code alone names no place.
  */
 function placeOf(raw: string): { location: string; china: boolean } {
   const parts = withoutPostcodes(raw).split(/[,;]/).map((part) => beforeDigits(part.trim()))
-    .filter((part) => !PLACEHOLDERS.has(part.toLowerCase()));
+    .filter((part) => !PLACEHOLDERS.has(part.toLowerCase()) && !FORWARDER.test(part.toLowerCase().replace(/\s+/g, '')));
   const china = CJK.test(raw) || parts.some((part) => CHINA_NAMES.test(part.toLowerCase().replace(/\s+/g, '')));
   const kept = china ? parts.filter((part) => !COUNTRY.test(part)) : parts;
   return { location: kept.every((part) => COUNTRY.test(part)) ? '' : [...new Set(kept)].join(', '), china };

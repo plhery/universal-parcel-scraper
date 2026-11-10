@@ -296,6 +296,11 @@ describe('DHLink HTTP adapter', () => {
     expect(relayed([row('2026-03-10 07:00:00', '2026-03-10 18:05:00', 'SYSTEM, US', 'Shipping Label Created')]).events![0])
       .toMatchObject({ description: 'Shipping Label Created', stage: 'registered' });
     expect(relayed([row('2026-03-10 07:00:00', '2026-03-10 18:05:00', 'SYSTEM, US', 'Shipping Label Created')]).events![0]).not.toHaveProperty('location');
+    // Nor does a forwarder's name a warehouse writes as its place, which leaves only the destination's code.
+    const forwarded = relayed([{ ...row('2026-03-10 18:00:00', '2026-03-10 18:05:00', 'SAMPLEEXP, US', 'Package departed from the warehouse'), nodeCode: 'WH011' },
+      row('2026-03-10 09:00:00', '2026-03-10 18:05:00', 'Sample Logistics, SHENZHEN, US', 'Package received & scanned at warehouse')]);
+    expect(timeline(forwarded.events)).toEqual([['2026-03-10T18:00:00+08:00', 'WH011', 'in_transit', null],
+      ['2026-03-10T09:00:00+08:00', null, 'accepted', 'SHENZHEN']]);
   });
 
   it('keeps one row of a US partner’s scan relayed on its hub’s clock and again on UTC, on the hub’s clock', () => {

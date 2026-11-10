@@ -91,11 +91,12 @@ page makes.
   and fourteen digits is GOFO, and fourteen digits from depots 0600 to 0619 is DPD
   Switzerland. Other numbers give no hand-off; parcels USPS or a post delivers give no
   last-leg number.
-- Places lose postcodes, placeholders such as a relayed label row's "SYSTEM" and the destination
+- Places lose postcodes, placeholders such as a relayed label row's "SYSTEM", a forwarder's name a
+  warehouse writes as its place (one ending in "EXP", "Express" or "Logistics") and the destination
   code feeds append to Chinese places, whether written in Chinese or as a province or city in Latin
   letters ("SHENZHEN, US"). A place naming only the destination country is the parcel's, not the
   scan's: a Canada line's airline hand-over in China reads "Canada". It is left out, and a scan
-  stored with it, or with a placeholder ("SYSTEM, US"), keeps its row.
+  stored with it, or with a placeholder or forwarder's name ("SYSTEM, US"), keeps its row.
   Wordings lose US ZIP codes, British and Canadian postcodes, contact or signature details a
   post appends, and the row's own clock a node's wording ends with ("Shipment has delivered
   at …"); a scan stored with that clock keeps its row. The order id, the DHLink number and
