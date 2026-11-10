@@ -17,7 +17,7 @@ import { ChallengeError, IndeterminateError, InputRequiredError, InvalidInputErr
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
-import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
+import { countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
@@ -26,6 +26,7 @@ import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from 
 import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
+import { IMPORT, LA_POSTE_COUNTRIES, partnerWall } from '../../carriers/la-poste/clock.js';
 import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
 import { placedInIndia } from '../../carriers/shiprocket/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
@@ -203,6 +204,18 @@ const CTT = 16101;
  * scans as Swiss Post does (carriers/swiss-post/clock.ts).
  */
 const SWISS_POST = 19251;
+
+/**
+ * 17TRACK's carrier 6051, La Poste, shows La Poste's feed with its offsets. On a
+ * tracked letter (an S10 number of the L series), a partner post's scan abroad
+ * carries that office's wall clock read as UTC and shown on Paris's clock: the
+ * deposit of a letter from China came 8 hours after China Post's acceptance of
+ * it. It is read in the country's zone, as La Poste's adapter reads imported
+ * tracked mail ([clock.ts](../../carriers/la-poste/clock.ts)), or kept as a wall
+ * clock where the country has several.
+ */
+const LA_POSTE = 6051;
+const TRACKED_LETTER = /^L[A-Z]\d{9}[A-Z]{2}$/;
 
 /**
  * 17TRACK's carrier 100662, Shiprocket, shows the wall clocks of its rows,
@@ -638,6 +651,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const salvador = reported.key === CORREO_EL_SALVADOR;
     const sender = salvador && isValidS10TrackingNumber(number) ? countryTimeZone(number.slice(-2)) : null;
     const bound = reported.key === SWISS_POST ? recipientCountry(shipment) : null;
+    const letter = reported.key === LA_POSTE && TRACKED_LETTER.test(number) && isValidS10TrackingNumber(number);
     const shiprocket = reported.key === SHIPROCKET;
     const hywl = reported.key === HYWL;
     const daiPost = reported.key === DAI_POST;
@@ -667,6 +681,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".
       const relayed = bound ? swissPostDestinationZone(text(raw.description), text(raw.location), bound)
         : hywl && hywlInChina(text(raw.location)) ? HYWL_CHINA_ZONE : null;
+      // La Poste's copy of a partner post's scan abroad on a tracked letter: the office's wall clock, read as UTC.
+      const office = letter && isRecord(raw.time_raw) && typeof raw.time_raw.timezone === 'string' ? locationCountry(raw.location) : null;
+      const posted = office && !LA_POSTE_COUNTRIES.has(office) && typeof raw.time_iso === 'string' && explicitOffsetTime(raw.time_iso)
+        ? partnerWall(raw.time_iso, IMPORT, false) : null;
       // A USPS facility's clock in its state's zone, where its place names one.
       const facility = usps ? uspsScanZone(text(raw.location)) : null;
       // A USPS row abroad on that country's clock, or its wall clock alone where the country keeps several.
@@ -686,13 +704,13 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const read = facility || overseas !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
         || shiprocket || daiPost || quickRabbit || sent !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
-      const season = relayed || hywl || read || poland ? null : seasonZone(raw, labelled, now);
-      const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
+      const season = relayed || hywl || read || poland || posted ? null : seasonZone(raw, labelled, now);
+      const wall = posted ?? (relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null);
       // A label its mailer wrote on UTC, as USPS's adapter reads it.
       const scanned = facility && wall ? uspsRowZone(wall, facility, text(raw.description), now.toMillis()) : facility;
       // The zone the wall clock is read on, and how it was chosen.
       const at = (zone: string | null, basis: ZoneBasis): Placed | null => zone ? { zone, basis } : null;
-      const chosen = !wall ? null : season ? at(season, 'carrier') : hywl ? at(relayed, 'place')
+      const chosen = !wall ? null : posted ? at(countryTimeZone(office), 'place') : season ? at(season, 'carrier') : hywl ? at(relayed, 'place')
         : overseas !== undefined ? at(overseas, 'place') : relayed ? at(relayed, 'destination')
         : scanned ? at(scanned, 'place') : site ? at(site, intake ? 'neighbour' : 'place') : own ? at(own, 'place')
         : sent !== undefined ? at(sent, 'place') : abroad.has(index) ? abroad.get(index) ?? null
@@ -731,8 +749,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         latest.see(day, false);
         continue;
       }
-      if (wall && (abroad.has(index) || shiprocket || hywl || sent !== undefined || overseas !== undefined) && !zone) {
-        // A scan NZ Post dated abroad or India Post relays from the destination's post, or an origin post's that Correos or USPS relays, in a
+      if (wall && (abroad.has(index) || shiprocket || hywl || posted || sent !== undefined || overseas !== undefined) && !zone) {
+        // A scan NZ Post dated abroad or India Post relays from the destination's post, or an origin post's that Correos, USPS or La Poste relays, in a
         // country on several clocks, a Shiprocket row outside India or a Huiyi Logistics row outside China, keeps its description as a wall time.
         const local: CarrierEvent = { ...parsed, local_time: wall };
         delete local.time;

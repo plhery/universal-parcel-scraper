@@ -233,6 +233,11 @@ carrier.
   sorting and delivery scans, with no location, at that office's clock under Swiss Post's
   offset ([Swiss Post](../../carriers/swiss-post/README.md)). They are read on the clock of
   the recipient's country (`shipping_info`) when it keeps one; else 17TRACK's reading stays.
+- La Poste's leg (carrier key 6051) shows La Poste's feed with its offsets. On a tracked
+  letter (an S10 number of the L series), a partner post's scan abroad carries that office's
+  wall clock read as UTC and shown on Paris's clock, as La Poste's own feed does
+  ([La Poste](../../carriers/la-poste/README.md)): it is read in the country's zone, or stays
+  a wall time where the country has several. A parcel's partner scans keep 17TRACK's reading.
 - India Post dates a take-off with the departure airport's wall clock labelled UTC, and
   17TRACK keeps the label: a Mumbai take-off showed 5.5 hours late, a Frankfurt one 2 hours
   late. India Post rows worded `Aircraft Departure` or `UPLIFT` are counted in

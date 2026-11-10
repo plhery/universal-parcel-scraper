@@ -925,6 +925,29 @@ describe('17TRACK result parsing', () => {
     expect(times('RR123456785ES')).toEqual(['2026-10-05T07:11:05.000Z', '2026-09-29T15:01:00.000Z', '2026-09-29T14:56:00.000Z']);
   });
 
+  it("reads La Poste's copy of a partner post's scan abroad on a tracked letter on that office's clock", () => {
+    // Public shape: La Poste's feed with its offsets; a partner's scan abroad shows the office's wall clock as UTC on Paris's clock.
+    const row = (time: string, location: string, description: string) => ({ time_iso: time, time_utc: null,
+      time_raw: { date: time.slice(0, 10), time: time.slice(11, 19), timezone: time.slice(19) },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (requested: string, key = 6051): Payload => ({ meta: { code: 200 }, shipments: [{ number: requested, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'La Poste (Colissimo)', country: 'FR' }, events: [
+        row('2026-11-02T09:15:00+01:00', 'EXAMPLE TOWN', 'Votre envoi est en cours de livraison.'),
+        row('2026-10-29T19:00:00+01:00', 'US', "Votre envoi est en cours d'acheminement."),
+        row('2026-10-28T18:03:00+01:00', 'CN', "Votre envoi a été déposé par l'expéditeur chez notre partenaire postal"),
+      ] }] } } }] });
+    const letter = 'LA876543216CN';
+    const parsed = parse17TrackResponse(reply(letter), letter);
+    // China Post accepted the letter at 17:03 in Ningbo, 09:03 UTC; the scan at home keeps its instant.
+    expect(parsed.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-02T08:15:00.000Z', '2026-10-29T18:00:00',
+      '2026-10-28T09:03:00.000Z']);
+    expect(parsed.events?.[2]).toMatchObject({ time_zone: 'Asia/Shanghai', time_zone_basis: 'place',
+      provider_time_iso: '2026-10-28T18:03:00+01:00', time_provenance: 'carrier_reported' });
+    // A parcel's partner scans have not been compared, and another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply('CA876543216CN'), 'CA876543216CN').events?.[2]?.time).toBe('2026-10-28T17:03:00.000Z');
+    expect(parse17TrackResponse(reply(letter, 100999), letter).events?.[2]?.time).toBe('2026-10-28T17:03:00.000Z');
+  });
+
   it('reads the clock and offset 17TRACK shows when its UTC conversion disagrees', () => {
     // An India Post leg: the wall clock under India's offset, and a conversion 30 minutes after it.
     const scan = { time_iso: '2026-07-14T14:40:00+05:30', time_utc: '2026-07-14T09:40:00Z',

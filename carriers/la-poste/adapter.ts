@@ -8,9 +8,10 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { runSteps, type StepSpec } from '../../core/runner/index.js';
 import { firstAttemptMs, isNetworkFailure } from '../../core/runner/networkRetry.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
-import { countryTimeZone, explicitOffsetTime, isoTime } from '../../core/time/index.js';
+import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { EXPORTED_LETTER, partnerClock } from './clock.js';
 import { eventStage, eventStatus, GROUP_STATUSES } from './status.js';
 
 // Protocol provenance:
@@ -88,37 +89,6 @@ function safeDate(value: unknown): string {
   const raw = clean(value, 64);
   if (!/^\d{4}-\d{2}-\d{2}(?:[T ][0-9:+.Z-]+)?$/i.test(raw)) return '';
   return isoTime(raw, TIMEZONE) ? raw : '';
-}
-
-/** France and the overseas places where La Poste scans items itself. */
-const LA_POSTE_COUNTRIES = new Set(['FR', 'GP', 'MQ', 'GF', 'RE', 'YT', 'PM', 'BL', 'MF']);
-
-/** An international tracked letter La Poste sends abroad: `L`, a letter, nine digits and `FR`. */
-const EXPORTED_LETTER = /^L[A-Z]\d{9}FR$/;
-
-const IMPORT = 'lettre et ppi import suivi';
-
-/**
- * A partner post's scan abroad shows that office's wall clock, mislabelled:
- * Colissimo gives it Paris's offset, and tracked mail, imported or an
- * international tracked letter sent from France, reads it as UTC and shows it on
- * Paris's clock (a Dutch scan of such a letter reached the feed before the
- * instant it was labelled). It is read in the country's zone, or kept as a wall
- * clock when the country has several. Null at home, where an imported item's
- * arrival and transit keep the instant the relaying post shows to the minute,
- * and for other products, whose partner scans have not been compared with the
- * partner's own.
- */
-function partnerClock(raw: string, country: string, product: string, exportedLetter: boolean): { time: string; local_time?: string } | null {
-  if (!country || LA_POSTE_COUNTRIES.has(country) || !explicitOffsetTime(raw)) return null;
-  const labelled = DateTime.fromISO(raw, { setZone: true });
-  const shown = product === 'colissimo' ? labelled
-    : product === IMPORT || (exportedLetter && product !== 'chronopost') ? labelled.toUTC() : null;
-  const wall = shown?.toISO({ includeOffset: false, suppressMilliseconds: true });
-  if (!wall) return null;
-  const zone = countryTimeZone(country);
-  const placed = zone ? isoTime(wall, zone) : null;
-  return placed ? { time: placed.iso } : { time: '', local_time: wall };
 }
 
 /**
