@@ -4,7 +4,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, EkartTracker } from './adapter.js';
 import { parseEkart } from './parser.js';
 import statuses from './statuses.json' with { type: 'json' };
-import { ekartScan } from './status.js';
+import { ekartScan, statusMap } from './status.js';
 const NUMBER = 'FMPP9999999980';
 const RETURN = 'BSIC0000000001';
 const load = (name: string) => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
@@ -64,6 +64,11 @@ describe('Ekart parser', () => {
     expect(result.events!.slice(0, 2).map(({ provider_code, stage }) => [provider_code, stage]))
       .toEqual([['undelivered_update', 'failed_attempt'], ['ShipmentUndeliveredAttempted', 'failed_attempt']]);
     expect(result.delivered_at).toBeUndefined();
+  });
+  it('reads a round\'s "Unsuccessful" outcome in prose as a failed attempt, but not a pickup run\'s', () => {
+    expect(statusMap.stage(null, 'Unsuccessful Unable to attempt delivery due to operational issues')).toBe('failed_attempt');
+    expect(statusMap.stage(null, 'Unsuccessful Undelivered. (Rescheduled to: 2026-01-04)')).toBe('failed_attempt');
+    expect(statusMap.stage(null, 'Unsuccessful pickup attempt')).toBeUndefined();
   });
   it('replays every recorded status through the map', () => {
     for (const entry of statuses.entries) {

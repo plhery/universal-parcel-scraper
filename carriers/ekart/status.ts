@@ -22,12 +22,17 @@ const STAGES = new Map<string, Stage>(Object.entries({
 
 const key = (text: string) => text.toLowerCase().replace(/[^a-z]/g, '');
 
+// A delivery round's outcome in prose ("Unsuccessful Undelivered. (Rescheduled to: …)"); a pickup run's stays unread.
+const UNSUCCESSFUL = /^unsuccessful\s+(?!.*\bpick ?up\b)\S/i;
+
 /** The code of a code-shaped scan, its mapped stage, and whether it starts or continues a return. */
 export function ekartScan(description: string): { code?: string; stage?: Stage; returning: boolean } {
   const coded = /^([A-Za-z]+(?:_[A-Za-z]+)*) - \S/.exec(description);
   const code = coded?.[1];
   // A hub's name after "Received at" or "Dispatched to": the parcel arriving there, or sent on to it.
-  const stage = code ? STAGES.get(key(code)) : /^(?:received at|dispatched to) \S/i.test(description) ? 'in_transit' : STAGES.get(key(description));
+  // "Unsuccessful" and its reason in prose: the round out for delivery ended without delivering.
+  const stage = code ? STAGES.get(key(code)) : /^(?:received at|dispatched to) \S/i.test(description) ? 'in_transit'
+    : UNSUCCESSFUL.test(description) ? 'failed_attempt' : STAGES.get(key(description));
   return { ...(code ? { code } : {}), ...(stage ? { stage } : {}), returning: !!code && /^(?:rto|return|shipmentrto)/i.test(code) };
 }
 

@@ -155,6 +155,22 @@
       "note": "The delivery run ended without an attempt."
     },
     {
+      "wording": "Unsuccessful Unable to attempt delivery due to operational issues",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Prose at the end of a day out for delivery; another round followed the next morning. Any 'Unsuccessful' line but a pickup's reads so."
+    },
+    {
+      "wording": "Unsuccessful Undelivered. (Rescheduled to: 2026-11-11)",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Prose after a round out for delivery, with the next day's date."
+    },
+    {
       "code": "ShipmentUndeliveredAttempted",
       "language": "en",
       "stage": "failed_attempt",
