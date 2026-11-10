@@ -8,7 +8,8 @@ tracking service. Links to gofo.com's `/ca` pages name this carrier.
 GOFO Canada runs [GOFO US](../gofo/README.md)'s consignee service at its own
 `/ca` path, and the adapter shares GOFO US's tracker and parser. One bounded
 JSON POST asks for Toronto clocks. Waybills are `GFCA` and 14 digits; detection
-claims them.
+claims them. Their digits open with a zero, so `normalizeTrackingNumber` reads a letter O
+typed there as that zero, the form the tracker knows.
 
 The reply sorts unknown numbers by the region their prefix names. Only the
 Canadian error list proves absence; the US service files a `GFCA` number under

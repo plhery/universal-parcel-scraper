@@ -343,6 +343,20 @@ describe('normalization', () => {
     }
   });
 
+  it('reads a letter O typed after GFUS or GFCA as the zero of a GOFO waybill', () => {
+    for (const [typed, waybill, carrier] of [
+      ['gfcao 1357924680135', 'GFCA01357924680135', 'gofo-ca'],
+      ['GFUSO1357924680135', 'GFUS01357924680135', 'gofo'],
+    ] as const) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(waybill);
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier, confidence: 'high' });
+    }
+    // Only right after the region, at the waybill's own length: anything else stays as typed.
+    for (const typed of ['GFCAO135792468013', 'GFCAO13579246801351', 'GFCAOO357924680135', 'GFCA0O357924680135', 'GFUKO1357924680135']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('reads a letter O among a JS Express waybill\'s digits as a zero', () => {
     for (const typed of ['jseab 000000001o yq', 'JSEAB000000001OYQ', 'JSEABO00000001OYQ']) {
       expect(normalizeTrackingNumber(typed), typed).toBe('JSEAB0000000010YQ');

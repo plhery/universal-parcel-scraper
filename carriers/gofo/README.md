@@ -17,7 +17,8 @@ the `CR` and 12 series of CIRRO E-Commerce, formerly Parcll, which GOFO bought; 
 GOFO for a GFUS waybill, which its tracker knows from the label, and only suggests it for the older
 series, which recognition asks. For an AliExpress parcel GOFO shows only the label while Cainiao's
 tracker follows the GFUS waybill from China, so detection lists [AliExpress](../aliexpress/README.md)
-as an origin, and the tracker asks Cainiao while GOFO holds only the label.
+as an origin, and the tracker asks Cainiao while GOFO holds only the label. GFUS waybills'
+digits open with a zero, so `normalizeTrackingNumber` reads a letter O typed there as that zero.
 
 The waybill must be the requested number; the tracking number repeats it
 or is the shipper's own reference, never another GOFO number. The exception is a

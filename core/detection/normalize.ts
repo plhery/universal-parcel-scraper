@@ -27,7 +27,10 @@ import { hasS10CheckDigit } from './s10CheckDigit.js';
  * digits and YQ, holds only digits between its letters, so a letter O there is
  * a zero typed as a letter: the tracker knows the number with the zero. A zero
  * typed for its second letter, which leaves eleven digits, is the letter O: the
- * tracker knows the number with the letter. A NO
+ * tracker knows the number with the letter. GOFO's GFUS and GFCA waybills go on
+ * with a zero, so a letter O there is that zero: no carrier issues GFUS or GFCA,
+ * a letter O and thirteen digits, and GOFO's tracker knows the number with the
+ * zero. A NO
  * LIMIT shipment number, P/1234/LABC/2026, reads the same without its slashes,
  * which are dropped.
  */
@@ -42,6 +45,8 @@ export function normalizeTrackingNumber(raw: string): string {
   if (piece) return `${piece[1]}0${piece[2]}`;
   const jrt = /^JRTO(\d{10}MM)$/.exec(value);
   if (jrt) return `JRT${jrt[1]}`;
+  const gofo = /^(GF(?:US|CA))O(\d{13})$/.exec(value);
+  if (gofo) return `${gofo[1]}0${gofo[2]}`;
   const jsExpress = /^(JSE[A-Z])([A-Z0])([\dO]{10})YQ$/.exec(value);
   if (jsExpress && (jsExpress[2] === '0' || jsExpress[3]!.includes('O'))) {
     return `${jsExpress[1]}${jsExpress[2] === '0' ? 'O' : jsExpress[2]}${jsExpress[3]!.replace(/O/g, '0')}YQ`;
