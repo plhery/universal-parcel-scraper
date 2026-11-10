@@ -156,9 +156,10 @@ Akamai or an interactive CAPTCHA can block anonymous retrieval. Browser build
 and network affect access; enabled universal providers can handle a failed
 direct lookup. The edge resetting the tracking request is reported as a
 challenge, and it also refuses lookups that follow each other closely, so the
-catalog asks for at most one refresh an hour. `ROYAL_MAIL_BROWSER_PROXY` sends
-the browser's traffic through an `http://` or `socks5://` proxy when the edge
-refuses the host's own address. Domestic 2D references have 21 characters (two hexadecimal, seven digits,
+catalog asks for at most one refresh an hour. `ROYAL_MAIL_BROWSER_PROXY` applies
+an `http://` or `socks5://` proxy to local browser launches. With
+`ROYAL_MAIL_BROWSER_WS_ENDPOINT`, the remote worker controls its own network route;
+this proxy setting does not change it. Domestic 2D references have 21 characters (two hexadecimal, seven digits,
 twelve hexadecimal) or 16 hexadecimal ones. They remain low-confidence candidates because their
 shape can overlap unrelated identifiers. Printed spaces and hyphens are stripped
 before submission. Other barcode formats and postcode-gated delivery options are
