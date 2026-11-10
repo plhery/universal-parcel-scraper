@@ -93,11 +93,16 @@ const DOMESTIC_STAGE = new Map<string, Stage>([
   ['shipment sorted in sorting centre', 'in_transit'],
   ['shipment has been sorted', 'in_transit'],
   ['shipment is ready for transport to the country of destination', 'in_transit'],
+  // A parcel PostNL delivers abroad: the border, the destination's sorting centre, then its rounds.
+  ['your parcel has crossed the border', 'in_transit'],
+  ["your parcel's at a sorting centre in the destination country", 'in_transit'],
+  ['your shipment is on its way to the recipient', 'out_for_delivery'],
+  ["we missed you; we'll try again", 'failed_attempt'],
 ]);
 
-/** The stage of one domestic tracker observation, or undefined when unmapped. */
+/** The stage of one domestic tracker observation, or undefined when unmapped. Its labels write the apostrophe either way. */
 export function postNLDomesticStage(description: string): Stage | undefined {
-  return DOMESTIC_STAGE.get(description.trim().toLocaleLowerCase('en-US').replace(/[.!]+$/, ''));
+  return DOMESTIC_STAGE.get(description.trim().toLocaleLowerCase('en-US').replace(/[.!]+$/, '').replace(/\u2019/g, "'"));
 }
 
 /**

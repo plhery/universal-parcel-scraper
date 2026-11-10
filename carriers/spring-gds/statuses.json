@@ -278,6 +278,38 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "note": "A label of PostNL's domestic tracker, with observation code X01: sorted for export after PostNL received the parcel."
+    },
+    {
+      "wording": "Your parcel has crossed the border",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A label of PostNL's domestic tracker, with observation code Q12, on a parcel it delivers abroad: after sorting in the Netherlands, before the destination's sorting centre."
+    },
+    {
+      "wording": "Your parcel's at a sorting centre in the destination country",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A label of PostNL's domestic tracker, with observation code X08, on a parcel it delivers abroad."
+    },
+    {
+      "wording": "Your shipment is on its way to the recipient",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A label of PostNL's domestic tracker, with observation code Y05, on a parcel it delivers abroad: the morning round, followed hours later by a missed delivery and the next morning by another round."
+    },
+    {
+      "wording": "We missed you; we’ll try again",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A label of PostNL's domestic tracker, with observation code Y10, on a parcel it delivers abroad, after a round; written with a straight or curly apostrophe."
     }
   ]
 }

@@ -640,6 +640,11 @@ describe('PostNL domestic tracker', () => {
     expect(statusMap.stage('J01', 'Shipment has been sorted')).toBe('in_transit');
     expect(statusMap.stage('M02', 'Not yet processed by PostNL')).toBe('registered');
     expect(statusMap.stage('X01', 'Shipment is ready for transport to the country of destination')).toBe('in_transit');
+    // A parcel PostNL delivers abroad: the border, the destination's sorting centre, a round and a missed delivery.
+    expect(statusMap.stage('Q12', 'Your parcel has crossed the border')).toBe('in_transit');
+    expect(statusMap.stage('X08', "Your parcel's at a sorting centre in the destination country")).toBe('in_transit');
+    expect(statusMap.stage('Y05', 'Your shipment is on its way to the recipient')).toBe('out_for_delivery');
+    for (const missed of ['We missed you; we’ll try again', "We missed you; we'll try again"]) expect(statusMap.stage('Y10', missed)).toBe('failed_attempt');
   });
 
   it('reads PostNL acceptance by its status number, as a universal provider rewords it', () => {
