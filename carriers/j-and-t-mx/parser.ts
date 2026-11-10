@@ -4,6 +4,7 @@ import {
   IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { newestStagedScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
@@ -145,7 +146,8 @@ export function parseJAndTMx(payload: unknown, raw: string): CarrierResult {
   // Newest first, as the page lists them; scans at one instant keep the reply's order.
   const newestFirst = scans.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index).map(({ event }) => event);
   const newest = newestFirst[0]!;
-  const staged = newestFirst.find((event) => event.stage);
+  // A delivery stands only while no newer scan may have undone it (`newestStagedScan`).
+  const staged = newest.stage ? newest : newestStagedScan(newestFirst) ?? undefined;
   const stage = staged?.stage as Stage | undefined;
   const delivered = stage === 'delivered' ? staged!.time as string : null;
   return {

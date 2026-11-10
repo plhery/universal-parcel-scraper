@@ -28,7 +28,7 @@ Tracked through the tracking form on its home page.
   log in to the platform. The tracking form needs no account.
 - Each scan gives its wall clock and its instant. Its time is that instant on the offset the two give
   together, Beijing time in the scans seen. When they give no zone's offset, the instant is kept in UTC;
-  a scan with only its wall clock is read on Beijing time.
+  a scan with only its wall clock keeps it and is ordered among the others on Beijing time.
 - The map stages scans by their node: `Created` is the order's data received,
   `PickedUp_CollectedParcel` the collection, and `InTransit_Other` the sorting centre's scans, the
   departure and the line's scans on the way. `InTransit_CustomsReleased` is the export clearance and

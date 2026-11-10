@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { newestStagedScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -126,7 +127,8 @@ export function parseKuayuan(payload: unknown, raw: string): CarrierResult {
   scans.sort((left, right) => right.local.localeCompare(left.local));
   const events = scans.map(({ event }) => event);
   const newest = events[0]!;
-  const current = events.find((event) => event.stage);
+  // A delivery stands only while no newer scan may have undone it (`newestStagedScan`).
+  const current = newest.stage ? newest : newestStagedScan(events) ?? undefined;
   const stage = current?.stage as Stage | undefined;
   const country = countryCode(text(shipment, 'country_code', 8));
   return {

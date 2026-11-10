@@ -99,6 +99,14 @@ describe('J&T Express Mexico HTTP adapter', () => {
       '2026-05-13T22:18:02-06:00', '2026-05-12T19:47:51-06:00', '2026-05-12T11:30:00-06:00']);
   });
 
+  it('lets no newer unstaged scan keep an older delivery', () => {
+    const result = parseJAndTMx(changed('delivered', (body) => {
+      body.data.details.unshift({ scanTime: '2026-05-15 10:00:00', status: 'Sample status', customerTracking: '【Sample City Branch】Sample note' });
+    }), DELIVERED);
+    expect(result.current_stage).not.toBe('delivered');
+    expect(result.status).not.toBe('delivered');
+  });
+
   it('reads the reply’s refusals by their codes', async () => {
     const failure = (body: unknown) => carrier(site(() => reply(body))).track({ number: DELIVERED, phoneDigits: DIGITS });
     // An unknown waybill is not found, whatever the digits.

@@ -89,10 +89,11 @@ describe('ROZETKA Delivery parser', () => {
     expect(parse(history(), cancelled)).toMatchObject({ status: 'exception', current_stage: 'exception', provider_code: '60010',
       last_update_local: '2026-02-13T12:00:00', expected_delivery: null });
     expect(parse(history(), cancelled).pickup_point).toBeUndefined();
-    for (const code of [40060, 50010, 50015, 50020, 60040]) {
+    for (const [code, stage] of [[40060, 'exception'], [50010, 'exception'], [50015, 'exception'], [50021, 'exception'],
+      [50030, 'returned'], [50020, 'returned'], [60040, 'returned']] as const) {
       const returned = overview(NUMBER, code, '2026-02-13 12:00:00'); returned.data.last_status_name = 'Повернення';
       const result = parse(history(), returned);
-      expect(result).toMatchObject({ status: 'exception', current_stage: 'returned', provider_code: String(code), expected_delivery: null });
+      expect(result).toMatchObject({ status: 'exception', current_stage: stage, provider_code: String(code), expected_delivery: null });
       expect(result.pickup_point).toBeUndefined();
     }
   });

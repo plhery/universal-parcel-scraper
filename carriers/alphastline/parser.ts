@@ -2,6 +2,7 @@ import { DateTime, FixedOffsetZone } from 'luxon';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { newestStagedScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, epochSecondsTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
@@ -67,14 +68,15 @@ function instant(row: Record<string, unknown>): number | null {
  * A scan's time. Each scan gives its instant and the wall clock it reads on: the
  * instant keeps that clock's offset, which the two give together. When they do not
  * give a zone's offset, the instant stands alone, in UTC; a scan with only its wall
- * clock keeps it as one.
+ * clock keeps it as one and is ordered on Beijing time.
  */
 function scanTime(row: Record<string, unknown>): { at: number; event: Pick<CarrierEvent, 'time' | 'local_time'> } {
   const wall = wallClock(text(row, 'operateTime', 32));
   const at = instant(row);
   if (at === null) {
     if (!wall) throw new SchemaError(PROVIDER, 'Alphastline returned a scan without a time');
-    return { at: Date.parse(`${wall}Z`), event: { local_time: wall } };
+    // Ordered among the scans that give their instant as Beijing time, the clock they read on.
+    return { at: Date.parse(`${wall}+08:00`), event: { local_time: wall } };
   }
   const offset = wall ? (Date.parse(`${wall}Z`) - at) / 60_000 : Number.NaN;
   const zone = Number.isInteger(offset) && offset % 15 === 0 && Math.abs(offset) <= MAX_OFFSET_MINUTES
@@ -166,7 +168,8 @@ export function parseAlphastline(payload: unknown, raw: string): CarrierResult {
   scans.sort((left, right) => right.at - left.at);
   const events = scans.map(({ event }) => event);
   const newest = events[0]!;
-  const current = currentStage(events.find((event) => event.stage), status);
+  // A delivery stands only while no newer scan may have undone it (`newestStagedScan`).
+  const current = currentStage(newest.stage ? newest : newestStagedScan(events) ?? undefined, status);
   const country = countryCode(text(shipment, 'shipTo', 8));
   return {
     status: current ? languageStageStatus(current.stage) : 'unknown',

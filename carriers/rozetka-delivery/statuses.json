@@ -159,7 +159,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "40070",
@@ -175,7 +175,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "40045",
@@ -191,7 +191,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "50012",
@@ -199,7 +199,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "50013",
@@ -207,7 +207,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "50015",
@@ -215,7 +215,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "50021",
@@ -223,7 +223,7 @@
       "language": "uk",
       "confirmedBy": "portal",
       "note": "The public tracker dictionary at https://rz-delivery.rozetka.ua/api/track-status.",
-      "stage": "returned"
+      "stage": "exception"
     },
     {
       "code": "50030",

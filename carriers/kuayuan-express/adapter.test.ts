@@ -97,6 +97,12 @@ describe('Kuayuan Express HTTP adapter', () => {
     expect(note.events![0]).not.toHaveProperty('stage');
     expect(parseKuayuan(changed((shipment) => { shipment.track_detail_list = [{ track_date: '2026-01-09 10:00:00', track_content: 'Sample note' }]; }), IN_TRANSIT))
       .toMatchObject({ status: 'unknown', last_status_text: 'Sample note' });
+    // A newer scan nothing stages may have undone a delivery.
+    const undone = parseKuayuan(changed((shipment) => shipment.track_detail_list.unshift(
+      { track_date: '2026-01-10 10:00:00', track_location: 'TORONTO', track_content: 'Sample note', track_code: 'ZZ' },
+      { track_date: '2026-01-09 10:00:00', track_location: 'TORONTO', track_content: 'Sample delivery', track_code: 'CC' })), IN_TRANSIT);
+    expect(undone.current_stage).not.toBe('delivered');
+    expect(undone.status).not.toBe('delivered');
   });
 
   it('names no line when its number is the one asked or no high-confidence rule claims it', () => {

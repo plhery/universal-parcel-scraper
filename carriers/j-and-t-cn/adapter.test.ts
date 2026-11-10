@@ -180,5 +180,15 @@ describe('J&T Express China HTTP adapter', () => {
   it('answers its statuses from its map', () => {
     expect(statusMapAnswer({ carrier: 'j-and-t-cn', providerCode: null, description: '已签收' })).toEqual({ kind: 'mapped', stage: 'delivered' });
     expect(statusMapAnswer({ carrier: 'j-and-t-cn', providerCode: null, description: '已代收' })).toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    // The return scan starts the way back; the parcel is returned only on arrival.
+    expect(statusMapAnswer({ carrier: 'j-and-t-cn', providerCode: null, description: '已进行退件扫描' })).toEqual({ kind: 'mapped', stage: 'exception' });
+  });
+
+  it('lets no newer unstaged scan keep an older delivery', () => {
+    const result = parsed(changed('delivered', (body) => {
+      body.data[0]!.details.unshift({ scanTime: '2026-05-15 10:00:00', status: null, customerTracking: '【样本市】示例备注' });
+    }));
+    expect(result.current_stage).not.toBe('delivered');
+    expect(result.status).not.toBe('delivered');
   });
 });

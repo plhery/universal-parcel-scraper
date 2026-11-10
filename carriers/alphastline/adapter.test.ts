@@ -132,6 +132,24 @@ describe('Alphastline HTTP adapter', () => {
     expect(wall.events![0]).not.toHaveProperty('time');
   });
 
+  it('orders a lone wall clock on Beijing time and lets no newer unstaged scan keep an older delivery', () => {
+    const mixed = parseAlphastline(changed((shipment) => {
+      shipment.status = 'Sented';
+      const lone = scan(CREATED_AT + 86_400, 'Sample earlier note');
+      delete lone.operateTimestamp;
+      // Four hours before the next scan on Beijing time, four hours after it if read on UTC.
+      lone.operateTime = '2026-01-04 08:36:34';
+      shipment.detail = [scan(CREATED_AT + 97_200, 'Departed from the sorting center'), lone, scan(CREATED_AT, 'Order received', 'Created')];
+    }), KNOWN);
+    expect(mixed.events!.map((event) => event.description)).toEqual(['Departed from the sorting center', 'Sample earlier note', 'Order received']);
+    const undone = parseAlphastline(changed((shipment) => {
+      shipment.status = 'Sented';
+      shipment.detail = [scan(CREATED_AT + 172_800, 'Sample note', 'Exception_Other'), scan(CREATED_AT + 86_400, 'Delivered', 'Delivered_Other')];
+    }), KNOWN);
+    expect(undone.current_stage).not.toBe('delivered');
+    expect(undone.status).not.toBe('delivered');
+  });
+
   it('reads the tracker’s answer for an unknown number as not found, and other refusals as inconclusive', () => {
     expect(() => parseAlphastline(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     const other = fixture('not-found');

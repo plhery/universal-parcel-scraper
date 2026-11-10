@@ -12,6 +12,6 @@
     {"wording": "已取消", "stage": "exception", "language": "zh", "confirmedBy": "official-doc", "note": "Status name the tracker page's script handles (service.js). Cancelled."},
     {"wording": "运输中", "stage": "in_transit", "language": "zh", "confirmedBy": "source", "note": "Quoted by a consumer in a news report about J&T China."},
     {"wording": "物流异常提醒", "stage": "exception", "language": "zh", "confirmedBy": "official-doc", "note": "Title of the box the tracker page's script (service.js) shows above a waybill's scans when J&T sends an exception notice."},
-    {"wording": "已进行退件扫描", "stage": "returned", "language": "zh", "confirmedBy": "source", "note": "Quoted in a news report; the return scan."}
+    {"wording": "已进行退件扫描", "stage": "exception", "language": "zh", "confirmedBy": "source", "note": "Quoted in a news report; the return scan, while the parcel is still on its way back."}
   ]
 }

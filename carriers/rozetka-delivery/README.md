@@ -17,7 +17,8 @@ HTTP recognition stays within the existing detection candidates.
 The public `track-status` dictionary supplies the code meanings. Actual dated
 statuses form the history; the planned route and the page's future progress rail
 do not. Cancellation, partial receipt and return movements retain their own
-meaning. The newest reached state wins when the overview and history differ.
+meaning: a return under way is an exception until it reaches the sender's
+branch. The newest reached state wins when the overview and history differ.
 
 Clocks without offsets remain local wall times. Explicit upstream offsets are
 preserved. A status without scans is marked as a summary. A history that omits
