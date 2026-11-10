@@ -9,7 +9,7 @@ import { parseInpostSpainPage } from './inpostSpain.js';
 
 // Every number, label and instant here is synthetic.
 const NUMBER = 'FV99999981';
-const PAGE_URL = `https://www.inpost.es/seguimiento-del-envio/?parcelNumber=${NUMBER}`;
+const PAGE_URL = `https://www.inpost.es/seguimiento-del-envio?parcelNumber=${NUMBER}`;
 const FIXTURE = readFileSync(new URL('./fixtures/inpost-es-awaiting-collection.html', import.meta.url), 'utf8');
 
 /** Astro's serialized form of a prop value. */

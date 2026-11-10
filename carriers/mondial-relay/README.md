@@ -48,7 +48,7 @@ so only the Spanish names resolve here. InPost Spain's own `FV` numbers are read
 
 An InPost Spain number (`FV` and eight digits) takes neither step:
 
-1. `inpost-es`: load `https://www.inpost.es/seguimiento-del-envio/?parcelNumber=…`,
+1. `inpost-es`: load `https://www.inpost.es/seguimiento-del-envio?parcelNumber=…`,
    which the server renders with no cookie or bot check, and read the props of
    its tracking component. Both `parcelNumber` and `trackingDetails.packageId`
    must be the number asked.

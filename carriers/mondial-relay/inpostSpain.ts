@@ -10,7 +10,7 @@ import { inpostSpainHeadlineStage, inpostSpainStage } from './status.js';
 
 const PROVIDER = 'Mondial Relay';
 /** InPost Spain's tracking page, which the server renders with the parcel's tracking in its props. */
-export const INPOST_SPAIN_PAGE = 'https://www.inpost.es/seguimiento-del-envio/';
+export const INPOST_SPAIN_PAGE = 'https://www.inpost.es/seguimiento-del-envio';
 // One page is under 100 kB.
 const MAX_BYTES = 2_000_000;
 const REDIRECTS = [301, 302, 303, 307, 308];
