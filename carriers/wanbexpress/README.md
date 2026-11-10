@@ -26,7 +26,8 @@ A final rejection remains a challenge even when an earlier reply succeeded.
 The tracking reply must name the requested parcel and identify a parcel-ID match. Reference
 and delivery-number matches stay inconclusive. Only the explicit unknown-parcel envelope is
 not-found. Scans carry UTC instants; their display offsets are not applied a second time.
-A scan's place is left out when it names the linehaul agent, a role, or only a country on order
+A scan's place is left out when it names the linehaul agent, a role, the system that wrote the
+courier's label ("SYSTEM"), or only a country on order
 data written before the parcel is handed over, such as a partner's note that the sender is still
 preparing it, which names the destination.
 The last-mile partner's scans, iMile's on a parcel to Germany, come in the partner's sentences

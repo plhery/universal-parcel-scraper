@@ -26,13 +26,13 @@ export function normalizeWanbNumber(raw: string): string {
 const CURRENT: Readonly<Record<string, Stage>> = { Delivered: 'delivered', InTransit: 'in_transit', OutForDelivery: 'out_for_delivery' };
 
 /**
- * A scan's place. The linehaul agent's departure names its role, and order data a partner relays
- * before the parcel is handed over, such as the sender still preparing it, names only a country,
- * the destination's: neither is where the parcel was.
+ * A scan's place. The linehaul agent's departure names its role, the courier's label its system
+ * ("SYSTEM"), and order data a partner relays before the parcel is handed over, such as the sender
+ * still preparing it, names only a country, the destination's: none is where the parcel was.
  */
 function wanbPlace(location: string, stage: Stage | null | undefined): string | undefined {
   const place = clean(repairMisreadUtf8(location), 300);
-  if (!place || /^linehaul agent$/i.test(place) || (stage === 'registered' && /^[A-Z]{2}$/.test(place))) return undefined;
+  if (!place || /^(?:linehaul agent|system)$/i.test(place) || (stage === 'registered' && /^[A-Z]{2}$/.test(place))) return undefined;
   return place;
 }
 
