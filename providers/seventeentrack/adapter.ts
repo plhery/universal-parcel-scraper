@@ -508,11 +508,38 @@ const OUTWARD_SCAN = /^(?:Posting\/Collection|(?:Arrival at|Dispatch from) outwa
  * tracker shows them (see [Japan Post](../../carriers/japan-post/README.md)), and 17TRACK
  * labels them with Japan's +09:00: China Post's posting at 16:28 Beijing time showed at
  * 16:28 +09:00, an hour before China Post's own leg puts it. On an S10 number from abroad,
- * from a country on one clock, they are read on that clock; elsewhere 17TRACK's reading stays.
+ * from a country on one clock, such a post's copies are read on that clock; elsewhere
+ * 17TRACK's reading stays. `home` is the relaying post's country.
  */
-function japanPostOriginZone(number: string): string | null {
+function relayedOriginZone(number: string, home: string): string | null {
   const origin = isValidS10TrackingNumber(number) ? number.slice(-2) : null;
-  return origin && origin !== 'JP' ? countryTimeZone(origin) : null;
+  return origin && origin !== home ? countryTimeZone(origin) : null;
+}
+
+/** A destination post's leg that relays the origin post's scans: its country, the wording that marks them, and whether its rows placed in the origin country are them too. */
+interface OriginRelay { home: string; outward?: RegExp; placed?: true }
+
+/**
+ * Destination posts' legs that relay the origin post's scans on an item from abroad at that post's
+ * wall clock under their own country's offset, keyed by 17TRACK's carrier: Japan Post's (10021),
+ * ePOST, Korea Post's (11051), Pakistan Post's (16011) and Saudi Post's (19071). The last three
+ * repeated China Post's own Beijing digits: Korea Post's arrival at Guangzhou's outward office of
+ * exchange showed at 22:46 +09:00 as China Post presented the item to export customs there at 22:46
+ * +08:00, and Pakistan Post's and Saudi Post's copies of China Post's export customs scans kept their
+ * minute under +05:00 and +03:00. Their copies are worded as the origin's, or placed in the origin
+ * country, a name both countries share counting as the post's own.
+ */
+const ORIGIN_RELAYS = new Map<unknown, OriginRelay>([
+  [JAPAN_POST, { home: 'JP', outward: OUTWARD_SCAN }],
+  [11051, { home: 'KR', outward: /^(?:Posting\/Collection\b|(?:Arrival at|Dispatch from) outward office of exchange$|Item (?:presented to|returned from) export Customs$)/, placed: true }],
+  [16011, { home: 'PK', outward: / in origin country$/, placed: true }],
+  [19071, { home: 'SA', placed: true }],
+]);
+
+/** Whether a row of a relaying post's leg is the origin post's scan, as its wording or place shows. */
+function originRelayed(relay: OriginRelay, origin: string, raw: Record<string, unknown>): boolean {
+  if (relay.outward?.test(text(raw.description).trim())) return true;
+  return relay.placed === true && locatePlace(text(raw.location), { countries: [relay.home] })?.country === origin;
 }
 
 /**
@@ -649,8 +676,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const abroad = provider.events.length > MAX_EVENTS ? new Map<number, Placed | null>()
       : nz ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers))
         : india ? indiaPostInbound(provider.events, recipientCountry(shipment)) : new Map<number, Placed | null>();
-    const origin = reported.key === CHINA_POST ? originZone(number) : reported.key === JAPAN_POST ? japanPostOriginZone(number) : null;
-    const outward = reported.key === JAPAN_POST ? OUTWARD_SCAN : ORIGIN_EXCHANGE;
+    const relay = ORIGIN_RELAYS.get(reported.key);
+    const origin = reported.key === CHINA_POST ? originZone(number) : relay ? relayedOriginZone(number, relay.home) : null;
     // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
     // reads them, and 17TRACK labels them with China's offset: Correos's arrival at its exchange office at 09:25
     // Madrid time showed in China Post's leg at 09:25 +08:00, seven hours before Correos's own row of it.
@@ -686,7 +713,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
-      const exchange = origin !== null && outward.test(text(raw.description).trim());
+      const exchange = origin !== null && (relay ? originRelayed(relay, number.slice(-2), raw) : ORIGIN_EXCHANGE.test(text(raw.description).trim()));
       const arrived = destination.has(index);
       const own = !salvador ? null : OUTBOUND.test(text(raw.description)) ? sender : 'UTC';
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".

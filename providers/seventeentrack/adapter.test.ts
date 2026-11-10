@@ -911,6 +911,42 @@ describe('17TRACK result parsing', () => {
     }
   });
 
+  it("reads the origin post's scans Korea Post, Pakistan Post and Saudi Post relay on that post's clock, and their own as labeled", () => {
+    const row = (offset: string) => (date: string, time: string, description: string, location: string) => ({
+      time_iso: `${date}T${time}${offset}`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const times = (key: number, country: string, events: unknown[], requested: string) => parse17TrackResponse({ meta: { code: 200 },
+      shipments: [{ number: requested, code: 200, shipment: { latest_status: { status: 'InTransit' },
+        tracking: { providers: [{ provider: { key, name: 'Example Post', country }, events }] } } }] }, requested).events?.map(e => e.time);
+    const korea = row('+09:00');
+    const koreaRows = [
+      korea('2026-11-06', '08:00:00', 'Arrival at inward office of exchange', 'KRSELA'),
+      korea('2026-11-05', '04:22:00', 'Ready for dispatch, Dispatch number : CNCANDKRSELBAA0000', 'CNCAND'),
+      korea('2026-11-04', '22:46:00', 'Arrival at outward office of exchange', 'CNCANA'),
+      korea('2026-11-02', '14:38:00', 'Posting/Collection, Posting office zip code : , , , ', ''),
+    ];
+    // China Post's scans at Beijing's wall clock, under 17TRACK's +09:00; Korea Post's own on Seoul's.
+    expect(times(11051, 'KR', koreaRows, 'ZZ123456785CN')).toEqual(['2026-11-05T23:00:00.000Z', '2026-11-04T20:22:00.000Z',
+      '2026-11-04T14:46:00.000Z', '2026-11-02T06:38:00.000Z']);
+    // An item Korea Post sends keeps 17TRACK's reading.
+    expect(times(11051, 'KR', koreaRows, 'ZZ123456785KR')).toEqual(['2026-11-05T23:00:00.000Z', '2026-11-04T19:22:00.000Z',
+      '2026-11-04T13:46:00.000Z', '2026-11-02T05:38:00.000Z']);
+    const pakistan = row('+05:00');
+    expect(times(16011, 'PK', [
+      pakistan('2026-10-22', '10:00:00', 'Receive item at office of exchange', 'KARACHI'),
+      pakistan('2026-10-19', '05:59:00', 'Send item to destination country', 'GUANGZHOU EMS'),
+      pakistan('2026-10-19', '05:58:00', 'Return item from customs in origin country', ''),
+      pakistan('2026-10-18', '22:17:00', 'Receive item at office of exchange in origin country', 'GUANGZHOU'),
+    ], 'ZZ123456785CN')).toEqual(['2026-10-22T05:00:00.000Z', '2026-10-18T21:59:00.000Z', '2026-10-18T21:58:00.000Z',
+      '2026-10-18T14:17:00.000Z']);
+    const saudi = row('+03:00');
+    // Saudi Post's wording says nothing of the origin: its place does.
+    expect(times(19071, 'SA', [
+      saudi('2026-10-20', '09:00:00', 'Your shipment is on its way to destination', 'RIYADH'),
+      saudi('2026-10-13', '05:03:00', 'Your shipment is on its way to destination', 'GUANGZHOU EM'),
+    ], 'ZZ123456785CN')).toEqual(['2026-10-20T06:00:00.000Z', '2026-10-12T21:03:00.000Z']);
+  });
+
   it('reads Correos de El Salvador\'s scans in UTC, its copies of the origin post\'s and Swiss Post\'s relays on their offices\' clocks', () => {
     const row = (date: string, time: string, offset: string | null, description: string, location: string | null = null) => ({
       time_iso: `${date}T${time}${offset ?? '-05:00'}`, time_utc: null, time_raw: { date, time, timezone: offset },

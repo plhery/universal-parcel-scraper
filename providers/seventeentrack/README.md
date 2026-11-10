@@ -223,6 +223,11 @@ carrier.
   17TRACK labels them `+09:00`: China Post's posting came an hour before China Post's own leg
   puts it. On an S10 number from a country on one clock they are read on that clock;
   elsewhere, and for Japan Post's own scans, 17TRACK's reading stays.
+- ePOST's leg for Korea Post (carrier key 11051), Pakistan Post's (16011) and Saudi Post's
+  (19071) relay the origin post's scans the same way under `+09:00`, `+05:00` and `+03:00`,
+  each repeating China Post's own Beijing minute. A copy worded as the origin's (Korea Post's
+  posting and outward exchange scans, Pakistan Post's "… in origin country") or placed in the
+  origin country is read on that country's clock, as Japan Post's are.
 - Correos de El Salvador's leg (carrier key 19031) dates its own scans in UTC, as its own
   tracker does, and its copies of the origin post's scans, marked `(salida)` or
   `(recibido por EDI)`, at the origin office's wall clock; 17TRACK labels them all `-05:00`
