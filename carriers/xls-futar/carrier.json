@@ -1,0 +1,46 @@
+{
+  "id": "xls-futar",
+  "displayName": "XLS Futár",
+  "aliases": [
+    "XLS Futar",
+    "XLS Futár Zrt."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#009fe3"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://xlsfutar.hu/track?id={trackingNumber}",
+    "searchUrl": "https://xlsfutar.hu/track",
+    "canaryUrl": "https://xlsfutar.hu/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "xlsfutar.hu",
+        "www.xlsfutar.hu"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

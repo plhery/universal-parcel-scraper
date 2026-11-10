@@ -1,0 +1,35 @@
+{
+  "id": "gyujtoszallitas",
+  "displayName": "Gyűjtőszállítás.hu",
+  "aliases": [
+    "Gyujtoszallitas.hu",
+    "Gyűjtőszállítás",
+    "Gyűjtőszállítás.hu Futárszolgálat Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#633388"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "canaryUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

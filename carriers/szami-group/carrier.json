@@ -1,0 +1,33 @@
+{
+  "id": "szami-group",
+  "displayName": "SZAMI Group",
+  "aliases": [
+    "SZAMI Group Logisztikai Szolgáltató Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#f02036"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "canaryUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

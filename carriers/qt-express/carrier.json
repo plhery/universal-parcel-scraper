@@ -1,0 +1,44 @@
+{
+  "id": "qt-express",
+  "displayName": "QT Express",
+  "aliases": [
+    "QT Logistics",
+    "QT Logistics Group",
+    "QT Logistics Group Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#ee7e22"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://tracking.qtlogistics.eu/hu/{trackingNumber}",
+    "searchUrl": "https://tracking.qtlogistics.eu/hu",
+    "canaryUrl": "https://tracking.qtlogistics.eu/hu",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "tracking.qtlogistics.eu"
+      ],
+      "pathPattern": "^/(?:hu|en)/[^/]+/?$",
+      "path": "^/(?:hu|en)/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}

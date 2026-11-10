@@ -1,0 +1,45 @@
+{
+  "id": "trans-pack",
+  "displayName": "Trans-Pack",
+  "aliases": [
+    "Trans-Pack Logisztika",
+    "Trans-Pack Logisztika Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#1967b0"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://partner.trans-pack.hu/csomagkovetes?id={trackingNumber}",
+    "searchUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "canaryUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "partner.trans-pack.hu"
+      ],
+      "pathPattern": "^/csomagkovetes/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

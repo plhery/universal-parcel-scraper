@@ -1,0 +1,47 @@
+{
+  "id": "mixpakk",
+  "displayName": "Mixpakk",
+  "aliases": [
+    "MXP",
+    "Mixpakk Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#1ca12a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://mixpakk.hu/nyomkovetes/?package={trackingNumber}",
+    "searchUrl": "https://mixpakk.hu/nyomkovetes/",
+    "canaryUrl": "https://mixpakk.hu/nyomkovetes/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "mixpakk.hu",
+        "www.mixpakk.hu"
+      ],
+      "pathPattern": "^/nyomkovetes/?$",
+      "params": [
+        "package",
+        "q"
+      ]
+    }
+  ],
+  "detection": []
+}

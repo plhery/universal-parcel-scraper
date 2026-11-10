@@ -14698,6 +14698,37 @@
     ],
     "detectionRules": []
   },
+  "csomagpiac": {
+    "displayName": "Csomagpiac",
+    "color": "#fba817",
+    "aliases": [
+      "Csomagpiac Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "trackingUrlTemplate": "https://bestr.csomagpiac.hu/kuldemenykovetes?ident={trackingNumber}",
+    "trackingSearchUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "linkRules": [
+      {
+        "domains": [
+          "bestr.csomagpiac.hu"
+        ],
+        "pathPattern": "^/kuldemenykovetes/?$",
+        "params": [
+          "ident"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cst-italia": {
     "displayName": "CST Italia",
     "color": "#005baa",
@@ -24599,6 +24630,28 @@
     ],
     "detectionRules": []
   },
+  "gyujtoszallitas": {
+    "displayName": "Gyűjtőszállítás.hu",
+    "color": "#633388",
+    "aliases": [
+      "Gyujtoszallitas.hu",
+      "Gyűjtőszállítás",
+      "Gyűjtőszállítás.hu Futárszolgálat Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "trackingSearchUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gzyl": {
     "displayName": "GZYL",
     "color": "#4e79e1",
@@ -33218,6 +33271,40 @@
     ],
     "detectionRules": []
   },
+  "mixpakk": {
+    "displayName": "Mixpakk",
+    "color": "#1ca12a",
+    "aliases": [
+      "MXP",
+      "Mixpakk Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mixpakk.hu/nyomkovetes/",
+    "trackingUrlTemplate": "https://mixpakk.hu/nyomkovetes/?package={trackingNumber}",
+    "trackingSearchUrl": "https://mixpakk.hu/nyomkovetes/",
+    "linkRules": [
+      {
+        "domains": [
+          "mixpakk.hu",
+          "www.mixpakk.hu"
+        ],
+        "pathPattern": "^/nyomkovetes/?$",
+        "params": [
+          "package",
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "mng-kargo": {
     "displayName": "DHL eCommerce Türkiye",
     "color": "#ffcc00",
@@ -39703,6 +39790,37 @@
     ],
     "detectionRules": []
   },
+  "qt-express": {
+    "displayName": "QT Express",
+    "color": "#ee7e22",
+    "aliases": [
+      "QT Logistics",
+      "QT Logistics Group",
+      "QT Logistics Group Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.qtlogistics.eu/hu",
+    "trackingUrlTemplate": "https://tracking.qtlogistics.eu/hu/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.qtlogistics.eu/hu",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.qtlogistics.eu"
+        ],
+        "pathPattern": "^/(?:hu|en)/[^/]+/?$",
+        "path": "^/(?:hu|en)/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "quality-post": {
     "displayName": "Quality Post",
     "color": "#a4e000",
@@ -45789,6 +45907,26 @@
     ],
     "detectionRules": []
   },
+  "szami-group": {
+    "displayName": "SZAMI Group",
+    "color": "#f02036",
+    "aliases": [
+      "SZAMI Group Logisztikai Szolgáltató Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "trackingSearchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "t-cat": {
     "displayName": "T-CAT",
     "color": "#009481",
@@ -48201,6 +48339,38 @@
     "canaryUrl": "https://trace.transontario.com/",
     "trackingSearchUrl": "https://trace.transontario.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "trans-pack": {
+    "displayName": "Trans-Pack",
+    "color": "#1967b0",
+    "aliases": [
+      "Trans-Pack Logisztika",
+      "Trans-Pack Logisztika Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "trackingUrlTemplate": "https://partner.trans-pack.hu/csomagkovetes?id={trackingNumber}",
+    "trackingSearchUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "linkRules": [
+      {
+        "domains": [
+          "partner.trans-pack.hu"
+        ],
+        "pathPattern": "^/csomagkovetes/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "transaher": {
@@ -51960,6 +52130,39 @@
         "pathPattern": "^/(?:index\\.html)?$",
         "params": [
           "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "xls-futar": {
+    "displayName": "XLS Futár",
+    "color": "#009fe3",
+    "aliases": [
+      "XLS Futar",
+      "XLS Futár Zrt."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xlsfutar.hu/track",
+    "trackingUrlTemplate": "https://xlsfutar.hu/track?id={trackingNumber}",
+    "trackingSearchUrl": "https://xlsfutar.hu/track",
+    "linkRules": [
+      {
+        "domains": [
+          "xlsfutar.hu",
+          "www.xlsfutar.hu"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "id"
         ]
       }
     ],

@@ -1,0 +1,44 @@
+{
+  "id": "csomagpiac",
+  "displayName": "Csomagpiac",
+  "aliases": [
+    "Csomagpiac Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#fba817"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://bestr.csomagpiac.hu/kuldemenykovetes?ident={trackingNumber}",
+    "searchUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "canaryUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "bestr.csomagpiac.hu"
+      ],
+      "pathPattern": "^/kuldemenykovetes/?$",
+      "params": [
+        "ident"
+      ]
+    }
+  ],
+  "detection": []
+}

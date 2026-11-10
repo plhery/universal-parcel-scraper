@@ -14702,6 +14702,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "csomagpiac": {
+    "displayName": "Csomagpiac",
+    "color": "#fba817",
+    "aliases": [
+      "Csomagpiac Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "trackingUrlTemplate": "https://bestr.csomagpiac.hu/kuldemenykovetes?ident={trackingNumber}",
+    "trackingSearchUrl": "https://bestr.csomagpiac.hu/kuldemenykovetes",
+    "linkRules": [
+      {
+        "domains": [
+          "bestr.csomagpiac.hu"
+        ],
+        "pathPattern": "^/kuldemenykovetes/?$",
+        "params": [
+          "ident"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "cst-italia": {
     "displayName": "CST Italia",
     "color": "#005baa",
@@ -24603,6 +24634,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "gyujtoszallitas": {
+    "displayName": "Gyűjtőszállítás.hu",
+    "color": "#633388",
+    "aliases": [
+      "Gyujtoszallitas.hu",
+      "Gyűjtőszállítás",
+      "Gyűjtőszállítás.hu Futárszolgálat Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "trackingSearchUrl": "https://gyujtoszallitas.hu/csomagkovetes",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "gzyl": {
     "displayName": "GZYL",
     "color": "#4e79e1",
@@ -33222,6 +33275,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "mixpakk": {
+    "displayName": "Mixpakk",
+    "color": "#1ca12a",
+    "aliases": [
+      "MXP",
+      "Mixpakk Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mixpakk.hu/nyomkovetes/",
+    "trackingUrlTemplate": "https://mixpakk.hu/nyomkovetes/?package={trackingNumber}",
+    "trackingSearchUrl": "https://mixpakk.hu/nyomkovetes/",
+    "linkRules": [
+      {
+        "domains": [
+          "mixpakk.hu",
+          "www.mixpakk.hu"
+        ],
+        "pathPattern": "^/nyomkovetes/?$",
+        "params": [
+          "package",
+          "q"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "mng-kargo": {
     "displayName": "DHL eCommerce Türkiye",
     "color": "#ffcc00",
@@ -39707,6 +39794,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "qt-express": {
+    "displayName": "QT Express",
+    "color": "#ee7e22",
+    "aliases": [
+      "QT Logistics",
+      "QT Logistics Group",
+      "QT Logistics Group Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.qtlogistics.eu/hu",
+    "trackingUrlTemplate": "https://tracking.qtlogistics.eu/hu/{trackingNumber}",
+    "trackingSearchUrl": "https://tracking.qtlogistics.eu/hu",
+    "linkRules": [
+      {
+        "domains": [
+          "tracking.qtlogistics.eu"
+        ],
+        "pathPattern": "^/(?:hu|en)/[^/]+/?$",
+        "path": "^/(?:hu|en)/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "quality-post": {
     "displayName": "Quality Post",
     "color": "#a4e000",
@@ -45793,6 +45911,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "szami-group": {
+    "displayName": "SZAMI Group",
+    "color": "#f02036",
+    "aliases": [
+      "SZAMI Group Logisztikai Szolgáltató Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "trackingSearchUrl": "https://www.szamigroup.hu/nyomonkovetes/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "t-cat": {
     "displayName": "T-CAT",
     "color": "#009481",
@@ -48205,6 +48343,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://trace.transontario.com/",
     "trackingSearchUrl": "https://trace.transontario.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "trans-pack": {
+    "displayName": "Trans-Pack",
+    "color": "#1967b0",
+    "aliases": [
+      "Trans-Pack Logisztika",
+      "Trans-Pack Logisztika Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "trackingUrlTemplate": "https://partner.trans-pack.hu/csomagkovetes?id={trackingNumber}",
+    "trackingSearchUrl": "https://partner.trans-pack.hu/csomagkovetes",
+    "linkRules": [
+      {
+        "domains": [
+          "partner.trans-pack.hu"
+        ],
+        "pathPattern": "^/csomagkovetes/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "transaher": {
@@ -51969,6 +52139,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xls-futar": {
+    "displayName": "XLS Futár",
+    "color": "#009fe3",
+    "aliases": [
+      "XLS Futar",
+      "XLS Futár Zrt."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xlsfutar.hu/track",
+    "trackingUrlTemplate": "https://xlsfutar.hu/track?id={trackingNumber}",
+    "trackingSearchUrl": "https://xlsfutar.hu/track",
+    "linkRules": [
+      {
+        "domains": [
+          "xlsfutar.hu",
+          "www.xlsfutar.hu"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "xpect-same-day": {
     "displayName": "Xpect Same Day",
     "color": "#181a57",
@@ -53665,6 +53868,7 @@ export const CARRIER_IDS = [
   "crossflight",
   "cruz-del-sur",
   "cse-russia",
+  "csomagpiac",
   "cst-italia",
   "ctc-express",
   "cttyex",
@@ -53929,6 +54133,7 @@ export const CARRIER_IDS = [
   "gta-airskip",
   "gtl-goto",
   "guatex",
+  "gyujtoszallitas",
   "gzyl",
   "hanjin",
   "hapdong",
@@ -54176,6 +54381,7 @@ export const CARRIER_IDS = [
   "midland-transport",
   "mikropakket",
   "miller-deliveries",
+  "mixpakk",
   "mng-kargo",
   "mobel-services",
   "mobi-logistica",
@@ -54350,6 +54556,7 @@ export const CARRIER_IDS = [
   "pxc-pacific",
   "qatar-post",
   "qls-quince",
+  "qt-express",
   "quality-post",
   "quantium-solutions",
   "quick-fort",
@@ -54517,6 +54724,7 @@ export const CARRIER_IDS = [
   "swiftx",
   "sxjd-freight",
   "syd",
+  "szami-group",
   "t-cat",
   "t-group",
   "takesend",
@@ -54586,6 +54794,7 @@ export const CARRIER_IDS = [
   "tracx-logis",
   "trans-o-flex",
   "trans-ontario",
+  "trans-pack",
   "transaher",
   "transcorp",
   "transfera",
@@ -54693,6 +54902,7 @@ export const CARRIER_IDS = [
   "xingyunyi",
   "xlcourier",
   "xlmiles",
+  "xls-futar",
   "xpect-same-day",
   "xpo-ltl",
   "xpress-courier-link",
@@ -55095,6 +55305,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "crossflight": [],
   "cruz-del-sur": [],
   "cse-russia": [],
+  "csomagpiac": [],
   "cst-italia": ["cst-italia-1","cst-italia-2"],
   "ctc-express": [],
   "cttyex": ["cttyex-1"],
@@ -55359,6 +55570,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gta-airskip": ["gta-airskip-1"],
   "gtl-goto": ["gtl-goto-1","gtl-goto-2"],
   "guatex": [],
+  "gyujtoszallitas": [],
   "gzyl": ["gzyl-1","gzyl-2"],
   "hanjin": [],
   "hapdong": [],
@@ -55606,6 +55818,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "midland-transport": [],
   "mikropakket": [],
   "miller-deliveries": [],
+  "mixpakk": [],
   "mng-kargo": [],
   "mobel-services": [],
   "mobi-logistica": [],
@@ -55780,6 +55993,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pxc-pacific": [],
   "qatar-post": ["qatar-post-ems-s10"],
   "qls-quince": [],
+  "qt-express": [],
   "quality-post": [],
   "quantium-solutions": [],
   "quick-fort": ["quick-fort-1"],
@@ -55947,6 +56161,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiftx": ["swiftx-1"],
   "sxjd-freight": [],
   "syd": [],
+  "szami-group": [],
   "t-cat": [],
   "t-group": ["t-group-1"],
   "takesend": ["takesend-1"],
@@ -56016,6 +56231,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tracx-logis": ["tracx-logis-1"],
   "trans-o-flex": [],
   "trans-ontario": [],
+  "trans-pack": [],
   "transaher": ["transaher-1"],
   "transcorp": [],
   "transfera": [],
@@ -56123,6 +56339,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xingyunyi": [],
   "xlcourier": ["xlcourier-1"],
   "xlmiles": [],
+  "xls-futar": [],
   "xpect-same-day": [],
   "xpo-ltl": ["xpo-ltl-1"],
   "xpress-courier-link": [],
