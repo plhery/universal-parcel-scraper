@@ -14523,6 +14523,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "crc-post": {
+    "displayName": "CRC Post",
+    "color": "#2a3181",
+    "aliases": [
+      "CRCPOST",
+      "CRC Post S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.crcpost.it/",
+    "trackingSearchUrl": "https://www.crcpost.it/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "credifin": {
     "displayName": "Credifin Logística",
     "color": "#001d9c",
@@ -26499,6 +26520,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.instapack.es/",
     "trackingSearchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "integraa": {
+    "displayName": "Integraa",
+    "color": "#efde48",
+    "aliases": [
+      "Integraa Posta",
+      "Integr@a",
+      "Integraa Holding"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://integraa.net/gestione/tracking.php",
+    "trackingSearchUrl": "https://integraa.net/gestione/tracking.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41503,7 +41546,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#e5c043",
     "aliases": [
       "SAILPOST",
-      "Sailpost SpA"
+      "Sailpost SpA",
+      "Citypost",
+      "Citypost S.p.A."
     ],
     "countries": [
       "IT"
@@ -53615,6 +53660,7 @@ export const CARRIER_IDS = [
   "cps-lastmile",
   "cpszy",
   "crane-worldwide",
+  "crc-post",
   "credifin",
   "crossflight",
   "cruz-del-sur",
@@ -53940,6 +53986,7 @@ export const CARRIER_IDS = [
   "inposdom",
   "instabox",
   "instapack",
+  "integraa",
   "integral-pack",
   "intel-valley",
   "intelcom",
@@ -55043,6 +55090,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cps-lastmile": [],
   "cpszy": [],
   "crane-worldwide": [],
+  "crc-post": [],
   "credifin": [],
   "crossflight": [],
   "cruz-del-sur": [],
@@ -55368,6 +55416,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "inposdom": [],
   "instabox": [],
   "instapack": [],
+  "integraa": [],
   "integral-pack": [],
   "intel-valley": ["intel-valley-1"],
   "intelcom": ["intelcom-1","intelcom-2","intelcom-3"],

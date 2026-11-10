@@ -1,0 +1,35 @@
+{
+  "id": "integraa",
+  "displayName": "Integraa",
+  "aliases": [
+    "Integraa Posta",
+    "Integr@a",
+    "Integraa Holding"
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#efde48"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://integraa.net/gestione/tracking.php",
+    "canaryUrl": "https://integraa.net/gestione/tracking.php",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

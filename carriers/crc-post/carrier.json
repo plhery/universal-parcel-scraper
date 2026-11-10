@@ -1,0 +1,34 @@
+{
+  "id": "crc-post",
+  "displayName": "CRC Post",
+  "aliases": [
+    "CRCPOST",
+    "CRC Post S.r.l."
+  ],
+  "region": {
+    "countries": [
+      "IT"
+    ]
+  },
+  "brand": {
+    "color": "#2a3181"
+  },
+  "selectable": true,
+  "timezone": "Europe/Rome",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.crcpost.it/",
+    "canaryUrl": "https://www.crcpost.it/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

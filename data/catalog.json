@@ -14519,6 +14519,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "crc-post": {
+    "displayName": "CRC Post",
+    "color": "#2a3181",
+    "aliases": [
+      "CRCPOST",
+      "CRC Post S.r.l."
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.crcpost.it/",
+    "trackingSearchUrl": "https://www.crcpost.it/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "credifin": {
     "displayName": "Credifin Logística",
     "color": "#001d9c",
@@ -26495,6 +26516,28 @@
     },
     "canaryUrl": "https://www.instapack.es/",
     "trackingSearchUrl": "https://back.instapack.es/client-dashboard/seguimiento-de-envios/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "integraa": {
+    "displayName": "Integraa",
+    "color": "#efde48",
+    "aliases": [
+      "Integraa Posta",
+      "Integr@a",
+      "Integraa Holding"
+    ],
+    "countries": [
+      "IT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Rome",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://integraa.net/gestione/tracking.php",
+    "trackingSearchUrl": "https://integraa.net/gestione/tracking.php",
     "linkRules": [],
     "detectionRules": []
   },
@@ -41499,7 +41542,9 @@
     "color": "#e5c043",
     "aliases": [
       "SAILPOST",
-      "Sailpost SpA"
+      "Sailpost SpA",
+      "Citypost",
+      "Citypost S.p.A."
     ],
     "countries": [
       "IT"

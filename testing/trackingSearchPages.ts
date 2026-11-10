@@ -19,7 +19,10 @@ export function countNumberFields(elements: Element[]): number {
     if (field.tagName === 'INPUT' && !/^(?:text|search|tel|number|url)$/.test(field.type)) return false;
     const box = field.getBoundingClientRect();
     if (box.width === 0 || box.height === 0 || getComputedStyle(field).visibility === 'hidden' || field.disabled) return false;
-    const label = [field.name, field.id, field.placeholder, field.getAttribute('aria-label'), field.autocomplete].join(' ');
+    // A text field marked new-password only turns autofill off (Integraa); it is no sign-in clue.
+    const autocomplete = field.getAttribute('autocomplete') ?? '';
+    const label = [field.name, field.id, field.placeholder, field.getAttribute('aria-label'),
+      /^\s*new-password\s*$/i.test(autocomplete) ? '' : autocomplete].join(' ');
     if (/e-?mail|user ?name|login|password|passwort|mot de passe/i.test(label)) return false;
     const siteSearch = /^(?:q|query|s|search|keywords?)$/i.test(field.name)
       || /^\s*(?:search|rechercher|suchen|buscar|cerca|szukaj)\b/i.test(field.placeholder || field.getAttribute('aria-label') || '');

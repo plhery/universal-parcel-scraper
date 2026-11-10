@@ -21,6 +21,8 @@ describe('carrier search pages', () => {
 
   it('counts a tracking field, including the editable box a tag widget draws over its text area', () => {
     expect(numberFields('<input type="text" placeholder="Tracking number">')).toBe(1);
+    // Integraa turns autofill off on its barcode field this way.
+    expect(numberFields('<input type="text" name="sorting_product_barcode" autocomplete="new-password">')).toBe(1);
     expect(numberFields('<tags><span contenteditable="" role="textbox"></span></tags><textarea data-hidden></textarea>')).toBe(1);
   });
 
@@ -29,6 +31,7 @@ describe('carrier search pages', () => {
       '<input type="text" data-hidden>',
       '<input type="text" disabled>',
       '<input type="text" name="email">',
+      '<input type="text" name="user" autocomplete="current-password">',
       '<input type="text" name="q" placeholder="Search">',
       '<input type="checkbox">',
       '<span contenteditable="false" role="textbox"></span>',

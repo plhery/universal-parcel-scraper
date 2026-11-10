@@ -1,7 +1,8 @@
 # Sailpost
 
 Sailpost is a private Italian postal network of franchised agencies that delivers letters,
-registered mail, documents for public bodies and parcels. Tracked through the service its app
+registered mail, documents for public bodies and parcels. Its operator was formerly named
+Citypost S.p.A., a name older items and filings carry. Tracked through the service its app
 asks.
 
 ## How it works
