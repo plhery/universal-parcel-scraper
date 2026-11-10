@@ -79,7 +79,10 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
   left out, and a scan it follows keeps its own words. Some scans come without a code. "Traffic, Strike, Bad weather" is a failed attempt on a
   delivery run and a delay under In Transit, before the parcel reaches its delivery office.
 - Delivery runs lose the driver's phone, deliveries lose who took the parcel, and Brazilian
-  deliveries and returns lose iMile's support contacts. The proof-of-delivery photos some
+  deliveries and returns lose iMile's support contacts. A receiver type that names where the
+  parcel was left rather than a person ("Mail box", "Parcel locker", "Reception") stays; the
+  others ("Self", "Family", a name) go. A delivery has no location: its station is the depot the
+  courier set out from, not the place the parcel reached. The proof-of-delivery photos some
   countries link are not kept.
 - `country` is iMile's own three-letter code, mostly ISO's, though `KSA`, `UAE`, `RSA` and `BIH`
   (Bahrain) are its own. It becomes `destination_country`.

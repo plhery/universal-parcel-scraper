@@ -56,22 +56,25 @@ const CONTACT = /\s*You can contact\b[\s\S]*$/i;
 // iMile's support footer after a Brazilian delivery or a return: "If you have any questions, …".
 const SUPPORT = /\s*If you have any questions?\b[\s\S]*$/i;
 // Who took the parcel, in 【】: "received by 【Self】", ", Receiver Type:【Self】".
-const RECEIVER = /\s*[,，;；]?\s*(?:\bby|\bReceiver Type\s*[:：]?)\s*【[^】]*】/gi;
+const RECEIVER = /\s*[,，;；]?\s*(?:\bby|\bReceiver Type\s*[:：]?)\s*【([^】]*)】/gi;
+// A receiver type naming where the courier left the parcel rather than who took it.
+const PLACE_RECEIVER = /^(?:mail ?box|letter ?box|post ?box|parcel (?:box|locker)|locker|reception|front desk)$/i;
 // A run of nine or more digits, with spaces, brackets, dots or hyphens
 // between them, as phone numbers are written; a date stays.
 const PHONE = /(?<![A-Z\d])(?!\d{4}-\d{2}-\d{2}(?!\d))\+?\d(?:[\s().\-/]{0,2}\d){8,}(?![A-Z\d])/gi;
 
 /**
  * A scan's wording without the people it names: the driver's phone, who
- * took the parcel, the proof-of-delivery link and the support footer go.
- * The centre names in 【】 stay for the stage rules to read past.
+ * took the parcel, the proof-of-delivery link and the support footer go. A
+ * receiver type that names a place, such as a mail box, stays. The centre
+ * names in 【】 stay for the stage rules to read past.
  */
 export function imileWording(raw: string): string {
   return clean(raw
     .replace(PROOF, ' ')
     .replace(SUPPORT, '')
     .replace(CONTACT, '')
-    .replace(RECEIVER, '')
+    .replace(RECEIVER, (clause: string, receiver: string) => /^[\s,，;；]*Receiver Type/i.test(clause) && PLACE_RECEIVER.test(receiver.trim()) ? clause : '')
     .replace(PHONE, '')
     .replace(/\s+([,，;；.。])/g, '$1'))
     .replace(/^[\s,，;；]+|[\s,，;；]+$/g, '');
@@ -115,7 +118,8 @@ function projectRow(row: Record<string, unknown>): { key: string; event: Carrier
   if (!description) return null;
   const event: CarrierEvent = {
     local_time: local,
-    ...(location ? { location } : {}),
+    // A delivery's station is the depot the courier set out from, not where the parcel was left.
+    ...(location && staged?.stage !== 'delivered' ? { location } : {}),
     description,
     ...(code ? { provider_code: code } : {}),
     ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),

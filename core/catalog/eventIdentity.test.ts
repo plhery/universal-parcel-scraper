@@ -720,6 +720,14 @@ describe('same-instant identity policies', () => {
     // A row that only booked a flight has no scan to take it over.
     const flight = { ...booked, description: 'Flight Schedule ETD【EXA】<2026-01-02 03:04:05>, ETA【EXB】<2026-01-02 06:07:08>.' };
     expect(policy?.matches?.(flight, flight)).toBe(false);
+    // A delivery stored with its depot and without the receiver type naming its place keeps its row once read with it and without the depot.
+    const delivered = { stage: 'delivered', description: 'Your order has been delivered successfully.', location: 'Example01', providerCode: '2060' };
+    const read = { ...delivered, description: 'Your order has been delivered successfully, Receiver Type: Mail box.', location: '' };
+    expect(policy?.matches?.(read, delivered)).toBe(true);
+    expect(policy?.matches?.({ ...read, location: '' }, { ...delivered, description: 'Your order has been delivered successfully, Receiver Type:【Mail box】.' })).toBe(true);
+    expect(policy?.matches?.({ ...read, description: 'Your order has been received.' }, delivered)).toBe(false);
+    // Only a delivery drops its station.
+    expect(policy?.matches?.({ ...bracketed, description: 'Arrived.', location: '' }, bracketed)).toBe(false);
   });
 
   it('lets a DHLink node stored with its row’s clock in its wording keep its row once worded without it', () => {

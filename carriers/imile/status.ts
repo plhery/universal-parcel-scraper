@@ -92,7 +92,6 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // The short form of a centre's delivery, "【centre】Delivered", as JS Express relays it, and the German centres' form
   // naming who took the parcel: "【centre】Delivered, receiver type:【Self or Family】.".
   ['delivered', 'delivered'],
-  ['delivered, receiver type:', 'delivered'],
   ['your package was received', 'delivered'],
   ['order delivery failed, returning to sender', 'exception'],
   // The delivery order closed without a delivery, as the return starts (`1008`), also as Shouwu relays it.
@@ -121,9 +120,16 @@ const OPENINGS: readonly (readonly [RegExp, Stage | null])[] = [
   [/^the parcel has been delivered to\b.*\. please collect your parcel\b.* using your pickup code$/, 'ready_for_pickup'],
 ];
 
-/** A wording as the phrases list it: lower case, without the 【】 names, single spaces, no closing full stop. */
+// Who took a delivered parcel or where it was left, after the sentence: ", Receiver Type: Mail box".
+export const RECEIVER_TYPE = /\s*[,，;；]?\s*\breceiver type\b[^.。]*/i;
+
+/**
+ * A wording as the phrases list it: lower case, without the 【】 names or the receiver type a
+ * delivery names, single spaces, no closing full stop.
+ */
 export function imilePhrase(wording: string): string {
-  return wording.replace(/【[^】]*】/g, ' ').toLocaleLowerCase('en-US').replace(/\s+/g, ' ').trim().replace(/\s*\.$/, '');
+  return wording.replace(/【[^】]*】/g, ' ').replace(RECEIVER_TYPE, '').toLocaleLowerCase('en-US').replace(/\s+/g, ' ').trim()
+    .replace(/\s*\.$/, '');
 }
 
 /** Drivers' reasons iMile also gives a parcel held up before its delivery run. */

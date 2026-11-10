@@ -193,6 +193,20 @@ describe('iMile HTTP adapter', () => {
     expect(result.events!.find((event) => event.description === 'Clearance Processing')).toMatchObject({ stage: 'customs' });
     expect(result.events!.find((event) => event.description === 'Clearance Processing')).not.toHaveProperty('provider_code');
     expect(JSON.stringify(result)).not.toMatch(/Self|Receiver|viewPic|example\.invalid|contact him|\+000|0500000001/);
+    // The delivery's station is the depot the courier set out from; the delivery run keeps it.
+    expect(result.events![0]).not.toHaveProperty('location');
+    expect(result.events![1]).toMatchObject({ location: 'SMP DS01' });
+    // A delivery left in the mail box says so.
+    const mailbox = parseImile(changed('delivered', (shipment) => {
+      shipment.trackInfos[0]!.content = 'Your order has been delivered successfully, Receiver Type:【Mail box】.';
+    }), DELIVERED);
+    expect(mailbox).toMatchObject({ current_stage: 'delivered', last_status_text: 'Your order has been delivered successfully, Receiver Type: Mail box.' });
+    expect(mailbox.events![0]).not.toHaveProperty('location');
+    // Without a code, the sentence still reads as the delivery.
+    const uncoded = parseImile(changed('delivered', (shipment) => {
+      Object.assign(shipment.trackInfos[0]!, { content: 'Your order has been delivered successfully, Receiver Type:【Mail box】.', trackStage: null, trackStageTx: null });
+    }), DELIVERED);
+    expect(uncoded.events![0]).toMatchObject({ stage: 'delivered', description: 'Your order has been delivered successfully, Receiver Type: Mail box.' });
   });
 
   it('reads return handling as a return under way, until the sender has the parcel back', () => {
@@ -249,7 +263,7 @@ describe('iMile HTTP adapter', () => {
       shipment.trackInfos[0]!.operateStationName = 'AucklandDS';
     }), DELIVERED);
     expect(delivered).toMatchObject({ current_stage: 'delivered', last_update: '2026-11-01T15:08:15+13:00' });
-    expect(delivered.events![0]).toMatchObject({ time: '2026-11-01T15:08:15+13:00', location: 'AucklandDS' });
+    expect(delivered.events![0]).toMatchObject({ time: '2026-11-01T15:08:15+13:00' });
   });
 
   it('keeps the wall clocks of a country with several zones or none named', () => {
@@ -265,6 +279,14 @@ describe('iMile HTTP adapter', () => {
       + '📞 WhatsApp: +00 00 0000-0000📧 Email: support@example.invalid🌐 Official website: https://example.invalid/'))
       .toBe('【DS SMP】Your package was received.');
     expect(imileWording('Your order has been delivered successfully, Receiver Type:【Family】.')).toBe('Your order has been delivered successfully.');
+    expect(imileWording('【Sample01】Delivered, receiver type:【Self or Family】.')).toBe('【Sample01】Delivered.');
+    // A receiver type naming where the parcel was left stays; a name in its place goes.
+    for (const place of ['Mail box', 'Parcel locker', 'Reception']) {
+      expect(imileWording(`Your order has been delivered successfully, Receiver Type:【${place}】.`))
+        .toBe(`Your order has been delivered successfully, Receiver Type:【${place}】.`);
+    }
+    expect(imileWording('Your order has been delivered successfully, Receiver Type:【Sample Person】.')).toBe('Your order has been delivered successfully.');
+    expect(imileWording('Your package was received by 【Mail box】.')).toBe('Your package was received.');
     expect(imileWording('Our delivery associate is out for delivery.You can contact him by clicking +000 0500000000.'))
       .toBe('Our delivery associate is out for delivery.');
     expect(imileWording('Your order has been delivered successfully.<div class="viewPic" data-pic="https://example.invalid/a.jpg">View</div>'))
