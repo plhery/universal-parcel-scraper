@@ -1902,13 +1902,17 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const summaries = new Set<CarrierEvent>();
   let undated = 0;
   // The reply is in North America when a scan certainly is, or when a scan
-  // names a state or province ("Atlanta, GA") and none names another country.
+  // names a state or province ("Atlanta, GA") and none names another country
+  // or the parcel is bound for the US or Canada. A parcel from China names
+  // China first: GOFO's hub "EXAMPLE, CA" is then California's, where GOFO's
+  // own tracker dates the scan at ParcelsApp's digits.
   const kinds = payload.states.flatMap((raw: unknown) => {
     const location = isRecord(raw) ? scanLocation(stateCarrierName(payload, raw), raw.location) : '';
     return location ? [placeKind(location)] : [];
   });
-  const inNorthAmerica = kinds.includes('certain') || (kinds.includes('region') && !kinds.includes('abroad'));
   const destination = replyDestination(payload, number);
+  const inNorthAmerica = kinds.includes('certain')
+    || (kinds.includes('region') && (!kinds.includes('abroad') || destination === 'US' || destination === 'CA'));
   const origin = countryCode(payload.originCode) ?? countryCode(payload.origin);
   const entries: (ReturnType<typeof readState> & { raw: Record<string, unknown>; scan: CarrierScan | undefined; wording: string })[] = [];
   const placeholders = placeholderDates(payload.states.flatMap((raw: unknown) => isRecord(raw) && !raw.require_fields && !raw.error ? [raw.date] : []));

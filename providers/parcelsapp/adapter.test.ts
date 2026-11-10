@@ -1957,6 +1957,19 @@ describe('ParcelsApp result parsing', () => {
     expect(result.undated_event_count).toBeUndefined();
   });
 
+  it('reads a state\'s code on a parcel bound for the US on that state\'s clock after scans in China', () => {
+    const hub = (destinationCode?: string) => parseParcelsAppResponse({
+      carriers: ['GoFo Express', 'Yun Express'], originCode: 'CN', ...(destinationCode ? { destinationCode } : {}), states: [
+        { date: '2026-11-08T16:22:13Z', status: 'Arrived at GOFO Regional Hub', carrier: 0, location: 'EXAMPLE, CA' },
+        { date: '2026-11-03T20:46:41Z', status: 'Clearence processing completed - Export', carrier: 1, location: 'Guangdong Sheng, People\'s Republic of China' },
+      ],
+    }, number, identity()).events?.find((event) => event.description === 'Arrived at GOFO Regional Hub')?.time;
+    // GOFO's own tracker dates the scan at 00:22:13 UTC, Pacific time.
+    expect(hub('US')).toBe('2026-11-09T00:22:13.000Z');
+    // With no destination, a code beside a scan in China can be a country's: it keeps its label.
+    expect(hub()).toBe('2026-11-08T16:22:13.000Z');
+  });
+
   it('gives YunExpress\'s unplaced copy of a partner scan at the same second that scan\'s clock', () => {
     // Live shape: YunExpress relays GOFO's scans in its own words with no place, at GOFO's
     // Central digits; GOFO's own instants are five hours after the label.
