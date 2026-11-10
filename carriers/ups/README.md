@@ -136,8 +136,9 @@ rendered status, after that wait.
   the map, other banners none. Coded scans' wording is never read without its code.
 - Each scan comes as a UTC pair and a local pair with the place's `gmtOffset`. The time is the
   UTC pair's instant, to the second, written on that offset when the local pair reads the same
-  minute on it, so a consumer reads the scan's day where it happened; otherwise, or at a zero
-  offset, it stays `+00:00`. Without the UTC pair the local pair and its offset are the time.
+  minute on it, so a consumer reads the scan's day where it happened, including `+00:00` at a
+  zero offset. Otherwise it stays in UTC, written `Z`, so a consumer does not take UTC for the
+  place's clock. Without the UTC pair the local pair and its offset are the time.
   A local pair without an offset stays `local_time`, a scan dated by its day alone, as some
   drop-offs are, keeps that day as `local_time`, and other text stays `provider_time_text`;
   no zone is guessed. Some label scans come with no clock and get none.

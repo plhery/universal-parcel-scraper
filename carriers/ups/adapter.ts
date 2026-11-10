@@ -421,7 +421,9 @@ function utcPair(activity: JsonObject): string | null {
  * `gmtTime`) and a local pair with a `gmtOffset`. The UTC pair's instant, to
  * the second, is written on that offset when the local pair reads the same
  * minute on it, so the scan keeps its place's clock; otherwise it stays in
- * UTC. A zero offset is written as UTC was, `+00:00`. Without the UTC pair,
+ * UTC, written `Z` so that no consumer takes UTC for the place's clock. A
+ * zero offset the local pair agrees with is the place's clock, written
+ * `+00:00`. Without the UTC pair,
  * the local pair and its offset become the time. An offset the place cannot
  * have at that time of year gives way to the place's zone (`placeClock`);
  * otherwise no zone is guessed. A local pair without an offset stays a
@@ -437,7 +439,7 @@ function scanClock(activity: JsonObject, local: string | null, day: string | nul
   const utc = utcPair(activity);
   if (utc) {
     const shown = offset === null ? null : DateTime.fromISO(utc, { zone: 'utc' }).setZone(FixedOffsetZone.instance(offset));
-    if (!shown?.isValid || !local || shown.toFormat("yyyy-MM-dd'T'HH:mm") !== local.slice(0, 16)) return { time: `${utc}+00:00` };
+    if (!shown?.isValid || !local || shown.toFormat("yyyy-MM-dd'T'HH:mm") !== local.slice(0, 16)) return { time: `${utc}Z` };
     return placeClock(shown.toFormat("yyyy-MM-dd'T'HH:mm:ss"), offset!, zone)
       ?? { time: offset ? shown.toISO({ suppressMilliseconds: true }) : `${utc}+00:00` };
   }

@@ -185,7 +185,8 @@ describe('UPS structured response', () => {
       clocked('08/04/2026', '4:05 A.M.', '04:05:09', '+00:00'),
       clocked('08/04/2026', '9:35 A.M.', '04:05:09', '+05:30'),
     ]), TRACKING_NUMBER, TODAY).events?.map((event) => event.time);
-    expect(times).toEqual(['2026-08-03T23:05:09-05:00', '2026-08-04T04:05:09+00:00', '2026-08-04T04:05:09+00:00',
+    // UTC is written Z, and a zero offset the local reading agrees with +00:00, the place's own clock.
+    expect(times).toEqual(['2026-08-03T23:05:09-05:00', '2026-08-04T04:05:09Z', '2026-08-04T04:05:09+00:00',
       '2026-08-04T09:35:09+05:30']);
     // The instant is the UTC pair's, so a scan stored in UTC is the same scan.
     expect(new Set(times!.map((time) => Date.parse(time!)))).toEqual(new Set([Date.parse('2026-08-04T04:05:09Z')]));
@@ -283,7 +284,7 @@ describe('UPS structured response', () => {
     expect(unmapped).toMatchObject({ status: 'in_transit' });
     expect(unmapped.current_stage).toBeUndefined();
     expect(unmapped.events?.[0]).toEqual({
-      time: '2026-08-06T15:50:00+00:00', location: 'Example City, Germany',
+      time: '2026-08-06T15:50:00Z', location: 'Example City, Germany',
       description: 'Wording UPS has not used before', provider_code: 'X9',
     });
   });
@@ -380,7 +381,7 @@ describe('UPS structured response', () => {
       { progressBarType: 'InTransit' }), TRACKING_NUMBER, TODAY);
     expect(held).toMatchObject({ status: 'in_transit', current_stage: 'customs', current_stage_source: 'carrier_map' });
     expect(held.events?.[0]).toEqual({
-      time: '2026-08-07T11:41:00+00:00', location: '', description: 'The package is at the clearing agency awaiting final release.',
+      time: '2026-08-07T11:41:00Z', location: '', description: 'The package is at the clearing agency awaiting final release.',
       stage: 'customs', stage_source: 'carrier_map',
     });
     // The parcel app asks the map about the scan it stored without a code.
@@ -413,7 +414,7 @@ describe('UPS structured response', () => {
       scan('ZP', 'UPS Access Point™ possession ', '20260811 09:22:52'),
     ], { progressBarType: 'Delivered', upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY);
     expect(collected).toMatchObject({
-      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-11T10:14:47+00:00', expected_delivery: null,
+      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-11T10:14:47Z', expected_delivery: null,
     });
     expect(collected.pickup_point).toBeUndefined();
 
@@ -563,7 +564,7 @@ describe('UPS structured response', () => {
     ], { additionalInformation: { serviceInformation: { serviceName: 'UPS Ground Saver&#174;' }, postalServiceTrackingID } });
     const result = parseUPSTrackingResponse(handedOver(POSTAL_PIC), TRACKING_NUMBER, TODAY);
     expect(result).toMatchObject({
-      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-04T15:10:00+00:00',
+      status: 'delivered', current_stage: 'delivered', delivered_at: '2026-08-04T15:10:00Z',
       service_name: 'UPS Ground Saver', delivery_carrier: 'usps', delivery_tracking_number: POSTAL_PIC,
     });
     expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['YC', 'delivered'], ['YH', 'in_transit'], ['LX', 'in_transit']]);
@@ -586,7 +587,7 @@ describe('UPS structured response', () => {
     expect(result.events?.every((event) => event.provider_code)).toBe(true);
     expect(result.expected_delivery).toBeTruthy();
     expect(parseUPSTrackingResponse(withScans([scan('KB', 'DELIVERED ', '20260804 10:28:15')]), TRACKING_NUMBER, TODAY)
-      .delivered_at).toBe('2026-08-04T10:28:15+00:00');
+      .delivered_at).toBe('2026-08-04T10:28:15Z');
     expect(parseUPSTrackingResponse(withScans([scan('2Q', 'Delivered to UPS Access Point™ ', '20260804 10:28:15')],
       { upsAccessPoint: ACCESS_POINT }), TRACKING_NUMBER, TODAY).pickup_point).toBe(KIOSK);
     const served = fixture();

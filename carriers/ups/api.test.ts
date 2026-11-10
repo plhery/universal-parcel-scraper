@@ -205,7 +205,7 @@ describe('UPS API reply', () => {
     }), TRACKING_NUMBER).events?.map(({ time, local_time, provider_time_text }) => ({ time, local_time, provider_time_text }));
     expect(times).toEqual([
       { time: '2026-08-04T10:00:00-04:00', local_time: undefined, provider_time_text: undefined },
-      { time: '2026-08-04T14:00:00+00:00', local_time: undefined, provider_time_text: undefined },
+      { time: '2026-08-04T14:00:00Z', local_time: undefined, provider_time_text: undefined },
       { time: '2026-08-04T03:47:00-04:00', local_time: undefined, provider_time_text: undefined },
       { time: '2026-08-04T10:00:00-04:00', local_time: undefined, provider_time_text: undefined },
       { time: undefined, local_time: '2026-08-04T10:00:00', provider_time_text: undefined },
