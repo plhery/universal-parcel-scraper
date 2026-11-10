@@ -574,6 +574,18 @@ describe('17TRACK result parsing', () => {
     const zoned = { ...row('2026-05-07', '20:16:09', '-04:00', 'US'), time_raw: { date: '2026-05-07', time: '20:16:09', timezone: '-04:00' } };
     expect(parse17TrackResponse(reply(21051, [zoned]), number).events?.[0])
       .toMatchObject({ time: '2026-05-08T00:16:09.000Z', time_provenance: 'carrier_reported' });
+    // A row placed abroad is on that country's clock, as USPS's adapter reads it, not under 17TRACK's US offset:
+    // the origin post's acceptance in China and a town there. USPS's "JAMAICA" alone is its service centre at JFK.
+    // A country of several clocks gives none, and the row keeps its wall clock.
+    expect(parse17TrackResponse(reply(21051, [
+      row('2026-11-03', '08:49:00', '-05:00', 'FUZHOU, CHINA', 'Processed Through Facility'),
+      row('2026-11-02', '19:04:00', '-05:00', 'CHINA', 'Acceptance'),
+    ]), number).events?.map((event) => event.time)).toEqual(['2026-11-03T00:49:00.000Z', '2026-11-02T11:04:00.000Z']);
+    expect(parse17TrackResponse(reply(21051, [row('2026-07-09', '16:05:00', '-04:00', 'JAMAICA', 'Processed Through USPS Facility')]), number)
+      .events?.[0]?.time).toBe('2026-07-09T20:05:00.000Z');
+    const canada = parse17TrackResponse(reply(21051, [row('2026-11-02', '19:04:00', '-05:00', 'CANADA', 'Acceptance')]), number).events?.[0];
+    expect(canada).toMatchObject({ local_time: '2026-11-02T19:04:00' });
+    expect(canada?.time).toBeUndefined();
     // A place that gives only its ZIP code is read in that ZIP code's state.
     expect(parse17TrackResponse(reply(21051, [row('2026-05-06', '14:03:00', '-05:00', '94000')]), number).events?.[0]?.time)
       .toBe('2026-05-06T21:03:00.000Z');
@@ -943,11 +955,24 @@ describe('17TRACK result parsing', () => {
     const reply = (country: string | null): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
       latest_status: { status: 'InTransit' }, ...(country ? { shipping_info: { recipient_address: { country } } } : {}),
       tracking: { providers: [{ provider: { key: 9021, name: 'India Post' }, events: [
+        scan('Delivered', '18:16:00', 'Example PO - 3000'), scan('Arrived at the delivery Post office', '16:20:00', 'Example PO - 3000'),
         scan('Item received at office of exchange (Inb)', '14:04:00', 'EXAMPLE EMS'), scan('Dispatched', '11:04:48', 'EXAMPLE EMS')] }] } } }] });
     const read = (country: string | null) => parse17TrackResponse(reply(country), number).events?.map((event) => [event.time, event.local_time]);
-    expect(read(null)).toEqual([[undefined, '2026-11-05T14:04:00'], ['2026-11-05T05:34:48.000Z', undefined]]);
-    // A recipient country of one clock dates it there; India's own rows keep 17TRACK's reading.
-    expect(read('GB')).toEqual([['2026-11-05T14:04:00.000Z', undefined], ['2026-11-05T05:34:48.000Z', undefined]]);
+    // The delivery office's rows after the inbound mark carry none, and are the destination's too.
+    expect(read(null)).toEqual([[undefined, '2026-11-05T18:16:00'], [undefined, '2026-11-05T16:20:00'],
+      [undefined, '2026-11-05T14:04:00'], ['2026-11-05T05:34:48.000Z', undefined]]);
+    // A recipient country of one clock dates them there; India's own rows keep 17TRACK's reading.
+    expect(read('GB')).toEqual([['2026-11-05T18:16:00.000Z', undefined], ['2026-11-05T16:20:00.000Z', undefined],
+      ['2026-11-05T14:04:00.000Z', undefined], ['2026-11-05T05:34:48.000Z', undefined]]);
+    // An outbound mark starts a way back, which keeps India's label, as do rows of a leg with no inbound mark.
+    const back = (events: Record<string, unknown>[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' }, shipping_info: { recipient_address: { country: 'GB' } },
+      tracking: { providers: [{ provider: { key: 9021, name: 'India Post' }, events }] } } }] });
+    expect(parse17TrackResponse(back([scan('Item Booked', '20:00:00', 'EXAMPLE NSH'), scan('Item dispatched (Otb)', '19:00:00', 'EXAMPLE EMS'),
+      scan('Item received at office of exchange (Inb)', '14:04:00', 'EXAMPLE EMS')]), number).events?.map((event) => event.time))
+      .toEqual(['2026-11-05T14:30:00.000Z', '2026-11-05T14:04:00.000Z', '2026-11-05T13:30:00.000Z']);
+    expect(parse17TrackResponse(back([scan('Delivered', '18:16:00', 'EXAMPLE NSH')]), number).events?.map((event) => event.time))
+      .toEqual(['2026-11-05T12:46:00.000Z']);
   });
 
   it('requires a completed identity-matched NotFound and an empty history for a negative answer', () => {

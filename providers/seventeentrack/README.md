@@ -125,7 +125,11 @@ carrier.
   whose place names its state or gives a ZIP code is read in that state's zone, as the
   [USPS adapter](../../carriers/usps/README.md) reads it. A row with no place, or with the
   country alone, gives no state: it keeps USPS's wall clock as `local_time`, as the USPS
-  adapter gives it, so a consumer dates both copies alike. A place that names neither keeps 17TRACK's reading.
+  adapter gives it, so a consumer dates both copies alike. A row placed abroad, such as an
+  origin post's acceptance in "CHINA", is read on that country's clock, or its town's, as the
+  USPS adapter reads it; 17TRACK's US offset put it half a day late. In a country of several
+  clocks it keeps its wall clock. USPS's "JAMAICA" alone is its service centre at JFK. A place
+  that names neither keeps 17TRACK's reading.
   A step USPS dates by its day alone, such as a label printed at a post office, comes at
   midnight under 17TRACK's offset; it keeps its day as `local_time`, as on USPS's page. A
   USPS scan at exactly midnight is read the same way.
@@ -231,10 +235,12 @@ carrier.
   late. India Post rows worded `Aircraft Departure` or `UPLIFT` are counted in
   `undated_event_count` instead of dated. The scans before one still describe the parcel,
   so the reply stays conclusive. India Post's own adapter places take-offs.
-- India Post's rows from the destination's post, marked `(Inb)`, have that office's wall clock
-  under India's offset: Sydney's office of exchange came five and a half hours late against
-  India Post's own row and Australia Post's scan. As India Post's adapter reads them, they take
-  the recipient country's clock when it keeps one, else stay wall times for their place to date.
+- India Post's rows from the destination's post have that office's wall clock under India's
+  offset: Sydney's office of exchange came five and a half hours late against India Post's own
+  row and Australia Post's scan. As India Post's adapter reads them, they run from the first row
+  marked `(Inb)`, including the delivery office's unmarked arrival and delivery, to an outbound
+  mark `(Otb)`, take-offs aside. They take the recipient country's clock when it keeps one, else
+  stay wall times for their place to date.
 - DHL eCommerce US's leg (carrier key 7047) adds an `EN ROUTE` row without a place each time
   17TRACK asks Webtrack again, stamped with that moment. It echoes the status, so it is left
   out, as [DHL eCommerce's adapter](../../carriers/dhl-ecommerce/README.md) leaves it out.
