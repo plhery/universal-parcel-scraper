@@ -3185,6 +3185,12 @@
     "reason": "Sendle's order numbers are a short counter that other carriers' rules share; the QSS tracking number under the label's barcode names Sendle."
   },
   {
+    "carrier": "sengi-express",
+    "pattern": "^\\d{3}C\\d{8}F$",
+    "kind": "by_design",
+    "reason": "SDA waybills Sengi gives parcels for Italy before SDA knows them. The shape is SDA's, and AliExpress shows its buyers SDA waybills too, so detection suggests Poste Italiane and AliExpress."
+  },
+  {
     "carrier": "servientrega",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
