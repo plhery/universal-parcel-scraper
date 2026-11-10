@@ -319,6 +319,9 @@ const uspsAhead = (name: unknown, location: string, zone: string | null, event: 
   nameKey(name) === 'usps' && !!location && !!zone && typeof event.time === 'string' && Date.parse(event.time) > readAt + USPS_AHEAD_MS;
 // Known clocks that are the destination or origin country's (`knownClock`).
 const DESTINATION = 'destination';
+// Destinations in the European Union, the European Economic Area, Switzerland and the UK.
+const EUROPE: ReadonlySet<string> = new Set(['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE',
+  'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'IS', 'LI', 'NO', 'CH', 'GB']);
 const ORIGIN = 'origin';
 const wordings = (list: readonly string[]) => new RegExp(`^(?:${list.join('|')})$`, 'i');
 // Cainiao's last-mile scans, in its words or the local carrier's.
@@ -345,10 +348,15 @@ const CAINIAO_LAST_MILE = [
  * China time, Cainiao words its transit sorting centers' scans that way. The seller's step before the warehouse is on China time as well:
  * read as labeled, it comes after ParcelsApp first returns it. It dates
  * import customs on the destination's clock, and the last mile as well,
- * except the UK's, on GMT in July. Its transit hub, on GMT+2 for a
- * UK parcel, and "Arrived at linehaul office", on either side's clock, are
- * not listed: a parcel to Colombia reached that office four minutes before
- * MailAmericas' "Delivered by Airline" there. A
+ * except the UK's, on GMT in July. Its transit hub's arrival, warehouse
+ * outbound and departure on a parcel to Europe are on Central European time:
+ * AliExpress's feed states them +02:00 in summer and +01:00 in winter on
+ * parcels to Switzerland, Spain, France and Italy, and ParcelsApp's copies
+ * keep the digits. Its plain arrival in a transit country ("Arrive at
+ * transit country or district"), which it also states on UTC, and "Arrived
+ * at linehaul office", on either side's clock, are not listed: a parcel to
+ * Colombia reached that office four minutes before MailAmericas' "Delivered
+ * by Airline" there. A
  * parcel bound for Portugal clears customs in Spain, on Madrid's clock:
  * AliExpress's own "Departed from customs" and the Madrid broker's scans have
  * the digits of Cainiao's import customs. The sorting-center sentences of
@@ -396,6 +404,7 @@ const CAINIAO_LAST_MILE = [
  */
 const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
   wording: RegExp; zone: string; except?: string; otherwise?: string; via?: Readonly<Record<string, string>>; to?: string;
+  among?: ReadonlySet<string>;
 }[]> = new Map([
   ['gofoexpress', [
     { wording: /^shipping label created$/i, zone: 'America/Toronto', to: 'CA' },
@@ -410,6 +419,8 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
     { wording: wordings(['your shipment has arrived at sorting center', 'your shipment has been processed at sorting center and ready for shipping']),
       zone: 'Europe/Madrid' },
     { wording: wordings(CAINIAO_LAST_MILE), zone: DESTINATION, except: 'GB' },
+    { wording: wordings(['arrive at transit country or facility', 'parcel outbound from transit facility', 'depart from transit country or district']),
+      zone: 'Europe/Paris', among: EUROPE },
   ]],
   ['mailamericas', [
     { wording: /^(?:order created|tax id|origin warehouse)\.|^transit to destination country\. (?:on the way to the airport|origin customs|flight)$/i,
@@ -448,7 +459,8 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
  * names for it.
  */
 function knownClock(name: unknown, status: string, destination: string | null, origin: string | null = null): { zone: string | null; country?: string } | null {
-  const known = KNOWN_CLOCKS.get(nameKey(name))?.find(({ wording, to }) => wording.test(status.trim()) && (!to || to === destination));
+  const known = KNOWN_CLOCKS.get(nameKey(name))?.find(({ wording, to, among }) => wording.test(status.trim())
+    && (!to || to === destination) && (!among || among.has(destination ?? '')));
   if (known?.zone === ORIGIN) return origin ? { zone: countryTimeZone(origin) } : null;
   if (!known || known.zone !== DESTINATION) return known ? { zone: known.zone } : null;
   if (!destination) return known.otherwise ? { zone: known.otherwise } : null;
@@ -2086,15 +2098,20 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   const hints = universalCarrierHints([
     ...carriers, ...services.map((service: unknown) => isRecord(service) ? service.name : undefined),
   ].filter((name) => !(typeof name === 'string' && /^url$/i.test(name.trim()))).slice(0, 20), number);
-  // The list also names carriers asked without an answer. When every scan
-  // names the same carrier, that carrier is the hint.
-  const discovered = hints.discovered_carrier
-    ?? (scanCarriers.size === 1 ? universalCarrierHints([...scanCarriers], number).discovered_carrier : undefined);
   const stated = statedDestination(payload);
   const answer = result(events, SOURCE);
+  const partner = nextPartner(payload, answer.events ?? [], names, number);
+  // The list also names carriers asked without an answer. When every scan
+  // names the same carrier, that carrier is the hint, unless they are its rows
+  // under the number ParcelsApp names next for it and the number's own rules do
+  // not point to it: Hermes's under its own number, for a forwarder's reference.
+  const scanned = scanCarriers.size === 1 ? universalCarrierHints([...scanCarriers], number).discovered_carrier : undefined;
+  const partnerRows = scanned !== undefined && partner.delivery_carrier === scanned
+    && !(detectCarrierMatch(number).candidates as readonly string[]).includes(scanned);
+  const discovered = hints.discovered_carrier ?? (partnerRows ? undefined : scanned);
   return { ...answer, ...(undated ? { undated_event_count: undated } : {}),
     ...hints, ...(discovered ? { discovered_carrier: discovered } : {}), ...(stated ? { destination_country: stated } : {}),
-    ...nextPartner(payload, answer.events ?? [], names, number) };
+    ...partner };
 }
 
 /** Whether a direct request failed by reaching its own cap rather than by a network failure. */

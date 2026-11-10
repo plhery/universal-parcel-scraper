@@ -21,6 +21,7 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   // Notices the providers drop before they reach a history (`isNotice`), seen before they did.
   ['a preferred drop-off location was booked for the shipment', "ParcelsApp's note of a drop-off place the recipient booked: not a scan."],
   ['a desired day for delivery has been booked', "Postal Ninja's note of a delivery day the recipient booked with Hermes, which Hermes keeps out of its history: not a scan."],
+  ['a desired paketshop has been booked for the shipment', "ParcelsApp's note of a PaketShop the recipient booked with Hermes, which Hermes keeps out of its history: not a scan."],
   ['track sendcloud shipment by tapping the button', "ParcelsApp's prompt to track on Sendcloud's site: not a scan."],
   ['shipment parameters updated', "Postal Ninja's note that the shipment's details changed: not a scan."],
   ['tracking number must contain only capital letters and digits. please check that tracking number is correct.',

@@ -298,9 +298,10 @@ describe('ParcelsApp result parsing', () => {
     // An address in place of the destination names no country.
     expect(result.destination_country).toBeUndefined();
     expect(() => parseParcelsAppResponse({ states: [{ date: '2026-08-18T00:00:00Z', status: 'Enter the recipient postal code', require_fields: [{}] }] }, number, identity())).toThrow();
-    // A prompt to track the parcel on a partner's site, a drop-off place the recipient booked or their details updated is no scan either.
+    // A prompt to track the parcel on a partner's site, a drop-off place or PaketShop the recipient booked or their details updated is no scan either.
     const prompted = parseParcelsAppResponse({ states: [{ date: '2026-08-19T00:00:00Z', status: 'Track Sendcloud shipment by tapping the button' },
       { date: '2026-08-18T12:00:00Z', status: 'A preferred drop-off location was booked for the shipment' },
+      { date: '2026-08-18T11:30:00Z', status: 'A desired PaketShop has been booked for the shipment' },
       { date: '2026-08-18T11:00:00Z', status: 'Recipient information updated' }, ...announced.states] }, number, identity());
     expect(prompted.events?.map(({ description }) => description)).toEqual(result.events?.map(({ description }) => description));
     // ParcelsApp's own check of the number comes as a state dated at the lookup: no scan, so no history.
@@ -1913,6 +1914,28 @@ describe('ParcelsApp result parsing', () => {
     expect(reply.last_update).toBe('2026-07-01T10:00:00.000Z');
   });
 
+  it('reads Cainiao\'s transit hub steps on a parcel to Europe on Central European time', () => {
+    // AliExpress's feed states them +01:00 in winter and +02:00 in summer; its plain arrival in a
+    // transit country it states on UTC too, so that one keeps the label.
+    const states = [
+      { date: '2026-11-10T05:12:40Z', status: 'Depart from transit country or district', carrier: 0 },
+      { date: '2026-11-09T22:31:05Z', status: 'Parcel outbound from transit facility', carrier: 0 },
+      { date: '2026-11-09T09:15:00Z', status: 'Arrive at  transit country or district', carrier: 0 },
+      { date: '2026-11-09T04:02:51Z', status: 'Arrive at transit country or facility', carrier: 0 },
+      { date: '2026-07-09T04:02:51Z', status: 'Arrive at transit country or facility', carrier: 0 },
+    ];
+    const times = (destinationCode: string) => parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode, states }, number,
+      identity()).events?.map((scan) => [scan.time, scan.time_zone, scan.time_zone_basis]);
+    expect(times('ES')).toEqual([
+      ['2026-11-10T04:12:40.000Z', 'Europe/Paris', 'carrier'],
+      ['2026-11-09T21:31:05.000Z', 'Europe/Paris', 'carrier'],
+      ['2026-11-09T09:15:00.000Z', 'UTC', 'label'],
+      ['2026-11-09T03:02:51.000Z', 'Europe/Paris', 'carrier'],
+      ['2026-07-09T02:02:51.000Z', 'Europe/Paris', 'carrier'],
+    ]);
+    expect(times('MX')?.map(([, zone]) => zone)).toEqual(['UTC', 'UTC', 'UTC', 'UTC', 'UTC']);
+  });
+
   it('reads MailAmericas\' origin leg and Tax ID checks on the origin\'s clock, its scans in the destination on that one\'s', () => {
     // On a parcel to Colombia (2026-10-16), the Tax ID checks precede
     // ParcelsApp's first answer only on China's clock, and the scans there
@@ -3117,6 +3140,22 @@ describe('ParcelsApp result parsing', () => {
       { date: '2030-01-12T06:34:09Z', status: 'Release for delivery abroad', carrier: 1 }] })).toEqual([undefined, undefined]);
     // Two numbers its rules claim leave the partner unnamed.
     expect(partner({ next_tracking_ids: [waybill, '1000000000025U'] })).toEqual([undefined, undefined]);
+  });
+
+  it('names no carrier for the number when its only scans are the partner\'s under the number named next', () => {
+    // Live shape: a forwarder's reference whose rows are Hermes's, which ParcelsApp follows under Hermes's own number.
+    const reference = 'AKR0000000001';
+    const hermes = 'H9999999999999999980';
+    const read = (next?: string[]) => parseParcelsAppResponse({
+      carriers: ['Asendia', 'myHermes DE', '4PX Express', 'Hermes Borderguru'], destinationCode: 'DE', next_tracking_ids: next,
+      states: [
+        { date: '2030-01-06T02:51:37Z', status: 'The shipment has been electronically announced to Hermes. More information will follow.', carrier: 1 },
+      ],
+    }, reference, identity(reference));
+    expect(read([hermes])).toMatchObject({ delivery_carrier: 'hermes-de', delivery_tracking_number: hermes });
+    expect(read([hermes]).discovered_carrier).toBeUndefined();
+    // Without the number named next, the scans' carrier stays the hint for routing to confirm.
+    expect(read().discovered_carrier).toBe('hermes-de');
   });
 
   it('reads a scan on its known clock before the zone routing passes for the parcel', () => {

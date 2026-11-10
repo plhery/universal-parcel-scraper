@@ -308,7 +308,11 @@ step exists for future protocol changes.
   dates import customs ("Import clearance start" to "Leaving customs") and the last mile
   ("Received by local delivery company", "Out for delivery", "Delivered", and bpost's and
   CTT's wording) on the destination's clock, except the UK's last mile, on GMT in July.
-  Its transit hub, on GMT+2 for a UK parcel, and "Arrived at
+  Its transit hub's arrival, warehouse outbound and departure on a parcel to Europe ("Arrive
+  at transit country or facility", "Parcel outbound from transit facility", "Depart from
+  transit country or district") are on Central European time: AliExpress's feed states them
+  +02:00 in summer and +01:00 in winter on parcels to Switzerland, Spain, France and Italy.
+  Its plain arrival in a transit country, which it also states on UTC, and "Arrived at
   linehaul office", on either side's clock, are not listed: a parcel to Colombia reached
   that office four minutes before MailAmericas' "Delivered by Airline" there. A parcel
   bound for Portugal clears customs in Spain, on
@@ -729,7 +733,9 @@ step exists for future protocol changes.
   carries on names DPD Poland's waybill next. The tracker then asks that carrier's own
   adapter, which keeps the parcel's last leg direct when no tracker serves the line. A
   number of a carrier with no later scan, such as an earlier leg's, or two such numbers,
-  name no partner.
+  name no partner. When every scan is that partner's and the asked number's own rules do
+  not point to it, as with Hermes's rows under its own number for a forwarder's reference,
+  the scans name no `discovered_carrier`: the partner would not know the asked number.
 - The destination country the reply names (`destinationCode`, else a `destination` that
   is a country name) becomes `destination_country`, which routing uses to propose the
   destination's post for a postal number. A country only read off a reference ("CNPRT")
