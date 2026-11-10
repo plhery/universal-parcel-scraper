@@ -10,7 +10,7 @@ import { withNetworkRetry } from '../../core/runner/networkRetry.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { cleanScalar, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
-import { classifyDescription, GLS_STATUSES, statusCode } from './status.js';
+import { classifyDescription, GLS_STATUSES, PARCELSHOP_SCAN, statusCode } from './status.js';
 
 // Protocol provenance (inspected 2026-08-30):
 // https://gls-group.eu/EU/en/parcel-tracking
@@ -57,6 +57,8 @@ interface ParsedEvent {
   status: CarrierStatus;
   timestamp: number;
   sourceIndex: number;
+  /** Staged by its status code rather than its wording. */
+  coded: boolean;
 }
 
 export interface GLSSwitzerlandOptions {
@@ -322,9 +324,11 @@ function parseEvents(parcel: JsonObject): ParsedEvent[] {
     const identity = JSON.stringify([time.iso, location, description, code]);
     if (seen.has(identity)) return;
     seen.add(identity);
-    const classified = GLS_STATUSES.get(statusCode(raw.status)) ?? classifyDescription(description);
+    const coded = GLS_STATUSES.get(statusCode(raw.status));
+    const classified = coded ?? classifyDescription(description);
     parsed.push({
       sourceIndex,
+      coded: coded !== undefined,
       timestamp: time.timestamp,
       status: classified.status,
       event: {
@@ -339,6 +343,13 @@ function parseEvents(parcel: JsonObject): ParsedEvent[] {
   parsed.sort((left, right) => (
     right.timestamp - left.timestamp || left.sourceIndex - right.sourceIndex
   ));
+  // A ParcelShop arrival before any scan of GLS's own is the sender's drop-off: GLS collects the
+  // parcel from the shop next. After one, the parcel waits there for its recipient.
+  for (const entry of parsed) {
+    if (entry.coded || !PARCELSHOP_SCAN.test(entry.event.description ?? '')) continue;
+    const carried = parsed.some((other) => other.timestamp < entry.timestamp && !['pending', 'registered'].includes(other.event.stage ?? ''));
+    if (!carried) Object.assign(entry, { status: 'in_transit', event: { ...entry.event, stage: 'accepted' } });
+  }
   return parsed.slice(0, MAX_EVENTS_TO_RETURN);
 }
 

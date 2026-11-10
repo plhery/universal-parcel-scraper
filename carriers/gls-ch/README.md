@@ -60,7 +60,12 @@ upstream error.
   shop names itself, but the progress bar then reads `DELIVERED`.
 - "The parcel has not been handed over to GLS." is `registered`: GLS knows of
   the parcel but does not have it. It is checked before the "handed over to
-  GLS" acceptance.
+  GLS" acceptance. So is "The parcel was provided by the sender for collection by
+  GLS.", the sender's note before GLS collects it.
+- "The parcel has reached the ParcelShop." before any scan of GLS's own is the
+  sender's drop-off, `accepted`: GLS collects the parcel from the shop next.
+  After one, the parcel waits there for its recipient, `ready_for_pickup`. The
+  app's review leaves that row to the adapter.
 - Scan date and time arrive as separate offset-less fields and are read in
   `Europe/Zurich` (gls-de relabels the timezone only).
 - The estimate is the first date of the `arrivalTime` text, dropped once the parcel is

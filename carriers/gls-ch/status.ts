@@ -46,10 +46,17 @@ export function glsSwitzerlandStatus(value: unknown): ClassifiedStatus['status']
   return GLS_STATUSES.get(statusCode(value))?.status ?? 'unknown';
 }
 
+/**
+ * GLS's ParcelShop arrival, which the scans before it read: after a scan of GLS's own the parcel
+ * waits there for its recipient; before any, the sender has dropped it off for GLS to collect.
+ */
+export const PARCELSHOP_SCAN = /^(?:the )?parcel has reached the parcel ?shop[.!]?$/i;
+
 /** Classify a history row that carries no status code, from its wording alone. */
 export function classifyDescription(description: string): ClassifiedStatus {
-  // GLS knows of the parcel but does not have it yet: no acceptance.
-  if (/^(?:the )?parcel has not been handed over to gls[.!]?$/i.test(description.trim())) {
+  // GLS knows of the parcel but does not have it yet: no acceptance. The sender has it ready for
+  // GLS to collect, or has not handed it over.
+  if (/^(?:the )?parcel (?:has not been handed over to gls|was provided by the sender for collection by gls)[.!]?$/i.test(description.trim())) {
     return { status: 'pending', stage: 'registered' };
   }
   // INDELIVERY's wording: the parcel is on today's round, not a forecast.
@@ -96,10 +103,12 @@ export function classifyDescription(description: string): ClassifiedStatus {
 /**
  * What the map says about one scan. A history row keeps its event number as its code, not the
  * status code that staged it, so the wording stages it as a row without a status. Wording the
- * rules do not know stays open, and so does a delivery notice.
+ * rules do not know stays open, and so do a delivery notice and the ParcelShop arrival, which
+ * the scans before it read.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => {
+    if (PARCELSHOP_SCAN.test(wording.trim())) return undefined;
     const classified = classifyDescription(wording);
     return classified.status === 'unknown' ? undefined : classified.stage;
   },

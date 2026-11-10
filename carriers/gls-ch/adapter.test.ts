@@ -13,7 +13,7 @@ import {
   normalizeGLSSwitzerlandTrackingNumber,
   parseGLSSwitzerlandTrackingResponse,
 } from './adapter.js';
-import { glsSwitzerlandStatus } from './status.js';
+import { glsSwitzerlandStatus, statusMap } from './status.js';
 
 // Intentional test identifiers from official documentation. Swiss Post's GLS
 // guide publishes parcel 999999999916 alongside fictional “Test Entreprise”
@@ -292,6 +292,24 @@ describe('GLS Switzerland response normalization', () => {
       history: [{ date: '2026-06-19', time: '08:00', evtDscr }],
     }, OFFICIAL_TEST_PARCEL_NUMBER);
     expect(result.events?.[0]!.stage).toBe(stage);
+  });
+
+  it("reads the ParcelShop arrival as the sender's drop-off before any scan of GLS's own, and as waiting for the recipient after", () => {
+    const read = (history: JsonObject[]) => parseGLSSwitzerlandTrackingResponse({ tuNo: OFFICIAL_TEST_PARCEL_NUMBER, progressBar: {}, history },
+      OFFICIAL_TEST_PARCEL_NUMBER);
+    const entered = { date: '2026-06-18', time: '12:40:57', evtDscr: 'The parcel data was entered into the GLS IT system; the parcel was not yet handed over to GLS.' };
+    const provided = { date: '2026-06-18', time: '20:23:21', evtDscr: 'The parcel was provided by the sender for collection by GLS.' };
+    const shop = { date: '2026-06-19', time: '06:48:54', evtDscr: 'The parcel has reached the Parcelshop.' };
+    const dropped = read([shop, provided, entered]);
+    expect(dropped).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(dropped.events?.map((event) => event.stage)).toEqual(['accepted', 'registered', 'registered']);
+    const collected = read([{ date: '2026-06-19', time: '12:26:47', evtDscr: 'The parcel has been picked up by GLS.' }, shop, provided, entered]);
+    expect(collected.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted', 'registered', 'registered']);
+    const waiting = read([shop, { date: '2026-06-18', time: '21:00:00', evtDscr: 'The parcel has left the parcel center.' }, entered]);
+    expect(waiting).toMatchObject({ current_stage: 'ready_for_pickup' });
+    // The app's review leaves the arrival to the scans before it.
+    expect(statusMap.stage(null, 'The parcel has reached the Parcelshop.')).toBeUndefined();
+    expect(statusMap.stage(null, 'The parcel was provided by the sender for collection by GLS.')).toBe('registered');
   });
 
   it('reads a parcel GLS has not been handed as registered when no code names the stage', () => {
