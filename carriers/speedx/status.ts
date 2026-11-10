@@ -15,8 +15,9 @@ const RETURNED: ClassifiedStatus = { status: 'exception', stage: 'returned' };
 const CODES = new Map<string, ClassifiedStatus>([
   ['50001', REGISTERED],
   ['51001', REGISTERED],
-  // A pickup that failed at the shipper's, such as for a parcel count that did not match the
-  // booking: SpeedX still does not hold the parcel, and a later pickup collects it.
+  // A pickup that failed at the shipper's, closed when the driver came or with a parcel count that
+  // did not match the booking: SpeedX still does not hold the parcel, and a later pickup collects it.
+  ['51102', REGISTERED],
   ['51107', REGISTERED],
   // The driver collected the booked pickup from the shipper.
   ['51005', ACCEPTED],
