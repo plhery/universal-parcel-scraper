@@ -932,6 +932,7 @@ describe('classifyWording', () => {
     expect(classifyWording('Package shipment information', 'pending')).not.toEqual({ stage: 'in_transit', source: 'wording:language' });
     expect(classifyWording('Please update your delivery details', 'pending')).toEqual({ stage: 'pending', source: 'none' });
     expect(wordingStage('Your parcel will be available at the retrieval point', 'pending')).toBe('in_transit');
+    expect(wordingStage('Available for pickup shortly', 'pending')).toBe('in_transit');
     expect(wordingStage('Your parcel is not available at the retrieval point', 'pending')).not.toBe('ready_for_pickup');
     // The round itself still reads as one, a terminal or depot does not.
     expect(wordingStage('The parcel is in delivery.', 'pending')).toBe('out_for_delivery');

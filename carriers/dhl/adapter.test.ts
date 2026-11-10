@@ -292,6 +292,8 @@ describe('DHL public tracking normalization', () => {
     ['Eine Umleitung ist nicht mehr möglich. Die Sendung wird heute zugestellt.', 'in_transit', 'in_transit'],
     ['Delivery not possible. Pickup information will follow by mail', 'failed_attempt', 'exception'],
     ['Delivery not possible. Forwarding in postal retail outlet', 'failed_attempt', 'exception'],
+    // On the way to the outlet after "Forwarding to outlet"; not waiting there yet.
+    ['Available for pickup shortly', 'in_transit', 'in_transit'],
     ['The shipment is ready for collection', 'ready_for_pickup', 'out_for_delivery'],
     ['Die Sendung liegt zur Abholung bereit.', 'ready_for_pickup', 'out_for_delivery'],
     ['The shipment is being processed by customs', 'customs', 'in_transit'],

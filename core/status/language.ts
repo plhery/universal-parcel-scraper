@@ -451,7 +451,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // USPS's "Shipment Received, Package Acceptance Pending": the item reached USPS before its acceptance scan, as USPS's map reads it.
   if (/^shipment received,? package acceptance pending\b/.test(text)) return 'registered';
   if (/will be transported|\barrange (?:a )?(?:truck|train|rail|road) transfer\b|sera (?:transporte|achemine)|wird.*transportiert|sara trasportat/.test(text)) return 'in_transit';
-  if (/will be available|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis|mis en (?:livraison|distribution))|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/.test(text)) return 'in_transit';
+  // "Available for pickup shortly": the parcel is on its way to the outlet, not waiting there yet.
+  if (/will be available|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b|sera disponible|(?:sera|va etre|doit etre) (?:distribue|remis|mis en (?:livraison|distribution))|wird.*verfugbar|sara disponibile|to be delivered|a livrer|noch zuzustellen|da consegnare|(?:once|when|as soon as) (?:the |your )?(?:shipment|parcel|package|item) is out for delivery|\bout for delivery soon\b/.test(text)) return 'in_transit';
   if (/\bestara disponi(?:ble|vel)\b|\b(?:en breve|pronto|proximamente) podr(?:a|as|an) recoger(?:lo|la)?\b|\bpor entregar\b|\bpendiente de (?:entrega|entregar|reparto)\b|\bpendente de entrega\b|\b(?:aguarda|aguardando|a aguardar) (?:a )?entrega\b|\bsera (?:enviad|transportad|expedid|encaminhad)[oa]s?\b/.test(text)) return 'in_transit';
 
   // "Order information has been received and ready for pickup", as SF Express words it: the
