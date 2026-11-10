@@ -20,8 +20,10 @@ lookup its tracking page makes.
   HTTP 403, which the adapter reports as a refusal. A host whose clock drifts gets the same.
 - The page first asks `/open/website/orderPackageType` for each number, which only echoes the
   numbers back. The adapter skips it.
-- An unknown number is `{"code":500,"msg":"未找到单号"}` ("tracking number not found"). Any
-  other non-200 `code`, such as `轨迹接口异常` ("trace service error"), is inconclusive.
+- An unknown number is `{"code":500,"msg":"未找到单号"}` ("tracking number not found"). A number
+  the tracker knows before its first scan gets `无此单号轨迹信息!` ("no tracking information for
+  this number") instead, which is no history. Any other non-200 `code`, such as `轨迹接口异常`
+  ("trace service error"), is inconclusive.
 - A SafeLine firewall sits in front of the service. Its block page is reported as a challenge.
 - The history must echo the number asked.
 - Recognition makes the same request.

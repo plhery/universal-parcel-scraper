@@ -84,6 +84,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['12', 'exception'], // A service Total Express does not provide.
   ['28', 'exception'], // Held for an investigation.
   ['110', 'exception'], // Held at a state tax checkpoint.
+  ['92', 'exception'], // EM ANALISE DO POSTO FISCAL: the checkpoint holding it examines it, until 133 releases it.
   ['112', 'exception'],
   // Lost, stolen, damaged, confiscated or destroyed.
   ['10', 'exception'],

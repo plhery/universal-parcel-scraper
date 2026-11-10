@@ -575,9 +575,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // pickup point is read above.
   if (/^(?:[您你]的)?快件已到[达達](?:【[^【】]{1,80}】)?(?:[，,] ?准[备備]装[车車])?$/.test(text)) return 'in_transit';
   if (/^(?:[您你]的)?快件已[离離][开開](?:【[^【】]{1,80}】)?的?路上$/.test(text)) return 'in_transit';
-  // JD Express starting a long haul, with the distance to its next site, as providers relay it with no carrier:
-  // in transit, like its departures on the road.
+  // JD Express starting a long haul, with the distance to its next site, or under way on it, with the distance
+  // covered, as providers relay them with no carrier: in transit, like its departures on the road.
   if (/^开始长途运[输輸](?:[，,] ?距[离離]下一站 ?\d+(?:\.\d+)? ?(?:km|公里))?[。.]?$/.test(text)) return 'in_transit';
+  if (/^正在长途运[输輸]中(?:[，,] ?[当當]前位[于於] ?\d+(?:\.\d+)? ?(?:km|公里))?[。.]?$/.test(text)) return 'in_transit';
   // Australia Post's lodgement and its landing in a country (INT-2144, INT-2164), as providers relay them
   // with no carrier: accepted and in transit, as Australia Post's map reads them.
   if (/^item lodged$/.test(text)) return 'accepted';

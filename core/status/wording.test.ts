@@ -1058,8 +1058,9 @@ describe('classifyWording', () => {
       ['京东快递已收取件，以守护之名，奔赴每一份信任！如有疑问请随时拨打', 'accepted'], ['京东快递已收取件', 'accepted'],
       ['您的快件已到达，准备装车', 'in_transit'], ['您的快件已到达', 'in_transit'], ['您的快件已到达【示例营业部】，准备装车', 'in_transit'], ['您的快件已到达【示例驿站】', 'ready_for_pickup'],
       ['您的快件已离开的路上', 'in_transit'],
-      // JD Express starting a long haul, with the distance to its next site or without it.
+      // JD Express starting a long haul, with the distance to its next site or without it, and under way on it.
       ['开始长途运输，距离下一站1234KM。', 'in_transit'], ['开始长途运输，距离下一站56公里', 'in_transit'], ['开始长途运输', 'in_transit'],
+      ['正在长途运输中，当前位于1234KM。', 'in_transit'], ['正在长途运输中', 'in_transit'],
       // Australia Post's lodgement and its landing in a country, as providers relay them without a carrier.
       ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
       // A hub identifying a parcel as bulky, at the second it receives it.

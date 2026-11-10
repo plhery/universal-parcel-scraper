@@ -62,6 +62,7 @@
     {"code": "87", "wording": "Encomenda Postada a partir de uma Base (digitada)", "language": "pt", "stage": "accepted", "confirmedBy": "bundle"},
     {"code": "90", "wording": "ENCOMENDA DESCARTADA (DESTRUIÇÃO)", "language": "pt", "stage": "exception", "confirmedBy": "bundle"},
     {"code": "91", "wording": "ENTREGA PROGRAMADA", "language": "pt", "stage": "in_transit", "confirmedBy": "bundle", "note": "The recipient was contacted to arrange the delivery."},
+    {"code": "92", "wording": "EM ANALISE DO POSTO FISCAL", "language": "pt", "stage": "exception", "confirmedBy": "live", "note": "A state tax checkpoint examines the parcel it holds (110), seconds before it releases it (133)."},
     {"code": "94", "wording": "EXTRAVIO PARCIAL", "language": "pt", "stage": "exception", "confirmedBy": "bundle"},
     {"code": "95", "wording": "FALTA DE COMPLEMENTO FISICO", "language": "pt", "stage": "failed_attempt", "confirmedBy": "bundle"},
     {"code": "96", "wording": "CONFISCADO RFB", "language": "pt", "stage": "exception", "confirmedBy": "bundle"},

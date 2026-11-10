@@ -145,6 +145,8 @@ describe('Anjun HTTP adapter', () => {
     expect(() => parseAnjun(fixture('not-found'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseAnjun(fixture('service-error'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseAnjun({ ...fixture('not-found'), code: 401 }, UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseAnjun({ ...fixture('not-found'), msg: '无此单号轨迹信息!' }, UNKNOWN))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
     expect(() => parseAnjun(changed('delivered', (rows) => { rows.length = 0; }), DELIVERED))
       .toThrow(expect.objectContaining({ kind: 'indeterminate', name: 'NoHistoryError' }));
   });

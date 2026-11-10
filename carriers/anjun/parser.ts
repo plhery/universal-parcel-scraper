@@ -15,6 +15,8 @@ const NUMBER = /^AJ\d{15}$/;
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 // The tracker's message for a number it does not know: "tracking number not found".
 const NOT_FOUND = '未找到单号';
+// Its message for a number it knows with no scans yet: "no tracking information for this number".
+const NO_SCANS = /^无此单号轨迹信息[!！]?$/;
 const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
 // A run of nine or more digits, with spaces, brackets, dots or hyphens
 // between them, as phone numbers are written; a date stays.
@@ -116,6 +118,7 @@ export function parseAnjun(payload: unknown, raw: string): CarrierResult {
   if (!isRecord(payload) || typeof payload.code !== 'number') throw new SchemaError(PROVIDER, 'Anjun returned an invalid envelope');
   if (payload.code !== 200) {
     if (payload.code === 500 && clean(payload.msg, 80) === NOT_FOUND) throw new NotFoundError(PROVIDER);
+    if (payload.code === 500 && NO_SCANS.test(clean(payload.msg, 80))) throw new NoHistoryError(PROVIDER);
     throw new IndeterminateError(PROVIDER, 'Anjun did not complete the lookup');
   }
   const extra = payload.extra;
