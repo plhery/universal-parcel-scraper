@@ -83,6 +83,141 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "The driver could not deliver for missing address details; OnTrac's code list files it as a delivery attempt."
+    },
+    {
+      "code": "LODK",
+      "wording": "Delivery Delay",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The code list's \"Delayed. Delivery date updated.\": the parcel moves on with a new date."
+    },
+    {
+      "code": "LR",
+      "wording": "Delayed by road closure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LM",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LW",
+      "wording": "Weather delay. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "EXFT",
+      "wording": "Delayed. Could not reach delivery area",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "DLAY",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LLNH",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LODK",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "LD",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "MBKD",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "RB",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "WTDL",
+      "wording": "Weather delay. See service alerts",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "BW",
+      "wording": "Weather delay. See service alerts",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "AN",
+      "wording": "Delayed. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "FTCF",
+      "wording": "Misrouted. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "FWED",
+      "wording": "Misrouted. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "MSST",
+      "wording": "Misrouted. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "MR",
+      "wording": "Misrouted. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
+    },
+    {
+      "code": "MS",
+      "wording": "Misrouted. Delivery date updated",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "portal"
     }
   ]
 }

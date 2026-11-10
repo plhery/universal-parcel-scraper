@@ -15,6 +15,10 @@ add(['XX', 'OVRC', 'AUTO', 'EXRL', 'INRL'], 'pending', 'registered');
 add(['PKUP', 'PU', 'RL', 'ALPK'], 'in_transit', 'accepted');
 add(['ARRD', 'ORIG', 'RCVD', 'OS', 'FCTF', 'SFCT', 'LOAD', 'NFRP'], 'in_transit', 'in_transit');
 add(['OFDL', 'OD'], 'out_for_delivery', 'out_for_delivery');
+// Delays (by weather, a road closure, a mechanical issue, or unnamed) and misroutes: the parcel moves
+// on with a new delivery date, so it is in transit, as the code list's status says.
+add(['LR', 'LM', 'LW', 'EXFT', 'DLAY', 'LLNH', 'LODK', 'LD', 'MBKD', 'RB', 'WTDL', 'BW', 'AN',
+  'FTCF', 'FWED', 'MSST', 'MR', 'MS'], 'in_transit', 'in_transit');
 add(['BCLD', 'UTLV', 'NH', 'ACSS', 'NDMI', 'RFDM'], 'exception', 'failed_attempt');
 add(['DN', 'DLVD', 'CL', 'DM', 'DW', 'OK', 'DD'], 'delivered', 'delivered');
 add(['RETD', 'RETN', 'RS'], 'exception', 'returned');

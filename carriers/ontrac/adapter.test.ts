@@ -120,6 +120,8 @@ describe('OnTrac direct tracking', () => {
     ['UD', 'The contents of the package are damaged', 'exception', 'exception'],
     ['ONHD', 'Details needed. Please contact us', 'exception', 'exception'],
     ['NFRP', 'Order has been transferred to another carrier', 'in_transit', 'in_transit'],
+    // A delay the code list files as an exception: the parcel moves on with a new date.
+    ['LODK', 'Delivery Delay', 'in_transit', 'in_transit'],
   ])('interprets %s from its actual milestone rather than the portal presentation type', (code, description, status, stage) => {
     const value = payload();
     Object.assign(value.Packages[0].Events[0], { EventCode: code, EventShortDescription: description });
