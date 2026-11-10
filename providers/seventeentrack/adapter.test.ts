@@ -151,6 +151,24 @@ describe('17TRACK result parsing', () => {
     expect(JSON.stringify(result)).not.toMatch(/示例（|13000000000|热线|致电/u);
   });
 
+  it("writes XDP's scans as ParcelsApp does, so the two copies of a scan meet", () => {
+    const scan = (time: string, description: string) => ({
+      time_iso: `2026-11-06T${time}+00:00`, time_utc: null, time_raw: { date: '2026-11-06', time, timezone: null },
+      description, location: 'Sample Depot', stage: null, sub_status: 'InfoReceived' });
+    const payload = postalHistory([
+      scan('07:00:00', 'NOT COLLECTED EMAIL, Manifested but not collected email sent to Sample'),
+      scan('01:54:00', 'PRINT, --'),
+      scan('01:54:00', 'CREATE, --'),
+    ], 'InfoReceived');
+    const providers = (payload.shipments[0]!.shipment as { tracking: { providers: { provider: unknown }[] } }).tracking.providers;
+    providers[0]!.provider = { key: 100167, name: 'XDP EXPRESS' };
+    expect(parse17TrackResponse(payload, number).events?.map((event) => [event.description, event.stage])).toEqual([
+      ['Manifested but not collected email sent to Sample', 'registered'],
+      ['PRINT', 'registered'],
+      ['CREATE', 'registered'],
+    ]);
+  });
+
   it('reads an exact voided label as a problem despite the generic transit code', () => {
     const label = { ...postalScan('InfoReceived', 'Shipping Label Created'),
       time_iso: '2026-09-19T12:22:00+08:00', time_utc: '2026-09-19T04:22:00Z' };

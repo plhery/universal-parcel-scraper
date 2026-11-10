@@ -271,7 +271,9 @@ carrier.
   country's code there before its English cut short ("【ZZ Arriyal at Processin】"), and that
   code is its place. Pengyou's leg writes its place in
   brackets after its English wording ("Airline received【Example】"); with no location, that place
-  becomes the location, and a copy stored with the brackets takes the new form in place.
+  becomes the location, and a copy stored with the brackets takes the new form in place. XDP's
+  scans come as their type and description ("CREATE, --"); they keep the description, or the
+  type where XDP gives "--", as ParcelsApp words them, so the two copies of a scan meet.
 - Each scan keeps the `location` 17TRACK reports, unless it holds private delivery details or
   is Posti's "ULKOMAILLA" ("abroad") or the "目的国" ("destination country") China Post's feed
   gives an airline's arrival in place of a country's code: neither names a place. China

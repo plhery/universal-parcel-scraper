@@ -1857,6 +1857,7 @@ describe("universal providers' answers", () => {
       ['The shipment has been received at the SEUR facilities of origin', 'accepted'],
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
       ['Your parcel has been received by drop off point', 'accepted'], ['Parcel has entered confiscation process', 'exception'],
+      ['Manifested but not collected email sent to Sample', 'registered'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
       ['Restricted item - Battery item', 'in_transit'],
       ['Package information is created in the system', 'registered'],

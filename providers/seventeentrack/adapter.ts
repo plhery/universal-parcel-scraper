@@ -481,6 +481,19 @@ const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049]);
 const BRACKETED_PLACES: ReadonlySet<unknown> = new Set([191878]);
 /** 17TRACK's carrier 190157, YTO Express, whose scans it relays in the website's expanded wording. */
 const YTO = 190157;
+/** 17TRACK's carrier 100167, XDP, whose scans it writes as their type and description: "CREATE, --". */
+const XDP = 100167;
+const XDP_SCAN = /^[A-Z][A-Z0-9 /&-]{0,39}, (.+)$/;
+
+/**
+ * An XDP scan as ParcelsApp gives it, so the two copies of a scan meet: its description, or
+ * its type where XDP writes "--" for none.
+ */
+function xdpRelayedWording(description: string): string {
+  const scan = XDP_SCAN.exec(description.trim());
+  if (!scan) return description;
+  return scan[1]!.trim() === '--' ? description.trim().slice(0, -scan[1]!.length - 2) : scan[1]!.trim();
+}
 /** China Post's mirror of the origin post's outward exchange office: "arrived at" or "left the exchange office abroad". */
 const ORIGIN_EXCHANGE = /^(?:到达|离开)境外出口互换局/;
 
@@ -764,7 +777,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const placed = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
       let parsed: CarrierEvent | null;
       // YTO's wording without the courier's name and phone and its hotline, as YTO's own result keeps neither.
-      const scan = reported.key === YTO ? { ...raw, description: ytoRelayedWording(text(raw.description)) } : raw;
+      const scan = reported.key === YTO ? { ...raw, description: ytoRelayedWording(text(raw.description)) }
+        : reported.key === XDP ? { ...raw, description: xdpRelayedWording(text(raw.description)) } : raw;
       try { parsed = seventeenTrackEvent(scan, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed || (reported.key === DHL_ECOMMERCE_US && !parsed.location && DHL_ECOMMERCE_EN_ROUTE.test(parsed.description ?? ''))) continue;

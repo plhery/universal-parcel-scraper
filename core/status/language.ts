@@ -672,6 +672,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Nor is a pickup that did not happen. A parcel left uncollected or one the courier failed to collect is an
   // exception, as the carriers' own maps file it. One yet to be collected waits for the carrier or the recipient,
   // whichever the scan names, and one that may not happen ("if not collected") names no stage.
+  // XDP's notice to the sender that a consignment it manifested has not been collected: the sender still has it.
+  if (/^manifested but not collected (?:e-?mail|sms)\b/.test(text)) return 'registered';
   if (NOT_COLLECTED.test(text)) {
     if (/\b(?:if|unless|wenn|falls|si|qualora|caso)\b/.test(text)) return undefined;
     if (!/\b(?:yet|noch|encore|ancora|todavia|aun|ainda|jeszcze)\b/.test(text)) return 'exception';
