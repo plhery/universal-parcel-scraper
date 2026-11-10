@@ -255,6 +255,14 @@
       "unmapped": true,
       "confirmedBy": "live",
       "note": "The day booked for the next run after the parcel came back to the station, as iMile writes its \"Shipment is scheduled to\" line: moves nothing, so the failed attempt stands. Its pattern covers any day."
+    },
+    {
+      "wording": "Parcel is ready for hand over to distributor",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-05",
+      "note": "Without a code, after the sorting centre's departure: the parcel waits to go to the partner that delivers it."
     }
   ]
 }

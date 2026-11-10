@@ -127,6 +127,14 @@
       "note": "The local courier's delivery round."
     },
     {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-09",
+      "note": "The local courier's delivery, after its round, with no place."
+    },
+    {
       "wording": "Delivered by post man",
       "stage": "delivered",
       "language": "en",

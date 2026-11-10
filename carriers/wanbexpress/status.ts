@@ -29,6 +29,8 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   // Held at the delivery base for another day: no round, so no attempt.
   ['the shipment has been postponed and will probably be delivered on the next working day', 'in_transit'],
   ['the shipment has been loaded onto the delivery vehicle. delivery is expected to take place today.', 'out_for_delivery'],
+  // After the sorting centre's departure, before the partner that delivers it takes the parcel.
+  ['parcel is ready for hand over to distributor', 'in_transit'],
 ]);
 
 /**
