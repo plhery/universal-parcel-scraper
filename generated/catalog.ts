@@ -35988,6 +35988,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "olza-logistic": {
+    "displayName": "Olza Logistic",
+    "color": "#08c2ee",
+    "aliases": [
+      "olzalogistic.com"
+    ],
+    "countries": [
+      "CZ",
+      "PL",
+      "SK",
+      "HU",
+      "RO",
+      "BG",
+      "SI",
+      "HR",
+      "GR",
+      "IT",
+      "DE",
+      "EE",
+      "LV",
+      "LT",
+      "DK",
+      "SE",
+      "FI",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.olzalogistic.com/",
+    "trackingSearchUrl": "https://tracking.olzalogistic.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "om-logistics": {
     "displayName": "Om Logistics",
     "color": "#e31f24",
@@ -38950,6 +38987,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "pointpack": {
+    "displayName": "Pointpack",
+    "color": "#fe5722",
+    "aliases": [
+      "Pointpack S.A."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "trackingUrlTemplate": "https://www.pointpack.pl/sledz-przesylke/{trackingNumber}",
+    "trackingSearchUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "linkRules": [
+      {
+        "domains": [
+          "pointpack.pl",
+          "www.pointpack.pl"
+        ],
+        "pathPattern": "^/sledz-przesylke/[^/]+/?$",
+        "path": "^/sledz-przesylke/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "polaris-transport": {
     "displayName": "Polaris Transportation Group",
     "color": "#004c8c",
@@ -40877,6 +40944,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "quriers": {
+    "displayName": "Quriers",
+    "color": "#85d31f",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.quriers.pl/sledz-przesylke",
+    "trackingSearchUrl": "https://www.quriers.pl/sledz-przesylke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "qwintry": {
     "displayName": "Qwintry",
     "color": "#ef7d00",
@@ -41381,6 +41465,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "rgw-express": {
+    "displayName": "RGW Express",
+    "color": "#dd2928",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trace.rgw-express.pl/search2/",
+    "trackingUrlTemplate": "https://trace.rgw-express.pl/search2/tracking.php?reference_no={trackingNumber}&language=polish",
+    "trackingSearchUrl": "https://trace.rgw-express.pl/search2/",
+    "linkRules": [
+      {
+        "domains": [
+          "trace.rgw-express.pl"
+        ],
+        "pathPattern": "^/search2/tracking\\.php$",
+        "params": [
+          "reference_no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rhenus-de": {
     "displayName": "Rhenus Germany",
     "color": "#00499a",
@@ -41431,6 +41543,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "riders-express": {
+    "displayName": "Riders Express",
+    "color": "#042b55",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "trackingSearchUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "linkRules": [],
     "detectionRules": []
   },
   "rika-express": {
@@ -55546,6 +55675,7 @@ export const CARRIER_IDS = [
   "okaken",
   "okay-parcel",
   "olva-courier",
+  "olza-logistic",
   "om-logistics",
   "omgo",
   "omniva",
@@ -55624,6 +55754,7 @@ export const CARRIER_IDS = [
   "pitt-ohio",
   "plycon",
   "pmm",
+  "pointpack",
   "polaris-transport",
   "polonez",
   "pony-express",
@@ -55675,6 +55806,7 @@ export const CARRIER_IDS = [
   "quick-rabbit",
   "quicksilver-sa",
   "quiqup",
+  "quriers",
   "qwintry",
   "qwqer",
   "raben",
@@ -55690,8 +55822,10 @@ export const CARRIER_IDS = [
   "redx",
   "relaytech",
   "rex-indonesia",
+  "rgw-express",
   "rhenus-de",
   "rhenus-it",
+  "riders-express",
   "rika-express",
   "rincos",
   "rivigo",
@@ -57024,6 +57158,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "okaken": [],
   "okay-parcel": [],
   "olva-courier": ["olva-courier-3"],
+  "olza-logistic": [],
   "om-logistics": [],
   "omgo": ["omgo-1"],
   "omniva": ["omniva-1","omniva-2","omniva-own","omniva-s10"],
@@ -57102,6 +57237,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "pitt-ohio": [],
   "plycon": [],
   "pmm": [],
+  "pointpack": [],
   "polaris-transport": ["polaris-transport-1"],
   "polonez": ["polonez-1"],
   "pony-express": [],
@@ -57153,6 +57289,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
   "quicksilver-sa": ["quicksilver-sa-1"],
   "quiqup": [],
+  "quriers": [],
   "qwintry": ["qwintry-1"],
   "qwqer": [],
   "raben": ["raben-1"],
@@ -57168,8 +57305,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "redx": ["redx-1"],
   "relaytech": ["relaytech-1"],
   "rex-indonesia": ["rex-indonesia-1"],
+  "rgw-express": [],
   "rhenus-de": [],
   "rhenus-it": [],
+  "riders-express": [],
   "rika-express": [],
   "rincos": [],
   "rivigo": [],

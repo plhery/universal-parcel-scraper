@@ -1,0 +1,42 @@
+{
+  "id": "rgw-express",
+  "displayName": "RGW Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#dd2928"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trace.rgw-express.pl/search2/tracking.php?reference_no={trackingNumber}&language=polish",
+    "searchUrl": "https://trace.rgw-express.pl/search2/",
+    "canaryUrl": "https://trace.rgw-express.pl/search2/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "trace.rgw-express.pl"
+      ],
+      "pathPattern": "^/search2/tracking\\.php$",
+      "params": [
+        "reference_no"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,43 @@
+{
+  "id": "pointpack",
+  "displayName": "Pointpack",
+  "aliases": [
+    "Pointpack S.A."
+  ],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#fe5722"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.pointpack.pl/sledz-przesylke/{trackingNumber}",
+    "searchUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "canaryUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "pointpack.pl",
+        "www.pointpack.pl"
+      ],
+      "pathPattern": "^/sledz-przesylke/[^/]+/?$",
+      "path": "^/sledz-przesylke/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}

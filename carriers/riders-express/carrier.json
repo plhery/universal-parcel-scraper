@@ -1,0 +1,31 @@
+{
+  "id": "riders-express",
+  "displayName": "Riders Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#042b55"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "canaryUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

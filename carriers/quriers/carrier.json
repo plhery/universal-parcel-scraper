@@ -1,0 +1,31 @@
+{
+  "id": "quriers",
+  "displayName": "Quriers",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "PL"
+    ]
+  },
+  "brand": {
+    "color": "#85d31f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Warsaw",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.quriers.pl/sledz-przesylke",
+    "canaryUrl": "https://www.quriers.pl/sledz-przesylke",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

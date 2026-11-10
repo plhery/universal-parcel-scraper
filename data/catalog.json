@@ -35984,6 +35984,43 @@
       }
     ]
   },
+  "olza-logistic": {
+    "displayName": "Olza Logistic",
+    "color": "#08c2ee",
+    "aliases": [
+      "olzalogistic.com"
+    ],
+    "countries": [
+      "CZ",
+      "PL",
+      "SK",
+      "HU",
+      "RO",
+      "BG",
+      "SI",
+      "HR",
+      "GR",
+      "IT",
+      "DE",
+      "EE",
+      "LV",
+      "LT",
+      "DK",
+      "SE",
+      "FI",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Prague",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://tracking.olzalogistic.com/",
+    "trackingSearchUrl": "https://tracking.olzalogistic.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "om-logistics": {
     "displayName": "Om Logistics",
     "color": "#e31f24",
@@ -38946,6 +38983,36 @@
     ],
     "detectionRules": []
   },
+  "pointpack": {
+    "displayName": "Pointpack",
+    "color": "#fe5722",
+    "aliases": [
+      "Pointpack S.A."
+    ],
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "trackingUrlTemplate": "https://www.pointpack.pl/sledz-przesylke/{trackingNumber}",
+    "trackingSearchUrl": "https://www.pointpack.pl/sledz-przesylke",
+    "linkRules": [
+      {
+        "domains": [
+          "pointpack.pl",
+          "www.pointpack.pl"
+        ],
+        "pathPattern": "^/sledz-przesylke/[^/]+/?$",
+        "path": "^/sledz-przesylke/([^/]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "polaris-transport": {
     "displayName": "Polaris Transportation Group",
     "color": "#004c8c",
@@ -40873,6 +40940,23 @@
     ],
     "detectionRules": []
   },
+  "quriers": {
+    "displayName": "Quriers",
+    "color": "#85d31f",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.quriers.pl/sledz-przesylke",
+    "trackingSearchUrl": "https://www.quriers.pl/sledz-przesylke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "qwintry": {
     "displayName": "Qwintry",
     "color": "#ef7d00",
@@ -41377,6 +41461,34 @@
       }
     ]
   },
+  "rgw-express": {
+    "displayName": "RGW Express",
+    "color": "#dd2928",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trace.rgw-express.pl/search2/",
+    "trackingUrlTemplate": "https://trace.rgw-express.pl/search2/tracking.php?reference_no={trackingNumber}&language=polish",
+    "trackingSearchUrl": "https://trace.rgw-express.pl/search2/",
+    "linkRules": [
+      {
+        "domains": [
+          "trace.rgw-express.pl"
+        ],
+        "pathPattern": "^/search2/tracking\\.php$",
+        "params": [
+          "reference_no"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rhenus-de": {
     "displayName": "Rhenus Germany",
     "color": "#00499a",
@@ -41427,6 +41539,23 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "riders-express": {
+    "displayName": "Riders Express",
+    "color": "#042b55",
+    "countries": [
+      "PL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Warsaw",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "trackingSearchUrl": "https://www.riders.com.pl/monitoruj-przesylke/",
+    "linkRules": [],
     "detectionRules": []
   },
   "rika-express": {

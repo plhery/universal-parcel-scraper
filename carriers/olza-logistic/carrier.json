@@ -1,0 +1,50 @@
+{
+  "id": "olza-logistic",
+  "displayName": "Olza Logistic",
+  "aliases": [
+    "olzalogistic.com"
+  ],
+  "region": {
+    "countries": [
+      "CZ",
+      "PL",
+      "SK",
+      "HU",
+      "RO",
+      "BG",
+      "SI",
+      "HR",
+      "GR",
+      "IT",
+      "DE",
+      "EE",
+      "LV",
+      "LT",
+      "DK",
+      "SE",
+      "FI",
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#08c2ee"
+  },
+  "selectable": true,
+  "timezone": "Europe/Prague",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://tracking.olzalogistic.com/",
+    "canaryUrl": "https://tracking.olzalogistic.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
