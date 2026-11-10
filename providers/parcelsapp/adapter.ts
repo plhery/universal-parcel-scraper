@@ -1097,6 +1097,9 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // FAR's tracker states each scan's offset, the origin's in China and the last-mile carrier's
   // abroad; ParcelsApp keeps the digits alone, so its copies keep their wall clock.
   if (carrier === 'far-international') return null;
+  // Shouwu's dates are the epoch it stores (`traceTime`), in UTC and without a place: its own
+  // tracker dates its rows in China and Hong Kong at the same instants to the second.
+  if (carrier === 'shouwu') return null;
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
   if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;

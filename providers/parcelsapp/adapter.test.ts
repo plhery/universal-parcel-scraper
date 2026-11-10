@@ -812,6 +812,19 @@ describe('ParcelsApp result parsing', () => {
     expect(time('France')).toEqual(['2026-10-28T16:03:00.000Z']);
   });
 
+  it("reads Shouwu's dates as the epoch Shouwu stores", () => {
+    const times = parseParcelsAppResponse({
+      carriers: ['Shouwu Express'], originCode: 'CN', destinationCode: 'US',
+      states: [
+        { date: '2026-10-31T22:28:42Z', status: 'Flight arrival', carrier: 0 },
+        { date: '2026-10-31T08:00:26Z', status: 'Flight departure', carrier: 0 },
+        { date: '2026-10-26T06:43:03Z', status: 'Shipment information received', carrier: 0 },
+      ],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // Shouwu's own tracker dates its rows in China and Hong Kong at these instants to the second.
+    expect(times).toEqual(['2026-10-31T22:28:42.000Z', '2026-10-31T08:00:26.000Z', '2026-10-26T06:43:03.000Z']);
+  });
+
   it("reads Azerbaijan Post's copies of a sending post's scans on the clock of the country before the office", () => {
     const time = (location: string, carrier = 1) => parseParcelsAppResponse({
       carriers: ['Universal Postal Union', 'Azerbaijan Post'], origin: 'Latvia', destination: 'Azerbaijan',

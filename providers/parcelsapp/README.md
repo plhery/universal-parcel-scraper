@@ -413,7 +413,9 @@ step exists for future protocol changes.
   brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
   hours ahead of iMile's own in Italy. "FAR" has the digits of FAR International's tracker,
   which states each scan's offset, China's or the last-mile carrier's abroad: its copies
-  keep their wall clock, as FAR's own scans without an offset do. "MailAmericas" customs scans in the destination ("Customs at
+  keep their wall clock, as FAR's own scans without an offset do. "Shouwu Express" has the
+  epoch Shouwu stores, in UTC and without a place: Shouwu's own tracker dates its rows in China
+  and Hong Kong at the same instants, eight hours after China's clock would. "MailAmericas" customs scans in the destination ("Customs at
   destination. …") are on that country's clock, as MailAmericas's own reply dates them: Argentina's,
   Colombia's or Peru's; Mexico's and Chile's several clocks leave them as they are. "Royal Mail", "Parcelforce" and "Parcelforce Worldwide" have the labels
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African
