@@ -1,0 +1,47 @@
+{
+  "id": "home-delivery-team",
+  "displayName": "Home Delivery Team",
+  "aliases": [
+    "HDT",
+    "HDT Home Delivery Team",
+    "GE Logisztika Kft."
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#dd137b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://homedt.hu/nyomonkovetes?track_number={trackingNumber}",
+    "searchUrl": "https://homedt.hu/nyomonkovetes",
+    "canaryUrl": "https://homedt.hu/nyomonkovetes",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "homedt.hu",
+        "www.homedt.hu"
+      ],
+      "pathPattern": "^/nyomonkovetes/?$",
+      "params": [
+        "track_number"
+      ]
+    }
+  ],
+  "detection": []
+}

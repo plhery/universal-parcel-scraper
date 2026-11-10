@@ -25366,6 +25366,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "home-delivery-team": {
+    "displayName": "Home Delivery Team",
+    "color": "#dd137b",
+    "aliases": [
+      "HDT",
+      "HDT Home Delivery Team",
+      "GE Logisztika Kft."
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://homedt.hu/nyomonkovetes",
+    "trackingUrlTemplate": "https://homedt.hu/nyomonkovetes?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://homedt.hu/nyomonkovetes",
+    "linkRules": [
+      {
+        "domains": [
+          "homedt.hu",
+          "www.homedt.hu"
+        ],
+        "pathPattern": "^/nyomonkovetes/?$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "homexpress": {
     "displayName": "HOMEXPRESS",
     "color": "#ffcd00",
@@ -54156,6 +54190,7 @@ export const CARRIER_IDS = [
   "hkd-express",
   "hlog-transportes",
   "holisol",
+  "home-delivery-team",
   "homexpress",
   "honducor",
   "hongsuda",
@@ -55593,6 +55628,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hkd-express": [],
   "hlog-transportes": ["hlog-transportes-1"],
   "holisol": [],
+  "home-delivery-team": [],
   "homexpress": [],
   "honducor": [],
   "hongsuda": [],

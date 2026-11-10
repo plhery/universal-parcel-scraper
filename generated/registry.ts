@@ -2103,6 +2103,7 @@ export const REGISTRY: RegistryDefinition = {
     "hkd-express": "universal",
     "hlog-transportes": "universal",
     "holisol": "universal",
+    "home-delivery-team": "universal",
     "homexpress": "homexpress",
     "honducor": "universal",
     "hongkong-post": "hongkong-post",
