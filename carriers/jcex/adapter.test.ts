@@ -432,8 +432,9 @@ describe('JCEX status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'InTransit_Other', description: 'Synthetic note' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Exception_Returned', description: 'Synthetic note' })).toEqual({ kind: 'mapped', stage: 'returned' });
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'SYNTHETIC', description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
-    // Rows filed without a code: the line haul leaving China, and USPS's arrival with its name left out.
-    for (const description of ['China, Departure from the starting port', 'Arrived at  Facility']) {
+    // Rows filed without a code: the line haul leaving China, the truck transfer at the destination,
+    // and USPS's arrival with its name left out.
+    for (const description of ['China, Departure from the starting port', 'Card transferring(卡转中)', 'Arrived at  Facility']) {
       expect(statusMapAnswer({ carrier: 'jcex', providerCode: '', description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
   });
