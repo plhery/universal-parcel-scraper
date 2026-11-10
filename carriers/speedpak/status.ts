@@ -19,6 +19,8 @@ const MAP: Readonly<Record<string, ClassifiedStatus>> = {
   'Out for delivery': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   // SpeedX's last-mile wording, relayed without its Chinese label.
   'Attempted Delivery: No access': { status: 'exception', stage: 'failed_attempt' },
+  // PF Logistics' driver has the parcel on board, relayed in quotes under the label 尝试派送.
+  '"Onboard ready for delivery"': { status: 'out_for_delivery', stage: 'out_for_delivery' },
 };
 
 const MOVING: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };

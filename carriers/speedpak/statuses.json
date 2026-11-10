@@ -96,6 +96,14 @@
       "note": "SpeedX's last-mile wording, which SpeedPAK relays."
     },
     {
+      "wording": "\"Onboard ready for delivery\"",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "PF Logistics' last-mile wording, which SpeedPAK relays in quotes under its label 尝试派送: the driver has the parcel on board, as PF Logistics' own Onboard."
+    },
+    {
       "wording": "Delivered. (Recipient's front door)",
       "language": "en",
       "stage": "delivered",

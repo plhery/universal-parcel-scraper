@@ -83,6 +83,17 @@ describe('SpeedPAK response projection', () => {
     expect(statusMap.stage(null, 'attempted delivery: no access')).toBe('failed_attempt');
   });
 
+  it("reads PF Logistics' onboard scan, relayed in quotes, as out for delivery", () => {
+    const payload = fixture();
+    payload.result.waybills[0].traces[0] = { eventDesc: '"Onboard ready for delivery"', eventDescCn: '尝试派送', oprTimestamp: 1767362400000 };
+    payload.result.waybills[0].lastStatus = '"Onboard ready for delivery"';
+    payload.result.waybills[0].lastStatusCn = '尝试派送';
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'carrier_map' });
+    expect(statusMap.stage(null, '"onboard ready for delivery"')).toBe('out_for_delivery');
+  });
+
   it('keeps a destination hand-off\'s departures and arrivals moving by their labels', () => {
     const payload = fixture();
     const traces = payload.result.waybills[0].traces;
