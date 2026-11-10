@@ -792,6 +792,9 @@ describe('classifyWording', () => {
       // GEODIS's notice of the sender's data, unlike a parcel transferred on.
       ['Transferred Data', 'registered'],
       ['Transferred to next facility', 'in_transit'],
+      // DPD's notice of the sender's parcel data, unlike the parcel handed to it.
+      ['Parcelinfo handed to DPD', 'registered'],
+      ['Parcel handed to DPD', 'accepted'],
       // Correos: left for admission, pre-registered, admitted.
       ['depositado para admisión. envío depositado por remitente en taquilla citypaq para admisión por correos', 'registered'],
       ['Entregado en CityPaq para admisión', 'registered'],

@@ -43,6 +43,14 @@
       "note": "Seen in the German app's scan list, which carries wording only."
     },
     {
+      "wording": "Parcelinfo handed to DPD",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The sender's parcel data reaching DPD, as ParcelsApp relays it: absent from DPD's own history, whose first scan is the parcel handed to DPD a day later."
+    },
+    {
       "wording": "Parcel handed to Pickup parcelshop by consignor.",
       "language": "en",
       "stage": "accepted",
