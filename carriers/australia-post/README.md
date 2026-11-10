@@ -20,6 +20,14 @@ refusal there leaves the number unchecked instead of starting the browser.
      over plain HTTP.
    - Each lookup gets a fresh browser context that is closed afterwards.
 
+`AUSTRALIA_POST_FALLBACK_PROXY_URL` opts into one more browser read through an HTTP(S)
+proxy after a captured browser challenge. The primary browser keeps its full budget;
+the retry starts only when the transport allowance and usable browser time remain.
+It sends the whole browser context through the configured proxy. Missing parcels,
+inconclusive replies, rate limits and schema errors do not use it. Step telemetry
+distinguishes the default and configured residential routes; it does not infer an IP family.
+HTTP recognition never uses either browser route.
+
 Budget: 45 s by default (max 60 s). `trawl` keeps a 15 s transport allowance and fails when less
 remains. Either reply is capped at 1 MB. On the capture, 401/403 is a challenge and 429 is rate
 limited; a missing capture or changed schema is an error for normal provider fallback.
@@ -32,13 +40,14 @@ has package id `au.com.auspost.android`; Australia Post publishes its signing fi
 same gateway route as the website through OkHttp, with `AP_APP_ID: MYPOST` and
 `AP_CHANNEL_NAME: ANDROID`.
 
-The gateway's DataDome protection decides on the HTTP client name: the app's OkHttp name gets JSON,
-and any other name gets a captcha reply with HTTP 403, whatever the channel. Two defaults of
-`fetch` get the same refusal, so the adapter replaces them: `Accept-Language: *`, and the cache
+The gateway's DataDome protection evaluates the HTTP client and session state. The app's
+OkHttp name alone does not guarantee a direct answer. The adapter replaces two `fetch`
+defaults that cause refusals: `Accept-Language: *`, and the cache
 headers of the `no-store` and `no-cache` modes (`Pragma`, and `Cache-Control: no-cache` or
-`max-age=0`), which the app never sends. So does a `baggage` header, which Sentry's Node SDK adds to
-every outgoing request unless the consumer sets `tracePropagationTargets: []`. The app also sends an
-`API-KEY` and carries the DataDome SDK; the gateway answers without the key or a DataDome cookie.
+`max-age=0`), which the app never sends. A `baggage` header also causes refusals; Sentry's Node SDK adds
+it unless the consumer sets `tracePropagationTargets: []`. The app also sends an
+`API-KEY` and carries the DataDome SDK, which maintains issued protection state. An API
+key alone does not clear a DataDome challenge; browser verification stays in its own context.
 
 ## Notes
 

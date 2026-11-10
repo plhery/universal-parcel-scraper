@@ -531,3 +531,102 @@ describe('Australia Post browser retrieval', () => {
       .resolves.toMatchObject({ status: 'delivered' });
   });
 });
+
+describe('Australia Post opt-in browser proxy recovery', () => {
+  const proxy = 'http://test-user:test-pass@proxy.example.test:8080';
+  function routed(replies: unknown[], budgetMs?: number) {
+    const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(replies.shift()));
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser),
+      fetcher: refused(), recorder, fallbackProxyUrl: proxy, timeoutMs: budgetMs });
+    return { client, browser, recorder };
+  }
+
+  it('uses the proxy once after a browser challenge, preserving history and route provenance', async () => {
+    const { client, browser, recorder } = routed([service([capture({}, 403)]), service()]);
+    const result = await client.fetch(NUMBER);
+    expect(result).toEqual(parse(fixture(), NUMBER));
+    expect(browser).toHaveBeenCalledTimes(2);
+    const [primary, retry] = browser.mock.calls.map(call => JSON.parse(String(call[1]!.body)));
+    expect(primary).not.toHaveProperty('proxy');
+    expect(primary.maxTimeout).toBeGreaterThan(29_000);
+    expect(retry).toMatchObject({ proxy, url: australiaPostTrackingUrl(NUMBER), captureResponses: [australiaPostApiUrl(NUMBER)], skipHttp: true, maxTier: 3 });
+    expect(retry.maxTimeout).toBeLessThanOrEqual(30_000);
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'challenge', networkRoute: 'default', networkAttempt: 'initial', historyAvailable: false }));
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok', networkRoute: 'residential', networkAttempt: 'retry', historyAvailable: true }));
+    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ attempts: 3, outcome: 'ok' }));
+    expect(JSON.stringify(recorder.step.mock.calls)).not.toContain(proxy);
+  });
+
+  it('keeps a successful primary browser read and its full budget without a paid request', async () => {
+    const { client, browser } = routed([service()]);
+    await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    expect(browser).toHaveBeenCalledTimes(1);
+    const first = JSON.parse(String(browser.mock.calls[0]![1]!.body));
+    expect(first.maxTimeout).toBeGreaterThan(29_000);
+    expect(first).not.toHaveProperty('proxy');
+  });
+
+  it('does not proxy missing, empty, rate-limited, mismatched or malformed replies', async () => {
+    const missing = empty(); missing[0].trackingIds = [NUMBER];
+    const noHistory = fixture(); noHistory[0].shipment.articles[0].details[0].events = [];
+    const wrong = fixture(); wrong[0].trackingIds = [OTHER];
+    for (const payload of [service([capture(missing)]), service([capture(noHistory)]), service([capture({}, 429)]),
+      service([capture(wrong)]), service([{ ...capture(), body: 'invalid-json' }]), service([])]) {
+      const { client, browser } = routed([payload, service()]);
+      await expect(client.fetch(NUMBER)).rejects.toThrow();
+      expect(browser).toHaveBeenCalledTimes(1);
+    }
+  });
+
+  it('preserves a short-budget challenge without recording or sending another attempt', async () => {
+    const { client, browser, recorder } = routed([service([capture({}, 403)]), service()], 20_000);
+    await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(browser).toHaveBeenCalledTimes(1);
+    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ attempts: 2, finalStep: 'trawl' }));
+  });
+
+  it('accounts for time already spent before deciding whether a proxy request fits', async () => {
+    let elapsed = 0;
+    const clock = vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    try {
+      const browser = vi.fn<typeof fetch>().mockImplementation(async () => { elapsed = 30_000; return Response.json(service([capture({}, 403)])); });
+      const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), fallbackProxyUrl: proxy });
+      await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+      expect(browser).toHaveBeenCalledTimes(1);
+    } finally { clock.mockRestore(); }
+  });
+
+  it('keeps the proxy reply failure kind and retry-after, with no further recovery', async () => {
+    const limited = { ...capture({}, 429), headers: { 'retry-after': '9' } };
+    const { client, browser } = routed([service([capture({}, 401)]), service([limited])]);
+    await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 9000 });
+    expect(browser).toHaveBeenCalledTimes(2);
+  });
+
+  it('starts no proxy request after cancellation', async () => {
+    const controller = new AbortController();
+    const browser = vi.fn<typeof fetch>().mockImplementation(async () => { controller.abort(new Error('stopped')); return Response.json(service([capture({}, 403)])); });
+    const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), fallbackProxyUrl: proxy });
+    await expect(client.fetch(NUMBER, { signal: controller.signal })).rejects.toThrow();
+    expect(browser).toHaveBeenCalledTimes(1);
+  });
+
+  it('requires explicit configuration and validates it without exposing credentials', async () => {
+    const { tracker: noProxy, fetcher } = tracker(service([capture({}, 403)]));
+    await expect(noProxy.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(() => new AustraliaPostTracker({ trawl: null, fallbackProxyUrl: 'http://test-user:PRIVATE_PASSWORD@proxy.example.test/path' }))
+      .toThrow('Browser retry proxy must be an HTTP(S) origin');
+    try { new AustraliaPostTracker({ trawl: null, fallbackProxyUrl: 'http://test-user:PRIVATE_PASSWORD@proxy.example.test/path' }); }
+    catch (error) { expect(String(error)).not.toContain('PRIVATE_PASSWORD'); }
+  });
+
+  it('reads host configuration for tracking while HTTP recognition never opens either browser route', async () => {
+    const browser = vi.fn<typeof fetch>().mockResolvedValue(Response.json(service()));
+    const instance = adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), recorder: NOOP_RECORDER,
+      env: { AUSTRALIA_POST_FALLBACK_PROXY_URL: proxy }, browserExecutablePath: null });
+    await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(browser).not.toHaveBeenCalled();
+  });
+});

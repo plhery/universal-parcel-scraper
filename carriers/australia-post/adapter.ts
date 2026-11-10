@@ -13,6 +13,7 @@ import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTim
   mislabeledLocalTime, mislabeledWallTime, usStateTimeZone } from '../../core/time/index.js';
 import { clean, fetchBounded, TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
 import { australiaPostCode, australiaPostCodeParts, australiaPostStatus } from './status.js';
 
 const PROVIDER = 'Australia Post';
@@ -22,8 +23,9 @@ const API = 'https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/sh
 const MAX_BYTES = 1_000_000;
 const TRANSPORT_ALLOWANCE_MS = 15_000;
 const DIRECT_TIMEOUT_MS = 10_000;
-// The gateway's bot protection passes the official Android app's HTTP client and
-// channel; other clients get a captcha reply. So does fetch's default `Accept-Language: *`.
+const RETRY_MIN_BROWSER_MS = 8_000;
+// Match the official Android app's HTTP client and channel. DataDome can still
+// challenge this request; fetch's default `Accept-Language: *` also causes refusals.
 const APP_HEADERS = { Accept: 'application/json', 'Accept-Language': 'en-AU', AP_APP_ID: 'MYPOST', AP_CHANNEL_NAME: 'ANDROID',
   'User-Agent': 'okhttp/4.12.0' };
 // fetch's `no-store` adds a browser reload's cache headers and `no-cache` a `max-age=0`, which
@@ -283,10 +285,17 @@ export interface AustraliaPostTrackerOptions {
   fetcher?: typeof fetch;
   timeoutMs?: number;
   recorder?: StepRecorder;
+  fallbackProxyUrl?: string;
 }
 
 export class AustraliaPostTracker {
-  constructor(private readonly options: AustraliaPostTrackerOptions) {}
+  private readonly fallbackProxy: string | null;
+
+  constructor(private readonly options: AustraliaPostTrackerOptions) {
+    const proxy = options.fallbackProxyUrl?.trim() || null;
+    if (proxy) browserContextProxy(proxy);
+    this.fallbackProxy = proxy;
+  }
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeAustraliaPostNumber(raw);
@@ -294,7 +303,48 @@ export class AustraliaPostTracker {
     if (!Number.isFinite(budgetMs) || budgetMs <= 0 || budgetMs > 60_000) throw new TypeError('Australia Post budget must be between 1 and 60000 ms');
     context.signal?.throwIfAborted();
     const trawl = this.options.trawl;
-    return runSteps({ carrier: 'australia-post', budgetMs, signal: context.signal, recorder: this.options.recorder }, [{
+    const deadline = performance.now() + budgetMs;
+    let route: 'default' | 'residential' = 'default';
+    let reads = 0;
+    let history = false;
+    const recorder = this.options.recorder;
+    const routed: StepRecorder | undefined = recorder && this.fallbackProxy ? {
+      step: record => recorder.step(record.step === 'trawl' ? { ...record, networkRoute: route,
+        networkAttempt: reads > 1 ? 'retry' : 'initial', historyAvailable: history } : record),
+      lookup: record => recorder.lookup(record),
+    } : recorder;
+    const browser = async (signal: AbortSignal, remainingMs: number, proxy: string | null): Promise<CarrierResult> => {
+      const timeoutMs = Math.floor(remainingMs - TRANSPORT_ALLOWANCE_MS);
+      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, budgetMs);
+      route = proxy ? 'residential' : 'default'; reads++; history = false;
+      const apiUrl = australiaPostApiUrl(number);
+      const page = await trawl!.scrape({ url: australiaPostTrackingUrl(number), skipHttp: true, maxTier: 3,
+        maxTimeout: timeoutMs, captureResponses: [apiUrl], ...(proxy ? { proxy } : {}), settleTimeout: Math.min(timeoutMs, 10_000),
+      }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
+      signal.throwIfAborted();
+      if (![2, 3].includes(page.tier) || ![200, 304].includes(page.statusCode)) {
+        throw new TransportError(PROVIDER, 'The browser service did not load Australia Post tracking');
+      }
+      const captures = page.capturedResponses.filter((capture) => capture.url === apiUrl && capture.status !== 204);
+      if (!captures.length || captures.length > 20) throw new TransportError(PROVIDER, 'Australia Post returned no matching browser response');
+      const capture = captures[captures.length - 1]!;
+      if (capture.status === 429) {
+        const retry = capture.headers['retry-after'];
+        throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
+      }
+      if ([401, 403].includes(capture.status)) throw new ChallengeError(PROVIDER);
+      if (capture.status >= 400) throw new UpstreamHttpError(PROVIDER, capture.status);
+      if (capture.status !== 200 || capture.error || capture.truncated || capture.base64Encoded || capture.body === null) {
+        throw new TransportError(PROVIDER, 'Australia Post returned an incomplete browser response');
+      }
+      if (Buffer.byteLength(capture.body, 'utf8') > MAX_BYTES) throw new SchemaError(PROVIDER, 'Australia Post returned an unexpectedly large response');
+      let payload: unknown;
+      try { payload = JSON.parse(capture.body); } catch { throw new SchemaError(PROVIDER, 'Australia Post returned invalid tracking JSON'); }
+      const result = parse(payload, number);
+      history = !!result.events?.length;
+      return result;
+    };
+    return runSteps({ carrier: 'australia-post', budgetMs, signal: context.signal, recorder: routed }, [{
       id: 'direct', run: async ({ signal, remainingMs }) => {
         const { response, bytes } = await fetchBounded(australiaPostApiUrl(number), { signal, headers: APP_HEADERS }, {
           provider: PROVIDER, timeoutMs: Math.max(1, Math.min(DIRECT_TIMEOUT_MS, Math.floor(remainingMs))),
@@ -314,40 +364,19 @@ export class AustraliaPostTracker {
     }, {
       // The browser reads the same gateway, so it cannot improve on an inconclusive entry.
       enabled: trawl !== null, recovers: (error) => recoverableByDefault(error) && !(error instanceof IndeterminateError),
-      id: 'trawl', run: async ({ signal, remainingMs }) => {
-        const timeoutMs = Math.floor(remainingMs - TRANSPORT_ALLOWANCE_MS);
-        if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, budgetMs);
-        const apiUrl = australiaPostApiUrl(number);
-        const page = await trawl!.scrape({ url: australiaPostTrackingUrl(number), skipHttp: true, maxTier: 3,
-          maxTimeout: timeoutMs, captureResponses: [apiUrl], settleTimeout: Math.min(timeoutMs, 10_000),
-        }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false });
-        signal.throwIfAborted();
-        if (![2, 3].includes(page.tier) || ![200, 304].includes(page.statusCode)) {
-          throw new TransportError(PROVIDER, 'The browser service did not load Australia Post tracking');
-        }
-        const captures = page.capturedResponses.filter((capture) => capture.url === apiUrl && capture.status !== 204);
-        if (!captures.length || captures.length > 20) throw new TransportError(PROVIDER, 'Australia Post returned no matching browser response');
-        const capture = captures[captures.length - 1]!;
-        if (capture.status === 429) {
-          const retry = capture.headers['retry-after'];
-          throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
-        }
-        if ([401, 403].includes(capture.status)) throw new ChallengeError(PROVIDER);
-        if (capture.status >= 400) throw new UpstreamHttpError(PROVIDER, capture.status);
-        if (capture.status !== 200 || capture.error || capture.truncated || capture.base64Encoded || capture.body === null) {
-          throw new TransportError(PROVIDER, 'Australia Post returned an incomplete browser response');
-        }
-        if (Buffer.byteLength(capture.body, 'utf8') > MAX_BYTES) throw new SchemaError(PROVIDER, 'Australia Post returned an unexpectedly large response');
-        let payload: unknown;
-        try { payload = JSON.parse(capture.body); } catch { throw new SchemaError(PROVIDER, 'Australia Post returned invalid tracking JSON'); }
-        return parse(payload, number);
-      },
+      id: 'trawl', run: ({ signal, remainingMs }) => browser(signal, remainingMs, null),
+    }, {
+      id: 'trawl', enabled: trawl !== null && this.fallbackProxy !== null,
+      recovers: error => error instanceof ChallengeError
+        && deadline - performance.now() >= TRANSPORT_ALLOWANCE_MS + RETRY_MIN_BROWSER_MS,
+      run: ({ signal, remainingMs }) => browser(signal, remainingMs, this.fallbackProxy),
     }]);
   }
 }
 
 export const adapter: AdapterFactory = (environment) => {
-  const tracker = new AustraliaPostTracker({ trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder });
+  const tracker = new AustraliaPostTracker({ trawl: environment.trawl, fetcher: environment.fetcher, recorder: environment.recorder,
+    fallbackProxyUrl: environment.env.AUSTRALIA_POST_FALLBACK_PROXY_URL });
   // Recognition is plain HTTP: it asks the gateway alone, and a refusal there fails instead of starting a browser.
   // A recognition budget can be longer than the minute a lookup takes at most.
   const gateway = new AustraliaPostTracker({ trawl: null, fetcher: environment.fetcher, recorder: environment.recorder });
