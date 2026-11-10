@@ -17,6 +17,8 @@ const UNKNOWN = 'BR2600000000003';
 const FLEET = 'BR2600000000045';
 // The order lookup's answer for a number its orders do not hold.
 const NOT_HELD = { retcode: 2, message: 'not found spx order', detail: 'Oops, an unexpected error has occurred', debug: '' };
+// The fleet feed's answer for a number it does not know.
+const FLEET_UNKNOWN = { retcode: -1000, message: 'Server error. Please try again later.', data: {} };
 
 type Row = Record<string, unknown>;
 type Tracking = Row & { records: Row[] };
@@ -363,12 +365,31 @@ describe('SPX Express Brazil HTTP adapter', () => {
     await expect(lookup(fixture('fleet-delivered'), 'BR2600000000053')).rejects.toMatchObject(held);
     await expect(lookup({ action_type: 2, redirect_to_error_page: true })).rejects.toMatchObject({ kind: 'challenge' });
     await expect(lookup({ retcode: 0, data: { sls_tracking_number: FLEET, tracking_list: 'scans' } })).rejects.toMatchObject({ kind: 'schema' });
-    // A number the orders do not know, or one they hold without scans, ends the lookup.
-    for (const body of [fixture('not-found'), { retcode: 0, data: { fulfillment_info: {} } }]) {
-      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(body));
-      await expect(carrier(fetcher).track({ number: UNKNOWN })).rejects.toThrow();
-      expect(fetcher).toHaveBeenCalledTimes(1);
+    // A number the orders hold without scans ends the lookup.
+    const empty = vi.fn<typeof fetch>().mockResolvedValue(reply({ retcode: 0, data: { fulfillment_info: {} } }));
+    await expect(carrier(empty).track({ number: UNKNOWN })).rejects.toMatchObject({ name: 'NoHistoryError' });
+    expect(empty).toHaveBeenCalledTimes(1);
+  });
+
+  it('asks the fleet feed for a number the order index finds none of, and keeps not found unless the feed holds it', async () => {
+    const lookup = (fleet: unknown, number = FLEET) => {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('not-found'))).mockResolvedValueOnce(reply(fleet));
+      return { fetcher, result: carrier(fetcher).track({ number }) };
+    };
+    // A domestic parcel only the feed holds, its confiscation sent with an empty message.
+    const fleet = fixture('fleet-delivered') as unknown as { data: { tracking_list: Record<string, unknown>[] } };
+    fleet.data.tracking_list = [{ timestamp: 1_779_300_000, status: 'Start_Confiscation', message: '' }, fleet.data.tracking_list.at(-1)!];
+    const held = lookup(fleet);
+    await expect(held.result).resolves.toMatchObject({ status: 'exception', current_stage: 'exception', current_stage_source: 'carrier_map',
+      last_status_text: 'Parcel has entered confiscation process' });
+    expect(held.fetcher).toHaveBeenCalledTimes(2);
+    // The feed's server error for an unknown number, or another shipment, leaves the index's not found.
+    for (const body of [FLEET_UNKNOWN, fixture('fleet-delivered')]) {
+      await expect(lookup(body, UNKNOWN).result).rejects.toMatchObject({ kind: 'not_found' });
     }
+    // A status the feed sends without words and the map does not know is still a changed reply.
+    fleet.data.tracking_list = [{ timestamp: 1_779_300_000, status: 'Start_Something', message: '' }];
+    expect(() => parseSpxBrFleet(fleet, FLEET)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('rejects a changed fleet reply', () => {
@@ -397,7 +418,9 @@ describe('SPX Express Brazil HTTP adapter', () => {
 
   it('keeps an unknown number, a moved route, a gateway page and a broken reply apart', async () => {
     const lookup = (body: unknown, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body, init))).track({ number: UNKNOWN });
-    await expect(lookup(fixture('not-found'))).rejects.toMatchObject({ kind: 'not_found' });
+    // The fleet feed, asked next, answers an unknown number with a server error.
+    const unknown = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('not-found'))).mockResolvedValueOnce(reply(FLEET_UNKNOWN));
+    await expect(carrier(unknown).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     // The tracker reads a missing parcel from a 200 reply: a 404 or a redirect is a moved route.
     await expect(lookup(fixture('not-found'), { status: 404 })).rejects.toMatchObject({ kind: 'transport' });
     await expect(lookup('', { status: 302, headers: { Location: 'https://spx.com.br/' } })).rejects.toMatchObject({ kind: 'transport' });
@@ -416,11 +439,11 @@ describe('SPX Express Brazil HTTP adapter', () => {
 
   it('recognizes a known number with its last scan and the unknown-number answer, and asks nothing for another layout', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
-      .mockResolvedValueOnce(reply(fixture('not-found')));
+      .mockResolvedValueOnce(reply(fixture('not-found'))).mockResolvedValueOnce(reply(FLEET_UNKNOWN));
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: '2026-05-19T12:53:20.000Z' });
     await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
     await expect(carrier(fetcher).recognize!('PH2600000000011')).resolves.toEqual({ known: false });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher).toHaveBeenCalledTimes(3);
   });
 
   it('rejects numbers SPX Brazil does not issue and pre-aborted lookups without a request', async () => {

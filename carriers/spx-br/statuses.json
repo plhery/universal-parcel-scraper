@@ -591,6 +591,15 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-04",
       "note": "Fleet feed: the delivery by a partner carrier after SPX's sorting centre, with no round of SPX's own. The line opens with the partner's code, which is dropped, and leaves the receiver's name empty."
+    },
+    {
+      "code": "Start_Confiscation",
+      "wording": "Parcel has entered confiscation process",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Fleet feed: the parcel is held for confiscation after reaching its delivery hub. The Portuguese feed sends no message; the wording is SPX's English as ParcelsApp relays it."
     }
   ]
 }

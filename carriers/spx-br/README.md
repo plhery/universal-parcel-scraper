@@ -27,16 +27,20 @@ label's first fifteen characters.
   or a parcel only the fleet feed holds. It is inconclusive with `portal_not_found`, the
   carrier's own answer that it holds no history yet, not an outage.
 - The tracking object must name the number asked.
-2. `legacy`: an inconclusive order lookup, such as a number its orders do not hold ("not found
-   spx order"), asks the fleet feed the tracker's scripts also read:
+2. `legacy`: an order lookup that finds nothing, either a number its index finds none of
+   (`find [0]`) or one its orders do not hold ("not found spx order"), or that is otherwise
+   inconclusive, asks the fleet feed the tracker's scripts also read:
    `GET https://spx.com.br/api/v2/fleet_order/tracking/search` with
    `sls_tracking_number={number}|{seconds}{checksum}` and `x-language: br`. The checksum is the
    SHA-256 of the number, the time and the public checksum configuration SPX's Taiwanese and
    Philippine trackers share. The feed holds parcels the order system does not.
 
+- The feed holds domestic parcels the order index finds none of.
 - The feed's `-1217` is a parcel without scans. It answers an unknown number with a server error
-  and a rejected checksum with empty data, so these leave the order lookup's inconclusive answer;
+  and a rejected checksum with empty data, so these leave the order lookup's answer;
   the reply must also name the number asked. The recipient and phone fields are not read.
+- In Portuguese the feed sends `Start_Confiscation` with an empty message. The scan takes SPX's
+  English wording for it, "Parcel has entered confiscation process", as ParcelsApp relays it.
 - Recognition makes the same requests.
 
 ## Notes

@@ -60,6 +60,7 @@ const FLEET: ReadonlyMap<string, Stage> = new Map(([
   ['Delivering', 'out_for_delivery'], // F600.
   ['Delivered', 'delivered'], // F980.
   ['3PL_Delivered', 'delivered'], // Delivered by the partner carrier SPX handed the parcel to after its sorting centre.
+  ['Start_Confiscation', 'exception'], // The parcel entered confiscation: it is held, not delivered.
 ] as const).map(([status, stage]) => [status.toUpperCase(), stage]));
 
 /** The stage SPX's order code or fleet status gives a scan. */

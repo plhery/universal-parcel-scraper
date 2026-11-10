@@ -1,6 +1,6 @@
 import { createHash } from 'node:crypto';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, IndeterminateError, NoHistoryError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -56,9 +56,9 @@ export class SpxBrTracker {
     return runSteps({ carrier: 'spx-br', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: ({ signal, remainingMs }) => read(signal, remainingMs) },
-      // An order the lookup does not hold can still be in the fleet feed. Its own failure to
-      // answer leaves the lookup's.
-      { id: 'legacy', recovers: (error) => error instanceof IndeterminateError && !(error instanceof NoHistoryError),
+      // An order the lookup does not hold, or one its index finds none of, can still be in the
+      // fleet feed. Its own failure to answer leaves the lookup's.
+      { id: 'legacy', recovers: (error) => error instanceof NotFoundError || error instanceof IndeterminateError && !(error instanceof NoHistoryError),
         run: async ({ signal, remainingMs, previousError }) => {
           try {
             return await fleet(signal, remainingMs);

@@ -201,11 +201,16 @@ const NEXT_HUB = /\[((?:FM|LM) ?Hub_[^\]]{1,100}|SoC_[^\]]{1,100})\]$/i;
 // The longest a hub's unloading runs before the hub's own scan takes the parcel in.
 const UNLOADING_MS = 24 * 60 * 60 * 1000;
 
+// Statuses the feed sends with an empty message in Portuguese, in SPX's own English as ParcelsApp relays them.
+const UNWORDED: ReadonlyMap<string, string> = new Map([
+  ['START_CONFISCATION', 'Parcel has entered confiscation process'],
+]);
+
 function projectFleetRow(row: Record<string, unknown>): CarrierEvent {
   if (typeof row.status !== 'string' || !FLEET_STATUS.test(row.status.trim())) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid fleet status');
   const code = row.status.trim();
   if (typeof row.message !== 'string') throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a scan without wording');
-  const worded = spxBrWording(row.message);
+  const worded = spxBrWording(row.message) || (UNWORDED.get(code.toUpperCase()) ?? '');
   const line = code === 'Delivered' ? clean(worded.replace(LAST_NAMED, ''), 500) : worded;
   // The hub leaves the wording, so it reads the same from hub to hub, and is the place of
   // the hub taking the parcel in. A pickup or a delivery names the hub that made it, not
