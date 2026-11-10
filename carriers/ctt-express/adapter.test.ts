@@ -71,16 +71,18 @@ describe('CTT Express direct tracking', () => {
       { data: { shipping_code: NUMBER, shipping_history: { item_code: null, events: [] } }, error: null }]) {
       expect(() => parseCttExpress(payload, NUMBER)).toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
     }
-    const fetcher = vi.fn(async () => json({ error: 'Invalid token.' })) as unknown as typeof fetch;
-    await expect(new CttExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    // CTT repeats an error reply for the shipment, so it is not read again at once; its description names the error.
+    const fetcher = vi.fn(async () => json({ data: null, error: { errorDescription: 'Envío 0012345 no disponible: a@b.es' } })) as unknown as typeof fetch;
+    await expect(new CttExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate',
+      message: 'CTT Express returned an inconclusive tracking response (Envío … no disponible: …)' });
+    expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
   it.each([
-    ['an error reply', () => json({ error: 'Invalid token.' })],
-    ['a body that is not JSON', () => new Response('<html></html>', { headers: { 'Content-Type': 'text/html' } })],
+    ['a body that is not JSON', async () => new Response('<html></html>', { headers: { 'Content-Type': 'text/html' } })],
+    ['a failed request', () => Promise.reject(new TypeError('fetch failed'))],
   ])('reads once more after %s, recording the retry', async (_name, failure) => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(failure()).mockResolvedValueOnce(json(fixture));
+    const fetcher = vi.fn<typeof fetch>().mockImplementationOnce(failure).mockResolvedValueOnce(json(fixture));
     const steps: unknown[] = [];
     const tracker = new CttExpressTracker({ fetcher, recorder: { step: (event) => { steps.push(event); }, lookup() {} } });
     await expect(tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'ready_for_pickup' });

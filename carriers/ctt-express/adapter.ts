@@ -4,7 +4,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, isNetworkFailure } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
-import { CttExpressErrorReply, normalizeCttExpressNumber, parseCttExpress } from './parser.js';
+import { normalizeCttExpressNumber, parseCttExpress } from './parser.js';
 
 const ENDPOINT = 'https://wct.cttexpress.com/p_track_redis_v2.php';
 
@@ -40,13 +40,13 @@ export class CttExpressTracker {
       catch (cause) { throw new UnreadableReply('CTT Express', 'CTT Express returned invalid tracking JSON', { cause }); }
       return parseCttExpress(payload, number);
     };
-    // A few percent of lookups get an error reply or a body that is not JSON, and the same
-    // parcel reads normally on the next poll. Those, like a request that fails to reach the
-    // service, are read once more.
+    // A body that is not JSON, like a request that fails to reach the service, is read once
+    // more. An error reply is not: CTT repeats it for that shipment for a quarter of an hour
+    // or more while other shipments read, and the parcel reads normally on a later poll.
     return runSteps({ carrier: 'ctt-express', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: ({ signal, remainingMs }) => read(signal, firstAttemptMs(remainingMs)) },
-      { id: 'retry', recovers: (error) => error instanceof CttExpressErrorReply || error instanceof UnreadableReply || isNetworkFailure(error),
+      { id: 'retry', recovers: (error) => error instanceof UnreadableReply || isNetworkFailure(error),
         run: ({ signal, remainingMs }) => read(signal, remainingMs) },
     ]);
   }

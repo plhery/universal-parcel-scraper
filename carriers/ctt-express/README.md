@@ -11,9 +11,11 @@ its package code must identify the sole package according to the carrier's
 Package inputs retain their counter and must match the returned package exactly.
 Multi-piece shipments remain inconclusive because the public response contains
 only one package's scans. Portuguese postal references use the universal providers.
-A few percent of lookups get an error reply or a body that is not JSON, and the same parcel
-reads normally on the next poll, so those are read once more, as is a request that fails to
-reach the service. A number with no shipment gets HTTP 200 with an empty body, which the
+A few percent of lookups get an error reply, the one the tracking page shows as "Ha ocurrido un
+error". CTT repeats it for that shipment for a quarter of an hour or more while other shipments
+read normally, so it is not read again at once; the parcel reads on a later poll, and the
+message carries CTT's description of the error. A body that is not JSON and a request that
+fails to reach the service are read once more. A number with no shipment gets HTTP 200 with an empty body, which the
 tracking page reads as a shipment it has not located; two empty reads in a row are not found.
 Every code in CTT Express's agency list starts with `00`, so detection claims a reference only when
 both its agency codes do. TIPSA numbers share the agency, agency, waybill layout. A reference starting
