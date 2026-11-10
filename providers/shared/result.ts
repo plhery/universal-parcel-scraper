@@ -53,8 +53,10 @@ export function text(value: unknown): string {
 // its own history, is a notice too.
 // DHL's detail line "Keine weiteren Details erforderlich" ("no further details required"),
 // which ParcelsApp relays as a row of its own beside DHL's scans, says nothing either.
+// Nor do the emails and texts XDP sends, which its own tracker leaves out, as ParcelsApp and 17TRACK relay
+// them: "Manifested but not collected email sent to" and the person's name, "Collect SMS alert sent".
 export function isNotice(description: string): boolean {
-  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^a desired (?:day for delivery|paketshop|parcel ?shop) (?:has been|was) booked\b|^keine weiteren details erforderlich[.!]?$/i.test(description);
+  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^a desired (?:day for delivery|paketshop|parcel ?shop) (?:has been|was) booked\b|^keine weiteren details erforderlich[.!]?$|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:manifested but not collected email|clean email notification) sent to\b|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:delivery|collect) (?:email|sms) alert sent[.!]?$/i.test(description);
 }
 
 // Raw text, so accented and plain spellings are both listed. A carrier receiving the

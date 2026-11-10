@@ -34,7 +34,8 @@ still link to.
 - After a return label, every later scan is staged `returned`.
 - Notification rows (emails, text messages and the delivery confirmation message) are dropped:
   they move nothing, and some name the recipient. Wording that goes on to name a person is
-  cut before the name.
+  cut before the name. The providers' copies of XDP's emails and text messages are left out
+  too.
 - A consignment of several pieces repeats each scan once per piece; repeats are dropped.
 - Clocks are UK wall time without an offset. The page prints a 24-hour clock with a meridiem;
   a meridiem that disagrees with the hour is rejected.

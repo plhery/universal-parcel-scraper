@@ -151,7 +151,7 @@ describe('17TRACK result parsing', () => {
     expect(JSON.stringify(result)).not.toMatch(/示例（|13000000000|热线|致电/u);
   });
 
-  it("writes XDP's scans as ParcelsApp does, so the two copies of a scan meet", () => {
+  it("writes XDP's scans as ParcelsApp does, so the two copies of a scan meet, and leaves out the emails XDP sends", () => {
     const scan = (time: string, description: string) => ({
       time_iso: `2026-11-06T${time}+00:00`, time_utc: null, time_raw: { date: '2026-11-06', time, timezone: null },
       description, location: 'Sample Depot', stage: null, sub_status: 'InfoReceived' });
@@ -163,7 +163,6 @@ describe('17TRACK result parsing', () => {
     const providers = (payload.shipments[0]!.shipment as { tracking: { providers: { provider: unknown }[] } }).tracking.providers;
     providers[0]!.provider = { key: 100167, name: 'XDP EXPRESS' };
     expect(parse17TrackResponse(payload, number).events?.map((event) => [event.description, event.stage])).toEqual([
-      ['Manifested but not collected email sent to Sample', 'registered'],
       ['PRINT', 'registered'],
       ['CREATE', 'registered'],
     ]);

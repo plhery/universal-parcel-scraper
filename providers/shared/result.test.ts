@@ -194,6 +194,15 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00Z', 'Keine weiteren Details erforderlich, Entladung')).not.toBeNull();
   });
 
+  it('leaves out the emails and texts XDP sends, with the name they name, as its own tracker does', () => {
+    expect(event('2026-03-02T07:00:00Z', 'Manifested but not collected email sent to Sam')).toBeNull();
+    expect(event('2026-03-02T07:00:00Z', 'NOT COLLECTED EMAIL, Manifested but not collected email sent to Sam')).toBeNull();
+    expect(event('2026-03-04T13:42:00Z', 'Clean email notification sent to Alex Example')).toBeNull();
+    expect(event('2026-03-04T07:10:00Z', 'Delivery Email alert sent')).toBeNull();
+    expect(event('2026-03-03T20:58:00Z', 'Collect SMS alert sent')).toBeNull();
+    expect(event('2026-03-03T20:58:00Z', 'At Collection Depot')).toMatchObject({ description: 'At Collection Depot' });
+  });
+
   it("leaves out 17FEIA's estimated departure, written before the flight, so it cannot pass for the latest step", () => {
     expect(event('2026-01-07T09:16:18Z', 'Estimated departure date: 2026-01-08 17:16:18')).toBeNull();
     expect(event('2026-01-07T09:16:18Z', 'Estimated departure date: 2026-01-08 17:16:18, OTHER', 'InTransit')).toBeNull();
