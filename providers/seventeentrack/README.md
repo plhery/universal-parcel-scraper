@@ -103,8 +103,11 @@ carrier.
   wrong: for one parcel, the China Post leg put `+08:00` on the same wall clock that
   USPS reported at `-07:00`. Each event keeps `provider_time_iso`, `time_provenance`
   (`provider_inferred`, `carrier_reported` or `unspecified`) and the reporting carrier's
-  name and key. The timeline still uses 17TRACK's reading, and mirrored scans from two
-  operators are not deduplicated. That is why a scoped China Post success skips
+  name and key, whatever zone the rules below read it on. A row read on another zone names
+  it and how it was chosen (`time_zone`, `time_zone_basis`): `place` (its location, or the
+  side of the border its words name), `neighbour` (a nearby scan's), `destination` (the
+  recipient's country) or `carrier` (the leg's own clock). UTC is named by none. Other rows
+  keep 17TRACK's reading, and mirrored scans from two operators are not deduplicated. That is why a scoped China Post success skips
   timestamp-based shadow comparisons.
 - Where it adds the offset, 17TRACK uses its zone for the carrier at that zone's offset on the
   day it looks, not on the scan's: after October's change it put `+01:00` on BRT's July scans

@@ -20,7 +20,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { countryTimeZone, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { locatePlace, placeTimeZone } from '../../places/index.js';
+import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
@@ -381,6 +381,9 @@ function ficHandover(events: unknown[]): string {
   }, '');
 }
 
+/** A zone the adapter reads a row's wall clock on, and how it was chosen (`time_zone_basis`). */
+interface Placed { zone: string; basis: ZoneBasis }
+
 /** 17TRACK's carrier 14061, NZ Post. */
 const NZ_POST = 14061;
 const NZ_DEPARTURE = /^international departure\b/i;
@@ -407,10 +410,10 @@ function locationCountry(location: unknown): string | null {
  * lends none, and the scan stays a wall time. With no country named at all,
  * NZ Post's Auckland reading stays, the last guess: hours off, but the scan
  * keeps its place, and a delivery its instant.
- * Returns the zone, or null for a wall time, of each scan placed abroad, by its index in the leg.
+ * Returns the zone and how it was chosen, or null for a wall time, of each scan placed abroad, by its index in the leg.
  */
-function nzPostAbroad(events: unknown[], number: string, destination: string | null): Map<number, string | null> {
-  const abroad = new Map<number, string | null>();
+function nzPostAbroad(events: unknown[], number: string, destination: string | null): Map<number, Placed | null> {
+  const abroad = new Map<number, Placed | null>();
   if (!/^[A-Z]{2}\d{9}NZ$/.test(number)) return abroad;
   const scans = events.map((raw, index) => isRecord(raw) ? { index, raw, wall: facilityWall(raw) } : null)
     .filter((scan) => scan !== null);
@@ -424,9 +427,11 @@ function nzPostAbroad(events: unknown[], number: string, destination: string | n
     .sort((a, b) => a.wall < b.wall ? -1 : a.wall > b.wall ? 1 : 0);
   after.forEach((scan, position) => {
     if (scan.airline) return;
-    const country = scan.country ?? after.slice(0, position).reverse().find((other) => other.country)?.country
-      ?? after.slice(position + 1).find((other) => other.country)?.country ?? destination;
-    if (country) abroad.set(scan.index, countryTimeZone(country));
+    const borrowed = after.slice(0, position).reverse().find((other) => other.country)?.country
+      ?? after.slice(position + 1).find((other) => other.country)?.country;
+    const country = scan.country ?? borrowed ?? destination;
+    const zone = country ? countryTimeZone(country) : null;
+    if (country) abroad.set(scan.index, zone ? { zone, basis: scan.country ? 'place' : borrowed ? 'neighbour' : 'destination' } : null);
   });
   return abroad;
 }
@@ -512,15 +517,16 @@ function misdatedTakeOff(carrierName: unknown, raw: Record<string, unknown>): bo
  */
 const INBOUND_MARK = /\(Inb\)/i;
 const OUTBOUND_MARK = /\(Otb\)/i;
-function indiaPostInbound(events: unknown[], destination: string | null): Map<number, string | null> {
+function indiaPostInbound(events: unknown[], destination: string | null): Map<number, Placed | null> {
   const zone = countryTimeZone(destination);
+  const placed: Placed | null = zone ? { zone, basis: 'destination' } : null;
   const rows = events.map((raw) => (isRecord(raw) ? { wording: text(raw.description), wall: facilityWall(raw) } : { wording: '', wall: null }));
   const walls = (mark: RegExp, after = '') => rows.flatMap(({ wording, wall }) => (wall && wall > after && mark.test(wording) ? [wall] : [])).sort();
   const entered = walls(INBOUND_MARK)[0];
   if (!entered) return new Map();
   const wayBack = walls(OUTBOUND_MARK, entered)[0];
   return new Map(rows.flatMap(({ wording, wall }, index) => (wall && wall >= entered && (!wayBack || wall < wayBack) && !TAKE_OFF.test(wording)
-    ? [[index, zone] as const] : [])));
+    ? [[index, placed] as const] : [])));
 }
 
 /** The day an estimate's bound names, as written: 17TRACK can put its own offset on a carrier's clock. */
@@ -618,9 +624,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const utc = relaysUtcClock(reported.key);
     const nz = reported.key === NZ_POST;
     const india = typeof name === 'string' && carrierIdFromName(name) === 'india-post';
-    const abroad = provider.events.length > MAX_EVENTS ? new Map<number, string | null>()
+    const abroad = provider.events.length > MAX_EVENTS ? new Map<number, Placed | null>()
       : nz ? nzPostAbroad(provider.events, number, nzPostDestination(shipment, tracking.providers))
-        : india ? indiaPostInbound(provider.events, recipientCountry(shipment)) : new Map<number, string | null>();
+        : india ? indiaPostInbound(provider.events, recipientCountry(shipment)) : new Map<number, Placed | null>();
     const origin = reported.key === CHINA_POST ? originZone(number) : reported.key === JAPAN_POST ? japanPostOriginZone(number) : null;
     const outward = reported.key === JAPAN_POST ? OUTWARD_SCAN : ORIGIN_EXCHANGE;
     // China Post's copies of the destination post's own scans keep that post's wall clock, as China Post's adapter
@@ -668,12 +674,14 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // Correos's copy of the origin post's scan on an item from abroad: that post's zone, or null for its wall clock.
       const sent = correos ? correosOriginZone(number, { wording: text(raw.description) }) : undefined;
       // Poland Post's scan on Warsaw's clock, or a partner's after the departure from Poland on the recipient's.
-      const polish = !poland ? null : departed && (rawClock(raw) ?? '') > departed ? partner : 'Europe/Warsaw';
+      const left = poland && departed !== '' && (rawClock(raw) ?? '') > departed;
+      const polish = !poland ? null : left ? partner : 'Europe/Warsaw';
       // FIC's partner's scan from the handover on, unless placed in Britain, on the recipient's clock.
       const handed = delivering && (rawClock(raw) ?? '') >= handedOver && locationCountry(raw.location) !== 'GB' ? delivering : null;
       // CTT's scan on the clock its place names, or Madrid's for the acceptance as a CTT Express agency takes the parcel in.
-      const site = !ctt ? null : cttSiteZone(text(raw.location), countries)
-        ?? (!text(raw.location) && agencyIntake(wallMillis(raw), agencyScans) ? 'Europe/Madrid' : null);
+      const named = ctt ? cttSiteZone(text(raw.location), countries) : null;
+      const intake = ctt && !named && !text(raw.location) && agencyIntake(wallMillis(raw), agencyScans);
+      const site = named ?? (intake ? 'Europe/Madrid' : null);
       // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's or an origin post's, on which 17TRACK puts one offset for the whole parcel.
       const read = facility || overseas !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
         || shiprocket || daiPost || quickRabbit || sent !== undefined;
@@ -682,11 +690,19 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const wall = relayed || hywl ? rawClock(raw) : read || season ? facilityWall(raw) : null;
       // A label its mailer wrote on UTC, as USPS's adapter reads it.
       const scanned = facility && wall ? uspsRowZone(wall, facility, text(raw.description), now.toMillis()) : facility;
-      const zone = !wall ? null : season ?? (hywl ? relayed : overseas !== undefined ? overseas : relayed ?? scanned ?? site ?? own ?? (sent !== undefined ? sent : abroad.has(index) ? abroad.get(index) ?? null
-        : exchange ? origin : arrived ? inbound : utc ? 'UTC' : polish ? polish : handed ? handed
-        : nz ? 'Pacific/Auckland' : quickRabbit ? 'Europe/Madrid' : chile ? facilityZone(text(raw.location)) ?? 'America/Santiago'
-        : shiprocket ? (placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null)
-        : daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location))));
+      // The zone the wall clock is read on, and how it was chosen.
+      const at = (zone: string | null, basis: ZoneBasis): Placed | null => zone ? { zone, basis } : null;
+      const chosen = !wall ? null : season ? at(season, 'carrier') : hywl ? at(relayed, 'place')
+        : overseas !== undefined ? at(overseas, 'place') : relayed ? at(relayed, 'destination')
+        : scanned ? at(scanned, 'place') : site ? at(site, intake ? 'neighbour' : 'place') : own ? at(own, 'place')
+        : sent !== undefined ? at(sent, 'place') : abroad.has(index) ? abroad.get(index) ?? null
+        : exchange ? at(origin, 'place') : arrived ? at(inbound, 'destination') : utc ? at('UTC', 'carrier')
+        : polish ? at(polish, left ? 'destination' : 'carrier') : handed ? at(handed, 'destination')
+        : nz ? at('Pacific/Auckland', 'carrier') : quickRabbit ? at('Europe/Madrid', 'carrier')
+        : chile ? at(facilityZone(text(raw.location)), 'place') ?? at('America/Santiago', 'carrier')
+        : shiprocket ? at(placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null, 'place')
+        : at(daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location)), 'place');
+      const zone = chosen?.zone ?? null;
       const placed = wall && zone ? firstOccurrence(DateTime.fromISO(wall, { zone })) : null;
       let parsed: CarrierEvent | null;
       // YTO's wording without the courier's name and phone and its hotline, as YTO's own result keeps neither.
@@ -729,7 +745,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // With no zone for the facility it is a wall time, counted like a row without a date.
       // A take-off is counted the same way, but the scans before it still say where the parcel is.
       if (unplaced || misdatedTakeOff(name, raw)) undated++;
-      else events.push(parsed);
+      // A clock read on a zone 17TRACK did not give names it, as a deduced clock does; UTC's needs no name.
+      else events.push(placed && chosen && chosen.zone !== 'UTC' ? { ...parsed, time_zone: chosen.zone, time_zone_basis: chosen.basis } : parsed);
     }
   }
   latest.check();

@@ -438,6 +438,8 @@ describe('17TRACK result parsing', () => {
         description: 'Arrived at destination', location: 'EXAMPLE CITY, Switzerland', stage: null, sub_status: 'InTransit_Other' }] }] } } }] });
     expect(parse17TrackResponse(scan(100016), number).events?.[0]).toMatchObject({ time: '2026-05-07T16:20:00.000Z',
       provider_time_iso: '2026-05-07T16:20:00-04:00', time_provenance: 'provider_inferred' });
+    // UTC needs no zone named.
+    expect(parse17TrackResponse(scan(100016), number).events?.[0]?.time_zone).toBeUndefined();
     // Another feed of the same name keeps 17TRACK's reading.
     expect(parse17TrackResponse(scan(100999), number).events?.[0]?.time).toBe('2026-05-07T20:20:00.000Z');
   });
@@ -490,6 +492,10 @@ describe('17TRACK result parsing', () => {
     expect(times(16101, [row('2026-10-22', '16:27:53', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
       row('2026-10-22', '16:27:52', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null)]))
       .toEqual(['2026-10-22T14:27:53.000Z', '2026-10-22T14:27:52.000Z']);
+    // Each names the zone it is read on: the agency's from its place, the acceptance's borrowed from the agency's scan.
+    expect(parse17TrackResponse(reply(16101, [row('2026-10-22', '16:27:53', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
+      row('2026-10-22', '16:27:52', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null)]), number).events
+      ?.map(({ time_zone, time_zone_basis }) => [time_zone, time_zone_basis])).toEqual([['Europe/Madrid', 'place'], ['Europe/Madrid', 'neighbour']]);
     // Another feed keeps 17TRACK's reading.
     expect(times(100999, [row('2026-10-27', '11:00:05', 'In transit', '009999 - (PL) EXAMPLE AGENCY')])).toEqual(['2026-10-27T11:00:05.000Z']);
   });
@@ -505,6 +511,8 @@ describe('17TRACK result parsing', () => {
     expect(parsed.events?.map((event) => event.time)).toEqual([undefined, '2026-05-07T11:43:31.000Z',
       '2026-05-07T07:51:00.000Z', '2026-05-07T02:43:31.000Z']);
     expect(parsed.events?.[0]?.local_time).toBe('2026-05-07T22:43:31');
+    expect(parsed.events?.[0]?.time_zone).toBeUndefined();
+    expect(parsed.events?.[1]).toMatchObject({ time_zone: 'Asia/Shanghai', time_zone_basis: 'place' });
     expect(parsed.undated_event_count).toBeUndefined();
     // Another feed keeps 17TRACK's reading.
     expect(parse17TrackResponse(reply(100999, [row('15:51:00', 'Shenzhen')]), number).events?.[0]?.time).toBe('2026-05-07T15:51:00.000Z');
@@ -672,6 +680,8 @@ describe('17TRACK result parsing', () => {
     // July is Poland's summer, +02:00; the customs scan abroad is Japan's +09:00.
     expect(parse17TrackResponse(reply(16081, 'JP'), number).events?.map((event) => event.time)).toEqual(['2026-07-20T05:25:00.000Z',
       '2026-07-08T08:02:20.000Z', '2026-07-06T15:11:32.000Z']);
+    expect(parse17TrackResponse(reply(16081, 'JP'), number).events?.map((event) => event.time_zone_basis))
+      .toEqual(['destination', 'carrier', 'carrier']);
     // With no recipient country, or one on several clocks, the scan abroad keeps 17TRACK's reading.
     for (const country of [undefined, 'ES']) {
       expect(parse17TrackResponse(reply(16081, country), number).events?.map((event) => event.time)).toEqual(['2026-07-20T13:25:00.000Z',
@@ -717,6 +727,9 @@ describe('17TRACK result parsing', () => {
     // July is Italy's summer, +02:00; a scan since the change keeps +01:00, and one 17TRACK labelled +02:00 kept its label.
     expect(times(reply(199997, 'IT', [row('2026-10-26', '08:10:00'), row('2026-07-24', '13:42:00'), row('2026-07-23', '21:00:00', '+02:00')])))
       .toEqual(['2026-10-26T07:10:00.000Z', '2026-07-24T11:42:00.000Z', '2026-07-23T19:00:00.000Z']);
+    // Only the scan read again names the zone, the carrier's; the labels kept name none.
+    expect(parse17TrackResponse(reply(199997, 'IT', [row('2026-10-26', '08:10:00'), row('2026-07-24', '13:42:00')]), number).events
+      ?.map(({ time_zone, time_zone_basis }) => [time_zone, time_zone_basis])).toEqual([[undefined, undefined], ['Europe/Rome', 'carrier']]);
     // A zone the carrier stated stays.
     expect(times(reply(199997, 'IT', [row('2026-07-24', '13:42:00', '+01:00', '+01:00')]))).toEqual(['2026-07-24T12:42:00.000Z']);
     // GLS's leg names Great Britain, but 17TRACK labels it on Central European time.
@@ -769,17 +782,18 @@ describe('17TRACK result parsing', () => {
     const held = (payload: unknown, requested = number) => parse17TrackResponse(payload, requested).events
       ?.find(e => e.description?.startsWith('Held')) ?? null;
     // The recipient's country, China, lends its clock: 12:47 in Guangzhou.
-    expect(held(reply([nzLeg(null)], 'CN'))).toMatchObject({ time: '2026-08-14T04:47:00.000Z' });
+    expect(held(reply([nzLeg(null)], 'CN'))).toMatchObject({ time: '2026-08-14T04:47:00.000Z', time_zone: 'Asia/Shanghai', time_zone_basis: 'destination' });
     // So does the post whose leg follows NZ Post's, and its mirror of NZ Post's exchange scan is Auckland's 06:09.
     const relayed = parse17TrackResponse(reply([chinaPostLeg('CN'), nzLeg(null)]), number);
     expect(relayed.events?.find(e => e.description === 'Held for clearance, Your item is currently being held for clearance')?.time)
       .toBe('2026-08-14T04:47:00.000Z');
-    expect(relayed.events?.find(e => e.description === "Arrival at the origin post's office of exchange")).toMatchObject({ time: '2026-08-05T18:09:00.000Z' });
+    expect(relayed.events?.find(e => e.description === "Arrival at the origin post's office of exchange")).toMatchObject({ time: '2026-08-05T18:09:00.000Z',
+      time_zone: 'Pacific/Auckland', time_zone_basis: 'place' });
     // An airline scan naming a country lends it before the destination does, though a transit hub's can be the wrong one.
-    expect(held(reply([nzLeg('Japan')], 'CN'))).toMatchObject({ time: '2026-08-14T03:47:00.000Z' });
+    expect(held(reply([nzLeg('Japan')], 'CN'))).toMatchObject({ time: '2026-08-14T03:47:00.000Z', time_zone: 'Asia/Tokyo', time_zone_basis: 'neighbour' });
     // A lender on several clocks leaves the wall time; with none at all, NZ Post's Auckland reading stays.
     expect(held(reply([nzLeg('United States')], 'CN'))).toMatchObject({ local_time: '2026-08-14T12:47:00' });
-    expect(held(reply([nzLeg(null)]))).toMatchObject({ time: '2026-08-14T00:47:00.000Z' });
+    expect(held(reply([nzLeg(null)]))).toMatchObject({ time: '2026-08-14T00:47:00.000Z', time_zone: 'Pacific/Auckland', time_zone_basis: 'carrier' });
     // An origin on several clocks keeps 17TRACK's reading of the exchange scan.
     expect(parse17TrackResponse(reply([chinaPostLeg('CN')], null, 'ZZ123456785US'), 'ZZ123456785US').events?.[0]?.time)
       .toBe('2026-08-05T22:09:00.000Z');
@@ -803,6 +817,8 @@ describe('17TRACK result parsing', () => {
       ['Arrival at processing center in the destination country', '2026-11-05T08:25:00.000Z'],
       ['Arrive at the place of destination', '2026-11-04T11:37:00.000Z'],
     ]);
+    expect(parse17TrackResponse(reply('ES'), number).events?.map((e) => [e.time_zone, e.time_zone_basis])).toEqual([
+      ['Europe/Madrid', 'destination'], ['Europe/Madrid', 'destination'], [undefined, undefined]]);
     // A destination on several clocks keeps 17TRACK's reading.
     expect(times('US')?.[1]).toEqual(['Arrival at processing center in the destination country', '2026-11-05T01:25:00.000Z']);
   });
