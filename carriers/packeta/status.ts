@@ -13,8 +13,8 @@
  * Provenance: derived from the prior-art client
  * https://github.com/ha-parcel-integrations/ha-packeta (MIT), and from the id
  * names the public tracking page's own script declares (read 2026-10-09).
- * `packetStatusId` "3" (delivered), "4" (cancelled), "5" (returned to sender)
- * and "21" are live-confirmed; the other ids are reconstructed. The script also
+ * `packetStatusId` "1" (waiting for the hand-over), "3" (delivered), "4" (cancelled),
+ * "5" (returned to sender) and "21" are live-confirmed; the other ids are reconstructed. The script also
  * names SENT_BY_MAIL, TO_BE_SENT_BY_MAIL and PROBLEMATIC_CAPTURE, left unmapped
  * because their names do not say where the parcel is. The event sentences were
  * confirmed live on 2026-08-19 against real delivered parcels (values
@@ -29,8 +29,9 @@ const EXCEPTION: ClassifiedStatus = { status: 'exception', stage: 'exception' };
 const PACKET_STATUS: Record<string, ClassifiedStatus> = {
   // TO_BE_PROCESSED
   '997': { status: 'pending', stage: 'registered' },
-  // WAITING_FOR_DELIVERY (in warehouse)
-  '1': { status: 'in_transit', stage: 'in_transit' },
+  // WAITING_FOR_DELIVERY, the first step of the page's progress rail, before ON_THE_WAY: the
+  // sender has yet to hand the parcel over (live wording "We are waiting for the package handover").
+  '1': { status: 'pending', stage: 'registered' },
   // ON_THE_WAY
   '31': { status: 'in_transit', stage: 'in_transit' },
   // READY_FOR_PICKUP
@@ -62,6 +63,7 @@ const PACKET_STATUS: Record<string, ClassifiedStatus> = {
 const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['aware of your parcel and are waiting for the sender', 'registered'],
   ['assigned a tracking number', 'registered'],
+  ['awaiting consignment by the sender', 'registered'],
   ['successfully received the parcel for transport', 'in_transit'],
   ['on its way to the depot', 'in_transit'],
   ['arrived at the depot', 'in_transit'],

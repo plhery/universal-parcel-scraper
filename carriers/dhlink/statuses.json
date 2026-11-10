@@ -104,6 +104,11 @@
     {"wording": "Parcel received at UniUni sorting hub.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "UniUni's sorting hub, relayed with or without the hub's place first."},
     {"wording": "Parcel processed.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "UniUni's processing at its sorting hub, a second after the hub's receipt and minutes before the delivery round; relayed with the hub's town first, which the place names too."},
     {"wording": "Parcel scanned and in transit.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "UniUni's transit scan, relayed with or without its place first."},
-    {"wording": "Arrived to ABC hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "A European partner's hub, named by a code that varies."}
+    {"wording": "Arrived to ABC hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-06", "note": "A European partner's hub, named by a code that varies."},
+    {"wording": "Arrive at the receiving point", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "A line's collection point, as \"The goods arrive at the receiving point\" words it, on a row without a node."},
+    {"wording": "Transferring to the airport", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The line's transfer from its warehouse to the departure airport."},
+    {"wording": "Arrive at Shenzhen Transit Center, Shanghai", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "A line's transit centre on the way to the airport; matched on its words, any city."},
+    {"wording": "Customs clearance completed CN", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "China's export clearance, minutes after the hand-over to the airline."},
+    {"wording": "Terminal, arrival terminal, mail in transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The airport terminal holding the mail before the flight, repeated daily until it leaves."}
   ]
 }

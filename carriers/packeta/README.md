@@ -34,8 +34,10 @@ after nine digits is CDL's order number.
 - Two independent maps: `packetStatusId` sets the parcel's stage, the canned sentences set
   each event's stage. The overall stage never borrows from the sentences. The app's review
   asks the sentence map (`statusMap`), since a scan keeps no code.
-- The `packetStatusId` names come from the tracking page's own script. Only `3` (delivered)
-  and the returns `5` and `21` are confirmed live; the other ids are reconstructed. The script
+- The `packetStatusId` names come from the tracking page's own script. Only `1`, `3`
+  (delivered) and the returns `5` and `21` are confirmed live; the other ids are reconstructed.
+  `1`, WAITING_FOR_DELIVERY, is the first step of the page's progress rail, before ON_THE_WAY,
+  worded "We are waiting for the package handover": the parcel is registered. The script
   names `21` LOST_OR_UNKNOWN, but its live wording is "Return (on the way back)", so it maps to
   `returned`. An unmapped id is treated as schema drift: `unknown`, no guessed stage.
 - Times are naive and read as `Europe/Prague`, the zone the backend stamps. The result

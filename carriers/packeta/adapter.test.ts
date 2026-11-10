@@ -78,7 +78,7 @@ describe('Packeta response parsing', () => {
   it('maps every documented packet status code', () => {
     const cases: Array<[string, string, string]> = [
       ['997', 'pending', 'registered'],
-      ['1', 'in_transit', 'in_transit'],
+      ['1', 'pending', 'registered'],
       ['31', 'in_transit', 'in_transit'],
       ['2', 'out_for_delivery', 'ready_for_pickup'],
       ['3', 'delivered', 'delivered'],

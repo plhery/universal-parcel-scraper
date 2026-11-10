@@ -116,6 +116,13 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['linehaul transit; parcel has entered the linehaul network.', 'in_transit'],
   // Pactic's record of the parcel's data: a registration before DHLink's scans, no step back after them.
   ['data received; data transferred and received by carrier', 'registered'],
+  // A line's rows in English without a node, before its flight: the receiving point, as its longer
+  // wording says, the transfer to the airport, the airport terminal holding the mail, and China's
+  // export clearance.
+  ['arrive at the receiving point', 'accepted'],
+  ['transferring to the airport', 'in_transit'],
+  ['terminal, arrival terminal, mail in transit', 'in_transit'],
+  ['customs clearance completed cn', 'in_transit'],
 ]);
 
 /** DHLink's and China Post's scans in Chinese, and a relayed USPS notice. */
@@ -174,6 +181,8 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^(?:[^,]{1,60}, )?parcel scanned and in transit\.?$/, 'in_transit'],
   // A European partner's hub, named by its code.
   [/^arrived to [a-z0-9]{2,10} hub$/, 'in_transit'],
+  // A line's transit centre in China, named by its city, with the city it stands in after it.
+  [/^arrive at [a-z ]{2,30} transit cent(?:er|re)(?:, [a-z ]{2,30})?$/, 'in_transit'],
 ];
 
 function wordingStage(wording: string): Stage | undefined {
