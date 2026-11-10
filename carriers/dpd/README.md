@@ -76,9 +76,11 @@ signal.
   for a round, with none tried before it, and reads as in transit.
 - When DPD's unit in another country takes the parcel, the group's history
   dates `PARCEL_HANDED` anew, after the parcel's later milestones. Dated after
-  one of them, it is that hand-off between units and reads as in transit, as
-  does the parcel's current stage while it is the newest milestone: its label
-  alone would read as acceptance.
+  one of them, it is that hand-off between units and reads as in transit.
+- When the enumeration gives no stage, the parcel's current stage is that of its
+  newest scan, as the codes read it. A label alone can read otherwise: the
+  hand-off between units as acceptance, the sender's hand-in at a pickup point
+  (`DOPKY`) as transit.
 - A proof-of-delivery bookkeeping entry is omitted when the actual delivery
   scan exists, so it cannot shift the delivery time. Delivery estimates are
   omitted after completion or an exception.
