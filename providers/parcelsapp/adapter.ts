@@ -389,7 +389,11 @@ const CAINIAO_LAST_MILE = [
  * "Held for customs inspection" those of UPU's "Held by customs" at the
  * Johannesburg office. Borrowed from the origin's scans before them, they came
  * an hour late. Its hold at that office ("Held at destination import office")
- * is the same office's scan.
+ * is the same office's scan. In a country of several clocks the office of
+ * exchange is on the one most of its people live on, unless the country's
+ * states or provinces keep their own: on a parcel to Chile, EMS's arrival and
+ * import customs at "Santiago" had the digits of UPU's copies at "SANTIAGO
+ * EMS, Chile" and FIC's own rows on Santiago's clock.
  *
  * FIRST LINE's ("1ST") scans from its arrival at the destination airport are
  * on the destination's clock, as its partner's scans after them are (see
@@ -404,7 +408,7 @@ const CAINIAO_LAST_MILE = [
  */
 const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
   wording: RegExp; zone: string; except?: string; otherwise?: string; via?: Readonly<Record<string, string>>; to?: string;
-  among?: ReadonlySet<string>;
+  among?: ReadonlySet<string>; main?: boolean;
 }[]> = new Map([
   ['gofoexpress', [
     { wording: /^shipping label created$/i, zone: 'America/Toronto', to: 'CA' },
@@ -442,7 +446,8 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
   ]],
   ['ems', [
     { wording: wordings(['arrived at destination import office', 'held at destination import office', 'held for customs inspection',
-      'presented to import customs', 'released from import customs', 'departed from destination import office']), zone: DESTINATION },
+      'presented to import customs', 'released from import customs', 'departed from destination import office']), zone: DESTINATION,
+      main: true },
   ]],
   ['ecoscooting', [
     { wording: /^(?:shipment data information received|shipment has left cainiao express's partner facility|shipment is in transit to cainiao express)$/i,
@@ -466,7 +471,9 @@ function knownClock(name: unknown, status: string, destination: string | null, o
   if (!destination) return known.otherwise ? { zone: known.otherwise } : null;
   if (destination === known.except) return null;
   const country = known.via?.[destination] ?? destination;
-  return { zone: countryTimeZone(country), country };
+  const zone = countryTimeZone(country)
+    ?? (known.main && hasSeveralClocks(country) && !REGIONAL_CLOCKS.has(country) ? mainZone(country) : null);
+  return { zone, country };
 }
 /**
  * Networks whose dates are their home clock wherever the scan was: their own

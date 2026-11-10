@@ -2848,6 +2848,30 @@ describe('ParcelsApp result parsing', () => {
     expect(parsed.last_status_text).toBe('Departed from destination import office');
   });
 
+  it('reads EMS\'s office of exchange in a country of several clocks on the one most of its people live on', () => {
+    // On a parcel to Chile, EMS's arrival and import customs at the Santiago office came at the digits of UPU's
+    // copies placed there; read under ParcelsApp's label they came three hours early.
+    const scan = (date: string, status: string, carrier: number, location?: string) => ({ date, status, carrier, ...(location ? { location } : {}) });
+    const states = (destination: string, office: string) => [
+      scan('2026-11-06T01:36:00Z', 'Item presented to import Customs', 0, `${office}, ${destination}`),
+      scan('2026-11-06T01:36:00+00:00', 'Presented to import customs', 1, 'Example Town'),
+      scan('2026-11-06T00:59:00Z', 'Arrived at sorting center in destination', 0, `${office}, ${destination}`),
+      scan('2026-11-06T00:59:00+00:00', 'Arrived at destination import office', 1, 'Example City'),
+    ];
+    const times = (destination: string, office: string) => parseParcelsAppResponse({ carriers: ['Universal Postal Union', 'EMS'],
+      origin: 'Netherlands', destination, states: states(destination, office) }, number, identity()).events
+      ?.map((event) => [event.description, event.time, event.time_zone]);
+    expect(times('Chile', 'EXAMPLE EMS')).toEqual([
+      ['Item presented to import Customs', '2026-11-06T04:36:00.000Z', 'America/Santiago'],
+      ['Presented to import customs', '2026-11-06T04:36:00.000Z', 'America/Santiago'],
+      ['Arrived at sorting center in destination', '2026-11-06T03:59:00.000Z', 'America/Santiago'],
+      ['Arrived at destination import office', '2026-11-06T03:59:00.000Z', 'America/Santiago'],
+    ]);
+    // A country whose states keep their own clocks names no office's clock.
+    expect(times('United States', 'EXAMPLE ISC')?.filter(([description]) => /import/.test(String(description))).map(([, , zone]) => zone))
+      .not.toContain('America/New_York');
+  });
+
   it('leaves out GEODIS Poland\'s summary, which ParcelsApp dates after each of its reads', () => {
     // GEODIS Poland's own tracker gives the status with no scan; ParcelsApp's date moves with its reads.
     const summary = { date: '2026-10-28T16:55:00Z', status: 'Transferred Data', carrier: 0 };

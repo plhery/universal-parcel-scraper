@@ -339,7 +339,9 @@ step exists for future protocol changes.
   origin's: on a parcel from the UK to South Africa they have the digits of the South
   African post's own copies, and its unplaced "Held for customs inspection" those of
   UPU's "Held by customs" at the Johannesburg office. Borrowed from the British scans
-  before them, they came an hour late. FIRST LINE ("1ST") dates its scans in China and Hong Kong, and its order data
+  before them, they came an hour late. In a country of several clocks the office is on the
+  one most of its people live on, unless its states or provinces keep their own: on a parcel
+  to Chile, EMS's rows at the Santiago office had the digits of UPU's copies there. FIRST LINE ("1ST") dates its scans in China and Hong Kong, and its order data
   with no place, on Beijing's clock, as 17TRACK's copies do. Its scans abroad are its
   delivery partner's, on their facility's clock, and from "Arrived at Destination Airport"
   they are in the destination: on a parcel to California, its copies of GOFO's scans had
