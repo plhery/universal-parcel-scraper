@@ -24,6 +24,9 @@
       "direct",
       "retry"
     ],
+    "recognition": {
+      "rank": 156
+    },
     "localClocks": true
   },
   "capabilities": [

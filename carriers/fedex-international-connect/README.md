@@ -14,6 +14,8 @@ Connect, so that name is not an alias. The adapter reads FIC's tracker.
 2. `retry`: one more read when the first fails to connect or hangs. The first gets half of the
    budget.
 
+Recognition makes the same request.
+
 - The tracker also looks up a partner's number or a shipper's reference. The adapter asks only for
   an FIC tracking number, and reads only a page whose heading and "FIC Tracking Number" are the
   whole number asked.
@@ -46,7 +48,8 @@ Connect, so that name is not an alias. The adapter reads FIC's tracker.
 An FIC tracking number is three letters naming the shipper, four digits, the country the shipper
 sends from and eleven digits. FIC's tracker labels it "FIC Tracking Number", and archived lookups
 there show it behind many shippers' letters. Starlinks Global labels its parcels the same way, and
-neither tracker knows the other's, so the rule is low-confidence and puts FIC first.
+neither tracker knows the other's, so the rule is low-confidence and puts FIC first. Recognition
+asks both trackers, FIC's first.
 
 ## Links
 

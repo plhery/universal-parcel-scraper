@@ -21694,6 +21694,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "fedex-international-connect",
+      "recognitionRank": 156,
       "localClocks": true
     },
     "canaryUrl": "https://fictracking.fedex.com/",

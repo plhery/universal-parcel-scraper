@@ -182,6 +182,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "fan-courier": 330,
   "fargo-uz": 802,
   "fastdrop": 826,
+  "fedex-international-connect": 156,
   "fedex-pl": 882,
   "fermopoint": 872,
   "fez-delivery": 82,

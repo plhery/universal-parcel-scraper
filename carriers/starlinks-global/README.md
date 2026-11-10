@@ -46,8 +46,7 @@ Starlinks. Tracked through its tracking page.
 A Starlinks Global number is three letters naming the shipper, four digits, the country the
 shipper sends from and eleven digits. FedEx International Connect labels its parcels the same
 way, and neither tracker knows the other's numbers, so both rules are low-confidence and FIC,
-with many more shippers, comes first. FIC's tracker cannot be asked, so recognition asks
-Starlinks Global's about either.
+with many more shippers, comes first. Recognition asks both trackers, FIC's first.
 
 ## Links
 

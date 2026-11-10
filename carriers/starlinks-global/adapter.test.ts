@@ -224,8 +224,8 @@ describe('Starlinks Global HTTP adapter', () => {
     const fetcher = vi.fn<typeof fetch>();
     await expect(carrier(fetcher).recognize!('12345')).resolves.toEqual({ known: false });
     expect(fetcher).not.toHaveBeenCalled();
-    // FedEx International Connect prints the same shape and stays first, but cannot be asked.
-    expect(recognitionCandidates(PARCEL).map((candidate) => candidate.carrier)).toEqual(['starlinks-global']);
+    // FedEx International Connect prints the same shape and, with many more shippers, is asked first.
+    expect(recognitionCandidates(PARCEL).map((candidate) => candidate.carrier)).toEqual(['fedex-international-connect', 'starlinks-global']);
   });
 
   it('routes a number filed under Starlinks Global to the adapter', async () => {

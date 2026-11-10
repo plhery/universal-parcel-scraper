@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
@@ -146,6 +147,18 @@ describe('FedEx International Connect HTTP adapter', () => {
     }
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeFicNumber('zzz-0000-gb-99999999980')).toBe(DELIVERED);
+  });
+
+  it('recognizes a number the tracker knows, and not one it does not', async () => {
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(html(page('delivered')))).recognize!(DELIVERED))
+      .resolves.toMatchObject({ known: true });
+    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(html(page('not-found')))).recognize!(UNKNOWN))
+      .resolves.toEqual({ known: false });
+    const fetcher = vi.fn<typeof fetch>();
+    await expect(carrier(fetcher).recognize!('12345')).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+    // Starlinks Global prints the same shape; FIC, with many more shippers, is asked first.
+    expect(recognitionCandidates(DELIVERED).map((candidate) => candidate.carrier)).toEqual(['fedex-international-connect', 'starlinks-global']);
   });
 
   it('sends a read that fails to connect once more inside the budget', async () => {
