@@ -612,6 +612,23 @@ describe('the detection engine', () => {
     }
   });
 
+  it('takes no word of a message or a link for a number, though its shape fits a carrier', () => {
+    expect(detectCarrierMatch('ADDITIONAL').confidence).toBe('high');
+    for (const text of [
+      'For additional information on the scope of this notice, please contact our customer service.',
+      'Psychological additionally aseptically',
+      'https://shop.example/help/additional?topic=additional',
+    ]) expect(parseTrackingInput(text), text).toMatchObject({ trackingNumber: '', source: 'none' });
+    // Typed alone, it is the number the visitor means.
+    expect(parseTrackingInput('ADDITIONAL')).toMatchObject({ trackingNumber: 'ADDITIONAL', source: 'number' });
+    // A word beside a number leaves the number.
+    expect(parseTrackingInput('For additional information track 1Z999AA10123456784').trackingNumber).toBe('1Z999AA10123456784');
+  });
+
+  it('reads the number after a separator printed twice', () => {
+    expect(parseTrackingInput('Tracking Number: : 12345678901')).toMatchObject({ trackingNumber: '12345678901', source: 'text', confidence: 'low' });
+  });
+
   it('keeps a label word attached to the number, and takes no word for a number', () => {
     expect(parseTrackingInput('Tracking NO123456789').trackingNumber).toBe('NO123456789');
     expect(parseTrackingInput('tracking notable1234').trackingNumber).toBe('notable1234');

@@ -29,9 +29,10 @@ beforeEach(() => {
 
 describe('the work a pasted text costs', () => {
   it.each([
-    ['one word repeated', Array(3000).fill('abcd').join(' '), 3],
-    ['one unknown link repeated', Array(612).fill('https://example.invalid/track/abcd/efgh').join(' '), 8],
-    ['distinct words', Array.from({ length: 2800 }, (_, index) => `w${letters(index)}`).join(' '), MOST_TEXT_CANDIDATES],
+    // A word without a digit is no candidate and costs nothing, so each of these holds one.
+    ['one word repeated', Array(3000).fill('ab1d').join(' '), 3],
+    ['one unknown link repeated', Array(612).fill('https://example.invalid/track/ab1d/ef2h').join(' '), 8],
+    ['distinct words', Array.from({ length: 2800 }, (_, index) => `w1${letters(index)}`).join(' '), MOST_TEXT_CANDIDATES],
     ['distinct numbers', Array.from({ length: 2000 }, (_, index) => String(1_000_000 + index * 7)).join(' '), MOST_TEXT_CANDIDATES],
     ['distinct unknown links', Array.from({ length: 500 }, (_, index) => `https://e${index}.invalid/t/a${index}bc/q${index}gh`).join(' '), MOST_TEXT_CANDIDATES],
   ])('asks about each candidate of %s once, and about no more than the budget', (_, text, most) => {
@@ -39,6 +40,12 @@ describe('the work a pasted text costs', () => {
     expect(detections.mock.calls.length).toBeLessThanOrEqual(most + 2);
     // A rule is tried on its own only in a group of rules that fits the number: a small share of the catalog.
     expect(ruleTests.mock.calls.length).toBeLessThan(detections.mock.calls.length * catalogRules / 5);
+  });
+
+  it('asks about no word that holds no digit', () => {
+    const words = Array.from({ length: 2800 }, (_, index) => `w${letters(index)}`).join(' ');
+    expect(parseTrackingInput(words.slice(0, LIMIT))).toMatchObject({ source: 'none' });
+    expect(detections.mock.calls.length).toBeLessThanOrEqual(2);
   });
 
   it('still reads a number after a long message’s words', () => {

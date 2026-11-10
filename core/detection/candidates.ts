@@ -55,13 +55,16 @@ export function candidateScan(): CandidateScan {
 
 /**
  * The first candidate in the text that one carrier claims confidently, among
- * those `scan` has not asked about yet.
+ * those `scan` has not asked about yet. A candidate holds a digit: some
+ * carriers' shapes also fit a word, "additional" for one, and a word of a
+ * message or a link is no number. A number typed alone is not read here.
  */
 export function recognizedNumberInScan(raw: string, scan: CandidateScan): string | undefined {
   for (const pattern of TRACKING_CANDIDATE_PATTERNS) {
     pattern.lastIndex = 0;
     for (const match of raw.matchAll(pattern)) {
       const candidate = match[0].trim();
+      if (!/\d/.test(candidate)) continue;
       const key = candidate.toUpperCase();
       if (scan.asked.has(key)) continue;
       if (scan.asked.size >= MOST_TEXT_CANDIDATES) return undefined;
@@ -93,7 +96,8 @@ const LABELLED_NUMBER = new RegExp(
   + String.raw`|(?:(?:${NUMBER_WORDS})\s*(?:(?:de|du|di|del|do|da)\s+|d')?)?(?:${PARCEL_WORDS})(?!\p{L})(?:\s*(?:${NUMBER_WORDS}))?`
   // A joined word is read from its start: a later start in the same word reads no more, and would try every letter.
   + String.raw`|(?<!\p{L})\p{L}*(?:sendungs|paket|tracking|zending)nummer)`
-  + String.raw`(?:\s+(?:is|est|es|ist|lautet|è|é|jest)(?:\s+(?:le|el|il|o))?(?![\p{L}0-9]))?\s*[:#-]?\s*`
+  // An email's template can print its separator twice: "Tracking Number: : 1234567899".
+  + String.raw`(?:\s+(?:is|est|es|ist|lautet|è|é|jest)(?:\s+(?:le|el|il|o))?(?![\p{L}0-9]))?\s*(?:[:#-]\s*){0,2}`
   // The token holds a digit, so a label followed by a plain word does not end the search. Groups
   // printed apart may follow it: "1Z 999 AA1 01 2345 6784".
   + String.raw`((?=[A-Z0-9.-]{0,39}\d)(?:[A-Z0-9][A-Z0-9.-]{3,39}|[A-Z0-9][A-Z0-9.-]{1,2}(?=\s[A-Z0-9]*\d))`
