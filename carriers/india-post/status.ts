@@ -58,11 +58,12 @@ export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
     'notdelivered',
     'undelivered',
   ])) return { status: 'exception', stage: 'failed_attempt' };
+  // track91 words the destination post's delivery "Delivered" alone, as both code and wording.
   if (includesAny(key, [
     'itemdelivered',
     'deliveredtorecipient',
     'delivereddelivery',
-  ])) return { status: 'delivered', stage: 'delivered' };
+  ]) || values.slice(0, 2).some((value) => statusKey(value) === 'delivered')) return { status: 'delivered', stage: 'delivered' };
   if (includesAny(key, [
     'readyforpickup',
     'readyforcollection',
@@ -98,10 +99,12 @@ export function classifyIndiaPostEvent(...values: unknown[]): ClassifiedStatus {
   if (includesAny(key, [
     'itembagged',
     'itemdispatched',
+    'dispatched',
     'itemreceived',
     'receivedat',
     'departed',
     'arrived',
+    'arrival',
     'forwarded',
     'intransit',
     'handedover',

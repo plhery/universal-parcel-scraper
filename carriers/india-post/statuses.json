@@ -21,6 +21,9 @@
     {"code": "SendItemToDomestic", "wording": "Send item to domestic location (Inb)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-05", "note": "The inbound office of exchange sends the item on into the domestic network."},
     {"code": "ItemTransfered", "wording": "Transfer to OOE (Otb)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-09-22", "note": "A transfer to the outbound office of exchange; India Post spells the code with one r."},
     {"code": "AssignedToLoadPlan", "wording": "Assigned to load plan", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-03", "note": "The item is planned onto a transport."},
-    {"code": "TransportLegCompleted", "wording": "Transport Leg Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-03", "note": "A transport leg ended."}
+    {"code": "TransportLegCompleted", "wording": "Transport Leg Completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-03", "note": "A transport leg ended."},
+    {"code": "Delivered", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "track91's wording, code and text alike, for the destination post's delivery abroad. Matched whole, so failures worded around it read first."},
+    {"code": "Dispatched", "wording": "Dispatched", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "track91's wording for the office of exchange's dispatch abroad."},
+    {"code": "Aircraft arrival in Transit country", "wording": "Aircraft arrival in Transit country", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "track91's wording for a landing at a hub on the way; substring key `arrival`."}
   ]
 }

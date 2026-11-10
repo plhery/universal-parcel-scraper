@@ -10,7 +10,7 @@ import {
   parseIndiaPostTrack91Result,
   parseIndiaPostTrackingHtml,
 } from './adapter.js';
-import { classifyIndiaPostEvent } from './status.js';
+import { classifyIndiaPostEvent, statusMap } from './status.js';
 import { locatePlace } from '../../places/index.js';
 
 // Every identifier, office, pincode and timestamp below is synthetic; both
@@ -165,6 +165,17 @@ it('reads the movement codes seen since as transit, no longer unknown', () => {
     ['ItemTransfered', 'Transfer to OOE (Otb)'], ['AssignedToLoadPlan', 'Assigned to load plan'],
     ['TransportLegCompleted', 'Transport Leg Completed'],
   ]) expect(classifyIndiaPostEvent(code, wording)).toEqual({ status: 'in_transit', stage: 'in_transit' });
+});
+
+it("reads track91's prose for the destination post's delivery and movement", () => {
+  expect(classifyIndiaPostEvent('Delivered', 'Delivered')).toEqual({ status: 'delivered', stage: 'delivered' });
+  expect(classifyIndiaPostEvent('Dispatched', 'Dispatched')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+  expect(classifyIndiaPostEvent('Aircraft arrival in Transit country', 'Aircraft arrival in Transit country'))
+    .toEqual({ status: 'in_transit', stage: 'in_transit' });
+  // Matched whole: a failure worded around it reads first, and an arrival at the delivery office is not a delivery.
+  expect(classifyIndiaPostEvent('Item Not Delivered', 'Item Not Delivered').stage).toBe('failed_attempt');
+  expect(classifyIndiaPostEvent('Arrived at the delivery Post office', 'Arrived at the delivery Post office').stage).toBe('in_transit');
+  expect(statusMap.stage('Delivered', 'Delivered')).toBe('delivered');
 });
 
 it('reads "lost" only as a whole word, not Lagos before "To" in a flight remark', () => {
@@ -739,6 +750,16 @@ describe('India Post Livewire session', () => {
     expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]).toMatchObject({ local_time: '2026-07-19T14:04:00' });
     expect(parseIndiaPostTrack91Result(hub, SAMPLE_NUMBER).events?.[0]).not.toHaveProperty('time');
     expect(() => parseIndiaPostTrack91Result(track91Result(WRONG_VALID_NUMBER), SAMPLE_NUMBER)).toThrow(SchemaError);
+  });
+
+  it('reads the destination post\'s delivery track91 words "Delivered" as delivered, on the wall clock abroad', () => {
+    const done = track91Result();
+    (done.events as Array<Record<string, unknown>>).unshift({
+      event_code: 'delivered', event: 'Delivered', tracked_at: '2026-07-20T00:16:00+01:00', location: { address: '' }, remarks: null,
+    });
+    const result = parseIndiaPostTrack91Result(done, SAMPLE_NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+    expect(result.events?.[0]).toMatchObject({ description: 'Delivered', stage: 'delivered', local_time: '2026-07-20T04:46:00' });
   });
 
   it('reads a take-off track91 words in prose on its airport\'s clock too', () => {
