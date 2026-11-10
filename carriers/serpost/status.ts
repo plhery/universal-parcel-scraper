@@ -16,6 +16,8 @@ const SERPOST_RULES: readonly (readonly [RegExp, Stage])[] = [
   [/^envio sin observacion por la aduana\b/, 'in_transit'],
   [/^envio sujeto a tramite ante aduana\b/, 'customs'],
   [/^envio salio de peru\b/, 'in_transit'],
+  // The item left Peru for the country it is addressed to.
+  [/^envio rumbo al pais de destino\b/, 'in_transit'],
   [/^envio en transito\b/, 'in_transit'],
   // Sorting at the head office, and preparing the round to the addressee's home.
   [/^envio en procesamiento\b/, 'in_transit'],
