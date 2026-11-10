@@ -82,15 +82,17 @@ const ROYAL_MAIL_HANDED_OVER = /^in transit (?:to|via) (?:royal ?mail|rm ?\d{2})
 /**
  * How a universal provider's copy of ePost Global's feed reads a row's clock: undefined for a
  * processing center's scan, which its place dates, or a feed that is not ePost Global's (it has
- * neither the label nor a handover); null for ePost Global's own row, a wall clock; the partner's
- * zone for a partner's row once ePost Global handed the parcel to GLS's European network or to Royal Mail.
+ * neither the label nor a handover); the partner's zone for a partner's row once ePost Global
+ * handed the parcel to GLS's European network or to Royal Mail; null, a wall clock, for any other
+ * row, as ePost Global's own tracker keeps it. Its relays of USPS's rows came two hours after
+ * USPS's own scans when read on the facility's clock.
  */
 export function epostGlobalCopyZone(wording: string, feed: readonly string[]): string | null | undefined {
   const rows = feed.map(normalizeStatusWording);
   if (!rows.some((row) => row === 'shipment in transit to the epost global processing center' || HANDED_OVER.test(row))) return undefined;
   if (epostGlobalOwnRow(wording)) return epostGlobalFacilityScan(wording) ? undefined : null;
   if (rows.some((row) => GLS_HANDED_OVER.test(row))) return EPOST_GLOBAL_GLS_ZONE;
-  return rows.some((row) => ROYAL_MAIL_HANDED_OVER.test(row)) ? EPOST_GLOBAL_ROYAL_MAIL_ZONE : undefined;
+  return rows.some((row) => ROYAL_MAIL_HANDED_OVER.test(row)) ? EPOST_GLOBAL_ROYAL_MAIL_ZONE : null;
 }
 
 /** A scan at one of ePost Global's processing centers. */

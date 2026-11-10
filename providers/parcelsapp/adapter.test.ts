@@ -800,6 +800,18 @@ describe('ParcelsApp result parsing', () => {
     expect(time()).toEqual(['2026-11-02T08:25:14.000Z']);
   });
 
+  it("reads La Poste's copy of a sending post's posting on the clock of the country it names", () => {
+    const time = (location: string) => parseParcelsAppResponse({
+      carriers: ['La Poste'], originCode: 'CN', destinationCode: 'FR',
+      states: [{ date: '2026-10-28T17:03:00Z', status: 'Your shipment has been deposited by the sender with postal partner in the country of origin.',
+        carrier: 0, location }],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // La Poste's own lookup dates the posting 09:03 UTC, as China Post's own row does.
+    expect(time('China')).toEqual(['2026-10-28T09:03:00.000Z']);
+    expect(time('United States')).toEqual(['local 2026-10-28T17:03:00.000']);
+    expect(time('France')).toEqual(['2026-10-28T16:03:00.000Z']);
+  });
+
   it("reads Azerbaijan Post's copies of a sending post's scans on the clock of the country before the office", () => {
     const time = (location: string, carrier = 1) => parseParcelsAppResponse({
       carriers: ['Universal Postal Union', 'Azerbaijan Post'], origin: 'Latvia', destination: 'Azerbaijan',
@@ -1742,9 +1754,11 @@ describe('ParcelsApp result parsing', () => {
 
   it('reads Cainiao\'s warehouse and origin sorting center on China time', () => {
     // AliExpress's feed dates the same scans +08:00; ParcelsApp labels the digits UTC.
+    // ParcelsApp words the sorting center's refusal "Inbound failure", at the second Cainiao's own feed dates +08:00.
     const result = parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode: 'FR', states: [
       { date: '2026-10-16T13:52:01Z', status: 'Departed from sorting center', carrier: 0, location: 'Example Town' },
       { date: '2026-10-16T11:54:16Z', status: 'Processing at sorting center', carrier: 0, location: 'Example Town' },
+      { date: '2026-10-16T09:15:19Z', status: 'Inbound failure in sorting center', carrier: 0, location: 'Example Town' },
       { date: '2026-10-16T08:01:25Z', status: 'Package shipped out from warehouse', carrier: 0 },
       { date: '2026-10-16T06:30:00Z', status: 'Package ready for shipping from warehouse', carrier: 0 },
       { date: '2026-10-16T03:07:09Z', status: 'Shipment information received by warehouse electronically', carrier: 0 },
@@ -1752,6 +1766,7 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual([
       '2026-10-16T05:52:01.000Z',
       '2026-10-16T03:54:16.000Z',
+      '2026-10-16T01:15:19.000Z',
       '2026-10-16T00:01:25.000Z',
       '2026-10-15T22:30:00.000Z',
       '2026-10-15T19:07:09.000Z',
@@ -2294,6 +2309,16 @@ describe('ParcelsApp result parsing', () => {
       state('2026-11-02T23:56:32Z', 'In transit to ROYALMAIL 48 TRACKED tracking #: GB000000005GB'),
       state('2026-11-02T23:55:32Z', 'Parcel Shipped', 'Example City IL'),
     ])).toEqual(['2026-11-07T14:30:00.000Z', '2026-11-03T18:58:00.000Z', '2026-11-03T05:55:32.000Z', '2026-11-02T23:56:32.000']);
+    // Any other partner's rows keep their wall clock, as ePost Global's own tracker keeps them: its relays of
+    // USPS's rows, read on the facility's clock, came two hours after USPS's own scans.
+    expect(clocks([
+      state('2026-10-28T12:10:00Z', 'ARRIVED AT INTERNATIONAL SERVICE CENTER', 'EXAMPLE CITY CA EXAMPLE HUB'),
+      state('2026-10-26T16:06:00Z', 'In transit to USPS tracking #: UM000000000US'),
+      state('2026-10-26T16:05:00Z', 'Parcel Shipped', 'Example City CA,90000'),
+      state('2026-10-24T05:41:00Z', 'DEPARTED SHIPPING PARTNER FACILITY', 'EXAMPLE CITY'),
+      state('2026-10-23T15:27:00Z', 'Shipment in Transit to the ePost Global Processing Center'),
+    ])).toEqual(['2026-10-28T12:10:00.000', '2026-10-26T23:05:00.000Z', '2026-10-26T16:06:00.000', '2026-10-24T05:41:00.000',
+      '2026-10-23T15:27:00.000']);
   });
 
   it('reads the networks ParcelsApp names its own way on their home clock', () => {

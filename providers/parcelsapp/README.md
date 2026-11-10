@@ -525,7 +525,8 @@ step exists for future protocol changes.
   Post's own row of it; read on Bratislava's, Chunghwa Post's came seven hours after Slovak
   Post's own row, which states +08:00. Azerbaijan Post names the country before the office
   ("LATVIA: LVRIXA") as it names a town at home: read on Baku's clock, its copies of Latvian
-  Post's scans came two hours before Latvian Post's own.
+  Post's scans came two hours before Latvian Post's own. So does La Poste ("China"): read on
+  Paris's clock, its copy of China Post's posting came seven hours after La Poste's own instant.
 - Speedaf's dates are its sites' wall clocks under a UTC label. Its own feed dates the
   scans up to the departing flight ("Cargo flight departured") on China time and the rest
   on the destination's, and Cainiao's copies of the same scans agree once read that way.
@@ -550,7 +551,8 @@ step exists for future protocol changes.
   take the clocks of [ePost Global's own tracker](../../carriers/epost-global/README.md): a
   processing center's scan its state's, its own place-less rows their wall clock, and GLS
   Europe's rows after the handover to GLS Berlin's, even at GLS's gateway in the United States,
-  which the routing zone put nine hours late.
+  which the routing zone put nine hours late. Other partners' rows keep their wall clock: read on
+  their facility's clock, the USPS rows it relays came two hours after USPS's own scans.
 - So do Paack's scans. Paack's timeline gives instants, not wall clocks, and ParcelsApp's
   `date` is their UTC instant: Paack's own lookup gives the same instants scan for scan.
   Read on Paack's Paris clock, they came out two hours early in summer.

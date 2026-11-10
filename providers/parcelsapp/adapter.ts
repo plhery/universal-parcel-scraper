@@ -1059,8 +1059,10 @@ function placeClockLine(carrier: string, status: string, location: string): stri
  * names the country before the office ("LATVIA: LVRIXA", "LATVİYA: Latvia"),
  * as it does a town at home ("Baku: AZBAKA"): read on Baku's clock, its
  * copies of Latvian Post's scans came two hours before Latvian Post's own.
+ * La Poste names the sending country ("China"): read on Paris's clock, its
+ * copy of China Post's posting came seven hours after La Poste's own instant.
  */
-const RELAYING_POSTS: Readonly<Record<string, string>> = { azerpost: 'AZ', 'correo-uruguayo': 'UY', 'slovenska-posta': 'SK' };
+const RELAYING_POSTS: Readonly<Record<string, string>> = { azerpost: 'AZ', 'correo-uruguayo': 'UY', 'la-poste': 'FR', 'slovenska-posta': 'SK' };
 
 /**
  * The clock of a sending post's scan a relaying post names abroad: that

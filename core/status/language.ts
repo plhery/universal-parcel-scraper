@@ -660,8 +660,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^processing: left (?:the )?pickup location$|^(?:export|import) of international mail$/.test(text)) return 'in_transit';
   if (/^released from (?!(?:the|a|an|our|your)\b)(?!.*\b(?:customs|hold|storage|warehouse|office|branch|depot|hub|facility|cent(?:er|re)|point|locker|quarantine|inspection|sender|shipper)\b)[a-z][a-z .'-]{1,40}$/.test(text)) return 'in_transit';
   if (/^(?:posting\/collection|posted|origin scan)$|received at (?:our |the )?(?:[a-z]+ )?origin (?:office|facility|hub)|dropped off (?:after|before) (?:the )?latest drop ?off time/.test(text)) return 'accepted';
-  // Turned away rather than taken in: "Package not accepted by sorting center".
-  if (/(?:\b(?:not|never)|n't)(?: (?:be|been|being))? accepted\b/.test(text)) return 'exception';
+  // Turned away rather than taken in: "Package not accepted by sorting center", which ParcelsApp words
+  // "Inbound failure in sorting center" (Cainiao's SC_INBOUND_FAILURE).
+  if (/(?:\b(?:not|never)|n't)(?: (?:be|been|being))? accepted\b|^inbound failure (?:in|at) (?:the )?sorting cent(?:er|re)$/.test(text)) return 'exception';
   // Nor is a pickup that did not happen. A parcel left uncollected or one the courier failed to collect is an
   // exception, as the carriers' own maps file it. One yet to be collected waits for the carrier or the recipient,
   // whichever the scan names, and one that may not happen ("if not collected") names no stage.

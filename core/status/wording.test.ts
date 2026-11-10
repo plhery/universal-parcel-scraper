@@ -722,8 +722,10 @@ describe('classifyWording', () => {
   });
 
   it('reads a parcel turned away as a fault, not an acceptance', () => {
-    for (const wording of ['Package not accepted by sorting center', "Parcel wasn't accepted at the depot", 'Could not be accepted',
-      'Not accepted by the recipient']) expect(wordingStage(wording), wording).toBe('exception');
+    for (const wording of ['Package not accepted by sorting center', 'Inbound failure in sorting center', "Parcel wasn't accepted at the depot",
+      'Could not be accepted', 'Not accepted by the recipient']) expect(wordingStage(wording), wording).toBe('exception');
+    // Cainiao's outbound failure is a processing delay.
+    expect(wordingStage('Outbound failure in sorting center')).not.toBe('exception');
     for (const wording of ['Accepted', 'Parcel accepted at the post office', 'Item accepted, not yet dispatched']) {
       expect(wordingStage(wording), wording).toBe('accepted');
     }
