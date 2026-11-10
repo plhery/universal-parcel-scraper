@@ -614,7 +614,9 @@ step exists for future protocol changes.
   relays a partner's scan in its own words with no place, at the partner's digits to the
   second: GOFO's "In Transit to Next Facility" came as its "In Transit", five hours early as
   labeled. Such a row takes the clock of the other networks' scans at that second when they
-  share one; a second of :00 places nothing, since minute-only clocks share it. In a
+  share one, as does one placed only in a country of several clocks (its copy of GOFO's label
+  in the "United States of America"); a second of :00 places nothing, since minute-only clocks
+  share it. In a
   destination of several clocks outside North America, YunExpress writes a town, its state
   and the country's code with spaces alone ("EXAMPLE TOWN STATE AU"), on the town's clock,
   and gives its other scans there the same digits: its copy of Australia Post's receipt, at

@@ -1478,7 +1478,9 @@ function chinaPostTwinZones(items: readonly { name: unknown; date: unknown; loca
  * words with no place, at the partner's digits to the second. YunExpress's "In Transit" came at
  * the second of GOFO's "In Transit to Next Facility", Central time digits under ParcelsApp's UTC
  * label: read as labeled, it came five hours before GOFO's own instant. It takes the zone or
- * offset of the other networks' dated scans at that second when they share one. A second of
+ * offset of the other networks' dated scans at that second when they share one. So does its copy
+ * placed only in a country of several clocks: its "Shipping Label Created" in the "United States of
+ * America" had GOFO's Pacific digits, seven hours before GOFO's own instant as labeled. A second of
  * :00 can be a minute-only clock's, so it places nothing.
  */
 const PARTNER_RELAYS = new Set(['yunexpress']);
@@ -1554,7 +1556,8 @@ function relayTwinZones(items: readonly { name: unknown; date: unknown; location
     if (key && clock && !relay(item.name)) twins.set(key, (twins.get(key) ?? new Set()).add(clock));
   });
   return items.map((item, index) => {
-    const found = relay(item.name) && !item.location && !item.offset && !zones[index]!.zone ? twins.get(second(item)) : undefined;
+    const place = item.location.trim();
+    const found = relay(item.name) && (!place || countryCode(place)) && !item.offset && !zones[index]!.zone ? twins.get(second(item)) : undefined;
     return found?.size === 1 ? [...found][0]! : null;
   });
 }

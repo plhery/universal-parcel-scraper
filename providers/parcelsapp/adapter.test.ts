@@ -1984,6 +1984,12 @@ describe('ParcelsApp result parsing', () => {
         ['2026-10-18T03:47:04.000Z', 'Shipment is in transit to carrier'],
       ].sort());
     }
+    // Its copy placed only in a country of several clocks takes the partner's clock too.
+    const label = parseParcelsAppResponse({ carriers: ['GoFo Express', 'Yun Express'], destinationCode: 'US', states: [
+      scan('2026-10-31T08:53:20Z', 'Shipping Label Created', 0),
+      scan('2026-10-31T08:53:20Z', 'Shipping Label Created', 1, 'United States of America'),
+    ] }, number, identity());
+    expect(label.events?.map((event) => event.time)).toEqual(['2026-10-31T15:53:20.000Z']);
     // Another network's unplaced row keeps its label.
     expect(parseParcelsAppResponse({ carriers: ['Example Parcel Line', 'GoFo Express'], states: states(1, 0) }, number, identity())
       .events?.find((event) => event.description === 'In Transit')?.time).not.toBe('2026-10-27T09:10:52.000Z');
