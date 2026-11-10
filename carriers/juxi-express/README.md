@@ -18,6 +18,15 @@ of Juxi's other lines. So `juxi-express-2` is low confidence beside DHLink's pre
 those two codes: recognition asks DHLink, and a provider naming Juxi alone still names Juxi.
 `juxi-express-1` names Juxi for the other codes.
 
+## Times
+
+Universal providers relay Juxi's rows with Beijing's clock. Its own rows, in China or with no
+place, are on that clock. The scans of the carrier that delivers abroad, which Juxi relays at
+each facility's wall clock, are read on their place's clock by the
+[17TRACK](../../providers/seventeentrack/README.md) and
+[ParcelsApp](../../providers/parcelsapp/README.md) adapters
+([clock.ts](clock.ts)).
+
 ## Links
 
 No tracking page of the carrier remains, so no link opens one parcel.

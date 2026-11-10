@@ -38,6 +38,7 @@ import { cttSiteZone, portugalZone } from '../../carriers/ctt/clock.js';
 import { DHLINK_RECORD_ZONE, usClockCopy } from '../../carriers/dhlink/clock.js';
 import { epostGlobalCopyZone } from '../../carriers/epost-global/status.js';
 import { FIRST_LINE_CHINA_ZONE, firstLineInChina } from '../../carriers/first-line/clock.js';
+import { juxiExpressAbroadZone } from '../../carriers/juxi-express/clock.js';
 import { hrvatskaPostaForeignZone } from '../../carriers/hrvatska-posta/parser.js';
 import { imileCountryClock } from '../../carriers/imile/clock.js';
 import { jsExpressChinaClock } from '../../carriers/js-express/clock.js';
@@ -1135,6 +1136,10 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   const relayed = relayedPostZone(carrier, scanLocation(name, state.location));
   if (relayed !== undefined) return relayed;
   if (carrier && PLACE_CLOCK_LINES.has(carrier)) return placeClockLine(carrier, status, scanLocation(name, state.location));
+  // Juxi Express relays the scans of the carrier that delivers abroad at the facility's wall clock: its
+  // place's clock, or null for its wall clock in a country of several. Its own rows are Beijing's.
+  const juxi = carrier === 'juxi-express' ? juxiExpressAbroadZone(scanLocation(name, state.location), status, destination) : undefined;
+  if (juxi !== undefined) return juxi;
   // Posta Shqiptare's relays of a foreign post's scans, under that post's country ("Finland"), run
   // hours ahead of the foreign post's own clock by an amount that differs between countries: they
   // keep their wall clock, as Posta Shqiptare's own tracker leaves them.
@@ -1299,12 +1304,13 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // of one zone places them, and without one they keep their wall clock. So do China Post's
   // copies of the destination post's scans (`chinaPostAbroad`), Croatia Post's scan without an
   // office or at a facility abroad whose office code names no single clock, Correos's and a relaying
-  // post's copies of an origin post's scan from a country of several clocks, a scan of a
+  // post's copies of an origin post's scan from a country of several clocks, Juxi Express's copy of a
+  // local carrier's scan there (`juxiExpressAbroadZone`), a scan of a
   // line on its place's clock that its place does not date (`PLACE_CLOCK_LINES`), and Pitney
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
-    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare', 'juxi-express'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;

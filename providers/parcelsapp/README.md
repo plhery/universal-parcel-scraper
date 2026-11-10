@@ -396,6 +396,12 @@ step exists for future protocol changes.
   only a town or a country of several clocks keeps its wall clock. This is no rule for
   every line on China's clock: Hualei's tenants (Mayi Yinfu) and DHLink date their scans
   abroad on Beijing time.
+- Juxi Express relays the scans of the carrier that delivers abroad at the facility's wall
+  clock. On Beijing's clock, a British delivery office's rounds came at night, and its copy
+  of USPS's departure from a Chicago distribution center came before USPS's own acceptance
+  there. Such a scan takes the clock of the town, state or province its place names, or the
+  single clock of its country, and keeps its wall clock in a country of several. Juxi's own
+  rows, in China or with no place, keep Beijing's.
 - Home clocks: some networks are named their own way, and their dates are their own
   instants or labels shown on their home clock wherever the scan was (checked
   2026-10-10). "Italy Post" has Poste Italiane's epoch milliseconds on Rome time. "New

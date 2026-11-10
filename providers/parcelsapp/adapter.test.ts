@@ -1090,6 +1090,34 @@ describe('ParcelsApp result parsing', () => {
     });
   });
 
+  it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows on Beijing's", () => {
+    // On Beijing's clock a British delivery office's rounds came at night, and a copy of USPS's
+    // departure from Chicago before USPS's own acceptance there.
+    const parse = (destination: string, states: unknown[]) => parseParcelsAppResponse({ carriers: ['Juxi Express'], destination, states },
+      number, identity(), 'Asia/Shanghai').events!.map((scan) => [scan.description, scan.time ?? `local ${scan.local_time}`]);
+    expect(parse('United Kingdom', [
+      { date: '2026-11-08T07:27:13+00:00', status: 'SHIPMENT RECEIVED IN DEPOT', carrier: 0, location: 'GB NORTH WEST MIDLANDS MC' },
+      { date: '2026-11-07T05:46:25+00:00', status: 'SHIPMENT RECEIVED', carrier: 0, location: 'GB HEATHROW INTERNATIONAL LC' },
+      { date: '2026-11-06T10:09:28+00:00', status: 'Delivered to local carrier', carrier: 0, location: '' },
+      { date: '2026-11-04T06:48:13+00:00', status: 'Customs clearance in progress', carrier: 0, location: 'Customs clearance in progress' },
+      { date: '2026-10-30T15:16:55+00:00', status: 'Item inbound in sorting center.', carrier: 0, location: 'shanghai' },
+    ])).toEqual([
+      ['SHIPMENT RECEIVED IN DEPOT', '2026-11-08T07:27:13.000Z'],
+      ['SHIPMENT RECEIVED', '2026-11-07T05:46:25.000Z'],
+      ['Delivered to local carrier', '2026-11-06T02:09:28.000Z'],
+      ['Customs clearance in progress', '2026-11-03T22:48:13.000Z'],
+      ['Item inbound in sorting center.', '2026-10-30T07:16:55.000Z'],
+    ]);
+    expect(parse('Canada', [
+      { date: '2026-11-09T14:26:00+00:00', status: 'Item was released by Customs', carrier: 0, location: 'MISSISSAUGA,ON' },
+      { date: '2026-11-05T10:00:00+00:00', status: 'In transit', carrier: 0, location: 'US' },
+    ])).toEqual([
+      ['Item was released by Customs', '2026-11-09T19:26:00.000Z'],
+      // The United States alone keeps several clocks: the wall clock stays.
+      ['In transit', 'local 2026-11-05T10:00:00.000'],
+    ]);
+  });
+
   it("reads ECMS's scans on their facility's clock, Japan's at Narita", () => {
     // ECMS's own tracker gives these digits "+09:00" at Narita; China's clock put them an hour late.
     const result = parseParcelsAppResponse({ carriers: ['ECMS Express'], destinationCode: 'US', states: [

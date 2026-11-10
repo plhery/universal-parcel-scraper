@@ -518,6 +518,41 @@ describe('17TRACK result parsing', () => {
     expect(parse17TrackResponse(reply(100999, [row('15:51:00', 'Shenzhen')]), number).events?.[0]?.time).toBe('2026-05-07T15:51:00.000Z');
   });
 
+  it("reads Juxi Express's copies of a local carrier's scans abroad on their place's clock, and its own rows as labeled", () => {
+    // 17TRACK labels the leg's wall clocks +08:00: so read, USPS's departure from Chicago came ten hours before USPS's own acceptance there.
+    const row = (date: string, time: string, description: string, location: string) => ({
+      time_iso: `${date}T${time}+08:00`, time_utc: null, time_raw: { date, time, timezone: null },
+      description, location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, country: string, events: unknown[]): Payload => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, shipping_info: { recipient_address: { country } },
+        tracking: { providers: [{ provider: { key, name: 'SHJX', country: 'CN' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(190384, 'US', [
+      row('2026-11-08', '11:14:15', 'Arrived at GOFO Regional Hub', 'Miami,FL'),
+      row('2026-11-05', '10:00:00', 'In Transit to Next Facility', 'US'),
+      row('2026-11-04', '20:59:32', 'DEPARTED USPS FACILITY', 'US CHICAGO IL DISTRIBUTION CENTER'),
+      row('2026-11-04', '09:15:08', 'Delivered to local carrier', ''),
+      row('2026-11-03', '06:28:04', 'Customs clearance to release', 'Customs clearance to release'),
+      row('2026-10-30', '15:16:55', 'Item inbound in sorting center.', 'shanghai'),
+    ]), number);
+    expect(parsed.events?.map((event) => [event.time ?? `local ${event.local_time}`, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-11-08T16:14:15.000Z', 'America/New_York', 'place'],
+      // The United States alone keeps several clocks: the wall clock stays.
+      ['local 2026-11-05T10:00:00', undefined, undefined],
+      ['2026-11-05T02:59:32.000Z', 'America/Chicago', 'place'],
+      ['2026-11-04T01:15:08.000Z', undefined, undefined],
+      ['2026-11-02T22:28:04.000Z', undefined, undefined],
+      ['2026-10-30T07:16:55.000Z', undefined, undefined],
+    ]);
+    expect(parsed.undated_event_count).toBeUndefined();
+    expect(parse17TrackResponse(reply(190384, 'GB', [row('2026-11-08', '07:27:13', 'SHIPMENT RECEIVED IN DEPOT', 'GB NORTH WEST MIDLANDS MC'),
+      row('2026-10-26', '06:33:00', 'Parcel arrived at branch', 'FR'), row('2026-11-09', '14:26:00', 'Item was released by Customs', 'MISSISSAUGA,ON'),
+      row('2026-11-06', '09:09:22', 'Sorted for delivery', 'Zürich Briefzentrum')]), number).events?.map((event) => event.time))
+      .toEqual(['2026-11-09T19:26:00.000Z', '2026-11-08T07:27:13.000Z', '2026-11-06T08:09:22.000Z', '2026-10-26T05:33:00.000Z']);
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, 'US', [row('2026-11-08', '11:14:15', 'Arrived', 'Miami,FL')]), number).events?.[0]?.time)
+      .toBe('2026-11-08T03:14:15.000Z');
+  });
+
   it('reads DAI Post\'s scans on their country\'s clock, not on the one offset 17TRACK gives the parcel', () => {
     // Public shape: every scan stamped with one offset, the scan's local clock in time_raw, its town and country code.
     const row = (date: string, time: string, location: string, description = 'Parcel arrived in trans-shipment country.') => ({

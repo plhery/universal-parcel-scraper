@@ -158,6 +158,12 @@ carrier.
   most of its rows in China fall between midnight and 06:00 there, and on Beijing's clock all
   in the day. A row placed in China or Hong Kong is read on Beijing's clock; any other keeps
   its wall clock in `local_time`, as the line's own rows keep it.
+- Juxi Express's leg (carrier key 190384, `SHJX`) relays the scans of the carrier that delivers
+  abroad at each facility's wall clock, and 17TRACK labels them `+08:00`: so read, a copy of
+  USPS's departure from a Chicago distribution center came ten hours before USPS's own
+  acceptance there. A row placed abroad is read on the clock of the town, state or province its
+  place names, or of its country where that keeps one, and keeps its wall clock in a country of
+  several. Juxi's own rows, in China or with no place, keep 17TRACK's reading.
 - DAI Post's leg (carrier key 100790) shows the tracker's clocks, each the scan's local time,
   and 17TRACK puts one offset on all of them: `+01:00` on a parcel from London, on its
   Singapore and Brisbane scans too. A scan is read as the
