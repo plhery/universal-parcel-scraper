@@ -12,8 +12,9 @@ const STAGES: Readonly<Record<string, Stage>> = {
 };
 
 // The last-mile partners' scans relayed without a code, by `normalizeStatusWording` wording: a US
-// partner's between its receipt and the delivery run, and DHL's in Germany.
-const UNCODED: ReadonlyMap<string, Stage> = new Map([
+// partner's between its receipt and the delivery run, DHL's in Germany and InPost's in the UK.
+// Null marks a line that moves nothing.
+const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>([
   ['in processing at transit facility.', 'in_transit'],
   // The same partner's departure from its facility and its local facility's receipt before the delivery run.
   ['parcel departed from facility.', 'in_transit'],
@@ -31,6 +32,11 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['the shipment has been loaded onto the delivery vehicle. delivery is expected to take place today.', 'out_for_delivery'],
   // After the sorting centre's departure, before the partner that delivers it takes the parcel.
   ['parcel is ready for hand over to distributor', 'in_transit'],
+  // InPost's lines on a parcel to the UK before WanbExpress's sorting centre takes it in: the parcel on its
+  // way to InPost, then the parcel in hand, and a note on the recipient's account settings.
+  ['your parcel is on its way to inpost. please check back for updates', 'registered'],
+  ['we have your parcel. please check back for updates', 'accepted'],
+  ["we'll apply your my account preferences to this parcel delivery", null],
 ]);
 
 /**
@@ -41,7 +47,8 @@ const UNCODED: ReadonlyMap<string, Stage> = new Map([
 export function wanbStage(code: string | null, wording: string): Stage | null | undefined {
   if (code && Object.hasOwn(STAGES, code)) return STAGES[code];
   const normalized = normalizeStatusWording(wording);
-  return (code ? undefined : UNCODED.get(normalized) ?? SHARED_WORDINGS.get(normalized)) ?? imileMappedStage('', wording);
+  if (!code && UNCODED.has(normalized)) return UNCODED.get(normalized);
+  return (code ? undefined : SHARED_WORDINGS.get(normalized)) ?? imileMappedStage('', wording);
 }
 
 export const statusMap: CarrierStatusMap = {

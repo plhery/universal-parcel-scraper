@@ -263,6 +263,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-05",
       "note": "Without a code, after the sorting centre's departure: the parcel waits to go to the partner that delivers it."
+    },
+    {
+      "wording": "Your parcel is on its way to InPost. Please check back for updates",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "InPost's line on a parcel to the UK, without a code, two days before WanbExpress's sorting centre takes the parcel in."
+    },
+    {
+      "wording": "We have your parcel. Please check back for updates",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "InPost's line on a parcel to the UK, without a code, after the parcel on its way to InPost and the day before WanbExpress's sorting centre takes it in."
+    },
+    {
+      "wording": "We'll apply your My Account preferences to this parcel delivery",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "InPost's note on a parcel to the UK that the recipient's account settings apply: not a scan."
     }
   ]
 }

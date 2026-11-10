@@ -123,6 +123,13 @@ describe('WanbExpress', () => {
     expect(['wanbexpress', 'yunexpress', 'unknown'].map((carrier) => statusMapAnswer({ carrier, providerCode: null, description: announced })))
       .toEqual(Array(3).fill({ kind: 'mapped', stage: 'registered' }));
     expect(wanbStage('LastMileNew', 'In Transit to Next Facility.')).toBeUndefined();
+    // InPost's lines on a parcel to the UK before the sorting centre has it: announced, then in hand, and a
+    // note on the recipient's account that moves nothing.
+    expect(wanbStage(null, 'Your parcel is on its way to InPost. Please check back for updates')).toBe('registered');
+    expect(wanbStage(null, 'We have your parcel. Please check back for updates')).toBe('accepted');
+    expect(wanbStage(null, "We'll apply your My Account preferences to this parcel delivery")).toBeNull();
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: "We'll apply your My Account preferences to this parcel delivery" }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
 
   it('puts right DHL\'s relayed text whose UTF-8 was read as Latin-1, and stages its round that did not deliver as a failed attempt', () => {
