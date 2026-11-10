@@ -6821,14 +6821,6 @@
     "reason": "A year digit, the day of the year, six digits and 0000 also fit DHL eCommerce's seventeen-digit rule. Both stay low-confidence suggestions and recognition confirms the carrier."
   },
   {
-    "shape": "Nineteen digits in the Hermes Einrichtungs-Service delivery-note layout",
-    "carriers": [
-      "hermes",
-      "poczta-polska"
-    ],
-    "reason": "Poczta Polska's nineteen-digit rule takes the same length, and OCA's numbers, which no rule names, can fit the layout too. Both stay low-confidence suggestions and recognition confirms the carrier."
-  },
-  {
     "shape": "Twenty-one digits in the Hermes Einrichtungs-Service delivery-note layout",
     "carriers": [
       "hermes",

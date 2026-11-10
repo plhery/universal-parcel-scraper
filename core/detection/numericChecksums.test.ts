@@ -118,7 +118,9 @@ describe('numeric checksum candidates', () => {
     }
     expect(detectCarrierMatch('12345678901234567891').candidates).not.toContain('poczta-polska');
     expect(detectCarrierMatch('12345678901234567890').preferred).not.toContain('poczta-polska');
-    expect(detectCarrierMatch('1234567890123456789').candidates).toContain('poczta-polska');
+    // The alias is the barcode without its check digit, so it keeps the identifier 00.
+    expect(detectCarrierMatch('0012345678901234567').candidates).toContain('poczta-polska');
+    expect(detectCarrierMatch('1234567890123456789').candidates ?? []).not.toContain('poczta-polska');
     expect(detectCarrierMatch('PX1234567890')).toMatchObject({ carrier: 'poczta-polska', confidence: 'high' });
     // Poczta Polska's own company prefix selects it, with or without the 00; a wrong check digit or
     // another company prefix in 18 digits does not.

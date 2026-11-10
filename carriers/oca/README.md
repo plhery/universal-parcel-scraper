@@ -47,8 +47,8 @@ OCA parcel numbers are nineteen digits: five digits, four zeros and ten more dig
 archived from OCA's current tracker, its older parcel and e-Pak pages and the tracking service
 behind its search show them. No rule claims them: detection compares numbers with spaces and
 hyphens stripped, and nineteen digits are then a plain digit run other carriers print too,
-Poczta Polska among them. A piece of a parcel adds a dash and a digit, which stays unclaimed as
-well.
+Hermes's delivery notes among them. A piece of a parcel adds a dash and a digit, which stays
+unclaimed as well.
 
 ## Links
 

@@ -84,7 +84,7 @@
   "detection": [
     {
       "id": "poczta-polska-1",
-      "pattern": "^\\d{19}$",
+      "pattern": "^00\\d{17}$",
       "confidence": "low"
     },
     {

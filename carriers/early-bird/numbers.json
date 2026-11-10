@@ -448,10 +448,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on Early Bird's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -470,10 +467,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on Early Bird's own tracker, as an archived address shows; the capture was not opened."
     },
@@ -492,10 +486,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska"
-        ]
+        "confidence": "none"
       },
       "note": "Looked up on Early Bird's own tracker, as an archived address shows; the capture was not opened."
     }

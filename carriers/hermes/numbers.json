@@ -33,8 +33,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "hermes",
-          "poczta-polska"
+          "hermes"
         ]
       },
       "note": "A Hermes Einrichtungs-Service delivery-note number looked up on myhes.de and listed in the Wayback Machine's capture index. myhes.de returned its delivered order."
@@ -102,8 +101,7 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "hermes",
-          "poczta-polska"
+          "hermes"
         ]
       },
       "note": "A Hermes Einrichtungs-Service delivery-note number whose myhes.de lookup the Wayback Machine archived. The archived reply holds its order."

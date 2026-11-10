@@ -5134,7 +5134,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^\\d{19}$",
+        "pattern": "^00\\d{17}$",
         "confidence": "low"
       },
       {

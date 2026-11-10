@@ -116,6 +116,16 @@ describe('S10-shaped numbers', () => {
     expect(recognitionAskedCarriers('VV123456789PL')).not.toContain('poczta-polska');
   });
 
+  it('offers Poczta Polska a 19-digit reference only when it starts with the barcode identifier 00', () => {
+    // A reference is the 20-digit barcode, 00 and an SSCC, without its check digit.
+    expect(detectCarrierMatch('0019999999999999999').candidates).toContain('poczta-polska');
+    expect(recognitionAskedCarriers('0019999999999999999')).toContain('poczta-polska');
+    for (const number of ['1999999999999999999', '9999999999999999999', '0199999999999999999']) {
+      expect(detectCarrierMatch(number).candidates ?? []).not.toContain('poczta-polska');
+      expect(recognitionAskedCarriers(number)).not.toContain('poczta-polska');
+    }
+  });
+
   it('asks Correo Argentino first about an Argentine-issued number without selecting it', () => {
     expect(detectCarrierMatch('hc 123 456 785 ar')).toMatchObject({ carrier: 'intl-post', confidence: 'high' });
     expect(recognitionCandidates('hc 123 456 785 ar')).toEqual([

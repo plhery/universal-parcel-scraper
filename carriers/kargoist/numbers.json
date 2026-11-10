@@ -84,10 +84,7 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "poczta-polska"
-        ]
+        "confidence": "none"
       },
       "note": "Şikayetvar complaint about Kargoist giving it as Kargoist's tracking number for a fashion retailer's order."
     },
