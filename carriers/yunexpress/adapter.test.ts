@@ -503,6 +503,8 @@ describe('YunExpress captured response projection', () => {
     // J&T Express Australia's pickup reads the same with the customer service line it can end with.
     expect(yunExpressStatus('The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000'))
       .toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(yunExpressStatus('Your parcel is out for delivery. If you have any questions, please call customer service:130000, thank you for your patience.'))
+      .toEqual({ status: 'out_for_delivery', stage: 'out_for_delivery' });
   });
 
   it('takes the status from the latest code when the newest wording is new, without staging it', () => {

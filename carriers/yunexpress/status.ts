@@ -136,7 +136,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
  * `normalizeStatusWording` form: GOFO's missed delivery with its type,
  * Ecoscooting's with its reason in brackets, and CouriersPlease's acceptance
  * at a town's depot, its transfer to a depot after it left a card and its
- * transfer to the depot's collection run, and J&T Express Australia's pickup.
+ * transfer to the depot's collection run, and J&T Express Australia's pickup
+ * and its delivery round.
  */
 const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^delivery failed, type: ?recipient absent or delivery location inaccessible\b/, FAILED_ATTEMPT],
@@ -147,6 +148,8 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   // J&T Express Australia's pickup, with its customer service line or without: like a courier partner's
   // acceptance, it follows the scans that brought the parcel to it, a hand-over.
   [/^the parcel has been successfully picked up and is being prepared for transportation\.?(?: ?customer service: ?\d[\d -]*\d)?$/, { status: 'in_transit', stage: 'in_transit' }],
+  // Its delivery round, with the customer service sentence it can end with.
+  [/^your parcel is out for delivery\.?(?: if you have any questions, please call customer service: ?\d[\d -]*\d, thank you for your patience\.?)?$/, { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // Import customs abroad holding the item for inspection, with what it waits for in brackets.
   [/^境外进口海关留存待验(?:[（(][^（）()]{1,60}[）)])?$/, { status: 'in_transit', stage: 'customs' }],
   // The departure from a processing centre abroad, its country in 【】.

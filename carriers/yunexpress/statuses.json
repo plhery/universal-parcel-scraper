@@ -907,6 +907,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-10",
       "note": "Relayed from J&T Express Australia: its transit centre sending the parcel on."
+    },
+    {
+      "wording": "Your parcel is out for delivery.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Relayed from J&T Express Australia: its delivery round. Matched on its fixed words, with the customer service sentence it can end with or without."
     }
   ]
 }
