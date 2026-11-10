@@ -55,11 +55,16 @@ numbers `shouwu-1` offers.
   `time` on Beijing's clock. The airline's rows under an airport's code (`TRACE_TYPE_HEAD`) and the
   delivering partners' rows are wall clocks: a flight from Shanghai to Amsterdam would otherwise
   last five hours, and La Poste's and DHL's rounds would start at night.
+- A row under a country's code or without a place is the epoch's instant too when Shouwu wrote it
+  (`createTs`) before the earliest instant its Beijing wall clock stands for anywhere in that
+  country, or in the destination: a flight's arrival under US, written five hours after its
+  epoch, would otherwise have landed thirteen hours after it. A row written later keeps its wall
+  clock.
 - A scan's place is `traceLocation`, which the page leaves out and Shouwu's own back office shows
   before the wording. A country's code it opens with, as in `CN,` before a sort facility, is left
   out. Anything with a digit, as an address or a postcode has, is dropped.
-- The destination is `order.countryCodeTwo`. The status text (`traceStatusDesc`), the
-  destination's name and the write time are not read.
+- The destination is `order.countryCodeTwo`. The status text (`traceStatusDesc`) and the
+  destination's name are not read.
 - The request carries the page's `x-locale`, `zh-cn` unless a visitor chose another language.
 
 ## Limitations

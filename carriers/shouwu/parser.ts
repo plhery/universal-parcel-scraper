@@ -4,8 +4,10 @@ import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, S
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { countryZones } from '../../places/zones.js';
 import { shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
 import { withoutCountryCode } from './place.js';
 
@@ -32,6 +34,8 @@ const CHINESE_NOTE = /^(?!.*[A-Za-z]{2})(?=.*\p{Script=Han})/su;
 const IMILE_CENTRE = /^【[^】]+】/u;
 const REASON = /^<[^<>]+>$/;
 const MAX_ENTRIES = 20;
+// How far a write time may stray from the clocks it is compared with.
+const CLOCK_SLACK_S = 600;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 /**
@@ -87,6 +91,30 @@ function onEpoch(row: Record<string, unknown>, description: string, location: st
   return AIRPORT_CODE.test(location) && text(row, 'traceType', 64) === 'TRACE_TYPE_TAIL';
 }
 
+/** When Shouwu wrote a row (`createTs`), in epoch seconds; null without a readable one. */
+function writtenAt(row: Record<string, unknown>): number | null {
+  const value = row.createTs;
+  const digits = typeof value === 'number' && Number.isSafeInteger(value) ? String(value) : typeof value === 'string' ? value.trim() : '';
+  return EPOCH.test(digits) ? Number(digits.slice(0, 10)) : null;
+}
+
+/**
+ * Whether a row's write time shows that its epoch is its instant: a row under a
+ * country's code or without a place, written after its epoch but before the
+ * earliest instant its Beijing wall clock stands for anywhere in that country, or
+ * in the destination for a row without a place. A row is not written before it
+ * happens, so its wall clock cannot be its place's.
+ */
+function writtenBeforeWallClock(row: Record<string, unknown>, clock: { seconds: number; wall: string }, location: string, destination: string): boolean {
+  const written = writtenAt(row);
+  if (written === null || written < clock.seconds - CLOCK_SLACK_S) return false;
+  const country = location ? (COUNTRY_CODE.test(location) ? location : '') : destination;
+  const zones = country ? countryZones(country) : [];
+  if (!zones.length) return false;
+  const earliest = Math.min(...zones.map((zone) => firstOccurrence(DateTime.fromISO(clock.wall, { zone })).toSeconds()));
+  return written < earliest - CLOCK_SLACK_S;
+}
+
 /** The facility or town a scan names, at most; anything that could be an address is dropped. */
 function place(row: Record<string, unknown>): string {
   const name = withoutCountryCode(text(row, 'traceLocation', 120));
@@ -106,6 +134,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   const status = text(order, 'traceStatus', 64);
   if (status && !STATUS.test(status)) throw new SchemaError(PROVIDER, 'Shouwu returned an invalid status');
   const country = text(order, 'countryCodeTwo', 8).toUpperCase();
+  const destination = COUNTRY.test(country) ? country : '';
   const rows = entry.traces ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Shouwu returned a parcel with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Shouwu returned an oversized history');
@@ -124,7 +153,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     const staged = shouwuStage(description);
     scans.push({ timestamp: clock.seconds, event: {
       local_time: clock.wall,
-      ...(onEpoch(row, description, location) ? {
+      ...(onEpoch(row, description, location) || writtenBeforeWallClock(row, clock, location, destination) ? {
         time: DateTime.fromSeconds(clock.seconds, { zone: BACK_OFFICE }).toISO({ suppressMilliseconds: true })!,
         time_zone: BACK_OFFICE, time_zone_basis: 'carrier' as const,
       } : {}),
@@ -136,7 +165,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   // Newest first; equal instants keep the reply's order, which lists the newest first.
   if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.timestamp - left.timestamp);
-  return { status, country: COUNTRY.test(country) ? country : '', events: scans.map((scan) => scan.event), newest: scans[0]?.timestamp ?? -Infinity };
+  return { status, country: destination, events: scans.map((scan) => scan.event), newest: scans[0]?.timestamp ?? -Infinity };
 }
 
 /**

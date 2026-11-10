@@ -340,6 +340,27 @@ describe('Shouwu International HTTP adapter', () => {
     expect(answer.result.last_update).toBe('2026-04-12T07:30:00+08:00');
   });
 
+  it('keeps the epoch as the instant of a row under a country\'s code or without a place that was written before its wall clock there', async () => {
+    // Live shape: a flight's arrival under US, written five hours after its epoch, read on New York's clock came thirteen hours after it.
+    const written = changed((traces, order) => {
+      order.countryCodeTwo = 'US';
+      traces.splice(0, traces.length, { ...trace(1775950200, 'Out for Delivery', null), createTs: (1775950200 + 9000) * 1000 },
+        { ...trace(1775939400, 'Flight arrival', 'US'), createTs: (1775939400 + 18000) * 1000 },
+        { ...trace(1775932200, 'Currently undergoing customs clearance in the destination country', 'US'), createTs: (1775932200 + 259200) * 1000 },
+        { ...trace(1775900000, 'Departed from export airport', 'Shanghai'), createTs: (1775900000 + 60) * 1000 });
+    });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url) === SHOUWU_API
+      ? reply(JSON.stringify(written)) : new Response('', { status: 503 })));
+    const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'shouwu' }, { budgetMs: 3000 });
+    expect(answer.result.events.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-04-12T07:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-12T04:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      // Written days later, its wall clock may be New York's.
+      ['2026-04-12T02:30:00-04:00', 'America/New_York', 'place'],
+      ['2026-04-11T17:33:20+08:00', 'Asia/Shanghai', 'place'],
+    ]);
+  });
+
 });
 
 describe('Shouwu International stored scans', () => {
