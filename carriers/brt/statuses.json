@@ -70,6 +70,13 @@
       "note": "The partner abroad that delivers the parcel has left it at its parcel shop."
     },
     {
+      "wording": "TO BE DELIVERED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The partner abroad that delivers the parcel has it for delivery, given at the same minute as FOR DELIVERY."
+    },
+    {
       "wording": "UNKNOWN/INCOMPLETE CONSIGNEE",
       "language": "en",
       "stage": "failed_attempt",

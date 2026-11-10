@@ -15,6 +15,8 @@ const labels: Record<string, ClassifiedStatus> = {
   'COLLECTED AT BRT-FERMOPOINT': { status: 'delivered', stage: 'delivered' },
   // The partner abroad that delivers the parcel has left it at its parcel shop.
   'TO COLLECT AT THE PARCEL SHOP': { status: 'in_transit', stage: 'ready_for_pickup' },
+  // The partner abroad that delivers the parcel has it for delivery, given at the minute of FOR DELIVERY.
+  'TO BE DELIVERED': { status: 'in_transit', stage: 'in_transit' },
   'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
   // The courier found no one in and left a notice.
   'NOTICE OF ATTEMPTED DELIVERY': { status: 'exception', stage: 'failed_attempt' },
