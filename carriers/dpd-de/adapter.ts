@@ -58,16 +58,18 @@ const UNITS: Readonly<Record<string, Unit>> = {
  * guest service and, when the country's unit has a source of its own, that
  * unit, asked together: the unit's history when it holds more scans and is not behind the
  * group's milestones, else those. Either answers when the other fails. The
- * German tiers know the parcel, so neither finding it is inconclusive.
+ * German tiers know the parcel, so when neither holds it their own reply
+ * stands, and without one the lookup is inconclusive.
  */
 export function trackAbroad(group: DpdGroupLookup, units: Readonly<Record<string, DpdGroupLookup>>): DPDAbroad {
-  return async (number, country, context) => {
+  return async (number, country, context, reply) => {
     const unit = Object.hasOwn(units, country) ? units[country] : undefined;
     const [shared, own] = await Promise.allSettled([group(number, context), ...(unit ? [unit(number, context)] : [])]);
     if (shared.status === 'fulfilled') {
       return own?.status === 'fulfilled' ? fillPartialAnswer('dpd-de', number, shared.value, own.value) ?? shared.value : shared.value;
     }
     if (own?.status === 'fulfilled') return own.value;
+    if (reply && [shared.reason, own?.reason].every((error: unknown) => error === undefined || error instanceof NotFoundError)) return reply;
     throw [shared.reason, own?.reason].find((error: unknown) => error !== undefined && !(error instanceof NotFoundError))
       ?? new IndeterminateError('DPD Germany', 'DPD did not find the parcel it places in another country');
   };

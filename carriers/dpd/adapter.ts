@@ -726,13 +726,16 @@ export interface DPDTrackerOptions {
   app?: DPDAppTier;
   /** Finds the address of the Pickup shop a parcel waits at, by its PUDO id. */
   shops?: DPDParcelShops;
-  /** Tracks a parcel the German tiers place in another country, from that country's code. */
+  /**
+   * Tracks a parcel the German tiers place in another country, from that country's code, with the
+   * tier's own reply when it has one.
+   */
   abroad?: DPDAbroad;
   /** The carrier that delivers a parcel the guest tier places in another country from its delivery depot on, by that country's code. */
   handsTo?: Readonly<Record<string, string>>;
 }
 
-export type DPDAbroad = (number: string, country: string, context: TrackingContext) => Promise<CarrierResult>;
+export type DPDAbroad = (number: string, country: string, context: TrackingContext, reply?: CarrierResult) => Promise<CarrierResult>;
 
 export interface DPDParcelShops {
   /** The shop, or nothing when it is not found in time; only the signal ends it with an error. */
@@ -885,8 +888,9 @@ export class DPDTracker {
         id: 'abroad',
         recovers: (error: unknown) => error instanceof DpdOtherCountryError,
         run: async ({ signal, remainingMs, previousError }: { signal: AbortSignal; remainingMs: number; previousError?: unknown }) => {
-          const answer = await abroad(trackingNumber, (previousError as DpdOtherCountryError).country, { signal, budgetMs: remainingMs });
-          answeredAbroad = true;
+          const placed = previousError as DpdOtherCountryError;
+          const answer = await abroad(trackingNumber, placed.country, { signal, budgetMs: remainingMs }, placed.reply);
+          answeredAbroad = answer !== placed.reply;
           return answer;
         },
       }] : []),
@@ -984,7 +988,15 @@ export class DPDTracker {
     if (this.country === 'DE' && isRecord(payload.status)) {
       const country = known(payload.status.countryCode).toUpperCase();
       if (/^[A-Z]{2}$/.test(country) && country !== 'DE') {
-        throw new DpdOtherCountryError(country);
+        // The reply goes with the error: it stands when no source abroad holds the parcel.
+        let answer: CarrierResult | undefined;
+        try {
+          requireGuestActivity(payload, result);
+          answer = result;
+        } catch {
+          // A reply without activity leaves the parcel placed abroad all the same.
+        }
+        throw new DpdOtherCountryError(country, answer);
       }
     }
     // BRT's unit reads a parcel once DPD places it in Italy: before that it can be another unit's.

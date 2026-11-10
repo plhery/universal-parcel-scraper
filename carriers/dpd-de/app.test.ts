@@ -875,4 +875,31 @@ describe('DPD Germany tiers', () => {
     expect(app.calls).toHaveLength(0);
     expect(steps).toEqual([['direct', 'indeterminate'], ['abroad', 'ok']]);
   });
+
+  it("keeps the app service's reply when DPD's group does not hold a parcel it places in a country without a unit", async () => {
+    const { app, guestCalls, opened, steps, tracking } = tiers(guest(unknownParcel()));
+    await opened();
+    app.replies.getTrackingScanList = [() => xml(fixture('scans').replaceAll('Musterstadt (DE)', 'Musterby (DK)'))];
+    const result = await tracking.track({ number: NUMBER });
+    expect(steps).toEqual([['app', 'indeterminate'], ['abroad', 'ok']]);
+    expect(guestCalls.map(url => new URL(url).searchParams.get('businessUnit')).filter(Boolean)).toEqual(['DPD-BE']);
+    expect(result).toMatchObject({ tracking_url: `https://tracking.dpd.de/status/en_US/parcel/${NUMBER}` });
+    expect(result.events?.some(event => event.location === 'Musterby, DK')).toBe(true);
+  });
+
+  it("keeps the guest protocol's reply when DPD's group does not hold a parcel it places in a country without a unit", async () => {
+    const elsewhere = { parcelNumber: NUMBER, status: { description: 'DELIVERED', countryCode: 'DK' },
+      parcelHistory: [{ description: 'DELIVERED', eventDateAndTime: '2026-01-03T10:00:00+01:00' }] };
+    const { steps, tracking } = tiers([...guest(Response.json(elsewhere)), ...guest(unknownParcel())]);
+    expect(await tracking.track({ number: NUMBER, postcode: '10115' })).toMatchObject({ status: 'delivered',
+      tracking_url: `https://tracking.dpd.de/status/en_US/parcel/${NUMBER}` });
+    expect(steps).toEqual([['direct', 'indeterminate'], ['abroad', 'ok']]);
+  });
+
+  it('stays inconclusive when the reply that places a parcel abroad shows no activity and the group does not hold it', async () => {
+    const elsewhere = { parcelNumber: NUMBER, status: { description: '', countryCode: 'DK' } };
+    const { steps, tracking } = tiers([...guest(Response.json(elsewhere)), ...guest(unknownParcel())]);
+    await expect(tracking.track({ number: NUMBER, postcode: '10115' })).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(steps).toEqual([['direct', 'indeterminate'], ['abroad', 'indeterminate']]);
+  });
 });

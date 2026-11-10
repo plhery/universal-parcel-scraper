@@ -1,6 +1,7 @@
 import { createHash, randomBytes } from 'node:crypto';
 import type { AdapterEnvironment } from '../../core/adapter/index.js';
 import { carrierErrorKind, ChallengeError, errorTypeOf, IndeterminateError, SchemaError, TransportError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { clean, decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { transportOf } from '../../core/transport/transportOf.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
@@ -16,9 +17,12 @@ export const DPD_DE_SESSION_OPENING = 'session_opening';
 /** Activity either German tier places outside Germany. */
 export const DPD_DE_OTHER_COUNTRY = 'other_country';
 
-/** A parcel DPD's group places in another country: `country` is the code the tier gave for where it is now. */
+/**
+ * A parcel DPD's group places in another country: `country` is the code the tier gave for where it
+ * is now, and `reply` the tier's own answer, which stands when no source abroad holds the parcel.
+ */
 export class DpdOtherCountryError extends IndeterminateError {
-  constructor(readonly country: string) {
+  constructor(readonly country: string, readonly reply?: CarrierResult) {
     super('DPD Germany', 'DPD returned activity in another country', { reason: DPD_DE_OTHER_COUNTRY });
   }
 }

@@ -167,9 +167,23 @@ export function parseDpdDeApp(data: XmlNode, scans: XmlNode, number: string): { 
   const depot = children(tracking, 'LastStatusInfo').flatMap(info => children(info, 'DepotData')).flatMap(data => children(data, 'Address'))[0];
   const country = placed || countryOf(depot);
   if (country && country !== 'DE') {
-    throw new DpdOtherCountryError(country);
+    // The reply goes with the error: it stands when no source abroad holds the parcel.
+    let answer: CarrierResult | undefined;
+    try {
+      answer = reply(tracking, events, announced, shop).result;
+    } catch {
+      // A reply that cannot be read leaves the parcel placed abroad all the same.
+    }
+    throw new DpdOtherCountryError(country, answer);
   }
-  events.reverse();
+  return reply(tracking, events, announced, shop);
+}
+
+/** The result of a reply whose scans come oldest first, and the PUDO id of the shop holding the parcel, else empty. */
+function reply(
+  tracking: XmlNode, scans: readonly CarrierEvent[], announced: string | null, shop: ReturnType<typeof shopOf>,
+): { result: CarrierResult; shop: string } {
+  const events = [...scans].reverse();
   const current = events[0]!;
   const railId = scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64);
   const rail = Object.hasOwn(DPD_DE_APP_RAIL, railId) ? DPD_DE_APP_RAIL[railId] : undefined;

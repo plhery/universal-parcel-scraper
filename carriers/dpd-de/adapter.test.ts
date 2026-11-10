@@ -187,6 +187,14 @@ describe('DPD Germany abroad', () => {
     await expect(trackAbroad(missing, {})(NUMBER, 'CZ', {})).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(trackAbroad(missing, { AT: outage })(NUMBER, 'AT', {})).rejects.toMatchObject({ message: 'Sample outage' });
   });
+
+  it("keeps the German tiers' reply when neither holds the parcel, and not when one fails", async () => {
+    expect(await trackAbroad(missing, {})(NUMBER, 'DK', {}, group)).toBe(group);
+    expect(await trackAbroad(missing, { AT: missing })(NUMBER, 'AT', {}, group)).toBe(group);
+    expect(await trackAbroad(missing, { AT: async () => scans })(NUMBER, 'AT', {}, group)).toBe(scans);
+    await expect(trackAbroad(outage, {})(NUMBER, 'DK', {}, group)).rejects.toMatchObject({ message: 'Sample outage' });
+    await expect(trackAbroad(missing, { AT: outage })(NUMBER, 'AT', {}, group)).rejects.toMatchObject({ message: 'Sample outage' });
+  });
 });
 
 describe('DPD Germany scan identity', () => {

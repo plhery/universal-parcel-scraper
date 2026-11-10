@@ -25,7 +25,9 @@ DPD parcels tracked through the German business unit. DPD Switzerland remains
    Netherlands' and Switzerland's read the group's service. The unit's history
    answers when it holds more scans and is not behind the group's milestones,
    else the group's milestones, as a truncated history. Either answers when the
-   other fails, and the answer keeps the link of the source that gave it. In
+   other fails, and the answer keeps the link of the source that gave it. When
+   neither holds the parcel, as where the country has no unit of its own, the
+   German service's reply stands; a failure abroad stays inconclusive. In
    Spain and Italy the unit is the group's network there, [SEUR](../seur/README.md)
    and [BRT](../brt/README.md), whose trackers find a parcel by its DPD number.
    BRT's tracker is asked alone: the partner its adapter adds is the group's
