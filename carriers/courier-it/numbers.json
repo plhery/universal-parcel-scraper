@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "The opened capture of Courier IT's Trackit page shows the waybill from collection to proof of delivery. The consignor is a PostNet store, so the waybill belongs to PostNet's counter-to-counter service carried by Courier IT."
     },
@@ -52,7 +55,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "The opened capture of Courier IT's tracker shows this PostNet waybill carried from one PostNet counter to another, from collection to proof of delivery."
     }

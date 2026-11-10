@@ -282,7 +282,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on Qxpress's own tracker address; the capture was opened, but the page loads the history by script, so the history was not visible."
     },
@@ -301,7 +304,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on Qxpress's own tracker address; the capture was not opened, and the page loads the history by script, so the history was not visible."
     },

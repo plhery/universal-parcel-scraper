@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "Archived lookup on Fliway's own consignment tracker; the opened capture shows only the empty result template, so the history was not visible."
     },

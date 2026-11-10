@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on 2GO Express's tracking API; that API still knows it as a delivered air waybill."
     },
@@ -211,7 +214,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "A ComplaintsBoard complaint about 2GO Group gives it as the reference number of a document 2GO had not encoded yet."
     }

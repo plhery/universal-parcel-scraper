@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on American West's own I-Trek tracker shows this pro number picked up in Moorpark, California for Missouri, in transit, with its pieces, weight and ETA."
     }

@@ -18,7 +18,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "jeebly"
+          "jeebly",
+          "rl-carriers"
         ]
       },
       "note": "Archived lookup on the signed-in tracker of Jeebly's customer portal under its last-mile service; the capture is a sign-in redirect. Jeebly's public tracker shows its history under the Scheduled service."
@@ -40,7 +41,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "jeebly"
+          "jeebly",
+          "rl-carriers"
         ]
       },
       "note": "Archived lookup on the signed-in tracker of Jeebly's customer portal under its express service, with a last-mile lookup of the same number minutes earlier; the captures are sign-in redirects. Jeebly's public tracker shows its history under the Scheduled service."
@@ -62,7 +64,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "jeebly"
+          "jeebly",
+          "rl-carriers"
         ]
       },
       "note": "Archived lookup on the signed-in tracker of Jeebly's customer portal under its last-mile service; the capture is a sign-in redirect. A lookup two days earlier on the public tracker sent the number after a space and a tab, which the tracker does not strip, and showed No Shipment Found; the public tracker shows its history for the number itself under the Scheduled service."
@@ -84,7 +87,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "jeebly"
+          "jeebly",
+          "rl-carriers"
         ]
       },
       "note": "Archived lookup on Jeebly's public tracker under its Scheduled service. It sent the number after a space, which the tracker does not strip, so the capture shows No Shipment Found; the tracker shows its history for the number itself."

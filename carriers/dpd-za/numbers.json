@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on Dawn Wing's tracker, then a division of DPD South Africa Express Logistics, shows this waybill's history from hub receipt to delivery within Cape Town."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived lookup on Dawn Wing's tracker, then a division of DPD South Africa Express Logistics, shows this waybill's history from hub receipt to delivery within Cape Town."
     },
@@ -54,7 +60,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "Looked up on DPD South Africa's tracking page on dpd.com/za, as an archived address shows; the capture holds the page, whose history loads in a frame that was not archived. DPD South Africa's tracker shows it collected and delivered within Cape Town."
     },

@@ -3047,12 +3047,6 @@
     "reason": "Nine digits are shared by several carriers and nothing in the number points to R+L Carriers."
   },
   {
-    "carrier": "rl-carriers",
-    "pattern": "^[A-Z]{2}\\d{7}$",
-    "kind": "by_design",
-    "reason": "Without a hyphen before the last digit, two letters and seven digits are a shape Parcelforce and others share, so only the hyphenated form suggests R+L Carriers."
-  },
-  {
     "carrier": "roadrunner",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

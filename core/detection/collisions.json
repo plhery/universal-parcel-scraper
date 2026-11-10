@@ -6529,6 +6529,22 @@
     "reason": "Forza guías with eight digits are two letters and eight digits, the layout TNT Italy's low rule takes; both rules are low, so recognition asks each carrier."
   },
   {
+    "shape": "FD and seven digits",
+    "carriers": [
+      "forza-delivery",
+      "rl-carriers"
+    ],
+    "reason": "Forza guías with seven digits are two letters and seven digits, the layout of an R+L PRO written without its dash; both rules are low, so recognition asks each carrier."
+  },
+  {
+    "shape": "JB and seven digits",
+    "carriers": [
+      "jeebly",
+      "rl-carriers"
+    ],
+    "reason": "Jeebly's JB numbers are two letters and seven digits, the layout of an R+L PRO written without its dash; both rules are low, so recognition asks each carrier."
+  },
+  {
     "shape": "UPU S10 ending IL",
     "carriers": [
       "chronopost",

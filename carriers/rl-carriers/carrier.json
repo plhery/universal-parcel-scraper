@@ -99,6 +99,11 @@
       "id": "rl-carriers-2",
       "pattern": "^I\\d{9}$",
       "confidence": "low"
+    },
+    {
+      "id": "rl-carriers-3",
+      "pattern": "^[A-Z]{2}\\d{7}$",
+      "confidence": "low"
     }
   ]
 }

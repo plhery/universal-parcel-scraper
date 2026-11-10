@@ -373,7 +373,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "The Wayback Machine indexes a CEVA Home Delivery tracking lookup for this number; the capture was not opened. CEVA's tracker answers it as a house bill booked without events."
     },
@@ -516,7 +519,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "The Wayback Machine indexes a request to CEVA's tracking service for this house bill number; the capture was not opened. CEVA's tracker answers it as a delivered house bill."
     },

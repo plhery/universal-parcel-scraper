@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "New Zealand Couriers' track-a-parcel page gives it as its courier ticket example: product code and ticket number, which the tracker takes as two fields."
     },

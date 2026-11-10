@@ -30,7 +30,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "forza-delivery"
+          "forza-delivery",
+          "rl-carriers"
         ]
       },
       "note": "Synthetic guía in the shape the tracking page's own check takes: FD and six to nine digits. Its serial sits far beyond the range in use."

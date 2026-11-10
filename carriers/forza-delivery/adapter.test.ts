@@ -5,6 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { rlTracingUrl } from '../rl-carriers/adapter.js';
 import { adapter, FORZA_API, ForzaTracker } from './adapter.js';
 import { forzaWording, normalizeForzaNumber, parseForza, parseForzaReply } from './parser.js';
 import { forzaStage, statusMap } from './status.js';
@@ -270,7 +271,9 @@ describe('Forza Delivery tracking adapter', () => {
         .resolves.toMatchObject({ carrier: 'forza-delivery', source: 'forza-delivery', result: { current_stage: 'delivered' } });
       await expect(tracker.track({ number: DELIVERED }, { budgetMs: 3000 }))
         .resolves.toMatchObject({ carrier: 'forza-delivery', source: 'forza-delivery' });
-      expect(fetcher.mock.calls.every(([url]) => String(url) === FORZA_API)).toBe(true);
+      // A guía with seven digits has the layout of an R+L PRO without its dash, so recognition asks R+L's tracer too.
+      expect(fetcher.mock.calls.every(([url]) => String(url) === FORZA_API || String(url) === rlTracingUrl(DELIVERED))).toBe(true);
+      expect(fetcher.mock.calls.filter(([url]) => String(url) === FORZA_API).length).toBeGreaterThan(1);
     } finally {
       vi.useRealTimers();
     }

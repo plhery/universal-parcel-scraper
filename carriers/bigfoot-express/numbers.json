@@ -32,7 +32,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "TrackShip's Bigfoot Express page gives it as a tracking code example."
     }

@@ -26,11 +26,15 @@ lookup.
 A PRO number is nine digits, or two letters and seven digits. The last digit is a check digit,
 which R+L checks and the library does not. PRO numbers are often written with the check digit
 after a dash. The tracer names every PRO with an `I` in front, on its result page too, and takes
-that form as well; the library drops the `I`. `rl-carriers-1` offers R+L for the dashed form and
-`rl-carriers-2` for nine digits after the `I`, both at low confidence, so preflight asks
-recognition. Other carriers share both layouts without the dash or the `I`, so neither is claimed
-then. Three letters and seven digits are a shape other carriers' references take, so an `I`
-before two letters and seven digits is not claimed either.
+that form as well; the library drops the `I`. `rl-carriers-1` offers R+L for the dashed form,
+`rl-carriers-2` for nine digits after the `I` and `rl-carriers-3` for two letters and seven
+digits without the dash, all at low confidence, so preflight asks recognition. Lettered PROs are
+often written without the dash, in R+L's own tracing links too, and the lettered numbers of that
+layout the app tracked were R+L's, so that form is offered although some other carriers'
+references share it; R+L also rejects a PRO whose check digit fails. Nine digits are far more
+common elsewhere, so they are claimed only with the dash or the `I`. Three letters and seven
+digits are a shape other carriers' references take, so an `I` before two letters and seven digits
+is not claimed either.
 
 ## Notes
 

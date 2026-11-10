@@ -214,7 +214,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived Parcelforce tracking page. A consignment number; Royal Mail's tracker now asks for the 14-character number of each parcel instead."
     },
@@ -233,7 +236,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "An archived Parcelforce tracking page. A consignment number; Royal Mail's tracker now asks for the 14-character number of each parcel instead."
     }

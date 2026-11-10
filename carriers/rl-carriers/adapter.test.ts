@@ -312,13 +312,13 @@ describe('R+L Carriers tracking adapter', () => {
     expect(slow.mock.calls.every(([, init]) => init?.signal?.aborted)).toBe(true);
   });
 
-  it('is asked about the dashed and I-prefixed PRO numbers detection offers it, and reads tracer links', () => {
-    for (const number of ['ZZ123456-7', '90000000-1', `I${DELAYED}`, `i ${DELAYED}`]) {
+  it('is asked about the dashed, I-prefixed and lettered PRO numbers detection offers it, and reads tracer links', () => {
+    for (const number of ['ZZ123456-7', '90000000-1', `I${DELAYED}`, `i ${DELAYED}`, DELIVERED, 'zz 1234567']) {
       expect(detectCarrierMatch(number), number).toMatchObject({ confidence: 'low', candidates: expect.arrayContaining(['rl-carriers']) });
       expect(recognitionAskedCarriers(number), number).toContain('rl-carriers');
     }
-    // Other references share three letters and seven digits.
-    for (const number of [DELIVERED, `I${DELIVERED}`, `I${DELAYED}0`, `J${DELAYED}`]) {
+    // Other carriers' references share nine digits, and three letters and seven digits; a lettered PRO has seven digits exactly.
+    for (const number of [DELAYED, `I${DELIVERED}`, `I${DELAYED}0`, `J${DELAYED}`, 'ZZ123456', `${DELIVERED}0`, 'Z1234567']) {
       expect(detectCarrierMatch(number).candidates, number).not.toContain('rl-carriers');
       expect(recognitionAskedCarriers(number), number).not.toContain('rl-carriers');
     }

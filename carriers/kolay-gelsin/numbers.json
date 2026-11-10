@@ -16,7 +16,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "Looked up on Kolay Gelsin's former e-branch tracker, as an archived address shows; the opened capture holds only the page shell."
     },
@@ -35,7 +38,10 @@
       },
       "expect": {
         "carrier": "unknown",
-        "confidence": "none"
+        "confidence": "low",
+        "candidates": [
+          "rl-carriers"
+        ]
       },
       "note": "Looked up on Kolay Gelsin's former e-branch tracker, as an archived address shows; the capture was not opened."
     },

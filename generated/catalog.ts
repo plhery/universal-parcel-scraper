@@ -41919,6 +41919,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^I\\d{9}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^[A-Z]{2}\\d{7}$",
+        "confidence": "low"
       }
     ]
   },
@@ -57578,7 +57582,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "rika-express": [],
   "rincos": [],
   "rivigo": [],
-  "rl-carriers": ["rl-carriers-1","rl-carriers-2"],
+  "rl-carriers": ["rl-carriers-1","rl-carriers-2","rl-carriers-3"],
   "roadie": ["roadie-1","roadie-2"],
   "roadrunner": [],
   "rocket-shipping": [],
