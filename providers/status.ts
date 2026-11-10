@@ -125,5 +125,8 @@ export const statusMap: CarrierStatusMap = {
   }, {
     wording: 'delivery request received',
     note: "Royal Mail's record of a redelivery the recipient asked for after a missed delivery, as Postal Ninja relays it: not a scan, so it keeps the stage the parcel already had.",
+  }, {
+    wording: 'interactive delivery information',
+    note: "DPD Portugal's interactive message to the recipient about the coming delivery (700), as Ship24 relays it: not a scan, so it keeps the stage the parcel already had.",
   }, ...NO_STEP.map(([wording, note]) => ({ wording, note }))],
 };

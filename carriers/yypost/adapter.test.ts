@@ -149,9 +149,9 @@ describe('YYpost HTTP adapter', () => {
         scan('2026-05-15 07:00:00', 'Sample Status Note')];
     }), PARCEL);
     expect(worded.events!.map((event) => [event.description, event.stage, event.stage_source])).toEqual([
-      ['Delivered', 'delivered', 'wording:language'], ['Out for delivery', 'out_for_delivery', 'wording:language'],
+      ['Delivered', 'delivered', 'carrier_map'], ['Out for delivery', 'out_for_delivery', 'wording:language'],
       ['Sample Status Note', undefined, undefined]]);
-    expect(worded).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'wording:language' });
+    expect(worded).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map' });
     expect(worded).not.toHaveProperty('delivered_at');
     const unstaged = parseYypost(changed((item) => { item.details = [scan('2026-05-15 07:00:00', 'Sample Status Note')]; }), PARCEL);
     expect(unstaged).toMatchObject({ status: 'unknown' });
@@ -291,6 +291,12 @@ describe('YYpost status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'yypost', providerCode: null, description: 'Sample Status Note' })).toEqual({ kind: 'unknown' });
     expect(statusMap.stage('QGWC', 'flight arrival')).toBeUndefined();
     for (const wording of ['constructor', 'toString', 'Sample Status Note']) expect(yypostStage(wording), wording).toBeNull();
+    // iMile's delivery day booked on its last mile moves nothing, whatever day it names.
+    const booked = 'Delivery, Shipment is scheduled to [2031-04-23] .';
+    expect(yypostStage(booked)).toBeNull();
+    expect(statusMapAnswer({ carrier: 'yypost', providerCode: null, description: booked }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    expect(statusMapAnswer({ carrier: 'yypost', providerCode: null, description: 'Delivery, Sample Status Note' })).toEqual({ kind: 'unknown' });
   });
 
   it("reads GOFO's relayed scans without the support line GOFO appends, and its failed attempts by their headline", () => {

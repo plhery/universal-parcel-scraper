@@ -45,12 +45,16 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
  * sort into the delivery round: "nous le préparons pour le mettre en
  * livraison" is followed the same day by the delivery or a failed attempt.
  * `MD2` under `DISILIEU` is the recipient's choice of a postal point: the parcel
- * is routed there, and its arrival there is a later scan.
+ * is routed there, and its arrival there is a later scan. `ET2` and `ET3` are an
+ * import's crossing: ready to leave the origin territory (`ACHORI`), then in the
+ * destination territory (`DISINTAS`, `ACHFR`), groups the map does not read.
  */
 export const CODE_STATUSES = new Map<string, CarrierStatus>([
   ['DR1', 'pending'],
   ['PC1', 'in_transit'],
   ['ET1', 'in_transit'],
+  ['ET2', 'in_transit'],
+  ['ET3', 'in_transit'],
   ['EP1', 'in_transit'],
   ['MD1', 'out_for_delivery'],
   ['MD2', 'in_transit'],

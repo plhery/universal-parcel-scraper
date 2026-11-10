@@ -55,6 +55,7 @@ export const DPD_PT_FORECAST = '714';
 // Messages to the recipient and requests for a new delivery or address: no
 // movement, so the parcel keeps its stage.
 const NOTICES: ReadonlyMap<string, string> = new Map([
+  ['700', "DPD's interactive message to the recipient about the coming delivery, the evening after the depot scan; it moves nothing."],
   ['706', 'A message giving the recipient a delivery window; it moves nothing.'],
   ['709', 'A message telling the recipient of the next delivery; it moves nothing.'],
   ['714', 'DPD set an expected delivery day, which the row does not name; the history leaves it out and it moves nothing.'],

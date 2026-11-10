@@ -883,6 +883,30 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
       "note": "The last-mile carrier sending back an item nobody collected."
+    },
+    {
+      "wording": "The parcel has been successfully picked up and is being prepared for transportation.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Relayed from J&T Express Australia: its pickup after the scans that brought the parcel to it, a hand-over between carriers. Matched on its fixed words, with its customer service line or without."
+    },
+    {
+      "wording": "The parcel arrives at the distribution center and is prepared for transport to the next destination.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Relayed from J&T Express Australia: its distribution centre after the pickup."
+    },
+    {
+      "wording": "The parcel is dispatched from the transit center to the next destination",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Relayed from J&T Express Australia: its transit centre sending the parcel on."
     }
   ]
 }

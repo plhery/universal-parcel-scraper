@@ -215,6 +215,9 @@ describe('status map answers', () => {
     expect(answer('delivengo', 'DISTOU/MD1', sort)).toEqual(mapped('out_for_delivery'));
     expect(answer('la-poste', 'AG1', 'Votre colis vous attend')).toEqual(mapped('ready_for_pickup'));
     expect(answer('la-poste', 'DISARR', 'Votre colis est en cours d’acheminement')).toEqual(mapped('in_transit'));
+    // An import's crossing, under groups the map does not read.
+    expect(answer('la-poste', 'ACHORI/ET2', 'Votre envoi est prêt à partir de son territoire d’expédition.')).toEqual(mapped('in_transit'));
+    expect(answer('la-poste', 'DISINTAS/ET3', 'Votre envoi poursuit son acheminement sur son territoire de destination.')).toEqual(mapped('in_transit'));
     // Under keys the map does not read, the stage comes from wording and a default.
     expect(answer('la-poste', null, 'Votre colis vous attend dans votre point de retrait')).toEqual(unknown);
     expect(answer('la-poste', 'XYZ/ZZ9', sort)).toEqual(unknown);
@@ -1550,6 +1553,12 @@ describe("universal providers' answers", () => {
     expect(answer('unknown', null, 'DEPOSITADO PELO CLIENTE/EXPEDIDOR')).toEqual(mapped('accepted'));
     expect(answer('unknown', null, 'ENCOMENDA RECOLHIDA')).toEqual(mapped('accepted'));
     expect(answer('unknown', null, 'ENTRADA EM ARMAZÉM')).toEqual(mapped('in_transit'));
+    // DPD Portugal's in Ship24's English: its depot scan, and its message to the recipient about the delivery, no scan.
+    expect(answer('unknown', null, 'WAREHOUSE READING')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', null, 'INTERACTIVE DELIVERY INFORMATION')).toEqual(gap);
+    // La Poste's import moving on abroad, and XDP's first record, as ParcelsApp relays them.
+    expect(answer('unknown', null, 'Your shipment continues its journey to its destination country.')).toEqual(mapped('in_transit'));
+    expect(answer('unknown', null, 'CREATE')).toEqual(mapped('registered'));
     expect(answer('unknown', null, 'Die Sendung ist im Zielland/Zielgebiet eingetroffen')).toEqual(mapped('in_transit'));
     // Wording the carriers' own maps now read.
     expect(answer('bpost', null, 'Your parcel was delivered at one of your neighbours. You can find all delivery details in your mailbox.'))

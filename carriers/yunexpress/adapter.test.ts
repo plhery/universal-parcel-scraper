@@ -500,6 +500,9 @@ describe('YunExpress captured response projection', () => {
       if (!entry.wording) expect(yunExpressCodeStatus(Number(entry.code)), entry.code).toBeDefined();
       else expect(yunExpressStatus(entry.wording, entry.code === undefined ? undefined : Number(entry.code))?.stage, entry.wording).toBe(entry.stage);
     }
+    // J&T Express Australia's pickup reads the same with the customer service line it can end with.
+    expect(yunExpressStatus('The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000'))
+      .toEqual({ status: 'in_transit', stage: 'in_transit' });
   });
 
   it('takes the status from the latest code when the newest wording is new, without staging it', () => {

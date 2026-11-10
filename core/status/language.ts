@@ -485,6 +485,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // receive", Royal Mail's "Sender preparing item" (or "parcel"), "Sender despatching item" and "Sender has despatched item", "Shipping info sent to BRT",
   // a line's "Shipping Order Created", and iMile's order, in its spelling: "Order Submited.".
   if (/\border submitted(?:,| and)? pending (?:to )?rece(?:iv|ipt)|^(?:your |the )?order (?:has been |was )?submit+ed\.?$|\bshipment data uploaded\b|^sender preparing (?:item|parcel)\b|^sender (?:has despatched|despatching) item$|^shipping info(?:rmation)? sent to (?!(?:the |your? )?(?:recipient|customer|consignee|addressee|buyer)\b)|\bwe have received your shipment information\b|\bhemos recibido la informacion de su envio\b|\bwe will pick up (?:the|your) (?:package|parcel) from the sender\b|^booked for collection$|\bpending shipping by (?:the )?(?:seller|sender|shipper|merchant)\b|\bship(?:ment|ping) order created\b/.test(text)) return 'registered';
+  // XDP's first record, the consignment created from the sender's booking, relayed as its bare type: "CREATE".
+  if (/^create$/.test(text)) return 'registered';
   // A marketplace's seller still packing the order, as Postal Ninja relays it: "Awaiting shipping confirmation.
   // The seller has already received your order and is preparing the packaging for shipping."
   if (/^awaiting shipping confirmation\b|\bseller has (?:already )?received your order and is preparing\b/.test(text)) return 'registered';
@@ -631,6 +633,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // after its sorting, the parcel linked to a packaging tool for the journey abroad and crossing the border.
   if (/^shipment expected,? but not yet arrived or processed at postnl$/.test(text)) return 'registered';
   if (/^parcel linked to (?:a |the )?packaging tool$|^(?:your |the )?(?:parcel|package|shipment|item) has crossed the border$/.test(text)) return 'in_transit';
+  // La Poste's import moving on in the destination territory (ET3, "Votre envoi poursuit son acheminement sur
+  // son territoire de destination"), as ParcelsApp words it.
+  if (/^(?:your |the )?(?:shipment|parcel|package|item) continues its journey to (?:its|the) destination country$/.test(text)) return 'in_transit';
   // UPS's scans as providers relay them without its activity codes, read as UPS's own map reads them: a delivery
   // change the receiver asked for, carried out, and a wrong company or receiver name holding the delivery.
   if (/^as requested, (?:the )?(?:ups my choice®? )?delivery change (?:was|has been) completed$|^(?:the )?(?:delivery )?address (?:was|has been) changed as (?:the )?(?:receiver|recipient) requested$/.test(text)) return 'in_transit';
@@ -694,6 +699,8 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // DPD Poland's scans as ParcelsApp words them: the sender's drop-off at a pickup point, and the pickup
   // point handing the parcel to DPD's courier, not a delivery round.
   if (/^sending the (?:package|parcel) at the pick ?up point$|^handing over the (?:package|parcel) to the courier$/.test(text)) return 'accepted';
+  // DPD Portugal's depot scan after the collection (PEC, "Entrada em armazém"), in Ship24's words.
+  if (/^warehouse reading$/.test(text)) return 'in_transit';
   // Its arrival at the delivering branch of the DPD country it was sent to, after the sorting centre there.
   if (/^acceptance of the (?:package|parcel) at the delivery branch abroad$/.test(text)) return 'in_transit';
   // The recipient's pickup point taking the parcel in, "Parcel collected by pickup point" on DPD Poland's own page.

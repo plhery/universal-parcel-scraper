@@ -18,6 +18,9 @@
     {"wording": "Delivery Exception, Incorrect/Insufficient Address", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "GOFO's failed attempt during its round, relayed with GOFO's support line, which the map reads without. GOFO's own map reads every \"Delivery Exception, \" reason as a failed attempt (code 206), and so does this one."},
     {"wording": "Address Corrected", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "GOFO fixed the address after a failed attempt; the parcel goes out again. Relayed with GOFO's support line."},
     {"wording": "Sorting center outbound, Your shipment has been processed at sorting center and ready for shipping", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A departure from a sorting centre, worded as an event name and its sentence like the shipment order."},
-    {"wording": "Out of delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "GOFO's own tracker words it \"Out for Delivery\": it follows the arrival at the delivery station by minutes and comes before the delivery or its exception."}
+    {"wording": "Out of delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "GOFO's own tracker words it \"Out for Delivery\": it follows the arrival at the delivery station by minutes and comes before the delivery or its exception."},
+    {"wording": "Delivery, Your order has arrived at 【Sample DS】", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "iMile's last mile, its sentence after the event name: read as iMile's map reads it. Its delivery day booked (\"Delivery, Shipment is scheduled to [<day>] .\") moves nothing."},
+    {"wording": "Delivery, Your order has been shipped from 【Sample DS】.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "iMile's last mile, its sentence after the event name: read as iMile's map reads it."},
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The delivery after iMile's last-mile scans."}
   ]
 }

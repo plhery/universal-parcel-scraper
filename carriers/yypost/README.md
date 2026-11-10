@@ -33,7 +33,9 @@ CN.
   transit, and the later ones are rounds. Behind GOFO, the row is GOFO's round.
 - Scans are English wording from YYpost's warehouse in Shenzhen, its air line through Hong Kong
   and the destination's clearance, staged by the wording recorded in
-  [statuses.json](statuses.json), then the shared rules. Scan codes only mark a row as
+  [statuses.json](statuses.json), then the shared rules. iMile's last-mile scans, its sentence
+  after the event name "Delivery", read as iMile's map reads them: its delivery day booked
+  moves nothing. Scan codes only mark a row as
   YYpost's, and the parcel's summary status, which repeats the newest scan's, is not read. The
   onward network's shipment order, recorded after the parcel has left the warehouse, is no step
   back.

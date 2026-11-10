@@ -15,6 +15,9 @@ const STAGES: Readonly<Record<string, Stage>> = {
 // partner's between its receipt and the delivery run, and DHL's in Germany.
 const UNCODED: ReadonlyMap<string, Stage> = new Map([
   ['in processing at transit facility.', 'in_transit'],
+  // The same partner's departure from its facility and its local facility's receipt before the delivery run.
+  ['parcel departed from facility.', 'in_transit'],
+  ['parcel received by local facility.', 'in_transit'],
   ['in transit to next facility.', 'in_transit'],
   ['in transit to next facility', 'in_transit'],
   // USPS's notice of a parcel still moving but behind its expected day.

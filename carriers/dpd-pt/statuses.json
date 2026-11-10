@@ -8,6 +8,7 @@
     {"code": "PEC", "wording": "ENTRADA EM ARMAZÉM", "stage": "in_transit", "language": "pt", "confirmedBy": "portal", "note": "Scanned in at the depot before delivery."},
     {"code": "HUB", "wording": "PASSAGEM POR HUB", "stage": "in_transit", "language": "pt", "confirmedBy": "portal"},
     {"code": "OFD", "wording": "EM DISTRIBUIÇÃO", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "portal"},
+    {"code": "700", "wording": "INFORMAÇÃO INTERACTIVA DE PREVISÃO DE ENTREGA", "language": "pt", "confirmedBy": "live", "note": "DPD's interactive message to the recipient about the coming delivery, after the depot scan; it is not a scan."},
     {"code": "706", "wording": "HORÁRIO DE ENTREGA ENVIADA AO DESTINATÁRIO", "language": "pt", "confirmedBy": "portal", "note": "A message giving the recipient a delivery window, which the comment column shows; it is not a scan."},
     {"code": "709", "wording": "MENSAGEM \"A PROXIMA ENTREGA\" ENVIADA", "language": "pt", "confirmedBy": "portal", "note": "A message telling the recipient of the next delivery; it is not a scan."},
     {"code": "714", "wording": "DATA PREVISTA DE ENTREGA", "language": "pt", "confirmedBy": "live", "firstSeen": "2026-10-27", "note": "Says DPD set an expected delivery day without naming it: dated when DPD set it, beside the depot's intake, with at most a country code as comment. It is not a scan, and the history leaves it out."},

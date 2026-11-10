@@ -108,6 +108,9 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['1 item has been In transit, Despatched to Carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Onboard for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Unsuccessful delivery - failed delivery card left', FAILED_ATTEMPT],
+  // J&T Express Australia's distribution centre and transit centre sending the parcel on after its pickup.
+  ['The parcel arrives at the distribution center and is prepared for transport to the next destination.', { status: 'in_transit', stage: 'in_transit' }],
+  ['The parcel is dispatched from the transit center to the next destination', { status: 'in_transit', stage: 'in_transit' }],
   // GLS keeps the parcel at its depot after the parcel box it was due in was full.
   ['The parcel is being stored in the GLS parcel center. It could not be delivered as the parcel box was occupied.', FAILED_ATTEMPT],
   // GOFO's line haul between its facilities, relayed without the next one.
@@ -133,7 +136,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
  * `normalizeStatusWording` form: GOFO's missed delivery with its type,
  * Ecoscooting's with its reason in brackets, and CouriersPlease's acceptance
  * at a town's depot, its transfer to a depot after it left a card and its
- * transfer to the depot's collection run.
+ * transfer to the depot's collection run, and J&T Express Australia's pickup.
  */
 const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^delivery failed, type: ?recipient absent or delivery location inaccessible\b/, FAILED_ATTEMPT],
@@ -141,6 +144,9 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^\d+ items? (?:has|have) been transferred to \S.* card left$/, FAILED_ATTEMPT],
   [/^\d+ items? (?:has|have) been transferred to run \S+ depot collection$/, { status: 'out_for_delivery', stage: 'ready_for_pickup' }],
+  // J&T Express Australia's pickup, with its customer service line or without: like a courier partner's
+  // acceptance, it follows the scans that brought the parcel to it, a hand-over.
+  [/^the parcel has been successfully picked up and is being prepared for transportation\.?(?: ?customer service: ?\d[\d -]*\d)?$/, { status: 'in_transit', stage: 'in_transit' }],
   // Import customs abroad holding the item for inspection, with what it waits for in brackets.
   [/^境外进口海关留存待验(?:[（(][^（）()]{1,60}[）)])?$/, { status: 'in_transit', stage: 'customs' }],
   // The departure from a processing centre abroad, its country in 【】.

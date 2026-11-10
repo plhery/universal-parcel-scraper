@@ -89,6 +89,20 @@
       "note": "A US last-mile partner's sort after its receipt, relayed without a code."
     },
     {
+      "wording": "Parcel departed from Facility.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A US last-mile partner's departure from its facility, relayed without a code."
+    },
+    {
+      "wording": "Parcel received by local Facility.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The same partner's local facility taking the parcel in before the delivery run, relayed without a code."
+    },
+    {
       "wording": "Your package is being prepared by the sender and will be handed over to us soon",
       "language": "en",
       "stage": "registered",
