@@ -149,6 +149,15 @@
       "note": "The item presented to the border agency after its arrival at the office of exchange."
     },
     {
+      "code": "5188",
+      "wording": "MoH - Medsafe assessment",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The Ministry of Health's medicines regulator assessing an item held in border clearance, after its presentation for clearance."
+    },
+    {
       "code": "5017",
       "wording": "At local/regional depot",
       "language": "en",

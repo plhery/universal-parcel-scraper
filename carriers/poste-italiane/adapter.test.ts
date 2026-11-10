@@ -239,6 +239,7 @@ describe('Poste Italiane response parsing', () => {
       ['disponibile per il ritiro dal giorno lavorativo successivo alla data indicata', 'out_for_delivery', 'ready_for_pickup'],
       ['Disponibile per il ritiro entro i termini indicati su SMS/email', 'out_for_delivery', 'ready_for_pickup'],
       ["all'estero", 'in_transit', 'in_transit'],
+      ['presso il Centro di lavorazione Internazionale', 'in_transit', 'in_transit'],
       ['sono in corso delle verifiche sulla spedizione. contatta assistenza', 'exception', 'failed_attempt'],
     ];
     for (const [wording, status, stage] of cases) {

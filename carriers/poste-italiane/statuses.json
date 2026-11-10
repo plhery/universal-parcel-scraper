@@ -12,6 +12,7 @@
     { "wording": "completata la fase di verifica per lo svincolo…", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Customs release; prefix match." },
     { "wording": "all’estero", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match; the ASCII apostrophe variant is accepted too." },
     { "wording": "presso il paese estero in data", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match." },
+    { "wording": "presso il Centro di lavorazione Internazionale", "language": "it", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "Exact match: the international processing centre on its own line, after the movement in transit." },
     { "wording": "in data", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-09-10", "note": "Exact match on a truncated movement line." },
     { "wording": "In transito", "language": "it", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-25", "note": "Exact match: registered mail's box 3 \"in data\" under the page's label for that box." },
     { "wording": "In transito presso il paese estero", "language": "it", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-10-25", "note": "Exact match: a prior-art fragment under box 3's label, as is \"In transito all’estero\"." },

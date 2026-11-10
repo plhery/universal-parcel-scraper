@@ -93,6 +93,8 @@ export function classifyPosteItalianeStatus(rawWording: unknown): ClassifiedStat
     case 'all\'estero':
     case 'presso il paese estero in data':
     case 'in data':
+    // Registered mail's international processing centre, on its own line.
+    case 'presso il centro di lavorazione internazionale':
     // A change to the delivery instructions: the parcel carries on.
     case 'cambio disposizioni di consegna':
       return { status: 'in_transit', stage: 'in_transit' };

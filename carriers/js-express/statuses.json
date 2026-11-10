@@ -121,6 +121,7 @@
     {"code": "OIT", "wording": "Flight departure scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Flight arrival scan", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OCP", "wording": "Start Custom clearance Process", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs at the destination."},
+    {"code": "OCP", "wording": "Customs clearance agent received the shipment in destnation country.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The destination's clearance agent taking the parcel for import customs after the flight landed. JS Express's own spelling."},
     {"code": "DCF", "wording": "customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs released the parcel."},
     {"code": "OIT", "wording": "Shipment in transit. Thanks for your waiting.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Delivery in progress", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier at the destination, after its station's arrival and before any courier round: no round of its own."},
