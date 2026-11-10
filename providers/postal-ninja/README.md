@@ -150,7 +150,9 @@ capture failure.
   information sent", which is at the shipper's clock, and two hours early for DHL Germany's
   copies of UPU's record of a Swiss Post item, which are in UTC, read in Zurich time. A
   scan with no zone to borrow keeps its wall time as `local_time`; an explicit offset is
-  kept as it is.
+  kept as it is. A scan read on a zone names it beside its instant (`time_zone`), with how
+  it was chosen (`time_zone_basis`): its place, a neighbouring scan's, the destination's or
+  the carrier's clock. A UTC stamp is the instant itself and names none.
 - A scan whose hour is unknown keeps its wall time whatever its zone. A scan dated
   without a time is written as midnight (FedEx's pickup, Geodis's departure). UPS dates
   its scans between midnight and 1 a.m. at 12:xx (its arrival in Lenexa at 00:25 is

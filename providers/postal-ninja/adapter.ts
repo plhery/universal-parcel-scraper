@@ -25,7 +25,7 @@ import { isRecord } from '../../core/types.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { classifyEvent, event, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
-import { borrowsRoutingZone, carrierHomeZone, originLeg, serviceZone, wallClock } from './clocks.js';
+import { borrowsRoutingZone, carrierHomeZone, originLeg, serviceZone, wallClock, type Zoned } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
 const GET_API = 'https://postal.ninja/track/get';
@@ -113,7 +113,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier),
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
-  const scans: { wall: string | null; service: string; origin: boolean; zone: string | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
+  const scans: { wall: string | null; service: string; origin: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   for (const raw of rawEvents as unknown[]) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
@@ -142,23 +142,28 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // a zone outside the US (borrowsRoutingZone), else, in a history the service
   // reports alone, the one its name gives. This is a guess, which keeps a reply
   // dated when its newest scan names no place. A scan whose hour is unknown
-  // (false) keeps its wall time.
-  const zoneAt = (index: number, wall: string): string | null => {
+  // (false) keeps its wall time. A deduced instant names its zone and how it was
+  // chosen; a UTC stamp is the instant itself.
+  const zoneAt = (index: number, wall: string): Zoned | null => {
     const { zone, service, origin } = scans[index]!;
     if (zone !== null) return zone || null;
     // A service's scans on its origin's clock (a post's copies of the origin post's, Cainiao's in China) borrow among themselves.
     const established = (other: typeof scans[number]) => other.service === service && other.origin === origin
-      && typeof other.zone === 'string' ? other.zone : null;
-    for (let earlier = index - 1; earlier >= 0; earlier -= 1) { const borrowed = established(scans[earlier]!); if (borrowed) return borrowed; }
-    for (let later = index + 1; later < scans.length; later += 1) { const borrowed = established(scans[later]!); if (borrowed) return borrowed; }
-    if (timezone) return borrowsRoutingZone(service, timezone) ? timezone : null;
-    return journey.alone ? courierZone(service, number, wall) : null;
+      && other.zone ? other.zone.zone : null;
+    const borrowed = (zone: string): Zoned => ({ zone, basis: 'neighbour' });
+    for (let earlier = index - 1; earlier >= 0; earlier -= 1) { const zone = established(scans[earlier]!); if (zone) return borrowed(zone); }
+    for (let later = index + 1; later < scans.length; later += 1) { const zone = established(scans[later]!); if (zone) return borrowed(zone); }
+    if (timezone) return borrowsRoutingZone(service, timezone) ? { zone: timezone, basis: 'carrier' } : null;
+    const home = journey.alone ? courierZone(service, number, wall) : null;
+    return home ? { zone: home, basis: 'carrier' } : null;
   };
   const events = scans.map((scan, index): CarrierEvent => {
     if (scan.wall === null) return scan.event;
-    const zone = zoneAt(index, scan.wall);
-    const instant = zone ? firstOccurrence(DateTime.fromISO(scan.wall, { zone })) : null;
-    return instant?.isValid ? { time: instant.toUTC().toISO(), ...scan.event } : { local_time: scan.wall, ...scan.event };
+    const placed = zoneAt(index, scan.wall);
+    const instant = placed ? firstOccurrence(DateTime.fromISO(scan.wall, { zone: placed.zone })) : null;
+    if (!placed || !instant?.isValid) return { local_time: scan.wall, ...scan.event };
+    const named = placed.zone === 'UTC' ? {} : { time_zone: placed.zone, time_zone_basis: placed.basis };
+    return { time: instant.toUTC().toISO(), ...named, ...scan.event };
   }).reverse();
   // A deadline is no scan, and placed it would be the parcel's newest instant.
   // Besides those it names, a row dated after Postal Ninja last read the

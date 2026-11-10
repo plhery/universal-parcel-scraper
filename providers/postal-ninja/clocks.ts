@@ -18,6 +18,7 @@ import { DateTime } from 'luxon';
 import {
   canadaProvinceTimeZone, countryCode, countryTimeZone, postalOfficeZone, sharedClockZone, usStateTimeZone,
 } from '../../core/time/index.js';
+import type { ZoneBasis } from '../../places/clocks.js';
 import { keepsZone } from '../../places/zones.js';
 import { courierZone } from '../shared/hints.js';
 
@@ -200,6 +201,9 @@ export interface Scan {
   delivered: boolean;
 }
 
+/** A zone and how it was chosen, as a deduced instant names them (`time_zone`, `time_zone_basis`). */
+export interface Zoned { zone: string; basis: ZoneBasis }
+
 /**
  * Whether a scan is on its origin's clock, apart from its service's others: a
  * UTC post's copy of the origin post's, on the origin office's clock, or
@@ -222,28 +226,31 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
  * carrier's. A destination on another clock than the service's may be a
  * parcel that crossed a border, so it establishes none. Null when the clock
  * is unknown; false when the hour is (a date written as midnight, UPS's
- * 12:xx), so that no zone can place the scan.
+ * 12:xx), so that no zone can place the scan. The zone comes with how it was
+ * chosen (`time_zone_basis`).
  */
-export function serviceZone(scan: Scan, journey: Journey): string | null | false {
+export function serviceZone(scan: Scan, journey: Journey): Zoned | null | false {
   const { service, description, wall, location, delivered } = scan;
-  const relayed = service === 'Swiss Post' ? swissPostDestinationZone(description, location, journey.destination)
-    : berlinCopyZone(service, location);
+  const at = (zone: string | null | undefined, basis: ZoneBasis): Zoned | null => zone ? { zone, basis } : null;
+  const relayed = service === 'Swiss Post' ? at(swissPostDestinationZone(description, location, journey.destination), 'destination')
+    : at(berlinCopyZone(service, location), 'carrier');
   if (relayed) return relayed;
   if (UTC_POSTS.has(service)) {
-    if (!originLeg(scan)) return 'UTC';
-    return isValidS10TrackingNumber(journey.number) ? countryTimeZone(journey.number.slice(-2)) : null;
+    if (!originLeg(scan)) return at('UTC', 'carrier');
+    return isValidS10TrackingNumber(journey.number) ? at(countryTimeZone(journey.number.slice(-2)), 'carrier') : null;
   }
-  const fixed = FIXED_CLOCKS.get(service) ?? (journey.destination ? NETWORK_CLOCKS.get(service)?.get(journey.destination) : undefined);
+  const fixed = at(FIXED_CLOCKS.get(service), 'carrier')
+    ?? at(journey.destination ? NETWORK_CLOCKS.get(service)?.get(journey.destination) : undefined, 'destination');
   if (fixed) return fixed;
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;
-  if (service === CAINIAO && originLeg(scan)) return CAINIAO_CHINA_ZONE;
+  if (service === CAINIAO && originLeg(scan)) return at(CAINIAO_CHINA_ZONE, 'carrier');
   // A mailer writes its label on UTC, as USPS's adapter reads it (uspsRowZone).
-  if (isUsps(service)) return uspsMailerLabel(description) ? 'UTC' : uspsScanZone(location) ?? locationZone(location);
+  if (isUsps(service)) return uspsMailerLabel(description) ? at('UTC', 'carrier') : at(uspsScanZone(location) ?? locationZone(location), 'place');
   if (!journey.alone) return null;
-  if (LOCATED_CLOCKS.has(service)) return locationZone(location);
+  if (LOCATED_CLOCKS.has(service)) return at(locationZone(location), 'place');
   if (!LOCAL_CLOCKS.has(service)) return null;
   const home = courierZone(service, journey.number, wall) ?? journey.fallback;
-  if (!journey.destination) return home;
+  if (!journey.destination) return at(home, 'carrier');
   const destination = countryTimeZone(journey.destination);
-  return destination && (!home || sharedClockZone([destination, home], wall)) ? destination : null;
+  return destination && (!home || sharedClockZone([destination, home], wall)) ? at(destination, 'destination') : null;
 }
