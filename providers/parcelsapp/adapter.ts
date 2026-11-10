@@ -1103,8 +1103,17 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // Shouwu's dates are the epoch it stores (`traceTime`), in UTC and without a place: its own
   // tracker dates its rows in China and Hong Kong at the same instants to the second.
   if (carrier === 'shouwu') return null;
-  // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time.
-  if (carrier === 'spring-gds' && countryCode(lastPlace(scanLocation(name, state.location))) === 'GB') return null;
+  // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time. Its scans
+  // in another country are that country's wall clock, as in PostNL's own feed: read on the clock most of
+  // the country lives on ("Chile"). Spain's and Portugal's, which also keep island clocks, and those of
+  // countries whose regions the steps read, are left to their place.
+  const postnlPlace = carrier === 'spring-gds' ? lastPlace(scanLocation(name, state.location)) : undefined;
+  const postnlCountry = countryCode(postnlPlace);
+  if (postnlCountry === 'GB') return null;
+  if (postnlCountry && postnlCountry !== 'NL' && !['ES', 'PT'].includes(postnlCountry) && !REGIONAL_CLOCKS.has(postnlCountry)) {
+    const zone = countryTimeZone(postnlPlace) ?? (hasSeveralClocks(postnlCountry) ? mainZone(postnlCountry) : null);
+    if (zone) return zone;
+  }
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
   if (carrier === 'imile') {
     const country = countryCode(destination);

@@ -576,7 +576,11 @@ step exists for future protocol changes.
   hours late.
 - So do PostNL's scans in Britain. FedEx International Connect lists the same scans two hours
   after ParcelsApp's digits, on Dutch summer time, so those digits are their UTC instants. Read
-  on PostNL's Amsterdam clock, they came out two hours early. PostNL's other scans keep it.
+  on PostNL's Amsterdam clock, they came out two hours early. PostNL's scans in another country
+  have that country's wall clock, as PostNL's own feed does, and are read on the clock most of the
+  country lives on; read on Amsterdam's, scans in Chile came out four hours early. Spain, Portugal
+  and countries whose regions the steps read are left to the place. PostNL's scans in the
+  Netherlands or with no place keep Amsterdam's clock.
 - So do a mailer's labels filed under USPS, whose wording repeats their place ("Shipping Label
   Created, EXAMPLE CITY, CA 12345"). USPS's own rows read "Shipping Label Created, USPS Awaiting
   Item" and keep its wall clock. Read on their place's clock, three such labels came eight hours

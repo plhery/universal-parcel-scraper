@@ -1012,6 +1012,19 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual(['2026-10-22T01:23:00.000Z', '2026-10-22T01:21:00.000Z']);
   });
 
+  it('reads PostNL\'s scans in the destination country on that country\'s clock', () => {
+    // PostNL's own feed dates its scans in Chile at the same digits on Chile's clock; read on
+    // PostNL's Amsterdam clock they came out four hours early. Its own records, with no place, stay Dutch.
+    const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post'], states: [
+      { date: '2026-11-06T01:36:00Z', status: 'The item is at customs', carrier: 0, location: 'Chile' },
+      { date: '2026-11-06T00:59:00Z', status: 'The item has been processed in the country of destination', carrier: 0, location: 'Chile' },
+      { date: '2026-10-26T08:16:00Z', status: 'The item is pre-advised to PostNL', carrier: 0 },
+    ] }, number, identity(), 'Europe/Budapest');
+    expect(result.events?.map((scan) => [scan.time, scan.time_zone, scan.time_zone_basis])).toEqual([
+      ['2026-11-06T04:36:00.000Z', 'America/Santiago', 'carrier'], ['2026-11-06T03:59:00.000Z', 'America/Santiago', 'carrier'],
+      ['2026-10-26T07:16:00.000Z', 'Europe/Amsterdam', 'carrier']]);
+  });
+
   it('reads iMile\'s scans on the destination\'s clock, wherever they happened', () => {
     // iMile's page writes every scan on the recipient country's clock and ParcelsApp has its
     // digits; read on iMile's catalog zone they came out two hours early in Italy, and nine
