@@ -49,6 +49,11 @@ export interface ResolvedEvent extends CarrierEvent {
   stage_source: string;
   /** Null for a date or local clock whose offset the feed did not establish. */
   instant: string | null;
+  /**
+   * Set when the adapter left the scan without a stage and the shared wording classifier gave it
+   * one, its rule or its fallback. Absent on a stage the adapter chose, by any map or rule.
+   */
+  stage_inferred?: true;
 }
 
 export interface ResolvedResult extends CarrierResult {
@@ -59,12 +64,15 @@ export interface ResolvedResult extends CarrierResult {
 export function resolveResult(input: unknown): ResolvedResult {
   const result = readLateRegistrations(normalizeCarrierResult(input));
   const current = resultStage(result);
-  const events = (result.events ?? []).map((event): ResolvedEvent => {
+  const events = (result.events ?? []).map(({ stage_inferred: marked, ...event }): ResolvedEvent => {
     const declared = stages.has(event.stage ?? '') ? event.stage as Stage : undefined;
     const classified = classifyWording(event.description ?? '', 'in_transit');
+    // A lookup resolves an answer again once it merges it: a scan staged here before keeps its mark
+    // while it still holds the classifier's stage and source.
+    const inferred = !declared || (marked === true && declared === classified.stage && event.stage_source === classified.source);
     return { ...event, stage: declared ?? classified.stage,
       stage_source: declared ? stageSource(declared, event.description ?? '', event.stage_source) : classified.source,
-      instant: explicitOffsetTime(event.time)?.iso ?? null };
+      instant: explicitOffsetTime(event.time)?.iso ?? null, ...(inferred ? { stage_inferred: true as const } : {}) };
   });
   return { ...result, ...(current ? { current_stage: current } : {}), events };
 }

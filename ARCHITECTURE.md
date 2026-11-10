@@ -402,7 +402,9 @@ says how it got there:
 Adapters retain `stage_source` when they classify wording before returning a stage.
 Explicit carrier vocabularies and provider codes use `carrier_map`; text rules use
 `wording:<rule>`, and unmatched text uses `none`. Resolution preserves that source,
-including on `pending` events. Universal summaries carry `current_stage_source` from
+including on `pending` events. A scan the adapter left without a stage gets the classifier's
+source too, and `stage_inferred: true`, so a consumer can tell the scraper's guess from the
+adapter's own wording rule. Universal summaries carry `current_stage_source` from
 the event that establishes the current stage. Consumers can review wording and
 fallback decisions without mistaking them for explicit maps. `resultStage()` reads a result
 that states no status by its newest scan with a stage, unless that scan is a delivery or a

@@ -850,6 +850,13 @@
                     "null"
                   ]
                 },
+                "stage_inferred": {
+                  "type": "boolean",
+                  "enum": [
+                    true
+                  ],
+                  "description": "Set when the adapter gave the scan no stage and the shared wording classifier chose it, by a rule or its fallback. Absent on a stage the adapter chose."
+                },
                 "recipient_action": {
                   "type": "string",
                   "enum": [

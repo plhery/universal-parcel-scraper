@@ -266,3 +266,25 @@ describe('scans dated alike', () => {
     expect(events.map((event) => event.tie_order ?? null)).toEqual([null, null]);
   });
 });
+
+describe('scans the scraper staged', () => {
+  it('marks a scan the adapter left without a stage, and only that one, across a second resolution', () => {
+    const resolved = resolveResult({ status: 'in_transit', events: [
+      { time: '2026-11-03T10:00:00Z', description: 'Delivery was not possible' },
+      { time: '2026-11-02T10:00:00Z', description: 'Zzz qqq' },
+      { time: '2026-11-01T10:00:00Z', description: 'Delivery was not possible', stage: 'failed_attempt', stage_source: 'wording:en' },
+      { time: '2026-10-31T10:00:00Z', description: 'Parcel registered', stage: 'registered', stage_source: 'carrier_map', stage_inferred: true },
+    ] });
+    expect(resolved.events.map((event) => [event.stage, event.stage_source, event.stage_inferred])).toEqual([
+      ['failed_attempt', resolved.events[0]!.stage_source, true],
+      ['in_transit', 'none', true],
+      ['failed_attempt', 'wording:en', undefined],
+      ['registered', 'carrier_map', undefined],
+    ]);
+    expect(resolved.events[0]!.stage_source).toMatch(/^wording:/);
+    expect(resolved.events[2]).not.toHaveProperty('stage_inferred');
+    // A lookup resolves a merged answer again: the scraper's guess stays marked, a stage set since does not.
+    const again = resolveResult({ ...resolved, events: [...resolved.events, { ...resolved.events[1]!, stage: 'delivered' }] });
+    expect(again.events.map((event) => event.stage_inferred)).toEqual([true, true, undefined, undefined, undefined]);
+  });
+});
