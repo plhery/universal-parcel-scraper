@@ -138,6 +138,9 @@ the last piece is delivered, so it keeps the stage of the scan before it.
 
 The returned identity must match the whole waybill and the browser response must
 identify the Express division. Reused waybills and empty histories stay inconclusive.
+A record of another division is inconclusive too, with the reason `parcel_de_division`
+when it is DHL Paket's, which [DHL Paket's adapter](../dhl/README.md) can be asked for,
+and `other_division` otherwise.
 The mobile API answers a missing waybill with an empty shipment list. A waybill it holds
 records for but shows nothing about, such as one several shipments reuse, comes back as one
 blank checkpoint: that is inconclusive (`portal_not_found`), and the global page is asked next.

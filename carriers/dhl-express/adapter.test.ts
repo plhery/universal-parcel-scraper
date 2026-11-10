@@ -638,7 +638,14 @@ describe('DHL Express piece identifiers', () => {
   it('rejects a reply without the piece, another division, a missing waybill and a reused piece', () => {
     expect(() => parseUnifiedPiece(unifiedPayload(), piece)).toThrow('does not list the piece');
     const parcel = piecePayload(); parcel.shipments[0]!.id = piece; parcel.shipments[0]!.service = 'parcel-de';
-    expect(() => parseUnifiedPiece(parcel, piece)).toThrow(new IndeterminateError('DHL Express', 'DHL returned a different division (parcel-de)'));
+    expect(() => parseUnifiedPiece(parcel, piece)).toThrow(new IndeterminateError('DHL Express', 'DHL returned a different division (parcel-de)',
+      { reason: 'parcel_de_division' }));
+    const reason = (payload: ReturnType<typeof piecePayload>) => {
+      try { parseUnifiedPiece(payload, piece); } catch (error) { return (error as IndeterminateError).reason; }
+      return undefined;
+    };
+    const freight = piecePayload(); freight.shipments[0]!.id = piece; freight.shipments[0]!.service = 'freight';
+    expect(reason(freight)).toBe('other_division');
     const noWaybill = piecePayload(); noWaybill.shipments[0]!.id = '1234567890';
     expect(() => parseUnifiedPiece(noWaybill, piece)).toThrow(SchemaError);
     const reused = piecePayload(); reused.shipments.push({ ...reused.shipments[0]!, id: '1234567902' });

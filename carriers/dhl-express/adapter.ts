@@ -82,7 +82,12 @@ function unifiedShipment(payload: unknown, matches: (shipment: Record<string, un
   }
   if (matching.length !== 1) throw new IndeterminateError(PROVIDER, wording.reused);
   const shipment = matching[0]!;
-  if (shipment.service !== 'express') throw new IndeterminateError(PROVIDER, `DHL returned a different division (${clean(shipment.service, 40) || 'unnamed'})`);
+  if (shipment.service !== 'express') {
+    // The reason says whether the record is DHL Paket's, which a consumer can ask instead.
+    const division = clean(shipment.service, 40);
+    throw new IndeterminateError(PROVIDER, `DHL returned a different division (${division || 'unnamed'})`,
+      { reason: division === 'parcel-de' ? 'parcel_de_division' : 'other_division' });
+  }
   return shipment;
 }
 
