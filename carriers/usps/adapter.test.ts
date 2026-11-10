@@ -314,6 +314,9 @@ describe('USPS rendered page', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In Transit, Arriving On Time',
       expected_delivery: '2025-03-17' });
     expect(result.events).toHaveLength(3);
+    // The step shown between scans keeps the day first expected in its banner: no day is read from it.
+    expect(parseUSPSTrackingHtml(ESTIMATE_PAGE.replace('In Transit, Arriving On Time', 'In Transit to Next Facility'), IN_TRANSIT_NUMBER))
+      .toMatchObject({ current_stage: 'in_transit', last_status_text: 'In Transit to Next Facility', expected_delivery: null });
     // A banner without an estimate gives none, and a delivered parcel keeps none.
     expect(parseUSPSTrackingHtml(ESTIMATE_PAGE.replace(/<div class="expected_delivery">[\s\S]*?<\/h2>\s*<\/div>/, ''), IN_TRANSIT_NUMBER).expected_delivery).toBeNull();
     const delivered = ESTIMATE_PAGE.replace('<p class="tb-status">On the Way</p>', '<p class="tb-status">Delivered</p>')

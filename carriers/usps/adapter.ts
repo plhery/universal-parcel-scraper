@@ -179,6 +179,11 @@ function estimateOf(announced: string | null, round: string | null): string | nu
   return announced && announced.length > round.length ? announced : round;
 }
 
+// The step USPS shows for a parcel between scans. Its page keeps the day first expected in the
+// banner after the page's other version, "In Transit, Arriving On Time", has moved it, so the
+// banner's day is not read there; a day the status itself names still is.
+const BETWEEN_SCANS = /^in transit to next facility\b/i;
+
 function notLocated(): CarrierResult {
   return {
     status: 'unknown',
@@ -374,8 +379,8 @@ export function parseUSPSTrackingHtml(page: string, trackingNumber: string, read
     last_status_text: delivered ? 'Delivered' : returning && moving === 'delivered' ? 'Returned to the sender' : statusText,
     last_update: events[0]?.time || null,
     ...(events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),
-    expected_delivery: delivered ? null
-      : estimateOf(expectedDelivery(`${estimateArea} ${banner}`) ?? bannerEstimate(estimate), roundEstimate(events[0])),
+    expected_delivery: delivered ? null : estimateOf(expectedDelivery(`${estimateArea} ${banner}`)
+      ?? (BETWEEN_SCANS.test(statusText) ? null : bannerEstimate(estimate)), roundEstimate(events[0])),
     events,
   };
 }

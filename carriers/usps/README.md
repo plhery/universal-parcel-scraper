@@ -82,7 +82,10 @@ Parsing, in order:
   elements of their own ("Wednesday 28 October 2026 by 9:00pm"), and becomes
   `expected_delivery` as a calendar day, or a slot when it gives a window. A newest
   out-for-delivery scan's "Expected Delivery Between 1:15pm and 4:15pm" is a slot on that
-  scan's day, unless the banner names another day. A delivered parcel has none.
+  scan's day, unless the banner names another day. A delivered parcel has none. The page
+  alternates between "In Transit, Arriving On Time" and, between scans, "In Transit to Next
+  Facility", whose banner keeps the day first expected after the other version has moved it:
+  that banner's day is not read, and a consumer keeps the day the other version gave.
 - History comes from `.tb-step` cards (`.tb-status-detail`, `.tb-date`, `.tb-location`).
   Collapsed cards already hold the full history in the HTML. Undated placeholder steps and
   the "See All Tracking History" control are skipped. Rows of the older
