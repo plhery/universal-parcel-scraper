@@ -16,12 +16,13 @@ export function packetaEventText(raw: string): string {
     .replace(/\s+/g, ' ').trim().slice(0, 500);
 }
 
-// Three sentences name a depot or point: the reception and the notice of a
-// parcel ready for pickup after their sentence ("… for transport. DEPO
-// Example"), and the depot arrival within it.
+// Four sentences name a depot or point: the reception, the notice of a parcel
+// ready for pickup and the micro-depot arrival after their sentence ("… for
+// transport. DEPO Example"), and the depot arrival within it.
 const PLACED = [
   /^(We have successfully received the parcel for transport\.) (\S.*)$/,
   /^(The parcel is ready for pickup\.) (\S.*)$/,
+  /^(The parcel has arrived at the micro-depot\.) (\S.*)$/,
   /^(Your parcel has arrived at the depot) (\S.*)(\. We[’']re now preparing it for delivery\.)$/,
 ];
 

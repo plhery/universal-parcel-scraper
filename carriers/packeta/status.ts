@@ -67,6 +67,7 @@ const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['successfully received the parcel for transport', 'in_transit'],
   ['on its way to the depot', 'in_transit'],
   ['arrived at the depot', 'in_transit'],
+  ['arrived at the micro-depot', 'in_transit'],
   ['has been handed over to the carrier', 'in_transit'],
   ['on its way to you', 'out_for_delivery'],
   ['ready for pickup', 'ready_for_pickup'],

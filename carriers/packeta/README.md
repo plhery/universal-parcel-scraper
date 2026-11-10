@@ -52,9 +52,9 @@ after nine digits is CDL's order number.
   then a depot or the point it no longer waits at. A delivered parcel keeps the pickup point
   only when its last movement before the delivery made it ready for pickup there.
 - At most 20 events are returned, newest first.
-- The reception and the notice of a parcel ready for pickup end with their depot or point, and
-  the depot arrival names its depot within. That place becomes the scan's location, and a scan
-  stored with it in the wording keeps its row in the app.
+- The reception, the notice of a parcel ready for pickup and the micro-depot arrival end with
+  their depot or point, and the depot arrival names its depot within. That place becomes the
+  scan's location, and a scan stored with it in the wording keeps its row in the app.
 - A courier hand-off sentence links the partner's number to the partner's tracker. The
   wording keeps the number and loses the link; a scan stored with the link keeps its row in
   the app. A host the catalog knows names the partner in `delivery_carrier`, and the number
@@ -65,7 +65,8 @@ after nine digits is CDL's order number.
 
 ## Limitations
 
-- No delivery estimate. Only the reception, the depot arrival and the pickup notice name a place.
+- No delivery estimate. Only the reception, the depot and micro-depot arrivals and the pickup notice
+  name a place.
 - Romanian (EET) depot scans can be one hour off: the backend stamps Prague time.
 
 ## Testing

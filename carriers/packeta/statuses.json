@@ -21,6 +21,7 @@
     { "wording": "…successfully received the parcel for transport…", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },
     { "wording": "The parcel is currently on its way to the depot.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },
     { "wording": "…arrived at the depot…", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },
+    { "wording": "The parcel has arrived at the micro-depot.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The arrival at a small last-mile depot, followed by its town and street, which is the scan's place." },
     { "wording": "The parcel has been handed over to the carrier…", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },
     { "wording": "…on its way to you…", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },
     { "wording": "The parcel is ready for pickup…", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-19", "note": "Event sentence; substring match." },

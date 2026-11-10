@@ -382,11 +382,13 @@ describe('Packeta hand-off to a delivery partner', () => {
 
   it('reads the depot or point a sentence names as its place, and keeps a row stored with it in the sentence', () => {
     const result = parsePacketaTrackingResponse({ item: packet({ trackingDetails: [
+      { text: 'The parcel has arrived at the micro-depot. Example-West, Example Lane 7/1', time: '2026-07-07 05:00:00' },
       { text: 'Your parcel has arrived at the depot Example-East, Example Street 2/4. We’re now preparing it for delivery.', time: '2026-07-06 05:00:00' },
       { text: 'We have successfully received the parcel for transport. DEPO Example, Example Street', time: '2026-07-05 09:00:00' },
       { text: 'We have successfully received the parcel for transport.', time: '2026-07-04 09:00:00' },
     ] }) }, TRACKING_NUMBER);
     expect(result.events?.map((event) => [event.description, event.location, event.stage])).toEqual([
+      ['The parcel has arrived at the micro-depot.', 'Example-West, Example Lane 7/1', 'in_transit'],
       ['Your parcel has arrived at the depot. We’re now preparing it for delivery.', 'Example-East, Example Street 2/4', 'in_transit'],
       ['We have successfully received the parcel for transport.', 'DEPO Example, Example Street', 'in_transit'],
       ['We have successfully received the parcel for transport.', '', 'in_transit'],
