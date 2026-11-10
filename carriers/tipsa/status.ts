@@ -45,8 +45,8 @@ export function tipsaStatus(label: string): ClassifiedStatus | undefined {
 /**
  * What the map says about one history label, the only key a scan has: TIPSA's
  * own labels, else the shared wording rules the adapter reads them with. An
- * agency read is in transit, or out for delivery right after the round, so its
- * stage depends on the scan before it and the map gives none.
+ * agency read is in transit, or out for delivery after the round on its day, so
+ * its stage depends on the scans before it and the map gives none.
  */
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code || AGENCY_READ.test(comparable(wording)) ? undefined : tipsaStatus(wording)?.stage),

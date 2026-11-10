@@ -101,7 +101,7 @@ describe('TIPSA shipment page', () => {
     ]);
   });
 
-  it("reads the agency's reads as it loads the van, minutes after the round, as out for delivery", () => {
+  it("reads the agency's reads after the round, on its day, as out for delivery", () => {
     const loading = (minute: string, description: string) => `<tr><td class="mdl-data-table__cell--non-numeric">30/03/26 09:${minute}</td>`
       + `<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_des_0">${description}</span></td>`
       + '<td class="mdl-data-table__cell--non-numeric ellipsis"><span id="est_traz_pob_0">VILLA EJEMPLO</span></td></tr>';
@@ -114,9 +114,12 @@ describe('TIPSA shipment page', () => {
       ['REPARTO', 'out_for_delivery', undefined],
       ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'in_transit', undefined],
     ]);
-    // Later in the day it is the parcel back at the agency, and the read before the round stays one.
+    // A read later that day, before the round's outcome, is still part of the round; the read before the round stays in transit.
     expect(parseTipsaDetail(page(loading('25', 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')), NUMBER))
-      .toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+      .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    // On a later day, with no outcome between, the agency holds the parcel before its next round.
+    const nextDay = loading('25', 'LECTURA EN AGENCIA DESTINO EJEMPLO 01').replace('30/03/26', '31/03/26');
+    expect(parseTipsaDetail(page(nextDay), NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
   });
 
   it('reads a delivery asked for at another address as the parcel rerouted', () => {

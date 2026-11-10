@@ -17,8 +17,8 @@ const HUB_READ = /^LECTURA EN HUB ([A-Z][A-Z .'-]{0,40})$/;
 const CENTRAL_TOWN = 'SAN FERNANDO DE HENARES';
 // A hub whose name in a read is not its town's whole name.
 const HUB_TOWNS = new Map([['BARBERA', 'BARBERA DEL VALLES']]);
-// The destination agency reads the parcel again as it loads the van, at the round's minute or the next.
-const LOADING_MS = 10 * 60_000;
+// The day of an instant on TIPSA's clock, which dates a round and the agency's reads during it.
+const MADRID_DAY = new Intl.DateTimeFormat('en-CA', { timeZone: TIPSA_ZONE, year: 'numeric', month: '2-digit', day: '2-digit' });
 
 /**
  * A row's place: its POBLACIÓN, the town of the agency that recorded it. Reads
@@ -121,15 +121,15 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
   const weight = /^\d{1,6}(?:[.,]\d{1,3})?$/.test(kilos) ? Number(kilos.replace(',', '.')) : 0;
   // Newest first, as the page lists them; rows of one minute keep the page's order.
   events.sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
-  // An agency read within minutes after the round (REPARTO) is the van's loading, part of the
-  // round: out for delivery, rather than the parcel back in transit.
+  // An agency read after the round (REPARTO), on its day and before its outcome, is part of the
+  // round: the van's loading at its minute or later, out for delivery rather than back in transit.
   const loading = new Set<CarrierEvent>();
-  let round: number | undefined;
+  let round: string | undefined;
   for (const event of [...events].reverse()) {
-    const at = Date.parse(event.time);
+    const day = MADRID_DAY.format(new Date(event.time));
     const key = comparable(event.description!);
-    if (key === 'REPARTO') round = at;
-    else if (round !== undefined && AGENCY_READ.test(key) && at - round <= LOADING_MS) {
+    if (key === 'REPARTO') round = day;
+    else if (round !== undefined && AGENCY_READ.test(key) && day === round) {
       event.stage = 'out_for_delivery';
       loading.add(event);
     } else if (event.stage) round = undefined;
