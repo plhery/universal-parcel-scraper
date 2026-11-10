@@ -428,6 +428,8 @@ describe('classifyWording', () => {
       'Liberado pela alfândega', 'Desalfandegado', 'Fiscalização aduaneira finalizada',
       'Odprawa celna zakończona', 'Przesyłka odprawiona celnie',
       'Випущено з митного контролю', 'Пройшло митний контроль', 'Выпущено таможней', 'Таможенное оформление завершено', 'Покинуло таможню',
+      'Завершение таможенного контроля', 'Митний догляд завершено. Відправлення буде передане на доставку', 'Митне декларування завершене',
+      'Вибуло із митного терміналу', 'Ваше отправление закончило таможенное оформление', 'Возвращено с таможни',
     ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'in_transit', source: 'wording:language' });
     // Holds, inspections, submissions and a release still to come stay with customs.
     for (const wording of [
@@ -441,7 +443,12 @@ describe('classifyWording', () => {
       'Envío en aduana', 'Não foi liberado pela alfândega', 'Encaminhado para fiscalização aduaneira',
       'Przesyłka oczekuje na odprawę celną', 'Nie została odprawiona celnie',
       'Знаходиться в митниці', 'Не випущено з митниці', 'Очікує митного оформлення', 'Прибыло на таможню', 'Ожидает выпуска таможней', 'Мытны кантроль',
+      'Таможенный досмотр не завершен', 'Митне оформлення не завершено',
     ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
+    // Customs sending the parcel back to the sender has not cleared it.
+    for (const wording of ['Возвращено с таможни отправителю', 'Повернуто з митниці відправнику']) {
+      expect(wordingStage(wording, 'pending'), wording).not.toBe('in_transit');
+    }
   });
 
   it('reads a post\'s movement and acceptance in Ukrainian and Russian', () => {
@@ -904,6 +911,10 @@ describe('classifyWording', () => {
       ['Pendiente de recepción en CTT Express', 'registered'],
       // A centre sending the parcel on to a station.
       ['Example center Parcel has been sent to AST 01.', 'in_transit'],
+      // Unless the sentence goes on to a pickup point or a delivery round.
+      ['Your parcel has been sent to the pickup point and is ready for collection', 'ready_for_pickup'],
+      ['Package has been sent to the parcel shop. Ready for pickup', 'ready_for_pickup'],
+      ['Parcel has been sent to the courier and is out for delivery', 'out_for_delivery'],
       // Updated delivery details and a local carrier's bare shipment scan, relayed mid-route.
       ['Delivery details updated', 'in_transit'],
       ['Delivery information has been updated.', 'in_transit'],
@@ -1080,6 +1091,8 @@ describe('classifyWording', () => {
     expect(wordingStage('Shipping information sent to the recipient', 'pending')).not.toBe('registered');
     expect(wordingStage('Item received at delivery office', 'pending')).toBe('accepted');
     expect(wordingStage('Item received by customs', 'pending')).toBe('customs');
+    // A parcel sent to a returns centre is not moving on to its recipient.
+    expect(wordingStage('Package has been sent to the return center', 'pending')).not.toBe('in_transit');
   });
 
   it("reads China Post's and other Chinese carriers' final scans as providers relay them", () => {
@@ -1093,7 +1106,8 @@ describe('classifyWording', () => {
       ['已由【示例驿站】代收', 'ready_for_pickup'], ['已到达【示例自提点】', 'ready_for_pickup'], ['已放入丰巢柜', 'ready_for_pickup'],
       ['邮件已到达【示例营业部】，请您前往领取', 'ready_for_pickup'], ['等待客户网点取件', 'ready_for_pickup'], ['到达待取', 'ready_for_pickup'],
       ['已退回', 'returned'], ['已退回寄件人', 'returned'], ['退回寄件人', 'returned'], ['退回妥投', 'returned'], ['退件签收', 'returned'],
-      ['【示例】签收人是寄件人', 'returned'],
+      ['【示例】签收人是寄件人', 'returned'], ['您的邮件已代签收，成功退回至寄件人', 'returned'], ['已签收，退回寄件人', 'returned'],
+      ['快件已签收，退回至寄件人', 'returned'], ['派送失败，退回寄件人', 'failed_attempt'],
       ['未妥投', 'failed_attempt'], ['未妥投，原因：收件人不在', 'failed_attempt'], ['投递失败', 'failed_attempt'],
       ['已试投/投递失败（/已通知客户）', 'failed_attempt'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
@@ -1102,7 +1116,9 @@ describe('classifyWording', () => {
     // pickup from the sender and cash on delivery are no final scan.
     for (const wording of ['【示例市处理中心】退回', '退回中', '您的快件正在派送中，请您准备签收', '签收后第一时间开箱', 'PDA异常签收扫描',
       '待签收', '待取件', '已出库待取件', '京东快件已取件', '寄件人已修改寄件信息，预计取件时间是：2026-01-02', '已下单，待取件', '代收货款', '如需退回请联系派件员',
-      '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', '签收人：示例', '开始长途运输前请确认地址', 'Landed in 3 days?']) {
+      '範例中心國際快捷股, 到達出口互換局, 後續處理方式:退回', '签收人：示例', '开始长途运输前请确认地址', 'Landed in 3 days?',
+      // Nor is an arrival at the hub in brackets.
+      '包裹已送達【示例】物流中心，進行理貨轉運中', '快件已送达【示例分拨中心】', '您的快件已送达【示例转运中心】，准备发往下一站']) {
       expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'pending', source: 'none' });
     }
   });

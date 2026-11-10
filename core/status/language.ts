@@ -188,8 +188,11 @@ const CUSTOMS_RELEASED = new RegExp([
   String.raw`\b(?:liberad|despachad)[oa]s? (?:por|de|en|desde) (?:la |las )?aduanas?\b|\b(?:salida|salio|ha salido|sale) (?:de|desde) (?:la )?aduana\b|\b(?:tramites|despacho|gestion(?:es)?|proceso)(?: (?:de|del|en))?(?: (?:la |las |los )?aduanas?| aduaner[oa]s?)+ (?:(?:ha sido|han sido|fue|fueron) )?(?:finalizad|completad|terminad|concluid|realizad)[oa]s?\b`,
   String.raw`\b(?:liberad|desembaracad)[oa]s? (?:pela|na|da) (?:alfandega|aduana|fiscalizacao(?: aduaneira)?|receita federal)\b|\bdesalfandegad[oa]s?\b|\b(?:desalfandegamento|desembaraco(?: aduaneiro)?|fiscalizacao aduaneira|tramites aduaneiros|processo aduaneiro) (?:(?:foi|esta|foram) )?(?:concluid|finalizad|terminad|realizad|efetuad|efectuad)[oa]s?\b|\b(?:saiu|saida) (?:da|de) (?:alfandega|aduana)\b`,
   String.raw`\bodprawa celna (?:\w+ )?(?:zakonczona|zakonczyla sie|ukonczona)\b|\bodprawion[aey] celnie\b|\bzwolnion[aey] (?:przez urzad celny|z urzedu celnego)\b|\bopuscil[aoy]? urzad celny\b`,
-  // Ukrainian and Russian: released from customs, clearance completed, customs passed or left.
-  String.raw`${CYRILLIC_START}(?:випущен|выпущен)[а-яієґ]*(?: [а-яієґ']+){0,3}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_CUSTOMS}[а-яієґ]* (?:оформлення|оформление|контроль|очищення|очистка)(?: [а-яієґ']+)? (?:завершен|пройден|закінчен|успішно завершен|успешно завершен)|${CYRILLIC_START}(?:завершен[оа]?|пройден[оа]?|закінчен[оа]?) ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:прошл[оаи]|проишл[оаи]|покинул[оаи]?|залишил[оаи]?) ${CYRILLIC_CUSTOMS}`,
+  // Ukrainian and Russian: released from customs, clearance, inspection or declaration completed in
+  // either word order ("Митний догляд завершено", "Завершение таможенного контроля", "закончило
+  // таможенное оформление"), customs passed or left ("Вибуло із митного терміналу"), or the parcel
+  // back from customs ("Возвращено с таможни"), unless it goes back to the sender.
+  String.raw`${CYRILLIC_START}(?:випущен|выпущен)[а-яієґ]*(?: [а-яієґ']+){0,3}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_CUSTOMS}[а-яієґ]* (?:оформлення|оформление|контроль|очищення|очистка|догляд|досмотр|декларування|декларирование)(?: [а-яієґ']+)? (?:завершен|пройден|закінчен|успішно завершен|успешно завершен)|${CYRILLIC_START}(?:завершен[оа]?|завершени[ея]|завершення|пройден[оа]?|закінчен[оа]?|закінчення|закончил[оаи]?|закінчил[оаи]?|завершил[оаи]?)(?: [а-яієґ']+){0,2}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:прошл[оаи]|проишл[оаи]|покинул[оаи]?|залишил[оаи]?) ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:вибул[оаи]?|вибув|выбыл[оаи]?|убыл[оаи]?|возвращен[оаы]?|повернут[оаі]?|повернен[оаі]?) (?:з|із|зі|из|с|со) ${CYRILLIC_CUSTOMS}[а-яієґ]*(?![а-яієґ])(?! (?:[а-яієґ']+ )?(?:отправител|відправник))`,
 ].join('|'));
 /** An export clearance or declaration started or under way in the country the parcel leaves, in English and Chinese. */
 const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
@@ -281,11 +284,12 @@ const ZH_SIGNER = String.raw`(?:本人|收件人|家人|他人|同事|门卫|門
 const ZH_PICKUP_PLACE = String.raw`(?:快[递遞]柜|快[递遞]櫃|智能柜|智能櫃|快件箱|快[递遞]箱|包裹柜|包裹櫃|自提柜|自提櫃|丰巢|豐巢|[驿驛]站|自提点|自提點|代收点|代收點|服[务務]站)`;
 /** China Post's and other Chinese carriers' final scans, as forwarders and providers relay them with no code. */
 const ZH_FINAL: ReadonlyArray<readonly [RegExp, Stage]> = [
-  // Returned to the sender ("已退回", "已退回寄件人"), delivered back to it ("退回妥投", "退件签收"), or
-  // signed for by the sender. A centre sending an item back ("【…】退回") and a return under way
+  // Returned to the sender ("已退回", "已退回寄件人"), delivered back to it ("退回妥投", "退件签收"),
+  // signed for by the sender, or a clause saying so after the scan ("已代签收，成功退回至寄件人",
+  // "已签收，退回寄件人"). A centre sending an item back ("【…】退回") and a return under way
   // ("退回中") are not.
   [new RegExp(String.raw`${ZH_LEAD}已[经經]?被?(?:退回|退[还還]|返[还還]|退件)(?:(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|寄件网点|寄件網點|原寄地|原寄局|[卖賣]家|商家))?${ZH_END}`), 'returned'],
-  [new RegExp(String.raw`${ZH_LEAD}(?:退回|退件|退[还還])件?已?[经經]?(?:妥投|妥收|[签簽]收)${ZH_END}|${ZH_LEAD}(?:退回|退[还還])(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|原寄地)${ZH_END}|[签簽]收人 ?(?:是|为|為|[:：]) ?(?:原?寄件人|[发發]件人)`), 'returned'],
+  [new RegExp(String.raw`${ZH_LEAD}(?:退回|退件|退[还還])件?已?[经經]?(?:妥投|妥收|[签簽]收)${ZH_END}|${ZH_LEAD}(?:退回|退[还還])(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|原寄地)${ZH_END}|[签簽]收人 ?(?:是|为|為|[:：]) ?(?:原?寄件人|[发發]件人)|${ZH_LEAD}(?:已[经經]?被?)?(?:${ZH_SIGNER}代?)?(?:成功)?(?:妥投|妥收|[签簽]收|代[签簽]收?|代收)(?:成功)?[，,] ?(?:已[经經]?|成功|已成功)?(?:退回|退[还還])(?:至|给|給|到)?(?:原?寄件人|[发發]件人|寄件方|原寄地)${ZH_END}`), 'returned'],
   // Not delivered after a try: "未妥投", "投递失败", China Post's "已试投/投递失败".
   [new RegExp(String.raw`${ZH_LEAD}(?:未能?妥投|妥投失[败敗]|(?:投[递遞]|派送|配送|派件)失[败敗]|已[试試]投)`), 'failed_attempt'],
   // Kept in a locker or at a pickup point ("已投递至【…智能快件箱】", "已存放至【…驿站】，请您及时取件",
@@ -294,8 +298,9 @@ const ZH_FINAL: ReadonlyArray<readonly [RegExp, Stage]> = [
   // is no pickup point.
   [new RegExp(String.raw`^(?!.*(?:揽|攬|寄件人|下单|下單|预约|預約|上门|上門|预计|預計|出库|出庫)).*(?:取件码|取件碼|提[货貨]码|提[货貨]碼|请您?(?:及时|及時|尽快|儘快)?(?:前往|到|凭|憑)?[^，,。；;]{0,20}?(?:取件|[领領]取|自取|取[货貨])|(?:待|等待)(?:客户|客戶|收件人|您)(?:到?(?:网点|網點|自提点|自提點))?(?:取件|[领領]取|自提)|到达待取|到達待取|(?:投[递遞]|放入|存入|存放|放置|投放|送达|送達|到达|到達|投入)(?:至|到|在|于|於|进|進)?[^，,。；;]{0,40}${ZH_PICKUP_PLACE}|${ZH_PICKUP_PLACE}[^，,。；;]{0,10}(?:代收|代[签簽]收?|[签簽]收)|已投柜|已投櫃)`), 'ready_for_pickup'],
   // Delivered ("已妥投", "邮件已妥投", "【…】已妥投"), signed for ("已签收", "本人签收", "他人代收"), or
-  // handed over ("已送达"). "未妥投", "请签收" and "签收后" are not deliveries.
-  [new RegExp(String.raw`${ZH_LEAD}(?:已[经經]?被?|已由|已在【[^【】]{0,80}】)?(?:${ZH_SIGNER}代?)?(?:成功)?(?:妥投|妥收|[签簽]收|代[签簽]收?|代收)(?:成功)?${ZH_END}|${ZH_LEAD}已[经經]?送[达達]${ZH_END}|${ZH_LEAD}(?:投[递遞]|派送|配送)成功${ZH_END}`), 'delivered'],
+  // handed over ("已送达"). "未妥投", "请签收" and "签收后" are not deliveries, nor is an arrival at the
+  // place in brackets ("已送达【…转运中心】").
+  [new RegExp(String.raw`${ZH_LEAD}(?:已[经經]?被?|已由|已在【[^【】]{0,80}】)?(?:${ZH_SIGNER}代?)?(?:成功)?(?:妥投|妥收|[签簽]收|代[签簽]收?|代收)(?:成功)?${ZH_END}|${ZH_LEAD}已[经經]?送[达達](?! ?【)${ZH_END}|${ZH_LEAD}(?:投[递遞]|派送|配送)成功${ZH_END}`), 'delivered'],
 ];
 
 /** The stage of a Chinese final scan, or undefined for other wording. */
@@ -372,9 +377,6 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // And a delivery to a parcel shop the recipient asked for, as Evri acknowledges it and as its
   // tracking point names the request.
   if (SHOP_REQUEST.test(text)) return 'in_transit';
-  // A centre sending the parcel on to a station it names, as iMile's Italian centres word it:
-  // "Parcel has been sent to AST 03". A parcel sent back, or to customs, is read above or below.
-  if (/\b(?:parcel|package|shipment|item) has been sent to (?!(?:the |your )?(?:recipient|customer|consignee|addressee|buyer|customs|sender|shipper|seller|merchant|origin)\b)/.test(text)) return 'in_transit';
   // A change to the delivery details, relayed as just that (Cainiao's notice once the
   // local carrier has the parcel), moves no parcel back before transit.
   if (/^(?:the )?delivery (?:details|information) (?:(?:has|have) been |were |was )?updated$/.test(text)) return 'in_transit';
@@ -726,6 +728,11 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A delay notice that names no hold, the whole sentence, "There has been a delay with your delivery": the parcel
   // still moves. Wording that says it is held or blocked is an exception above.
   if (/^there (?:has|have) been (?:a |an )?(?:slight |short |small |unexpected )?delay (?:with|to|in) (?:your |the )?(?:delivery|parcel|package|shipment|order)\.?$/.test(text)) return 'in_transit';
+  // A centre sending the parcel on to a station it names, as iMile's Italian centres word it:
+  // "Parcel has been sent to AST 03". It comes after the rules above, so a sentence that goes on
+  // to a pickup point, a delivery round or a return is read by them; a parcel sent back, or to
+  // customs, is not one.
+  if (/\b(?:parcel|package|shipment|item) has been sent to (?!(?:the |your |a )?(?:recipient|customer|consignee|addressee|buyer|customs|sender|shipper|seller|merchant|origin|return\w*)\b)/.test(text)) return 'in_transit';
   if (/transit|\bline ?haul\b|en route|on (?:its|the) way|\bfacility\b|airport|\bleaving\b|\bdispatched\b|^delay(?:ed)?$|received by (?:the )?(?:local )?(?:delivery|logistics) company|\btransfer to (?:the |a |an )?(?:local |destination )?(?:acting |delivery |logistics |courier )?(?:company|agent|carrier|partner)\b|received by (?:postnl|uniuni)\b|notification.*sent to the recipient|delivery option requested|instruction de livraison recue|cambio (?:delle )?disposizioni di consegna|expedie (?:depuis|du|de)\b|acheminement|unterwegs|\bin viaggio\b|\bw drodze\b|\bonderweg\b|transport|trasport|arriv|depart|processed|processing completed|processing at (?:the )?(?:origin |destination )?branch\b|\breceipt of (?:the )?(?:package|parcel|shipment) at (?:the )?dpd branch\b|sorted|sorting|\btri\b|\btriee?s?\b|traitement|traite|sortier|bearbeitet|bearbeitung|elaborat|elaborazion|smistat|parcel cent(?:er|re)|delivery cent(?:er|re)|centre.*(?:colis|distribution)|paketzentrum|verteilzentrum|centro.*(?:pacchi|distribuzione)|depot|import scan|scan.*import|importscan|scansione.*import|delivery.*delayed|livraison.*(?:retard|report)|zustellung.*verzogert|consegna.*ritard|transferred|transfere|weitergeleitet|inoltrato|left.*(?:point|center)|quitte|verlassen|raggiunto|close bag|fermeture du sac|sack.*geschlossen|chiusura.*sacco|scanned into|scanned at (?:a |the )?checkpoint|dismantling the board|scanne dans|eingescannt|scansionat|\b(?:un)?loaded\b|^(?:item|parcel|shipment) distributed$|charg.*vehicule de transport|transportfahrzeug.*geladen|caric.*veicolo.*trasporto/.test(text)) return 'in_transit';
   if (/^enviad[oa]$|\bclasificad[oa]s?\b|\bclasificacion\b|\ben ruta\b|\ben camino\b|\bcargad[oa]s? en (?:el )?vehiculo\b|\bllegad[oa]s? (?:a|al|en)\b|\bllegada (?:a|al|en|de)\b|\bha llegado\b|\bllego (?:a|al)\b|\bsalida (?:de|del|desde)\b|\b(?:ha )?salido (?:de|del)\b|\bsalio (?:de|del)\b|\ben destino\b|\b(?:agencia|delegacion|plataforma|oficina|franquicia) (?:de )?destino\b|\b(?:unidad|centro|oficina|delegacion|base|agencia|plataforma) de reparto\b|\bcentro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones|operativo)\b|\blectura\b|\bleid[oa]s?\b|\brecepcionad[oa]s?\b|\bprocesad[oa]s?\b|\bexpedid[oa]s?\b|\btriagem\b|\btriad[oa]s?\b|\bem tratamento\b|\btratad[oa]s?\b|\bcentro (?:de )?(?:distribuicao|tratamento|triagem|operacional)\b|\bchegad[ao] (?:a|ao|no|na|em)\b|\bchegou (?:a|ao|no|na|em)\b|\bsaida (?:do|da|de|dos|das)\b|\bsaiu (?:do|da|de|dos|das)\b|\bem rota\b|\ba caminho\b|\bencaminhad[oa]s?\b|\b(?:em )?transferencia\b|\btransferid[oa]s?\b|\bprocessad[oa]s?\b|\brecebid[oa] (?:no|na|em) (?:centro|armazem|unidade|plataforma)\b|\brecibid[oa] en (?:el |la |nuestr[oa] )?(?:almacen|centro|delegacion|plataforma|hub|agencia)\b/.test(text)) return 'in_transit';
   // Accepted by a post, the whole scan, in Ukrainian ("Прийнято") or Russian ("Принято").
