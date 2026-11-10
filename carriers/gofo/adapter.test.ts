@@ -26,6 +26,8 @@ describe('GOFO US history', () => {
     // Collected from the sender: the pick-up's start is no receipt yet, its success is.
     expect(result.events?.filter((event) => ['216', '801'].includes(String(event.provider_code))).map((event) => [event.provider_code, event.stage]))
       .toEqual([['801', 'accepted'], ['216', 'registered']]);
+    // So is a shipping partner's collection for GOFO, before GOFO holds the parcel.
+    expect(gofoStatus('816', 'Picked up by Shipping Partner, GOFO Awaiting Item')).toEqual({ status: 'in_transit', stage: 'accepted' });
     expect(result.events?.at(-1)).toMatchObject({ stage: 'registered', time: '2026-01-14T04:30:00-08:00' });
     for (const field of ['processContent', 'processDeptId', 'processSecondCode', 'processTimeZone']) {
       const wrongSummary = counterFixture(); item(wrongSummary).lastTrackEvent[field] = 'Different';

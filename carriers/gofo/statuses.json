@@ -45,6 +45,15 @@
       "note": "GOFO collected the parcel from the sender."
     },
     {
+      "code": "816",
+      "wording": "Picked up by Shipping Partner, GOFO Awaiting Item",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A shipping partner collected the parcel for GOFO: its first scan after the label, a day before GOFO's sorting center's arrival."
+    },
+    {
       "code": "206",
       "wording": "Delivery Exception, Business Closed",
       "language": "en",
