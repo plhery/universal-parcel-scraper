@@ -145,7 +145,9 @@ presentation, hold and release, arrivals at the delivery office, rounds,
 deliveries and departures from a transit office (codes 459 to 463, 486, 487, 489
 and 493). Those keep the wall clock alone, which the shared clock step dates by
 the destination it names. The arrival in the destination country (516) stays on
-China's. The web preview dates the destination post's scans
+China's, unless it falls on the minute and office of that post's arrival at its
+processing centre, which it then copies: on China's clock, one such arrival in
+the United States came six hours after the flight left China. The web preview dates the destination post's scans
 on China's clock too: on that post's own, a delivery or a round would fall after
 the preview showed it. Because one history mixes these clocks, the catalog
 timezone stays UTC with local clocks, and `last_update` is set only when the

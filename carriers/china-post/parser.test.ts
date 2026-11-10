@@ -352,6 +352,24 @@ describe('China Post trace projection', () => {
     expect(result.last_update).toBe('2026-09-03T13:10:00+09:00');
   });
 
+  it("dates the arrival in the destination country by its place when it copies the destination post's arrival", () => {
+    const dated = (arrival: string) => dateLocalClocks('china-post', parseChinaPostTraces(edit('delivered', (mail) => {
+      mail.receiverCountryName = '美国';
+      mail.mailInfoCount = 3;
+      const base = scan(mail, 0);
+      mail.mailInfos = [
+        { ...base, operationCode: '457', operation: '航班起飞', stateDesc: '运送中', orgCode: '', orgName: '', time: '2026-09-01 09:40:56' },
+        { ...base, operationCode: '516', operation: '到达寄达地', stateDesc: '到达境外目的地', orgCode: 'US', orgName: '美国', time: arrival },
+        { ...base, operationCode: '459', operation: '到达寄达地处理中心', stateDesc: '到达境外目的地', orgCode: 'US', orgName: '美国', time: '2026-09-01 16:05:00' },
+      ];
+    }), NUMBER)).events?.find((event) => event.provider_code === '516');
+    // On the minute and office of the arrival at the processing centre, it is that arrival: on China's clock the item
+    // would have crossed the Pacific in six hours.
+    expect(dated('2026-09-01 16:05:00')).toMatchObject({ local_time: '2026-09-01T16:05:00', time_zone_basis: 'place' });
+    expect(dated('2026-09-01 16:05:00')?.time).not.toMatch(/\+08:00$/);
+    expect(dated('2026-09-01 14:05:00')).toMatchObject({ time: '2026-09-01T14:05:00+08:00', time_zone_basis: 'carrier' });
+  });
+
   it('keeps the receiver country label when it has no ISO code', () => {
     const result = parseChinaPostTraces(edit('delivered', (mail) => { mail.receiverCountryName = '示例国'; }), NUMBER);
     expect(result.destination_country).toBeUndefined();

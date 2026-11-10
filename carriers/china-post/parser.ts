@@ -130,6 +130,17 @@ export function chinaClock(local: string): Pick<CarrierEvent, 'local_time' | 'ti
 // office (489).
 const DESTINATION_CLOCK = new Set(['459', '460', '461', '462', '463', '486', '487', '489', '493']);
 
+// The arrival in the destination country (516) is China Post's own, on China's clock, unless it
+// falls on the minute and office of the destination post's arrival at its processing centre (459):
+// then it copies that arrival. Read on China's clock, one such arrival in the United States came
+// six hours after the flight left China.
+const ARRIVED_ABROAD = '516';
+const DESTINATION_ARRIVAL = '459';
+
+function scanOffice(scan: Record<string, unknown>): string {
+  return JSON.stringify([wallClock(scan.time) ?? '', cleanScalar(scan.orgCode, 8).toUpperCase(), clean(scan.orgName, 100)]);
+}
+
 function scanTime(value: unknown): string {
   const time = wallClock(value);
   if (!time) throw new SchemaError(PROVIDER, 'China Post returned an invalid scan time');
@@ -237,6 +248,8 @@ export function parseChinaPostTraces(payload: unknown, raw: string): CarrierResu
   const destination = country ? chinaPostCountry(country) : undefined;
   const kept: Scan[] = [];
   const seen = new Set<string>();
+  const arrivals = new Set(scans.flatMap((scan) => (isRecord(scan) && cleanScalar(scan.operationCode, 16) === DESTINATION_ARRIVAL
+    && atDestination(scan, destination) ? [scanOffice(scan)] : [])));
   // Scans arrive oldest first. Reversal keeps the service's order: Chinese
   // and foreign wall clocks cannot be compared to sort them.
   for (const scan of [...scans].reverse()) {
@@ -250,7 +263,8 @@ export function parseChinaPostTraces(payload: unknown, raw: string): CarrierResu
     const status = chinaPostStatus(code, state);
     // The destination post's own scan keeps its wall clock alone, for its place to date.
     const time = scanTime(scan.time);
-    const clock = local && DESTINATION_CLOCK.has(code) ? { local_time: time } : chinaClock(time);
+    const copied = DESTINATION_CLOCK.has(code) || (code === ARRIVED_ABROAD && arrivals.has(scanOffice(scan)));
+    const clock = local && copied ? { local_time: time } : chinaClock(time);
     // The label shows in English where one is known; the code and state label stage it.
     const event: CarrierEvent = { ...clock, description: chinaPostEnglish(description) ?? description, ...(location ? { location } : {}),
       ...(code ? { provider_code: code } : {}), ...(status ? { stage: status.stage, stage_source: 'carrier_map' } : {}) };
