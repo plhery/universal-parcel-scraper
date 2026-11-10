@@ -261,6 +261,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "jersey-post": 832,
   "jet-logistic": 823,
   "jhgj": 907,
+  "jiayang": 719,
   "jitsu": 85,
   "jordan-post": 881,
   "jrt": 984,

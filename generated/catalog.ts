@@ -29074,6 +29074,52 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "jiayang": {
+    "displayName": "Jiayang International",
+    "color": "#105bcc",
+    "aliases": [
+      "JIAYANG",
+      "JYGJ",
+      "嘉扬国际",
+      "嘉揚國際",
+      "嘉扬国际物流",
+      "东莞嘉扬国际",
+      "东莞市嘉扬国际物流有限公司",
+      "Dongguan Jiayang International Logistics Co., Ltd"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jiayang",
+      "recognitionRank": 719,
+      "recognitionPattern": "^JYGJ\\d{10}YQ$",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jygjgyl.com/",
+    "trackingUrlTemplate": "https://www.jygjgyl.com/index/tracknumber/track?nos={trackingNumber}",
+    "trackingSearchUrl": "https://www.jygjgyl.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.jygjgyl.com"
+        ],
+        "pathPattern": "^/index/tracknumber/track/?$",
+        "params": [
+          "nos"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^JYGJ\\d{10}YQ$",
+        "confidence": "low"
+      }
+    ]
+  },
   "jiaying-express": {
     "displayName": "Jiaying Express",
     "color": "#10346a",
@@ -55683,6 +55729,7 @@ export const CARRIER_IDS = [
   "jetpak",
   "jhgj",
   "jiachen-express",
+  "jiayang",
   "jiaying-express",
   "jiehang",
   "jifan",
@@ -57173,6 +57220,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jetpak": [],
   "jhgj": ["jhgj-1"],
   "jiachen-express": [],
+  "jiayang": ["jiayang-1"],
   "jiaying-express": [],
   "jiehang": [],
   "jifan": ["jifan-1"],

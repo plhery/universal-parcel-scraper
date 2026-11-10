@@ -1596,6 +1596,23 @@ describe('Dongdu Logistics', () => {
   });
 });
 
+describe('Jiayang International', () => {
+  it('offers Jiayang at low confidence for JYGJ, ten digits and YQ, asks it, and reads its names and links', () => {
+    expect(detectCarrierMatch('jygj 9958 3147 02 yq')).toEqual({
+      carrier: 'unknown', confidence: 'low', candidates: ['jiayang'], preferred: [],
+    });
+    expect(recognitionCandidates('JYGJ9958314702YQ').map((candidate) => candidate.carrier)).toEqual(['jiayang']);
+    for (const number of ['JYGJ995831470YQ', 'JYGJ99583147020YQ', 'JYGJ9958314702CN', 'JYGY9958314702YQ', 'XJYGJ9958314702YQ']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('jiayang');
+      expect(recognitionCandidates(number).map((candidate) => candidate.carrier), number).not.toContain('jiayang');
+    }
+    expect(parseTrackingInput('https://www.jygjgyl.com/index/tracknumber/track?nos=JY5831470296'))
+      .toMatchObject({ trackingNumber: 'JY5831470296', carrier: 'jiayang', source: 'link' });
+    for (const name of ['JIAYANG', 'Jiayang International', '嘉扬国际', '嘉揚國際']) expect(carrierIdFromName(name), name).toBe('jiayang');
+    expect(carrierIdFromName('JIAYING')).not.toBe('jiayang');
+  });
+});
+
 describe('WooliiPorter', () => {
   it('reads its names and tracking links', () => {
     for (const name of ['WooliiPorter', 'Woolii']) expect(carrierIdFromName(name), name).toBe('wooliiporter');

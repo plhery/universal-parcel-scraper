@@ -1,0 +1,88 @@
+{
+  "id": "jiayang",
+  "displayName": "Jiayang International",
+  "aliases": [
+    "JIAYANG",
+    "JYGJ",
+    "嘉扬国际",
+    "嘉揚國際",
+    "嘉扬国际物流",
+    "东莞嘉扬国际",
+    "东莞市嘉扬国际物流有限公司",
+    "Dongguan Jiayang International Logistics Co., Ltd"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#105bcc"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "jiayang",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 719,
+      "pattern": "^JYGJ\\d{10}YQ$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "offset_timestamps"
+  ],
+  "portal": {
+    "url": "https://www.jygjgyl.com/index/tracknumber/track?nos={trackingNumber}",
+    "searchUrl": "https://www.jygjgyl.com/",
+    "canaryUrl": "https://www.jygjgyl.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "provider_code",
+      "eta",
+      "weight",
+      "delivered_at",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.jygjgyl.com"
+      ],
+      "pathPattern": "^/index/tracknumber/track/?$",
+      "params": [
+        "nos"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "jiayang-1",
+      "pattern": "^JYGJ\\d{10}YQ$",
+      "confidence": "low"
+    }
+  ]
+}

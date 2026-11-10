@@ -1,0 +1,91 @@
+{
+  "carrier": "jiayang",
+  "entries": [
+    {
+      "wording": "Order information received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The shipment data has arrived; Jiayang does not hold the parcel yet."
+    },
+    {
+      "wording": "Arrive at the receiving point",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Received at the receiving point in China."
+    },
+    {
+      "wording": "Goods leave the operation center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10"
+    },
+    {
+      "wording": "Arrival at domestic internationality airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "At the departure airport in China."
+    },
+    {
+      "wording": "Departure from the airport of origin domestic",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The flight has left China."
+    },
+    {
+      "wording": "Arrive at the destination international airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10"
+    },
+    {
+      "wording": "Import customs clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "After the port's town, which the adapter moves into the location; no release yet."
+    },
+    {
+      "wording": "Arrived at logistics carrier Facility In Transit to Next Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "The last-mile network's scan, with its name replaced by \"logistics carrier\"."
+    },
+    {
+      "wording": "Accepted at logistics carrier Regional Destination Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "After the town, state and postcode. The last-mile network's first scan near the recipient."
+    },
+    {
+      "wording": "Arrive at the last mile sorting and distribution center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "After the town, state and postcode."
+    },
+    {
+      "wording": "Leaving the sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "After the town, which the adapter moves into the location."
+    }
+  ]
+}

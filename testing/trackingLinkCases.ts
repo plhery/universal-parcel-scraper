@@ -1425,6 +1425,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dongdu', number: 'DDGYL99000002YQ',
     route: /^https:\/\/www\.ddgyl\.vip\/index\/tracknumber\/track\?nos=DDGYL99000002YQ$/,
     marker: /快件跟踪|跟踪\(Track\)/ },
+  { carrier: 'jiayang', number: 'JYGJ9958314702YQ',
+    route: /^https:\/\/www\.jygjgyl\.com\/index\/tracknumber\/track\?nos=JYGJ9958314702YQ$/,
+    marker: /快件跟踪|跟踪\(Track\)/ },
   // The same tracker system, which prefills its form with the number and looks it up when submitted.
   { carrier: 'zecheng', number: 'ZCGJ0000000002CN',
     route: /^https:\/\/api\.zecwl\.com\/index\/tracknumber\/track\?nos=ZCGJ0000000002CN$/,
