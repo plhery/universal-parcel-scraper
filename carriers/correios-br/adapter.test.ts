@@ -140,6 +140,27 @@ describe('Correios parser', () => {
     expect(once).toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted' }] });
   });
 
+  it("reads the sending post's rows on its country's clock, which Correios labels with Brasília's zone", () => {
+    const brasilia = (date: string) => ({ date: `${date}.000000`, timezone_type: 3, timezone: 'America/Sao_Paulo' });
+    const rows = [
+      scan('RO', '01', 'Objeto em trânsito - por favor aguarde', brasilia('2026-11-12 09:30:00')),
+      scan('PAR', '18', 'Objeto recebido na unidade de exportação no país de origem', brasilia('2026-11-11 03:07:00')),
+      scan('PO', '01', 'Objeto postado', brasilia('2026-11-10 21:00:00')),
+    ];
+    const china = parseCorreios({ ...fixture, codObjeto: 'AA000000005CN', eventos: rows }, 'AA000000005CN');
+    expect(china.events!.map(({ time, local_time, time_zone, time_zone_basis }) => [time, local_time, time_zone, time_zone_basis])).toEqual([
+      ['2026-11-12T09:30:00-03:00', undefined, undefined, undefined],
+      ['2026-11-11T03:07:00+08:00', '2026-11-11T03:07:00', 'Asia/Shanghai', 'place'],
+      ['2026-11-10T21:00:00+08:00', '2026-11-10T21:00:00', 'Asia/Shanghai', 'place'],
+    ]);
+    // A country of several clocks keeps the wall clock alone; Brazil's own mail keeps the zone Correios states.
+    const states = parseCorreios({ ...fixture, codObjeto: 'AA000000005US', eventos: rows }, 'AA000000005US');
+    expect(states.events!.slice(1).map(({ time, local_time }) => [time, local_time])).toEqual([
+      [undefined, '2026-11-11T03:07:00'], [undefined, '2026-11-10T21:00:00']]);
+    const brazil = parseCorreios({ ...fixture, eventos: rows }, NUMBER);
+    expect(brazil.events!.map(event => event.time)).toEqual(['2026-11-12T09:30:00-03:00', '2026-11-11T03:07:00-03:00', '2026-11-10T21:00:00-03:00']);
+  });
+
   it('reads the service and shows the delivery forecast only where the portal does', () => {
     const transit = { ...clone(), situacao: 'T', dtPrevista: '08/01/2026', tipoPostal: { sigla: 'AA', descricao: 'ETIQUETA EXEMPLO', categoria: 'SEDEX', tipo: 'N' } };
     transit.eventos = transit.eventos.slice(4);

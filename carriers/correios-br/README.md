@@ -36,11 +36,14 @@ shows it: for an object in transit that it does not mark as late. The service is
 product category the portal names, such as SEDEX. Addresses, recipients, proof images
 and tokens are excluded.
 
-Mail from abroad keeps the S10 number of the post that sent it, and the portal tracks it
-from its arrival in Brazil, with each row's zone. It reaches Correios Brazil when a caller
-names it, a provider names it (some write "Brazil Post"), or a result gives Brazil as the
-destination of an S10 item. The arrival in Brazil reads as transit, and so does a posting
-the sending post lists again when it dispatches the item.
+Mail from abroad keeps the S10 number of the post that sent it. The portal lists that post's
+posting and office of exchange, then the item from its arrival in Brazil, with each row's
+zone. The sending post's rows carry its wall clock but Brasília's zone, as China Post's own
+scans of the same items show, so they are read on the clock of the country the number ends
+with, or kept as wall clocks where that country keeps several. It reaches Correios Brazil
+when a caller names it, a provider names it (some write "Brazil Post"), or a result gives
+Brazil as the destination of an S10 item. The arrival in Brazil reads as transit, and so
+does a posting the sending post lists again when it dispatches the item.
 
 ## Testing
 

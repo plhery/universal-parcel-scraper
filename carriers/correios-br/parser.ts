@@ -5,6 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { hasSeveralClocks, mainZone } from '../../places/zones.js';
 import { classifyCorreiosStatus } from './status.js';
 
 export function normalizeCorreiosNumber(raw: string): string {
@@ -20,13 +21,21 @@ export function isCorreiosCaptchaError(payload: unknown): boolean {
     && clean(payload.mensagem, 100).toLowerCase() === 'captcha inválido';
 }
 
-function scanClock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: string; provider_time_text?: string } {
+type ScanClock = Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> & { local_time?: string; provider_time_text?: string };
+
+/**
+ * A row's clock. `abroad` is the zone of the sending post's country for a row there, null when
+ * that country keeps several clocks: Correios writes such a row on that post's wall clock and
+ * labels it with Brasília's zone, so its own zone is not read.
+ */
+function scanClock(value: unknown, abroad?: string | null): ScanClock {
   const raw = clean(isRecord(value) ? value.date : value, 64);
   const digits = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:\.\d{1,6})?$/.exec(raw)?.[1];
   const wall = digits ? DateTime.fromFormat(digits, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' }) : null;
   if (!wall?.isValid) return raw ? { provider_time_text: raw } : {};
   const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true });
-  const zone = isRecord(value) && value.timezone_type === 3 ? clean(value.timezone, 64) : '';
+  const stated = isRecord(value) && value.timezone_type === 3 ? clean(value.timezone, 64) : '';
+  const zone = abroad === undefined ? stated : abroad ?? '';
   if (!zone || !IANAZone.isValidZone(zone)) return { local_time: local };
   // Use the explicit per-row zone only when its clock exists uniquely. Do not
   // silently shift a nonexistent DST clock or choose between repeated clocks.
@@ -34,8 +43,12 @@ function scanClock(value: unknown): Pick<CarrierEvent, 'time'> & { local_time?: 
   if (!zoned.isValid || zoned.toFormat('yyyy-MM-dd HH:mm:ss') !== digits || zoned.getPossibleOffsets().length !== 1) {
     return { local_time: local };
   }
-  return { time: zoned.toISO({ suppressMilliseconds: true }) };
+  const time = zoned.toISO({ suppressMilliseconds: true });
+  return abroad === undefined ? { time } : { time, local_time: local, time_zone: zone, time_zone_basis: 'place' };
 }
+
+// The sending post's rows for mail from abroad: its posting and its office of exchange.
+const ABROAD = /^(?:PO\/\d{2}|PAR\/18)$/;
 
 // The portal shows its delivery forecast only for an object in transit
 // (situacao T) that it does not mark as late.
@@ -71,6 +84,9 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
   if (payload.erro === true || payload.erro === 'true') throw new IndeterminateError('Correios', 'Correios returned an inconclusive tracking response');
   if (payload.codObjeto !== requested) throw new SchemaError('Correios', 'Correios returned a different tracking object');
   if (!Array.isArray(payload.eventos) || payload.eventos.length > 500) throw new SchemaError('Correios');
+  // Mail from abroad keeps the S10 number of the post that sent it, whose country ends it.
+  const origin = requested.slice(-2);
+  const originZone = origin === 'BR' ? undefined : hasSeveralClocks(origin) ? null : mainZone(origin);
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   for (const row of payload.eventos) {
@@ -80,7 +96,7 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
     const description = clean(row.descricao, 500);
     if (!/^[A-Z]{2,4}$/.test(code) || !/^\d{2}$/.test(subtype) || !description) throw new SchemaError('Correios', 'Correios returned an incomplete scan');
     const providerCode = `${code}/${subtype}`;
-    const clock = scanClock(row.dtHrCriado);
+    const clock = scanClock(row.dtHrCriado, ABROAD.test(providerCode) ? originZone : undefined);
     const address = isRecord(row.unidade) && isRecord(row.unidade.endereco) ? row.unidade.endereco : null;
     const location = address ? [clean(address.cidade, 100), clean(address.uf, 8)].filter(Boolean).join(', ') : '';
     const key = `${clock.time ?? clock.local_time ?? clock.provider_time_text ?? ''}\u0000${providerCode}\u0000${description}\u0000${location}`;
