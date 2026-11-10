@@ -490,10 +490,12 @@ const CORREIOS_BRAZIL_CLOCK = 'America/Sao_Paulo';
  */
 const SHOPEE_BRAZIL_CLOCK = 'Asia/Singapore';
 /**
- * CTT Express's dates are Madrid's clock under a UTC label: its own tracker
- * states its scans with Madrid's offset, and read as UTC ParcelsApp's copies of
- * two of them came an hour late. Its offices ("C.O. EXAMPLE B10") place no
- * scan, and the catalog's UTC is only its tracker's label.
+ * CTT Express's scans at its offices ("C.O. EXAMPLE B10") are on Madrid's
+ * clock under a UTC label: its own tracker states them with Madrid's offset,
+ * and read as UTC ParcelsApp's copies came an hour late. Its offices place no
+ * scan, and the catalog's UTC is only its tracker's label. A row without an
+ * office has the instant its own tracker states: read on Madrid's clock, a
+ * parcel's posting and dispatch came one or two hours early.
  */
 const CTT_EXPRESS_CLOCK = 'Europe/Madrid';
 /**
@@ -1133,10 +1135,14 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   const relayed = relayedPostZone(carrier, scanLocation(name, state.location));
   if (relayed !== undefined) return relayed;
   if (carrier && PLACE_CLOCK_LINES.has(carrier)) return placeClockLine(carrier, status, scanLocation(name, state.location));
+  // Posta Shqiptare's relays of a foreign post's scans, under that post's country ("Finland"), run
+  // hours ahead of the foreign post's own clock by an amount that differs between countries: they
+  // keep their wall clock, as Posta Shqiptare's own tracker leaves them.
+  if (carrier === 'posta-shqiptare' && (countryCode(lastPlace(scanLocation(name, state.location))) ?? 'AL') !== 'AL') return null;
   if (Object.hasOwn(HOME_CLOCKS, key)) return HOME_CLOCKS[key]!;
   if (carrier === 'correios-br') return CORREIOS_BRAZIL_CLOCK;
   if (carrier === 'spx-br') return SHOPEE_BRAZIL_CLOCK;
-  if (carrier === 'ctt-express') return CTT_EXPRESS_CLOCK;
+  if (carrier === 'ctt-express') return scanLocation(name, state.location) ? CTT_EXPRESS_CLOCK : null;
   // A home clock stays a guess that a location abroad rules out, even when
   // the catalog gives the network that zone (GEODIS Poland for "Pekaes").
   // CTT's copies take the clock its offices of exchange give (`cttZone`).
@@ -1298,7 +1304,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   // Bowes's relay of a destination post's scan on a parcel bound for no single clock (`pitneyBowesClock`).
   const ownCarrier = typeof name === 'string' ? carrierIdFromName(name) ?? '' : '';
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
-    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
+    || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
   const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
   const placed = own !== undefined ? own : sited;

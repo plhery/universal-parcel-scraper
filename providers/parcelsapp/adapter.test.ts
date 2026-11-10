@@ -825,6 +825,16 @@ describe('ParcelsApp result parsing', () => {
     expect(times).toEqual(['2026-10-31T22:28:42.000Z', '2026-10-31T08:00:26.000Z', '2026-10-26T06:43:03.000Z']);
   });
 
+  it("keeps the wall clock of Albania Post's relays of a foreign post's scans", () => {
+    const time = (location: string) => parseParcelsAppResponse({
+      carriers: ['Universal Postal Union', 'Albania Post', 'Finland Post'], originCode: 'AL', destinationCode: 'FI',
+      states: [{ date: '2026-10-29T21:08:00Z', status: 'Objekti u pranua ne zyren e shkembimit / Receive item at office of exchange', carrier: 1, location }],
+    }, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    // Finland Post's own arrival in the country came at 17:08:59 UTC, hours before either reading.
+    expect(time('Finland')).toEqual(['local 2026-10-29T21:08:00.000']);
+    expect(time('EXAMPLE OFFICE, TIRANA')).toEqual(['2026-10-29T20:08:00.000Z']);
+  });
+
   it("reads Azerbaijan Post's copies of a sending post's scans on the clock of the country before the office", () => {
     const time = (location: string, carrier = 1) => parseParcelsAppResponse({
       carriers: ['Universal Postal Union', 'Azerbaijan Post'], origin: 'Latvia', destination: 'Azerbaijan',
@@ -2355,9 +2365,11 @@ describe('ParcelsApp result parsing', () => {
     const far = parseParcelsAppResponse({ carriers: ['FAR'], states: [scan('2026-11-06T06:39:05Z'), scan('2026-11-04T13:19:00Z', 'Example City')] },
       number, identity(), 'Asia/Shanghai').events;
     expect(far?.map((event) => [event.time, event.local_time])).toEqual([[undefined, '2026-11-06T06:39:05.000'], [undefined, '2026-11-04T13:19:00.000']]);
-    // CTT Express's own tracker has the same scans an hour earlier in winter, at Madrid's offset.
-    expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-07-04T12:23:00Z')]))
-      .toEqual(['2026-11-05T13:38:00.000Z', '2026-07-04T10:23:00.000Z']);
+    // CTT Express's own tracker has its offices' scans an hour earlier in winter, at Madrid's
+    // offset, and a row without an office at the instant ParcelsApp gives.
+    expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-10-29T16:15:42Z'),
+      scan('2026-07-04T12:23:00Z', 'C.O. EXAMPLE B10')]))
+      .toEqual(['2026-11-05T13:38:00.000Z', '2026-10-29T16:15:42.000Z', '2026-07-04T10:23:00.000Z']);
     // Landmark Global's page clock is US Central's, whatever zone the check suggests.
     const landmark = { carriers: ['Landmark Global'], states: [scan('2026-10-14T09:00:00Z', 'Example City, Germany'), scan('2026-01-14T09:00:00Z')] };
     for (const hint of [null, 'Europe/Zurich']) {
