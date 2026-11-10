@@ -220,9 +220,10 @@ step exists for future protocol changes.
   rendered page prints no location, so it places none of them.
 - SwiftX's dates are its sites' wall clocks: its own tracker gives each scan its site's
   offset ([SwiftX](../../carriers/swiftx/README.md)). ParcelsApp writes the site after the
-  country and town, with no state ("US, EXAMPLE TOWN, EWR HUB"), and a site the adapter
-  lists gives its zone: read on Eastern time, the EWR hub's digits have to the second the
-  instants of DHLink's copies of the same scans, which DHLink dates on China's clock, and
+  country and town, with no state ("US, EXAMPLE TOWN, EWR HUB"), or alone with its ZIP code
+  ("EWR HUB 07008"), and a site the adapter lists gives its zone: read on Eastern time, the
+  EWR hub's digits have to the second the instants of DHLink's copies of the same scans,
+  which DHLink dates on China's clock, and
   the New Jersey warehouse's those of SwiftX's own tracker. The ORD hub, at Chicago O'Hare,
   is on Central time, where KTD's copies under the hub's town and state put the same
   digits. A delivery names the recipient's

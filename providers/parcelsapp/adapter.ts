@@ -566,8 +566,9 @@ const SWIFTX_SITES: ReadonlyMap<string, string> = new Map([
 ]);
 const SWIFTX_LABEL = /^shipping label created$/i;
 const SWIFTX_LABEL_CLOCK = 'UTC-7';
+// A site can come with its ZIP code after it, alone: "EWR HUB 07008".
 function swiftxListedZone(location: string): string | null {
-  const site = location.split(',').at(-1)?.trim().replace(/\s+/g, ' ').toUpperCase();
+  const site = location.split(',').at(-1)?.trim().replace(/\s+/g, ' ').replace(/ \d{5}$/, '').toUpperCase();
   return (site && SWIFTX_SITES.get(site)) || null;
 }
 function swiftxSiteZone(payload: Record<string, unknown>, state: Record<string, unknown>, location: string): string | null {

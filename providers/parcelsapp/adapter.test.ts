@@ -2379,6 +2379,10 @@ describe('ParcelsApp result parsing', () => {
       { date: '2026-01-14T22:40:05Z', status: 'Departed Origin Hub', carrier: 0, location: 'US, EXAMPLE TOWN, EWR HUB' },
       { date: '2026-01-12T03:42:21Z', status: 'Shipping Label Created', carrier: 0, location: 'US, SYSTEM, SYSTEM' },
     ])).toEqual(['2026-01-17T14:15:30.000Z', '2026-01-15T03:40:05.000Z', '2026-01-12T10:42:21.000Z']);
+    // The hub with its ZIP code after it, alone, is the same site: read on Pacific, it came three hours after
+    // the same scan at the hub under its town.
+    expect(times([{ date: '2026-01-14T22:40:00Z', status: 'Departed Origin Hub', carrier: 0, location: 'EWR HUB 07008' }]))
+      .toEqual(['2026-01-15T03:40:00.000Z']);
     // A label at the hub keeps the label's clock.
     expect(times([{ date: '2026-01-12T03:42:21Z', status: 'Shipping Label Created', carrier: 0, location: 'US, EXAMPLE TOWN, EWR HUB' }]))
       .toEqual(['2026-01-12T10:42:21.000Z']);

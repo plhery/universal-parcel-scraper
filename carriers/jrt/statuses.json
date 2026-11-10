@@ -306,6 +306,22 @@
       "note": "Copied from DHL: left at a pickup point for the recipient."
     },
     {
+      "wording": "The recipient was not present. Please find more information here.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Copied from DHL, with its help link's text: nobody was in."
+    },
+    {
+      "wording": "The shipment is ready for collection from a ParcelShop/retail outlet. Please find more information here.",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Copied from DHL, with its help link's text: left at a parcel shop for the recipient."
+    },
+    {
       "wording": "shipment will be returned to origin-not ordered",
       "language": "en",
       "stage": "returned",
