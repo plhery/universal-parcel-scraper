@@ -1,0 +1,42 @@
+{
+  "id": "skyex-gr",
+  "displayName": "Skyex Bioex",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#42b776"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://skyex.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
+    "searchUrl": "https://skyex.gr/el/entopismos",
+    "canaryUrl": "https://skyex.gr/el/entopismos",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "skyex.gr"
+      ],
+      "pathPattern": "^/pegasus/courier04/search00\\.php$",
+      "params": [
+        "r18p01"
+      ]
+    }
+  ],
+  "detection": []
+}

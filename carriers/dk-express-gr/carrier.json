@@ -1,0 +1,44 @@
+{
+  "id": "dk-express-gr",
+  "displayName": "DK Express Courier",
+  "aliases": [
+    "DK Express"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#34c3d1"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://dkexpresscourier.gr/anazitisi-apostolis/?voucher={trackingNumber}",
+    "searchUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "canaryUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "dkexpresscourier.gr"
+      ],
+      "pathPattern": "^/anazitisi-apostolis/?$",
+      "params": [
+        "voucher"
+      ]
+    }
+  ],
+  "detection": []
+}

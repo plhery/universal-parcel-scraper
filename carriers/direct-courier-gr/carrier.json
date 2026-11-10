@@ -1,0 +1,33 @@
+{
+  "id": "direct-courier-gr",
+  "displayName": "Direct Courier",
+  "aliases": [
+    "Direct Courier Services"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#711326"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.directcourier.gr/",
+    "canaryUrl": "https://www.directcourier.gr/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "asap-couriers",
+  "displayName": "ASAP Couriers",
+  "aliases": [
+    "ASAP Courier",
+    "ASAP Couriers Μονοπρόσωπη Α.Ε."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#047386"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://asapcouriers.gr/tracking?number={trackingNumber}",
+    "searchUrl": "https://asapcouriers.gr/tracking",
+    "canaryUrl": "https://asapcouriers.gr/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "asapcouriers.gr",
+        "www.asapcouriers.gr"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "number"
+      ]
+    }
+  ],
+  "detection": []
+}

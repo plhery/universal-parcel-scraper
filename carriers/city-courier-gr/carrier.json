@@ -1,0 +1,46 @@
+{
+  "id": "city-courier-gr",
+  "displayName": "City Courier",
+  "aliases": [
+    "City Courier Services",
+    "City Delivery"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#0054a6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.citycourier.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
+    "searchUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "canaryUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "citycourier.gr",
+        "www.citycourier.gr"
+      ],
+      "pathPattern": "^/pegasus/courier04/search00\\.php$",
+      "params": [
+        "r18p01"
+      ]
+    }
+  ],
+  "detection": []
+}

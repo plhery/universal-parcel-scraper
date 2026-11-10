@@ -1,0 +1,33 @@
+{
+  "id": "prisma-courier",
+  "displayName": "Prisma Courier",
+  "aliases": [
+    "Prisma Service"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#0907a6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "canaryUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

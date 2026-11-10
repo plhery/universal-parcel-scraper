@@ -1,0 +1,43 @@
+{
+  "id": "xp-courier",
+  "displayName": "XP Courier",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#073b62"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.xpcourier.gr/track?identifier={trackingNumber}",
+    "searchUrl": "https://www.xpcourier.gr/track",
+    "canaryUrl": "https://www.xpcourier.gr/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "xpcourier.gr",
+        "www.xpcourier.gr"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "identifier"
+      ]
+    }
+  ],
+  "detection": []
+}

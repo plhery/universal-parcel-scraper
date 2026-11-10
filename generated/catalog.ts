@@ -6609,7 +6609,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#e42229",
     "aliases": [
       "ACS",
-      "ACS Courier S.A."
+      "ACS Courier S.A.",
+      "ACS Ταχυδρομικές Υπηρεσίες"
     ],
     "countries": [
       "GR",
@@ -6655,6 +6656,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "mod7"
       }
     ]
+  },
+  "act-argos": {
+    "displayName": "Argos S.A.",
+    "color": "#0853a6",
+    "aliases": [
+      "ΑΡΓΟΣ Α.Ε."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.argoscom.gr/",
+    "trackingSearchUrl": "https://www.argoscom.gr/index.php?page=55",
+    "linkRules": [],
+    "detectionRules": []
   },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
@@ -6729,6 +6750,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "aetos-courier": {
+    "displayName": "Aetos Courier",
+    "color": "#d4311f",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://aetoscourier.e-anaptixi.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "trackingUrlTemplate": "https://aetoscourier.e-anaptixi.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://aetoscourier.e-anaptixi.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "linkRules": [
+      {
+        "domains": [
+          "aetoscourier.e-anaptixi.gr"
+        ],
+        "pathPattern": "^/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher\\.html$",
+        "params": [
+          "r18p01"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "aex-paraguay": {
     "displayName": "AEX",
@@ -6904,6 +6953,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/tracking/?$",
         "params": [
           "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "aiolos-courier": {
+    "displayName": "Aiolos Courier",
+    "color": "#1a693a",
+    "aliases": [
+      "Hellenic Aiolos Courier"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://aioloscourier.gr/track-trace/",
+    "trackingUrlTemplate": "https://aioloscourier.gr/track-trace/?shipping_num={trackingNumber}",
+    "trackingSearchUrl": "https://aioloscourier.gr/track-trace/",
+    "linkRules": [
+      {
+        "domains": [
+          "aioloscourier.gr",
+          "www.aioloscourier.gr"
+        ],
+        "pathPattern": "^/track-trace/?$",
+        "params": [
+          "shipping_num"
         ]
       }
     ],
@@ -8240,6 +8321,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ant-courier": {
+    "displayName": "ANT Logistics & Forwarding",
+    "color": "#9a235b",
+    "aliases": [
+      "ANT Logistics",
+      "ANT A.E."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
+    "trackingSearchUrl": "https://ant-vl.com/%CE%B1%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7-%CE%B1%CF%80%CE%BF%CF%83%CF%84%CE%BF%CE%BB%CE%AE%CF%82/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "antaria": {
     "displayName": "Antaria Services",
     "color": "#4e96ee",
@@ -8988,6 +9090,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "asap-couriers": {
+    "displayName": "ASAP Couriers",
+    "color": "#047386",
+    "aliases": [
+      "ASAP Courier",
+      "ASAP Couriers Μονοπρόσωπη Α.Ε."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://asapcouriers.gr/tracking",
+    "trackingUrlTemplate": "https://asapcouriers.gr/tracking?number={trackingNumber}",
+    "trackingSearchUrl": "https://asapcouriers.gr/tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "asapcouriers.gr",
+          "www.asapcouriers.gr"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "ase-express": {
     "displayName": "ASE Express",
     "color": "#ed1a1c",
@@ -9138,6 +9273,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "athinaiki": {
+    "displayName": "Athinaiki",
+    "color": "#160b8b",
+    "aliases": [
+      "Αθηναϊκή",
+      "Γενικές Μεταφορές Αθηναϊκή Α.Ε."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.athinaiki.gr/b2c/",
+    "trackingSearchUrl": "https://www.athinaiki.gr/b2c/",
+    "linkRules": [],
     "detectionRules": []
   },
   "atlantic-courier": {
@@ -9623,6 +9779,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/Track/info/?$",
         "params": [
           "numbers"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "bcs-courier": {
+    "displayName": "BCS Courier",
+    "color": "#005395",
+    "aliases": [
+      "B.C.S. Courier"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "trackingUrlTemplate": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://www.bcscourier.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "linkRules": [
+      {
+        "domains": [
+          "bcscourier.gr",
+          "www.bcscourier.gr"
+        ],
+        "pathPattern": "^/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher\\.html$",
+        "params": [
+          "r18p01"
         ]
       }
     ],
@@ -10266,6 +10454,36 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://bigpost.com.au/tracking/",
     "trackingSearchUrl": "https://bigpost.com.au/tracking/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "biz-courier": {
+    "displayName": "BIZ Courier",
+    "color": "#0f6ab2",
+    "aliases": [
+      "BIZ Courier & Logistics",
+      "Biz Courier Services"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trackit.bizcourier.eu/app/en",
+    "trackingUrlTemplate": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
+    "trackingSearchUrl": "https://trackit.bizcourier.eu/app/en",
+    "linkRules": [
+      {
+        "domains": [
+          "trackit.bizcourier.eu"
+        ],
+        "pathPattern": "^/app/[a-z]{2}(?:-[a-z]{2})?/[^/]+/?$",
+        "path": "^/app/[a-z]{2}(?:-[a-z]{2})?/([^/]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "bjs-home-delivery": {
@@ -13109,6 +13327,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "city-courier-gr": {
+    "displayName": "City Courier",
+    "color": "#0054a6",
+    "aliases": [
+      "City Courier Services",
+      "City Delivery"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "trackingUrlTemplate": "https://www.citycourier.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://www.citycourier.gr/anazitisi-apostolis",
+    "linkRules": [
+      {
+        "domains": [
+          "citycourier.gr",
+          "www.citycourier.gr"
+        ],
+        "pathPattern": "^/pegasus/courier04/search00\\.php$",
+        "params": [
+          "r18p01"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "city-express-rs": {
     "displayName": "City Express",
     "color": "#f58220",
@@ -13286,6 +13537,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/track/?$",
         "params": [
           "job"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "cityxpress": {
+    "displayName": "CityXpress",
+    "color": "#9bd8f3",
+    "aliases": [
+      "City Express Courier"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "trackingUrlTemplate": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://cityxpress.gr/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "linkRules": [
+      {
+        "domains": [
+          "cityxpress.gr",
+          "www.cityxpress.gr"
+        ],
+        "pathPattern": "^/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher\\.html$",
+        "params": [
+          "r18p01"
         ]
       }
     ],
@@ -16729,6 +17012,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "direct-courier-gr": {
+    "displayName": "Direct Courier",
+    "color": "#711326",
+    "aliases": [
+      "Direct Courier Services"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.directcourier.gr/",
+    "trackingSearchUrl": "https://www.directcourier.gr/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "direct-couriers": {
     "displayName": "Direct Couriers",
     "color": "#f3852e",
@@ -16812,6 +17115,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/(?:(?:en/)?track|prosledete-vashata-pratka|tr/gonderinizi-takip-ediniz)/?$",
         "params": [
           "code"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "dk-express-gr": {
+    "displayName": "DK Express Courier",
+    "color": "#34c3d1",
+    "aliases": [
+      "DK Express"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "trackingUrlTemplate": "https://dkexpresscourier.gr/anazitisi-apostolis/?voucher={trackingNumber}",
+    "trackingSearchUrl": "https://dkexpresscourier.gr/anazitisi-apostolis/",
+    "linkRules": [
+      {
+        "domains": [
+          "dkexpresscourier.gr"
+        ],
+        "pathPattern": "^/anazitisi-apostolis/?$",
+        "params": [
+          "voucher"
         ]
       }
     ],
@@ -24915,6 +25249,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "happy-courier-gr": {
+    "displayName": "Happy Courier",
+    "color": "#f8981d",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "trackingUrlTemplate": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html?r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://happycourier.e-anaptixi.gr/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher.html",
+    "linkRules": [
+      {
+        "domains": [
+          "happycourier.e-anaptixi.gr"
+        ],
+        "pathPattern": "^/el/courier/voucher/%CE%91%CE%BD%CE%B1%CE%B6%CE%AE%CF%84%CE%B7%CF%83%CE%B7Voucher\\.html$",
+        "params": [
+          "r18p01"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "happy-post": {
     "displayName": "Happy-Post",
     "color": "#ff8500",
@@ -26278,6 +26640,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://hztgjwl.com/query/",
     "trackingSearchUrl": "https://hztgjwl.com/query/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "icc-courier-gr": {
+    "displayName": "ICC Courier",
+    "color": "#dc2626",
+    "aliases": [
+      "Intercity Courier",
+      "ICC Ταχυμεταφορές Ε.Ε."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://icccourier.gr/voucher/search",
+    "trackingUrlTemplate": "https://icccourier.gr/voucher/search?voucher={trackingNumber}",
+    "trackingSearchUrl": "https://icccourier.gr/voucher/search",
+    "linkRules": [
+      {
+        "domains": [
+          "icccourier.gr",
+          "www.icccourier.gr"
+        ],
+        "pathPattern": "^/(?:en/)?voucher/search/?$",
+        "params": [
+          "voucher"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "icc-worldwide": {
@@ -29175,6 +29570,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jieyou.nextsls.com/tracking/app",
     "trackingSearchUrl": "https://jieyou.nextsls.com/tracking/app#/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "kanga-services": {
+    "displayName": "Kanga Services",
+    "color": "#008e43",
+    "aliases": [
+      "Kanga Services Couriers",
+      "Kanga Couriers",
+      "Kanga Services Couriers Ταχυμεταφορική Α.Ε."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
+    "trackingSearchUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -34066,6 +34483,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "mvp-courier": {
+    "displayName": "MVP Courier",
+    "color": "#093d64",
+    "aliases": [
+      "MVP Couriers"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mvp.synlog.io/",
+    "trackingUrlTemplate": "https://mvp.synlog.io/?barcode={trackingNumber}",
+    "trackingSearchUrl": "https://mvp.synlog.io/",
+    "linkRules": [
+      {
+        "domains": [
+          "mvp.synlog.io"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "barcode"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "myanmar-post": {
     "displayName": "Myanmar Post",
     "color": "#ed1c24",
@@ -36266,7 +36714,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#06377b",
     "aliases": [
       "Pack-man Courier",
-      "Pack-Man Courier"
+      "Pack-Man Courier",
+      "ΕΝΤΙΠΠΟΣ ΙΚΕ"
     ],
     "countries": [
       "GR"
@@ -39606,6 +40055,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "prisma-courier": {
+    "displayName": "Prisma Courier",
+    "color": "#0907a6",
+    "aliases": [
+      "Prisma Service"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "trackingSearchUrl": "https://www.prismacourier.gr/parcel-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pro-carrier": {
     "displayName": "Pro Carrier",
     "color": "#2c1f72",
@@ -40591,6 +41060,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "rapid-courier-gr": {
+    "displayName": "Rapid Courier",
+    "color": "#b40e21",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "trackingUrlTemplate": "https://rapidcourier.gr/anazhthsh-apostolhs/?voucher={trackingNumber}",
+    "trackingSearchUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "linkRules": [
+      {
+        "domains": [
+          "rapidcourier.gr",
+          "www.rapidcourier.gr"
+        ],
+        "pathPattern": "^/anazhthsh-apostolhs/?$",
+        "params": [
+          "voucher"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "rayspeed": {
     "displayName": "RaySpeed Asia",
     "color": "#25266a",
@@ -40610,6 +41108,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://rayspeed.com/en/track",
     "trackingSearchUrl": "https://rayspeed.com/en/track",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "red-courier-gr": {
+    "displayName": "Red Courier",
+    "color": "#c10a0c",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://redcourier.gr/track-and-trace/",
+    "trackingUrlTemplate": "https://redcourier.gr/track-and-trace/?voucher={trackingNumber}",
+    "trackingSearchUrl": "https://redcourier.gr/track-and-trace/",
+    "linkRules": [
+      {
+        "domains": [
+          "redcourier.gr"
+        ],
+        "pathPattern": "^/track-and-trace/?$",
+        "params": [
+          "voucher"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "red-express": {
@@ -43952,6 +44478,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "skyex-gr": {
+    "displayName": "Skyex Bioex",
+    "color": "#42b776",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://skyex.gr/el/entopismos",
+    "trackingUrlTemplate": "https://skyex.gr/pegasus/courier04/search00.php?pcode=SEARCHVOUCHER&r18p01={trackingNumber}",
+    "trackingSearchUrl": "https://skyex.gr/el/entopismos",
+    "linkRules": [
+      {
+        "domains": [
+          "skyex.gr"
+        ],
+        "pathPattern": "^/pegasus/courier04/search00\\.php$",
+        "params": [
+          "r18p01"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "skyking": {
     "displayName": "SkyKing",
     "color": "#ed1c24",
@@ -44898,6 +45452,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://spfly.com.br/",
     "trackingSearchUrl": "https://spfly.com.br/rastreamento/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "spourgitis": {
+    "displayName": "Spourgitis Trans",
+    "color": "#d11f23",
+    "aliases": [
+      "Σπουργίτης",
+      "Σπουργίτης Μεταφορική",
+      "Spourgitis Transport"
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "trackingSearchUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "linkRules": [
+      {
+        "domains": [
+          "spourgitis.gr"
+        ],
+        "pathPattern": "^/(?:en/tracking-shipments|entopismos-apostolon)/?$",
+        "params": [
+          "shipping_code"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "spt-logistics": {
@@ -51587,6 +52173,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "west-postal": {
+    "displayName": "West Postal Services",
+    "color": "#00a9a4",
+    "aliases": [
+      "WEST A.E.",
+      "WEST S.A."
+    ],
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.wps.com.gr/trackshipment",
+    "trackingSearchUrl": "https://www.wps.com.gr/trackshipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "western-bid": {
     "displayName": "Western Bid",
     "color": "#284e51",
@@ -52584,6 +53191,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/track/?$",
         "params": [
           "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "xp-courier": {
+    "displayName": "XP Courier",
+    "color": "#073b62",
+    "countries": [
+      "GR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Athens",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xpcourier.gr/track",
+    "trackingUrlTemplate": "https://www.xpcourier.gr/track?identifier={trackingNumber}",
+    "trackingSearchUrl": "https://www.xpcourier.gr/track",
+    "linkRules": [
+      {
+        "domains": [
+          "xpcourier.gr",
+          "www.xpcourier.gr"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "identifier"
         ]
       }
     ],
@@ -54089,14 +54725,17 @@ export const CARRIER_IDS = [
   "acex",
   "aci-express-kr",
   "acs-courier",
+  "act-argos",
   "aeronet",
   "aeropost",
+  "aetos-courier",
   "aex-paraguay",
   "afghan-post",
   "agt-kurye",
   "ahamove",
   "ahl-courier",
   "aics",
+  "aiolos-courier",
   "air-star-xpress",
   "airmee",
   "airpak-express",
@@ -54135,6 +54774,7 @@ export const CARRIER_IDS = [
   "annto",
   "anousith",
   "anserx",
+  "ant-courier",
   "antaria",
   "anteraja",
   "ap-cargo",
@@ -54155,10 +54795,12 @@ export const CARRIER_IDS = [
   "arrow-express",
   "arrow-xl",
   "aruba-post",
+  "asap-couriers",
   "ase-express",
   "asiafly",
   "asigna",
   "asyad-express",
+  "athinaiki",
   "atlantic-courier",
   "ats-healthcare",
   "auexpress",
@@ -54172,6 +54814,7 @@ export const CARRIER_IDS = [
   "barid-al-maghrib",
   "barq",
   "basic-shipping",
+  "bcs-courier",
   "bee-fast",
   "beexprss",
   "bel",
@@ -54191,6 +54834,7 @@ export const CARRIER_IDS = [
   "big-smart",
   "bigfoot-express",
   "bigpost",
+  "biz-courier",
   "bjs-home-delivery",
   "blitznow",
   "blue-express",
@@ -54270,11 +54914,13 @@ export const CARRIER_IDS = [
   "citilogistics",
   "cititrans",
   "city-air-express",
+  "city-courier-gr",
   "city-express-rs",
   "citylink-express",
   "citymail",
   "citymail-pk",
   "citysprint",
+  "cityxpress",
   "cj-logistics",
   "cj-packet",
   "ckeex",
@@ -54370,9 +55016,11 @@ export const CARRIER_IDS = [
   "diakinisis",
   "dida-international",
   "dimex",
+  "direct-courier-gr",
   "direct-couriers",
   "direct-freight-express",
   "direx",
+  "dk-express-gr",
   "dnipro-llc",
   "dnx-cargo",
   "dobropost",
@@ -54589,6 +55237,7 @@ export const CARRIER_IDS = [
   "gzyl",
   "hanjin",
   "hapdong",
+  "happy-courier-gr",
   "happy-post",
   "hart2hart-express",
   "haypost",
@@ -54631,6 +55280,7 @@ export const CARRIER_IDS = [
   "hye",
   "hywl",
   "hzt",
+  "icc-courier-gr",
   "icc-worldwide",
   "icl-express",
   "ics-courier",
@@ -54713,6 +55363,7 @@ export const CARRIER_IDS = [
   "junfeng-international",
   "juxi-express",
   "jy-express",
+  "kanga-services",
   "kargoist",
   "kargoturk",
   "kart2door",
@@ -54854,6 +55505,7 @@ export const CARRIER_IDS = [
   "mte-xpress",
   "mtscn",
   "multientrega",
+  "mvp-courier",
   "myanmar-post",
   "mylerz",
   "mzz-briefdienst",
@@ -54999,6 +55651,7 @@ export const CARRIER_IDS = [
   "ppl",
   "precision-deliveries",
   "premier-deliveries-uk",
+  "prisma-courier",
   "pro-carrier",
   "product-care-group",
   "professional-couriers",
@@ -55027,7 +55680,9 @@ export const CARRIER_IDS = [
   "raben",
   "ram-hand-to-hand",
   "rangel",
+  "rapid-courier-gr",
   "rayspeed",
+  "red-courier-gr",
   "red-express",
   "redbox-mv",
   "redpack",
@@ -55124,6 +55779,7 @@ export const CARRIER_IDS = [
   "skroutz-last-mile",
   "skybox",
   "skyex-ae",
+  "skyex-gr",
   "skyking",
   "skynet-my",
   "skynet-sa",
@@ -55148,6 +55804,7 @@ export const CARRIER_IDS = [
   "speedpak",
   "speedy",
   "spfly",
+  "spourgitis",
   "spt-logistics",
   "sptexp",
   "spx-br",
@@ -55337,6 +55994,7 @@ export const CARRIER_IDS = [
   "wedo",
   "welivery",
   "wepost",
+  "west-postal",
   "western-bid",
   "westweg",
   "whistl",
@@ -55366,6 +56024,7 @@ export const CARRIER_IDS = [
   "xlcourier",
   "xlmiles",
   "xls-futar",
+  "xp-courier",
   "xpect-same-day",
   "xpedist",
   "xpo-ltl",
@@ -55544,14 +56203,17 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "acex": [],
   "aci-express-kr": [],
   "acs-courier": ["acs-courier-1"],
+  "act-argos": [],
   "aeronet": [],
   "aeropost": ["aeropost-1"],
+  "aetos-courier": [],
   "aex-paraguay": [],
   "afghan-post": [],
   "agt-kurye": [],
   "ahamove": [],
   "ahl-courier": [],
   "aics": [],
+  "aiolos-courier": [],
   "air-star-xpress": [],
   "airmee": [],
   "airpak-express": [],
@@ -55590,6 +56252,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "annto": [],
   "anousith": [],
   "anserx": ["anserx-1"],
+  "ant-courier": [],
   "antaria": [],
   "anteraja": ["anteraja-1"],
   "ap-cargo": [],
@@ -55610,10 +56273,12 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "arrow-express": [],
   "arrow-xl": [],
   "aruba-post": [],
+  "asap-couriers": [],
   "ase-express": [],
   "asiafly": [],
   "asigna": [],
   "asyad-express": [],
+  "athinaiki": [],
   "atlantic-courier": [],
   "ats-healthcare": [],
   "auexpress": [],
@@ -55627,6 +56292,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "barid-al-maghrib": ["barid-al-maghrib-s10"],
   "barq": [],
   "basic-shipping": [],
+  "bcs-courier": [],
   "bee-fast": [],
   "beexprss": [],
   "bel": [],
@@ -55646,6 +56312,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "big-smart": [],
   "bigfoot-express": [],
   "bigpost": [],
+  "biz-courier": [],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "blitznow": [],
   "blue-express": [],
@@ -55725,11 +56392,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "citilogistics": [],
   "cititrans": [],
   "city-air-express": ["city-air-express-1"],
+  "city-courier-gr": [],
   "city-express-rs": ["city-express-rs-1"],
   "citylink-express": [],
   "citymail": ["citymail-1","citymail-2"],
   "citymail-pk": [],
   "citysprint": [],
+  "cityxpress": [],
   "cj-logistics": [],
   "cj-packet": ["cj-packet-1"],
   "ckeex": [],
@@ -55825,9 +56494,11 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "diakinisis": [],
   "dida-international": [],
   "dimex": [],
+  "direct-courier-gr": [],
   "direct-couriers": [],
   "direct-freight-express": [],
   "direx": [],
+  "dk-express-gr": [],
   "dnipro-llc": [],
   "dnx-cargo": [],
   "dobropost": ["dobropost-1"],
@@ -56044,6 +56715,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gzyl": ["gzyl-1","gzyl-2"],
   "hanjin": [],
   "hapdong": [],
+  "happy-courier-gr": [],
   "happy-post": [],
   "hart2hart-express": [],
   "haypost": ["haypost-s10"],
@@ -56086,6 +56758,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hye": [],
   "hywl": ["hywl-1","hywl-2"],
   "hzt": [],
+  "icc-courier-gr": [],
   "icc-worldwide": [],
   "icl-express": [],
   "ics-courier": ["ics-courier-1"],
@@ -56168,6 +56841,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "junfeng-international": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
+  "kanga-services": [],
   "kargoist": ["kargoist-1"],
   "kargoturk": [],
   "kart2door": [],
@@ -56309,6 +56983,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mte-xpress": [],
   "mtscn": ["mtscn-1"],
   "multientrega": [],
+  "mvp-courier": [],
   "myanmar-post": [],
   "mylerz": ["mylerz-1"],
   "mzz-briefdienst": [],
@@ -56454,6 +57129,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ppl": ["ppl-1"],
   "precision-deliveries": ["precision-deliveries-1"],
   "premier-deliveries-uk": [],
+  "prisma-courier": [],
   "pro-carrier": ["pro-carrier-1"],
   "product-care-group": [],
   "professional-couriers": [],
@@ -56482,7 +57158,9 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "raben": ["raben-1"],
   "ram-hand-to-hand": ["ram-hand-to-hand-1"],
   "rangel": [],
+  "rapid-courier-gr": [],
   "rayspeed": [],
+  "red-courier-gr": [],
   "red-express": [],
   "redbox-mv": [],
   "redpack": [],
@@ -56579,6 +57257,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skroutz-last-mile": [],
   "skybox": [],
   "skyex-ae": [],
+  "skyex-gr": [],
   "skyking": [],
   "skynet-my": [],
   "skynet-sa": [],
@@ -56603,6 +57282,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "speedpak": ["speedpak-1"],
   "speedy": ["speedy-1","speedy-2"],
   "spfly": [],
+  "spourgitis": [],
   "spt-logistics": [],
   "sptexp": ["sptexp-1"],
   "spx-br": ["spx-br-1","spx-br-2"],
@@ -56792,6 +57472,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wedo": ["wedo-1"],
   "welivery": [],
   "wepost": [],
+  "west-postal": [],
   "western-bid": ["western-bid-1"],
   "westweg": [],
   "whistl": ["whistl-1"],
@@ -56821,6 +57502,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xlcourier": ["xlcourier-1"],
   "xlmiles": [],
   "xls-futar": [],
+  "xp-courier": [],
   "xpect-same-day": [],
   "xpedist": [],
   "xpo-ltl": ["xpo-ltl-1"],

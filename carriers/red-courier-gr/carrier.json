@@ -1,0 +1,42 @@
+{
+  "id": "red-courier-gr",
+  "displayName": "Red Courier",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#c10a0c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://redcourier.gr/track-and-trace/?voucher={trackingNumber}",
+    "searchUrl": "https://redcourier.gr/track-and-trace/",
+    "canaryUrl": "https://redcourier.gr/track-and-trace/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "redcourier.gr"
+      ],
+      "pathPattern": "^/track-and-trace/?$",
+      "params": [
+        "voucher"
+      ]
+    }
+  ],
+  "detection": []
+}

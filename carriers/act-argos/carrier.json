@@ -1,0 +1,33 @@
+{
+  "id": "act-argos",
+  "displayName": "Argos S.A.",
+  "aliases": [
+    "ΑΡΓΟΣ Α.Ε."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#0853a6"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.argoscom.gr/index.php?page=55",
+    "canaryUrl": "https://www.argoscom.gr/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

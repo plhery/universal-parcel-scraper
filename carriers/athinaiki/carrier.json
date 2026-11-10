@@ -1,0 +1,34 @@
+{
+  "id": "athinaiki",
+  "displayName": "Athinaiki",
+  "aliases": [
+    "Αθηναϊκή",
+    "Γενικές Μεταφορές Αθηναϊκή Α.Ε."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#160b8b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.athinaiki.gr/b2c/",
+    "canaryUrl": "https://www.athinaiki.gr/b2c/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

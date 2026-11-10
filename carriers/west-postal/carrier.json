@@ -1,0 +1,34 @@
+{
+  "id": "west-postal",
+  "displayName": "West Postal Services",
+  "aliases": [
+    "WEST A.E.",
+    "WEST S.A."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#00a9a4"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.wps.com.gr/trackshipment",
+    "canaryUrl": "https://www.wps.com.gr/trackshipment",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

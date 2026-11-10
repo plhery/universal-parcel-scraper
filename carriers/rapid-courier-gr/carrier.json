@@ -1,0 +1,43 @@
+{
+  "id": "rapid-courier-gr",
+  "displayName": "Rapid Courier",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#b40e21"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://rapidcourier.gr/anazhthsh-apostolhs/?voucher={trackingNumber}",
+    "searchUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "canaryUrl": "https://rapidcourier.gr/anazhthsh-apostolhs/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "rapidcourier.gr",
+        "www.rapidcourier.gr"
+      ],
+      "pathPattern": "^/anazhthsh-apostolhs/?$",
+      "params": [
+        "voucher"
+      ]
+    }
+  ],
+  "detection": []
+}

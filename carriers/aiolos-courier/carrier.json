@@ -1,0 +1,45 @@
+{
+  "id": "aiolos-courier",
+  "displayName": "Aiolos Courier",
+  "aliases": [
+    "Hellenic Aiolos Courier"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#1a693a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://aioloscourier.gr/track-trace/?shipping_num={trackingNumber}",
+    "searchUrl": "https://aioloscourier.gr/track-trace/",
+    "canaryUrl": "https://aioloscourier.gr/track-trace/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "aioloscourier.gr",
+        "www.aioloscourier.gr"
+      ],
+      "pathPattern": "^/track-trace/?$",
+      "params": [
+        "shipping_num"
+      ]
+    }
+  ],
+  "detection": []
+}

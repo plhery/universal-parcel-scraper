@@ -1,0 +1,35 @@
+{
+  "id": "kanga-services",
+  "displayName": "Kanga Services",
+  "aliases": [
+    "Kanga Services Couriers",
+    "Kanga Couriers",
+    "Kanga Services Couriers Ταχυμεταφορική Α.Ε."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#008e43"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
+    "canaryUrl": "https://kanga.gr/epikoinonia/anazitisi-apostolis/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

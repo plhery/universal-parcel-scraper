@@ -1,0 +1,43 @@
+{
+  "id": "biz-courier",
+  "displayName": "BIZ Courier",
+  "aliases": [
+    "BIZ Courier & Logistics",
+    "Biz Courier Services"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#0f6ab2"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
+    "searchUrl": "https://trackit.bizcourier.eu/app/en",
+    "canaryUrl": "https://trackit.bizcourier.eu/app/en",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "trackit.bizcourier.eu"
+      ],
+      "pathPattern": "^/app/[a-z]{2}(?:-[a-z]{2})?/[^/]+/?$",
+      "path": "^/app/[a-z]{2}(?:-[a-z]{2})?/([^/]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "icc-courier-gr",
+  "displayName": "ICC Courier",
+  "aliases": [
+    "Intercity Courier",
+    "ICC Ταχυμεταφορές Ε.Ε."
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#dc2626"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://icccourier.gr/voucher/search?voucher={trackingNumber}",
+    "searchUrl": "https://icccourier.gr/voucher/search",
+    "canaryUrl": "https://icccourier.gr/voucher/search",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "icccourier.gr",
+        "www.icccourier.gr"
+      ],
+      "pathPattern": "^/(?:en/)?voucher/search/?$",
+      "params": [
+        "voucher"
+      ]
+    }
+  ],
+  "detection": []
+}

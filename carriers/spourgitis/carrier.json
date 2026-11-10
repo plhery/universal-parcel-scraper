@@ -1,0 +1,45 @@
+{
+  "id": "spourgitis",
+  "displayName": "Spourgitis Trans",
+  "aliases": [
+    "Σπουργίτης",
+    "Σπουργίτης Μεταφορική",
+    "Spourgitis Transport"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#d11f23"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "canaryUrl": "https://spourgitis.gr/entopismos-apostolon/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "spourgitis.gr"
+      ],
+      "pathPattern": "^/(?:en/tracking-shipments|entopismos-apostolon)/?$",
+      "params": [
+        "shipping_code"
+      ]
+    }
+  ],
+  "detection": []
+}

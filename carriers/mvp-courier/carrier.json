@@ -1,0 +1,44 @@
+{
+  "id": "mvp-courier",
+  "displayName": "MVP Courier",
+  "aliases": [
+    "MVP Couriers"
+  ],
+  "region": {
+    "countries": [
+      "GR"
+    ]
+  },
+  "brand": {
+    "color": "#093d64"
+  },
+  "selectable": true,
+  "timezone": "Europe/Athens",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://mvp.synlog.io/?barcode={trackingNumber}",
+    "searchUrl": "https://mvp.synlog.io/",
+    "canaryUrl": "https://mvp.synlog.io/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "mvp.synlog.io"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "barcode"
+      ]
+    }
+  ],
+  "detection": []
+}
