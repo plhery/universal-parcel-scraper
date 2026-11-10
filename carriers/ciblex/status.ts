@@ -83,6 +83,8 @@ export function classifyCiblexStatus(rawDescription: string): ClassifiedCiblexSt
     'incident',
     'anomalie',
     'refuse',
+    // A problem with the recipient, written beside the incident on a delivery round that took the parcel back to the depot.
+    'probleme destinataire',
   ])) {
     return EXCEPTION;
   }

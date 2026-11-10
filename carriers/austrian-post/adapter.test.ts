@@ -103,6 +103,9 @@ describe('Austrian Post public tracking', () => {
       expect(austrianPostEventStatus('PUG', '2034', 'Synthetic wording')?.stage).toBe('ready_for_pickup');
       expect(statusMap.stage('IZ', 'sendung aus postempfangsbox abgeholt')).toBe('delivered');
       expect(statusMap.stage(null, 'sendung wurde zugestellt')).toBe('delivered');
+      // Handed to the recipient, under IZ.
+      expect(austrianPostEventStatus('IZ', '', 'Sendung an Empfänger∗in übergeben')?.stage).toBe('delivered');
+      expect(statusMap.stage('IZ', 'Sendung an Empfänger*in übergeben')).toBe('delivered');
       // The reason decides a box scan's stage, so its wording alone does not.
       expect(statusMap.stage('PUG', 'sendung in postempfangsbox abholbereit')).toBeUndefined();
     });

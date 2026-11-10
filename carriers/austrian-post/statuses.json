@@ -124,6 +124,15 @@
     },
     {
       "code": "IZ",
+      "wording": "Sendung an Empfänger∗in übergeben",
+      "language": "de",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "Handed to the recipient. The page sums the parcel up as delivered, although the scan carries status IZ."
+    },
+    {
+      "code": "IZ",
       "wording": "Sendung aus Postempfangsbox abgeholt",
       "language": "de",
       "stage": "delivered",

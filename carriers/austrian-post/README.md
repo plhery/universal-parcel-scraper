@@ -23,7 +23,8 @@ Summary codes and scan codes use different vocabularies. A scan marked `IZ` can
 describe completed delivery; its reason and wording determine the event stage.
 A parcel left in a Post Empfangsbox, a receiving box the recipient opens, is
 ready for collection, and the `IZ` scan of the recipient taking it out is its
-delivery, as the page's summary has them.
+delivery, as the page's summary has them. So is an `IZ` scan of the parcel handed
+to the recipient ("an Empfänger∗in übergeben").
 Timestamps carry explicit offsets, which are preserved. A scan place given
 only as `PLZ` and a postcode, or as `PLZ` and a country code with or without
 part of a postcode (`PLZ DE`), is the delivery area and is dropped, also when a

@@ -114,6 +114,14 @@
       "note": "Inherited from the pre-package adapter; source not recorded. Reclassified to exception 2026-09-12."
     },
     {
+      "wording": "PROBLEME DESTINATAIRE",
+      "language": "fr",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-10",
+      "note": "A problem with the recipient, at the minute of an incident on a delivery round, before the parcel went back to the depot."
+    },
+    {
       "wording": "destinataire absent",
       "language": "fr",
       "stage": "failed_attempt",

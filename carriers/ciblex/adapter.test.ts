@@ -92,6 +92,7 @@ describe('Ciblex status vocabulary', () => {
     expect(comparableText('COLIS LIVRÉ')).toBe('colis livre');
     expect(classifyCiblexStatus('Colis Livré')).toMatchObject({ stage: 'delivered' });
     expect(classifyCiblexStatus('COLIS LIVRE')).toMatchObject({ stage: 'delivered' });
+    expect(classifyCiblexStatus('PROBLEME DESTINATAIRE')).toMatchObject({ stage: 'exception', description: 'Shipment exception' });
     expect(classifyCiblexStatus('Statut provider nouveau')).toMatchObject({
       status: 'unknown',
       stage: 'in_transit',
