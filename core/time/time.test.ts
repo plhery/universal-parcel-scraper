@@ -175,6 +175,7 @@ describe('time policies', () => {
     expect(countryCode('USA')).toBe('US');
     expect(countryCode('Czech Republic')).toBe('CZ');
     expect(countryTimeZone('czech republic')).toBe('Europe/Prague');
+    expect(countryTimeZone('UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND')).toBe('Europe/London');
     expect(countryTimeZone('United States of America')).toBeNull();
     // Retired codes, subdivisions and places are not countries.
     for (const value of ['UK', 'FX', 'ON', 'Example Hub', 'EXAMPLE CITY, CA', '', undefined]) expect(countryCode(value)).toBeNull();

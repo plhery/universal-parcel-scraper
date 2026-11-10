@@ -1511,6 +1511,24 @@ describe('ParcelsApp result parsing', () => {
     ])).toEqual(['2026-11-05T00:07:00.000Z', '2026-11-04T12:07:00.000Z']);
   });
 
+  it('reads USPS\'s scans in the United Kingdom, named in full, on its clock and as USPS\'s own map stages them', () => {
+    // Live shape: USPS's wording with its place repeated, on the British post's wall clock labeled UTC.
+    // Borrowing the clock of the scans in Florida before them, they came five hours after USPS's own rows.
+    const uk = 'UNITED KINGDOM OF GREAT BRITAIN AND NORTHERN IRELAND';
+    const scan = (date: string, status: string) => ({ date, status: `${status}, ${uk}`, carrier: 0, location: uk });
+    expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
+      scan('2026-10-23T07:12:00Z', 'Collect for Pick Up'),
+      scan('2026-10-23T07:12:00Z', 'Payment of charges - Item being held, addressee being notified'),
+      scan('2026-10-23T06:50:00Z', 'Out for Delivery'),
+      { date: '2026-10-13T11:40:00Z', status: 'Arrived at USPS Facility, EXAMPLE CITY FL DISTRIBUTION CENTER', carrier: 0,
+        location: 'EXAMPLE CITY FL DISTRIBUTION CENTER' },
+    ] }, number, identity()).events?.slice(0, 3).map((event) => [event.time, event.stage])).toEqual([
+      ['2026-10-23T06:12:00.000Z', 'ready_for_pickup'],
+      ['2026-10-23T06:12:00.000Z', 'customs'],
+      ['2026-10-23T05:50:00.000Z', 'out_for_delivery'],
+    ]);
+  });
+
   it('keeps the instant of a mailer\'s label filed under USPS, its place after its wording', () => {
     // Live shape: the label came 9 minutes before ParcelsApp returned it, at 04:40 under a UTC
     // label; read on California's clock, it came 8 hours after.

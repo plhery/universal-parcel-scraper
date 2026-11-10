@@ -510,6 +510,10 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^your delivery is in [^,]{1,60}, post office[.!]?$/i.test(value)) return 'ready_for_pickup';
   // An item waiting for its recipient at a post office, as ParcelsApp relayed it for one bound for Slovenia.
   if (/^item prepared for pick-up at the post office[.!]?$/i.test(value)) return 'ready_for_pickup';
+  // The destination post's notice and its hold until the recipient pays the import charges, as USPS words them for an item
+  // abroad and its own map reads them. ParcelsApp repeats the scan's place after USPS's wording.
+  if (/^collect for pick ?up(?:, [^,]{1,80})?$/i.test(value)) return 'ready_for_pickup';
+  if (/^payment of charges - item being held, addressee being notified(?:, [^,]{1,80})?$/i.test(value)) return 'customs';
   if (/^delivery scheduled during the day[.!]?$/i.test(value)) return 'out_for_delivery';
   // Latvijas Pasts' acceptance at a post office, which ParcelsApp follows with the office's name.
   if (/^item posted \/ received from customer\b/i.test(value)) return 'accepted';
