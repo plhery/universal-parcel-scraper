@@ -529,6 +529,10 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^dispatch from outward office of exchange[.!]?$/i.test(value)) return 'in_transit';
   // BRT's TURMOIL, a public demonstration holding the parcel up (exception in its own map), as Ship24 relays it.
   if (/^turmoil[.!]?$/i.test(value)) return 'exception';
+  // SPX's drop-off at a point (DOP_Received) and its confiscation (Start_Confiscation), in SPX's English as ParcelsApp
+  // relays them, as SPX's own maps read them.
+  if (/^your parcel has been received by drop ?off point[.!]?$/i.test(value)) return 'accepted';
+  if (/^parcel has entered confiscation process[.!]?$/i.test(value)) return 'exception';
   // Lietuvos paštas' acceptance (ACCEPTED in its own map) as ParcelsApp relays it. The shared rules leave a
   // bare receipt unread, since it names no receiver.
   if (/^parcel received[.!]?$/i.test(value)) return 'accepted';

@@ -1856,6 +1856,7 @@ describe("universal providers' answers", () => {
       ['SF Express has received your package, we sincerely protect your expectations, and will not let you down. If you have any questions, please contact courier Example at 10000000000.', 'accepted'],
       ['The shipment has been received at the SEUR facilities of origin', 'accepted'],
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
+      ['Your parcel has been received by drop off point', 'accepted'], ['Parcel has entered confiscation process', 'exception'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
       ['Restricted item - Battery item', 'in_transit'],
       ['Package information is created in the system', 'registered'],
