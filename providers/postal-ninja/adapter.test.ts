@@ -89,6 +89,11 @@ describe('Postal Ninja result parsing', () => {
       ['PostNL', 'out_for_delivery', 'carrier_map'],
       ['PostNL', 'accepted', 'carrier_map'],
     ]);
+    // Past the first ten names the hints keep, a catalog service staging its scan is still named on it.
+    const crowded = [...Array.from({ length: 10 }, (_, index) => ({ ds: `Example ${index}`, dt: `2026-08-1${index}T08:00:00`, dsc: 'Sample note' })),
+      { ds: 'PostNL', dt: '2026-08-20T08:00:00', dsc: 'Driver is en route' }];
+    expect(parsePostalNinjaResponse(withEvents(crowded), number).events?.[0]).toMatchObject(
+      { reporting_carrier: 'PostNL', stage: 'out_for_delivery', stage_source: 'carrier_map' });
   });
 
   const times = (parsed: { events?: { time?: string | null; local_time?: string | null }[] }) =>

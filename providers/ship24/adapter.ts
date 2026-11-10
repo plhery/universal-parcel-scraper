@@ -356,13 +356,19 @@ function placedZone(journey: Journey, scan: Record<string, unknown>, wall: strin
   const location = typeof scan.location === 'string' ? scan.location.trim() : '';
   const located = feed?.place?.(location, journey, typeof scan.status === 'string' ? scan.status : '')
     ?? locationZone(location, journey.northAmerican || northAmericanCourier(scan), feed?.country ?? null)
-    ?? courierCountryZone(scan, location) ?? (journey.domestic ? countryTimeZone(journey.domestic) : null) ?? upuZone(journey, scan, wall);
-  const home = located || journey.international ? null : feed?.home?.(location);
-  return located ? { zone: located, basis: 'place' } : home ? { zone: home, basis: 'carrier' } : null;
+    ?? courierCountryZone(scan, location);
+  if (located) return { zone: located, basis: 'place' };
+  // The parcel's one country places no scan: it is the destination's clock.
+  const domestic = journey.domestic ? countryTimeZone(journey.domestic) : null;
+  if (domestic) return { zone: domestic, basis: 'destination' };
+  const worded = upuZone(journey, scan, wall);
+  if (worded) return { zone: worded, basis: 'place' };
+  const home = journey.international ? null : feed?.home?.(location);
+  return home ? { zone: home, basis: 'carrier' } : null;
 }
 
 /** A zone and how it was chosen, as a carrier's deduced clock says it (`time_zone_basis`). */
-interface Placed { zone: string; basis: 'place' | 'neighbour' | 'carrier' }
+interface Placed { zone: string; basis: 'place' | 'neighbour' | 'destination' | 'carrier' }
 
 /** The zone, carrier's, of a clock a step other than the scan's place gives. */
 const carrierZone = (zone: string | null | undefined): Placed | null => zone ? { zone, basis: 'carrier' } : null;

@@ -166,6 +166,12 @@ describe('Ship24 result parsing', () => {
     // An S10 item's suffix is its origin; Ship24 can still write the UK as "UK".
     expect(noonAt(undefined, { destination_country_code: 'PL' }, 'ZZ123456785PL')).toBe('2026-09-20T10:00:00.000Z');
     expect(noonAt(undefined, { origin_country_code: 'UK', destination_country_code: 'GB' })).toBe('2026-09-20T11:00:00.000Z');
+    // That is the destination's clock, not a place the scan names; a place it names stays its basis.
+    const basis = (country: string, location: string) => parseShip24Response({ data: { tracking_number: number, origin_country_code: country,
+      destination_country_code: country, events: [{ timestamp: '2026-09-20T12:00:00', status: 'In transit', location }] } }, number)
+      .events!.map(({ time_zone, time_zone_basis }) => [time_zone, time_zone_basis]);
+    expect(basis('DE', 'EXAMPLE TOWN')).toEqual([['Europe/Berlin', 'destination']]);
+    expect(basis('CA', 'EXAMPLE TOWN ON')).toEqual([['America/Toronto', 'place']]);
   });
 
   it('places a cross-border item\'s UPU events on the side of the border their words name, until it is sent back', () => {

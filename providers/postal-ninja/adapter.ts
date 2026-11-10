@@ -105,7 +105,9 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   // its service (reporting_carrier), and a service in the catalog whose map reads its wording whole stages it, as
   // the carrier's own adapter would (relayedWordingStage): Postal Ninja relays the wording without the code.
   const hints = universalCarrierHints([...services].filter(Boolean).slice(0, 20), number);
-  const named = new Set(hints.reported_carriers);
+  // A service in the catalog is named on its scans even past the hints' first ten names or their characters,
+  // so no scan takes a stage from a carrier it does not name.
+  const named = new Set([...hints.reported_carriers, ...[...services].filter((service) => service.length <= 80 && carrierIdFromName(service))]);
   const serviceStage = (service: string, description: string) => {
     const carrier = carrierIdFromName(service);
     return carrier ? relayedWordingStage(carrier, description) : undefined;
