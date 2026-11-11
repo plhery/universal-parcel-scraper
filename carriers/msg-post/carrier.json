@@ -1,0 +1,34 @@
+{
+  "id": "msg-post",
+  "displayName": "MSG Post & Koeriers",
+  "aliases": [
+    "MSG Post en Koeriers B.V."
+  ],
+  "region": {
+    "countries": [
+      "NL"
+    ]
+  },
+  "brand": {
+    "color": "#111860"
+  },
+  "selectable": true,
+  "timezone": "Europe/Amsterdam",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://app.veloyd.nl/track&trace/{trackingNumber}",
+    "searchUrl": "https://app.veloyd.nl/track&trace",
+    "canaryUrl": "https://app.veloyd.nl/track&trace",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

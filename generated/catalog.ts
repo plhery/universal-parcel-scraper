@@ -15397,7 +15397,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Cycloon Post & Fietskoeriers",
       "Fietskoeriers.nl",
-      "Cycloon Fietskoeriers"
+      "Cycloon Fietskoeriers",
+      "Cycloon Post B.V.",
+      "Cycloon Fietskoeriers B.V."
     ],
     "countries": [
       "NL"
@@ -34604,6 +34606,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "msg-post": {
+    "displayName": "MSG Post & Koeriers",
+    "color": "#111860",
+    "aliases": [
+      "MSG Post en Koeriers B.V."
+    ],
+    "countries": [
+      "NL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.veloyd.nl/track&trace",
+    "trackingUrlTemplate": "https://app.veloyd.nl/track&trace/{trackingNumber}",
+    "trackingSearchUrl": "https://app.veloyd.nl/track&trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mte-xpress": {
     "displayName": "MTE Xpress",
     "color": "#2a3653",
@@ -35750,7 +35773,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "NOX Nachtexpress",
       "nox Germany",
       "Innight Express",
-      "TNT Innight"
+      "TNT Innight",
+      "nox Belgium N.V."
     ],
     "countries": [
       "DE"
@@ -40254,7 +40278,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "PPL",
     "color": "#004b93",
     "aliases": [
-      "PPL CZ"
+      "PPL CZ",
+      "PPL CZ s.r.o."
     ],
     "countries": [
       "CZ"
@@ -55909,6 +55934,7 @@ export const CARRIER_IDS = [
   "mountain-movers",
   "movin",
   "mrl-global",
+  "msg-post",
   "mte-xpress",
   "mtscn",
   "multientrega",
@@ -57400,6 +57426,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mountain-movers": [],
   "movin": [],
   "mrl-global": [],
+  "msg-post": [],
   "mte-xpress": [],
   "mtscn": ["mtscn-1"],
   "multientrega": [],

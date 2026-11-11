@@ -2392,6 +2392,7 @@ export const REGISTRY: RegistryDefinition = {
     "movin": "universal",
     "mrl-global": "mrl-global",
     "mrw": "mrw",
+    "msg-post": "universal",
     "mte-xpress": "universal",
     "mtscn": "mtscn",
     "multientrega": "universal",

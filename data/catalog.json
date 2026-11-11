@@ -15393,7 +15393,9 @@
     "aliases": [
       "Cycloon Post & Fietskoeriers",
       "Fietskoeriers.nl",
-      "Cycloon Fietskoeriers"
+      "Cycloon Fietskoeriers",
+      "Cycloon Post B.V.",
+      "Cycloon Fietskoeriers B.V."
     ],
     "countries": [
       "NL"
@@ -34600,6 +34602,27 @@
     ],
     "detectionRules": []
   },
+  "msg-post": {
+    "displayName": "MSG Post & Koeriers",
+    "color": "#111860",
+    "aliases": [
+      "MSG Post en Koeriers B.V."
+    ],
+    "countries": [
+      "NL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Amsterdam",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.veloyd.nl/track&trace",
+    "trackingUrlTemplate": "https://app.veloyd.nl/track&trace/{trackingNumber}",
+    "trackingSearchUrl": "https://app.veloyd.nl/track&trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "mte-xpress": {
     "displayName": "MTE Xpress",
     "color": "#2a3653",
@@ -35746,7 +35769,8 @@
       "NOX Nachtexpress",
       "nox Germany",
       "Innight Express",
-      "TNT Innight"
+      "TNT Innight",
+      "nox Belgium N.V."
     ],
     "countries": [
       "DE"
@@ -40250,7 +40274,8 @@
     "displayName": "PPL",
     "color": "#004b93",
     "aliases": [
-      "PPL CZ"
+      "PPL CZ",
+      "PPL CZ s.r.o."
     ],
     "countries": [
       "CZ"
