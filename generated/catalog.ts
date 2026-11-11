@@ -50568,6 +50568,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "u-post": {
+    "displayName": "U Post",
+    "color": "#ffbe00",
+    "aliases": [
+      "U Post International",
+      "U POST s. r. o."
+    ],
+    "countries": [
+      "UA",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.upost.com.ua/tracking/",
+    "trackingSearchUrl": "https://www.upost.com.ua/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ubi-smart-parcel": {
     "displayName": "UBI Smart Parcel",
     "color": "#053c80",
@@ -56375,6 +56397,7 @@ export const CARRIER_IDS = [
   "tusou",
   "tws-express",
   "u-envios",
+  "u-post",
   "ubi-smart-parcel",
   "ubx-uk",
   "ues-uy",
@@ -57867,6 +57890,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tusou": [],
   "tws-express": ["tws-express-1"],
   "u-envios": [],
+  "u-post": [],
   "ubi-smart-parcel": ["ubi-smart-parcel-1"],
   "ubx-uk": [],
   "ues-uy": ["ues-uy-1"],

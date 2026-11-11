@@ -50564,6 +50564,28 @@
     ],
     "detectionRules": []
   },
+  "u-post": {
+    "displayName": "U Post",
+    "color": "#ffbe00",
+    "aliases": [
+      "U Post International",
+      "U POST s. r. o."
+    ],
+    "countries": [
+      "UA",
+      "SK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.upost.com.ua/tracking/",
+    "trackingSearchUrl": "https://www.upost.com.ua/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ubi-smart-parcel": {
     "displayName": "UBI Smart Parcel",
     "color": "#053c80",

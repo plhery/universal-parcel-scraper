@@ -2867,6 +2867,7 @@ export const REGISTRY: RegistryDefinition = {
     "tusou": "universal",
     "tws-express": "tws-express",
     "u-envios": "universal",
+    "u-post": "universal",
     "ubi-smart-parcel": "ubi-smart-parcel",
     "ubx-uk": "universal",
     "ues-uy": "universal",
