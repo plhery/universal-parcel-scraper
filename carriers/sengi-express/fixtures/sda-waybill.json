@@ -1,0 +1,88 @@
+{
+  "100C00000001F": [
+    {
+      "description": "Order information received. We're expecting your parcel to arrive with us.",
+      "zhDescription": "邮寄信息已收到",
+      "eventCode": "10",
+      "eventTime": "2026-03-20T09:12:40",
+      "eventTimeStr": "2026-03-20 09:12:40",
+      "location": "-",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 1,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    },
+    {
+      "description": "Arrived at Destinated Airport",
+      "zhDescription": "到达目的地机场",
+      "eventCode": "30",
+      "eventTime": "2026-03-26T06:40:00",
+      "eventTimeStr": "2026-03-26 06:40:00",
+      "location": "FCO",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 1,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    },
+    {
+      "description": "Terminal Notification of Arrival",
+      "zhDescription": "货站到货通知",
+      "eventCode": "31",
+      "eventTime": "2026-03-26T10:05:00",
+      "eventTimeStr": "2026-03-26 10:05:00",
+      "location": "FCO",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 1,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    },
+    {
+      "description": "Arrived at customs clearance warehouse",
+      "zhDescription": "到达清关仓",
+      "eventCode": "40",
+      "eventTime": "2026-03-29T08:30:00",
+      "eventTimeStr": "2026-03-29 08:30:00",
+      "location": "FCO",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 2,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    },
+    {
+      "description": "Customs clearance inspection, Reason: supposed as undervaluation, waiting for customs check(VM)",
+      "zhDescription": "海关查验",
+      "eventCode": "41",
+      "eventTime": "2026-03-30T11:15:00",
+      "eventTimeStr": "2026-03-30 11:15:00",
+      "location": "FCO",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 2,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    },
+    {
+      "description": "Ready for transit to last mile operator",
+      "zhDescription": "准备转交尾程",
+      "eventCode": "50",
+      "eventTime": "2026-04-02T16:45:00",
+      "eventTimeStr": "2026-04-02 16:45:00",
+      "location": "FCO",
+      "orderNumber": "AP0000000000000000",
+      "trackingNumber": "100C00000001F",
+      "timeZone": 2,
+      "relabelTrackingNumber": null,
+      "channelCode": "PI",
+      "serviceCode": "EXT"
+    }
+  ]
+}

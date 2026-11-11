@@ -28,7 +28,8 @@
         "confidence": "low",
         "candidates": [
           "aliexpress",
-          "poste-italiane"
+          "poste-italiane",
+          "sengi-express"
         ]
       },
       "note": "Made-up number in the shape of a parcel the app tracked to Italy: an SDA waybill of three digits, C, eight digits and F. Sengi's tracker answered it with its leg to the handover, which a universal provider relayed under Sengi's name, before SDA knew it. The shape is SDA's, so detection leaves Sengi out."

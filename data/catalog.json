@@ -43524,7 +43524,10 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sengi-express",
+      "recognitionRank": 119,
+      "recognitionPattern": "^\\d{3}C\\d{8}F$",
+      "localClocks": true
     },
     "canaryUrl": "https://portal.sengiexpress.com/",
     "trackingSearchUrl": "https://portal.sengiexpress.com/",
@@ -43532,6 +43535,10 @@
     "detectionRules": [
       {
         "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{3}C\\d{8}F$",
         "confidence": "low"
       }
     ]

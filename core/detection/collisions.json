@@ -3110,6 +3110,15 @@
     "reason": "SDA numbers its parcels in this shape, and AliExpress shows the buyer such a number while the parcel is still on Cainiao's leg, before Poste Italiane knows it. Neither rule is preferred; the one that knows the number confirms it. Once both know it, it is filed under AliExpress, which proposes Poste Italiane as the delivery carrier."
   },
   {
+    "shape": "9{3}A9{8}A",
+    "carriers": [
+      "aliexpress",
+      "poste-italiane",
+      "sengi-express"
+    ],
+    "reason": "SDA numbers its parcels in this shape, and AliExpress shows the buyer such a number while the parcel is still on Cainiao's leg, before Poste Italiane knows it. Sengi Express gives parcels for Italy such a waybill, with C and F, which only its tracker knows until SDA takes the parcel; its tracker holds only the parcels Sengi carries. No rule is preferred; the one that knows the number confirms it."
+  },
+  {
     "shape": "Fourteen digits starting 13 and their DPD check character",
     "carriers": [
       "chronopost",

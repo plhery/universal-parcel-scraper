@@ -421,6 +421,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "sendex": 794,
   "sending": 891,
   "sendle": 64,
+  "sengi-express": 119,
   "serpost": 893,
   "servientrega": 979,
   "seur": 870,

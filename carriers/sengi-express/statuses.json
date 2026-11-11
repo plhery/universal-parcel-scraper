@@ -1,4 +1,42 @@
 {
   "carrier": "sengi-express",
-  "entries": []
+  "entries": [
+    {
+      "code": "10",
+      "wording": "Order information received. We're expecting your parcel to arrive with us.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at Destinated Airport",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Terminal Notification of Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at customs clearance warehouse",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Customs clearance inspection, Reason: supposed as undervaluation, waiting for customs check(VM)",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Ready for transit to last mile operator",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
 }

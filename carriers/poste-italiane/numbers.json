@@ -217,7 +217,8 @@
         "confidence": "low",
         "candidates": [
           "aliexpress",
-          "poste-italiane"
+          "poste-italiane",
+          "sengi-express"
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed. Detection also suggests AliExpress, which shows buyers numbers of this shape before SDA knows them."

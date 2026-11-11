@@ -43528,7 +43528,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sengi-express",
+      "recognitionRank": 119,
+      "recognitionPattern": "^\\d{3}C\\d{8}F$",
+      "localClocks": true
     },
     "canaryUrl": "https://portal.sengiexpress.com/",
     "trackingSearchUrl": "https://portal.sengiexpress.com/",
@@ -43536,6 +43539,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^[A-Z]{5}\\d{9}MT$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^\\d{3}C\\d{8}F$",
         "confidence": "low"
       }
     ]
@@ -57634,7 +57641,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sendex": [],
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
-  "sengi-express": ["sengi-express-1"],
+  "sengi-express": ["sengi-express-1","sengi-express-2"],
   "sentral-cargo": [],
   "senyu": [],
   "serpost": ["serpost-s10"],

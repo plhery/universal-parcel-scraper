@@ -15,6 +15,7 @@ import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as zesExpress } from '../../carriers/zes-express/status.js';
+import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
 import { statusMap as fourSeventyTwo } from '../../carriers/4-72/status.js';
@@ -854,7 +855,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'quick-rabbit': quickRabbit, 'quicksilver-sa': quicksilverSa, quiqup, qwintry, raben, 'ram-hand-to-hand': ramHandToHand, redpack, redur, 'rex-indonesia': rexIndonesia, redx, 'relais-colis': relaisColis, relaytech,
   rincos, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
-  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
+  'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
   'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
   skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, slgtrax,
   'slovak-parcel-service': slovakParcelService,
