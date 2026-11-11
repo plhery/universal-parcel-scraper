@@ -78,6 +78,10 @@ const BROWSER_RECOGNITION_RANKS: Readonly<Record<string, number | undefined>> = 
 const RECOGNITION_PATTERNS: ReadonlyMap<string, RegExp> = new Map(Object.entries(CARRIER_DEFINITIONS)
   .flatMap(([id, { tracking }]) => tracking.recognitionPattern === undefined ? [] : [[id, new RegExp(tracking.recognitionPattern)] as const]));
 
+const BROWSER_RECOGNITION_PATTERNS: ReadonlyMap<string, RegExp> = new Map(Object.entries(CARRIER_DEFINITIONS)
+  .flatMap(([id, { tracking }]) => tracking.browserRecognitionPattern === undefined ? []
+    : [[id, new RegExp(tracking.browserRecognitionPattern)] as const]));
+
 /**
  * The low-confidence candidates worth asking, best first: the carrier a
  * universal provider named, then the ones number evidence backs, then the
@@ -137,7 +141,8 @@ export function recognitionCandidates(
   // abroad. Paquetexpress's guías, letters and digits, are asked whatever the country.
   const bareRun = /^\d+$/.test(normalized);
   const answers = (carrier: string) => {
-    if (options.phase === 'browser') return true;
+    // A browser lookup is costly: a carrier names the numbers worth one (DPD France its own layouts, not every run of digits).
+    if (options.phase === 'browser') return BROWSER_RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;
     const tracking = CARRIER_DEFINITIONS[carrier as CarrierId]?.tracking;
     if (tracking?.recognitionServedCountriesOnly && bareRun && countryScore(carrier) === 0) return false;
     return RECOGNITION_PATTERNS.get(carrier)?.test(normalized) ?? true;

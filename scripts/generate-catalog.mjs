@@ -144,6 +144,7 @@ function validateCarrierSemantics(carrier, adapterFolders) {
     if (requirement.pattern) new RegExp(requirement.pattern);
   }
   if (tracking.recognition?.pattern) new RegExp(tracking.recognition.pattern);
+  if (tracking.browserRecognition?.pattern) new RegExp(tracking.browserRecognition.pattern);
   for (const rule of carrier.detection) {
     new RegExp(rule.pattern);
     if (rule.rawPattern) new RegExp(rule.rawPattern);
@@ -195,6 +196,7 @@ function contractTracking(tracking) {
   if (tracking.recognition?.pattern !== undefined) contractValue.recognitionPattern = tracking.recognition.pattern;
   if (tracking.recognition?.servedCountriesOnly) contractValue.recognitionServedCountriesOnly = true;
   if (tracking.browserRecognition !== undefined) contractValue.browserRecognitionRank = tracking.browserRecognition.rank;
+  if (tracking.browserRecognition?.pattern !== undefined) contractValue.browserRecognitionPattern = tracking.browserRecognition.pattern;
   if (tracking.refresh !== undefined) contractValue.refresh = tracking.refresh;
   if (tracking.localClocks !== undefined) contractValue.localClocks = tracking.localClocks;
   // Consumers read the day of a scan on its place's clock, not on the clock the page states.

@@ -1192,6 +1192,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "dpd-fr",
+      "browserRecognitionRank": 700,
+      "browserRecognitionPattern": "^(?:10\\d{12}|250\\d{13})$",
       "browser": true
     },
     "canaryUrl": "https://trace.dpd.fr/fr/trace",

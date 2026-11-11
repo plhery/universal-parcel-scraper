@@ -154,6 +154,8 @@ export interface CarrierDefinition {
     recognitionServedCountriesOnly?: boolean;
     /** Opt-in browser confirmation; higher is asked first after HTTP is inconclusive. */
     browserRecognitionRank?: number;
+    /** The normalized numbers browser recognition asks about; others the carrier's rules offer are not asked. */
+    browserRecognitionPattern?: string;
     refresh?: { minMinutes: number; afterFailureMinutes?: number };
     localClocks?: boolean;
     /** The carrier's page states every scan on one clock of its own, not the clock where the scan happened. */

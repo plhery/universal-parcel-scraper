@@ -320,7 +320,8 @@ as typed: outside that PIC rule, a bare identifier also fits other carriers' for
 
 Recognition uses HTTP by default. Consumers can request `recognitionCandidates` with
 `phase: 'browser'` after HTTP is inconclusive, then call the adapter's
-`recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank;
+`recognizeWithBrowser` under a separate budget. The catalog declares eligibility and rank, and
+can name the numbers a browser lookup is worth, as DPD France's layouts;
 recipient inputs exclude a candidate. A carrier that holds the parcel but shows it only with
 the recipient's input knows the number: the adapter's `input_required` error carries the
 reason `parcel_found`, and recognition answers known without an activity date. A carrier whose HTTP recognition cannot bind every number

@@ -207,6 +207,11 @@
               "type": "integer",
               "minimum": 1,
               "maximum": 1000
+            },
+            "pattern": {
+              "description": "Regular expression for the normalized numbers browser recognition asks about. Absent: every number the carrier's rules offer.",
+              "type": "string",
+              "minLength": 1
             }
           }
         }

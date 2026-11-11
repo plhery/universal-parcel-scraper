@@ -5,6 +5,7 @@ import type { StepRecord, StepRecorder } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
 import { TrawlClient } from '../../core/transport/index.js';
+import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import {
   DPDFranceChallengeError,
   DPDFranceTracker,
@@ -491,5 +492,35 @@ describe('DPD France adapter factory', () => {
     expect(instance.steps).toEqual(['direct', 'retry', 'trawl']);
     await expect(instance.track({ number: TEST_TRACKING_NUMBER }))
       .resolves.toMatchObject({ status: 'exception' });
+  });
+
+  it('confirms a number in browser recognition only, from the dated rows the browser service shows', async () => {
+    const trawl = new TrawlClient('http://trawl.internal:8191/v1');
+    const scraped = (html: string) => new Response(JSON.stringify({ tier: 3, statusCode: 200, html, cookies: [] }),
+      { headers: { 'Content-Type': 'application/json' } });
+    const fetcher = vi.spyOn(globalThis, 'fetch').mockResolvedValueOnce(scraped(trackingFixture()));
+    const instance = adapter({ trawl, browserExecutablePath: null, recorder: recordingRecorder().recorder, env: {} });
+    expect(instance.recognize).toBeUndefined();
+
+    const known = await instance.recognizeWithBrowser!(TEST_TRACKING_NUMBER, { budgetMs: 30_000 });
+    expect(known).toMatchObject({ known: true, lastActivityAt: expect.any(String) });
+    expect(known.result?.events?.length).toBeGreaterThan(0);
+    expect(String(fetcher.mock.calls[0]![0])).toBe('http://trawl.internal:8191/scrape');
+
+    fetcher.mockResolvedValueOnce(scraped('<p>Nous ne sommes pas en mesure de retrouver le numéro de colis recherché.</p>'));
+    await expect(instance.recognizeWithBrowser!(TEST_TRACKING_NUMBER, { budgetMs: 30_000 })).resolves.toEqual({ known: false, lastActivityAt: null });
+
+    // A number DPD France does not issue is not asked.
+    await expect(instance.recognizeWithBrowser!('ABC', { budgetMs: 30_000 })).resolves.toEqual({ known: false, lastActivityAt: null });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+  });
+
+  it('is a browser recognition candidate for the ex-Exapaq depots\' fourteen digits only, never an HTTP one', () => {
+    // Synthetic: a 10xx depot's fourteen digits.
+    const number = '10080000000001';
+    expect(recognitionCandidates(number).map((candidate) => candidate.carrier)).not.toContain('dpd-fr');
+    expect(recognitionCandidates(number, { phase: 'browser' }).map((candidate) => candidate.carrier)).toContain('dpd-fr');
+    // Other runs of digits its rules suggest are more often other carriers': no browser lookup is spent on them.
+    expect(recognitionCandidates('100800000000', { phase: 'browser' }).map((candidate) => candidate.carrier)).not.toContain('dpd-fr');
   });
 });

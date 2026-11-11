@@ -1,6 +1,6 @@
 
 import { load } from 'cheerio';
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromBrowserLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { eventPoint, type CarrierEvent, type CarrierResult, type CarrierStatus, type EventPoint } from '../../core/result/index.js';
@@ -363,5 +363,9 @@ export const adapter: AdapterFactory = (environment) => {
     // The browser service's native scrape API, or a direct HTML GET without one.
     steps: ['direct', 'retry', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
+    // Cloudflare challenges every plain GET, so only the browser phase can ask DPD France. The trace page
+    // shows only the requested parcel, on Paris time: its dated rows confirm the number.
+    recognizeWithBrowser: (number, context) => (accepted(() => normalizeDPDFranceTrackingNumber(number))
+      ? recognizeFromBrowserLookup(() => tracker.fetch(number, context)) : Promise.resolve({ known: false, lastActivityAt: null })),
   };
 };
