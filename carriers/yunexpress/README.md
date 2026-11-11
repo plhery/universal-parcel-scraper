@@ -50,7 +50,10 @@ zone's standard offset in summer too, and the leg then shares the latest
 scan's error. Reading such a leg on the destination's zone, when the
 destination has one zone and the stated offset is its standard one in summer
 time, waits for a public sample: archived pages keep the page shell, not the
-tracking reply.
+tracking reply. J&T Express Australia's scans of a parcel bound for Australia
+name a depot's code and are on Sydney's clock whatever state the depot is in:
+the latest-scan record states Sydney's summer offset for one at a Brisbane
+depot, an hour more than Brisbane keeps.
 [`identity.ts`](identity.ts) lets such a row take over the one an app
 stored for its wall clock under another offset, with the same place and wording. The
 reply is inconclusive when its latest summary does not match the first scan.

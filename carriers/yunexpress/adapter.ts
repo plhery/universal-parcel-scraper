@@ -16,6 +16,7 @@ import { isRecord } from '../../core/types.js';
 import { airportTimeZone } from '../../places/index.js';
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
+import { jAndTAuRelayedStage } from '../j-and-t-au/status.js';
 import { YUNEXPRESS_ORIGIN_ZONE as ORIGIN_ZONE, yunExpressOriginLeg } from './clock.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressNotice, withoutMarkup, withoutRepeatedParts, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
@@ -144,6 +145,25 @@ function dateDestinationLeg(events: CarrierEvent[], offset: string | undefined, 
   if (events.slice(0, end).some((event) => event.location)) return events;
   return events.map((event, at) => at >= end || event.time || !event.local_time ? event
     : { ...event, time: eventClock(event.local_time, offset).time, time_zone: zone.name, time_zone_basis: 'neighbour' });
+}
+
+const SYDNEY = 'Australia/Sydney';
+
+/**
+ * Dates J&T Express Australia's scans of a parcel bound for Australia, which
+ * the feed relays with a depot's code as place and no offset, on Sydney's
+ * clock whatever state the depot is in: the latest-scan record states
+ * Sydney's summer offset for one at a Brisbane depot, which keeps an hour
+ * less, and J&T's own instants for the scans Techlink relays are those wall
+ * clocks at it.
+ */
+function dateJAndTAuScans(events: CarrierEvent[], country: string): CarrierEvent[] {
+  if (country !== 'AU') return events;
+  return events.map((event) => {
+    if (event.time || !event.local_time || !jAndTAuRelayedStage(event.description ?? '')) return event;
+    const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone: SYDNEY })).toISO({ suppressMilliseconds: true });
+    return time ? { ...event, time, time_zone: SYDNEY, time_zone_basis: 'carrier' } : event;
+  });
 }
 
 /**
@@ -282,7 +302,7 @@ export function parse(payload: unknown, trackingNumber: string): CarrierResult {
   }
   const domestic = /^[A-Z]{2}$/.test(country) && clean(info.OriginCountryCode, 8).toUpperCase() === country;
   const landed = dateArrivalAirport(events, info.DestAirport, country);
-  const dated = officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic));
+  const dated = dateJAndTAuScans(officesAsPlaces(dateDestinationLeg(dateChinaPostScans(dateOriginLeg(landed), country), lastOffset, domestic)), country);
   const latest = dated[0]!;
   const classified = current;
   // A partner's relayed row can link its contact page with its own reference,

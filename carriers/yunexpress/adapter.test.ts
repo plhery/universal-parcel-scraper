@@ -313,6 +313,19 @@ describe('YunExpress captured response projection', () => {
       '2026-03-19T13:39:00-05:00', '2026-03-18T13:39:00-05:00', undefined, undefined]);
   });
 
+  it("dates J&T Express Australia's scans of a parcel bound for Australia on Sydney's clock, whatever state its depot is in", () => {
+    const payload = placing({ 1: 'BRISBANE-HUB' });
+    const row = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList)[1];
+    row.ProcessContent = 'The parcel arrives at the distribution center and is prepared for transport to the next destination.----BRISBANE-HUB';
+    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'AU';
+    // Sydney's summer offset, an hour more than Brisbane keeps.
+    expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+11:00', local_time: '2026-03-19T13:39:00',
+      time_zone: 'Australia/Sydney', time_zone_basis: 'carrier', location: 'BRISBANE-HUB' });
+    // Bound elsewhere, J&T's words keep their wall clock for the facade.
+    payload.ResultList[0].TrackInfo.DestinationCountryCode = 'GB';
+    expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
+  });
+
   it("reads La Poste's platform scans in France on UTC, and its delivery office's on the office's clock", () => {
     // Against La Poste's own instants: its arrival in France at 18:08:37+02:00 came as 16:08:37.
     const relay = () => fixture('la-poste-relay');
