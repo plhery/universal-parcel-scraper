@@ -883,6 +883,19 @@ describe('same-instant identity policies', () => {
     ]) expect(policy?.matches?.(different, stored), different.description).toBe(false);
   });
 
+  it('lets a JRT row beside a country’s code in upper case take over the same row stored beside it in lower case', () => {
+    const policy = sameInstantIdentityPolicy('jrt', { supportsScanMatching: true });
+    const stored = { stage: 'registered', description: 'the instruction data for this shipment have been provided by the sender to dhl electronically', location: 'de', providerCode: '' };
+    const incoming = { ...stored, location: 'DE' };
+    expect(policy?.matches?.(incoming, stored)).toBe(true);
+    for (const different of [
+      { ...incoming, location: 'PL' },
+      { ...incoming, description: 'arrival at the parcel center' },
+    ]) expect(policy?.matches?.(different, stored), different.location).toBe(false);
+    // A town is not a country's code.
+    expect(policy?.matches?.({ ...incoming, location: 'HAGEN' }, { ...stored, location: 'hagen' })).toBe(false);
+  });
+
   it('lets a YunExpress row read on China’s clock take over the row stored on another zone, by wall clock, place and wording', () => {
     expect(sameInstantIdentityPolicy('yunexpress')).toBeUndefined();
     const policy = sameInstantIdentityPolicy('yunexpress', { supportsScanMatching: true });

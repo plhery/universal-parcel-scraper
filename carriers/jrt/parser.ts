@@ -3,7 +3,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import { normalizeHualeiNumber, parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
-import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, jrtStage } from './status.js';
+import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtCountryPlace, jrtEnglish, jrtStage } from './status.js';
 
 export const PROVIDER = 'JRT';
 export const JRT_ORIGIN = 'http://106.53.64.22:8082';
@@ -16,9 +16,15 @@ export const JRT: HualeiTenant = {
   ownNumber: /^JRT\d{10}[A-Z]{2}$/, unlabelledPartners: ['dhl'], productPartners: [[/\bFEDEX\b/i, 'fedex']],
 };
 
-/** The result with the rows the tracker copies from DHL dated, each keeping its wall clock. */
-export const dateJrtDhlRows = (result: CarrierResult): CarrierResult =>
-  dateDhlRows(result, { isRow: isJrtDhlRow, isGermanRow: isJrtDhlGermanRow });
+/** The result with the rows the tracker copies from DHL dated, each keeping its wall clock, and a country's code beside them shown as one. */
+export function dateJrtDhlRows(result: CarrierResult): CarrierResult {
+  const dated = dateDhlRows(result, { isRow: isJrtDhlRow, isGermanRow: isJrtDhlGermanRow });
+  if (!dated.events?.some((event) => event.location && isJrtDhlRow(event.description ?? '') && jrtCountryPlace(event.location) !== event.location)) return dated;
+  return {
+    ...dated,
+    events: dated.events.map((event) => (event.location && isJrtDhlRow(event.description ?? '') ? { ...event, location: jrtCountryPlace(event.location) } : event)),
+  };
+}
 
 // J&T Express Mexico writes its scans on Mexico City's clock, as its own tracker answers them.
 const JT_MEXICO_ZONE = 'America/Mexico_City';

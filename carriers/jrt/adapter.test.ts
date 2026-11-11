@@ -289,6 +289,9 @@ describe('JRT tracking adapter', () => {
     expect(dated('the shipment has been processed in the parcel center of origin')).toEqual([['2026-03-12T16:05:27+01:00', 'Europe/Berlin', 'place']]);
     expect(dated('loaded to movement / tour vehicle')).toEqual([['2026-03-14T16:11:00+01:00', 'Europe/Warsaw', 'place']]);
     expect(dated('unloaded from movement / tour vehicle')).toEqual([['2026-03-14T16:10:00+01:00', 'Europe/Warsaw', 'destination']]);
+    // The country's code is shown as other places name a country.
+    expect(result.events?.find(({ description }) => description === 'unloaded from movement / tour vehicle')?.location).toBe('PL');
+    expect(result.events?.find(({ description }) => description === 'loaded to movement / tour vehicle')?.location).toBe('poznan');
     // The label's data, beside the destination's code, comes from Germany.
     expect(dated('the instruction data for this shipment have been provided by the sender to dhl electronically'))
       .toEqual([['2026-03-04T10:01:11+01:00', 'Europe/Berlin', 'carrier']]);

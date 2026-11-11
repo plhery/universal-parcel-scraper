@@ -1,6 +1,7 @@
 import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { countryCode } from '../../core/time/index.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
@@ -101,3 +102,7 @@ export const isJrtDhlRow = (wording: string): boolean => DHL_SENTENCE.test(wordi
 export const isJrtDhlGermanRow = (wording: string): boolean => DHL_GERMAN_ROW.test(wording);
 
 export const statusMap: CarrierStatusMap = { stage: jrtStage, gaps: [] };
+
+/** A country's code the tracker writes in lower case beside DHL's rows ("de"), as other places name a country: "DE". */
+export const jrtCountryPlace = (location: string): string =>
+  /^[a-z]{2}$/.test(location.trim()) && countryCode(location) ? location.trim().toUpperCase() : location;

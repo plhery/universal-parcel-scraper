@@ -61,7 +61,8 @@ browser is needed, and no portal link is published.
   transport abroad) are read on DHL's German clock, and the others on the destination's. Read on
   Beijing time, each would sit six to eight hours before DHL's own row and show twice; a row stored
   that way is taken over by the same row on its wall clock. A help link DHL adds to a row is left
-  out of its text.
+  out of its text. The tracker writes the country's code in lower case ("de"); it is shown in upper
+  case, as other places name a country, and a row stored beside the lower case is taken over.
 - Other scan times are wall clocks without an offset on the platform's Beijing clock, as
   [GZYL's](../gzyl/README.md) are, and are read on it; a row dated after the lookup is held back.
 
