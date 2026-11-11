@@ -85,12 +85,13 @@ export const isJrtUpsRow = (wording: string, place: string): boolean =>
 
 // DHL's English sentences, as the tracker copies them on the line into Europe: "The shipment has arrived at the parcel center."
 const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b/i;
-// DHL's rows from Germany, before the parcel leaves for the destination country: the sender's data, the parcel
-// centre of origin, the export parcel centre and the transport abroad.
-const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:of origin|export parcel center|transported to the destination country)\b/i;
+// DHL's rows from Germany, before the parcel leaves for the destination country: the sender's data, the transport to
+// DHL, the parcel centre of origin, the export parcel centre and the transport abroad.
+const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:in transit to dhl|of origin|export parcel center|transported to the destination country)\b/i;
 
-// DHL's own event texts, in lower case, as the tracker copies them: "loaded to movement / tour vehicle".
-const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|sorted$|not delivered-(?:consignee|bad address)\b|held for consignee collection|shipment will be returned to origin\b)/i;
+// DHL's own event texts, in lower case, as the tracker copies them: "loaded to movement / tour vehicle", and
+// its sentences shortened, as "shipment in transit to dhl".
+const DHL_EVENT = /^(?:(?:un)?loaded (?:to|from) movement \/ tour vehicle|movement \/ tour vehicle arrived|pick-up was successful|sorted$|not delivered-(?:consignee|bad address)\b|held for consignee collection|shipment will be returned to origin\b|shipment in transit to dhl$)/i;
 
 /**
  * Whether a row is one DHL wrote that the tracker copies, on DHL's wall clock where it scanned the parcel: its

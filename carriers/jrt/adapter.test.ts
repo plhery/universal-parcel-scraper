@@ -282,6 +282,8 @@ describe('JRT tracking adapter', () => {
     at('the shipment has been processed in the parcel center of origin').track_location = 'hagen';
     at('loaded to movement / tour vehicle').track_location = 'poznan';
     at('unloaded from movement / tour vehicle').track_location = 'pl';
+    const handover = at('the instruction data for this shipment have been provided by the sender to dhl electronically');
+    rows.splice(rows.indexOf(handover), 0, { ...handover, track_content: 'shipment in transit to dhl', track_date: '2026-03-05 07:11:55', track_createdate: '2026-03-05 07:11:55', track_location: 'de' });
     const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-15T00:00:00Z'))!;
     const dated = (content: string) => result.events?.filter(({ description }) => description === content)
       .map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis]);
@@ -295,6 +297,9 @@ describe('JRT tracking adapter', () => {
     // The label's data, beside the destination's code, comes from Germany.
     expect(dated('the instruction data for this shipment have been provided by the sender to dhl electronically'))
       .toEqual([['2026-03-04T10:01:11+01:00', 'Europe/Berlin', 'carrier']]);
+    // So does DHL's transport to DHL, its sentence shortened, which DHL Germany dates on its clock.
+    expect(dated('shipment in transit to dhl')).toEqual([['2026-03-05T07:11:55+01:00', 'Europe/Berlin', 'carrier']]);
+    expect(result.events?.find(({ description }) => description === 'shipment in transit to dhl')?.location).toBe('DE');
     // JRT's own rows at a town stay on the platform's clock.
     expect(dated('Goods leave the operation center')).toEqual([['2026-03-04T09:40:08+08:00', undefined, undefined]]);
   });

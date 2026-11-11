@@ -57,7 +57,7 @@ browser is needed, and no portal link is published.
   its lower case event texts ("loaded to movement / tour vehicle"). They come on DHL's wall clock
   where it scanned the parcel, the wall clocks DHL's own reply gives. A row at a town, as "hagen",
   is read on that town's clock. Without one, or beside a country's code, which names no town,
-  DHL's rows from Germany (the sender's data, the parcel centre of origin, the export centre, the
+  DHL's rows from Germany (the sender's data, the transport to DHL, the parcel centre of origin, the export centre, the
   transport abroad) are read on DHL's German clock, and the others on the destination's. Read on
   Beijing time, each would sit six to eight hours before DHL's own row and show twice; a row stored
   that way is taken over by the same row on its wall clock. A help link DHL adds to a row is left
