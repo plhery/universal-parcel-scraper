@@ -401,6 +401,14 @@
       "note": "DHL's first scan in Germany, relayed after the sort that follows customs at the destination."
     },
     {
+      "wording": "The shipment has been processed in the destination parcel center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "DHL's sort at the parcel centre that serves the recipient, relayed before its round."
+    },
+    {
       "wording": "Shipment is out for delivery",
       "stage": "out_for_delivery",
       "language": "en",
