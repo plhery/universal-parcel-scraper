@@ -144,6 +144,12 @@ carrier.
   `-04:00`, Chile's offset outside summer time, in summer too: an hour late against
   Correos de Chile's page and Correios Brazil's copies. That leg's `time_raw` is read on
   Santiago's clock, unless its place names a country on one clock.
+- Correios Brazil's leg (carrier key 2151) places the sending post's posting and its office of
+  exchange in that post's country, as `CN`, and labels that post's wall clock with Brasília's
+  `-03:00`: so read, the posting came eleven hours after China Post's own acceptance. A row placed
+  in a country abroad is read on that country's clock, as the
+  [Correios adapter](../../carriers/correios-br/README.md) reads those rows, and keeps its wall
+  clock in a country of several. Correios's own rows keep 17TRACK's reading.
 - Asendia USA (carrier key 100016) relays A1's tracking, which dates every scan in UTC,
   partners' scans too, and 17TRACK labels those digits with US Eastern time. A Swiss Post
   scan at 18:20 `+02:00` is A1's 16:20, which 17TRACK showed as 16:20 `-04:00` (checked

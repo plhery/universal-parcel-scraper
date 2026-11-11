@@ -527,7 +527,7 @@ describe('ParcelsApp result parsing', () => {
     }
   });
 
-  it('reads Correios Brazil\'s scans on Brasília\'s clock, in Brazil and abroad', () => {
+  it('reads Correios Brazil\'s scans on Brasília\'s clock, and the sending post\'s on its country\'s', () => {
     // Correios Brazil's own tracker and 17TRACK's -03:00 copies have these digits.
     for (const name of ['Brazil Post', 'Correios Brazil']) {
       const payload = {
@@ -535,11 +535,14 @@ describe('ParcelsApp result parsing', () => {
         states: [
           { date: '2026-09-29T08:06:00Z', status: 'Item presented to import Customs', carrier: 0, location: 'EXAMPLE CITY, Brazil' },
           { date: '2026-09-14T17:29:00Z', status: 'Need to inform recipient\'s CPF/CNPJ', carrier: 0, location: 'Country, International Treatment Unit' },
+          // The sending post's scans: Chile keeps several clocks, so its keeps the wall clock.
           { date: '2026-09-14T17:28:00Z', status: 'Item in transfer - please wait', carrier: 0, location: 'Country, CHILE' },
+          // China Post's own acceptance came at 03:35 UTC.
+          { date: '2026-09-12T11:35:00Z', status: 'Item posted', carrier: 0, location: 'Country, CHINA' },
         ],
       };
-      expect(parseParcelsAppResponse(payload, number, identity()).events?.map((scan) => scan.time)).toEqual([
-        '2026-09-29T11:06:00.000Z', '2026-09-14T20:29:00.000Z', '2026-09-14T20:28:00.000Z',
+      expect(parseParcelsAppResponse(payload, number, identity()).events?.map((scan) => scan.time ?? `local ${scan.local_time}`)).toEqual([
+        '2026-09-29T11:06:00.000Z', '2026-09-14T20:29:00.000Z', 'local 2026-09-14T17:28:00.000', '2026-09-12T03:35:00.000Z',
       ]);
     }
   });

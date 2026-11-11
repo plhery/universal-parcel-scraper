@@ -495,11 +495,11 @@ const HOME_CLOCKS: Readonly<Record<string, string>> = {
   sunyousytrack: 'Asia/Shanghai', royalmail: 'Europe/London', parcelforce: 'Europe/London', parcelforceworldwide: 'Europe/London',
 };
 /**
- * Correios Brazil's dates, under any of its names, are Brasília's clock
- * wherever the scan was: its own tracker gives its rows America/Sao_Paulo,
- * and 17TRACK's -03:00 copies of the same scans, in Curitiba and in the origin
- * country, have ParcelsApp's digits. Brazil keeps several zones, so its scans
- * otherwise kept the UTC label.
+ * Correios Brazil's dates, under any of its names, are Brasília's clock for
+ * its own rows: its tracker gives them America/Sao_Paulo, and 17TRACK's -03:00
+ * copies in Curitiba have ParcelsApp's digits. Brazil keeps several zones, so
+ * its scans otherwise kept the UTC label. The sending post's rows it relays
+ * ("Country, CHINA") are that post's (`RELAYING_POSTS`).
  */
 const CORREIOS_BRAZIL_CLOCK = 'America/Sao_Paulo';
 /**
@@ -1084,8 +1084,12 @@ function placeClockLine(carrier: string, status: string, location: string): stri
  * copies of Latvian Post's scans came two hours before Latvian Post's own.
  * La Poste names the sending country ("China"): read on Paris's clock, its
  * copy of China Post's posting came seven hours after La Poste's own instant.
+ * Correios Brazil names it after "Country, ": read on Brasília's clock, China
+ * Post's posting came eleven hours after China Post's own row of it.
  */
-const RELAYING_POSTS: Readonly<Record<string, string>> = { azerpost: 'AZ', 'correo-uruguayo': 'UY', 'la-poste': 'FR', 'slovenska-posta': 'SK' };
+const RELAYING_POSTS: Readonly<Record<string, string>> = {
+  azerpost: 'AZ', 'correios-br': 'BR', 'correo-uruguayo': 'UY', 'la-poste': 'FR', 'slovenska-posta': 'SK',
+};
 
 /**
  * The clock of a sending post's scan a relaying post names abroad: that

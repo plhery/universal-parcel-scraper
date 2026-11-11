@@ -434,9 +434,10 @@ step exists for future protocol changes.
   of Royal Mail's tracker, on London time at home and beyond Europe: a South African
   office's scans have the instants of the South African post's own clock that way.
   Their European partners' relays are on another clock (below). Correios Brazil's ("Brazil
-  Post") have the digits of Correios' own tracker, whose rows name America/Sao_Paulo, in
-  Brazil and in the origin country, and 17TRACK's -03:00 copies agree: they are read on
-  Brasília's clock, which the catalog's UTC and Brazil's several zones left out. "Shopee
+  Post") have the digits of Correios' own tracker, whose rows name America/Sao_Paulo, and
+  17TRACK's -03:00 copies in Brazil agree: they are read on Brasília's clock, which the
+  catalog's UTC and Brazil's several zones left out. Its copies of the sending post's scans
+  are that post's (below). "Shopee
   Express Brazil" has Shopee's UTC+8 digits wherever in Brazil the scan was: SPX's own
   tracker dates the same scans, to the second, eight hours earlier. "CTT Express" has Madrid's
   digits at its offices: its own tracker states the same scans at Madrid's offset, and its
@@ -543,7 +544,8 @@ step exists for future protocol changes.
   ("LATVIA: LVRIXA") as it names a town at home: read on Baku's clock, its copies of Latvian
   Post's scans came two hours before Latvian Post's own. So does La Poste ("China"): read on
   Paris's clock, its copy of China Post's posting came seven hours after La Poste's own instant.
-  Albania Post's relays under the foreign post's country ("Finland") keep their wall clock, as
+  Correios Brazil names it after "Country, ": read on Brasília's clock, China Post's posting
+  came eleven hours after China Post's own row of it. Albania Post's relays under the foreign post's country ("Finland") keep their wall clock, as
   its own tracker leaves them: they run hours ahead of the foreign post's own scans.
 - Speedaf's dates are its sites' wall clocks under a UTC label. Its own feed dates the
   scans up to the departing flight ("Cargo flight departured") on China time and the rest

@@ -573,6 +573,35 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-11-08T03:14:15.000Z');
   });
 
+  it("reads Correios Brazil's copies of the sending post's scans abroad on that country's clock, and its own rows as labeled", () => {
+    // 17TRACK shows the sending post's wall clock under Brasília's offset: so read, the posting came eleven hours after China Post's acceptance.
+    const row = (date: string, time: string, description: string, location: string, sub_status = 'InTransit_Other') => ({
+      time_iso: `${date}T${time}-03:00`, time_utc: null, time_raw: { date, time, timezone: '-03:00' }, description, location, stage: null, sub_status });
+    const parsed = parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key: 2151, name: 'Correios Brazil', country: 'BR' }, events: [
+        row('2026-10-30', '09:12:00', 'Objeto em transferência - por favor aguarde', 'CURITIBA - PR'),
+        row('2026-10-24', '06:40:00', 'Objeto em transferência - por favor aguarde', 'US'),
+        row('2026-10-22', '20:15:00', 'Objeto recebido na unidade de exportação no país de origem', 'CN', 'InfoReceived'),
+        row('2026-10-22', '11:35:00', 'Objeto postado', 'CN', 'InfoReceived'),
+      ] }] },
+    } }] }, number);
+    expect(parsed.events?.map((event) => [event.time ?? `local ${event.local_time}`, event.time_zone, event.time_zone_basis])).toEqual([
+      // Correios's own row in Brazil keeps the offset it states.
+      ['2026-10-30T12:12:00.000Z', undefined, undefined],
+      // The United States keeps several clocks: the wall clock stays.
+      ['local 2026-10-24T06:40:00', undefined, undefined],
+      ['2026-10-22T12:15:00.000Z', 'Asia/Shanghai', 'place'],
+      ['2026-10-22T03:35:00.000Z', 'Asia/Shanghai', 'place'],
+    ]);
+    // Another carrier's row in China keeps 17TRACK's reading.
+    const other = parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key: 100999, name: 'Example' }, events: [row('2026-10-22', '11:35:00', 'Posted', 'CN')] }] },
+    } }] }, number);
+    expect(other.events?.[0]?.time).toBe('2026-10-22T14:35:00.000Z');
+  });
+
   it('reads DAI Post\'s scans on their country\'s clock, not on the one offset 17TRACK gives the parcel', () => {
     // Public shape: every scan stamped with one offset, the scan's local clock in time_raw, its town and country code.
     const row = (date: string, time: string, location: string, description = 'Parcel arrived in trans-shipment country.') => ({
