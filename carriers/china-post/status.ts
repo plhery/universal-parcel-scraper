@@ -135,6 +135,7 @@ const LABELS: ReadonlyArray<readonly [label: string, english: string]> = [
   ['邮件已在…完成分拣，准备发出', 'Sorted and ready to leave'],
   ['邮件已完成分拣，准备发出', 'Sorted and ready to leave'],
   ['邮件到达…，准备发往…', 'Arrived, to leave for the next office'],
+  ['邮件到达投递点…', 'Arrived at the delivery point'],
   ['邮件已乘机由…飞往…', 'Left on a flight'],
   ['您的邮件正途经…', 'Passing through'],
   ['…已出口直封', 'Closed into an export dispatch'],

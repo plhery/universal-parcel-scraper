@@ -281,6 +281,9 @@ describe('17TRACK result parsing', () => {
     expect(shown('InTransit_CustomsReleased', '出口清关完成【Customs Clearance Completed【示例市】】', 'Customs Clearance Completed【示例市】'))
       .toMatchObject({ description: 'Export customs clearance completed', location: '示例市', stage: 'in_transit' });
     expect(shown('InTransit_Other', '承运商接收')).toMatchObject({ description: 'Received by carrier', stage: 'in_transit' });
+    // The destination post's arrival at the delivery point, which 17TRACK leaves in Chinese among English rows.
+    expect(shown('InTransit_Other', '邮件到达投递点【ZZ XX Example Town X9X】', 'Example Town'))
+      .toMatchObject({ description: 'Arrived at the delivery point', location: 'Example Town', stage: 'in_transit' });
     // The estimate of the next arrival keeps its date, and the place it is at.
     expect(shown('InTransit_Other', '预计【01月02日】到达【示例市】，两地距离1000km，将在【01月02日上午】更新邮件状态，请您放心。', '示例市 00000000'))
       .toMatchObject({ description: 'Expected to arrive at the next stop on January 2', location: '示例市', stage: 'in_transit' });
