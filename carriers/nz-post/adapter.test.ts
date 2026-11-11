@@ -198,6 +198,8 @@ describe('NZ Post courier labels and international mail', () => {
     expect(presented.events?.map(event => event.stage)).toEqual(['customs', 'in_transit', 'in_transit']);
     // The Ministry of Health's Medsafe assessment holds the item in border clearance.
     expect(classifyNzPostStatus('5188')).toEqual({ status: 'in_transit', stage: 'customs' });
+    // Presented for border assessment, after that assessment and a second presentation for clearance.
+    expect(classifyNzPostStatus('5186')).toEqual({ status: 'in_transit', stage: 'customs' });
     expect(classifyNzPostStatus('6908')).toEqual({ status: 'pending', stage: 'registered' });
     // A carded parcel handed over to an outlet is not yet ready for collection.
     expect(classifyNzPostStatus('144')).toEqual({ status: 'in_transit', stage: 'in_transit' });

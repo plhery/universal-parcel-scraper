@@ -158,6 +158,15 @@
       "note": "The Ministry of Health's medicines regulator assessing an item held in border clearance, after its presentation for clearance."
     },
     {
+      "code": "5186",
+      "wording": "Presented for border assessment",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The item presented to the border agency for assessment, after Medsafe's assessment and its presentation for clearance: still held at the border."
+    },
+    {
       "code": "5017",
       "wording": "At local/regional depot",
       "language": "en",

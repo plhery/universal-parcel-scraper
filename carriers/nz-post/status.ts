@@ -23,9 +23,9 @@ const REGISTERED = new Set(['5303', '6908']);
 const MOVEMENT = new Set(['144', '591', '595', '5002', '5007', '5015', '5017', '5020', '5023', '5041', '5042',
   '5064', '5199', '5213', '5280', '5282', '5283', '5284', '5285', '5292', '5360', '6025', '6028', '6049',
   '6054', '6063', '6068', '6069', '6071']);
-// The border agency's hold, the item presented to it after its arrival, and the Ministry of Health's
-// Medsafe assessment of medicines it holds at the border.
-const BORDER = new Set(['5016', '5019', '5208', '5188']);
+// The border agency's hold, the item presented to it after its arrival, the Ministry of Health's
+// Medsafe assessment of medicines it holds at the border, and the item presented for assessment there.
+const BORDER = new Set(['5016', '5019', '5208', '5188', '5186']);
 // Border clearance pending, which NZ Post notes hours before an item from abroad reaches the office of
 // exchange: the item is still on its way, and its presentation to the border agency (5208) follows the arrival.
 const PENDING_CLEARANCE = '5057';
