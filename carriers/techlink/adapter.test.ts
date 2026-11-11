@@ -86,6 +86,25 @@ describe('Techlink HTTP adapter', () => {
     expect(result.events![0]!.local_time).toBeUndefined();
   });
 
+  it('dates J&T Express Australia’s scans of a parcel bound for Australia on Sydney’s clock, its pickup there a handover', () => {
+    const pickup = 'The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000';
+    const bound = (country: string, description: string) => changed((scans) => {
+      for (const scan of scans) scan.receive_country = country;
+      scans.unshift({ ...scans[0], track_code: 'InTransit', track_sub_code: 'InTransit_Other', track_name: '',
+        actual_time: '2026-01-09 15:31:05', create_date: '2026-01-09 15:31:05', location: 'QLD,EXAMPLE,EXA.01', description });
+    });
+    const newest = (country: string, description: string) => normalizeCarrierResult(parseTechlink(bound(country, description), IN_TRANSIT)).events![0]!;
+    // J&T's own instant for such a scan at a Queensland depot is its wall clock at Sydney's summer offset, not Brisbane's.
+    expect(newest('AU', pickup)).toMatchObject({ time: '2026-01-09T15:31:05+11:00', local_time: '2026-01-09T15:31:05', time_zone: 'Australia/Sydney',
+      time_zone_basis: 'carrier', location: 'QLD,EXAMPLE,EXA.01', stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(newest('AU', 'The parcel is dispatched from the transit center to the next destination')).toMatchObject({ time: '2026-01-09T15:31:05+11:00' });
+    // Another partner's scan there, and J&T's words in a parcel bound elsewhere, keep their wall clock.
+    for (const event of [newest('AU', 'Synthetic partner scan'), newest('PL', pickup)]) {
+      expect(event).toMatchObject({ local_time: '2026-01-09T15:31:05' });
+      expect(event.time).toBeUndefined();
+    }
+  });
+
   it('falls back to the Chinese wording and leaves out a last-mile number that is missing or not one', () => {
     const result = parseTechlink(changed((scans) => {
       for (const scan of scans) Object.assign(scan, { description: '', lm_track_num: '' });
@@ -193,6 +212,11 @@ describe('Techlink status vocabulary', () => {
     expect(techlinkStage('InTransit_Other', 'Delivery attempted, recipient not at home')).not.toMatchObject({ source: 'carrier_map' });
     // iMile's rows, whatever centre they name, and YWE's, whatever reason; the sentence decides over the family.
     expect(techlinkStage('InTransit_Other', '【Example center】Parcel shipped to【EXA 01】.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    // J&T Express Australia's, with its customer service line; its pickup is Techlink's handover.
+    expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'InTransit_Other',
+      description: 'The parcel has been successfully picked up and is being prepared for transportation. Customer service:130000' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(techlinkStage('InTransit_Other', 'Your parcel has been delivered.')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(techlinkStage('DlvFail_Other', 'Parcel delivery failed [Synthetic Reason]. Parcel will be returned to the warehouse.'))
       .toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'techlink', providerCode: 'DlvFail_Other', description: 'Parcel is out for delivery.' }))

@@ -3,7 +3,7 @@ import { languageStageStatus, type ClassifiedStatus, type Stage } from '../../co
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { chinaPostRelayedStage } from '../china-post/status.js';
 import { withoutCourtesy } from '../j-and-t-au/identity.js';
-import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
+import { J_AND_T_AU_HOTLINE, jAndTAuRelayedStage } from '../j-and-t-au/status.js';
 import { yweMappedStage } from '../ywe/status.js';
 
 const WORDING = new Map<string, ClassifiedStatus>([
@@ -178,15 +178,10 @@ const withoutPrefix = (description: string) => description.replace(/^【[^】]*�
 const bare = (description: string) => withoutPrefix(description).replace(/\s*\(Country(?: code)?: [a-z]{2}\)$/i, '');
 
 // J&T Express Australia's scans after Yanwen's batch handover at the destination port, relayed with its customer
-// service line: read as J&T's own map reads them, but its pickup is Yanwen's handover, not the parcel's acceptance.
-const HOTLINE = /[\s.]*customer service\s*[:：]\s*\d[\d\s]*$/i;
-function jAndTAuRelayedStage(wording: string): Stage | undefined {
-  const stage = jAndTAuMappedStage(wording.replace(HOTLINE, '.'));
-  return stage === 'accepted' ? 'in_transit' : stage;
-}
+// service line, are read as J&T's own map reads them, but its pickup is Yanwen's handover (`jAndTAuRelayedStage`).
 
 /** A relayed scan's wording without J&T Australia's customer service line and the courtesy that offers it, as J&T's own adapter keeps neither. */
-export const yanwenWording = (description: string): string => withoutCourtesy(description.replace(HOTLINE, '.')).trim();
+export const yanwenWording = (description: string): string => withoutCourtesy(description.replace(J_AND_T_AU_HOTLINE, '.')).trim();
 
 // YWE's scans in the United States after Yanwen's batch handover at the destination port, relayed without YWE's codes:
 // read as YWE's own map reads them, its hub's receipt of the container and of the parcel as that handover, in transit.

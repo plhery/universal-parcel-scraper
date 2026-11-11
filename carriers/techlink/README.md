@@ -20,13 +20,17 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
   the wall clock in `actual_time`, a place given as a country code, both countries and the
   last-mile number.
 - A code ending in `_Other` stands for a family. Abroad its rows are the delivering partner's
-  scans in the partner's words: iMile's in Italy and YWE's in the United States. Their own maps
-  read such a row whatever centre or reason it names, and the sentence decides over the family:
-  a failure's code on an out-for-delivery line is a new delivery round.
+  scans in the partner's words: iMile's in Italy, J&T Express Australia's and YWE's in the United
+  States. Their own maps read such a row whatever centre or reason it names, and the sentence
+  decides over the family: a failure's code on an out-for-delivery line is a new delivery round.
+  J&T's pickup in Australia is Techlink's handover, in transit, not the parcel's acceptance.
 - Techlink's own records are on Beijing's clock: the order's electronic information, which has
   no place, and the warehouse scans in China. So is a scan abroad worded with its centre in
   brackets (`【…】Received.`): read on the destination's clock, one came hours after the lookup
-  that returned it. Any other scan keeps `local_time`.
+  that returned it. J&T Express Australia's scans of a parcel bound for Australia are on
+  Sydney's clock whatever state the depot is in: J&T's own instants for them are those wall
+  clocks at Sydney's offset, an hour more than a Queensland depot keeps in summer. Any other
+  scan keeps `local_time`.
 - The last-mile number is returned as `delivery_tracking_number` with the destination country.
   The reply does not name the carrier; the shared hand-off proposes the destination's post or
   the carrier whose numbers have that shape.
@@ -34,7 +38,7 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
 ## Limitations
 
 - No estimated delivery, weight or service name.
-- The zone of a partner's scan abroad in plain words is unknown, and it keeps its wall clock.
+- The zone of another partner's scan abroad in plain words is unknown, and it keeps its wall clock.
 
 ## Numbers
 

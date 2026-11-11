@@ -1,6 +1,7 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import { imileRelayedStage } from '../imile/status.js';
+import { jAndTAuRelayedStage } from '../j-and-t-au/status.js';
 import { yweMappedStage } from '../ywe/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -8,9 +9,10 @@ type Entry = { code?: string; wording: string; stage?: string };
 
 // A code ending in `_Other` stands for any scan of its family without a code of its own, so the map
 // reads its rows by code and wording together. Abroad they are the delivering partner's scans in its
-// words: iMile's in Italy, which open with the centre's name in 【】, and YWE's in the United States.
-// Their readings stage a family's row the map does not list, whatever centre or reason it names, and
-// the sentence decides over the family: a failure's code on an out-for-delivery line is a new round.
+// words: iMile's in Italy, which open with the centre's name in 【】, J&T Express Australia's, whose
+// pickup is Techlink's handover, and YWE's in the United States. Their readings stage a family's row
+// the map does not list, whatever centre or reason it names, and the sentence decides over the family:
+// a failure's code on an out-for-delivery line is a new round.
 const FAMILY = /_Other$/;
 const key = (code: string, wording: string): string => (FAMILY.test(code) ? `${code}\n${normalizeStatusWording(wording)}` : code);
 
@@ -20,7 +22,7 @@ const CODES = new Map<string, Stage>((statuses.entries as readonly Entry[]).filt
 
 /** The stage Techlink's map gives a scan code, and its wording, or its partner's reading of it, where the code is a family's. */
 export function techlinkMappedStage(code: string, wording: string): Stage | undefined {
-  return CODES.get(key(code, wording)) ?? (FAMILY.test(code) ? imileRelayedStage(wording) ?? yweMappedStage(wording) : undefined);
+  return CODES.get(key(code, wording)) ?? (FAMILY.test(code) ? imileRelayedStage(wording) ?? jAndTAuRelayedStage(wording) ?? yweMappedStage(wording) : undefined);
 }
 
 /** A scan's stage: its code, else the shared wording rules, else none. */

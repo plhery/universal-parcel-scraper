@@ -40,6 +40,19 @@ export function jAndTAuStage(wording: string): ClassifiedWording | null {
   return worded.source === 'none' ? null : worded;
 }
 
+/** J&T Australia's customer service line, which a forwarder relaying its scans can close a sentence with. */
+export const J_AND_T_AU_HOTLINE = /[\s.]*customer service\s*[:：]\s*\d[\d\s]*$/i;
+
+/**
+ * The stage the map gives one of J&T Australia's scans that a forwarder relays after handing the parcel
+ * over at the destination, with or without the customer service line: its pickup there is that
+ * handover, not the parcel's acceptance, and is in transit.
+ */
+export function jAndTAuRelayedStage(wording: string): Stage | undefined {
+  const stage = jAndTAuMappedStage(wording.replace(J_AND_T_AU_HOTLINE, '.'));
+  return stage === 'accepted' ? 'in_transit' : stage;
+}
+
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => jAndTAuMappedStage(wording),
   gaps: [],

@@ -5,6 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
+import { jAndTAuRelayedStage } from '../j-and-t-au/status.js';
 import { techlinkStage } from './status.js';
 
 export const PROVIDER = 'Techlink';
@@ -22,6 +23,7 @@ const COUNTRY = /^[A-Z]{2}$/;
 // The entry's word for an order the tracker does not have.
 const NO_ORDER = '无订单信息';
 const BEIJING = 'Asia/Shanghai';
+const SYDNEY = 'Australia/Sydney';
 // A scan abroad worded with its centre in brackets: "【Example center】Received.".
 const BRACKETED = /^【[^】]+】/;
 const MAX_ENTRIES = 50;
@@ -62,8 +64,11 @@ function place(location: string): string {
  * One scan. Techlink's own records are on Beijing's clock: the order's
  * electronic information, which has no place, and the scans at its warehouse
  * in China. So is a scan abroad that names its centre in brackets: on the
- * destination's clock, one came hours after the lookup that returned it. A
- * scan anywhere else keeps its wall clock.
+ * destination's clock, one came hours after the lookup that returned it.
+ * J&T Express Australia's scans of a parcel bound for Australia are on
+ * Sydney's clock, whatever state the depot is in: J&T's own instants for them
+ * are those wall clocks at Sydney's offset, where a Queensland depot keeps an
+ * hour less in summer. A scan anywhere else keeps its wall clock.
  */
 function scan(row: unknown, number: string): CarrierEvent {
   if (!isRecord(row) || typeof row.order_num !== 'string') throw new SchemaError(PROVIDER, 'Techlink returned an invalid scan');
@@ -77,9 +82,10 @@ function scan(row: unknown, number: string): CarrierEvent {
   const location = text(row, 'location', 120);
   const own = location === 'CN' || (!location && text(row, 'track_code', 64) === 'InfoReceived') || BRACKETED.test(description);
   const time = own ? isoTime(local, BEIJING)?.iso : null;
+  const sydney = !own && text(row, 'receive_country', 8) === 'AU' && jAndTAuRelayedStage(description) ? isoTime(local, SYDNEY)?.iso : null;
   const staged = techlinkStage(code, description);
   return {
-    ...(time ? { time } : { local_time: local }),
+    ...(time ? { time } : sydney ? { local_time: local, time: sydney, time_zone: SYDNEY, time_zone_basis: 'carrier' } : { local_time: local }),
     description,
     ...(location ? { location: place(location) } : {}),
     ...(code ? { provider_code: code } : {}),
