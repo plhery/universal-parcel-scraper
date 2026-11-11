@@ -26,7 +26,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -56,7 +57,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -116,6 +118,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -145,7 +148,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Hermes Germany, which stays one candidate among several."
@@ -210,7 +214,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
@@ -248,7 +253,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
@@ -285,7 +291,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public report names this carrier; shipment identity remains unconfirmed."
@@ -340,7 +347,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Hermes shipment report on the German consumer forum. Hermes Germany's tracking no longer knows it."
@@ -375,7 +383,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Hermes shipment report on the German consumer forum."
@@ -411,7 +420,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Hermes shipment report on the German consumer forum."
@@ -448,6 +458,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -483,7 +494,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Hermes parcel number from a public Paketda question. Hermes's recipient service returned a parcel dropped off at a shop and left at an agreed safe place."
@@ -578,7 +590,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Hermes parcel number from a public Paketda question. Hermes's recipient service returned a parcel posted at a German shop and delivered in Austria."
@@ -614,7 +627,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Hermes parcel number from a public Paketda question. Hermes's recipient service returned its delivered history."

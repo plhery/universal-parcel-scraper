@@ -30,7 +30,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A review of DPD in the Netherlands from a customer living there whose parcel was lost; DPD's tracker places this parcel in the Netherlands."
@@ -65,7 +66,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Dutch review of DPD about this parcel missing from a Dutch pickup point; DPD's tracker places it in the Netherlands."
@@ -100,7 +102,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Dutch review of DPD asking where this parcel is; DPD's tracker places it in the Netherlands."
@@ -138,6 +141,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },

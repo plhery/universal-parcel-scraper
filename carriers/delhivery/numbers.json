@@ -75,7 +75,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Delhivery, which stays one candidate among several."
@@ -108,7 +109,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker returns its history. It shows the parcel returned to the seller."
@@ -140,7 +142,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker returns its history. It shows the parcel lost."
@@ -172,7 +175,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "The updated review labels this as a newly generated Delhivery AWB. Delhivery's tracker returns its history."
@@ -236,7 +240,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public report of a B2B freight shipment that also gives its LR number. Delhivery's tracker returns its history."
@@ -271,7 +276,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker no longer finds it."
@@ -334,7 +340,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public Delhivery report. Delhivery's tracker no longer finds it."
@@ -397,7 +404,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Delhivery tracking link archived by the Wayback Machine. Delhivery's tracker returns its history. It shows a return pickup cancelled after the last attempt."
@@ -431,7 +439,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Delhivery tracking link archived by the Wayback Machine. Delhivery's tracker returns its history. It shows a return pickup delivered to the seller."
@@ -577,6 +586,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -614,6 +624,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },

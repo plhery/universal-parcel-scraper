@@ -5,8 +5,8 @@ DPD Switzerland (myDPD), Swiss last-mile parcels only. Germany is
 United Kingdom is [dpd-uk](../dpd-uk/README.md), Poland is
 [dpd-pl](../dpd-pl/README.md), Belgium is [dpd-be](../dpd-be/README.md), the
 Netherlands is [dpd-nl](../dpd-nl/README.md), Hungary is
-[dpd-hu](../dpd-hu/README.md), and the group's network in Italy is
-[BRT](../brt/README.md).
+[dpd-hu](../dpd-hu/README.md), the group's network in Italy is
+[BRT](../brt/README.md), and Brazil's is [Jadlog](../jadlog/README.md).
 
 ## How it works
 
@@ -135,7 +135,8 @@ it cannot search by id.
 The [Dutch myDPD page](https://www.dpd.com/nl/nl/ontvangen/) links to the same
 Geopost Android package, `com.dpdgroup.chatbot.lemny.prod`, and
 [dpd-nl](../dpd-nl/README.md) reads its guest API with the Dutch business unit, as
-[dpd-hu](../dpd-hu/README.md) does with the Hungarian one.
+[dpd-hu](../dpd-hu/README.md) does with the Hungarian one and
+[Jadlog](../jadlog/README.md) with `JADLOG`.
 The German national app has a separate
 [SOAP service](../dpd-de/README.md#app-service), which this adapter asks only
 for Pickup shops.

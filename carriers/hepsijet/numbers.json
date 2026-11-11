@@ -30,7 +30,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Looked up on HepsiJET's own multi-shipment tracker, as an archived address shows; the capture holds only the page shell, which loads the parcel by script."
@@ -148,7 +149,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Customer complaint on Şikayetvar's HepsiJET page quoting it as the tracking number of a shipment sent with HepsiJET."
@@ -183,7 +185,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Customer complaint on Şikayetvar quoting it as the tracking number of a parcel sent with HepsiJET."

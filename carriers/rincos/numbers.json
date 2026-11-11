@@ -32,7 +32,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A lookup on Rincos's own tracker that a search engine indexed; the tracker still answers it."
@@ -68,7 +69,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A lookup on Rincos's own tracker that Common Crawl captured; the tracker still answers it."

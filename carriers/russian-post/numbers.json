@@ -143,7 +143,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Published on a parcel report page; Russian Post's anonymous detailed feed confirms the whole barcode with dated operations."
@@ -176,7 +177,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A user comment on gdeposylka's Russian Post page gives it as the tracking number."
@@ -209,7 +211,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An open-source Russian Post SDK's README tracks it as its example; its first six digits are the accepting office's postcode."
@@ -244,6 +247,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -281,6 +285,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -317,6 +322,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -351,7 +357,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Looked up on Russian Post's own tracker, as an archived address shows; the capture was not opened. Its first six digits are the accepting office's postcode."
@@ -387,7 +394,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Looked up on Russian Post's own tracker, as an archived address shows; the capture was not opened. Its first six digits are the accepting office's postcode."
@@ -422,7 +430,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Looked up on Russian Post's own tracker, as an archived address shows; the capture was not opened. Its first six digits are the accepting office's postcode."

@@ -32,6 +32,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -68,6 +69,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -104,6 +106,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -140,6 +143,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -175,6 +179,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -212,6 +217,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -250,6 +256,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -288,6 +295,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -324,6 +332,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -359,6 +368,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -469,7 +479,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A complaint says this Hermes Germany number passed to HR Parcel in Milan; it is Hermes Germany's number, not HR Parcel's."

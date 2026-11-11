@@ -1914,9 +1914,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -1935,28 +1936,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
-  },
-  {
-    "shape": "14 digits, starting 0 or ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-fr",
-      "dpd-uk",
-      "seur",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, starting 0 or ending 7, 8 or 9",
@@ -1974,16 +1957,15 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
-    "shape": "14 digits, starting 10",
+    "shape": "14 digits, starting 0 or ending 7, 8 or 9",
     "carriers": [
       "brt",
       "ciblex",
-      "delhivery",
       "dpd",
       "dpd-be",
       "dpd-nl",
@@ -1991,12 +1973,14 @@
       "dpd-fr",
       "dpd-uk",
       "seur",
-      "xpressbees",
       "dhl-ecommerce-uk",
       "dpd-pt",
-      "dpd-hu"
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, starting 10",
@@ -2015,12 +1999,12 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
   {
-    "shape": "14 digits",
+    "shape": "14 digits, starting 10",
     "carriers": [
       "brt",
       "ciblex",
@@ -2036,9 +2020,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
   {
     "shape": "14 digits",
@@ -2058,9 +2043,32 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9, starting 10",
@@ -2078,29 +2086,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
-  },
-  {
-    "shape": "14 digits, ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-fr",
-      "dpd-uk",
-      "seur",
-      "xpressbees",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2119,28 +2108,31 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
-    "shape": "14 digits",
+    "shape": "14 digits, ending 7, 8 or 9",
     "carriers": [
       "brt",
       "ciblex",
-      "delhivery",
       "dpd",
       "dpd-be",
       "dpd-nl",
       "dpd-de",
+      "dpd-fr",
       "dpd-uk",
       "seur",
+      "xpressbees",
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2158,9 +2150,9 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2178,9 +2170,31 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "rex-indonesia"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. REX Indonesia's low rule takes its fourteen-digit waybills that start 22201. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "rex-indonesia",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. REX Indonesia's low rule takes its fourteen-digit waybills that start 22201. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2198,9 +2212,10 @@
       "dpd-pt",
       "dpd-hu",
       "best-express-th",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2219,27 +2234,10 @@
       "dpd-hu",
       "best-express-th",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
-  },
-  {
-    "shape": "14 digits, ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-uk",
-      "seur",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2256,9 +2254,29 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2275,9 +2293,10 @@
       "dpd-pt",
       "dpd-hu",
       "best-express-th",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits starting 49",
@@ -2295,9 +2314,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits starting 49",
@@ -2316,28 +2336,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
-  },
-  {
-    "shape": "14 digits starting 49, ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-uk",
-      "imile",
-      "seur",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits starting 49, ending 7, 8 or 9",
@@ -2355,9 +2357,30 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits starting 49, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "imile",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. iMile's low rule takes those starting 49, which its own tracker answered for Italian parcels. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, starting 10",
@@ -2377,31 +2400,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
-  },
-  {
-    "shape": "14 digits",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "delhivery",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-fr",
-      "dpd-uk",
-      "hermes-de",
-      "seur",
-      "xpressbees",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
   {
     "shape": "14 digits",
@@ -2422,9 +2424,33 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-uk",
+      "hermes-de",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2443,9 +2469,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too; Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits starting 13",
@@ -2465,7 +2492,8 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
   },
@@ -2488,28 +2516,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
-    ],
-    "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
-  },
-  {
-    "shape": "14 digits starting 13, ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-fr",
-      "dpd-pl",
-      "dpd-uk",
-      "seur",
-      "xpressbees",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
   },
@@ -2531,7 +2539,30 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
+    ],
+    "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
+  },
+  {
+    "shape": "14 digits starting 13, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-fr",
+      "dpd-pl",
+      "dpd-uk",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
   },
@@ -2554,7 +2585,8 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
   },
@@ -2578,7 +2610,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Most fourteen-digit numbers on DPD Poland's own archived tracking pages start with 13, so DPD Poland is listed first; the length stays shared with the other DPD networks and these carriers, so number shape alone cannot identify the carrier."
   },
@@ -2598,9 +2631,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2619,9 +2653,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2640,9 +2675,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "rex-indonesia"
+      "rex-indonesia",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too, and REX Indonesia's takes its waybills that start 22201. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too, and REX Indonesia's takes its waybills that start 22201. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2662,7 +2698,8 @@
       "dpd-hu",
       "russian-post",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Fourteen digits starting with 80 whose GS1 check digit passes fit Russian Post's preferred low rule, as well as DPD's low rules and those of BRT, SEUR, Ciblex, Delhivery, DHL eCommerce UK and Hermes Germany. Russian Post comes first, but the number stays a low-confidence suggestion; HTTP recognition must confirm which carrier knows it."
   },
@@ -2681,9 +2718,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2701,9 +2739,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2722,29 +2761,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too; La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
-  },
-  {
-    "shape": "14 digits",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "delhivery",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-uk",
-      "la-poste",
-      "seur",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too; La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2763,9 +2783,31 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "la-poste",
+      "seur",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2782,9 +2824,10 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2802,29 +2845,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
-  },
-  {
-    "shape": "14 digits",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "delhivery",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-uk",
-      "nova-poshta",
-      "seur",
-      "dhl-ecommerce-uk",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
-    ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. La Poste's low rule takes those starting 865, 866, 875, 880 or 885. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2843,15 +2867,16 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
-    "shape": "14 digits, ending 7, 8 or 9",
+    "shape": "14 digits",
     "carriers": [
       "brt",
       "ciblex",
+      "delhivery",
       "dpd",
       "dpd-be",
       "dpd-nl",
@@ -2862,9 +2887,11 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2882,29 +2909,30 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
-    "shape": "14 digits",
+    "shape": "14 digits, ending 7, 8 or 9",
     "carriers": [
       "brt",
       "ciblex",
-      "delhivery",
       "dpd",
       "dpd-be",
       "dpd-nl",
       "dpd-de",
       "dpd-uk",
+      "nova-poshta",
       "seur",
-      "xpressbees",
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Nova Poshta's low rule takes its domestic prefixes, such as 204, 590 or 51. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -2923,9 +2951,31 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+  },
+  {
+    "shape": "14 digits",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "delhivery",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "xpressbees",
+      "dhl-ecommerce-uk",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
+    ],
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex, Delhivery and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits, ending 7, 8 or 9",
@@ -2943,9 +2993,10 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Xpressbees's low rule takes those starting 1 or 9. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14-digit Nova Poshta family passing the Hermes checksum",
@@ -2964,7 +3015,8 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
   },
@@ -2986,7 +3038,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
   },
@@ -3007,7 +3060,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Nova Poshta waybills overlap other numeric families; a valid Hermes checksum cannot establish carrier ownership."
   },
@@ -4855,7 +4909,8 @@
       "dhl-ecommerce-uk",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Hermes Germany parcel numbers share this numeric length with the DPD networks and these carriers, so number shape alone cannot identify a carrier."
   },
@@ -4877,7 +4932,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Hermes Germany parcel numbers share this numeric length with the DPD networks and these carriers, so number shape alone cannot identify a carrier."
   },
@@ -4898,7 +4954,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Hermes Germany parcel numbers share this numeric length with the DPD networks and these carriers, so number shape alone cannot identify a carrier."
   },
@@ -5198,7 +5255,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "SPS parcel numbers start with 703, Slovakia's country code, so SPS is offered next to the other carriers that print fourteen digits; number shape alone cannot identify the carrier. The same whole identifiers are also domestic ZTO candidates."
   },
@@ -5221,7 +5279,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "SPS parcel numbers start with 703, Slovakia's country code, and some also pass the Hermes check, so SPS is offered next to Hermes and the other fourteen-digit carriers; number shape alone cannot identify the carrier. The same whole identifiers are also domestic ZTO candidates."
   },
@@ -5243,7 +5302,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "SPS parcel numbers start with 703, Slovakia's country code, and some also pass the Hermes check, so SPS is offered next to Hermes and the other fourteen-digit carriers; number shape alone cannot identify the carrier. The same whole identifiers are also domestic ZTO candidates."
   },
@@ -5630,7 +5690,8 @@
       "seur",
       "xpressbees",
       "dpd-pt",
-      "dpd-hu"
+      "dpd-hu",
+      "jadlog"
     ],
     "reason": "Anteraja ranges overlap other carriers. Its low-confidence suggestion requires the guest API to confirm the whole waybill. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
@@ -5652,7 +5713,8 @@
       "xpressbees",
       "dpd-pt",
       "dpd-hu",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Anteraja ranges overlap other carriers. Its low-confidence suggestion requires the guest API to confirm the whole waybill. Chronopost's rule leaves out the 10 depots, DPD France's."
   },
@@ -5675,7 +5737,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Anteraja ranges overlap other carriers. Its low-confidence suggestion requires the guest API to confirm the whole waybill."
   },
@@ -5698,7 +5761,8 @@
       "xpressbees",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Anteraja ranges overlap other carriers. Its low-confidence suggestion requires the guest API to confirm the whole waybill."
   },
@@ -5718,7 +5782,8 @@
       "zto",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Domestic ZTO candidates overlap numeric parcel formats. A shape or checksum does not establish network ownership."
   },
@@ -5739,7 +5804,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Domestic ZTO candidates overlap numeric parcel formats. A shape or checksum does not establish network ownership."
   },
@@ -5759,7 +5825,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Domestic ZTO candidates overlap numeric parcel formats. A shape or checksum does not establish network ownership."
   },
@@ -5780,7 +5847,8 @@
       "zto",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Domestic ZTO candidates overlap numeric parcel formats. A shape or checksum does not establish network ownership."
   },
@@ -5802,7 +5870,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Domestic ZTO candidates overlap numeric parcel formats. A shape or checksum does not establish network ownership."
   },
@@ -5823,7 +5892,8 @@
       "zto-international",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "ZTO's own configuration gives its international waybills 771 and eleven digits, so ZTO International's preferred low rule lists it first. Domestic ZTO and the other fourteen-digit formats stay candidates: a shape does not establish the network, and recognition asks ZTO International first."
   },
@@ -5845,27 +5915,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
-    ],
-    "reason": "ZTO's own configuration gives its international waybills 771 and eleven digits, so ZTO International's preferred low rule lists it first. Domestic ZTO and the other fourteen-digit formats stay candidates: a shape does not establish the network, and recognition asks ZTO International first."
-  },
-  {
-    "shape": "771 followed by eleven digits, ending 7, 8 or 9",
-    "carriers": [
-      "brt",
-      "ciblex",
-      "dhl-ecommerce-uk",
-      "dpd",
-      "dpd-be",
-      "dpd-nl",
-      "dpd-de",
-      "dpd-uk",
-      "seur",
-      "zto",
-      "zto-international",
-      "dpd-pt",
-      "dpd-hu",
-      "chronopost"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "ZTO's own configuration gives its international waybills 771 and eleven digits, so ZTO International's preferred low rule lists it first. Domestic ZTO and the other fourteen-digit formats stay candidates: a shape does not establish the network, and recognition asks ZTO International first."
   },
@@ -5886,7 +5937,29 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "jadlog"
+    ],
+    "reason": "ZTO's own configuration gives its international waybills 771 and eleven digits, so ZTO International's preferred low rule lists it first. Domestic ZTO and the other fourteen-digit formats stay candidates: a shape does not establish the network, and recognition asks ZTO International first."
+  },
+  {
+    "shape": "771 followed by eleven digits, ending 7, 8 or 9",
+    "carriers": [
+      "brt",
+      "ciblex",
+      "dhl-ecommerce-uk",
+      "dpd",
+      "dpd-be",
+      "dpd-nl",
+      "dpd-de",
+      "dpd-uk",
+      "seur",
+      "zto",
+      "zto-international",
+      "dpd-pt",
+      "dpd-hu",
+      "chronopost",
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "ZTO's own configuration gives its international waybills 771 and eleven digits, so ZTO International's preferred low rule lists it first. Domestic ZTO and the other fourteen-digit formats stay candidates: a shape does not establish the network, and recognition asks ZTO International first."
   },
@@ -6131,7 +6204,8 @@
       "seur",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "City Express shipment numbers start with one of its centre codes; the same fourteen digits fit other carriers' low-confidence rules, so recognition asks each of them."
   },
@@ -6151,7 +6225,8 @@
       "seur",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Mylerz barcodes are fourteen digits starting 63, which fit the other carriers' fourteen-digit rules. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
@@ -6172,7 +6247,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Mylerz barcodes are fourteen digits starting 63, which fit the other carriers' fourteen-digit rules. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
@@ -6192,7 +6268,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "Mylerz barcodes are fourteen digits starting 63, which fit the other carriers' fourteen-digit rules. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
@@ -6212,7 +6289,8 @@
       "seur",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "Mylerz barcodes are fourteen digits starting 63, which fit the other carriers' fourteen-digit rules; some also pass the Hermes checksum. Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
@@ -6725,7 +6803,8 @@
       "seur",
       "dpd-pt",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
     "reason": "A DPD parcel number opens with the issuing depot, and DPD Austria's depot list gives these codes to its depots, so DPD Austria is listed first; the fourteen digits stay shared with the other DPD networks and these carriers. DPD Austria cannot be asked, so, as for DPD France, recognition leaves out the DPD networks, whose guest API would file the parcel under DPD Switzerland, and asks the others."
   },
@@ -6746,7 +6825,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "A DPD parcel number opens with the issuing depot, and DPD Austria's depot list gives these codes to its depots, so DPD Austria is listed first; the fourteen digits stay shared with the other DPD networks and these carriers. DPD Austria cannot be asked, so, as for DPD France, recognition leaves out the DPD networks, whose guest API would file the parcel under DPD Switzerland, and asks the others."
   },
@@ -6871,9 +6951,10 @@
       "hermes-de",
       "seur",
       "dpd-hu",
-      "chronopost"
+      "chronopost",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. DPD Portugal is listed first for its own depots (0955 to 0988). Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. DPD Portugal is listed first for its own depots (0955 to 0988). Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "14 digits",
@@ -6892,9 +6973,10 @@
       "seur",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
-    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Hermes Germany's low rule takes fourteen digits too. DPD Portugal is listed first for its own depots (0955 to 0988). Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
+    "reason": "Fourteen digits is DPD's parcel number, taken by each DPD entry's low rule and by Chronopost's, which delivers DPD parcels entering France, and BRT, SEUR, Ciblex and DHL eCommerce UK issue numbers of the same length. Jadlog, the group's network in Brazil, takes them too and is asked only for a lookup there. Hermes Germany's low rule takes fourteen digits too. DPD Portugal is listed first for its own depots (0955 to 0988). Every rule involved is low, so the number stays a low-confidence suggestion and recognition asks the candidates."
   },
   {
     "shape": "UU, nine digits and DE with a valid S10 check digit",
@@ -7339,7 +7421,8 @@
       "dpd-pt",
       "dpd-hu",
       "chronopost",
-      "mondial-relay"
+      "mondial-relay",
+      "jadlog"
     ],
     "reason": "best-express-my numbers of this shape fall in each of these carriers' rules; recognition asks them in turn."
   },

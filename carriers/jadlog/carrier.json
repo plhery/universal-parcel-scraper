@@ -17,15 +17,30 @@
   "timezone": "America/Sao_Paulo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "jadlog",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 717,
+      "servedCountriesOnly": true
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivered_at",
+    "provider_code"
+  ],
   "portal": {
     "searchUrl": "https://www.jadlog.com.br/jadlog/home",
     "canaryUrl": "https://www.jadlog.com.br/jadlog/home",
     "shows": [],
-    "scraped": [],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at",
+      "provider_code"
+    ],
     "discarded": [],
     "unavailable": []
   },
@@ -40,5 +55,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "jadlog-1",
+      "pattern": "^\\d{14}$",
+      "confidence": "low"
+    }
+  ]
 }

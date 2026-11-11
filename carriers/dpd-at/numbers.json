@@ -32,7 +32,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived reply of DPD's group tracker on its Austrian English locale: scans at DPD Austria's Leopoldsdorf depot from transit through a failed attempt to collection at a Pickup parcelshop."
@@ -67,7 +68,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived reply of DPD's group tracker on its Austrian locale: in transit from Leopoldsdorf and delivered from DPD Austria's Hörsching depot."
@@ -102,7 +104,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived reply of DPD's group tracker: the parcel at DPD Austria's Leopoldsdorf depot and out for delivery from it."
@@ -138,7 +141,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived reply of DPD's group tracker: handed to DPD at DPD Austria's Obertrum depot and in transit through a German hub."
@@ -174,7 +178,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Austria's myDPD tracker; the opened capture is the page shell, which loads the history by script, so the history was not visible."
@@ -209,7 +214,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Austria's myDPD tracker; myDPD's lookup knows it, from DPD Austria's Leopoldsdorf depot to a delivery from its Obertrum depot."
@@ -245,7 +251,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Austria's myDPD tracker, under the Hörsching depot code; the capture was not opened and the history was not visible."
@@ -280,7 +287,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Austria's myDPD tracker, under the Sulz depot code; the capture was not opened and the history was not visible."
@@ -315,7 +323,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Austria's myDPD tracker, under a German depot's code; myDPD's lookup knows it, from German depots to a Pickup station of DPD Austria's Leobendorf depot."

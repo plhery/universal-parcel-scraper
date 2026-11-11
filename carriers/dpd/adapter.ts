@@ -55,9 +55,10 @@ const CLIENT_VERSION = '3.79.14';
 const INSTALLATIONS_URL = `https://firebaseinstallations.googleapis.com/v1/projects/${FIREBASE_PROJECT}/installations`;
 const REMOTE_CONFIG_URL = `https://firebaseremoteconfig.googleapis.com/v1/projects/${FIREBASE_PROJECT_NUMBER}/namespaces/firebase:fetch`;
 const TIMEZONE = 'Europe/Zurich';
+const JADLOG_SEARCH_URL = 'https://www.jadlog.com.br/jadlog/home';
 
-/** A guest business unit: `businessUnit=DPD-<country>`. */
-export type DPDCountry = 'CH' | 'DE' | 'BE' | 'NL' | 'HU' | 'IT';
+/** A guest business unit: `businessUnit=DPD-<country>`, unless the unit has a selector of its own. */
+export type DPDCountry = 'CH' | 'DE' | 'BE' | 'NL' | 'HU' | 'IT' | 'BR';
 
 /**
  * What the unit changes beyond its selector: the carrier a lookup is filed
@@ -68,9 +69,11 @@ export type DPDCountry = 'CH' | 'DE' | 'BE' | 'NL' | 'HU' | 'IT';
 /**
  * `sender`, for a unit whose recognition reads where a parcel was sent from, is the business
  * unit DPD names as the shipment's. DPD Belux's GeoData guide sets `034` before every Belgian
- * customer's depot, where GeoRouting puts the business unit.
+ * customer's depot, where GeoRouting puts the business unit. `selector` replaces `DPD-<country>`.
  */
-const UNITS: Readonly<Record<DPDCountry, { carrier: string; name: string; adjective: string; zone: string; sender?: string }>> = {
+const UNITS: Readonly<Record<DPDCountry, {
+  carrier: string; name: string; adjective: string; zone: string; sender?: string; selector?: string;
+}>> = {
   CH: { carrier: 'dpd', name: 'DPD Switzerland', adjective: 'Swiss', zone: TIMEZONE },
   DE: { carrier: 'dpd-de', name: 'DPD Germany', adjective: 'German', zone: TIMEZONE },
   BE: { carrier: 'dpd-be', name: 'DPD Belgium', adjective: 'Belgian', zone: 'Europe/Brussels', sender: '034' },
@@ -78,9 +81,11 @@ const UNITS: Readonly<Record<DPDCountry, { carrier: string; name: string; adject
   HU: { carrier: 'dpd-hu', name: 'DPD Hungary', adjective: 'Hungarian', zone: 'Europe/Budapest' },
   // The group's network in Italy is BRT's, whose BRTcodes the guest service reads.
   IT: { carrier: 'brt', name: 'BRT', adjective: 'Italian', zone: 'Europe/Rome' },
+  // The group's network in Brazil is Jadlog's, which the myJadlog app reads under this selector.
+  BR: { carrier: 'jadlog', name: 'Jadlog', adjective: 'Brazilian', zone: 'America/Sao_Paulo', selector: 'JADLOG' },
 };
 /** Units read through the guest API alone, with no page or app tier after it. */
-const GUEST_ONLY: ReadonlySet<DPDCountry> = new Set(['BE', 'NL', 'HU', 'IT']);
+const GUEST_ONLY: ReadonlySet<DPDCountry> = new Set(['BE', 'NL', 'HU', 'IT', 'BR']);
 /** Guest statuses at the delivery depot or after it. Before it, the status's country can be the sender's. */
 const DELIVERY_SIDE: ReadonlySet<string> = new Set([
   'AT_DELIVERY_CENTER', 'PARCEL_OUT_FOR_DELIVERY', 'AVAILABLE_FOR_COLLECTION', 'UNSUCCESSFUL_DELIVERY_ATTEMPT', 'DELIVERED',
@@ -591,7 +596,7 @@ export function parseDPDTrackingApi(
   return result;
 }
 
-/** Guard automatic scope confirmation and the German, Belgian, Dutch, Hungarian and Italian direct services. */
+/** Guard automatic scope confirmation and the German, Belgian, Dutch, Hungarian, Italian and Brazilian direct services. */
 function requireGuestActivity(payload: JsonObject, result: CarrierResult): void {
   if (!isRecord(payload.status) || !known(payload.status.description)) {
     throw new SchemaError('DPD', 'DPD returned no usable shipment status');
@@ -799,7 +804,7 @@ export class DPDTracker {
     // DPD checks the postcode against the recipient's, and the service this
     // adapter asks also answers for parcels delivered in other countries: any
     // country's postcode goes through. The German unit reads German deliveries.
-    // DPD Belgium's, DPD Netherlands' and DPD Hungary's catalog entries ask for none.
+    // DPD Belgium's, DPD Netherlands', DPD Hungary's and Jadlog's catalog entries ask for none.
     const resolvedPostcode = deliveryPostcodeText(postcode);
     if (resolvedPostcode && !(this.country === 'DE' ? /^\d{5}$/ : DELIVERY_POSTCODE).test(resolvedPostcode)) {
       throw new InvalidInputError('DPD', this.country === 'DE'
@@ -905,7 +910,8 @@ export class DPDTracker {
           ? `https://www.dpdgroup.com/${this.country.toLowerCase()}/mydpd/my-parcels/search?parcelNumber=${trackingNumber}`
           : this.country === 'IT'
             ? `https://www.mybrt.it/it/mybrt/my-parcels/search?parcelNumber=${trackingNumber}`
-            : dpdTrackingUrl(trackingNumber);
+            // Jadlog's own page shows a parcel only after a CAPTCHA: its search page is the link.
+            : this.country === 'BR' ? JADLOG_SEARCH_URL : dpdTrackingUrl(trackingNumber);
     return result;
   }
 
@@ -951,7 +957,7 @@ export class DPDTracker {
   /**
    * The Swiss page and the German app can answer after Cloudflare's challenge
    * or DPD's rate limit, so those stay inconclusive for them. Belgium, the
-   * Netherlands, Hungary and Italy have no tier after the guest API, and report them as what they are.
+   * Netherlands, Hungary, Italy and Brazil have no tier after the guest API, and report them as what they are.
    */
   private reported(error: unknown): unknown {
     if (!GUEST_ONLY.has(this.country) || !(error instanceof Error)) return error;
@@ -1046,7 +1052,7 @@ export class DPDTracker {
   ): Promise<JsonObject> {
     const url = new URL(`${DETAILS_BASE}/${encodeURIComponent(trackingNumber)}`);
     url.searchParams.set('parcelType', 'INCOMING');
-    url.searchParams.set('businessUnit', `DPD-${this.country}`);
+    url.searchParams.set('businessUnit', UNITS[this.country].selector ?? `DPD-${this.country}`);
     url.searchParams.set('lang', 'en');
     url.searchParams.set('continueWithoutVerification', postcode ? 'false' : 'true');
     if (postcode) url.searchParams.set('dataForVerification', postcode);

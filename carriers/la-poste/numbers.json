@@ -469,7 +469,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Typed without its optional check character; La Poste's tracker returns its history under the full fifteen-character number."
@@ -506,7 +507,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Typed without its optional check character; La Poste's tracker returns its history under the full fifteen-character number."
@@ -621,7 +623,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived lookup of this Smart Data number on La Poste's tracker. It is typed without its key character."
@@ -695,7 +698,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived lookup of this Smart Data number on La Poste's tracker. It is typed without its key character."

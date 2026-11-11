@@ -542,7 +542,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Made-up number in the shape of parcels the app tracked: a DPD parcel number's fourteen digits without its check character, which Chronopost's own tracker answered with their history. Fourteen digits are shared with DPD's networks, BRT, SEUR and others, so Chronopost is only a suggestion. Its serial sits far beyond the range in use."

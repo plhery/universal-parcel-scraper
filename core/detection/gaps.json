@@ -1909,12 +1909,6 @@
     "reason": "One reported waybill starts 57; the rule covers the 20 prefix of every other report."
   },
   {
-    "carrier": "jadlog",
-    "pattern": "^\\d{14}$",
-    "kind": "by_design",
-    "reason": "Fourteen digits are DPD's parcel layout and several other carriers print them, so nothing in the number points to Jadlog."
-  },
-  {
     "carrier": "jamaica-post",
     "pattern": "^ZL\\d{8}$",
     "kind": "by_design",

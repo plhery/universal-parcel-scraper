@@ -28420,7 +28420,9 @@
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jadlog",
+      "recognitionRank": 717,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://www.jadlog.com.br/jadlog/home",
     "trackingSearchUrl": "https://www.jadlog.com.br/jadlog/home",
@@ -28435,7 +28437,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
   },
   "jamaica-post": {
     "displayName": "Jamaica Post",

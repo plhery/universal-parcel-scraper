@@ -31,7 +31,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived reply of Sundarban's own tracking service, captured seconds after its tracking page was opened for this CN number, names it with its booking event."
@@ -66,6 +67,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -102,6 +104,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -136,7 +139,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "The CN number in the sample addresses that a comment in the script of Sundarban's own tracking page gives."

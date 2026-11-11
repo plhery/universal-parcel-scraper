@@ -32,7 +32,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An opened capture of LaBaih's own tracker shows this shipment from creation and pickup from the shop to arrival at the Riyadh distribution centre."
@@ -66,7 +67,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An opened capture of LaBaih's own tracker shows this shipment with its creation event."
@@ -102,7 +104,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An opened capture of LaBaih's own tracker shows this shipment from creation through the Jeddah distribution centre and a failed delivery attempt."

@@ -358,7 +358,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Reported under GLS Austria in a generic customer or order-number field; the identifier role is unresolved.",
@@ -397,7 +398,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",
@@ -436,7 +438,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Reported national GLS service is outside the German adapter scope; the shared number shape does not establish German ownership.",

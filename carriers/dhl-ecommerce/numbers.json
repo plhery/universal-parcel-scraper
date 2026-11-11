@@ -207,7 +207,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "DHL eCommerce example on the Malaysian tracking page, not a real shipment. No rule offers this carrier for fourteen digits."

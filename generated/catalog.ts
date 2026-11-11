@@ -28424,7 +28424,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jadlog",
+      "recognitionRank": 717,
+      "recognitionServedCountriesOnly": true
     },
     "canaryUrl": "https://www.jadlog.com.br/jadlog/home",
     "trackingSearchUrl": "https://www.jadlog.com.br/jadlog/home",
@@ -28439,7 +28441,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{14}$",
+        "confidence": "low"
+      }
+    ]
   },
   "jamaica-post": {
     "displayName": "Jamaica Post",
@@ -57203,7 +57210,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-middle-east": ["j-and-t-middle-east-1"],
   "j-and-t-mx": ["j-and-t-mx-1"],
   "j-and-t-uk": ["j-and-t-uk-1"],
-  "jadlog": [],
+  "jadlog": ["jadlog-1"],
   "jamaica-post": [],
   "jamef": [],
   "janco-express": ["janco-express-1"],

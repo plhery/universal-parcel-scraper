@@ -689,7 +689,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "The same Kilimall reply gives it as the waybill to use after the parcel reached Speedaf's sorting center. Speedaf's tracker does not know it."

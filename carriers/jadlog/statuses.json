@@ -1,6 +1,7 @@
 {
   "carrier": "jadlog",
   "entries": [
+    {"code": "ORDER_CREATED", "wording": "Order created", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "Geopost's guest API for the JADLOG business unit: the order is registered, not yet collected."},
     {"wording": "COLETA SOLICITADA", "stage": "registered", "language": "pt", "confirmedBy": "official-doc", "note": "The sender asked for a pickup. Listed in the event and status examples of Jadlog's API integration document."},
     {"wording": "EMISSAO", "stage": "accepted", "language": "pt", "confirmedBy": "official-doc", "note": "The consignment note was issued. Listed in the event and status examples of Jadlog's API integration document."},
     {"wording": "ENTREGUE", "stage": "delivered", "language": "pt", "confirmedBy": "official-doc", "note": "Listed in the event and status examples of Jadlog's API integration document. The example prints it with a trailing space."},

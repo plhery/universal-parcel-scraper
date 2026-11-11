@@ -30,7 +30,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Sent to PostEx's own tracker on postex.pk, as an archived address shows; the opened capture holds only the page shell, so no history is visible."
@@ -64,7 +65,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Sent to PostEx's own tracker on postex.pk, as an archived address shows; the capture was not opened and no history is visible."
@@ -98,6 +100,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -133,7 +136,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A customer's Trustpilot review of PostEx gives it as the tracking ID of an order. PostEx's tracker knows it, with a history from the merchant's warehouse to the delivery."
@@ -170,6 +174,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -206,6 +211,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },

@@ -23,6 +23,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -57,6 +58,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -93,6 +95,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -130,6 +133,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -169,6 +173,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -207,6 +212,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -245,6 +251,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -283,6 +290,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -319,6 +327,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -357,6 +366,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -395,6 +405,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -433,6 +444,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -472,6 +484,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -508,6 +521,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -545,6 +559,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -582,6 +597,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -619,6 +635,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -657,6 +674,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -695,6 +713,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "nova-poshta"
         ]
       },
@@ -732,7 +751,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Export waybill of the 595 family to a Nova Post branch in Germany; the official tracker returned its customs history."
@@ -769,7 +789,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Export waybill handed to UPS abroad and returned to the sending branch; the official tracker returned its history."
@@ -807,7 +828,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Export waybill to the United States handed to GoFo Express for delivery; the official tracker returned its history."
@@ -845,7 +867,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Sample number on ParcelPanel's Nova Poshta page: an export to the United States handed to GoFo Express; the official tracker returned its history."
@@ -882,7 +905,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Export waybill to the United States, its partner named PylonLogisticsUPS; the official tracker returned its history."

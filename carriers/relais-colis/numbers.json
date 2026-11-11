@@ -89,7 +89,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "The customer names the Relais Colis tracking reference and reports that history appeared. The merchant confirms carrier acceptance. Numeric detection remains ambiguous."

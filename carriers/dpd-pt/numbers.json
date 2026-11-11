@@ -59,6 +59,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -94,7 +95,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Portugal's tracker; the opened capture shows a hub scan."
@@ -155,7 +157,8 @@
           "dpd-de",
           "dpd-hu",
           "dpd-nl",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Portugal's tracker; the opened capture shows the sender's drop-off at a pickup point and its hand-over to DPD."
@@ -190,7 +193,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on DPD Portugal's tracker; the opened capture shows a pickup-point hand-over, collection and hub scans."
@@ -229,6 +233,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -290,7 +295,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A Portal da Queixa complaint about DPD Portugal's delivery of two parcels gives this number for one of them."
@@ -325,7 +331,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "DPD's reply to a Portal da Queixa complaint names this waybill for the return it collected."
@@ -412,7 +419,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "DPD's reply to a Portal da Queixa complaint says the parcel with this waybill was delivered to the address the sender gave."

@@ -31,6 +31,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -65,7 +66,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A complaint against DPD Belgium about this parcel held at one of its Belgian depots; DPD Belgium's replies arrange its delivery."
@@ -99,7 +101,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A complaint against DPD Belgium; the customer names this parcel in the thread and DPD Belgium's customer care replies about its delivery."
@@ -133,7 +136,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "A complaint against DPD Belgium about this parcel's pickup points; DPD Belgium's reply traces its Belgian route."

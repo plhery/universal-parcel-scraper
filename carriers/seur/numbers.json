@@ -24,7 +24,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to SEUR, which stays one candidate among several."
@@ -73,7 +74,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Public complaint about an ignored pickup point; SEUR's tracker returns its history."
@@ -176,7 +178,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Given as the shipment number in a complaint about a missed delivery; SEUR's tracker returns its history."
@@ -212,7 +215,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number in a complaint about a pickup point; SEUR's tracker had no usable history for it when checked."
@@ -249,7 +253,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number in a complaint about a parcel shown as delivered; SEUR's tracker had no usable history for it when checked."
@@ -284,7 +289,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Vinted shipping code for a SEUR locker drop-off; SEUR's tracker had no usable history for it when checked."
@@ -320,7 +326,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number in a complaint about a parcel shown as delivered; SEUR's tracker had no usable history for it when checked."
@@ -356,7 +363,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Quoted from a SEUR e-mail about a returned parcel; SEUR's tracker had no usable history for it when checked."
@@ -391,7 +399,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number of a return; SEUR's tracker had no usable history for it when checked."
@@ -523,7 +532,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number in a complaint about an undelivered parcel; SEUR's tracker had no usable history for it when checked."
@@ -675,7 +685,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Tracking number in a complaint about a locker drop-off; SEUR's tracker returns its history."

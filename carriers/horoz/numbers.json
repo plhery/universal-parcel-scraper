@@ -31,7 +31,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on Horoz's own tracker; the opened capture shows the delivery note with its movements."
@@ -66,7 +67,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on Horoz's own tracker; the opened capture shows the delivery note with its movements up to delivery."
@@ -102,6 +104,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -137,7 +140,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Archived lookup on Horoz's own tracker; the capture could not be opened, so the history was not visible."
@@ -172,7 +176,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Şikayetvar complaint about Horoz Lojistik giving it as the tracking number of an undelivered parcel."
@@ -206,7 +211,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Şikayetvar complaint about Horoz Lojistik, shown on this page among related complaints, giving it in hyphenated groups as the tracking number."
@@ -240,7 +246,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Şikayetvar complaint about Horoz Lojistik giving it as the tracking number of a delayed parcel."
@@ -275,7 +282,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Şikayetvar complaint about Horoz Lojistik giving it as the tracking number of a parcel carried by Horoz."
@@ -310,7 +318,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "Şikayetvar complaint about Horoz Lojistik giving it as the tracking number of a parcel shown as delivered."
@@ -345,6 +354,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },

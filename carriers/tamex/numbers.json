@@ -30,7 +30,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived lookup on Tamex's own tracker shows this parcel from its creation to its delivery, dated by day without times, and the live tracker gave the same history."
@@ -61,7 +62,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived lookup on Tamex's own tracker shows this parcel from its creation to its delivery, dated by day without times."
@@ -92,7 +94,8 @@
           "dpd-hu",
           "dpd-nl",
           "dpd-pt",
-          "dpd-uk"
+          "dpd-uk",
+          "jadlog"
         ]
       },
       "note": "An archived lookup on Tamex's own tracker shows this parcel back out for delivery after a failed attempt, dated by day without times."
@@ -124,6 +127,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -158,6 +162,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
@@ -191,6 +196,7 @@
           "dpd-nl",
           "dpd-pt",
           "dpd-uk",
+          "jadlog",
           "xpressbees"
         ]
       },
