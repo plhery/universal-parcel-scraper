@@ -43,6 +43,7 @@
     {"code": "20", "wording": "Unfortunately, consignee not present. Notification was left.", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "DPD's missed delivery in Austria (NAB/NABN): nobody was in and a card was left."},
     {"code": "20", "wording": "Parcel was handed over to Pickup parcel shop", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "DPD's driver left the parcel at a Pickup parcelshop after the missed delivery (HANDOVER/SHOP)."},
     {"code": "20", "wording": "Takeover by Pickup parcel shop", "language": "en", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The Pickup parcelshop booked the parcel in for the recipient (TAKEOVER/SHOP)."},
+    {"code": "20", "wording": "Parcel in transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The delivering partner's transit scan in Spain after the destination's customs, relayed on the partner's clock."},
     {"code": "20", "wording": "Parcel was not picked up", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The recipient did not collect the parcel from the Pickup parcelshop in time (NOT_PICKED_UP); DPD sends it back to the sender, which its next scan states."}
   ]
 }
