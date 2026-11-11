@@ -456,6 +456,10 @@ describe('India Post response normalization', () => {
     expect(location('Office - DEL 00000002', '110037')).toBe('110037');
     for (const office of ['Office - FRA', 'Office - DEFRA', 'Office - CDG 00000003']) expect(location(office, '400099'), office).toBe('');
     expect(location('Office - 00000001', '999001')).toBe('');
+    // An office of exchange's UPU code opens with its country; an office named abroad keeps its name.
+    expect(location('Office - DEFRAA', '400099')).toBe('');
+    expect(location('Office - INBOMB', '400099')).toBe('400099');
+    expect(location('Office - Example Mail Centre', '')).toBe('Example Mail Centre');
   });
 
   it('keeps rows newest first once a take-off is back on its own clock', () => {

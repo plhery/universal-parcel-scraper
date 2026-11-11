@@ -12,6 +12,13 @@ describe('same-instant identity policies', () => {
     const scan = (description: string, providerCode: string, location = 'Sample GPO 400001') => ({ stage: 'in_transit', description, providerCode, location });
     expect(policy?.matches?.(scan('Bag Closed', 'BagOpened'), scan('Item bagged', 'ItemBagged'))).toBe(true);
     expect(policy?.matches?.(scan('Bag Dispatched', 'BagDispatched'), scan('Item Dispatched', 'ItemDispatched', 'Sample NSH 400001'))).toBe(false);
+    // A location stored with "Office - " before a name or a UPU code, as the adapter writes it now.
+    const arrived = (location: string) => scan('Arrived at sorting Centre', 'MailArrived', location);
+    expect(policy?.matches?.(arrived('Example Mail Centre'), arrived('Office - Example Mail Centre'))).toBe(true);
+    expect(policy?.matches?.(arrived(''), arrived('Office - DEFRAA'))).toBe(true);
+    expect(policy?.matches?.(arrived('400001'), arrived('Office - INBOMB 400001'))).toBe(true);
+    expect(policy?.matches?.(arrived('Example Mail Centre'), arrived('Office - Other Mail Centre'))).toBe(false);
+    expect(policy?.matches?.(arrived('400001'), arrived('Office - DEFRAA 400001'))).toBe(false);
     // Older app versions match by the instant and code alone, so they get no policy.
     expect(sameInstantIdentityPolicy('india-post')).toBeUndefined();
   });
