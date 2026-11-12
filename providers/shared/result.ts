@@ -525,6 +525,14 @@ function providerWordingStage(description: string): Stage | undefined {
   // collect it, as 17TRACK relays it under its pickup status and as SpeedPAK's own map reads it.
   if (/^the item is being held, addressee being notified[.!]?$/i.test(value)) return 'ready_for_pickup';
   if (/^delivery scheduled during the day[.!]?$/i.test(value)) return 'out_for_delivery';
+  // BH Pošta's steps in its own Bosnian, as providers relay them, each marked for export ("Izvoz") or import ("Uvoz"):
+  // the acceptance from the sender, the item bagged and sent abroad with its electronic notice; then, in Bosnia and
+  // Herzegovina, the office of exchange, the parcel sent to customs and back from it, the dispatch towards the office
+  // that delivers it, which the step names, and the arrival there.
+  if (/^prijem posiljke od korisnika[.!]?$/i.test(value)) return 'accepted';
+  if (/^ubacivanje posiljke u vrecu - izvoz$|^otprema posiljke u inostranstvo(?: \(edi poruka ?\))?$/i.test(value)) return 'in_transit';
+  if (/^otprema paketa na carinu - uvoz$/i.test(value)) return 'customs';
+  if (/^prispijece posiljke u (?:izmjenicnu|dostavnu) postu - uvoz$|^vracanje posiljke sa carine - uvoz$|^otprema posiljke u uvozu prema: [^:]{1,80}$/i.test(value)) return 'in_transit';
   // Latvijas Pasts' acceptance at a post office, which ParcelsApp follows with the office's name.
   if (/^item posted \/ received from customer\b/i.test(value)) return 'accepted';
   // Its export steps after that, as ParcelsApp relays them: the logistics centre, the outward office of

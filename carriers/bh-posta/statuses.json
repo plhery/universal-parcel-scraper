@@ -1,4 +1,13 @@
 {
   "carrier": "bh-posta",
-  "entries": []
+  "entries": [
+    {"wording": "Prijem pošiljke od korisnika", "stage": "accepted", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The item accepted from the sender, as providers relay it."},
+    {"wording": "Ubacivanje pošiljke u vreću - Izvoz", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The item put in a bag for export."},
+    {"wording": "Otprema pošiljke u inostranstvo (EDI poruka )", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The item sent abroad, with its electronic notice to the destination post."},
+    {"wording": "Prispijeće pošiljke u izmjeničnu poštu - Uvoz", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "An imported item at the office of exchange; providers also relay it without the háček."},
+    {"wording": "Otprema paketa na carinu - Uvoz", "stage": "customs", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "An imported parcel sent to customs."},
+    {"wording": "Vraćanje pošiljke sa carine - Uvoz", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "An imported item back from customs, on its way to delivery."},
+    {"wording": "Otprema pošiljke u uvozu prema: …", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "An imported item sent towards the office that delivers it, which the step names with its postcode and service."},
+    {"wording": "Prispijeće pošiljke u dostavnu poštu - Uvoz", "stage": "in_transit", "language": "bs", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "An imported item at the office that delivers it."}
+  ]
 }

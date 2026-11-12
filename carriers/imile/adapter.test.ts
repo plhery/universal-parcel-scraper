@@ -648,6 +648,8 @@ describe('iMile status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1004', description: 'Shipment is scheduled to [2026-05-20].' })).toEqual({ kind: 'unknown' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'User not at home' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Wrong Address(Insufficient address details)' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Failed to schedule due to [noanswer]。' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'The delivery method has been confirmed with the recipient as Self-Pickup.' }))

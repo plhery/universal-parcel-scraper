@@ -1858,6 +1858,13 @@ describe("universal providers' answers", () => {
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
       ['Your parcel has been received by drop off point', 'accepted'], ['Parcel has entered confiscation process', 'exception'],
       ['Manifested but not collected email sent to Sample', 'registered'],
+      // BH Pošta's own Bosnian, export then import, the dispatch naming the office that delivers the item.
+      ['Prijem pošiljke od korisnika', 'accepted'], ['Ubacivanje pošiljke u vreću - Izvoz', 'in_transit'],
+      ['Otprema pošiljke u inostranstvo (EDI poruka )', 'in_transit'], ['Otprema pošiljke u inostranstvo', 'in_transit'],
+      ['Prispijeće pošiljke u izmjeničnu poštu - Uvoz', 'in_transit'], ['Prispijeće pošiljke u izmjenicnu poštu - Uvoz', 'in_transit'],
+      ['Otprema paketa na carinu - Uvoz', 'customs'], ['Vraćanje pošiljke sa carine - Uvoz', 'in_transit'],
+      ['Otprema pošiljke u uvozu prema: 00000 PRIMJER (Dostava-EMS)', 'in_transit'],
+      ['Prispijeće pošiljke u dostavnu poštu - Uvoz', 'in_transit'],
       // Hermes taking the parcel over at a depot it names, the UPU's item held for its addressee, a destination carrier's
       // pre-alert of a parcel its sender still has, a request registered, and an ocean line's booking, terminal and warehouse.
       ['The shipment has been taken over by Hermes in Beispieldorf (Musterstadt) and is being prepared for further shipping.', 'accepted'],

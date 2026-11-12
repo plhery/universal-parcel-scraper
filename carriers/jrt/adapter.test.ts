@@ -386,6 +386,8 @@ describe('JRT tracking adapter', () => {
     // The bilingual row of a booked flight reads alike whatever its day.
     expect(answer('预计10.29航班/Flight scheduled for October 29th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计11.3航班/Flight scheduled for November 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Latin America the booked flight and the flight name the destination and the day.
     expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });

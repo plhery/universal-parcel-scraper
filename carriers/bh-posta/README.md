@@ -18,6 +18,9 @@ rule claims them.
 The tracking page embeds a form from bhpwebout.posta.ba that posts the number back with the page's
 ASP.NET view state. Universal providers relay its scans, so there is no adapter.
 
+The providers relay its scans in Bosnian, each step marked for export ("Izvoz") or import ("Uvoz"). The
+providers' shared reading stages them.
+
 ## Links
 
 Its tracking page takes numbers only through a form that posts them, so no address opens one item.

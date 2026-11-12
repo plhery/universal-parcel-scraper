@@ -574,6 +574,14 @@
       "note": "The flight booked, naming its day in both halves (\"预计10.29航班\", \"October 29th\"); the map reads each day as an ellipsis. The flight is still to come."
     },
     {
+      "wording": "预计配载航班…月…日,Expected flight on …",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-08",
+      "note": "The flight the parcel is loaded for, naming its day in both halves (\"11月11日\", \"November 11th\"); the map reads each day as an ellipsis. The flight is still to come."
+    },
+    {
       "wording": "航班已启运/Package in transit to destination country",
       "language": "zh",
       "stage": "in_transit",

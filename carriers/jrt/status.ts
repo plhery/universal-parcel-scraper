@@ -29,6 +29,8 @@ const ESTIMATED_DAY = /^(estimated (?:departure|arrival date) is )[a-z]+ \d{1,2}
 
 // The bilingual row of a booked flight names its day in both halves: "预计10.29航班/Flight scheduled for October 29th".
 const SCHEDULED_FLIGHT = /^(预计)\d{1,2}\.\d{1,2}(航班\/flight scheduled for )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
+// So does the row of the flight the parcel is loaded for, the day as month and day: "预计配载航班11月11日,Expected flight on November 11th".
+const LOADED_FLIGHT = /^(预计配载航班)\d{1,2}月\d{1,2}日[,，] ?(expected flight on )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
 
 // On the line into Mexico the booked flight is in Spanish, naming the destination and the day:
 // "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
@@ -59,7 +61,7 @@ const jtMexicoKey = (wording: string): string => (JT_MEXICO_ROW.test(wording)
 export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
-  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
+  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(DELAYED_FLIGHT, '$1…$2…');
 
 /**

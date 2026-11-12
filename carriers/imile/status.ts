@@ -79,6 +79,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['user not at home', 'failed_attempt'],
   ['consignee not at home', 'failed_attempt'],
   ['wrong address', 'failed_attempt'],
+  // The same reason with iMile's detail in brackets, after the round out for delivery.
+  ['wrong address(insufficient address details)', 'failed_attempt'],
   ['<bad address>', 'failed_attempt'],
   // The recipient refused the parcel at the door.
   ['refuse to accept', 'failed_attempt'],

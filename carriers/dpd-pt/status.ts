@@ -26,6 +26,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['501', 'failed_attempt'], // The address is incomplete or unreadable.
   ['506', 'failed_attempt'], // The recipient was not in.
   ['508', 'failed_attempt'], // The recipient was closed for holidays.
+  ['510', 'failed_attempt'], // Not delivered on the round for a reason of DPD's own, back at the depot to go out again.
   ['521', 'failed_attempt'], // The locker or pickup point was full.
   // Nobody collected the parcel in time, and a return to the sender ordered:
   // delivery stops, and the parcel has not reached the sender yet.
