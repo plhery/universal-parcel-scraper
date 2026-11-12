@@ -15413,6 +15413,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cvc": {
+    "displayName": "CVC",
+    "color": "#5f3e8f",
+    "aliases": [
+      "Си Ви Си",
+      "Си Ви Си ЕООД",
+      "e-CVC"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://my.e-cvc.bg/track",
+    "trackingUrlTemplate": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
+    "trackingSearchUrl": "https://my.e-cvc.bg/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cycloon": {
     "displayName": "Cycloon",
     "color": "#e4002b",
@@ -20954,7 +20977,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#f58220",
     "aliases": [
       "Express One BG",
-      "Експрес Уан"
+      "Експрес Уан",
+      "M&BM Express",
+      "М и БМ Експрес"
     ],
     "countries": [
       "BG"
@@ -50038,6 +50063,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "transpress": {
+    "displayName": "Transpress",
+    "color": "#1e6ee2",
+    "aliases": [
+      "Транспрес",
+      "Транспрес ООД",
+      "Transpres",
+      "Транспрес Деливъри",
+      "Транспрес Деливъри ЕООД"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://transpress.bg/bg/prosledjavane",
+    "trackingUrlTemplate": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
+    "trackingSearchUrl": "https://transpress.bg/bg/prosledjavane",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "trendyol-express": {
     "displayName": "Trendyol Express",
     "color": "#f16623",
@@ -55448,6 +55498,7 @@ export const CARRIER_IDS = [
   "cupost",
   "curiera",
   "custom-companies",
+  "cvc",
   "cycloon",
   "cyprus-post",
   "czl-express",
@@ -56409,6 +56460,7 @@ export const CARRIER_IDS = [
   "transnatur",
   "transport-rdl",
   "transportes-rapex",
+  "transpress",
   "trendyol-express",
   "trexity",
   "trumpcard",
@@ -56942,6 +56994,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cupost": [],
   "curiera": [],
   "custom-companies": [],
+  "cvc": [],
   "cycloon": ["cycloon-1"],
   "cyprus-post": ["cyprus-post-s10"],
   "czl-express": [],
@@ -57903,6 +57956,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transnatur": [],
   "transport-rdl": [],
   "transportes-rapex": [],
+  "transpress": [],
   "trendyol-express": [],
   "trexity": [],
   "trumpcard": [],

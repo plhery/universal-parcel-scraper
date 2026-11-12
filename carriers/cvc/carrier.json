@@ -1,0 +1,36 @@
+{
+  "id": "cvc",
+  "displayName": "CVC",
+  "aliases": [
+    "Си Ви Си",
+    "Си Ви Си ЕООД",
+    "e-CVC"
+  ],
+  "region": {
+    "countries": [
+      "BG"
+    ]
+  },
+  "brand": {
+    "color": "#5f3e8f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Sofia",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
+    "searchUrl": "https://my.e-cvc.bg/track",
+    "canaryUrl": "https://my.e-cvc.bg/track",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

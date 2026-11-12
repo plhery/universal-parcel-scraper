@@ -1,0 +1,38 @@
+{
+  "id": "transpress",
+  "displayName": "Transpress",
+  "aliases": [
+    "Транспрес",
+    "Транспрес ООД",
+    "Transpres",
+    "Транспрес Деливъри",
+    "Транспрес Деливъри ЕООД"
+  ],
+  "region": {
+    "countries": [
+      "BG"
+    ]
+  },
+  "brand": {
+    "color": "#1e6ee2"
+  },
+  "selectable": true,
+  "timezone": "Europe/Sofia",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
+    "searchUrl": "https://transpress.bg/bg/prosledjavane",
+    "canaryUrl": "https://transpress.bg/bg/prosledjavane",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
