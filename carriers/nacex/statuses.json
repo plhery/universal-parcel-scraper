@@ -4,6 +4,7 @@
     { "wording": "Notificado", "language": "es", "stage": "registered", "confirmedBy": "live", "note": "Recorded the day the shipment is booked, before or after its acceptance: a notice of the shipment, not a movement. A repeat after a physical scan keeps that scan's stage." },
     { "wording": "Aceptada", "language": "es", "stage": "accepted", "confirmedBy": "live", "note": "Acceptance at an agency. One placed at the web channel (WEB) is the online booking and registers the shipment." },
     { "wording": "En tránsito", "language": "es", "stage": "in_transit", "confirmedBy": "live" },
+    { "wording": "Gestión de servicio, posible demora", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "The agency handles an incident, such as a round that did not deliver, and warns of a delay; an arranged delivery follows." },
     { "wording": "Solución de entrega concertada", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "A delivery arrangement after an incident, such as a new day; delivery resumes." },
     { "wording": "Solución de entrega en punto", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "The parcel is redirected to a NACEX pickup point; the point code after the label is dropped." },
     { "wording": "Cambio de dirección", "language": "es", "stage": "in_transit", "confirmedBy": "live", "note": "The delivery address changed and the parcel is rerouted." },

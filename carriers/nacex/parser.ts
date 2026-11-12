@@ -116,7 +116,7 @@ export function parseNacex(html: string, raw: string): CarrierResult {
   const summaryCell = statusCells.eq(1);
   const summaryLabels = summaryCell.children('b, font.fuente_titulo_green');
   const summaryLabel = clean(summaryLabels.length === 1 ? summaryLabels.text() : summaryCell.text(), 120).replace(AGENCY_CODE, '');
-  if (!summaryLabel || !/^[\p{L}][\p{L}\s().-]{1,119}$/u.test(summaryLabel)) throw new SchemaError('NACEX', 'NACEX returned an invalid current status');
+  if (!summaryLabel || !/^[\p{L}][\p{L}\s().,-]{1,119}$/u.test(summaryLabel)) throw new SchemaError('NACEX', 'NACEX returned an invalid current status');
   const rows = history.find('tr');
   if (!rows.length) throw new IndeterminateError('NACEX', 'NACEX returned empty shipment history');
   if (rows.length > 500) throw new SchemaError('NACEX', 'NACEX returned too many scans');
@@ -139,7 +139,7 @@ export function parseNacex(html: string, raw: string): CarrierResult {
     // separate text nodes. A parenthetical agency or pickup point is routing
     // detail, not code.
     const label = clean(labels.text(), 160).replace(AGENCY_CODE, '');
-    if (labels.length !== 1 || !/^[\p{L}][\p{L}\s.-]{1,119}$/u.test(label)) {
+    if (labels.length !== 1 || !/^[\p{L}][\p{L}\s.,-]{1,119}$/u.test(label)) {
       throw new SchemaError('NACEX', 'NACEX returned an invalid scan label');
     }
     const trailing = clean(cell.contents().filter((_, node) => node.nodeType === 3).map((_, node) => $(node).text()).get().join(' '), 300);

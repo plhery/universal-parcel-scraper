@@ -34,8 +34,9 @@ has no collection scan, so the booking registers the shipment until its first
 transit scan. Notices (`Notificado`, or an administrative note) record a
 message, not a movement: they keep the stage of the scan before them, and only
 a first notice registers the shipment. Agreed redeliveries, address changes and pickup point
-redirects resume delivery; requests to contact the agency and incidents closed
-without success are problems. A parenthetical agency or pickup point code after
+redirects resume delivery, as does the agency's handling of an incident that warns of a
+delay ("Gestión de servicio, posible demora"); requests to contact the agency and incidents
+closed without success are problems. A parenthetical agency or pickup point code after
 a label is dropped.
 
 Only status labels and depot localities of movement scans are retained. A

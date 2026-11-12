@@ -160,6 +160,13 @@ describe('NACEX direct tracking', () => {
       ['Solucionado sin OK', 'exception', undefined], ['Solución de entrega en punto', 'in_transit', undefined],
       ['Solución de entrega concertada', 'in_transit', undefined], ['Contacta con agencia', 'exception', undefined],
       ['En reparto', 'out_for_delivery', 'TEST LOCALITY']]);
+    // A label with a comma, the agency's handling of a missed round, is a scan like the others.
+    const delayed = parseNacex(history('Entregado', ['<b>Entregado</b><br>TEST RECIPIENT', '<b>Solución de entrega concertada</b>',
+      '<b>Gestión de servicio, posible demora</b>', '<b>En reparto</b><br>9901 - TEST LOCALITY']), NUMBER);
+    expect(delayed.events?.map(event => [event.provider_status, event.stage])).toEqual([['Entregado', 'delivered'],
+      ['Solución de entrega concertada', 'in_transit'], ['Gestión de servicio, posible demora', 'in_transit'], ['En reparto', 'out_for_delivery']]);
+    expect(parseNacex(history('Gestión de servicio, posible demora', ['<b>Gestión de servicio, posible demora</b>',
+      '<b>En reparto</b><br>9901 - TEST LOCALITY']), NUMBER)).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Gestión de servicio, posible demora' });
     expect(parseNacex(history('Cambio de dirección (9901)', ['<b>Cambio de dirección (9901)</b>', '<b>En reparto</b><br>9901 - TEST LOCALITY']), NUMBER))
       .toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Cambio de dirección' });
     const pickup = edit($ => {

@@ -9,8 +9,10 @@ const labels: Record<string, ClassifiedStatus> = {
   'DISPONIBLE EN PUNTO NACEX': { status: 'in_transit', stage: 'ready_for_pickup' },
   AUSENTE: { status: 'exception', stage: 'failed_attempt' },
   // A redelivery, address change or pickup point the recipient agreed puts
-  // the parcel back on its way; the agency's request to be contacted and an
+  // the parcel back on its way, as does the agency's handling of an incident
+  // that warns of a delay; the agency's request to be contacted and an
   // incident closed without success are problems.
+  'GESTION DE SERVICIO, POSIBLE DEMORA': { status: 'in_transit', stage: 'in_transit' },
   'SOLUCION DE ENTREGA CONCERTADA': { status: 'in_transit', stage: 'in_transit' },
   'SOLUCION DE ENTREGA EN PUNTO': { status: 'in_transit', stage: 'in_transit' },
   'CAMBIO DE DIRECCION': { status: 'in_transit', stage: 'in_transit' },
