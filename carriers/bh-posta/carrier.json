@@ -1,0 +1,34 @@
+{
+  "id": "bh-posta",
+  "displayName": "BH Pošta",
+  "aliases": [
+    "JP BH Pošta",
+    "JP BH POŠTA d.o.o. Sarajevo"
+  ],
+  "region": {
+    "countries": [
+      "BA"
+    ]
+  },
+  "brand": {
+    "color": "#034ea2"
+  },
+  "selectable": true,
+  "timezone": "Europe/Sarajevo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.posta.ba/pracenje-posiljaka/",
+    "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

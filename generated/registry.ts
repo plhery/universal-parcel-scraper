@@ -1662,6 +1662,7 @@ export const REGISTRY: RegistryDefinition = {
     "better-trucks": "better-trucks",
     "bex-express": "bex-express",
     "bfe-express": "universal",
+    "bh-posta": "universal",
     "big-smart": "universal",
     "bigfoot-express": "universal",
     "bigpost": "universal",

@@ -10378,6 +10378,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bh-posta": {
+    "displayName": "BH Pošta",
+    "color": "#034ea2",
+    "aliases": [
+      "JP BH Pošta",
+      "JP BH POŠTA d.o.o. Sarajevo"
+    ],
+    "countries": [
+      "BA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sarajevo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
+    "trackingSearchUrl": "https://www.posta.ba/pracenje-posiljaka/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "big-smart": {
     "displayName": "Big Smart",
     "color": "#2f2f5e",
@@ -55284,6 +55305,7 @@ export const CARRIER_IDS = [
   "better-trucks",
   "bex-express",
   "bfe-express",
+  "bh-posta",
   "big-smart",
   "bigfoot-express",
   "bigpost",
@@ -56777,6 +56799,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "better-trucks": ["better-trucks-1"],
   "bex-express": [],
   "bfe-express": [],
+  "bh-posta": [],
   "big-smart": [],
   "bigfoot-express": [],
   "bigpost": [],
