@@ -30,7 +30,9 @@ Once the parcel has crossed the border both know the number. It is one journey, 
 files it under AliExpress, which holds the scans from before the border, instead of leaving the
 choice to the user. The result then proposes the partner as a hand-off: the one carrier at home
 in the destination country whose rule fits the number. A consumer adopts it when it reports the
-parcel.
+parcel. The `RTZ` and `FMP` numbers of parcels for Italy are labels around a Poste Italiane code:
+Poste's tracker knows the thirteen characters after the letters, so the hand-off asks it about
+those ([Poste Italiane](../poste-italiane/README.md)).
 
 Cainiao's tracker also follows partner numbers in shapes no rule suggests it for: plain digits, or
 a format another carrier's rule claims with high confidence. For those the user picks AliExpress

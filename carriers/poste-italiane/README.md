@@ -80,6 +80,13 @@ Italiane for a number issued abroad.
 - Partners abroad hand Poste Italiane parcels under a DHL Parcel Connect plate, `JJD` and
   twenty-one digits, and link to Poste's tracker with it, as PPL does. The adapter takes those
   plates for that hand-off. DHL issues them, so no detection rule names Poste for them.
+- Senders abroad follow a parcel for Poste Italiane under a sixteen-character label: three
+  letters, then Poste's own `UW` or `5P` code. Vinted Go's parcels for Italy and AliExpress's
+  through Cainiao carry `RTZ`, `FMP` or `APT` there. Poste's tracker does not know the label and
+  follows the code alone, as Poste Delivery Business Standard or Crono Economy, from the day it
+  takes the parcel. So a hand-off from such a label asks Poste about its last thirteen characters
+  (`posteItalianeLabelCode`), whoever the sender is and whether or not it names Italy. Detection
+  leaves the label with the sender, which holds the scans from before Italy.
 - Poste Delivery Business Internazionale Plus codes start with `8UW`, as `1UW` and `3UW` codes
   do for Poste's other parcels. Poste's tracker follows them.
 - AliExpress parcels to Italy can carry a `5P` code before Poste has them. Aggregators then name

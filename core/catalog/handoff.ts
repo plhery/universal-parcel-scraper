@@ -9,7 +9,7 @@ import { detectCarrierMatch, isValidDhlExpressWaybill, isValidS10TrackingNumber,
 import { isAcsVoucherNumber } from '../detection/acsCourier.js';
 import { isAnotherPostItemAtChronopost } from '../detection/chronopost.js';
 import { isCorreosChileLookup } from '../detection/correosChile.js';
-import { isPosteItalianeLookup } from '../detection/posteItaliane.js';
+import { isPosteItalianeLookup, posteItalianeLabelCode } from '../detection/posteItaliane.js';
 import { isSpsLookup } from '../detection/sps.js';
 import { isFlickpostReference } from '../detection/flickpost.js';
 import { isFezDeliveryReference } from '../detection/fezDelivery.js';
@@ -123,7 +123,15 @@ export function deliveryHandoff(carrier: string, number: string, result: Carrier
   if (!result.delivery_carrier && linked.length > 1) return null;
   let target: string | undefined = result.delivery_carrier ?? linked[0];
   let basis: DeliveryHandoff['basis'] = 'partner';
-  const reference = result.delivery_tracking_number || number;
+  let reference = result.delivery_tracking_number || number;
+  // A label around one of Poste Italiane's parcel codes names Poste whoever follows the parcel
+  // under it, and Poste's tracker is asked about the code alone.
+  const labelled = posteItalianeLabelCode(reference);
+  if (labelled && (!target || target === 'poste-italiane')) {
+    if (!target) basis = 'reference';
+    target = 'poste-italiane';
+    reference = labelled;
+  }
   const destination = typeof result.destination_country === 'string' ? result.destination_country
     : typeof result.destination_country_name === 'string' ? result.destination_country_name : undefined;
   // S10 binds the postal identity across borders. Its issuer suffix does not

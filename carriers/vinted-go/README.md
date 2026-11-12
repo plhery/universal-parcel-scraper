@@ -45,6 +45,11 @@ Portugal and Finland. Tracked through the service its tracking page's search box
 - The page shows a "New tracking code" with a link to another network on a redirected or
   left-our-network scan. The adapter reads that code as the delivery tracking number, and the
   network from the link when the catalog knows its host. No reply showed one.
+- Parcels for Italy leave Vinted Go's network for Poste Italiane. Vinted Go's history then stops,
+  at "Parcel is on the way to Italy" or at the last sorting centre, and names no code. The number
+  itself holds one: three letters, then the Poste Italiane code the parcel travels under in
+  Italy. The hand-off asks Poste's tracker about that code, which it knows once it has the parcel
+  ([Poste Italiane](../poste-italiane/README.md)).
 - The parcel page is rendered on the server and also answers `RSC: 1` with its React Server
   Components rows, but it leaves out some scans the service lists, so it is not used. Vinted's
   own app needs an account.
@@ -67,7 +72,8 @@ The service also answers codes of sixteen capital letters and digits, mostly let
 takes them when an aggregator names Vinted Go for one or the user picks it. No public sample shows
 the form. Codes of three letters, a digit, `UW`, a digit and nine letters or digits were answered
 with Vinted Go's own scans, so `vinted-go-uw` suggests Vinted Go first for that layout, at low
-confidence. `FMP` also opens codes that wrap another carrier's number in another layout.
+confidence. The letters are no mark of Vinted Go: `FMP` and `RTZ` also open the labels of
+AliExpress parcels for Italy, around another of Poste Italiane's codes.
 
 ## Links
 

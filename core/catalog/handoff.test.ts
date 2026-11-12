@@ -253,6 +253,42 @@ describe('an origin that follows the parcel under its delivery carrier\'s number
   });
 });
 
+describe('a label around one of Poste Italiane\'s parcel codes', () => {
+  // Vinted Go and Cainiao follow a parcel for Italy under three letters and Poste's code.
+  const labels = [['vinted-go', 'ABC1UW2DEFGHI34J', '1UW2DEFGHI34J'], ['vinted-go', 'FMP1UW2ABCDEFGHI', '1UW2ABCDEFGHI'],
+    ['aliexpress', 'RTZ5P00D99999980', '5P00D99999980'], ['aliexpress', 'FMP5P00D99999980', '5P00D99999980']] as const;
+
+  it('asks Poste Italiane about the code alone, whoever follows the label and wherever it says the parcel goes', () => {
+    for (const [carrier, label, code] of labels) {
+      for (const result of [{}, { destination_country: 'IT' }, normalizeCarrierResult({ status: 'in_transit', destination_country_name: 'Italy' })]) {
+        expect(deliveryHandoff(carrier, label, result)).toEqual({ carrier: 'poste-italiane', number: code, basis: 'reference' });
+      }
+      expect(hasDirectHandoffAdapter('poste-italiane', code)).toBe(true);
+      expect(hasDirectHandoffAdapter('poste-italiane', label)).toBe(false);
+    }
+  });
+  it('reads the code from a label the origin names as the delivery number', () => {
+    expect(deliveryHandoff('aliexpress', 'LP00000000000001', { delivery_tracking_number: 'RTZ5P00D99999980' }))
+      .toEqual({ carrier: 'poste-italiane', number: '5P00D99999980', basis: 'reference' });
+    expect(deliveryHandoff('vinted-go', 'ABC1UW2DEFGHI34J', { delivery_carrier: 'poste-italiane' }))
+      .toEqual({ carrier: 'poste-italiane', number: '1UW2DEFGHI34J', basis: 'partner' });
+  });
+  it('leaves another partner the origin names, and Poste\'s own lookups', () => {
+    expect(deliveryHandoff('vinted-go', 'ABC1UW2DEFGHI34J', { delivery_carrier: 'ups', delivery_tracking_number: '1Z1234567890123454' }))
+      .toEqual({ carrier: 'ups', number: '1Z1234567890123454', basis: 'partner' });
+    expect(deliveryHandoff('aliexpress', 'RTZ5P00D99999980', { destination_country: 'IT', delivery_carrier: 'ups' }))
+      .toEqual({ carrier: 'ups', number: 'RTZ5P00D99999980', basis: 'partner' });
+    expect(deliveryHandoff('poste-italiane', 'ABC1UW2DEFGHI34J', {})).toBeNull();
+  });
+  it('proposes nobody for another layout', () => {
+    // Other characters where Poste's codes start, a label a character short or long, and the bare code.
+    for (const number of ['ABC1UX2DEFGHI34J', 'ABC5Q00D99999980', 'AB11UW2DEFGHI34J', 'ABC1UW2DEFGHI34', 'ABCD1UW2DEFGHI34J', '1UW2DEFGHI34J',
+      'VGS99999999999980', '1799999999999980']) {
+      expect(deliveryHandoff('vinted-go', number, {})).toBeNull();
+    }
+  });
+});
+
 describe('delivery partners with an optional input', () => {
   it('hands DPD only a reference of its own shape, and never its postcode', () => {
     expect(hasDirectHandoffAdapter('dpd', '06080000000002')).toBe(true);
