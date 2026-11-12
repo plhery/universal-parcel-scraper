@@ -42,6 +42,7 @@ async function harness() {
   };
   vi.mocked(planRoyalMailVision).mockResolvedValue({ action: 'drag', points: [{ x: 300, y: 600 }, { x: 800, y: 750 }] });
   return { ...recovery, controller, state, mouse, submit, context, records, emitter, refusal, crop, install,
+    refresh: () => { emitter.emit('request', { ...request(), url: () => 'https://api.hcaptcha.com/getcaptcha/synthetic-sitekey' }); },
     autoAccept: () => { state.proof = true; emitter.emit('request', request()); },
     autoCheck: () => { emitter.emit('request', request()); },
     spendBudget: () => { remaining = 2501; }, signal: controller.signal };
@@ -190,6 +191,35 @@ describe('Royal Mail verification recovery', () => {
     });
     await expect(h.solve(h.signal)).resolves.toBe(false);
     expect(h.mouse.down).not.toHaveBeenCalled();
+    h.finish(false);
+    expect(h.records[0]?.outcome).toBe('stale');
+  });
+
+  it('discards a refreshed generation during snapshot metadata reads before inference', async () => {
+    const h = await harness();
+    const box = h.crop.boundingBox;
+    h.crop.boundingBox = async () => { h.refresh(); return box(); };
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(planRoyalMailVision).not.toHaveBeenCalled();
+    expect(h.mouse.down).not.toHaveBeenCalled();
+    h.finish(false);
+    expect(h.records[0]?.outcome).toBe('stale');
+  });
+
+  it.each(['generation', 'frame'] as const)('rechecks the %s after awaiting input metadata', async kind => {
+    const h = await harness();
+    vi.mocked(planRoyalMailVision).mockImplementationOnce(async () => {
+      const box = h.crop.boundingBox;
+      h.crop.boundingBox = async () => {
+        if (kind === 'generation') h.refresh();
+        else h.state.frameUrl += '-replacement';
+        return box();
+      };
+      return { action: 'drag', points: [{ x: 300, y: 600 }, { x: 800, y: 750 }] };
+    });
+    await expect(h.solve(h.signal)).resolves.toBe(false);
+    expect(h.mouse.down).not.toHaveBeenCalled();
+    expect(h.submit.click).not.toHaveBeenCalled();
     h.finish(false);
     expect(h.records[0]?.outcome).toBe('stale');
   });

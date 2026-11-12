@@ -145,6 +145,8 @@ guest session and lookup deadline, after reserving the existing fresh-context re
 with one visual round and no new attempt after a verification refusal.
 Ambiguous plans, changed images, multi-page tasks, click tasks and unsupported layouts remain
 challenges for provider fallback.
+An image from a widget refresh is discarded before inference; the frame, generation,
+prompt and image geometry must still match before input or submission.
 
 `ROYAL_MAIL_GEMINI_LOG_VERIFICATION=1` writes fixed verification labels, counts,
 timing and a bound-history flag to stderr. Accepted verification without history

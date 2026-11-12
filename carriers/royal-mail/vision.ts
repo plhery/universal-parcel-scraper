@@ -189,6 +189,7 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
       const sharp = await loadSharp(PROVIDER);
       {
         record.rounds++;
+        const currentGeneration = generation;
         const crop = frame.locator('.challenge-view');
         if (await frame.locator('canvas').count() !== 1) { outcome = 'unsupported'; return false; }
         const ready = await crop.evaluate(node => {
@@ -224,11 +225,11 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
         }
         if (!stable) { outcome = 'stale'; return false; }
         const digest = createHash('sha256').update(image).digest('hex');
-        const box = await crop.boundingBox(), canvas = await frame.locator('canvas').boundingBox();
+        const [box, canvas] = await Promise.all([crop.boundingBox(), frame.locator('canvas').boundingBox()]);
+        if (generation !== currentGeneration) { outcome = 'stale'; return false; }
         if (!box || !canvas || box.width < 100 || box.width > 1000 || box.height < 100 || box.height > 1200) {
           outcome = 'unsupported'; return false;
         }
-        const currentGeneration = generation;
         const started = performance.now();
         phase = 'analysis';
         const guide = await sharp(image).composite([{ input: royalMailVisionGrid(Math.round(box.width), Math.round(box.height)) }]).png().toBuffer();
@@ -241,10 +242,12 @@ export function royalMailVisionRecovery(page: Page, config: RoyalMailVisionConte
         phase = 'generation';
         left();
         const unchanged = async () => {
-          if (frame?.url() !== original || generation !== currentGeneration
-            || await frame.locator('.prompt-text').innerText({ timeout: left() }) !== signature) return false;
-          const currentBox = await crop.boundingBox(), currentCanvas = await frame.locator('canvas').boundingBox();
-          return currentBox !== null && currentCanvas !== null
+          if (frame?.url() !== original || generation !== currentGeneration) return false;
+          const [currentSignature, currentBox, currentCanvas] = await Promise.all([
+            frame.locator('.prompt-text').innerText({ timeout: left() }), crop.boundingBox(), frame.locator('canvas').boundingBox(),
+          ]);
+          return frame.url() === original && generation === currentGeneration && currentSignature === signature
+            && currentBox !== null && currentCanvas !== null
             && (['x', 'y', 'width', 'height'] as const).every(key => Math.abs(currentBox[key] - box[key]) < 0.5
               && Math.abs(currentCanvas[key] - canvas[key]) < 0.5);
         };
