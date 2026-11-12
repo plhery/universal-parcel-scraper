@@ -11608,6 +11608,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Български пощи",
       "Bulgarian Post",
+      "Bulgaria Post",
       "BG Post",
       "Balgarski Poshti"
     ],
@@ -33767,6 +33768,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^IHB\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^ANS\\d{13}UA$",
+        "confidence": "low"
       }
     ]
   },
@@ -36328,7 +36333,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#f86300",
     "aliases": [
       "Eesti Post",
-      "Estonian Post"
+      "Estonian Post",
+      "Estonia Post"
     ],
     "countries": [
       "EE",
@@ -57420,7 +57426,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maxzeego": [],
   "mayiyinfu": ["mayiyinfu-1","mayiyinfu-2"],
   "mds-collivery": [],
-  "meest": ["meest-1","meest-2"],
+  "meest": ["meest-1","meest-2","meest-3"],
   "megacity-courier": [],
   "meihoo-pegasus": ["meihoo-pegasus-1"],
   "meitetsu-unyu": [],

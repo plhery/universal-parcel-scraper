@@ -130,6 +130,11 @@
       "id": "meest-2",
       "pattern": "^IHB\\d{10}$",
       "confidence": "low"
+    },
+    {
+      "id": "meest-3",
+      "pattern": "^ANS\\d{13}UA$",
+      "confidence": "low"
     }
   ]
 }

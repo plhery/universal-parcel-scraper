@@ -11604,6 +11604,7 @@
     "aliases": [
       "Български пощи",
       "Bulgarian Post",
+      "Bulgaria Post",
       "BG Post",
       "Balgarski Poshti"
     ],
@@ -33763,6 +33764,10 @@
       {
         "pattern": "^IHB\\d{10}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^ANS\\d{13}UA$",
+        "confidence": "low"
       }
     ]
   },
@@ -36324,7 +36329,8 @@
     "color": "#f86300",
     "aliases": [
       "Eesti Post",
-      "Estonian Post"
+      "Estonian Post",
+      "Estonia Post"
     ],
     "countries": [
       "EE",

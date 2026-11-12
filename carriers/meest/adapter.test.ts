@@ -279,6 +279,12 @@ describe('Meest HTTP adapter', () => {
     for (const number of ['IHB000000001', 'IHB00000000012', 'IHC0000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('meest');
     }
+    // In the shape of a parcel the app tracked that Meest's tracker answered: ANS, thirteen digits and UA.
+    expect(detectCarrierMatch('ANS8000000000046UA')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['meest'] });
+    expect(recognitionAskedCarriers('ANS8000000000046UA')).toContain('meest');
+    for (const number of ['ANS800000000046UA', 'ANS80000000000046UA', 'ANS8000000000046PL', 'ANT8000000000046UA']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('meest');
+    }
     // Senders' S10 numbers and partners' references stay with their own routing.
     for (const number of [DOMESTIC, REFERENCE]) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('meest');
