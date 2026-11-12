@@ -42,7 +42,7 @@ browser is needed, and no portal link is published.
   the parcel goes to FedEx when FedEx's detection offers the number. DHL's collection after the
   hand-off is transit, and its rows of a
   return, the refusal included, are returned: the delivery that follows is the one back to the
-  sender.
+  sender. Its note of the recipient's preferred location moves nothing.
 - The line into the United States ends with UPS. The tracker copies UPS's rows in Chinese, and
   they show UPS's English. They come on UPS's wall clock at the scan's place: a delivery read on
   Beijing time would fall before dawn there. Rows in UPS's words or at a place in the United
@@ -51,8 +51,8 @@ browser is needed, and no portal link is published.
 - The line into Mexico ends with J&T Express Mexico. The tracker copies J&T's rows in Spanish, the
   town and the site in brackets, on J&T's clock in Mexico City, the one its own tracker answers on:
   read on Beijing time, the night's sorting at J&T's centre would fall in the morning. The map reads
-  their towns and sites, and the courier and phone of the collection, as ellipses; J&T's collection
-  of the cleared parcel is in transit.
+  their towns and sites, and the courier and phone of the collection and of the round to the
+  recipient's home, as ellipses; J&T's collection of the cleared parcel is in transit.
 - On the line into Europe the tracker also copies DHL's rows, in DHL's own English sentences or
   its lower case event texts ("loaded to movement / tour vehicle"). They come on DHL's wall clock
   where it scanned the parcel, the wall clocks DHL's own reply gives. A row at a town, as "hagen",

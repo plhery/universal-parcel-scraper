@@ -206,5 +206,9 @@ describe('YDH status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'ydh', providerCode: null, description: 'Sample Status Note' })).toEqual({ kind: 'unknown' });
     expect(statusMap.gaps.every((gap) => gap.code && gap.note)).toBe(true);
     for (const wording of ['constructor', 'toString', 'Sample Status Note']) expect(ydhStage(wording), wording).toBeNull();
+    // The final carrier's late first scan keeps the parcel on its way, and Poste Italiane's transit comes without a code.
+    expect(statusMapAnswer({ carrier: 'ydh', providerCode: 'DSD', description: 'D-SCAN DELAY' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'ydh', providerCode: null, description: 'In transit along Poste Italiane’s logistic network' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 });

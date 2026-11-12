@@ -66,6 +66,14 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Departed from AIRPORT",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The flight leaving the origin's airport, after the export release and before the international flight's arrival."
+    },
+    {
       "wording": "The country of origin commences customs declaration.",
       "stage": "in_transit",
       "language": "en",
@@ -545,6 +553,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
       "note": "Relayed after the parcel left the facilities of the network that brought it to the courier partner: a hand-over, not the parcel's acceptance."
+    },
+    {
+      "wording": "Item accepted",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from the last-mile carrier after YunExpress delivered the parcel to it: its intake, a hand-over like Package accepted at courier partner, not the parcel's acceptance."
     },
     {
       "wording": "Accepted at Carrier's Facility",

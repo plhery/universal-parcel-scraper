@@ -58,6 +58,8 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['200019', MOVING],
   ['200000', MOVING],
   ['10054', MOVING],
+  // Arrived at the delivery station, before the courier's round.
+  ['200075', MOVING],
   ['11000', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['10034', { status: 'delivered', stage: 'delivered' }],
 ]);

@@ -795,6 +795,62 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-27",
       "note": "The Italian last mile's attempt that found no one at home; the reason after the colon varies, and the delivery is tried again."
+    },
+    {
+      "wording": "Currently processing import customs clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The destination's import clearance under way, a day after the flight's arrival."
+    },
+    {
+      "wording": "Customs clearance for imports",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The import clearance again, hours after the row that it is under way, without saying it is done; the next row schedules the delivery."
+    },
+    {
+      "wording": "Scheduled For Delivery",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Shouwu's row after the import clearance, days before the delivering partner's depot and round: a delivery planned, not under way."
+    },
+    {
+      "wording": "In transit.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "DPD's transit scan, as its German app words it, on the line DPD delivers."
+    },
+    {
+      "wording": "At parcel delivery centre.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "DPD's delivering depot, before the round and again after a failed one."
+    },
+    {
+      "wording": "Out for delivery.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "DPD's delivery round."
+    },
+    {
+      "wording": "Unfortunately we have not been able to deliver your parcel. Consignee address not correct.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "DPD's failed round with its reason joined, a wrong address. DPD's own map reads the sentence as a failed attempt whatever the reason, and the parcel went back to the depot, not to the sender."
     }
   ]
 }

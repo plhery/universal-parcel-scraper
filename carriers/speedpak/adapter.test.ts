@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SpeedpakTracker } from './adapter.js';
@@ -92,6 +93,19 @@ describe('SpeedPAK response projection', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
     expect(result.events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'carrier_map' });
     expect(statusMap.stage(null, '"onboard ready for delivery"')).toBe('out_for_delivery');
+  });
+
+  it("reads the destination post's customs release, delivery office and held item in the UPU's English", () => {
+    const payload = fixture();
+    payload.result.waybills[0].traces[0] = { eventDesc: 'The item is being held, addressee being notified', oprTimestamp: 1767362400000 };
+    payload.result.waybills[0].lastStatus = 'The item is being held, addressee being notified';
+    const result = parseSpeedpak(payload, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'ready_for_pickup' });
+    expect(result.events?.[0]).toMatchObject({ stage: 'ready_for_pickup', stage_source: 'carrier_map' });
+    for (const [description, stage] of [['Item is cleared by customs', 'in_transit'], ['Arrival at Delivery Post Office', 'in_transit'],
+      ['The item is being held, addressee being notified', 'ready_for_pickup']] as const) {
+      expect(statusMapAnswer({ carrier: 'speedpak', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage });
+    }
   });
 
   it('keeps a destination hand-off\'s departures and arrivals moving by their labels', () => {

@@ -19,7 +19,9 @@ const CODES = new Map<string, ClassifiedStatus>([
   // Back at GOFO's facility after a failed attempt, for another: GOFO's own summary stays Transit, not its Returned.
   ['209', { status: 'in_transit', stage: 'in_transit' }],
   // The address is wrong or incomplete: the parcel waits for details. Once they are in, the corrected address moves it on.
+  // GOFO writes it on a hub's arrival (322), or the day after a failed attempt for that reason (601).
   ['322', { status: 'exception', stage: 'exception' }],
+  ['601', { status: 'exception', stage: 'exception' }],
   ['225', { status: 'in_transit', stage: 'in_transit' }],
   ['205', { status: 'delivered', stage: 'delivered' }],
 ]);

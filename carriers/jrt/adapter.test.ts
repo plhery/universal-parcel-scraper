@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
-import { isJrtDhlRow, isJrtJtMexicoRow, statusMap } from './status.js';
+import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -352,6 +352,8 @@ describe('JRT tracking adapter', () => {
     expect(answer('Flight is expected to take off on November?3')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is expected to depart on 10.27 and land on 10.28')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight has departed and is expected to 1.3 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // A delayed connecting flight names its landing day the same way.
+    expect(answer('Sorry, the second flight has been delayed and is expected to 11.12 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('报关已放行等待3号航班起飞 Customs released,Awaiting departure on flight of the 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('10/22号航班')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // A delayed flight names its new day in both halves.
@@ -372,6 +374,11 @@ describe('JRT tracking adapter', () => {
     expect(answer('not delivered-bad address')).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(answer('shipment will be returned to origin-bad address')).toEqual({ kind: 'mapped', stage: 'returned' });
     expect(isJrtDhlRow('not delivered-bad address')).toBe(true);
+    // The recipient's preferred location is DHL's note at the destination, on its clock there: it moves nothing.
+    const preferred = 'A preferred location was designated as a reception option for this shipment.';
+    expect(answer(preferred)).toEqual({ kind: 'mapped', stage: 'pending' });
+    expect(isJrtDhlRow(preferred)).toBe(true);
+    expect(isJrtDhlGermanRow(preferred)).toBe(false);
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // DHL's row for the parcel on its way to it, as JRT copies it in lower case.
@@ -400,6 +407,13 @@ describe('JRT tracking adapter', () => {
       expect(isJrtJtMexicoRow(description), description).toBe(true);
     }
     expect(isJrtJtMexicoRow('Tu envío ha llegado')).toBe(false);
+    // Its courier on the way to the recipient's home reads alike whatever the town, the site, the courier and the phone.
+    for (const description of [
+      '【Villa Uno】【SITE-Sur.pdv】El mensajero de J&T Express OTRO1-DPA.pcp está en camino a tu domicilio. Si requieres mayor información, contáctanos al 5500000000',
+      '【Villa Dos】【CLC-Norte.pdv】El mensajero de J&T Express CLC-NORTE1 está en camino a tu domicilio.']) {
+      expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
+      expect(isJrtJtMexicoRow(description), description).toBe(true);
+    }
     // So is the hand-over to FedEx after the clearance, and the warehouse's receipt before it: neither is an acceptance.
     for (const description of ['It has been handed over to the service provider.',
       'The cargo has been picked up and arrived at the warehouse，awaiting outbound shipment', 'Arrived at FedEx hub', 'Departed FedEx hub', 'On the way']) {

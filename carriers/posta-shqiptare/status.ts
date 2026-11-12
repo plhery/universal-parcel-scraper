@@ -16,6 +16,8 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['objekti u nxor nga thesi per perpunim', 'in_transit'],
   // The foreign post's office of exchange received it.
   ['objekti u pranua ne zyren e shkembimit', 'in_transit'],
+  // Put in a bag and sent abroad from the outward office of exchange.
+  ['objekti u fut ne thes dhe u dergua jashte', 'in_transit'],
   // Presented to customs, or held there, in the destination country.
   ['regjistrimi i informacionit doganor te objektit', 'customs'],
   // Sent on from the office of exchange.

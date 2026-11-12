@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InputRequiredError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import {
@@ -137,6 +138,13 @@ describe('Colis Privé wording classifier', () => {
       .toEqual({ status: 'delivered', stage: 'delivered' });
     expect(classifyStatus("Votre colis est retourné à l'expéditeur"))
       .toEqual({ status: 'exception', stage: 'returned' });
+  });
+
+  it("reads a shipping partner's rows before Colis Privé has the parcel as transit", () => {
+    for (const description of ["votre colis est arrivé chez le partenaire d'expédition.", 'votre colis est en transit vers colis privé']) {
+      expect(classifyStatus(description), description).toEqual({ status: 'in_transit', stage: 'in_transit' });
+      expect(statusMapAnswer({ carrier: 'colis-prive', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
   });
 
   it('leaves wording it does not know unmapped', () => {

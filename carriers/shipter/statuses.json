@@ -6,6 +6,7 @@
     {"wording":"The parcel has been shipped.","language":"en","stage":"in_transit","confirmedBy":"live"},
     {"wording":"The flight has been departed.","language":"en","stage":"in_transit","confirmedBy":"live"},
     {"wording":"Depart origin airport","language":"en","stage":"in_transit","confirmedBy":"live"},
+    {"wording":"Arrived at destination airport","language":"en","stage":"in_transit","confirmedBy":"live","note":"The flight's arrival, after the departure from the origin airport."},
     {"wording":"Parcel received in processing centre (…)","language":"en","stage":"in_transit","confirmedBy":"live","note":"The processing hub is variable."},
     {"wording":"Parcel depart from … depot","language":"en","stage":"in_transit","confirmedBy":"live","note":"The departure depot is variable."},
     {"wording":"The item is ready for shipment…","language":"en","stage":"in_transit","confirmedBy":"live","note":"A partner's dispatch row after processing at its hub; the appended hub name is variable."},

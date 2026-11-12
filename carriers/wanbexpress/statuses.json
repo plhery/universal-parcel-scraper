@@ -265,6 +265,14 @@
       "note": "Without a code, after the sorting centre's departure: the parcel waits to go to the partner that delivers it."
     },
     {
+      "wording": "Order information received. We're expecting your parcel to arrive with us.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "A partner's pre-advice, without a code, at the instant of the parcel's data and before the sorting centre receives the parcel."
+    },
+    {
       "wording": "Your parcel is on its way to InPost. Please check back for updates",
       "stage": "registered",
       "language": "en",

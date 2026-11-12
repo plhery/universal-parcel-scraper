@@ -42,6 +42,9 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['GWMS_ACCEPT', 'pending'],
   // "Order Created": the last-mile gateway's order for the parcel, before anyone has it.
   ['CREATE_ORDER_CES', 'pending'],
+  // "Warehouse packaging complete": the seller's warehouse packed the order, between its receipt of the order's data and
+  // "Package ready for shipping from warehouse".
+  ['GWMS_PICK', 'pending'],
   ['GWMS_PACKAGE', 'pending'],
   ['PRE_READY_TO_SHIP', 'pending'],
   ['CONSIGN', 'pending'],
@@ -59,6 +62,9 @@ export const CAINIAO_ACTION_STATUS = new Map<string, CarrierStatus>([
   ['CW_OUTBOUND', 'in_transit'],
   ['CW_COMMON_PROCESSING1', 'in_transit'],
   ['PU_PICKUP_SUCCESS', 'in_transit'],
+  // "Received by logistics company", as Cainiao also words PU_PICKUP_SUCCESS: the first carrier signing the parcel in from
+  // the seller, after "Awaiting seller dispatch" and before the sorting center.
+  ['PU_SIGN_IN_SUCCESS', 'in_transit'],
   ['GWMS_OUTBOUND', 'in_transit'],
   ['SC_INBOUND_SUCCESS', 'in_transit'],
   ['SC_OUTBOUND_SUCCESS', 'in_transit'],
@@ -171,7 +177,7 @@ export function cainiaoActionStage(code: string): Stage | undefined {
   // Export clearance starts at the departure hub and ends before the parcel leaves the country: the export step, in
   // transit. The destination's customs taking the parcel in and its import clearance are customs.
   if (['CC_IM_START', 'CC_HO_IN_SUCCESS'].includes(code)) return 'customs';
-  if (code === 'PU_PICKUP_SUCCESS') return 'accepted';
+  if (code === 'PU_PICKUP_SUCCESS' || code === 'PU_SIGN_IN_SUCCESS') return 'accepted';
   // Cainiao's last-mile gateway words it "Delivery Attempt Failure" in its
   // `delivery_failed` group (seen live through Ecoscooting, another client).
   if (['GTMS_DEL_FAILURE', 'LM_DELIVERY_FAILURE', 'PUDO_DELIVERY_FAILURE'].includes(code)) return 'failed_attempt';

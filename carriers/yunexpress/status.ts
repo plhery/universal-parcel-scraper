@@ -22,6 +22,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Arrived at the origin international airport', { status: 'in_transit', stage: 'in_transit' }],
   ['Clearence processing completed - Export', { status: 'in_transit', stage: 'in_transit' }],
   ['International flight has departed', { status: 'in_transit', stage: 'in_transit' }],
+  // The flight leaving the origin's airport, after the export release.
+  ['Departed from AIRPORT', { status: 'in_transit', stage: 'in_transit' }],
   ['International flight has arrived', { status: 'in_transit', stage: 'in_transit' }],
   ['Start Customs Clearence', { status: 'in_transit', stage: 'customs' }],
   ['Collected at Cargo Terminal', { status: 'in_transit', stage: 'in_transit' }],
@@ -94,6 +96,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // A courier partner's acceptance follows the scans of the network that
   // brought the parcel to it: a hand-over, not the parcel's acceptance.
   ['Package accepted at courier partner', { status: 'in_transit', stage: 'in_transit' }],
+  ['Item accepted', { status: 'in_transit', stage: 'in_transit' }],
   // An American last-mile carrier's intake after the label it printed, then its facilities.
   ['Accepted at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],

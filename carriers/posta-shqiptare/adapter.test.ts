@@ -197,5 +197,7 @@ describe('Posta Shqiptare status vocabulary', () => {
     expect(statusMap.stage('X', 'objekti u dorezua')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'posta-shqiptare', description: 'Tentative e pasuksesshme ne shperndarjen e objektit' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'posta-shqiptare', description: 'objekti u fut ne thes dhe u dergua jashte' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 });

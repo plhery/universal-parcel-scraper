@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { AdapterRegistry } from '../../core/adapter/index.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
@@ -292,6 +293,9 @@ describe('GOFO US history', () => {
   it('maps every code in the status catalogue, including the hub departure and line-haul codes', () => {
     const catalogue = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')) as { entries: { code: string; wording: string; stage: string }[] };
     for (const entry of catalogue.entries) expect(gofoStatus(entry.code, entry.wording)?.stage).toBe(entry.stage);
+    // The address held for details, after a failed attempt for that reason as on a hub's arrival.
+    expect(statusMapAnswer({ carrier: 'gofo', providerCode: '601', description: 'incorrect/insufficient address, additional details required for delivery.' }))
+      .toEqual({ kind: 'mapped', stage: 'exception' });
     const value = fixture();
     item(value).trackEventList.unshift({ ...item(value).trackEventList.at(-1), processCode: '412', processContent: 'In Transit to Next Facility' });
     item(value).trackEventList.splice(1, item(value).trackEventList.length - 2);

@@ -35,6 +35,8 @@
     { "wording": "expédié vers", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "va être prochainement déposé", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "a été collecté", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
-    { "wording": "rendez-vous est confirmé", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "The row ends with the appointment day, read as the delivery estimate." }
+    { "wording": "rendez-vous est confirmé", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "The row ends with the appointment day, read as the delivery estimate." },
+    { "wording": "arrivé chez le partenaire d'expédition", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "\"Votre colis est arrivé chez le partenaire d'expédition.\" A shipping partner has the parcel and carries it to Colis Privé: transit, as \"pris en charge\" is." },
+    { "wording": "en transit vers", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "\"Votre colis est en transit vers Colis Privé\": the partner carries it there, a day after it took the parcel." }
   ]
 }

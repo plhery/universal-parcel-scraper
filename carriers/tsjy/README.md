@@ -34,8 +34,8 @@ abroad on a line such as 17FEIA's. Tracked through the lookup the order search o
   dates the scan on that country's clock when it has a single zone, as 17FEIA does. The line's
   other rows keep their wall clocks; the hand-off to `17feia` dates the partner's scans.
 - The map names TSJY's steps and 17FEIA's milestones as they read in TSJY's journey: 17FEIA's
-  order data comes while TSJY still holds the parcel, and its receipt after TSJY's dispatch is
-  transit. A later carrier's announcement or receipt is transit too; other relayed wording goes
+  order data, like another line's order in Chinese (已下单), comes while TSJY still holds the parcel,
+  and its receipt after TSJY's dispatch is transit. A later carrier's announcement or receipt is transit too; other relayed wording goes
   through the shared rules. The broker's "delivered to warehouse" is customs.
 - The line is handed over from its number: `17feia` when the number is one of 17FEIA's order
   numbers, else the one carrier whose high-confidence rule claims it, else nobody. The channel's

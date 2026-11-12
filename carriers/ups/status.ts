@@ -88,10 +88,10 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // A notice that the package is on its way, without a facility.
   ['DA', 'in_transit'],
   // Delays and new delivery plans: a late flight, a possible delay, a new
-  // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather,
-  // and a delivery a business day later than expected.
+  // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather
+  // or for a labor dispute outside UPS, and a delivery a business day later than expected.
   ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'], ['RF', 'in_transit'],
-  ['DJ', 'in_transit'], ['8Y', 'in_transit'],
+  ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
   // one to the receiver's address instead of the access point.
@@ -139,10 +139,11 @@ export function upsActivityStage(code: string): Stage | undefined {
 
 /**
  * Codes of notices that are no scan: the receiver's delivery instructions,
- * seen while UPS had only the label. A notice keeps the stage of the scan
- * before it, and the newest other scan decides the parcel's.
+ * under either code, seen while UPS had only the label and between the
+ * round out for delivery and the delivery. A notice keeps the stage of the
+ * scan before it, and the newest other scan decides the parcel's.
  */
-const NOTICE_CODES = new Set(['L0']);
+const NOTICE_CODES = new Set(['L0', 'L8']);
 
 /** Whether a scan's `actCode` is a notice the stage is not read from. */
 export function isUpsNotice(code: string | undefined): boolean {
@@ -185,7 +186,7 @@ export function upsUncodedScanStage(text: string): Stage | undefined {
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
   gaps: [
-    { code: 'L0', note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." },
+    ...['L0', 'L8'].map((code) => ({ code, note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." })),
     { code: 'VK', note: "A government agency holding the parcel, or releasing it: the code says neither, so the shared rules read the wording, a hold as customs and a release as in transit." },
   ],
 };

@@ -548,6 +548,9 @@ describe('DHLink status vocabulary', () => {
     // UniUni's scans keep their stage with the hub's place written first.
     expect(dhlinkStage('', '', 'Sampletown, Parcel received at UniUni sorting hub.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(dhlinkStage('', '', 'Sampletown, Parcel scanned and in transit')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    // The last-mile carrier's facility on a US line, named by any code; another receiver is not read as one.
+    expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description: 'Parcel received by XYZ12.' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description: 'Parcel received by the recipient.' })).toEqual({ kind: 'unknown' });
     // A clock alone names no step.
     for (const description of ['(13:05)', '( 9:40 )']) {
       expect(statusMapAnswer({ carrier: 'dhlink', providerCode: null, description }), description)

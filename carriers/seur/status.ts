@@ -4,6 +4,8 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 const delivered: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
 const inTransit: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };
 const exception: ClassifiedStatus = { status: 'exception', stage: 'exception' };
+const registered: ClassifiedStatus = { status: 'pending', stage: 'registered' };
+const accepted: ClassifiedStatus = { status: 'in_transit', stage: 'accepted' };
 
 // A null reading is a delay notice, not a movement: the scan keeps the stage of the one before it.
 const observed: Record<string, { group: string; wording: string; mapped: ClassifiedStatus | null }> = {
@@ -46,8 +48,18 @@ const observed: Record<string, { group: string; wording: string; mapped: Classif
   // The pickup made on a pickup reference, before SEUR's origin facility receives the parcel.
   SX605: { group: 'EN TRÁNSITO', wording: 'LA RECOGIDA HA SIDO REALIZADA.', mapped: { status: 'in_transit', stage: 'accepted' } },
   SX001: { group: 'EN TRÁNSITO', wording: 'EL ENVÍO HA SIDO RECEPCIONADO EN LAS INSTALACIONES DE ORIGEN DE SEUR. COMIENZA EL TRÁNSITO A DESTINO', mapped: { status: 'in_transit', stage: 'accepted' } },
-  SX010: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: { status: 'pending', stage: 'registered' } },
-  SC999: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: { status: 'pending', stage: 'registered' } },
+  SX010: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: registered },
+  SC999: { group: 'NOTIFICADO', wording: 'EL ENVÍO HA SIDO REGISTRADO.', mapped: registered },
+  // A collection from the sender. Booked, changed, or confirmed by the courier on the day's round, it registers the
+  // shipment; a collection that failed leaves the parcel with the sender, no delivery attempt. The collection made, or
+  // the sender's drop at a SEUR Pickup point, is the acceptance.
+  GO003: { group: 'SOLICITUD REGISTRADA', wording: 'LA RECOGIDA HA SIDO REGISTRADA.', mapped: registered },
+  GO002: { group: 'SOLICITUD REGISTRADA', wording: 'LA RECOGIDA HA SIDO REGISTRADA.', mapped: registered },
+  GO001: { group: 'SOLICITUD REGISTRADA', wording: 'LA RECOGIDA HA SIDO MODIFICADA.', mapped: registered },
+  GC002: { group: 'RECOGIDA CONFIRMADA', wording: 'LA RECOGIDA HA SIDO CONFIRMADA POR EL REPATIDOR.', mapped: registered },
+  GI650: { group: 'EN INCIDENCIA', wording: 'RECOGIDA NO REALIZADA: CLIENTE CERRADO O AUSENTE. SE PUEDE REPROGRAMAR UNA NUEVA FECHA DE RECOGIDA.', mapped: registered },
+  GL001: { group: 'RECOGIDA REALIZADA', wording: 'LA RECOGIDA HA SIDO REALIZADA.', mapped: accepted },
+  GO008: { group: 'ENVÍO DEPOSITADO', wording: 'EL ENVÍO HA SIDO DEPOSITADO EN UN PUNTO SEUR PICKUP.', mapped: accepted },
 };
 
 // SEUR's delay notices, which it files under ever more codes of its EN DEMORA group, with or without the last full stop.

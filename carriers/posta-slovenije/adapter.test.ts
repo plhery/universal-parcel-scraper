@@ -331,5 +331,7 @@ describe('Pošta Slovenije status vocabulary', () => {
     expect(statusMap.stage(null, 'the item has arrived at pošta slovenije')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'posta-slovenije', providerCode: 'PVI', description: 'The item is ready for pickup at the post office' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    expect(statusMapAnswer({ carrier: 'posta-slovenije', providerCode: 'VLPKTM', description: 'the item is ready for pickup at the parcel locker' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
   });
 });

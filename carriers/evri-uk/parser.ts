@@ -27,7 +27,16 @@ const POINTS = new Map<string, Stage>([
   ['COURIER_REATTEMPT_CUSTOMER_NOT_AVAILABLE', 'failed_attempt'], ['REDELIVER_WORKDAY_COURIER', 'failed_attempt'],
 ]);
 
+// Notices on the 6_INFO rail, where Evri also files some of the delay notices it gives on the
+// parcel's own rail. A day without a delivery, the parcel going out again the next working day,
+// is transit; a fraud flag on the record moves nothing. Other points there stay unstaged.
+const INFO_POINTS = new Map<string, Stage>([
+  ['DELAY_ASAP', 'in_transit'], ['DELAY_ONEDAY', 'in_transit'], ['RE_ATTEMPT_NOT_WITHIN_GEOFENCE', 'in_transit'],
+  ['POTENTIAL_FRAUD', 'pending'],
+]);
+
 function stageOf(stageCode: string, pointCode: string): Stage | undefined {
+  if (stageCode === '6_INFO') return INFO_POINTS.get(pointCode);
   const rail = STAGES.get(stageCode);
   if (!rail) return undefined;
   if (rail === 'ready_for_pickup' || stageCode === '5_SHOP') return rail;
@@ -142,15 +151,17 @@ export function parseEvriUk(payload: unknown, raw: string, expectedUrn?: string)
   if (!events.some(event => event.time)) throw new IndeterminateError('Evri UK', 'Evri UK returned no dated parcel activity');
   if (events.every(event => event.time)) events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   const newest = events[0]!;
-  const stage = newest.stage as Stage | undefined;
+  // A notice that moves nothing leaves the stage to the scan before it.
+  const current = events.find(event => event.stage !== 'pending') ?? newest;
+  const stage = current.stage as Stage | undefined;
   const sender = senderName(parcel);
   const service = isRecord(parcel.service) ? clean(parcel.service.serviceType, 80) : '';
   return {
     status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage } : {}),
     last_status_text: newest.description ?? null, last_update: newest.time ?? null,
-    // Only the newest scan's window is current: a later scan replaces or withdraws it.
-    ...(windows.get(newest) ?? { expected_delivery: null }),
-    ...(stage === 'delivered' && newest.time ? { delivered_at: newest.time } : {}),
+    // Only the window of the scan that sets the stage holds: a later scan replaces or withdraws it.
+    ...(windows.get(current) ?? { expected_delivery: null }),
+    ...(stage === 'delivered' && current.time ? { delivered_at: current.time } : {}),
     ...(sender ? { sender_name: sender } : {}),
     ...(service ? { service_name: service } : {}),
     events: events.slice(0, 100),

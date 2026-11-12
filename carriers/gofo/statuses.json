@@ -81,6 +81,15 @@
       "note": "Minutes after a regional hub's arrival: the address is wrong or incomplete, and the parcel waits until someone adds details."
     },
     {
+      "code": "601",
+      "wording": "Incorrect/Insufficient Address, Additional Details Required for Delivery.",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Code 322's wording, the day after a failed attempt (206) for an incorrect or insufficient address: the parcel waits until someone adds details."
+    },
+    {
       "code": "225",
       "wording": "Address Corrected.",
       "language": "en",

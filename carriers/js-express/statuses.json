@@ -10,6 +10,9 @@
     {"wording": "Domestic allocation has begun", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At JS Express's Chinese warehouse, after the outbound sorting scan and before the departure from origin."},
     {"wording": "Under domestic allocation", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The step after the allocation began, still before the departure from origin."},
     {"wording": "Item departed from origin.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "OIT", "wording": "Arrived at export center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The export centre in China, after the departure from origin and before the port of departure."},
+    {"code": "OIT", "wording": "Exports Center Sorting and Packing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The same export centre sorting and packing the parcel for its departure."},
+    {"code": "OIT", "wording": "Arrived at Origin Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "At the port of departure in China, after the export centre and before the flight."},
     {"wording": "Arrive at international airport to abroad", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Released From Export Customs", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "A-SCAN: SHIPMENT IN INTERNATIONAL TRANSIT", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
@@ -21,6 +24,8 @@
     {"wording": "ARRIVED AT DESTINATION AIRPORT", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Item Flight landing", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "NOA-Notification of arrival from GHA", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination airport's ground handling agent reports the shipment arrived."},
+    {"code": "OIT", "wording": "The customs clearance agent is queuing up to pick up the goods", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "After the airline's notice of arrival, the destination's clearance agent waits at the cargo terminal to collect the parcel: neither the agent nor customs has it yet."},
+    {"code": "OIT", "wording": "The customs clearance agent has picked up the goods", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "The destination's clearance agent took the parcel from the cargo terminal for import customs, as its receipt of the shipment reads, before the release."},
     {"wording": "The goods have been picked up abroad", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination agent took the shipment from the airport; JS Express accepted the parcel long before."},
     {"wording": "Inbound to customs temporary warehouse", "stage": "customs", "language": "en", "confirmedBy": "live", "note": "The shipment entered a customs warehouse to wait for its clearance."},
     {"wording": "Released From Import Customs", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
@@ -53,6 +58,7 @@
     {"wording": "Last Mile Delivery", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The hand-over to the destination courier, before its first scan."},
     {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The destination courier's delivery, with its place moved into the location."},
     {"wording": "Accepted at USPS Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS's first scan after the hand-off to the local courier; JS Express accepted the parcel in China."},
+    {"code": "OIT", "wording": "Accepted at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "USPS's first scan after the hand-off to the local courier, like its origin facility's acceptance; JS Express accepted the parcel in China."},
     {"wording": "Arrived at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Departed USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Arrived at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
@@ -111,6 +117,7 @@
     {"code": "OIT", "wording": "Departure from the original airport", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The flight leaving the airport of origin."},
     {"code": "OIT", "wording": "Arrival to the destination airport", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The flight landing at the destination airport."},
     {"code": "OIT", "wording": "PREFERENCE APPLIED", "stage": "pending", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The destination courier's record of a delivery preference the recipient chose, days before it has the parcel. It moves nothing."},
+    {"code": "OIT", "wording": "Consignee Contacted", "stage": "pending", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The delivering courier's call or message to the recipient, at the second it records a missed delivery: it moves nothing."},
     {"code": "OIT", "wording": "Quick Pickup", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "SF Express's pickup at JS Express's Chinese hub, after the departure from origin: the line's carrier takes the parcel, not its acceptance."},
     {"code": "OIT", "wording": "Local courier has received the parcel", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "The destination courier's receipt at the depot that delivers, between its sorting and its outbound scan, days after the hand-over to it."},
     {"code": "OIT", "wording": "Operation center Weighing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "SF Express weighing the parcel at its operation centre, beside its collection."},
@@ -123,6 +130,8 @@
     {"code": "OCP", "wording": "Start Custom clearance Process", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs at the destination."},
     {"code": "OCP", "wording": "Customs clearance agent received the shipment in destnation country.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The destination's clearance agent taking the parcel for import customs after the flight landed. JS Express's own spelling."},
     {"code": "DCF", "wording": "customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Import customs released the parcel."},
+    {"code": "DCF", "wording": "Released from customs: customs cleared.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "Import customs released the parcel, after the clearance agent received it."},
+    {"code": "OIT", "wording": "Depart from the destination distribution center.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "The destination's distribution centre sending the parcel on, after the import release."},
     {"code": "OIT", "wording": "Shipment in transit. Thanks for your waiting.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04"},
     {"code": "OIT", "wording": "Delivery in progress", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The line's carrier at the destination, after its station's arrival and before any courier round: no round of its own."},
     {"code": "SJS", "wording": "Refused", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "The recipient refused the parcel on the delivery round; it goes back."},
@@ -159,6 +168,7 @@
     {"wording": "Arrived at Destination Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "The US delivery partner's hub nearer the recipient, before its last-mile warehouse."},
     {"wording": "Departed Destination Hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's hub sends the parcel on to its last-mile warehouse."},
     {"wording": "Arrived At Warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-07", "note": "The US delivery partner's last-mile warehouse, before the delivery round."},
-    {"wording": "Parcel scan delays", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-08", "note": "A note under OIT, hours after the parcel reached a USPS facility, while no scan follows: the parcel stays on its way."}
+    {"wording": "Parcel scan delays", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-08", "note": "A note under OIT, hours after the parcel reached a USPS facility, while no scan follows: the parcel stays on its way."},
+    {"code": "DOP", "wording": "Enviado", "stage": "in_transit", "language": "es", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "CTT Express's status (its code 1000), relayed after the local courier received the parcel and before its round: sent on, as CTT Express's own map reads it."}
   ]
 }

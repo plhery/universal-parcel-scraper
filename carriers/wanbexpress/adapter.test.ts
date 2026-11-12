@@ -123,6 +123,9 @@ describe('WanbExpress', () => {
     expect(['wanbexpress', 'yunexpress', 'unknown'].map((carrier) => statusMapAnswer({ carrier, providerCode: null, description: announced })))
       .toEqual(Array(3).fill({ kind: 'mapped', stage: 'registered' }));
     expect(wanbStage('LastMileNew', 'In Transit to Next Facility.')).toBeUndefined();
+    // A partner's pre-advice beside the parcel's data, before the sorting centre has it.
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: "Order information received. We're expecting your parcel to arrive with us." }))
+      .toEqual({ kind: 'mapped', stage: 'registered' });
     // InPost's lines on a parcel to the UK before the sorting centre has it: announced, then in hand, and a
     // note on the recipient's account that moves nothing.
     expect(wanbStage(null, 'Your parcel is on its way to InPost. Please check back for updates')).toBe('registered');

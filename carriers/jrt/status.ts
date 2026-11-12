@@ -16,9 +16,10 @@ const CLEARED_FLIGHT_DAY = /^(报关已放行等待)\d{1,2}(号航班起飞 cust
 // The English row of a booked flight names its day, sometimes with a question mark for the space ("November?3").
 const TAKE_OFF_DAY = /^(flight is expected to take off on )[a-z]+[ ?]{1,2}\d{1,2}$/;
 
-// The newer English rows name the flight's days as month.day: "expected to depart on 10.27 and land on 10.27".
+// The newer English rows name the flight's days as month.day: "expected to depart on 10.27 and land on 10.27",
+// and so does a delayed connecting flight: "Sorry, the second flight has been delayed and is expected to 11.12 land".
 const FLIGHT_DATES = /^(the flight is expected to depart on )\d{1,2}\.\d{1,2}( and land on )\d{1,2}\.\d{1,2}$/;
-const LANDING_DATE = /^(the flight has departed and is expected to )\d{1,2}\.\d{1,2}( land)$/;
+const LANDING_DATE = /^(the flight has departed and is expected to |sorry, the second flight has been delayed and is expected to )\d{1,2}\.\d{1,2}( land)$/;
 
 // On the line into the United States JRT books the flight by its month and day alone: "10/22号航班".
 const BOOKED_FLIGHT = /^\d{1,2}\/\d{1,2}(号航班)$/;
@@ -44,13 +45,15 @@ const JT_MEXICO_ROW = /【[^【】]{1,80}】\s*(?:【[^【】]{1,80}】\s*)?(?:t
 const BRACKETED = /【[^【】]{1,80}】/g;
 // Its collection names the courier and J&T's phone, and the platform's GBK turns its "¡" into "?".
 const JT_MEXICO_COLLECTION = /^((?:【…】){1,2})[¡?]?(recolección exitosa!\. el mensajero de j&t asignado )\S.*?( recolectó tu envío\.).*$/;
+// So does its round to the recipient's home: "El mensajero de J&T Express … está en camino a tu domicilio. Si requieres …".
+const JT_MEXICO_ROUND = /^((?:【…】){1,2})(el mensajero de j&t express )\S.*?( está en camino a tu domicilio\.).*$/;
 
 /** Whether a row is one J&T Express Mexico wrote that the tracker copies, on J&T's clock in Mexico. */
 export const isJrtJtMexicoRow = (wording: string): boolean => JT_MEXICO_ROW.test(wording);
 
-/** A J&T Express Mexico row's key: its towns and sites, and the courier and phone of its collection, as ellipses. */
+/** A J&T Express Mexico row's key: its towns and sites, and the courier and phone of its collection and round, as ellipses. */
 const jtMexicoKey = (wording: string): string => (JT_MEXICO_ROW.test(wording)
-  ? wording.replace(BRACKETED, '【…】').replace(JT_MEXICO_COLLECTION, '$1¡$2…$3') : wording);
+  ? wording.replace(BRACKETED, '【…】').replace(JT_MEXICO_COLLECTION, '$1¡$2…$3').replace(JT_MEXICO_ROUND, '$1$2…$3') : wording);
 
 /** The key a row's `normalizeStatusWording` wording is mapped under: a booked flight's day becomes an ellipsis. */
 export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
@@ -83,8 +86,9 @@ const UPS_ROWS = new Set(['发件人已创建标签，但是 UPS 尚未收到包
 export const isJrtUpsRow = (wording: string, place: string): boolean =>
   UPS_ROWS.has(normalizeStatusWording(wording)) || /(?:^|,)\s*US$/.test(place.trim());
 
-// DHL's English sentences, as the tracker copies them on the line into Europe: "The shipment has arrived at the parcel center."
-const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b/i;
+// DHL's English sentences, as the tracker copies them on the line into Europe: "The shipment has arrived at the parcel center.",
+// and the recipient's preferred location for its delivery.
+const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b|^a preferred location was designated as a reception option for this shipment\b/i;
 // DHL's rows from Germany, before the parcel leaves for the destination country: the sender's data, the transport to
 // DHL, the parcel centre of origin, the export parcel centre and the transport abroad.
 const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:in transit to dhl|of origin|export parcel center|transported to the destination country)\b/i;

@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, EkartTracker } from './adapter.js';
 import { parseEkart } from './parser.js';
@@ -69,6 +70,17 @@ describe('Ekart parser', () => {
     expect(statusMap.stage(null, 'Unsuccessful Unable to attempt delivery due to operational issues')).toBe('failed_attempt');
     expect(statusMap.stage(null, 'Unsuccessful Undelivered. (Rescheduled to: 2026-01-04)')).toBe('failed_attempt');
     expect(statusMap.stage(null, 'Unsuccessful pickup attempt')).toBeUndefined();
+  });
+  it('reads "Marked RTO" and its reason in prose as the start of the return to the seller', () => {
+    expect(ekartScan('Marked RTO: ORDER_REJECT')).toEqual({ stage: 'exception', returning: true });
+    expect(statusMapAnswer({ carrier: 'ekart', description: 'Marked RTO: ORDER_REJECT' })).toEqual({ kind: 'mapped', stage: 'exception' });
+    const value = fixture();
+    value[NUMBER].shipmentTrackingDetails.splice(2, 1,
+      { date: 1767434400000, city: 'Example hub', statusDetails: 'Marked RTO: ORDER_REJECT' },
+      { date: 1767438000000, city: 'Example hub', statusDetails: 'Delivered' });
+    const result = parseEkart(value, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'returned' });
+    expect(result.events?.[0]).toMatchObject({ provider_leg: 'return' });
   });
   it('replays every recorded status through the map', () => {
     for (const entry of statuses.entries) {

@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { runInNewContext } from 'node:vm';
 import { describe, expect, it } from 'vitest';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, EvriUkTracker } from './adapter.js';
@@ -148,6 +149,9 @@ describe('Evri UK anonymous history', () => {
     ['4_SHOP', 'ARRIVED_PARCELSHOP', 'ready_for_pickup', 'out_for_delivery'],
     ['4_LOCKER', 'SYNTHETIC_LOCKER_POINT', 'ready_for_pickup', 'out_for_delivery'],
     ['5_SHOP', 'SYNTHETIC_COLLECTED_POINT', 'delivered', 'delivered'],
+    ['6_INFO', 'DELAY_ASAP', 'in_transit', 'in_transit'],
+    ['6_INFO', 'DELAY_ONEDAY', 'in_transit', 'in_transit'],
+    ['6_INFO', 'RE_ATTEMPT_NOT_WITHIN_GEOFENCE', 'in_transit', 'in_transit'],
   ])('files rail %s point %s as %s', (stageCode, code, stage, status) => {
     const payload = history();
     payload.results[0].trackingEvents = [scan(stageCode, code, '2026-07-03T11:00:00Z')];
@@ -157,6 +161,28 @@ describe('Evri UK anonymous history', () => {
     // The scan keeps its rail with its tracking point, which the parcel app's review reads.
     const { provider_code: kept, description } = result.events![0]!;
     expect(statusMap.stage(kept ?? null, normalizeStatusWording(description ?? ''))).toBe(stage);
+  });
+
+  it("reads the notices on Evri's 6_INFO rail: a day without a delivery as transit, a fraud flag as moving nothing", () => {
+    const payload = history();
+    const window = { eta: { start: '2026-07-03T16:00:00Z', end: '2026-07-03T18:00:00Z' } };
+    payload.results[0].trackingEvents = [scan('6_INFO', 'RE_ATTEMPT_NOT_WITHIN_GEOFENCE', '2026-07-03T15:48:00Z'),
+      scan('4_COURIER', 'DELIVERY_1700_1900', '2026-07-03T10:35:00Z', window)];
+    expect(parseEvriUk(payload, NUMBER, URN)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', expected_delivery: null });
+    // A fraud flag after the delivery leaves the parcel delivered, at the delivery's time.
+    payload.results[0].trackingEvents = [scan('6_INFO', 'POTENTIAL_FRAUD', '2026-07-03T16:01:00Z'), scan('5_COURIER', 'DELIVERED', '2026-07-03T15:09:00Z')];
+    const flagged = parseEvriUk(payload, NUMBER, URN);
+    expect(flagged).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-07-03T15:09:00Z' });
+    expect(flagged.events?.map(event => event.stage)).toEqual(['pending', 'delivered']);
+    // A point the map does not know on that rail stays unstaged.
+    payload.results[0].trackingEvents = [scan('6_INFO', 'SYNTHETIC_NOTICE', '2026-07-03T16:01:00Z')];
+    expect(parseEvriUk(payload, NUMBER, URN).events?.[0]).not.toHaveProperty('stage');
+    const sorry = "we're sorry we haven't been able to deliver today. we'll update your tracking when it's on the way on the next working day";
+    for (const point of ['DELAY_ASAP', 'DELAY_ONEDAY', 'RE_ATTEMPT_NOT_WITHIN_GEOFENCE']) {
+      expect(statusMapAnswer({ carrier: 'evri-uk', providerCode: `6_INFO/${point}`, description: sorry }), point).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    expect(statusMapAnswer({ carrier: 'evri-uk', providerCode: '6_INFO/POTENTIAL_FRAUD', description: 'potential fraud event' }))
+      .toEqual({ kind: 'mapped', stage: 'pending' });
   });
 
   it('names the delivery service Evri gives the parcel', () => {

@@ -40,7 +40,8 @@ to the destination carrier's scans.
 - USPS's facility scans come under `ND` and are read by their words. HuaHan also puts its
   out-for-delivery code `CB` on USPS's departure from a distribution centre, so under `CB`,
   `PB` and `CC` the words decide when the map knows them and the code otherwise. USPS's
-  pre-advice, written while HuaHan still has the parcel, is registered.
+  pre-advice and DHL's record of the sender's data, written while HuaHan still has the parcel,
+  are registered.
 
 ## Numbers
 

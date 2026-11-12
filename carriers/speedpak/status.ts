@@ -16,6 +16,11 @@ const MAP: Readonly<Record<string, ClassifiedStatus>> = {
   'The freight handler collected the shipment at the airport': { status: 'in_transit', stage: 'in_transit' },
   'The item is received by PostNL': { status: 'in_transit', stage: 'in_transit' },
   'The item is at the PostNL sorting center': { status: 'in_transit', stage: 'in_transit' },
+  // The destination post's steps in the UPU's English on PostNL's international line: customs' release, the delivery
+  // office's receipt, and the item held there after a missed delivery while its addressee is notified to collect it.
+  'Item is cleared by customs': { status: 'in_transit', stage: 'in_transit' },
+  'Arrival at Delivery Post Office': { status: 'in_transit', stage: 'in_transit' },
+  'The item is being held, addressee being notified': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   'Out for delivery': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   // SpeedX's last-mile wording, relayed without its Chinese label.
   'Attempted Delivery: No access': { status: 'exception', stage: 'failed_attempt' },

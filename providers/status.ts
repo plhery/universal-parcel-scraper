@@ -32,6 +32,9 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   ['tax id. address not found', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
   ['buyer info. tax id ok', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
   ['buyer info. tn validation ok', "MailAmericas' tax ID check as ParcelsApp relays it: the parcel moves on whatever it says."],
+  // An ocean line's schedule and paperwork, as Ship24 relays them beside the vessel's departure and arrival.
+  ['customer documentation cut-off', "An ocean line's deadline for the shipper's documents, dated when it is due: no scan, and the providers leave it out."],
+  ['all import documents received', "An ocean line's record that the import paperwork arrived, while the cargo was at sea: it moves nothing, so it keeps the stage the parcel already had."],
   // Detail lines that sit beside different scans, headings, and a code relayed without its wording.
   ['filiale / agentur', 'A German detail line that sits beside different scans: no step of its own.'],
   ['packstation', 'A detail line naming a Packstation, before the parcel was collected: no step of its own.'],

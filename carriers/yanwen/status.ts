@@ -145,6 +145,12 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['In Transit to Next Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at GOFO Delivery Station', { status: 'in_transit', stage: 'in_transit' }],
   ['Out for Delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  // A destination courier's transit hub, its delivery task and its sorting, after the import release and the pickup at
+  // the destination port, and Poste Italiane's first scan after Yanwen's batch handover: the journey going on.
+  ['ARRIVE TRANSITHUB', { status: 'in_transit', stage: 'in_transit' }],
+  ['TASK ASSIGNED', { status: 'in_transit', stage: 'in_transit' }],
+  ['ORDER SORTED', { status: 'in_transit', stage: 'in_transit' }],
+  ['First parcel scan along Poste Italiane’s logistic network', { status: 'in_transit', stage: 'in_transit' }],
 ]);
 
 // Yanwen files each parcel under a category its status filter names:

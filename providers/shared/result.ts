@@ -457,6 +457,9 @@ function providerWordingStage(description: string): Stage | undefined {
     && !/^leave the return\b/i.test(value)) return 'in_transit';
   // Mayi Yinfu's parcel booked out of its operations centre, as its own map reads it.
   if (/^已出库(?:[,，]货物离开操作中心)?$/u.test(value)) return 'in_transit';
+  // Hermes Germany taking the parcel over at the depot it names (TAKEN_OVER_BY_HERMES), as ParcelsApp relays it after
+  // Hermes's announcement and as Hermes's own map reads it.
+  if (/^the shipment (?:has been|was) taken over by hermes in .{1,80}? and is (?:being )?prepared for (?:the )?further shipping[.!]?$/i.test(value)) return 'accepted';
   // Hermes Germany's hub steps in an aggregator's English, and the aggregator's label for an inbound one.
   if (/^shipment added to loading unit[.!]?$|^received at hub: in motherbag[.!]?$|^shipment received[.!]?$|^the shipment (?:has been|was) prepared for (?:the )?further shipping\b/i.test(value)) return 'in_transit';
   // Hermes Germany's delivery to the safe place its recipient booked, which the aggregator pairs with its "Delivered".
@@ -474,9 +477,11 @@ function providerWordingStage(description: string): Stage | undefined {
   // Landmark Global's pallet for the crossing, whatever crossing and number it names, as Landmark's own map reads it:
   // "Grouped when pallet scanned to crossing (SLC INTERPOST #1)".
   if (/^grouped when pallet scanned to crossing \([a-z]{3}(?: interpost)? #\d{1,10}\)$/i.test(value)) return 'in_transit';
-  // A destination carrier's pre-alert, the sender's data it holds before the parcel reaches it, generated and still
-  // without its receipt ("sin recepción"), as ParcelsApp relays it beside the carrier's Spanish notice of the data.
-  if (/^carrier pre-?alert\. (?:generated|sin recepcion)[.!]?$/i.test(value)) return 'registered';
+  // A destination carrier's pre-alert, the sender's data it holds before the parcel reaches it, generated, still
+  // without its receipt ("sin recepción") or with the parcel still at the sender, as ParcelsApp relays it beside the
+  // carrier's Spanish notice of the data. ParcelsApp also relays the last caption alone, as Venipak words a parcel its
+  // sender still has.
+  if (/^carrier pre-?alert\. (?:generated|sin recepcion|at sender)[.!]?$|^at sender[.!]?$/i.test(value)) return 'registered';
   // Pitney Bowes's Global Shipping Program steps as aggregators relay them, as its own map reads them: the shipper's data,
   // then its hub measuring, labelling and loading the parcel and sending it abroad. Interpost, which carries it on, requests
   // the final-mile label at the hub's processing scan and hands the parcel to the destination's postal company.
@@ -516,6 +521,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // abroad and its own map reads them. ParcelsApp repeats the scan's place after USPS's wording.
   if (/^collect for pick ?up(?:, [^,]{1,80})?$/i.test(value)) return 'ready_for_pickup';
   if (/^payment of charges - item being held, addressee being notified(?:, [^,]{1,80})?$/i.test(value)) return 'customs';
+  // The UPU's measure after a missed delivery, the item held at the delivery office while its addressee is notified to
+  // collect it, as 17TRACK relays it under its pickup status and as SpeedPAK's own map reads it.
+  if (/^the item is being held, addressee being notified[.!]?$/i.test(value)) return 'ready_for_pickup';
   if (/^delivery scheduled during the day[.!]?$/i.test(value)) return 'out_for_delivery';
   // Latvijas Pasts' acceptance at a post office, which ParcelsApp follows with the office's name.
   if (/^item posted \/ received from customer\b/i.test(value)) return 'accepted';
@@ -590,6 +598,12 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^we have your parcel[.!]?$/i.test(value)) return 'accepted';
   // A booking before any carrier has the parcel: a collection requested or booked, or a carrier still waiting for it.
   if (/^(?:pickup requested|booked|waiting for (?:the )?parcel)[.!]?$/i.test(value)) return 'registered';
+  // A carrier's request registered, asking the sender to prepare the order for it: nobody has the parcel yet.
+  if (/^the request has been registered\. prepare your order[.!]?$/i.test(value)) return 'registered';
+  // An ocean line's booking and its entry in the line's system, before it has the cargo; then, after the vessel's
+  // arrival, its terminal receiving the cargo and its warehouse holding it until a delivery appointment is booked.
+  if (/^customer booking received[.!]?$|^shipment entered into system[.!]?$/i.test(value)) return 'registered';
+  if (/^received at terminal[.!]?$|^shipment in warehouse - awaiting delivery appointment[.!]?$/i.test(value)) return 'in_transit';
   // A forwarder's warehouse scanning the parcel in or out, as aggregators relay SPT Express's rows.
   if (/^item (?:in|out)bound scanning[.!]?$/i.test(value)) return 'in_transit';
   // FedEx's scan status for a parcel it has taken in, with the details aggregators join to it, as FedEx's own map reads it.
@@ -676,10 +690,10 @@ const BOOKED_FLIGHT = /^(?:预计\d{1,2}\.\d{1,2}航班(?:\s*\/\s*scheduled flig
 const flightToCome = (label: string): boolean => FLIGHT_ESTIMATE.test(label) || DHLINK_FLIGHT.test(label)
   || intelValleyFlight(label) || MAYIYINFU_FLIGHT.test(label) || BOOKED_FLIGHT.test(label);
 
-// A carrier's schedule, as 17TRACK relays it beside the milestones: an ocean line's estimated vessel departure and
-// arrival, each again once updated, and its cargo cut-off, and a flight's ETD or ETA. Each is dated when it is due,
-// often weeks ahead, so it is no scan.
-const SCHEDULE = /^(?:estimated vessel (?:departure|arrival)|cfs\/cy cut-off date)(?: \(last updated\))?$|^flight et[ad]\b/i;
+// A carrier's schedule, as 17TRACK and Ship24 relay it beside the milestones: an ocean line's estimated vessel departure
+// and arrival, each again once updated, and its cargo and documentation cut-offs, and a flight's ETD or ETA. Each is
+// dated when it is due, often weeks ahead, so it is no scan.
+const SCHEDULE = /^(?:estimated vessel (?:departure|arrival)|cfs\/cy cut-off date|customer documentation cut-off)(?: \(last updated\))?$|^flight et[ad]\b/i;
 
 // A time or date in brackets with no words, as 17TRACK relays a Juxi Express row between the flight
 // being arranged at the airport and the departure, and ParcelsApp one dated by month and day ("(10.20)")

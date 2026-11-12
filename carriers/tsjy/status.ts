@@ -22,6 +22,8 @@ const OWN: ReadonlyMap<string, Stage> = new Map([
  */
 const RELAYED: ReadonlyMap<string, Stage> = new Map([
   ['item information received.', 'accepted'],
+  // Another line's order, in Chinese, placed while TSJY still holds the packed parcel, as 17FEIA's order data is.
+  ['已下单', 'accepted'],
   ['the package is on the way to the facility.', 'in_transit'],
   ['warehouse receipt.', 'in_transit'],
   ['the order has information pending customer confirmation.', 'in_transit'],

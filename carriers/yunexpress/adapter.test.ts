@@ -72,6 +72,9 @@ describe('YunExpress captured response projection', () => {
   it('stages the destination leg, and a hand-over to the local carrier is no delivery', () => {
     expect(yunExpressStatus('Delivered to local carrier')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    // The last-mile carrier's intake after that hand-over, and the flight out before it.
+    expect(yunExpressStatus('Item accepted')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(statusMap.stage(null, normalizeStatusWording('Departed from AIRPORT'))).toBe('in_transit');
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');
     // A European last-mile carrier's steps after the flight, and its return of an unclaimed item.

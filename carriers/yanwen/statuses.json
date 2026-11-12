@@ -982,6 +982,38 @@
       "note": "YWE's round from its delivery station, relayed without YWE's code; read as YWE's map reads it."
     },
     {
+      "wording": "ARRIVE TRANSITHUB",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "A destination courier's transit hub, after the import release and the pickup at the destination port."
+    },
+    {
+      "wording": "TASK ASSIGNED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The same courier's delivery task, after its transit hub and before its sorting."
+    },
+    {
+      "wording": "ORDER SORTED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The same courier's sorting."
+    },
+    {
+      "wording": "First parcel scan along Poste Italiane’s logistic network",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Poste Italiane's first scan after Yanwen's batch handover at the destination port: a handover, not the parcel's acceptance."
+    },
+    {
       "code": "LM40",
       "stage": "delivered",
       "confirmedBy": "live",

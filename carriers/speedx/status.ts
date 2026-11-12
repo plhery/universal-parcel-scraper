@@ -5,6 +5,7 @@ const REGISTERED: ClassifiedStatus = { status: 'pending', stage: 'registered' };
 const ACCEPTED: ClassifiedStatus = { status: 'in_transit', stage: 'accepted' };
 const IN_TRANSIT: ClassifiedStatus = { status: 'in_transit', stage: 'in_transit' };
 const OUT_FOR_DELIVERY: ClassifiedStatus = { status: 'out_for_delivery', stage: 'out_for_delivery' };
+const READY_FOR_PICKUP: ClassifiedStatus = { status: 'out_for_delivery', stage: 'ready_for_pickup' };
 const FAILED_ATTEMPT: ClassifiedStatus = { status: 'exception', stage: 'failed_attempt' };
 const DELIVERED: ClassifiedStatus = { status: 'delivered', stage: 'delivered' };
 const EXCEPTION: ClassifiedStatus = { status: 'exception', stage: 'exception' };
@@ -34,6 +35,10 @@ const CODES = new Map<string, ClassifiedStatus>([
   // The day's note on a parcel not delivered that day; it goes out again the next morning.
   ['57409', IN_TRANSIT],
   ['57201', DELIVERED],
+  // After the round out for delivery, at a parcelshop: the parcel waits there for the recipient,
+  // then the recipient collects it.
+  ['57701', READY_FOR_PICKUP],
+  ['57702', DELIVERED],
   ['57413', EXCEPTION],
   ['57504', EXCEPTION],
   ['59116', EXCEPTION],

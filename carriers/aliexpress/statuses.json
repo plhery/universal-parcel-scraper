@@ -67,6 +67,15 @@
       "note": ""
     },
     {
+      "code": "GWMS_PICK",
+      "wording": "Warehouse packaging complete",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The seller's warehouse packed the order, between GWMS_ACCEPT and GWMS_PACKAGE: no carrier has the parcel yet."
+    },
+    {
       "code": "GWMS_PACKAGE",
       "wording": "Package ready for shipping from warehouse",
       "language": "en",
@@ -129,6 +138,15 @@
       "note": "",
       "wording": "Received by logistics company",
       "language": "en"
+    },
+    {
+      "code": "PU_SIGN_IN_SUCCESS",
+      "wording": "Received by logistics company",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The first carrier signing the parcel in from the seller, worded as PU_PICKUP_SUCCESS is, after \"Awaiting seller dispatch\" and before the sorting center."
     },
     {
       "code": "GWMS_OUTBOUND",

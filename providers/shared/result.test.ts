@@ -214,7 +214,7 @@ describe('shared provider result', () => {
 
   it("leaves out a carrier's schedule, dated when it is due: a vessel's estimated departure and arrival, the cut-off, a flight's ETD or ETA", () => {
     for (const label of ['Estimated Vessel Departure', 'Estimated Vessel Departure (Last Updated)', 'Estimated Vessel Arrival',
-      'Estimated Vessel Arrival (Last Updated)', 'CFS/CY Cut-Off Date', 'Flight ETD Sep 23.', 'Flight ETA Sep 25.']) {
+      'Estimated Vessel Arrival (Last Updated)', 'CFS/CY Cut-Off Date', 'Customer Documentation Cut-off', 'Flight ETD Sep 23.', 'Flight ETA Sep 25.']) {
       expect(event('2026-12-10T11:00:00Z', label, 'InTransit')).toBeNull();
     }
     expect(event('2026-10-05T01:27:00Z', 'Actual Vessel Departure', 'InTransit')).toMatchObject({ stage: 'in_transit' });

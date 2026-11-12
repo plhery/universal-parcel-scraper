@@ -273,6 +273,9 @@ describe('TSJY status vocabulary', () => {
     // A later carrier's announcement comes after TSJY dispatched the parcel.
     expect(tsjyStage('Shipment information received')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
+    // A line's order in Chinese, placed while TSJY still holds the packed parcel, reads as 17FEIA's order data.
+    expect(tsjyStage('已下单')).toEqual({ stage: 'accepted', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'tsjy', providerCode: null, description: '已下单' })).toEqual({ kind: 'mapped', stage: 'accepted' });
     // An own step nobody recorded keeps no stage.
     expect(tsjyStage('仓库已称重')).toBeNull();
   });

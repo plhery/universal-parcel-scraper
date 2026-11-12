@@ -79,15 +79,20 @@ caller's deadline and cancellation signal.
   point alone, or without a code, is staged only by the `Delivered` wording.
   The code is not part of a stored scan's identity, which the app keys on its
   time, place and wording.
+- Evri files some notices on a `6_INFO` rail, among them delay notices it also
+  gives on the parcel's own rail. A day without a delivery, the parcel going
+  out again the next working day, is in transit. A fraud flag on the record is
+  `pending`: it moves nothing, so the scan before it sets the parcel's stage.
+  Other points on that rail remain unstaged.
 - A parcel sent to a ParcelShop or locker waits on the `4_SHOP` or
   `4_LOCKER` rail, which evri.com's tracking page reads as awaiting
   collection, so it is ready for pickup until the `5_SHOP` collection, which
   is its delivery. Points on these rails do not refine them: a ParcelShop
   arrival there is the parcel reaching its recipient's shop, not a drop-off.
 - On the delivery day a courier scan carries the window it announces. The
-  newest scan's window becomes the estimate on the British clock, a slot
-  within one day or its days across several; a later scan replaces or
-  withdraws it. A delivery's time is `delivered_at`.
+  window of the scan that sets the stage becomes the estimate on the British
+  clock, a slot within one day or its days across several; a later scan
+  replaces or withdraws it. A delivery's time is `delivered_at`.
 - `sender_name` is the account Evri names as the sender, only when Evri
   marks the parcel as neither consumer-to-consumer nor a customer return.
 - `service_name` is the delivery service Evri gives the parcel

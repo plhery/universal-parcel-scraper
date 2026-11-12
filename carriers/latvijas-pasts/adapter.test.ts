@@ -251,5 +251,17 @@ describe('Latvijas Pasts status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
     expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode: '75', description: 'Item arrived at pick-up point' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    // Temporary storage is customs' hold before the clearance, not an acceptance; a redirection keeps the item moving.
+    for (const [providerCode, description, stage] of [
+      ['1136', 'item accepted for temporary storage', 'customs'],
+      ['1150', 'electonic notification (sms) of customs clearance sent to recipient', 'customs'],
+      ['1137', 'customs clearance completed, item to be delivered to recipient', 'in_transit'],
+      ['1126', 'item redirected', 'in_transit'],
+      ['1127', 'item address re-labelled', 'in_transit'],
+      ['36', 'unsuccessful delivery attempt', 'failed_attempt'],
+      ['72', 'item sent to next processing facility', 'in_transit'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'latvijas-pasts', providerCode, description }), providerCode).toEqual({ kind: 'mapped', stage });
+    }
   });
 });

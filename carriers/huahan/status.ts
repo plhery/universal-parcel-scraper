@@ -31,6 +31,11 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['we will pick up your parcel from the sender soon.', 'registered'],
   // CTT Express's notice of the parcel coming, relayed while HuaHan still has it in China.
   ['pendiente de recepción en ctt express', 'registered'],
+  // DHL's record of the sender's data, relayed without a code before or after HuaHan's receipt in China, and the
+  // order's electronic data in Chinese: records of data, not movements.
+  ['the instruction data for this shipment have been provided by the sender to dhl electronically.', 'registered'],
+  ['the instruction data for this shipment have been provided by the sender to dhl electronically', 'registered'],
+  ['货物电子信息已经收到', 'registered'],
   ['ready to ship, parcel received and processed', 'in_transit'],
   ['shipped', 'in_transit'],
   ['change of delivery address', 'in_transit'],

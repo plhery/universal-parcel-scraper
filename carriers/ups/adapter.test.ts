@@ -326,6 +326,18 @@ describe('UPS structured response', () => {
     expect(parseUPSTrackingResponse(withScans([
       scan('L0', 'Delivery instructions have been provided by the receiver.', '20260806 18:00:00'),
     ]), TRACKING_NUMBER, TODAY).events?.[0]?.stage).toBeUndefined();
+    // L8 words the same notice, here between the round out for delivery and the delivery.
+    const outForDelivery = parseUPSTrackingResponse(withScans([
+      scan('L8', 'Delivery instructions have been provided by the receiver.', '20260807 15:28:00'),
+      scan('OF', 'Out For Delivery', '20260807 05:34:00'),
+    ], { progressBarType: 'OutForDelivery' }), TRACKING_NUMBER, TODAY);
+    expect(outForDelivery).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(outForDelivery.events?.[0]).toMatchObject({ provider_code: 'L8', stage: 'out_for_delivery', stage_source: 'none' });
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'L8', description: 'delivery instructions have been provided by the receiver.' }))
+      .toMatchObject({ kind: 'intentional_gap', note: expect.stringContaining('keeps the stage of the scan before it') });
+    // A labor dispute outside UPS delays the parcel by a day, as the weather does.
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'RY', description: 'a non-ups labor dispute has delayed delivery by one business day.' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it('reads a pickup after the delivery leg, from an access point, as transit', () => {

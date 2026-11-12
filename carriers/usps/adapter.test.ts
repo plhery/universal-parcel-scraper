@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
@@ -68,6 +69,9 @@ describe('USPS status vocabulary', () => {
     // A Post Office counter's receipt for an item handed in, before "Departed Post Office".
     expect(uspsStage('USPS electronic receipt of item for mailing')).toBe('accepted');
     expect(uspsStage('Insufficient Address')).toBe('failed_attempt');
+    // International mail: the destination post's unsuccessful delivery.
+    expect(uspsStage('Attempted Delivery Abroad')).toBe('failed_attempt');
+    expect(statusMapAnswer({ carrier: 'usps', description: 'attempted delivery abroad' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(uspsStage('Refused')).toBe('returned');
     expect(uspsStage('Pre-Shipment')).toBe('registered');
     // A label printed at the counter, dated by its day alone; the scan of the item that follows is the acceptance.

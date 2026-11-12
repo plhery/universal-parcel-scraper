@@ -1858,6 +1858,14 @@ describe("universal providers' answers", () => {
       ['Parcel was dropped off at the locker', 'accepted'], ['Parcel was dropped off at the parcel shop', 'accepted'],
       ['Your parcel has been received by drop off point', 'accepted'], ['Parcel has entered confiscation process', 'exception'],
       ['Manifested but not collected email sent to Sample', 'registered'],
+      // Hermes taking the parcel over at a depot it names, the UPU's item held for its addressee, a destination carrier's
+      // pre-alert of a parcel its sender still has, a request registered, and an ocean line's booking, terminal and warehouse.
+      ['The shipment has been taken over by Hermes in Beispieldorf (Musterstadt) and is being prepared for further shipping.', 'accepted'],
+      ['The item is being held, addressee being notified', 'ready_for_pickup'],
+      ['Carrier prealert. At sender', 'registered'], ['At sender', 'registered'],
+      ['The request has been registered. Prepare your order', 'registered'],
+      ['Customer Booking Received', 'registered'], ['Shipment Entered into System', 'registered'],
+      ['Received at terminal', 'in_transit'], ['Shipment in warehouse - awaiting delivery appointment', 'in_transit'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
       ['Restricted item - Battery item', 'in_transit'],
       ['Package information is created in the system', 'registered'],
@@ -1906,7 +1914,9 @@ describe("universal providers' answers", () => {
       'Received at Example Store', 'Your order has been shipped from Example center to the store',
       'The shipment was taken care of at the post office by the sender', 'The shipment is on delivery hold',
       'Parcel has been cleared for return', 'Pallet scan event at warehouse for return', 'Wysłanie przesyłki z Polski wstrzymane',
-      'Przyjęta w kraju przeznaczenia do zwrotu']) {
+      'Przyjęta w kraju przeznaczenia do zwrotu', 'Not at sender', 'Carrier prealert. Received', 'Received at terminal for return',
+      'The shipment has been taken over by Hermes in Musterstadt',
+      'Shipment in warehouse - awaiting delivery appointment confirmation from the recipient']) {
       expect(answer('unknown', null, wording), wording).toEqual(unknown);
     }
   });
@@ -1972,7 +1982,8 @@ describe("universal providers' answers", () => {
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
       'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Package received', 'Received.', 'Received', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',
-      'Parcel to be taken to a Yodel Store', 'The parcel has reached the ParcelShop', 'Barcode scanning', 'Packaged', 'Ready for dispatch']) expect(answer('unknown', null, wording), wording).toEqual(gap);
+      'Parcel to be taken to a Yodel Store', 'The parcel has reached the ParcelShop', 'Barcode scanning', 'Packaged', 'Ready for dispatch',
+      'Customer Documentation Cut-off', 'All Import Documents Received']) expect(answer('unknown', null, wording), wording).toEqual(gap);
     // Only the whole wording: a receipt that names its receiver, or another number, is not left out.
     for (const wording of ['Item received by Royal Mail']) expect(answer('unknown', null, wording), wording).toEqual(mapped('accepted'));
     // Royal Mail's sender drop-offs, relayed without their carrier.

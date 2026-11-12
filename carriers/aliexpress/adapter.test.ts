@@ -691,6 +691,11 @@ describe('Cainiao projection', () => {
     for (const code of CAINIAO_ACTION_STATUS.keys()) {
       expect(recorded.entries.find((entry) => entry.code === code)?.stage, code).toBe(cainiaoActionStage(code));
     }
+    // The first carrier's sign-in, worded as its pickup is, and the seller's warehouse packing the order.
+    expect(statusMapAnswer({ carrier: 'aliexpress', providerCode: 'PU_SIGN_IN_SUCCESS', description: 'Received by logistics company' }))
+      .toEqual({ kind: 'mapped', stage: 'accepted' });
+    expect(statusMapAnswer({ carrier: 'aliexpress', providerCode: 'GWMS_PICK', description: 'Warehouse packaging complete' }))
+      .toEqual({ kind: 'mapped', stage: 'registered' });
   });
 
   it('reads the destination country without the town Cainiao can add after it', () => {

@@ -404,6 +404,9 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMap.stage(null, 'back to sender for reason: sample reason')).toBe('exception');
     expect(shouwuStage('Failed delivery for reason: recipient was not at home')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
     expect(statusMap.stage(null, 'failed delivery for reason: sample reason')).toBe('failed_attempt');
+    // DPD's failed round with a wrong address joined: the parcel went back to the depot, not to the sender.
+    expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null,
+      description: 'Unfortunately we have not been able to deliver your parcel. Consignee address not correct.' })).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
   });
 
   it('maps every status it recorded to the stage recorded for it, and keeps the page’s labels off scan wording', () => {

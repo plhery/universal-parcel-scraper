@@ -288,6 +288,13 @@
       "note": "Left a sorting center for the next site (已离开【…】，正在发往下一站)."
     },
     {
+      "code": "200075",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Arrived at the delivery station, before the courier's round (已到达【…】)."
+    },
+    {
       "code": "11000",
       "stage": "out_for_delivery",
       "confirmedBy": "live",

@@ -7,6 +7,7 @@
     {"wording": "订单打包完成，等待出库", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Packed and waiting to leave the warehouse; the row can repeat within a minute."},
     {"wording": "订单已出库，开始国际运输", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Dispatched from TSJY's warehouse to the line."},
     {"wording": "Item information received.", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "17FEIA's order data, relayed. It comes while TSJY still holds the parcel, before its dispatch; 17FEIA's own map reads it as a registration."},
+    {"wording": "已下单", "stage": "accepted", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "A line's order placed, relayed in Chinese without TSJY's place, after TSJY packed the parcel and before its dispatch: like 17FEIA's order data, it comes while TSJY still holds the parcel."},
     {"wording": "The package is on the way to the facility.", "stage": "in_transit", "language": "en", "confirmedBy": "source", "note": "17FEIA's milestone, seen from 17FEIA's own tracker; TSJY relays 17FEIA's rows in English."},
     {"wording": "Warehouse receipt.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "17FEIA's warehouse received the parcel TSJY dispatched: the journey going on."},
     {"wording": "The order has information pending customer confirmation.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Relayed from 17FEIA, whose warehouse holds the parcel."},

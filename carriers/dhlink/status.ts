@@ -94,6 +94,9 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   // The last-mile carrier's pickup on a row without DHLink's node, then its local facility's receipt.
   ['package picked up by last-mile carrier', 'in_transit'],
   ['parcel received by local facility.', 'in_transit'],
+  ['parcel departed from facility.', 'in_transit'],
+  // The US line's order, before its warehouse has the parcel.
+  ['shipping order created.', 'registered'],
   ['out for delivery', 'out_for_delivery'],
   // China Post hands the dispatch to the airline after taking the parcel.
   ['handed over to airlines', 'in_transit'],
@@ -181,6 +184,8 @@ const PATTERNS: readonly (readonly [RegExp, Stage])[] = [
   [/^(?:[^,]{1,60}, )?parcel scanned and in transit\.?$/, 'in_transit'],
   // A European partner's hub, named by its code.
   [/^arrived to [a-z0-9]{2,10} hub$/, 'in_transit'],
+  // The last-mile carrier's facility taking the parcel in after its pickup, named by its code.
+  [/^parcel received by [a-z]{2,6}\d{1,3}\.?$/, 'in_transit'],
   // A line's transit centre in China, named by its city, with the city it stands in after it.
   [/^arrive at [a-z ]{2,30} transit cent(?:er|re)(?:, [a-z ]{2,30})?$/, 'in_transit'],
 ];

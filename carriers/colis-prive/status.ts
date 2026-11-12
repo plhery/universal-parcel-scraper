@@ -93,6 +93,9 @@ export const IN_TRANSIT_PHRASES = [
   'va etre prochainement depose',
   'a ete collecte',
   'rendez vous est confirme',
+  // A shipping partner takes the parcel first, then carries it to Colis Privé.
+  'arrive chez le partenaire d expedition',
+  'en transit vers',
 ] as const;
 
 export function classifyStatus(description: string): ClassifiedStatus {

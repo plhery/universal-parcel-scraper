@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
@@ -93,6 +94,11 @@ describe('SpeedX tracking page', () => {
     expect(speedxStatus('50002', 'PICKUP')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     // The day's delay note on a parcel not delivered that day goes out again: its code outranks an undelivered category.
     expect(speedxStatus('57409', 'LAST_MILE_UNDELIVERED')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    // At a parcelshop after the round: the parcel waits for the recipient, who then collects it.
+    expect(statusMapAnswer({ carrier: 'speedx', providerCode: '57701', description: 'Waiting for collection from Parcelshop' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    expect(statusMapAnswer({ carrier: 'speedx', providerCode: '57702', description: 'Self picked up from Parcelshop' }))
+      .toEqual({ kind: 'mapped', stage: 'delivered' });
     const result = parse(withData((_data, events) => {
       Object.assign(events[0]!, { eventCode: '59999', category: 'CLEARANCE', eventDescription: 'Held for review', eventSupplementalInfo: null });
     }));

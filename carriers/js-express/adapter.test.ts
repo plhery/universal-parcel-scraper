@@ -341,6 +341,19 @@ describe('JS Express tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DRS', description: 'Return to Sender' })).toEqual({ kind: 'mapped', stage: 'exception' });
   });
 
+  it("reads the clearance agent's wait at the cargo terminal as transit and its pickup as customs, and a call to the recipient as moving nothing", () => {
+    for (const [code, description, stage] of [
+      ['OIT', 'Arrived at export center', 'in_transit'], ['OIT', 'Exports Center Sorting and Packing', 'in_transit'], ['OIT', 'Arrived at Origin Port', 'in_transit'],
+      ['OIT', 'The customs clearance agent is queuing up to pick up the goods', 'in_transit'],
+      ['OIT', 'The customs clearance agent has picked up the goods', 'customs'],
+      ['DCF', 'Released from customs: customs cleared.', 'in_transit'], ['OIT', 'Depart from the destination distribution center.', 'in_transit'],
+      ['OIT', 'Accepted at USPS Facility', 'in_transit'], ['DOP', 'Enviado', 'in_transit'], ['OIT', 'Consignee Contacted', 'pending'],
+    ] as const) {
+      expect(jsExpressStage(description, code), description).toEqual({ stage, source: 'carrier_map' });
+      expect(statusMapAnswer({ carrier: 'js-express', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+    }
+  });
+
   it("reads FedEx's status between its facilities on the line it delivers", () => {
     expect(jsExpressStage('On the way', 'OIT')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
     expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: 'On the way' })).toEqual({ kind: 'mapped', stage: 'in_transit' });

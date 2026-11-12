@@ -4,6 +4,7 @@ import { SeurTracker, adapter } from './adapter.js';
 import { accepted } from '../../core/adapter/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
 import { recognitionAskedCarriers, recognitionCandidates } from '../../core/catalog/recognition.js';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeSeurNumber, normalizeSeurRecognitionNumber, parseSeur } from './parser.js';
 import { classifySeurStatus, seurStatusGroup } from './status.js';
@@ -92,6 +93,25 @@ describe('SEUR simplified anonymous tracking', () => {
     const result = parseSeur(body, NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(result.events?.map(e => e.stage)).toEqual(['accepted', 'accepted']);
+  });
+
+  it("reads a collection from the sender as registered until it is made or dropped at a SEUR Pickup point, a failed one included", () => {
+    const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
+      descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
+    const body = copy();
+    body.situaciones = [scan('GI650', '2026-01-22T15:37:00Z'), scan('GC002', '2026-01-22T07:46:00Z'), scan('GO003', '2026-01-21T12:12:00Z')] as typeof body.situaciones;
+    expect(parseSeur(body, NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    expect(parseSeur(body, NUMBER).events?.map(e => e.stage)).toEqual(['registered', 'registered', 'registered']);
+    body.situaciones = [scan('GL001', '2026-01-23T11:46:00Z'), scan('GC002', '2026-01-23T04:18:00Z'), scan('GO001', '2026-01-22T23:44:00Z'),
+      scan('GO002', '2026-01-21T16:25:00Z'), scan('GO008', '2026-01-21T16:24:00Z')] as typeof body.situaciones;
+    const collected = parseSeur(body, NUMBER);
+    expect(collected).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(collected.events?.map(e => e.stage)).toEqual(['accepted', 'registered', 'registered', 'registered', 'accepted']);
+    for (const [code, stage] of [['GO003', 'registered'], ['GO002', 'registered'], ['GO001', 'registered'], ['GC002', 'registered'],
+      ['GI650', 'registered'], ['GL001', 'accepted'], ['GO008', 'accepted']] as const) {
+      const description = statuses.entries.find(entry => entry.code === code)!.wording.toLowerCase();
+      expect(statusMapAnswer({ carrier: 'seur', providerCode: code, description }), code).toEqual({ kind: 'mapped', stage });
+    }
   });
 
   it('reads a delivery held by customs for its invoice through the codes SEUR scans it with', () => {

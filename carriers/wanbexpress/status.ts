@@ -32,6 +32,8 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['the shipment has been loaded onto the delivery vehicle. delivery is expected to take place today.', 'out_for_delivery'],
   // After the sorting centre's departure, before the partner that delivers it takes the parcel.
   ['parcel is ready for hand over to distributor', 'in_transit'],
+  // A partner's pre-advice, at the instant WanbExpress records the parcel's data, before its sorting centre has it.
+  ["order information received. we're expecting your parcel to arrive with us.", 'registered'],
   // InPost's lines on a parcel to the UK before WanbExpress's sorting centre takes it in: the parcel on its
   // way to InPost, then the parcel in hand, and a note on the recipient's account settings.
   ['your parcel is on its way to inpost. please check back for updates', 'registered'],

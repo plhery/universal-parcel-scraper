@@ -62,6 +62,12 @@
       "note": "\"The goods have been handed over to the final carrier\"."
     },
     {
+      "code": "DSD",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "\"D-SCAN DELAY\": the final carrier's first scan is late, days after the hand-over to it and before that scan. The parcel stays on its way."
+    },
+    {
       "code": "PU",
       "stage": "in_transit",
       "confirmedBy": "live",
@@ -196,6 +202,13 @@
       "language": "en",
       "confirmedBy": "live",
       "note": "USPS's scan at the delivery office, relayed without a code."
+    },
+    {
+      "wording": "In transit along Poste Italiane’s logistic network",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Poste Italiane's scan between its first one and its round, relayed without a code."
     }
   ]
 }

@@ -18,12 +18,75 @@
       "note": "Its group was not kept: SX010's, with the same wording, is assumed."
     },
     {
+      "code": "GO003",
+      "wording": "LA RECOGIDA HA SIDO REGISTRADA.",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group SOLICITUD REGISTRADA: a collection from the sender is booked. The parcel is still with the sender."
+    },
+    {
+      "code": "GO002",
+      "wording": "LA RECOGIDA HA SIDO REGISTRADA.",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group SOLICITUD REGISTRADA: a collection booked, here a minute after the sender's drop at a SEUR Pickup point (GO008), for the courier to collect the parcel there."
+    },
+    {
+      "code": "GO001",
+      "wording": "LA RECOGIDA HA SIDO MODIFICADA.",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group SOLICITUD REGISTRADA: the booked collection changed, before the courier confirms it again."
+    },
+    {
+      "code": "GC002",
+      "wording": "LA RECOGIDA HA SIDO CONFIRMADA POR EL REPATIDOR.",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group RECOGIDA CONFIRMADA: the courier takes the collection on the day's round, early in the morning; the collection made (GL001) or failed (GI650) follows hours later. SEUR's own spelling of repartidor."
+    },
+    {
+      "code": "GI650",
+      "wording": "RECOGIDA NO REALIZADA: CLIENTE CERRADO O AUSENTE. SE PUEDE REPROGRAMAR UNA NUEVA FECHA DE RECOGIDA.",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group EN INCIDENCIA: the courier found the sender closed or absent, after GC002. The parcel is still with the sender, so it is no delivery attempt."
+    },
+    {
       "code": "SX605",
       "wording": "LA RECOGIDA HA SIDO REALIZADA.",
       "language": "es",
       "stage": "accepted",
       "confirmedBy": "live",
       "note": "The pickup made on a pickup reference, before SEUR's origin facility receives the parcel."
+    },
+    {
+      "code": "GL001",
+      "wording": "LA RECOGIDA HA SIDO REALIZADA.",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group RECOGIDA REALIZADA: the courier collected the parcel, hours after confirming the collection (GC002). SX605's wording."
+    },
+    {
+      "code": "GO008",
+      "wording": "EL ENVÍO HA SIDO DEPOSITADO EN UN PUNTO SEUR PICKUP.",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Group ENVÍO DEPOSITADO: the sender dropped the parcel at a SEUR Pickup point, after a collection was booked; a collection from the point follows (GO002, GC002, GL001)."
     },
     {
       "code": "SX001",

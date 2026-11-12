@@ -438,6 +438,13 @@ describe('Yanwen result projection', () => {
     expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
   });
 
+  it("reads a destination courier's hub, task and sorting, and Poste Italiane's first scan, after the import release as transit", () => {
+    for (const wording of ['ARRIVE TRANSITHUB', 'TASK ASSIGNED', 'ORDER SORTED', 'First parcel scan along Poste Italiane’s logistic network']) {
+      expect(yanwenStatus(wording), wording).toEqual({ status: 'in_transit', stage: 'in_transit' });
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+    }
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);

@@ -496,6 +496,14 @@
       "note": "In the air; the landing day, month.day, is read as an ellipsis."
     },
     {
+      "wording": "Sorry, the second flight has been delayed and is expected to … land",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The connecting flight is late, after the first flight's departure; the new landing day, month.day, is read as an ellipsis."
+    },
+    {
       "wording": "The flight has arrived and is awaiting dismantling",
       "language": "en",
       "stage": "in_transit",
@@ -1049,6 +1057,22 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-09",
       "note": "Copied from J&T Express Mexico: the parcel reaches one of its sites."
+    },
+    {
+      "wording": "【…】【…】El mensajero de J&T Express … está en camino a tu domicilio.",
+      "language": "es",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Copied from J&T Express Mexico: its courier is on the way to the recipient's home, after the parcel reached the site that delivers it. The town, the site, the courier and what follows the sentence are read as ellipses."
+    },
+    {
+      "wording": "A preferred location was designated as a reception option for this shipment.",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Copied from DHL: the recipient's preferred place for the delivery, recorded while the parcel is still on its way to DHL. It moves nothing."
     }
   ]
 }

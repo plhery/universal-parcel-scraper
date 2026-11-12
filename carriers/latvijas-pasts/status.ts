@@ -18,16 +18,26 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   // Presented to customs at the office of exchange; code 7 is its release.
   4: 'customs',
   7: 'in_transit',
+  // An item from abroad: held in temporary storage under customs supervision, the recipient told
+  // by SMS about its clearance, then cleared for delivery.
+  1136: 'customs',
+  1150: 'customs',
+  1137: 'in_transit',
   8: 'in_transit',
   12: 'in_transit',
   30: 'in_transit',
   32: 'in_transit',
   35: 'in_transit',
   69: 'in_transit',
+  72: 'in_transit',
   77: 'in_transit',
   1113: 'in_transit',
   1120: 'in_transit',
+  // Redirected, then relabelled for its new address: the item goes on there.
+  1126: 'in_transit',
+  1127: 'in_transit',
   39: 'out_for_delivery',
+  36: 'failed_attempt',
   // The delivery office printed the invitation to collect the item there.
   1134: 'ready_for_pickup',
   // A foreign post's item waiting at its collection point, UPU's EDH.

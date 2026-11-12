@@ -244,6 +244,12 @@ describe('HuaHan status map', () => {
     // CTT Express's pre-advice, relayed without a code before HuaHan's receipt in China.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Pendiente de recepción en CTT Express' })).toEqual({ kind: 'mapped', stage: 'registered' });
     expect(huahanStage('', 'Pendiente de recepción en CTT Express')).toEqual({ stage: 'registered', source: 'carrier_map' });
+    // DHL's record of the sender's data, with its full stop or without, and the order's data in Chinese, relayed without a code.
+    for (const description of ['The instruction data for this shipment have been provided by the sender to DHL electronically.',
+      'The instruction data for this shipment have been provided by the sender to DHL electronically', '货物电子信息已经收到']) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'registered' });
+      expect(huahanStage('', description), description).toEqual({ stage: 'registered', source: 'carrier_map' });
+    }
     // The destination carrier's hub and trunk route under IA, by their words.
     for (const description of ['In Transit, Arrived to HU HUB', 'In Transit, Parcel has entered the Linehaul network.']) {
       expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'IA', description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });

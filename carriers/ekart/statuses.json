@@ -203,6 +203,14 @@
       "note": "Starts the return to the seller; it and later scans are on the return leg."
     },
     {
+      "wording": "Marked RTO: ORDER_REJECT",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Prose after rounds that did not deliver, with the reason after the colon: the parcel is marked to return to the seller, as ShipmentRtoConfirmed, and later scans are on the return leg."
+    },
+    {
       "code": "RtoExpected",
       "language": "en",
       "stage": "in_transit",

@@ -28,8 +28,9 @@ const CODES: Readonly<Record<string, Stage>> = {
   EMI: 'delivered',
   // "Pošiljka bo predvidoma dostavljena danes": with the postman, on its way to the address.
   N: 'out_for_delivery',
-  // On its way to the parcel locker the recipient chose.
+  // On its way to the parcel locker the recipient chose, then waiting in it.
   VLPAKP: 'out_for_delivery',
+  VLPKTM: 'ready_for_pickup',
   // Put in the recipient's letterbox or post office box, or handed over at the address.
   VL: 'delivered',
   // Nobody collected it from the parcel locker in time; it goes to a post office.

@@ -82,6 +82,30 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Item is cleared by customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Customs released the item, at the minute of PostNL's own release on its international line."
+    },
+    {
+      "wording": "Arrival at Delivery Post Office",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The destination post's delivery office taking the item in, beside the round's start."
+    },
+    {
+      "wording": "The item is being held, addressee being notified",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The UPU's measure after a missed delivery: the item waits at the delivery office while its addressee is notified to collect it. The destination post's own rows deposit it there and the addressee collected it the next day; 17TRACK files the same wording as available for pickup."
+    },
+    {
       "wording": "Out for delivery",
       "language": "en",
       "stage": "out_for_delivery",
