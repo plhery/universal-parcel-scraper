@@ -50330,6 +50330,29 @@
     ],
     "detectionRules": []
   },
+  "trustexpress": {
+    "displayName": "Trustexpress",
+    "color": "#095da8",
+    "aliases": [
+      "Trust Express",
+      "Тръстекспрес",
+      "Тръстекспрес ООД",
+      "Тръст Експрес"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trustexpress.bg/tracking",
+    "trackingSearchUrl": "https://trustexpress.bg/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tsb-es": {
     "displayName": "TSB",
     "color": "#32499c",

@@ -1,0 +1,36 @@
+{
+  "id": "trustexpress",
+  "displayName": "Trustexpress",
+  "aliases": [
+    "Trust Express",
+    "Тръстекспрес",
+    "Тръстекспрес ООД",
+    "Тръст Експрес"
+  ],
+  "region": {
+    "countries": [
+      "BG"
+    ]
+  },
+  "brand": {
+    "color": "#095da8"
+  },
+  "selectable": true,
+  "timezone": "Europe/Sofia",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://trustexpress.bg/tracking",
+    "canaryUrl": "https://trustexpress.bg/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

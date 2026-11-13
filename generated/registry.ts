@@ -2864,6 +2864,7 @@ export const REGISTRY: RegistryDefinition = {
     "trexity": "universal",
     "trumpcard": "universal",
     "trunkrs": "universal",
+    "trustexpress": "universal",
     "tsb-es": "universal",
     "tsjy": "tsjy",
     "tst-cf-express": "tst-cf-express",

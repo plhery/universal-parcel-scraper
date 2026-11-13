@@ -50334,6 +50334,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "trustexpress": {
+    "displayName": "Trustexpress",
+    "color": "#095da8",
+    "aliases": [
+      "Trust Express",
+      "Тръстекспрес",
+      "Тръстекспрес ООД",
+      "Тръст Експрес"
+    ],
+    "countries": [
+      "BG"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sofia",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://trustexpress.bg/tracking",
+    "trackingSearchUrl": "https://trustexpress.bg/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tsb-es": {
     "displayName": "TSB",
     "color": "#32499c",
@@ -56589,6 +56612,7 @@ export const CARRIER_IDS = [
   "trexity",
   "trumpcard",
   "trunkrs",
+  "trustexpress",
   "tsb-es",
   "tsjy",
   "tst-cf-express",
@@ -58087,6 +58111,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trexity": [],
   "trumpcard": [],
   "trunkrs": [],
+  "trustexpress": [],
   "tsb-es": [],
   "tsjy": ["tsjy-1"],
   "tst-cf-express": [],
