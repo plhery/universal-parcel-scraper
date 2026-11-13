@@ -656,6 +656,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // DHL parcels' delivery planned after the hub's sorting, at a city hub or in a courier's route, as ParcelsApp relays it
   // hours before the depot's arrival and the delivery round.
   if (/^delivery planned (?:at the cityhub|in (?:the )?route(?: of the courier)?)[.!]?$/i.test(value)) return 'in_transit';
+  // DHL Parcel Spain's departure, "Salida de" and its place, as Postal Ninja translates it with the place apart: at the
+  // minute of DHL eCommerce Iberia's own departure and of DHL Parcel Netherlands' copy of it.
+  if (/^output of[.!]?$/i.test(value)) return 'in_transit';
   // A shipment's data created, as 17TRACK relays it beside "Shipment data has entered the system", before the pickup.
   if (/^(?:the )?shipment was successfully created[.!]?$/i.test(value)) return 'registered';
   // GLS's parcel made ready by its sender for GLS to collect, as Postal Ninja relays it and GLS's own maps read it.

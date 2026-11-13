@@ -53,8 +53,9 @@ function text(row: Record<string, unknown>, key: string, maxLength = 500): strin
 const PROOF = /<div[^>]*\bviewPic\b[^>]*>[\s\S]*?<\/div>/gi;
 // The driver's phone an out-for-delivery scan offers: "You can contact him by clicking +966 …".
 const CONTACT = /\s*You can contact\b[\s\S]*$/i;
-// iMile's support footer after a Brazilian delivery or a return: "If you have any questions, …".
-const SUPPORT = /\s*If you have any questions?\b[\s\S]*$/i;
+// iMile's support footer after a Brazilian delivery or a return, "If you have any questions, …", and its hotline after a
+// round out for delivery, "Customer service hotline: …".
+const SUPPORT = /\s*(?:If you have any questions?|Customer service hotline)\b[\s\S]*$/i;
 // Who took the parcel, in 【】: "received by 【Self】", ", Receiver Type:【Self】".
 const RECEIVER = /\s*[,，;；]?\s*(?:\bby|\bReceiver Type\s*[:：]?)\s*【([^】]*)】/gi;
 // A receiver type naming where the courier left the parcel rather than who took it.

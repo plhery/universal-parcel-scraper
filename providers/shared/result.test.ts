@@ -363,6 +363,13 @@ describe('shared provider result', () => {
     }
   });
 
+  it("reads DHL Parcel Spain's departure as Postal Ninja translates it, its place apart, as transit", () => {
+    expect(classifyEvent('output of')).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    // Its data received, before the pickup, is the registration DHL eCommerce Iberia's own map reads.
+    expect(classifyEvent('Shipment details received')).toEqual({ stage: 'registered', stage_source: 'wording:language' });
+    expect(classifyEvent('output of the warehouse').stage_source).toBe('none');
+  });
+
   it("reads BUFFALO's depot steps in South Africa as transit, and leaves its bare \"Returns\" unread", () => {
     for (const wording of ['EX DC received the parcel', 'Receive in [Example TownDC]', 'Pack completed in [EXDC][DCZZ00000000]',
       'Outbound and start the next transfer phase', 'Floor scan']) {

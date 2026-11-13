@@ -289,6 +289,8 @@ describe('iMile HTTP adapter', () => {
     expect(imileWording('Your package was received by 【Mail box】.')).toBe('Your package was received.');
     expect(imileWording('Our delivery associate is out for delivery.You can contact him by clicking +000 0500000000.'))
       .toBe('Our delivery associate is out for delivery.');
+    expect(imileWording('Our delivery associate is out for delivery. Customer service hotline: 0000000000'))
+      .toBe('Our delivery associate is out for delivery.');
     expect(imileWording('Your order has been delivered successfully.<div class="viewPic" data-pic="https://example.invalid/a.jpg">View</div>'))
       .toBe('Your order has been delivered successfully.');
     expect(imileWording('Driver called 000 000 0000 , no answer')).toBe('Driver called, no answer');

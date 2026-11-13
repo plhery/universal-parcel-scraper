@@ -783,6 +783,8 @@ describe('classifyWording', () => {
     for (const [wording, stage] of [
       // Sender data and a shipment record, as Paack's, DPD UK's, InPost's and Asendia's maps file them.
       ['order details received', 'registered'],
+      // DHL Parcel Spain's data received, as Postal Ninja translates it.
+      ['Shipment details received', 'registered'],
       ["We've received your order details, but have not yet received your parcel", 'registered'],
       ['Dane zamówienia otrzymane', 'registered'],
       ['shipment created', 'registered'],
