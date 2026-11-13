@@ -446,7 +446,9 @@ describe('classifyWording', () => {
       'Таможенный досмотр не завершен', 'Митне оформлення не завершено',
     ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
     // Customs sending the parcel back to the sender has not cleared it.
-    for (const wording of ['Возвращено с таможни отправителю', 'Повернуто з митниці відправнику']) {
+    for (const wording of ['Возвращено с таможни отправителю', 'Повернуто з митниці відправнику', 'Возвращено с таможни, возврат отправителю',
+      'Возвращено с таможни. Возврат отправителю', 'Возвращено с таможни в адрес отправителя', 'Повернуто з митниці на адресу відправника',
+      'Повернуто з митниці. Повернення відправнику']) {
       expect(wordingStage(wording, 'pending'), wording).not.toBe('in_transit');
     }
   });
@@ -1117,6 +1119,14 @@ describe('classifyWording', () => {
       ['已退回', 'returned'], ['已退回寄件人', 'returned'], ['退回寄件人', 'returned'], ['退回妥投', 'returned'], ['退件签收', 'returned'],
       ['【示例】签收人是寄件人', 'returned'], ['您的邮件已代签收，成功退回至寄件人', 'returned'], ['已签收，退回寄件人', 'returned'],
       ['快件已签收，退回至寄件人', 'returned'], ['派送失败，退回寄件人', 'failed_attempt'],
+      // A return after the sign-off takes the targets, verbs, prefixes and separators of the rules beside it.
+      ['您的邮件已代签收，成功退回至商家', 'returned'], ['已签收，退回卖家', 'returned'], ['已签收，退回寄件网点', 'returned'],
+      ['已在【示例网点】签收，退回寄件人', 'returned'], ['已由本人签收，退回寄件人', 'returned'], ['您的邮件已代签收，成功退回至寄件人处', 'returned'],
+      ['已签收；返还寄件人', 'returned'], ['已簽收。退回賣家', 'returned'], ['退回原寄局', 'returned'],
+      // A return only offered after the sign-off leaves the delivery.
+      ['已签收，如需退回请联系商家', 'delivered'],
+      // A Traditional Chinese pickup notice after the delivery to the point.
+      ['已送達，請於7日內取件', 'ready_for_pickup'], ['包裹已送達，請及時取件', 'ready_for_pickup'], ['包裹已送達，請至門市取貨', 'ready_for_pickup'],
       ['未妥投', 'failed_attempt'], ['未妥投，原因：收件人不在', 'failed_attempt'], ['投递失败', 'failed_attempt'],
       ['已试投/投递失败（/已通知客户）', 'failed_attempt'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
