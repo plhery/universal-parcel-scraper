@@ -2,6 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { event, localEvent, result } from './result.js';
 
 describe('shared provider result', () => {
+  it('names an unreadable timestamp\'s shape, never its digits', () => {
+    expect(() => event('2026-11-12T24:61:00Z', 'Arrived at sorting center'))
+      .toThrow('Tracking event has an invalid timestamp (9999-99-99T99:99:99Z)');
+    expect(() => event('2026-11-12 01:00 CET', 'Arrived at sorting center')).toThrow('no valid timezone (9999-99-99 99:99 aaT)');
+    expect(() => localEvent('12.11.2026', 'Arrived at sorting center')).toThrow('invalid timestamp (99.99.9999)');
+    expect(() => localEvent(undefined, 'Arrived at sorting center')).toThrow('invalid timestamp (undefined)');
+  });
+
   it('drops an entry in wording no rule reads when it is dated at the lookup', () => {
     const now = Date.now();
     const at = (ago: number) => new Date(now - ago).toISOString();

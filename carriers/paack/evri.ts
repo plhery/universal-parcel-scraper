@@ -11,9 +11,9 @@
  */
 import type { TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError } from '../../core/errors/index.js';
-import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { fetchEvriInternational } from '../evri/adapter.js';
-import { evriPartner, parseEvriInternational } from '../evri/parser.js';
+import { evriPartner, paackLegInstants, parseEvriInternational } from '../evri/parser.js';
 
 /** The number Paack prints on a parcel from Evri International; the catalog's `paack-1` rule. */
 export const PAACK_EVRI_NUMBER = /^PK\d{18}$/;
@@ -30,23 +30,6 @@ export function parsePaackEvriReply(html: string, number: string): CarrierResult
     throw new SchemaError('Paack', 'Evri International returned a parcel another carrier delivers');
   }
   return paackLegInstants(shipment.result);
-}
-
-/** The newest-first reply with Paack's scans, from its arrival in the country on, read as UTC. */
-function paackLegInstants(result: CarrierResult): CarrierResult {
-  const events = result.events ?? [];
-  const arrival = events.findIndex((event) => event.description === 'Arrived In Country');
-  if (arrival < 0) return result;
-  const dated = events.map((event, index): CarrierEvent => {
-    if (index > arrival || typeof event.local_time !== 'string') return event;
-    const instant: CarrierEvent = { ...event, time: new Date(`${event.local_time}Z`).toISOString() };
-    delete instant.local_time;
-    return instant;
-  });
-  const newest = dated[0]!.time;
-  const instants: CarrierResult = { ...result, last_update: typeof newest === 'string' ? newest : null, events: dated };
-  if (instants.last_update) delete instants.last_update_local;
-  return instants;
 }
 
 export async function trackPaackThroughEvri(

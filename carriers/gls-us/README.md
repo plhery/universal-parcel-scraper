@@ -27,7 +27,7 @@ The default budget is 15 seconds.
   whose newest scans share a clock leave the answer inconclusive.
 - The shipment's own status ("out for delivery", "delivered", "returned") sets the current
   stage, as on the page; its newest staged scan does when the status is one the map does not
-  know.
+  know, or when that scan is further along than a status that lags it.
 - Scan clocks are wall clocks without an offset, kept in `local_time`. They are not UTC: a
   reply archived while a parcel was out for delivery came before, in UTC, the delivery clock it
   later showed. The network spans the Pacific, Mountain and Central zones, so each scan is dated

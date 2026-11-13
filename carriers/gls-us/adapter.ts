@@ -28,8 +28,8 @@ export class GlsUsTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
-    context.signal?.throwIfAborted();
     const number = normalizeGlsUsNumber(raw);
+    context.signal?.throwIfAborted();
     const read = async (signal: AbortSignal, timeoutMs: number) => {
       const { response, bytes } = await fetchBounded(GLS_US_ENDPOINT, {
         method: 'POST', signal,

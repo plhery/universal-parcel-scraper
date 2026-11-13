@@ -167,6 +167,21 @@ describe('Evri International delivery partners', () => {
     expect(evriPartner('Evri 48H Courier')).toBeUndefined();
   });
 
+  it('dates Paack\'s scans as UTC instants from its arrival in the country, as Paack\'s own lookup of the reply does', () => {
+    const arrived = (value: string) => value.replace('<tr><td>2026-06-07 18:50:00',
+      '<tr><td>2026-06-07 20:47:32</td><td>Arrived In Country</td><td></td><td>SCANNED AT ORIGIN</td></tr>\n<tr><td>2026-06-07 18:50:00');
+    const result = parse(arrived(partner('Paack 48H', 'PK000000000000000001')), NUMBER);
+    expect(result.events?.slice(0, 3).map(({ time, local_time, description }) => [time ?? local_time, description])).toEqual([
+      ['2026-06-08T12:08:00.000Z', 'Delivery Attempted'], ['2026-06-08T11:51:00.000Z', 'At the local depot'],
+      ['2026-06-07T20:47:32.000Z', 'Arrived In Country'],
+    ]);
+    expect(result.events?.slice(3).every((event) => event.local_time && !event.time)).toBe(true);
+    expect(result).toMatchObject({ last_update: '2026-06-08T12:08:00.000Z', delivery_carrier: 'paack' });
+    expect(result).not.toHaveProperty('last_update_local');
+    // Another partner's scans keep their wall clocks.
+    expect(parse(arrived(html), NUMBER).events?.every((event) => event.local_time && !event.time)).toBe(true);
+  });
+
   it('answers only for its own barcode when the tracker found the parcel by a partner number', () => {
     expect(() => parse(html, 'H000000000000002')).toThrow(expect.objectContaining({ kind: 'schema' }));
   });

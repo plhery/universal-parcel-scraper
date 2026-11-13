@@ -726,15 +726,21 @@ function describe(description: unknown, stage?: unknown): { description: string;
   return { description: classified.stage === 'delivered' ? 'Delivered' : label, ...classified };
 }
 
+/** A timestamp's shape for an error: digits read 9 and letters a, but for ISO's `T` and `Z` (`9999-99-99T99:99:99Z`). */
+export function timeShape(time: unknown): string {
+  if (typeof time !== 'string') return time === null ? 'null' : typeof time;
+  return time.slice(0, 40).replace(/\d/g, '9').replace(/[^\W\dTZ]/g, 'a') || 'empty';
+}
+
 export function event(time: unknown, description: unknown, stage?: unknown): CarrierEvent | null {
   const described = describe(description, stage);
   if (!described) return null;
   // Require an explicit offset: universal events can originate in any timezone.
   if (typeof time !== 'string' || !EXPLICIT_OFFSET.test(time)) {
-    throw new TypeError('Tracking event has no valid timezone');
+    throw new TypeError(`Tracking event has no valid timezone (${timeShape(time)})`);
   }
   const date = DateTime.fromISO(time, { setZone: true });
-  if (!date.isValid) throw new TypeError('Tracking event has an invalid timestamp');
+  if (!date.isValid) throw new TypeError(`Tracking event has an invalid timestamp (${timeShape(time)})`);
   return { time: date.toUTC().toISO(), ...described };
 }
 
@@ -747,7 +753,7 @@ export function localEvent(time: unknown, description: unknown, stage?: unknown)
   const described = describe(description, stage);
   if (!described) return null;
   if (typeof time !== 'string' || !LOCAL_WALL_TIME.test(time) || !DateTime.fromISO(time, { zone: 'UTC' }).isValid) {
-    throw new TypeError('Tracking event has an invalid timestamp');
+    throw new TypeError(`Tracking event has an invalid timestamp (${timeShape(time)})`);
   }
   return { local_time: time, ...described };
 }

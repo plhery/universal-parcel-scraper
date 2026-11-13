@@ -172,6 +172,28 @@ export function deliveryPartner(shipment: EvriInternationalShipment): { carrier:
   return { carrier, number };
 }
 
+/**
+ * The newest-first reply of a parcel Paack delivers. Paack's scans, from
+ * "Arrived In Country" on, carry the digits of Paack's own UTC instants to the
+ * second, so they become instants and the newest gives `last_update`. Evri's
+ * scans before them keep their wall clocks.
+ */
+export function paackLegInstants(result: CarrierResult): CarrierResult {
+  const events = result.events ?? [];
+  const arrival = events.findIndex((event) => event.description === 'Arrived In Country');
+  if (arrival < 0) return result;
+  const dated = events.map((event, index): CarrierEvent => {
+    if (index > arrival || typeof event.local_time !== 'string') return event;
+    const instant: CarrierEvent = { ...event, time: new Date(`${event.local_time}Z`).toISOString() };
+    delete instant.local_time;
+    return instant;
+  });
+  const newest = dated[0]!.time;
+  const instants: CarrierResult = { ...result, last_update: typeof newest === 'string' ? newest : null, events: dated };
+  if (instants.last_update) delete instants.last_update_local;
+  return instants;
+}
+
 /** Evri's own lookup: the reply must be the parcel with this Evri barcode. */
 export function parse(html: string, trackingNumber: string): CarrierResult {
   const number = normalizeEvriNumber(trackingNumber);
@@ -179,7 +201,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   if (shipment.system !== number) throw new SchemaError(PROVIDER, 'Evri returned a different shipment');
   const partner = deliveryPartner(shipment);
   return {
-    ...shipment.result,
+    ...(evriPartner(shipment.carrierLabel) === 'paack' ? paackLegInstants(shipment.result) : shipment.result),
     ...(partner ? { delivery_carrier: partner.carrier, delivery_tracking_number: partner.number } : {}),
   };
 }

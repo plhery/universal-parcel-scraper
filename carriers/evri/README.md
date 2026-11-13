@@ -49,6 +49,10 @@ International first for a `C` in the sixth place.
   the portal's newest-first order; `events[].time` is omitted and `last_update`
   is null, so the host never reads them as UTC. Clocks aren't sorted across
   legs.
+- Paack's scans are the exception. When the Carrier field names Paack, its
+  scans from "Arrived In Country" on carry the digits of Paack's own UTC
+  instants to the second, so they become instants and the newest gives
+  `last_update`, as in [Paack](../paack/README.md)'s lookup of the same reply.
 - Because of that, the host first checks universal providers for a dated
   timeline and uses this result as the fallback. It can establish initial
   progress but can't overwrite a richer summary, and it doesn't feed the

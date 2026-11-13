@@ -24384,6 +24384,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
     "trackingUrlTemplate": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/?TrackingNumbers={trackingNumber}",
     "trackingSearchUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
+    "helpUrl": "https://gls-group.com/US/en/support/customer-support/",
     "linkRules": [
       {
         "domains": [

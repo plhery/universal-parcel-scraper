@@ -83,6 +83,20 @@ describe('GLS US HTTP adapter', () => {
     expect(glsUsShipmentStatus('In Transit')).toEqual({ status: 'in_transit', stage: 'in_transit' });
   });
 
+  it('lets a scan further along lead a status that lags it, and no other', () => {
+    expect(parseGlsUs(changed((shipment) => { shipment.status = 'out for delivery'; }), NUMBER))
+      .toMatchObject({ status: 'delivered', current_stage: 'delivered', expected_delivery: null });
+    expect(parseGlsUs(changed((shipment) => {
+      shipment.status = 'in transit';
+      shipment.transitDetails.shift();
+    }), NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(parseGlsUs(outForDelivery(), NUMBER)).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });
+    expect(parseGlsUs(changed((shipment) => {
+      shipment.status = 'delivered';
+      shipment.transitDetails.shift();
+    }), NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+  });
+
   it('answers a label without scans by its status alone', () => {
     const result = parseGlsUs(changed((shipment) => {
       shipment.status = 'label created';
@@ -155,6 +169,9 @@ describe('GLS US HTTP adapter', () => {
       await expect(carrier(fetcher).track({ number })).rejects.toMatchObject({ kind: 'invalid_input' });
     }
     await expect(carrier(fetcher).track({ number: NUMBER }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');
+    // A number the page would not take says so, cancelled or not.
+    await expect(carrier(fetcher).track({ number: 'SH12' }, { signal: AbortSignal.abort(new Error('cancelled')) }))
+      .rejects.toMatchObject({ kind: 'invalid_input' });
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeGlsUsNumber('sh 7304-1826 5903 174526')).toBe(NUMBER);
   });

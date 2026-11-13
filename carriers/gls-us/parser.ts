@@ -2,6 +2,7 @@ import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { PROGRESS } from '../../core/result/partial.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { glsUsScanStatus, glsUsShipmentStatus } from './status.js';
@@ -107,7 +108,8 @@ export function parseGlsUs(payload: unknown, raw: string): CarrierResult {
   const newest = events[0];
   const staged = events.find((event) => event.stage);
   const scanned = staged ? glsUsScanStatus(staged.description!) : undefined;
-  const current = summary ?? scanned;
+  // The status can lag a scan the reply already lists: a scan further along leads.
+  const current = summary && !(scanned && (PROGRESS[scanned.stage] ?? 0) > (PROGRESS[summary.stage] ?? 0)) ? summary : scanned ?? summary;
   if (!newest && !summary) throw new IndeterminateError(PROVIDER, 'GLS US returned a shipment without scans or status');
   const open = current?.status !== 'delivered' && current?.stage !== 'returned';
   return {
