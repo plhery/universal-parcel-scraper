@@ -365,6 +365,18 @@ describe('DPD Germany app projection', () => {
     expect(result.events?.every(event => event.stage_source === 'carrier_map')).toBe(true);
   });
 
+  it('lets a newest scan that is no delivery set the status beside a delivered rail', async () => {
+    const result = await track('DELIVERED', [
+      ['05.01.2026', '10:00', 'At parcel delivery centre.', 'Musterstadt (DE)'],
+      ['05.01.2026', '15:10', 'Unfortunately we have not been able to deliver your parcel.', 'Musterstadt (DE)'],
+    ]);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'failed_attempt', expected_delivery: null });
+    expect(result.delivered_at).toBeUndefined();
+    // A newest scan without a stage leaves the rail's delivery standing.
+    await expect(track('DELIVERED', [['05.01.2026', '12:31', 'Delivered.', 'Musterstadt (DE)'], ['06.01.2026', '08:00', 'A future notice', 'Musterstadt (DE)']]))
+      .resolves.toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-01-05T12:31:00+01:00' });
+  });
+
   it('reads the sender booking the parcel out as before DPD has it', async () => {
     const result = await track('ACCEPTED', [
       ['01.11.2026', '22:46', 'Order information has been transmitted to DPD.', ''],

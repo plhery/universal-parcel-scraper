@@ -189,8 +189,9 @@ function reply(
   const rail = Object.hasOwn(DPD_DE_APP_RAIL, railId) ? DPD_DE_APP_RAIL[railId] : undefined;
   const stage = current.stage ?? rail?.stage;
   // The rail reads delivered once the driver leaves the parcel at a shop, where it waits for the
-  // recipient: while the newest scan has it waiting there, the status follows that scan.
-  const status = rail && !(rail.status === 'delivered' && stage === 'ready_for_pickup') ? rail.status : statusOf(stage);
+  // recipient. Delivered stands beside a newest scan that is a delivery or has no stage; beside
+  // another, such as the shop holding the parcel or a failed attempt, the status follows that scan.
+  const status = rail && !(rail.status === 'delivered' && stage !== 'delivered') ? rail.status : statusOf(stage);
   const order = one(tracking, 'OrderInfo');
   const kilograms = Number(scalar(order, 'Weight', 16).replace(',', '.'));
   const dimensions = dimensionsOf(order);
@@ -200,7 +201,7 @@ function reply(
   const result: CarrierResult = {
     status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: current.description ?? null, last_update: current.time ?? null,
-    ...(affirmative(scalar(tracking, 'Delivered', 8)) || status === 'delivered' || status === 'exception'
+    ...(affirmative(scalar(tracking, 'Delivered', 8)) || rail?.status === 'delivered' || status === 'delivered' || status === 'exception'
       || stage === 'delivered' || stage === 'ready_for_pickup' ? { expected_delivery: null } : deliveryEstimate(tracking, announced)),
     ...(current.time ? {} : { last_update_local: current.local_time }),
     ...(Number.isFinite(kilograms) && kilograms > 0 ? { weight_kg: kilograms } : {}),
