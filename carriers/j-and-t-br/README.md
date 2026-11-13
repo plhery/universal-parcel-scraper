@@ -20,10 +20,11 @@ Staff, recipient fields, free-form remarks, signatures and proof-of-delivery dat
 
 ## Numbers
 
-The guest flow accepts the fifteen-digit domestic waybills beginning with 888. This format
-alone does not prove ownership. There is no broad detection rule or HTTP recognizer; explicit
-carrier selection and a named matching handoff can use the adapter. Other aliases and the
-CPF/CNPJ, account and proof-of-delivery branches are outside this adapter.
+The guest flow accepts the fifteen-digit domestic waybills beginning with 888. Every waybill
+seen so far begins with 8880, so a low-confidence, preferred rule suggests J&T Brazil first for
+those, ahead of BRT's and Yunda's fifteen digits. The format alone does not prove ownership, and
+there is no HTTP recognizer: the reader's choice, or a named matching handoff, uses the adapter.
+Other aliases and the CPF/CNPJ, account and proof-of-delivery branches are outside this adapter.
 
 Samples and provenance live in [`numbers.json`](numbers.json). The current portal's query
 only opens the form; the browser helper fills it instead of assuming the query submitted it.

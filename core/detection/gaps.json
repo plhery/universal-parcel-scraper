@@ -1897,12 +1897,6 @@
     "reason": "Iran Post's 24-digit domestic codes share their length with other carriers' barcodes, and no published structure sets them apart."
   },
   {
-    "carrier": "j-and-t-br",
-    "pattern": "^888\\d{12}$",
-    "kind": "collision",
-    "reason": "Fifteen-digit J&T Express Brazil waybills share their shape with BRT, Yunda and other carriers' numeric rules, and no carrier statement ties the 888 prefix to J&T Brazil."
-  },
-  {
     "carrier": "j-and-t-cargo",
     "pattern": "^57\\d{10}$",
     "kind": "open",

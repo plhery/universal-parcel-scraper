@@ -46,5 +46,12 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "j-and-t-br-1",
+      "pattern": "^8880\\d{11}$",
+      "confidence": "low",
+      "preferred": true
+    }
+  ]
 }

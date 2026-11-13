@@ -28168,7 +28168,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^8880\\d{11}$",
+        "confidence": "low",
+        "preferred": true
+      }
+    ]
   },
   "j-and-t-cargo": {
     "displayName": "J&T Cargo",
@@ -57410,7 +57416,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "islandwide-express": [],
   "israel-post": ["israel-post-1","israel-post-s10"],
   "j-and-t-au": ["j-and-t-au-1"],
-  "j-and-t-br": [],
+  "j-and-t-br": ["j-and-t-br-1"],
   "j-and-t-cargo": ["j-and-t-cargo-1","j-and-t-cargo-2"],
   "j-and-t-cn": ["j-and-t-cn-1"],
   "j-and-t-co": [],

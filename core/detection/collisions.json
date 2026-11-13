@@ -1216,6 +1216,16 @@
     "reason": "A passing GS1 check digit adds FedEx to BRT and Yunda, which accept any fifteen digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Fifteen digits starting 8880 that pass the GS1 check",
+    "carriers": [
+      "brt",
+      "fedex",
+      "yunda",
+      "j-and-t-br"
+    ],
+    "reason": "J&T Express Brazil's domestic waybills start 8880, and BRT and Yunda accept any fifteen digits; a passing GS1 check digit adds FedEx. Every rule is low confidence and J&T Brazil's is preferred, so the number stays a suggestion, J&T Brazil first."
+  },
+  {
     "shape": "Fifteen digits starting 36000, 31000 or 30000 that pass the GS1 check",
     "carriers": [
       "andreani",
@@ -1232,6 +1242,15 @@
       "yunda"
     ],
     "reason": "BRT parcel IDs and Yunda's fifteen-digit rule both accept any fifteen digits and neither carries a check digit, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Fifteen digits starting 8880 that fail the GS1 check",
+    "carriers": [
+      "brt",
+      "yunda",
+      "j-and-t-br"
+    ],
+    "reason": "J&T Express Brazil's domestic waybills start 8880, and BRT and Yunda accept any fifteen digits. Every rule is low confidence and J&T Brazil's is preferred, so the number stays a suggestion, J&T Brazil first."
   },
   {
     "shape": "Fifteen digits starting 36000, 31000 or 30000 that fail the GS1 check",
