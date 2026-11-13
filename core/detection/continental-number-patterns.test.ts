@@ -6,6 +6,7 @@ import { isBrtTrackingNumber } from './brt.js';
 import { isPosteItalianeTrackingNumber } from './posteItaliane.js';
 import { SHEIN_PACKAGE_NUMBER, isSheinPackageNumber } from './shein.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
+import { CHECKSUMS } from './checksums.js';
 
 describe('continental shipment candidates', () => {
   it('offers BRT shipment numbers without assigning ownership from twelve digits', () => {
@@ -542,6 +543,12 @@ describe('J&T Express Middle East waybills', () => {
     }
     for (const number of ['888112345678901', '988012345678901', '88801234567890', '8880123456789012', 'JMX888012345678']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('j-and-t-br');
+    }
+    // Whatever the last digit: FedEx's fifteen-digit GS1 rule leaves the 8880 range out, so one
+    // waybill in ten no longer lists FedEx first.
+    for (let digit = 0; digit <= 9; digit++) {
+      const number = `88801234567890${digit}`;
+      expect(detectCarrierMatch(number), number).toMatchObject({ preferred: ['j-and-t-br'], candidates: ['j-and-t-br', 'brt', 'yunda'] });
     }
   });
 
@@ -1220,6 +1227,16 @@ describe('Andreani shipment numbers', () => {
     for (const number of ['320000000000001', '360010000000001', '900000000000001', '36000000000001', '3600000000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('andreani');
     }
+    // Whatever the last digit: FedEx's fifteen-digit GS1 rule leaves Andreani's prefixes out, and
+    // keeps the fifteen digits around them.
+    for (const prefix of ['36000', '31000', '30000']) {
+      for (let digit = 0; digit <= 9; digit++) {
+        const number = `${prefix}123456789${digit}`;
+        expect(detectCarrierMatch(number), number).toMatchObject({ preferred: ['andreani'], candidates: ['andreani', 'brt', 'yunda'] });
+      }
+    }
+    const fedexGround = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].map((digit) => `36001123456789${digit}`).find((number) => CHECKSUMS.gs1(number));
+    expect(detectCarrierMatch(fedexGround!).preferred).toContain('fedex');
   });
 });
 

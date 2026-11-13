@@ -57,14 +57,15 @@ export function candidateScan(): CandidateScan {
  * The first candidate in the text that one carrier claims confidently, among
  * those `scan` has not asked about yet. A candidate holds a digit: some
  * carriers' shapes also fit a word, "additional" for one, and a word of a
- * message or a link is no number. A number typed alone is not read here.
+ * message or a link is no number. A number typed alone is read whole, digits
+ * or not.
  */
 export function recognizedNumberInScan(raw: string, scan: CandidateScan): string | undefined {
   for (const pattern of TRACKING_CANDIDATE_PATTERNS) {
     pattern.lastIndex = 0;
     for (const match of raw.matchAll(pattern)) {
       const candidate = match[0].trim();
-      if (!/\d/.test(candidate)) continue;
+      if (!/\d/.test(candidate) && candidate !== raw.trim()) continue;
       const key = candidate.toUpperCase();
       if (scan.asked.has(key)) continue;
       if (scan.asked.size >= MOST_TEXT_CANDIDATES) return undefined;
@@ -107,7 +108,13 @@ const LABELLED_NUMBER = new RegExp(
 // A word that offers a second number: "tracking 1234567899 or 9987654321".
 export const ALTERNATIVE_WORDS = 'or|oder|ou|o|of|lub';
 const ALTERNATIVE_NUMBER = new RegExp(String.raw`^\s+(?:${ALTERNATIVE_WORDS})\s+[A-Z0-9.-]*\d`, 'i');
-const DATE = /^\d{1,2}([./-])\d{1,2}\1\d{2,4}$/;
+// A date, day or year first: "12.11.2026", "2026-11-12".
+const DATE = /^(?:\d{1,2}([./-])\d{1,2}\1\d{2,4}|\d{4}([./-])\d{1,2}\2\d{1,2})$/;
+
+/** Whether a labelled token is a date, written whole or ending a sentence. */
+export function isDateToken(token: string): boolean {
+  return DATE.test(token.replace(/[.,;:]+$/, ''));
+}
 
 /**
  * Last resort: a number introduced by a "tracking number:" style label. A
@@ -127,13 +134,16 @@ export function keywordNumberInText(raw: string): string | undefined {
     groups.push(group);
     if (!digits) break;
   }
-  const end = match.index + match[0].length - match[1]!.length + groups.join(' ').length;
+  const start = match.index + match[0].length - match[1]!.length;
+  const end = start + groups.join(' ').length;
   if (ALTERNATIVE_NUMBER.test(raw.slice(end))) return undefined;
   // A sentence can end right after its number.
   const joins = groups.map((_, count) => groups.slice(0, count + 1).join('').replace(/[.-]+$/, ''));
   const claimed = joins.slice(1).reverse().find((joined) => detectCarrierMatch(joined).confidence === 'high');
+  // A date printed in groups or with slashes, which end the token, is no number either.
+  if (!claimed && (isDateToken(groups.join('.')) || isDateToken(/^\S*/.exec(raw.slice(start))![0]))) return undefined;
   const grouped = groups.length > 1 && groups.every((group) => group.length <= 6) && joins.at(-1)!.length >= 8
-    && !DATE.test(groups.join('.')) ? joins.at(-1) : undefined;
+    ? joins.at(-1) : undefined;
   const candidate = claimed ?? grouped ?? joins[0]!;
   if (candidate.length < 4 || DATE.test(candidate)) return undefined;
   return validTrackingNumberInText(candidate) ? candidate : undefined;

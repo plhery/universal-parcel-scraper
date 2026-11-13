@@ -13,6 +13,7 @@ import {
   isValidHermesParcelNumber,
   isValidMondialRelayBarcode,
   isValidS10TrackingNumber,
+  keywordNumberInText,
   normalizeTrackingNumber,
   parseTrackingInput,
   supportsSwissPostHandoff,
@@ -643,9 +644,15 @@ describe('the detection engine', () => {
 
   it('takes no number from a label that offers two, nor a date', () => {
     for (const text of ['Tracking number 5555666677 or 7777888899', 'Sendung 12.10.2026', 'Votre colis du 12/10/2026',
-      'Tracking 1234 5678 or 9999 8888', 'Suivi colis 12 10 2026 merci']) {
-      expect(parseTrackingInput(text)).toMatchObject({ trackingNumber: '', source: 'none' });
+      'Tracking 1234 5678 or 9999 8888', 'Suivi colis 12 10 2026 merci',
+      // Year first too, whether the label is the whole entry or starts a sentence.
+      "Date d'envoi : 2026-11-12", 'Fecha de envío: 2026-11-12', 'Data di spedizione: 2026-11-12', 'Tracking: 2026-11-12',
+      'Tracking: 2026/11/12', 'Tracking: 2026.11.12.', 'Tracking: 2026 11 12', 'Votre colis du 2026-11-12 arrive demain']) {
+      expect(parseTrackingInput(text), text).toMatchObject({ trackingNumber: '', source: 'none' });
+      expect(keywordNumberInText(text), text).toBeUndefined();
     }
+    // A number of the same length is still read.
+    expect(keywordNumberInText('Tracking: 20261112')).toBe('20261112');
   });
 
   it('takes no word of a message or a link for a number, though its shape fits a carrier', () => {
@@ -655,8 +662,11 @@ describe('the detection engine', () => {
       'Psychological additionally aseptically',
       'https://shop.example/help/additional?topic=additional',
     ]) expect(parseTrackingInput(text), text).toMatchObject({ trackingNumber: '', source: 'none' });
-    // Typed alone, it is the number the visitor means.
+    // Typed alone, it is the number the visitor means, however many letters a carrier's rule takes.
     expect(parseTrackingInput('ADDITIONAL')).toMatchObject({ trackingNumber: 'ADDITIONAL', source: 'number' });
+    expect(detectCarrierMatch('PSQWERTYUIOPA')).toMatchObject({ carrier: 'bulgarian-posts', confidence: 'high' });
+    expect(parseTrackingInput(' PSQWERTYUIOPA ')).toMatchObject({ trackingNumber: 'PSQWERTYUIOPA', carrier: 'bulgarian-posts', source: 'number' });
+    expect(parseTrackingInput('Votre colis PSQWERTYUIOPA est en route')).toMatchObject({ trackingNumber: '', source: 'none' });
     // A word beside a number leaves the number.
     expect(parseTrackingInput('For additional information track 1Z999AA10123456784').trackingNumber).toBe('1Z999AA10123456784');
   });

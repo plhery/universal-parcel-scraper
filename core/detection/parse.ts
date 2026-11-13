@@ -10,7 +10,7 @@
 import type { CarrierId } from '../../generated/catalog.js';
 import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules.js';
-import { ALTERNATIVE_WORDS, candidateScan, keywordNumberInText, recognizedNumberInScan } from './candidates.js';
+import { ALTERNATIVE_WORDS, candidateScan, isDateToken, keywordNumberInText, recognizedNumberInScan } from './candidates.js';
 import { detectCarrierMatch } from './detect.js';
 import { validTrackingNumber } from './valid.js';
 import type { TrackingInputMatch } from './types.js';
@@ -132,7 +132,7 @@ const holdsWord = (entry: string) => /\s/.test(entry) && WORD.test(entry);
  * unread, and a label word before the digits is no part of it, unless a
  * carrier confidently claims the two together. Nor is any other word: "Suivi
  * colis 12345678" holds no number whole. A label of an order's or a phone's
- * number names no tracking number.
+ * number names no tracking number, and a date after a label is no number.
  */
 function numberEnteredWhole(input: string): { number: string; labelled: boolean } | undefined {
   if (input.includes('://')) return undefined;
@@ -146,6 +146,7 @@ function numberEnteredWhole(input: string): { number: string; labelled: boolean 
   const label = LABEL.exec(input);
   if (label && !claimed && !OTHER_NUMBER.test(label[0])) {
     const number = input.slice(label[0].length);
+    if (isDateToken(number.replace(/\s+/g, '.'))) return undefined;
     if (validTrackingNumber(number) && !holdsWord(number)) return { number, labelled: true };
   }
   return validTrackingNumber(input) && (claimed || !holdsWord(input)) ? { number: input, labelled: false } : undefined;

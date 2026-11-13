@@ -162,7 +162,6 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "fedex",
           "j-and-t-br",
           "brt",
           "yunda"

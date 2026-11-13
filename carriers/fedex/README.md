@@ -12,7 +12,8 @@ rejects anything else before any request, except a scanned label barcode, which 
 the number it carries: a 22-digit `96` Ground barcode by its last 15 digits, a 34-digit
 barcode by its last 12 behind two zeros. Detection prefers FedEx for a 12-digit number whose
 last digit matches (weights 3, 1, 7 from the left, sum mod 11, then mod 10), for a 15-digit
-Ground number whose last digit is its GS1 mod 10 check, and for a 22-digit `96` barcode whose
+Ground number whose last digit is its GS1 mod 10 check, outside the `8880` and `36000`, `31000`
+and `30000` ranges that J&T Express Brazil's and Andreani's waybills start with, and for a 22-digit `96` barcode whose
 embedded number passes its check; it drops FedEx otherwise. It selects FedEx for a 34-digit
 barcode whose embedded number passes its check: no other carrier issues that length but USPS,
 whose `420` barcodes can carry zeros where the layout expects them, so behind `420` FedEx is
