@@ -4158,6 +4158,11 @@
         "pattern": "^EM\\d{16}CA$",
         "confidence": "low",
         "preferred": true
+      },
+      {
+        "pattern": "^311\\d{9}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },

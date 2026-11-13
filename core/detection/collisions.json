@@ -3340,6 +3340,28 @@
     "reason": "The mod 7 check digit that Japan Post, Sagawa and Yamato share adds all three to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
   },
   {
+    "shape": "Twelve digits starting 311 that pass the mod 7 check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "japan-post",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sagawa",
+      "sf-express",
+      "sto",
+      "yamato",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "four-px"
+    ],
+    "reason": "4PX's twelve-digit waybills of 311 join the carriers that accept any twelve digits, and the mod 7 check digit adds Japan Post, Sagawa and Yamato; neither the range nor a check digit establishes ownership, so 4PX is asked first and the number stays a low-confidence suggestion."
+  },
+  {
     "shape": "Twelve digits that pass the mod 7 and Poste Italiane checks",
     "carriers": [
       "brt",
@@ -3734,6 +3756,26 @@
       "paquetexpress"
     ],
     "reason": "A passing check digit adds FedEx to the carriers that accept any twelve digits; a check digit does not establish ownership, so the number stays a low-confidence suggestion."
+  },
+  {
+    "shape": "Twelve digits starting 311 that pass the FedEx check",
+    "carriers": [
+      "brt",
+      "colis-prive",
+      "fedex",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "mondial-relay",
+      "mrw",
+      "sf-express",
+      "sto",
+      "zto",
+      "sending",
+      "paquetexpress",
+      "four-px"
+    ],
+    "reason": "4PX's twelve-digit waybills of 311 join the carriers that accept any twelve digits, and a passing check digit adds FedEx; neither the range nor a check digit establishes ownership, so 4PX is asked first and the number stays a low-confidence suggestion."
   },
   {
     "shape": "Twelve digits that pass the FedEx and Poste Italiane checks",

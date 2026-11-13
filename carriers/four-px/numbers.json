@@ -263,6 +263,36 @@
         ]
       },
       "note": "Made-up number in the shape of the Emile barcodes on parcels 4PX hands to Emile in Canada. Both 4PX's and Emile's trackers find such a parcel, and Emile's history says its waybill was generated for 4PX. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "311999999990",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-13",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "four-px",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "Made-up number in the shape of 4PX waybills the app tracked, which 4PX's own tracker answered. Its serial sits far beyond the range in use."
     }
   ]
 }

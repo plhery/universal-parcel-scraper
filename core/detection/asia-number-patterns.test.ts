@@ -53,6 +53,16 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
     expect(recognitionAskedCarriers('2820000000001')).toContain('delhivery');
   });
 
+  it('asks 4PX first for its twelve-digit waybills of 311 and no other twelve digits', () => {
+    // Synthetic numbers.
+    expect(detectCarrierMatch('311999999990')).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(detectCarrierMatch('311999999990').preferred[0]).toBe('four-px');
+    expect(recognitionAskedCarriers('311999999990', { countryHint: 'IT' })[0]).toBe('four-px');
+    for (const number of ['310999999990', '312999999990', '3119999999990', '31199999999']) {
+      expect(detectCarrierMatch(number).candidates).not.toContain('four-px');
+    }
+  });
+
   it('ranks a carrier whose check digit passes ahead of popularity alone', () => {
     // Synthetic twelve digits; only the first passes Purolator's Luhn check.
     expect(recognitionCandidates('300000000004')[0]!.carrier).toBe('purolator');

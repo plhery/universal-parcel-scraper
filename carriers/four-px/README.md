@@ -57,9 +57,10 @@ the ZIP code before it.
 The contact card names the last-mile provider and its website; the adapter
 reports the catalog carrier both agree on, never the card's phone numbers, and
 provider discovery confirms the operator separately. The feed also answers
-partners' numbers, 4PX's `OLS` references and its twelve-digit waybills, which
-detection does not route here: twelve digits are shared by many carriers and no
-range of 4PX's is known. It also follows the Cainiao Express `DOFR…HD` numbers of parcels 4PX hands to
+partners' numbers, 4PX's `OLS` references and its twelve-digit waybills. Twelve
+digits are shared by many carriers, so detection suggests 4PX only for the waybills
+starting 311 that parcels in the app showed 4PX's own tracker answering, and recognition
+asks 4PX first for them. The range moves on as 4PX issues waybills. It also follows the Cainiao Express `DOFR…HD` numbers of parcels 4PX hands to
 Cainiao Express in France, from the first mile; Cainiao answers them only once Cainiao
 Express has the parcel, without 4PX's leg. Aggregators name 4PX "4PX Express" for those, and
 that name is an alias, so their naming leads to this adapter, which still has to find the parcel.

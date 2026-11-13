@@ -4162,6 +4162,11 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pattern": "^EM\\d{16}CA$",
         "confidence": "low",
         "preferred": true
+      },
+      {
+        "pattern": "^311\\d{9}$",
+        "confidence": "low",
+        "preferred": true
       }
     ]
   },
@@ -56891,7 +56896,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "correios-br": ["correios-br-1"],
   "correos-chile": ["correos-chile-1","correos-chile-2"],
   "yunexpress": ["yunexpress-1"],
-  "four-px": ["four-px-1","four-px-cainiao-reference","four-px-emile-reference"],
+  "four-px": ["four-px-1","four-px-cainiao-reference","four-px-emile-reference","four-px-waybill"],
   "blue-dart": ["blue-dart-1"],
   "delhivery": ["delhivery-1"],
   "nz-post": ["nz-post-1","nz-post-2","nz-post-3"],
