@@ -19,7 +19,7 @@ describe('Poczta Polska identity-bound scans', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_update: '2026-01-06T12:00:00+01:00',
       weight_kg: 0.35, expected_delivery: null });
     expect(result).not.toHaveProperty('last_update_local');
-    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'exception', 'accepted', 'registered']);
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'failed_attempt', 'accepted', 'registered']);
     expect(result.events?.[0]).toMatchObject({ location: 'Example Post Office', description: 'Final delivery', provider_code: 'P_D' });
     // An office type marks a Polish office; the electronic sender has none.
     expect(result.events?.map(event => event.time ?? event.local_time)).toEqual(['2026-01-06T12:00:00+01:00',
@@ -181,8 +181,15 @@ describe('Poczta Polska identity-bound scans', () => {
   });
 
   it('uses specific failure codes and never borrows a broad state or finished flag for unknown scans', () => {
+    // P_ND is an attempted delivery in Poczta Polska's event list, though its name is the in-delivery state.
     const failed = payload(); failed.mailInfo.events = [failed.mailInfo.events[2]];
+    expect(parsePocztaPolska(failed, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    // A failure code the widget colours red that the list does not name stays an exception.
+    Object.assign(failed.mailInfo.events[0], { code: 'P_NDPJ' });
     expect(parsePocztaPolska(failed, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(['P_ADR', 'P_NDD', 'P_ZPNP'].map(code => classifyPocztaPolskaStatus(code)?.stage)).toEqual(['failed_attempt', 'failed_attempt', 'failed_attempt']);
+    expect(['P_DS', 'P_S', 'P_OWP', 'P_PWP', 'P_ZDUN'].map(code => classifyPocztaPolskaStatus(code)?.stage))
+      .toEqual(['delivered', 'delivered', 'delivered', 'ready_for_pickup', 'returned']);
     const unknown = payload(); Object.assign(unknown.mailInfo.events.at(-1), { code: '__proto__', name: 'Unmapped scan' });
     expect(parsePocztaPolska(unknown, NUMBER).status).toBe('unknown');
     expect(parsePocztaPolska(unknown, NUMBER)).not.toHaveProperty('current_stage');

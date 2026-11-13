@@ -37,8 +37,10 @@ check digit to validate and remain shape-based suggestions.
 
 ## Notes
 
-Specific scan codes determine progress. An unsuccessful delivery can carry the
-broader “in delivery” state, so that state does not override the scan. The one
+Specific scan codes determine progress, as Poczta Polska's
+[events list](https://www.poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf)
+defines them. An attempted delivery (`P_ND`) can carry the broader “in delivery”
+state as its name, so that state does not override the scan. The one
 state read on its own is “returned”: from that scan on, the item travels back,
 and a final delivery means the sender has it again. Weight is provided in
 kilograms. Office names provide locations, except those that name a system or a unit with

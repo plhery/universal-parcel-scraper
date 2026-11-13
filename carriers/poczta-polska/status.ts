@@ -18,16 +18,36 @@ const CODES: Record<string, ClassifiedStatus> = {
   P_WD: { status: 'out_for_delivery', stage: 'out_for_delivery' },
   // The Polish answer can give the scan of an item in delivery under this code where the English gives P_WD.
   P_WDML: { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  P_PPDN: { status: 'in_transit', stage: 'accepted' },
+  P_WPUCWKP: { status: 'in_transit', stage: 'customs' },
+  P_ZPUCPP: { status: 'in_transit', stage: 'customs' },
+  P_ZPUCWKP: { status: 'in_transit', stage: 'customs' },
+  // A notice left, with the item at the office or due for another round, and an attempt that failed,
+  // was forwarded or was made at the sender's request: Poczta Polska's event list names each.
   P_A: { status: 'exception', stage: 'failed_attempt' },
   P_PA: { status: 'exception', stage: 'failed_attempt' },
+  P_ADR: { status: 'exception', stage: 'failed_attempt' },
+  P_APP: { status: 'exception', stage: 'failed_attempt' },
+  P_ND: { status: 'exception', stage: 'failed_attempt' },
+  P_NDD: { status: 'exception', stage: 'failed_attempt' },
+  P_ZPNP: { status: 'exception', stage: 'failed_attempt' },
+  P_NDB: { status: 'exception', stage: 'exception' },
   P_KWD: { status: 'out_for_delivery', stage: 'ready_for_pickup' },
+  P_DKAO: { status: 'out_for_delivery', stage: 'ready_for_pickup' },
+  P_PWP: { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   P_NDZ: { status: 'exception', stage: 'returned' },
+  P_ZDUN: { status: 'exception', stage: 'returned' },
+  P_ZZPZ: { status: 'exception', stage: 'returned' },
   P_D: { status: 'delivered', stage: 'delivered' },
-  // Collected by the recipient at the office: its state reads "picked up at the point".
+  P_DS: { status: 'delivered', stage: 'delivered' },
+  P_S: { status: 'delivered', stage: 'delivered' },
+  P_ZPNA: { status: 'delivered', stage: 'delivered' },
+  // Collected by the recipient at the office or a point: its state reads "picked up at the point".
   P_OWU: { status: 'delivered', stage: 'delivered' },
+  P_OWP: { status: 'delivered', stage: 'delivered' },
 };
-const FAILED_DELIVERY = new Set(['P_ND', 'P_NDZK', 'P_NDPD', 'P_R',
-  'P_NDZAP', 'P_NDZKON', 'P_ZDUN', 'P_CZDKN', 'P_NDPJ']);
+// Codes the widget shows as failed deliveries that Poczta Polska's event list does not name.
+const FAILED_DELIVERY = new Set(['P_NDZK', 'P_NDPD', 'P_R', 'P_NDZAP', 'P_NDZKON', 'P_CZDKN', 'P_NDPJ']);
 
 export function classifyPocztaPolskaStatus(code: string): ClassifiedStatus | undefined {
   if (Object.hasOwn(CODES, code)) return CODES[code];

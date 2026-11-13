@@ -47,8 +47,9 @@
       "code": "P_ND",
       "wording": "In delivery",
       "language": "en",
-      "stage": "exception",
-      "confirmedBy": "live"
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an attempted or unsuccessful delivery (Nieudana próba doręczenia); its name is the in-delivery state."
     },
     {
       "code": "P_WYPL",
@@ -143,6 +144,142 @@
       "language": "en",
       "stage": "failed_attempt",
       "confirmedBy": "live"
+    },
+    {
+      "code": "P_ADR",
+      "wording": "Unsuccessful (physical) delivery",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as a notice left for another delivery round (Awizo - do ponownego doręczenia)."
+    },
+    {
+      "code": "P_APP",
+      "wording": "Unsuccessful (physical) delivery",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item notified for another delivery round (Przesyłka awizowana do ponownego doręczenia)."
+    },
+    {
+      "code": "P_NDD",
+      "wording": "Attempted delivery - redirected",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an attempt after which the item is forwarded (Próba doręczenia - dosłanie)."
+    },
+    {
+      "code": "P_ZPNP",
+      "wording": "Delivery at sender's request - delivery attempt",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an attempt made at the sender's request (Doręczenie na życzenie - próba doręczenia)."
+    },
+    {
+      "code": "P_NDB",
+      "wording": "Unsuccessful (physical) delivery - lost",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item lost in delivery (Nieudane doręczenie - zaginięcie)."
+    },
+    {
+      "code": "P_DKAO",
+      "wording": "Added to postal notice book - Item can be collected",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item waiting at the office for collection (oczekiwanie na odbiór w Urzędzie)."
+    },
+    {
+      "code": "P_PWP",
+      "wording": "Ready for pick up at the point",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item waiting at a point for collection (Przesyłka oczekuje na odbiór)."
+    },
+    {
+      "code": "P_ZDUN",
+      "wording": "Returned to sender",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as a return to the sender, in the returned state (Zwrot do nadawcy)."
+    },
+    {
+      "code": "P_ZZPZ",
+      "wording": "Not collected at the delivery point",
+      "language": "en",
+      "stage": "returned",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item not collected at a point, in the returned state (Przesyłka nieodebrana w punkcie)."
+    },
+    {
+      "code": "P_DS",
+      "wording": "Final delivery",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as a delivery to the recipient's letterbox (Doręczono do skrzynki oddawczej Adresata)."
+    },
+    {
+      "code": "P_S",
+      "wording": "Delivered to the PO box",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as a delivery to a PO box (Przesyłka doręczona do skrytki pocztowej)."
+    },
+    {
+      "code": "P_ZPNA",
+      "wording": "Delivery at sender's request - delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as a delivery made at the sender's request (Doręczenie na życzenie - doręczono)."
+    },
+    {
+      "code": "P_OWP",
+      "wording": "Collected at the delivery point",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as the recipient collected the item at a point (Odebrana w punkcie odbioru)."
+    },
+    {
+      "code": "P_PPDN",
+      "wording": "Item arrived at the shipping point",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item handed in at a point (Przesyłka przyjęta w punkcie)."
+    },
+    {
+      "code": "P_WPUCWKP",
+      "wording": "Item returned from import customs",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item released by import customs (Zwolniona po kontroli celnej)."
+    },
+    {
+      "code": "P_ZPUCPP",
+      "wording": "Customs service",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as the stage before the customs declaration (Etap przed zgłoszeniem celnym)."
+    },
+    {
+      "code": "P_ZPUCWKP",
+      "wording": "Customs service",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "official-doc",
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as customs handling (Obsługa celna)."
     }
   ]
 }
