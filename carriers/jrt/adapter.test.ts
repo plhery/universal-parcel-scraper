@@ -259,6 +259,15 @@ describe('JRT tracking adapter', () => {
         'The instruction data for this shipment have been provided by the sender to DHL electronically', 'registered'],
       ['2026-03-01T18:37:40+08:00', undefined, undefined, undefined, undefined, 'The electronic cargo information has been received', 'registered'],
     ]);
+    // DHL's absent-recipient sentence in the same place is read on the destination's clock too, not Beijing's.
+    const absentPayload = fixture('track-dhl-placeless') as { data: Record<string, unknown>[] }[];
+    const absentRound = 'The recipient was not present. Please find more information&lt;a href=https://www.example.com/help/status.html#not-delivered&gt; here.&lt;/a&gt;';
+    const record = absentPayload[0]!.data[0]!;
+    record.trackContent = absentRound;
+    (record.trackDetails as Record<string, unknown>[])[0]!.track_content = absentRound;
+    expect(dateLocalClocks('jrt', parseJrtTrack(absentPayload, 'UP0000000000000004', readAt)!).events?.[0]).toMatchObject({
+      time: '2026-03-12T16:35:00+01:00', time_zone: 'Europe/Rome', time_zone_basis: 'destination',
+      description: 'The recipient was not present. Please find more information here.', stage: 'failed_attempt' });
     // The adapter dates them the same way, and a destination on another clock takes its own.
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('track-dhl-placeless')));
     await expect(adapter(environment(fetcher)).track({ number: 'UP0000000000000004' })).resolves
@@ -379,6 +388,13 @@ describe('JRT tracking adapter', () => {
     expect(answer(preferred)).toEqual({ kind: 'mapped', stage: 'pending' });
     expect(isJrtDhlRow(preferred)).toBe(true);
     expect(isJrtDhlGermanRow(preferred)).toBe(false);
+    // DHL's round that found no one, copied to the minute without a place, is DHL's too: the same sentence comes with
+    // the destination's country on its clock there, beside DHL's other rows.
+    const absent = 'The recipient was not present. Please find more information here.';
+    expect(answer(absent)).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(isJrtDhlRow(absent)).toBe(true);
+    expect(isJrtDhlRow('The recipient could not be found at the address on the shipment.')).toBe(true);
+    expect(isJrtDhlGermanRow(absent)).toBe(false);
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // DHL's row for the parcel on its way to it, as JRT copies it in lower case.

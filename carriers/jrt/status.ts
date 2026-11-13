@@ -89,8 +89,8 @@ export const isJrtUpsRow = (wording: string, place: string): boolean =>
   UPS_ROWS.has(normalizeStatusWording(wording)) || /(?:^|,)\s*US$/.test(place.trim());
 
 // DHL's English sentences, as the tracker copies them on the line into Europe: "The shipment has arrived at the parcel center.",
-// and the recipient's preferred location for its delivery.
-const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b|^a preferred location was designated as a reception option for this shipment\b/i;
+// the recipient's preferred location for its delivery, and a round that found no one, or no such recipient, at the address.
+const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b|^a preferred location was designated as a reception option for this shipment\b|^the recipient (?:was not present|could not be found)\b/i;
 // DHL's rows from Germany, before the parcel leaves for the destination country: the sender's data, the transport to
 // DHL, the parcel centre of origin, the export parcel centre and the transport abroad.
 const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:in transit to dhl|of origin|export parcel center|transported to the destination country)\b/i;
