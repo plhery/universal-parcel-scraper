@@ -33,7 +33,6 @@
     "service_name",
     "destination_country",
     "canonical_tracking_number",
-    "delivery_partner",
     "delivery_tracking_number"
   ],
   "portal": {
@@ -46,7 +45,6 @@
       "service_name",
       "destination_country",
       "canonical_tracking_number",
-      "delivery_partner",
       "delivery_tracking_number",
       "parcel_count",
       "weight",
@@ -68,7 +66,6 @@
       "service_name",
       "destination_country",
       "canonical_tracking_number",
-      "delivery_partner",
       "delivery_tracking_number"
     ],
     "discarded": [
@@ -87,7 +84,8 @@
     "unavailable": [
       "eta",
       "delivered_at",
-      "offset_timestamps"
+      "offset_timestamps",
+      "delivery_partner"
     ]
   },
   "links": [],
