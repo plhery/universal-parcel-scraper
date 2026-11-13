@@ -119,7 +119,8 @@ Parsing, in order:
 - A mailer writes its label, "Shipping Label Created" with its place apart, on UTC: read on
   the place's clock, each label read soon enough to tell came after the lookup, and their hours
   gather in America's evening. ParcelsApp's and 17TRACK's copies of it are read the same way.
-  Another label row, such as "Shipping Label Created, USPS Awaiting Item", is read on UTC when
+  Another label row, such as "Shipping Label Created, USPS Awaiting Item" or a merchant's
+  "Merchant Order Receipt Notification", is read on UTC when
   the facility's zone dates it after the lookup and UTC does not. Once both date it in the
   past, nothing tells them apart and it keeps the facility's zone; its row takes over the
   stored one by its wall clock.
