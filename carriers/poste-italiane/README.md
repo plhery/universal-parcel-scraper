@@ -48,8 +48,8 @@ Italiane for a number issued abroad.
      CAPTCHA. An HTTP 429 pauses them for the wait its `Retry-After` names, else for those
      fifteen minutes. A lookup over that fails as rate-limited without a request, with the time
      left to wait and the reason `self_paced`, and the browser step does not run. The catalog asks for a refresh at most
-     every half hour, and an hour after a failed one, so that a handful of followed parcels,
-     including one out for delivery, keeps within the hour's searches.
+     every hour, a failed one included, so that up to eighteen followed parcels, out for delivery
+     too, keep within the hour's searches.
    - Missing or unusable history is a schema failure. Unrecognized empty envelopes remain inconclusive.
 2. `trawl`, only after a challenge: the official page opens in a fresh browser context.
    TRAWL solves its reCAPTCHA checkbox/audio challenge and observes the page retrying the
