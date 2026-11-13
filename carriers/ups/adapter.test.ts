@@ -387,6 +387,16 @@ describe('UPS structured response', () => {
       { ...scan('7F', 'Des droits ou taxes sont dus', '20260807 09:12:07'), activityAdditionalDescription: 'Payez en ligne' },
     ]), TRACKING_NUMBER, TODAY);
     expect(worded.events?.[0]).toMatchObject({ provider_code: '7F', recipient_action: 'duties' });
+    // Live shape: seconds after 7F, UPS says the charges are collected at the door, and the parcel goes on.
+    const atDoor = parseUPSTrackingResponse(withScans([
+      scan('1C', 'Import charges are due and payable at delivery.', '20260807 09:12:11'),
+      scan('7F', 'Duties or taxes are due on this package.', '20260807 09:12:07'),
+      scan('DP', 'Departed from Facility', '20260807 07:00:00'),
+    ]), TRACKING_NUMBER, TODAY);
+    expect(atDoor).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    expect(atDoor.events?.map((event) => [event.provider_code, event.stage, event.recipient_action ?? null])).toEqual([
+      ['1C', 'in_transit', null], ['7F', 'customs', 'duties'], ['DP', 'in_transit', null],
+    ]);
   });
 
   it('reads the clearing agency\'s scan, which UPS sends without a code, as customs by its whole wording', () => {

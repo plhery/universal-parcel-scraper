@@ -16,6 +16,7 @@
     { "code": "12", "wording": "Item sent abroad (EDI-received)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The foreign post's dispatch of an item from abroad, relayed by its electronic data." },
     { "code": "30", "wording": "Item arrived at office of exchange", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The inward office of exchange, in Latvia or in the destination country." },
     { "code": "32", "wording": "Item arrived at processing facility", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "code": "33", "wording": "Item arrived at sorting centre", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13" },
     { "code": "35", "wording": "Item sent to next processing facility", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "77", "wording": "Item sent to next processing facility", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
     { "code": "69", "wording": "Item awaiting next planned cycle", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the next dispatch at the office of exchange." },

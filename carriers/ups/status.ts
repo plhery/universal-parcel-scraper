@@ -106,6 +106,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // Prepared for clearance, duties or taxes due, and the parcel held until the
   // receiver pays them.
   ['Z1', 'customs'], ['7F', 'customs'], ['OQ', 'customs'],
+  // The import charges collected from the receiver at the door instead, seconds after 7F: the parcel
+  // goes on, and nothing is asked of the receiver before it moves.
+  ['1C', 'in_transit'],
   // Loaded on the delivery vehicle, and out for delivery.
   ['OF', 'out_for_delivery'], ['OT', 'out_for_delivery'],
   // Receiver absent, absent again at the final attempt, business closed, or

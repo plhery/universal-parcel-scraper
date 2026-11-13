@@ -27,6 +27,7 @@ const EVENTS: Readonly<Record<string, Stage>> = {
   12: 'in_transit',
   30: 'in_transit',
   32: 'in_transit',
+  33: 'in_transit',
   35: 'in_transit',
   69: 'in_transit',
   72: 'in_transit',

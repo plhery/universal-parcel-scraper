@@ -95,7 +95,8 @@ rendered status, after that wait.
   code after the delivery leg, such as the "Pickup Scan" when UPS collects a parcel from the
   access point it waited at, is transit.
 - Duties or taxes due (`7F`) and the hold until they are paid (`OQ`) set `recipient_action`
-  to `duties` by their code, whatever words UPS adds beside it.
+  to `duties` by their code, whatever words UPS adds beside it. Import charges collected at the
+  door (`1C`) are transit: the parcel goes on, and nothing is asked before it moves.
 - UPS's reminder to collect a parcel before its hold ends (`5G`) is `ready_for_pickup`: the parcel
   is returned only if no one collects it. It does not say where the parcel is held.
 - `pickup_point` names the access point only while the newest scan is `2Q` or `ZP`. Replies
