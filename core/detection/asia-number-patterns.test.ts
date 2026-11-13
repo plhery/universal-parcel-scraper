@@ -147,6 +147,8 @@ describe('prefixed Asian shipment references and shared numeric formats', () => 
       expect(detectCarrierMatch(number), number).toMatchObject({ carrier, confidence: 'high', candidates: [carrier] });
       expect(recognitionCandidates(number), number).toEqual([]);
     }
+    // BUFFALO's second layout keeps its prefix and the YQ ending.
+    expect(detectCarrierMatch('BUFZA1SK23456BUYQ')).toMatchObject({ carrier: 'buffalo-ex', confidence: 'high', candidates: ['buffalo-ex'] });
     // JS Express and WanbExpress never stand in for each other.
     expect(detectCarrierMatch('JSEZZ0000000001YQ').candidates).not.toContain('wanbexpress');
     expect(detectCarrierMatch('WNBJS0000000001YQ').candidates).not.toContain('js-express');

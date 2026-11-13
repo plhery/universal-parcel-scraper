@@ -11591,7 +11591,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "BUFFALO International Logistics",
       "Buffalo International",
       "Buffaloex",
-      "Buffalo Express"
+      "Buffalo Express",
+      "Buffalo Logistics"
     ],
     "countries": [
       "ZA",
@@ -11628,7 +11629,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^BUFZA\\d{10}YQ$",
+        "pattern": "^BUFZA(?:\\d{10}|\\dSK\\d{5}BU)YQ$",
         "confidence": "high"
       }
     ]
