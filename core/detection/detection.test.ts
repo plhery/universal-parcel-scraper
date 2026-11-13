@@ -491,8 +491,17 @@ describe('the detection engine', () => {
   });
 
   it('reads a number out of a pasted carrier link', () => {
-    expect(parseTrackingInput('https://service.post.ch/ekp-web/ui/entry/search/RA999999987CH'))
-      .toMatchObject({ trackingNumber: 'RA999999987CH', carrier: 'swiss-post', source: 'link' });
+    // Swiss Post's old and current tracking links, and the address its search box opens, name
+    // Swiss Post even for an item another post numbered; other post.ch pages do not.
+    for (const link of ['https://service.post.ch/ekp-web/ui/entry/search/RA123456785IR',
+      'https://www.post.ch/swisspost-tracking?formattedParcelCodes=RA123456785IR&lang=de',
+      'https://mys.post.ch/my-consignments/deeplink-search?formattedParcelCodes=RA123456785IR&lang=fr',
+      'https://service.post.ch/ekp-web/external/view/RA123456785IR?lang=it']) {
+      expect(parseTrackingInput(link), link)
+        .toMatchObject({ trackingNumber: 'RA123456785IR', carrier: 'swiss-post', source: 'link' });
+    }
+    expect(parseTrackingInput('https://www.post.ch/de/empfangen/sendung-verfolgen?formattedParcelCodes=RA123456785IR').carrier)
+      .not.toBe('swiss-post');
   });
 
   it('reads a GETOnline link on the shared host as SkyNet only for its own stid', () => {

@@ -32,7 +32,7 @@ describe('the derived CARRIERS record', () => {
       capabilities: { selectable: true, timezone: 'Europe/Zurich', tracking: { mode: 'automatic', adapter: 'swiss-post' } },
     });
     expect(CARRIERS['swiss-post'].trackingUrl?.('RA999999987CH'))
-      .toBe('https://service.post.ch/ekp-web/ui/entry/search/RA999999987CH');
+      .toBe('https://www.post.ch/swisspost-tracking?formattedParcelCodes=RA999999987CH');
     expect(CARRIERS['swiss-post'].trackingSearchUrl).toBe('https://www.post.ch/de/empfangen/sendung-verfolgen');
     expect(CARRIERS['swiss-post'].helpUrl).toBe('https://www.post.ch/de/hilfe-und-kontakt/empfangen');
     expect(SELECTABLE_CARRIERS.every((carrier) => carrier.capabilities.selectable)).toBe(true);
@@ -248,6 +248,8 @@ describe('tracking links', () => {
 
   it('localizes only the portals that support it', () => {
     expect(localizedCarrierUrl('swiss-post', 'https://service.post.ch/x', 'fr')).toContain('lang=fr');
+    expect(localizedCarrierUrl('swiss-post', CARRIERS['swiss-post'].trackingUrl!('RA999999987CH'), 'fr'))
+      .toBe('https://www.post.ch/swisspost-tracking?formattedParcelCodes=RA999999987CH&lang=fr');
     // post.ch moves its search page to the language the parameter names.
     expect(localizedCarrierUrl('swiss-post', CARRIERS['swiss-post'].trackingSearchUrl!, 'fr'))
       .toBe('https://www.post.ch/de/empfangen/sendung-verfolgen?lang=fr');
@@ -261,7 +263,7 @@ describe('tracking links', () => {
     expect(parcelTrackingLinks({ carrier: 'swiss-post', trackingNumber: 'RA999999987CH' })).toEqual([{
       carrier: CARRIERS['swiss-post'],
       name: 'Swiss Post',
-      url: 'https://service.post.ch/ekp-web/ui/entry/search/RA999999987CH',
+      url: 'https://www.post.ch/swisspost-tracking?formattedParcelCodes=RA999999987CH',
       active: true,
       ready: true,
       role: 'active',

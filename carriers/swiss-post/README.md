@@ -1,10 +1,10 @@
 # Swiss Post
 
 Swiss Post domestic parcels and inbound international letter-post (`…CH` S10
-numbers), tracked through the anonymous API behind the public `service.post.ch`
-tracker. A postal item from abroad is handed off here under its own S10 number
-when its carrier reports Switzerland as the destination, as is AliExpress/Cainiao
-letter-post with a Swiss-issued `L…CH` number
+numbers), tracked through the anonymous API on `service.post.ch` that Swiss
+Post's public tracker used. A postal item from abroad is handed off here under
+its own S10 number when its carrier reports Switzerland as the destination, as
+is AliExpress/Cainiao letter-post with a Swiss-issued `L…CH` number
 ([handoff.ts](../../core/catalog/handoff.ts)). Freight goes to
 [swiss-post-cargo](../swiss-post-cargo/README.md) and PostLogistics
 track-and-trace to [postlogistics](../postlogistics/README.md).
@@ -44,6 +44,12 @@ row by provider code, instant and location, unless one of the two is revoked.
 
 ## Notes
 
+- The portal link is the address Swiss Post's own tracking form opens,
+  `www.post.ch/swisspost-tracking?formattedParcelCodes=…`, which forwards to the
+  parcel's page in the new «My consignments». The old `service.post.ch/ekp-web/ui`
+  pages only say the service has moved, while the API beside them still answers.
+  Pasted links of either kind, and the site search's `ekp-web/external/view/…`,
+  name Swiss Post.
 - 18-digit `98`/`99` parcel numbers carry no check digit (identifier, franking
   licence and counter), so detection cannot reject a mistyped one.
 - One cookie jar per lookup — the user, CSRF token and hash are only valid

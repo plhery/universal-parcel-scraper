@@ -24,7 +24,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "swiss-post"
     },
     "canaryUrl": "https://service.post.ch/",
-    "trackingUrlTemplate": "https://service.post.ch/ekp-web/ui/entry/search/{trackingNumber}",
+    "trackingUrlTemplate": "https://www.post.ch/swisspost-tracking?formattedParcelCodes={trackingNumber}",
     "trackingSearchUrl": "https://www.post.ch/de/empfangen/sendung-verfolgen",
     "helpUrl": "https://www.post.ch/de/hilfe-und-kontakt/empfangen",
     "linkRules": [
@@ -32,7 +32,17 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "domains": [
           "service.post.ch"
         ],
-        "path": "/entry/search/([^/?#]+)"
+        "path": "/(?:entry/search|external/view)/([^/?#]+)"
+      },
+      {
+        "domains": [
+          "www.post.ch",
+          "mys.post.ch"
+        ],
+        "pathPattern": "^/(?:swisspost-tracking|my-consignments/deeplink-search)/?$",
+        "params": [
+          "formattedParcelCodes"
+        ]
       }
     ],
     "detectionRules": [

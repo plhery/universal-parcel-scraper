@@ -37,7 +37,7 @@
     "delivered_at"
   ],
   "portal": {
-    "url": "https://service.post.ch/ekp-web/ui/entry/search/{trackingNumber}",
+    "url": "https://www.post.ch/swisspost-tracking?formattedParcelCodes={trackingNumber}",
     "searchUrl": "https://www.post.ch/de/empfangen/sendung-verfolgen",
     "helpUrl": "https://www.post.ch/de/hilfe-und-kontakt/empfangen",
     "canaryUrl": "https://service.post.ch/",
@@ -82,7 +82,17 @@
       "domains": [
         "service.post.ch"
       ],
-      "path": "/entry/search/([^/?#]+)"
+      "path": "/(?:entry/search|external/view)/([^/?#]+)"
+    },
+    {
+      "domains": [
+        "www.post.ch",
+        "mys.post.ch"
+      ],
+      "pathPattern": "^/(?:swisspost-tracking|my-consignments/deeplink-search)/?$",
+      "params": [
+        "formattedParcelCodes"
+      ]
     }
   ],
   "detection": [
