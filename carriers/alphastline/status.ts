@@ -35,6 +35,11 @@ const STATUSES: ReadonlyMap<string, Stage> = new Map([
   ['Failed', 'exception'],
 ]);
 
+/** Whether a wording is one of the line's notices, which move nothing and keep the stage of the scan before them. */
+export function isAlphastlineNotice(wording: string): boolean {
+  return isGap(wording);
+}
+
 /** The stage Alphastline's map gives a scan's node. */
 export function alphastlineMappedStage(node: string | null): Stage | undefined {
   return node ? NODES.get(node) : undefined;

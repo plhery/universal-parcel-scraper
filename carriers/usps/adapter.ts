@@ -455,6 +455,8 @@ export class USPSTracker {
       { id: 'trawl', recovers: error => (error instanceof ChallengeError && error.reason === 'interstitial_page')
         || this.#readsAgain(error, read, trawl),
         run },
+      // The third own redirect in a row pauses the own route: the same lookup reads once through the proxy.
+      { id: 'trawl', recovers: error => this.#readsAgain(error, read, trawl) && this.#fallbackRun(trawl) !== null, run },
     ]);
     // A typed routing barcode opens with the recipient's ZIP code. The package
     // identifier after it is the number USPS tracks, so consumers can keep that.

@@ -27,7 +27,10 @@ The default budget is 15 seconds.
   whose newest scans share a clock leave the answer inconclusive.
 - The shipment's own status ("out for delivery", "delivered", "returned") sets the current
   stage, as on the page; its newest staged scan does when the status is one the map does not
-  know, or when that scan is further along than a status that lags it.
+  know, or when that scan is further along than a status that lags it. A scan wording the map
+  does not know takes the shared wording rules, so a newer attempt or return is not hidden
+  behind an older delivery or round, and a delivery under a newer scan neither stages is no
+  longer current.
 - Scan clocks are wall clocks without an offset, kept in `local_time`. They are not UTC: a
   reply archived while a parcel was out for delivery came before, in UTC, the delivery clock it
   later showed. The network spans the Pacific, Mountain and Central zones, so each scan is dated
@@ -47,7 +50,8 @@ The default budget is 15 seconds.
 ## Limitations
 
 - Only the scans' wordings and the shipment statuses the page's script reads are mapped.
-  Exceptions, failed attempts and returns have not been seen in scans.
+  Exceptions, failed attempts and returns have not been seen in scans; the shared wording
+  rules read them.
 - Clocks outside California are dated on their place's zone without a live comparison.
 - No weight, sender or delivery instant.
 

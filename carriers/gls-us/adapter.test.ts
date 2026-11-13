@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import { normalizeCarrierResult } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
@@ -95,6 +96,25 @@ describe('GLS US HTTP adapter', () => {
       shipment.status = 'delivered';
       shipment.transitDetails.shift();
     }), NUMBER)).toMatchObject({ status: 'delivered', current_stage: 'delivered' });
+  });
+
+  it('takes no stage from an older mapped scan under a newer scan the map does not know', () => {
+    const later = (description: string, status: string) => changed((shipment) => {
+      shipment.status = status;
+      shipment.transitDetails.unshift({ eventDateTime: '2026-03-06T09:30:00', eventDetails: description,
+        location: 'OTHERTOWN, CA, US', trackingDateTime: '0001-01-01T00:00:00' });
+    });
+    const returned = normalizeCarrierResult(parseGlsUs(later('RETURNED TO SHIPPER', 'Synthetic status'), NUMBER));
+    expect(returned.status).not.toBe('delivered');
+    expect(returned.last_status_text).toBe('RETURNED TO SHIPPER');
+    const attempt = changed((shipment) => {
+      shipment.status = 'Synthetic status';
+      shipment.transitDetails.splice(0, 1, { eventDateTime: '2026-03-05T15:02:11', eventDetails: 'DELIVERY ATTEMPTED - BUSINESS CLOSED',
+        location: 'OTHERTOWN, CA, US', trackingDateTime: '0001-01-01T00:00:00' });
+    });
+    expect(normalizeCarrierResult(parseGlsUs(attempt, NUMBER))).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+    // A status the map knows still decides.
+    expect(parseGlsUs(later('RETURNED TO SHIPPER', 'returned'), NUMBER)).toMatchObject({ current_stage: 'returned' });
   });
 
   it('answers a label without scans by its status alone', () => {

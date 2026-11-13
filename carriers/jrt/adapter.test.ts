@@ -143,6 +143,16 @@ describe('JRT tracking adapter', () => {
     ]);
   });
 
+  it('keeps the parcel in transit under DHL’s preferred-location note, which moves nothing', () => {
+    const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const record = payload[0]!.data[0]!;
+    record.trackDetails.unshift({ ...record.trackDetails[0]!, track_date: '2026-03-14 18:00:00', track_createdate: '2026-03-14 18:00:00',
+      track_content: 'A preferred location was designated as a reception option for this shipment.' });
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-15T00:00:00Z'))!;
+    expect(result.events?.[0]).toMatchObject({ stage: 'pending' });
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it('reads the Shenzhen hub’s receipt after the operation center as transit, in English', () => {
     const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
     const record = payload[0]!.data[0]!;

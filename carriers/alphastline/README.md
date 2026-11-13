@@ -33,7 +33,8 @@ Tracked through the tracking form on its home page.
   `PickedUp_CollectedParcel` the collection, and `InTransit_Other` the sorting centre's scans, the
   departure and the line's scans on the way. `InTransit_CustomsReleased` is the export clearance and
   `InTransit_Departure` the arrival at the delivery point, both on the way. The line also files its record of the shipper's data and
-  its expected delivery date under `InTransit_Other`; they move nothing and have no stage. Other nodes
+  its expected delivery date under `InTransit_Other`; they move nothing and have no stage, so a
+  delivery before one still stands. Other nodes
   fall to the shared wording rules. The shipment's status gives the stage when it is further on:
   `Sented` (shipped), `Finished` (delivered) and `Failed` (exception).
 - The reply does not name the line. The line's number names it when one carrier's high-confidence

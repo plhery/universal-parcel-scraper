@@ -3,6 +3,8 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { PROGRESS } from '../../core/result/partial.js';
+import { newestStagedScan } from '../../core/result/unstaged.js';
+import { classifyWording, languageStageStatus, type ClassifiedStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { glsUsScanStatus, glsUsShipmentStatus } from './status.js';
@@ -57,9 +59,12 @@ function scans(record: Record<string, unknown>): CarrierEvent[] {
     const key = JSON.stringify([localTime, description, location]);
     if (seen.has(key)) continue;
     seen.add(key);
+    // A wording the map does not know, such as an attempt or a return, takes the shared wording rules.
     const mapped = glsUsScanStatus(description);
-    events.push({ local_time: localTime, description, ...(location ? { location } : {}),
-      ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) });
+    const worded = mapped ? null : classifyWording(description, 'in_transit');
+    const staged = mapped ? { stage: mapped.stage, stage_source: 'carrier_map' }
+      : worded && worded.source !== 'none' ? { stage: worded.stage, stage_source: worded.source } : {};
+    events.push({ local_time: localTime, description, ...(location ? { location } : {}), ...staged });
   }
   // The reply lists scans newest first; the newest clock leads whatever the order.
   return events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
@@ -81,6 +86,12 @@ function requestedShipment(shipments: unknown[], number: string): Shipment {
     throw new IndeterminateError(PROVIDER, 'GLS US returned several shipments for this number');
   }
   return ordered[0]!;
+}
+
+/** A staged scan's status: the map's, or the one its shared stage gives. */
+function scanStatus(event: CarrierEvent): ClassifiedStatus | undefined {
+  if (!event.stage) return undefined;
+  return glsUsScanStatus(event.description!) ?? { status: languageStageStatus(event.stage as Stage), stage: event.stage as Stage };
 }
 
 /** The day of a delivery estimate ("2026-07-15T00:00:00"); null when unset. */
@@ -106,15 +117,17 @@ export function parseGlsUs(payload: unknown, raw: string): CarrierResult {
   const summaryText = clean(record.status, 64);
   const summary = glsUsShipmentStatus(summaryText);
   const newest = events[0];
-  const staged = events.find((event) => event.stage);
-  const scanned = staged ? glsUsScanStatus(staged.description!) : undefined;
+  // The newest scan with a stage, but never a delivery or a return under a newer scan without one.
+  const staged = newest?.stage ? newest : newestStagedScan(events);
+  const scanned = staged ? scanStatus(staged) : undefined;
   // The status can lag a scan the reply already lists: a scan further along leads.
   const current = summary && !(scanned && (PROGRESS[scanned.stage] ?? 0) > (PROGRESS[summary.stage] ?? 0)) ? summary : scanned ?? summary;
   if (!newest && !summary) throw new IndeterminateError(PROVIDER, 'GLS US returned a shipment without scans or status');
   const open = current?.status !== 'delivered' && current?.stage !== 'returned';
+  const source = current && current !== summary ? staged?.stage_source ?? 'carrier_map' : 'carrier_map';
   return {
     status: current?.status ?? 'unknown',
-    ...(current ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
+    ...(current ? { current_stage: current.stage, current_stage_source: source } : {}),
     last_status_text: newest?.description ?? summaryText,
     last_update: null,
     ...(newest ? { last_update_local: newest.local_time! } : {}),

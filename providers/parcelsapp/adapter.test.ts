@@ -2056,6 +2056,23 @@ describe('ParcelsApp result parsing', () => {
     expect(hub()).toBe('2026-11-08T16:22:13.000Z');
   });
 
+  it('reads USPS\'s California scans beside a ZIP code of California on Pacific time on a parcel leaving the US', () => {
+    const times = (destinationCode?: string) => parseParcelsAppResponse({
+      carriers: ['USPS'], originCode: 'US', ...(destinationCode ? { destinationCode } : {}), states: [
+        { date: '2026-11-01T07:51:00Z', status: 'Departed', carrier: 0, location: 'Sydney, AUSTRALIA' },
+        { date: '2026-10-28T10:10:00Z', status: 'Arrived at USPS Facility', carrier: 0, location: 'EXAMPLE CITY CA DISTRIBUTION CENTER' },
+        { date: '2026-10-26T18:05:00Z', status: 'Arrived Shipping Partner Facility', carrier: 0, location: 'EXAMPLE TOWN, CA 90001' },
+      ],
+    }, number, identity()).events?.slice(1).map((event) => [event.time, event.time_zone]);
+    // CA is Canada's code too; the ZIP code places it in California, not on the relayed Sydney scan's clock.
+    for (const destination of ['AU', undefined, 'US']) {
+      expect(times(destination), String(destination)).toEqual([
+        ['2026-10-28T17:10:00.000Z', 'America/Los_Angeles'],
+        ['2026-10-27T01:05:00.000Z', 'America/Los_Angeles'],
+      ]);
+    }
+  });
+
   it('gives YunExpress\'s unplaced copy of a partner scan at the same second that scan\'s clock', () => {
     // Live shape: YunExpress relays GOFO's scans in its own words with no place, at GOFO's
     // Central digits; GOFO's own instants are five hours after the label.

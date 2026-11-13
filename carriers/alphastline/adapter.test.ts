@@ -148,6 +148,14 @@ describe('Alphastline HTTP adapter', () => {
     }), KNOWN);
     expect(undone.current_stage).not.toBe('delivered');
     expect(undone.status).not.toBe('delivered');
+    // The line's notice after a delivery moves nothing: the delivery stands over a lagging or Failed status.
+    for (const status of ['Sented', 'Failed']) {
+      expect(parseAlphastline(changed((shipment) => {
+        shipment.status = status;
+        shipment.detail = [scan(CREATED_AT + 172_800, 'EXPECTED DELIVERY DATE UPDATED', 'InTransit_Other'),
+          scan(CREATED_AT + 86_400, 'Delivered', 'Delivered_Other'), scan(CREATED_AT, 'Order received', 'Created')];
+      }), KNOWN), status).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'EXPECTED DELIVERY DATE UPDATED' });
+    }
   });
 
   it('reads the tracker’s answer for an unknown number as not found, and other refusals as inconclusive', () => {

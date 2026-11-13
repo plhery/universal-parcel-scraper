@@ -366,7 +366,8 @@ function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, 
       ahead.length ? { reason: 'written_ahead', writtenAhead: ahead } : undefined);
   }
   const newest = events[0]!;
-  const current = events.find((event) => event.stage);
+  // A note mapped as pending moves nothing: the newest row that moves the parcel leads it.
+  const current = events.find((event) => event.stage && event.stage !== 'pending') ?? events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;
   const { partner } = facts;
   // The tracking number is the order's own unless it is the delivery carrier's.

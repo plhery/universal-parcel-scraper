@@ -263,7 +263,8 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // Hand-overs on the way: also MailAmericas' airline delivering the bags in the destination
   // country ("Delivered by Airline") and its last-mile distributor taking the item ("Deliver to distributor").
   if (/deliver(?:ed)? to (?:the )?(?:local carrier|delivery partner|post office|distributor)|delivered by (?:the )?airline/i.test(description)) return 'in_transit';
-  if (/will be available for (?:pickup|collection)/i.test(description)) return 'in_transit';
+  // DHL's "Available for pickup shortly" is the way to the outlet, as DHL's own map reads it.
+  if (/will be available for (?:pickup|collection)|\bavailable for (?:pick ?up|collection) (?:shortly|soon)\b/i.test(description)) return 'in_transit';
   // InPost's steps as aggregators relay them, as its own map reads them: a logistics centre taking the parcel in on
   // the way, after the courier's collection and again on each round trip, and its hand-over to the courier for delivery.
   if (/^accepted at the logistics cent(?:er|re)[.!]?$/i.test(description)) return 'in_transit';

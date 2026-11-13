@@ -97,7 +97,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   notice that keeps the stage of the scan before it with no source of its own: in transit before a
   round, and after a missed delivery the miss, as the parcel waits for the next round or the
   recipient's request, so it does not step back to in transit. The recipient's redirect after the
-  third miss moves the parcel on.
+  third miss moves the parcel on. A call to the recipient ("Consignee Contacted") moves nothing:
+  the miss at its second still leads.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.

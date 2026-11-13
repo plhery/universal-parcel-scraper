@@ -742,8 +742,9 @@ const US_STATE_NAMES: ReadonlyMap<string, string> = new Map(Object.entries({
  * The zone of the US state or Canadian province a location names ("Riverside,
  * CA, US", "Charlotte, NC", "Linden, NJ 12345", "Scranton PA", "Mississauga,
  * ON, CA", "Example City, IN, US 12345"). It is `certain` when the location
- * names the country, the code is no country's, or the town lies in that state
- * or province ("Chicago, IL" is not in Israel); "Atlanta, GA" could still be
+ * names the country, the code is no country's, the town lies in that state
+ * or province ("Chicago, IL" is not in Israel), or a ZIP code of that state
+ * follows it; "Atlanta, GA" could still be
  * in Gabon. A state written out counts only after the country ("Example City
  * Minnesota, United States"): Georgia is a country too.
  */
@@ -770,7 +771,10 @@ function regionClock(location: string): { zone: string; certain: boolean } | nul
   const town = parts.length > 1 ? parts.at(-2)! : words.slice(0, -1).join(' ');
   const zone = (country === 'CA' || !usStateTimeZone(code) ? null : stateClock(code.toUpperCase(), town))
     ?? (country === 'US' ? null : canadaProvinceTimeZone(code));
-  return zone ? { zone, certain: country !== null || !countryCode(code) || regionHasTown(code, town) } : null;
+  // A ZIP code of that state settles it: "EXAMPLE TOWN, CA 90001" is California's.
+  const zip = /\b(\d{5})(?:-\d{4})?$/.exec(last)?.[1];
+  const zipped = !!zip && usZipState(zip) === code.toUpperCase();
+  return zone ? { zone, certain: country !== null || !countryCode(code) || regionHasTown(code, town) || zipped } : null;
 }
 
 /**

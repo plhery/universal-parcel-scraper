@@ -475,6 +475,12 @@ describe('JS Express tracking adapter', () => {
     expect(redirected.events?.slice(0, 3).map((event) => [event.stage, event.stage_source])).toEqual([
       ['in_transit', 'none'], ['in_transit', 'carrier_map'], ['failed_attempt', 'none']]);
     expect(redirected).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map' });
+    // The call to the recipient at the second of the missed delivery moves nothing: the miss leads, and the receipt keeps it.
+    const called = parseJsExpress(waybill([rows[0]!, coded('2026-11-06 13:25:48', 'Consignee Contacted', 'OIT'), ...rows.slice(1)],
+      { country: 'Germany' }), DELIVERED);
+    expect(called.events?.slice(0, 3).map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'none'], ['pending', 'carrier_map'], ['failed_attempt', 'carrier_map']]);
+    expect(called).toMatchObject({ status: 'exception', current_stage: 'failed_attempt', current_stage_source: 'carrier_map' });
   });
 
   it("reads USPS's scans relayed to the second on UTC, and those to the minute on their town's clock", () => {

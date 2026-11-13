@@ -1,7 +1,16 @@
 import { describe, expect, it } from 'vitest';
-import { event, localEvent, result } from './result.js';
+import { classifyEvent, event, localEvent, result } from './result.js';
+import { statusMap } from '../status.js';
 
 describe('shared provider result', () => {
+  it("reads DHL's \"Available for pickup shortly\" relayed by a provider as on its way to the outlet, as DHL does", () => {
+    expect(classifyEvent('Available for pickup shortly').stage).toBe('in_transit');
+    expect(classifyEvent('Will be available for collection tomorrow').stage).toBe('in_transit');
+    expect(statusMap.stage(null, 'available for pickup shortly')).toBe('in_transit');
+    expect(classifyEvent('The shipment is available for pickup').stage).toBe('ready_for_pickup');
+    expect(classifyEvent('The shipment is ready for collection').stage).toBe('ready_for_pickup');
+  });
+
   it('names an unreadable timestamp\'s shape, never its digits', () => {
     expect(() => event('2026-11-12T24:61:00Z', 'Arrived at sorting center'))
       .toThrow('Tracking event has an invalid timestamp (9999-99-99T99:99:99Z)');

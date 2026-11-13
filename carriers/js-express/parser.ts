@@ -279,14 +279,16 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
   let previous: Stage | undefined;
   for (const event of [...events].reverse()) {
     if (previous && isJsExpressDepotReceipt(event.description ?? '')) Object.assign(event, { stage: previous, stage_source: 'none' });
-    previous = (event.stage as Stage | undefined) ?? previous;
+    // A note mapped as pending, such as the call to the recipient, keeps the stage before it too.
+    if (event.stage !== 'pending') previous = (event.stage as Stage | undefined) ?? previous;
   }
 
   // The reply's order stands: a history mixes the clocks of several countries.
   // The newest row's instant, when it has one, is the last update, and a dated
   // delivery's is the delivery time.
   const newest = events[0]!;
-  const current = events.find((event) => event.stage && event.stage_source !== 'none');
+  const moved = (event: CarrierEvent) => event.stage && event.stage_source !== 'none';
+  const current = events.find((event) => moved(event) && event.stage !== 'pending') ?? events.find(moved);
   const stage = current?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
