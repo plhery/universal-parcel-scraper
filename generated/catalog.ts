@@ -47371,7 +47371,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "sxw-express": {
     "displayName": "SXW Express",
-    "color": "#1291c5",
+    "color": "#003876",
     "aliases": [
       "SXW",
       "SXW Wuliu",
