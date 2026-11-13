@@ -1,0 +1,8 @@
+{
+  "apiStart": "2026-05-06 13:05:40.210",
+  "apiTime": 0.101,
+  "system": "Production",
+  "statusNbr": 30001,
+  "status": "error  RETRIEVE_STATUS",
+  "statusMsg": "The search value could not be located.  Please verify that you have entered the correct number or log in to expand your search to use shipper bill of lading or purchase order numbers, or contact the office for assistance."
+}

@@ -1,0 +1,22 @@
+{
+  "shipments": [
+    {
+      "trackingNumber": "SH730418265903174526",
+      "status": "delivered",
+      "estimatedDeliveryDate": "2026-03-05T00:00:00",
+      "hasTransitDetails": true,
+      "isFreight": false,
+      "transitDetails": [
+        { "eventDateTime": "2026-03-05T14:21:09.41", "eventDetails": "SHIPMENT DELIVERED", "location": "Sample City,CA,US", "trackingDateTime": "0001-01-01T00:00:00" },
+        { "eventDateTime": "2026-03-05T08:12:44.307", "eventDetails": "ON ROUTE FOR DELIVERY", "location": "OTHERTOWN, CA, US", "trackingDateTime": "0001-01-01T00:00:00" },
+        { "eventDateTime": "2026-03-05T06:40:02.15", "eventDetails": "SCANNED AT DELIVERY DEPOT", "location": "OTHERTOWN, CA, US", "trackingDateTime": "0001-01-01T00:00:00" },
+        { "eventDateTime": "2026-03-04T19:03:55.902", "eventDetails": "ARRIVAL SCAN - DELIVERY SCHED  FOR 03/05/2026", "location": "SAMPLEVILLE, CA, US", "trackingDateTime": "0001-01-01T00:00:00" },
+        { "eventDateTime": "2026-03-04T10:15:30.5", "eventDetails": "LABEL CREATED", "location": "", "trackingDateTime": "0001-01-01T00:00:00" }
+      ]
+    }
+  ],
+  "hasMultipleAccounts": false,
+  "statusCode": 200,
+  "isSuccess": true,
+  "message": null
+}

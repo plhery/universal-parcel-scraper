@@ -495,6 +495,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gls-it', number: 'ZZ999999999',
     route: /^https:\/\/gls-group\.com\/IT\/it\/servizi-online\/ricerca-spedizioni\/\?/,
     marker: /Ricerca spedizion|Non sono stati trovati risultati/i },
+  // GLS US's page reads the number from the link, then drops the query from the address.
+  { carrier: 'gls-us', number: 'SH730418265903174526',
+    route: /^https:\/\/gls-group\.com\/US\/en\/send-and-receive\/track-a-parcel\/(?:\?|$)/,
+    marker: /Track a Parcel|no shipments that matched/i },
   // The form asks for the delivery postcode too, so the link carries no number.
   { carrier: 'gls-es', number: '1000000001',
     route: /^https:\/\/gls-group\.com\/ES\/es\/recibir-paquetes\/seguimiento-envio\/(?:\?|$)/,
@@ -2237,6 +2241,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'zoom-ve': 'the result is rendered after the application Turnstile callback, which the daily link check does not submit',
   'fm-transportes': 'the parcel view needs a Turnstile guest session, and its initial empty view is not a number-bound missing-parcel notice',
   roadie: 'The tracker requires US egress; the rendered-link canary has no scoped US browser transport.',
+  'peninsula-truck-lines': 'The website refuses visitors outside North America; the rendered-link canary has no scoped North American browser transport.',
   'asyad-express': 'The web tracker requires Omani network access; the adapter reads the separate mobile guest endpoints.',
   'nepal-post': 'The internal tracker requires Nepali network access; the rendered-link check has no country-specific browser transport.',
   'russian-post': 'The public tracker requires Russian network access; the rendered-link check has no country-specific browser transport.',

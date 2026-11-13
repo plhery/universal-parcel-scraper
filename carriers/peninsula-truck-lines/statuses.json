@@ -1,4 +1,10 @@
 {
   "carrier": "peninsula-truck-lines",
-  "entries": []
+  "entries": [
+    {"wording": "PICKUP", "stage": "accepted", "language": "en", "confirmedBy": "official-doc", "note": "A shipment log row in the tracking API guide. The freight was collected from the shipper."},
+    {"wording": "DOCK", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "A shipment log row in the tracking API guide, at a terminal's town. The freight reached a terminal's dock."},
+    {"wording": "DEL MFST", "stage": "out_for_delivery", "language": "en", "confirmedBy": "official-doc", "note": "A shipment log row in the tracking API guide, minutes after a dock row at the same terminal. The shipment went on the delivering terminal's delivery manifest."},
+    {"wording": "DELIVERED ON <date>", "stage": "delivered", "language": "en", "confirmedBy": "official-doc", "note": "The shipment's status line in the tracking API guide. It dates the delivery by its day; the parser drops a receiver named in it."},
+    {"wording": "TENDERED TO <carrier> ON <date> ON THEIR PRO <number>", "stage": "in_transit", "language": "en", "confirmedBy": "official-doc", "note": "The shipment's status line in the tracking API guide. A partner carrier took the shipment over under its own PRO; the line settles the status over older rows."}
+  ]
 }

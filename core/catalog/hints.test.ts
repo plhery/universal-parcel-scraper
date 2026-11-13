@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
-  brandCarrierIds, brandTimeZones, carrierIdFromName, carrierIdFromPartner, carrierIdFromPartnerLinks, carrierNameCountryZone, isCarrierFeedName,
+  brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierIdFromPartner, carrierIdFromPartnerLinks, carrierNameCountryZone, isCarrierFeedName,
   isKnownCarrierName, nationalPostCandidate,
 } from './hints.js';
 
@@ -265,6 +265,18 @@ describe('carrier names reported by universal providers', () => {
     ['GLS (FR)', 'gls-fr'], ['GLS IT', 'gls-it'], ['GLS (DE)', 'gls-de'],
   ])('maps %s, a brand followed by the country of one of its networks', (name, expected) => {
     expect(carrierIdFromName(name)).toBe(expected);
+  });
+
+  it.each([
+    'GLS (US)', 'GLS US', 'GLS USA', 'GSO (GLS US)', 'Golden State Overnight',
+  ])('maps %s to GLS US, which runs a system of its own', (name) => {
+    expect(carrierIdFromName(name)).toBe('gls-us');
+  });
+
+  it("keeps GLS US out of bare GLS's networks", () => {
+    expect(brandCarrierIds('GLS')).not.toContain('gls-us');
+    expect(carrierBrand('gls-us')).toBeUndefined();
+    expect(carrierBrand('gls-de')).toBe('gls');
   });
 
   it.each([

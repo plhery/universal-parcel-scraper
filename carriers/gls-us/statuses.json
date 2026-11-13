@@ -1,0 +1,15 @@
+{
+  "carrier": "gls-us",
+  "entries": [
+    { "wording": "LABEL CREATED", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Scan with no place." },
+    { "wording": "ARRIVAL SCAN - DELIVERY SCHED FOR 07/15/2026", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Ends with the day the parcel is due, which varies; the reply has two spaces before FOR." },
+    { "wording": "SCANNED AT DELIVERY DEPOT", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "wording": "ON ROUTE FOR DELIVERY", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live" },
+    { "wording": "SHIPMENT DELIVERED", "language": "en", "stage": "delivered", "confirmedBy": "live" },
+    { "wording": "out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "The shipment's status above the scans." },
+    { "wording": "delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The shipment's status above the scans." },
+    { "wording": "label created", "language": "en", "stage": "registered", "confirmedBy": "bundle", "note": "A shipment status the tracking page's script reads." },
+    { "wording": "in transit", "language": "en", "stage": "in_transit", "confirmedBy": "bundle", "note": "A shipment status the tracking page's script reads." },
+    { "wording": "returned", "language": "en", "stage": "returned", "confirmedBy": "bundle", "note": "A shipment status the tracking page's script reads." }
+  ]
+}

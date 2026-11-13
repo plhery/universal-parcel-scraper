@@ -1,0 +1,21 @@
+{
+  "consigneeName": "EXAMPLE OUTFITTERS",
+  "ilProNumber": "",
+  "proDate": "2026-05-05",
+  "proNumber": "700123456",
+  "proStatus": "",
+  "shipperName": "SAMPLE MILLS INC",
+  "podImage": "",
+  "shipments": [],
+  "shipmentLog": [
+    {"date": "2026-05-05", "time": "12:20pm", "activity": "PICKUP", "location": "SAMPLE HARBOR, WA"},
+    {"date": "2026-05-06", "time": "12:05am", "activity": "DOCK", "location": "SAMPLE HARBOR, WA"},
+    {"date": "2026-05-06", "time": "11:47am", "activity": "DOCK", "location": "SAMPLEVILLE, WA"}
+  ],
+  "apiStart": "2026-05-06 13:02:11.004",
+  "apiTime": 0.044,
+  "system": "Production",
+  "statusNbr": 200,
+  "status": "ok",
+  "statusMsg": ""
+}

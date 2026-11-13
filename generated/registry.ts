@@ -282,6 +282,7 @@ import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsEs } from '../carriers/gls-es/adapter.js';
 import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
 import { adapter as glsIt } from '../carriers/gls-it/adapter.js';
+import { adapter as glsUs } from '../carriers/gls-us/adapter.js';
 import { adapter as gmsWorldwide } from '../carriers/gms-worldwide/adapter.js';
 import { adapter as goExpress } from '../carriers/go-express/adapter.js';
 import { adapter as goLogisticsAu } from '../carriers/go-logistics-au/adapter.js';
@@ -503,6 +504,7 @@ import { adapter as pdnExpress } from '../carriers/pdn-express/adapter.js';
 import { adapter as pdqChile } from '../carriers/pdq-chile/adapter.js';
 import { adapter as pecom } from '../carriers/pecom/adapter.js';
 import { adapter as pengyou } from '../carriers/pengyou/adapter.js';
+import { adapter as peninsulaTruckLines } from '../carriers/peninsula-truck-lines/adapter.js';
 import { adapter as pfcExpress } from '../carriers/pfc-express/adapter.js';
 import { adapter as pflogistics } from '../carriers/pflogistics/adapter.js';
 import { adapter as phlpost } from '../carriers/phlpost/adapter.js';
@@ -1042,6 +1044,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-es": glsEs,
     "gls-fr": glsFr,
     "gls-it": glsIt,
+    "gls-us": glsUs,
     "gms-worldwide": gmsWorldwide,
     "go-express": goExpress,
     "go-logistics-au": goLogisticsAu,
@@ -1263,6 +1266,7 @@ export const REGISTRY: RegistryDefinition = {
     "pdq-chile": pdqChile,
     "pecom": pecom,
     "pengyou": pengyou,
+    "peninsula-truck-lines": peninsulaTruckLines,
     "pfc-express": pfcExpress,
     "pflogistics": pflogistics,
     "phlpost": phlpost,
@@ -2078,6 +2082,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-fr": "gls-fr",
     "gls-it": "gls-it",
     "gls-pl": "gls-de",
+    "gls-us": "gls-us",
     "gms-worldwide": "gms-worldwide",
     "go-express": "go-express",
     "go-logistics-au": "go-logistics-au",
@@ -2506,7 +2511,7 @@ export const REGISTRY: RegistryDefinition = {
     "pelican-express": "universal",
     "penguin-box": "universal",
     "pengyou": "pengyou",
-    "peninsula-truck-lines": "universal",
+    "peninsula-truck-lines": "peninsula-truck-lines",
     "penta-express": "universal",
     "peqasus-az": "universal",
     "peregrine-ship": "universal",

@@ -1,0 +1,111 @@
+{
+  "id": "gls-us",
+  "displayName": "GLS US",
+  "aliases": [
+    "GLS USA",
+    "GSO",
+    "Golden State Overnight",
+    "Golden State Overnight Delivery Service",
+    "GSO (GLS US)"
+  ],
+  "region": {
+    "countries": [
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-us",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "recognition": {
+      "rank": 652
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta"
+  ],
+  "portal": {
+    "url": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/?TrackingNumbers={trackingNumber}",
+    "searchUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
+    "canaryUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at",
+      "recipient_address",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery",
+      "signature",
+      "customer_reference",
+      "service_type",
+      "departure_date"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "delivered_at",
+      "recipient_address",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery",
+      "signature",
+      "customer_reference",
+      "service_type",
+      "departure_date"
+    ],
+    "unavailable": [
+      "weight",
+      "sender_name"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/US/",
+      "params": [
+        "TrackingNumbers",
+        "match",
+        "unitno"
+      ]
+    },
+    {
+      "domains": [
+        "gls-us.com",
+        "gso.com"
+      ],
+      "params": [
+        "TrackingNumbers",
+        "TrackingNumber",
+        "trackingnum"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "gls-us-1",
+      "pattern": "^SH\\d{18}$",
+      "confidence": "low"
+    }
+  ]
+}

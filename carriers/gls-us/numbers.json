@@ -1,0 +1,43 @@
+{
+  "carrier": "gls-us",
+  "records": [
+    {
+      "number": "SH730418265903174526",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-us"
+        ]
+      },
+      "note": "Made-up number in the shape of GLS US's SH labels: SH and eighteen digits."
+    },
+    {
+      "number": "SH468637583456552026",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260715194638/https://gls-group.com/US/en/send-and-receive/track-a-parcel/?TrackingNumbers=SH468637583456552026",
+        "date": "2026-07-15",
+        "access": "full_page",
+        "dateKind": "capture"
+      },
+      "context": {
+        "service": "GLS US",
+        "reportedRole": "shipment_tracking",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-us"
+        ]
+      },
+      "note": "A link to GLS's US tracking page archived by the Wayback Machine, with the tracking service's reply for the number archived beside it. GLS US's tracking service returns a delivered history for it."
+    }
+  ]
+}

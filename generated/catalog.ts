@@ -24345,6 +24345,62 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "gls-us": {
+    "displayName": "GLS US",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS USA",
+      "GSO",
+      "Golden State Overnight",
+      "Golden State Overnight Delivery Service",
+      "GSO (GLS US)"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-us",
+      "recognitionRank": 652,
+      "localClocks": true
+    },
+    "canaryUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
+    "trackingUrlTemplate": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/?TrackingNumbers={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/US/en/send-and-receive/track-a-parcel/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/US/",
+        "params": [
+          "TrackingNumbers",
+          "match",
+          "unitno"
+        ]
+      },
+      {
+        "domains": [
+          "gls-us.com",
+          "gso.com"
+        ],
+        "params": [
+          "TrackingNumbers",
+          "TrackingNumber",
+          "trackingnum"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^SH\\d{18}$",
+        "confidence": "low"
+      }
+    ]
+  },
   "gms-worldwide": {
     "displayName": "GMS Worldwide Express",
     "color": "#006634",
@@ -38532,7 +38588,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "peninsula-truck-lines",
+      "localClocks": true
     },
     "canaryUrl": "https://www.peninsulatruck.com/track/",
     "trackingUrlTemplate": "https://www.peninsulatruck.com/track/?pro_number={trackingNumber}",
@@ -55745,6 +55802,7 @@ export const CARRIER_IDS = [
   "gls-es",
   "gls-it",
   "gls-pl",
+  "gls-us",
   "gms-worldwide",
   "go-express",
   "go-logistics-au",
@@ -57241,6 +57299,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-es": ["gls-es-1","gls-es-2"],
   "gls-it": ["gls-it-1","gls-it-digit-depot"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
+  "gls-us": ["gls-us-1"],
   "gms-worldwide": [],
   "go-express": [],
   "go-logistics-au": [],

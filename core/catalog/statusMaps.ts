@@ -295,6 +295,7 @@ import { statusMap as glsDe } from '../../carriers/gls-de/status.js';
 import { statusMap as glsEs } from '../../carriers/gls-es/status.js';
 import { statusMap as glsFr } from '../../carriers/gls-fr/status.js';
 import { statusMap as glsIt } from '../../carriers/gls-it/status.js';
+import { statusMap as glsUs } from '../../carriers/gls-us/status.js';
 import { statusMap as goExpress } from '../../carriers/go-express/status.js';
 import { statusMap as globalpost } from '../../carriers/globalpost/status.js';
 import { statusMap as gmsWorldwide } from '../../carriers/gms-worldwide/status.js';
@@ -510,6 +511,7 @@ import { statusMap as pdnExpress } from '../../carriers/pdn-express/status.js';
 import { statusMap as pdqChile } from '../../carriers/pdq-chile/status.js';
 import { statusMap as pecom } from '../../carriers/pecom/status.js';
 import { statusMap as pengyou } from '../../carriers/pengyou/status.js';
+import { statusMap as peninsulaTruckLines } from '../../carriers/peninsula-truck-lines/status.js';
 import { statusMap as pfcExpress } from '../../carriers/pfc-express/status.js';
 import { statusMap as phlpost } from '../../carriers/phlpost/status.js';
 import { statusMap as pflogistics } from '../../carriers/pflogistics/status.js';
@@ -820,7 +822,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'flash-express-ph': flashExpressPh,
   'flashbird-ca': flashbirdCa,
   fleetex, fleetoptics, flippost, fmx, followmont, 'fm-transportes': fmTransportes, 'forward-air': forwardAir, 'forza-delivery': forzaDelivery, 'four-px': fourPx, foxpost, 'franch-express': franchExpress, fukuyama, gaash, gati, gdex,
-  'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt,
+  'gebrueder-weiss': gebruederWeiss, geis, 'geniki-taxydromiki': geniki, geodis, 'geodis-pl': geodisPl, 'gig-logistics': gigLogistics, 'global-delivery-network': globalDeliveryNetwork, 'gls-ch': glsCh, 'gls-de': glsDe, 'gls-es': glsEs, 'gls-fr': glsFr, 'gls-it': glsIt, 'gls-us': glsUs,
   globalpost, 'gms-worldwide': gmsWorldwide, 'go-express': goExpress, 'go-logistics-au': goLogisticsAu, go4, gobolt, gofo, 'gofo-ca': gofoCa, 'gofo-es': gofoEs, 'gofo-fr': gofoFr, 'gofo-it': gofoIt, 'gofo-nl': gofoNl, 'gogo-xpress': gogoXpress,
   'grand-slam-express': grandSlamExpress, 'gs-postbox': gsPostbox, 'gsi-express': gsiExpress, 'gta-airskip': gtaAirskip, 'gtl-goto': gtlGoto, guatex, gzyl,
   hanjin, 'happy-post': happyPost, haypost, 'hct-logistics': hctLogistics, helthjem, heppner, hepsijet, hermes, 'hermes-at': hermesAt, 'hermes-de': hermesDe, hitch, hispapost, homexpress, 'hongkong-post': hongkongPost,
@@ -845,7 +847,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'one-world-express': oneWorldExpress, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress,
-  'pdq-chile': pdqChile, pecom, pengyou, 'pfc-express': pfcExpress, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
+  'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,
