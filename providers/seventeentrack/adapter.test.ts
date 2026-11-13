@@ -482,6 +482,23 @@ describe('17TRACK result parsing', () => {
       .toBe('2026-05-07T20:22:51.000Z');
   });
 
+  it('reads Anjun Express\'s rows on the clock of the place they name, not under the -04:00 17TRACK adds', () => {
+    const row = (time: string, location: string | null) => ({
+      time_iso: `2026-11-09T${time}-04:00`, time_utc: null, time_raw: { date: '2026-11-09', time, timezone: null },
+      description: 'O pacote chegou ao centro de trânsito', location, stage: null, sub_status: 'InTransit_Other' });
+    const reply = (key: number, events: unknown[]) => ({ meta: { code: 200 }, shipments: [{ number, code: 200,
+      shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'Anjunexpress', country: 'BR' }, events }] } } }] });
+    const parsed = parse17TrackResponse(reply(191915, [row('21:09:46', 'São Paulo / SP'), row('18:00:00', 'Manaus / AM'),
+      row('15:31:26', 'Example Town / GO'), row('15:00:00', null)]), number);
+    expect(parsed.events?.map((event) => event.time ?? event.local_time).sort()).toEqual(['2026-11-09T15:00:00',
+      '2026-11-09T15:31:26', '2026-11-09T22:00:00.000Z', '2026-11-10T00:09:46.000Z']);
+    expect(parsed.events?.find((event) => event.time === '2026-11-10T00:09:46.000Z')).toMatchObject({ time_zone: 'America/Sao_Paulo',
+      time_zone_basis: 'place', provider_time_iso: '2026-11-09T21:09:46-04:00', time_provenance: 'provider_inferred' });
+    expect(parsed.undated_event_count).toBeUndefined();
+    // Another feed keeps 17TRACK's reading.
+    expect(parse17TrackResponse(reply(100999, [row('21:09:46', 'São Paulo / SP')]), number).events?.[0]?.time).toBe('2026-11-10T01:09:46.000Z');
+  });
+
   it('reads Quick Rabbit\'s rows on Madrid\'s clock, not under the -04:00 17TRACK adds', () => {
     const row = (date: string, time: string, timezone: string | null = null) => ({
       time_iso: `${date}T${time}${timezone ?? '-04:00'}`, time_utc: null, time_raw: { date, time, timezone },

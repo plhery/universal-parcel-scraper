@@ -351,6 +351,19 @@ function undatedClock(raw: Record<string, unknown>): string | null {
 const CORREOS_CHILE = 3101;
 
 /**
+ * 17TRACK's carrier 191915, Anjun Express, shows Anjun Express's wall clocks (`time_raw` has no
+ * zone) and labels them -04:00: a scan Anjun Express's own service dates 21:09:46 at a sorting
+ * centre in Goiás came as 21:09:46-04:00, an hour after Brasília's clock, which Goiás keeps
+ * (checked 2026-11-13). A row is read on the clock of the place it names ("Town / UF"); one whose
+ * place is not found keeps its wall clock in `local_time`, as Anjun's adapter gives every scan.
+ */
+const ANJUN_EXPRESS = 191915;
+function anjunExpressZone(location: string): string | null {
+  const place = location ? locatePlace(location, { countries: ['BR'], carriers: ['anjun'] }) : null;
+  return place ? placeTimeZone(place) : null;
+}
+
+/**
  * 17TRACK's carrier 2151, Correios Brazil, places the sending post's posting and its office of
  * exchange in that post's country ("CN"), and shows that post's wall clock under Brasília's -03:00:
  * so read, Correios's copy of China Post's acceptance came eleven hours after China Post's own. A row
@@ -725,6 +738,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const brt = reported.key === BRT;
     const fedex = reported.key === FEDEX;
     const chile = reported.key === CORREOS_CHILE;
+    const anjunExpress = reported.key === ANJUN_EXPRESS;
     const correiosBr = reported.key === CORREIOS_BRAZIL;
     const correos = reported.key === CORREOS_SPAIN;
     const poland = reported.key === POLAND_POST;
@@ -769,10 +783,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const named = ctt ? cttSiteZone(text(raw.location), countries) : null;
       const intake = ctt && !named && !text(raw.location) && agencyIntake(wallMillis(raw), agencyScans);
       const site = named ?? (intake ? 'Europe/Madrid' : null);
-      // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
+      // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Anjun Express's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
       // Correios Brazil's copy of the sending post's scan, which 17TRACK labels with Brasília's offset.
       const read = facility || overseas !== undefined || juxiAbroad !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
-        || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined;
+        || anjunExpress || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland || posted ? null : seasonZone(raw, labelled, now);
       const wall = posted ?? (relayed || hywl || sending !== undefined ? rawClock(raw) : read || season ? facilityWall(raw) : null);
@@ -788,6 +802,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         : polish ? at(polish, left ? 'destination' : 'carrier') : handed ? at(handed, 'destination')
         : nz ? at('Pacific/Auckland', 'carrier') : quickRabbit ? at('Europe/Madrid', 'carrier')
         : chile ? at(facilityZone(text(raw.location)), 'place') ?? at('America/Santiago', 'carrier')
+        : anjunExpress ? at(anjunExpressZone(text(raw.location)), 'place')
         : shiprocket ? at(placedInIndia(text(raw.location)) ? 'Asia/Kolkata' : null, 'place')
         : at(daiPost ? daiPostRelayZone(text(raw.description), text(raw.location)) : facilityZone(text(raw.location)), 'place');
       const zone = chosen?.zone ?? null;
@@ -820,11 +835,11 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         latest.see(day, false);
         continue;
       }
-      if (wall && (abroad.has(index) || shiprocket || hywl || posted || sent !== undefined || sending !== undefined || overseas !== undefined
+      if (wall && (abroad.has(index) || shiprocket || anjunExpress || hywl || posted || sent !== undefined || sending !== undefined || overseas !== undefined
         || juxiAbroad !== undefined) && !zone) {
         // A scan NZ Post dated abroad or India Post relays from the destination's post, or an origin post's that Correos, Correios, USPS or La Poste relays, or a
-        // local carrier's that Juxi Express relays, in a country on several clocks, a Shiprocket row outside India or a Huiyi Logistics row outside
-        // China, keeps its description as a wall time.
+        // local carrier's that Juxi Express relays, in a country on several clocks, a Shiprocket row outside India, an Anjun Express row at a place
+        // not found or a Huiyi Logistics row outside China, keeps its description as a wall time.
         const local: CarrierEvent = { ...parsed, local_time: wall };
         delete local.time;
         events.push(local);
