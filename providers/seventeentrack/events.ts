@@ -51,7 +51,7 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
   if (!parsed) return null;
   // 17TRACK files a line's copy of China Post's own labels under generic transit: a final scan in
   // Chinese ("已试投/投递失败") or import customs abroad ("送交境外进口海关"). Their exact wording gives the stage.
-  const chinese = code === 'InTransit_Other' && parsed.stage_source === 'carrier_map'
+  const chinese = code === 'InTransit_Other' && parsed.stage_source === 'carrier_map' && parsed.description
     ? chineseFinalStage(parsed.description) ?? chinaPostRelayedStage(parsed.description) : undefined;
   if (chinese) Object.assign(parsed, { stage: chinese, stage_source: 'wording:language' });
   const coded = chinese ? undefined : subStatusStage(code, parsed.stage as Stage, parsed.description);
