@@ -140,6 +140,13 @@ describe('Hualei track interface', () => {
     // A destination clock up to twelve hours ahead of the platform's is still a scan written as it happened.
     expect(parseHualeiTrack(script('2026-03-06 22:00:00'), NUMBER, unscripted, after)).toMatchObject({ current_stage: 'delivered' });
     expect(parseHualeiTrack(script('2026-03-02 10:00:00'), NUMBER, unscripted, after)).toMatchObject({ current_stage: 'registered' });
+    // A row written in the same second as the script, more than six hours before its own clock, is the script's too.
+    const batch = edited((record) => { for (const row of record.trackDetails) row.track_createdate = '2026-03-01 12:00:00'; });
+    expect(() => parseHualeiTrack(batch, NUMBER, GZYL, after)).toThrow(expect.objectContaining({ name: 'NoHistoryError', reason: 'written_ahead',
+      writtenAhead: expect.arrayContaining(['2026-03-01T22:36:51+08:00']) }));
+    // Written alone, or with the script less than six hours before its clock, it may be on a destination's clock.
+    const alone = edited((record) => { for (const row of record.trackDetails) row.track_createdate = ''; record.trackDetails.at(-1).track_createdate = '2026-03-01 12:00:00'; });
+    expect(parseHualeiTrack(alone, NUMBER, GZYL, after)?.events).toHaveLength(7);
     // An order whose every row was written ahead names their clocks, so that a provider's copies of them are no scans either.
     const scripted = edited((record) => { for (const row of record.trackDetails) row.track_createdate = '2026-03-01 08:00:00'; });
     expect(() => parseHualeiTrack(scripted, NUMBER, GZYL, after)).toThrow(expect.objectContaining({ name: 'NoHistoryError', reason: 'written_ahead',

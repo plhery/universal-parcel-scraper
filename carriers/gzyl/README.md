@@ -47,7 +47,8 @@ instead.
   most of the scan times. A row the track interface says was written more than twelve hours
   before its own clock is a forecast, not a scan, and is held back on every tenant; the margin
   leaves room for a destination's clock, up to six hours ahead of Beijing's, on the tenants that
-  keep their rows' wall clocks (below). The page shows no
+  keep their rows' wall clocks (below). A row written in the same second as such a row, more than
+  six hours before its own clock, is the same script's and is held back too. The page shows no
   creation times, so a row dated after the lookup on Beijing time is held back too. An order
   whose rows are all held back has no history yet. Either way the clocks of the rows written
   ahead are named, in `written_ahead` or the error, so that a universal provider's copies of

@@ -123,8 +123,10 @@ const NUMBER = /^(?=.{6,40}$)[A-Z0-9]+(?:-[A-Z0-9]+)*$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 // A tenant that keeps wall clocks can date a row on its destination's clock, up to six hours
 // ahead of Beijing's, the clock rows are written on: a row written more than twelve hours before
-// its own clock was written ahead, on every tenant.
+// its own clock was written ahead, on every tenant. A row written in the same second as such a
+// row is the same script's when it was written more than six hours before its own clock.
 const WRITTEN_AHEAD_MS = 12 * 3_600_000;
+const DESTINATION_LEAD_MS = 6 * 3_600_000;
 // The kind of the rows the platform's custom track product (轨迹定制) writes to a script: they
 // can have a parcel abroad before it reaches the airport.
 const CUSTOM_TRACK = 'CO_C_CR';
@@ -230,12 +232,22 @@ function writtenAt(row: HualeiRow): string | undefined {
   return match ? isoTime(`${match[1]}T${match[2]}`, HUALEI_ZONE)?.iso : undefined;
 }
 
-/** Whether a row was written well before its own clock, as part of a timeline written ahead. */
-function writtenAhead(row: HualeiRow, local: string): boolean {
+/** Whether a row was written more than `lead` before its own clock. */
+function writtenAhead(row: HualeiRow, local: string, lead = WRITTEN_AHEAD_MS): boolean {
   const match = CLOCK.exec(row.written ?? '');
   if (!match) return false;
   const written = DateTime.fromISO(`${match[1]}T${match[2]}`, { zone: 'UTC' });
-  return written.isValid && written.toMillis() + WRITTEN_AHEAD_MS < DateTime.fromISO(local, { zone: 'UTC' }).toMillis();
+  return written.isValid && written.toMillis() + lead < DateTime.fromISO(local, { zone: 'UTC' }).toMillis();
+}
+
+/**
+ * Whether each row is part of a timeline written ahead: written well before its own clock, or
+ * written with such a row, in the same second, more than any destination clock's lead before it.
+ */
+function forecasts(rows: readonly HualeiRow[], clocks: readonly string[]): boolean[] {
+  const script = new Set(rows.filter((row, index) => writtenAhead(row, clocks[index]!)).map((row) => row.written));
+  return rows.map((row, index) => writtenAhead(row, clocks[index]!)
+    || script.has(row.written) && writtenAhead(row, clocks[index]!, DESTINATION_LEAD_MS));
 }
 
 function stageOf(tenant: HualeiTenant, code: string, description: string): { stage: Stage; source: string } | undefined {
@@ -264,12 +276,13 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const clocks = rows.map((row) => wallClock(row.clock, tenant.provider));
   // The page shows no creation times, so it cannot tell a script's delivery row from a scan: there
   // every delivery row of such a tenant is held back, as the track interface holds a script's.
-  const scripted = tenant.scriptedDelivery === true && (page || rows.some((row, index) => writtenAhead(row, clocks[index]!)));
+  const forecast = forecasts(rows, clocks);
+  const scripted = tenant.scriptedDelivery === true && (page || forecast.some(Boolean));
   rows.forEach((row, index) => {
     const local = clocks[index]!;
     const placed = isoTime(local, HUALEI_ZONE)!;
     const reading = tenant.clock?.(row) ?? (tenant.wallClocks ? 'wall' : 'platform');
-    if (row.code === CUSTOM_TRACK || writtenAhead(row, local)) {
+    if (row.code === CUSTOM_TRACK || forecast[index]) {
       ahead.add(reading === 'platform' ? placed.iso : local);
       return;
     }

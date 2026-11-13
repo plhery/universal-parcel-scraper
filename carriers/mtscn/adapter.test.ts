@@ -42,11 +42,13 @@ describe('Meiteshun Logistics tracking adapter', () => {
 
   it('holds back the script written at the order’s creation, its delivery included', () => {
     const result = parseMtscnTrack(fixture('track'), NUMBER, AFTER)!;
-    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'item inbound in sorting center',
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted',
+      last_status_text: 'The package has been collected and is ready to be sent to the distribution center',
       service_name: 'Synthetic Small Parcel', destination_country: 'US' });
-    // Rows written within twelve hours of their own clock stand.
+    // The script's rows dated more than six hours after it was written are held back, its sorting centre's seven hours on;
+    // its collection, written after its clock, stands.
+    expect(result.written_ahead).toContain('2026-03-02T12:56:49+08:00');
     expect(result.events).toEqual([
-      { time: '2026-03-02T12:56:49+08:00', description: 'item inbound in sorting center', location: 'ShenZhen', stage: 'in_transit', stage_source: 'carrier_map', written_at: '2026-03-02T05:40:40+08:00' },
       {
         time: '2026-03-01T18:16:00+08:00', description: 'The package has been collected and is ready to be sent to the distribution center',
         stage: 'accepted', stage_source: 'carrier_map', written_at: '2026-03-02T05:40:40+08:00',

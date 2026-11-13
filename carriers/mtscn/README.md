@@ -25,10 +25,12 @@ answers.
   destination, and all of its rows are written when the order is created, dated ahead. A buyer
   reported a parcel the script showed as delivered that never came. A row written more than
   twelve hours before its own clock is a forecast, not a scan, and is held back, as is a row
-  dated after the lookup on Beijing time. The tracking page shows no creation times, so a
-  delivery row it shows is held back too. An order whose rows are all held back has no history
-  yet, and the rows written ahead are named so that a universal provider's copies of them are
-  set aside. The record's own summary status is not read.
+  dated after the lookup on Beijing time. The script's first sorting-centre row, dated hours
+  after it was written in the same second as the rest, is held back with them. The tracking
+  page shows no creation times, so a delivery row it shows is held back too. An order whose
+  rows are all held back has no history yet, and the rows written ahead are named so that a
+  universal provider's copies of them are set aside. The record's own summary status is not
+  read.
 - Scan times are wall clocks without an offset, on the tracker's Beijing clock at the destination
   too, as [GZYL's](../gzyl/README.md) are, and are read on it.
 - A row's place is inside its text, before a comma (`ShenZhen`, `Hong Kong`, the destination's
