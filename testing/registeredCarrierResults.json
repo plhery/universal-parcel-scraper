@@ -1905,7 +1905,7 @@
           "description": "In delivery",
           "provider_code": "P_ND",
           "location": "Example Distribution Centre",
-          "stage": "exception"
+          "stage": "failed_attempt"
         },
         {
           "time": "2026-01-04T12:00:00+01:00",

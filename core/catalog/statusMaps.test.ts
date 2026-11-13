@@ -478,7 +478,7 @@ describe('status map answers', () => {
   it("answers Poczta Polska and CTT Express by their scan codes", () => {
     expect(answer('poczta-polska', 'P_REJ_KN1', 'Electronic item data received')).toEqual(mapped('registered'));
     expect(answer('poczta-polska', 'P_ZWC', 'Customs service')).toEqual(mapped('customs'));
-    expect(answer('poczta-polska', 'P_ND', 'In delivery')).toEqual(mapped('exception'));
+    expect(answer('poczta-polska', 'P_ND', 'In delivery')).toEqual(mapped('failed_attempt'));
     expect(answer('poczta-polska', 'P_D', 'Final delivery')).toEqual(mapped('delivered'));
     expect(answer('poczta-polska', 'P_ROZL_CEL', 'Synthetic settlement')).toEqual(unknown);
     expect(answer('poczta-polska', null, 'Final delivery')).toEqual(unknown);
