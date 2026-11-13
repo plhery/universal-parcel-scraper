@@ -15421,7 +15421,7 @@
   },
   "cvc": {
     "displayName": "CVC",
-    "color": "#5f3e8f",
+    "color": "#652b9e",
     "aliases": [
       "Си Ви Си",
       "Си Ви Си ЕООД",
@@ -15439,7 +15439,17 @@
     "canaryUrl": "https://my.e-cvc.bg/track",
     "trackingUrlTemplate": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
     "trackingSearchUrl": "https://my.e-cvc.bg/track",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "my.e-cvc.bg"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "wb"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "cycloon": {
@@ -23618,10 +23628,15 @@
     "aliases": [
       "Γενική Ταχυδρομική",
       "Geniki Taxidromiki",
-      "General Post"
+      "General Post",
+      "Геники Тахидромики",
+      "ГЕНИКИ ТАХИДРОМИКИ ООД"
     ],
     "countries": [
-      "GR"
+      "GR",
+      "BG",
+      "CY",
+      "RO"
     ],
     "selectable": true,
     "timezone": "Europe/Athens",
@@ -23639,7 +23654,7 @@
         "domains": [
           "taxydromiki.com"
         ],
-        "path": "^/(?:en/)?track/([^/?#]+)/?$"
+        "path": "^/(?:(?:en|bg|ro)/)?track/([^/?#]+)/?$"
       }
     ],
     "detectionRules": [
@@ -40234,6 +40249,29 @@
     ],
     "detectionRules": []
   },
+  "poste-srpske": {
+    "displayName": "Pošte Srpske",
+    "color": "#feb715",
+    "aliases": [
+      "Pošta Srpske",
+      "Poste Srpske",
+      "Поште Српске",
+      "Preduzeće za poštanski saobraćaj Republike Srpske"
+    ],
+    "countries": [
+      "BA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sarajevo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postesrpske.com/track/tracktracec.html",
+    "trackingSearchUrl": "https://www.postesrpske.com/pracenje-posiljaka/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "postex": {
     "displayName": "PostEx",
     "color": "#92cf50",
@@ -50154,7 +50192,17 @@
     "canaryUrl": "https://transpress.bg/bg/prosledjavane",
     "trackingUrlTemplate": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
     "trackingSearchUrl": "https://transpress.bg/bg/prosledjavane",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "transpress.bg"
+        ],
+        "pathPattern": "^/(?:bg|en)/prosledjavane/?$",
+        "params": [
+          "track-number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "trendyol-express": {

@@ -144,6 +144,13 @@ describe('continental shipment candidates', () => {
     expect(detected.candidates).toEqual(expect.arrayContaining(['acs-courier', 'geniki-taxydromiki', 'dhl-express']));
     expect(recognitionAskedCarriers('1000000002', { countryHint: 'GR' })).toEqual(expect.arrayContaining(['acs-courier', 'geniki-taxydromiki']));
     expect(recognitionAskedCarriers('1000000002', { countryHint: 'CY' })).toContain('acs-courier');
+    // Geniki's own network delivers in Bulgaria and Cyprus and carries parcels to and from Romania.
+    for (const countryHint of ['BG', 'CY', 'RO']) {
+      expect(recognitionAskedCarriers('1000000002', { countryHint }).slice(0, 3), countryHint).toContain('geniki-taxydromiki');
+    }
+    for (const link of ['https://taxydromiki.com/bg/track/1000000002', 'https://taxydromiki.com/ro/track/1000000002/']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: '1000000002', carrier: 'geniki-taxydromiki', source: 'link' });
+    }
     for (const number of ['1000000001', '100000002', '10000000002', 'A100000002']) {
       expect(detectCarrierMatch(number).candidates).not.toContain('acs-courier');
       expect(detectCarrierMatch(number).candidates).not.toContain('geniki-taxydromiki');

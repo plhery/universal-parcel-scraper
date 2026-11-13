@@ -504,6 +504,18 @@ describe('the detection engine', () => {
       .not.toBe('swiss-post');
   });
 
+  it('reads the links Transpress and CVC tracking forms open', () => {
+    for (const link of ['https://transpress.bg/bg/prosledjavane?track-number=123456789',
+      'https://www.transpress.bg/en/prosledjavane/?track-number=123456789']) {
+      expect(parseTrackingInput(link), link).toMatchObject({ trackingNumber: '123456789', carrier: 'transpress', source: 'link' });
+    }
+    expect(parseTrackingInput('https://my.e-cvc.bg/track?wb=123456789&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8'))
+      .toMatchObject({ trackingNumber: '123456789', carrier: 'cvc', source: 'link' });
+    for (const link of ['https://transpress.bg/bg/search/?track-number=123456789', 'https://my.e-cvc.bg/login?wb=123456789']) {
+      expect(parseTrackingInput(link).carrier, link).not.toMatch(/^(?:transpress|cvc)$/);
+    }
+  });
+
   it('reads a GETOnline link on the shared host as SkyNet only for its own stid', () => {
     for (const link of ['https://tracking.frontierforce.com/go/plm-tracking?stid=skynet&cn=ZZ0000000000',
       'https://tracking.frontierforce.com/go/plm-tracking?cn=ZZ0000000000&stid=skynet']) {

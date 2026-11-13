@@ -17,8 +17,8 @@ number to check its replies against, there is no adapter.
 
 ## Links
 
-The tracking page opens numbers from its `wb` parameter, sent with the `checkit` button value its
-form submits.
+The tracking page's form sends the number as `wb`, with the `checkit` button value, so the portal
+link carries both. A pasted `my.e-cvc.bg/track` link with a `wb` number names CVC.
 
 ## Testing
 

@@ -12,7 +12,7 @@
     ]
   },
   "brand": {
-    "color": "#5f3e8f"
+    "color": "#652b9e"
   },
   "selectable": true,
   "timezone": "Europe/Sofia",
@@ -31,6 +31,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "my.e-cvc.bg"
+      ],
+      "pathPattern": "^/track/?$",
+      "params": [
+        "wb"
+      ]
+    }
+  ],
   "detection": []
 }

@@ -7,7 +7,8 @@ Hrvatska pošta Mostar parcels use enabled universal providers. There is no dedi
 The tracker follows express, registered, insured and parcel items, domestic and international,
 by their UPU S10 numbers, and its example is a registered letter posted in Bosnia and
 Herzegovina. [BH Pošta](../bh-posta/README.md), the other postal operator in the Federation,
-also issues S10 numbers ending in `BA`, so the suffix does not name the operator. Generic postal
+and [Pošte Srpske](../poste-srpske/README.md), Republika Srpska's, also issue S10 numbers ending
+in `BA`, so the suffix does not name the operator. Generic postal
 detection handles S10 numbers, so no Hrvatska pošta Mostar rule claims them.
 
 ## Links

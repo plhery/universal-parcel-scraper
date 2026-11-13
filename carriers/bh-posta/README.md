@@ -9,8 +9,8 @@ universal providers name it for the scans of international mail bound for the co
 ## Numbers
 
 Its tracking page follows items by their 13-character UPU S10 numbers.
-[Hrvatska pošta Mostar](../hp-mostar/README.md) also issues S10 numbers ending in `BA`, so the
-suffix does not name the operator. Generic postal detection handles S10 numbers, so no BH Pošta
+[Hrvatska pošta Mostar](../hp-mostar/README.md) and [Pošte Srpske](../poste-srpske/README.md) also
+issue S10 numbers ending in `BA`, so the suffix does not name the operator. Generic postal detection handles S10 numbers, so no BH Pošta
 rule claims them.
 
 ## Why there is no adapter

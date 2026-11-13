@@ -33,6 +33,16 @@
     "discarded": [],
     "unavailable": []
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "transpress.bg"
+      ],
+      "pathPattern": "^/(?:bg|en)/prosledjavane/?$",
+      "params": [
+        "track-number"
+      ]
+    }
+  ],
   "detection": []
 }

@@ -17,7 +17,9 @@ against, there is no adapter.
 
 ## Links
 
-The tracking page opens numbers from its `track-number` parameter.
+The tracking page's own form sends the number as `track-number` on the Bulgarian or English page,
+so `transpress.bg/bg/prosledjavane?track-number={number}` opens one shipment, and a pasted link of
+either language names Transpress.
 
 ## Testing
 

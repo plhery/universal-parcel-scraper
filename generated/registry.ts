@@ -2556,6 +2556,7 @@ export const REGISTRY: RegistryDefinition = {
     "posta-srbije": "posta-srbije",
     "postaplus": "universal",
     "poste-italiane": "poste-italiane",
+    "poste-srpske": "universal",
     "postex": "postex",
     "posti": "posti",
     "postlogistics": "postlogistics",

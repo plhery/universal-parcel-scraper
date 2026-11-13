@@ -15425,7 +15425,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   },
   "cvc": {
     "displayName": "CVC",
-    "color": "#5f3e8f",
+    "color": "#652b9e",
     "aliases": [
       "Си Ви Си",
       "Си Ви Си ЕООД",
@@ -15443,7 +15443,17 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://my.e-cvc.bg/track",
     "trackingUrlTemplate": "https://my.e-cvc.bg/track?wb={trackingNumber}&checkit=%D0%9F%D1%80%D0%BE%D0%B2%D0%B5%D1%80%D0%B8",
     "trackingSearchUrl": "https://my.e-cvc.bg/track",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "my.e-cvc.bg"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "wb"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "cycloon": {
@@ -23622,10 +23632,15 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Γενική Ταχυδρομική",
       "Geniki Taxidromiki",
-      "General Post"
+      "General Post",
+      "Геники Тахидромики",
+      "ГЕНИКИ ТАХИДРОМИКИ ООД"
     ],
     "countries": [
-      "GR"
+      "GR",
+      "BG",
+      "CY",
+      "RO"
     ],
     "selectable": true,
     "timezone": "Europe/Athens",
@@ -23643,7 +23658,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "domains": [
           "taxydromiki.com"
         ],
-        "path": "^/(?:en/)?track/([^/?#]+)/?$"
+        "path": "^/(?:(?:en|bg|ro)/)?track/([^/?#]+)/?$"
       }
     ],
     "detectionRules": [
@@ -40238,6 +40253,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "poste-srpske": {
+    "displayName": "Pošte Srpske",
+    "color": "#feb715",
+    "aliases": [
+      "Pošta Srpske",
+      "Poste Srpske",
+      "Поште Српске",
+      "Preduzeće za poštanski saobraćaj Republike Srpske"
+    ],
+    "countries": [
+      "BA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Sarajevo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.postesrpske.com/track/tracktracec.html",
+    "trackingSearchUrl": "https://www.postesrpske.com/pracenje-posiljaka/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "postex": {
     "displayName": "PostEx",
     "color": "#92cf50",
@@ -50158,7 +50196,17 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://transpress.bg/bg/prosledjavane",
     "trackingUrlTemplate": "https://transpress.bg/bg/prosledjavane?track-number={trackingNumber}",
     "trackingSearchUrl": "https://transpress.bg/bg/prosledjavane",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "transpress.bg"
+        ],
+        "pathPattern": "^/(?:bg|en)/prosledjavane/?$",
+        "params": [
+          "track-number"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "trendyol-express": {
@@ -56254,6 +56302,7 @@ export const CARRIER_IDS = [
   "posta-slovenije",
   "posta-srbije",
   "postaplus",
+  "poste-srpske",
   "postex",
   "postmedia-parcel-services",
   "postplus",
@@ -57751,6 +57800,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "posta-slovenije": ["posta-slovenije-own","posta-slovenije-s10"],
   "posta-srbije": ["posta-srbije-own","posta-srbije-s10"],
   "postaplus": [],
+  "poste-srpske": [],
   "postex": [],
   "postmedia-parcel-services": [],
   "postplus": [],

@@ -1,0 +1,36 @@
+{
+  "id": "poste-srpske",
+  "displayName": "Pošte Srpske",
+  "aliases": [
+    "Pošta Srpske",
+    "Poste Srpske",
+    "Поште Српске",
+    "Preduzeće za poštanski saobraćaj Republike Srpske"
+  ],
+  "region": {
+    "countries": [
+      "BA"
+    ]
+  },
+  "brand": {
+    "color": "#feb715"
+  },
+  "selectable": true,
+  "timezone": "Europe/Sarajevo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.postesrpske.com/pracenje-posiljaka/",
+    "canaryUrl": "https://www.postesrpske.com/track/tracktracec.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

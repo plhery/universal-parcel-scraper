@@ -4,11 +4,16 @@
   "aliases": [
     "Γενική Ταχυδρομική",
     "Geniki Taxidromiki",
-    "General Post"
+    "General Post",
+    "Геники Тахидромики",
+    "ГЕНИКИ ТАХИДРОМИКИ ООД"
   ],
   "region": {
     "countries": [
-      "GR"
+      "GR",
+      "BG",
+      "CY",
+      "RO"
     ]
   },
   "brand": {
@@ -69,7 +74,7 @@
       "domains": [
         "taxydromiki.com"
       ],
-      "path": "^/(?:en/)?track/([^/?#]+)/?$"
+      "path": "^/(?:(?:en|bg|ro)/)?track/([^/?#]+)/?$"
     }
   ],
   "detection": [
