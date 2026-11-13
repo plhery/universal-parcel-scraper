@@ -289,8 +289,15 @@ export function readBrt(html: string, raw: string, parcelList?: string): { resul
   const deliveredHome = arrival.length === 2 && clean(arrival.last().text(), 80) !== '';
   const origin = scans.at(-1)!.location;
   const broughtBy = brtOriginPartner(origin);
-  const events = scans.map(({ date, clock, location, label }): CarrierEvent => {
+  // BRT's FOR DELIVERY at the depot of the DPD network abroad that delivers a parcel it sent there is its
+  // copy of the hand-over to that network, dated alone: the network's own round comes later.
+  const staged = (label: string, location: string): ClassifiedStatus | undefined => {
     const mapped = brtStatus(label, broughtBy);
+    return mapped?.stage === 'out_for_delivery' && !deliveredHome && dpdNetwork(location)
+      ? { status: 'in_transit', stage: 'in_transit' } : mapped;
+  };
+  const events = scans.map(({ date, clock, location, label }): CarrierEvent => {
+    const mapped = staged(label, location);
     const zones = clockZones(location, deliveredHome || location === origin);
     // A delivery reads as BRT's DELIVERED, or as its CONSEGNATA on the Italian page.
     const delivered = brtEnglishLabel(label) ? 'Consegnata' : 'Delivered';
@@ -300,7 +307,7 @@ export function readBrt(html: string, raw: string, parcelList?: string): { resul
   });
   // Source order also carries undated scans and clocks of several zones, so scans are never sorted.
   const latest = events[0]!;
-  let mapped = brtStatus(String(latest.provider_status), broughtBy);
+  let mapped = staged(String(latest.provider_status), scans[0]!.location);
   // A shipment sent back reads DELIVERED once it reaches its sender again.
   if (mapped?.stage === 'delivered' && events.slice(1).some((event) => event.stage === 'returned')) {
     mapped = { status: 'exception', stage: 'returned' };

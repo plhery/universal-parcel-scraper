@@ -90,7 +90,9 @@ Italy, the detail gives the parcel's DPD number ("Parcel number dpd"). Once the
 newest scan is at a DPD depot named after a single country with a DPD network
 in the catalog, such as `DPD DE …`, that network is the `delivery_carrier` and
 the DPD number the `delivery_tracking_number`. BRT copies that network's scans,
-often with their dates alone; the network dates them.
+often with their dates alone; the network dates them. Its FOR DELIVERY at such a
+depot is the hand-over to that network, in transit: the network's own round
+comes later.
 
 ## Notes
 

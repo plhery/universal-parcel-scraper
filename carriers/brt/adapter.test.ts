@@ -241,7 +241,9 @@ describe('BRT direct tracking', () => {
       first.eq(1).text(''); first.eq(2).text(place); first.eq(3).text('FOR DELIVERY');
     });
     const result = normalizeCarrierResult(parseBrt(sent('DPD DE SAMPLE (990)'), NUMBER));
-    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: null, delivery_carrier: 'dpd-de', delivery_tracking_number: DPD_NUMBER });
+    // BRT's FOR DELIVERY there is its copy of the hand-over to DPD; DPD's own round comes later.
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_update: null, delivery_carrier: 'dpd-de', delivery_tracking_number: DPD_NUMBER });
+    expect(result.events?.[0]).toMatchObject({ description: 'FOR DELIVERY', stage: 'in_transit' });
     expect(deliveryHandoff('brt', NUMBER, result)).toEqual({ carrier: 'dpd-de', number: DPD_NUMBER, basis: 'partner' });
     for (const [place, network] of [['DPD-ROV-GERMANIA (991)', 'dpd-de'], ['DPD FR NORD (992)', 'dpd-fr'], ['DPD-ROV-AUSTRIA (993)', 'dpd-at']] as const) {
       expect(parseBrt(sent(place), NUMBER).delivery_carrier, place).toBe(network);
@@ -846,7 +848,7 @@ describe('BRT through the DPD group while its tracker is down', () => {
       $('.table_stato_dati tr').slice(1, 3).remove();
       $('.table_stato_dati tr').eq(1).children('td').eq(2).text('DPD DE SAMPLE (990)');
     });
-    expect(parseBrt(abroad, NUMBER)).toMatchObject({ current_stage: 'out_for_delivery', delivery_carrier: 'dpd-de' });
+    expect(parseBrt(abroad, NUMBER)).toMatchObject({ current_stage: 'in_transit', delivery_carrier: 'dpd-de' });
     for (const body of [html, atLocker, abroad]) await tracker(body).fetch(NUMBER);
     expect(group).not.toHaveBeenCalled();
   });

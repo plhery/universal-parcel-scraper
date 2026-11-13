@@ -30,7 +30,8 @@
       "wording": "FOR DELIVERY",
       "language": "en",
       "stage": "out_for_delivery",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "note": "BRT's own delivery round. At the depot of the DPD network abroad that delivers a parcel BRT sent there, the adapter reads it as the hand-over to that network, in transit."
     },
     {
       "wording": "ARRIVED AT BRT LOCKER",
