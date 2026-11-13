@@ -156,7 +156,8 @@ const CUSTOMS_SIDE = String.raw`(?:(?:import|export)(?:\/(?:import|export))? |lo
  */
 const CUSTOMS_PENDING = new RegExp([
   String.raw`attend d'etre libere|attente de liberation|wartet auf.*freigabe|attesa di svincolo`,
-  String.raw`(?:customs|clearance).*\bnot\b.*(?:clear|complet|releas)|customs (?:not cleared|clearance not completed)|not.*released by customs`,
+  String.raw`(?:customs|clearance).*\bnot\b.*(?:clear|complet|releas)|customs (?:not cleared|clearance not completed)|not.*(?:released|allowed) by customs`,
+  String.raw`(?:\bnot|n't|\bnever)\b(?: \w+){0,3}? allowed by (?:the )?${CUSTOMS_SIDE}customs\b`,
   String.raw`(?:\bnot|n't|\bnever|\byet to)\b(?: (?:yet|been|be|being|have|has|had|fully|still))* (?:released|cleared|left|exited|out of|passed)\b${SENTENCE}*?\bcustoms\b`,
   String.raw`\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to)\b(?: \w+){0,3}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared)\b${SENTENCE}*?\bcustoms\b`,
   String.raw`\b(?:customs|clearance)\b${SENTENCE}*?\b(?:will|would|shall|should|may|might|must|can|could|once|when|until|till|before|unless|as soon as|needs? to|has to|have to|yet to|waiting to|expected to|about to|to)\b(?: \w+){0,2}? (?:be |been |get |gets |is |are |has been |have been )?(?:released|cleared|completed?|finished|done)\b`,
@@ -178,6 +179,8 @@ const CUSTOMS_RELEASED = new RegExp([
   String.raw`\b(?:completed|finished) (?:the |its )?${CUSTOMS_SIDE}customs clearance\b`,
   String.raw`\b(?:import|export) (?:procedures|formalities)\b${SENTENCE}*?\b(?:are|were|have been|has been) (?:now )?(?:complete|completed|finished|done)\b`,
   String.raw`(?:leaving|departed from|left|exited|exiting|out of|passed(?: through)?) (?:the )?${CUSTOMS_SIDE}customs\b(?! (?:to|for) (?:the )?(?:sender|shipper)\b)`,
+  // An entry allowed: 17TRACK's "Import allowed by destination customs" after the parcel is held for inspection.
+  String.raw`\ballowed by (?:the )?${CUSTOMS_SIDE}customs\b`,
   String.raw`completion of customs|released by (?:(?:the )?${CUSTOMS_SIDE}customs|a government agency|(?:the |a )?clearing agen(?:cy|t))|\breleased (?:from|out of|at) (?:the )?${CUSTOMS_SIDE}customs\b|\breturned from (?:the )?${CUSTOMS_SIDE}customs\b(?! to\b)`,
   // A release as a bare label, China Post's "出口海关/放行" in English: "Export customs release", "Export customs/release [City]".
   String.raw`^(?:(?:import|export) )?customs ?\/? ?release(?: ?(?:\[[^[\]]{1,60}\]|【[^【】]{1,60}】))?$`,
