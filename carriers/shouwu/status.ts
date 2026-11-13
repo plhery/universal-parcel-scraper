@@ -45,6 +45,13 @@ function mappedStage(wording: string): Stage | undefined {
   return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? imileRelayedStage(wording);
 }
 
+// Rows that send the parcel back to its sender: DHL's "Shipment will be returned to origin-Bad address" and the
+// Italian last mile's "Back to Sender for reason: …".
+const SENDS_BACK = /^shipment will be returned to origin\b|^back to sender for reason: \S/;
+
+/** Whether a scan's wording sends the parcel back to its sender. */
+export const shouwuSendsBack = (wording: string): boolean => SENDS_BACK.test(normalizeStatusWording(wording));
+
 /** The stage of a parcel's status code. */
 export function shouwuStatusStage(code: string): Stage | undefined {
   return CODES.get(code);

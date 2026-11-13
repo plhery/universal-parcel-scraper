@@ -11,7 +11,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { zonedTime } from '../../core/time/index.js';
 import { clean, decodeText, fetchBounded, type TrawlClient } from '../../core/transport/index.js';
 import { isDeliveryStatusCell } from './identity.js';
-import { classifyStatus, comparableText, includesAny, isAcceptanceNotice } from './status.js';
+import { classifyStatus, comparableText, includesAny, isRecipientNotice } from './status.js';
 
 // Protocol provenance:
 // - DPD France publishes a server-rendered recipient page rather than a
@@ -203,11 +203,11 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
   parsedEvents.sort((left, right) => (
     right.timestamp - left.timestamp || left.sourceIndex - right.sourceIndex
   ));
-  // Oldest first: the acceptance notice keeps the stage of the scan before it, so it cannot pull
-  // the parcel back.
+  // Oldest first: the notices to the recipient keep the stage of the scan before them, so they cannot
+  // pull the parcel back.
   let previous: Stage | undefined;
   for (const { event } of [...parsedEvents].reverse()) {
-    if (isAcceptanceNotice(comparableText(event.description ?? ''))) Object.assign(event, { stage: previous ?? 'registered', stage_source: 'none' });
+    if (isRecipientNotice(comparableText(event.description ?? ''))) Object.assign(event, { stage: previous ?? 'registered', stage_source: 'none' });
     else if (event.stage) previous = event.stage as Stage;
   }
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);

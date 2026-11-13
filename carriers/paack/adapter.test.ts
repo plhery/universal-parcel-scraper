@@ -15,7 +15,7 @@ import {
   parsePaackTrackingResponse,
 } from './adapter.js';
 import { PAACK_EVRI_NUMBER, parsePaackEvriReply } from './evri.js';
-import { classifyPaackEvent, paackScan, statusKey } from './status.js';
+import { classifyPaackEvent, paackScan, statusKey, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 // Paack publishes this synthetic exchange order in its official Postman
@@ -833,6 +833,18 @@ describe('Paack numbers on parcels from Evri International', () => {
     // A reply to the Evri barcode is not a reply to the Paack number.
     expect(() => parsePaackEvriReply(evriReply, EVRI_BARCODE)).toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parsePaackEvriReply(evriNotFound, EVRI_PARTNER_NUMBER)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+  });
+
+  it('reads a new delivery day Evri International relays as transit, not a courier run', () => {
+    const rescheduled = evriReply
+      .replace('<strong>Current Status:</strong> Out for delivery', '<strong>Current Status:</strong> Scheduled For Delivery')
+      .replace('<td>Out for delivery</td><td></td><td>PRIVATE DELIVERY COMMENT</td>',
+        '<td>Scheduled For Delivery</td><td></td><td>APPOINTMENT RESCHEDULED - OTHER | The delivery timeslot or day has been changed</td>');
+    const result = parsePaackEvriReply(rescheduled, EVRI_PARTNER_NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Scheduled For Delivery' });
+    expect(result.events?.[0]).toMatchObject({ time: '2026-03-12T07:31:05.000Z', stage: 'in_transit' });
+    // The app's review reads the stored wording through Evri's labels.
+    expect(statusMap.stage(null, 'scheduled for delivery')).toBe('in_transit');
   });
 
   it('reads Paack\'s scans as UTC instants from its arrival in the country, and keeps Evri\'s wall clocks', () => {

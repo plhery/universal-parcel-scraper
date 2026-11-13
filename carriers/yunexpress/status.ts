@@ -69,6 +69,9 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['The shipment has been processed in the parcel center of origin', { status: 'in_transit', stage: 'in_transit' }],
   ['The shipment has been processed in the destination parcel center', { status: 'in_transit', stage: 'in_transit' }],
   ['Loaded to movement / tour vehicle', { status: 'in_transit', stage: 'in_transit' }],
+  // Its vehicle's arrival at the delivery depot, before the loading for the round, and its round that reached no one.
+  ['Movement / tour vehicle arrived', { status: 'in_transit', stage: 'in_transit' }],
+  ['Not delivered-Consignee could not be reached', FAILED_ATTEMPT],
   ['Shipment is in transit to carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Preparing for delivery', { status: 'in_transit', stage: 'in_transit' }],
   // Last-mile wording the feed relays without codes. DPD files its data
@@ -104,6 +107,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // brought the parcel to it: a hand-over, not the parcel's acceptance.
   ['Package accepted at courier partner', { status: 'in_transit', stage: 'in_transit' }],
   ['Item accepted', { status: 'in_transit', stage: 'in_transit' }],
+  // The same carrier's round, before its delivery to the letterbox.
+  ['Item is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // An American last-mile carrier's intake after the label it printed, then its facilities.
   ['Accepted at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Carrier\'s Facility', { status: 'in_transit', stage: 'in_transit' }],

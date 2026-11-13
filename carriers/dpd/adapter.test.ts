@@ -753,6 +753,11 @@ describe('DPD scan times', () => {
     </body></html>`, TRACKING_NUMBER);
     expect(scans.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-08-04', '2026-08-03T17:05:00+02:00']);
     expect(scans.events?.[0]?.time).toBeUndefined();
+    // The page's spelling of AT_DELIVERY_CENTER's label is the same gap as the API's.
+    for (const description of ['At delivery centre', 'At delivery center']) {
+      expect(statusMapAnswer({ carrier: 'dpd', providerCode: null, description }), description)
+        .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/^The label of AT_DELIVERY_CENTER\b/) });
+    }
   });
 
   it('accepts the zone spellings DPD could plausibly send', () => {

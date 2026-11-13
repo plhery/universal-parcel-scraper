@@ -43,6 +43,16 @@ export function isAcceptanceNotice(value: string): boolean {
   return value.includes('de la prise en charge de son colis');
 }
 
+/** The notice that the recipient was told of the delivery's current step, by its `comparableText` form. */
+function isStepNotice(value: string): boolean {
+  return value.includes('de l etape actuelle de sa livraison');
+}
+
+/** A notice to the recipient that names no step of its own: of the acceptance, or of the delivery's current step. */
+export function isRecipientNotice(value: string): boolean {
+  return isAcceptanceNotice(value) || isStepNotice(value);
+}
+
 export function classifyStatus(description: string): ClassifiedStatus {
   const value = comparableText(description);
 
@@ -110,8 +120,9 @@ export function classifyStatus(description: string): ClassifiedStatus {
 
   // The notice telling the recipient of the acceptance can come hours later, after a sort
   // centre's scan; staged, it would pull the parcel back to accepted. The acceptance's own scan
-  // stages it, and the adapter gives the notice the stage of the scan before it.
-  if (isAcceptanceNotice(value)) return { status: 'unknown', stage: 'in_transit' };
+  // stages it, and the adapter gives the notice the stage of the scan before it. So it does the notice of the
+  // delivery's current step, which DPD sends during the round and names no step.
+  if (isRecipientNotice(value)) return { status: 'unknown', stage: 'in_transit' };
 
   // Acceptance into the network.
   if (includesAny(value, ['pris en charge dans notre reseau'])) return { status: 'in_transit', stage: 'accepted' };
@@ -148,6 +159,10 @@ export const statusMap: CarrierStatusMap = {
     return classified && classified.status !== 'unknown' ? classified.stage : undefined;
   },
   gaps: [],
-  gapNote: (code, wording) => (!code && isAcceptanceNotice(comparableText(wording))
-    ? 'The recipient told of the acceptance, which can come after the parcel moved on: it keeps the stage it had.' : undefined),
+  gapNote: (code, wording) => {
+    if (code) return undefined;
+    const value = comparableText(wording);
+    if (isAcceptanceNotice(value)) return 'The recipient told of the acceptance, which can come after the parcel moved on: it keeps the stage it had.';
+    return isStepNotice(value) ? "The recipient told of the delivery's current step, during the round: it keeps the stage it had." : undefined;
+  },
 };

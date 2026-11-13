@@ -142,7 +142,7 @@ describe('Shouwu International HTTP adapter', () => {
       .toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
         events: [{ stage: 'in_transit' }, { stage: 'in_transit' }, { stage: 'in_transit' }, { stage: 'customs' }, { stage: 'in_transit' },
           { stage: 'in_transit' }, { stage: 'in_transit' }, { stage: 'accepted' }] });
-    // Delivered is the end: no scan refines it, and no instant dates it.
+    // Delivered is the end: no scan but a return refines it, and no instant dates it.
     const signed = staged('TRACE_STATUS_SIGNED', [trace(1776361152, 'Sample Status Note'), trace(1776327314, 'Out for Delivery')]);
     expect(signed).toMatchObject({ status: 'delivered', current_stage: 'delivered', current_stage_source: 'carrier_map', last_status_text: 'Sample Status Note' });
     expect(signed).not.toHaveProperty('delivered_at');
@@ -363,6 +363,26 @@ describe('Shouwu International HTTP adapter', () => {
     ]);
   });
 
+  it('reads a row under a code that names no country, as EU, against the destination\'s clock', async () => {
+    // Live shape: customs and the flight's arrival under EU, written together three hours after the customs epoch;
+    // read on Vienna's clock, customs would come three hours after it was written.
+    const written = changed((traces, order) => {
+      order.countryCodeTwo = 'AT';
+      traces.splice(0, traces.length, { ...trace(1775950200, 'Currently processing import customs clearance', 'EU'), createTs: (1775950200 + 10800) * 1000 },
+        { ...trace(1775935800, 'Flight Arrived', 'EU'), createTs: (1775950200 + 10800) * 1000 },
+        { ...trace(1775900000, 'Departed from export airport', 'Shanghai'), createTs: (1775900000 + 60) * 1000 });
+    });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url) === SHOUWU_API
+      ? reply(JSON.stringify(written)) : new Response('', { status: 503 })));
+    const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'shouwu' }, { budgetMs: 3000 });
+    expect(answer.result.events.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-04-12T07:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      // Written after its wall clock in Vienna, which would still come after customs read at its epoch: read at its epoch too.
+      ['2026-04-12T03:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-11T17:33:20+08:00', 'Asia/Shanghai', 'place'],
+    ]);
+  });
+
 });
 
 describe('Shouwu International stored scans', () => {
@@ -445,5 +465,21 @@ describe('Shouwu International status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: 'Preparing' })).toEqual({ kind: 'unknown' });
     expect(statusMapAnswer({ carrier: 'shouwu', providerCode: 'TRACE_STATUS_SAMPLE', description: 'Sample Status Note' })).toEqual({ kind: 'unknown' });
     for (const wording of ['constructor', 'toString', 'Sample Status Note', 'Preparing']) expect(shouwuStage(wording), wording).toBeNull();
+  });
+
+  it("reads DHL's round that found no such recipient and its return, and its delivery after that as the return delivered to the sender", () => {
+    const parsed = (status: string) => parseShouwu(changed((rows, order) => {
+      order.traceStatus = status;
+      rows.splice(0, rows.length, trace(1776900000, 'Shipment sent directly from parcel center to business customer'),
+        trace(1776800000, 'The shipment has been processed in the parcel center of origin'),
+        trace(1776700000, 'Shipment will be returned to origin-Bad address'), trace(1776699000, 'The recipient is unknown'),
+        trace(1776600000, 'The shipment has been processed in the destination parcel center'));
+    }), DELIVERED);
+    for (const status of ['TRACE_STATUS_FAILED', 'TRACE_STATUS_SIGNED']) {
+      expect(parsed(status), status).toMatchObject({ current_stage: 'returned', current_stage_source: 'carrier_map',
+        events: [{ stage: 'returned' }, { stage: 'in_transit' }, { stage: 'exception' }, { stage: 'failed_attempt' }, { stage: 'in_transit' }] });
+    }
+    // Without a return before it, the same row is a delivery to a business recipient.
+    expect(shouwuStage('Shipment sent directly from parcel center to business customer')).toEqual({ stage: 'delivered', source: 'carrier_map' });
   });
 });

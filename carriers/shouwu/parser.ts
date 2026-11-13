@@ -8,7 +8,7 @@ import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
-import { shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
+import { shouwuSendsBack, shouwuStage, shouwuStatusLabel, shouwuStatusStage } from './status.js';
 import { withoutCountryCode } from './place.js';
 
 export const PROVIDER = 'Shouwu International';
@@ -47,6 +47,8 @@ const REFINES: Partial<Record<Stage, ReadonlySet<string>>> = {
   registered: new Set(['accepted']),
   in_transit: new Set(['accepted', 'customs', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup', 'returned', 'exception']),
   failed_attempt: new Set(['ready_for_pickup', 'returned', 'exception']),
+  // Delivered does not say to whom: a return delivered to its sender is returned.
+  delivered: new Set(['returned']),
 };
 
 /** A Shouwu waybill in capitals; anything else is not one Shouwu issues. */
@@ -114,11 +116,12 @@ function writtenBeforeWallClock(row: Record<string, unknown>, clock: { seconds: 
 
 /**
  * The earliest instant, in epoch seconds, a Beijing wall clock stands for in the country of a
- * row under a country's code, or in the destination for a row without a place; null otherwise.
+ * row under a country's code, or in the destination for a row without a place or under a code
+ * that names no country, as "EU"; null otherwise.
  */
 function earliestWallInstant(wall: string, location: string, destination: string): number | null {
-  const country = location ? (COUNTRY_CODE.test(location) ? location : '') : destination;
-  const zones = country ? countryZones(country) : [];
+  const named = COUNTRY_CODE.test(location) ? countryZones(location) : [];
+  const zones = named.length ? named : (!location || COUNTRY_CODE.test(location)) && destination ? countryZones(destination) : [];
   return zones.length ? Math.min(...zones.map((zone) => firstOccurrence(DateTime.fromISO(wall, { zone })).toSeconds())) : null;
 }
 
@@ -189,6 +192,13 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
       Object.assign(event, onBackOffice(scan.timestamp));
       bound = scan.timestamp;
     }
+  }
+  // A delivery after a row that sent the parcel back, as DHL's to a business customer after its return to origin, is
+  // the return delivered to the sender.
+  let returning = false;
+  for (const { event } of [...scans].reverse()) {
+    if (shouwuSendsBack(event.description!) || (event.stage === 'returned' && event.stage_source === 'carrier_map')) returning = true;
+    else if (returning && event.stage === 'delivered') Object.assign(event, { stage: 'returned', stage_source: 'carrier_map' });
   }
   return { status, country: destination, events: scans.map((scan) => scan.event), newest: scans[0]?.timestamp ?? -Infinity };
 }

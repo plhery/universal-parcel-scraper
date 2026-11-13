@@ -59,6 +59,8 @@ non-2xx statuses are indeterminate.
   de la prise en charge…") can come hours after a sort centre's scan, so it keeps the stage of the
   scan before it (`stage_source: 'none'`) and gives no result status; the acceptance's own row is
   `accepted`. The same-day delivery notice follows the round's scan and stays `out_for_delivery`.
+  The notice of the delivery's current step ("… de l'étape actuelle de sa livraison") names no
+  step, so it also keeps the stage of the scan before it.
 - Unrecognized wording keeps the row with no `stage`; the result status comes
   from the newest recognized row. `statusMap` in [status.ts](status.ts) answers the app's
   review queue by the same wording.

@@ -236,11 +236,19 @@ describe('Colis Privé HTML normalization', () => {
       rows: [['29/08/2026', 'Un nouveau libellé du transporteur']],
     }), PUBLIC_SYNTHETIC_CREDENTIAL);
     expect(result.status).toBe('unknown');
+    expect(result).not.toHaveProperty('current_stage');
     expect(result.events).toEqual([{
       local_time: '2026-08-29',
       location: '',
       description: 'Un nouveau libellé du transporteur',
     }]);
+  });
+
+  it("gives the banner's stage as its map reads it, so the sync does not read the banner by the shared rules", () => {
+    const status = 'Votre colis est pris en charge par Colis Privé. Il va être expédié vers notre agence régionale de distribution.';
+    const result = parseColisPriveTrackingHtml(trackingPage({ status, rows: [['29/08/2026', status]] }), PUBLIC_SYNTHETIC_CREDENTIAL);
+    expect(result).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'carrier_map', last_status_text: status });
+    expect(result.events).toEqual([expect.objectContaining({ stage: 'in_transit' })]);
   });
 
   it('maps delivered and relay-pickup statuses', () => {

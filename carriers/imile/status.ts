@@ -90,6 +90,8 @@ const PHRASES: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // After a failed attempt the recipient chose to collect the parcel; the drop-off at a pickup point follows.
   ['the delivery method has been confirmed with the recipient as self-pickup', null],
   ['inventory count scan', null],
+  // A delivery booked again, without its day, between a round out for delivery and the attempt's end or the next round.
+  ['scheduled delivery', null],
   ['your order has been delivered successfully', 'delivered'],
   // The short form of a centre's delivery, "【centre】Delivered", as JS Express relays it, and the German centres' form
   // naming who took the parcel: "【centre】Delivered, receiver type:【Self or Family】.".
@@ -200,6 +202,7 @@ export const statusMap: CarrierStatusMap = {
     { wording: 'the pick-up task has been cancelled.', note: 'The courier\'s collection from the sender called off, before a pickup driver is assigned again: the parcel is still with the sender, so it keeps the stage of the scan before it.' },
     { code: DELIVERY, wording: 'lost order', note: 'A driver\'s reason during a delivery run, followed by the attempt\'s end; the parcel it was seen on went out again and was delivered, so it does not establish a loss.' },
     { code: DELIVERY, wording: 'the delivery method has been confirmed with the recipient as self-pickup.', note: 'The recipient chose to collect the parcel after a failed attempt; it keeps the stage of the scan before it until the pickup point has the parcel.' },
+    { code: DELIVERY, wording: 'scheduled delivery', note: 'A delivery booked again, without its day, between a round out for delivery and the attempt\'s end or the next round: it moves nothing, so it keeps the stage of the scan before it.' },
     ...cainiaoStatusMap.gaps,
   ],
   gapNote: (code, wording) => ((code ?? DELIVERY) === DELIVERY && SCHEDULED.test(normalizeStatusWording(wording))

@@ -201,6 +201,48 @@
       "note": "DHL's round that did not deliver, hours after the loading; the parcel went back to a parcel centre and out again days later."
     },
     {
+      "code": "LastMileDeliveryTried",
+      "wording": "Consignee absent, Consignee could not be found.",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "A partner's round that found no one, hours after it took the parcel out; the parcel went to a parcel shop."
+    },
+    {
+      "code": "LastMileWaitForCollection",
+      "wording": "Placed in Parcelshop/Parcel locker",
+      "language": "en",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The same partner leaving the parcel at a parcel shop or locker for the recipient, after the missed round."
+    },
+    {
+      "wording": "Shipment arrived to sorting centre / Shipment in the sorting centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "A partner's sorting centre taking the parcel in before its round, relayed without a code; WanbExpress also sends it under SupplierAndLastMileReceive."
+    },
+    {
+      "wording": "Consignee Contacted",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "A partner's courier calling the recipient, relayed without a code at the minute of the round that found no one: not a scan."
+    },
+    {
+      "wording": "Your parcel will soon be handed over to us! It is being prepared by the sender.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "A partner's pre-advice, relayed without a code at the instant of the parcel's data: the sender has not handed the parcel over."
+    },
+    {
       "code": "LastMileDelivered",
       "wording": "Parcel has been delivered.(Front door)",
       "language": "en",

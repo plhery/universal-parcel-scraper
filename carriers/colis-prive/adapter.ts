@@ -193,6 +193,8 @@ export function parseColisPriveTrackingHtml(
     && Date.parse(`${planned}T00:00:00Z`) >= latestDay ? planned : null;
   return {
     status,
+    // The banner's stage, as the map reads it, so the sync does not read the banner again by the shared rules.
+    ...(current.stage ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: summary,
     last_update: null,
     ...(events[0]?.local_time ? { last_update_local: events[0].local_time } : {}),

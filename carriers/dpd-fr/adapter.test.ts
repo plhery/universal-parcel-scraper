@@ -194,6 +194,21 @@ describe('DPD France rendered tracking', () => {
     expect(notice.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted']);
   });
 
+  it("gives the notice of the delivery's current step the stage of the scan before it", () => {
+    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
+      ['05/03/2026', '08:48', "Le destinataire est informé par SMS de l'étape actuelle de sa livraison", ''],
+      ['05/03/2026', '06:58', 'Votre colis est en cours de livraison', 'Agence DPD de Exemple (998)'],
+      ['05/03/2026', '02:32', 'Votre colis est en transit dans notre réseau', 'Centre de tri DPD de Exemple (999)'],
+    ] }), TEST_TRACKING_NUMBER);
+    expect(result.status).toBe('out_for_delivery');
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['out_for_delivery', 'none'], ['out_for_delivery', undefined], ['in_transit', undefined],
+    ]);
+    const notice = normalizeStatusWording("Le destinataire est informé par SMS de l'étape actuelle de sa livraison");
+    expect(statusMap.stage(null, notice)).toBeUndefined();
+    expect(statusMap.gapNote?.(null, notice)).toMatch(/current step.*keeps the stage/);
+  });
+
   it('returns every declared capability from one fixture', () => {
     const result = parseDPDFranceTrackingHtml(trackingFixture({
       outboundRows: FIXTURE.outboundRows.slice(2),

@@ -1104,6 +1104,49 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-11",
       "note": "Copied from DHL: the recipient's preferred place for the delivery, recorded while the parcel is still on its way to DHL. It moves nothing."
+    },
+    {
+      "wording": "分拣包裹已出库",
+      "language": "zh",
+      "english": "Sorted parcel has left the warehouse",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "After the parcel left the operation center, before it reaches the port of departure."
+    },
+    {
+      "wording": "货物到达口岸，预计…号航班起飞",
+      "language": "zh",
+      "english": "Arrived at the port, booked on a flight",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "At the port of departure, naming the booked flight's day with its year (\"2026/11/17\"), which the map reads as an ellipsis. The English leaves out the flight, which is still to come."
+    },
+    {
+      "wording": "预计…号航班飞",
+      "language": "zh",
+      "english": "Booked on a flight",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The booked flight's day as month.day (\"11.11\"), read as an ellipsis, after the parcel was sent to the airline and before the flight."
+    },
+    {
+      "wording": "理货较慢，导致提货缓慢，已催促尽快处理 Slow cargo sorting has resulted in delayed pickup. We have followed up for prompt handling.",
+      "language": "zh",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "A delay at the destination airport after the row that waits there for the pickup and the clearance. It moves nothing."
+    },
+    {
+      "wording": "货物已清关完成/Import customs clearance complete",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The destination's import clearance is done, before the delivering carrier's first scan, as a completed clearance reads."
     }
   ]
 }

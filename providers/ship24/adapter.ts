@@ -285,6 +285,35 @@ function planned(scan: Record<string, unknown>, event: CarrierEvent, now: number
   return Boolean(moment?.isValid && moment.toMillis() > now);
 }
 
+/**
+ * Feeds whose sentences name the shipment they are about, as DHL eCommerce UK's tracker does
+ * (carriers/dhl-ecommerce-uk). DHL Parcel UK's feed can carry another shipment's row ("Your
+ * shipment <another number> is part delivered"), which DHL's own page would refuse.
+ */
+const NAMING_FEEDS = new Set(['dhlparcel-uk-tracking']);
+
+/** The numbers a naming feed's scan names; none for another feed's. */
+function namedNumbers(scan: Record<string, unknown>): string[] {
+  const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
+  return typeof code === 'string' && NAMING_FEEDS.has(code) && typeof scan.status === 'string' ? scan.status.match(/\d{7,}/g) ?? [] : [];
+}
+
+/**
+ * Whether a naming feed's scan names a number that is neither the one asked for nor one Ship24
+ * lists for the parcel, in a reply whose other scans of such a feed name the parcel: a feed that
+ * names only a number Ship24 does not list keeps its scans.
+ */
+function anotherShipment(scan: Record<string, unknown>, numbers: ReadonlySet<string>, named: boolean): boolean {
+  return named && namedNumbers(scan).some((value) => !numbers.has(value));
+}
+
+/** The number asked for and those Ship24 lists for the same parcel. */
+function parcelNumbers(data: Record<string, unknown>, number: string): Set<string> {
+  const listed = Array.isArray(data.tracking_numbers) ? data.tracking_numbers.slice(0, MAX_COURIERS) : [];
+  return new Set([number, ...listed.flatMap((entry) => isRecord(entry) && typeof entry.tracking_number === 'string'
+    ? [entry.tracking_number.toUpperCase().replace(/[\s.-]/g, '')] : [])]);
+}
+
 /** A relabelling feed's timestamp as the scan's wall clock; any other is left as Ship24 sent it. */
 function feedClock(timestamp: unknown, feed: Feed | null, scan: Record<string, unknown>): unknown {
   if (!feed || feed.keepsOffsets || typeof timestamp !== 'string' || !EXPLICIT_OFFSET_PATTERN.test(timestamp)) return timestamp;
@@ -487,9 +516,12 @@ export function parseShip24Response(payload: unknown, trackingNumber: string, ti
     isRecord(courier) && isRecord(courier.translation) ? courier.translation.name : undefined), number);
   const journey = journeyOf(data, data.events, number, names.reported_carriers, timezone);
   const forwarding = forwardingJob(data.events);
+  const numbers = parcelNumbers(data, number);
+  const named = data.events.some((raw) => isRecord(raw) && namedNumbers(raw).some((value) => numbers.has(value)));
   const readings: Reading[] = [];
   for (const raw of data.events) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Ship24 returned an invalid event');
+    if (anotherShipment(raw, numbers, named)) continue;
     // A scan dated without a time (GLS Italy's announcement) has no place
     // among the others; it is left out rather than failing the history.
     if (typeof raw.timestamp === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(raw.timestamp)) continue;

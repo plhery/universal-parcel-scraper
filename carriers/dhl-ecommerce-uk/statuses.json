@@ -3,7 +3,11 @@
   "entries": [
     {"wording": "Your shipment has been collected", "language": "en", "stage": "accepted", "confirmedBy": "live"},
     {"wording": "Your shipment is due to be delivered on Monday 02nd November 2026", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Any weekday and date: the row the page adds once it plans a delivery day, after the collection. The same day heads the page as its expected delivery."},
+    {"wording": "Your shipment is due to be delivered to your ServicePoint on Wednesday 04th November 2026", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Any weekday and date: the delivery planned at a ServicePoint after a missed delivery, before the parcel reaches it."},
     {"wording": "Your shipment is at the delivery depot", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Your shipment is at the delivery location", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Between the depot scan and the delivery round: not a delivery."},
+    {"wording": "We're sorry but we haven't been able to deliver your shipment as our driver was unable to gain access to the delivery address", "language": "en", "stage": "failed_attempt", "confirmedBy": "live", "firstSeen": "2026-11-13"},
+    {"wording": "Delayed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Names no shipment. A delay on the way, after a missed delivery: the parcel moves on."},
     {"wording": "Your shipment is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
     {"wording": "Your shipment is delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"},
     {"wording": "Collected", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "Names no shipment. Its time is the signature's, under a delivered headline: the recipient collected the parcel."},

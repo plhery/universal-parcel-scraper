@@ -36,6 +36,9 @@ numbers `shouwu-1` offers.
   some lines Shouwu writes its own rows in Chinese, through the flight and the clearance abroad;
   the delivering partner's "Your consignment has been picked up" after them is that partner
   collecting the parcel from Shouwu's depot, in transit, not a handover from the sender.
+- A delivery after a row that sends the parcel back, as DHL's "Shipment sent directly from parcel
+  center to business customer" after its "Shipment will be returned to origin", is the return
+  delivered to the sender: returned, which refines Undelivered and Delivered alike.
 - Shouwu writes "Carrier received the shipment" two hours to the second after the order data, and
   the page's status turns In Transit with it, days before the first facility scan. The row is
   part of the registration, and In Transit on registration rows alone stays registered.
@@ -58,7 +61,9 @@ numbers `shouwu-1` offers.
 - A row under a country's code or without a place is the epoch's instant too when Shouwu wrote it
   (`createTs`) before the earliest instant its Beijing wall clock stands for anywhere in that
   country, or in the destination: a flight's arrival under US, written five hours after its
-  epoch, would otherwise have landed thirteen hours after it. A row written later keeps its wall
+  epoch, would otherwise have landed thirteen hours after it. A code that names no country, as
+  EU, stands for the destination: customs under EU read on Vienna's clock would have come after
+  Shouwu wrote it. A row written later keeps its wall
   clock, unless even the earliest instant it stands for there comes after a newer row read at its
   epoch: customs written days late is then read at its epoch, not after the round out for
   delivery.

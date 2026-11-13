@@ -346,4 +346,28 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+01:00', 'Customs Clearance. Customs Import submitted')?.description)
       .toBe('Customs Clearance. Customs Import submitted');
   });
+
+  it("reads DHL parcels' planned delivery as transit and leaves out the notice of its details, as ParcelsApp relays them", () => {
+    for (const wording of ['Delivery Planned In Route', 'Delivery planned in the route of the courier', 'Delivery planned at the CityHub']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+    expect(classifyEvent('Information On Delivery Transmitted').stage_source).toBe('none');
+    expect(statusMap.gaps.some(({ wording }) => wording === 'information on delivery transmitted')).toBe(true);
+    // A planned delivery that names its day is no step the rule reads.
+    expect(classifyEvent('Delivery planned for Example day').stage_source).toBe('none');
+  });
+
+  it("reads a shipment's data created, and GLS's parcel made ready for its collection, as registration", () => {
+    for (const wording of ['Shipment was successfully created', 'The parcel was provided by the sender for collection by GLS.']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'registered', stage_source: 'wording:provider' });
+    }
+  });
+
+  it("reads BUFFALO's depot steps in South Africa as transit, and leaves its bare \"Returns\" unread", () => {
+    for (const wording of ['EX DC received the parcel', 'Receive in [Example TownDC]', 'Pack completed in [EXDC][DCZZ00000000]',
+      'Outbound and start the next transfer phase', 'Floor scan']) {
+      expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
+    }
+    expect(classifyEvent('Returns').stage_source).toBe('none');
+  });
 });

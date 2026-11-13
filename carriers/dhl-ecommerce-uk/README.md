@@ -20,9 +20,11 @@ and UK Mail, through its tracking page. German DHL Paket is
   parcel. The page also comes back empty when it did not look the number up,
   and that is an inconclusive answer.
 - The headline and most rows name the shipment, some more than once. The
-  parser requires the headline to open with the number asked for, rejects a
-  headline or a row that names another one, and keeps the sentences without
-  it. Each refusal names the test that failed, without the page's words.
+  headline opens with it, or with an apology for a missed delivery before it.
+  The parser requires the headline to name "your shipment" with the number
+  asked for, rejects a headline or a row that names another one, and keeps the
+  sentences without it. Each refusal names the test that failed, without the
+  page's words. A dated row with an empty message is left out.
 - The page has no status codes. [statuses.json](statuses.json) lists the
   sentences seen with the stage each one means; a sentence missing from it
   keeps its wording and gets no stage.

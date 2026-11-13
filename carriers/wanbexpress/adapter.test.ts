@@ -133,6 +133,14 @@ describe('WanbExpress', () => {
     expect(wanbStage(null, "We'll apply your My Account preferences to this parcel delivery")).toBeNull();
     expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: "We'll apply your My Account preferences to this parcel delivery" }))
       .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
+    // A partner's missed round, the parcel left at a parcel shop, its sorting centre without a code, its pre-advice in other
+    // words, and its courier's call to the recipient, which moves nothing.
+    expect(wanbStage('LastMileDeliveryTried', 'Consignee absent, Consignee could not be found.')).toBe('failed_attempt');
+    expect(wanbStage('LastMileWaitForCollection', 'Placed in Parcelshop/Parcel locker')).toBe('ready_for_pickup');
+    expect(wanbStage(null, 'Shipment arrived to sorting centre / Shipment in the sorting centre')).toBe('in_transit');
+    expect(wanbStage(null, 'Your parcel will soon be handed over to us! It is being prepared by the sender.')).toBe('registered');
+    expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Consignee Contacted' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
   });
 
   it('puts right DHL\'s relayed text whose UTF-8 was read as Latin-1, and stages its round that did not deliver as a failed attempt', () => {

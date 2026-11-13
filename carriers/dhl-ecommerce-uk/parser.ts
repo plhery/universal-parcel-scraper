@@ -54,8 +54,10 @@ export function parseDhlEcommerceUk(html: string, rawNumber: string): CarrierRes
   // Each refusal says which test failed, without the page's words, so a host's log tells them apart.
   if (status.length !== 1) throw new SchemaError(PROVIDER, `DHL eCommerce UK returned ${status.length} status panels`);
   if (namesAnother(headline, number)) throw new SchemaError(PROVIDER, 'DHL eCommerce UK returned a different shipment');
-  if (!headline.startsWith(`Your shipment ${number} `)) {
-    throw new SchemaError(PROVIDER, 'DHL eCommerce UK returned a headline that does not open with the shipment');
+  // The headline names the shipment, at its start or after an apology ("We're sorry but we
+  // haven't been able to deliver your shipment … as our driver …").
+  if (!headline.toLowerCase().includes(`your shipment ${number} `)) {
+    throw new SchemaError(PROVIDER, 'DHL eCommerce UK returned a headline that does not name the shipment');
   }
   // The photo panel reuses the journey's layout; only the block under this heading is the history.
   const journey = $('div.parcel-journey').filter((_, node) => clean($(node).find('h4').first().text(), 60) === "Your parcel's journey");
@@ -67,7 +69,11 @@ export function parseDhlEcommerceUk(html: string, rawNumber: string): CarrierRes
   const events: (CarrierEvent & { stage?: Stage })[] = [];
   for (const row of rows.slice(1).toArray()) {
     const cells = $(row).children('td');
-    const description = cells.length === 3 ? sentence(clean(cells.eq(2).text(), 400), number) : undefined;
+    if (cells.length !== 3) throw new SchemaError(PROVIDER, 'DHL eCommerce UK returned an invalid scan');
+    const message = clean(cells.eq(2).text(), 400);
+    // A dated row with an empty message says nothing and is left out.
+    if (!message) continue;
+    const description = sentence(message, number);
     if (!description) throw new SchemaError(PROVIDER, 'DHL eCommerce UK returned an invalid scan');
     const date = day(clean(cells.eq(0).text(), 40));
     const clock = /^([01]\d|2[0-3]):([0-5]\d)$/.exec(clean(cells.eq(1).text(), 10));
@@ -83,7 +89,7 @@ export function parseDhlEcommerceUk(html: string, rawNumber: string): CarrierRes
   // A refused shipment goes back through the depot, and only the headline says
   // it is returning to the sender.
   const stage = /\bhas now been returned to the sender\b/i.test(headline) ? 'returned' : latest.stage;
-  const due = /^Your shipment is due to be delivered on (.+)$/.exec(clean($(`${PANEL}LO_02_pnlSecondaryDesc`).text(), 200))?.[1];
+  const due = /^Your shipment is due to be delivered (?:to your ServicePoint )?on (.+)$/.exec(clean($(`${PANEL}LO_02_pnlSecondaryDesc`).text(), 200))?.[1];
   const planned = due ? day(due) : undefined;
   return {
     status: stage ? statusForStage(stage) : 'unknown',

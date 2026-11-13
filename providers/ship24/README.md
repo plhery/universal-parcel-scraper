@@ -183,6 +183,10 @@ No account, cookie, fingerprint or issued token is used.
   gives as sent says neither.
 - A scan dated without a time (GLS Italy's announcement) is left out: it has no place
   among the others.
+- `dhlparcel-uk-tracking` can relay another shipment's row ("Your shipment <another
+  number> is part delivered"). Its sentences name the shipment, so a row naming a number
+  that is neither the one asked for nor one in `tracking_numbers` is left out when its
+  other rows name the parcel, as DHL eCommerce UK's own page would refuse it.
 - ECMS dates a flight row by the flight's day alone, at midnight sharp, and Ship24 gives
   that midnight as UTC's. A "Flight departure" or "Flight arrival" at midnight UTC keeps
   its day alone, as ECMS's own result does (carriers/ecms-express).

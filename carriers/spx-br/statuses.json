@@ -430,6 +430,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "F988",
+      "wording": "Pedido será devolvido ao vendedor. Por favor, aguarde.",
+      "language": "pt",
+      "stage": "returned",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "F680's words with a request to wait: the parcel goes back to the seller, as F680 does."
+    },
+    {
       "code": "F999",
       "wording": "Pedido devolvido",
       "language": "pt",

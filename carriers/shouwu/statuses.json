@@ -409,6 +409,30 @@
       "note": "DHL's sort at the parcel centre that serves the recipient, relayed before its round."
     },
     {
+      "wording": "The recipient is unknown",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "DHL's round in Germany, after the destination parcel centre: no such recipient at the address, and the return follows."
+    },
+    {
+      "wording": "Shipment will be returned to origin-Bad address",
+      "stage": "exception",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "DHL sending the parcel back after the round could not find the address: on its way back, not yet with the sender, as the Italian last mile's \"Back to Sender\" is."
+    },
+    {
+      "wording": "Shipment sent directly from parcel center to business customer",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "DHL's delivery from the parcel centre to a business recipient, \"ab Paketzentrum dem Geschäftskunden zugestellt\" in German. After DHL sent the parcel back, it is the return delivered to the sender: the parser reads it as returned."
+    },
+    {
       "wording": "Shipment is out for delivery",
       "stage": "out_for_delivery",
       "language": "en",

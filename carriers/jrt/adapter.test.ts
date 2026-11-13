@@ -8,7 +8,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
 import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
-import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, statusMap } from './status.js';
+import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -432,6 +432,16 @@ describe('JRT tracking adapter', () => {
     expect(answer('The shipment has been loaded onto the delivery vehicle')).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     // The destination's completed clearance lets the parcel go on.
     expect(answer('Customs clearance in destination country completed')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('货物已清关完成/Import customs clearance complete')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The slow pickup at the destination airport moves nothing: the wait for the pickup and the clearance leads.
+    expect(answer('理货较慢，导致提货缓慢，已催促尽快处理 Slow cargo sorting has resulted in delayed pickup. We have followed up for prompt handling.'))
+      .toEqual({ kind: 'mapped', stage: 'pending' });
+    // The rows at the port of departure read alike whatever day, with its year or as month.day, they book.
+    for (const description of ['货物到达口岸，预计2026/11/17号航班起飞', '货物到达口岸,预计2027/1/3号航班起飞', '预计11.11号航班飞', '预计1.3号航班飞']) {
+      expect(answer(description), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    expect(jrtEnglish(null, normalizeStatusWording('预计11.11号航班飞'))).toBe('Booked on a flight');
+    expect(jrtEnglish(null, normalizeStatusWording('分拣包裹已出库'))).toBe('Sorted parcel has left the warehouse');
     // J&T Express Mexico's rows read alike whatever their towns, sites, courier and phone; its collection after the
     // clearance is no first acceptance, with its "¡" or the "?" the platform's GBK leaves of it.
     for (const description of ['【Villa Uno】Tu envío ha salido de【SITE.pdv】con destino a【MEXICO.sc】', '【Villa Uno】Tu envío ha llegado a【MEXICO.sc】',
@@ -461,6 +471,8 @@ describe('JRT tracking adapter', () => {
       'loaded to movement / tour vehicle again',
       'The flight is expected to depart on soon and land on 10.27',
       '10/22号航班 CA000',
+      '预计号航班飞',
+      '货物到达口岸，预计2026/11/17号航班起飞 CA000',
       'Se espera que el vuelo salga hacia México',
     ]) expect(answer(description), description).toEqual({ kind: 'unknown' });
   });

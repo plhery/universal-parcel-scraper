@@ -184,6 +184,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-10",
       "note": "Exact GlobalEco international event label."
+    },
+    {
+      "wording": "Scheduled For Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "On a parcel Paack delivers, after Arrived In Country. Its comment relays Paack's appointment rescheduling: the delivery day or slot has changed. No courier run followed that day: the parcel waits at the depot."
     }
   ]
 }

@@ -14,8 +14,9 @@ import statuses from './statuses.json' with { type: 'json' };
 // The page writes some apostrophes curly.
 const key = (wording: string) => wording.toLowerCase().replace(/[’‘]/g, "'");
 const WORDINGS = new Map<string, Stage>(statuses.entries.map((entry) => [key(entry.wording), entry.stage as Stage]));
-// The row the page adds once it plans a delivery day, with that day, after the collection.
-const DUE = /^your shipment is due to be delivered on (?:mon|tues|wednes|thurs|fri|satur|sun)day \d{1,2}(?:st|nd|rd|th) [a-z]+ \d{4}$/;
+// The row the page adds once it plans a delivery day, with that day, after the collection, and
+// again for a delivery to a ServicePoint after a missed one.
+const DUE = /^your shipment is due to be delivered (?:to your servicepoint )?on (?:mon|tues|wednes|thurs|fri|satur|sun)day \d{1,2}(?:st|nd|rd|th) [a-z]+ \d{4}$/;
 
 const STATUSES: Record<Stage, CarrierStatus> = {
   pending: 'pending', registered: 'pending', accepted: 'in_transit', in_transit: 'in_transit', customs: 'in_transit',

@@ -1022,6 +1022,9 @@ describe('classifyWording', () => {
       // DHL eCommerce UK's planned delivery day after the collection, relayed with and without the number.
       ['Your shipment 99999999999999 is due to be delivered on Tuesday 03rd November 2026', 'in_transit'],
       ['Your shipment is due to be delivered on Monday 02nd November 2026', 'in_transit'],
+      ['Your shipment 99999999999999 is due to be delivered to your ServicePoint on Wednesday 18th November 2026', 'in_transit'],
+      ['Your shipment 99999999999999 is at the delivery location', 'in_transit'],
+      ['We’re sorry but we haven’t been able to deliver your shipment 99999999999999 as our driver was unable to gain access to the delivery address', 'failed_attempt'],
       // Posta Slovenije's and GLS's delivery rounds, relayed without their codes.
       ['The item is expected to be delivered today', 'out_for_delivery'],
       ['The parcel is expected to be delivered during the day.', 'out_for_delivery'],

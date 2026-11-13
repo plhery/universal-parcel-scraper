@@ -8,7 +8,8 @@ const STAGES: Readonly<Record<string, Stage>> = {
   LinehaulAgencyReceive: 'in_transit', LinehaulAgencyDeparture: 'in_transit', LinehaulDeparture: 'in_transit',
   LinehaulArrival: 'in_transit', CustomsCleared: 'in_transit', SupplierAndLastMileReceive: 'in_transit',
   LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDeliveryReady: 'out_for_delivery',
-  LastMileDeliveryFailed: 'failed_attempt', LastMileDelivered: 'delivered',
+  LastMileDeliveryFailed: 'failed_attempt', LastMileDeliveryTried: 'failed_attempt', LastMileWaitForCollection: 'ready_for_pickup',
+  LastMileDelivered: 'delivered',
 };
 
 // The last-mile partners' scans relayed without a code, by `normalizeStatusWording` wording: a US
@@ -39,6 +40,11 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['your parcel is on its way to inpost. please check back for updates', 'registered'],
   ['we have your parcel. please check back for updates', 'accepted'],
   ["we'll apply your my account preferences to this parcel delivery", null],
+  // A partner's pre-advice in other words, at the instant of the parcel's data; its sorting centre's arrival, also sent
+  // under SupplierAndLastMileReceive; and its courier calling the recipient at the minute of an attempt.
+  ['your parcel will soon be handed over to us! it is being prepared by the sender.', 'registered'],
+  ['shipment arrived to sorting centre / shipment in the sorting centre', 'in_transit'],
+  ['consignee contacted', null],
 ]);
 
 /**

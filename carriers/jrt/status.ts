@@ -23,6 +23,10 @@ const LANDING_DATE = /^(the flight has departed and is expected to |sorry, the s
 
 // On the line into the United States JRT books the flight by its month and day alone: "10/22号航班".
 const BOOKED_FLIGHT = /^\d{1,2}\/\d{1,2}(号航班)$/;
+// So do its rows at the port of departure, the day with its year, "货物到达口岸，预计2026/11/17号航班起飞",
+// or as month.day, "预计11.11号航班飞".
+const PORT_FLIGHT_DAY = /^货物到达口岸[，,] ?预计(?:\d{4}\/)?\d{1,2}\/\d{1,2}号航班起飞$/;
+const EXPECTED_FLIGHT_DAY = /^(预计)\d{1,2}[./]\d{1,2}(号航班飞)$/;
 
 // The English rows of a booked flight name its departure and arrival days: "Estimated departure is October 23th".
 const ESTIMATED_DAY = /^(estimated (?:departure|arrival date) is )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
@@ -63,6 +67,7 @@ const jtMexicoKey = (wording: string): string => (JT_MEXICO_ROW.test(wording)
 export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).replace(FLIGHT_DAY, '$1…$2…').replace(AWAITED_FLIGHT_DAY, '$1…$2…')
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
+  .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
 

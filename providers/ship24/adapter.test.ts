@@ -355,6 +355,23 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(read('US')?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-08T21:06:11', '2026-11-05T19:11:40']);
   });
 
+  it('leaves out a DHL Parcel UK row about another shipment, which is no delivery of this one', () => {
+    // Live shape: the feed relayed "Your shipment <another number> is part delivered" beside this parcel's rows.
+    const asked = '99999999999981';
+    const scan = (timestamp: string, status: string) => ({ timestamp, status, courier: { crawler_code: 'dhlparcel-uk-tracking' } });
+    const read = (data: Record<string, unknown>) => parseShip24Response({ data: { tracking_number: asked,
+      couriers: [{ translation: { name: 'DHL Parcel UK' } }], ...data } }, asked).events?.map((event) => event.description);
+    const events = [scan('2026-10-31T06:59:00', `Your shipment ${asked} is at the delivery depot`),
+      scan('2026-10-31T02:19:00', `Your shipment ${asked} has been collected`), scan('2026-10-30T17:53:00', 'Your shipment 99999000000001 is part delivered')];
+    expect(read({ events })).toEqual([`Your shipment ${asked} is at the delivery depot`, `Your shipment ${asked} has been collected`]);
+    // A number Ship24 lists for the same parcel is the parcel's, and another feed's sentence is not read so.
+    expect(read({ events, tracking_numbers: [{ tracking_number: asked, is_main: true }, { tracking_number: '99999000000001' }] })).toHaveLength(3);
+    const other = events.map((event) => ({ ...event, courier: { crawler_code: 'example-tracking' } }));
+    expect(read({ events: other })).toHaveLength(3);
+    // A feed that names only a number Ship24 does not list keeps its rows.
+    expect(read({ events: events.slice(2) })).toHaveLength(1);
+  });
+
   it('leaves out a milestone Mainfreight\'s feed relays before its clock has come anywhere', () => {
     // Live shape: an air job's arrival a day ahead, without the tracker's "(Estimated)".
     const scan = (timestamp: string, status: string) => ({ timestamp, status, courier: { crawler_code: 'mainfreight-tracking' } });

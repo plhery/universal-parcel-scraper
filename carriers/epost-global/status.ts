@@ -32,9 +32,12 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   // La Poste's wording for parcels PostNL brings to France, after they left the United States.
   ['your item has been dropped off by the sender with our postal partner in the country of origin.', 'in_transit'],
   ['your item is ready to be forwarded from its foreign territory. it will be given to the carrier for forwarding.', 'in_transit'],
-  // GLS's European network, after the hand-over: a parcel center's arrival and departure.
+  // GLS's European network, after the hand-over: a parcel center's arrival and departure, the delivery round and the
+  // delivery, as GLS's own maps read them.
   ['the parcel has reached the parcel center.', 'in_transit'],
   ['the parcel has left the parcel center.', 'in_transit'],
+  ['the parcel is expected to be delivered during the day.', 'out_for_delivery'],
+  ['the parcel has been delivered.', 'delivered'],
   // Royal Mail's British partner, after the hand-over: its hub, depots and the collection point. Its codes are
   // Intersoft's Intelligent Shipper buckets, which file "Arrived in customs" as misrouted (ISMI).
   ['departed hub', 'in_transit'],

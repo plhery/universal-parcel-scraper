@@ -364,6 +364,22 @@
       "note": "Relayed from DHL: loaded onto a vehicle between its parcel centres, as after the export parcel centre. DHL words the delivery round otherwise."
     },
     {
+      "wording": "Movement / tour vehicle arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "Relayed from DHL: its vehicle at the delivery depot, at the minute the shipment is prepared for delivery there and before the loading for the round."
+    },
+    {
+      "wording": "Not delivered-Consignee could not be reached",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "Relayed from DHL at the minute of its \"The recipient was not present\": the round reached no one."
+    },
+    {
       "wording": "Shipment is in transit to carrier",
       "stage": "in_transit",
       "language": "en",
@@ -601,6 +617,14 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-12",
       "note": "Relayed from the last-mile carrier after YunExpress delivered the parcel to it: its intake, a hand-over like Package accepted at courier partner, not the parcel's acceptance."
+    },
+    {
+      "wording": "Item is out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "Relayed from the same last-mile carrier after its Item accepted, hours before its delivery to the letterbox."
     },
     {
       "wording": "Accepted at Carrier's Facility",

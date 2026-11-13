@@ -189,6 +189,7 @@ export const statusMap: CarrierStatusMap = {
     { wording: 'parcel handed to dpd', note: "The label of PARCEL_HANDED, which DPD's map leaves unmapped on purpose." },
     { wording: 'your parcel is on its way', note: "The label of IN_TRANSIT, which DPD's map leaves unmapped on purpose." },
     { wording: 'at delivery center', note: "The label of AT_DELIVERY_CENTER, which DPD's map leaves unmapped on purpose." },
+    { wording: 'at delivery centre', note: "The label of AT_DELIVERY_CENTER as DPD's rendered pages spell it, which DPD's map leaves unmapped on purpose." },
     { code: 'SPL', note: 'Worded like IN_TRANSIT and seen on both sides of the origin depot, so it names no movement of its own.' },
     { code: 'OTHER', note: "The guest API's catch-all, which names no movement: the parcel keeps the stage it had." },
     { code: 'SPE', note: 'A delivery estimate or a changed delivery day, not a scan: the parcel keeps the stage it had.' },

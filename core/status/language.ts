@@ -333,7 +333,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^due (?:to be delivered|for delivery) today(?: by\b.*)?$/.test(text)) return 'out_for_delivery';
   // DHL eCommerce UK's row for the day it plans to deliver on, which follows the collection, as
   // universal providers relay it with the shipment's number: the carrier's map reads it in transit.
-  if (/^your shipment (?:\d{7,} )?is due to be delivered on (?:mon|tues|wednes|thurs|fri|satur|sun)day \d{2}(?:st|nd|rd|th) [a-z]+ \d{4}$/.test(text)) return 'in_transit';
+  // So is its day for a ServicePoint, its arrival at the delivery depot, and a round that could not reach the address.
+  if (/^your shipment (?:\d{7,} )?is due to be delivered (?:to your servicepoint )?on (?:mon|tues|wednes|thurs|fri|satur|sun)day \d{2}(?:st|nd|rd|th) [a-z]+ \d{4}$/.test(text)) return 'in_transit';
+  if (/^your shipment (?:\d{7,} )?is at the delivery location$/.test(text)) return 'in_transit';
+  if (/^we['’]re sorry but we haven['’]t been able to deliver your shipment (?:\d{7,} )?as our driver was unable to gain access to the delivery address$/.test(text)) return 'failed_attempt';
   // Posta Slovenije's delivery round (N) and GLS's (INDELIVERY), as universal providers relay
   // them without the code: each carrier's map reads the sentence as out for delivery.
   if (/^the item is expected to be delivered today\.?$|^(?:the )?parcel is expected to be delivered during the day\.?$/.test(text)) return 'out_for_delivery';

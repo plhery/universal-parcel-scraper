@@ -25,6 +25,7 @@
     {"code": "DI", "wording": "Incorrect address details: delivery not possible", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "After the round: the address details do not let the courier deliver, an incidence the sender or recipient settles before the parcel moves on. Absence and a closed business are failed attempts instead."},
     {"code": "CH", "wording": "Not delivered today: delivery expected for the next working day", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "PE", "wording": "The expected delivery date might be postponed one working day", "language": "en", "stage": "exception", "confirmedBy": "live"},
+    {"code": "NL", "wording": "The expected delivery date might be postponed one working day", "language": "en", "stage": "exception", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The wording PE and AI also carry, here between the arrival in Spain and the delivering depot: staged as they are."},
     {"code": "FM", "wording": "Force Majeure: delivery not possible", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "OH", "wording": "Delivery is being managed locally, non standard goods or shipment, special handling means required", "language": "en", "stage": "exception", "confirmedBy": "live"},
     {"code": "FA", "wording": "Shipment with incidence If you are the sender, please contact DHL Parcel, if you are the recipient please contact the sender", "language": "en", "stage": "exception", "confirmedBy": "live"},

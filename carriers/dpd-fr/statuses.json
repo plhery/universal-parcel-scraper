@@ -322,6 +322,14 @@
       "note": "Acceptance notice sent to the recipient by SMS and by e-mail. It can come hours after a sort centre's scan, so it keeps the stage of the scan before it; the acceptance scan itself is accepted."
     },
     {
+      "wording": "de l'étape actuelle de sa livraison",
+      "language": "fr",
+      "stage": null,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "\"Le destinataire est informé par SMS de l'étape actuelle de sa livraison\": a notice to the recipient, sent during the delivery round, that names no step. It keeps the stage of the scan before it."
+    },
+    {
       "wording": "colis en retour",
       "language": "fr",
       "stage": "returned",

@@ -19,6 +19,8 @@ const STATUSES: Record<string, ClassifiedStatus> = {
   'received by carrier': { status: 'in_transit', stage: 'in_transit' },
   'delayed': { status: 'in_transit', stage: 'in_transit' },
   'at the local depot': { status: 'in_transit', stage: 'in_transit' },
+  // Paack's new delivery day or slot, relayed: the parcel waits at the depot.
+  'scheduled for delivery': { status: 'in_transit', stage: 'in_transit' },
   'delivery attempted': { status: 'exception', stage: 'failed_attempt' },
   'carrier label error': { status: 'exception', stage: 'exception' },
   'delivery exception': { status: 'exception', stage: 'exception' },

@@ -120,7 +120,29 @@ describe('DHL eCommerce UK parser', () => {
     expect(() => parseDhlEcommerceUk(mixed, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     const reworded = fixture('delivered').replace(`<h3>Your shipment ${NUMBER} `, `<h3>Shipment ${NUMBER} `);
     expect(() => parseDhlEcommerceUk(reworded, NUMBER))
-      .toThrow(expect.objectContaining({ kind: 'schema', message: 'DHL eCommerce UK returned a headline that does not open with the shipment' }));
+      .toThrow(expect.objectContaining({ kind: 'schema', message: 'DHL eCommerce UK returned a headline that does not name the shipment' }));
+  });
+
+  it('reads a missed delivery the headline apologises for, a ServicePoint day and a dated row with no message', () => {
+    const row = (date: string, clock: string, text: string) => `<tr><td>${date}</td><td>${clock}</td><td>${text}</td></tr>`;
+    const missed = `We're sorry but we haven’t been able to deliver your shipment ${NUMBER}`;
+    const page = fixture('in-transit')
+      .replace(/<h3>[^<]*<\/h3>/, `<h3>${missed} (1 parcel expected) as our driver was unable to gain access to the delivery address</h3>`)
+      .replace('<tr><td nowrap="nowrap">03rd April 2026', [
+        row('06th April 2026', '16:00', 'Delayed'),
+        row('06th April 2026', '10:27', '\n   '),
+        row('05th April 2026', '21:51', `Your shipment ${NUMBER} is due to be delivered to your ServicePoint on Tuesday 07th April 2026`),
+        row('05th April 2026', '16:00', `${missed} as our driver was unable to gain access to the delivery address`),
+        row('05th April 2026', '08:49', `Your shipment ${NUMBER} is at the delivery location`),
+      ].join('') + '<tr><td nowrap="nowrap">03rd April 2026')
+      .replace('due to be delivered on Friday 03rd April 2026', 'due to be delivered on Tuesday 07th April 2026');
+    const result = parseDhlEcommerceUk(page, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Delayed', expected_delivery: '2026-04-07' });
+    expect(result.events?.slice(0, 4).map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'failed_attempt', 'in_transit']);
+    expect(result.events).toHaveLength(7);
+    expect(JSON.stringify(result)).not.toContain(NUMBER);
+    expect(statusMap.stage(null, `Your shipment ${NUMBER} is at the delivery location`)).toBe('in_transit');
+    expect(statusMap.stage(null, `${missed} as our driver was unable to gain access to the delivery address`)).toBe('failed_attempt');
   });
 
   it('reads a headline and rows that name the shipment more than once', () => {
