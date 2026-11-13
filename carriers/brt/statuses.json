@@ -175,6 +175,14 @@
       "note": "The Italian page's label for NOTICE OF ATTEMPTED DELIVERY."
     },
     {
+      "wording": "PATRONAL HOLIDAY",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "The patron saint's holiday where the parcel is going holds it for the day, before it reaches the delivery depot; no delivery is tried, and the next scans move it on."
+    },
+    {
       "wording": "MANIFESTAZIONE PUBBLICA",
       "language": "it",
       "stage": "exception",

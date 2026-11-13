@@ -167,6 +167,12 @@ describe('BRT direct tracking', () => {
     expect(result.delivered_at).toBeUndefined();
   });
 
+  it('reads the patron saint\'s holiday on the way to the delivery depot as transit, not an attempt', () => {
+    const held = parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').last().text('PATRONAL HOLIDAY')), NUMBER);
+    expect(held).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'PATRONAL HOLIDAY' });
+    expect(held.events![0]).toMatchObject({ stage: 'in_transit', provider_status: 'PATRONAL HOLIDAY' });
+  });
+
   it('reads a shipment a public demonstration holds up as an exception, until a later scan moves it on', () => {
     const held = parseBrt(edit($ => $('.table_stato_dati tr').eq(1).children('td').last().text('TURMOIL')), NUMBER);
     expect(held).toMatchObject({ status: 'exception', current_stage: 'exception', last_status_text: 'TURMOIL' });

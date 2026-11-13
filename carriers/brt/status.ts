@@ -24,6 +24,8 @@ const labels: Record<string, ClassifiedStatus> = {
   'ABSENT AFTER ATTEMPT.DELIVERY': { status: 'exception', stage: 'failed_attempt' },
   // A public demonstration holds the parcel up.
   TURMOIL: { status: 'exception', stage: 'exception' },
+  // The patron saint's holiday where the parcel is going holds it for the day, before the delivery depot.
+  'PATRONAL HOLIDAY': { status: 'in_transit', stage: 'in_transit' },
   'RETURNED TO SENDER': { status: 'exception', stage: 'returned' },
   DELIVERED: { status: 'delivered', stage: 'delivered' },
 };
