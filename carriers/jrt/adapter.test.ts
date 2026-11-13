@@ -417,6 +417,12 @@ describe('JRT tracking adapter', () => {
     // On the line into Latin America the booked flight and the flight name the destination and the day.
     expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('During transportation to Spain')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('During transportation to Portugal')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('航班已起飞,the flight has taken off from the origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // FedEx's hold at the recipient's request, while the parcel still travels.
+    expect(answer('Delivery option requested, Hold request received - check back later for shipment status'))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     // Landed, the parcel is still the flight's, until the next row says customs has it.
     expect(answer('The flight has landed, and the package is ready to be handed over to customs for clearance.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('and the package has been handed over to customs for clearance')).toEqual({ kind: 'mapped', stage: 'customs' });

@@ -36,6 +36,8 @@ const LOADED_FLIGHT = /^(预计配载航班)\d{1,2}月\d{1,2}日[,，] ?(expecte
 // "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
 const SPANISH_FLIGHT = /^(se espera que el vuelo salga hacia )[^\d…]{1,40}?( el )\d{1,2} de [a-z]+$/;
 const FLIGHT_EN_ROUTE = /^(the flight is en route to the airport in )[^\d…]{1,40}$/;
+// The parcel on its way to the destination: "During transportation to Spain".
+const TRANSPORTED_TO = /^(during transportation to )[^\d…]{1,40}$/;
 
 // A delayed flight names its new day in both halves: "航班延误，预计11/1号飞出 Flight delayed, estimated departure on Nov 1.",
 // sometimes with the month's full stop for the space ("Oct.24.").
@@ -62,7 +64,7 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
-  .replace(DELAYED_FLIGHT, '$1…$2…');
+  .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
 
 /**
  * The stage JRT's map gives a row, by its whole `normalizeStatusWording` wording:

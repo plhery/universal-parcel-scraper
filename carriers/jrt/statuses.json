@@ -1019,6 +1019,29 @@
       "note": "The flight to the destination's airport, which the map reads as an ellipsis."
     },
     {
+      "wording": "During transportation to …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The parcel on its way to the destination country, which the map reads as an ellipsis."
+    },
+    {
+      "wording": "航班已起飞,The flight has taken off from the origin",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13"
+    },
+    {
+      "wording": "Delivery option requested, hold request received - check back later for shipment status",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "Copied from FedEx (code RR): the recipient asked to hold the parcel while it still travels, as FedEx's own map reads it."
+    },
+    {
       "wording": "At local FedEx facility",
       "language": "en",
       "stage": "in_transit",
