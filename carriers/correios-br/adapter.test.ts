@@ -3,6 +3,7 @@ import fixture from './fixtures/delivered.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import type { TrawlCapturedResponse, TrawlClient } from '../../core/transport/trawl.js';
 import { CorreiosTracker } from './adapter.js';
 import { isCorreiosCaptchaError, normalizeCorreiosNumber, parseCorreios } from './parser.js';
@@ -297,6 +298,34 @@ describe('Correios session and transport', () => {
     const throttled = vi.fn(async () => new Response('busy', { status: 429 })) as unknown as typeof fetch;
     await expect(new CorreiosTracker({ fetcher: throttled, trawl: unused as unknown as TrawlClient }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited' });
     expect(unused.scrape).not.toHaveBeenCalled();
+  });
+
+  it('goes straight to the browser for a while after Turnstile refused the direct read, and not after a misread CAPTCHA', async () => {
+    const API = 'https://rastreamento.correios.com.br/app/resultado.php';
+    const browser = (service: string) => ({ endpoint: new URL(`https://browser.example.test/${service}`), scrape: vi.fn(async () => ({ statusCode: 200,
+      capturedResponses: [{ url: API, status: 200, headers: {}, body: JSON.stringify(fixture), truncated: false, base64Encoded: false, error: null,
+        trackingNumberSubmitted: NUMBER }] })) }) as unknown as TrawlClient;
+    const turnstile = vi.fn(async () => new Response('<div id="captcha" class="cf-turnstile"></div>')) as unknown as typeof fetch;
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const trawl = browser('turnstile');
+    const tracker = () => new CorreiosTracker({ fetcher: turnstile, trawl, recorder });
+    await tracker().fetch(NUMBER);
+    await tracker().fetch(NUMBER);
+    expect(turnstile).toHaveBeenCalledTimes(1);
+    expect(recorder.step.mock.calls.map(([step]) => step.step)).toEqual(['direct', 'trawl', 'trawl']);
+    // Without a browser service there is nowhere else to go: the portal is asked each time.
+    await expect(new CorreiosTracker({ fetcher: turnstile }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(turnstile).toHaveBeenCalledTimes(2);
+    // Once the rest is over, the portal is asked again.
+    const later = vi.spyOn(Date, 'now').mockReturnValue(Date.now() + DIRECT_REST_MS + 1);
+    try { await tracker().fetch(NUMBER); } finally { later.mockRestore(); }
+    expect(turnstile).toHaveBeenCalledTimes(3);
+    // A text CAPTCHA the OCR misread is the direct path working: it starts no rest.
+    const p = portal();
+    const unread = new CorreiosTracker({ fetcher: p.fetcher, solveCaptcha: vi.fn(async () => '?'), trawl: browser('misread') });
+    await unread.fetch(NUMBER);
+    await unread.fetch(NUMBER);
+    expect(p.calls.filter(({ url }) => url.href === HOME)).toHaveLength(2);
   });
 
   it('keeps endpoint absence inconclusive and preserves challenge, throttle and network errors', async () => {

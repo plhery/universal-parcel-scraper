@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter, AustraliaPostTracker, australiaPostApiUrl, australiaPostTrackingUrl, normalizeAustraliaPostNumber, parse } from './adapter.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NoHistoryError } from '../../core/errors/index.js';
+import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { sameInstantIdentityPolicy } from '../../app.js';
@@ -363,6 +364,9 @@ describe('Australia Post status codes and places', () => {
 function capture(body: unknown = fixture(), status = 200) {
   return { url: australiaPostApiUrl(NUMBER), status, body: JSON.stringify(body), headers: {} };
 }
+// Each tracker its own browser service: a refusal one meets rests no other's direct step.
+let services = 0;
+const browserService = (fetcher: typeof fetch) => new TrawlClient(`https://browser.example.test/service-${services += 1}`, fetcher);
 function service(captures: Array<Record<string, unknown>> = [capture()], extra: Record<string, unknown> = {}) {
   return { url: australiaPostTrackingUrl(NUMBER), html: '<html/>', tier: 2, statusCode: 200,
     capturedResponses: captures, ...extra };
@@ -371,14 +375,14 @@ const refused = () => vi.fn<typeof fetch>().mockImplementation(async () => new R
 /** A tracker whose direct request is refused, so the browser service answers. */
 function tracker(payload: unknown) {
   const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json(payload));
-  const trawl = new TrawlClient('https://browser.example.test', fetcher);
+  const trawl = browserService(fetcher);
   const direct = refused();
   return { fetcher, trawl, direct, tracker: new AustraliaPostTracker({ trawl, fetcher: direct }) };
 }
 function direct(body: unknown = fixture(), status = 200, headers: Record<string, string> = {}) {
   const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(typeof body === 'string' ? body : JSON.stringify(body), { status, headers }));
   const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()));
-  return { fetcher, browser, tracker: new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher }) };
+  return { fetcher, browser, tracker: new AustraliaPostTracker({ trawl: browserService(browser), fetcher }) };
 }
 
 describe('Australia Post direct retrieval', () => {
@@ -405,9 +409,33 @@ describe('Australia Post direct retrieval', () => {
     }
     const recorder = { step: vi.fn(), lookup: vi.fn() };
     const { fetcher, browser } = direct('{}', 403);
-    await adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher, recorder, env: {}, browserExecutablePath: null }).track({ number: NUMBER });
+    await adapter({ trawl: browserService(browser), fetcher, recorder, env: {}, browserExecutablePath: null }).track({ number: NUMBER });
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: 'challenge' }));
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok', fallbackFrom: 'direct' }));
+  });
+
+  it('goes straight to the browser for a while after the gateway refused plain HTTP', async () => {
+    const { tracker: client, fetcher, browser } = direct('{}', 403);
+    await client.fetch(NUMBER);
+    await client.fetch(NUMBER);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(browser).toHaveBeenCalledTimes(2);
+    // A gateway error that is no refusal starts no rest.
+    const failed = direct('<html>error</html>', 500);
+    await failed.tracker.fetch(NUMBER);
+    await failed.tracker.fetch(NUMBER);
+    expect(failed.fetcher).toHaveBeenCalledTimes(2);
+    // Recognition has no browser to go to, and still asks the gateway.
+    const gateway = refused();
+    const instance = adapter({ trawl: browserService(vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()))),
+      fetcher: gateway, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
+    await instance.track({ number: NUMBER });
+    await instance.recognize!(NUMBER).catch(() => undefined);
+    expect(gateway).toHaveBeenCalledTimes(2);
+    // Once the rest is over, the gateway is asked again.
+    const later = vi.spyOn(Date, 'now').mockReturnValue(Date.now() + DIRECT_REST_MS + 1);
+    try { await client.fetch(NUMBER); } finally { later.mockRestore(); }
+    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 
   it('keeps rate limits, changed schemas and unprocessable references away from the browser', async () => {
@@ -432,7 +460,7 @@ describe('Australia Post recognition', () => {
   it('asks the gateway alone and reads only its not-found entry as unknown', async () => {
     const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(service()));
     const fetcher = vi.fn<typeof fetch>();
-    const instance = adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
+    const instance = adapter({ trawl: browserService(browser), fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null });
     fetcher.mockResolvedValueOnce(Response.json(fixture()));
     await expect(instance.recognize!(NUMBER)).resolves.toEqual({ known: true, lastActivityAt: '2026-06-08T04:10:00.000Z' });
     // A recognition budget past the lookup's minute still asks.
@@ -537,7 +565,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
   function routed(replies: unknown[], budgetMs?: number) {
     const browser = vi.fn<typeof fetch>().mockImplementation(async () => Response.json(replies.shift()));
     const recorder = { step: vi.fn(), lookup: vi.fn() };
-    const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser),
+    const client = new AustraliaPostTracker({ trawl: browserService(browser),
       fetcher: refused(), recorder, fallbackProxyUrl: proxy, timeoutMs: budgetMs });
     return { client, browser, recorder };
   }
@@ -591,7 +619,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
     const clock = vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
     try {
       const browser = vi.fn<typeof fetch>().mockImplementation(async () => { elapsed = 30_000; return Response.json(service([capture({}, 403)])); });
-      const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), fallbackProxyUrl: proxy });
+      const client = new AustraliaPostTracker({ trawl: browserService(browser), fetcher: refused(), fallbackProxyUrl: proxy });
       await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
       expect(browser).toHaveBeenCalledTimes(1);
     } finally { clock.mockRestore(); }
@@ -607,7 +635,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
   it('starts no proxy request after cancellation', async () => {
     const controller = new AbortController();
     const browser = vi.fn<typeof fetch>().mockImplementation(async () => { controller.abort(new Error('stopped')); return Response.json(service([capture({}, 403)])); });
-    const client = new AustraliaPostTracker({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), fallbackProxyUrl: proxy });
+    const client = new AustraliaPostTracker({ trawl: browserService(browser), fetcher: refused(), fallbackProxyUrl: proxy });
     await expect(client.fetch(NUMBER, { signal: controller.signal })).rejects.toThrow();
     expect(browser).toHaveBeenCalledTimes(1);
   });
@@ -624,7 +652,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
 
   it('reads host configuration for tracking while HTTP recognition never opens either browser route', async () => {
     const browser = vi.fn<typeof fetch>().mockResolvedValue(Response.json(service()));
-    const instance = adapter({ trawl: new TrawlClient('https://browser.example.test', browser), fetcher: refused(), recorder: NOOP_RECORDER,
+    const instance = adapter({ trawl: browserService(browser), fetcher: refused(), recorder: NOOP_RECORDER,
       env: { AUSTRALIA_POST_FALLBACK_PROXY_URL: proxy }, browserExecutablePath: null });
     await expect(instance.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     expect(browser).not.toHaveBeenCalled();

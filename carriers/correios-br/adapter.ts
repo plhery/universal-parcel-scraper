@@ -2,6 +2,7 @@ import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
+import { DirectRest } from '../../core/runner/directRest.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
@@ -24,8 +25,10 @@ export class CorreiosTracker {
     const number = normalizeCorreiosNumber(raw);
     const trawl = this.options.trawl ?? null;
     const budgetMs = context.budgetMs ?? (trawl ? 45_000 : 20_000);
+    // Behind Turnstile the direct read only costs a request: the browser step reads the parcel.
+    const rest = new DirectRest('correios-br', trawl);
     return runSteps({ carrier: 'correios-br', budgetMs, signal: context.signal,
-      recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', run: async ({ signal, remainingMs }) => {
+      recorder: this.options.recorder ?? NOOP_RECORDER }, [{ id: 'direct', enabled: !rest.resting, run: async ({ signal, remainingMs }) => {
       // The page check is quick; the browser step needs the rest.
       const deadline = performance.now() + (trawl ? Math.min(remainingMs, 10_000, Math.max(1, Math.floor(remainingMs * 0.3))) : remainingMs);
       const check = () => {
@@ -48,6 +51,7 @@ export class CorreiosTracker {
       // The portal moved its query behind Cloudflare Turnstile, which only a browser passes: the
       // query is then a POST its token must accompany, and the old one is refused with HTTP 405.
       if (/\bcf-turnstile\b/.test(new TextDecoder().decode(home.bytes))) {
+        rest.refused();
         throw new ChallengeError('Correios', 'Correios requires a Turnstile browser check');
       }
       for (let attempt = 0; attempt < 2; attempt += 1) {

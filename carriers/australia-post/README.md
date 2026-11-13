@@ -11,6 +11,8 @@ refusal there leaves the number unchecked instead of starting the browser.
 1. `direct`: one `GET https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments?trackingIds={number}`
    with the Android app's `AP_APP_ID`, `AP_CHANNEL_NAME` and HTTP client name, 10 s timeout. No key,
    cookie or token is sent. 401/403 is a challenge and hands over to `trawl`; 429 is rate limited.
+   After a 401/403, lookups with a browser service skip this step for a few hours, then ask the
+   gateway again. Recognition always asks it.
 2. `trawl`: TRAWL opens `/mypost/track/details/{number}` (tiers 2–3, no plain HTTP) and captures
    exactly the same GET.
    - The Australia Post helper ([`australia-post-browser.mjs`](../../trawl/australia-post-browser.mjs),

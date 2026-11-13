@@ -1,6 +1,7 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, carrierErrorKind, ChallengeError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { DirectRest } from '../../core/runner/directRest.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
@@ -81,11 +82,20 @@ export class MailamericasTracker {
       }
       return parseMailamericas(json(decodeText(bytes)), number);
     };
+    // While AWS's firewall holds plain HTTP for a browser check, the browser step reads the parcel.
+    const rest = new DirectRest('mailamericas', this.options.trawl);
     // One read with the whole budget: a parcel the service has not looked up
     // lately takes it twenty seconds to answer.
     return runSteps({ carrier: 'mailamericas', budgetMs: context.budgetMs ?? (this.options.trawl ? 60_000 : 30_000), signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => read(signal, remainingMs) },
+      { id: 'direct', enabled: !rest.resting, run: async ({ signal, remainingMs }) => {
+        try {
+          return await read(signal, remainingMs);
+        } catch (error) {
+          if (error instanceof ChallengeError) rest.refused();
+          throw error;
+        }
+      } },
       { id: 'trawl', enabled: Boolean(this.options.trawl), recovers: error => carrierErrorKind(error) === 'challenge',
         run: ({ signal, remainingMs }) => this.browser(number, signal, remainingMs) },
     ]);

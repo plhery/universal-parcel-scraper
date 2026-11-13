@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
+import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { universalCarrierHints } from '../../providers/shared/hints.js';
@@ -402,8 +403,10 @@ describe('MailAmericas browser recovery', () => {
     url: MAILAMERICAS_API, status: 200, body: JSON.stringify(fixture('delivered')), headers: {},
     truncated: false, base64Encoded: false, error: null, trackingNumberSubmitted: DELIVERED, ...overrides,
   });
+  // Each setup its own browser service: a refusal one meets rests no other's direct step.
+  let services = 0;
   function setup(entries: TrawlCapturedResponse[], httpStatus = 202, httpBody = '') {
-    const trawl = new TrawlClient('http://browser.test');
+    const trawl = new TrawlClient(`http://browser.test/service-${services += 1}`);
     const scrape = vi.spyOn(trawl, 'scrape').mockResolvedValue({ url: '', html: '', cookies: [], userAgent: null,
       tier: 3, statusCode: 200, capturedResponses: entries, raw: {} });
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(httpBody, { status: httpStatus }));
@@ -423,6 +426,20 @@ describe('MailAmericas browser recovery', () => {
     expect(options.signal).toBeInstanceOf(AbortSignal);
     await expect(f.instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
     expect(f.scrape).toHaveBeenCalledTimes(1);
+  });
+  it('goes straight to the browser for a while after the firewall held the direct lookup', async () => {
+    const f = setup([capture()]);
+    await f.instance.track({ number: DELIVERED });
+    await f.instance.track({ number: DELIVERED });
+    expect(f.fetcher).toHaveBeenCalledTimes(1);
+    expect(f.recorder.step.mock.calls.map(([row]) => row.step)).toEqual(['direct', 'trawl', 'trawl']);
+    // HTTP recognition has no browser to go to, and still asks.
+    await expect(f.instance.recognize!(DELIVERED)).rejects.toMatchObject({ kind: 'challenge' });
+    expect(f.fetcher).toHaveBeenCalledTimes(2);
+    // Once the rest is over, the direct lookup asks again.
+    const later = vi.spyOn(Date, 'now').mockReturnValue(Date.now() + DIRECT_REST_MS + 1);
+    try { await f.instance.track({ number: DELIVERED }); } finally { later.mockRestore(); }
+    expect(f.fetcher).toHaveBeenCalledTimes(3);
   });
   it('requires a bound request for absence and rejects a different returned identity', async () => {
     await expect(setup([capture({ body: '{"data":null}' })]).instance.track({ number: DELIVERED })).rejects.toMatchObject({ kind: 'not_found' });

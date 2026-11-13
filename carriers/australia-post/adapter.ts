@@ -7,6 +7,7 @@ import { unreadEstimates } from '../../core/result/unread.js';
 import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import { furtherAlong } from '../../core/status/progress.js';
+import { DirectRest } from '../../core/runner/directRest.js';
 import { recoverableByDefault, runSteps } from '../../core/runner/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { canadaProvinceTimeZone, countryCode, countryTimeZone, explicitOffsetTime, epochMillisTime, isoTime,
@@ -344,8 +345,10 @@ export class AustraliaPostTracker {
       history = !!result.events?.length;
       return result;
     };
+    // A gateway that refuses plain HTTP refuses it for days: the browser step reads the parcel meanwhile.
+    const rest = new DirectRest('australia-post', trawl);
     return runSteps({ carrier: 'australia-post', budgetMs, signal: context.signal, recorder: routed }, [{
-      id: 'direct', run: async ({ signal, remainingMs }) => {
+      id: 'direct', enabled: !rest.resting, run: async ({ signal, remainingMs }) => {
         const { response, bytes } = await fetchBounded(australiaPostApiUrl(number), { signal, headers: APP_HEADERS }, {
           provider: PROVIDER, timeoutMs: Math.max(1, Math.min(DIRECT_TIMEOUT_MS, Math.floor(remainingMs))),
           maxBytes: MAX_BYTES, allowHttpStatuses: [401, 403, 429], fetcher: asApp(this.options.fetcher),
@@ -355,6 +358,7 @@ export class AustraliaPostTracker {
           throw new RateLimitedError(PROVIDER, retry && /^\d+$/.test(retry) ? Number(retry) * 1000 : undefined);
         }
         if (response.status !== 200) {
+          rest.refused();
           throw new ChallengeError(PROVIDER, trawl ? undefined : 'Australia Post requires the browser tracking service');
         }
         let payload: unknown;

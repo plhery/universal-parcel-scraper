@@ -28,7 +28,9 @@ Tracked through the lookup its tracking page makes.
 - AWS's firewall can hold a lookup for a browser to verify, with an empty HTTP 202 that names its
   action in `x-amzn-waf-action`. Browser recovery retains that failure. A later refusal,
   throttle or malformed reply cannot be hidden by an earlier history. Unresolved verification
-  still needs enabled universal providers.
+  still needs enabled universal providers. After the direct request meets a browser check or a
+  refusal other than the balancer's, lookups with a browser service skip it for a few hours,
+  then ask again.
 - Some replies take twenty seconds or more. The single read gets the whole budget rather than
   half of it with a retry after.
 - The shipment must echo the number asked.

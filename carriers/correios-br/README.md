@@ -16,7 +16,9 @@ with HTTP 403. The direct step stops at a page showing Turnstile, and the `trawl
 browser service. It opens the portal's share link, `index.php?objetos=`, which fills in the
 number, waits for Turnstile's token, interacting with its checkbox when shown, and searches.
 The service keeps only the reply whose request carried the whole number, the same
-JSON the direct query read. Without a browser service, Turnstile is a challenge and lookups
+JSON the direct query read. After a page showing Turnstile, lookups go straight to the
+`trawl` step for a few hours, then the direct step looks again; an unreadable or rejected text
+CAPTCHA starts no such rest. Without a browser service, Turnstile is a challenge and lookups
 fall back to the providers. The portal answers a burst of lookups from one address with HTTP
 429, a rate limit rather than a missing parcel. Fixed `correios.verification` diagnostics
 record token receipt, submission, response counts and HTTP statuses, without the number,
