@@ -93,14 +93,17 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   size of the namesake context picks, when it lies nearer the way between the scans around
   it: "Warsaw" between Lviv and New York is in Poland.
 - A state, province or canton written after the town holds: "Earth City, MO" is not Earth
-  in Texas.
+  in Texas. After a town the reader does not know, the place is the state's country with the
+  code in `region` ("EXAMPLE TOWN, AZ, US", or "EXAMPLE TOWN, AZ" on a parcel in the US), so
+  the scan keeps the state's clock.
 - A state or province written alone by its code ("WA", "VIC, AU", "SA AUSTRALIA") is in the
   first country the parcel is likely in that has it, before the country, town or airport its
   letters also name (Saudi Arabia, Vic in Spain, Tashkent). The place is that country's and `region` holds the
   code. Letters that are also a country's keep naming it on a parcel through that country, and
   where another scan names a country by its code alone: Meest's "NL" beside its "US" is the
   Netherlands, not Newfoundland. A code alone for the state's own country ("AU" beside "SA")
-  keeps the state.
+  keeps the state. A US state whose code is also a country's ("CA", "AZ", "DE") is the state
+  only on a parcel nothing puts outside the US.
 - Two letters after the town are a country when a town of that name is there ("MONTE CARLO
   MC"), or when the parcel is. Otherwise they may be a province or an office: "PINEROLO
   (TO)" is in the province of Turin, not Tonga, and Royal Mail's "Norwich MC" is a mail
@@ -212,7 +215,9 @@ destination, the next one after, so later scans do not move it, or with none, th
 clock, unless the last one is on a clock the destination keeps. With none before, it is the next
 one, unless the parcel lands on the way there; else from the parcel's
 destination, when the carrier delivers there; else from the carrier's home clock: its catalog
-zone, or with UTC there, its first country's. The scan keeps `local_time` and gains `time`,
+zone, or with UTC there, its first country's. A country of several clocks named alone, as a place
+or as the destination, keeps the carrier's home clock when it is one of them: GLS US's place-less
+scans read on Pacific time, not on the Eastern time most of the US keeps. The scan keeps `local_time` and gains `time`,
 `time_zone` and `time_zone_basis` (`place`, `neighbour`, `destination` or `carrier`). Given the read
 time, `dateLocalClocks(carrier, result, readAt)` leaves a scan its wall clock alone when the zone
 would date it more than a few minutes after the read: that zone is not the scan's clock. Node lookups

@@ -490,8 +490,9 @@ describe('17TRACK result parsing', () => {
       shipment: { latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'Anjunexpress', country: 'BR' }, events }] } } }] });
     const parsed = parse17TrackResponse(reply(191915, [row('21:09:46', 'São Paulo / SP'), row('18:00:00', 'Manaus / AM'),
       row('15:31:26', 'Example Town / GO'), row('15:00:00', null)]), number);
+    // A town the place reader does not know is read on its state's clock: Goiás keeps Brasília's.
     expect(parsed.events?.map((event) => event.time ?? event.local_time).sort()).toEqual(['2026-11-09T15:00:00',
-      '2026-11-09T15:31:26', '2026-11-09T22:00:00.000Z', '2026-11-10T00:09:46.000Z']);
+      '2026-11-09T18:31:26.000Z', '2026-11-09T22:00:00.000Z', '2026-11-10T00:09:46.000Z']);
     expect(parsed.events?.find((event) => event.time === '2026-11-10T00:09:46.000Z')).toMatchObject({ time_zone: 'America/Sao_Paulo',
       time_zone_basis: 'place', provider_time_iso: '2026-11-09T21:09:46-04:00', time_provenance: 'provider_inferred' });
     expect(parsed.undated_event_count).toBeUndefined();

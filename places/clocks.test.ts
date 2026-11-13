@@ -266,6 +266,22 @@ describe('dateLocalClocks', () => {
       .toEqual(['2026-03-02T11:00:00+08:00', 'Asia/Shanghai', 'carrier']);
   });
 
+  it('keeps a carrier’s own clock in a country of several where nothing names a state', () => {
+    const scan = { local_time: '2026-03-02T11:00:00', description: 'In transit' };
+    // GLS US is at home on Pacific time: a scan with no place, or naming the US alone, reads there, destination or not.
+    for (const result of [{ events: [scan] }, { destination_country: 'US', events: [scan] }, { events: [{ ...scan, location: 'US' }] }]) {
+      expect(dated(dateLocalClocks('gls-us', result).events![0])).toEqual(['2026-03-02T11:00:00-08:00', 'America/Los_Angeles', 'carrier']);
+    }
+    // A town it does not know keeps the state written after it, and a state alone is that state.
+    expect(dated(dateLocalClocks('gls-us', { events: [{ ...scan, location: 'QZXVILLE, AZ, US' }] }).events![0]))
+      .toEqual(['2026-03-02T11:00:00-07:00', 'America/Phoenix', 'place']);
+    expect(dated(dateLocalClocks('gls-us', { destination_country: 'US', events: [{ ...scan, location: 'AZ' }] }).events![0]))
+      .toEqual(['2026-03-02T11:00:00-07:00', 'America/Phoenix', 'place']);
+    // A carrier on the clock most of the country keeps keeps it, as the destination's.
+    expect(dated(dateLocalClocks('usps', { destination_country: 'US', events: [scan] }).events![0]))
+      .toEqual(['2026-03-02T11:00:00-05:00', 'America/New_York', 'destination']);
+  });
+
   it('gives a carrier’s home clock: the zone its result declares, its catalog zone, or with UTC there its first country’s', () => {
     expect(carrierHomeZone('seur')).toBe('Europe/Madrid');
     expect(carrierHomeZone('usps')).toBe('America/New_York');

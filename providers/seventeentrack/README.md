@@ -148,9 +148,9 @@ carrier.
   Santiago's clock, unless its place names a country on one clock.
 - Anjun Express's leg (carrier key 191915) shows Anjun Express's wall clocks, and 17TRACK labels
   them `-04:00`: an hour late against Anjun Express's own service in the states on Brasília's
-  clock. A row is read on the clock of the place it names (`Town / UF`); one whose place is not
-  found keeps its wall clock in `local_time`, as the [Anjun adapter](../../carriers/anjun/README.md)
-  gives every scan.
+  clock. A row is read on the clock of the place it names (`Town / UF`), or its state's when the
+  town is not found; one with no place keeps its wall clock in `local_time`, as the
+  [Anjun adapter](../../carriers/anjun/README.md) gives every scan.
 - Correios Brazil's leg (carrier key 2151) places the sending post's posting and its office of
   exchange in that post's country, as `CN`, and labels that post's wall clock with Brasília's
   `-03:00`: so read, the posting came eleven hours after China Post's own acceptance. A row placed

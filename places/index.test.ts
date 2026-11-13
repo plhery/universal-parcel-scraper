@@ -62,12 +62,36 @@ describe('locatePlace', () => {
     // A state the text gives holds: Earth City in Missouri, not Earth in Texas.
     expectPlace('Earth City, MO, United States', { country: 'US', name: 'Earth City', latitude: 38.77, longitude: -90.47 });
     expectPlace('Earth, TX', { country: 'US', name: 'Earth', latitude: 34.23, longitude: -102.41 });
-    // On a parcel that may be in the US, a state names no town abroad, before a facility's words too.
-    expect(place('HILLAH, NC', ['US'])).toBeNull();
-    expect(place('METRO OH DISTRIBUTION CENTER', ['US'])).toBeNull();
+    // On a parcel that may be in the US, a state names no town abroad, before a facility's words too:
+    // a town the reader does not know keeps only the state.
+    expect(place('HILLAH, NC', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'NC' });
+    expect(place('METRO OH DISTRIBUTION CENTER', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'OH' });
     expect(place('TAMPA FL DISTRIBUTION CENTER', ['US'])).toMatchObject({ country: 'US', name: 'Tampa' });
     expect(place('Kingston, ON', ['US', 'CA'])).toMatchObject({ country: 'CA', name: 'Kingston' });
     expect(place('Paris, FR', ['CH'])).toMatchObject({ country: 'FR', name: 'Paris' });
+  });
+
+  it('keeps the state or province written after a town it does not know', () => {
+    expect(place('QZXVILLE, AZ, US')).toMatchObject({ country: 'US', precision: 'country', region: 'AZ' });
+    expect(place('QZXVILLE, CA, US')).toMatchObject({ country: 'US', precision: 'country', region: 'CA' });
+    expect(place('QZXVILLE, BC, CA')).toMatchObject({ country: 'CA', precision: 'country', region: 'BC' });
+    // With no country written, a state of the country the parcel is in; nothing else tells.
+    expect(place('QZXVILLE, AZ', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'AZ' });
+    expect(place('QZXVILLE, AZ')).toBeNull();
+    // A state's code that is also a country's stays ambiguous on a parcel that may be outside the US.
+    expect(place('QZXVILLE, AZ', ['US', 'CN'])).toBeNull();
+    expect(place('QZXVILLE, TX', ['US', 'CN'])).toMatchObject({ country: 'US', region: 'TX' });
+  });
+
+  it('reads a US state alone as the state on a parcel in the US alone', () => {
+    expect(place('CA', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'CA' });
+    expect(place('AZ', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'AZ' });
+    expect(place('CA, US')).toMatchObject({ country: 'US', precision: 'country', region: 'CA' });
+    // Where the parcel may also be elsewhere, or is in the country the letters name, they are that country.
+    expect(place('CA', ['US', 'CN'])).toMatchObject({ country: 'CA', precision: 'country' });
+    expect(place('CA', ['CA', 'US'])).toMatchObject({ country: 'CA', precision: 'country' });
+    expect(place('AZ')).toMatchObject({ country: 'AZ', precision: 'country' });
+    expect(place('TX', ['US', 'CN'])).toMatchObject({ country: 'US', region: 'TX' });
   });
 
   it('tells a province or an office code from a country', () => {

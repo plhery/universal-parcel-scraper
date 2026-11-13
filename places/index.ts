@@ -115,8 +115,10 @@ const ABBREVIATED_LINKS: Readonly<Record<string, readonly (readonly string[])[]>
 // The words a town's full name can put before what brackets after its name hold: "Neustadt (Holstein)"
 // is Neustadt in Holstein, "Neustadt (Weinstrasse)" Neustadt an der Weinstraße.
 const QUALIFIER_LINKS = ['in', 'an der', 'am', 'an', 'im', 'in der', 'bei', 'ob der', 'nad', 'pod', 'sur', 'upon'];
-// Carriers print provinces the way the post does; GeoNames numbers them.
+// Carriers print provinces the way the post does; GeoNames numbers them, but codes the US states as the post does.
 const ADMIN_CODES: Record<string, Record<string, string>> = {
+  US: Object.fromEntries(`AL AK AZ AR CA CO CT DE DC FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND
+    OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY`.split(/\s+/).map((code) => [code, code])),
   CA: { AB: '01', BC: '02', MB: '03', NB: '04', NL: '05', NS: '07', ON: '08', PE: '09', QC: '10', SK: '11', YT: '12', NT: '13', NU: '14' },
   AU: { ACT: '01', NSW: '02', NT: '03', QLD: '04', SA: '05', TAS: '06', VIC: '07', WA: '08' },
   BR: {
@@ -1093,6 +1095,10 @@ function locate(location: string | null | undefined, hints: PlaceHints, split = 
     }));
     country = named.find((set) => set.size === 1)?.values().next().value ?? null;
   }
+  // A town the reader does not know keeps the state or province written after it, and so its clock.
+  const region = guessed ? null : statedRegion(data, stated, country, context);
+  const inState = region && countryPlace(data, region.country, true);
+  if (inState) return { ...inState, place: { ...inState.place, region: region.code } };
   return country ? countryPlace(data, country, !guessed) : null;
 }
 
@@ -1107,9 +1113,35 @@ function statePlace(data: Gazetteer, text: string, explicit: { country: string |
   const stated = explicit.country && explicit.place ? explicit : spaced?.country ? spaced : null;
   const code = stated ? stated.place : text;
   if (!/^[A-Z]{2,3}$/.test(code) || (!explicit.place && context.includes(code))) return null;
-  const country = stated ? stated.country : context.find((other) => ADMIN_CODES[other]?.[code]);
+  const country = stated ? stated.country : stateCountry(data, code, context);
   const found = country && ADMIN_CODES[country]?.[code] ? countryPlace(data, country, true) : null;
   return found && { ...found, place: { ...found.place, region: code } };
+}
+
+/**
+ * The country whose state or province a printed code names, among those the parcel is likely in:
+ * the first that has one. A US state's code that is also a country's ("CA", "DE", "IN") names
+ * the state only on a parcel nothing puts outside the US.
+ */
+function stateCountry(data: Gazetteer, code: string, context: readonly string[]): string | undefined {
+  const owner = context.find((other) => ADMIN_CODES[other]?.[code]);
+  return owner === 'US' && data.countries.has(code) && context.some((other) => other !== 'US') ? undefined : owner;
+}
+
+/**
+ * The state or province written after a town the reader does not know: of the country the text
+ * names ("EXAMPLE TOWN, AZ, US", "EXAMPLE TOWN, BC, CA"), else of one the parcel is in
+ * ("EXAMPLE TOWN, AZ" in the US). A code that is also a country the parcel may be in is not one.
+ */
+function statedRegion(data: Gazetteer, stated: readonly string[], country: string | null, context: readonly string[]): { country: string; code: string } | null {
+  const last = stated.at(-1);
+  const owner = country ?? (stated.length > 1 && last && data.countries.has(last) ? last : null);
+  if (owner) {
+    const code = [...stated].reverse().find((other) => other !== owner && ADMIN_CODES[owner]?.[other]);
+    return code ? { country: owner, code } : null;
+  }
+  const found = last && !context.includes(last) ? stateCountry(data, last, context) : undefined;
+  return found ? { country: found, code: last! } : null;
 }
 
 function countryPlace(data: Gazetteer, country: string, text: boolean): Located | null {

@@ -997,7 +997,7 @@
           "stage": "delivered",
           "time": "2026-01-04T14:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "Available for pickup for 5 business days from arrival date at the counter",
@@ -1007,7 +1007,7 @@
           "stage": "ready_for_pickup",
           "time": "2026-01-03T16:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "Attempted delivery - receiver unavailable",
@@ -1017,7 +1017,7 @@
           "stage": "failed_attempt",
           "time": "2026-01-03T14:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "On vehicle for delivery",
@@ -1027,7 +1027,7 @@
           "stage": "out_for_delivery",
           "time": "2026-01-03T08:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "Arrived at sort facility",
@@ -1037,7 +1037,7 @@
           "stage": "in_transit",
           "time": "2026-01-02T10:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "Picked up by Purolator",
@@ -1047,7 +1047,7 @@
           "stage": "accepted",
           "time": "2026-01-01T18:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "description": "Label information electronically submitted",
@@ -1057,7 +1057,7 @@
           "stage": "registered",
           "time": "2026-01-01T10:00:00-05:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "place"
+          "time_zone_basis": "neighbour"
         }
       ]
     }
@@ -2102,7 +2102,7 @@
           "location": "EXAMPLE CITY, ON",
           "time": "2026-03-14T08:00:34-04:00",
           "time_zone": "America/Toronto",
-          "time_zone_basis": "carrier"
+          "time_zone_basis": "place"
         },
         {
           "time": "2026-03-14T08:00:34-05:00",

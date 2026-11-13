@@ -58,9 +58,24 @@ export function carrierHomeZone(carrier: string, result: Pick<CarrierResult, 'ti
   return countries[0] ? mainZone(countries[0]) : null;
 }
 
+/**
+ * The clock of a country of several, named alone: the carrier's home clock where the country keeps
+ * it (GLS US's Pacific time in the US), else the one most of its people live on.
+ */
+function countryClock(country: string, home: string | null): Zoned | null {
+  const zone = mainZone(country);
+  if (ownCountryClock(country, home, zone)) return { zone: home!, basis: 'carrier' };
+  return zone ? { zone, basis: 'destination' } : null;
+}
+
+/** Whether a carrier's home clock is one of a country's several, other than the one most of its people live on. */
+function ownCountryClock(country: string, home: string | null, main = mainZone(country)): boolean {
+  return Boolean(home) && home !== main && hasSeveralClocks(country) && keepsZone(country, home!);
+}
+
 /** The destination's clock, when the carrier delivers there itself. */
-function destinationZone(carrier: string, country: string): string | null {
-  return country && (definition(carrier)?.countries ?? []).includes(country) ? mainZone(country) : null;
+function destinationZone(carrier: string, country: string, home: string | null): Zoned | null {
+  return country && (definition(carrier)?.countries ?? []).includes(country) ? countryClock(country, home) : null;
 }
 
 /**
@@ -131,8 +146,8 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     if (scans.slice(before + 1, at + 1).some(landed)) return neighbour(own[after]) ?? landing(before);
     return neighbour(own[before]) ?? (scans.slice(at + 1, after).some(landed) ? null : neighbour(own[after]));
   };
-  const destination = destinationZone(carrier, country ?? '');
   const home = carrierHomeZone(carrier, result);
+  const destination = destinationZone(carrier, country ?? '', home);
   const zoneAt = (at: number): Zoned | null => {
     const place = places[at];
     if (own[at]) return { zone: own[at], basis: 'place' };
@@ -141,12 +156,15 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     if (office) return { zone: office, basis: 'place' };
     if (place) {
       const town = leg(at, (other) => other?.country === place.country);
-      const zone = town?.zone ?? placeTimeZone(place);
-      if (zone) return { zone, basis: town ? 'neighbour' : 'place' };
+      if (town) return town;
+      // A country of several clocks named alone, with no state: the carrier's own clock there, if it keeps one.
+      if (!place.region && ownCountryClock(place.country, home)) return { zone: home!, basis: 'carrier' };
+      const zone = placeTimeZone(place);
+      if (zone) return { zone, basis: 'place' };
     }
     const borrowed = leg(at, () => true, arrival);
     if (borrowed) return borrowed;
-    if (destination) return { zone: destination, basis: 'destination' };
+    if (destination) return destination;
     return home ? { zone: home, basis: 'carrier' } : null;
   };
   const zones = new Map<CarrierEvent, Zoned>();

@@ -34,8 +34,9 @@ The default budget is 15 seconds.
 - Scan clocks are wall clocks without an offset, kept in `local_time`. They are not UTC: a
   reply archived while a parcel was out for delivery came before, in UTC, the delivery clock it
   later showed. The network spans the Pacific, Mountain and Central zones, so each scan is dated
-  on its place's zone, as for other US carriers. A scan without a place, such as the label's,
-  reads on Pacific time, the clock GLS US gives its customer support hours in.
+  on its place's zone, as for other US carriers, or its state's for a town the place reader does
+  not know. A scan without a place, such as the label's, reads on Pacific time, the clock GLS US
+  gives its customer support hours in, whatever the destination.
 - The date at the end of "ARRIVAL SCAN - DELIVERY SCHED FOR" stays in the wording. The estimate
   is the reply's estimated delivery day, given only while the parcel moves.
 - The recipient's company, contact and address, the signer, the shipper's reference, the
