@@ -280,13 +280,17 @@ function dayEvent(day: string, description: string): CarrierEvent | null {
  * leg by leg, on GMT+8, +2 or +1, also under EcoScooting; 4PX's and
  * MailAmericas' (below). They are read in the state, province or single-clock
  * country their location names; `wallClockZones` reads the others.
+ * Australia Post's are its tracker's digits, each scan's clock as Australia Post states it: a
+ * clearance it dates 22:21:11 in Sydney came at 22:21:11 here, and ParcelsApp gave the same scan
+ * its instant, 11:21:11, a few days before; its scans in Australia take the state or capital
+ * their place names (`australiaPostZone`).
  * FIRST LINE's ("1ST") rows abroad are its delivery partner's scans on their
  * facility's clock: a copy of a GOFO scan in California came at GOFO's digits,
  * and read on Beijing's clock, its arrival in Los Angeles came twelve minutes
  * after the flight left Shenzhen. Its rows in China, and its order data with
  * no place, are Beijing's (`carrierClock`).
  */
-const WALL_CLOCKS = new Set(['usps', 'canadapost', 'gofoexpress', 'speedpak', 'ems', 'cainiao', 'ecoscooting', '4pxexpress', 'mailamericas', '1st']);
+const WALL_CLOCKS = new Set(['usps', 'canadapost', 'gofoexpress', 'speedpak', 'ems', 'cainiao', 'ecoscooting', '4pxexpress', 'mailamericas', '1st', 'australiapost']);
 /**
  * A mailer's label that ParcelsApp files under USPS, its place repeated after
  * its wording ("Shipping Label Created, EXAMPLE CITY, CA 12345"), where USPS's
@@ -914,6 +918,17 @@ function australianZone(location: string, capitals = true): string | null {
 }
 
 /**
+ * The clock of Australia Post's own scan in Australia. ParcelsApp copies the digits of Australia
+ * Post's tracker, the clock of the scan's state, under a UTC label, and writes its place as a town
+ * and state with no country ("EXAMPLE TOWN QLD"): its "Lodged by Sender" in Queensland came ten
+ * hours after Australia Post's own instant, Brisbane's offset. A place in another country is not read here.
+ */
+function australiaPostZone(location: string): string | null {
+  const country = countryCode(lastPlace(location));
+  return !country || country === 'AU' ? australianZone(location) : null;
+}
+
+/**
  * Whether a scan is a postal feed's posting, whose place names the posting
  * office: in Australia that office's capital need not be the scan's state.
  */
@@ -1244,6 +1259,9 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   const place = (key === 'yunexpress' ? spacedCountry(location) : null) ?? lastPlace(location);
   // A state or province the town confirms beats the country its code also
   // names ("Chicago, IL"); a merely possible one comes after ("Koeln, DE").
+  // Australia Post's "WA" and "NT" are Australian states, not Washington or the Northwest Territories.
+  const australiaPost = carrier === 'australia-post' ? australiaPostZone(location) : null;
+  if (australiaPost) return australiaPost;
   const region = regionScanZone(name, location, inNorthAmerica);
   if (region?.certain) return region.zone;
   // A posting's capital names its office, not the scan's state (`postingOffice`).

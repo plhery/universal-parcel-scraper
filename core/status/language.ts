@@ -587,6 +587,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Australia Post's lodgement and its landing in a country (INT-2144, INT-2164), as providers relay them
   // with no carrier: accepted and in transit, as Australia Post's map reads them.
   if (/^item lodged$/.test(text)) return 'accepted';
+  // So are its sender's lodgement (AFC-ER36) and its approval of the shipping information (ADMIN-ER40).
+  if (/^lodged by sender$/.test(text)) return 'accepted';
+  if (/^shipping information approved by australia post$/.test(text)) return 'registered';
   if (/^landed in(?: [a-z][a-z .'-]{1,60})?$/.test(text)) return 'in_transit';
   // A hub identifying a parcel as bulky, as ParcelsApp relays Hermes's line into Germany at the second of the
   // hub's receipt: the parcel is in hand there, in transit.

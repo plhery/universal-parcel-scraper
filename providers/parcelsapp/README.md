@@ -246,13 +246,14 @@ step exists for future protocol changes.
   minute-only clock's, so it matches nothing. A 4PX site code the adapter knows, the country
   and the city's code ("USHOUA", its Houston operation point), places its scan in that town.
 - Wall clocks: the dates of USPS, Canada Post, GOFO's US scans, SpeedPAK, EMS, Cainiao,
-  EcoScooting, 4PX, MailAmericas and FIRST LINE abroad are each scan's local clock under a label that is
+  EcoScooting, 4PX, MailAmericas, Australia Post and FIRST LINE abroad are each scan's local clock under a label that is
   never its instant (checked 2026-10-10 scan for scan: USPS's page and the "at 8:25 am" in
   the status text ParcelsApp relays; Canada Post's own digits; GOFO's US feed, which gives
   the offsets; Orange Connex's times and offsets for SpeedPAK; the EMS office clocks
   Parcelforce and NZ Post relay; Cainiao's leg by leg, on GMT+8, +2 or +1, also under
   EcoScooting, whose Spanish and Portuguese scans differ by an hour; MailAmericas' older
-  tracker, which gave each scan its site's offset). Such a scan skips the steps above and
+  tracker, which gave each scan its site's offset; Australia Post's own instants). Such a scan
+  skips the steps above and
   takes the first zone of:
   1. its place: the state or province (North American scans below) or the single-clock
      country its location names;
@@ -509,7 +510,8 @@ step exists for future protocol changes.
   to date: they have the destination post's digits, and a town's name ("MADRID") is read
   first. On an item to the US, one placed by a ZIP Code alone is on that state's clock. Australia has several clocks, so an Australian origin's scans take the state or
   state capital their place names, as Australia Post's own offsets do; one naming neither
-  stays a guess. A posting names its office, which can be in another state than the scan:
+  stays a guess. Australia Post's own scans there take the state or capital their place names
+  too, and its "WA" or "NT" is no North American code. A posting names its office, which can be in another state than the scan:
   UPU's "BRISBANE" posting of an item Australia Post received in New South Wales has the
   digits of Australia Post's "+11:00", as does EMS's copy under the office's code. A posting that only its
   office's capital places therefore borrows the clock of its feed's other scans, as a wall

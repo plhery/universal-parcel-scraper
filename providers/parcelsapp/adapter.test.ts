@@ -167,9 +167,10 @@ describe('ParcelsApp YTO scans', () => {
 
   it("reads Morocco Post's relays of the sending post by Barid Al-Maghrib's map, on their day alone", () => {
     // Shape of ParcelsApp's copies of Barid Al-Maghrib's tracker on an item from Australia: its English for the
-    // page's wordings, and the sending post's digits on a twelve-hour dial (22:21 written 10:21).
+    // page's wordings, and the sending post's digits on a twelve-hour dial (22:21 written 10:21). Australia
+    // Post's own row has its digits too, 22:21:11 in New South Wales.
     const parsed = parseParcelsAppResponse({ carriers: ['Australia Post', 'Morocco Post'], states: [
-      { date: '2026-11-03T11:21:11Z', status: 'Cleared and awaiting international departure', location: 'EXAMPLE NSW AUS', carrier: 0 },
+      { date: '2026-11-03T22:21:11Z', status: 'Cleared and awaiting international departure', location: 'EXAMPLE NSW', carrier: 0 },
       { date: '2026-11-03T10:21:00Z', status: 'Package shipped', location: 'Example, Australia', carrier: 1 },
       { date: '2026-10-28T02:37:00Z', status: 'Shipment received for export', location: 'Example, Australia', carrier: 1 },
       { date: '2026-10-27T09:18:00Z', status: 'Shipment picked up', location: 'Example, Australia', carrier: 1 },
@@ -177,7 +178,7 @@ describe('ParcelsApp YTO scans', () => {
     // The relay at the minute of the sending post's own scan is that scan's copy.
     expect(parsed.events?.map((event) => [event.description, event.stage, event.stage_source, event.time, event.local_time, event.time_zone]))
       .toEqual([
-        ['Cleared and awaiting international departure', 'in_transit', expect.any(String), '2026-11-03T11:21:11.000Z', undefined, 'UTC'],
+        ['Cleared and awaiting international departure', 'in_transit', expect.any(String), '2026-11-03T11:21:11.000Z', undefined, 'Australia/Sydney'],
         ['Shipment received for export', 'in_transit', 'carrier_map', undefined, '2026-10-28', undefined],
         ['Shipment picked up', 'accepted', 'carrier_map', undefined, '2026-10-27', undefined],
       ]);
@@ -2935,6 +2936,32 @@ describe('ParcelsApp result parsing', () => {
     expect(result.events?.map((scan) => scan.time)).toEqual([
       '2026-10-12T09:00:00.000Z', // past the origin's leg
       '2026-10-10T18:42:00.000Z', '2026-10-10T13:58:00.000Z', '2026-10-10T07:55:00.000Z',
+    ]);
+  });
+
+  it("reads Australia Post's scans as its own wall clocks, in Australia on the clock of the state or capital they name", () => {
+    // Live shape: Australia Post's own instants are these digits at +10:00 in Queensland and +11:00 in New South Wales.
+    const result = parseParcelsAppResponse({ carriers: ['Australia Post', 'Universal Postal Union'], originCode: 'AU', destinationCode: 'GB', states: [
+      { date: '2026-11-13T13:00:00Z', status: 'Arrived at facility', carrier: 0, location: 'EXAMPLE, United Kingdom' },
+      { date: '2026-11-12T14:16:18Z', status: 'Lodged by Sender', carrier: 0, location: 'EXAMPLE TOWN QLD' },
+      { date: '2026-11-12T09:25:00Z', status: 'Item has been handed over to the air carrier', carrier: 0, location: '' },
+      { date: '2026-11-11T22:21:11Z', status: 'Cleared and awaiting international departure', carrier: 0, location: 'EXAMPLE, AUSTRALIA' },
+      { date: '2026-11-11T21:25:09Z', status: 'Item processed at sorting facility', carrier: 0, location: 'EXAMPLE TOWN NSW' },
+      { date: '2026-11-11T18:34:45Z', status: 'Item processed at sorting facility', carrier: 0, location: 'Example Parcel Facility (Brisbane)' },
+      { date: '2026-11-11T16:38:53Z', status: 'Shipping information approved by Australia Post', carrier: 0, location: 'EXAMPLE TOWN WA' },
+    ] }, number, identity());
+    expect(result.events?.map((scan) => [scan.description, scan.time, scan.time_zone, scan.stage ?? null])).toEqual([
+      // A place abroad keeps its country's clock.
+      ['Arrived at facility', '2026-11-13T13:00:00.000Z', 'Europe/London', 'in_transit'],
+      ['Lodged by Sender', '2026-11-12T04:16:18.000Z', 'Australia/Brisbane', 'accepted'],
+      // A scan with no place, or none a state names, takes the clock of Australia Post's scan before it.
+      ['Item has been handed over to the air carrier', '2026-11-11T22:25:00.000Z', 'Australia/Sydney', 'in_transit'],
+      ['Cleared and awaiting international departure', '2026-11-11T11:21:11.000Z', 'Australia/Sydney', 'in_transit'],
+      // New South Wales keeps summer time in November, Queensland none.
+      ['Item processed at sorting facility', '2026-11-11T10:25:09.000Z', 'Australia/Sydney', 'in_transit'],
+      // "WA" is Western Australia here, not Washington.
+      ['Shipping information approved by Australia Post', '2026-11-11T08:38:53.000Z', 'Australia/Perth', 'registered'],
+      ['Item processed at sorting facility', '2026-11-11T08:34:45.000Z', 'Australia/Brisbane', 'in_transit'],
     ]);
   });
 

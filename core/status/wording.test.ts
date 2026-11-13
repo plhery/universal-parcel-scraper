@@ -1069,6 +1069,8 @@ describe('classifyWording', () => {
       ['正在长途运输中，当前位于1234KM。', 'in_transit'], ['正在长途运输中', 'in_transit'],
       // Australia Post's lodgement and its landing in a country, as providers relay them without a carrier.
       ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
+      // Its sender's lodgement, and its approval of the shipping information.
+      ['Lodged by Sender', 'accepted'], ['Shipping information approved by Australia Post', 'registered'],
       // A hub identifying a parcel as bulky, at the second it receives it.
       ['INFORMATION. PARCEL IDENTIFIED AS BULKY GOOD (ESI)', 'in_transit'], ['Information. Parcel identified as bulky good', 'in_transit'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
