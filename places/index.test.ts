@@ -123,6 +123,10 @@ describe('locatePlace', () => {
     expectPlace('NORTH YORK - ONTARIO - CANADA', { country: 'CA', name: 'North York', latitude: 43.75, longitude: -79.44 });
     // Unconfirmed, the town in England is still the one meant.
     expectPlace('Scarborough', { country: 'GB', name: 'Scarborough', latitude: 54.28, longitude: -0.4 });
+    // A former municipality whose postal areas are named after its parts ("Lachine East"), as Canpar writes it.
+    expectPlace('LACHINE, QC', { country: 'CA', name: 'Lachine', latitude: 45.44, longitude: -73.69 }, ['CA']);
+    expect(placeTimeZone(place('LACHINE, QC', ['CA'])!)).toBe('America/Toronto');
+    expectPlace('DOWNSVIEW - ON - CANADA', { country: 'CA', name: 'Downsview', latitude: 43.73, longitude: -79.5 });
   });
 
   it('puts a scan at the airport or hub it names', () => {

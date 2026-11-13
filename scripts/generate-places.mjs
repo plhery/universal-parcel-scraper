@@ -389,19 +389,26 @@ const admin1Codes = lines(await readFile(await download('admin1CodesASCII.txt', 
 // file has one row per urban postal area, named after its municipality first
 // ("Scarborough (Agincourt)"); a rural area, with a 0 second, names a region
 // ("Eastern Alberta (St. Paul)"). A municipality is placed at the mean of its areas.
+// Some former municipalities have only areas named after a part of them ("Lachine
+// East"); one counts when no town in Canada has its name.
 const provinces = new Map(admin1Codes.filter(([id]) => id.startsWith('CA.')).map(([id, name]) => [nameKey(name), id.slice(3)]));
+const PART = /^(?:(?:North|South|East|West|Central|Northeast|Northwest|Southeast|Southwest|and)(?:\s+|$))+$/u;
 const municipalities = new Map();
 for (const [, code, area, province, , municipality, , , , lat, lon] of lines(unzip(await download('CA.zip', 'https://download.geonames.org/export/zip/CA.zip'), 'CA.txt'))) {
-  const name = area.replace(/\s*\(.*$/u, '').trim();
-  if (code[1] === '0' || name !== municipality.trim() || !latin(name) || !provinces.has(nameKey(province))) continue;
+  const named = area.replace(/\s*\(.*$/u, '').trim();
+  const name = municipality.trim();
+  const whole = named === name;
+  if (code[1] === '0' || !name || (!whole && !(named.startsWith(`${name} `) && PART.test(named.slice(name.length + 1))))
+    || !latin(name) || !provinces.has(nameKey(province))) continue;
   const key = `${provinces.get(nameKey(province))}:${name}`;
-  municipalities.set(key, [...municipalities.get(key) ?? [], [Number(lat), Number(lon)]]);
+  const known = municipalities.get(key) ?? { points: [], whole: false };
+  municipalities.set(key, { points: [...known.points, [Number(lat), Number(lon)]], whole: known.whole || whole });
 }
-for (const [key, points] of municipalities) {
+for (const [key, { points, whole }] of municipalities) {
   const [admin1, name] = key.split(/:(.*)/u);
   const point = [round(points.reduce((sum, [lat]) => sum + lat, 0) / points.length), round(points.reduce((sum, [, lon]) => sum + lon, 0) / points.length)];
   const keys = nameKeys(name);
-  if (keys.some((other) => (byKey.get(`CA:${other}`) ?? []).some((place) => distanceKm(point, [place.lat, place.lon]) < 15))) continue;
+  if (keys.some((other) => (byKey.get(`CA:${other}`) ?? []).some((place) => !whole || distanceKm(point, [place.lat, place.lon]) < 15))) continue;
   remember({ name, ascii: name, country: 'CA', admin1, admin2: '', lat: point[0], lon: point[1], population: 0, primary: keys, alternate: [] });
 }
 

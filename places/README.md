@@ -314,7 +314,8 @@ Swiss Post's "Zürich Briefzentrum" is in Mülligen.
 or more and first-level regions (by the local name in a country's dump where it reads one:
 "Catalunya"), the postal localities of Switzerland, Liechtenstein, their
 neighbours, the Benelux and the United States, the Canadian municipalities postal areas are named after (Canada
-Post still addresses Scarborough and North York, now part of Toronto), the municipalities of
+Post still addresses Scarborough and North York, now part of Toronto), or after their parts
+when no town in Canada has their name ("Lachine East"), the municipalities of
 some European countries and Taiwan that no town is named after (with the older romanizations of
 Taiwan's: "Ta-yuan" is Dayuan), the town seats of Guangdong and
 Zhejiang, Mexican municipalities named unlike their seats, as alternate names of the seats
