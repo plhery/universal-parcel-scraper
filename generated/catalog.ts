@@ -24374,7 +24374,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "US"
     ],
     "selectable": true,
-    "timezone": "UTC",
+    "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
       "adapter": "gls-us",
