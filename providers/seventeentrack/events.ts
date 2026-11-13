@@ -5,6 +5,8 @@ import type { Stage } from '../../generated/catalog.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { event, place, text } from '../shared/result.js';
 import { SUB_STAGES, subStatusStage } from './status.js';
+import { chineseFinalStage } from '../../core/status/language.js';
+import { chinaPostRelayedStage } from '../../carriers/china-post/status.js';
 
 /**
  * A scan the carrier did not date. Besides leaving both readings empty,
@@ -47,7 +49,12 @@ export function seventeenTrackEvent(raw: JsonObject, operator: JsonObject, place
   const declared = code === 'InfoReceived' ? undefined : raw.stage ?? (Object.hasOwn(SUB_STAGES, code) ? code.split('_')[0] : undefined);
   const parsed = event(time, raw.description, declared);
   if (!parsed) return null;
-  const coded = subStatusStage(code, parsed.stage as Stage, parsed.description);
+  // 17TRACK files a line's copy of China Post's own labels under generic transit: a final scan in
+  // Chinese ("已试投/投递失败") or import customs abroad ("送交境外进口海关"). Their exact wording gives the stage.
+  const chinese = code === 'InTransit_Other' && parsed.stage_source === 'carrier_map'
+    ? chineseFinalStage(parsed.description) ?? chinaPostRelayedStage(parsed.description) : undefined;
+  if (chinese) Object.assign(parsed, { stage: chinese, stage_source: 'wording:language' });
+  const coded = chinese ? undefined : subStatusStage(code, parsed.stage as Stage, parsed.description);
   // A stage the code gives comes from 17TRACK's map, even where its stage name was not one the wording rules read.
   if (coded) Object.assign(parsed, { stage: coded, stage_source: 'carrier_map' });
   // 17TRACK's generic transit bucket loses Swiss Post's delivery-round scan, and

@@ -308,7 +308,7 @@ const ZH_FINAL: ReadonlyArray<readonly [RegExp, Stage]> = [
 ];
 
 /** The stage of a Chinese final scan, or undefined for other wording. */
-function chineseFinalStage(text: string): Stage | undefined {
+export function chineseFinalStage(text: string): Stage | undefined {
   return ZH_FINAL.find(([pattern]) => pattern.test(text))?.[1];
 }
 

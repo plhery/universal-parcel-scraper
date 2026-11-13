@@ -49,7 +49,9 @@ captured bodies instead.
 Swiss Post's exact vehicle-loading label refines 17TRACK's generic transit bucket into
 out-for-delivery, and its "Registered", the sender's data before Swiss Post has the item,
 into registered. Other operators' "Registered" can be an acceptance, so it stays with the
-shared rules. The reported provider code is preserved.
+shared rules. China Post's exact final and import customs labels ("已试投/投递失败",
+"送交境外进口海关"), which 17TRACK files there on any leg that copies them, take the stage
+their wording gives. The reported provider code is preserved.
 
 Codes -11, -13 and -14 mean interactive verification. Shipment code 100 means polling.
 A matching code-400/null-shipment reply means no history, unless its parameter metadata
@@ -275,7 +277,7 @@ carrier.
   17TRACK asks Webtrack again, stamped with that moment. It echoes the status, so it is left
   out, as [DHL eCommerce's adapter](../../carriers/dhl-ecommerce/README.md) leaves it out.
 - Original scan text is kept: the English interface does not translate descriptions. China
-  Post's leg, and JHGJ's, which relays China Post's labels, show a label in the English the
+  Post's leg, and JHGJ's and XC's, which relay China Post's labels, show a label in the English the
   [China Post adapter](../../carriers/china-post/README.md) shows, its places left to the location,
   and a copy stored in Chinese takes the English in place. A label that names its place only in 【】
   ("启运【Example】") with no location gives it that place; a partner's scan abroad gives its

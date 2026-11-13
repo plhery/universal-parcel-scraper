@@ -955,6 +955,29 @@ describe('17TRACK result parsing', () => {
     expect(home?.[0]).toEqual(['Delivery attempted, not delivered', '2026-10-25T02:00:00.000Z', undefined]);
   });
 
+  it("stages China Post's final and import customs labels that 17TRACK files under generic transit, on its leg and on XC's", () => {
+    const row = (time: string, description: string) => ({
+      time_iso: `2026-10-17T${time}+08:00`, time_utc: null, time_raw: { date: '2026-10-17', time, timezone: null },
+      description, location: '', stage: null, sub_status: 'InTransit_Other' });
+    const read = (key: number, name: string) => parse17TrackResponse({ meta: { code: 200 }, shipments: [{ number, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key, name, country: 'CN' }, events: [
+        row('19:58:00', '【西班牙】已妥投'), row('13:35:00', '已试投/投递失败(/已通知客户)'), row('13:34:00', '已到达【西班牙】投递局'),
+        row('09:20:00', '寄达地海关允许进口'), row('09:10:00', '境外进口海关留存待验(等待提交给边境机构/安全部门)'),
+        row('09:00:00', '送交境外进口海关'),
+      ] }] } } }] }, number).events?.map((e) => [e.stage, e.description, e.location]);
+    const staged = [
+      ['delivered', 'Delivered', '西班牙'], ['failed_attempt', 'Delivery attempted, not delivered', undefined],
+      ['in_transit', 'Arrived at the delivery office', '西班牙'], ['in_transit', 'Import allowed by destination customs', undefined],
+      ['customs', 'Held by import customs abroad for inspection', undefined], ['customs', 'Presented to import customs abroad', undefined],
+    ];
+    expect(read(3011, 'China Post')).toEqual(staged);
+    expect(read(191903, 'XC')).toEqual(staged);
+    // Another line's leg keeps its wording; its exact Chinese final scan still gives the stage.
+    expect(read(190000, 'Example Forwarder')?.slice(0, 2)).toEqual([
+      ['delivered', 'Delivered', undefined], ['failed_attempt', '已试投/投递失败(/已通知客户)', undefined]]);
+  });
+
   it("reads the origin post's scans Japan Post relays on that post's clock, and Japan Post's own on Tokyo's", () => {
     const row = (date: string, time: string, description: string, location: string) => ({
       time_iso: `${date}T${time}+09:00`, time_utc: null, time_raw: { date, time, timezone: null },

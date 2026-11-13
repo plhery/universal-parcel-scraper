@@ -203,7 +203,8 @@ export function chinaPostEnglish(wording: string): string | undefined {
 // place, a sorting or a dispatch to the delivering office, a flight between two cities, the closing of
 // an export dispatch, its hand-over to the carrier that flies it and the airline's receipt and
 // departure, the carrier's receipt and an arrival as 17TRACK words them, and export customs' presentation,
-// hold for inspection and release. Also China Post's
+// hold for inspection and release, and import customs' abroad, as China Post's own codes 486, 493 and 487
+// read them. Also China Post's
 // receipt of the mail, and a centre sending the parcel back, as the airport's security check does
 // ("【广州市处理中心】退回，备注:安检退回"): a problem the centre deals with before dispatching it
 // again, not a return to the sender.
@@ -220,6 +221,9 @@ const RELAYED_STAGES: ReadonlyArray<readonly [RegExp, Stage]> = [
   [/^(?:承运商接收|抵达)$/u, 'in_transit'],
   [/^送交出口海关$/u, 'customs'],
   [/^出口海关\/放行$/u, 'in_transit'],
+  [/^送交境外进口海关$/u, 'customs'],
+  [/^境外进口海关留存待验(?:[(（][^()（）]*[)）])?$/u, 'customs'],
+  [/^寄达地海关允许进口$/u, 'in_transit'],
 ];
 
 /** The stage of one of China Post's scans relayed in Chinese, or undefined for other wording. */

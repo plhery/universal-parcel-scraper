@@ -501,8 +501,8 @@ function nzPostDestination(shipment: Record<string, unknown>, providers: unknown
 
 /** 17TRACK's carrier 3011, China Post. */
 const CHINA_POST = 3011;
-/** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list). */
-const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049]);
+/** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list) and XC (191903). */
+const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049, 191903]);
 /** Legs whose English wording ends with the place in brackets: Pengyou (捧友, 191878 in 17TRACK's carrier list). */
 const BRACKETED_PLACES: ReadonlySet<unknown> = new Set([191878]);
 /** 17TRACK's carrier 190157, YTO Express, whose scans it relays in the website's expanded wording. */
@@ -817,9 +817,11 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // China Post words its labels in Chinese only, on its own leg and on a forwarder's that relays them: they
       // show in English where it is known, staged as the Chinese was, with the place left to the location, or
       // taken from the label's 【】 where none is given.
-      const english = CHINA_POST_LABELS.has(reported.key) && parsed.description ? chinaPostEnglish(parsed.description) : undefined;
+      // A delivery reads "Delivered" by now; its label still names the place.
+      const label = parsed.stage === 'delivered' ? text(scan.description).trim() : parsed.description;
+      const english = CHINA_POST_LABELS.has(reported.key) && label ? chinaPostEnglish(label) : undefined;
       if (english) {
-        const named = parsed.location ? '' : place(chinaPostLabelPlace(parsed.description ?? '') ?? '');
+        const named = parsed.location ? '' : place(chinaPostLabelPlace(label ?? '') ?? '');
         parsed.description = english;
         if (named) parsed.location = named;
       }
