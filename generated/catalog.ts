@@ -47369,6 +47369,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sxw-express": {
+    "displayName": "SXW Express",
+    "color": "#1291c5",
+    "aliases": [
+      "SXW",
+      "SXW Wuliu",
+      "Shengxingwang",
+      "Shenzhen Shengxingwang Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sxw-express"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^SXW\\d{12}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "syd": {
     "displayName": "SYD Express",
     "color": "#ff0000",
@@ -54125,6 +54152,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xuchuan-logistics": {
+    "displayName": "Xuchuan International Logistics",
+    "color": "#0a2463",
+    "aliases": [
+      "XC",
+      "Xuchuan Logistics",
+      "旭川国际物流",
+      "xcwl.ltd Logistics"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xcwl.ltd/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^XC\\d{10}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "xyl": {
     "displayName": "XYL",
     "color": "#d0b692",
@@ -56527,6 +56581,7 @@ export const CARRIER_IDS = [
   "swftbox",
   "swiftx",
   "sxjd-freight",
+  "sxw-express",
   "syd",
   "szami-group",
   "t-cat",
@@ -56723,6 +56778,7 @@ export const CARRIER_IDS = [
   "xpress-freight-management",
   "xpressbees",
   "xpressen",
+  "xuchuan-logistics",
   "xyl",
   "yalidine",
   "yamato-america",
@@ -58026,6 +58082,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swftbox": [],
   "swiftx": ["swiftx-1"],
   "sxjd-freight": [],
+  "sxw-express": ["sxw-express-1"],
   "syd": [],
   "szami-group": [],
   "t-cat": [],
@@ -58222,6 +58279,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpress-freight-management": [],
   "xpressbees": ["xpressbees-awb"],
   "xpressen": [],
+  "xuchuan-logistics": ["xuchuan-logistics-1"],
   "xyl": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],

@@ -650,6 +650,7 @@ import { adapter as suratKargo } from '../carriers/surat-kargo/adapter.js';
 import { adapter as swiftx } from '../carriers/swiftx/adapter.js';
 import { adapter as swissPost } from '../carriers/swiss-post/adapter.js';
 import { adapter as swissPostCargo } from '../carriers/swiss-post-cargo/adapter.js';
+import { adapter as sxwExpress } from '../carriers/sxw-express/adapter.js';
 import { adapter as tCat } from '../carriers/t-cat/adapter.js';
 import { adapter as tGroup } from '../carriers/t-group/adapter.js';
 import { adapter as tanzaniaPosts } from '../carriers/tanzania-posts/adapter.js';
@@ -1412,6 +1413,7 @@ export const REGISTRY: RegistryDefinition = {
     "swiftx": swiftx,
     "swiss-post": swissPost,
     "swiss-post-cargo": swissPostCargo,
+    "sxw-express": sxwExpress,
     "t-cat": tCat,
     "t-group": tGroup,
     "tanzania-posts": tanzaniaPosts,
@@ -2774,6 +2776,7 @@ export const REGISTRY: RegistryDefinition = {
     "swiss-post": "swiss-post",
     "swiss-post-cargo": "swiss-post-cargo",
     "sxjd-freight": "universal",
+    "sxw-express": "sxw-express",
     "syd": "universal",
     "szami-group": "universal",
     "t-cat": "t-cat",
@@ -2979,6 +2982,7 @@ export const REGISTRY: RegistryDefinition = {
     "xpress-freight-management": "universal",
     "xpressbees": "xpressbees",
     "xpressen": "universal",
+    "xuchuan-logistics": "universal",
     "xyl": "universal",
     "yalidine": "yalidine",
     "yamato": "yamato",

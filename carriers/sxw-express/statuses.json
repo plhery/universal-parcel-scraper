@@ -1,0 +1,15 @@
+{
+  "carrier": "sxw-express",
+  "entries": [
+    {"wording": "Parcel Data Received", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s order row."},
+    {"wording": "货物电子信息已经收到", "language": "zh", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The platform’s order row: the shipment’s data received."},
+    {"wording": "到达收货点", "language": "zh", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Arrived at the receiving point: the first scan at the forwarder."},
+    {"wording": "Parcel picked up", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s first scan."},
+    {"wording": "货物离开操作中心", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The parcel leaves the forwarder’s operation centre."},
+    {"wording": "Parcel received at Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s sorting centre, its city in the wording."},
+    {"wording": "Parcel processed at Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s sorting centre, its city in the wording."},
+    {"wording": "Parcel departure in Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s sorting centre, its city in the wording."},
+    {"wording": "Parcel departure in Transit Facility, Parcel Departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13"},
+    {"wording": "Customs declaration completed", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Export declaration in China; GZYL’s map reads it the same way."}
+  ]
+}

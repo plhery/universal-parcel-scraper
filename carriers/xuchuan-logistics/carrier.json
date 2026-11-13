@@ -1,0 +1,41 @@
+{
+  "id": "xuchuan-logistics",
+  "displayName": "Xuchuan International Logistics",
+  "aliases": [
+    "XC",
+    "Xuchuan Logistics",
+    "旭川国际物流",
+    "xcwl.ltd Logistics"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#0a2463"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "canaryUrl": "https://xcwl.ltd/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "xuchuan-logistics-1",
+      "pattern": "^XC\\d{10}CN$",
+      "confidence": "low"
+    }
+  ]
+}
