@@ -108,11 +108,24 @@ function writtenAt(row: Record<string, unknown>): number | null {
 function writtenBeforeWallClock(row: Record<string, unknown>, clock: { seconds: number; wall: string }, location: string, destination: string): boolean {
   const written = writtenAt(row);
   if (written === null || written < clock.seconds - CLOCK_SLACK_S) return false;
+  const earliest = earliestWallInstant(clock.wall, location, destination);
+  return earliest !== null && written < earliest - CLOCK_SLACK_S;
+}
+
+/**
+ * The earliest instant, in epoch seconds, a Beijing wall clock stands for in the country of a
+ * row under a country's code, or in the destination for a row without a place; null otherwise.
+ */
+function earliestWallInstant(wall: string, location: string, destination: string): number | null {
   const country = location ? (COUNTRY_CODE.test(location) ? location : '') : destination;
   const zones = country ? countryZones(country) : [];
-  if (!zones.length) return false;
-  const earliest = Math.min(...zones.map((zone) => firstOccurrence(DateTime.fromISO(clock.wall, { zone })).toSeconds()));
-  return written < earliest - CLOCK_SLACK_S;
+  return zones.length ? Math.min(...zones.map((zone) => firstOccurrence(DateTime.fromISO(wall, { zone })).toSeconds())) : null;
+}
+
+/** A row read at its epoch, on the back office's clock. */
+function onBackOffice(seconds: number): Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> {
+  return { time: DateTime.fromSeconds(seconds, { zone: BACK_OFFICE }).toISO({ suppressMilliseconds: true })!,
+    time_zone: BACK_OFFICE, time_zone_basis: 'carrier' };
 }
 
 /** The facility or town a scan names, at most; anything that could be an address is dropped. */
@@ -153,10 +166,7 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     const staged = shouwuStage(description);
     scans.push({ timestamp: clock.seconds, event: {
       local_time: clock.wall,
-      ...(onEpoch(row, description, location) || writtenBeforeWallClock(row, clock, location, destination) ? {
-        time: DateTime.fromSeconds(clock.seconds, { zone: BACK_OFFICE }).toISO({ suppressMilliseconds: true })!,
-        time_zone: BACK_OFFICE, time_zone_basis: 'carrier' as const,
-      } : {}),
+      ...(onEpoch(row, description, location) || writtenBeforeWallClock(row, clock, location, destination) ? onBackOffice(clock.seconds) : {}),
       ...(location ? { location } : {}),
       description,
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
@@ -165,6 +175,21 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
   // Newest first; equal instants keep the reply's order, which lists the newest first.
   if (listsNewestFirst(scans.map(({ event }) => event)) === false) scans.reverse();
   scans.sort((left, right) => right.timestamp - left.timestamp);
+  // A wall clock that would land after a newer row read at its epoch, wherever in its country, is read at its
+  // epoch too: customs written days late must not come after the round out for delivery.
+  let bound = Infinity;
+  for (const scan of scans) {
+    const { event } = scan;
+    if (event.time) {
+      bound = Date.parse(event.time) / 1000;
+      continue;
+    }
+    const earliest = earliestWallInstant(event.local_time!, event.location ?? '', destination);
+    if (earliest !== null && earliest > bound) {
+      Object.assign(event, onBackOffice(scan.timestamp));
+      bound = scan.timestamp;
+    }
+  }
   return { status, country: destination, events: scans.map((scan) => scan.event), newest: scans[0]?.timestamp ?? -Infinity };
 }
 

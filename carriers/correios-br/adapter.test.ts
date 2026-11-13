@@ -3,6 +3,7 @@ import fixture from './fixtures/delivered.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
 import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import type { TrawlCapturedResponse, TrawlClient } from '../../core/transport/trawl.js';
 import { CorreiosTracker } from './adapter.js';
@@ -154,10 +155,13 @@ describe('Correios parser', () => {
       ['2026-11-11T03:07:00+08:00', '2026-11-11T03:07:00', 'Asia/Shanghai', 'place'],
       ['2026-11-10T21:00:00+08:00', '2026-11-10T21:00:00', 'Asia/Shanghai', 'place'],
     ]);
-    // A country of several clocks keeps the wall clock alone; Brazil's own mail keeps the zone Correios states.
-    const states = parseCorreios({ ...fixture, codObjeto: 'AA000000005US', eventos: rows }, 'AA000000005US');
-    expect(states.events!.slice(1).map(({ time, local_time }) => [time, local_time])).toEqual([
-      [undefined, '2026-11-11T03:07:00'], [undefined, '2026-11-10T21:00:00']]);
+    // A country of several clocks gives its main clock, the sending post's own, never Brasília's after the shared
+    // clock step; Brazil's own mail keeps the zone Correios states.
+    for (const [number, zone, offset] of [['AA000000005US', 'America/New_York', '-05:00'], ['AA000000005PT', 'Europe/Lisbon', '+00:00']] as const) {
+      const sent = dateLocalClocks('correios-br', parseCorreios({ ...fixture, codObjeto: number, eventos: rows }, number));
+      expect(sent.events!.slice(1).map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis]), number).toEqual([
+        [`2026-11-11T03:07:00${offset}`, zone, 'carrier'], [`2026-11-10T21:00:00${offset}`, zone, 'carrier']]);
+    }
     const brazil = parseCorreios({ ...fixture, eventos: rows }, NUMBER);
     expect(brazil.events!.map(event => event.time)).toEqual(['2026-11-12T09:30:00-03:00', '2026-11-11T03:07:00-03:00', '2026-11-10T21:00:00-03:00']);
   });

@@ -815,6 +815,15 @@ describe('ParcelsApp result parsing', () => {
     expect(time('China')).toEqual(['2026-10-28T09:03:00.000Z']);
     expect(time('United States')).toEqual(['local 2026-10-28T17:03:00.000']);
     expect(time('France')).toEqual(['2026-10-28T16:03:00.000Z']);
+    // On a tracked letter La Poste shows that wall clock read as UTC on Paris's clock: 18:03 in winter.
+    const letter = 'LA000000014CN';
+    const lettered = (location: string, digits: string) => parseParcelsAppResponse({
+      carriers: ['La Poste'], originCode: 'CN', destinationCode: 'FR',
+      states: [{ date: `2026-10-28T${digits}:00Z`, status: 'Your shipment has been deposited by the sender with postal partner in the country of origin.',
+        carrier: 0, location }],
+    }, letter, identity(letter)).events?.map((scan) => scan.time ?? `local ${scan.local_time}`);
+    expect(lettered('China', '18:03')).toEqual(['2026-10-28T09:03:00.000Z']);
+    expect(lettered('United States', '18:03')).toEqual(['local 2026-10-28T17:03:00.000']);
   });
 
   it("reads Shouwu's dates as the epoch Shouwu stores", () => {
@@ -2071,6 +2080,47 @@ describe('ParcelsApp result parsing', () => {
         ['2026-10-27T01:05:00.000Z', 'America/Los_Angeles'],
       ]);
     }
+  });
+
+  it('reads a state code the reply\'s own origin or destination names as that country\'s', () => {
+    const read = (originCode: string, destinationCode: string, foreign: string, later = foreign) => parseParcelsAppResponse({
+      carriers: ['UPS'], originCode, destinationCode, states: originCode === 'US' ? [
+        { date: '2026-11-04T10:12:00Z', status: 'Delivered', carrier: 0, location: foreign },
+        { date: '2026-11-02T22:00:00Z', status: 'Departed from Facility', carrier: 0, location: 'Louisville, KY, United States' },
+      ] : [
+        { date: '2026-11-05T10:12:00Z', status: 'Delivered', carrier: 0, location: later },
+        { date: '2026-11-04T08:40:00Z', status: 'Arrival Scan', carrier: 0, location: 'Louisville, KY, United States' },
+        { date: '2026-11-02T08:40:00Z', status: 'Origin Scan', carrier: 0, location: foreign },
+      ],
+    }, number, identity()).events?.filter((scan) => scan.description !== 'Arrival Scan' && scan.description !== 'Departed from Facility')
+      .map((scan) => [scan.time, scan.time_zone]);
+    // UPS's "City, CC": Tunisia's code is Tennessee's too.
+    expect(read('US', 'TN', 'Tunis, TN')).toEqual([['2026-11-04T09:12:00.000Z', 'Africa/Tunis']]);
+    expect(read('US', 'DE', 'Example City, DE')).toEqual([['2026-11-04T09:12:00.000Z', 'Europe/Berlin']]);
+    // Indonesia's is Idaho's after the first scan in the US, not before it: Indonesia's three clocks leave that scan its label.
+    expect(read('ID', 'US', 'Jakarta, ID', 'Example City, ID')).toEqual([
+      ['2026-11-05T17:12:00.000Z', 'America/Boise'], ['2026-11-02T08:40:00.000Z', 'UTC'],
+    ]);
+    // Australia's "WA" and "NT" on a parcel bound for Australia, with no scan in North America.
+    const delivered = (carrier: string, location: string) => parseParcelsAppResponse({ carriers: [carrier], originCode: 'CN', destinationCode: 'AU', states: [
+      { date: '2026-11-05T10:12:00Z', status: 'Delivered', carrier: 0, location },
+      { date: '2026-11-02T08:40:00Z', status: 'Departed from sorting center', carrier: 0, location: 'Shenzhen' },
+    ] }, number, identity()).events?.map((scan) => [scan.time, scan.time_zone]);
+    expect(delivered('Cainiao', 'Example Town, NT')?.[0]).toEqual(['2026-11-05T00:42:00.000Z', 'Australia/Darwin']);
+    expect(delivered('Cainiao', 'Example Town WA 6000')?.[0]).toEqual(['2026-11-05T02:12:00.000Z', 'Australia/Perth']);
+    expect(delivered('4PX Express', 'Example Town WA')?.[1]?.[1] ?? '').not.toMatch(/^America\//);
+  });
+
+  it('reads EMS\'s last mile at a postcode on the destination\'s clock, not the export office\'s', () => {
+    const times = new Map(parseParcelsAppResponse({ carriers: ['EMS'], originCode: 'CN', destinationCode: 'FR', states: [
+      { date: '2026-11-06T14:20:00+00:00', status: 'Delivered', carrier: 0, location: '75001' },
+      { date: '2026-11-06T09:00:00+00:00', status: 'Out for delivery', carrier: 0, location: '75001' },
+      { date: '2026-11-06T06:00:00+00:00', status: 'Departed from destination import office', carrier: 0, location: 'Example City' },
+      { date: '2026-11-03T23:40:00+00:00', status: 'Departed from export office', carrier: 0, location: 'EXAMPLE OFFICE' },
+    ] }, number, identity()).events?.map((scan) => [scan.description, [scan.time, scan.time_zone]]));
+    expect(times.get('Delivered')).toEqual(['2026-11-06T13:20:00.000Z', 'Europe/Paris']);
+    expect(times.get('Out for delivery')).toEqual(['2026-11-06T08:00:00.000Z', 'Europe/Paris']);
+    expect(times.get('Departed from export office')).toEqual(['2026-11-03T15:40:00.000Z', 'Asia/Shanghai']);
   });
 
   it('gives YunExpress\'s unplaced copy of a partner scan at the same second that scan\'s clock', () => {

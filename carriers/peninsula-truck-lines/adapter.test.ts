@@ -86,6 +86,14 @@ describe('Peninsula Truck Lines HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/OUTFITTERS|SAMPLE MILLS/);
     const reversed = parsePeninsula(shipment('in-transit', (body) => body.shipmentLog.reverse()), IN_TRANSIT);
     expect(events(reversed)).toEqual(events(result));
+    // A same-day log, oldest first, whose newest row gives its day alone: the timed rows decide the order.
+    const sameDay = (log: Record<string, string>[]) => parsePeninsula(shipment('in-transit', (body) => {
+      body.shipmentLog = log.map((row) => ({ location: 'SAMPLEVILLE, WA', ...row }));
+    }), IN_TRANSIT);
+    const log = [{ date: '2026-05-06', time: '6:05am', activity: 'PICKUP' }, { date: '2026-05-06', time: '11:47am', activity: 'DOCK' },
+      { date: '2026-05-06', time: '', activity: 'DEL MFST' }];
+    expect(sameDay(log)).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'DEL MFST' });
+    expect(sameDay([...log].reverse())).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'DEL MFST' });
   });
 
   it('settles a delivery, a return, a problem and a hand-off from the status line, and other lines only without a staged row', () => {

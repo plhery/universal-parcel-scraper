@@ -121,8 +121,17 @@ function history(rows: unknown[]): CarrierEvent[] {
     seen.add(key);
     events.push(event);
   }
-  // The guide's example lists the oldest row first; a list that way round is turned round.
-  return events.length > 1 && events[0]!.local_time! < events.at(-1)!.local_time! ? events.reverse() : events;
+  // The guide's example lists the oldest row first; a list that way round is turned round. A row with its day
+  // and no time orders only against another day, so the first rows that compare decide.
+  const direction = order(events[0], events.at(-1)) || events.slice(1).map((event, index) => order(events[index], event)).find(Boolean);
+  return (direction ?? 0) < 0 ? events.reverse() : events;
+}
+
+/** How two rows' clocks compare: by day, and within a day only when both have a time. */
+function order(left: CarrierEvent | undefined, right: CarrierEvent | undefined): number {
+  const [from, to] = [left?.local_time ?? '', right?.local_time ?? ''];
+  if (!from || !to) return 0;
+  return from.slice(0, 10) !== to.slice(0, 10) || (from.length > 10 && to.length > 10) ? from.localeCompare(to) : 0;
 }
 
 /** The delivery the status line dates, placed among the rows by its day, when no row records one. */

@@ -59,7 +59,9 @@ numbers `shouwu-1` offers.
   (`createTs`) before the earliest instant its Beijing wall clock stands for anywhere in that
   country, or in the destination: a flight's arrival under US, written five hours after its
   epoch, would otherwise have landed thirteen hours after it. A row written later keeps its wall
-  clock.
+  clock, unless even the earliest instant it stands for there comes after a newer row read at its
+  epoch: customs written days late is then read at its epoch, not after the round out for
+  delivery.
 - A scan's place is `traceLocation`, which the page leaves out and Shouwu's own back office shows
   before the wording. A country's code it opens with, as in `CN,` before a sort facility, is left
   out. Anything with a digit, as an address or a postcode has, is dropped.

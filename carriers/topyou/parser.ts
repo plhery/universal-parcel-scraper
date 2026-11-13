@@ -35,10 +35,13 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
 
 // The offset TopYou states for its own scans, on China's clock.
 const OWN_OFFSET = '+08:00';
-// TopYou's own end of the destination's clearance, which comes at times without an offset. It is on
-// China's clock all the same: read on the destination's, it fell after TopYou's hand-over to the
-// delivery carrier that follows it, or after the lookup that first found it.
-const OWN_WITHOUT_OFFSET = /^shipment completed the customs clearance process at destination$/i;
+// TopYou's own lines that come at times without an offset, on China's clock all the same. Its end of
+// the destination's clearance, read on the destination's, fell after TopYou's hand-over to the
+// delivery carrier that follows it, or after the lookup that first found it. 17TRACK's copy of its
+// airline's arrival in the destination has the instant of its digits on China's clock: read on the
+// destination's, it came seven hours late.
+const OWN_WITHOUT_OFFSET = /^(?:shipment completed the customs clearance process at destination|airline arrived at destination country\.?)$/i;
+const OWN_ZONE = 'Asia/Shanghai';
 
 /**
  * A scan's clock. TopYou's own scans state +08:00. The delivery carrier's
@@ -48,7 +51,7 @@ const OWN_WITHOUT_OFFSET = /^shipment completed the customs clearance process at
  * for them, and iMile's in Germany, stated +08:00 like TopYou's own, eight
  * hours before iMile's.
  */
-function scanClock(row: Record<string, unknown>, description: string, imile: boolean): { time: string } | { local_time: string } {
+function scanClock(row: Record<string, unknown>, description: string, imile: boolean): Pick<CarrierEvent, 'time' | 'local_time' | 'time_zone' | 'time_zone_basis'> {
   const match = CLOCK.exec(text(row, 'changeDate', 32));
   const zone = text(row, 'timeZone', 8);
   const local = match ? `${match[1]}-${match[2]}-${match[3]}T${match[4]}` : '';
@@ -60,7 +63,8 @@ function scanClock(row: Record<string, unknown>, description: string, imile: boo
   if (!zone && !OWN_WITHOUT_OFFSET.test(description)) return { local_time: local };
   const instant = explicitOffsetTime(`${local}${!zone || (zone === OWN_OFFSET && !imile) ? OWN_OFFSET : '+00:00'}`);
   if (!instant) throw new SchemaError(PROVIDER, 'TopYou returned an invalid scan time');
-  return { time: instant.iso };
+  // An instant deduced for an own line without an offset says which clock read it.
+  return zone ? { time: instant.iso } : { time: instant.iso, local_time: local, time_zone: OWN_ZONE, time_zone_basis: 'carrier' };
 }
 
 // A country's three-letter code, which TopYou writes after its name: "France,FRA".

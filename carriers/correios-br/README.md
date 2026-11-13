@@ -42,7 +42,8 @@ Mail from abroad keeps the S10 number of the post that sent it. The portal lists
 posting and office of exchange, then the item from its arrival in Brazil, with each row's
 zone. The sending post's rows carry its wall clock but Brasília's zone, as China Post's own
 scans of the same items show, so they are read on the clock of the country the number ends
-with, or kept as wall clocks where that country keeps several. It reaches Correios Brazil
+with, its main clock where it keeps several (basis `carrier`): a wall clock left alone would
+be dated on Brasília's zone after the parser. It reaches Correios Brazil
 when a caller names it, a provider names it (some write "Brazil Post"), or a result gives
 Brazil as the destination of an S10 item. The arrival in Brazil reads as transit, and so
 does a posting the sending post lists again when it dispatches the item.

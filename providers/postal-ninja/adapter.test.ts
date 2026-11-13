@@ -320,6 +320,11 @@ describe('Postal Ninja result parsing', () => {
     expect(times(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds'))?.[0]).toBe('2026-11-02T04:40:00.000Z');
     // A UTC stamp is the instant itself, and names no zone.
     expect(parsePostalNinjaResponse(label, number, 'Europe/Amsterdam', 'spring-gds').events![0]).not.toHaveProperty('time_zone');
+    // That UTC is the label's own, not USPS's clock: the unplaced scan after it still borrows the facility's.
+    const labelled = withEvents([scans[0], { ds: 'USPS', dt: '2026-11-01T22:00:00', dsc: 'Shipping Label Created', loc: 'EXAMPLE CITY, CA 90001' },
+      ...scans.slice(1, 3)]);
+    expect(parsePostalNinjaResponse(labelled, number, 'Europe/Amsterdam', 'spring-gds').events!
+      .find((scan) => scan.description === 'Inbound into customs')).toMatchObject({ time: '2026-11-02T11:00:29.000Z', time_zone: 'America/Los_Angeles' });
   });
 
   it('reads local clocks beside other services, or for a postal item that crosses a border, only in the carrier\'s zone', () => {

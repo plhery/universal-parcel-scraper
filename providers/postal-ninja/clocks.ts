@@ -215,6 +215,16 @@ export function originLeg({ service, description }: Pick<Scan, 'service' | 'desc
 }
 
 /**
+ * Whether a scan's established zone is its service's clock for the scans
+ * around it. A USPS mailer's label is on UTC (`serviceZone`), not where USPS
+ * scans: lent to an unplaced customs scan, it put that scan eight hours off
+ * the Pacific clock of the facility scan after it.
+ */
+export function lendsZone({ service, description }: Pick<Scan, 'service' | 'description'>): boolean {
+  return !(isUsps(service) && uspsMailerLabel(description));
+}
+
+/**
  * The established zone of a scan's wall time, from the service that reported
  * it: the destination post's clock for a scan Swiss Post relays from it, the
  * office's for DHL Germany's copies at a European one, a UTC

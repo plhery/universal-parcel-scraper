@@ -96,7 +96,8 @@ page makes.
   code feeds append to Chinese places, whether written in Chinese or as a province or city in Latin
   letters ("SHENZHEN, US"). A place naming only the destination country is the parcel's, not the
   scan's: a Canada line's airline hand-over in China reads "Canada". It is left out, and a scan
-  stored with it, or with a placeholder or forwarder's name ("SYSTEM, US"), keeps its row.
+  stored with it, or with a placeholder or forwarder's name ("SYSTEM, US"), keeps its row, as
+  does one stored with a forwarder's name beside its town once shown with the town alone.
   Wordings lose US ZIP codes, British and Canadian postcodes, contact or signature details a
   post appends, and the row's own clock a node's wording ends with ("Shipment has delivered
   at …"); a scan stored with that clock keeps its row. The order id, the DHLink number and

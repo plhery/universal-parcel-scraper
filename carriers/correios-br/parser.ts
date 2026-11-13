@@ -28,7 +28,7 @@ type ScanClock = Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> & 
  * that country keeps several clocks: Correios writes such a row on that post's wall clock and
  * labels it with Brasília's zone, so its own zone is not read.
  */
-function scanClock(value: unknown, abroad?: string | null): ScanClock {
+function scanClock(value: unknown, abroad?: string | null, basis = 'place'): ScanClock {
   const raw = clean(isRecord(value) ? value.date : value, 64);
   const digits = /^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})(?:\.\d{1,6})?$/.exec(raw)?.[1];
   const wall = digits ? DateTime.fromFormat(digits, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' }) : null;
@@ -44,7 +44,7 @@ function scanClock(value: unknown, abroad?: string | null): ScanClock {
     return { local_time: local };
   }
   const time = zoned.toISO({ suppressMilliseconds: true });
-  return abroad === undefined ? { time } : { time, local_time: local, time_zone: zone, time_zone_basis: 'place' };
+  return abroad === undefined ? { time } : { time, local_time: local, time_zone: zone, time_zone_basis: basis };
 }
 
 // The sending post's rows for mail from abroad: its posting and its office of exchange.
@@ -86,7 +86,10 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
   if (!Array.isArray(payload.eventos) || payload.eventos.length > 500) throw new SchemaError('Correios');
   // Mail from abroad keeps the S10 number of the post that sent it, whose country ends it.
   const origin = requested.slice(-2);
-  const originZone = origin === 'BR' ? undefined : hasSeveralClocks(origin) ? null : mainZone(origin);
+  // A country of several clocks gives its main one, the sending post's own: a wall clock left alone would be dated on
+  // Brasília's after the parser.
+  const originZone = origin === 'BR' ? undefined : mainZone(origin);
+  const originBasis = hasSeveralClocks(origin) ? 'carrier' : 'place';
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
   for (const row of payload.eventos) {
@@ -96,7 +99,7 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
     const description = clean(row.descricao, 500);
     if (!/^[A-Z]{2,4}$/.test(code) || !/^\d{2}$/.test(subtype) || !description) throw new SchemaError('Correios', 'Correios returned an incomplete scan');
     const providerCode = `${code}/${subtype}`;
-    const clock = scanClock(row.dtHrCriado, ABROAD.test(providerCode) ? originZone : undefined);
+    const clock = scanClock(row.dtHrCriado, ABROAD.test(providerCode) ? originZone : undefined, originBasis);
     const address = isRecord(row.unidade) && isRecord(row.unidade.endereco) ? row.unidade.endereco : null;
     const location = address ? [clean(address.cidade, 100), clean(address.uf, 8)].filter(Boolean).join(', ') : '';
     const key = `${clock.time ?? clock.local_time ?? clock.provider_time_text ?? ''}\u0000${providerCode}\u0000${description}\u0000${location}`;

@@ -342,7 +342,10 @@ step exists for future protocol changes.
   UPU's "Held by customs" at the Johannesburg office. Borrowed from the British scans
   before them, they came an hour late. In a country of several clocks the office is on the
   one most of its people live on, unless its states or provinces keep their own: on a parcel
-  to Chile, EMS's rows at the Santiago office had the digits of UPU's copies there. FIRST LINE ("1ST") dates its scans in China and Hong Kong, and its order data
+  to Chile, EMS's rows at the Santiago office had the digits of UPU's copies there. Its last
+  mile ("Out for delivery", "Delivered") at a postcode or a town is in the destination too, on
+  its single clock: borrowed from the export office, a round in France went out on Beijing's
+  clock before the item left the import office. FIRST LINE ("1ST") dates its scans in China and Hong Kong, and its order data
   with no place, on Beijing's clock, as 17TRACK's copies do. Its scans abroad are its
   delivery partner's, on their facility's clock, and from "Arrived at Destination Airport"
   they are in the destination: on a parcel to California, its copies of GOFO's scans had
@@ -545,7 +548,10 @@ step exists for future protocol changes.
   Post's own row, which states +08:00. Azerbaijan Post names the country before the office
   ("LATVIA: LVRIXA") as it names a town at home: read on Baku's clock, its copies of Latvian
   Post's scans came two hours before Latvian Post's own. So does La Poste ("China"): read on
-  Paris's clock, its copy of China Post's posting came seven hours after La Poste's own instant.
+  Paris's clock, its copy of China Post's posting on a parcel came seven hours after La Poste's
+  own instant. On a tracked letter (an S10 number of the L series) La Poste shows that wall
+  clock read as UTC on Paris's clock, as 17TRACK has it, so the digits go back to the wall
+  clock first.
   Correios Brazil names it after "Country, ": read on Brasília's clock, China Post's posting
   came eleven hours after China Post's own row of it. Albania Post's relays under the foreign post's country ("Finland") keep their wall clock, as
   its own tracker leaves them: they run hours ahead of the foreign post's own scans.
@@ -632,7 +638,12 @@ step exists for future protocol changes.
   California's on a parcel leaving the US. Another shared code ("GA" is Gabon) counts only in a reply that is in North America: one
   scan certainly is, or one names a state or province and none names another country or the
   parcel is bound for the US or Canada: GOFO's hub "EXAMPLE, CA", on a parcel from China, has
-  the instant GOFO's own tracker gives on California's clock. A copy of such a scan from another carrier, at the same minute with the same wording
+  the instant GOFO's own tracker gives on California's clock. A code the reply's own origin
+  or destination names (its own, or Australia's "WA" and "NT") is that country's unless its
+  town, a ZIP code or the country places it, on the origin's side of the reply's first scan
+  certainly in North America and on the destination's side of its last: UPS's "Tunis, TN" on
+  a parcel bound for Tunisia keeps Tunis's clock, and "EXAMPLE TOWN WA 6000" on one bound for
+  Australia Perth's. A country of several clocks leaves such a scan its wall clock. A copy of such a scan from another carrier, at the same minute with the same wording
   (Cainiao relaying UniUni, YunExpress relaying GOFO), takes the same zone. YunExpress also
   relays a partner's scan in its own words with no place, at the partner's digits to the
   second: GOFO's "In Transit to Next Facility" came as its "In Transit", five hours early as

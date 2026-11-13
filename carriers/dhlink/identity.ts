@@ -20,8 +20,9 @@ const STATED_CLOCK = / at \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 // end of its wording keeps its row once worded without it, and one stored in
 // Chinese once shown in English. A row stored with the destination country, or
 // a placeholder such as "SYSTEM, US", as its place keeps its row once shown
-// without a place. A partner's scan stored with its place's town and state
-// before its wording keeps its row once worded without them.
+// without a place, and one stored with a forwarder's name beside its town
+// once shown with the town alone. A partner's scan stored with its place's
+// town and state before its wording keeps its row once worded without them.
 export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   sourceCarrierId: 'dhlink', storedSources: ['dhlink'], requireProviderCode: false,
   matchEachScan: true,
@@ -30,6 +31,8 @@ export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
     || sameScan(incoming, { ...stored, description: dhlinkEnglish(stored.description) ?? '' })
     || sameScan(incoming, { ...stored, description: dhlinkWithoutTown(stored.description, stored.location) })
     || (!incoming.location.trim() && (countryCode(stored.location.trim()) !== null || !dhlinkPlace(stored.location))
-      && sameScan(incoming, { ...stored, location: '' })),
+      && sameScan(incoming, { ...stored, location: '' }))
+    || (!!incoming.location.trim() && dhlinkPlace(stored.location) === incoming.location.trim()
+      && sameScan(incoming, { ...stored, location: incoming.location })),
   matchWallClock: true,
 };

@@ -22,8 +22,10 @@ const STAGES = new Map<string, Stage>(Object.entries({
 
 const key = (text: string) => text.toLowerCase().replace(/[^a-z]/g, '');
 
-// A delivery round's outcome in prose ("Unsuccessful Undelivered. (Rescheduled to: …)"); a pickup run's stays unread.
+// A delivery round's outcome in prose ("Unsuccessful Undelivered. (Rescheduled to: …)"). A pickup run's leaves the
+// parcel with the seller: registered, as the pickup request before it.
 const UNSUCCESSFUL = /^unsuccessful\s+(?!.*\bpick ?up\b)\S/i;
+const UNSUCCESSFUL_PICKUP = /^unsuccessful\s+.*\bpick ?up\b/i;
 // "Marked RTO" and its reason in prose ("Marked RTO: ORDER_REJECT"): the return to the seller starts, as ShipmentRtoConfirmed.
 const MARKED_RTO = /^marked rto\b/i;
 
@@ -34,7 +36,8 @@ export function ekartScan(description: string): { code?: string; stage?: Stage; 
   // A hub's name after "Received at" or "Dispatched to": the parcel arriving there, or sent on to it.
   // "Unsuccessful" and its reason in prose: the round out for delivery ended without delivering.
   const stage = code ? STAGES.get(key(code)) : /^(?:received at|dispatched to) \S/i.test(description) ? 'in_transit'
-    : UNSUCCESSFUL.test(description) ? 'failed_attempt' : MARKED_RTO.test(description) ? 'exception' : STAGES.get(key(description));
+    : UNSUCCESSFUL.test(description) ? 'failed_attempt' : UNSUCCESSFUL_PICKUP.test(description) ? 'registered'
+    : MARKED_RTO.test(description) ? 'exception' : STAGES.get(key(description));
   const returning = code ? /^(?:rto|return|shipmentrto)/i.test(code) : MARKED_RTO.test(description);
   return { ...(code ? { code } : {}), ...(stage ? { stage } : {}), returning };
 }

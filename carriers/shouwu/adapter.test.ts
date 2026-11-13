@@ -319,25 +319,26 @@ describe('Shouwu International HTTP adapter', () => {
   it('keeps the epoch as the instant of an agent’s note, iMile’s rows and an agent’s rows under an airport, but not the airline’s', async () => {
     const abroad = changed((traces, order) => {
       order.countryCodeTwo = 'IT';
-      traces.splice(0, traces.length, trace(1775950200, '【ROM 10】Shipment out for delivery.', 'IT'),
-        trace(1775946600, '<User not at home>', 'IT'), trace(1775943000, '因中港查验延误，需安排新航班。', 'GB'),
-        trace(1775939400, 'Flight arrival', 'MXP'), { ...trace(1775935800, 'Arrived at airport of Destination', 'MXP'), traceType: 'TRACE_TYPE_HEAD' },
+      // The agent's rows come a day after the airline's and the arrival, so that every row keeps its order.
+      traces.splice(0, traces.length, trace(1775950200 + 86400, '【ROM 10】Shipment out for delivery.', 'IT'),
+        trace(1775946600 + 86400, '<User not at home>', 'IT'), trace(1775943000 + 86400, '因中港查验延误，需安排新航班。', 'GB'),
+        trace(1775939400 + 86400, 'Flight arrival', 'MXP'), { ...trace(1775935800, 'Arrived at airport of Destination', 'MXP'), traceType: 'TRACE_TYPE_HEAD' },
         trace(1775932200, 'Shipment arrived in the destination country', 'IT'), trace(1775928600, '其他 | Shipment Announced', 'GB'));
     });
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url) === SHOUWU_API
       ? reply(JSON.stringify(abroad)) : new Response('', { status: 503 })));
     const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'shouwu' }, { budgetMs: 3000 });
     expect(answer.result.events.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
-      ['2026-04-12T07:30:00+08:00', 'Asia/Shanghai', 'carrier'],
-      ['2026-04-12T06:30:00+08:00', 'Asia/Shanghai', 'carrier'],
-      ['2026-04-12T05:30:00+08:00', 'Asia/Shanghai', 'carrier'],
-      ['2026-04-12T04:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-13T07:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-13T06:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-13T05:30:00+08:00', 'Asia/Shanghai', 'carrier'],
+      ['2026-04-13T04:30:00+08:00', 'Asia/Shanghai', 'carrier'],
       ['2026-04-12T03:30:00+02:00', 'Europe/Rome', 'place'],
       ['2026-04-12T02:30:00+02:00', 'Europe/Rome', 'place'],
       // A partner's row in English under the destination's code keeps its place's clock.
       ['2026-04-12T01:30:00+01:00', 'Europe/London', 'place'],
     ]);
-    expect(answer.result.last_update).toBe('2026-04-12T07:30:00+08:00');
+    expect(answer.result.last_update).toBe('2026-04-13T07:30:00+08:00');
   });
 
   it('keeps the epoch as the instant of a row under a country\'s code or without a place that was written before its wall clock there', async () => {
@@ -355,8 +356,9 @@ describe('Shouwu International HTTP adapter', () => {
     expect(answer.result.events.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
       ['2026-04-12T07:30:00+08:00', 'Asia/Shanghai', 'carrier'],
       ['2026-04-12T04:30:00+08:00', 'Asia/Shanghai', 'carrier'],
-      // Written days later, its wall clock may be New York's.
-      ['2026-04-12T02:30:00-04:00', 'America/New_York', 'place'],
+      // Written days later, its wall clock may be New York's, but there it would come after the round out for delivery
+      // and the flight's arrival read at their epochs: it is read at its epoch too.
+      ['2026-04-12T02:30:00+08:00', 'Asia/Shanghai', 'carrier'],
       ['2026-04-11T17:33:20+08:00', 'Asia/Shanghai', 'place'],
     ]);
   });

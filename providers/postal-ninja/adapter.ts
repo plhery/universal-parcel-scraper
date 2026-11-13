@@ -25,7 +25,7 @@ import { isRecord } from '../../core/types.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { classifyEvent, event, hasPrivateDeliveryDetails, isNotice, numberOf, result, text, type UniversalSource } from '../shared/result.js';
 import { courierZone, universalCarrierHints } from '../shared/hints.js';
-import { borrowsRoutingZone, carrierHomeZone, originLeg, serviceZone, wallClock, type Zoned } from './clocks.js';
+import { borrowsRoutingZone, carrierHomeZone, lendsZone, originLeg, serviceZone, wallClock, type Zoned } from './clocks.js';
 
 const SOURCE: UniversalSource = 'Postal Ninja';
 const GET_API = 'https://postal.ninja/track/get';
@@ -115,7 +115,7 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
   const journey = { number, destination, fallback: timezone ?? carrierHomeZone(carrier),
     alone: payload.track.events !== undefined && services.size === 1
       && (!isValidS10TrackingNumber(number) || number.slice(-2) === destination) };
-  const scans: { wall: string | null; service: string; origin: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
+  const scans: { wall: string | null; service: string; origin: boolean; lends: boolean; zone: Zoned | null | false; event: Omit<CarrierEvent, 'local_time'> }[] = [];
   for (const raw of rawEvents as unknown[]) {
     if (!isRecord(raw)) throw new SchemaError(SOURCE, 'Postal Ninja returned an invalid event');
     const description = text(raw.dsc);
@@ -127,14 +127,14 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const reporting = named.has(service) ? { reporting_carrier: service } : {};
     if (/(?:Z|[+-]\d{2}:\d{2})$/.test(wall)) {
       const parsed = event(wall, description, serviceStage(service, description));
-      if (parsed) scans.push({ wall: null, service, origin: false, zone: null, event: { ...parsed, ...reporting } });
+      if (parsed) scans.push({ wall: null, service, origin: false, lends: false, zone: null, event: { ...parsed, ...reporting } });
     } else {
       const classified = classifyEvent(description, serviceStage(service, description));
       const { stage } = classified;
       if (stage !== 'delivered' && hasPrivateDeliveryDetails(description)) continue;
       // A scan's location (loc) is read only for its clock.
       const scan = { service, description, wall, location: text(raw.loc), delivered: stage === 'delivered' };
-      scans.push({ wall, service, origin: originLeg(scan), zone: serviceZone(scan, journey),
+      scans.push({ wall, service, origin: originLeg(scan), lends: lendsZone(scan), zone: serviceZone(scan, journey),
         event: { description: stage === 'delivered' ? 'Delivered' : description, ...classified, ...reporting } });
     }
   }
@@ -150,8 +150,9 @@ export function parsePostalNinjaResponse(payload: unknown, trackingNumber: strin
     const { zone, service, origin } = scans[index]!;
     if (zone !== null) return zone || null;
     // A service's scans on its origin's clock (a post's copies of the origin post's, Cainiao's in China) borrow among themselves.
+    // A USPS mailer's label on UTC lends none (`lendsZone`).
     const established = (other: typeof scans[number]) => other.service === service && other.origin === origin
-      && other.zone ? other.zone.zone : null;
+      && other.lends && other.zone ? other.zone.zone : null;
     const borrowed = (zone: string): Zoned => ({ zone, basis: 'neighbour' });
     for (let earlier = index - 1; earlier >= 0; earlier -= 1) { const zone = established(scans[earlier]!); if (zone) return borrowed(zone); }
     for (let later = index + 1; later < scans.length; later += 1) { const zone = established(scans[later]!); if (zone) return borrowed(zone); }

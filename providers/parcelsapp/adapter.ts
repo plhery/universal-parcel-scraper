@@ -16,7 +16,7 @@ import { carrierDefinition, carrierTimezone } from '../../core/catalog/index.js'
 import {
   brandCarrierIds, brandTimeZones, carrierBrand, carrierIdFromName, carrierNameCountryZone, isCarrierFeedName, isKnownCarrierName,
 } from '../../core/catalog/hints.js';
-import { detectCarrierMatch } from '../../core/detection/index.js';
+import { detectCarrierMatch, isValidS10TrackingNumber } from '../../core/detection/index.js';
 import { CarrierError, carrierErrorKind, ChallengeError, IndeterminateError, InputRequiredError, InvalidInputError, NoHistoryError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -328,6 +328,8 @@ const EUROPE: ReadonlySet<string> = new Set(['AT', 'BE', 'BG', 'CY', 'CZ', 'DE',
   'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK', 'IS', 'LI', 'NO', 'CH', 'GB']);
 const ORIGIN = 'origin';
 const wordings = (list: readonly string[]) => new RegExp(`^(?:${list.join('|')})$`, 'i');
+// EMS's last-mile scans, which happen in the destination.
+const EMS_LAST_MILE = wordings(['arriv(?:al|ed) at delivery office', 'out for delivery', 'unsuccessful delivery', 'delivered', 'final delivery']);
 // Cainiao's last-mile scans, in its words or the local carrier's.
 const CAINIAO_LAST_MILE = [
   'received by local\\s+delivery company', '(?:at|left) destination country/region(?: sorting center)?', 'arrived at local delivery center',
@@ -397,7 +399,10 @@ const CAINIAO_LAST_MILE = [
  * exchange is on the one most of its people live on, unless the country's
  * states or provinces keep their own: on a parcel to Chile, EMS's arrival and
  * import customs at "Santiago" had the digits of UPU's copies at "SANTIAGO
- * EMS, Chile" and FIC's own rows on Santiago's clock.
+ * EMS, Chile" and FIC's own rows on Santiago's clock. Its last mile
+ * (`EMS_LAST_MILE`), at a postcode or a town, is in the destination too, on
+ * its single clock: borrowed from the export office, a round in France went
+ * out on Beijing's clock, before the item left the import office.
  *
  * FIRST LINE's ("1ST") scans from its arrival at the destination airport are
  * on the destination's clock, as its partner's scans after them are (see
@@ -452,6 +457,7 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
     { wording: wordings(['arrived at destination import office', 'held at destination import office', 'held for customs inspection',
       'presented to import customs', 'released from import customs', 'departed from destination import office']), zone: DESTINATION,
       main: true },
+    { wording: EMS_LAST_MILE, zone: DESTINATION },
   ]],
   ['ecoscooting', [
     { wording: /^(?:shipment data information received|shipment has left cainiao express's partner facility|shipment is in transit to cainiao express)$/i,
@@ -748,7 +754,7 @@ const US_STATE_NAMES: ReadonlyMap<string, string> = new Map(Object.entries({
  * in Gabon. A state written out counts only after the country ("Example City
  * Minnesota, United States"): Georgia is a country too.
  */
-function regionClock(location: string): { zone: string; certain: boolean } | null {
+function regionClock(location: string, distrusted: ReadonlySet<string> = NO_CODES): { zone: string; certain: boolean; distrusted?: string } | null {
   const parts = location.split(',').map((part) => part.trim()).filter(Boolean);
   const last = parts.at(-1) ?? '';
   const coded = parts.length > 2 ? COUNTRY_POSTCODE.exec(last)?.[1] : undefined;
@@ -774,7 +780,46 @@ function regionClock(location: string): { zone: string; certain: boolean } | nul
   // A ZIP code of that state settles it: "EXAMPLE TOWN, CA 90001" is California's.
   const zip = /\b(\d{5})(?:-\d{4})?$/.exec(last)?.[1];
   const zipped = !!zip && usZipState(zip) === code.toUpperCase();
-  return zone ? { zone, certain: country !== null || !countryCode(code) || regionHasTown(code, town) || zipped } : null;
+  // A code the reply's own origin or destination also names (`replyCodes`) needs its town, its ZIP code or the country.
+  const shared = distrusted.has(code.toUpperCase());
+  const certain = country !== null || (!shared && !countryCode(code)) || regionHasTown(code, town) || zipped;
+  return zone ? { zone, certain, ...(shared ? { distrusted: code.toUpperCase() } : {}) } : null;
+}
+
+const NO_CODES: ReadonlySet<string> = new Set();
+
+/**
+ * The codes a country at one end of the reply gives its own places, which a state or province
+ * shares: its own code ("Casablanca, MA" on a parcel bound for Morocco), and Australia's "WA"
+ * and "NT". None for the US or Canada.
+ */
+function ownCountryCodes(country: string | null): string[] {
+  if (!country || country === 'US' || country === 'CA') return [];
+  return country === 'AU' ? ['WA', 'NT'] : [country];
+}
+
+/**
+ * The codes a scan's place is distrusted for as a state or province: the origin's before the
+ * reply's first scan certainly in North America, the destination's after its last. With no
+ * such scan, an end's codes count unless the other end is the US or Canada.
+ */
+function replyCodes(payload: Record<string, unknown>, states: readonly unknown[], origin: string | null,
+  destination: string | null): (date: unknown) => ReadonlySet<string> {
+  const ends = new Set([...ownCountryCodes(origin), ...ownCountryCodes(destination)]);
+  if (!ends.size) return () => NO_CODES;
+  const certain = states.flatMap((raw) => {
+    if (!isRecord(raw)) return [];
+    const location = scanLocation(stateCarrierName(payload, raw), raw.location);
+    const wall = location && placeKind(location, ends) === 'certain' ? mislabeledWallTime(raw.date) : null;
+    return wall ? [wall] : [];
+  }).sort();
+  const northAmerican = (country: string | null) => country === 'US' || country === 'CA';
+  return (date) => {
+    const wall = mislabeledWallTime(date);
+    const before = certain.length ? wall !== null && wall < certain[0]! : !northAmerican(destination);
+    const after = certain.length ? wall !== null && wall > certain.at(-1)! : !northAmerican(origin);
+    return new Set([...(before ? ownCountryCodes(origin) : []), ...(after ? ownCountryCodes(destination) : [])]);
+  };
 }
 
 /**
@@ -895,6 +940,9 @@ const AUSTRALIAN_STATE_ZONES: ReadonlyMap<string, string> = new Map([
   ['SA', 'Australia/Adelaide'], ['TAS', 'Australia/Hobart'], ['VIC', 'Australia/Melbourne'], ['WA', 'Australia/Perth'],
 ]);
 
+// An Australian state and its four-digit postcode, ending a place: "EXAMPLE TOWN WA 6000".
+const AUSTRALIAN_ADDRESS = /\b(ACT|NSW|NT|QLD|SA|TAS|VIC|WA),?\s+\d{4}$/;
+
 // The countries of the US, Canadian and Australian zones a state or province gives.
 const STATE_ZONES: ReadonlyMap<string, string> = new Map([
   ...[...US_STATE_NAMES.values()].map((code) => [usStateTimeZone(code)!, 'US'] as const),
@@ -970,8 +1018,8 @@ function fitsPlace(zone: string | null, location: string, borrowed = false): str
 }
 
 /** Where a location puts a scan, for the reply-wide North America check. */
-function placeKind(location: string): 'certain' | 'region' | 'abroad' | null {
-  const region = regionClock(location);
+function placeKind(location: string, distrusted: ReadonlySet<string> = NO_CODES): 'certain' | 'region' | 'abroad' | null {
+  const region = regionClock(location, distrusted);
   if (region?.certain) return 'certain';
   const place = lastPlace(location);
   if (countryTimeZone(place)) return 'abroad';
@@ -985,10 +1033,11 @@ function placeKind(location: string): 'certain' | 'region' | 'abroad' | null {
  * are local clocks. An uncertain one counts only in a reply that is in North
  * America.
  */
-function regionScanZone(name: unknown, location: string, inNorthAmerica: boolean): { zone: string; certain: boolean } | null {
+function regionScanZone(name: unknown, location: string, inNorthAmerica: boolean,
+  distrusted: ReadonlySet<string> = NO_CODES): { zone: string; certain: boolean } | null {
   const key = nameKey(name);
-  const region = LOCAL_CLOCK_CARRIERS.has(key) || WALL_CLOCKS.has(key) ? regionClock(location) : null;
-  return region && (region.certain || inNorthAmerica) ? region : null;
+  const region = LOCAL_CLOCK_CARRIERS.has(key) || WALL_CLOCKS.has(key) ? regionClock(location, distrusted) : null;
+  return region && (region.certain || (inNorthAmerica && !region.distrusted)) ? region : null;
 }
 
 const POLAND_POST_RELAY = /^International Postal System$/i;
@@ -1026,6 +1075,21 @@ function polandPostRelay(name: unknown, date: unknown, location: string, number:
   const written = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2}(?:\.\d+)?)?)(?:Z|[+-]\d{2}:\d{2})?$/i.exec(date.trim())?.[1];
   const partner = written ? pocztaPolskaPartnerClock(number, destination) : null;
   return written && partner ? { zone: partner.zone, date: `${written}Z` } : null;
+}
+
+// A tracked letter: an S10 number of the L series.
+const TRACKED_LETTER = /^L[A-Z]\d{9}[A-Z]{2}$/;
+
+/**
+ * La Poste's copy of a sending post's scan on a tracked letter (`relayedPostZone`): La Poste shows
+ * that post's wall clock read as UTC on Paris's clock, as 17TRACK has it, so its digits go back to
+ * the wall clock before that post's clock reads them.
+ */
+function laPosteLetterRelay(name: unknown, date: unknown, location: string, number: string): { zone: string | null; date: string } | null {
+  if (typeof name !== 'string' || carrierIdFromName(name) !== 'la-poste' || !TRACKED_LETTER.test(number) || !isValidS10TrackingNumber(number)) return null;
+  const zone = relayedPostZone('la-poste', location);
+  const wall = zone === undefined ? null : mislabeledLocalTime(date, 'Europe/Paris');
+  return zone !== undefined && wall ? { zone, date: new Date(wall.timestamp).toISOString() } : null;
 }
 
 /**
@@ -1102,7 +1166,8 @@ function placeClockLine(carrier: string, status: string, location: string): stri
  * as it does a town at home ("Baku: AZBAKA"): read on Baku's clock, its
  * copies of Latvian Post's scans came two hours before Latvian Post's own.
  * La Poste names the sending country ("China"): read on Paris's clock, its
- * copy of China Post's posting came seven hours after La Poste's own instant.
+ * copy of China Post's posting came seven hours after La Poste's own instant
+ * (`laPosteLetterRelay` for a tracked letter's).
  * Correios Brazil names it after "Country, ": read on Brasília's clock, China
  * Post's posting came eleven hours after China Post's own row of it.
  */
@@ -1250,7 +1315,7 @@ function destinationOffice(name: unknown, location: string, destination: string 
  * "+08:00" copies of its airline handovers and of such scans have their digits.
  */
 function siteZone(payload: Record<string, unknown>, state: Record<string, unknown>, number: string, inNorthAmerica = false,
-  status = '', destination: string | null = null): string | null | undefined {
+  status = '', destination: string | null = null, distrusted: ReadonlySet<string> = NO_CODES): string | null | undefined {
   const name = stateCarrierName(payload, state);
   const key = nameKey(name);
   const carrier = typeof name === 'string' ? carrierIdFromName(name) : undefined;
@@ -1266,13 +1331,22 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   // Australia Post's "WA" and "NT" are Australian states, not Washington or the Northwest Territories.
   const australiaPost = carrier === 'australia-post' ? australiaPostZone(location) : null;
   if (australiaPost) return australiaPost;
-  const region = regionScanZone(name, location, inNorthAmerica);
+  const region = regionScanZone(name, location, inNorthAmerica, distrusted);
   if (region?.certain) return region.zone;
+  // A code of the reply's own origin or destination that the town, a ZIP code or the country does not place in
+  // North America is that end's: "Casablanca, MA" on a parcel bound for Morocco, and Australia's "WA" and "NT".
+  const own = distrusted.size ? regionClock(location, distrusted) : null;
+  const end = own?.distrusted && !own.certain ? own.distrusted : null;
+  const ended = !end ? null : end === 'WA' || end === 'NT' ? australianZone(location, false) : hasSeveralClocks(end) ? null : mainZone(end);
+  if (ended) return ended;
+  // So is a state and its four-digit postcode at the reply's Australian end: "EXAMPLE TOWN WA 6000".
+  const addressed = distrusted.has('WA') ? AUSTRALIAN_ADDRESS.exec(location)?.[1] : undefined;
+  if (addressed) return AUSTRALIAN_STATE_ZONES.get(addressed)!;
   // A posting's capital names its office, not the scan's state (`postingOffice`).
   const capitals = !postalPosting(name, status);
   // A town of the state or province whose code a country shares is not in
   // that country: "Denver, CO" is not in Colombia, whoever scanned it.
-  const located = regionClock(location)?.certain ? null
+  const located = regionClock(location, distrusted)?.certain ? null
     : countryTimeZone(place) ?? (countryCode(place) === 'AU' ? australianZone(location, capitals) : null);
   if (located) return located;
   if (region) return region.zone;
@@ -1346,12 +1420,12 @@ function guessedZone(payload: Record<string, unknown>, state: Record<string, unk
  * which `wallClockZones` falls back on.
  */
 function readState(payload: Record<string, unknown>, raw: Record<string, unknown>, status: string, fallback: string | null, number: string,
-  inNorthAmerica = false, destination: string | null = null, origin: string | null = null) {
+  inNorthAmerica = false, destination: string | null = null, origin: string | null = null, distrusted: ReadonlySet<string> = NO_CODES) {
   const name = stateCarrierName(payload, raw);
   const location = scanLocation(name, raw.location);
   const offset = ownOffset(name, raw.date, location);
   const wallClock = WALL_CLOCKS.has(nameKey(name)) && !offset && !uspsLabelRow(name, status);
-  const relay = polandPostRelay(name, raw.date, location, number, destination);
+  const relay = polandPostRelay(name, raw.date, location, number, destination) ?? laPosteLetterRelay(name, raw.date, location, number);
   const pitneyBowes = relay ? undefined : pitneyBowesClock(payload, raw, status, destination);
   const own = relay?.zone ?? (pitneyBowes ? pitneyBowes.zone : carrierClock(payload, raw, number, status, destination));
   // iMile's page writes every scan on the recipient country's clock, wherever it happened, and
@@ -1367,7 +1441,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
   const unplacedWall = own === null && !offset && (pitneyBowes?.zone === null
     || ['imile', 'china-post', 'hrvatska-posta', 'correos-spain', 'far-international', 'posta-shqiptare', 'juxi-express'].includes(ownCarrier) || Object.hasOwn(RELAYING_POSTS, ownCarrier)
     || PLACE_CLOCK_LINES.has(ownCarrier) || (nameKey(name) === 'easyship' && epostGlobalCopyZone(status, feedWordings(payload)) === null));
-  const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination) : undefined;
+  const sited = own === undefined ? siteZone(payload, raw, number, inNorthAmerica, status, destination, distrusted) : undefined;
   const placed = own !== undefined ? own : sited;
   // A posting that only its office's capital places borrows first (`postingOffice`).
   const office = placed === undefined ? postingOffice(name, status, location, replyOrigin(payload, number)) : null;
@@ -1382,7 +1456,7 @@ function readState(payload: Record<string, unknown>, raw: Record<string, unknown
     offset, location, wallClock, nationwide, office,
     // How the zone was chosen (`zoneBasis`), and whether the date is an instant the carrier stated.
     basis: own === undefined && sited !== undefined ? 'place' as const : 'carrier' as const, instant: own === null,
-    local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica)?.zone,
+    local: zone !== null && zone === regionScanZone(name, location, inNorthAmerica, distrusted)?.zone,
     fallback: wallClock || office ? fitsPlace(fallback, location) : null, known: known?.zone ?? null, arrival: known?.country ?? null,
     // With no zone, a scan whose label nothing vouches for keeps its wall clock.
     wallOnly: unplacedWall || destinationCode || unknownNetwork(name) || localClockBrand(name) || militaryPostOffice(location) };
@@ -1967,14 +2041,20 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
   // or the parcel is bound for the US or Canada. A parcel from China names
   // China first: GOFO's hub "EXAMPLE, CA" is then California's, where GOFO's
   // own tracker dates the scan at ParcelsApp's digits.
+  // A code the reply's own origin or destination names is distrusted as a state or province
+  // (`replyCodes`), and a parcel bound for another country is not in North America by its
+  // uncertain codes alone.
+  const destination = replyDestination(payload, number);
+  const origin = countryCode(payload.originCode) ?? countryCode(payload.origin);
+  const ends = new Set([...ownCountryCodes(origin), ...ownCountryCodes(destination)]);
+  const distrustedAt = replyCodes(payload, payload.states, origin, destination);
   const kinds = payload.states.flatMap((raw: unknown) => {
     const location = isRecord(raw) ? scanLocation(stateCarrierName(payload, raw), raw.location) : '';
-    return location ? [placeKind(location)] : [];
+    return location ? [placeKind(location, ends)] : [];
   });
-  const destination = replyDestination(payload, number);
+  const boundElsewhere = destination !== null && destination !== 'US' && destination !== 'CA';
   const inNorthAmerica = kinds.includes('certain')
-    || (kinds.includes('region') && (!kinds.includes('abroad') || destination === 'US' || destination === 'CA'));
-  const origin = countryCode(payload.originCode) ?? countryCode(payload.origin);
+    || (kinds.includes('region') && ((!kinds.includes('abroad') && !boundElsewhere) || destination === 'US' || destination === 'CA'));
   const entries: (ReturnType<typeof readState> & { raw: Record<string, unknown>; scan: CarrierScan | undefined; wording: string })[] = [];
   const placeholders = placeholderDates(payload.states.flatMap((raw: unknown) => isRecord(raw) && !raw.require_fields && !raw.error ? [raw.date] : []));
   for (const raw of payload.states) {
@@ -1989,7 +2069,7 @@ function parseHistory(payload: unknown, trackingNumber: string, timezone: string
     }
     const status = relayedLabel(raw.status);
     if (FORECAST.test(status) || summaryRow(stateCarrierName(payload, raw), status)) continue;
-    const state = readState(payload, raw, status, timezone, number, inNorthAmerica, destination, origin);
+    const state = readState(payload, raw, status, timezone, number, inNorthAmerica, destination, origin, distrustedAt(raw.date));
     const carrier = typeof state.name === 'string' ? carrierIdFromName(state.name) : undefined;
     const scan = carrierScan(carrier, status) ?? airportHandOver(carrier, status, state.location, destination);
     entries.push({ ...state, raw, scan, wording: scan?.wording ?? status });

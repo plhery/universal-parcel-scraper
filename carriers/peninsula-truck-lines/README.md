@@ -28,7 +28,9 @@ Columbia, based in Federal Way. Tracked by PRO through the lookup its tracking p
 - The reply's shape follows the page's code and Peninsula's tracking API guide, which share it.
   Each log row has a day, a 12-hour time, a short activity ("PICKUP", "DOCK", "DEL MFST") and a
   town with its state. No clock names its zone, so clocks stay wall clocks in `local_time`.
-- The log lists the oldest row first; the result turns it round. Repeated rows appear once.
+- The log lists the oldest row first; the result turns it round. A row with its day and no time
+  orders only against another day's, so the rows whose clocks compare decide which way round the
+  log is. Repeated rows appear once.
 - The status line settles a delivery, a return, a problem and the hand-off to a partner carrier
   ("TENDERED TO … ON THEIR PRO …"), and a shipment without a staged row. Otherwise the newest
   staged row is ahead of it.

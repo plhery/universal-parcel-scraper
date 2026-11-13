@@ -66,10 +66,16 @@ describe('Ekart parser', () => {
       .toEqual([['undelivered_update', 'failed_attempt'], ['ShipmentUndeliveredAttempted', 'failed_attempt']]);
     expect(result.delivered_at).toBeUndefined();
   });
-  it('reads a round\'s "Unsuccessful" outcome in prose as a failed attempt, but not a pickup run\'s', () => {
+  it('reads a round\'s "Unsuccessful" outcome in prose as a failed attempt, and a pickup run\'s as the parcel still with the seller', () => {
     expect(statusMap.stage(null, 'Unsuccessful Unable to attempt delivery due to operational issues')).toBe('failed_attempt');
     expect(statusMap.stage(null, 'Unsuccessful Undelivered. (Rescheduled to: 2026-01-04)')).toBe('failed_attempt');
-    expect(statusMap.stage(null, 'Unsuccessful pickup attempt')).toBeUndefined();
+    expect(statusMap.stage(null, 'Unsuccessful pickup attempt')).toBe('registered');
+    // After the pickup request, the failed pickup run is no failed delivery attempt.
+    const value = fixture();
+    value[NUMBER].shipmentTrackingDetails.splice(1, 2, { date: 1767232800000, city: 'Example origin', statusDetails: 'Unsuccessful pickup attempt' });
+    const result = parseEkart(value, NUMBER);
+    expect(result.events?.[0]).toMatchObject({ description: 'Unsuccessful pickup attempt', stage: 'registered', stage_source: 'carrier_map' });
+    expect(result).toMatchObject({ status: 'pending', current_stage: 'registered' });
   });
   it('reads "Marked RTO" and its reason in prose as the start of the return to the seller', () => {
     expect(ekartScan('Marked RTO: ORDER_REJECT')).toEqual({ stage: 'exception', returning: true });
