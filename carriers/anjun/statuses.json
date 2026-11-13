@@ -61,6 +61,18 @@
     {"code": "parcel_damaged", "stage": "exception", "confirmedBy": "bundle", "note": "A code the tracking page's script sorts parcels by; not seen in a reply."},
     {"code": "lost", "stage": "exception", "confirmedBy": "bundle", "note": "A code the tracking page's script sorts parcels by; not seen in a reply."},
     {"code": "destroy", "stage": "exception", "confirmedBy": "bundle", "note": "A code the tracking page's script sorts parcels by; not seen in a reply."},
-    {"code": "abnormal", "stage": "exception", "confirmedBy": "bundle", "note": "A code the tracking page's script sorts parcels by; not seen in a reply."}
+    {"code": "abnormal", "stage": "exception", "confirmedBy": "bundle", "note": "A code the tracking page's script sorts parcels by; not seen in a reply."},
+    {"code": "collected", "wording": "Objeto coletado", "stage": "accepted", "language": "pt", "confirmedBy": "live", "note": "Anjun Express's lookup: collected from the sender, the first scan of a parcel sent within Brazil."},
+    {"code": "transfer_in_storage", "wording": "O pacote chegou ao centro de trânsito", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "Anjun Express's lookup."},
+    {"code": "transfer_out_storage", "wording": "O pacote saiu do centro de trânsito", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "Anjun Express's lookup."},
+    {"code": "collect_in_storage", "stage": "in_transit", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "collect_out_storage", "stage": "in_transit", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "delivery_site_in_storage", "stage": "in_transit", "confirmedBy": "bundle", "note": "At the delivery station the courier leaves from. A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "pack_bag", "stage": "in_transit", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "customs_inspection", "stage": "customs", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "customs_fastener", "stage": "customs", "confirmedBy": "bundle", "note": "Held by customs. A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "signed", "stage": "delivered", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "return_completed", "stage": "returned", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."},
+    {"code": "problem", "stage": "exception", "confirmedBy": "bundle", "note": "A code Anjun Express's tracking page's script names; not seen in a reply."}
   ]
 }

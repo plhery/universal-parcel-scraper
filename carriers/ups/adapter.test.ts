@@ -338,6 +338,9 @@ describe('UPS structured response', () => {
     // A labor dispute outside UPS delays the parcel by a day, as the weather does.
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'RY', description: 'a non-ups labor dispute has delayed delivery by one business day.' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // So do events outside UPS's control, between facility scans.
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'C5', description: 'uncontrollable events have delayed delivery. we are adjusting delivery plans as quickly as possible. please check back on the next business day for updates.' }))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it('reads a pickup after the delivery leg, from an access point, as transit', () => {

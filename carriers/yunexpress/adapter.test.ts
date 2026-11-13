@@ -74,6 +74,10 @@ describe('YunExpress captured response projection', () => {
     expect(yunExpressStatus('Package accepted at courier partner')).toEqual({ status: 'in_transit', stage: 'in_transit' });
     // The last-mile carrier's intake after that hand-over, and the flight out before it.
     expect(yunExpressStatus('Item accepted')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    // DHL's lines in Germany: its collection after the hand-over moves the parcel on, its data record registers it.
+    expect(['Pick-up was successful.', 'Loaded to movement / tour vehicle', 'The shipment has been processed in the parcel center of origin',
+      'The shipment has been processed in the destination parcel center', 'The instruction data for this shipment have been provided by the sender to DHL electronically']
+      .map((wording) => statusMap.stage(null, normalizeStatusWording(wording)))).toEqual(['in_transit', 'in_transit', 'in_transit', 'in_transit', 'registered']);
     expect(statusMap.stage(null, normalizeStatusWording('Departed from AIRPORT'))).toBe('in_transit');
     expect(yunExpressStatus('Arrived at GOFO Regional Destination Facility')?.stage).toBe('in_transit');
     expect(yunExpressStatus('The driver is out for delivery')?.stage).toBe('out_for_delivery');

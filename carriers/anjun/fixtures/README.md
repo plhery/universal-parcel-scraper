@@ -9,4 +9,9 @@ file and a note naming who took the parcel. `in-transit.json` has entered the bo
 after its flight. `not-found.json` is the answer for a number the tracker does not know, and
 `service-error.json` the service's own failure.
 
+`express-in-transit.json` follows the reply of Anjun Express's `/track/open/website/query` for a
+parcel sent within Brazil, newest scan first and day first: it was collected from the sender, at
+an address the parser drops, with a note, a site and a courier, and one scan is repeated.
+`express-unknown.json` is that service's answer for a number it has no scans for.
+
 Numbers, names, places, coordinates, addresses and clocks are invented.

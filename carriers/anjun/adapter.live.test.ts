@@ -21,6 +21,12 @@ describe('Anjun live retrieval', () => {
     await expect(direct().recognize!(process.env.ANJUN_TRACKING_NUMBER!)).resolves.toMatchObject({ known: true });
   }, 30_000);
 
+  it.skipIf(!process.env.ANJUN_EXPRESS_TRACKING_NUMBER)('retrieves a parcel Anjun Express carries within Brazil', async () => {
+    const result = await direct().track({ number: process.env.ANJUN_EXPRESS_TRACKING_NUMBER! });
+    expect(result.events?.length).toBeGreaterThan(0);
+    expect(result.events!.every((event) => event.provider_code && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(String(event.local_time)))).toBe(true);
+  }, 30_000);
+
   it.skipIf(!process.env.ANJUN_UNKNOWN_NUMBER)('reads an unknown number as not found', async () => {
     await expect(direct().track({ number: process.env.ANJUN_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
   }, 30_000);

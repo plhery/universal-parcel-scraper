@@ -13,6 +13,10 @@ export const ANJUN_MAX_BYTES = 512 * 1024;
 // Anjun's own numbers: AJ and fifteen digits.
 const NUMBER = /^AJ\d{15}$/;
 const WALL_CLOCK = /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
+// Anjun Express's lookup in Brazil writes the day first: `dd-MM-yyyy HH:mm:ss`.
+const DAY_FIRST = /^(\d{2})-(\d{2})-(\d{4}) (\d{2}:\d{2}:\d{2})$/;
+// A scan's place in Anjun Express's replies: the town and the state's two letters.
+const TOWN_STATE = /^[^\d,;]{1,80} \/ [A-Z]{2}$/;
 // The tracker's message for a number it does not know: "tracking number not found".
 const NOT_FOUND = '未找到单号';
 // Its message for a number it knows with no scans yet: "no tracking information for this number".
@@ -71,7 +75,19 @@ export function anjunWording(status: string, details: readonly string[], remark:
  * so the clock stays local.
  */
 function scanClock(row: Record<string, unknown>): string {
-  const wall = text(row, 'date', 32);
+  return wallClock(text(row, 'date', 32));
+}
+
+/** Anjun Express's day-first clock, `dd-MM-yyyy HH:mm:ss`, as the tracker's `yyyy-MM-dd HH:mm:ss`. */
+function nodeClock(row: Record<string, unknown>): string {
+  const raw = text(row, 'dateTime', 32);
+  const parts = DAY_FIRST.exec(raw);
+  if (!parts) throw new SchemaError(PROVIDER, 'Anjun Express returned an invalid scan time');
+  return wallClock(`${parts[3]}-${parts[2]}-${parts[1]} ${parts[4]}`);
+}
+
+/** A `yyyy-MM-dd HH:mm:ss` wall clock as an ISO local time. */
+function wallClock(wall: string): string {
   const local = wall.replace(' ', 'T');
   // Parsing in UTC checks the calendar digits only; the wall clock keeps no offset.
   const parsed = DateTime.fromISO(local, { zone: 'UTC' });
@@ -82,19 +98,34 @@ function scanClock(row: Record<string, unknown>): string {
   return local;
 }
 
+/** A scan as either lookup gives it, before it is worded and staged. */
+interface Scan { code: string; status: string; details: string[]; remark: string; local: string; location: string }
+
 function projectRow(row: Record<string, unknown>): { key: string; event: CarrierEvent } {
-  const code = cleanScalar(row.stateCode, 80);
   const extra = row.extraData;
   if (extra !== null && extra !== undefined && !isRecord(extra)) throw new SchemaError(PROVIDER, 'Anjun returned invalid scan details');
   // The reason a delivery failed, and a detail the page shows beside the line.
   // The recipient's street, number and district beside them are never read.
   const details = extra ? [text(extra, 'problemType', 120), text(extra, 'statusDetail', 200)] : [];
-  const status = text(row, 'status', 500);
+  return projectScan({ code: cleanScalar(row.stateCode, 80), status: text(row, 'status', 500), details,
+    remark: text(row, 'remark', 1000), local: scanClock(row), location: text(row, 'address', 120) });
+}
+
+/**
+ * A scan of Anjun Express's lookup in Brazil. Its place is kept only as a town and a state; the
+ * sender's note (`content`), coordinates, the site, the courier, signatures and photos are never read.
+ */
+function projectNode(row: Record<string, unknown>): { key: string; event: CarrierEvent } {
+  const place = text(row, 'address', 120);
+  return projectScan({ code: cleanScalar(row.statusCode, 80), status: text(row, 'status', 500),
+    details: [text(row, 'problemType', 120), text(row, 'statusDetail', 200)],
+    remark: '', local: nodeClock(row), location: TOWN_STATE.test(place) ? place : '' });
+}
+
+function projectScan({ code, status, details, remark, local, location }: Scan): { key: string; event: CarrierEvent } {
   const delivered = anjunStage(code, status)?.stage === 'delivered';
-  const description = anjunWording(status, details, text(row, 'remark', 1000), delivered);
+  const description = anjunWording(status, details, remark, delivered);
   if (!description) throw new SchemaError(PROVIDER, 'Anjun returned a scan without wording');
-  const local = scanClock(row);
-  const location = text(row, 'address', 120);
   const staged = anjunStage(code, description);
   const event: CarrierEvent = {
     local_time: local,
@@ -132,11 +163,41 @@ export function parseAnjun(payload: unknown, raw: string): CarrierResult {
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Anjun returned a history with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Anjun returned an oversized history');
 
+  return history(rows.map((row) => {
+    if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun returned an invalid scan');
+    return projectRow(row);
+  }), country);
+}
+
+/**
+ * The reply of Anjun Express's `POST /track/open/website/query` for one number, which the
+ * tracking page on anjunexpress.com makes. It knows parcels Anjun Express carries within Brazil
+ * that the tracker on anjuntrack.com does not. A number it does not know comes back with no
+ * scans, as one it knows before its first scan does, so either is no history. The record must
+ * echo the number asked.
+ */
+export function parseAnjunExpress(payload: unknown, raw: string): CarrierResult {
+  const number = normalizeAnjunNumber(raw);
+  if (!isRecord(payload) || typeof payload.code !== 'number') throw new SchemaError(PROVIDER, 'Anjun Express returned an invalid envelope');
+  if (payload.code !== 200) throw new IndeterminateError(PROVIDER, 'Anjun Express did not complete the lookup');
+  if (!Array.isArray(payload.data)) throw new SchemaError(PROVIDER, 'Anjun Express returned an invalid list');
+  const record = payload.data.find((item): item is Record<string, unknown> => isRecord(item)
+    && typeof item.trackNo === 'string' && normalizeTrackingNumber(clean(item.trackNo, 64)).toUpperCase() === number);
+  if (!record) throw new IndeterminateError(PROVIDER, 'Anjun Express answered for another shipment');
+  const rows = record.nodeDataList ?? [];
+  if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Anjun Express returned a history with invalid scans');
+  if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Anjun Express returned an oversized history');
+  return history(rows.map((row) => {
+    if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun Express returned an invalid scan');
+    return projectNode(row);
+  }), '');
+}
+
+/** The result of either lookup's scans, without repeats, newest first. */
+function history(scans: readonly { key: string; event: CarrierEvent }[], country: string): CarrierResult {
   const seen = new Set<string>();
   const events: CarrierEvent[] = [];
-  for (const row of rows) {
-    if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun returned an invalid scan');
-    const scan = projectRow(row);
+  for (const scan of scans) {
     if (seen.has(scan.key)) continue;
     seen.add(scan.key);
     events.push(scan.event);

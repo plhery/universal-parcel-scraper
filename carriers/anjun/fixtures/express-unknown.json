@@ -1,0 +1,20 @@
+{
+  "brand": "ANJUN",
+  "code": 200,
+  "data": [
+    {
+      "destination": null,
+      "lastTrackStatus": null,
+      "nodeDataList": null,
+      "origin": null,
+      "providerNumber": null,
+      "timezone": null,
+      "trackNo": "AJ260101000000001",
+      "waybillNumber": null
+    }
+  ],
+  "extra": "",
+  "msg": "",
+  "requestID": "00000000000000000000000000000000",
+  "status": "OK"
+}

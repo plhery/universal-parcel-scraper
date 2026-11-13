@@ -1,15 +1,17 @@
 import { constants, createPublicKey, publicEncrypt } from 'node:crypto';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, SchemaError, TransportError } from '../../core/errors/index.js';
+import { ChallengeError, NoHistoryError, NotFoundError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { ANJUN_MAX_BYTES, normalizeAnjunNumber, parseAnjun, PROVIDER } from './parser.js';
+import { ANJUN_MAX_BYTES, normalizeAnjunNumber, parseAnjun, parseAnjunExpress, PROVIDER } from './parser.js';
 
 /** The lookup the tracking page on anjuntrack.com makes for each number it shows. */
 export const ANJUN_API = 'https://trackserver.bailidaming.com/open/website/track';
+/** The lookup Anjun Express's tracking page on anjunexpress.com makes, for parcels it carries within Brazil. */
+export const ANJUN_EXPRESS_API = 'https://track.anjunexpress.com/track/open/website/query';
 /** The RSA public key in the page's script, the same for every visitor, that its `token` header is encrypted with. */
 export const ANJUN_TOKEN_KEY = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDMpkV/EUX35Lp57YaAJ34DTc7nKfDjzCX/vjAdqI57CQadoMDBzn+BbKkLEbG45D52I1ko2gLMEA/rpY/qQw1+4mvivBAl68q3SUd/c9HnqhZjKGd/fcsLnebMDns0ZeG331q0rNEmwhZB4gGwjzNMLQ1nVt1YSQLosgV4t08P0wIDAQAB'; // gitleaks:allow
 const REDIRECTS = [301, 302, 303, 307, 308];
@@ -60,11 +62,34 @@ export class AnjunTracker {
       if (response.status === 403) throw new ChallengeError(PROVIDER, 'Anjun refused the lookup', { status: 403 });
       return parseAnjun(json(decodeText(bytes)), number);
     };
+    // Anjun Express's page asks its own service, with the same token, for the one number.
+    const readBrazil = async (signal: AbortSignal, timeoutMs: number, previous: unknown): Promise<CarrierResult> => {
+      const { response, bytes } = await fetchBounded(ANJUN_EXPRESS_API, { method: 'POST', signal, headers: {
+        Accept: 'application/json, text/plain, */*', 'Content-Type': 'application/json', 'Accept-Language': 'pu',
+        token: anjunToken(this.options.now?.()), 'User-Agent': userAgentOf(this.options.userAgent),
+      }, body: JSON.stringify({ trackNos: number }) }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)),
+        maxBytes: ANJUN_MAX_BYTES, redirect: 'manual', fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, ...GONE, 403] });
+      if (REDIRECTS.includes(response.status) || GONE.includes(response.status)) {
+        throw new TransportError(PROVIDER, 'Anjun Express tracking lookup is unavailable', { status: response.status });
+      }
+      if (response.status === 403) throw new ChallengeError(PROVIDER, 'Anjun Express refused the lookup', { status: 403 });
+      try {
+        return parseAnjunExpress(json(decodeText(bytes)), number);
+      } catch (error) {
+        // It cannot tell a number it does not know from one with no scans: the tracker's answer stands.
+        if (error instanceof NoHistoryError) throw previous;
+        throw error;
+      }
+    };
     // A lookup that fails to reach Anjun, or hangs, gets one more try: the first gets half of the budget.
+    // A number the tracker does not know, or knows with no scans, is asked of Anjun Express, which
+    // carries parcels within Brazil that the tracker never sees.
     return runSteps({ carrier: 'anjun', budgetMs: context.budgetMs ?? 20_000, signal: context.signal,
       recorder: this.options.recorder ?? NOOP_RECORDER }, [
       { id: 'direct', run: ({ signal, remainingMs }) => read(signal, firstAttemptMs(remainingMs)) },
       networkRetryStep(({ signal, remainingMs }) => read(signal, remainingMs)),
+      { id: 'brazil', recovers: (error) => error instanceof NotFoundError || error instanceof NoHistoryError,
+        run: ({ signal, remainingMs, previousError }) => readBrazil(signal, remainingMs, previousError) },
     ]);
   }
 }
@@ -72,7 +97,7 @@ export class AnjunTracker {
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new AnjunTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return {
-    id: 'anjun', recordsSteps: true, steps: ['direct', 'retry'],
+    id: 'anjun', recordsSteps: true, steps: ['direct', 'retry', 'brazil'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeAnjunNumber(number))),

@@ -324,6 +324,46 @@
       "firstSeen": "2026-10-08"
     },
     {
+      "wording": "The instruction data for this shipment have been provided by the sender to DHL electronically",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from DHL in Germany: the sender's data record, as DHL files it."
+    },
+    {
+      "wording": "Pick-up was successful.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from DHL: its collection after YunExpress handed the parcel over, so not the parcel's first acceptance."
+    },
+    {
+      "wording": "The shipment has been processed in the parcel center of origin",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from DHL's first parcel centre after the hand-over."
+    },
+    {
+      "wording": "The shipment has been processed in the destination parcel center",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from DHL's parcel centre near the recipient, before the delivery round."
+    },
+    {
+      "wording": "Loaded to movement / tour vehicle",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "Relayed from DHL: loaded onto a vehicle between its parcel centres, as after the export parcel centre. DHL words the delivery round otherwise."
+    },
+    {
       "wording": "Shipment is in transit to carrier",
       "stage": "in_transit",
       "language": "en",

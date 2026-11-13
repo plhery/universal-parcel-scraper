@@ -62,6 +62,13 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['Transport to destination', { status: 'in_transit', stage: 'in_transit' }],
   ['Returned (Unclaimed item)', { status: 'exception', stage: 'returned' }],
   ['Shipment in transit to DHL', { status: 'in_transit', stage: 'in_transit' }],
+  // DHL's own lines once it has the parcel in Germany: its data record, its collection after the
+  // hand-over, which is no first acceptance, its parcel centres and its vehicles between them.
+  ['The instruction data for this shipment have been provided by the sender to DHL electronically', { status: 'pending', stage: 'registered' }],
+  ['Pick-up was successful.', { status: 'in_transit', stage: 'in_transit' }],
+  ['The shipment has been processed in the parcel center of origin', { status: 'in_transit', stage: 'in_transit' }],
+  ['The shipment has been processed in the destination parcel center', { status: 'in_transit', stage: 'in_transit' }],
+  ['Loaded to movement / tour vehicle', { status: 'in_transit', stage: 'in_transit' }],
   ['Shipment is in transit to carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Preparing for delivery', { status: 'in_transit', stage: 'in_transit' }],
   // Last-mile wording the feed relays without codes. DPD files its data

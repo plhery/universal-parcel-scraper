@@ -6,7 +6,7 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
  * and mixed case, as `LM _has _collected`: the map reads them in lower case
  * without spaces. The first group came in replies; the second is named by the
  * tracking page's script, which sorts parcels by them. Another code falls to
- * the wording rules.
+ * the wording rules. Anjun Express's codes (`statusCode`) follow.
  */
 const CODES: ReadonlyMap<string, Stage> = new Map([
   ['forecast', 'registered'], // The sender's data, before the parcel.
@@ -50,6 +50,20 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['lost', 'exception'],
   ['destroy', 'exception'],
   ['abnormal', 'exception'],
+  // Anjun Express's own lookup in Brazil spells its scans' codes apart. The first group came in
+  // replies; the second is named by its tracking page's script. Another code falls to the wording rules.
+  ['collected', 'accepted'], // "Objeto coletado": collected from the sender, the first scan of a parcel sent within Brazil.
+  ['transfer_in_storage', 'in_transit'],
+  ['transfer_out_storage', 'in_transit'],
+  ['collect_in_storage', 'in_transit'],
+  ['collect_out_storage', 'in_transit'],
+  ['delivery_site_in_storage', 'in_transit'], // At the delivery station the courier leaves from.
+  ['pack_bag', 'in_transit'],
+  ['customs_inspection', 'customs'],
+  ['customs_fastener', 'customs'], // Held by customs.
+  ['signed', 'delivered'],
+  ['return_completed', 'returned'],
+  ['problem', 'exception'],
 ]);
 
 /** A code as the map reads it: lower case, without spaces. */

@@ -5,8 +5,8 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
-import { adapter, ANJUN_API, anjunClock, anjunToken, AnjunTracker } from './adapter.js';
-import { anjunWording, normalizeAnjunNumber, parseAnjun } from './parser.js';
+import { adapter, ANJUN_API, ANJUN_EXPRESS_API, anjunClock, anjunToken, AnjunTracker } from './adapter.js';
+import { anjunWording, normalizeAnjunNumber, parseAnjun, parseAnjunExpress } from './parser.js';
 import { anjunStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
@@ -14,6 +14,8 @@ import { fakeBudgetClock } from '../../testing/budgetClock.js';
 const DELIVERED = 'AJ260301000000101';
 const IN_TRANSIT = 'AJ260514000000201';
 const UNKNOWN = 'AJ260101000000001';
+// A parcel Anjun Express carries within Brazil, which the tracker does not know.
+const DOMESTIC = 'AJ260509000000301';
 // A Correios number of the kind Anjun's tracker also answers for.
 const CORREIOS = 'NC000000000BR';
 
@@ -28,6 +30,9 @@ const changed = (name: string, change: (rows: Row[], reply: Reply) => void) => {
 };
 const reply = (body: unknown, init: ResponseInit = {}) => new Response(typeof body === 'string' ? body : JSON.stringify(body),
   { ...init, headers: { 'Content-Type': 'application/json', ...init.headers } });
+// The tracker's lookup answers `tracker`; Anjun Express's answers `express`, a number it has no scans for unless given.
+const routed = (tracker: () => Response, express: () => Response = () => reply(fixture('express-unknown'))) =>
+  vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url).startsWith(ANJUN_EXPRESS_API) ? express() : tracker()));
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 // The page the SafeLine firewall in front of the service serves a client it blocks.
 const SAFELINE = '<!DOCTYPE html><html><head><title>访问已被拦截</title></head><body><div>Protected by SafeLine</div></body></html>';
@@ -181,7 +186,7 @@ describe('Anjun HTTP adapter', () => {
   });
 
   it('keeps an unknown number, a moved route, a refused token, a firewall block and a broken reply apart', async () => {
-    const lookup = (body: unknown, init?: ResponseInit) => carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(body, init))).track({ number: UNKNOWN });
+    const lookup = (body: unknown, init?: ResponseInit) => carrier(routed(() => reply(body, init))).track({ number: UNKNOWN });
     await expect(lookup(fixture('not-found'))).rejects.toMatchObject({ kind: 'not_found' });
     await expect(lookup(fixture('service-error'))).rejects.toMatchObject({ kind: 'indeterminate' });
     // The page reads a missing parcel from a 200 reply: a 404 or a redirect is a moved route.
@@ -203,13 +208,15 @@ describe('Anjun HTTP adapter', () => {
     });
 
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number Anjun does not issue', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
-      .mockResolvedValueOnce(reply(fixture('not-found')));
+    const fetcher = routed(() => reply(fixture('delivered')));
     // A local clock dates the last activity without an instant.
     await expect(carrier(fetcher).recognize!(DELIVERED)).resolves.toEqual({ known: true, lastActivityAt: null, lastActivityLocal: '2026-03-14T15:42:10' });
-    await expect(carrier(fetcher).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
-    await expect(carrier(fetcher).recognize!(CORREIOS)).resolves.toEqual({ known: false });
-    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    const unknown = routed(() => reply(fixture('not-found')));
+    await expect(carrier(unknown).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
+    await expect(carrier(unknown).recognize!(CORREIOS)).resolves.toEqual({ known: false });
+    // Anjun Express is asked too before the number counts as unknown.
+    expect(unknown.mock.calls.map(([url]) => String(url).split('?')[0])).toEqual([ANJUN_API, ANJUN_EXPRESS_API]);
   });
 
   it('rejects numbers Anjun does not issue and pre-aborted lookups without a request', async () => {
@@ -245,6 +252,68 @@ describe('Anjun HTTP adapter', () => {
     expect(Date.now() - started).toBeLessThan(2000);
     expect(slow.mock.calls.length).toBeLessThanOrEqual(2);
     expect(slow.mock.calls.every(([, init]) => init?.signal?.aborted)).toBe(true);
+  });
+
+  it('asks Anjun Express for a number the tracker does not know, with the same token, and keeps its history', async () => {
+    const fetcher = routed(() => reply(fixture('not-found')), () => reply(fixture('express-in-transit')));
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const tracker = new AnjunTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' });
+    await expect(tracker.fetch(DOMESTIC, { budgetMs: 1000 })).resolves.toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    const [url, init] = fetcher.mock.calls[1]!;
+    expect(String(url)).toBe(ANJUN_EXPRESS_API);
+    expect(init).toMatchObject({ method: 'POST', redirect: 'manual', body: JSON.stringify({ trackNos: DOMESTIC }),
+      headers: { 'Content-Type': 'application/json', 'Accept-Language': 'pu', 'User-Agent': 'SyntheticHost/1.0' } });
+    expect((init!.headers as Record<string, string>).token).toMatch(/^[A-Za-z0-9+/]{171}=$/);
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: 'not_found' }));
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'brazil', outcome: 'ok', fallbackFrom: 'direct' }));
+  });
+
+  it('keeps the tracker’s answer when Anjun Express has no scans, and Anjun Express’s own failures apart', async () => {
+    const track = (tracker: string, express: () => Response) => carrier(routed(() => reply(fixture(tracker)), express)).track({ number: UNKNOWN });
+    await expect(track('not-found', () => reply(fixture('express-unknown')))).rejects.toMatchObject({ kind: 'not_found', name: 'NotFoundError' });
+    await expect(track('not-found', () => reply(changed('express-unknown', (rows) => { rows[0]!.nodeDataList = []; }))))
+      .rejects.toMatchObject({ kind: 'not_found' });
+    const noScans = { code: 500, msg: '无此单号轨迹信息!', data: '', extra: '' };
+    await expect(carrier(routed(() => reply(noScans))).track({ number: UNKNOWN })).rejects.toMatchObject({ name: 'NoHistoryError' });
+    // A record for another number, a failed lookup, a refused token and a block are its own.
+    await expect(carrier(routed(() => reply(fixture('not-found')), () => reply(fixture('express-in-transit')))).track({ number: UNKNOWN }))
+      .rejects.toMatchObject({ kind: 'indeterminate', message: 'Anjun Express answered for another shipment' });
+    await expect(track('not-found', () => reply({ code: 500, msg: 'error', data: null }))).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(track('not-found', () => reply('', { status: 403 }))).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(track('not-found', () => reply(SAFELINE, { headers: { 'Content-Type': 'text/html' } }))).rejects.toMatchObject({ kind: 'challenge' });
+    // A history, a refusal or a firewall block from the tracker is not asked again elsewhere.
+    for (const answer of [() => reply(fixture('delivered')), () => reply('', { status: 403 }), () => reply(fixture('service-error'))]) {
+      const fetcher = routed(answer);
+      await carrier(fetcher).track({ number: DELIVERED }).catch(() => undefined);
+      expect(fetcher.mock.calls.every(([url]) => String(url).startsWith(ANJUN_API))).toBe(true);
+    }
+  });
+
+  it('reads Anjun Express’s scans day first on their wall clocks, with their places as town and state only', () => {
+    const result = parseAnjunExpress(fixture('express-in-transit'), DOMESTIC.toLowerCase());
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      last_status_text: 'O pacote chegou ao centro de trânsito', last_update: null, last_update_local: '2026-05-12T21:09:46' });
+    expect(result.events!.map((event) => [event.local_time, event.provider_code, event.stage ?? null, event.location ?? null])).toEqual([
+      ['2026-05-12T21:09:46', 'transfer_in_storage', 'in_transit', 'Sample Hub / MT'],
+      ['2026-05-11T20:19:39', 'transfer_out_storage', 'in_transit', 'Sample Origin / SP'],
+      ['2026-05-10T01:10:31', 'transfer_in_storage', 'in_transit', 'Sample Origin / SP'],
+      ['2026-05-09T15:31:26', 'collected', 'accepted', null],
+    ]);
+    expect(result.events!.every((event) => event.time === undefined)).toBe(true);
+    expect(JSON.stringify(result)).not.toMatch(/Sample (?:sender|Courier)|Rua|SP-01|-23\.0|Sample City/);
+    expect(result).not.toHaveProperty('destination_country');
+    for (const change of [
+      (rows: Row[]) => { (rows[0]!.nodeDataList as Row[])[0]!.dateTime = '2026-05-12 21:09:46'; },
+      (rows: Row[]) => { (rows[0]!.nodeDataList as Row[])[0]!.dateTime = '31-02-2026 21:09:46'; },
+      (rows: Row[]) => { (rows[0]!.nodeDataList as Row[])[0]!.status = ''; },
+      (rows: Row[]) => { rows[0]!.nodeDataList = 'scans'; },
+      (rows: Row[]) => { (rows[0]!.nodeDataList as unknown[])[0] = 'scan'; },
+      (_rows: Row[], body: Reply) => { body.data = 'records' as never; },
+    ]) {
+      expect(() => parseAnjunExpress(changed('express-in-transit', change), DOMESTIC)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+    expect(() => parseAnjunExpress(fixture('express-unknown'), UNKNOWN)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
   });
 
   it('routes a number filed under Anjun, or detected as one of its numbers, to the adapter', async () => {

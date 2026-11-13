@@ -2,8 +2,8 @@
 
 Anjun (安骏物流) is a Shenzhen cross-border logistics company with lines to Latin America,
 Europe and North America. Its Brazilian arm, Anjun Express, carries marketplace orders such as
-Shein's from its warehouse in China to the door, or hands them to Correios. Tracked through the
-lookup its tracking page makes.
+Shein's from its warehouse in China to the door, or hands them to Correios, and carries parcels
+sent within Brazil. Tracked through the lookups its two tracking pages make.
 
 ## How it works
 
@@ -12,6 +12,11 @@ lookup its tracking page makes.
    and echoes the number in `extra.trackNo`.
 2. `retry`: one more try when the first fails to reach the service or hangs. The first gets half
    of the budget.
+3. `brazil`: when the tracker does not know the number, or has no scans for it, one
+   `POST https://track.anjunexpress.com/track/open/website/query` with `{"trackNos": number}`, as
+   the tracking page on `anjunexpress.com` sends it, with the same `token`. Anjun Express's
+   service knows parcels sent within Brazil that the tracker never sees. It answers a number it
+   has no scans for with an empty record, so the tracker's answer stands then.
 
 - The request needs a `token` header: the time in Beijing as `yyyy-MM-dd HH:mm:ss`, encrypted
   with the RSA public key in the page's script, the same for every visitor. The adapter builds
@@ -26,12 +31,17 @@ lookup its tracking page makes.
   ("trace service error"), is inconclusive.
 - A SafeLine firewall sits in front of the service. Its block page is reported as a challenge.
 - The history must echo the number asked.
-- Recognition makes the same request.
+- Recognition makes the same requests.
 
 ## Notes
 
 - Each scan's `date` is the scanning site's wall clock to the second, with no zone. One history
-  goes from China's clocks to Brazil's, so the clocks stay `local_time`.
+  goes from China's clocks to Brazil's, so the clocks stay `local_time`. Anjun Express writes the
+  day first (`dd-MM-yyyy HH:mm:ss`), also on the site's clock, and Brazil has several zones.
+- Anjun Express spells its codes apart (`statusCode`, as `transfer_in_storage`); the same map
+  reads them. Its `collected` is the collection from the sender, the first scan of a parcel sent
+  within Brazil. Its place is kept only as the town and state it gives (`Town / UF`); the note it
+  shows under a collection, its sites, couriers, coordinates and photos are not read.
 - The `stateCode` stages each scan. The tracker spells codes with stray spaces and mixed case,
   as `LM _has _collected`, so the map reads them in lower case without spaces. A code the map
   does not know falls to the shared wording rules. The codes the page's script sorts parcels by
@@ -72,4 +82,5 @@ Correios number in one of these links is detected on its own.
 ## Testing
 
 `npm run test:carriers:live -- carriers/anjun`, with `ANJUN_TRACKING_NUMBER` and optionally
-`ANJUN_UNKNOWN_NUMBER` set outside the repository.
+`ANJUN_EXPRESS_TRACKING_NUMBER`, a parcel sent within Brazil, and `ANJUN_UNKNOWN_NUMBER` set
+outside the repository.

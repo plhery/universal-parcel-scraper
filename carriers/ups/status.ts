@@ -89,9 +89,10 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['DA', 'in_transit'],
   // Delays and new delivery plans: a late flight, a possible delay, a new
   // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather
-  // or for a labor dispute outside UPS, and a delivery a business day later than expected.
+  // or for a labor dispute outside UPS, a delivery a business day later than expected, and
+  // a delay for events outside UPS's control.
   ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'], ['RF', 'in_transit'],
-  ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'],
+  ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'], ['C5', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
   // one to the receiver's address instead of the access point.
