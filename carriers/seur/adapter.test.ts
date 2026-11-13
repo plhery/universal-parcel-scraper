@@ -95,7 +95,7 @@ describe('SEUR simplified anonymous tracking', () => {
     expect(result.events?.map(e => e.stage)).toEqual(['accepted', 'accepted']);
   });
 
-  it("reads a collection from the sender as registered until it is made or dropped at a SEUR Pickup point, a failed one included", () => {
+  it("reads a collection from the sender as registered until it is made or dropped at a SEUR Pickup point, a failed one included, and a collection from the point as no step back", () => {
     const scan = (code: string, fecha: string) => ({ fecha, cod_situacion: code, grupo_situacion: seurStatusGroup(code)!,
       descripcion_situacion: statuses.entries.find(entry => entry.code === code)!.wording });
     const body = copy();
@@ -106,7 +106,18 @@ describe('SEUR simplified anonymous tracking', () => {
       scan('GO002', '2026-01-21T16:25:00Z'), scan('GO008', '2026-01-21T16:24:00Z')] as typeof body.situaciones;
     const collected = parseSeur(body, NUMBER);
     expect(collected).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
-    expect(collected.events?.map(e => e.stage)).toEqual(['accepted', 'registered', 'registered', 'registered', 'accepted']);
+    // The drop at the point hands the parcel over; the collection booked from the point moves nothing.
+    expect(collected.events?.map(e => [e.provider_code, e.stage, e.stage_source ?? null])).toEqual([
+      ['GL001', 'accepted', null], ['GC002', 'accepted', 'none'], ['GO001', 'accepted', 'none'],
+      ['GO002', 'accepted', 'none'], ['GO008', 'accepted', null]]);
+    // Before the courier collects it from the point, the parcel stays accepted, not registered again.
+    body.situaciones = body.situaciones.slice(1);
+    const waiting = parseSeur(body, NUMBER);
+    expect(waiting).toMatchObject({ status: 'in_transit', current_stage: 'accepted', last_status_text: 'LA RECOGIDA HA SIDO CONFIRMADA POR EL REPATIDOR.' });
+    expect(waiting.events?.map(e => e.stage)).toEqual(['accepted', 'accepted', 'accepted', 'accepted']);
+    // A booking before the drop is still the sender's: registered.
+    body.situaciones = [...body.situaciones, scan('GO003', '2026-01-21T10:35:00Z')] as typeof body.situaciones;
+    expect(parseSeur(body, NUMBER).events?.at(-1)).toMatchObject({ provider_code: 'GO003', stage: 'registered' });
     for (const [code, stage] of [['GO003', 'registered'], ['GO002', 'registered'], ['GO001', 'registered'], ['GC002', 'registered'],
       ['GI650', 'registered'], ['GL001', 'accepted'], ['GO008', 'accepted']] as const) {
       const description = statuses.entries.find(entry => entry.code === code)!.wording.toLowerCase();

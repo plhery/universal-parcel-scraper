@@ -23,7 +23,8 @@ come, so it reads as transit; LI574 or LI530 then makes it ready for pickup.
 A collection from the sender has codes of its own. Booked, changed or taken on the courier's
 round, it registers the shipment, and so does a collection that failed: the parcel is still
 with the sender, so it is no delivery attempt. The collection made, or the sender's drop at a
-SEUR Pickup point, is the acceptance.
+SEUR Pickup point, is the acceptance. A collection booked after that, as from the point the
+sender left the parcel at, keeps the stage the parcel had, and the current status follows the scan before it.
 A code seen without its group takes the group of a code with the same wording. SEUR marks its scan clocks as UTC, but they
 are Spanish wall clocks: DPD gives the same scans the same digits with Madrid's
 offset. A scan names no place, and the lookup names no destination, while SEUR

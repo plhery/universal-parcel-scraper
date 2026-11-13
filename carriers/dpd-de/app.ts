@@ -188,7 +188,9 @@ function reply(
   const railId = scalar(one(tracking, 'LastStatusInfo'), 'StatusID', 64);
   const rail = Object.hasOwn(DPD_DE_APP_RAIL, railId) ? DPD_DE_APP_RAIL[railId] : undefined;
   const stage = current.stage ?? rail?.stage;
-  const status = rail?.status ?? statusOf(current.stage);
+  // The rail reads delivered once the driver leaves the parcel at a shop, where it waits for the
+  // recipient: while the newest scan has it waiting there, the status follows that scan.
+  const status = rail && !(rail.status === 'delivered' && stage === 'ready_for_pickup') ? rail.status : statusOf(stage);
   const order = one(tracking, 'OrderInfo');
   const kilograms = Number(scalar(order, 'Weight', 16).replace(',', '.'));
   const dimensions = dimensionsOf(order);

@@ -81,15 +81,23 @@ export function parseSeur(value: unknown, raw: string): CarrierResult {
   const delay = (event: CarrierEvent) => isSeurDelay(event.provider_code!, String(event.provider_group), String(event.provider_status));
   // Oldest first: a delay notice keeps the stage of the scan before it. SEUR delays a shipment on
   // its way, so a notice with no stage before it, which may be all SEUR lists, is in transit.
+  // A collection booked once SEUR has the parcel, as from the SEUR Pickup point the sender left it
+  // at, keeps the parcel's stage too: the parcel is no longer with the sender.
+  const held = new Set<CarrierEvent>();
   let previous: string | undefined;
   for (const event of [...events].reverse()) {
-    if (!delay(event)) previous = event.stage ?? previous;
-    else Object.assign(event, { stage: previous ?? 'in_transit', stage_source: 'none' });
+    if (delay(event)) {
+      held.add(event);
+      Object.assign(event, { stage: previous ?? 'in_transit', stage_source: 'none' });
+    } else if (event.stage === 'registered' && previous && previous !== 'registered') {
+      held.add(event);
+      Object.assign(event, { stage: previous, stage_source: 'none' });
+    } else previous = event.stage ?? previous;
   }
   // The official widget consumes situaciones[0]; unresolved clocks retain that position.
-  // Its status is the newest scan's other than a delay notice.
+  // Its status is the newest scan's other than a delay notice or a collection SEUR no longer needs.
   const latest = events[0]!;
-  const current = events.find((event) => !delay(event));
+  const current = events.find((event) => !held.has(event));
   const mapped: ClassifiedStatus | undefined = current
     ? classifySeurStatus(current.provider_code!, String(current.provider_group), String(current.provider_status))
     : { status: 'in_transit', stage: 'in_transit' };

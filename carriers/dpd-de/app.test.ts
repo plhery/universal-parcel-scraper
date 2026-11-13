@@ -393,6 +393,10 @@ describe('DPD Germany app projection', () => {
     const waiting = lookup('HANDOVER_TO_PARCELSHOP', atShop);
     expect(await waiting.result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup',
       pickup_point: 'Kiosk Muster\nMusterstr. 1\n00000 Musterstadt', expected_delivery: null });
+    // A rail already at delivered while the shop holds the parcel: the status agrees with the stage, no delivery yet.
+    const railAhead = await lookup('DELIVERED', atShop).result;
+    expect(railAhead).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', expected_delivery: null });
+    expect(railAhead.delivered_at).toBeUndefined();
     const shop = waiting.calls.find(call => call.operation === 'getParcelShopByID')!;
     expect(shop.body).toContain('<ParcelShopID>0</ParcelShopID><PudoID>DE00001</PudoID><ParcelShopOnly>false</ParcelShopOnly>');
     expect(JSON.stringify(await waiting.result)).not.toMatch(/SHOP|07:00|8\.1/);

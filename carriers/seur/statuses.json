@@ -33,7 +33,7 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-11-12",
-      "note": "Group SOLICITUD REGISTRADA: a collection booked, here a minute after the sender's drop at a SEUR Pickup point (GO008), for the courier to collect the parcel there."
+      "note": "Group SOLICITUD REGISTRADA: a collection booked, here a minute after the sender's drop at a SEUR Pickup point (GO008), for the courier to collect the parcel there. Once SEUR has the parcel, as after the drop at a SEUR Pickup point (GO008), it keeps the parcel's stage."
     },
     {
       "code": "GO001",
@@ -42,7 +42,7 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-11-12",
-      "note": "Group SOLICITUD REGISTRADA: the booked collection changed, before the courier confirms it again."
+      "note": "Group SOLICITUD REGISTRADA: the booked collection changed, before the courier confirms it again. Once SEUR has the parcel, as after the drop at a SEUR Pickup point (GO008), it keeps the parcel's stage."
     },
     {
       "code": "GC002",
@@ -51,7 +51,7 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-11-12",
-      "note": "Group RECOGIDA CONFIRMADA: the courier takes the collection on the day's round, early in the morning; the collection made (GL001) or failed (GI650) follows hours later. SEUR's own spelling of repartidor."
+      "note": "Group RECOGIDA CONFIRMADA: the courier takes the collection on the day's round, early in the morning; the collection made (GL001) or failed (GI650) follows hours later. SEUR's own spelling of repartidor. Once SEUR has the parcel, as after the drop at a SEUR Pickup point (GO008), it keeps the parcel's stage."
     },
     {
       "code": "GI650",

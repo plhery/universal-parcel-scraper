@@ -158,7 +158,8 @@ with [DPD Switzerland](../dpd/README.md), whose Pickup shops
 - Scans carry English wording without codes. Each known wording is mapped
   whole in [status.ts](status.ts), because the shared classifier misreads
   several of them. A collection the sender booked is still registration; the
-  recipient's collection from a Pickup station or shop is the delivery. DPD
+  recipient's collection from a Pickup station or shop is the delivery, though
+  the progress rail already reads delivered while the shop holds the parcel. DPD
   words a driver's collection from a shop, and the shop's note that no
   recipient collected the parcel, the same for a parcel the sender dropped
   there as for one its recipient left: after the parcel waited at the shop for
