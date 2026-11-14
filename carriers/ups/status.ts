@@ -103,9 +103,9 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['ZW', 'in_transit'], ['LX', 'in_transit'], ['YH', 'in_transit'],
   // Collected back from an access point, or moved off one that is closing.
   ['3P', 'in_transit'], ['6B', 'in_transit'],
-  // Prepared for clearance, duties or taxes due, and the parcel held until the
-  // receiver pays them.
-  ['Z1', 'customs'], ['7F', 'customs'], ['OQ', 'customs'],
+  // Prepared for clearance, duties or taxes due, the parcel held until the
+  // receiver pays them, and the importer's identification number awaited for clearance.
+  ['Z1', 'customs'], ['7F', 'customs'], ['OQ', 'customs'], ['B5', 'customs'],
   // The import charges collected from the receiver at the door instead, seconds after 7F: the parcel
   // goes on, and nothing is asked of the receiver before it moves. Those charges paid or billed: the parcel goes on.
   ['1C', 'in_transit'], ['1D', 'in_transit'],
@@ -128,12 +128,14 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['2W', 'delivered'], ['YC', 'delivered'],
 ]);
 
-/** Duties or taxes due, and the parcel held until the receiver pays them. */
-const DUTIES_CODES = new Set(['7F', 'OQ']);
+/** Duties or taxes due and the parcel held until the receiver pays them, and the importer's identification number awaited. */
+const ACTION_CODES: ReadonlyMap<string, RecipientAction> = new Map<string, RecipientAction>([
+  ['7F', 'duties'], ['OQ', 'duties'], ['B5', 'tax_id'],
+]);
 
 /** What a scan's `actCode` asks the receiver to do, whatever the wording beside it. */
 export function upsRecipientAction(code: string): RecipientAction | undefined {
-  return DUTIES_CODES.has(code.trim().toUpperCase()) ? 'duties' : undefined;
+  return ACTION_CODES.get(code.trim().toUpperCase());
 }
 
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */

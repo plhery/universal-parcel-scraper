@@ -11,6 +11,7 @@ describe('recipient actions', () => {
     expect(recipientAction('Necessidade de informar CPF/CNPJ do destinatário')).toBe('tax_id');
     expect(recipientAction('NECESSIDADE DE INFORMAR CPF/CNPJ DO DESTINATARIO.')).toBe('tax_id');
     expect(recipientAction('Need to inform recipient’s CPF/CNPJ')).toBe('tax_id');
+    expect(recipientAction("Importer’s consumer or business Identification number is required for clearance. Awaiting information from the customer.")).toBe('tax_id');
     expect(recipientAction('Duties or taxes are due on this package.')).toBe('duties');
     expect(recipientAction('Your package is being held until duties and taxes are paid. Awaiting customer action.')).toBe('duties');
     expect(recipientAction('Waiting for customs payment')).toBe('duties');

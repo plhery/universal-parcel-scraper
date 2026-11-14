@@ -22,7 +22,8 @@ const WORDINGS: readonly (readonly [RegExp, RecipientAction])[] = [
   // Correios, and its English as ParcelsApp and 17TRACK relay it.
   [/^necessidade de informar (?:o )?cpf\/cnpj do destinatario$/, 'tax_id'],
   [/^need to inform (?:the )?recipient'?s cpf\/cnpj$/, 'tax_id'],
-  // UPS 7F and OQ, as relayed.
+  // UPS B5, 7F and OQ, as relayed.
+  [/^importer's consumer or business identification number is required for clearance\. awaiting information from the customer$/, 'tax_id'],
   [/^duties or taxes are due on this package$/, 'duties'],
   [/^your package is being held until duties and taxes are paid(?:\. awaiting customer action)?$/, 'duties'],
   // Omniva's payment requests for a customs declaration.

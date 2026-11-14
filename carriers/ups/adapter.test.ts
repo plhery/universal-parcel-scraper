@@ -397,6 +397,15 @@ describe('UPS structured response', () => {
     expect(atDoor.events?.map((event) => [event.provider_code, event.stage, event.recipient_action ?? null])).toEqual([
       ['1C', 'in_transit', null], ['7F', 'customs', 'duties'], ['DP', 'in_transit', null],
     ]);
+    // Live wording: clearance waits for the importer's identification number, which the receiver gives.
+    const taxId = parseUPSTrackingResponse(withScans([
+      scan('B5', "Importer's consumer or business Identification number is required for clearance. Awaiting information from the customer.", '20260807 13:02:12'),
+      scan('Z1', 'Your package is prepared for clearance.', '20260806 18:20:00'),
+    ]), TRACKING_NUMBER, TODAY);
+    expect(taxId).toMatchObject({ current_stage: 'customs', current_stage_source: 'carrier_map' });
+    expect(taxId.events?.map((event) => [event.provider_code, event.stage_source, event.recipient_action ?? null])).toEqual([
+      ['B5', 'carrier_map', 'tax_id'], ['Z1', 'carrier_map', null],
+    ]);
   });
 
   it('reads the clearing agency\'s scan, which UPS sends without a code, as customs by its whole wording', () => {
