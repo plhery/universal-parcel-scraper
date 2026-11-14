@@ -114,14 +114,16 @@
       "wording": "Customs service II",
       "language": "en",
       "stage": "customs",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "note": "Released for delivery (Zwolnienie przesyłki do doręczenia) in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf), which keeps it in Poczta Polska's own custom clearance state (OCP)."
     },
     {
       "code": "P_WPUCPP",
       "wording": "Customs service",
       "language": "en",
       "stage": "customs",
-      "confirmedBy": "live"
+      "confirmedBy": "live",
+      "note": "Released after customs control (Zwolniona po kontroli celnej) in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf), which keeps it in Poczta Polska's own custom clearance state (OCP)."
     },
     {
       "code": "P_OWU",
@@ -263,7 +265,7 @@
       "language": "en",
       "stage": "customs",
       "confirmedBy": "official-doc",
-      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item released by import customs (Zwolniona po kontroli celnej)."
+      "note": "Listed in Poczta Polska's events list for its tracking system (poczta-polska.pl/wp-content/uploads/2025/02/PPSA_events_lists.pdf) as an item released by import customs (Zwolniona po kontroli celnej). The list keeps it in Poczta Polska's own custom clearance state (OCP), the tracker's \"Customs service\", so it stays at customs until the next movement."
     },
     {
       "code": "P_ZPUCPP",
