@@ -4,6 +4,8 @@ const ORIGIN = 'https://www.ems.com.cn';
 const FLAG = `${ORIGIN}/ems-web/trackTestQuery/getLogisticsTestFlag`;
 const API = `${ORIGIN}/ems-web/mailTrack/queryTrack`;
 const MAX_BODY = 1_000_000;
+// Where each lookup's time goes: fixed phase labels, counts and offsets from its start, nothing else.
+const reportTiming = fields => console.warn(JSON.stringify({ level: 'warn', event: 'china-post.timing', host: 'www.ems.com.cn', ...fields }));
 const endpointOf = raw => {
   try { const url = new URL(raw); return !url.username && !url.password ? url.origin + url.pathname : null; }
   catch { return null; }
@@ -43,7 +45,7 @@ export function projectChinaPostWebReply(payload, number) {
 
 /** Submit the anonymous form; a phone or account dialog is never completed. */
 export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, capture, installPolicy, signal,
-  solveCharacters = solveChinaPostCharacters }) {
+  solveCharacters = solveChinaPostCharacters, onTiming = reportTiming }) {
   const number = chinaPostBrowserNumber(url, capture);
   if (!number) return undefined;
   const started = Date.now(), entries = [], reads = [];
@@ -52,6 +54,10 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
   let context, page, observer, requestObserver, timer, abort, accepting = true, expired = false, statusCode = 0, totalBytes = 0, verificationStatus = 0, phase = 'setup';
   let formReloaded = false, formReadyAfterReload = false, unreadableChallenge = false, trackingStarted = false;
   let promptRefreshed = false, previousPrompt;
+  let puzzles = 0, ocrMs = 0, solvingSince = null;
+  // Offsets from the start; a phase that was not reached stays null.
+  const marks = { navigationMs: null, formMs: null, pictureMs: null, replyMs: null };
+  const mark = name => { marks[name] ??= Date.now() - started; };
   let finish;
   const trackingWait = () => new Promise(resolve => { finish = resolve; });
   let completed = trackingWait();
@@ -106,6 +112,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
           }
           if (![FLAG, API].includes(endpoint) || boundEndpoint(response.request()) !== endpoint) return;
           const track = endpoint === API;
+          if (track) mark('replyMs');
           if (entries.length >= 10) { entries.at(-1).error = 'response-limit'; accepting = false; finish(); return; }
           const headers = response.headers();
           // The firewall appends session material to query strings. Never retain it.
@@ -136,6 +143,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
         page.on('response', observer);
         phase = 'navigation';
         const navigation = await page.goto(`${ORIGIN}/queryList`, { waitUntil: 'domcontentloaded', timeout: remaining(25000) });
+        mark('navigationMs');
         statusCode = navigation?.status() ?? 0;
         if ([403, 405, 412].includes(statusCode)) verificationStatus = statusCode;
         if ([404, 410].includes(statusCode)) return result();
@@ -161,6 +169,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
         if (await input.inputValue({ timeout: remaining(3000) }) !== number) throw new Error('China Post input changed');
         // Blurring commits the typed value to the form's list of waybills.
         await input.evaluate(element => element.blur(), undefined, { timeout: remaining(3000) });
+        mark('formMs');
         phase = 'picture';
         const nextPicture = () => page.waitForResponse(response => endpointOf(response.url()) === `${ORIGIN}/ems-web/cutPic/getPictureNew`
           && response.request().method() === 'POST', { timeout: remaining() }).catch(() => null);
@@ -170,6 +179,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
         for (let attempt = 0; attempt < 2; attempt++) {
           const imageResponse = await picture;
           if (!imageResponse || imageResponse.status() !== 200) return result();
+          mark('pictureMs');
           const imageBody = await imageResponse.body();
           if (imageBody.length > MAX_BODY) throw new Error('China Post image response too large');
           const challenge = JSON.parse(imageBody.toString('utf8'))?.data;
@@ -185,11 +195,15 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
             }, challenge.backgroundImage, { timeout: remaining(3000) });
           }
           phase = 'characters';
-          let promptUnreadable = false;
-          const points = await solveCharacters(challenge, operationSignal, remaining(24000), stage => {
-            if (stage === 'prompt' || stage === 'positions') phase = `characters-${stage}`;
-            if (stage === 'prompt-unreadable' && phase === 'characters-prompt') promptUnreadable = true;
-          });
+          let promptUnreadable = false, points;
+          solvingSince = Date.now();
+          puzzles++;
+          try {
+            points = await solveCharacters(challenge, operationSignal, remaining(24000), stage => {
+              if (stage === 'prompt' || stage === 'positions') phase = `characters-${stage}`;
+              if (stage === 'prompt-unreadable' && phase === 'characters-prompt') promptUnreadable = true;
+            });
+          } finally { ocrMs += Date.now() - solvingSince; solvingSince = null; }
           if (!points?.length || points.length > 4 || points.some(point => !Number.isFinite(point?.x) || !Number.isFinite(point?.y)
             || point.x < 0 || point.y < 0 || point.x >= challenge.backgroundImageWidth || point.y >= challenge.backgroundImageHeight)) {
             unreadableChallenge = true;
@@ -237,6 +251,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
     const failedVerification = !entries.length && identifiedChallenge(), failurePhase = phase;
     const failureCause = unreadableChallenge ? 'unreadable' : 'firewall', failurePageStatus = statusCode, failureVerificationStatus = verificationStatus;
     const reloadedFormReady = formReadyAfterReload;
+    const solvedMs = ocrMs + (solvingSince === null ? 0 : Date.now() - solvingSince);
     let reloadScans = 0;
     if (formReloaded || promptRefreshed) {
       try {
@@ -261,5 +276,9 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
       try { console.warn(JSON.stringify({ level: 'warn', event: 'china-post.prompt-refresh', host: 'www.ems.com.cn',
         scans: reloadScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
     }
+    try {
+      onTiming({ phase: failurePhase, responses: entries.length, formReloaded, puzzles, ...marks, ocrMs: solvedMs,
+        durationMs: Date.now() - started });
+    } catch { /* Diagnostics cannot change tracking or cleanup. */ }
   }
 }

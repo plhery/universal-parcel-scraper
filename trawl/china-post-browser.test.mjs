@@ -14,7 +14,7 @@ const response = (payload = found, overrides = {}) => ({ url: () => api, status:
   headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }),
   body: async () => Buffer.from(JSON.stringify(payload)), ...overrides });
 function fixture() {
-  const handlers = {}, state = { closed: 0, counted: 0, navigated: 0 };
+  const handlers = {}, state = { closed: 0, counted: 0, navigated: 0, timings: [] };
   let submitted = number;
   const page = {
     on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
@@ -30,9 +30,43 @@ function fixture() {
   };
   const context = { newPage: async () => page, close: async () => { state.closed++; } };
   return { page, context, handlers, state, options: { url, capture, tier: 3, maxTimeout: 200,
-    solveCharacters: async () => [{ x: 20, y: 20 }, { x: 40, y: 40 }],
+    solveCharacters: async () => [{ x: 20, y: 20 }, { x: 40, y: 40 }], onTiming: fields => { state.timings.push(fields); },
     handle: { browser: { newContext: async () => context }, noteTemporaryContext: () => { state.counted++; } } } };
 }
+
+test('times each phase of a lookup with fixed labels and counts only', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: 1_000_000 });
+  const f = fixture();
+  const goto = f.page.goto, waitForResponse = f.page.waitForResponse;
+  f.page.goto = async (...args) => { t.mock.timers.tick(3000); return goto(...args); };
+  // Each puzzle wait takes a second, including the one observed for a refresh after the answer.
+  f.page.waitForResponse = async (...args) => { t.mock.timers.tick(1000); return waitForResponse(...args); };
+  f.options.solveCharacters = async () => { t.mock.timers.tick(4000); return [{ x: 20, y: 20 }, { x: 40, y: 40 }]; };
+  f.page.getByRole = (_role, { name }) => ({ evaluate: async () => {
+    if (name === '验证') { t.mock.timers.tick(500); f.handlers.response(response()); }
+  } });
+  const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 14000 });
+  assert.equal(result.capturedResponses.length, 1);
+  assert.deepEqual(f.state.timings, [{ phase: 'history', responses: 1, formReloaded: false, puzzles: 1,
+    navigationMs: 3000, formMs: 3000, pictureMs: 4000, replyMs: 9500, ocrMs: 4000, durationMs: 9500 }]);
+});
+
+test('the default timing line keeps no identifier or reply content, and a failed sink changes nothing', async t => {
+  const logs = []; t.mock.method(console, 'warn', text => logs.push(JSON.parse(text)));
+  const f = fixture();
+  delete f.options.onTiming;
+  await runChinaPostBrowser(f.options);
+  assert.equal(logs.length, 1);
+  assert.equal(logs[0].event, 'china-post.timing');
+  assert.equal(logs[0].phase, 'history');
+  assert.equal(JSON.stringify(logs).includes(number), false);
+  assert.equal(JSON.stringify(logs).includes('PRIVATE'), false);
+  const failing = fixture();
+  failing.options.onTiming = () => { throw new Error('PRIVATE'); };
+  const result = await runChinaPostBrowser(failing.options);
+  assert.equal(result.capturedResponses.length, 1);
+  assert.equal(failing.state.closed, 1);
+});
 
 test('refreshes only a completed unreadable prompt, observes the new picture and binds its history', async t => {
   const logs = []; t.mock.method(console, 'warn', text => logs.push(JSON.parse(text)));

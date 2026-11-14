@@ -81,7 +81,9 @@ it reloads the official page once before sending any tracking request. An identi
 unsolved verification on an HTTP 200 page reaches the adapter as a challenge,
 with its phase retained in a `china-post.verification` warning.
 The `china-post.form-reload` warning records whether the form recovered and
-a bound scan reply arrived, without identifiers or page content. Its two-scan guest window stays marked
+a bound scan reply arrived, without identifiers or page content. A `china-post.timing`
+warning gives each lookup's final phase, puzzle count, OCR time and the times its page,
+form, first puzzle and tracking reply arrived. Its two-scan guest window stays marked
 incomplete; the helper enters no phone digits and signs into no account.
 JD's domestic single-icon helper matches the prompt's foreground colour pattern,
 then independently segments each candidate region to check its shape in the same
