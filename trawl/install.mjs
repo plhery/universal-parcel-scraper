@@ -3,6 +3,7 @@ import { dhlPolandNativeSources } from '/app/packages/tiers/src/utils/dhl-poland
 import { fastRecaptchaAudio } from '/app/packages/tiers/src/utils/recaptcha-audio.mjs';
 import { logTierFailures } from '/app/apps/api/src/tier-failure-log.mjs';
 import { trawlLicense } from '/app/packages/tiers/src/utils/license.mjs';
+import { fedexBrowserPool } from '/app/packages/tiers/src/utils/fedex-session.mjs';
 
 // Every caller of the reCAPTCHA solver stops once Google blocks or refuses its audio.
 const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
@@ -137,15 +138,10 @@ if (orchestrator.split(attempt).length !== 2) throw new Error('TRAWL attempt his
 writeFileSync(orchestratorPath, orchestrator.replace(attempt, attempt + '\n      ...(r.status === "success"'
   + ' || r.statusCode === undefined ? {} : { statusCode: r.statusCode, responseHeaders: r.responseHeaders }),'));
 
-// Retention only helps if the next pool lease returns to the working browser.
-// The helper has no dependency on BrowserPool and shares the tier singleton.
+// FedEx's verified session keeps its browser: the pool returns to it and holds it past
+// the recycle count. The helper has no dependency on BrowserPool and shares the tier singleton.
 const poolPath = '/app/packages/browser/src/pool.ts';
-const pool = readFileSync(poolPath, 'utf8');
-const pick = '    if (domain) {\n      const sticky = available.find';
-if (pool.split(pick).length !== 2) throw new Error('TRAWL browser affinity integration changed');
-writeFileSync(poolPath, 'import { preferredFedExEntry } from "../../tiers/src/utils/fedex-session.mjs"\n'
-  + pool.replace(pick, '    const retained = preferredFedExEntry(available, domain)\n'
-    + '    if (retained) return retained\n' + pick));
+writeFileSync(poolPath, fedexBrowserPool(readFileSync(poolPath, 'utf8')));
 
 // A failed tier says why at the image's warn level.
 const tierFailurePaths = { browser: '/app/packages/tiers/src/tiers/browser.ts', tier2: '/app/packages/tiers/src/tiers/2.ts',

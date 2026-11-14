@@ -1,7 +1,10 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { EventEmitter } from 'node:events';
-import { FedExSessions, fedexSessionNumber } from './fedex-session.mjs';
+import { readFileSync } from 'node:fs';
+import { stripTypeScriptTypes } from 'node:module';
+import { FEDEX_HOLD_MAX_AGE_MS, FEDEX_HOLD_MAX_LOOKUPS, FEDEX_HOLD_MAX_MEMORY_SHARE, FedExSessions, fedexBrowserPool,
+  fedexSessionNumber, fedexSessions } from './fedex-session.mjs';
 
 const API = 'https://api.fedex.com/track/v2/shipments';
 const NUMBER = '999999999999';
@@ -510,4 +513,274 @@ test('a failed session-end reporter cannot prevent disposal or change the captur
   assert.equal(f.contexts[0].closed, true);
   assert.equal((await f.run()).reason, 'fedex-session-new');
   await f.close();
+});
+
+const GIB = 1024 ** 3;
+const memory = (workingSetBytes, limitBytes = 4 * GIB) => () => ({ currentBytes: 4 * GIB, workingSetBytes, limitBytes });
+const holding = (settings = {}) => {
+  const holds = [];
+  const sessions = new FedExSessions({ settleMs: 0, incompleteSettleMs: 0, onRefusal: () => {}, onSessionEnd: () => {},
+    onHold: fields => holds.push(fields), ...settings });
+  return { holds, sessions };
+};
+
+test('the hold limits are named constants that sessions use by default', () => {
+  const sessions = new FedExSessions();
+  assert.equal(sessions.holdMaxLookups, FEDEX_HOLD_MAX_LOOKUPS);
+  assert.equal(sessions.holdMaxAgeMs, FEDEX_HOLD_MAX_AGE_MS);
+  assert.equal(sessions.holdMaxMemoryShare, FEDEX_HOLD_MAX_MEMORY_SHARE);
+  assert.ok(FEDEX_HOLD_MAX_LOOKUPS > 8 && FEDEX_HOLD_MAX_AGE_MS > 0 && FEDEX_HOLD_MAX_MEMORY_SHARE < 0.85);
+});
+
+test('holds a browser with a verified session past its recycle count until the lookup cap', async () => {
+  const { holds, sessions } = holding({ holdMaxLookups: 3 });
+  const f = fixture([], { sessions });
+  await f.run();
+  const entry = { id: 1, browser: f.browser, temporaryContextUses: 8 };
+  // The cgroup's working set leaves out reclaimable file cache, as TRAWL's pool does.
+  assert.equal(sessions.holds(entry, memory(2 * GIB)), true);
+  assert.equal(sessions.holds(entry, memory(2 * GIB)), true);
+  assert.deepEqual(holds, [{ host: 'api.fedex.com', state: 'held', browser: 1, contexts: 8, sessionLookups: 1,
+    sessionAgeMs: holds[0].sessionAgeMs, memoryPercent: 50 }]);
+  // Other carriers' new contexts and FedEx's own lookups both count.
+  entry.temporaryContextUses = 10;
+  assert.equal(sessions.holds(entry, memory(2 * GIB)), true);
+  assert.equal((await f.run(OTHER)).reason, 'fedex-session-reused');
+  assert.equal(sessions.holds(entry, memory(2 * GIB)), false);
+  assert.equal(holds.length, 2);
+  assert.equal(holds[1].state, 'ended');
+  assert.equal(holds[1].reason, 'lookups');
+  assert.equal(holds[1].lookups, 3);
+  assert.equal(holds[1].contexts, 10);
+  assert.equal(holds[1].sessionLookups, 2);
+  // The pool now recycles as usual; the session lasts until it does.
+  assert.equal(f.contexts[0].closed, false);
+  assert.equal(sessions.holds(entry, memory(GIB)), false);
+  assert.equal(holds.length, 2);
+  assert.equal(JSON.stringify(holds).includes(NUMBER), false);
+  assert.equal(JSON.stringify(holds).includes(OTHER), false);
+  await f.close();
+  assert.equal(holds.length, 2);
+});
+
+test('ends a hold at its maximum age', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const { holds, sessions } = holding({ holdMaxAgeMs: 100 });
+  const f = fixture([], { sessions });
+  await f.run();
+  const entry = { id: 0, browser: f.browser, temporaryContextUses: 8 };
+  t.mock.timers.tick(5);
+  assert.equal(sessions.holds(entry, memory(GIB)), true);
+  t.mock.timers.tick(99);
+  assert.equal(sessions.holds(entry, memory(GIB)), true);
+  t.mock.timers.tick(1);
+  assert.equal(sessions.holds(entry, memory(GIB)), false);
+  assert.deepEqual(holds.map(row => [row.state, row.reason]), [['held', undefined], ['ended', 'age']]);
+  assert.equal(holds[1].heldMs, 100);
+  assert.equal(holds[1].sessionAgeMs, 105);
+  await f.close();
+});
+
+test('memory above the threshold declines or ends a hold, and an unreadable limit declines it', async () => {
+  for (const [usage, reason, percent] of [[memory(3 * GIB), 'memory', 75], [memory(GIB, null), 'memory_unknown', null],
+    [undefined, 'memory_unknown', null], [() => { throw new Error('PRIVATE'); }, 'memory_unknown', null]]) {
+    const { holds, sessions } = holding();
+    const f = fixture([], { sessions });
+    await f.run();
+    const entry = { id: 0, browser: f.browser, temporaryContextUses: 8 };
+    assert.equal(sessions.holds(entry, usage), false);
+    assert.deepEqual(holds.map(row => [row.state, row.reason, row.memoryPercent]), [['declined', reason, percent]]);
+    // A declined browser is recycled as usual and never held later.
+    assert.equal(sessions.holds(entry, memory(GIB)), false);
+    assert.equal(holds.length, 1);
+    await f.close();
+  }
+  const { holds, sessions } = holding();
+  const f = fixture([], { sessions });
+  await f.run();
+  const entry = { id: 0, browser: f.browser, temporaryContextUses: 8 };
+  assert.equal(sessions.holds(entry, memory(2.8 * GIB)), true);
+  assert.equal(sessions.holds(entry, memory(2.9 * GIB)), false);
+  assert.deepEqual(holds.map(row => [row.state, row.reason, row.memoryPercent]), [['held', undefined, 70], ['ended', 'memory', 73]]);
+  await f.close();
+});
+
+test('only a working verified session holds its browser, and a lookup in progress keeps the hold', async () => {
+  const { holds, sessions } = holding();
+  const entryOf = f => ({ id: 0, browser: f.browser, temporaryContextUses: 8 });
+  assert.equal(sessions.holds({ id: 0, browser: new EventEmitter(), temporaryContextUses: 8 }, memory(GIB)), false);
+  assert.equal(sessions.holds({ id: 0 }, memory(GIB)), false);
+  const refused = fixture([{ status: 403 }], { sessions });
+  await refused.run();
+  assert.equal(sessions.holds(entryOf(refused), memory(GIB)), false);
+  // A new session is not verified before its first reply.
+  let first;
+  const cold = fixture([{ bodyGate: new Promise(resolve => { first = resolve; }) }], { sessions });
+  const opening = cold.run();
+  await tick();
+  assert.equal(sessions.holds(entryOf(cold), memory(GIB)), false);
+  first();
+  await opening;
+  // A verified session's next lookup clears its verification until the reply.
+  let next;
+  const f = fixture([{}, { bodyGate: new Promise(resolve => { next = resolve; }) }], { sessions });
+  await f.run();
+  assert.equal(sessions.holds(entryOf(f), memory(GIB)), true);
+  const active = f.run(OTHER);
+  await tick();
+  assert.equal(sessions.holds(entryOf(f), memory(GIB)), true);
+  next();
+  assert.equal((await active).reason, 'fedex-session-reused');
+  assert.equal(sessions.holds(entryOf(f), memory(GIB)), true);
+  assert.deepEqual(holds.map(row => row.state), ['held']);
+  await refused.close(); await cold.close(); await f.close();
+});
+
+test('a session that ends ends its hold, and a later session cannot hold the same browser', async () => {
+  const { holds, sessions } = holding();
+  const f = fixture([{}, { status: 403 }, {}], { sessions });
+  await f.run();
+  const entry = { id: 0, browser: f.browser, temporaryContextUses: 8 };
+  assert.equal(sessions.holds(entry, memory(GIB)), true);
+  await f.run();
+  assert.equal(f.contexts[0].closed, true);
+  assert.deepEqual(holds.map(row => [row.state, row.reason]), [['held', undefined], ['ended', 'session_end']]);
+  assert.equal(holds[1].sessionLookups, 2);
+  assert.equal((await f.run()).reason, 'fedex-session-new');
+  assert.equal(sessions.holds(entry, memory(GIB)), false);
+  assert.equal(holds.length, 2);
+  await f.close();
+});
+
+test('a failed hold reporter cannot change the decision', async () => {
+  const { sessions } = holding({ onHold: () => { throw new Error('PRIVATE'); } });
+  const f = fixture([], { sessions });
+  await f.run();
+  assert.equal(sessions.holds({ id: 0, browser: f.browser, temporaryContextUses: 8 }, memory(GIB)), true);
+  await f.close();
+});
+
+// TRAWL's pool, reduced to the lease choice and rolling replacement. The lines
+// the patch changes are kept as upstream writes them.
+const upstreamPool = `import type { PoolBrowser } from "@trawl/types"
+
+export class BrowserPool {
+  private entries: PoolBrowser[] = []
+  private replacementRunning = false
+  private memoryUsage?: () => { currentBytes: number | null; limitBytes: number | null; workingSetBytes?: number } | undefined
+  warming?: (entry: PoolBrowser) => Promise<void>
+
+  constructor({ entries, memoryUsage }: { entries: PoolBrowser[]; memoryUsage?: () => undefined }) {
+    this.entries = entries
+    this.memoryUsage = memoryUsage
+  }
+
+  pickEntry(domain?: string): PoolBrowser | undefined {
+    const available = this.entries.filter((e) => !e.busy)
+    if (available.length === 0) return
+    if (domain) {
+      const sticky = available.find((e) => e.lastDomain === domain)
+      if (sticky) return sticky
+    }
+    return available[0]
+  }
+
+  async runNextRollingReplacement(): Promise<void> {
+    if (this.replacementRunning) return
+    const entry = this.entries.find(
+      (candidate) =>
+        candidate.replacementRequested &&
+        !candidate.restarting &&
+        !candidate.busy &&
+        !candidate.cleaning &&
+        (!candidate.retainedContexts || candidate.replacementRecovery),
+    )
+    if (!entry) return
+    this.replacementRunning = true
+    const reason = entry.replacementRequested as string
+    const recovery = Boolean(entry.replacementRecovery)
+    entry.replacementRequested = undefined
+    entry.replacementRecovery = false
+    try {
+      await this.warming?.(entry)
+      if (entry.retainedContexts && !recovery) {
+        entry.replacementRequested ??= reason
+        return
+      }
+      while (entry.busy) await new Promise((resolve) => setTimeout(resolve, 1))
+      if (entry.retainedContexts && !recovery) {
+        entry.replacementRequested ??= reason
+        return
+      }
+      entry.replaced = reason
+    } finally {
+      this.replacementRunning = false
+    }
+  }
+}
+`;
+
+// The patched pool asks the image's singleton, which the fixtures share here without its reply waits.
+async function patchedPool(t) {
+  const { settleMs, incompleteSettleMs } = fedexSessions;
+  Object.assign(fedexSessions, { settleMs: 0, incompleteSettleMs: 0 });
+  t.after(() => Object.assign(fedexSessions, { settleMs, incompleteSettleMs }));
+  const source = fedexBrowserPool(upstreamPool).replace('"../../tiers/src/utils/fedex-session.mjs"',
+    JSON.stringify(new URL('./fedex-session.mjs', import.meta.url).href));
+  const js = stripTypeScriptTypes(source, { mode: 'strip' });
+  return (await import(`data:text/javascript;base64,${Buffer.from(js).toString('base64')}`)).BrowserPool;
+}
+
+test('the patched pool keeps a held browser through recycles but not through recovery replacements', async t => {
+  const reports = []; t.mock.method(console, 'warn', text => { reports.push(JSON.parse(text)); });
+  const BrowserPool = await patchedPool(t);
+  const held = fixture([], { sessions: fedexSessions }), other = fixture([], { sessions: fedexSessions });
+  await held.run();
+  const a = { id: 0, browser: held.browser, temporaryContextUses: 8, replacementRequested: '8 temporary contexts created' };
+  const b = { id: 1, browser: other.browser, temporaryContextUses: 8, replacementRequested: '8 temporary contexts created' };
+  const pool = new BrowserPool({ entries: [a, b], memoryUsage: memory(GIB) });
+  assert.equal(pool.pickEntry('www.fedex.com'), a);
+  await pool.runNextRollingReplacement();
+  assert.equal(a.replaced, undefined);
+  assert.equal(a.replacementRequested, '8 temporary contexts created');
+  // Browser B holds no FedEx session, so it recycles as usual.
+  assert.equal(b.replaced, '8 temporary contexts created');
+  await pool.runNextRollingReplacement();
+  assert.equal(a.replaced, undefined);
+  assert.deepEqual(reports.map(row => [row.event, row.state, row.browser]), [['fedex.browser-hold', 'held', 0]]);
+  a.replacementRecovery = true;
+  await pool.runNextRollingReplacement();
+  assert.equal(a.replaced, '8 temporary contexts created');
+  await held.close(); await other.close();
+});
+
+test('the patched pool rechecks the hold once the replacement is warm', async t => {
+  t.mock.method(console, 'warn', () => {});
+  const BrowserPool = await patchedPool(t);
+  const f = fixture([{ status: 403 }, {}], { sessions: fedexSessions });
+  await f.run();
+  const entry = { id: 0, browser: f.browser, temporaryContextUses: 8, replacementRequested: '8 temporary contexts created' };
+  const pool = new BrowserPool({ entries: [entry], memoryUsage: memory(GIB) });
+  // A new session is verified on the incumbent while its replacement warms.
+  pool.warming = async () => { await f.run(); };
+  await pool.runNextRollingReplacement();
+  assert.equal(entry.replaced, undefined);
+  assert.equal(entry.replacementRequested, '8 temporary contexts created');
+  // Once that session ends, even a session verified during the next warm-up cannot hold the browser.
+  await f.close();
+  await pool.runNextRollingReplacement();
+  assert.equal(entry.replaced, '8 temporary contexts created');
+});
+
+test('the pool patch refuses an upstream pool whose patched lines changed', () => {
+  assert.throws(() => fedexBrowserPool(upstreamPool.replace('(!candidate.retainedContexts || candidate.replacementRecovery)',
+    '!candidate.retainedContexts')), /TRAWL browser pool changed/);
+  assert.throws(() => fedexBrowserPool(upstreamPool.replace('      if (entry.retainedContexts && !recovery) {', '      if (!recovery) {')),
+    /TRAWL browser pool changed/);
+  assert.throws(() => fedexBrowserPool(upstreamPool.replace('if (domain) {', 'if (domain !== undefined) {')), /TRAWL browser pool changed/);
+});
+
+test('the image installs the pool patch from the helper it imports', () => {
+  assert.match(readFileSync(new URL('./install.mjs', import.meta.url), 'utf8'),
+    /import \{ fedexBrowserPool \} from '\/app\/packages\/tiers\/src\/utils\/fedex-session\.mjs';/);
 });

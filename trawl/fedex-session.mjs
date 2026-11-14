@@ -11,6 +11,28 @@ const MAX_REPLIES = 20;
 // offsets count from the lookup's start; a phase that was not reached is null.
 const reportRefusal = fields => console.warn(JSON.stringify({ level: 'warn', event: 'fedex.api-refusal', ...fields }));
 const reportSessionEnd = fields => console.warn(JSON.stringify({ level: 'warn', event: 'fedex.session-end', ...fields }));
+const reportHold = fields => console.warn(JSON.stringify({ level: 'warn', event: 'fedex.browser-hold', ...fields }));
+
+// TRAWL replaces a browser after BROWSER_RECYCLE_AFTER_CONTEXTS new contexts, which
+// ends the verified FedEx session it holds; a new session is usually refused. While
+// that session keeps working, its browser is held past the count, within these
+// limits counted from the moment the pool first asked to replace it: the lookups the
+// browser serves (FedEx's own and other carriers' new contexts) and the hold's age.
+export const FEDEX_HOLD_MAX_LOOKUPS = 120;
+export const FEDEX_HOLD_MAX_AGE_MS = 60 * 60_000;
+// The container's working set as a share of its memory limit, as TRAWL's pool reads
+// them from the cgroup, above which a browser is not held. Firefox's per-browser
+// memory has no cheap reading; without a readable limit, no browser is held.
+export const FEDEX_HOLD_MAX_MEMORY_SHARE = 0.7;
+
+function memoryShare(memoryUsage) {
+  let memory;
+  try { memory = memoryUsage?.(); } catch { return null; }
+  const used = memory?.workingSetBytes ?? memory?.currentBytes, limit = memory?.limitBytes;
+  return Number.isFinite(used) && used >= 0 && Number.isFinite(limit) && limit > 0 ? used / limit : null;
+}
+
+const slot = id => Number.isSafeInteger(id) && id >= 0 && id < 1024 ? id : undefined;
 
 // Classify a discarded reply without retaining its content or identifying its parcel.
 function discardedReply(entries, number) {
@@ -57,8 +79,11 @@ async function bounded(promise, ms, message) {
 export class FedExSessions {
   #sessions = new WeakMap();
   #activity = new WeakMap();
+  #holds = new WeakMap();
   constructor({ idleMs = 30 * 60_000, maxAgeMs = 2 * 60 * 60_000, closeMs = 3_000,
-    settleMs = 250, incompleteSettleMs = 1_000, onRefusal = reportRefusal, onSessionEnd = reportSessionEnd } = {}) {
+    settleMs = 250, incompleteSettleMs = 1_000, onRefusal = reportRefusal, onSessionEnd = reportSessionEnd,
+    holdMaxLookups = FEDEX_HOLD_MAX_LOOKUPS, holdMaxAgeMs = FEDEX_HOLD_MAX_AGE_MS,
+    holdMaxMemoryShare = FEDEX_HOLD_MAX_MEMORY_SHARE, onHold = reportHold } = {}) {
     this.idleMs = idleMs;
     this.maxAgeMs = maxAgeMs;
     this.closeMs = closeMs;
@@ -66,6 +91,76 @@ export class FedExSessions {
     this.incompleteSettleMs = incompleteSettleMs;
     this.onRefusal = onRefusal;
     this.onSessionEnd = onSessionEnd;
+    this.holdMaxLookups = holdMaxLookups;
+    this.holdMaxAgeMs = holdMaxAgeMs;
+    this.holdMaxMemoryShare = holdMaxMemoryShare;
+    this.onHold = onHold;
+  }
+
+  #working(session) {
+    if (session.disposed || Date.now() - session.created >= this.maxAgeMs || session.page?.isClosed?.() !== false) return false;
+    // A lookup in progress clears `verified` until its reply; until then the previous lookup decides.
+    return session.busy ? session.lastVerifiedAt !== undefined : session.verified;
+  }
+
+  #reportHold(fields) {
+    try { this.onHold({ host: 'api.fedex.com', ...fields }); }
+    catch { /* Diagnostics must never change the pool's decision. */ }
+  }
+
+  // Lookups since the hold began: FedEx's on its session and other carriers' new contexts.
+  #heldLookups(hold) {
+    return Math.max(0, hold.contextsNow - hold.contexts) + Math.max(0, hold.session.lookups - hold.sessionLookups);
+  }
+
+  #endHold(hold, reason, share) {
+    hold.ended = true;
+    this.#reportHold({ state: 'ended', reason, browser: hold.browserId, heldMs: Math.max(0, Date.now() - hold.since),
+      lookups: this.#heldLookups(hold), contexts: hold.contextsNow, sessionLookups: hold.session.lookups,
+      sessionAgeMs: Math.max(0, Date.now() - hold.session.created),
+      memoryPercent: share === undefined || share === null ? null : Math.round(share * 100) });
+    return false;
+  }
+
+  /**
+   * Whether the pool keeps a browser past its recycle count. The pool asks only before
+   * a recycle; recovery replacements and memory pressure never ask. A browser
+   * is held at most once, by the verified session that started its hold, so the
+   * limits bound the browser, not each session on it.
+   */
+  holds(entry, memoryUsage) {
+    try {
+      const browser = entry?.browser;
+      if (!browser) return false;
+      let hold = this.#holds.get(browser);
+      if (hold?.ended) return false;
+      const session = this.#sessions.get(browser);
+      const contexts = Number.isSafeInteger(entry.temporaryContextUses) ? entry.temporaryContextUses : 0;
+      if (hold) hold.contextsNow = contexts;
+      if (!session || !this.#working(session) || (hold && hold.session !== session)) {
+        return hold ? this.#endHold(hold, 'session_end') : false;
+      }
+      if (hold && this.#heldLookups(hold) >= this.holdMaxLookups) return this.#endHold(hold, 'lookups');
+      if (hold && Date.now() - hold.since >= this.holdMaxAgeMs) return this.#endHold(hold, 'age');
+      const share = memoryShare(memoryUsage);
+      const memory = share === null ? 'memory_unknown' : share > this.holdMaxMemoryShare ? 'memory' : null;
+      if (memory && hold) return this.#endHold(hold, memory, share);
+      if (memory) {
+        this.#holds.set(browser, { ended: true });
+        this.#reportHold({ state: 'declined', reason: memory, browser: slot(entry.id), contexts,
+          sessionLookups: session.lookups, sessionAgeMs: Math.max(0, Date.now() - session.created),
+          memoryPercent: share === null ? null : Math.round(share * 100) });
+        return false;
+      }
+      if (!hold) {
+        hold = { session, since: Date.now(), contexts, contextsNow: contexts, sessionLookups: session.lookups,
+          browserId: slot(entry.id), ended: false };
+        this.#holds.set(browser, hold);
+        this.#reportHold({ state: 'held', browser: hold.browserId, contexts, sessionLookups: session.lookups,
+          sessionAgeMs: Math.max(0, Date.now() - session.created), memoryPercent: Math.round(share * 100) });
+      }
+      return true;
+    } catch { return false; }
   }
 
   preferred(entries, domain) {
@@ -93,6 +188,8 @@ export class FedExSessions {
         idleMs: session.lastLookupAt === undefined ? null : Math.max(0, Date.now() - session.lastLookupAt),
         sinceVerifiedMs: session.lastVerifiedAt === undefined ? null : Math.max(0, Date.now() - session.lastVerifiedAt) });
     } catch { /* Diagnostics must never prevent session disposal. */ }
+    const hold = this.#holds.get(browser);
+    if (hold?.session === session && !hold.ended) this.#endHold(hold, 'session_end');
     clearTimeout(session.timer);
     browser.off('disconnected', session.disconnected);
     if (this.#sessions.get(browser) === session) this.#sessions.delete(browser);
@@ -373,3 +470,25 @@ export class FedExSessions {
 
 export const fedexSessions = new FedExSessions();
 export const preferredFedExEntry = (entries, domain) => fedexSessions.preferred(entries, domain);
+export const holdsFedExEntry = (entry, memoryUsage) => fedexSessions.holds(entry, memoryUsage);
+
+/**
+ * TRAWL's browser pool with FedEx's affinity and hold. Retention only helps if the
+ * next lease returns to the working browser, and if a recycle waits while the hold
+ * lasts. Recovery replacements never ask about the hold. Throws when the patched
+ * lines changed upstream.
+ */
+export function fedexBrowserPool(source) {
+  const pick = '    if (domain) {\n      const sticky = available.find';
+  const candidate = '        (!candidate.retainedContexts || candidate.replacementRecovery),';
+  // Checked again once the replacement is warm and once the current lease ends.
+  const warmed = '      if (entry.retainedContexts && !recovery) {';
+  if (source.split(pick).length !== 2 || source.split(candidate).length !== 2 || source.split(warmed).length !== 3) {
+    throw new Error('TRAWL browser pool changed: review the FedEx affinity and hold');
+  }
+  return 'import { holdsFedExEntry, preferredFedExEntry } from "../../tiers/src/utils/fedex-session.mjs"\n'
+    + source.replace(pick, '    const retained = preferredFedExEntry(available, domain)\n    if (retained) return retained\n' + pick)
+      .replace(candidate, '        (candidate.replacementRecovery\n'
+        + '          || (!candidate.retainedContexts && !holdsFedExEntry(candidate, this.memoryUsage))),')
+      .replaceAll(warmed, '      if (!recovery && (entry.retainedContexts || holdsFedExEntry(entry, this.memoryUsage))) {');
+}

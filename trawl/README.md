@@ -46,8 +46,22 @@ HTML, cookies, rotating keys or ownership details.
 The service reuses browser sessions, never parcel responses. FedEx keeps one verified context
 per pooled browser and discards it on expiry, mismatch or failure. TRAWL's named sessions do not
 replace it: FedEx's API refuses the tracking call a kept session page makes for a tracking URL,
-and the untrusted input of a session eval never sends one. Australia Post,
-DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
+and the untrusted input of a session eval never sends one.
+
+TRAWL replaces a browser after `BROWSER_RECYCLE_AFTER_CONTEXTS` new contexts, which ends
+its FedEx session; a new session is usually refused. A browser with a verified FedEx session
+is held past that count while the session works, at most once. The hold ends, and the
+browser is replaced as usual, when the session ends, after `FEDEX_HOLD_MAX_LOOKUPS` (120)
+more lookups (FedEx's and other carriers' new contexts) or `FEDEX_HOLD_MAX_AGE_MS` (an
+hour) after the pool first asked to replace it. No browser is held while the container's
+working set is above `FEDEX_HOLD_MAX_MEMORY_SHARE` (70%) of its memory limit, or while the
+limit is unreadable. That is the cgroup reading TRAWL's pool already takes; Firefox has no
+cheap per-browser figure. Recovery replacements, TRAWL's memory pressure check and other
+browsers keep TRAWL's policy. The constants are in [fedex-session.mjs](fedex-session.mjs).
+A `fedex.browser-hold` warning records each hold that starts, ends or is declined, with
+its reason, browser slot, lookups, age and memory share.
+
+Australia Post, DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 A request's proxy carries WanbExpress's whole fresh context; through it the helper runs only
 the page's passive check and leaves a visible checkbox unsolved.
 SF Express solves GeeTest's slider locally and asks for at most two other puzzles when it

@@ -44,7 +44,8 @@ fallback')`.
    - it keeps the page and context only after a reply that matches the requested number
      (request and response) and has a status or scans;
    - the context stays on its pooled browser and closes after 30 min idle, 2 h total, any
-     failed validation, or a browser restart.
+     failed validation, or a browser restart. The browser outlasts the service's recycle
+     count while the session works, within the limits the TRAWL README gives.
 
 ## Notes
 
