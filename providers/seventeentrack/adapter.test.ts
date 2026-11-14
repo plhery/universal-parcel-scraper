@@ -678,6 +678,10 @@ describe('17TRACK result parsing', () => {
     // A place that names no state keeps 17TRACK's reading.
     expect(parse17TrackResponse(reply(21051, [row('2026-05-08', '09:00:00', '-05:00', 'EXAMPLE FACILITY')]), number).events?.[0]?.time)
       .toBe('2026-05-08T14:00:00.000Z');
+    // Unless the gazetteer finds a town in it, whose clock dates it as USPS's own copy is dated: 17TRACK labels a
+    // Houston processing center with Eastern time.
+    expect(parse17TrackResponse(reply(21051, [row('2026-11-11', '08:29:00', '-05:00', 'SOUTH HOUSTON PROCESSING CENTER', 'Arrived at USPS Facility')]),
+      number).events?.[0]).toMatchObject({ time: '2026-11-11T14:29:00.000Z', time_zone: 'America/Chicago', time_zone_basis: 'place' });
     expect(parsed.events?.[1]).toMatchObject({ provider_time_iso: '2026-05-07T20:16:00-05:00', time_provenance: 'provider_inferred' });
     expect(parsed.undated_event_count).toBeUndefined();
     // Another feed keeps 17TRACK's reading.

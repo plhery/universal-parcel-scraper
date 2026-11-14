@@ -136,7 +136,9 @@ carrier.
   origin post's acceptance in "CHINA", is read on that country's clock, or its town's, as the
   USPS adapter reads it; 17TRACK's US offset put it half a day late. In a country of several
   clocks it keeps its wall clock. USPS's "JAMAICA" alone is its service centre at JFK. A place
-  that names neither keeps 17TRACK's reading.
+  that names no state, but a town the gazetteer finds, is read on that town's clock, as USPS's
+  own copy is dated: 17TRACK labels "SOUTH HOUSTON PROCESSING CENTER", on Central time, with
+  Eastern time. A place the gazetteer does not find keeps 17TRACK's reading.
   A step USPS dates by its day alone, such as a label printed at a post office, comes at
   midnight under 17TRACK's offset; it keeps its day as `local_time`, as on USPS's page. A
   USPS scan at exactly midnight is read the same way.
