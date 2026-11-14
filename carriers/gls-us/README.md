@@ -22,8 +22,8 @@ The default budget is 15 seconds.
   sentence the page shows, "The search found no shipments that matched your criteria." Only
   that answer is not found. An empty list with any other message, an empty reply and a 404
   are inconclusive; a block page is a challenge.
-- Only shipments filed under the whole number are read. A reply without one is a schema
-  failure. A number used for several shipments gives the one with the newest scan, and two
+- Only shipments filed under the whole number are read. A reply without one is inconclusive:
+  shipments under another number say nothing of this one. A number used for several shipments gives the one with the newest scan, and two
   whose newest scans share a clock leave the answer inconclusive.
 - The shipment's own status ("out for delivery", "delivered", "returned") sets the current
   stage, as on the page; its newest staged scan does when the status is one the map does not

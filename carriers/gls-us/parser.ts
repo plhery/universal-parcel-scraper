@@ -78,7 +78,8 @@ function requestedShipment(shipments: unknown[], number: string): Shipment {
   const matching = shipments.filter(isRecord)
     .filter((record) => normalizeTrackingNumber(clean(record.trackingNumber, 64)) === number)
     .map((record) => ({ record, events: scans(record) }));
-  if (!matching.length) throw new SchemaError(PROVIDER, 'GLS US did not return the requested shipment');
+  // A well-formed reply under another number says nothing of this one.
+  if (!matching.length) throw new IndeterminateError(PROVIDER, 'GLS US did not return the requested shipment');
   if (matching.length === 1) return matching[0]!;
   const newest = (shipment: Shipment) => shipment.events[0]?.local_time ?? '';
   const ordered = [...matching].sort((left, right) => newest(right).localeCompare(newest(left)));

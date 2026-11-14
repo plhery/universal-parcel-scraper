@@ -143,9 +143,11 @@ describe('GLS US HTTP adapter', () => {
     expect(() => parseGlsUs({ ...fixture('not-found'), message: 'Synthetic failure' }, UNKNOWN))
       .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseGlsUs({ shipments: null, message: null }, UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
-    expect(() => parseGlsUs(fixture('delivered'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => parseGlsUs(fixture('delivered'), UNKNOWN)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseGlsUs(changed((shipment) => { shipment.trackingNumber = NUMBER.slice(0, -1); }), NUMBER))
-      .toThrow(expect.objectContaining({ kind: 'schema' }));
+      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => parseGlsUs(changed((shipment) => { delete shipment.trackingNumber; }), NUMBER))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseGlsUs({ shipments: {} }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
     expect(() => parseGlsUs(changed((shipment) => { shipment.transitDetails[0]!.eventDateTime = '0001-01-01T00:00:00'; }), NUMBER))
       .toThrow(expect.objectContaining({ kind: 'schema' }));
