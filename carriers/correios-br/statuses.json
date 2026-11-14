@@ -23,6 +23,7 @@
     { "code": "BDI/40", "wording": "Importação não autorizada", "language": "pt", "stage": "exception", "confirmedBy": "live", "note": "Customs refused the import." },
     { "code": "BDR/83", "wording": "Prazo de regularização encerrado", "language": "pt", "stage": "exception", "confirmedBy": "live", "note": "The time to settle the import with customs ran out." },
     { "code": "OEC/09", "wording": "Objeto saiu para entrega ao remetente", "language": "pt", "stage": "returned", "confirmedBy": "live", "note": "Out for delivery back to the sender, not to the recipient." },
+    { "code": "LDI/01", "wording": "Objeto aguardando retirada no endereço indicado", "language": "pt", "stage": "ready_for_pickup", "confirmedBy": "live", "note": "Waiting for collection at the unit the recipient named." },
     { "code": "LDI/02", "wording": "Objeto aguardando retirada na Caixa Postal", "language": "pt", "stage": "ready_for_pickup", "confirmedBy": "live" },
     { "code": "FC/82", "wording": "Etiqueta emitida", "language": "pt", "stage": "registered", "confirmedBy": "live", "note": "A label was issued; Correios does not have the parcel yet." },
     { "code": "FC/03", "wording": "Objeto em correção de rota", "language": "pt", "stage": "in_transit", "confirmedBy": "live", "note": "A missorted item that Correios will forward again; transfers follow." },

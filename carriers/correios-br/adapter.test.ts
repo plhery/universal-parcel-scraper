@@ -117,6 +117,7 @@ describe('Correios parser', () => {
       ['PAR', '24', 'Devolução determinada pela autoridade competente', 'exception', 'returned'],
       ['BDE', '20', 'Objeto não entregue - carteiro não atendido', 'exception', 'failed_attempt'],
       ['LDI', '02', 'Objeto aguardando retirada na Caixa Postal', 'in_transit', 'ready_for_pickup'],
+      ['LDI', '01', 'Objeto aguardando retirada no endereço indicado', 'in_transit', 'ready_for_pickup'],
       ['BDI', '01', 'Objeto entregue ao destinatário', 'delivered', 'delivered'],
       ['BDI', '40', 'Importação não autorizada', 'exception', 'exception'],
       ['FC', '82', 'Etiqueta emitida', 'pending', 'registered'],

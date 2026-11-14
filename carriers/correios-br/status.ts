@@ -17,6 +17,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'OEC/01': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   // Out for delivery back to the sender: the parcel is on its way back.
   'OEC/09': { status: 'exception', stage: 'returned' },
+  // Waiting at the unit the recipient named, or at a post office box.
+  'LDI/01': { status: 'in_transit', stage: 'ready_for_pickup' },
   'LDI/02': { status: 'in_transit', stage: 'ready_for_pickup' },
   'FC/82': { status: 'pending', stage: 'registered' },
   // A missorted item Correios has caught and will forward again.
