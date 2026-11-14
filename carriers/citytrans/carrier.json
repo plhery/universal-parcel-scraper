@@ -1,0 +1,34 @@
+{
+  "id": "citytrans",
+  "displayName": "Citytrans",
+  "aliases": [
+    "Citytrans GmbH",
+    "Citytrans Kurier GmbH"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#ff0000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.citytrans.ch/",
+    "canaryUrl": "https://www.citytrans.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

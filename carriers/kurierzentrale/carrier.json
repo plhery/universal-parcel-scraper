@@ -1,0 +1,34 @@
+{
+  "id": "kurierzentrale",
+  "displayName": "KurierZentrale",
+  "aliases": [
+    "KurierZentrale GmbH",
+    "KuZ"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#d0232a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://crm.kuz.ch/",
+    "canaryUrl": "https://www.kurierzentrale.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

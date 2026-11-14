@@ -1,0 +1,33 @@
+{
+  "id": "veloblitz",
+  "displayName": "Veloblitz",
+  "aliases": [
+    "Genossenschaft Veloblitz"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#ffec00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://veloblitz.kuz.ch/",
+    "canaryUrl": "https://www.veloblitz.ch/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

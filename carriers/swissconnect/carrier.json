@@ -1,0 +1,33 @@
+{
+  "id": "swissconnect",
+  "displayName": "swissconnect",
+  "aliases": [
+    "swissconnect ag"
+  ],
+  "region": {
+    "countries": [
+      "CH"
+    ]
+  },
+  "brand": {
+    "color": "#ff7f00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Zurich",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://swissconnect.ch/de/",
+    "canaryUrl": "https://swissconnect.ch/de/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
