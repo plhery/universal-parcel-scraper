@@ -54,6 +54,23 @@ describe('FAN Courier International events', () => {
     expect(fanCourierInternationalStage('CodeChanged:XYZ', 'Received code: Arrived at Delivery Hub')).toBe('in_transit');
   });
 
+  it('reads the newest received code the map knows, not the opening status, behind a last code the map does not know', () => {
+    const payload = fixture();
+    payload.status = { ...payload.status, code: 'QQZ', code_name: 'Synthetic unknown code' };
+    payload.history.history.push({ ...payload.history.history[3], date: '2026-01-11 08:00:00', event_date: null,
+      eventType: 'CodeChanged:QQZ', description: 'Received code: Synthetic unknown code', status: '' });
+    const result = parseFanCourierInternational(payload, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Received code: In Transit' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'CodeChanged:QQZ' });
+    expect(result.events?.[0]).not.toHaveProperty('stage');
+    // A settled status still leads, and without a received code the map reads the opening status stands.
+    expect(parseFanCourierInternational({ ...payload, status: { ...payload.status, status: 'exception' } }, NUMBER)).toMatchObject({ current_stage: 'exception' });
+    const unread = fixture();
+    unread.status = { ...unread.status, code: 'QQZ', code_name: 'Synthetic unknown code' };
+    unread.history.history = unread.history.history.filter((row: { eventType: string }) => !row.eventType.startsWith('CodeChanged:'));
+    expect(parseFanCourierInternational(unread, NUMBER)).toMatchObject({ current_stage: 'accepted', last_status_text: 'The shipment is picked up' });
+  });
+
   it('falls back on the newest staged event without a headline', () => {
     const payload = fixture();
     delete payload.status;

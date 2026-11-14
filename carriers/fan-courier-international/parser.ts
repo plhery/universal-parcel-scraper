@@ -62,13 +62,25 @@ export function readFanCourierInternationalRefusal(payload: unknown, raw: string
   throw new NotFoundError(PROVIDER);
 }
 
-/** The headline's stage: a settled status, else the last code received, by itself or its name, else the status. */
-function headlineStage(headline: Record<string, unknown>): Stage | undefined {
+/** The statuses a shipment keeps from its pick-up through its whole transit, which received codes go past. */
+const OPENING: ReadonlySet<Stage> = new Set<Stage>(['registered', 'accepted']);
+
+/**
+ * The headline's stage: a settled status, else the last code received, by itself or its name, else the status.
+ * Behind a last code the map does not know, an opening status ("active") stays through the transit, so the newest
+ * received code the map reads leads instead.
+ */
+function headlineStage(headline: Record<string, unknown>, events: readonly CarrierEvent[]): Stage | undefined {
   const status = clean(headline.status, 40).toLowerCase();
   const code = clean(headline.code, 80);
   const name = clean(headline.code_name, 80);
-  return SETTLED.get(status) ?? (code ? fanCourierInternationalStage(`CodeChanged:${code}`, name ? `Received code: ${name}` : '') : undefined)
-    ?? (status ? fanCourierInternationalStage(`StatusChanged:${status}`, '') : undefined);
+  const received = code ? fanCourierInternationalStage(`CodeChanged:${code}`, name ? `Received code: ${name}` : '') : undefined;
+  const settled = SETTLED.get(status) ?? received;
+  if (settled) return settled;
+  const byStatus = status ? fanCourierInternationalStage(`StatusChanged:${status}`, '') : undefined;
+  if (!code || (byStatus && !OPENING.has(byStatus))) return byStatus;
+  const known = events.find((event) => event.provider_code?.startsWith('CodeChanged:') && event.stage)?.stage as Stage | undefined;
+  return known ?? byStatus;
 }
 
 /**
@@ -105,7 +117,7 @@ export function parseFanCourierInternational(payload: unknown, raw: string): Car
   }
   // A received code and the status change it brings share an instant, the code first:
   // the headline says which the shipment is at.
-  const stage = headlineStage(headline) ?? events.find(event => event.stage)?.stage as Stage | undefined;
+  const stage = headlineStage(headline, events) ?? events.find(event => event.stage)?.stage as Stage | undefined;
   const latest = (stage ? events.find(event => event.stage === stage) : undefined) ?? events[0]!;
   return { status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage } : {}),
     last_status_text: latest.description ?? null, last_update: events[0]!.time ?? null, last_update_local: events[0]!.local_time ?? null,
