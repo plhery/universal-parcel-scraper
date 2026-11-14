@@ -7,8 +7,10 @@ TRAWL. The page owns request signing, Tencent verification and the final trackin
 The scoped browser helper matches the jigsaw's native-image texture and silhouette, measures
 the piece's movement against the knob, and keeps generation checks through the held drag.
 An ambiguous image abstains. It permits at most two drags and two bound tracking requests,
-within the caller's deadline, and closes its fresh context. Unsupported puzzles and refused
-verification leave enabled universal providers available.
+within the caller's deadline, and closes its fresh context. The helper abstains often, within
+seconds and before any drag, so the adapter asks it once more when the budget left still holds
+a solved run of about half a minute: the new context draws another image. Unsupported
+puzzles and refused verification leave enabled universal providers available.
 
 The request and positive reply must name the whole domestic waybill. A successful reply with
 an empty list, or with no data as for a waybill J&T has no record of yet, is no history rather

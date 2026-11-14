@@ -2,7 +2,7 @@ import type { AdapterEnvironment, AdapterFactory, TrackingContext } from '../../
 import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
-import { TRAWL_TRANSPORT_ALLOWANCE_MS } from '../../core/transport/trawl.js';
+import { TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { isRecord } from '../../core/types.js';
 import { JT_BR_API, JT_BR_MAX_BYTES, JT_BR_PAGE, normalizeJAndTBrNumber, parseJAndTBr, PROVIDER } from './parser.js';
 function retryAfter(headers: Record<string, string>): number | undefined {
@@ -10,6 +10,14 @@ function retryAfter(headers: Record<string, string>): number | undefined {
   const delay = value === undefined ? NaN : /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
   return Number.isFinite(delay) ? Math.max(0, delay) : undefined;
 }
+function lastReason(page: TrawlScrapeResponse): string {
+  const timing: unknown = Array.isArray(page.raw.timings) ? page.raw.timings.at(-1) : undefined;
+  return isRecord(timing) ? String(timing.reason) : '';
+}
+// The browser helper gives up within seconds, before any drag, on a puzzle image it cannot place
+// the gap in. A new browser context draws another image, and a solved run takes about half a minute.
+const ABSTAINED = 'jt-br-ambiguous_image';
+const RETRY_MIN_MS = 40_000;
 export class JAndTBrTracker {
   constructor(private readonly environment: AdapterEnvironment) {}
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
@@ -17,14 +25,24 @@ export class JAndTBrTracker {
     const number = normalizeJAndTBrNumber(raw);
     return runSteps({ carrier: 'j-and-t-br', recorder: this.environment.recorder, signal: context.signal,
       budgetMs: context.budgetMs ?? 90_000 + TRAWL_TRANSPORT_ALLOWANCE_MS }, [{ id: 'trawl', run: async ({ signal, remainingMs }) => {
-      if (!this.environment.trawl) throw new ChallengeError(PROVIDER, 'J&T Brazil needs the browser tracking service');
-      const timeoutMs = Math.floor(Math.min(90_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
-      if (timeoutMs < 12000) throw new BudgetExceededError(PROVIDER, remainingMs);
+      const trawl = this.environment.trawl;
+      if (!trawl) throw new ChallengeError(PROVIDER, 'J&T Brazil needs the browser tracking service');
       const url = `${JT_BR_PAGE}?${new URLSearchParams({ waybillNo: number })}`;
-      const page = await this.environment.trawl.scrape({ url, skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
+      const started = Date.now();
+      const scrape = (timeoutMs: number) => trawl.scrape({ url, skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [JT_BR_API], settleTimeout: timeoutMs }, { provider: PROVIDER, timeoutMs, signal,
         fetcher: this.environment.fetcher, maxBytes: 4 * JT_BR_MAX_BYTES, requireSolved: false, captureWindow: 'last' });
+      const timeoutMs = Math.floor(Math.min(90_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
+      if (timeoutMs < 12000) throw new BudgetExceededError(PROVIDER, remainingMs);
+      let page = await scrape(timeoutMs);
       signal.throwIfAborted();
+      if (!page.capturedResponses.length && lastReason(page) === ABSTAINED) {
+        const again = Math.floor(Math.min(90_000, remainingMs - (Date.now() - started) - TRAWL_TRANSPORT_ALLOWANCE_MS));
+        if (again >= RETRY_MIN_MS) {
+          page = await scrape(again);
+          signal.throwIfAborted();
+        }
+      }
       if (page.url !== url) throw new SchemaError(PROVIDER, 'J&T Brazil left its tracking page');
       const matching = page.capturedResponses.filter(row => row.url === JT_BR_API);
       if (matching.length > 2) throw new SchemaError(PROVIDER, 'J&T Brazil returned too many tracking replies');
@@ -50,8 +68,7 @@ export class JAndTBrTracker {
       if (failure) throw failure;
       if ([404, 410].includes(page.statusCode)) throw new TransportError(PROVIDER, 'J&T Brazil tracking page is unavailable');
       if (page.statusCode >= 400) throw new UpstreamHttpError(PROVIDER, page.statusCode);
-      const timing: unknown = Array.isArray(page.raw.timings) ? page.raw.timings.at(-1) : undefined;
-      if (isRecord(timing) && ['jt-br-runtime', 'jt-br-capture_missing'].includes(String(timing.reason))) {
+      if (['jt-br-runtime', 'jt-br-capture_missing'].includes(lastReason(page))) {
         throw new TransportError(PROVIDER, 'J&T Brazil could not complete its guest response capture');
       }
       throw new ChallengeError(PROVIDER, 'J&T Brazil returned no bound guest reply', { reason: 'verification_unfinished' });

@@ -97,6 +97,27 @@ describe('J&T Brazil guest history', () => {
   ])('keeps capture failures distinct', async (extra, kind) => {
     await expect(harness([capture(fixture(), extra)]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind });
   });
+  it('asks once more after the helper gives up on a puzzle image, while the budget holds another solved run', async () => {
+    const reply = (rows: unknown[], reason: string) => new Response(JSON.stringify({ url: `${JT_BR_PAGE}?waybillNo=${NUMBER}`,
+      html: '', tier: 3, statusCode: 200, cookies: [], capturedResponses: rows, timings: [{ reason }] }), { headers: { 'Content-Type': 'application/json' } });
+    const tracker = (fetcher: ReturnType<typeof vi.fn<typeof fetch>>) =>
+      new JAndTBrTracker({ fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null, trawl: new TrawlClient(SERVICE) });
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply([], 'jt-br-ambiguous_image'))
+      .mockResolvedValueOnce(reply([capture()], 'jt-br-reply'));
+    await expect(tracker(fetcher).fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(JSON.parse(String(fetcher.mock.calls[1]![1]!.body)).maxTimeout).toBeGreaterThanOrEqual(40000);
+    // A second refusal of the image ends the lookup as before.
+    const twice = vi.fn<typeof fetch>().mockImplementation(async () => reply([], 'jt-br-ambiguous_image'));
+    await expect(tracker(twice).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+    expect(twice).toHaveBeenCalledTimes(2);
+    // Without room for a solved run, or after a drag the puzzle refused, it asks once.
+    for (const [reason, budgetMs] of [['jt-br-ambiguous_image', 50000], ['jt-br-verification_unfinished', undefined]] as const) {
+      const once = vi.fn<typeof fetch>().mockImplementation(async () => reply([], reason));
+      await expect(tracker(once).fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+      expect(once).toHaveBeenCalledTimes(1);
+    }
+  });
   it('does not start I/O without a browser, sufficient budget or an active signal', async () => {
     await expect(new JAndTBrTracker({ env: {}, browserExecutablePath: null, recorder: NOOP_RECORDER, trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     const h = harness();
