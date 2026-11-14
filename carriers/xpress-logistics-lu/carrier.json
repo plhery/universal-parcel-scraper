@@ -1,0 +1,31 @@
+{
+  "id": "xpress-logistics-lu",
+  "displayName": "Xpress Logistics",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "LU"
+    ]
+  },
+  "brand": {
+    "color": "#bb2b2b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Luxembourg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "canaryUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

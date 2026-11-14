@@ -5,11 +5,13 @@
     "Nova Poshta",
     "Nova Post",
     "Nova Post Ukraine",
-    "Нова Пошта"
+    "Нова Пошта",
+    "New Post International MLD"
   ],
   "region": {
     "countries": [
-      "UA"
+      "UA",
+      "MD"
     ]
   },
   "brand": {

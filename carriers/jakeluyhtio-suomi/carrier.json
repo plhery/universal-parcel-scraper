@@ -1,0 +1,41 @@
+{
+  "id": "jakeluyhtio-suomi",
+  "displayName": "Jakeluyhtiö Suomi",
+  "aliases": [
+    "Jakeluyhtiö Suomi Oy"
+  ],
+  "region": {
+    "countries": [
+      "FI"
+    ]
+  },
+  "brand": {
+    "color": "#19c8f0"
+  },
+  "selectable": true,
+  "timezone": "Europe/Helsinki",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://seuranta.jakeluyhtio.fi/seuranta/{trackingNumber}",
+    "searchUrl": "https://seuranta.jakeluyhtio.fi/",
+    "canaryUrl": "https://seuranta.jakeluyhtio.fi/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "seuranta.jakeluyhtio.fi"
+      ],
+      "path": "^/(?:seuranta|uppfoljning|tracking)/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

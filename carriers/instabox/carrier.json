@@ -2,7 +2,9 @@
   "id": "instabox",
   "displayName": "Instabox",
   "aliases": [
-    "Instabox Sweden AB"
+    "Instabox Sweden AB",
+    "Instabox Norway AS",
+    "Porterbuddy"
   ],
   "region": {
     "countries": [

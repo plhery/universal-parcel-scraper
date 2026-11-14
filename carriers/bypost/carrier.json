@@ -1,0 +1,41 @@
+{
+  "id": "bypost",
+  "displayName": "Bypost",
+  "aliases": [
+    "Bypost AS"
+  ],
+  "region": {
+    "countries": [
+      "NO"
+    ]
+  },
+  "brand": {
+    "color": "#b83c3a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Oslo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://bypost.no/spor/{trackingNumber}/",
+    "searchUrl": "https://bypost.no/spor/",
+    "canaryUrl": "https://bypost.no/spor/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "bypost.no"
+      ],
+      "path": "^/spor/([A-Za-z0-9]{6,40})/?$"
+    }
+  ],
+  "detection": []
+}

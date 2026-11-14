@@ -4,6 +4,8 @@ Tracks a parcel through the recipient's complete notification link on `track.ins
 The link's verification code is an optional tracking-URL input; without it, enabled universal
 providers are asked. No phone number, email address, account or CAPTCHA is submitted.
 
+Porterbuddy, the Oslo home delivery of Instabox Norway AS, goes by Instabox here.
+
 The tracking page renders the complete parcel journey as literal React Flight records. The
 adapter parses those records without executing scripts, reads the `ParcelJourneyItems`
 component and requires the displayed parcel ID to match the request. Component ids and bundle
