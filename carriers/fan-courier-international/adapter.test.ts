@@ -71,9 +71,25 @@ describe('FAN Courier International events', () => {
     expect(parseFanCourierInternational(unread, NUMBER)).toMatchObject({ current_stage: 'accepted', last_status_text: 'The shipment is picked up' });
   });
 
-  it('falls back on the newest staged event without a headline', () => {
+  it('lets a later hub arrival lead behind the opening status, with no code or one the map does not know', () => {
+    const payload = fixture();
+    payload.history.history = payload.history.history.filter((row: { eventType: string }) => !row.eventType.startsWith('CodeChanged:'));
+    payload.history.history.push({ ...payload.history.history[0], date: '2026-01-10 08:00:00', event_date: null,
+      eventType: 'ShipmentArrivedInHub', description: 'The shipment arrived in the hub: Sample Hub', status: '' });
+    for (const code of ['Registered', 'Accepted', 'Pick up', '']) {
+      const result = parseFanCourierInternational({ ...payload, status: { ...payload.status, status: 'active', code, code_name: code } }, NUMBER);
+      expect(result, code).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'The shipment arrived in the hub: Sample Hub' });
+    }
+    // A settled status still leads.
+    expect(parseFanCourierInternational({ ...payload, status: { ...payload.status, status: 'returned', code: '' } }, NUMBER)).toMatchObject({ current_stage: 'returned' });
+  });
+
+  it('reads the newest event past the opening statuses without a headline, else the newest staged one', () => {
     const payload = fixture();
     delete payload.status;
+    // The received code and the pick-up it brings share an instant: the code leads.
+    expect(parseFanCourierInternational(payload, NUMBER)).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Received code: In Transit' });
+    payload.history.history = payload.history.history.filter((row: { eventType: string }) => !row.eventType.startsWith('CodeChanged:'));
     expect(parseFanCourierInternational(payload, NUMBER)).toMatchObject({ current_stage: 'accepted', last_status_text: 'The shipment is picked up' });
   });
 

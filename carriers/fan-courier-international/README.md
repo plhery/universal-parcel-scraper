@@ -20,8 +20,9 @@ Romanian network's AWB tracker. The adapter asks the status API behind that trac
   for a code received from the network, and is only used when an event has no epoch.
 - A received code and the status change it brings share an instant, the code first, so the
   current stage follows the reply's headline: a settled status, else its last code, else its
-  status. The status stays "active" from the pick-up through the whole transit, so behind a last
-  code the map does not know, the newest received code it does know leads.
+  status. The status stays "active" from the pick-up through the whole transit, so behind it, with
+  no code or one the map does not know, the newest event past the opening statuses leads: a hub
+  arrival or a received code the map reads.
 - Postal Ninja names these shipments "FAN Courier"; for a number of this shape that name points
   to this carrier. Royal Mail's 21-character 2D references leave the shape out.
 - A provider also reports the service as "FAN Courier (EU)", which is kept as an alias.

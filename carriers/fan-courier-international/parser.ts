@@ -67,8 +67,8 @@ const OPENING: ReadonlySet<Stage> = new Set<Stage>(['registered', 'accepted']);
 
 /**
  * The headline's stage: a settled status, else the last code received, by itself or its name, else the status.
- * Behind a last code the map does not know, an opening status ("active") stays through the transit, so the newest
- * received code the map reads leads instead.
+ * An opening status ("active") stays through the transit, so behind it, with no code or one the map does not know,
+ * the newest event past the opening statuses leads instead: a hub arrival or a received code the map reads.
  */
 function headlineStage(headline: Record<string, unknown>, events: readonly CarrierEvent[]): Stage | undefined {
   const status = clean(headline.status, 40).toLowerCase();
@@ -78,9 +78,9 @@ function headlineStage(headline: Record<string, unknown>, events: readonly Carri
   const settled = SETTLED.get(status) ?? received;
   if (settled) return settled;
   const byStatus = status ? fanCourierInternationalStage(`StatusChanged:${status}`, '') : undefined;
-  if (!code || (byStatus && !OPENING.has(byStatus))) return byStatus;
-  const known = events.find((event) => event.provider_code?.startsWith('CodeChanged:') && event.stage)?.stage as Stage | undefined;
-  return known ?? byStatus;
+  if (byStatus && !OPENING.has(byStatus)) return byStatus;
+  const later = events.find((event) => event.stage && !OPENING.has(event.stage as Stage))?.stage as Stage | undefined;
+  return later ?? byStatus;
 }
 
 /**
