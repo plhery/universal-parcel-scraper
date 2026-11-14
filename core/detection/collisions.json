@@ -1230,7 +1230,7 @@
       "yunda",
       "j-and-t-br"
     ],
-    "reason": "J&T Express Brazil's domestic waybills start 8880, and BRT and Yunda accept any fifteen digits; FedEx's fifteen-digit rule leaves the range out. Every rule is low confidence and J&T Brazil's is preferred, so the number stays a suggestion, J&T Brazil first."
+    "reason": "J&T Express Brazil's domestic waybills start 8880, and BRT and Yunda accept any fifteen digits; FedEx's fifteen-digit rule leaves the range out. Every public 8880 sample is J&T Brazil's and no other carrier's starts 8880, so J&T Brazil's high-confidence rule decides; a parcel it does not know falls back to the others."
   },
   {
     "shape": "Fifteen digits starting 36000, 31000 or 30000",
