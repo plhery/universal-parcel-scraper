@@ -36,10 +36,12 @@ clock, eight hours before iMile's instants, so a scan relayed from iMile is read
 it states. TopYou's hand-over and delivery rows on such a parcel had UTC wall clocks too, but they
 are worded as on its other lines, so they keep their reading. TopYou's own end of the
 destination's clearance ("Shipment completed the customs clearance process at destination") and
-its airline's arrival in the destination ("Airline arrived at destination country") come at times
+its post line's airline legs and clearances ("Airline arrived at destination country", "Export
+clearance success" and the like), which it states `+08:00` on other waybills, can come at times
 without an offset and are read on China's clock all the same, which the scan names: read on the
 destination's, the clearance fell after the hand-over TopYou scans next, or after the lookup that
-first found it, and the arrival came seven hours after 17TRACK's copy of it. A reply with no
+first found it, and the arrival in the destination country came after the lookup that found it,
+hours after 17TRACK's and ParcelsApp's copies of it. A reply with no
 scans and no destination is the page's "查询不到" (not found); one with a destination and no scans
 is an order announced but not received, and `success: "false"` is the page's "暂无轨迹信息" (no
 tracking yet): both are known numbers without history.

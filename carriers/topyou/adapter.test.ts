@@ -159,6 +159,17 @@ describe('TopYou HTTP adapter', () => {
         record: 'Airline arrived at destination country', status: '15' });
     });
     expect(parseTopyou(landed, IN_TRANSIT).events![0]).toMatchObject({ time: '2026-04-18T05:20:00+08:00', time_zone: 'Asia/Shanghai' });
+    // And its post line's legs and clearances: read on the destination's clock, the arrival came after the lookup that found it.
+    const posted = changed('in-transit', (track) => {
+      const last = track.trackInfo!.at(-1)!;
+      track.trackInfo!.push(...['Airline arrived at transit country or district.', 'Airline departed from transit or district country.',
+        'Export clearance success', 'Arrive at destination country'].map((record, index) =>
+        ({ ...last, id: `90002${index}`, changeDate: `2026/04/${18 + index} 10:41:38`, timeZone: null, location: null, record, status: '15' })));
+    });
+    expect(scans(parseTopyou(posted, IN_TRANSIT)).slice(0, 4).map(([time]) => time)).toEqual(
+      ['2026-04-21T10:41:38+08:00', '2026-04-20T10:41:38+08:00', '2026-04-19T10:41:38+08:00', '2026-04-18T10:41:38+08:00']);
+    expect(parseTopyou(posted, IN_TRANSIT).events!.slice(0, 4).every((event) => event.time_zone === 'Asia/Shanghai'
+      && event.time_zone_basis === 'carrier')).toBe(true);
     // The delivery carrier's scans without an offset keep their wall clock.
     const relayed = changed('in-transit', (track) => {
       track.trackInfo!.push({ ...track.trackInfo!.at(-1)!, id: '900010', changeDate: '2026/04/18 08:00:00', timeZone: null, record: 'Arrived at USPS Regional Facility', status: '15' });

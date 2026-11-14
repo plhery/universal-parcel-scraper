@@ -37,10 +37,15 @@ function text(row: Record<string, unknown>, key: string, maxLength = 300): strin
 const OWN_OFFSET = '+08:00';
 // TopYou's own lines that come at times without an offset, on China's clock all the same. Its end of
 // the destination's clearance, read on the destination's, fell after TopYou's hand-over to the
-// delivery carrier that follows it, or after the lookup that first found it. 17TRACK's copy of its
-// airline's arrival in the destination has the instant of its digits on China's clock: read on the
-// destination's, it came seven hours late.
-const OWN_WITHOUT_OFFSET = /^(?:shipment completed the customs clearance process at destination|airline arrived at destination country\.?)$/i;
+// delivery carrier that follows it, or after the lookup that first found it. Its post line's airline
+// legs and clearances, which it states +08:00 on other waybills, come without an offset on some: read
+// on the destination's clock, the arrival in the destination country came six hours after the lookup
+// that found it, and 17TRACK's and ParcelsApp's copies have the instants of their digits on China's.
+const OWN_WITHOUT_OFFSET = new RegExp(`^(?:${[
+  'shipment completed the customs clearance process at destination',
+  'airline arrived at (?:destination|transit) country(?: or district)?', 'airline departed from transit or district country',
+  'export clearance success', 'arrive at destination country',
+].join('|')})\\.?$`, 'i');
 const OWN_ZONE = 'Asia/Shanghai';
 
 /**
