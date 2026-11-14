@@ -1103,6 +1103,8 @@ describe('classifyWording', () => {
       ['Item lodged', 'accepted'], ['Landed in Sample Country', 'in_transit'], ['Landed in', 'in_transit'],
       // Its sender's lodgement, and its approval of the shipping information.
       ['Lodged by Sender', 'accepted'], ['Shipping information approved by Australia Post', 'registered'],
+      // Its record of the post abroad accepting an item bound for Australia.
+      ['Received item from Sender (Outbound)', 'accepted'],
       // A hub identifying a parcel as bulky, at the second it receives it.
       ['INFORMATION. PARCEL IDENTIFIED AS BULKY GOOD (ESI)', 'in_transit'], ['Information. Parcel identified as bulky good', 'in_transit'],
       ['Tracking number changed, Carrier note: Package relabeled', 'in_transit'],
