@@ -7,7 +7,7 @@ const STAGES: Readonly<Record<string, Stage>> = {
   OriginalWarehouseProcess: 'in_transit', OriginalWarehouseDeparture: 'in_transit',
   LinehaulAgencyReceive: 'in_transit', LinehaulAgencyDeparture: 'in_transit', LinehaulDeparture: 'in_transit',
   LinehaulArrival: 'in_transit', CustomsCleared: 'in_transit', SupplierAndLastMileReceive: 'in_transit',
-  LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDeliveryReady: 'out_for_delivery',
+  LastMileWarehouseReceive: 'in_transit', LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDeliveryReady: 'out_for_delivery',
   LastMileDeliveryFailed: 'failed_attempt', LastMileDeliveryTried: 'failed_attempt', LastMileWaitForCollection: 'ready_for_pickup',
   LastMileDelivered: 'delivered',
 };
@@ -17,6 +17,8 @@ const STAGES: Readonly<Record<string, Stage>> = {
 // Null marks a line that moves nothing.
 const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>([
   ['in processing at transit facility.', 'in_transit'],
+  // A US partner's departure from its destination hub, before its warehouse receives the parcel (LastMileWarehouseReceive).
+  ['departed destination hub', 'in_transit'],
   // The same partner's departure from its facility and its local facility's receipt before the delivery run.
   ['parcel departed from facility.', 'in_transit'],
   ['parcel received by local facility.', 'in_transit'],

@@ -17,6 +17,7 @@
     {"wording": "Parcel delivery failed [Wrong Address]. Parcel will be returned to the warehouse.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-31", "note": "The same failed delivery back to YWE's warehouse, worded as failed, such as for a rejected parcel; the parcel goes out for delivery again. Other reasons take the bracket's place."},
     {"wording": "Return to sender", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24", "note": "The return starts; it has not reached the sender."},
     {"wording": "Returned to sender, shipment has been received in sender warehouse.", "stage": "returned", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-24"},
-    {"wording": "Parcel departed from Transit Facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Leaving a hub on the way, between its receipt there and the move to the next facility."}
+    {"wording": "Parcel departed from Transit Facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-04", "note": "Leaving a hub on the way, between its receipt there and the move to the next facility."},
+    {"wording": "In transit - departure", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "A departure from the transit facility that received the parcel, before the delivery station."}
   ]
 }

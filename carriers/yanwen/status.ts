@@ -82,6 +82,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Your shipment has arrived at the transit destination', { status: 'in_transit', stage: 'in_transit' }],
   ['Parcel dispatched to be delivered', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Your shipment is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  ['Your shipment delivery attempt failed [Recipient not at home]', { status: 'exception', stage: 'failed_attempt' }],
   // Nova Poshta's leg in Ukraine, from the flight out of Hong Kong through customs at the border
   // to its branch, relayed in Yanwen's English. Customs holds the parcel at its terminal until the
   // clearance.

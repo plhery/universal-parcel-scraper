@@ -178,6 +178,23 @@
       "note": "DHL's delivery round, relayed without a code."
     },
     {
+      "wording": "Departed Destination Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "A US last-mile partner's departure from its destination hub, relayed without a code, after its origin hub's receipt and before its warehouse's."
+    },
+    {
+      "code": "LastMileWarehouseReceive",
+      "wording": "Arrived At Warehouse",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "The last-mile partner's warehouse receiving the parcel, after its departure from the destination hub: still on its way to delivery."
+    },
+    {
       "code": "LastMileInTransit",
       "wording": "In transit along Poste Italiane’s logistic network",
       "language": "en",

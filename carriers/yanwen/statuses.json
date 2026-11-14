@@ -495,6 +495,14 @@
       "note": "The partner's delivery round, at the town it delivers in, after its acceptance by the delivery carrier; Yanwen's coded copy of the same scan is its out-for-delivery code."
     },
     {
+      "wording": "Your shipment delivery attempt failed [Recipient not at home]",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "The partner's missed delivery, minutes after its delivery round; Yanwen's coded copy of the same scan is GTMS_DEL_FAILURE, and a new round followed."
+    },
+    {
       "wording": "UA.In the New Post Office",
       "language": "en",
       "stage": "ready_for_pickup",
