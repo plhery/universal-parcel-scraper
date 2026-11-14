@@ -12,10 +12,13 @@ import { classifyCttExpressStatus } from './status.js';
 /** A reply that carries an error in place of the shipment. */
 export class CttExpressErrorReply extends IndeterminateError {}
 
-/** CTT's description of an error reply, as its tracking page shows it, without digits or addresses that could name a parcel or a person. */
+/**
+ * CTT's description of an error reply, as its tracking page shows it, without digits or addresses
+ * that could name a parcel or a person. Digits printed in groups ("612 34 56 78") are one run.
+ */
 function errorDescription(error: unknown): string {
   const text = typeof error === 'string' ? error : isRecord(error) ? error.errorDescription ?? error.message : '';
-  return clean(text, 80).replace(/\S+@\S+/g, '…').replace(/\d{4,}/g, '…');
+  return clean(text, 80).replace(/\S+@\S+/g, '…').replace(/\+?\d(?:[\s./-]?\d){3,}/g, '…');
 }
 
 export function normalizeCttExpressNumber(raw: string): string {

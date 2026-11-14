@@ -76,6 +76,8 @@ describe('CTT Express direct tracking', () => {
     await expect(new CttExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate',
       message: 'CTT Express returned an inconclusive tracking response (Envío … no disponible: …)' });
     expect(fetcher).toHaveBeenCalledTimes(1);
+    const grouped = { data: null, error: { errorDescription: 'Error 500: llame al +34 612 34 56 78 o 612.345.678' } };
+    expect(() => parseCttExpress(grouped, NUMBER)).toThrowError('CTT Express returned an inconclusive tracking response (Error 500: llame al … o …)');
   });
 
   it.each([
