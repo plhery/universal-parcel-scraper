@@ -78,9 +78,28 @@ describe('locatePlace', () => {
     // With no country written, a state of the country the parcel is in; nothing else tells.
     expect(place('QZXVILLE, AZ', ['US'])).toMatchObject({ country: 'US', precision: 'country', region: 'AZ' });
     expect(place('QZXVILLE, AZ')).toBeNull();
-    // A state's code that is also a country's stays ambiguous on a parcel that may be outside the US.
-    expect(place('QZXVILLE, AZ', ['US', 'CN'])).toBeNull();
+    // A state's code that is also a country's names the state where the parcel is not in that country,
+    // in Canada and Mexico too, and stays ambiguous where it may be.
+    expect(place('QZXVILLE, AZ', ['US', 'CN'])).toMatchObject({ country: 'US', precision: 'country', region: 'AZ' });
+    expect(place('QZXVILLE, CO', ['US', 'CA', 'MX'])).toMatchObject({ country: 'US', precision: 'country', region: 'CO' });
+    expect(place('QZXVILLE, PE', ['US', 'CA', 'MX'])).toMatchObject({ country: 'CA', precision: 'country', region: 'PE' });
+    expect(place('QZXVILLE, AZ', ['US', 'AZ'])).toBeNull();
+    expect(place('QZXVILLE, CA', ['US', 'CA', 'MX'])).toBeNull();
     expect(place('QZXVILLE, TX', ['US', 'CN'])).toMatchObject({ country: 'US', region: 'TX' });
+  });
+
+  it("reads a town it does not know before a code that is also the parcel's country as the state, where the scans write states", () => {
+    const at = (locations: string[], carrier = 'tforce-freight') => placesForEvents(locations, { carriers: [carrier] })
+      .map((found) => found && [found.country, found.region ?? found.name]);
+    // TForce Freight serves the US, Canada and Mexico: "CA" alone after a town may be Canada.
+    expect(at(['QZXVILLE, CA'])).toEqual([null]);
+    // Beside a scan that writes its town's state or province, it is California.
+    expect(at(['DENVER, CO', 'QZXVILLE, CA'])).toEqual([['US', 'Denver'], ['US', 'CA']]);
+    expect(at(['QZXVILLE, OH', 'QZXVILLE, CA'])).toEqual([['US', 'OH'], ['US', 'CA']]);
+    expect(at(['OTTAWA, ON', 'QZXVILLE, CA'])).toEqual([['CA', 'Ottawa'], ['US', 'CA']]);
+    // Not where another scan places a town in Canada by the country's code: that carrier writes countries.
+    expect(at(['TORONTO, CA', 'DENVER, CO', 'QZXVILLE, CA'])).toEqual([['CA', 'Toronto'], ['US', 'Denver'], null]);
+    expect(at(['TORONTO, CA', 'QZXVILLE, CA'])).toEqual([['CA', 'Toronto'], null]);
   });
 
   it('reads a US state alone as the state on a parcel in the US alone', () => {

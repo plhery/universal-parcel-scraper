@@ -95,7 +95,10 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
 - A state, province or canton written after the town holds: "Earth City, MO" is not Earth
   in Texas. After a town the reader does not know, the place is the state's country with the
   code in `region` ("EXAMPLE TOWN, AZ, US", or "EXAMPLE TOWN, AZ" on a parcel in the US), so
-  the scan keeps the state's clock.
+  the scan keeps the state's clock. A code that is also a country's names the state unless the
+  parcel may be in that country: "EXAMPLE TOWN, CO" on a parcel in the US, Canada or Mexico is in
+  Colorado. "EXAMPLE TOWN, CA" there is in California when the parcel's other scans write their
+  towns' states ("DENVER, CO", "OTTAWA, ON") and none places a town in Canada by the country's code.
 - A state or province written alone by its code ("WA", "VIC, AU", "SA AUSTRALIA") is in the
   first country the parcel is likely in that has it, before the country, town or airport its
   letters also name (Saudi Arabia, Vic in Spain, Tashkent). The place is that country's and `region` holds the

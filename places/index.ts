@@ -1131,7 +1131,8 @@ function stateCountry(data: Gazetteer, code: string, context: readonly string[])
 /**
  * The state or province written after a town the reader does not know: of the country the text
  * names ("EXAMPLE TOWN, AZ, US", "EXAMPLE TOWN, BC, CA"), else of one the parcel is in
- * ("EXAMPLE TOWN, AZ" in the US). A code that is also a country the parcel may be in is not one.
+ * ("EXAMPLE TOWN, AZ" in the US, or in the US, Canada and Mexico). A code that is also a country
+ * the parcel may be in is not one; one that is a country it is not in, as Azerbaijan's, is.
  */
 function statedRegion(data: Gazetteer, stated: readonly string[], country: string | null, context: readonly string[]): { country: string; code: string } | null {
   const last = stated.at(-1);
@@ -1140,8 +1141,37 @@ function statedRegion(data: Gazetteer, stated: readonly string[], country: strin
     const code = [...stated].reverse().find((other) => other !== owner && ADMIN_CODES[owner]?.[other]);
     return code ? { country: owner, code } : null;
   }
-  const found = last && !context.includes(last) ? stateCountry(data, last, context) : undefined;
+  const found = last && !context.includes(last) ? context.find((other) => ADMIN_CODES[other]?.[last]) : undefined;
   return found ? { country: found, code: last! } : null;
+}
+
+/** The code after the last comma of a place, "EXAMPLE TOWN, CA": a state's, a province's or a country's. */
+const commaCode = (location: string | null | undefined): string | undefined => /,\s*([A-Z]{2})$/.exec(location?.trim() ?? '')?.[1];
+
+/**
+ * Whether a scan's place writes its town's state or province after it: "DENVER, CO" or
+ * "EXAMPLE TOWN, OH" in the US, "EXAMPLE TOWN, ON" in Canada, not "TORONTO, CA".
+ */
+function writesState(location: string | null | undefined, found: Located | null): boolean {
+  const code = commaCode(location);
+  return Boolean(code && found && found.place.country !== code && ADMIN_CODES[found.place.country]?.[code]
+    && (found.place.precision === 'city' || found.place.region === code));
+}
+
+/**
+ * A town the reader does not know before a code that is both a country the parcel may be in and a
+ * state or province of another ("EXAMPLE TOWN, CA" on a parcel in the US or Canada), on a parcel
+ * whose scans write their towns' states: the state, unless another scan places a town in that
+ * country without its province ("TORONTO, CA").
+ */
+function writtenState(index: number, locations: readonly (string | null | undefined)[], found: readonly (Located | null)[], base: readonly string[]): Located | null {
+  const code = commaCode(locations[index]);
+  const own = found[index];
+  if (!code || !base.includes(code) || (own && (own.place.precision !== 'country' || own.place.region || own.place.country !== code))) return null;
+  if (found.some((other, at) => at !== index && other?.place.country === code && !writesState(locations[at], other))) return null;
+  const owner = base.find((other) => other !== code && ADMIN_CODES[other]?.[code]);
+  const inState = owner ? countryPlace(gazetteer(), owner, true) : null;
+  return inState && { ...inState, place: { ...inState.place, region: code } };
 }
 
 function countryPlace(data: Gazetteer, country: string, text: boolean): Located | null {
@@ -1497,7 +1527,12 @@ export function placesForEvents(
     return countryCoded && code && found?.place.region && found.place.country !== code && !codes.includes(found.place.country)
       ? countryPlace(gazetteer(), code, true) ?? found : found;
   };
-  const looked = read.map(coded);
+  const codedPlaces = read.map(coded);
+  // A carrier that writes its towns' states after them ("DENVER, CO") writes them all so: an unknown town
+  // "EXAMPLE TOWN, CA" beside it is in California, though the parcel may be in Canada too.
+  const statesWritten = codedPlaces.some((found, index) => writesState(locations[index], found));
+  const looked = statesWritten
+    ? codedPlaces.map((found, index) => writtenState(index, locations, codedPlaces, base) ?? found) : codedPlaces;
   // A carrier can place some scans of an office and not others: they all share it.
   const pointAt = new Map<string, EventPoint>();
   locations.forEach((location, index) => {

@@ -282,6 +282,18 @@ describe('dateLocalClocks', () => {
       .toEqual(['2026-03-02T11:00:00-05:00', 'America/New_York', 'destination']);
   });
 
+  it('reads a town it does not know on its state’s clock when the state’s code is also a country’s', () => {
+    const scan = { local_time: '2026-03-02T11:00:00', description: 'Arrived at terminal' };
+    const zones = (...locations: string[]) => dateLocalClocks('tforce-freight', { events: locations.map((location) => ({ ...scan, location })) })
+      .events!.map((event) => `${event.time_zone} ${event.time_zone_basis}`);
+    // TForce Freight serves the US, Canada and Mexico, none of them Colombia or Azerbaijan.
+    expect(zones('QZXVILLE, CO')).toEqual(['America/Denver place']);
+    expect(zones('QZXVILLE, AZ')).toEqual(['America/Phoenix place']);
+    // "CA" may be Canada, unless the other scans write their towns' states: then it is California, before the scan beside it.
+    expect(zones('QZXVILLE, CA')).toEqual(['America/New_York carrier']);
+    expect(zones('QZXVILLE, CA', 'DENVER, CO')).toEqual(['America/Los_Angeles place', 'America/Denver place']);
+  });
+
   it('gives a carrier’s home clock: the zone its result declares, its catalog zone, or with UTC there its first country’s', () => {
     expect(carrierHomeZone('seur')).toBe('Europe/Madrid');
     expect(carrierHomeZone('usps')).toBe('America/New_York');
