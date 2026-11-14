@@ -41,6 +41,14 @@
       "note": "Handed to the delivering carrier, such as FedEx, after the clearance. It is not the first acceptance."
     },
     {
+      "wording": "It has been transferred to the provider",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "Handed to the delivering carrier on the air line to Spain, after the transport from the Netherlands. It is not the first acceptance."
+    },
+    {
       "wording": "On the way",
       "language": "en",
       "stage": "in_transit",
