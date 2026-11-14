@@ -95,6 +95,22 @@
       "firstSeen": "2026-09-28"
     },
     {
+      "wording": "Delivery interrupted due to unforeseen circumstances",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-12",
+      "note": "The postman's round stopped before it reached the item, on bpost's side; a new delivery day follows."
+    },
+    {
+      "wording": "New delivery scheduled",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The next delivery day set after an interrupted round: the item waits for it."
+    },
+    {
       "wording": "Your shipment has arrived at the postal operator of the country of destination and will be delivered in the coming days",
       "language": "en",
       "stage": "in_transit",

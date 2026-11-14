@@ -281,4 +281,19 @@ describe('HuaHan status map', () => {
       expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
     }
   });
+
+  it('reads Landmark Global\'s relayed depot scans by their words, its departure under CB as transit', () => {
+    for (const [code, description, stage] of [
+      [null, 'Shipment Data Uploaded', 'registered'],
+      [null, 'Processed', 'in_transit'],
+      ['CA', 'Incoming scan at facility', 'in_transit'],
+      // HuaHan puts its out-for-delivery code on the depot's departure, days before a round.
+      ['CB', 'Outgoing scan at facility', 'in_transit'],
+      ['ND', 'Out for delivery (On the way)', 'out_for_delivery'],
+      [null, 'Delivery attempt (Delivery not possible)', 'failed_attempt'],
+    ] as const) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
+      expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
+    }
+  });
 });

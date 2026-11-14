@@ -39,7 +39,8 @@ to the destination carrier's scans.
   vocabulary reads them; its receipt after HuaHan's own acceptance is the hand-over, in transit.
 - USPS's facility scans come under `ND` and are read by their words. HuaHan also puts its
   out-for-delivery code `CB` on USPS's departure from a distribution centre, so under `CB`,
-  `PB` and `CC` the words decide when the map knows them and the code otherwise. USPS's
+  `PB` and `CC` the words decide when the map knows them and the code otherwise. It puts `CB`
+  on Landmark Global's depot departure too, days before bpost's delivery round. USPS's
   pre-advice and DHL's record of the sender's data, written while HuaHan still has the parcel,
   are registered.
 

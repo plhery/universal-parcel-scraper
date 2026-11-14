@@ -53,6 +53,15 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['delivery attempted', 'failed_attempt'],
   ['delivery attempted, unfortunately we have not been able to deliver your parcel. pickup parcelshop delivery after first delivery attempt.', 'failed_attempt'],
   ['awaiting pickup, parcel was deposited in pickup parcel station', 'ready_for_pickup'],
+  // Landmark Global's scans on the line to bpost: its record of the sender's data, then its
+  // depot's scans after the hand-off. The outgoing scan, which HuaHan puts under CB, sends the
+  // parcel on to the destination network days before a delivery round.
+  ['shipment data uploaded', 'registered'],
+  ['processed', 'in_transit'],
+  ['incoming scan at facility', 'in_transit'],
+  ['outgoing scan at facility', 'in_transit'],
+  ['out for delivery (on the way)', 'out_for_delivery'],
+  ['delivery attempt (delivery not possible)', 'failed_attempt'],
   // HuaHan's transfer warehouse in Chinese, and an American partner's scans it relays, written
   // ahead while the parcel is still in China: a hand-off to come, not the parcel's acceptance.
   ['货物离开操作中心', 'in_transit'],
