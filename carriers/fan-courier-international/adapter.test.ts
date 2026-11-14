@@ -43,6 +43,17 @@ describe('FAN Courier International events', () => {
     expect(result.events?.[0]).not.toHaveProperty('time');
   });
 
+  it('reads a code that comes by its abbreviation, in the headline and the events', () => {
+    const payload = fixture();
+    payload.status = { ...payload.status, code: 'ADH', code_name: 'Arrived at Delivery Hub' };
+    payload.history.history.push({ ...payload.history.history[3], date: '2026-01-10 08:00:00', event_date: null,
+      eventType: 'CodeChanged:ADH', description: 'Received code: Arrived at Delivery Hub', status: '' });
+    const result = parseFanCourierInternational(payload, NUMBER);
+    expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Received code: Arrived at Delivery Hub' });
+    expect(result.events?.[0]).toMatchObject({ provider_code: 'CodeChanged:ADH', stage: 'in_transit' });
+    expect(fanCourierInternationalStage('CodeChanged:XYZ', 'Received code: Arrived at Delivery Hub')).toBe('in_transit');
+  });
+
   it('falls back on the newest staged event without a headline', () => {
     const payload = fixture();
     delete payload.status;

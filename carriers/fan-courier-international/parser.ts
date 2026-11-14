@@ -62,11 +62,12 @@ export function readFanCourierInternationalRefusal(payload: unknown, raw: string
   throw new NotFoundError(PROVIDER);
 }
 
-/** The headline's stage: a settled status, else the last code received, else the status. */
+/** The headline's stage: a settled status, else the last code received, by itself or its name, else the status. */
 function headlineStage(headline: Record<string, unknown>): Stage | undefined {
   const status = clean(headline.status, 40).toLowerCase();
   const code = clean(headline.code, 80);
-  return SETTLED.get(status) ?? (code ? fanCourierInternationalStage(`CodeChanged:${code}`, '') : undefined)
+  const name = clean(headline.code_name, 80);
+  return SETTLED.get(status) ?? (code ? fanCourierInternationalStage(`CodeChanged:${code}`, name ? `Received code: ${name}` : '') : undefined)
     ?? (status ? fanCourierInternationalStage(`StatusChanged:${status}`, '') : undefined);
 }
 

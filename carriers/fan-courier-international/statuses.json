@@ -27,6 +27,15 @@
       "firstSeen": "2026-11-14"
     },
     {
+      "code": "CodeChanged:ADH",
+      "wording": "Received code: Arrived at Delivery Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "At the hub that delivers it, the round to come; the code comes by its abbreviation."
+    },
+    {
       "code": "StatusChanged:active",
       "wording": "The shipment is picked up",
       "language": "en",

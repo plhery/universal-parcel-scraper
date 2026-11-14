@@ -22,6 +22,8 @@ const CODES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['StatusChanged:canceled', 'exception'],
   ['StatusChanged:exception', 'exception'],
   ['CodeChanged:In Transit', 'in_transit'],
+  // Some codes come by their abbreviation: ADH, "Arrived at Delivery Hub", at the hub that delivers it.
+  ['CodeChanged:ADH', 'in_transit'],
   ['CodeChanged:Delivery attempt', 'failed_attempt'],
   // A later delivery agreed with the recipient.
   ['CodeChanged:Postponed delivery', 'failed_attempt'],
@@ -43,6 +45,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['the shipment is picked up', 'accepted'],
   ['the shipment has been picked up', 'accepted'],
   ['received code: in transit', 'in_transit'],
+  ['received code: arrived at delivery hub', 'in_transit'],
   ['the shipment has been delivered', 'delivered'],
   ['delivery attempt failed', 'failed_attempt'],
   ['received code: delivery attempt', 'failed_attempt'],
