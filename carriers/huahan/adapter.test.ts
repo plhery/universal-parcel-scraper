@@ -124,6 +124,23 @@ describe('HuaHan guest tracking', () => {
     expect(several.events!.every(event => !event.time)).toBe(true);
   });
 
+  it('reads CTT Express\'s relayed notice of the parcel coming on Madrid\'s clock, before the hand-off', () => {
+    const notice = fixture();
+    Object.assign(notice.data[0]!, { Status: 'Departed from origin facility', Local_Carrier: 'CTT Express', Country_code: 'ES' });
+    notice.data[0]!.Detail = [
+      { Occur_date: '2026-01-03 04:20:23', Status: 'DF', Comment: 'Departed from origin facility', track_area: 'SHENZHEN' },
+      { Occur_date: '2026-01-02 04:47:04', Status: 'AF', Comment: 'Arrived at origin facility', track_area: 'SHENZHEN' },
+      { Occur_date: '2026-01-01 21:51:00', Status: '', Comment: 'Pendiente de recepción en CTT Express', track_area: '' },
+      { Occur_date: '2026-01-01 14:51:15', Status: 'IR', Comment: 'Shipment information received', track_area: '' },
+    ];
+    const events = parseHuahan(notice, NUMBER).events!;
+    expect(events[2]).toMatchObject({ local_time: '2026-01-01T21:51:00', time: '2026-01-01T21:51:00+01:00',
+      time_zone: 'Europe/Madrid', time_zone_basis: 'carrier', stage: 'registered' });
+    expect(events.filter(event => event.time)).toHaveLength(1);
+    notice.data[0]!.Detail = notice.data[0]!.Detail.slice(2);
+    expect(parseHuahan(notice, NUMBER)).toMatchObject({ last_update: '2026-01-01T21:51:00+01:00', current_stage: 'registered' });
+  });
+
   it('reads the flight, clearance and destination milestones by their codes', () => {
     const journey = fixture();
     journey.data[0]!.Detail = [

@@ -25,7 +25,9 @@ to the destination carrier's scans.
   destination carrier's scans on that carrier's clock, cut to the minute: a French history
   matched its partner's own tracker in French time. A destination country of one zone
   places those scans. HuaHan's own scans, in China and at the destination airport, stay
-  local times.
+  local times. CTT Express's notice of the parcel coming (`Pendiente de recepción en CTT
+  Express`), relayed before the hand-off, is on CTT Express's own clock, Madrid's: read so, it
+  falls minutes after HuaHan's arrival scan in China, and hours before it on China's clock.
 - The reply can list a destination carrier's scan twice at the same minute: in that carrier's
   words at its place, and in HuaHan's generic words without one. The placed line stays, with
   the generic line's code when it came without one, so it keeps the code's stage.
