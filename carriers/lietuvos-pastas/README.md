@@ -1,7 +1,9 @@
 # Lietuvos paštas
 
 Tracks Lietuvos paštas items and LP Express parcels through the self-service API behind LP
-Express's tracking page.
+Express's tracking page. LP Express runs its parcel lockers in Latvia and Estonia under the Unisend
+brand, which its rows name for lockers in Lithuania too, so Unisend is an alias. Unisend's own
+Latvian and Estonian sites put a script check in front of every page.
 
 ## How it works
 

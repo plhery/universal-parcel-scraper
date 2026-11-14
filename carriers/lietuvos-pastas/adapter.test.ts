@@ -6,6 +6,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { universalCarrierHints } from '../../providers/shared/hints.js';
 import { adapter, lietuvosPastasUrl, LietuvosPastasTracker } from './adapter.js';
 import { parseLietuvosPastas } from './parser.js';
 import { lietuvosPastasCodeStage, statusMap } from './status.js';
@@ -305,5 +306,10 @@ describe('Lietuvos paštas status vocabulary', () => {
     // A type the map leaves open takes a stage from wording that says enough, as the parser does.
     expect(statusMapAnswer({ carrier: 'lietuvos-pastas', providerCode: 'DELIVERY_HOLDING', description: 'Return to sender' }))
       .toEqual({ kind: 'mapped', stage: 'exception' });
+  });
+
+  it('reads Unisend, LP Express\'s brand in Latvia and Estonia, as Lietuvos paštas', () => {
+    expect(universalCarrierHints(['Unisend'], 'CC999999999LT').discovered_carrier).toBe('lietuvos-pastas');
+    expect(universalCarrierHints(['UNISEND'], 'CC999999999LT').discovered_carrier).toBe('lietuvos-pastas');
   });
 });

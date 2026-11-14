@@ -31840,7 +31840,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Lietuvos pastas",
       "LP Express",
       "Lithuanian Post",
-      "Lithuania Post"
+      "Lithuania Post",
+      "Unisend"
     ],
     "countries": [
       "LT"
