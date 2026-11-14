@@ -53,6 +53,20 @@ export function jAndTAuRelayedStage(wording: string): Stage | undefined {
   return stage === 'accepted' ? 'in_transit' : stage;
 }
 
+// The map's sentences other carriers write too: alone, they do not say J&T Australia has the parcel.
+const SHARED_WORDINGS: ReadonlySet<string> = new Set(['Your parcel is out for delivery.', 'Your parcel has been delivered.'].map(key));
+
+/**
+ * Whether a forwarder's history relays J&T Australia's scans: one of them is in its own words,
+ * not only in a sentence other carriers write too ("Your parcel has been delivered.").
+ */
+export function relaysJAndTAu(wordings: readonly string[]): boolean {
+  return wordings.some((wording) => {
+    const mapped = key(wording.replace(J_AND_T_AU_HOTLINE, '.'));
+    return WORDINGS.has(mapped) && !SHARED_WORDINGS.has(mapped);
+  });
+}
+
 export const statusMap: CarrierStatusMap = {
   stage: (_code, wording) => jAndTAuMappedStage(wording),
   gaps: [],

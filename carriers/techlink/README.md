@@ -29,8 +29,9 @@ ships some of its parcels on Techlink's line. Tracked through the lookup its tra
   brackets (`【…】Received.`): read on the destination's clock, one came hours after the lookup
   that returned it. J&T Express Australia's scans of a parcel bound for Australia are on
   Sydney's clock whatever state the depot is in: J&T's own instants for them are those wall
-  clocks at Sydney's offset, an hour more than a Queensland depot keeps in summer. Any other
-  scan keeps `local_time`.
+  clocks at Sydney's offset, an hour more than a Queensland depot keeps in summer. A history
+  needs one of J&T's own sentences for that: "Your parcel has been delivered." alone is any
+  carrier's. Any other scan keeps `local_time`.
 - The last-mile number is returned as `delivery_tracking_number` with the destination country.
   The reply does not name the carrier; the shared hand-off proposes the destination's post or
   the carrier whose numbers have that shape.

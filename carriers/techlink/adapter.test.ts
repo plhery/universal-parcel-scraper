@@ -98,8 +98,9 @@ describe('Techlink HTTP adapter', () => {
     expect(newest('AU', pickup)).toMatchObject({ time: '2026-01-09T15:31:05+11:00', local_time: '2026-01-09T15:31:05', time_zone: 'Australia/Sydney',
       time_zone_basis: 'carrier', location: 'QLD,EXAMPLE,EXA.01', stage: 'in_transit', stage_source: 'carrier_map' });
     expect(newest('AU', 'The parcel is dispatched from the transit center to the next destination')).toMatchObject({ time: '2026-01-09T15:31:05+11:00' });
-    // Another partner's scan there, and J&T's words in a parcel bound elsewhere, keep their wall clock.
-    for (const event of [newest('AU', 'Synthetic partner scan'), newest('PL', pickup)]) {
+    // Another partner's scan there, J&T's words in a parcel bound elsewhere, and a sentence other carriers write too
+    // in a history with none of J&T's own, keep their wall clock.
+    for (const event of [newest('AU', 'Synthetic partner scan'), newest('PL', pickup), newest('AU', 'Your parcel has been delivered.')]) {
       expect(event).toMatchObject({ local_time: '2026-01-09T15:31:05' });
       expect(event.time).toBeUndefined();
     }

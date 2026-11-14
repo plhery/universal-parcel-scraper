@@ -16,7 +16,7 @@ import { isRecord } from '../../core/types.js';
 import { airportTimeZone } from '../../places/index.js';
 import { hasSeveralClocks, keepsZone, mainZone } from '../../places/zones.js';
 import { chinaPostAirline, chinaPostDestinationScan } from '../china-post/status.js';
-import { jAndTAuRelayedStage } from '../j-and-t-au/status.js';
+import { jAndTAuRelayedStage, relaysJAndTAu } from '../j-and-t-au/status.js';
 import { YUNEXPRESS_ORIGIN_ZONE as ORIGIN_ZONE, yunExpressOriginLeg } from './clock.js';
 import { chinaPostOffice, chinaPostRelayEnglish, isYunExpressNotice, withoutMarkup, withoutRepeatedParts, yunExpressCodeStatus, yunExpressStatus } from './status.js';
 
@@ -155,10 +155,11 @@ const SYDNEY = 'Australia/Sydney';
  * clock whatever state the depot is in: the latest-scan record states
  * Sydney's summer offset for one at a Brisbane depot, which keeps an hour
  * less, and J&T's own instants for the scans Techlink relays are those wall
- * clocks at it.
+ * clocks at it. A history whose scans read only as other carriers' do too
+ * ("Your parcel has been delivered.") is not J&T's.
  */
 function dateJAndTAuScans(events: CarrierEvent[], country: string): CarrierEvent[] {
-  if (country !== 'AU') return events;
+  if (country !== 'AU' || !relaysJAndTAu(events.map((event) => event.description ?? ''))) return events;
   return events.map((event) => {
     if (event.time || !event.local_time || !jAndTAuRelayedStage(event.description ?? '')) return event;
     const time = firstOccurrence(DateTime.fromISO(event.local_time, { zone: SYDNEY })).toISO({ suppressMilliseconds: true });

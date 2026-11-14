@@ -328,7 +328,16 @@ describe('YunExpress captured response projection', () => {
     // Sydney's summer offset, an hour more than Brisbane keeps.
     expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+11:00', local_time: '2026-03-19T13:39:00',
       time_zone: 'Australia/Sydney', time_zone_basis: 'carrier', location: 'BRISBANE-HUB' });
+    // So does its delivery, in a sentence other carriers write too.
+    row.ProcessContent = 'Your parcel has been delivered.----BRISBANE-HUB';
+    const rows = payload.ResultList[0].TrackData.ProcessGroupList.flatMap((group: { ProcessDetailList: { ProcessContent: string }[] }) => group.ProcessDetailList);
+    rows[2].ProcessContent = 'The parcel is dispatched from the transit center to the next destination----BRISBANE-HUB';
+    expect(parse(payload, NUMBER).events?.[1]).toMatchObject({ time: '2026-03-19T13:39:00+11:00', time_zone: 'Australia/Sydney' });
+    // Alone, that sentence is any carrier's, which keeps its wall clock.
+    rows[2].ProcessContent = 'Arrived at sort facility----BRISBANE-HUB';
+    expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
     // Bound elsewhere, J&T's words keep their wall clock for the facade.
+    row.ProcessContent = 'The parcel arrives at the distribution center and is prepared for transport to the next destination.----BRISBANE-HUB';
     payload.ResultList[0].TrackInfo.DestinationCountryCode = 'GB';
     expect(parse(payload, NUMBER).events?.[1]!.time).toBeUndefined();
   });

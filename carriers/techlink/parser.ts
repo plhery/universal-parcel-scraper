@@ -5,7 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { jAndTAuRelayedStage } from '../j-and-t-au/status.js';
+import { jAndTAuRelayedStage, relaysJAndTAu } from '../j-and-t-au/status.js';
 import { techlinkStage } from './status.js';
 
 export const PROVIDER = 'Techlink';
@@ -68,9 +68,11 @@ function place(location: string): string {
  * J&T Express Australia's scans of a parcel bound for Australia are on
  * Sydney's clock, whatever state the depot is in: J&T's own instants for them
  * are those wall clocks at Sydney's offset, where a Queensland depot keeps an
- * hour less in summer. A scan anywhere else keeps its wall clock.
+ * hour less in summer. A history whose scans read only as other carriers' do
+ * too ("Your parcel has been delivered.") is not J&T's (`jAndTAu` false). A scan
+ * anywhere else keeps its wall clock.
  */
-function scan(row: unknown, number: string): CarrierEvent {
+function scan(row: unknown, number: string, jAndTAu: boolean): CarrierEvent {
   if (!isRecord(row) || typeof row.order_num !== 'string') throw new SchemaError(PROVIDER, 'Techlink returned an invalid scan');
   // Every scan names the shipment it belongs to.
   if (normalizeTrackingNumber(row.order_num) !== number) throw new IndeterminateError(PROVIDER, 'Techlink answered for another shipment');
@@ -82,7 +84,7 @@ function scan(row: unknown, number: string): CarrierEvent {
   const location = text(row, 'location', 120);
   const own = location === 'CN' || (!location && text(row, 'track_code', 64) === 'InfoReceived') || BRACKETED.test(description);
   const time = own ? isoTime(local, BEIJING)?.iso : null;
-  const sydney = !own && text(row, 'receive_country', 8) === 'AU' && jAndTAuRelayedStage(description) ? isoTime(local, SYDNEY)?.iso : null;
+  const sydney = !own && jAndTAu && text(row, 'receive_country', 8) === 'AU' && jAndTAuRelayedStage(description) ? isoTime(local, SYDNEY)?.iso : null;
   const staged = techlinkStage(code, description);
   return {
     ...(time ? { time } : sydney ? { local_time: local, time: sydney, time_zone: SYDNEY, time_zone_basis: 'carrier' } : { local_time: local }),
@@ -122,7 +124,8 @@ export function parseTechlink(payload: unknown, raw: string): CarrierResult {
   }
 
   const rows = entry.track_list as Record<string, unknown>[];
-  const read = rows.map((row) => scan(row, number));
+  const jAndTAu = relaysJAndTAu(rows.map((row) => isRecord(row) ? text(row, 'description', 1000) || text(row, 'track_name', 1000) : ''));
+  const read = rows.map((row) => scan(row, number, jAndTAu));
   // Newest first, as the tracker lists them; an oldest-first reply is turned round.
   const wall = (index: number) => text(rows[index]!, 'actual_time', 40) || text(rows[index]!, 'create_date', 40);
   const events = wall(0) < wall(rows.length - 1) ? read.reverse() : read;
