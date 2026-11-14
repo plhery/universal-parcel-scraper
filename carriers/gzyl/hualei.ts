@@ -377,17 +377,22 @@ interface Facts {
  */
 function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, readAt: number, page = false): CarrierResult {
   const { events, truncated, ahead } = scans(rows, tenant, readAt, page);
+  const { partner } = facts;
+  const deliveryTrackingNumber = partner && partner.number !== identity(facts.number) ? partner.number
+    : facts.downstream && facts.downstream !== identity(facts.number) ? facts.downstream : undefined;
   // The order exists, but nothing it holds is due yet. Rows written ahead are named, here and
-  // beside the scans kept, so that a provider's copies of them are not taken for scans.
+  // beside the scans kept, so that a provider's copies of them are not taken for scans. A hand-over
+  // goes with it: a tenant can set its own rows aside for the delivery carrier's, before that carrier scans.
   if (!events.length) {
-    throw new NoHistoryError(tenant.provider, `${tenant.provider} has no scans for the shipment yet`,
-      ahead.length ? { reason: 'written_ahead', writtenAhead: ahead } : undefined);
+    throw new NoHistoryError(tenant.provider, `${tenant.provider} has no scans for the shipment yet`, {
+      ...(ahead.length ? { reason: 'written_ahead', writtenAhead: ahead } : {}),
+      ...(partner ? { deliveryCarrier: partner.carrier } : {}), ...(deliveryTrackingNumber ? { deliveryTrackingNumber } : {}),
+    });
   }
   const newest = events[0]!;
   // A note mapped as pending moves nothing: the newest row that moves the parcel leads it.
   const current = events.find((event) => event.stage && event.stage !== 'pending') ?? events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;
-  const { partner } = facts;
   // The tracking number is the order's own unless it is the delivery carrier's.
   const canonical = facts.tracking && identity(facts.tracking) !== identity(facts.number)
     && identity(facts.tracking) !== partner?.number ? facts.tracking : '';
@@ -402,8 +407,7 @@ function result(rows: readonly HualeiRow[], facts: Facts, tenant: HualeiTenant, 
     ...(/^[A-Z]{2}$/.test(facts.destination) ? { destination_country: facts.destination } : {}),
     ...(canonical ? { canonical_tracking_number: canonical } : {}),
     ...(partner ? { delivery_carrier: partner.carrier } : {}),
-    ...(partner && partner.number !== identity(facts.number) ? { delivery_tracking_number: partner.number }
-      : facts.downstream && facts.downstream !== identity(facts.number) ? { delivery_tracking_number: facts.downstream } : {}),
+    ...(deliveryTrackingNumber ? { delivery_tracking_number: deliveryTrackingNumber } : {}),
     events,
     ...(truncated ? { history_truncated: true } : {}),
     ...(ahead.length ? { written_ahead: ahead } : {}),

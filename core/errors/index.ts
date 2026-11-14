@@ -95,15 +95,24 @@ export class NoHistoryError extends IndeterminateError {
    * or a wall clock when the carrier does not say in which zone.
    */
   readonly writtenAhead?: readonly string[];
+  /**
+   * The carrier the record hands the parcel to, by catalog id, and the number that carrier tracks it
+   * under, as a result's `delivery_carrier` and `delivery_tracking_number`: a record can name the
+   * hand-over before it holds a scan, or after it set its own scans aside for the delivery carrier's.
+   */
+  readonly deliveryCarrier?: string;
+  readonly deliveryTrackingNumber?: string;
 
   constructor(
     provider: string,
     message = `${provider} has no history for the shipment`,
-    options?: CarrierErrorOptions & { writtenAhead?: readonly string[] },
+    options?: CarrierErrorOptions & { writtenAhead?: readonly string[]; deliveryCarrier?: string; deliveryTrackingNumber?: string },
   ) {
     super(provider, message, options);
     this.name = 'NoHistoryError';
     if (options?.writtenAhead?.length) this.writtenAhead = [...options.writtenAhead];
+    if (options?.deliveryCarrier) this.deliveryCarrier = options.deliveryCarrier;
+    if (options?.deliveryTrackingNumber) this.deliveryTrackingNumber = options.deliveryTrackingNumber;
   }
 }
 

@@ -54,6 +54,9 @@ browser is needed, and no portal link is published.
   read on Beijing time, the night's sorting at J&T's centre would fall in the morning. The map reads
   their towns and sites, and the courier and phone of the collection and of the round to the
   recipient's home, as ellipses; J&T's collection of the cleared parcel is in transit.
+- When an order moves to a delivery carrier's channel, the tracker can drop JRT's rows for that
+  carrier's, which it has none of until the carrier scans. The lookup then has no history, and
+  its error names the hand-over as a result would (`deliveryCarrier`, `deliveryTrackingNumber`).
 - On the line into Europe the tracker also copies DHL's rows, in DHL's own English sentences or
   its lower case event texts ("loaded to movement / tour vehicle"). They come on DHL's wall clock
   where it scanned the parcel, the wall clocks DHL's own reply gives. A row at a town, as "hagen",

@@ -123,6 +123,27 @@ describe('JRT tracking adapter', () => {
     expect(() => parseJrtTrack(handed('CJ000000005DE'), 'UP0000000000000009', readAt)).toThrow('another shipment');
   });
 
+  it('names the delivery carrier and its number when the record set its own rows aside for them', () => {
+    const readAt = Date.parse('2026-03-15T00:00:00Z');
+    const cleared = (trackingNumber: string) => {
+      const payload = fixture('track-dhl') as { data: Record<string, unknown>[] }[];
+      Object.assign(payload[0]!.data[0]!, { trackingNumber, trackDetails: [] });
+      return payload;
+    };
+    const failure = (trackingNumber: string): unknown => {
+      try {
+        parseJrtTrack(cleared(trackingNumber), 'JRT0000000002ZZ', readAt);
+      } catch (error) {
+        return error;
+      }
+      throw new Error('the record has no rows');
+    };
+    expect(failure('CJ000000005DE')).toMatchObject({ name: 'NoHistoryError', deliveryCarrier: 'dhl', deliveryTrackingNumber: 'CJ000000005DE' });
+    expect(failure('000000000012')).toMatchObject({ name: 'NoHistoryError', deliveryCarrier: undefined, deliveryTrackingNumber: '000000000012' });
+    // An order still under its own number hands nothing over.
+    expect(failure('JRT0000000002ZZ')).toMatchObject({ name: 'NoHistoryError', deliveryCarrier: undefined, deliveryTrackingNumber: undefined });
+  });
+
   it('reads the landing, the clearance and the hand-over in Germany after DHL’s label data as transit', () => {
     const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
     const record = payload[0]!.data[0]!;

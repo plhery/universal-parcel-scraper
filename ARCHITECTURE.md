@@ -176,6 +176,10 @@ copies of them and are set aside; a fallback left with nothing has no history ei
 apply `writtenAheadClocks` to the carrier's error and `withoutWrittenAhead` to each fallback.
 A carrier that keeps other rows names those clocks in the result's `written_ahead`, and
 `fillPartialAnswer` sets a fallback's copies of them aside before comparing histories.
+An answer without history can name the hand-over in the error's `deliveryCarrier` and
+`deliveryTrackingNumber`, as a result's `delivery_carrier` and `delivery_tracking_number` would:
+a record can name the delivery carrier's number before any scan, or after it drops its own rows
+for that carrier's.
 An adapter that knows a reply field can hold a delivery estimate or slot it does not read yet
 names the field in the result's `unread_estimates` (`core/result/unread.ts`) whenever a reply
 fills it, so a host can keep the number for a capture that teaches the adapter its shape.
