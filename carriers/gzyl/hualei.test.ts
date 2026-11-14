@@ -128,7 +128,7 @@ describe('Hualei track interface', () => {
       if (delivery) record.trackDetails.unshift({ ...record.trackDetails[0], track_content: 'Delivered', track_date: '2026-03-07 10:00:00', track_createdate: delivery });
     });
     const after = Date.parse('2026-03-10T00:00:00Z');
-    // The first row, four hours after the order, is kept; the rest, a day and more ahead, are not.
+    // The first row, dated four hours after the script it was written with, is kept, on Beijing's clock too; the rest, a day and more ahead, are not.
     expect(parseHualeiTrack(script(), NUMBER, GZYL, after)?.events?.map((event) => event.description)).toEqual(['Order information received']);
     // Beside the rows kept, those written ahead are named too.
     expect(parseHualeiTrack(script(), NUMBER, GZYL, after)?.written_ahead).toEqual(expect.arrayContaining(['2026-03-06T15:10:42+08:00']));
@@ -144,7 +144,7 @@ describe('Hualei track interface', () => {
     const batch = edited((record) => { for (const row of record.trackDetails) row.track_createdate = '2026-03-01 12:00:00'; });
     expect(() => parseHualeiTrack(batch, NUMBER, GZYL, after)).toThrow(expect.objectContaining({ name: 'NoHistoryError', reason: 'written_ahead',
       writtenAhead: expect.arrayContaining(['2026-03-01T22:36:51+08:00']) }));
-    // Written alone, or with the script less than six hours before its clock, it may be on a destination's clock.
+    // Written alone, a row less than twelve hours before its own clock stands.
     const alone = edited((record) => { for (const row of record.trackDetails) row.track_createdate = ''; record.trackDetails.at(-1).track_createdate = '2026-03-01 12:00:00'; });
     expect(parseHualeiTrack(alone, NUMBER, GZYL, after)?.events).toHaveLength(7);
     // An order whose every row was written ahead names their clocks, so that a provider's copies of them are no scans either.
