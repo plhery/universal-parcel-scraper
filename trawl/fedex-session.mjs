@@ -7,7 +7,8 @@ const MAX_REPLIES = 20;
 
 // The browser tier succeeds even when its captured tracking API returns 403.
 // Its ordinary failure log cannot describe these refusals. Keep this separate
-// from the reply, and log only fixed labels, counts and elapsed times.
+// from the reply, and log only fixed labels, counts and elapsed times. Phase
+// offsets count from the lookup's start; a phase that was not reached is null.
 const reportRefusal = fields => console.warn(JSON.stringify({ level: 'warn', event: 'fedex.api-refusal', ...fields }));
 const reportSessionEnd = fields => console.warn(JSON.stringify({ level: 'warn', event: 'fedex.session-end', ...fields }));
 
@@ -142,8 +143,9 @@ export class FedExSessions {
     session.lookups++;
     session.lastLookupAt = started;
     session.digits = number.length;
+    const marks = {};
     try {
-      const result = await bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy,
+      const result = await bounded(this.#lookup({ number, session, browser, started, maxTimeout, capture, installPolicy, marks,
         replace: handle.requestBrowserReplacement, onCreated: handle.noteTemporaryContext }),
         Math.max(0, maxTimeout - (Date.now() - started)), 'FedEx lookup budget exhausted');
       if (session.verified) session.lastVerifiedAt = activity.successAt = Date.now();
@@ -156,6 +158,8 @@ export class FedExSessions {
             session: reused ? 'reused' : 'new', sessionAgeMs: Math.max(0, started - session.created),
             idleMs: previous ? Math.max(0, started - previous.at) : null, browserLookups: activity.lookups,
             sinceSuccessMs: activity.successAt === undefined ? null : Math.max(0, started - activity.successAt),
+            consent: marks.consent ?? null, menu: marks.menu ?? null, pageMs: marks.pageMs ?? null, formMs: marks.formMs ?? null,
+            submitMs: marks.submitMs ?? null, replyMs: marks.replyMs ?? null, durationMs: Math.max(0, Date.now() - started),
             ...(result.capturedResponses.length > 1 ? { responses: result.capturedResponses.length, recovered: session.verified } : {}) });
         } catch { /* Diagnostics must not change tracking or cleanup. */ }
       }
@@ -173,7 +177,8 @@ export class FedExSessions {
     }
   }
 
-  async #lookup({ number, session, browser, started, maxTimeout, capture, installPolicy, replace, onCreated }) {
+  async #lookup({ number, session, browser, started, maxTimeout, capture, installPolicy, marks, replace, onCreated }) {
+    const mark = name => { marks[name] = Math.max(0, Date.now() - started); };
     const timeout = (cap = 15_000) => {
       const remaining = maxTimeout - (Date.now() - started);
       if (remaining <= 0 || session.disposed) throw new Error('FedEx lookup budget exhausted');
@@ -219,6 +224,7 @@ export class FedExSessions {
     const observed = (request, response) => {
       if (!requests.has(request) || responded.has(request)) return;
       responded.add(request);
+      if (marks.replyMs === undefined) mark('replyMs');
       replies.push(response);
       if (replies.length > MAX_REPLIES) replies.shift();
       changed();
@@ -236,20 +242,27 @@ export class FedExSessions {
     page.on('request', onRequest);
     try {
       await page.goto(PAGE, { waitUntil: 'domcontentloaded', timeout: timeout(25_000) });
+      mark('pageMs');
       const consent = page.getByRole('button', { name: 'REJECT OPTIONAL COOKIES', exact: true });
-      try { await consent.click({ timeout: timeout(4_000) }); }
+      marks.consent = 'absent';
+      try { await consent.click({ timeout: timeout(4_000) }); marks.consent = 'clicked'; }
       catch { timeout(); }
       const another = page.getByRole('button', { name: 'Track Another Shipment', exact: true });
       const input = page.locator('input[id^="tracking_number_"]').first();
-      try { await another.click({ timeout: timeout(5_000) }); }
+      try { await another.click({ timeout: timeout(5_000) }); marks.menu = 'clicked'; }
       catch {
         timeout();
         // Camoufox mouse movement can stall. Only invoke the menu handler if
         // its form did not already open; a second toggle would close it.
-        if (!await input.isVisible()) await another.evaluate(element => element.click(), undefined, { timeout: timeout() });
+        marks.menu = 'open';
+        if (!await input.isVisible()) {
+          await another.evaluate(element => element.click(), undefined, { timeout: timeout() });
+          marks.menu = 'handler';
+        }
       }
       await input.fill(number, { timeout: timeout() });
       if (await input.inputValue({ timeout: timeout() }) !== number) throw new Error('FedEx input changed');
+      mark('formMs');
       submitted = true;
       const submit = page.getByRole('button', { name: /^track$/i, exact: true });
       try { await submit.click({ timeout: timeout(5_000) }); }
@@ -259,16 +272,20 @@ export class FedExSessions {
         // out. Never submit twice when that request is already in flight.
         if (!requests.size) await submit.evaluate(element => { if (!element.disabled) element.click(); }, undefined, { timeout: timeout() });
       }
+      mark('submitMs');
       // Keep the bounded response sequence, including automatic verification retries.
-      // A summary without scans gets a little longer to receive the history. Neither
-      // a refusal nor an unreadable final reply can disappear behind an older success.
+      // A summary without scans gets a little longer to receive the history. A
+      // refusal gets the short quiet period, since the page does not repeat the
+      // call after one; a repeated call it has already sent is still awaited.
+      // Neither a refusal nor an unreadable final reply can disappear behind an
+      // older success.
       const entries = [];
       const deadline = started + maxTimeout - Math.min(250, maxTimeout / 50);
-      let rich = false;
+      let rich = false, refused = false;
       while (Date.now() < deadline) {
         if (!replies.length) {
           const pending = [...requests].some(request => !responded.has(request));
-          const quiet = Math.min(capture.settleTimeout ?? Infinity, rich ? this.settleMs : this.incompleteSettleMs);
+          const quiet = Math.min(capture.settleTimeout ?? Infinity, rich || refused ? this.settleMs : this.incompleteSettleMs);
           const left = entries.length && !pending ? quiet - (Date.now() - lastActivity) : deadline - Date.now();
           if (left <= 0) break;
           await waitForChange(Math.min(left, deadline - Date.now()));
@@ -276,7 +293,7 @@ export class FedExSessions {
         }
         const response = replies.shift();
         session.verified = false;
-        rich = false;
+        rich = refused = false;
         if (!response) {
           entries.push({ url: API, status: 0, body: null, headers: {}, truncated: false,
             base64Encoded: false, error: 'fedex-tracking-request-failed' });
@@ -296,6 +313,7 @@ export class FedExSessions {
           } catch { /* Missing network diagnostics never change the original lookup. */ }
         }
         if ([401, 403].includes(entry.status)) {
+          refused = true;
           entry.error = /akamai/i.test(retainedHeaders.server ?? '')
             && /text\/html/i.test(retainedHeaders['content-type'] ?? '')
             ? 'fedex-edge-denial' : 'fedex-browser-request-rejected';

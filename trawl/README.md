@@ -178,7 +178,9 @@ without URLs or query strings and with runs that could be identifiers masked.
 FedEx's captured API refusals leave the browser tier successful. A separate
 `fedex.api-refusal` warning records the API status, browser slot, session reuse,
 session age, time since the browser's previous lookup and verified lookup, and
-lookup count on that browser. It contains no parcel identifier, response body or cookie. The
+lookup count on that browser. It also times the loaded page, the filled form, the submission
+and the first reply, and says whether the cookie banner and the form's menu took a click.
+It contains no parcel identifier, response body or cookie. The
 `fedex.session-end` warning records why a context closes, its age and lookup count,
 and whether it ever returned verified tracking. It distinguishes expiry and browser
 loss from an unreadable or inconclusive reply, without identifiers or response content.

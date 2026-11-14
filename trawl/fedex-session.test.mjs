@@ -64,6 +64,7 @@ function fixture(replies = [], settings = {}) {
       return { evaluate: act, click: async () => {
         if (settings.mouseStallsBeforeSubmit && name instanceof RegExp) throw new Error('Mouse stalled');
         if (settings.mouseStallsBeforeMenu && name === 'Track Another Shipment') throw new Error('Mouse stalled');
+        if (settings.consentAbsent && name === 'REJECT OPTIONAL COOKIES') throw new Error('Not found');
         await act();
         if (settings.mouseStallsAfterSubmit && name instanceof RegExp) throw new Error('Mouse stalled');
       } };
@@ -150,17 +151,56 @@ test('classifies an edge denial while retaining only safe response headers', asy
   await f.close();
 });
 
-test('retains a refusal and the page\'s later automatic successful reply without submitting twice', async () => {
+test('retains a refusal and the page\'s later automatic successful reply without submitting twice', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
   const reports = [];
   const full = JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, keyStatus: 'Delivered', scanEventList: [{}] }] } });
   const f = fixture([{ status: 403, following: [{ after: 10, body: full }] }],
-    { settleMs: 5, incompleteSettleMs: 25, onRefusal: fields => reports.push(fields) });
-  const result = await f.run();
+    { settleMs: 20, incompleteSettleMs: 1000, onRefusal: fields => reports.push(fields) });
+  const pending = f.run();
+  await tick();
+  t.mock.timers.tick(10);
+  await tick();
+  t.mock.timers.tick(20);
+  const result = await pending;
   assert.deepEqual(result.capturedResponses.map(x => x.status), [403, 200]);
   assert.deepEqual(f.requests, [NUMBER]);
   assert.equal(f.contexts[0].closed, false);
   assert.equal(reports[0].responses, 2);
   assert.equal(reports[0].recovered, true);
+  await f.close();
+});
+
+test('a refusal settles after the short quiet period instead of the wait for a missing history', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const f = fixture([{ status: 403 }], { settleMs: 20, incompleteSettleMs: 1000 });
+  let done = false;
+  const pending = f.run().then(result => { done = true; return result; });
+  await tick();
+  t.mock.timers.tick(19);
+  await tick();
+  assert.equal(done, false);
+  t.mock.timers.tick(1);
+  const result = await pending;
+  assert.deepEqual(result.capturedResponses.map(x => x.status), [403]);
+  assert.equal(result.durationMs, 20);
+  assert.equal(f.contexts[0].closed, true);
+  await f.close();
+});
+
+test('a scan-less summary still gets the longer wait for its history', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const summary = JSON.stringify({ output: { packages: [{ trackingNbr: NUMBER, keyStatus: 'In transit' }] } });
+  const f = fixture([{ body: summary }], { settleMs: 20, incompleteSettleMs: 1000 });
+  let done = false;
+  const pending = f.run().then(result => { done = true; return result; });
+  await tick();
+  t.mock.timers.tick(20);
+  await tick();
+  assert.equal(done, false);
+  t.mock.timers.tick(980);
+  const result = await pending;
+  assert.equal(result.durationMs, 1000);
   await f.close();
 });
 
@@ -214,16 +254,27 @@ test('refusal diagnostics distinguish a new browser from a reused verified sessi
   await f.run(OTHER);
   t.mock.timers.tick(30);
   await f.run();
+  const phases = { consent: 'clicked', menu: 'clicked', pageMs: 0, formMs: 0, submitMs: 0, replyMs: 0, durationMs: 0 };
   assert.deepEqual(reports, [
     { host: 'api.fedex.com', tier: 3, browser: undefined, statusCode: 403, cause: 'api', session: 'new',
-      sessionAgeMs: 0, idleMs: null, browserLookups: 1, sinceSuccessMs: null },
+      sessionAgeMs: 0, idleMs: null, browserLookups: 1, sinceSuccessMs: null, ...phases },
     { host: 'api.fedex.com', tier: 3, browser: undefined, statusCode: 401, cause: 'api', session: 'reused',
-      sessionAgeMs: 20, idleMs: 20, browserLookups: 3, sinceSuccessMs: 20 },
+      sessionAgeMs: 20, idleMs: 20, browserLookups: 3, sinceSuccessMs: 20, ...phases },
     { host: 'api.fedex.com', tier: 3, browser: undefined, statusCode: 403, cause: 'api', session: 'new',
-      sessionAgeMs: 0, idleMs: 30, browserLookups: 4, sinceSuccessMs: 50 },
+      sessionAgeMs: 0, idleMs: 30, browserLookups: 4, sinceSuccessMs: 50, ...phases },
   ]);
   assert.ok(!JSON.stringify(reports).includes(NUMBER));
   assert.ok(!JSON.stringify(reports).includes(OTHER));
+  await f.close();
+});
+
+test('refusal diagnostics name an absent consent banner and a menu opened by its handler', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout', 'Date'] });
+  const reports = [];
+  const f = fixture([{ status: 403 }], { consentAbsent: true, mouseStallsBeforeMenu: true, onRefusal: fields => reports.push(fields) });
+  await f.run();
+  assert.equal(reports[0].consent, 'absent');
+  assert.equal(reports[0].menu, 'handler');
   await f.close();
 });
 
