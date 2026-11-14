@@ -59,10 +59,10 @@ export function parseSuratHistory(payload: unknown): CarrierEvent[] {
   if (!Array.isArray(payload) || payload.length > 500) throw new SchemaError(PROVIDER, 'Sürat Kargo returned an invalid history');
   if (!payload.length) throw new NoHistoryError(PROVIDER);
   const events = payload.map((row): CarrierEvent => {
-    if (!isRecord(row) || typeof row.HareketTarihi !== 'string' || !/^\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}$/.test(row.HareketTarihi)
+    if (!isRecord(row) || typeof row.HareketTarihi !== 'string' || !/^\d{1,2}\.\d{1,2}\.\d{4} \d{2}:\d{2}:\d{2}$/.test(row.HareketTarihi)
       || typeof row.HareketTipi !== 'string' || !row.HareketTipi.trim() || row.HareketTipi.length > 2000
       || (row.HareketYeri != null && typeof row.HareketYeri !== 'string')) throw new SchemaError(PROVIDER, 'Sürat Kargo returned an invalid scan');
-    const date = firstOccurrence(DateTime.fromFormat(row.HareketTarihi, 'dd.MM.yyyy HH:mm:ss', { zone: 'Europe/Istanbul' }));
+    const date = firstOccurrence(DateTime.fromFormat(row.HareketTarihi, 'd.M.yyyy HH:mm:ss', { zone: 'Europe/Istanbul' }));
     if (!date.isValid) throw new SchemaError(PROVIDER, 'Sürat Kargo returned an invalid scan calendar');
     const description = clean(row.HareketTipi, 320);
     const location = clean(row.HareketYeri, 160);

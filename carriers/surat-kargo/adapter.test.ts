@@ -51,6 +51,16 @@ describe('Sürat Kargo merchant tracking flow', () => {
     }
   });
 
+  it('parses scan dates the carrier sends without zero padding', () => {
+    const events = parseSuratHistory([
+      { HareketTipi: 'Kargo Araca Yüklendi', HareketTarihi: '2.11.2026 17:51:15', HareketYeri: 'Sample Acente' },
+      { HareketTipi: 'Evrak Oluşturuldu', HareketTarihi: '2.11.2026 16:54:32', HareketYeri: 'Sample Acente' },
+    ]);
+    expect(events.map(event => event.time)).toEqual(['2026-11-02T17:51:15+03:00', '2026-11-02T16:54:32+03:00']);
+    expect(events.map(event => event.local_time)).toEqual(['2026-11-02T17:51:15', '2026-11-02T16:54:32']);
+    expect(parseSuratHistory([{ ...history()[0], HareketTarihi: '12.3.2026 13:40:48' }]).at(-1)!.time).toBe('2026-03-12T13:40:48+03:00');
+  });
+
   it('does not declare a multi-piece shipment delivered while one piece remains active', () => {
     const delivered = parseSuratHistory(history());
     const active = parseSuratHistory(history().slice(1));
