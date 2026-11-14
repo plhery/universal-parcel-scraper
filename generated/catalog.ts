@@ -21257,6 +21257,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
   "fan-courier-international": {
     "displayName": "FAN Courier International",
     "color": "#2daae1",
+    "aliases": [
+      "FAN Courier (EU)"
+    ],
     "countries": [
       "RO"
     ],

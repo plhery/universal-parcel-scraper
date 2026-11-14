@@ -23,6 +23,7 @@ Romanian network's AWB tracker. The adapter asks the status API behind that trac
   status.
 - Postal Ninja names these shipments "FAN Courier"; for a number of this shape that name points
   to this carrier. Royal Mail's 21-character 2D references leave the shape out.
+- A provider also reports the service as "FAN Courier (EU)", which is kept as an alias.
 
 ## Limitations
 

@@ -1,7 +1,7 @@
 {
   "id": "fan-courier-international",
   "displayName": "FAN Courier International",
-  "aliases": [],
+  "aliases": ["FAN Courier (EU)"],
   "region": {
     "countries": [
       "RO"

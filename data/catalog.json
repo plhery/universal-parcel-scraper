@@ -21253,6 +21253,9 @@
   "fan-courier-international": {
     "displayName": "FAN Courier International",
     "color": "#2daae1",
+    "aliases": [
+      "FAN Courier (EU)"
+    ],
     "countries": [
       "RO"
     ],
