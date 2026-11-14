@@ -268,6 +268,13 @@ describe('DHL piece identifiers', () => {
     for (const number of ['JJD000390012345678901', 'JJD149150012345678901', 'JJD012959123456789012', 'JJD01460001234567890123']) {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'dhl', confidence: 'high' });
     }
+    // Plates of 000090 and fourteen to sixteen digits are issued in the Dutch network, which DHL Paket's tracker does not hold.
+    for (const number of ['JJD00009005912345678901', 'JJD000090254000012345678', 'JJD0000900601234567890123']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'dhl-ecommerce-nl', confidence: 'high', candidates: ['dhl-ecommerce-nl'] });
+    }
+    for (const number of ['JJD000091254000012345678', 'JJD0000902540001234567', 'JJD00009025400001234567890']) {
+      expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'dhl', confidence: 'high' });
+    }
     // A zero-padded serial also fits Australia Post's article ID, which leaves a bare JJD plate to DHL.
     expect(detectCarrierMatch('JJD000390012000123456')).toMatchObject({ carrier: 'dhl', confidence: 'high' });
     expect(detectCarrierMatch('12JJD123456789000123456')).toMatchObject({ carrier: 'australia-post', confidence: 'high' });

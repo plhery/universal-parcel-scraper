@@ -42,6 +42,12 @@ Benelux, through the gateway behind its tracking page. German DHL Paket is
 - The gateway also follows parcels of DHL's European road network that enter
   the Benelux, including German `JJD` numbers. Detection leaves those with DHL
   Paket; the adapter accepts them when the carrier is named.
+- `JJD000090` and fourteen to sixteen digits are plates this network issues
+  itself. DHL Paket's tracker holds no record of them and sends the reader to
+  DHL's global tracking, which names DHL eCommerce, so detection selects this
+  carrier. The gateway shows them on its own `ECOMMERCE` network alone, and a
+  plate from abroad with the leg of the network that issued it, such as
+  `CDEx` for DHL Paket's or `IBERIA`.
 - It also answers a shipper's SSCC (`00` and eighteen digits with a valid GS1
   check digit), seen on public tracking pages. A valid SSCC names no carrier,
   so detection never offers DHL eCommerce Netherlands for one; the adapter

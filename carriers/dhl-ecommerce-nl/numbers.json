@@ -263,10 +263,50 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "dhl",
+        "carrier": "dhl-ecommerce-nl",
         "confidence": "high"
       },
       "note": "A DHL eCommerce Netherlands tracking page for this number archived by the Wayback Machine. DHL's Dutch tracking returned a JJD licence plate delivered in a mailbox in the Netherlands."
+    },
+    {
+      "number": "JJD00009005955331016885",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251027051934/https://my.dhlecommerce.nl/home/tracktrace/JJD00009005955331016885",
+        "date": "2025-10-27",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "reportedRole": "JJD licence plate",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "A DHL eCommerce Netherlands tracking page for this number listed in the Wayback Machine's capture index. DHL's Dutch tracking no longer holds it."
+    },
+    {
+      "number": "JJD000090060392009831670",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250610132823/https://my.dhlecommerce.nl/home/tracktrace/JJD000090060392009831670",
+        "date": "2025-06-10",
+        "access": "indexed_excerpt",
+        "dateKind": "capture"
+      },
+      "context": {
+        "reportedRole": "JJD licence plate",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "dhl-ecommerce-nl",
+        "confidence": "high"
+      },
+      "note": "A DHL eCommerce Netherlands tracking page for this number listed in the Wayback Machine's capture index. DHL's Dutch tracking no longer holds it."
     },
     {
       "number": "00040668261688049857",
