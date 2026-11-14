@@ -44,6 +44,8 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // under SupplierAndLastMileReceive; and its courier calling the recipient at the minute of an attempt.
   ['your parcel will soon be handed over to us! it is being prepared by the sender.', 'registered'],
   ['shipment arrived to sorting centre / shipment in the sorting centre', 'in_transit'],
+  // A Dutch partner's English copy of its departure from its sorting centre, sent beside its own line coded 200.
+  ['departed from the sorting center', 'in_transit'],
   ['consignee contacted', null],
 ]);
 

@@ -227,6 +227,14 @@
       "note": "A partner's sorting centre taking the parcel in before its round, relayed without a code; WanbExpress also sends it under SupplierAndLastMileReceive."
     },
     {
+      "wording": "Departed from the sorting center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "A Dutch last-mile partner's departure from its sorting centre, relayed without a code beside its own Dutch line coded 200."
+    },
+    {
       "wording": "Consignee Contacted",
       "language": "en",
       "stage": null,

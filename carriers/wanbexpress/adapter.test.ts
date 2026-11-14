@@ -110,6 +110,7 @@ describe('WanbExpress', () => {
     // A US partner's codeless scans between its receipt and the run.
     expect(wanbStage(null, 'In Processing at Transit Facility.')).toBe('in_transit');
     expect(statusMap.stage(null, 'in transit to next facility.')).toBe('in_transit');
+    expect(wanbStage(null, 'Departed from the sorting center')).toBe('in_transit');
     // Waiting at the sorting centre for the partner that delivers it.
     expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Parcel is ready for hand over to distributor' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
