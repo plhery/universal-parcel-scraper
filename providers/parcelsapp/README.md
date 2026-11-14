@@ -310,13 +310,17 @@ step exists for future protocol changes.
   dates import customs ("Import clearance start" to "Leaving customs") and the last mile
   ("Received by local delivery company", "Out for delivery", "Delivered", and bpost's and
   CTT's wording) on the destination's clock, except the UK's last mile, on GMT in July.
-  Its transit hub's arrival, warehouse outbound and departure on a parcel to Europe ("Arrive
-  at transit country or facility", "Parcel outbound from transit facility", "Depart from
-  transit country or district") are on Central European time: AliExpress's feed states them
-  +02:00 in summer and +01:00 in winter on parcels to Switzerland, Spain, France and Italy.
-  Its plain arrival in a transit country, which it also states on UTC, and "Arrived at
-  linehaul office", on either side's clock, are not listed: a parcel to Colombia reached
-  that office four minutes before MailAmericas' "Delivered by Airline" there. A parcel
+  In a country of several clocks its import customs is on the main one, Brasília's for
+  Brazil and Mexico City's for Mexico, but not in the US, where AliExpress's feed puts it
+  on the port of entry's. Its transit hub's arrival, warehouse outbound and departure on a
+  parcel to Europe ("Arrive at transit country or facility", "Parcel outbound from transit
+  facility", "Depart from transit country or district") are on Central European time:
+  AliExpress's feed states them +02:00 in summer and +01:00 in winter on parcels to
+  Switzerland, Spain, France and Italy. So is "Arrived at linehaul office" on a parcel to
+  Europe, also to the UK and Portugal, where it is the European hub's arrival; elsewhere it
+  is on the destination's clock, as import customs is: a parcel to Colombia reached that
+  office four minutes before MailAmericas' "Delivered by Airline" there. Its plain arrival
+  in a transit country, which it also states on UTC, is not listed. A parcel
   bound for Portugal clears customs in Spain, on
   Madrid's clock: AliExpress's own "Departed from customs" and the Madrid customs broker's
   scans have the digits of Cainiao's import customs. EcoScooting's sorting-center sentences

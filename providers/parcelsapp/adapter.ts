@@ -354,15 +354,18 @@ const CAINIAO_LAST_MILE = [
  * China time, Cainiao words its transit sorting centers' scans that way. The seller's step before the warehouse is on China time as well:
  * read as labeled, it comes after ParcelsApp first returns it. It dates
  * import customs on the destination's clock, and the last mile as well,
- * except the UK's, on GMT in July. Its transit hub's arrival, warehouse
+ * except the UK's, on GMT in July. In a country of several clocks its import
+ * customs is on the main one, Brasília's for Brazil and Mexico City's for
+ * Mexico, but not in the US, where it is on the port of entry's. Its transit hub's arrival, warehouse
  * outbound and departure on a parcel to Europe are on Central European time:
  * AliExpress's feed states them +02:00 in summer and +01:00 in winter on
  * parcels to Switzerland, Spain, France and Italy, and ParcelsApp's copies
- * keep the digits. Its plain arrival in a transit country ("Arrive at
- * transit country or district"), which it also states on UTC, and "Arrived
- * at linehaul office", on either side's clock, are not listed: a parcel to
- * Colombia reached that office four minutes before MailAmericas' "Delivered
- * by Airline" there. A
+ * keep the digits. So is "Arrived at linehaul office" on a parcel to Europe,
+ * also to the UK and Portugal, the European hub's arrival; elsewhere it is on
+ * the destination's clock, as import customs is: a parcel to Colombia reached
+ * that office four minutes before MailAmericas' "Delivered by Airline" there.
+ * Its plain arrival in a transit country ("Arrive at transit country or
+ * district"), which it also states on UTC, is not listed. A
  * parcel bound for Portugal clears customs in Spain, on Madrid's clock:
  * AliExpress's own "Departed from customs" and the Madrid broker's scans have
  * the digits of Cainiao's import customs. The sorting-center sentences of
@@ -428,7 +431,9 @@ const KNOWN_CLOCKS: ReadonlyMap<string, readonly {
     // The consolidation warehouse's arrival and receipt in ParcelsApp's words, which Cainiao states +08:00.
     { wording: wordings(['arrived at warehouse', 'received by warehouse']), zone: CAINIAO_CHINA_ZONE },
     { wording: wordings(['import clearance start', 'import customs clearance complete', 'arrived at customs', 'leaving customs',
-      'we\'re inspecting your order']), zone: DESTINATION, via: { PT: 'ES' } },
+      'we\'re inspecting your order']), zone: DESTINATION, via: { PT: 'ES' }, main: true },
+    { wording: wordings(['arrived at linehaul office']), zone: 'Europe/Paris', among: EUROPE },
+    { wording: wordings(['arrived at linehaul office']), zone: DESTINATION, main: true },
     { wording: wordings(['your shipment has arrived at sorting center', 'your shipment has been processed at sorting center and ready for shipping']),
       zone: 'Europe/Madrid' },
     { wording: wordings(CAINIAO_LAST_MILE), zone: DESTINATION, except: 'GB' },

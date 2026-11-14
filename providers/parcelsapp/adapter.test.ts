@@ -1968,6 +1968,31 @@ describe('ParcelsApp result parsing', () => {
     expect(times('MX')?.map(([, zone]) => zone)).toEqual(['UTC', 'UTC', 'UTC', 'UTC', 'UTC']);
   });
 
+  it('reads Cainiao\'s linehaul office on Central European time for Europe, else with import customs on the destination\'s main clock', () => {
+    // AliExpress's feed states both at Brasília's offset on parcels to Brazil and at Mexico City's on
+    // parcels to Mexico; the linehaul office at the European hub's on parcels to the UK and Portugal.
+    const states = [
+      { date: '2026-11-13T17:07:00Z', status: 'Arrived at linehaul office', carrier: 0 },
+      { date: '2026-11-11T03:28:47Z', status: 'Import clearance start', carrier: 0 },
+      { date: '2026-11-10T08:29:00Z', status: 'Left from departure country/region', carrier: 0 },
+    ];
+    const times = (destinationCode: string) => parseParcelsAppResponse({ carriers: ['Cainiao'], destinationCode, states }, number,
+      identity()).events?.map((scan) => [scan.time, scan.time_zone, scan.time_zone_basis]);
+    expect(times('BR')).toEqual([
+      ['2026-11-13T20:07:00.000Z', 'America/Sao_Paulo', 'destination'],
+      ['2026-11-11T06:28:47.000Z', 'America/Sao_Paulo', 'destination'],
+      ['2026-11-10T00:29:00.000Z', 'Asia/Shanghai', 'carrier'],
+    ]);
+    expect(times('MX')?.slice(0, 2).map(([, zone]) => zone)).toEqual(['America/Mexico_City', 'America/Mexico_City']);
+    expect(times('GB')?.slice(0, 2)).toEqual([
+      ['2026-11-13T16:07:00.000Z', 'Europe/Paris', 'carrier'],
+      ['2026-11-11T03:28:47.000Z', 'Europe/London', 'destination'],
+    ]);
+    expect(times('PT')?.[0]?.[1]).toBe('Europe/Paris');
+    // The US's import customs is on its port of entry's clock, which no rule gives.
+    expect(times('US')?.slice(0, 2).map(([, zone, basis]) => [zone, basis])).toEqual([['UTC', 'label'], ['UTC', 'label']]);
+  });
+
   it('reads MailAmericas\' origin leg and Tax ID checks on the origin\'s clock, its scans in the destination on that one\'s', () => {
     // On a parcel to Colombia (2026-10-16), the Tax ID checks precede
     // ParcelsApp's first answer only on China's clock, and the scans there
@@ -1987,7 +2012,7 @@ describe('ParcelsApp result parsing', () => {
       '2026-07-11T17:30:00.000Z', // Colombia's clock, from the customs scan before it
       '2026-07-10T07:00:00.000Z',
       '2026-07-09T09:45:00.000Z', // from the customs scan after it
-      '2026-07-09T04:41:00.000Z', // Cainiao's linehaul office, on either side's clock, as labeled
+      '2026-07-09T09:41:00.000Z', // Cainiao's linehaul office, on the destination's clock as its import customs
       '2026-07-07T04:00:00.000Z',
       '2026-07-06T06:00:00.000Z',
     ]);
