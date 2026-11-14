@@ -396,6 +396,8 @@ describe('JRT tracking adapter', () => {
     expect(answer('Sorry, the second flight has been delayed and is expected to 11.12 land')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('报关已放行等待3号航班起飞 Customs released,Awaiting departure on flight of the 3rd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('10/22号航班')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // UPS's access point note, copied before the forwarder's first scan, moves nothing.
+    expect(answer('等待递送至 UPS Access Point? 地点。')).toEqual({ kind: 'mapped', stage: 'pending' });
     // A delayed flight names its new day in both halves.
     expect(answer('航班延误，预计12/3号飞出 Flight delayed, estimated departure on Dec 3.')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('航班延误，预计11/21号飞出 Flight delayed, estimated departure on November 21st')).toEqual({ kind: 'mapped', stage: 'in_transit' });

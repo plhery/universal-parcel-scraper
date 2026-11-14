@@ -739,6 +739,15 @@
       "note": "Copied from UPS."
     },
     {
+      "wording": "等待递送至 UPS Access Point? 地点。",
+      "language": "zh",
+      "english": "Awaiting delivery to a UPS Access Point location.",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-11",
+      "note": "Copied from UPS before the forwarder's first scan: UPS's note that the parcel goes to an access point, which moves nothing. The tracker writes UPS's registered sign as a question mark."
+    },
+    {
       "wording": "Package has been packed and delivered to airport",
       "language": "en",
       "stage": "in_transit",
