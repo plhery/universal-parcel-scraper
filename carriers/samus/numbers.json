@@ -1,0 +1,43 @@
+{
+  "carrier": "samus",
+  "records": [
+    {
+      "number": "LT040101617LT",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://api-documentation.samus.lt/",
+        "date": "2026-11-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "note": "SAMUS's API documentation gives this as a parcel's number in its request and response examples.",
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "RD012171943LT",
+      "role": "full_barcode",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://api-documentation.samus.lt/",
+        "date": "2026-11-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "note": "SAMUS's API documentation gives this as the barcode printed on that parcel's label.",
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      }
+    }
+  ]
+}

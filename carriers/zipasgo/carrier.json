@@ -1,0 +1,45 @@
+{
+  "id": "zipasgo",
+  "displayName": "ZipasGo",
+  "aliases": [
+    "Parcel Stars",
+    "Zipas"
+  ],
+  "region": {
+    "countries": [
+      "LT"
+    ]
+  },
+  "brand": {
+    "color": "#ffdb1c"
+  },
+  "selectable": true,
+  "timezone": "Europe/Vilnius",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://zipasgo.com/lt/siuntimas?tid={trackingNumber}",
+    "searchUrl": "https://zipasgo.com/lt/siuntimas",
+    "canaryUrl": "https://zipasgo.com/lt/siuntimas",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "zipasgo.com"
+      ],
+      "pathPattern": "^/lt/siuntimas/?$",
+      "params": [
+        "tid"
+      ]
+    }
+  ],
+  "detection": []
+}

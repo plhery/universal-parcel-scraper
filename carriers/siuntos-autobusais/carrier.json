@@ -1,0 +1,34 @@
+{
+  "id": "siuntos-autobusais",
+  "displayName": "Siuntos autobusais",
+  "aliases": [
+    "Kautra",
+    "UAB Kautra"
+  ],
+  "region": {
+    "countries": [
+      "LT"
+    ]
+  },
+  "brand": {
+    "color": "#00843d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Vilnius",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "canaryUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

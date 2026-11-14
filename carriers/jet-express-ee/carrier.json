@@ -1,0 +1,44 @@
+{
+  "id": "jet-express-ee",
+  "displayName": "Jet Express",
+  "aliases": [
+    "Jet Express OÜ"
+  ],
+  "region": {
+    "countries": [
+      "EE"
+    ]
+  },
+  "brand": {
+    "color": "#d61b22"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tallinn",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://portal.kuller.ee/opter/TT?keyword={trackingNumber}",
+    "searchUrl": "https://portal.kuller.ee/opter/TT",
+    "canaryUrl": "https://portal.kuller.ee/opter/TT",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.kuller.ee"
+      ],
+      "pathPattern": "^/opter/[Tt][Tt]/?$",
+      "params": [
+        "keyword"
+      ]
+    }
+  ],
+  "detection": []
+}

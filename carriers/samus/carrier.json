@@ -1,0 +1,44 @@
+{
+  "id": "samus",
+  "displayName": "SAMUS",
+  "aliases": [
+    "UAB SAMUS"
+  ],
+  "region": {
+    "countries": [
+      "LT"
+    ]
+  },
+  "brand": {
+    "color": "#e50079"
+  },
+  "selectable": true,
+  "timezone": "Europe/Vilnius",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.samus.lt/siuntu-sekimas/?id={trackingNumber}",
+    "searchUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "canaryUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "samus.lt"
+      ],
+      "pathPattern": "^/siuntu-sekimas/?$",
+      "params": [
+        "id"
+      ]
+    }
+  ],
+  "detection": []
+}

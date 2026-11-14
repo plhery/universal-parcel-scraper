@@ -17260,6 +17260,27 @@
     ],
     "detectionRules": []
   },
+  "dk-logistics-ee": {
+    "displayName": "DK Logistics",
+    "color": "#f58428",
+    "aliases": [
+      "DKL",
+      "DK Logistics OÜ"
+    ],
+    "countries": [
+      "EE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "trackingSearchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dnipro-llc": {
     "displayName": "Dnipro LLC",
     "color": "#1c7bd3",
@@ -29008,6 +29029,37 @@
     "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "trackingSearchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "jet-express-ee": {
+    "displayName": "Jet Express",
+    "color": "#d61b22",
+    "aliases": [
+      "Jet Express OÜ"
+    ],
+    "countries": [
+      "EE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.kuller.ee/opter/TT",
+    "trackingUrlTemplate": "https://portal.kuller.ee/opter/TT?keyword={trackingNumber}",
+    "trackingSearchUrl": "https://portal.kuller.ee/opter/TT",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.kuller.ee"
+        ],
+        "pathPattern": "^/opter/[Tt][Tt]/?$",
+        "params": [
+          "keyword"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "jet-global": {
@@ -43175,6 +43227,37 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "samus": {
+    "displayName": "SAMUS",
+    "color": "#e50079",
+    "aliases": [
+      "UAB SAMUS"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "trackingUrlTemplate": "https://www.samus.lt/siuntu-sekimas/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "linkRules": [
+      {
+        "domains": [
+          "samus.lt"
+        ],
+        "pathPattern": "^/siuntu-sekimas/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "sapx-express": {
     "displayName": "SAPX Express",
     "color": "#ee6825",
@@ -44859,6 +44942,27 @@
     },
     "canaryUrl": "https://sinapseria.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "siuntos-autobusais": {
+    "displayName": "Siuntos autobusais",
+    "color": "#00843d",
+    "aliases": [
+      "Kautra",
+      "UAB Kautra"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "trackingSearchUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55070,6 +55174,38 @@
     "canaryUrl": "https://www.zimpost.co.zw/",
     "trackingSearchUrl": "https://www.zimpost.co.zw/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "zipasgo": {
+    "displayName": "ZipasGo",
+    "color": "#ffdb1c",
+    "aliases": [
+      "Parcel Stars",
+      "Zipas"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://zipasgo.com/lt/siuntimas",
+    "trackingUrlTemplate": "https://zipasgo.com/lt/siuntimas?tid={trackingNumber}",
+    "trackingSearchUrl": "https://zipasgo.com/lt/siuntimas",
+    "linkRules": [
+      {
+        "domains": [
+          "zipasgo.com"
+        ],
+        "pathPattern": "^/lt/siuntimas/?$",
+        "params": [
+          "tid"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "zippd": {

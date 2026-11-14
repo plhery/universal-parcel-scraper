@@ -1,0 +1,25 @@
+{
+  "carrier": "zipasgo",
+  "records": [
+    {
+      "number": "DE1323344412",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://zipasgo.com/lt/siuntimas",
+        "date": "2026-11-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "quarantine"
+      },
+      "note": "ZipasGo's tracking form shows this as its example number to look up. It is a placeholder: no public page shows a ZipasGo number in this layout, which Amazon's German numbers take.",
+      "expect": {
+        "carrier": "amazon-logistics",
+        "confidence": "high"
+      },
+      "quarantine": true
+    }
+  ]
+}

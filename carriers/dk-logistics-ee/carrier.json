@@ -1,0 +1,34 @@
+{
+  "id": "dk-logistics-ee",
+  "displayName": "DK Logistics",
+  "aliases": [
+    "DKL",
+    "DK Logistics OÜ"
+  ],
+  "region": {
+    "countries": [
+      "EE"
+    ]
+  },
+  "brand": {
+    "color": "#f58428"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tallinn",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

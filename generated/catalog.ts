@@ -17264,6 +17264,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "dk-logistics-ee": {
+    "displayName": "DK Logistics",
+    "color": "#f58428",
+    "aliases": [
+      "DKL",
+      "DK Logistics OÜ"
+    ],
+    "countries": [
+      "EE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "trackingSearchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dnipro-llc": {
     "displayName": "Dnipro LLC",
     "color": "#1c7bd3",
@@ -29012,6 +29033,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "trackingSearchUrl": "https://jet-dp.pl/pl/jetdp/tracking.html",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "jet-express-ee": {
+    "displayName": "Jet Express",
+    "color": "#d61b22",
+    "aliases": [
+      "Jet Express OÜ"
+    ],
+    "countries": [
+      "EE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tallinn",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://portal.kuller.ee/opter/TT",
+    "trackingUrlTemplate": "https://portal.kuller.ee/opter/TT?keyword={trackingNumber}",
+    "trackingSearchUrl": "https://portal.kuller.ee/opter/TT",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.kuller.ee"
+        ],
+        "pathPattern": "^/opter/[Tt][Tt]/?$",
+        "params": [
+          "keyword"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "jet-global": {
@@ -43179,6 +43231,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "samus": {
+    "displayName": "SAMUS",
+    "color": "#e50079",
+    "aliases": [
+      "UAB SAMUS"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "trackingUrlTemplate": "https://www.samus.lt/siuntu-sekimas/?id={trackingNumber}",
+    "trackingSearchUrl": "https://www.samus.lt/siuntu-sekimas/",
+    "linkRules": [
+      {
+        "domains": [
+          "samus.lt"
+        ],
+        "pathPattern": "^/siuntu-sekimas/?$",
+        "params": [
+          "id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "sapx-express": {
     "displayName": "SAPX Express",
     "color": "#ee6825",
@@ -44863,6 +44946,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://sinapseria.ro/",
     "trackingSearchUrl": "https://app.couriermanager.eu/cscourier/Main?tracking=true&appcont=17",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "siuntos-autobusais": {
+    "displayName": "Siuntos autobusais",
+    "color": "#00843d",
+    "aliases": [
+      "Kautra",
+      "UAB Kautra"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
+    "trackingSearchUrl": "https://www.siuntosautobusais.lt/siuntos-lietuvoje/siuntos-sekimas/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -55076,6 +55180,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "zipasgo": {
+    "displayName": "ZipasGo",
+    "color": "#ffdb1c",
+    "aliases": [
+      "Parcel Stars",
+      "Zipas"
+    ],
+    "countries": [
+      "LT"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Vilnius",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://zipasgo.com/lt/siuntimas",
+    "trackingUrlTemplate": "https://zipasgo.com/lt/siuntimas?tid={trackingNumber}",
+    "trackingSearchUrl": "https://zipasgo.com/lt/siuntimas",
+    "linkRules": [
+      {
+        "domains": [
+          "zipasgo.com"
+        ],
+        "pathPattern": "^/lt/siuntimas/?$",
+        "params": [
+          "tid"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "zippd": {
     "displayName": "Zippd",
     "color": "#173ded",
@@ -55753,6 +55889,7 @@ export const CARRIER_IDS = [
   "direct-freight-express",
   "direx",
   "dk-express-gr",
+  "dk-logistics-ee",
   "dnipro-llc",
   "dnx-cargo",
   "dobropost",
@@ -56074,6 +56211,7 @@ export const CARRIER_IDS = [
   "jeebly",
   "jersey-post",
   "jet-dp",
+  "jet-express-ee",
   "jet-global",
   "jet-logistic",
   "jetizz",
@@ -56472,6 +56610,7 @@ export const CARRIER_IDS = [
   "sailpost",
   "sameday",
   "samoa-post",
+  "samus",
   "sapx-express",
   "sat-ukraine",
   "saudi-post",
@@ -56520,6 +56659,7 @@ export const CARRIER_IDS = [
   "shunbang-express",
   "sicepat",
   "sinapseria",
+  "siuntos-autobusais",
   "sjl-express",
   "skladusa",
   "skroutz-last-mile",
@@ -56811,6 +56951,7 @@ export const CARRIER_IDS = [
   "zes-express",
   "zheldor",
   "zimpost",
+  "zipasgo",
   "zippd",
   "zippee",
   "znlogic",
@@ -57254,6 +57395,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "direct-freight-express": [],
   "direx": [],
   "dk-express-gr": [],
+  "dk-logistics-ee": [],
   "dnipro-llc": [],
   "dnx-cargo": [],
   "dobropost": ["dobropost-1"],
@@ -57575,6 +57717,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
   "jet-dp": [],
+  "jet-express-ee": [],
   "jet-global": [],
   "jet-logistic": [],
   "jetizz": [],
@@ -57973,6 +58116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sailpost": [],
   "sameday": ["sameday-1","sameday-2","sameday-3"],
   "samoa-post": [],
+  "samus": [],
   "sapx-express": [],
   "sat-ukraine": [],
   "saudi-post": ["saudi-post-1","saudi-post-s10"],
@@ -58021,6 +58165,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "shunbang-express": [],
   "sicepat": [],
   "sinapseria": [],
+  "siuntos-autobusais": [],
   "sjl-express": [],
   "skladusa": ["skladusa-1"],
   "skroutz-last-mile": [],
@@ -58312,6 +58457,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "zes-express": ["zes-express-1"],
   "zheldor": [],
   "zimpost": [],
+  "zipasgo": [],
   "zippd": [],
   "zippee": [],
   "znlogic": ["znlogic-1"],
