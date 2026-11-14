@@ -72,6 +72,8 @@ describe('JD domestic history', () => {
     }
     // The arrival at the delivery station before the round has a state of its own.
     expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: '200075', description: '您的快件已到达【示例站】' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // So does the state that keeps the parcel at the station between rounds, whose wording the contact cut leaves short.
+    expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: '200003', description: '已与' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
   });
 
   it('refuses wrong identities, multiple records and malformed clocks', () => {

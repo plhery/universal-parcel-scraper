@@ -60,6 +60,9 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['10054', MOVING],
   // Arrived at the delivery station, before the courier's round.
   ['200075', MOVING],
+  // Worded "已与" ("already … with") and a contact, which the wording drops. It came after the arrival at the delivery
+  // station and after a round without a delivery, each time followed by another round the next day.
+  ['200003', MOVING],
   ['11000', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['10034', { status: 'delivered', stage: 'delivered' }],
 ]);

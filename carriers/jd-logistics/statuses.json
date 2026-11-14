@@ -295,6 +295,13 @@
       "note": "Arrived at the delivery station, before the courier's round (已到达【…】)."
     },
     {
+      "code": "200003",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "Worded 已与 and a contact the wording drops; after the arrival at the delivery station and after a round without a delivery, each time followed by another round."
+    },
+    {
       "code": "11000",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
