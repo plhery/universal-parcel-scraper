@@ -220,4 +220,12 @@ describe('Huaya Express tracking adapter', () => {
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
   });
+
+  it('finds a row whether the page writes an accented letter or the "?" it can put in its place', () => {
+    for (const description of ['Din leverans ?r bokad med Early Bird.', 'Din leverans är bokad med Early Bird.']) {
+      expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description }), description)
+        .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+    expect(statusMapAnswer({ carrier: 'huaya-express', providerCode: null, description: 'Din leverans xr bokad med Early Bird.' })).toEqual({ kind: 'unknown' });
+  });
 });

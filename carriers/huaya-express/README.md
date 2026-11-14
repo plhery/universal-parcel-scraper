@@ -24,7 +24,8 @@ browser is needed.
   and the destination carrier's label row the tracker shows before the warehouse scan. That row
   is written at "US, SYSTEM, SYSTEM", a place the platform reads as none, repeated at the head of
   its wording, which is read without it. The tracker writes the warehouse receipt in Chinese,
-  "到达收货点", which the map lists too.
+  "到达收货点", which the map lists too. The tracker can write an accented letter as "?",
+  as in its Swedish Early Bird row, and the map reads either spelling.
 - On the line into Germany the tracker writes its own steps in Chinese, from the airport to the
   hand-over to DHL's warehouse ("已交仓"), and then copies DHL's English sentences. A flight row
   names the day it is due to land, which the map reads as an ellipsis.

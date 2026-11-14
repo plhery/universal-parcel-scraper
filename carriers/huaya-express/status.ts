@@ -3,13 +3,18 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 import statuses from './statuses.json' with { type: 'json' };
 
 export const ENTRIES: readonly { readonly wording: string; readonly stage: string }[] = statuses.entries;
-const WORDINGS = new Map<string, Stage>(ENTRIES.map((entry) => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
-
 // The flight row names the day it is due to land: "航班起飞，预计航班落地时间(10.22)".
 const LANDING_DAY = /^(航班起飞[，,] ?预计航班落地时间[(（])\d{1,2}[./]\d{1,2}([)）])$/;
+// The page writes some accented letters as "?": "Din leverans ?r bokad med Early Bird.".
+const ACCENTED = /[\u00C0-\u024F]/g;
 
-/** The key a row's `normalizeStatusWording` wording is mapped under: the flight's landing day becomes an ellipsis. */
-export const huayaScanKey = (wording: string): string => wording.replace(LANDING_DAY, '$1…$2');
+/**
+ * The key a row's `normalizeStatusWording` wording is mapped under: the flight's landing day becomes an ellipsis,
+ * and an accented Latin letter the "?" the page can write in its place, so either spelling finds the row.
+ */
+export const huayaScanKey = (wording: string): string => wording.replace(LANDING_DAY, '$1…$2').replace(ACCENTED, '?');
+
+const WORDINGS = new Map<string, Stage>(ENTRIES.map((entry) => [huayaScanKey(normalizeStatusWording(entry.wording)), entry.stage as Stage]));
 
 /**
  * The stage Huaya Express's map gives a row, by its `normalizeStatusWording` wording.
