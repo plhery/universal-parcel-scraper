@@ -23475,6 +23475,22 @@
     ],
     "detectionRules": []
   },
+  "fudu-logistics": {
+    "displayName": "Fudu Logistics",
+    "color": "#000000",
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "fukuyama": {
     "displayName": "Fukuyama Transporting",
     "color": "#e70128",
@@ -54939,6 +54955,25 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "xyl-ships": {
+    "displayName": "XYL-Ships",
+    "color": "#b13c3c",
+    "aliases": [
+      "FXYL"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xylships.com/",
+    "linkRules": [],
     "detectionRules": []
   },
   "yalidine": {

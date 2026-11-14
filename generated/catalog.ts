@@ -23479,6 +23479,22 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "fudu-logistics": {
+    "displayName": "Fudu Logistics",
+    "color": "#000000",
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "fukuyama": {
     "displayName": "Fukuyama Transporting",
     "color": "#e70128",
@@ -54945,6 +54961,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "xyl-ships": {
+    "displayName": "XYL-Ships",
+    "color": "#b13c3c",
+    "aliases": [
+      "FXYL"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://xylships.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yalidine": {
     "displayName": "Yalidine",
     "color": "#d62e2f",
@@ -56679,6 +56714,7 @@ export const CARRIER_IDS = [
   "freightways-global",
   "frontdoor-collective",
   "frontier-ca",
+  "fudu-logistics",
   "fukuyama",
   "furniture-logis",
   "fxdc-post",
@@ -57571,6 +57607,7 @@ export const CARRIER_IDS = [
   "xpressen",
   "xuchuan-logistics",
   "xyl",
+  "xyl-ships",
   "yalidine",
   "yamato-america",
   "yc-delivery",
@@ -58210,6 +58247,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "freightways-global": [],
   "frontdoor-collective": [],
   "frontier-ca": [],
+  "fudu-logistics": [],
   "fukuyama": [],
   "furniture-logis": [],
   "fxdc-post": [],
@@ -59102,6 +59140,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpressen": [],
   "xuchuan-logistics": ["xuchuan-logistics-1"],
   "xyl": [],
+  "xyl-ships": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yc-delivery": [],
