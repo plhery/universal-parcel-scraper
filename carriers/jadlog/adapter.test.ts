@@ -141,6 +141,16 @@ describe('Jadlog recognition', () => {
     await expect(recognize(guest(placed(countryCode)))).resolves.toEqual({ known: false });
   });
 
+  it('leaves a lookup of another unit\'s parcel placed abroad inconclusive', async () => {
+    const elsewhere = (countryCode: string, unit: string) => Response.json({ ...fixture('delivered.json'), shipmentBUCode: unit,
+      status: { ...fixture('delivered.json').status, countryCode } });
+    await expect(jadlog(guest(elsewhere('DE', '015'))).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'indeterminate' });
+    // Jadlog's own parcel abroad, or one in Brazil whatever its code, is read.
+    for (const [countryCode, unit] of [['PT', '060'], ['BR', '015']]) {
+      await expect(jadlog(guest(elsewhere(countryCode!, unit!))).track({ number: NUMBER })).resolves.toMatchObject({ status: 'delivered' });
+    }
+  });
+
   it('leaves a reply without a country inconclusive and does not know a missing parcel', async () => {
     await expect(recognize(guest(placed(undefined)))).rejects.toMatchObject({ kind: 'indeterminate' });
     await expect(recognize(guest(new Response('', { status: 404 })))).resolves.toEqual({ known: false });

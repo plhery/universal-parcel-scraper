@@ -18,6 +18,8 @@ reads, with Jadlog's business unit.
   limit. No tier follows.
 - Recognition makes the same request and knows a number only when the parcel's current country
   is Brazil. Another country is unknown, and a reply without one is inconclusive.
+- A lookup is inconclusive when the reply places the parcel in another country under another
+  business unit's code: the group-wide service answered for that unit's parcel.
 
 ## Notes
 

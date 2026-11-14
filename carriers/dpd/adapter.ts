@@ -86,6 +86,8 @@ const UNITS: Readonly<Record<DPDCountry, {
 };
 /** Units read through the guest API alone, with no page or app tier after it. */
 const GUEST_ONLY: ReadonlySet<DPDCountry> = new Set(['BE', 'NL', 'HU', 'IT', 'BR']);
+/** The business unit code Geopost's replies give Jadlog's parcels. */
+const JADLOG_UNIT = '060';
 /** Guest statuses at the delivery depot or after it. Before it, the status's country can be the sender's. */
 const DELIVERY_SIDE: ReadonlySet<string> = new Set([
   'AT_DELIVERY_CENTER', 'PARCEL_OUT_FOR_DELIVERY', 'AVAILABLE_FOR_COLLECTION', 'UNSUCCESSFUL_DELIVERY_ATTEMPT', 'DELIVERED',
@@ -1022,6 +1024,13 @@ export class DPDTracker {
     // BRT's unit reads a parcel once DPD places it in Italy: before that it can be another unit's.
     if (this.country === 'IT' && known(isRecord(payload.status) ? payload.status.countryCode : undefined).toUpperCase() !== 'IT') {
       throw new IndeterminateError(UNITS.IT.name, 'DPD returned no Italian country evidence');
+    }
+    // Jadlog's unit answers for the group: a parcel placed abroad under another unit's code is that unit's.
+    if (this.country === 'BR' && isRecord(payload.status)) {
+      const country = known(payload.status.countryCode).toUpperCase();
+      if (/^[A-Z]{2}$/.test(country) && country !== 'BR' && known(payload.shipmentBUCode) !== JADLOG_UNIT) {
+        throw new IndeterminateError(UNITS.BR.name, 'DPD placed another unit\'s parcel outside Brazil');
+      }
     }
     if (this.country !== 'CH') requireGuestActivity(payload, result);
     const current = isRecord(payload.status) ? payload.status : {};
