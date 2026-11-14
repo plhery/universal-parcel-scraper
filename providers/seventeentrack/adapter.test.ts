@@ -1095,13 +1095,13 @@ describe('17TRACK result parsing', () => {
       description, location, stage: null, sub_status: 'InTransit_Other' });
     const reply = (requested: string, key = 6051): Payload => ({ meta: { code: 200 }, shipments: [{ number: requested, code: 200, shipment: {
       latest_status: { status: 'InTransit' }, tracking: { providers: [{ provider: { key, name: 'La Poste (Colissimo)', country: 'FR' }, events: [
-        row('2026-11-02T09:15:00+01:00', 'EXAMPLE TOWN', 'Votre envoi est en cours de livraison.'),
+        row('2026-11-02T09:15:00+01:00', 'MC', 'Votre envoi est en cours de livraison.'),
         row('2026-10-29T19:00:00+01:00', 'US', "Votre envoi est en cours d'acheminement."),
         row('2026-10-28T18:03:00+01:00', 'CN', "Votre envoi a été déposé par l'expéditeur chez notre partenaire postal"),
       ] }] } } }] });
     const letter = 'LA876543216CN';
     const parsed = parse17TrackResponse(reply(letter), letter);
-    // China Post accepted the letter at 17:03 in Ningbo, 09:03 UTC; the scan at home keeps its instant.
+    // China Post accepted the letter at 17:03 in Ningbo, 09:03 UTC; La Poste's own scan in Monaco keeps its instant.
     expect(parsed.events?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-02T08:15:00.000Z', '2026-10-29T18:00:00',
       '2026-10-28T09:03:00.000Z']);
     expect(parsed.events?.[2]).toMatchObject({ time_zone: 'Asia/Shanghai', time_zone_basis: 'place',

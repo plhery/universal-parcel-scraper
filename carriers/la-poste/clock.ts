@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon';
 import { countryTimeZone, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 
-/** France and the overseas places where La Poste scans items itself. */
-export const LA_POSTE_COUNTRIES: ReadonlySet<string> = new Set(['FR', 'GP', 'MQ', 'GF', 'RE', 'YT', 'PM', 'BL', 'MF']);
+/** France, Monaco, whose post La Poste runs, and the overseas places where La Poste scans items itself. */
+export const LA_POSTE_COUNTRIES: ReadonlySet<string> = new Set(['FR', 'MC', 'GP', 'MQ', 'GF', 'RE', 'YT', 'PM', 'BL', 'MF']);
 
 /** An international tracked letter La Poste sends abroad: `L`, a letter, nine digits and `FR`. */
 export const EXPORTED_LETTER = /^L[A-Z]\d{9}FR$/;

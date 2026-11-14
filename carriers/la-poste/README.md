@@ -88,9 +88,10 @@ input, so recognition reads them as unknown rather than as a transport failure.
   other return wording are an exception, as the shared rules read a return under way, and only
   `DI2` (groups `DESLREXP` and `DESMDREXP`) or wording that has the sender receive it is returned.
   Apps treat a returned parcel as finished.
-- Scans in France and its overseas departments keep the feed's timestamp, which
-  carries its offset; impossible dates are dropped. That holds for imported
-  tracked mail's arrival and transit in France too: the posts that relay them,
+- Scans in France, its overseas departments and Monaco, whose post La Poste runs,
+  keep the feed's timestamp, which carries its offset; impossible dates are
+  dropped. That holds for imported tracked mail's arrival and transit in France
+  too: the posts that relay them,
   Royal Mail and India Post, show the same instant to the minute. A partner
   post's scan abroad shows that office's wall clock under the wrong offset:
   Colissimo gives it the Paris offset, and imported tracked mail ("Lettre et PPI
