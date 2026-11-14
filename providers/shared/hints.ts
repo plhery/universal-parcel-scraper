@@ -93,6 +93,16 @@ const ADAPTER_NUMBERS: Readonly<Record<string, (trackingNumber: string) => boole
 };
 
 /**
+ * Carriers whose name providers also write for a sister company's shipments,
+ * which only the number tells apart: Postal Ninja names FAN Courier for FAN
+ * Courier International's. The sister whose rule fits a number the named
+ * carrier's rules do not is the hint.
+ */
+const NAME_SISTERS: Readonly<Record<string, readonly string[]>> = {
+  'fan-courier': ['fan-courier-international'],
+};
+
+/**
  * Names are hints only. A direct adapter must confirm the shipment before
  * adoption. The looked-up number resolves a bare brand name, and rules out a
  * carrier whose adapter would refuse it for a failed check digit or its shape,
@@ -132,7 +142,9 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
     const brand = own ? carrierBrand(own) : undefined;
     const sibling = !partner && brand && trackingNumber && !fitting.includes(own!)
       ? brandCarrierForNumber(brand, trackingNumber, leg) : undefined;
-    const carrier = partner ?? sibling ?? named;
+    const sister = !partner && !sibling && own && trackingNumber && !fitting.includes(own)
+      ? NAME_SISTERS[own]?.find((id) => fitting.includes(id)) : undefined;
+    const carrier = partner ?? sibling ?? sister ?? named;
     const networks = carrier || !trackingNumber ? [] : brandCarrierIds(name);
     if (networks.length && !networks.some((id) => fitting.includes(id))) group = true;
     // A bare brand without networks of its own ("Cirro", "CTT") stands for a group too.
@@ -140,7 +152,7 @@ export function universalCarrierHints(raw: unknown[], trackingNumber?: string): 
     else if (!carrier) unmapped = true;
     else if (!refused.has(carrier)) {
       detected.add(carrier);
-      if (own && !sibling) inFull.add(carrier);
+      if (own && !sibling && !sister) inFull.add(carrier);
     }
   }
   // A name outside the catalog may be the number's owner, so it leaves no hint.

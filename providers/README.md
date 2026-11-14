@@ -146,6 +146,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - A brand's network none of whose rules fits the number names the brand's network the
   number points to, as a bare brand would: ParcelsApp names DPD France for DPD UK's depot
   numbers with their check character, which DPD France's adapter refuses.
+- A carrier whose name providers also write for a sister company names the sister whose rule
+  fits a number its own rules do not: Postal Ninja's "FAN Courier" is FAN Courier International
+  for that tracker's numbers.
 - The names `Ship24`, `ParcelsApp`, `17TRACK`, `Postal Ninja`, `Track718` and `UPU` are public, and
   consumers store them. Don't rename them.
 

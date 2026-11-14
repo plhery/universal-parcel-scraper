@@ -1,0 +1,70 @@
+{
+  "status": {
+    "date": "2026-01-09 21:40:12",
+    "no": "X00000001",
+    "code": "In Transit",
+    "request_no": "1000000000000001F0001",
+    "code_name": "In Transit",
+    "status": "active"
+  },
+  "history": {
+    "no": "1000000000000001F0001",
+    "return_no": "",
+    "status": "active",
+    "code": "In Transit",
+    "invoice_weight": 1.5,
+    "all_numbers": [
+      "X00000001",
+      "1000000000000001F0001",
+      "4000000000010"
+    ],
+    "all_return_numbers": [],
+    "history": [
+      {
+        "date": "2026-01-05 10:00:04",
+        "code": "",
+        "event_date": 1767600004,
+        "description": "Shipment data has entered the system",
+        "eventType": "ShipmentCreated",
+        "status_hash_id": 1,
+        "hub_location": "",
+        "code_id": 0,
+        "status": ""
+      },
+      {
+        "date": "2026-01-05 10:00:08",
+        "code": "",
+        "event_date": 1767600008,
+        "description": "Shipment was successfully created",
+        "eventType": "StatusChanged:uncollected",
+        "status_hash_id": 100000001,
+        "hub_location": "Sample Hub",
+        "code_id": 0,
+        "status": "neridicat"
+      },
+      {
+        "date": "2026-01-09 21:40:12",
+        "code": "In Transit",
+        "event_date": 1767985837,
+        "description": "Received code: In Transit",
+        "eventType": "CodeChanged:In Transit",
+        "status_hash_id": 100000002,
+        "hub_location": "",
+        "code_id": 3388,
+        "status": "neridicat"
+      },
+      {
+        "date": "2026-01-09 21:40:12",
+        "code": "",
+        "event_date": 1767985837,
+        "description": "The shipment is picked up",
+        "eventType": "StatusChanged:active",
+        "status_hash_id": 1000000003,
+        "hub_location": "",
+        "code_id": 0,
+        "status": "in_curs"
+      }
+    ],
+    "franchisor_last_tracking_response": {}
+  }
+}

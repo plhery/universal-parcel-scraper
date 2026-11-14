@@ -233,6 +233,7 @@ import { adapter as expedico } from '../carriers/expedico/adapter.js';
 import { adapter as expressOne } from '../carriers/express-one/adapter.js';
 import { adapter as expressOneBg } from '../carriers/express-one-bg/adapter.js';
 import { adapter as fanCourier } from '../carriers/fan-courier/adapter.js';
+import { adapter as fanCourierInternational } from '../carriers/fan-courier-international/adapter.js';
 import { adapter as farInternational } from '../carriers/far-international/adapter.js';
 import { adapter as fargoCourier } from '../carriers/fargo-courier/adapter.js';
 import { adapter as fargoUz } from '../carriers/fargo-uz/adapter.js';
@@ -996,6 +997,7 @@ export const REGISTRY: RegistryDefinition = {
     "express-one": expressOne,
     "express-one-bg": expressOneBg,
     "fan-courier": fanCourier,
+    "fan-courier-international": fanCourierInternational,
     "far-international": farInternational,
     "fargo-courier": fargoCourier,
     "fargo-uz": fargoUz,
@@ -1994,6 +1996,7 @@ export const REGISTRY: RegistryDefinition = {
     "famafutar": "universal",
     "famiport": "universal",
     "fan-courier": "fan-courier",
+    "fan-courier-international": "fan-courier-international",
     "far-international": "far-international",
     "fare-rata": "universal",
     "fargo-courier": "fargo-courier",

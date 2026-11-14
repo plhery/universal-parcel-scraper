@@ -71060,6 +71060,17 @@
     ]
   },
   {
+    "input": "9999999999999980F0001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fan-courier-international"
+    ],
+    "asked": [
+      "fan-courier-international"
+    ]
+  },
+  {
     "input": "99LP1665770287213",
     "carrier": "lion-parcel",
     "confidence": "high",

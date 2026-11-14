@@ -1,0 +1,106 @@
+{
+  "carrier": "fan-courier-international",
+  "entries": [
+    {
+      "code": "ShipmentCreated",
+      "wording": "Shipment data has entered the system",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14"
+    },
+    {
+      "code": "StatusChanged:uncollected",
+      "wording": "Shipment was successfully created",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "Created, not collected yet: the page's first step, ready to be picked up."
+    },
+    {
+      "code": "CodeChanged:In Transit",
+      "wording": "Received code: In Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14"
+    },
+    {
+      "code": "StatusChanged:active",
+      "wording": "The shipment is picked up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "Shares its instant with the code that brings it; the headline keeps the code's stage."
+    },
+    {
+      "code": "CodeChanged:Delivery attempt",
+      "wording": "Received code: Delivery attempt",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "code": "CodeChanged:Postponed delivery",
+      "wording": "Received code: Postponed delivery",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "code": "CodeChanged:Delivery attempt - refused",
+      "wording": "Received code: Delivery attempt - refused",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "The page's key names a refused cash-on-delivery payment."
+    },
+    {
+      "code": "CodeChanged:Damaged",
+      "wording": "Received code: Damaged",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "wording": "The shipment arrived in the hub: Timisoara",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations; any hub reads the same."
+    },
+    {
+      "wording": "The shipment has been delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "wording": "The shipment has been canceled",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "wording": "Delivery attempt failed",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations."
+    },
+    {
+      "wording": "The shipment is ready to be picked up",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "bundle",
+      "note": "From the tracking page's translations; the page's first step, before the transit."
+    }
+  ]
+}

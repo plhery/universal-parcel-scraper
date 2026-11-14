@@ -2343,7 +2343,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "s10"
       },
       {
-        "pattern": "^(?:32\\d{11}[A-F0-9]{8}|(?=[A-F0-9]*[A-F])[A-F0-9]{2}\\d{7}[A-F0-9]{12})$",
+        "pattern": "^(?!\\d{16}F\\d{4}$)(?:32\\d{11}[A-F0-9]{8}|(?=[A-F0-9]*[A-F])[A-F0-9]{2}\\d{7}[A-F0-9]{12})$",
         "confidence": "low"
       },
       {
@@ -21250,6 +21250,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       },
       {
         "pattern": "^[2-57]\\d{12}$",
+        "confidence": "low"
+      }
+    ]
+  },
+  "fan-courier-international": {
+    "displayName": "FAN Courier International",
+    "color": "#2daae1",
+    "countries": [
+      "RO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Bucharest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "fan-courier-international",
+      "recognitionRank": 16
+    },
+    "canaryUrl": "https://fancourier.eu/track-order",
+    "trackingSearchUrl": "https://fancourier.eu/track-order",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^\\d{16}F\\d{4}$",
         "confidence": "low"
       }
     ]
@@ -55991,6 +56014,7 @@ export const CARRIER_IDS = [
   "famafutar",
   "famiport",
   "fan-courier",
+  "fan-courier-international",
   "far-international",
   "fare-rata",
   "fargo-courier",
@@ -57497,6 +57521,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "famafutar": [],
   "famiport": [],
   "fan-courier": ["fan-courier-2","fan-courier-1"],
+  "fan-courier-international": ["fan-courier-international-1"],
   "far-international": ["far-international-1"],
   "fare-rata": [],
   "fargo-courier": ["fargo-courier-1"],

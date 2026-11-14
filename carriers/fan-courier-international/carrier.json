@@ -1,0 +1,60 @@
+{
+  "id": "fan-courier-international",
+  "displayName": "FAN Courier International",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "RO"
+    ]
+  },
+  "brand": {
+    "color": "#2daae1"
+  },
+  "selectable": true,
+  "timezone": "Europe/Bucharest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "fan-courier-international",
+    "steps": [
+      "direct"
+    ],
+    "recognition": {
+      "rank": 16
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://fancourier.eu/track-order",
+    "canaryUrl": "https://fancourier.eu/track-order",
+    "shows": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "eta",
+      "pickup_point",
+      "sender_name",
+      "recipient_name"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "fan-courier-international-1",
+      "pattern": "^\\d{16}F\\d{4}$",
+      "confidence": "low"
+    }
+  ]
+}
