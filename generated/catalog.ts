@@ -9635,6 +9635,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "baikal-service": {
+    "displayName": "Baikal Service",
+    "color": "#00a0de",
+    "aliases": [
+      "Байкал Сервис",
+      "ООО «Байкал-Сервис ТК»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "trackingSearchUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bangladesh-post": {
     "displayName": "Bangladesh Post Office",
     "color": "#ce0000",
@@ -13654,6 +13675,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "citytrans": {
+    "displayName": "Citytrans",
+    "color": "#ff0000",
+    "aliases": [
+      "Citytrans GmbH",
+      "Citytrans Kurier GmbH"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.citytrans.ch/",
+    "trackingSearchUrl": "https://www.citytrans.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cityxpress": {
     "displayName": "CityXpress",
     "color": "#9bd8f3",
@@ -15878,6 +15920,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dalli-service": {
+    "displayName": "Dalli",
+    "color": "#002a47",
+    "aliases": [
+      "ДАЛЛИ",
+      "Dalli Service",
+      "ДАЛЛИ-СЕРВИС",
+      "ООО «ДАЛЛИ-СЕРВИС»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dalli-service.com/tracking/",
+    "trackingSearchUrl": "https://dalli-service.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "danniao": {
     "displayName": "Danniao Express",
     "color": "#ff6a00",
@@ -16578,6 +16643,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/+Tracking(/index)?/?$",
         "params": [
           "track"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "der-kurier": {
+    "displayName": "DER KURIER",
+    "color": "#193a67",
+    "aliases": [
+      "DER KURIER GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
+    "trackingUrlTemplate": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
+    "trackingSearchUrl": "https://derkurier.de/sendungsverfolgung/",
+    "linkRules": [
+      {
+        "domains": [
+          "derkurier.de"
+        ],
+        "pathPattern": "^/sendungsverfolgung/?$",
+        "params": [
+          "d-pt-search"
         ]
       }
     ],
@@ -31332,6 +31428,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "kurierzentrale": {
+    "displayName": "KurierZentrale",
+    "color": "#d0232a",
+    "aliases": [
+      "KurierZentrale GmbH",
+      "KuZ"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.kurierzentrale.ch/",
+    "trackingSearchUrl": "https://crm.kuz.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kwick-box": {
     "displayName": "KwickBox",
     "color": "#254b66",
@@ -32991,6 +33108,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "logsis": {
+    "displayName": "Logsis",
+    "color": "#3492f7",
+    "aliases": [
+      "Логсис",
+      "ООО «Логсис Групп»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://logsis.ru/traking",
+    "trackingSearchUrl": "https://logsis.ru/traking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "longcps": {
     "displayName": "LONGCPS",
     "color": "#1e3d7e",
@@ -33221,6 +33359,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "lvz-post": {
+    "displayName": "LVZ Post",
+    "color": "#004b95",
+    "aliases": [
+      "LVZ Post GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://paketversand.lvz-post.de/index.php/tracking/search",
+    "trackingSearchUrl": "https://lvz-post.de/privatkunden/sendungsverfolgung/",
+    "linkRules": [],
     "detectionRules": []
   },
   "m-and-p": {
@@ -33480,6 +33638,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "magnit-post": {
+    "displayName": "Magnit Post",
+    "color": "#ff462d",
+    "aliases": [
+      "Магнит Пост",
+      "ООО «Магнит Маркет»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://post.magnit.ru/tracking/",
+    "trackingSearchUrl": "https://post.magnit.ru/tracking/",
+    "linkRules": [],
     "detectionRules": []
   },
   "magnum-transportation": {
@@ -35506,7 +35685,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#003562",
     "aliases": [
       "MZZ Briefdienst",
-      "MZZ Briefdienst GmbH"
+      "MZZ Briefdienst GmbH",
+      "biber post",
+      "biberpost"
     ],
     "countries": [
       "DE"
@@ -35912,6 +36093,35 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "night-star-express": {
+    "displayName": "Night Star Express",
+    "color": "#004170",
+    "aliases": [
+      "Night Star Express GmbH Logistik",
+      "NSE"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://customer.night-star-express.de/",
+    "trackingUrlTemplate": "https://customer.night-star-express.de/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://customer.night-star-express.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "customer.night-star-express.de"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "nim-express": {
     "displayName": "Nim Express",
     "color": "#0967b3",
@@ -36175,6 +36385,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "nordbrief": {
+    "displayName": "NordBrief",
+    "color": "#0b80c4",
+    "aliases": [
+      "Nordbrief GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "trackingSearchUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "linkRules": [],
     "detectionRules": []
   },
   "norsk-global": {
@@ -39352,6 +39582,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "peshkariki": {
+    "displayName": "Peshkariki",
+    "color": "#dc3c24",
+    "aliases": [
+      "Пешкарики",
+      "ООО «ДОСТАВКА-СЕРВИС»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://peshkariki.ru/tracking",
+    "trackingSearchUrl": "https://peshkariki.ru/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pfc-express": {
     "displayName": "PFC Express",
     "color": "#0e84d6",
@@ -42080,6 +42331,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "rail-continent": {
+    "displayName": "Rail Continent",
+    "color": "#ffd12d",
+    "aliases": [
+      "Рейл Континент",
+      "ТК Рейл Континент",
+      "ООО «Реил Континент М»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.railcontinent.ru/tracking/",
+    "trackingSearchUrl": "https://www.railcontinent.ru/tracking/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "ram-hand-to-hand": {
     "displayName": "RAM Hand-to-Hand Couriers",
@@ -45532,6 +45805,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "skif-cargo": {
+    "displayName": "Skif-Cargo",
+    "color": "#ce1226",
+    "aliases": [
+      "Скиф-Карго",
+      "ООО «Компания Скиф-Карго»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.skif-cargo.ru/tracking/",
+    "trackingSearchUrl": "https://www.skif-cargo.ru/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "skladusa": {
     "displayName": "SkladUSA",
     "color": "#ffa200",
@@ -48013,6 +48307,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "swissconnect": {
+    "displayName": "swissconnect",
+    "color": "#ff7f00",
+    "aliases": [
+      "swissconnect ag"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://swissconnect.ch/de/",
+    "trackingSearchUrl": "https://swissconnect.ch/de/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "sxjd-freight": {
     "displayName": "SXJD Freight",
@@ -52442,6 +52756,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "veloblitz": {
+    "displayName": "Veloblitz",
+    "color": "#ffec00",
+    "aliases": [
+      "Genossenschaft Veloblitz"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.veloblitz.ch/",
+    "trackingSearchUrl": "https://veloblitz.kuz.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "veloces": {
     "displayName": "Veloces",
     "color": "#fd026f",
@@ -55043,6 +55377,41 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yandex-delivery": {
+    "displayName": "Yandex Delivery",
+    "color": "#fc4714",
+    "aliases": [
+      "Яндекс Доставка",
+      "Яндекс.Доставка",
+      "ООО «Яндекс.Доставка»",
+      "Boxberry",
+      "Боксберри"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "trackingUrlTemplate": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",
+    "trackingSearchUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "dostavka.yandex.ru"
+        ],
+        "pathPattern": "^/ndd/tracking/?$",
+        "params": [
+          "order_tracking_id"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yc-delivery": {
     "displayName": "YC Delivery",
     "color": "#004092",
@@ -56332,6 +56701,7 @@ export const CARRIER_IDS = [
   "aymakan",
   "azerpost",
   "azul-cargo",
+  "baikal-service",
   "bangladesh-post",
   "banling",
   "barid-al-maghrib",
@@ -56446,6 +56816,7 @@ export const CARRIER_IDS = [
   "citymail",
   "citymail-pk",
   "citysprint",
+  "citytrans",
   "cityxpress",
   "cj-logistics",
   "cj-packet",
@@ -56510,6 +56881,7 @@ export const CARRIER_IDS = [
   "daiichi",
   "daily-xpress",
   "dakota-cargo",
+  "dalli-service",
   "danniao",
   "danske-fragtmaend",
   "dao",
@@ -56529,6 +56901,7 @@ export const CARRIER_IDS = [
   "depo",
   "deppon",
   "deprisa",
+  "der-kurier",
   "der-kurier-sk",
   "designer-transport",
   "dex-i",
@@ -56940,6 +57313,7 @@ export const CARRIER_IDS = [
   "kunyoung",
   "kunzendorf",
   "kuqi",
+  "kurierzentrale",
   "kwick-box",
   "kyoungdong",
   "kyrgyz-express-post",
@@ -56987,12 +57361,14 @@ export const CARRIER_IDS = [
   "logistics-solution",
   "logistiq",
   "logoix",
+  "logsis",
   "longcps",
   "loomis-express",
   "lotte-global",
   "lso",
   "ltl-kr",
   "lucky-fast-express",
+  "lvz-post",
   "m-and-p",
   "m-one",
   "m-xpress",
@@ -57001,6 +57377,7 @@ export const CARRIER_IDS = [
   "madhur-courier",
   "maersk-ecommerce",
   "magic-trans",
+  "magnit-post",
   "magnum-transportation",
   "magyar-posta",
   "mailamericas",
@@ -57075,6 +57452,7 @@ export const CARRIER_IDS = [
   "netpost-vn",
   "next-level-delivery",
   "nhat-tin",
+  "night-star-express",
   "nim-express",
   "nipost",
   "nippon-express",
@@ -57083,6 +57461,7 @@ export const CARRIER_IDS = [
   "noerpel",
   "noest",
   "nord-wheel",
+  "nordbrief",
   "norsk-global",
   "northline",
   "nova-global",
@@ -57166,6 +57545,7 @@ export const CARRIER_IDS = [
   "peregrine-ship",
   "performance-freight",
   "peru-box-air",
+  "peshkariki",
   "pfc-express",
   "pflogistics",
   "phlpost",
@@ -57238,6 +57618,7 @@ export const CARRIER_IDS = [
   "qwintry",
   "qwqer",
   "raben",
+  "rail-continent",
   "ram-hand-to-hand",
   "rangel",
   "rapid-courier-gr",
@@ -57339,6 +57720,7 @@ export const CARRIER_IDS = [
   "sinapseria",
   "siuntos-autobusais",
   "sjl-express",
+  "skif-cargo",
   "skladusa",
   "skroutz-last-mile",
   "skybox",
@@ -57404,6 +57786,7 @@ export const CARRIER_IDS = [
   "sway",
   "swftbox",
   "swiftx",
+  "swissconnect",
   "sxjd-freight",
   "sxw-express",
   "syd",
@@ -57533,6 +57916,7 @@ export const CARRIER_IDS = [
   "vasp-expresso",
   "vatican-post",
   "veho",
+  "veloblitz",
   "veloces",
   "velocity-express-in",
   "venipak",
@@ -57611,6 +57995,7 @@ export const CARRIER_IDS = [
   "xyl-ships",
   "yalidine",
   "yamato-america",
+  "yandex-delivery",
   "yc-delivery",
   "ycs-logistics",
   "ydh",
@@ -57865,6 +58250,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aymakan": ["aymakan-1"],
   "azerpost": [],
   "azul-cargo": [],
+  "baikal-service": [],
   "bangladesh-post": ["bangladesh-post-s10"],
   "banling": [],
   "barid-al-maghrib": ["barid-al-maghrib-s10"],
@@ -57979,6 +58365,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "citymail": ["citymail-1","citymail-2"],
   "citymail-pk": [],
   "citysprint": [],
+  "citytrans": [],
   "cityxpress": [],
   "cj-logistics": [],
   "cj-packet": ["cj-packet-1"],
@@ -58043,6 +58430,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "daiichi": [],
   "daily-xpress": [],
   "dakota-cargo": ["dakota-cargo-1"],
+  "dalli-service": [],
   "danniao": [],
   "danske-fragtmaend": ["danske-fragtmaend-1"],
   "dao": ["dao-1"],
@@ -58062,6 +58450,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "depo": [],
   "deppon": [],
   "deprisa": [],
+  "der-kurier": [],
   "der-kurier-sk": [],
   "designer-transport": [],
   "dex-i": [],
@@ -58473,6 +58862,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kunyoung": [],
   "kunzendorf": [],
   "kuqi": [],
+  "kurierzentrale": [],
   "kwick-box": [],
   "kyoungdong": [],
   "kyrgyz-express-post": [],
@@ -58520,12 +58910,14 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "logistics-solution": [],
   "logistiq": [],
   "logoix": ["logoix-1"],
+  "logsis": [],
   "longcps": [],
   "loomis-express": ["loomis-express-1","loomis-express-2"],
   "lotte-global": [],
   "lso": ["lso-1"],
   "ltl-kr": [],
   "lucky-fast-express": [],
+  "lvz-post": [],
   "m-and-p": [],
   "m-one": ["m-one-s10"],
   "m-xpress": [],
@@ -58534,6 +58926,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "madhur-courier": [],
   "maersk-ecommerce": ["maersk-ecommerce-1"],
   "magic-trans": [],
+  "magnit-post": [],
   "magnum-transportation": [],
   "magyar-posta": ["magyar-posta-s10","magyar-posta-domestic","magyar-posta-package","magyar-posta-letter","magyar-posta-europe-standard"],
   "mailamericas": ["mailamericas-ml","mailamericas-ml-7","mailamericas-mmxqp","mailamericas-domc","mailamericas-s10"],
@@ -58608,6 +59001,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "netpost-vn": [],
   "next-level-delivery": [],
   "nhat-tin": ["nhat-tin-1"],
+  "night-star-express": [],
   "nim-express": [],
   "nipost": ["nipost-s10"],
   "nippon-express": [],
@@ -58616,6 +59010,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "noerpel": [],
   "noest": [],
   "nord-wheel": [],
+  "nordbrief": [],
   "norsk-global": ["norsk-global-pkg"],
   "northline": [],
   "nova-global": ["nova-global-1"],
@@ -58699,6 +59094,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "peregrine-ship": [],
   "performance-freight": [],
   "peru-box-air": [],
+  "peshkariki": [],
   "pfc-express": ["pfc-express-1"],
   "pflogistics": ["pflogistics-1"],
   "phlpost": ["phlpost-s10"],
@@ -58771,6 +59167,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "qwintry": ["qwintry-1"],
   "qwqer": [],
   "raben": ["raben-1"],
+  "rail-continent": [],
   "ram-hand-to-hand": ["ram-hand-to-hand-1"],
   "rangel": [],
   "rapid-courier-gr": [],
@@ -58872,6 +59269,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sinapseria": [],
   "siuntos-autobusais": [],
   "sjl-express": [],
+  "skif-cargo": [],
   "skladusa": ["skladusa-1"],
   "skroutz-last-mile": [],
   "skybox": [],
@@ -58937,6 +59335,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sway": [],
   "swftbox": [],
   "swiftx": ["swiftx-1"],
+  "swissconnect": [],
   "sxjd-freight": [],
   "sxw-express": ["sxw-express-1"],
   "syd": [],
@@ -59066,6 +59465,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "vasp-expresso": [],
   "vatican-post": [],
   "veho": ["veho-1","veho-2"],
+  "veloblitz": [],
   "veloces": [],
   "velocity-express-in": [],
   "venipak": ["venipak-1"],
@@ -59144,6 +59544,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xyl-ships": [],
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
+  "yandex-delivery": [],
   "yc-delivery": [],
   "ycs-logistics": [],
   "ydh": ["ydh-1"],

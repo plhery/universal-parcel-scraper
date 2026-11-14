@@ -9631,6 +9631,27 @@
     ],
     "detectionRules": []
   },
+  "baikal-service": {
+    "displayName": "Baikal Service",
+    "color": "#00a0de",
+    "aliases": [
+      "Байкал Сервис",
+      "ООО «Байкал-Сервис ТК»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "trackingSearchUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bangladesh-post": {
     "displayName": "Bangladesh Post Office",
     "color": "#ce0000",
@@ -13650,6 +13671,27 @@
     ],
     "detectionRules": []
   },
+  "citytrans": {
+    "displayName": "Citytrans",
+    "color": "#ff0000",
+    "aliases": [
+      "Citytrans GmbH",
+      "Citytrans Kurier GmbH"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.citytrans.ch/",
+    "trackingSearchUrl": "https://www.citytrans.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cityxpress": {
     "displayName": "CityXpress",
     "color": "#9bd8f3",
@@ -15874,6 +15916,29 @@
       }
     ]
   },
+  "dalli-service": {
+    "displayName": "Dalli",
+    "color": "#002a47",
+    "aliases": [
+      "ДАЛЛИ",
+      "Dalli Service",
+      "ДАЛЛИ-СЕРВИС",
+      "ООО «ДАЛЛИ-СЕРВИС»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dalli-service.com/tracking/",
+    "trackingSearchUrl": "https://dalli-service.com/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "danniao": {
     "displayName": "Danniao Express",
     "color": "#ff6a00",
@@ -16574,6 +16639,37 @@
         "pathPattern": "^/+Tracking(/index)?/?$",
         "params": [
           "track"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "der-kurier": {
+    "displayName": "DER KURIER",
+    "color": "#193a67",
+    "aliases": [
+      "DER KURIER GmbH & Co. KG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
+    "trackingUrlTemplate": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
+    "trackingSearchUrl": "https://derkurier.de/sendungsverfolgung/",
+    "linkRules": [
+      {
+        "domains": [
+          "derkurier.de"
+        ],
+        "pathPattern": "^/sendungsverfolgung/?$",
+        "params": [
+          "d-pt-search"
         ]
       }
     ],
@@ -31328,6 +31424,27 @@
     ],
     "detectionRules": []
   },
+  "kurierzentrale": {
+    "displayName": "KurierZentrale",
+    "color": "#d0232a",
+    "aliases": [
+      "KurierZentrale GmbH",
+      "KuZ"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.kurierzentrale.ch/",
+    "trackingSearchUrl": "https://crm.kuz.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "kwick-box": {
     "displayName": "KwickBox",
     "color": "#254b66",
@@ -32987,6 +33104,27 @@
       }
     ]
   },
+  "logsis": {
+    "displayName": "Logsis",
+    "color": "#3492f7",
+    "aliases": [
+      "Логсис",
+      "ООО «Логсис Групп»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://logsis.ru/traking",
+    "trackingSearchUrl": "https://logsis.ru/traking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "longcps": {
     "displayName": "LONGCPS",
     "color": "#1e3d7e",
@@ -33217,6 +33355,26 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "lvz-post": {
+    "displayName": "LVZ Post",
+    "color": "#004b95",
+    "aliases": [
+      "LVZ Post GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://paketversand.lvz-post.de/index.php/tracking/search",
+    "trackingSearchUrl": "https://lvz-post.de/privatkunden/sendungsverfolgung/",
+    "linkRules": [],
     "detectionRules": []
   },
   "m-and-p": {
@@ -33476,6 +33634,27 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "magnit-post": {
+    "displayName": "Magnit Post",
+    "color": "#ff462d",
+    "aliases": [
+      "Магнит Пост",
+      "ООО «Магнит Маркет»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://post.magnit.ru/tracking/",
+    "trackingSearchUrl": "https://post.magnit.ru/tracking/",
+    "linkRules": [],
     "detectionRules": []
   },
   "magnum-transportation": {
@@ -35502,7 +35681,9 @@
     "color": "#003562",
     "aliases": [
       "MZZ Briefdienst",
-      "MZZ Briefdienst GmbH"
+      "MZZ Briefdienst GmbH",
+      "biber post",
+      "biberpost"
     ],
     "countries": [
       "DE"
@@ -35908,6 +36089,35 @@
       }
     ]
   },
+  "night-star-express": {
+    "displayName": "Night Star Express",
+    "color": "#004170",
+    "aliases": [
+      "Night Star Express GmbH Logistik",
+      "NSE"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://customer.night-star-express.de/",
+    "trackingUrlTemplate": "https://customer.night-star-express.de/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://customer.night-star-express.de/",
+    "linkRules": [
+      {
+        "domains": [
+          "customer.night-star-express.de"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "nim-express": {
     "displayName": "Nim Express",
     "color": "#0967b3",
@@ -36171,6 +36381,26 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "nordbrief": {
+    "displayName": "NordBrief",
+    "color": "#0b80c4",
+    "aliases": [
+      "Nordbrief GmbH"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "trackingSearchUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "linkRules": [],
     "detectionRules": []
   },
   "norsk-global": {
@@ -39348,6 +39578,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "peshkariki": {
+    "displayName": "Peshkariki",
+    "color": "#dc3c24",
+    "aliases": [
+      "Пешкарики",
+      "ООО «ДОСТАВКА-СЕРВИС»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://peshkariki.ru/tracking",
+    "trackingSearchUrl": "https://peshkariki.ru/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pfc-express": {
     "displayName": "PFC Express",
     "color": "#0e84d6",
@@ -42076,6 +42327,28 @@
         "confidence": "low"
       }
     ]
+  },
+  "rail-continent": {
+    "displayName": "Rail Continent",
+    "color": "#ffd12d",
+    "aliases": [
+      "Рейл Континент",
+      "ТК Рейл Континент",
+      "ООО «Реил Континент М»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.railcontinent.ru/tracking/",
+    "trackingSearchUrl": "https://www.railcontinent.ru/tracking/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "ram-hand-to-hand": {
     "displayName": "RAM Hand-to-Hand Couriers",
@@ -45528,6 +45801,27 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "skif-cargo": {
+    "displayName": "Skif-Cargo",
+    "color": "#ce1226",
+    "aliases": [
+      "Скиф-Карго",
+      "ООО «Компания Скиф-Карго»"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.skif-cargo.ru/tracking/",
+    "trackingSearchUrl": "https://www.skif-cargo.ru/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "skladusa": {
     "displayName": "SkladUSA",
     "color": "#ffa200",
@@ -48009,6 +48303,26 @@
         "confidence": "high"
       }
     ]
+  },
+  "swissconnect": {
+    "displayName": "swissconnect",
+    "color": "#ff7f00",
+    "aliases": [
+      "swissconnect ag"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://swissconnect.ch/de/",
+    "trackingSearchUrl": "https://swissconnect.ch/de/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "sxjd-freight": {
     "displayName": "SXJD Freight",
@@ -52438,6 +52752,26 @@
       }
     ]
   },
+  "veloblitz": {
+    "displayName": "Veloblitz",
+    "color": "#ffec00",
+    "aliases": [
+      "Genossenschaft Veloblitz"
+    ],
+    "countries": [
+      "CH"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Zurich",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.veloblitz.ch/",
+    "trackingSearchUrl": "https://veloblitz.kuz.ch/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "veloces": {
     "displayName": "Veloces",
     "color": "#fd026f",
@@ -55034,6 +55368,41 @@
         "pathPattern": "^/tracking/?$",
         "params": [
           "slipnumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "yandex-delivery": {
+    "displayName": "Yandex Delivery",
+    "color": "#fc4714",
+    "aliases": [
+      "Яндекс Доставка",
+      "Яндекс.Доставка",
+      "ООО «Яндекс.Доставка»",
+      "Boxberry",
+      "Боксберри"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "trackingUrlTemplate": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",
+    "trackingSearchUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "dostavka.yandex.ru"
+        ],
+        "pathPattern": "^/ndd/tracking/?$",
+        "params": [
+          "order_tracking_id"
         ]
       }
     ],
