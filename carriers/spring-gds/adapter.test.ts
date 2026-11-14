@@ -417,12 +417,12 @@ describe('PostNL ambiguity and clock safety', () => {
     const fifteen = '3SABCD123456789';
     expect(() => parsePostNLTrackingResponse(response(fifteen, 'The shipment barcode was incorrect.'), fifteen)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parsePostNLTrackingResponse(response(fifteen, 'Synthetic note'), fifteen)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
-    // Parcel EU barcodes are thirteen characters, and the endpoint calls all of them incorrect.
-    for (const unreadable of ['3SABCD1234567', '3SABC123456789']) {
+    // Parcel EU barcodes are thirteen characters, and the endpoint calls all of them incorrect, as it does fourteen-character ones.
+    for (const unreadable of ['3SABCD1234567', '3SABCD12345678', '3SABC123456789']) {
       expect(() => parsePostNLTrackingResponse(response(unreadable, 'The shipment barcode was incorrect.'), unreadable)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     }
     // A 3S barcode sent within the Netherlands is on the domestic tracker only.
-    for (const domestic of [fifteen, '3SABCD1234567']) {
+    for (const domestic of [fifteen, '3SABCD12345678', '3SABCD1234567']) {
       expect(() => parsePostNLTrackingResponse(response(domestic, 'The shipment barcode was not found.'), domestic))
         .toThrow(expect.objectContaining({ kind: 'input_required', field: 'postcode' }));
     }
@@ -690,6 +690,14 @@ describe('PostNL domestic tracker', () => {
     await expect(tracker.track({ number: barcode, postcode: '1234 ab' }, {})).resolves.toMatchObject({ status: 'out_for_delivery' });
     expect(fetcher).toHaveBeenCalledOnce();
     expect(String(fetcher.mock.calls[0]![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${barcode}-NL-1234AB?language=en`);
+  });
+
+  it('asks the domestic tracker about a fourteen-character barcode too', async () => {
+    const fourteen = '3SABCD12345678';
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(reply(collo({ barcode: fourteen }))));
+    const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(tracker.track({ number: fourteen, postcode: '1234AB' }, {})).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(String(fetcher.mock.calls[0]![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${fourteen}-NL-1234AB?language=en`);
   });
 
   it("asks the domestic tracker with another country's postcode given with that country, as PostNL's page does", async () => {

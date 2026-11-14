@@ -540,6 +540,63 @@
       "note": "A PostNL tracking link archived by the Wayback Machine. A fifteen-character 3S barcode; PostNL's tracker no longer returns it."
     },
     {
+      "number": "3SBOLD24991971",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/*/postnl.nl/tracktrace/?B=3SBOLD24991971*",
+        "date": "2022-05-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link listed in the Wayback Machine's capture index. A fourteen-character 3S barcode; PostNL's tracker no longer returns it."
+    },
+    {
+      "number": "3STXKC12593883",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/*/postnl.nl/tracktrace/?B=3STXKC12593883*",
+        "date": "2020-12-31",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link listed in the Wayback Machine's capture index. A fourteen-character 3S barcode; PostNL's tracker no longer returns it."
+    },
+    {
+      "number": "3SCETC00030631",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/*/postnl.nl/tracktrace/?B=3SCETC00030631*",
+        "date": "2024-01-01",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "spring-gds",
+        "confidence": "high"
+      },
+      "note": "A PostNL tracking link listed in the Wayback Machine's capture index. A fourteen-character 3S barcode; PostNL's tracker no longer returns it."
+    },
+    {
       "number": "LX038154718NL",
       "role": "shipment",
       "evidence": "public_shipment_report",

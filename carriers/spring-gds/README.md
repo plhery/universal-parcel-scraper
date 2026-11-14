@@ -9,8 +9,9 @@ it; everything user-facing says PostNL.
 
 ## How it works
 
-1. `domestic`: only for a 13- or 15-character `3S` barcode given with a Dutch postcode, or with
-   another country's postcode and that country (`postcodeCountry`). A GET to
+1. `domestic`: only for a `3S` barcode of 13 or 15 characters, or of 14 with a four-letter
+   customer code, given with a Dutch postcode, or with another country's postcode and that
+   country (`postcodeCountry`). A GET to
    `jouw.postnl.nl/track-and-trace/api/trackAndTrace/{barcode}-{country}-{postcode}`, the request
    PostNL's own tracking page makes, with the postcode sent without spaces or hyphens: the page
    splits that key on hyphens.
@@ -46,7 +47,7 @@ it; everything user-facing says PostNL.
    - An empty history without that message is a `NoHistoryError`, inconclusive: PostNL lists
      mail from abroad it does not hold yet the same way. Duplicate matching identities are
      refused. HTTP 404/410 means the endpoint is unavailable, not the parcel missing.
-   - "Barcode was not found" for a 13- or 15-character `3S` barcode asks for the delivery
+   - "Barcode was not found" for a `3S` barcode the domestic tracker takes asks for the delivery
      postcode: PostNL's international tracker does not hold parcels sent within the
      Netherlands. With a postcode it takes, the domestic tracker has already been asked, so
      the lookup stays inconclusive; a postcode that is not Dutch and comes without its country
@@ -101,6 +102,9 @@ it; everything user-facing says PostNL.
   fixture carries a recipient, an address and a signature link so the test can assert that
   they stay out.
 - PostNL's `3S` barcodes nearly all carry a four-letter customer code, which selects PostNL.
+  Seven, eight or nine digits follow it. PostNL's barcode documentation gives a `3S` barcode
+  thirteen or fifteen characters, but its tracking links also carry fourteen-character ones,
+  bol.com's `3SBOLD` series among them.
   DHL Parcel prints `3S` barcodes as well, mostly with three letters, so those go to
   [DHL eCommerce Netherlands](../dhl-ecommerce-nl/README.md); a few barcodes of each carrier
   land with the other. Shorter codes, such as the two-letter ones PostNL's barcode
@@ -118,9 +122,9 @@ it; everything user-facing says PostNL.
 ## Limitations
 
 - No delivery estimate: the endpoint publishes none, so `expected_delivery` is always null.
-- The endpoint answers "The shipment barcode was incorrect." for 13-character `3S` barcodes,
-  which are PostNL's (Parcel EU among them), and for 15-character ones without a four-letter
-  customer code. The lookup then stays inconclusive.
+- The endpoint answers "The shipment barcode was incorrect." for 13- and 14-character `3S`
+  barcodes, which are PostNL's (Parcel EU among them), and for 15-character ones without a
+  four-letter customer code. The lookup then stays inconclusive.
 - The tracking endpoint enforces a per-minute call quota shared beyond one client, so a
   lookup can meet HTTP 429 at a low request rate. The replay after its one-second
   `Retry-After` can meet the same quota, and so can the second replay; the lookup then fails

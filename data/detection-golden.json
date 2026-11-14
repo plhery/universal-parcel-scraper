@@ -41062,6 +41062,22 @@
     ]
   },
   {
+    "input": "3SBOLD24991971",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
+    "input": "3SCETC00030631",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
+    ]
+  },
+  {
     "input": "3SCKP00380671",
     "carrier": "dhl-ecommerce-nl",
     "confidence": "high",
@@ -41155,6 +41171,14 @@
     "confidence": "high",
     "candidates": [
       "dhl-ecommerce-nl"
+    ]
+  },
+  {
+    "input": "3STXKC12593883",
+    "carrier": "spring-gds",
+    "confidence": "high",
+    "candidates": [
+      "spring-gds"
     ]
   },
   {

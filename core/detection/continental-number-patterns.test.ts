@@ -231,7 +231,7 @@ describe('continental shipment candidates', () => {
   });
 
   it('splits 3S barcodes between PostNL and DHL Parcel by the customer code', () => {
-    for (const postnl of ['3SZZZZ1000001', '3SZZZZ100000001']) {
+    for (const postnl of ['3SZZZZ1000001', '3SZZZZ10000001', '3SZZZZ100000001']) {
       expect(detectCarrierMatch(postnl)).toMatchObject({ carrier: 'spring-gds', confidence: 'high' });
     }
     for (const dhl of ['3SZZZ10000001', '3SZZZ100000001', '3SZZZ1000000001']) {
@@ -244,7 +244,7 @@ describe('continental shipment candidates', () => {
     expect(recognitionAskedCarriers('3SZZ10000000001')).toEqual(['dhl-ecommerce-nl']);
     expect(detectCarrierMatch('3SZ1000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['spring-gds'] });
     expect(detectCarrierMatch('3SZZZ100000000001')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['dhl-ecommerce-nl'] });
-    for (const neither of ['3SZZZZ10000001', '3SZZZZZ10000001', '3S1000000000001']) {
+    for (const neither of ['3SZZZZ1000000001', '3SZZZZZ10000001', '3S1000000000001']) {
       expect(detectCarrierMatch(neither).candidates).toEqual([]);
     }
   });

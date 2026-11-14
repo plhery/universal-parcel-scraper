@@ -60,12 +60,12 @@ const TOKEN_RENEWAL_MARGIN_MS = 5 * 60_000;
 // A barcode PostNL holds no shipment under. "Incorrect" says the same only for a
 // fifteen-character 3S barcode with a four-letter customer code, the layout the endpoint
 // reads: there it marks a code PostNL did not issue, such as DHL eCommerce's. The endpoint
-// calls every thirteen-character 3S barcode incorrect, PostNL's own Parcel EU ones included.
+// calls every thirteen- and fourteen-character 3S barcode incorrect, PostNL's own Parcel EU ones included.
 const NOT_FOUND_MESSAGE = /barcode was not found/i;
 const INCORRECT_MESSAGE = /barcode was incorrect/i;
 const READABLE_3S = /^3S[A-Z]{4}\d{9}$/;
 // The 3S barcodes the domestic tracker may hold, and the Dutch postcode it takes them with.
-const THREE_S = /^(?=.{13}$|.{15}$)3S[A-Z]{1,4}\d+$/;
+const THREE_S = /^(?:(?=.{13}$|.{15}$)3S[A-Z]{1,4}\d+|3S[A-Z]{4}\d{8})$/;
 const DUTCH_POSTCODE = /^([1-9]\d{3}) ?([A-Z]{2})$/;
 // A postcode abroad, as the tracking page sends it: the page splits its key on hyphens.
 const FOREIGN_POSTCODE = /^[A-Z0-9]{2,10}$/;

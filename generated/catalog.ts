@@ -451,7 +451,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "requirements": [
         {
           "field": "postcode",
-          "whenTrackingNumber": "^(?=.{13}$|.{15}$)3S[A-Z]{1,4}[0-9]+$",
+          "whenTrackingNumber": "^(?:(?=.{13}$|.{15}$)3S[A-Z]{1,4}[0-9]+|3S[A-Z]{4}[0-9]{8})$",
           "validator": "internationalPostcode",
           "optional": true,
           "readsCountry": true,
@@ -510,7 +510,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "s10"
       },
       {
-        "pattern": "^3S[A-Z]{4}(?:\\d{7}|\\d{9})$",
+        "pattern": "^3S[A-Z]{4}\\d{7,9}$",
         "confidence": "high"
       },
       {
