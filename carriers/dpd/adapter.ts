@@ -916,6 +916,20 @@ export class DPDTracker {
   }
 
   /**
+   * The guest service alone, for a number one of DPD's units issues itself that the service names
+   * whole as the parcel, such as DPD Poland's thirteen-digit waybill with its letter: no postcode,
+   * page, app or step abroad, and no link, which the caller's tracker sets.
+   */
+  async guest(number: string, context: TrackingContext = {}): Promise<CarrierResult> {
+    const lookup = lookupBudget(context, this.budgetMs, UNITS[this.country].carrier);
+    try {
+      return await this.apiFetch(number, '', lookup);
+    } catch (error) {
+      throw this.reported(error);
+    }
+  }
+
+  /**
    * Whether the guest reply establishes activity in this tracker's country for
    * a 14-digit number, or for Belgium that its business unit sent the parcel.
    * The group-wide identity match alone must not promote another country's

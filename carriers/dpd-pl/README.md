@@ -13,6 +13,11 @@ and the United Kingdom have separate carrier ids.
    A lookup whose `language` is Polish opens a Polish session at `/findParcel`
    and posts to `/findPackage`. No account, postcode or CAPTCHA is needed, and
    each lookup opens its own session.
+2. `group`: a waybill the tracker has no trace of is asked of DPD's group-wide
+   guest service, through Belgium's unit as for [DPD Ireland](../dpd-ie/README.md).
+   The service holds some waybills the tracker, and its own links, say nothing
+   of, and names the waybill whole as the parcel. Fourteen-digit parcel numbers
+   are not asked there.
 
 ## Notes
 
@@ -58,9 +63,15 @@ and the United Kingdom have separate carrier ids.
   without a depot and other countries' scans keep their local clock, and
   `delivered_at` needs a delivery row in Polish time.
 - Only the page's no-trace answer naming the requested number, in English or
-  in Polish, makes a parcel unknown. One naming another number is a schema
-  error; any other reply, a redirect or a 404 is inconclusive.
-- Recognition asks the tracker and knows a number when it returns history.
+  in Polish, makes a parcel unknown, and for a waybill the guest service's
+  not-found as well: its other failures leave the lookup inconclusive. A page
+  naming another number is a schema error; any other reply, a redirect or a
+  404 is inconclusive.
+- The guest service gives each milestone once, at its newest date and without
+  a place, so its answer is a truncated history. DPD Poland's map reads its
+  codes as DPD's map does, with the same milestones left unmapped on purpose.
+- Recognition asks DPD Poland's tracker alone and knows a number when it
+  returns history.
 
 ## Limitations
 

@@ -300,6 +300,63 @@ describe('DPD Poland direct tracking', () => {
   });
 });
 
+describe('DPD Poland waybills in the group\'s guest service', () => {
+  // DPD's guest login, then its reply naming the waybill whole, each milestone once.
+  const milestone = (description: string, eventDateAndTime: string) => ({ status: 1, description, eventDateAndTime, eventDateAndTimeZoneId: '+01:00', city: null, countryCode: null });
+  const groupReply = (parcelNumber = NUMBER) => Response.json({ parcelNumber, shipmentId: parcelNumber, parcelSearchType: 'BY_PARCEL_NUMBER',
+    status: { status: 3, description: 'AT_DELIVERY_CENTER', eventDateAndTime: '2026-01-07T02:14:43', eventDateAndTimeZoneId: '+01:00', countryCode: 'PL' },
+    parcelHistory: [milestone('PARCEL_HANDED', '2026-01-05T20:29:52'), milestone('IN_TRANSIT', '2026-01-07T02:14:43'), milestone('AT_DELIVERY_CENTER', '2026-01-07T02:14:43')] });
+  const login = [
+    () => Response.json({ fid: 'synthetic-fid', authToken: { token: 'synthetic-installation', expiresIn: '604800s' } }),
+    () => Response.json({ entries: { basic_dpd_token: 'c3ludGhldGljOnRva2Vu' } }), // gitleaks:allow
+    () => Response.json({ access_token: 'synthetic-access', expires_in: 3600 }),
+  ];
+  const lookup = (...group: Response[]) => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply(absent()));
+    for (const response of [...login.map(make => make()), ...group]) fetcher.mockResolvedValueOnce(response);
+    return fetcher;
+  };
+
+  it('asks the group\'s guest service for a waybill the tracker has no trace of, and reads its milestones', async () => {
+    const fetcher = lookup(groupReply());
+    const result = await adapter(environment(fetcher)).track({ number: NUMBER });
+    expect(result).toMatchObject({ status: 'in_transit', history_truncated: true });
+    expect(result.events?.map(event => [event.provider_code, event.time])).toEqual([
+      ['AT_DELIVERY_CENTER', '2026-01-07T02:14:43+01:00'], ['IN_TRANSIT', '2026-01-07T02:14:43+01:00'], ['PARCEL_HANDED', '2026-01-05T20:29:52+01:00'],
+    ]);
+    // DPD Poland's map reads the group's codes as DPD's map does, leaving the same milestones unmapped on purpose.
+    for (const code of ['PARCEL_HANDED', 'IN_TRANSIT', 'AT_DELIVERY_CENTER']) {
+      expect(statusMapAnswer({ carrier: 'dpd-pl', providerCode: code, description: 'Synthetic label' }), code).toMatchObject({ kind: 'intentional_gap' });
+    }
+    expect(statusMapAnswer({ carrier: 'dpd-pl', providerCode: 'DELIVERED', description: 'Delivered' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    const url = new URL(String(fetcher.mock.calls.at(-1)![0]));
+    expect(url.pathname).toBe(`/concept/webservice/v10/parcels/details/${NUMBER}`);
+    expect(url.searchParams.get('continueWithoutVerification')).toBe('true');
+    // Recognition reads DPD Poland's tracker alone.
+    const absentLookup = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply(absent()));
+    expect(await adapter(environment(absentLookup as unknown as typeof fetch)).recognize!(NUMBER)).toEqual({ known: false });
+    expect(absentLookup).toHaveBeenCalledTimes(2);
+  });
+
+  it('needs both to call a waybill unknown, and binds the group\'s reply to the whole waybill', async () => {
+    await expect(adapter(environment(lookup(new Response('', { status: 404 })))).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    await expect(adapter(environment(lookup(new Response('', { status: 503 })))).track({ number: NUMBER })).rejects.not.toMatchObject({ kind: 'not_found' });
+    await expect(adapter(environment(lookup(groupReply(SECOND)))).track({ number: NUMBER })).rejects.toMatchObject({ kind: 'schema' });
+  });
+
+  it('leaves a parcel number, the tracker\'s history and its other failures to the tracker', async () => {
+    const group = vi.fn(async () => { throw new Error('not asked'); });
+    const parcel = '13000000000001';
+    const absentParcel = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply(absent(parcel)));
+    await expect(new DpdPlTracker({ fetcher: absentParcel as unknown as typeof fetch, group }).fetch(parcel)).rejects.toMatchObject({ kind: 'not_found' });
+    const known = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply());
+    await expect(new DpdPlTracker({ fetcher: known as unknown as typeof fetch, group }).fetch(NUMBER)).resolves.toMatchObject({ status: expect.any(String) });
+    const outage = vi.fn().mockResolvedValueOnce(page()).mockResolvedValueOnce(reply('<html>Unavailable</html>'));
+    await expect(new DpdPlTracker({ fetcher: outage as unknown as typeof fetch, group }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    expect(group).not.toHaveBeenCalled();
+  });
+});
+
 describe('DPD Poland in Polish', () => {
   // A parcel's scans worded on each page, newest first, where both are seen.
   const ROWS: [string, string, string, string, string][] = [

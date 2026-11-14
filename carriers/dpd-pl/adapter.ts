@@ -1,8 +1,10 @@
 import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, IndeterminateError } from '../../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, NotFoundError } from '../../core/errors/index.js';
+import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
+import { DPDTracker } from '../dpd/adapter.js';
 import { normalizeDpdPlNumber, parseDpdPl, PROVIDER, validateDpdPlBootstrap } from './parser.js';
 import { dpdPlEnglish } from './status.js';
 
@@ -12,6 +14,12 @@ const COOKIE = /^(JSESSIONID|__cf_bm)=([A-Za-z0-9._~:=+/-]{1,512})(?:;|$)/;
 const LANGUAGES = { en: '/EN', pl: '' } as const;
 
 export type DpdPlLanguage = keyof typeof LANGUAGES;
+
+/** DPD Poland's own waybill, thirteen digits and a letter, as against a fourteen-digit DPD parcel number. */
+const WAYBILL = /^\d{13}[A-Z]$/;
+
+/** A lookup of a DPD Poland waybill in DPD's group-wide guest service. */
+export type DpdPlGroupLookup = (waybill: string, context: TrackingContext) => Promise<CarrierResult>;
 
 /** The session the search page opens. It holds the page's language, which the lookup answers in. */
 function sessionCookie(response: Response): string {
@@ -25,15 +33,20 @@ function sessionCookie(response: Response): string {
 }
 
 export class DpdPlTracker {
-  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
+  constructor(private readonly options: {
+    fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string; group?: DpdPlGroupLookup;
+  } = {}) {}
 
   /**
    * `language` words the scans. A Polish page with a wording the map has no
-   * English for is asked again in English, which the map reads in full.
+   * English for is asked again in English, which the map reads in full. A
+   * waybill the tracker has no trace of is asked of DPD's group-wide guest
+   * service, which holds some that the tracker does not show.
    */
   fetch(raw: string, context: TrackingContext = {}, language: DpdPlLanguage = 'en') {
     const number = normalizeDpdPlNumber(raw);
     const budgetMs = context.budgetMs ?? 15_000;
+    const { group } = this.options;
     return runSteps({ carrier: 'dpd-pl', budgetMs, signal: context.signal, recorder: this.options.recorder ?? NOOP_RECORDER },
       [{ id: 'direct', run: async ({ signal, remainingMs }) => {
         signal.throwIfAborted();
@@ -71,13 +84,23 @@ export class DpdPlTracker {
           });
         }
         return result;
-      } }]);
+      } }, {
+        id: 'group',
+        enabled: Boolean(group) && WAYBILL.test(number),
+        recovers: (error) => error instanceof NotFoundError,
+        run: ({ signal, remainingMs }) => group!(number, { signal, budgetMs: remainingMs }),
+      }]);
   }
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new DpdPlTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'dpd-pl', recordsSteps: true, steps: ['direct'],
+  // DPD's guest service answers for the whole group; Belgium's unit asks it alone.
+  const group = new DPDTracker({ country: 'BE', fetcher: environment.fetcher, userAgent: environment.userAgent });
+  const options = { fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent };
+  const tracker = new DpdPlTracker({ ...options, group: (waybill, context) => group.guest(waybill, context) });
+  // Recognition reads DPD Poland's tracker alone.
+  const own = new DpdPlTracker(options);
+  return { id: 'dpd-pl', recordsSteps: true, steps: ['direct', 'group'],
     track: (input, context) => tracker.fetch(input.number, context, readerLanguage(input, ['pl']) ?? 'en'),
-    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context), () => accepted(() => normalizeDpdPlNumber(number))) };
+    recognize: (number, context) => recognizeFromLookup(() => own.fetch(number, context), () => accepted(() => normalizeDpdPlNumber(number))) };
 };

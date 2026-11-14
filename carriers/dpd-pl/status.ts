@@ -1,5 +1,9 @@
 import type { Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { API_LABELS, apiStage, statusMap as dpd } from '../dpd/status.js';
+
+/** The enumeration of DPD's group-wide guest service, asked about a waybill the page has no trace of. */
+const GUEST_CODES: ReadonlySet<string> = new Set(Object.keys(API_LABELS));
 
 /**
  * The English tracking page's scan wording, mapped whole. The shared
@@ -98,11 +102,18 @@ export function isDpdPlNotice(wording: string): boolean {
 /**
  * What the map says about one scan. The page's scans carry wording only. A
  * collection's stage depends on the scans before it, so the map does not know
- * it from its wording; notices are left without a stage on purpose.
+ * it from its wording; notices are left without a stage on purpose. The group's
+ * guest service codes its milestones, which DPD's map reads, leaving the same
+ * ones unmapped on purpose.
  */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => code ? undefined : SCANS.get(ENGLISH.get(wording) ?? wording),
-  gaps: [...NOTICE_KEYS, ...ENGLISH.keys()].filter(wording => isDpdPlNotice(wording)).map(wording => ({
-    wording, note: 'A message to the recipient, not a movement: the parcel keeps the stage it had.',
-  })),
+  stage: (code, wording) => code
+    ? (GUEST_CODES.has(code) ? apiStage(code) ?? undefined : undefined)
+    : SCANS.get(ENGLISH.get(wording) ?? wording),
+  gaps: [
+    ...[...NOTICE_KEYS, ...ENGLISH.keys()].filter(wording => isDpdPlNotice(wording)).map(wording => ({
+      wording, note: 'A message to the recipient, not a movement: the parcel keeps the stage it had.',
+    })),
+    ...dpd.gaps.filter(gap => gap.code !== undefined && GUEST_CODES.has(gap.code)),
+  ],
 };
