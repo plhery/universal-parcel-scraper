@@ -456,6 +456,27 @@ describe('classifyWording', () => {
     }
   });
 
+  it('keeps a release with customs when the line goes on to an inspection, examination or detention', () => {
+    for (const wording of [
+      'Import allowed by destination customs, held for inspection', 'Allowed by customs, held for inspection',
+      'Customs cleared, held for inspection', 'Released by customs; selected for examination', 'Released by customs, awaiting inspection',
+      'Customs clearance completed, under examination', 'Import customs clearance completed. Shipment detained',
+      'Released by customs, on hold for inspection',
+      'Dédouané, en attente de contrôle', 'Vom Zoll freigegeben, zur Kontrolle angehalten', 'Verzollt, Prüfung läuft',
+      'Liberado por aduana, retenido para inspección', 'Liberado pela alfândega, aguardando inspeção',
+      'Odprawa celna zakończona, kontrola celna', 'Выпущено таможней, направлено на досмотр',
+      // The same past a step the carrier has not taken yet.
+      'Shipment has not been handed over to the carrier: customs cleared, held for inspection',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'customs', source: 'wording:language' });
+    // An inspection done before the release or with it, one spared, or a release after the hold moves the parcel on.
+    for (const wording of [
+      'Cleared customs after inspection', 'Cleared customs after a physical inspection', 'Released from customs after examination',
+      'Released by customs without inspection', 'Customs inspection completed, released', 'Cleared through customs, inspection completed',
+      'Released by customs, inspection has been completed', 'Customs cleared; held for inspection; released by customs',
+      'Held for inspection, then released by customs', 'Dédouané après passage de contrôle', 'Dédouané et contrôlé', 'Verzollt nach Prüfung',
+    ]) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage: 'in_transit', source: 'wording:language' });
+  });
+
   it('reads a post\'s movement and acceptance in Ukrainian and Russian', () => {
     for (const wording of [
       'Прибуло до Логістичного центру', 'Прибуло до міжнародного терміналу', 'Прибыло в сортировочный центр',

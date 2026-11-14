@@ -197,6 +197,23 @@ const CUSTOMS_RELEASED = new RegExp([
   // back from customs ("Возвращено с таможни"), unless it goes back to the sender.
   String.raw`${CYRILLIC_START}(?:випущен|выпущен)[а-яієґ]*(?: [а-яієґ']+){0,3}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_CUSTOMS}[а-яієґ]* (?:оформлення|оформление|контроль|очищення|очистка|догляд|досмотр|декларування|декларирование)(?: [а-яієґ']+)? (?:завершен|пройден|закінчен|успішно завершен|успешно завершен)|${CYRILLIC_START}(?:завершен[оа]?|завершени[ея]|завершення|пройден[оа]?|закінчен[оа]?|закінчення|закончил[оаи]?|закінчил[оаи]?|завершил[оаи]?)(?: [а-яієґ']+){0,2}? ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:прошл[оаи]|проишл[оаи]|покинул[оаи]?|залишил[оаи]?) ${CYRILLIC_CUSTOMS}|${CYRILLIC_START}(?:вибул[оаи]?|вибув|выбыл[оаи]?|убыл[оаи]?|возвращен[оаы]?|повернут[оаі]?|повернен[оаі]?) (?:з|із|зі|из|с|со) ${CYRILLIC_CUSTOMS}[а-яієґ]*(?![а-яієґ])(?!.*(?:отправител|відправник))`,
 ].join('|'));
+const CUSTOMS_RELEASES = new RegExp(CUSTOMS_RELEASED.source, 'g');
+/**
+ * An inspection, examination or detention, in each language: the noun or the hold itself, not
+ * "inspected" or "contrôlé", which may report one done.
+ */
+const CUSTOMS_CHECK = String.raw`(?:\b(?:inspection|inspecting|examination|examining|detained|detaining|detention|seized|seizure|confiscated|confiscation|(?:pour|en|au|sous|un|le|de|du) controle|kontroll?(?:e|en|a|i)|prufung|ispezione|controllo|inspeccion|inspecao)\b|${CYRILLIC_START}(?:досмотр|огляд))`;
+/** A check still to come or under way: not one done before ("after inspection", "inspection completed") or spared. */
+const CUSTOMS_CHECK_PENDING = new RegExp(String.raw`(?<!\b(?:after|following|upon|post|without|no|apres|sans|nach|ohne|dopo|senza|tras|despues de|sin|apos|sem|po|bez)(?: [\w'-]+){0,2} )${CUSTOMS_CHECK}(?!(?: (?:has|have|had|was|were|is|are|been|now|fully|a|ete|est|wurde|ist|e|stato|stata|ha|sido|fue|foi|zostala|zostal|zostaly))* (?:complete|completed|finished|done|passed|ended|lifted|successful|successfully|cleared|released|waived|not required|terminee?|achevee?|effectuee?|abgeschlossen|beendet|erledigt|completat[oa]|conclus[oa]|superat[oa]|terminat[oa]|completad[oa]|finalizad[oa]|concluid[oa]|realizad[oa]|zakonczon[aey])\b)`);
+
+/**
+ * Clearance completed or the parcel released, unless the line goes on to an inspection, examination
+ * or detention after its last release: "Import allowed by destination customs, held for inspection".
+ */
+function customsReleased(text: string): boolean {
+  const last = [...text.matchAll(CUSTOMS_RELEASES)].at(-1);
+  return last !== undefined && !CUSTOMS_CHECK_PENDING.test(text.slice(last.index + last[0].length));
+}
 /** An export clearance or declaration started or under way in the country the parcel leaves, in English and Chinese. */
 const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
   String.raw`\bexport (?:customs? )?(?:clearance|declaration)(?: (?:has |is |was )?(?:started|commenced|begun|in progress|processing|under ?way|ongoing))\b`,
@@ -515,7 +532,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
     const rest = text.replace(NOT_YET, ' ');
     if (rest !== text) {
       return trackingLanguageStage(rest.replace(/^[\s,;:.!?]+|[\s,;:]+$/g, ''))
-        ?? (CUSTOMS.test(text) ? (!CUSTOMS_PENDING.test(text) && CUSTOMS_RELEASED.test(text) ? 'in_transit' : 'customs') : 'registered');
+        ?? (CUSTOMS.test(text) ? (!CUSTOMS_PENDING.test(text) && customsReleased(text) ? 'in_transit' : 'customs') : 'registered');
     }
   }
   if (/^(?:reported|recorded|announced|item created|enregistre|annonce|erfasst|angekundigt|registrato|annunciato)$/.test(text)) return 'registered';
@@ -532,7 +549,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // submissions and clearance still pending or negated stay with customs.
   if (/(?:国内|出口|进口|目的国)?清关中/.test(text)) return 'customs';
   if (CUSTOMS_PENDING.test(text)) return 'customs';
-  if (CUSTOMS_RELEASED.test(text)) return 'in_transit';
+  if (customsReleased(text)) return 'in_transit';
   if (CUSTOMS.test(text)) return 'customs';
 
   if (/out for (?:physical )?delivery|\bout with (?:the |a |our |your )?(?:delivery )?(?:courier|driver)s?\b(?! for (?:pick ?up|collection|return))|being delivered|\bin delivery\b(?! (?:terminal|depot|cent(?:er|re)|office|facility|hub|station|base|area|point)s?\b)|(?:loading|loaded).*delivery vehicle|on (?:\w+ )?vehicle for delivery|\bon ?board for delivery\b|(?:courier|driver|delivery champion) has (?:the|your) (?:shipment|parcel|package|item)|\bcourier will deliver (?:the|your) (?:parcel|package|shipment|item) (?:soon|today)\b|^release (?:of (?:the )?(?:shipment|package|parcel) )?for delivery(?: abroad)?$|en cours de livraison|en livraison|de la livraison de (?:son|votre) colis ce jour|charg(?:e|ement).*vehicule de livraison|in zustellung|zustellfahrzeug.*(?:geladen|verladen)|(?:beladen|verladung).*zustellfahrzeug|in consegna|caric(?:at|amento).*veicolo.*consegna/.test(text)) return 'out_for_delivery';
