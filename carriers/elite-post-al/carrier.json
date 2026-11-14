@@ -1,0 +1,33 @@
+{
+  "id": "elite-post-al",
+  "displayName": "Elite Post",
+  "aliases": [
+    "Elite Post SHPK"
+  ],
+  "region": {
+    "countries": [
+      "AL"
+    ]
+  },
+  "brand": {
+    "color": "#07664f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.elitepost.al/apps/package-tracking",
+    "canaryUrl": "https://app.elitepost.al/apps/package-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

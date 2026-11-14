@@ -1,0 +1,33 @@
+{
+  "id": "x-express-rs",
+  "displayName": "X Express Serbia",
+  "aliases": [
+    "X Express DOO Beograd"
+  ],
+  "region": {
+    "countries": [
+      "RS"
+    ]
+  },
+  "brand": {
+    "color": "#e85e21"
+  },
+  "selectable": true,
+  "timezone": "Europe/Belgrade",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "canaryUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

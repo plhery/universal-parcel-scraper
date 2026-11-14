@@ -52,7 +52,7 @@ The anonymous reply hides what CDEK shows only to the signed-in recipient, such 
 code. The adapter reads no delivery estimate, weight or proof of delivery. Future milestones, the
 service's tracking limit and "try again later" answers, and its replies for other services'
 numbers were not seen live; the adapter follows the app's code for them. Orders handled in
-Kazakhstan and Belarus were not checked.
+Kazakhstan, Belarus and Serbia, where an agent sells CDEK's services, were not checked.
 
 ## Testing
 

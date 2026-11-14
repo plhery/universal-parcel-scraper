@@ -1,0 +1,45 @@
+{
+  "id": "ntc-express",
+  "displayName": "NTC Express",
+  "aliases": [
+    "NTC Logistics",
+    "NTC LOGISTIC d.o.o."
+  ],
+  "region": {
+    "countries": [
+      "ME"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd33"
+  },
+  "selectable": true,
+  "timezone": "Europe/Podgorica",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://ntclog.me/?page=shipment-tracking&lang=me&shipment_code={trackingNumber}",
+    "searchUrl": "https://ntclog.me/?page=shipment-tracking&lang=me",
+    "canaryUrl": "https://ntclog.me/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "ntclog.me"
+      ],
+      "pathPattern": "^/?$",
+      "params": [
+        "shipment_code"
+      ]
+    }
+  ],
+  "detection": []
+}

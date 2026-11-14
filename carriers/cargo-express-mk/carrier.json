@@ -1,0 +1,35 @@
+{
+  "id": "cargo-express-mk",
+  "displayName": "Cargo Express",
+  "aliases": [
+    "Карго Експрес",
+    "Kargo Ekspres",
+    "Карго Експрес ДООЕЛ"
+  ],
+  "region": {
+    "countries": [
+      "MK"
+    ]
+  },
+  "brand": {
+    "color": "#00a64f"
+  },
+  "selectable": true,
+  "timezone": "Europe/Skopje",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "canaryUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

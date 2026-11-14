@@ -1,0 +1,44 @@
+{
+  "id": "intex-courier",
+  "displayName": "Intex Courier",
+  "aliases": [
+    "INTEXCOURIER SHPK"
+  ],
+  "region": {
+    "countries": [
+      "AL"
+    ]
+  },
+  "brand": {
+    "color": "#ff6615"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://app.intexcourier.al/packages/getByTrackingCode?tracking_number_list={trackingNumber}",
+    "searchUrl": "https://intexcourier.al/gjurmo.html",
+    "canaryUrl": "https://app.intexcourier.al/packages/getByTrackingCode",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "app.intexcourier.al"
+      ],
+      "pathPattern": "^/packages/getByTrackingCode/?$",
+      "params": [
+        "tracking_number_list"
+      ]
+    }
+  ],
+  "detection": []
+}

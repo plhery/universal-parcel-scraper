@@ -1,0 +1,33 @@
+{
+  "id": "express-one-me",
+  "displayName": "Express One Montenegro",
+  "aliases": [
+    "Express One Montenegro d.o.o."
+  ],
+  "region": {
+    "countries": [
+      "ME"
+    ]
+  },
+  "brand": {
+    "color": "#f58220"
+  },
+  "selectable": true,
+  "timezone": "Europe/Podgorica",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://expressone.me/pracenje-posiljke",
+    "canaryUrl": "https://expressone.me/pracenje-posiljke",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

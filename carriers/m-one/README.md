@@ -1,7 +1,9 @@
 # M-ONE
 
 M-ONE is the parcel courier of Serbia's Milšped group. It delivers in Serbia to the door and to
-its parcel lockers. Tracked through the lookup the tracker on its home page makes.
+its parcel lockers, and, through the group's companies there, in Montenegro, where it runs
+lockers too, North Macedonia and Albania. Tracked through the lookup the tracker on its home page
+makes.
 
 ## How it works
 

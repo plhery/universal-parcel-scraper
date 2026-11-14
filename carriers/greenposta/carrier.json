@@ -1,0 +1,47 @@
+{
+  "id": "greenposta",
+  "displayName": "Greenposta",
+  "aliases": [
+    "Green Posta",
+    "Greenposta sh.p.k."
+  ],
+  "region": {
+    "countries": [
+      "AL",
+      "XK",
+      "MK"
+    ]
+  },
+  "brand": {
+    "color": "#35b087"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://green-posta.al/Tracking?trackingNumber={trackingNumber}",
+    "searchUrl": "https://green-posta.al/Tracking",
+    "canaryUrl": "https://green-posta.al/Tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "green-posta.al"
+      ],
+      "pathPattern": "^/[Tt]racking/?$",
+      "params": [
+        "trackingNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

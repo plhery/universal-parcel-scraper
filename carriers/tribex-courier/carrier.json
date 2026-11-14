@@ -1,0 +1,33 @@
+{
+  "id": "tribex-courier",
+  "displayName": "Tribex Courier",
+  "aliases": [
+    "Tribex Courier sh.p.k."
+  ],
+  "region": {
+    "countries": [
+      "AL"
+    ]
+  },
+  "brand": {
+    "color": "#091748"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "canaryUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

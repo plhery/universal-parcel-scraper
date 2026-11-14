@@ -1,0 +1,35 @@
+{
+  "id": "adex-al",
+  "displayName": "ADEx",
+  "aliases": [
+    "Albanian Delivery Express",
+    "Albanian Delivery Express sh.p.k.",
+    "Adex Albania"
+  ],
+  "region": {
+    "countries": [
+      "AL"
+    ]
+  },
+  "brand": {
+    "color": "#dc0000"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://adex.al/gjurmo/",
+    "canaryUrl": "https://adex.al/gjurmo/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -2335,6 +2335,12 @@
     "reason": "One Morning Global waybill from the older tracker page has this layout, too little to tell how the carrier numbers parcels, so detection leaves it unclaimed."
   },
   {
+    "carrier": "mr-courier-al",
+    "pattern": "^MR\\d{6}$",
+    "kind": "by_design",
+    "reason": "Mr. Courier's one example code, in a comment in its tracking page's script, is MR and six digits: too short a shape and too little evidence for a rule."
+  },
+  {
     "carrier": "mrl-global",
     "pattern": "^C[A-Z]{3}\\d{6}$",
     "kind": "collision",

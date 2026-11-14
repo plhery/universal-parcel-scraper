@@ -1,0 +1,34 @@
+{
+  "id": "mr-courier-al",
+  "displayName": "Mr. Courier",
+  "aliases": [
+    "Posta Mr.Courier",
+    "Mr. Courier Shpk"
+  ],
+  "region": {
+    "countries": [
+      "AL"
+    ]
+  },
+  "brand": {
+    "color": "#005c92"
+  },
+  "selectable": true,
+  "timezone": "Europe/Tirane",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "canaryUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

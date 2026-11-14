@@ -2,6 +2,9 @@
 
 X Express parcels use enabled universal providers. There is no dedicated adapter.
 
+X Express in Serbia has its own tracker and number layout:
+[X Express Serbia](../x-express-rs/README.md).
+
 ## Numbers
 
 X Express shipment numbers are X or A followed by nine digits, or eight digits, as the tracking

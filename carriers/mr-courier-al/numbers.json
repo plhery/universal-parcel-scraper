@@ -1,0 +1,30 @@
+{
+  "carrier": "mr-courier-al",
+  "records": [
+    {
+      "number": "MR022832",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mrcourier.al/gjurmo-dergesen/",
+        "date": "2026-11-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "note": "A comment in the script of Mr. Courier's tracking page gives this code as an example of what the tracking field sends.",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "loggi"
+        ]
+      }
+    }
+  ]
+}

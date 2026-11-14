@@ -1,0 +1,33 @@
+{
+  "id": "hopexpress",
+  "displayName": "Hopexpress",
+  "aliases": [
+    "HOPEXPRESS DOO Beograd"
+  ],
+  "region": {
+    "countries": [
+      "RS"
+    ]
+  },
+  "brand": {
+    "color": "#1c75bc"
+  },
+  "selectable": true,
+  "timezone": "Europe/Belgrade",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "canaryUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

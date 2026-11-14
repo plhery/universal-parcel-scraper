@@ -1,0 +1,44 @@
+{
+  "id": "dm-express-me",
+  "displayName": "DM Express",
+  "aliases": [
+    "DM EXPRESS DELIVERY d.o.o."
+  ],
+  "region": {
+    "countries": [
+      "ME"
+    ]
+  },
+  "brand": {
+    "color": "#e85d04"
+  },
+  "selectable": true,
+  "timezone": "Europe/Podgorica",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://track.dmexpress.me/track?code={trackingNumber}",
+    "searchUrl": "https://track.dmexpress.me/",
+    "canaryUrl": "https://track.dmexpress.me/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "track.dmexpress.me"
+      ],
+      "pathPattern": "^/(?:track/?)?$",
+      "params": [
+        "code"
+      ]
+    }
+  ],
+  "detection": []
+}
