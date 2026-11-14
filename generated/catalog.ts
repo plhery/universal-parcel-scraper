@@ -2395,10 +2395,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ]
   },
   "evri": {
-    "displayName": "Evri",
+    "displayName": "Evri International",
     "color": "#00014d",
     "aliases": [
-      "Evri International",
       "Global Eco",
       "GlobalEco"
     ],
