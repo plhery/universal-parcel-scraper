@@ -17,3 +17,4 @@ cccee3087dce6115f88101f20e35da90e6d702dd:carriers/dpd-nl/adapter.test.ts:generic
 5985f11303e497bbee7de4aa79183e889002fdb6:carriers/forward-air/fixtures/in-transit.json:generic-api-key:10
 dc45b7945b7467cdbfbca4631cf64104265fef12:carriers/forward-air/fixtures/delivered.json:generic-api-key:10
 dc45b7945b7467cdbfbca4631cf64104265fef12:carriers/forward-air/fixtures/delivered.json:generic-api-key:127
+2b42f350d24645194ed93da144c9fc0d3b6056f8:carriers/adex-al/README.md:generic-api-key:23
