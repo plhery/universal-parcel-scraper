@@ -334,6 +334,20 @@ describe('universal discovery chain', () => {
     await expect(lookup(delivered(['SEUR']))).resolves.toMatchObject({ discovered_carrier: 'seur', current_stage: 'delivered' });
   });
 
+  it('reads BUFFALO\'s "RETURNS" as ParcelsApp relays it, and no one else\'s', async () => {
+    const states = [
+      { date: '2026-03-03T17:10:00Z', status: 'RETURNS', carrier: 0 },
+      { date: '2026-03-03T06:40:00Z', status: 'SCAN VEHICLE DEPARTURE', carrier: 0 },
+    ];
+    const lookup = (carriers: string[]) => new UniversalTracker({ providers: ['ParcelsApp'],
+      fetcher: vi.fn<typeof fetch>().mockResolvedValue(reply({ carriers, states })) }).fetchSource('ParcelsApp', 'BUFZA0SK00000BUYQ', 20_000);
+    const buffalo = await lookup(['Buffalo Logistics']);
+    expect(buffalo).toMatchObject({ discovered_carrier: 'buffalo-ex', current_stage: 'in_transit' });
+    expect(buffalo.events?.find((event) => event.description === 'RETURNS')).toMatchObject({ stage: 'in_transit', stage_source: 'wording:provider' });
+    const other = await lookup(['Universal Postal Union']);
+    expect(other.events?.find((event) => event.description === 'RETURNS')).toMatchObject({ stage: 'pending' });
+  });
+
   it('treats a history without one dated scan as inconclusive and moves on', async () => {
     // No offset, courier or place: the scan keeps its wall time and has no instant.
     const undated = { data: { tracking_number: number, events: [{ timestamp: '2026-09-10T10:00:00', status: 'Delivered', dispatch_code_id: 7 }] } };

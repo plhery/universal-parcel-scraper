@@ -13,6 +13,12 @@ The high-confidence rule claims both layouts: the BUFZA prefix and YQ suffix are
 them, since many carriers print bare digit runs of that length. The customs reference the
 tracker shows next to the number is not a tracking number.
 
+## Statuses
+
+ParcelsApp relays the scan of a parcel back at a BUFFALO depot after a round as a bare
+"RETURNS", and the parcel leaves again the next morning. A rule scoped to BUFFALO and ParcelsApp
+reads it as in transit; elsewhere the word can name a return to the sender.
+
 ## Links
 
 `buffaloex.com/tracks.html?order={number}` is the address the site's home page form submits to;

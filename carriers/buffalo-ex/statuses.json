@@ -23,6 +23,7 @@
     {"wording": "Air Shipping", "stage": "in_transit", "language": "en", "confirmedBy": "documentation", "note": "Listed among the tracking statuses on https://www.buffaloex.com/support.html: the parcel left China by air or sea freight."},
     {"wording": "At Destination", "stage": "customs", "language": "en", "confirmedBy": "documentation", "note": "Listed among the tracking statuses on https://www.buffaloex.com/support.html: the parcel reached South Africa and waits for customs clearance."},
     {"wording": "Inbound", "stage": "in_transit", "language": "en", "confirmedBy": "documentation", "note": "Listed among the tracking statuses on https://www.buffaloex.com/support.html: the parcel reached BUFFALO's warehouse in South Africa."},
-    {"wording": "Client Received", "stage": "delivered", "language": "en", "confirmedBy": "documentation", "note": "Listed among the tracking statuses on https://www.buffaloex.com/support.html: delivered to the address or a counter."}
+    {"wording": "Client Received", "stage": "delivered", "language": "en", "confirmedBy": "documentation", "note": "Listed among the tracking statuses on https://www.buffaloex.com/support.html: delivered to the address or a counter."},
+    {"wording": "RETURNS", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "ParcelsApp's copy of the scan of a parcel back at a BUFFALO depot after a round: each came the evening after a vehicle departure, and the parcel left again the next morning. A rule scoped to BUFFALO and ParcelsApp reads it."}
   ]
 }

@@ -479,6 +479,13 @@ stages the scan by that carrier's map when the map declares that it reads wordin
 whole (`wholeWording`), with the source `carrier_map` (`relayedWordingStage()`). A map that reads
 such wording by keywords is left out: a relayed sentence can carry its words in another sense.
 The `unknown` map cannot tell those scans apart, so it can read them otherwise.
+A word one carrier uses in a sense of its own, which the shared rules leave open or read
+otherwise, is a scoped rule ([core/status/scoped.ts](core/status/scoped.ts)): the carrier, the
+providers whose copies it reads when only some relay the word so, the whole wording and the
+stage. A provider's scan belongs to the carrier it names (`reporting_carrier`), else to the
+parcel's carrier (`discovered_carrier`) when the provider names no other. The rule outranks the
+shared rules, never a carrier's map, and gives the source `wording:provider`. Everywhere else,
+the `unknown` map included, the word keeps the shared reading.
 
 Some carrier categories cover several milestones. Exact carrier labels refine those cases;
 explanatory reasons and future delivery instructions do not establish a new milestone.

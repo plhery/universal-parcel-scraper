@@ -109,6 +109,9 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
 - 17TRACK and Postal Ninja name the carrier behind each scan in `reporting_carrier`. Postal
   Ninja stages a scan by that carrier's map where the map reads wording without a code whole
   ([status model](../ARCHITECTURE.md#status-model)).
+- A wording rule can hold for one carrier only, or for the providers that relay its word in
+  that sense ([core/status/scoped.ts](../core/status/scoped.ts)). Elsewhere the word keeps the
+  shared reading.
 - A carrier name reported by a provider is a hint. A consumer may try that carrier's
   adapter, and adopts the carrier only when that adapter confirms the shipment. A name is
   not proposed as `discovered_carrier` when the number fails a check digit that the
