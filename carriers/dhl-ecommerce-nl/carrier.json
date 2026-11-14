@@ -88,6 +88,11 @@
       "id": "dhl-ecommerce-nl-3",
       "pattern": "^3S[A-Z]{2,3}\\d{7,12}$",
       "confidence": "low"
+    },
+    {
+      "id": "dhl-ecommerce-nl-4",
+      "pattern": "^JJD000090\\d{14,16}$",
+      "confidence": "high"
     }
   ]
 }

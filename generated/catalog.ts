@@ -686,7 +686,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "checksum": "frankier-id"
       },
       {
-        "pattern": "^JJD(?!\\d{16}$)(?!0146\\d{14}$)[A-Z0-9]{8,}$",
+        "pattern": "^JJD(?!\\d{16}$)(?!0146\\d{14}$)(?!000090\\d{14,16}$)[A-Z0-9]{8,}$",
         "confidence": "high"
       },
       {
@@ -16904,6 +16904,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^3S[A-Z]{2,3}\\d{7,12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^JJD000090\\d{14,16}$",
+        "confidence": "high"
       }
     ]
   },
@@ -58457,7 +58461,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dex-pk": ["dex-pk-1"],
   "dg-transporte": [],
   "dhl-ecommerce-es": ["dhl-ecommerce-es-1","dhl-ecommerce-es-2"],
-  "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1","dhl-ecommerce-nl-2","dhl-ecommerce-nl-3"],
+  "dhl-ecommerce-nl": ["dhl-ecommerce-nl-1","dhl-ecommerce-nl-2","dhl-ecommerce-nl-3","dhl-ecommerce-nl-4"],
   "dhl-ecommerce-pl": ["dhl-ecommerce-pl-1"],
   "dhl-ecommerce-uk": ["dhl-ecommerce-uk-2","dhl-ecommerce-uk-1"],
   "dhl-express": ["dhl-express-waybill","dhl-express-piece","dhl-express-piece-label","dhl-express-piece-label-after"],
