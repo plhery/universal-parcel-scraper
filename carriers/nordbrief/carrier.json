@@ -1,0 +1,33 @@
+{
+  "id": "nordbrief",
+  "displayName": "NordBrief",
+  "aliases": [
+    "Nordbrief GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#0b80c4"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "canaryUrl": "https://paketportal.nordbrief-ostsee.de/index.php/tracking/search",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

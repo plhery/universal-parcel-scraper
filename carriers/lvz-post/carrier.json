@@ -1,0 +1,33 @@
+{
+  "id": "lvz-post",
+  "displayName": "LVZ Post",
+  "aliases": [
+    "LVZ Post GmbH"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#004b95"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://lvz-post.de/privatkunden/sendungsverfolgung/",
+    "canaryUrl": "https://paketversand.lvz-post.de/index.php/tracking/search",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

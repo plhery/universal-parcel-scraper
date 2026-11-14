@@ -1,0 +1,44 @@
+{
+  "id": "der-kurier",
+  "displayName": "DER KURIER",
+  "aliases": [
+    "DER KURIER GmbH & Co. KG"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#193a67"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://derkurier.de/sendungsverfolgung/?d-pt-search={trackingNumber}",
+    "searchUrl": "https://derkurier.de/sendungsverfolgung/",
+    "canaryUrl": "https://derkurier.de/sendungsverfolgung/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "derkurier.de"
+      ],
+      "pathPattern": "^/sendungsverfolgung/?$",
+      "params": [
+        "d-pt-search"
+      ]
+    }
+  ],
+  "detection": []
+}

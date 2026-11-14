@@ -1,0 +1,42 @@
+{
+  "id": "night-star-express",
+  "displayName": "Night Star Express",
+  "aliases": [
+    "Night Star Express GmbH Logistik",
+    "NSE"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#004170"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://customer.night-star-express.de/tracking/{trackingNumber}",
+    "searchUrl": "https://customer.night-star-express.de/",
+    "canaryUrl": "https://customer.night-star-express.de/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "customer.night-star-express.de"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

@@ -30,8 +30,9 @@ through its own tracker on intex-paketdienst.de.
   falls to the shared rules.
 - The destination's `D-` prefix gives Germany as the destination country. Its postcode and town
   are the recipient's and are not kept.
-- An archived page holds a hidden link to Der Kurier's tracker with another parcel number. Der
-  Kurier is not in the catalog, so that number is not kept and no partner is named.
+- An archived page holds a hidden link to the tracker of [DER KURIER](../der-kurier/README.md)
+  with another parcel number. The reader never sees it, so that number is not kept and no
+  partner is named.
 - The not-found page offers to look the same number up at FedEx. That is no hand-off: INTEX
   does not know the number.
 
