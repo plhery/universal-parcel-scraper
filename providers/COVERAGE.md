@@ -31,6 +31,10 @@ Emile is outside it too. ParcelsApp returns the history a consolidator relays fo
 number, Emile's scans included; Ship24 had none for the same references. UPU does not take
 the format, and 17TRACK and Postal Ninja are unverified for it.
 
+FAN Courier International is outside it as well. Postal Ninja returns its history under the
+name "FAN Courier", which for a number of its shape names FAN Courier International; the
+other providers are unverified for it.
+
 ## Reading the table
 
 A check mark means scan history came back. The number beside it counts projected rows,
