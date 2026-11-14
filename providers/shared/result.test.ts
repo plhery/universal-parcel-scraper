@@ -211,6 +211,11 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00Z', 'Keine weiteren Details erforderlich, Entladung')).not.toBeNull();
   });
 
+  it("leaves out DPD Portugal's note of an expected delivery day it set, as its own adapter does", () => {
+    expect(event('2026-01-07T18:16:00Z', 'DATA PREVISTA DE ENTREGA')).toBeNull();
+    expect(event('2026-01-07T18:16:00Z', 'Data prevista de entrega alterada pelo destinatário')).not.toBeNull();
+  });
+
   it('leaves out the emails and texts XDP sends, with the name they name, as its own tracker does', () => {
     expect(event('2026-03-02T07:00:00Z', 'Manifested but not collected email sent to Sam')).toBeNull();
     expect(event('2026-03-02T07:00:00Z', 'NOT COLLECTED EMAIL, Manifested but not collected email sent to Sam')).toBeNull();

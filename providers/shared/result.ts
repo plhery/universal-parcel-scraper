@@ -55,8 +55,10 @@ export function text(value: unknown): string {
 // which ParcelsApp relays as a row of its own beside DHL's scans, says nothing either.
 // Nor do the emails and texts XDP sends, which its own tracker leaves out, as ParcelsApp and 17TRACK relay
 // them: "Manifested but not collected email sent to" and the person's name, "Collect SMS alert sent".
+// DPD Portugal's note that it set an expected delivery day (its code 714), dated then and naming no
+// day, which its own adapter leaves out, says nothing either.
 export function isNotice(description: string): boolean {
-  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^a desired (?:day for delivery|paketshop|parcel ?shop) (?:has been|was) booked\b|^keine weiteren details erforderlich[.!]?$|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:manifested but not collected email|clean email notification) sent to\b|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:delivery|collect) (?:email|sms) alert sent[.!]?$/i.test(description);
+  return /enter .*?(?:postal|post|zip|phone)|select (?:a |the )?(?:carrier|destination country)|no information about your (?:package|parcel|shipment)|tracking (?:is |temporarily )?unavailable|tracking number (?:not found|is incorrect|must (?:only )?(?:contain|consist|be)\b)|check that (?:the |your )?tracking number is correct|no tracking (?:information|data)|delivery preference|captcha|verify (?:you|your)|enable javascript|try again later|by tapping the button|^(?:shipment parameters|recipient information) updated[.!]?$|^a preferred drop-off location was booked\b|^a desired (?:day for delivery|paketshop|parcel ?shop) (?:has been|was) booked\b|^keine weiteren details erforderlich[.!]?$|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:manifested but not collected email|clean email notification) sent to\b|^(?:[a-z]+(?: [a-z]+){0,3}, )?(?:delivery|collect) (?:email|sms) alert sent[.!]?$|^data prevista de entrega[.!]?$/i.test(description);
 }
 
 // Raw text, so accented and plain spellings are both listed. A carrier receiving the
@@ -619,8 +621,10 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^in fedex possession(?:[.!]?$|\s*[-—–:]\s)/i.test(value)) return 'accepted';
   if (/^checked in at origin hub[.!]?$|^parcel received and processing[.!]?$/i.test(value)) return 'accepted';
   if (/^parcel shipped[.!]?$|^(?:airline|flight) delay(?:ed)?[.!]?$/i.test(value)) return 'in_transit';
-  // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them.
-  if (/^shipment (?:under processing at origin hub|despatched to (?:transshipment hub|overseas)|received at (?:transshipment hub|delivery branch))[.!]?$/i.test(value)) return 'in_transit';
+  // Quantium Solutions' hub steps, which aggregators relay for SingPost's cross-border parcels, as its own map reads them,
+  // and its receipt at the destination post, after the despatch from the destination transit centre: Yanwen's copy names
+  // it "Arrival at Destination Post".
+  if (/^shipment (?:under processing at origin hub|despatched to (?:transshipment hub|overseas)|received at (?:transshipment hub|delivery branch|post office))[.!]?$/i.test(value)) return 'in_transit';
   // DHL eCommerce's US label awaiting the parcel, and the parcel handed to the last-mile partner, as its own map reads them.
   if (/^dhl ecommerce currently awaiting shipment\b/i.test(value)) return 'registered';
   if (/^tendered to (?:the )?delivery service provider\b/i.test(value)) return 'in_transit';

@@ -1750,7 +1750,7 @@ describe("universal providers' answers", () => {
       ['In FedEx possession — At FedEx location', 'accepted'],
       ['Shipment under processing at origin hub', 'in_transit'], ['Shipment despatched to transshipment hub', 'in_transit'],
       ['Shipment received at transshipment hub', 'in_transit'], ['Shipment despatched to overseas', 'in_transit'],
-      ['Shipment received at delivery branch', 'in_transit'],
+      ['Shipment received at delivery branch', 'in_transit'], ['Shipment received at Post Office', 'in_transit'],
       ['Goods leave the operation center', 'in_transit'], ['Package left the warehouse', 'in_transit'], ['Leave the warehouse', 'in_transit'],
       ['Package shipped from the warehouse', 'in_transit'],
       ["We're processing your parcel at our hub", 'in_transit'], ['Warehouse. Inbound warehouse', 'in_transit'],
