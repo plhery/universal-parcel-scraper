@@ -1,0 +1,34 @@
+{
+  "id": "post-international",
+  "displayName": "Post-International",
+  "aliases": [
+    "ПОСТ-ІНТЕРНЕЙШНЛ",
+    "ТОВ «ПОСТ-ІНТЕРНЕЙШНЛ»"
+  ],
+  "region": {
+    "countries": [
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#faf257"
+  },
+  "selectable": true,
+  "timezone": "Europe/Kyiv",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://post-int.com/",
+    "canaryUrl": "https://post-int.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

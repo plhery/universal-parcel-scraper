@@ -81,6 +81,7 @@ export const uncheckedSearchPages: Partial<Record<CarrierId, string>> = {
   'pony-express': 'www.ponyexpress.ru answers 403 to many networks outside Russia; an archived copy shows its waybill field',
   postaplus: 'postaplus.com draws its tracking form late in a script app, after the automated check gives up',
   saee: 'saee.sa answers 503 to automated checks from many networks; archived copies of its tracking page show the waybill field',
+  'sofex-post': 'sofexpost.md keeps its tracking box in a hidden pop-up that its "Verifică statutul coletului" button opens, so the check finds no field on load',
   slgtrax: 'sonic.pk drops connections from the weekly check\'s network and some others; to European and other American networks it shows its tracking number field',
   'spee-dee': 'the tracking form is a frame from packages.speedeedelivery.com, which drops connections from many networks',
   'surat-kargo': 'www.suratkargo.com.tr answers a Cloudflare block to many networks outside Turkey; an archived copy shows its number field',

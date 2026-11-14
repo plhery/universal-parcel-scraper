@@ -1,0 +1,33 @@
+{
+  "id": "fan-courier-md",
+  "displayName": "FAN Courier Moldova",
+  "aliases": [
+    "Fan Transportation SRL"
+  ],
+  "region": {
+    "countries": [
+      "MD"
+    ]
+  },
+  "brand": {
+    "color": "#02559e"
+  },
+  "selectable": true,
+  "timezone": "Europe/Chisinau",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
+    "canaryUrl": "https://www.fancourier.md/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

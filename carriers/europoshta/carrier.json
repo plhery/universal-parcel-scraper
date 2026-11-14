@@ -1,0 +1,45 @@
+{
+  "id": "europoshta",
+  "displayName": "Europoshta",
+  "aliases": [
+    "ЄВРОПОШТА",
+    "ТОВ «ЄВРОПОШТА»"
+  ],
+  "region": {
+    "countries": [
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#ffde08"
+  },
+  "selectable": true,
+  "timezone": "Europe/Kyiv",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://europoshta.com.ua/tracking/?track_input={trackingNumber}&go_button=OK",
+    "searchUrl": "https://europoshta.com.ua/tracking/",
+    "canaryUrl": "https://europoshta.com.ua/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "europoshta.com.ua"
+      ],
+      "pathPattern": "^/tracking/?$",
+      "params": [
+        "track_input"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "delivery-auto",
+  "displayName": "Delivery",
+  "aliases": [
+    "Delivery Auto",
+    "Делівері",
+    "ТОВ «Делівері»"
+  ],
+  "region": {
+    "countries": [
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#fdce00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Kyiv",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
+    "searchUrl": "https://www.delivery-auto.com/",
+    "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "delivery-auto.com"
+      ],
+      "pathPattern": "^/[a-z]{2}(?:-[a-z]{2})?/Home/SearchReceipt/?$",
+      "params": [
+        "number"
+      ]
+    }
+  ],
+  "detection": []
+}

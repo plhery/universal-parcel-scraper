@@ -1,0 +1,34 @@
+{
+  "id": "unipost-express",
+  "displayName": "Unipost-Express",
+  "aliases": [
+    "Unipost-Expres",
+    "Unipost-Expres SRL"
+  ],
+  "region": {
+    "countries": [
+      "MD"
+    ]
+  },
+  "brand": {
+    "color": "#1b4e9b"
+  },
+  "selectable": true,
+  "timezone": "Europe/Chisinau",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.unipost.md/",
+    "canaryUrl": "https://www.unipost.md/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

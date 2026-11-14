@@ -1,0 +1,34 @@
+{
+  "id": "globex-post",
+  "displayName": "Globex Post",
+  "aliases": [
+    "Глобекс Пост",
+    "ТОВ «Глобекс Пост»"
+  ],
+  "region": {
+    "countries": [
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#2b4a97"
+  },
+  "selectable": true,
+  "timezone": "Europe/Kyiv",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://globexpost.com/",
+    "canaryUrl": "https://globexpost.com/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

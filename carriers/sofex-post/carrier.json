@@ -1,0 +1,36 @@
+{
+  "id": "sofex-post",
+  "displayName": "SofEx Post",
+  "aliases": [
+    "SofEx Post SRL"
+  ],
+  "region": {
+    "countries": [
+      "MD",
+      "IL",
+      "UA",
+      "GE"
+    ]
+  },
+  "brand": {
+    "color": "#ed6b1a"
+  },
+  "selectable": true,
+  "timezone": "Europe/Chisinau",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://sofexpost.md/",
+    "canaryUrl": "https://sofexpost.md/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

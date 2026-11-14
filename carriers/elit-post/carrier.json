@@ -1,0 +1,34 @@
+{
+  "id": "elit-post",
+  "displayName": "Elit Post",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "MD",
+      "IL",
+      "RO",
+      "UA"
+    ]
+  },
+  "brand": {
+    "color": "#ed1b28"
+  },
+  "selectable": true,
+  "timezone": "Europe/Chisinau",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://elitpost.com/en/tracking",
+    "canaryUrl": "https://elitpost.com/en/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
