@@ -495,8 +495,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^documentacion de servicios web(?: por \S.*)?$/.test(text)) return 'registered';
   // The rtb56 trackers' first line, the parcel's electronic data received, as providers relay it.
   if (/^快件电子信息已经?收到/.test(text)) return 'registered';
-  // GEODIS's notice that the sender's data reached it, as ParcelsApp relays it: "Transferred Data".
-  if (/shipment (?:information|details) (?:received|sent to)|\binformation about the (?:shipment|parcel|package) (?:has been |was )?received\b|\bdata received\b|^transferred data$|(?:package|parcel|shipment) data (?:was |has been )?sent to|\bpre ?notification\b|informations d'expedition recues|sendungsinformationen erhalten|informazioni.*spedizione ricevute|(?:consignment|shipment|parcel|package) recorded by|envoi enregistre par|sendung.*absender.*erfasst|spedizione registrata dal/.test(text)) return 'registered';
+  // GEODIS's notice that the sender's data reached it, as ParcelsApp relays it: "Transferred Data", and the same notice
+  // worded the other way round, "Received data".
+  if (/shipment (?:information|details) (?:received|sent to)|\binformation about the (?:shipment|parcel|package) (?:has been |was )?received\b|\bdata received\b|^(?:transferred|received) data$|(?:package|parcel|shipment) data (?:was |has been )?sent to|\bpre ?notification\b|informations d'expedition recues|sendungsinformationen erhalten|informazioni.*spedizione ricevute|(?:consignment|shipment|parcel|package) recorded by|envoi enregistre par|sendung.*absender.*erfasst|spedizione registrata dal/.test(text)) return 'registered';
   // DPD's notice that the sender's parcel data reached it, before the parcel: "Parcelinfo handed to DPD", as ParcelsApp relays it.
   if (/^parcel ?info(?:rmation)? (?:(?:has been|was) )?handed (?:over )?to\b/.test(text)) return 'registered';
   // A carrier's notice before it has the parcel: "We're expecting your parcel to arrive with us", or

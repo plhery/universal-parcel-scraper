@@ -819,6 +819,7 @@ describe('classifyWording', () => {
       ['The shipment has been registered', 'registered'],
       // GEODIS's notice of the sender's data, unlike a parcel transferred on.
       ['Transferred Data', 'registered'],
+      ['Received data', 'registered'],
       ['Transferred to next facility', 'in_transit'],
       // DPD's notice of the sender's parcel data, unlike the parcel handed to it.
       ['Parcelinfo handed to DPD', 'registered'],
