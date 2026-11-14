@@ -6689,6 +6689,28 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "adex-al": {
+    "displayName": "ADEx",
+    "color": "#dc0000",
+    "aliases": [
+      "Albanian Delivery Express",
+      "Albanian Delivery Express sh.p.k.",
+      "Adex Albania"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://adex.al/gjurmo/",
+    "trackingSearchUrl": "https://adex.al/gjurmo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",
@@ -11816,6 +11838,34 @@
       }
     ]
   },
+  "bypost": {
+    "displayName": "Bypost",
+    "color": "#b83c3a",
+    "aliases": [
+      "Bypost AS"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Oslo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bypost.no/spor/",
+    "trackingUrlTemplate": "https://bypost.no/spor/{trackingNumber}/",
+    "trackingSearchUrl": "https://bypost.no/spor/",
+    "linkRules": [
+      {
+        "domains": [
+          "bypost.no"
+        ],
+        "path": "^/spor/([A-Za-z0-9]{6,40})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "c3x": {
     "displayName": "C3X",
     "color": "#2ca2c6",
@@ -12012,6 +12062,28 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "cargo-express-mk": {
+    "displayName": "Cargo Express",
+    "color": "#00a64f",
+    "aliases": [
+      "Карго Експрес",
+      "Kargo Ekspres",
+      "Карго Експрес ДООЕЛ"
+    ],
+    "countries": [
+      "MK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Skopje",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "trackingSearchUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "cargo-trans-logistik": {
@@ -12482,7 +12554,8 @@
     "countries": [
       "RU",
       "KZ",
-      "BY"
+      "BY",
+      "RS"
     ],
     "selectable": true,
     "timezone": "Europe/Moscow",
@@ -16267,6 +16340,39 @@
     ],
     "detectionRules": []
   },
+  "delivery-auto": {
+    "displayName": "Delivery",
+    "color": "#fdce00",
+    "aliases": [
+      "Delivery Auto",
+      "Делівері",
+      "ТОВ «Делівері»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
+    "trackingUrlTemplate": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
+    "trackingSearchUrl": "https://www.delivery-auto.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "delivery-auto.com"
+        ],
+        "pathPattern": "^/[a-z]{2}(?:-[a-z]{2})?/Home/SearchReceipt/?$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "delivro": {
     "displayName": "Délivro",
     "color": "#042a43",
@@ -17279,6 +17385,37 @@
     "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "trackingSearchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "dm-express-me": {
+    "displayName": "DM Express",
+    "color": "#e85d04",
+    "aliases": [
+      "DM EXPRESS DELIVERY d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.dmexpress.me/",
+    "trackingUrlTemplate": "https://track.dmexpress.me/track?code={trackingNumber}",
+    "trackingSearchUrl": "https://track.dmexpress.me/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.dmexpress.me"
+        ],
+        "pathPattern": "^/(?:track/?)?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "dnipro-llc": {
@@ -19452,6 +19589,46 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "elit-post": {
+    "displayName": "Elit Post",
+    "color": "#ed1b28",
+    "countries": [
+      "MD",
+      "IL",
+      "RO",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://elitpost.com/en/tracking",
+    "trackingSearchUrl": "https://elitpost.com/en/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "elite-post-al": {
+    "displayName": "Elite Post",
+    "color": "#07664f",
+    "aliases": [
+      "Elite Post SHPK"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.elitepost.al/apps/package-tracking",
+    "trackingSearchUrl": "https://app.elitepost.al/apps/package-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "elog-luxembourg": {
     "displayName": "eLOG Luxembourg",
     "color": "#ffdd00",
@@ -20545,6 +20722,38 @@
       }
     ]
   },
+  "europoshta": {
+    "displayName": "Europoshta",
+    "color": "#ffde08",
+    "aliases": [
+      "ЄВРОПОШТА",
+      "ТОВ «ЄВРОПОШТА»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://europoshta.com.ua/tracking/",
+    "trackingUrlTemplate": "https://europoshta.com.ua/tracking/?track_input={trackingNumber}&go_button=OK",
+    "trackingSearchUrl": "https://europoshta.com.ua/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "europoshta.com.ua"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "track_input"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "eushipments": {
     "displayName": "euShipments",
     "color": "#0a8fcf",
@@ -21046,6 +21255,26 @@
     ],
     "detectionRules": []
   },
+  "express-one-me": {
+    "displayName": "Express One Montenegro",
+    "color": "#f58220",
+    "aliases": [
+      "Express One Montenegro d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://expressone.me/pracenje-posiljke",
+    "trackingSearchUrl": "https://expressone.me/pracenje-posiljke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "express-ru": {
     "displayName": "Express.Ru",
     "color": "#e31e24",
@@ -21275,6 +21504,26 @@
         "confidence": "low"
       }
     ]
+  },
+  "fan-courier-md": {
+    "displayName": "FAN Courier Moldova",
+    "color": "#02559e",
+    "aliases": [
+      "Fan Transportation SRL"
+    ],
+    "countries": [
+      "MD"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.fancourier.md/",
+    "trackingSearchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
+    "linkRules": [],
+    "detectionRules": []
   },
   "far-international": {
     "displayName": "FAR International",
@@ -23534,7 +23783,8 @@
     "countries": [
       "AT",
       "DE",
-      "CH"
+      "CH",
+      "RS"
     ],
     "selectable": true,
     "timezone": "Europe/Vienna",
@@ -24143,6 +24393,27 @@
         "confidence": "high"
       }
     ]
+  },
+  "globex-post": {
+    "displayName": "Globex Post",
+    "color": "#2b4a97",
+    "aliases": [
+      "Глобекс Пост",
+      "ТОВ «Глобекс Пост»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://globexpost.com/",
+    "trackingSearchUrl": "https://globexpost.com/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "gls-at": {
     "displayName": "GLS Austria",
@@ -25102,6 +25373,40 @@
         "pathPattern": "^/Web/Track/?$",
         "params": [
           "AwbNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "greenposta": {
+    "displayName": "Greenposta",
+    "color": "#35b087",
+    "aliases": [
+      "Green Posta",
+      "Greenposta sh.p.k."
+    ],
+    "countries": [
+      "AL",
+      "XK",
+      "MK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://green-posta.al/Tracking",
+    "trackingUrlTemplate": "https://green-posta.al/Tracking?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://green-posta.al/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "green-posta.al"
+        ],
+        "pathPattern": "^/[Tt]racking/?$",
+        "params": [
+          "trackingNumber"
         ]
       }
     ],
@@ -26275,6 +26580,26 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "hopexpress": {
+    "displayName": "Hopexpress",
+    "color": "#1c75bc",
+    "aliases": [
+      "HOPEXPRESS DOO Beograd"
+    ],
+    "countries": [
+      "RS"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Belgrade",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "trackingSearchUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "horoz": {
     "displayName": "Horoz Lojistik",
     "color": "#c31f3f",
@@ -27071,6 +27396,28 @@
       }
     ]
   },
+  "ics-couriers-ua": {
+    "displayName": "ICS Couriers",
+    "color": "#2e3192",
+    "aliases": [
+      "International Courier Service",
+      "Інтернешнл Кур'єр Сервіс",
+      "ТОВ «Інтернешнл Кур'єр Сервіс»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "trackingSearchUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "idexpress": {
     "displayName": "ID Express",
     "color": "#ff0000",
@@ -27379,7 +27726,9 @@
     "displayName": "Instabox",
     "color": "#ff3e3e",
     "aliases": [
-      "Instabox Sweden AB"
+      "Instabox Sweden AB",
+      "Instabox Norway AS",
+      "Porterbuddy"
     ],
     "countries": [
       "SE",
@@ -27873,6 +28222,37 @@
     "canaryUrl": "https://intertown.pperfect.com/",
     "trackingSearchUrl": "https://intertown.pperfect.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "intex-courier": {
+    "displayName": "Intex Courier",
+    "color": "#ff6615",
+    "aliases": [
+      "INTEXCOURIER SHPK"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.intexcourier.al/packages/getByTrackingCode",
+    "trackingUrlTemplate": "https://app.intexcourier.al/packages/getByTrackingCode?tracking_number_list={trackingNumber}",
+    "trackingSearchUrl": "https://intexcourier.al/gjurmo.html",
+    "linkRules": [
+      {
+        "domains": [
+          "app.intexcourier.al"
+        ],
+        "pathPattern": "^/packages/getByTrackingCode/?$",
+        "params": [
+          "tracking_number_list"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "intex-paketdienst": {
@@ -28633,6 +29013,34 @@
         "confidence": "low"
       }
     ]
+  },
+  "jakeluyhtio-suomi": {
+    "displayName": "Jakeluyhtiö Suomi",
+    "color": "#19c8f0",
+    "aliases": [
+      "Jakeluyhtiö Suomi Oy"
+    ],
+    "countries": [
+      "FI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Helsinki",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://seuranta.jakeluyhtio.fi/",
+    "trackingUrlTemplate": "https://seuranta.jakeluyhtio.fi/seuranta/{trackingNumber}",
+    "trackingSearchUrl": "https://seuranta.jakeluyhtio.fi/",
+    "linkRules": [
+      {
+        "domains": [
+          "seuranta.jakeluyhtio.fi"
+        ],
+        "path": "^/(?:seuranta|uppfoljning|tracking)/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "jamaica-post": {
     "displayName": "Jamaica Post",
@@ -32838,7 +33246,10 @@
       "MILŠPED ONE DOO"
     ],
     "countries": [
-      "RS"
+      "RS",
+      "ME",
+      "MK",
+      "AL"
     ],
     "selectable": true,
     "timezone": "Europe/Belgrade",
@@ -33930,7 +34341,10 @@
       "Meest Express",
       "Meest Post",
       "Meest Group",
-      "Міст Експрес"
+      "Міст Експрес",
+      "Meest International",
+      "Міст Інтернешнл",
+      "Росан"
     ],
     "countries": [
       "UA",
@@ -34788,6 +35202,27 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "mr-courier-al": {
+    "displayName": "Mr. Courier",
+    "color": "#005c92",
+    "aliases": [
+      "Posta Mr.Courier",
+      "Mr. Courier Shpk"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "trackingSearchUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "linkRules": [],
     "detectionRules": []
   },
   "mrl-global": {
@@ -35869,10 +36304,12 @@
       "Nova Poshta",
       "Nova Post",
       "Nova Post Ukraine",
-      "Нова Пошта"
+      "Нова Пошта",
+      "New Post International MLD"
     ],
     "countries": [
-      "UA"
+      "UA",
+      "MD"
     ],
     "selectable": true,
     "timezone": "Europe/Kyiv",
@@ -36031,6 +36468,38 @@
         "confidence": "low"
       }
     ]
+  },
+  "ntc-express": {
+    "displayName": "NTC Express",
+    "color": "#ffdd33",
+    "aliases": [
+      "NTC Logistics",
+      "NTC LOGISTIC d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ntclog.me/",
+    "trackingUrlTemplate": "https://ntclog.me/?page=shipment-tracking&lang=me&shipment_code={trackingNumber}",
+    "trackingSearchUrl": "https://ntclog.me/?page=shipment-tracking&lang=me",
+    "linkRules": [
+      {
+        "domains": [
+          "ntclog.me"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "shipment_code"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "nz-couriers": {
     "displayName": "New Zealand Couriers",
@@ -39775,6 +40244,27 @@
     ],
     "detectionRules": []
   },
+  "post-international": {
+    "displayName": "Post-International",
+    "color": "#faf257",
+    "aliases": [
+      "ПОСТ-ІНТЕРНЕЙШНЛ",
+      "ТОВ «ПОСТ-ІНТЕРНЕЙШНЛ»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://post-int.com/",
+    "trackingSearchUrl": "https://post-int.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "post-luxembourg": {
     "displayName": "POST Luxembourg",
     "color": "#008736",
@@ -40115,7 +40605,8 @@
       "CNPR"
     ],
     "countries": [
-      "RO"
+      "RO",
+      "MD"
     ],
     "selectable": true,
     "timezone": "Europe/Bucharest",
@@ -42500,7 +42991,9 @@
     "aliases": [
       "Rozetka Delivery",
       "Rozetka.Delivery",
-      "rozetka.delivery"
+      "rozetka.delivery",
+      "Європлюс",
+      "Термінал Розетка"
     ],
     "countries": [
       "UA"
@@ -43332,7 +43825,8 @@
     "aliases": [
       "Транспортна компанія SAT",
       "ТК САТ",
-      "САТ"
+      "САТ",
+      "САТ Логістик"
     ],
     "countries": [
       "UA"
@@ -45609,6 +46103,29 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "sofex-post": {
+    "displayName": "SofEx Post",
+    "color": "#ed6b1a",
+    "aliases": [
+      "SofEx Post SRL"
+    ],
+    "countries": [
+      "MD",
+      "IL",
+      "UA",
+      "GE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sofexpost.md/",
+    "trackingSearchUrl": "https://sofexpost.md/",
+    "linkRules": [],
     "detectionRules": []
   },
   "sol-express": {
@@ -50437,6 +50954,26 @@
     ],
     "detectionRules": []
   },
+  "tribex-courier": {
+    "displayName": "Tribex Courier",
+    "color": "#091748",
+    "aliases": [
+      "Tribex Courier sh.p.k."
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "trackingSearchUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "trumpcard": {
     "displayName": "TrumpCard",
     "color": "#a90000",
@@ -51154,6 +51691,27 @@
     },
     "canaryUrl": "https://www.szlhyt.com/",
     "trackingSearchUrl": "https://www.szlhyt.com/package-inquiry",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "unipost-express": {
+    "displayName": "Unipost-Express",
+    "color": "#1b4e9b",
+    "aliases": [
+      "Unipost-Expres",
+      "Unipost-Expres SRL"
+    ],
+    "countries": [
+      "MD"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.unipost.md/",
+    "trackingSearchUrl": "https://www.unipost.md/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53623,6 +54181,26 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "x-express-rs": {
+    "displayName": "X Express Serbia",
+    "color": "#e85e21",
+    "aliases": [
+      "X Express DOO Beograd"
+    ],
+    "countries": [
+      "RS"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Belgrade",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "trackingSearchUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "x-trac": {
     "displayName": "X-TRAC",
     "color": "#082799",
@@ -54209,6 +54787,23 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "xpress-logistics-lu": {
+    "displayName": "Xpress Logistics",
+    "color": "#bb2b2b",
+    "countries": [
+      "LU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "trackingSearchUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "linkRules": [],
     "detectionRules": []
   },
   "xpressbees": {

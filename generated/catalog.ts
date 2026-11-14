@@ -6693,6 +6693,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "adex-al": {
+    "displayName": "ADEx",
+    "color": "#dc0000",
+    "aliases": [
+      "Albanian Delivery Express",
+      "Albanian Delivery Express sh.p.k.",
+      "Adex Albania"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://adex.al/gjurmo/",
+    "trackingSearchUrl": "https://adex.al/gjurmo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",
@@ -11820,6 +11842,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "bypost": {
+    "displayName": "Bypost",
+    "color": "#b83c3a",
+    "aliases": [
+      "Bypost AS"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Oslo",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://bypost.no/spor/",
+    "trackingUrlTemplate": "https://bypost.no/spor/{trackingNumber}/",
+    "trackingSearchUrl": "https://bypost.no/spor/",
+    "linkRules": [
+      {
+        "domains": [
+          "bypost.no"
+        ],
+        "path": "^/spor/([A-Za-z0-9]{6,40})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "c3x": {
     "displayName": "C3X",
     "color": "#2ca2c6",
@@ -12016,6 +12066,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "cargo-express-mk": {
+    "displayName": "Cargo Express",
+    "color": "#00a64f",
+    "aliases": [
+      "Карго Експрес",
+      "Kargo Ekspres",
+      "Карго Експрес ДООЕЛ"
+    ],
+    "countries": [
+      "MK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Skopje",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "trackingSearchUrl": "https://kargoekspres.mk/ProverkaPratka.aspx",
+    "linkRules": [],
     "detectionRules": []
   },
   "cargo-trans-logistik": {
@@ -12486,7 +12558,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "countries": [
       "RU",
       "KZ",
-      "BY"
+      "BY",
+      "RS"
     ],
     "selectable": true,
     "timezone": "Europe/Moscow",
@@ -16271,6 +16344,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "delivery-auto": {
+    "displayName": "Delivery",
+    "color": "#fdce00",
+    "aliases": [
+      "Delivery Auto",
+      "Делівері",
+      "ТОВ «Делівері»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt",
+    "trackingUrlTemplate": "https://www.delivery-auto.com/uk-UA/Home/SearchReceipt?number={trackingNumber}",
+    "trackingSearchUrl": "https://www.delivery-auto.com/",
+    "linkRules": [
+      {
+        "domains": [
+          "delivery-auto.com"
+        ],
+        "pathPattern": "^/[a-z]{2}(?:-[a-z]{2})?/Home/SearchReceipt/?$",
+        "params": [
+          "number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "delivro": {
     "displayName": "Délivro",
     "color": "#042a43",
@@ -17283,6 +17389,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "trackingSearchUrl": "https://www.dkl.ee/en/menu/4-TRACK_TRACE.html",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "dm-express-me": {
+    "displayName": "DM Express",
+    "color": "#e85d04",
+    "aliases": [
+      "DM EXPRESS DELIVERY d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://track.dmexpress.me/",
+    "trackingUrlTemplate": "https://track.dmexpress.me/track?code={trackingNumber}",
+    "trackingSearchUrl": "https://track.dmexpress.me/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.dmexpress.me"
+        ],
+        "pathPattern": "^/(?:track/?)?$",
+        "params": [
+          "code"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "dnipro-llc": {
@@ -19456,6 +19593,46 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "elit-post": {
+    "displayName": "Elit Post",
+    "color": "#ed1b28",
+    "countries": [
+      "MD",
+      "IL",
+      "RO",
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://elitpost.com/en/tracking",
+    "trackingSearchUrl": "https://elitpost.com/en/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "elite-post-al": {
+    "displayName": "Elite Post",
+    "color": "#07664f",
+    "aliases": [
+      "Elite Post SHPK"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.elitepost.al/apps/package-tracking",
+    "trackingSearchUrl": "https://app.elitepost.al/apps/package-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "elog-luxembourg": {
     "displayName": "eLOG Luxembourg",
     "color": "#ffdd00",
@@ -20549,6 +20726,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "europoshta": {
+    "displayName": "Europoshta",
+    "color": "#ffde08",
+    "aliases": [
+      "ЄВРОПОШТА",
+      "ТОВ «ЄВРОПОШТА»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://europoshta.com.ua/tracking/",
+    "trackingUrlTemplate": "https://europoshta.com.ua/tracking/?track_input={trackingNumber}&go_button=OK",
+    "trackingSearchUrl": "https://europoshta.com.ua/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "europoshta.com.ua"
+        ],
+        "pathPattern": "^/tracking/?$",
+        "params": [
+          "track_input"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "eushipments": {
     "displayName": "euShipments",
     "color": "#0a8fcf",
@@ -21050,6 +21259,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "express-one-me": {
+    "displayName": "Express One Montenegro",
+    "color": "#f58220",
+    "aliases": [
+      "Express One Montenegro d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://expressone.me/pracenje-posiljke",
+    "trackingSearchUrl": "https://expressone.me/pracenje-posiljke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "express-ru": {
     "displayName": "Express.Ru",
     "color": "#e31e24",
@@ -21279,6 +21508,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "fan-courier-md": {
+    "displayName": "FAN Courier Moldova",
+    "color": "#02559e",
+    "aliases": [
+      "Fan Transportation SRL"
+    ],
+    "countries": [
+      "MD"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.fancourier.md/",
+    "trackingSearchUrl": "https://app.fancourier.md/fan/Main?tracking=true&appcont=3895",
+    "linkRules": [],
+    "detectionRules": []
   },
   "far-international": {
     "displayName": "FAR International",
@@ -23538,7 +23787,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "countries": [
       "AT",
       "DE",
-      "CH"
+      "CH",
+      "RS"
     ],
     "selectable": true,
     "timezone": "Europe/Vienna",
@@ -24147,6 +24397,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
+  },
+  "globex-post": {
+    "displayName": "Globex Post",
+    "color": "#2b4a97",
+    "aliases": [
+      "Глобекс Пост",
+      "ТОВ «Глобекс Пост»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://globexpost.com/",
+    "trackingSearchUrl": "https://globexpost.com/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "gls-at": {
     "displayName": "GLS Austria",
@@ -25106,6 +25377,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "pathPattern": "^/Web/Track/?$",
         "params": [
           "AwbNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
+  "greenposta": {
+    "displayName": "Greenposta",
+    "color": "#35b087",
+    "aliases": [
+      "Green Posta",
+      "Greenposta sh.p.k."
+    ],
+    "countries": [
+      "AL",
+      "XK",
+      "MK"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://green-posta.al/Tracking",
+    "trackingUrlTemplate": "https://green-posta.al/Tracking?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://green-posta.al/Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "green-posta.al"
+        ],
+        "pathPattern": "^/[Tt]racking/?$",
+        "params": [
+          "trackingNumber"
         ]
       }
     ],
@@ -26279,6 +26584,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "hopexpress": {
+    "displayName": "Hopexpress",
+    "color": "#1c75bc",
+    "aliases": [
+      "HOPEXPRESS DOO Beograd"
+    ],
+    "countries": [
+      "RS"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Belgrade",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "trackingSearchUrl": "https://www.hopexpress.rs/pracenje-posiljaka",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "horoz": {
     "displayName": "Horoz Lojistik",
     "color": "#c31f3f",
@@ -27075,6 +27400,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ics-couriers-ua": {
+    "displayName": "ICS Couriers",
+    "color": "#2e3192",
+    "aliases": [
+      "International Courier Service",
+      "Інтернешнл Кур'єр Сервіс",
+      "ТОВ «Інтернешнл Кур'єр Сервіс»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "trackingSearchUrl": "https://ics-couriers.com/uslugi/%d0%b2%d1%96%d0%b4%d1%81%d1%82%d0%b5%d0%b6%d0%b8%d1%82%d0%b8-%d0%b2%d1%96%d0%b4%d0%bf%d1%80%d0%b0%d0%b2%d0%bb%d0%b5%d0%bd%d0%bd%d1%8f/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "idexpress": {
     "displayName": "ID Express",
     "color": "#ff0000",
@@ -27383,7 +27730,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Instabox",
     "color": "#ff3e3e",
     "aliases": [
-      "Instabox Sweden AB"
+      "Instabox Sweden AB",
+      "Instabox Norway AS",
+      "Porterbuddy"
     ],
     "countries": [
       "SE",
@@ -27877,6 +28226,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://intertown.pperfect.com/",
     "trackingSearchUrl": "https://intertown.pperfect.com/",
     "linkRules": [],
+    "detectionRules": []
+  },
+  "intex-courier": {
+    "displayName": "Intex Courier",
+    "color": "#ff6615",
+    "aliases": [
+      "INTEXCOURIER SHPK"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.intexcourier.al/packages/getByTrackingCode",
+    "trackingUrlTemplate": "https://app.intexcourier.al/packages/getByTrackingCode?tracking_number_list={trackingNumber}",
+    "trackingSearchUrl": "https://intexcourier.al/gjurmo.html",
+    "linkRules": [
+      {
+        "domains": [
+          "app.intexcourier.al"
+        ],
+        "pathPattern": "^/packages/getByTrackingCode/?$",
+        "params": [
+          "tracking_number_list"
+        ]
+      }
+    ],
     "detectionRules": []
   },
   "intex-paketdienst": {
@@ -28637,6 +29017,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "jakeluyhtio-suomi": {
+    "displayName": "Jakeluyhtiö Suomi",
+    "color": "#19c8f0",
+    "aliases": [
+      "Jakeluyhtiö Suomi Oy"
+    ],
+    "countries": [
+      "FI"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Helsinki",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://seuranta.jakeluyhtio.fi/",
+    "trackingUrlTemplate": "https://seuranta.jakeluyhtio.fi/seuranta/{trackingNumber}",
+    "trackingSearchUrl": "https://seuranta.jakeluyhtio.fi/",
+    "linkRules": [
+      {
+        "domains": [
+          "seuranta.jakeluyhtio.fi"
+        ],
+        "path": "^/(?:seuranta|uppfoljning|tracking)/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
   },
   "jamaica-post": {
     "displayName": "Jamaica Post",
@@ -32842,7 +33250,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "MILŠPED ONE DOO"
     ],
     "countries": [
-      "RS"
+      "RS",
+      "ME",
+      "MK",
+      "AL"
     ],
     "selectable": true,
     "timezone": "Europe/Belgrade",
@@ -33934,7 +34345,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Meest Express",
       "Meest Post",
       "Meest Group",
-      "Міст Експрес"
+      "Міст Експрес",
+      "Meest International",
+      "Міст Інтернешнл",
+      "Росан"
     ],
     "countries": [
       "UA",
@@ -34792,6 +35206,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "mr-courier-al": {
+    "displayName": "Mr. Courier",
+    "color": "#005c92",
+    "aliases": [
+      "Posta Mr.Courier",
+      "Mr. Courier Shpk"
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "trackingSearchUrl": "https://mrcourier.al/gjurmo-dergesen/",
+    "linkRules": [],
     "detectionRules": []
   },
   "mrl-global": {
@@ -35873,10 +36308,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Nova Poshta",
       "Nova Post",
       "Nova Post Ukraine",
-      "Нова Пошта"
+      "Нова Пошта",
+      "New Post International MLD"
     ],
     "countries": [
-      "UA"
+      "UA",
+      "MD"
     ],
     "selectable": true,
     "timezone": "Europe/Kyiv",
@@ -36035,6 +36472,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "ntc-express": {
+    "displayName": "NTC Express",
+    "color": "#ffdd33",
+    "aliases": [
+      "NTC Logistics",
+      "NTC LOGISTIC d.o.o."
+    ],
+    "countries": [
+      "ME"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Podgorica",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://ntclog.me/",
+    "trackingUrlTemplate": "https://ntclog.me/?page=shipment-tracking&lang=me&shipment_code={trackingNumber}",
+    "trackingSearchUrl": "https://ntclog.me/?page=shipment-tracking&lang=me",
+    "linkRules": [
+      {
+        "domains": [
+          "ntclog.me"
+        ],
+        "pathPattern": "^/?$",
+        "params": [
+          "shipment_code"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "nz-couriers": {
     "displayName": "New Zealand Couriers",
@@ -39779,6 +40248,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "post-international": {
+    "displayName": "Post-International",
+    "color": "#faf257",
+    "aliases": [
+      "ПОСТ-ІНТЕРНЕЙШНЛ",
+      "ТОВ «ПОСТ-ІНТЕРНЕЙШНЛ»"
+    ],
+    "countries": [
+      "UA"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Kyiv",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://post-int.com/",
+    "trackingSearchUrl": "https://post-int.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "post-luxembourg": {
     "displayName": "POST Luxembourg",
     "color": "#008736",
@@ -40119,7 +40609,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "CNPR"
     ],
     "countries": [
-      "RO"
+      "RO",
+      "MD"
     ],
     "selectable": true,
     "timezone": "Europe/Bucharest",
@@ -42504,7 +42995,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Rozetka Delivery",
       "Rozetka.Delivery",
-      "rozetka.delivery"
+      "rozetka.delivery",
+      "Європлюс",
+      "Термінал Розетка"
     ],
     "countries": [
       "UA"
@@ -43336,7 +43829,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Транспортна компанія SAT",
       "ТК САТ",
-      "САТ"
+      "САТ",
+      "САТ Логістик"
     ],
     "countries": [
       "UA"
@@ -45613,6 +46107,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "sofex-post": {
+    "displayName": "SofEx Post",
+    "color": "#ed6b1a",
+    "aliases": [
+      "SofEx Post SRL"
+    ],
+    "countries": [
+      "MD",
+      "IL",
+      "UA",
+      "GE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://sofexpost.md/",
+    "trackingSearchUrl": "https://sofexpost.md/",
+    "linkRules": [],
     "detectionRules": []
   },
   "sol-express": {
@@ -50441,6 +50958,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "tribex-courier": {
+    "displayName": "Tribex Courier",
+    "color": "#091748",
+    "aliases": [
+      "Tribex Courier sh.p.k."
+    ],
+    "countries": [
+      "AL"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Tirane",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "trackingSearchUrl": "https://app.tribexcourier.al/apps/package-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "trumpcard": {
     "displayName": "TrumpCard",
     "color": "#a90000",
@@ -51158,6 +51695,27 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.szlhyt.com/",
     "trackingSearchUrl": "https://www.szlhyt.com/package-inquiry",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "unipost-express": {
+    "displayName": "Unipost-Express",
+    "color": "#1b4e9b",
+    "aliases": [
+      "Unipost-Expres",
+      "Unipost-Expres SRL"
+    ],
+    "countries": [
+      "MD"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Chisinau",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.unipost.md/",
+    "trackingSearchUrl": "https://www.unipost.md/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53627,6 +54185,26 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "x-express-rs": {
+    "displayName": "X Express Serbia",
+    "color": "#e85e21",
+    "aliases": [
+      "X Express DOO Beograd"
+    ],
+    "countries": [
+      "RS"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Belgrade",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "trackingSearchUrl": "https://www.x-express.rs/korisnicki-panel/pracenje-posiljke",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "x-trac": {
     "displayName": "X-TRAC",
     "color": "#082799",
@@ -54213,6 +54791,23 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "xpress-logistics-lu": {
+    "displayName": "Xpress Logistics",
+    "color": "#bb2b2b",
+    "countries": [
+      "LU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Luxembourg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "universal"
+    },
+    "canaryUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "trackingSearchUrl": "https://www.xpress-logistics.lu/suivi-colis/",
+    "linkRules": [],
     "detectionRules": []
   },
   "xpressbees": {
@@ -55617,6 +56212,7 @@ export const CARRIER_IDS = [
   "aci-express-kr",
   "acs-courier",
   "act-argos",
+  "adex-al",
   "aeronet",
   "aeropost",
   "aetos-courier",
@@ -55763,6 +56359,7 @@ export const CARRIER_IDS = [
   "burundi-post",
   "bussgods",
   "byhd",
+  "bypost",
   "c3x",
   "c807-xpress",
   "cacesa",
@@ -55770,6 +56367,7 @@ export const CARRIER_IDS = [
   "campost",
   "canada-air-express",
   "cargo-expreso",
+  "cargo-express-mk",
   "cargo-trans-logistik",
   "cargobus",
   "cargoline",
@@ -55888,6 +56486,7 @@ export const CARRIER_IDS = [
   "dealersend",
   "deliverdirect",
   "deliveright",
+  "delivery-auto",
   "delivro",
   "dellin",
   "delnext",
@@ -55916,6 +56515,7 @@ export const CARRIER_IDS = [
   "direx",
   "dk-express-gr",
   "dk-logistics-ee",
+  "dm-express-me",
   "dnipro-llc",
   "dnx-cargo",
   "dobropost",
@@ -55970,6 +56570,8 @@ export const CARRIER_IDS = [
   "ekart",
   "eli-express",
   "elianpost",
+  "elit-post",
+  "elite-post-al",
   "elog-luxembourg",
   "elta",
   "emex",
@@ -55999,6 +56601,7 @@ export const CARRIER_IDS = [
   "eurodis",
   "euroexpress-ba",
   "europochta",
+  "europoshta",
   "eushipments",
   "evdemo-lojistik",
   "evri-uk",
@@ -56012,6 +56615,7 @@ export const CARRIER_IDS = [
   "express-freight-ni",
   "express-one",
   "express-one-bg",
+  "express-one-me",
   "express-ru",
   "ezship",
   "f2-logistics",
@@ -56019,6 +56623,7 @@ export const CARRIER_IDS = [
   "famiport",
   "fan-courier",
   "fan-courier-international",
+  "fan-courier-md",
   "far-international",
   "fare-rata",
   "fargo-courier",
@@ -56100,6 +56705,7 @@ export const CARRIER_IDS = [
   "global-delivery-network",
   "global-parcel-service",
   "globalpost",
+  "globex-post",
   "gls-at",
   "gls-es",
   "gls-it",
@@ -56124,6 +56730,7 @@ export const CARRIER_IDS = [
   "goodmaji",
   "gordom-logistika",
   "grand-slam-express",
+  "greenposta",
   "greenway-vn",
   "groupe-guilbault",
   "gruber-logistics",
@@ -56160,6 +56767,7 @@ export const CARRIER_IDS = [
   "homexpress",
   "honducor",
   "hongsuda",
+  "hopexpress",
   "horoz",
   "hound-express",
   "houng-ah-loun",
@@ -56183,6 +56791,7 @@ export const CARRIER_IDS = [
   "icc-worldwide",
   "icl-express",
   "ics-courier",
+  "ics-couriers-ua",
   "idexpress",
   "ids-logistik",
   "ilyang-logis",
@@ -56206,6 +56815,7 @@ export const CARRIER_IDS = [
   "internet-express",
   "interrapidisimo",
   "intertown-transport",
+  "intex-courier",
   "intex-paketdienst",
   "intime-bg",
   "intime-hr",
@@ -56225,6 +56835,7 @@ export const CARRIER_IDS = [
   "j-and-t-mx",
   "j-and-t-uk",
   "jadlog",
+  "jakeluyhtio-suomi",
   "jamaica-post",
   "jamef",
   "janco-express",
@@ -56405,6 +57016,7 @@ export const CARRIER_IDS = [
   "motorex",
   "mountain-movers",
   "movin",
+  "mr-courier-al",
   "mrl-global",
   "msg-post",
   "mte-xpress",
@@ -56441,6 +57053,7 @@ export const CARRIER_IDS = [
   "nova-poshta",
   "now-couriers",
   "nox",
+  "ntc-express",
   "nz-couriers",
   "oak-harbor",
   "obibox",
@@ -56537,6 +57150,7 @@ export const CARRIER_IDS = [
   "porlor",
   "pos-indonesia",
   "post-haste",
+  "post-international",
   "post-luxembourg",
   "post-modern",
   "post-one",
@@ -56703,6 +57317,7 @@ export const CARRIER_IDS = [
   "slovenska-posta",
   "sm-express",
   "smsa-express",
+  "sofex-post",
   "sol-express",
   "sorthub",
   "south-african-post-office",
@@ -56838,6 +57453,7 @@ export const CARRIER_IDS = [
   "transpress",
   "trendyol-express",
   "trexity",
+  "tribex-courier",
   "trumpcard",
   "trunkrs",
   "trustexpress",
@@ -56859,6 +57475,7 @@ export const CARRIER_IDS = [
   "ues-uy",
   "ukp-worldwide",
   "union-express",
+  "unipost-express",
   "united-delivery-service",
   "united-worldwide-couriers",
   "uof-express",
@@ -56931,6 +57548,7 @@ export const CARRIER_IDS = [
   "wp-ground",
   "wpx",
   "x-express-ba",
+  "x-express-rs",
   "x-trac",
   "xcargo",
   "xd-express",
@@ -56948,6 +57566,7 @@ export const CARRIER_IDS = [
   "xpo-ltl",
   "xpress-courier-link",
   "xpress-freight-management",
+  "xpress-logistics-lu",
   "xpressbees",
   "xpressen",
   "xuchuan-logistics",
@@ -57124,6 +57743,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aci-express-kr": [],
   "acs-courier": ["acs-courier-1"],
   "act-argos": [],
+  "adex-al": [],
   "aeronet": [],
   "aeropost": ["aeropost-1"],
   "aetos-courier": [],
@@ -57270,6 +57890,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "burundi-post": [],
   "bussgods": ["bussgods-1"],
   "byhd": ["byhd-1"],
+  "bypost": [],
   "c3x": [],
   "c807-xpress": [],
   "cacesa": [],
@@ -57277,6 +57898,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "campost": [],
   "canada-air-express": [],
   "cargo-expreso": [],
+  "cargo-express-mk": [],
   "cargo-trans-logistik": [],
   "cargobus": [],
   "cargoline": [],
@@ -57395,6 +58017,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dealersend": ["dealersend-1"],
   "deliverdirect": [],
   "deliveright": [],
+  "delivery-auto": [],
   "delivro": [],
   "dellin": [],
   "delnext": [],
@@ -57423,6 +58046,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "direx": [],
   "dk-express-gr": [],
   "dk-logistics-ee": [],
+  "dm-express-me": [],
   "dnipro-llc": [],
   "dnx-cargo": [],
   "dobropost": ["dobropost-1"],
@@ -57477,6 +58101,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ekart": ["ekart-ecommerce","ekart-merchant"],
   "eli-express": [],
   "elianpost": [],
+  "elit-post": [],
+  "elite-post-al": [],
   "elog-luxembourg": [],
   "elta": ["elta-s10"],
   "emex": [],
@@ -57506,6 +58132,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "eurodis": [],
   "euroexpress-ba": [],
   "europochta": ["europochta-1"],
+  "europoshta": [],
   "eushipments": [],
   "evdemo-lojistik": [],
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
@@ -57519,6 +58146,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "express-freight-ni": [],
   "express-one": [],
   "express-one-bg": [],
+  "express-one-me": [],
   "express-ru": ["express-ru-1"],
   "ezship": [],
   "f2-logistics": [],
@@ -57526,6 +58154,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "famiport": [],
   "fan-courier": ["fan-courier-2","fan-courier-1"],
   "fan-courier-international": ["fan-courier-international-1"],
+  "fan-courier-md": [],
   "far-international": ["far-international-1"],
   "fare-rata": [],
   "fargo-courier": ["fargo-courier-1"],
@@ -57607,6 +58236,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "global-delivery-network": [],
   "global-parcel-service": [],
   "globalpost": ["globalpost-1"],
+  "globex-post": [],
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-es": ["gls-es-1","gls-es-2"],
   "gls-it": ["gls-it-1","gls-it-digit-depot"],
@@ -57631,6 +58261,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "goodmaji": [],
   "gordom-logistika": [],
   "grand-slam-express": [],
+  "greenposta": [],
   "greenway-vn": [],
   "groupe-guilbault": [],
   "gruber-logistics": [],
@@ -57667,6 +58298,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "homexpress": [],
   "honducor": [],
   "hongsuda": [],
+  "hopexpress": [],
   "horoz": [],
   "hound-express": [],
   "houng-ah-loun": [],
@@ -57690,6 +58322,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "icc-worldwide": [],
   "icl-express": [],
   "ics-courier": ["ics-courier-1"],
+  "ics-couriers-ua": [],
   "idexpress": ["idexpress-1"],
   "ids-logistik": [],
   "ilyang-logis": [],
@@ -57713,6 +58346,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "internet-express": [],
   "interrapidisimo": [],
   "intertown-transport": [],
+  "intex-courier": [],
   "intex-paketdienst": [],
   "intime-bg": [],
   "intime-hr": [],
@@ -57732,6 +58366,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "j-and-t-mx": ["j-and-t-mx-1"],
   "j-and-t-uk": ["j-and-t-uk-1"],
   "jadlog": ["jadlog-1"],
+  "jakeluyhtio-suomi": [],
   "jamaica-post": [],
   "jamef": [],
   "janco-express": ["janco-express-1"],
@@ -57912,6 +58547,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "motorex": [],
   "mountain-movers": [],
   "movin": [],
+  "mr-courier-al": [],
   "mrl-global": [],
   "msg-post": [],
   "mte-xpress": [],
@@ -57948,6 +58584,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "nova-poshta": ["nova-poshta-export","nova-poshta-domestic","nova-poshta-international"],
   "now-couriers": [],
   "nox": ["nox-1"],
+  "ntc-express": [],
   "nz-couriers": [],
   "oak-harbor": [],
   "obibox": ["obibox-1"],
@@ -58044,6 +58681,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "porlor": [],
   "pos-indonesia": ["pos-indonesia-1","pos-indonesia-s10"],
   "post-haste": [],
+  "post-international": [],
   "post-luxembourg": ["post-luxembourg-s10"],
   "post-modern": [],
   "post-one": ["post-one-1"],
@@ -58210,6 +58848,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
   "sm-express": [],
   "smsa-express": [],
+  "sofex-post": [],
   "sol-express": [],
   "sorthub": [],
   "south-african-post-office": ["south-african-post-office-s10"],
@@ -58345,6 +58984,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transpress": [],
   "trendyol-express": [],
   "trexity": [],
+  "tribex-courier": [],
   "trumpcard": [],
   "trunkrs": [],
   "trustexpress": [],
@@ -58366,6 +59006,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ues-uy": ["ues-uy-1"],
   "ukp-worldwide": ["ukp-worldwide-1"],
   "union-express": [],
+  "unipost-express": [],
   "united-delivery-service": ["united-delivery-service-1"],
   "united-worldwide-couriers": [],
   "uof-express": [],
@@ -58438,6 +59079,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wp-ground": [],
   "wpx": [],
   "x-express-ba": [],
+  "x-express-rs": [],
   "x-trac": ["x-trac-1"],
   "xcargo": [],
   "xd-express": [],
@@ -58455,6 +59097,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xpo-ltl": ["xpo-ltl-1"],
   "xpress-courier-link": [],
   "xpress-freight-management": [],
+  "xpress-logistics-lu": [],
   "xpressbees": ["xpressbees-awb"],
   "xpressen": [],
   "xuchuan-logistics": ["xuchuan-logistics-1"],
