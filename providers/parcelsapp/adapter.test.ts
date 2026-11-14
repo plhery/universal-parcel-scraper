@@ -1077,6 +1077,25 @@ describe('ParcelsApp result parsing', () => {
     ]);
   });
 
+  it("reads 4PX's copies of iMile's scans, and its hand-over to iMile, on Beijing's clock", () => {
+    // 4PX's own feed dates these "+08:00", and they meet iMile's own scans to the second; borrowed
+    // from 4PX's transit centre in Belgium, each came seven hours late.
+    const result = parseParcelsAppResponse({ carriers: ['4PX Express', 'iMile'], destination: 'Italy', origin: 'China', states: [
+      { date: '2026-11-03T01:51:38Z', status: '【example center】parcel shipped to【lat 01】', carrier: 0, location: 'Example center' },
+      { date: '2026-11-02T22:55:33Z', status: '【example center】received', carrier: 0, location: 'Example center' },
+      { date: '2026-11-02T15:55:33Z', status: 'Example center Your order has been received', carrier: 1, location: 'Example center' },
+      { date: '2026-11-02T14:56:41Z', status: 'Shipment delivered to imile rdc or lastmile vendor', carrier: 0, location: 'Example hub' },
+      { date: '2026-10-29T10:45:58Z', status: 'Arrive in transit center', carrier: 0, location: 'BE' },
+    ] }, number, identity(), null, Date.parse('2026-11-05T11:25:00Z'));
+    expect(result.events?.map((scan) => scan.time)).toEqual([
+      '2026-11-02T17:51:38.000Z',
+      '2026-11-02T14:55:33.000Z',
+      '2026-11-02T14:55:33.000Z',
+      '2026-11-02T06:56:41.000Z',
+      '2026-10-29T09:45:58.000Z',
+    ]);
+  });
+
   it("reads MailAmericas's customs scans in the destination on that country's clock", () => {
     // MailAmericas's own reply dates the hand-over to the last mile 20:31-03:00 on a parcel for Argentina; ParcelsApp
     // gave the digits marked UTC, three hours early.

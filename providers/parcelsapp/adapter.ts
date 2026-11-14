@@ -883,6 +883,10 @@ const CHINA_POST_OWN_LINE_ABROAD = /^邮件(?:到达|离开)处理中心【[^】
 // ("【…】received", not iMile's own "【…】Your order has been received."), are on Beijing's clock: in Italy
 // each read seven hours ahead of iMile's own copy, and on Italy's clock the delivery round came after the lookup.
 const IMILE_FORWARDER_COPY = /^【[^【】]{1,60}】\s*(?:received|arrived|parcel shipped to ?【[^【】]{1,60}】|shipment out for delivery)$/iu;
+// 4PX is such a forwarder: ParcelsApp also files those copies under 4PX Express, with 4PX's hand-over
+// to iMile, all of which 4PX's own feed dates "+08:00". Placed by the transit centre beside them, they
+// came seven hours late.
+const FOUR_PX_IMILE_HANDOVER = /^shipment delivered to imile rdc or lastmile vendor\.?$/i;
 // MailAmericas's customs scans in the destination country, on that country's clock as its own adapter dates them
 // ("Destination customs: Hand over to Last Mile Provider" at 20:31-03:00): ParcelsApp gives the digits marked UTC.
 // Mexico's and Chile's states keep several clocks, so their scans are left as they were.
@@ -1227,6 +1231,7 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
     const country = countryCode(destination);
     return IMILE_FORWARDER_COPY.test(status.trim()) ? 'Asia/Shanghai' : country ? imileCountryClock(country) : null;
   }
+  if (carrier === 'four-px' && (IMILE_FORWARDER_COPY.test(status.trim()) || FOUR_PX_IMILE_HANDOVER.test(status.trim()))) return 'Asia/Shanghai';
   if (carrier === 'mailamericas' && MAILAMERICAS_DESTINATION_CUSTOMS.test(status.trim())) {
     return MAILAMERICAS_DESTINATION_ZONES[countryCode(destination) ?? ''] ?? undefined;
   }

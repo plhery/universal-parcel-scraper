@@ -428,7 +428,8 @@ step exists for future protocol changes.
   take the clock iMile's own lookup reads them on, the destination's single one or Sydney's
   for Australia, or else keep their wall clock. A Chinese forwarder's copies of them under the same name, the centre in
   brackets before a short step ("【…】received"), are on Beijing's clock: each reads seven
-  hours ahead of iMile's own in Italy. "FAR" has the digits of FAR International's tracker,
+  hours ahead of iMile's own in Italy. Under "4PX Express" the same copies, and 4PX's hand-over
+  to iMile, take Beijing's clock too, as 4PX's own feed states them. "FAR" has the digits of FAR International's tracker,
   which states each scan's offset, China's or the last-mile carrier's abroad: its copies
   keep their wall clock, as FAR's own scans without an offset do. "Shouwu Express" has the
   epoch Shouwu stores, in UTC and without a place: Shouwu's own tracker dates its rows in China
