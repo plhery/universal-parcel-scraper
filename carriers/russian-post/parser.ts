@@ -22,6 +22,21 @@ function text(value: unknown, max = 320): string {
   return clean(value, max);
 }
 
+const COPY_TIME = /^(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}):00(?:\.0{1,3})?([+-]\d{2}:\d{2})$/;
+
+/**
+ * A scan's second copy, rounded to the minute, that writes UTC's wall clock under the local offset: read as UTC,
+ * its clock falls within two minutes of the same operation at the same place.
+ */
+function utcCopy(event: CarrierEvent, events: readonly CarrierEvent[]): boolean {
+  const match = COPY_TIME.exec(event.time ?? '');
+  if (!match || /^[+-]00:00$/.test(match[2]!)) return false;
+  const read = Date.parse(`${match[1]}:00Z`);
+  return events.some((other) => other !== event && other.provider_code === event.provider_code
+    && other.description === event.description && other.location === event.location
+    && Math.abs(Date.parse(other.time!) - read) <= 120_000);
+}
+
 /** The anonymous detailed read returns one whole trackingItem and its real scan history. */
 export function parseRussianPost(payload: unknown, raw: string): CarrierResult {
   const number = russianPostNumber(raw);
@@ -63,13 +78,13 @@ export function parseRussianPost(payload: unknown, raw: string): CarrierResult {
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   // The carrier supplies newest first, including its sequence for equal times.
-  events.reverse();
-  const newest = events[0]!;
+  const kept = events.filter((event) => !utcCopy(event, events)).reverse();
+  const newest = kept[0]!;
   const destination = typeof item.destinationCountryName === 'string' ? countryCode(item.destinationCountryName) : null;
   return { status: newest.stage ? languageStageStatus(newest.stage as Stage) : 'unknown',
     ...(newest.stage ? { current_stage: newest.stage, current_stage_source: newest.stage_source } : {}),
-    last_status_text: newest.description!, last_update: newest.time, expected_delivery: null, events: events.slice(0, 100),
-    ...(events.length > 100 || (Array.isArray(item.hiddenHistoryList) && item.hiddenHistoryList.length > 0) ? { history_truncated: true } : {}),
+    last_status_text: newest.description!, last_update: newest.time, expected_delivery: null, events: kept.slice(0, 100),
+    ...(kept.length > 100 || (Array.isArray(item.hiddenHistoryList) && item.hiddenHistoryList.length > 0) ? { history_truncated: true } : {}),
     ...(destination ? { destination_country: destination } : {}),
     ...(newest.stage === 'delivered' ? { delivered_at: newest.time } : {}) };
 }

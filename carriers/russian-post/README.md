@@ -15,7 +15,10 @@ block, and an unavailable API route is a transport failure.
 
 Only real tracking-history operations are read. Planned events, recipient and sender fields,
 postcodes, payment information and account fields are excluded. Scan timestamps retain the
-offset the source states. The summary's clock does not replace those scan clocks.
+offset the source states. The summary's clock does not replace those scan clocks. An export scan
+can come twice: the second copy is rounded to the minute and writes UTC's wall clock under the
+local offset, so it lands hours before the scans that preceded it. A copy whose clock, read as
+UTC, falls within two minutes of the same operation at the same place is dropped.
 
 A return operation starts the return leg. Later sorting or transport stays active; a delivery
 operation completes a return only with that leg's context or the carrier's return flag. The

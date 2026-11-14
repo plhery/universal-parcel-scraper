@@ -56,6 +56,20 @@ describe('Russian Post anonymous tracking', () => {
     expect(statusMapAnswer({ carrier: 'russian-post', providerCode: '11.0', description: 'Прием на таможню' })).toEqual({ kind: 'mapped', stage: 'customs' });
   });
 
+  it('drops the minute-rounded copy of a scan that writes UTC\'s wall clock under the local offset', () => {
+    const body = fixture(); Object.assign(body[0]!.trackingItem, { globalStatus: 'IN_PROGRESS', trackingHistoryItemList: [
+      row(33, 1, 'Released from Russia', '2026-03-10T12:01:13.000+03:00'), row(10, 0, 'Prepared for shipment from Russia', '2026-03-10T12:01:05.000+03:00'),
+      row(33, 1, 'Released from Russia', '2026-03-10T09:01:00.000+03:00'), row(8, 5, 'Arrived at the customs of Russia', '2026-03-09T09:00:00.000+03:00')] });
+    expect(parseRussianPost(body, NUMBER).events!.map(event => event.time)).toEqual([
+      '2026-03-10T12:01:13.000+03:00', '2026-03-10T12:01:05.000+03:00', '2026-03-09T09:00:00.000+03:00']);
+    for (const [time, city] of [['2026-03-10T09:04:00.000+03:00', 'Sample City'], ['2026-03-10T09:01:30.000+03:00', 'Sample City'],
+      ['2026-03-10T09:01:00.000+03:00', 'Other City'], ['2026-03-10T09:01:00.000+00:00', 'Sample City']] as const) {
+      const list = body[0]!.trackingItem.trackingHistoryItemList;
+      list[2] = { ...row(33, 1, 'Released from Russia', time), cityName: city };
+      expect(parseRussianPost(body, NUMBER).events, `${time} ${city}`).toHaveLength(4);
+    }
+  });
+
   it('reads every acceptance attribute of operation type 1 as the acceptance', () => {
     for (const code of ['1.1', '1.8', '1.11']) {
       expect(statusMapAnswer({ carrier: 'russian-post', providerCode: code, description: 'Упрощенный предоплаченный' }), code).toEqual({ kind: 'mapped', stage: 'accepted' });
