@@ -305,6 +305,9 @@ describe('Postal Ninja result parsing', () => {
     expect(times(parsePostalNinjaResponse(unplaced, number, 'America/New_York'))).toEqual([
       '2026-11-02T08:00:29.000Z', '2026-10-28T14:00:00.000Z',
     ]);
+    // A territory USPS delivers in keeps its own clock: Puerto Rico's, Guam's.
+    expect(times(parsePostalNinjaResponse(unplaced, number, 'America/Puerto_Rico'))?.[0]).toBe('2026-11-02T07:00:29.000Z');
+    expect(times(parsePostalNinjaResponse(unplaced, number, 'Pacific/Guam'))?.[0]).toBe('2026-11-01T17:00:29.000Z');
     // Each deduced instant names its zone and how it was chosen.
     expect(parsePostalNinjaResponse(withEvents(scans), number, 'Europe/Amsterdam', 'spring-gds').events!
       .map((scan) => [scan.time_zone, scan.time_zone_basis])).toEqual([

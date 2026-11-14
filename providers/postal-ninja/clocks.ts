@@ -135,14 +135,18 @@ const TWELVE_HOUR_CLOCKS: ReadonlySet<string> = new Set(['UPS']);
  */
 const isUsps = (service: string) => carrierIdFromName(service) === 'usps';
 
+// The territories USPS delivers in as at home, each on a clock of its own: Puerto Rico, the US Virgin Islands,
+// Guam, American Samoa and the Northern Mariana Islands.
+const US_TERRITORY_ZONES: ReadonlySet<string> = new Set(['PR', 'VI', 'GU', 'AS', 'MP'].map((code) => usStateTimeZone(code)!));
+
 /**
  * Whether a scan of the service may borrow the zone routing passes for the
- * parcel's carrier: a USPS scan borrows no zone of a country outside the US,
- * such as the Amsterdam zone of a spring GDS item, which put its scans eight
- * and nine hours early. It keeps its wall time instead.
+ * parcel's carrier: a USPS scan borrows no zone of a country outside the US
+ * and its territories, such as the Amsterdam zone of a spring GDS item, which
+ * put its scans eight and nine hours early. It keeps its wall time instead.
  */
 export function borrowsRoutingZone(service: string, zone: string): boolean {
-  return !isUsps(service) || keepsZone('US', zone);
+  return !isUsps(service) || keepsZone('US', zone) || US_TERRITORY_ZONES.has(zone);
 }
 
 /** A scan dated without a time is written as midnight (FedEx's pickup, Geodis's departure). */
