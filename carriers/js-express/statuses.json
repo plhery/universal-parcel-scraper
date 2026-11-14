@@ -14,6 +14,7 @@
     {"code": "OIT", "wording": "Exports Center Sorting and Packing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "The same export centre sorting and packing the parcel for its departure."},
     {"code": "OIT", "wording": "Arrived at Origin Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "At the port of departure in China, after the export centre and before the flight."},
     {"wording": "Arrive at international airport to abroad", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "OIT", "wording": "Start on-site transportation and shipment", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-10", "note": "At the airport of departure, after the arrival there and before the export release."},
     {"wording": "Released From Export Customs", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "A-SCAN: SHIPMENT IN INTERNATIONAL TRANSIT", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "UPLIFTED FROM TRANSSHIPMENT HUB", "stage": "in_transit", "language": "en", "confirmedBy": "live"},

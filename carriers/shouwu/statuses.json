@@ -433,6 +433,14 @@
       "note": "DHL's delivery from the parcel centre to a business recipient, \"ab Paketzentrum dem Geschäftskunden zugestellt\" in German. After DHL sent the parcel back, it is the return delivered to the sender: the parser reads it as returned."
     },
     {
+      "wording": "Mis routed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-13",
+      "note": "The delivering partner in Germany sent the parcel to the wrong facility and sends it on: a delay, not a stop. The round came the same day."
+    },
+    {
       "wording": "Shipment is out for delivery",
       "stage": "out_for_delivery",
       "language": "en",

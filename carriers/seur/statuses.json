@@ -128,6 +128,15 @@
       "note": "The international leg in the EN TRÁNSITO group, after SW189."
     },
     {
+      "code": "LS857",
+      "wording": "EN ENVÍO HA SIDO RECEPCIONADO EN LAS INSTALACIONES DE DESTINO. PRONTO SALDRÁ A REPARTO.",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-14",
+      "note": "In the EN TRÁNSITO group: received at the delivering facility, the round to come. SEUR writes it with \"EN ENVÍO\"."
+    },
+    {
       "code": "LD221",
       "wording": "EL ENVÍO HA LLEGADO A LA ADUANA DE DESTINO. INICIAMOS LOS TRÁMITES DE DESPACHO ADUANERO.",
       "language": "es",

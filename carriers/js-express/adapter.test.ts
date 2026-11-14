@@ -310,6 +310,7 @@ describe('JS Express tracking adapter', () => {
     expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'Arrived, awaiting collection' });
     expect(waiting.events).toMatchObject([{ description: 'Arrived, awaiting collection', stage: 'ready_for_pickup', stage_source: 'carrier_map' }]);
     expect(statusMap.stage(null, normalizeStatusWording('Arrived, awaiting collection'))).toBe('ready_for_pickup');
+    expect(statusMap.stage('OIT', normalizeStatusWording('Start on-site transportation and shipment'))).toBe('in_transit');
   });
 
   it("reads USPS's forwarding alert, which names its time, day and town, as the parcel going on", () => {
