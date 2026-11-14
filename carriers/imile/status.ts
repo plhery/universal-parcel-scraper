@@ -205,7 +205,17 @@ export const statusMap: CarrierStatusMap = {
     { code: DELIVERY, wording: 'scheduled delivery', note: 'A delivery booked again, without its day, between a round out for delivery and the attempt\'s end or the next round: it moves nothing, so it keeps the stage of the scan before it.' },
     ...cainiaoStatusMap.gaps,
   ],
-  gapNote: (code, wording) => ((code ?? DELIVERY) === DELIVERY && SCHEDULED.test(normalizeStatusWording(wording))
-    ? 'A delivery day booked, after a failed attempt the new round: the adapter reads it as the expected delivery, and the parcel keeps the stage it had.'
-    : undefined),
+  gapNote: (code, wording) => {
+    if ((code ?? DELIVERY) === DELIVERY && SCHEDULED.test(normalizeStatusWording(wording))) {
+      return 'A delivery day booked, after a failed attempt the new round: the adapter reads it as the expected delivery, and the parcel keeps the stage it had.';
+    }
+    // The station's name in 【】 and the flight's airports and clocks vary.
+    const phrase = imilePhrase(wording);
+    if (phrase === 'inventory count scan') {
+      return 'A stock count at the delivery station, repeated while the parcel waits: it moves nothing, so the parcel keeps the stage it had.';
+    }
+    return /^flight schedule etd\b/.test(phrase)
+      ? 'A flight booked for the parcel, logged before it leaves with its planned clocks: still to come, so the adapter leaves the row out.'
+      : undefined;
+  },
 };

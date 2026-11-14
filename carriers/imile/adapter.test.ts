@@ -650,6 +650,14 @@ describe('iMile status vocabulary', () => {
         .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage it had/) });
     }
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1004', description: 'Shipment is scheduled to [2026-05-20].' })).toEqual({ kind: 'unknown' });
+    // The rows statuses.json leaves unmapped on purpose answer why, whatever station or flight they name.
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: '【DS(XYZ)】Inventory count scan' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/moves nothing/) });
+    expect(statusMapAnswer({ carrier: 'imile', providerCode: '1002', description: 'Flight Schedule ETD【<AAA>】<2026-01-01 01:00:00>, ETA【<BBB>】<2026-01-01 05:00:00>.' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/still to come/) });
+    for (const entry of (statuses.entries as { code?: string; wording: string; unmapped?: boolean }[]).filter((candidate) => candidate.unmapped)) {
+      expect(statusMapAnswer({ carrier: 'imile', providerCode: entry.code ?? null, description: entry.wording }).kind, entry.wording).toBe('intentional_gap');
+    }
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'User not at home' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'imile', providerCode: '1003', description: 'Wrong Address(Insufficient address details)' }))
