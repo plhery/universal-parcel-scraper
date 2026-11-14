@@ -299,6 +299,10 @@ describe('JRT tracking adapter', () => {
     expect(dateLocalClocks('jrt', parseJrtTrack(absentPayload, 'UP0000000000000004', readAt)!).events?.[0]).toMatchObject({
       time: '2026-03-12T16:35:00+01:00', time_zone: 'Europe/Rome', time_zone_basis: 'destination',
       description: 'The recipient was not present. Please find more information here.', stage: 'failed_attempt' });
+    // A destination on another clock than DHL's German one dates it there.
+    record.consigneeCountry = 'GR';
+    expect(parseJrtTrack(absentPayload, 'UP0000000000000004', readAt)!.events?.[0]).toMatchObject({
+      time: '2026-03-12T16:35:00+02:00', time_zone: 'Europe/Athens', time_zone_basis: 'destination', stage: 'failed_attempt' });
     // The adapter dates them the same way, and a destination on another clock takes its own.
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(json(fixture('track-dhl-placeless')));
     await expect(adapter(environment(fetcher)).track({ number: 'UP0000000000000004' })).resolves
