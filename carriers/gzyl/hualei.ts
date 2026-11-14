@@ -10,6 +10,7 @@ import { load, type CheerioAPI } from 'cheerio';
 import { DateTime } from 'luxon';
 import { accepted, recognizeFromLookup, type Recognition, type TrackingContext } from '../../core/adapter/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import { brandCarrierIds, carrierBrand, carrierIdFromName } from '../../core/catalog/hints.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import {
   ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError,
@@ -63,7 +64,8 @@ export interface HualeiTenant {
   readonly repeats?: (wording: string, other: string) => boolean;
   /**
    * Carriers the tenant hands records to without naming a channel: one takes a
-   * record whose transfer number its own high-confidence rule claims whole.
+   * record whose transfer number its own high-confidence rule claims whole,
+   * under a channel label too unless the label names another carrier.
    */
   readonly unlabelledPartners?: readonly CarrierId[];
   /**
@@ -425,29 +427,66 @@ function unlabelledPartner(numbers: readonly string[], tenant: HualeiTenant): Fa
   return undefined;
 }
 
+/** The carriers a catalog name or a brand names, if any. */
+const namedCarriers = (name: string): string[] => {
+  const carrier = /[A-Za-z]/.test(name) ? carrierIdFromName(name) : undefined;
+  return carrier ? [carrier] : brandCarrierIds(name);
+};
+
 /**
- * The delivery carrier and its number: the channel's transfer number, else the
- * tracking number, which some lines fill with the delivery carrier's. Without
- * a channel, only the transfer number, or the tracking number a tenant's own
- * number shape marks as the delivery carrier's, of a carrier the tenant hands to
- * or the record's product names.
+ * The carriers a channel label names: the one the platform's table gives it, or
+ * the carriers of the label as a whole name, else of the longest runs of one to
+ * three of its Latin words that name some, from the left ("GOFO" in
+ * "GOFO美国专线", "DHL Paket" and not "Paket" in "DHL Paket Line").
+ */
+function labelCarriers(label: string): string[] {
+  const key = normalizeStatusWording(label);
+  if (Object.hasOwn(PARTNERS, key)) return [PARTNERS[key]!];
+  const whole = namedCarriers(label);
+  if (whole.length) return whole;
+  const words = (label.match(/[A-Za-z0-9]+/g) ?? []).slice(0, 20);
+  const carriers: string[] = [];
+  for (let start = 0; start < words.length;) {
+    const size = [3, 2, 1].find((length) => start + length <= words.length
+      && namedCarriers(words.slice(start, start + length).join(' ')).length);
+    if (size) carriers.push(...namedCarriers(words.slice(start, start + size).join(' ')));
+    start += size ?? 1;
+  }
+  return [...new Set(carriers)];
+}
+
+/** Whether a channel label names a carrier other than the partner, a network of its brand and the tenant itself. */
+function namesAnotherCarrier(label: string, partner: CarrierId, tenant: HualeiTenant): boolean {
+  const brand = carrierBrand(partner);
+  return labelCarriers(label).some((carrier) => carrier !== partner && carrier !== tenant.carrier
+    && !(brand && carrierBrand(carrier) === brand));
+}
+
+/**
+ * The delivery carrier and its number. Under a channel the platform's table
+ * holds, the channel's transfer number, else the tracking number, which some
+ * lines fill with the delivery carrier's. Otherwise the transfer number, or the
+ * tracking number a tenant's own number shape marks as the delivery carrier's,
+ * of a carrier the tenant hands to unnamed, unless the channel names another
+ * carrier; without a channel, also of the carrier the record's product names.
  */
 function partnerOf(record: JsonObject, destination: string, tenant: HualeiTenant, downstream = ''): Facts['partner'] {
   const { provider } = tenant;
   const label = text(record, 'channel_name', provider, 100);
-  if (!label) {
-    const unlabelled = unlabelledPartner([identity(text(record, 'business_channeltransfercode', provider, 64)), downstream], tenant);
-    if (unlabelled) return unlabelled;
-    const product = downstream ? text(record, 'productKindName', provider, 100) : '';
-    const named = product ? tenant.productPartners?.find(([pattern]) => pattern.test(product))?.[1] : undefined;
-    return named && takes(named, downstream, destination) ? { carrier: named, number: downstream } : undefined;
+  if (label) {
+    for (const key of ['business_channeltransfercode', 'trackingNumber']) {
+      const number = identity(text(record, key, provider, 64));
+      const carrier = number ? hualeiPartner(label, number, destination) : undefined;
+      if (carrier) return { carrier, number };
+    }
   }
-  for (const key of ['business_channeltransfercode', 'trackingNumber']) {
-    const number = identity(text(record, key, provider, 64));
-    const carrier = number ? hualeiPartner(label, number, destination) : undefined;
-    if (carrier) return { carrier, number };
-  }
-  return undefined;
+  // A number the partner's own rule claims whole is the partner's, unless the channel names another carrier.
+  const unlabelled = unlabelledPartner([identity(text(record, 'business_channeltransfercode', provider, 64)), downstream], tenant);
+  if (unlabelled) return label && namesAnotherCarrier(label, unlabelled.carrier, tenant) ? undefined : unlabelled;
+  if (label) return undefined;
+  const product = downstream ? text(record, 'productKindName', provider, 100) : '';
+  const named = product ? tenant.productPartners?.find(([pattern]) => pattern.test(product))?.[1] : undefined;
+  return named && takes(named, downstream, destination) ? { carrier: named, number: downstream } : undefined;
 }
 
 /**

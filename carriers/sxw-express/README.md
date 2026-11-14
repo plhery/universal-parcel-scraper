@@ -1,7 +1,7 @@
 # SXW Express
 
-Tracks shipments of SXW Express (Shenzhen Shengxingwang Supply Chain Management), a Shenzhen
-forwarder whose site is sxwexpress.cn. 17TRACK names it SXW Wuliu.
+Tracks shipments of SXW Express (深圳胜兴旺供应链管理有限公司, Shenzhen Shengxingwang Supply Chain
+Management), a Shenzhen forwarder whose site is sxwexpress.cn. 17TRACK names it SXW Wuliu.
 
 ## How it works
 
@@ -17,8 +17,10 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
 ## Notes
 
 - A record keeps SXW's own number in its invoice field and the delivery carrier's in its tracking
-  number, with no channel named. A GOFO number there is GOFO's last leg in the United States, so
-  the result names GOFO with it.
+  number, with no channel named. A GOFO number there (`GFUS` and fourteen digits), or as the
+  channel's transfer number, is GOFO's last leg in the United States, so the result names GOFO
+  with it. A channel name does not change that unless it names another carrier. GOFO alone issues
+  the shape, and its own tracker answers for the number, so the record's destination is not checked.
 - The tracker writes the line's English rows beside the platform's Chinese ones; the status map
   reads both.
 - A not-found leaves the enabled universal providers to answer.
@@ -36,6 +38,8 @@ the corpus holds a made-up number in that shape. `SXW` is the company's own code
 ## Links
 
 The tracker is plain HTTP and takes numbers through its form, so no link opens one shipment.
+The site answers plain HTTP only, and the canary takes HTTPS only, so it checks 17TRACK, which the
+site links to beside its tracking box.
 
 ## Testing
 

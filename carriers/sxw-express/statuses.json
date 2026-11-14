@@ -10,6 +10,6 @@
     {"wording": "Parcel processed at Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s sorting centre, its city in the wording."},
     {"wording": "Parcel departure in Shenzhen Sorting Centre.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "The line’s sorting centre, its city in the wording."},
     {"wording": "Parcel departure in Transit Facility, Parcel Departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13"},
-    {"wording": "Customs declaration completed", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "Export declaration in China; GZYL’s map reads it the same way."}
+    {"wording": "Customs declaration completed", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-13", "note": "China’s export declaration, before the flight: the parcel is not held. PFC Express’s map, whose line writes the same rows, reads it the same way."}
   ]
 }

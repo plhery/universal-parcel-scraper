@@ -47507,6 +47507,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "SXW",
       "SXW Wuliu",
       "Shengxingwang",
+      "胜兴旺",
+      "深圳胜兴旺供应链管理有限公司",
       "Shenzhen Shengxingwang Supply Chain Management Co., Ltd."
     ],
     "countries": [
