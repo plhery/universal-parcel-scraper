@@ -19,7 +19,9 @@ own but use the same tracker. Tracked through the lookup its tracking page makes
   moved route, not a missing parcel.
 - The entry must echo the number asked. An entry without a destination country or a scan is a
   number Speedaf does not know: not found. An entry with its country but no scan is a waybill
-  whose scans are not shown, which happens to older parcels: no history.
+  whose scans are not shown: no history. Older parcels answer so, and so does an AliExpress
+  parcel Cainiao is still sorting in China, before Speedaf's warehouse scans it. Cainiao's
+  tracker answers the same number with those rows.
 - `success: false` with an error message is inconclusive, or a rate limit when the message says
   the client asks too often.
 - Recognition makes the same request.
