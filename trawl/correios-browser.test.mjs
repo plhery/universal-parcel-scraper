@@ -16,16 +16,16 @@ const response = (status = 200, value = body, sent = form()) => ({ url: () => en
   request: () => ({ method: () => 'POST', postData: () => sent }),
   headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }), body: async () => Buffer.from(value) });
 function fixture() {
-  const handlers = {}, state = { closed: 0, clicked: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1, diagnostics: [] };
+  const handlers = {}, state = { closed: 0, clicked: 0, filled: [], policy: 0, token: 'PRIVATE', field: number, widget: 1, diagnostics: [], waits: [] };
   const page = { on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
     goto: async () => ({ status: () => 200 }),
     locator: selector => ({
       count: async () => selector.includes('cf-turnstile') ? state.widget : 1,
-      inputValue: async () => selector === '#objeto' ? state.field : state.token,
+      inputValue: async () => selector === '#objeto' ? state.field : typeof state.token === 'function' ? state.token() : state.token,
       fill: async value => { state.filled.push(value); state.field = value; },
       click: async () => { state.clicked++; handlers.response(response()); },
     }),
-    frames: () => [], waitForTimeout: async () => {},
+    frames: () => [], waitForTimeout: async ms => { state.waits.push(ms); },
   };
   const options = { url, capture, tier: 3, maxTimeout: 1000, onVerification: fields => state.diagnostics.push(fields),
     handle: { browser: { newContext: async () => ({ newPage: async () => page, close: async () => { state.closed++; } }) } },
@@ -62,8 +62,27 @@ test('searches once the token is there, binds the request and keeps only the fie
   assert.equal(active.state.closed, 1); assert.equal(active.state.policy, 1);
   assert.deepEqual(active.handlers, {});
   assert.equal(active.state.diagnostics.length, 1);
-  assert.deepEqual({ ...active.state.diagnostics[0], durationMs: 0 }, { nativeOutcome: 'token_received', searched: true,
-    responses: 1, pending: 0, pageStatus: 200, apiStatus: 200, outcome: 'http_response', durationMs: 0 });
+  const diagnostic = active.state.diagnostics[0];
+  assert.deepEqual({ ...diagnostic, loadMs: 0, tokenMs: 0, replyMs: 0, durationMs: 0 }, { nativeOutcome: 'token_received', searched: true,
+    responses: 1, pending: 0, pageStatus: 200, apiStatus: 200, outcome: 'http_response', clicks: 0, loadMs: 0, tokenMs: 0, replyMs: 0, durationMs: 0 });
+  assert.ok(diagnostic.loadMs <= diagnostic.tokenMs && diagnostic.tokenMs <= diagnostic.replyMs && diagnostic.replyMs <= diagnostic.durationMs);
+  // A reply that returned its JSON ends the lookup without a further wait.
+  assert.deepEqual(active.state.waits, []);
+});
+
+test('times the widget\'s clicks and token without waiting on a fixed schedule after the reply', async t => {
+  t.mock.timers.enable({ apis: ['Date'], now: 1_000_000 });
+  const active = fixture();
+  active.options.maxTimeout = 60_000;
+  active.state.token = () => Date.now() >= 1_005_000 ? 'PRIVATE' : '';
+  const checkbox = { isVisible: async () => true, click: async () => {} };
+  active.page.frames = () => [{ url: () => 'https://challenges.cloudflare.com/turnstile', locator: () => ({ first: () => checkbox }) }];
+  active.page.waitForTimeout = async ms => { active.state.waits.push(ms); t.mock.timers.tick(ms); };
+  const result = await runCorreiosBrowser(active.options);
+  assert.equal(result.capturedResponses.length, 1);
+  const diagnostic = active.state.diagnostics[0];
+  assert.deepEqual([diagnostic.clicks, diagnostic.loadMs, diagnostic.tokenMs, diagnostic.replyMs], [2, 0, 5000, 5000]);
+  assert.equal(active.state.waits.length, 20);
 });
 
 test('fills the field when the page did not, and ignores replies for another number', async () => {
@@ -90,6 +109,8 @@ test('keeps a refused check as its status and never searches without a token', a
   assert.deepEqual(result.capturedResponses.map(row => [row.status, row.body]), [[403, null]]);
   assert.equal(refused.state.diagnostics[0].outcome, 'challenge');
   assert.equal(refused.state.diagnostics[0].apiStatus, 403);
+  // The page may repeat a refused request at once; that reply is still kept.
+  assert.deepEqual(refused.state.waits, [300]);
 
   const waiting = fixture();
   waiting.state.token = ''; waiting.options.maxTimeout = 20;
@@ -100,6 +121,9 @@ test('keeps a refused check as its status and never searches without a token', a
   assert.equal(waiting.state.diagnostics[0].nativeOutcome, 'waiting');
   assert.equal(waiting.state.diagnostics[0].searched, false);
   assert.equal(waiting.state.diagnostics[0].outcome, 'timeout');
+  assert.equal(typeof waiting.state.diagnostics[0].loadMs, 'number');
+  assert.equal(waiting.state.diagnostics[0].tokenMs, null);
+  assert.equal(waiting.state.diagnostics[0].replyMs, null);
 });
 
 test('returns a refused page at once and fails without a widget', async () => {

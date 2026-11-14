@@ -42,7 +42,10 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
   const start = Date.now();
   let context, page, timer, onResponse;
   let expired = false, accepting = true, statusCode = 0, widget = false, searched = false, tokenReceived = false, timedOut = false;
-  let responseCount = 0, totalBytes = 0, lastClick = 0, pendingBodies = 0;
+  let responseCount = 0, totalBytes = 0, lastClick = 0, pendingBodies = 0, clicks = 0;
+  // Phase offsets from the start, for the diagnostic; a phase that was not reached stays null.
+  const marks = { loadMs: null, tokenMs: null, replyMs: null };
+  const mark = name => { marks[name] ??= Date.now() - start; };
   const entries = [];
   const remaining = () => Math.max(1, maxTimeout - (Date.now() - start));
   const close = async target => {
@@ -78,6 +81,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
           const frame = page.frames().find(frame => frame.url().startsWith('https://challenges.cloudflare.com/'));
           if (!frame) return;
           lastClick = Date.now();
+          clicks++;
           const checkbox = frame.locator('[role="checkbox"], input[type="checkbox"], .ctp-checkbox-label').first();
           if (await checkbox.isVisible().catch(() => false)) {
             await checkbox.click({ timeout: Math.min(2000, remaining()) }).catch(() => {});
@@ -99,6 +103,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
             entries.at(-1).error = 'Correios tracking response limit exceeded'; accepting = false; finish(); return;
           }
           const headers = response.headers();
+          mark('replyMs');
           const entry = { url: API, status: response.status(), body: null, trackingNumberSubmitted: number,
             headers: Object.fromEntries(['content-type', 'retry-after'].filter(key => headers[key])
               .map(key => [key, headers[key].slice(0, 100)])), truncated: false, base64Encoded: false, error: null };
@@ -123,12 +128,14 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
         const navigation = await page.goto(url, { waitUntil: 'domcontentloaded', timeout: remaining() });
         statusCode = navigation?.status() ?? 0;
         const loaded = Date.now();
+        mark('loadMs');
         const field = page.locator('#objeto');
         while (accepting && !expired && statusCode === 200) {
           widget ||= await page.locator('#form-rastreamento .cf-turnstile').count().catch(() => 0) > 0;
           const token = widget ? await page.locator('#form-rastreamento [name="cf-turnstile-response"]').inputValue().catch(() => '') : '';
           if (token) {
             tokenReceived = true;
+            mark('tokenMs');
             if (await field.inputValue().catch(() => '') !== number) await field.fill(number, { timeout: Math.min(5000, remaining()) });
             await page.locator('#b-pesquisar').click({ timeout: Math.min(5000, remaining()) });
             searched = true;
@@ -139,8 +146,12 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
         }
         if (!searched) return result();
         await terminal;
-        // Keep the bounded sequence if the page repeats its request at once.
-        await page.waitForTimeout(Math.min(300, remaining()));
+        // Keep the bounded sequence if the page repeats a refused or unreadable request at
+        // once. It does not repeat one that returned its JSON.
+        const last = entries.at(-1);
+        if (last?.status !== 200 || last.truncated || last.error || !last.body || last.body === 'null') {
+          await page.waitForTimeout(Math.min(300, remaining()));
+        }
         return result();
       })(),
       new Promise((_, reject) => { timer = setTimeout(() => { timedOut = expired = true; reject(new Error('Browser deadline')); }, maxTimeout); }),
@@ -164,7 +175,7 @@ export async function runCorreiosBrowser({ url, capture, handle, tier, maxTimeou
         outcome: !last ? timedOut ? 'timeout' : 'not_submitted'
           : [400, 401, 403].includes(last.status) ? 'challenge' : last.status === 429 ? 'rate_limited'
             : last.error || last.truncated || last.status === 200 && (!last.body || last.body === 'null') ? 'incomplete' : 'http_response',
-        durationMs: Date.now() - start });
+        clicks, ...marks, durationMs: Date.now() - start });
     } catch { /* Diagnostics must not change the tracking result or cleanup. */ }
   }
 }

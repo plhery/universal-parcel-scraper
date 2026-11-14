@@ -21,8 +21,8 @@ JSON the direct query read. After a page showing Turnstile, lookups go straight 
 CAPTCHA starts no such rest. Without a browser service, Turnstile is a challenge and lookups
 fall back to the providers. The portal answers a burst of lookups from one address with HTTP
 429, a rate limit rather than a missing parcel. Fixed `correios.verification` diagnostics
-record token receipt, submission, response counts and HTTP statuses, without the number,
-token or response body. A response diagnostic is not a claim that its history parsed.
+record token receipt, submission, response counts, HTTP statuses, widget clicks and when the
+page loaded, the token arrived and the reply came, without the number, token or response body. A response diagnostic is not a claim that its history parsed.
 
 ## Notes
 
