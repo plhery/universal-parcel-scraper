@@ -47,11 +47,16 @@ Tracked through the lookup its tracking page makes.
   again with its sentence after " -> ", at one clock and place, each under the code JCEX gives
   its words: the fuller row stays.
 - Other rows are read on the clock their place keeps: its country's when the country has one,
-  and in the United States its state's when the place names one, as USPS writes it. A row whose
-  place is a bare country code keeps that country's clock: JCEX files its Hong Kong hub's rows
-  under the destination with the destination's offset. An offset the place does not keep at
-  that time, and a place without one clock, keep the wall clock: Colissimo's rows come on
-  France's clock with China's offset.
+  and in the United States its state's when the place names one, as USPS writes it or as JCEX
+  writes the delivering partner's scans: the state and the country alone ("ST, US"), or the town,
+  state and postcode with the offset of the place's clock after them ("TOWN;ST;POSTCODE;-05:00").
+  JCEX lists such a scan again to the minute in the second form, and the offset written there
+  dates the copy where the state keeps it then, whatever offset the row carries, so a partner's
+  label created after JCEX's receipt in China is not read on China's clock. That place keeps its
+  form without the postcode. A row whose place is a bare country code keeps that country's
+  clock: JCEX files its Hong Kong hub's rows under the destination with the destination's
+  offset. An offset the place does not keep at that time, and a place without one clock, keep
+  the wall clock: Colissimo's rows come on France's clock with China's offset.
 - The newest scan's instant, when it has one, is the last update, and a delivered scan's is the
   delivery time. Rows dated after the read are dropped.
 - Seconds after it takes a parcel in, JCEX writes a timeline up to the delivering partner: rows

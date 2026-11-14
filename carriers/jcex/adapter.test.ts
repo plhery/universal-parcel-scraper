@@ -3,9 +3,11 @@ import { describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../app.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
+import type { CarrierEvent } from '../../core/result/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter, JCEX_API, JcexTracker } from './adapter.js';
 import { normalizeJcexNumber, parseJcex } from './parser.js';
 import { statusMap } from './status.js';
@@ -134,6 +136,44 @@ describe('JCEX HTTP adapter', () => {
     expect(result).toMatchObject({ current_stage: 'delivered', last_update: null, last_update_local: '2026-04-20T10:05:00' });
     expect(result.delivered_at).toBeUndefined();
     expect([0, 3, 9].map((index) => result.events![index]!.local_time)).toEqual(['2026-04-20T10:05:00', '2026-04-18T13:07:00', '2026-04-11T01:09:38']);
+  });
+
+  it("dates the delivering partner's label by the offset JCEX writes after its state, and its own row on that state's clock", () => {
+    const withLabel = (source: Row, copy: Row) => changed('delivered', (content) => {
+      const row = (fields: Row) => ({ countryCode: 'US', platformEventCode: 'InfoReceived', eventDetailCn: null, ...fields });
+      content.trackDetails.push(row({ eventDetailEn: 'Synthetic order created.', ...source }), row({ eventDetailEn: 'Synthetic order created.;WC;', ...copy }));
+    });
+    const labels = (events: CarrierEvent[]) => events.filter((event) => event.description!.startsWith('Synthetic order created.'))
+      .map((event) => [event.time ?? null, event.local_time ?? null, event.time_zone_basis ?? null, event.location]);
+    // JCEX lists the partner's label with its state and country, then again to the minute as
+    // "TOWN;ST;POSTCODE;OFFSET": Illinois keeps -05:00 in April, hours after the receipt in China.
+    const parsed = parseJcex(withLabel({ eventTime: '2026-04-10 15:30:47', timeZone: '+08:00', location: 'IL,US' },
+      { eventTime: '2026-04-10 15:30:00', timeZone: '+08:00', location: ';IL;;-05:00' }), NUMBER, READ);
+    expect(labels(parsed.events!)).toEqual([
+      // A label that is not the state's keeps the wall clock, ordered on the state's clock after the receipt.
+      [null, '2026-04-10T15:30:47', null, 'IL, US'],
+      ['2026-04-10T15:30:00-05:00', null, null, ';IL;;-05:00'],
+    ]);
+    const receipt = parsed.events!.findIndex((event) => event.description === 'Arrive at the delivery point');
+    expect(parsed.events!.findIndex((event) => event.description === 'Synthetic order created.;WC;')).toBeLessThan(receipt);
+    // Both rows are one moment on Illinois' clock, not the copy on Beijing's, which the receipt in China would lend it.
+    expect(labels(dateLocalClocks('jcex', parsed, READ).events!)).toEqual([
+      ['2026-04-10T15:30:47-05:00', '2026-04-10T15:30:47', 'place', 'IL, US'],
+      ['2026-04-10T15:30:00-05:00', null, null, ';IL;;-05:00'],
+    ]);
+    // A state named before its country settles the label's offset too.
+    expect(labels(parseJcex(withLabel({ eventTime: '2026-04-10 15:30:47', timeZone: '-05:00', location: 'IL,US' },
+      { eventTime: '2026-04-10 15:30:00', timeZone: '-05:00', location: 'Example Town;IL;00000;-05:00' }), NUMBER, READ).events!)).toEqual([
+      ['2026-04-10T15:30:47-05:00', null, null, 'IL, US'],
+      // The postcode is not read.
+      ['2026-04-10T15:30:00-05:00', null, null, 'Example Town;IL;;-05:00'],
+    ]);
+    // An offset the state does not keep then, or a region no state is, dates nothing.
+    for (const location of [';IL;;-06:00', ';IL;;+08:00', ';ZZ;;-05:00']) {
+      expect(labels(parseJcex(withLabel({ eventTime: '2026-04-10 15:30:47', timeZone: '+08:00', location: 'IL,US' },
+        { eventTime: '2026-04-10 15:30:00', timeZone: '+08:00', location }), NUMBER, READ).events!).at(-1), location)
+        .toEqual([null, '2026-04-10T15:30:00', null, location]);
+    }
   });
 
   it('drops the copies JCEX dates on Beijing\'s clock and keeps the offsets of the scans it relays', () => {

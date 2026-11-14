@@ -24,6 +24,11 @@ const HOME_OFFSET = '+08:00';
 // A US place as USPS writes it: "TOWN, ST 00000", or a facility naming its state before its kind.
 const US_STATE = /,\s*([A-Z]{2})\b/;
 const US_FACILITY_STATE = /\s([A-Z]{2})\s*(?:\(USPS\)|(?:(?:NETWORK|REGIONAL|INTERNATIONAL)\s+)?DISTRIBUTION\s+CENTER)$/;
+// A US place as JCEX writes the delivering partner's scans: the state and the country alone,
+// "ST, US", or the town, state and postcode with the offset of the place's clock after them,
+// "TOWN;ST;00000;-05:00", the town or postcode at times left empty.
+const US_STATE_ALONE = /^([A-Z]{2}),\s*US$/;
+const OFFSET_PLACE = /^([^;]{0,80});([A-Z]{2});[^;]{0,12};([+-]\d{2}:\d{2})$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 // Once JCEX takes a parcel in, it writes a timeline up to the delivering partner: rows on one
@@ -48,8 +53,13 @@ function text(row: Record<string, unknown>, key: string, maxLength = 500): strin
   return cleanScalar(value, maxLength);
 }
 
-/** A place as JCEX writes it, "TOWN,TOWN,FR,00000" or "TOWN, ST 00000", without its postcode and each part once. */
+/**
+ * A place as JCEX writes it, "TOWN,TOWN,FR,00000" or "TOWN, ST 00000", without its postcode and
+ * each part once. A place written with its offset keeps its form without the postcode.
+ */
 function placeOf(location: string): string {
+  const written = OFFSET_PLACE.exec(location);
+  if (written) return `${written[1]};${written[2]};;${written[3]}`;
   const parts: string[] = [];
   for (const raw of location.split(',')) {
     const part = raw.trim().replace(/\s+\d{4,6}(?:-\d{4})?$/, '');
@@ -63,13 +73,15 @@ function placeOf(location: string): string {
  * The zone a row's place keeps. A bare country code is the place, even when
  * the row's country is another: JCEX files its Hong Kong hub's rows under the
  * destination with the destination's offset. A US place settles a zone
- * through its state.
+ * through its state, and so does a place written with its offset.
  */
 function placeZone(location: string, country: string): string | null {
+  const written = OFFSET_PLACE.exec(location);
+  if (written) return usStateTimeZone(written[2]);
   const place = /^[A-Z]{2}$/.test(location) && countryCode(location) ? location : country;
   if (place !== 'US') return countryTimeZone(place);
   if (place === location) return null;
-  return usStateTimeZone(US_STATE.exec(location)?.[1] ?? US_FACILITY_STATE.exec(location)?.[1]);
+  return usStateTimeZone(US_STATE_ALONE.exec(location)?.[1] ?? US_STATE.exec(location)?.[1] ?? US_FACILITY_STATE.exec(location)?.[1]);
 }
 
 /** A wall clock's instant under an offset, when the offset reads it back unchanged. */
@@ -80,17 +92,23 @@ function labelledTime(local: string, label: string): ParsedTime | null {
   return { iso: placed.toISO({ suppressMilliseconds: true }), timestamp: placed.toMillis() };
 }
 
+/** A wall clock's instant under an offset, when that is the offset the zone keeps at that time. */
+function keptTime(local: string, label: string | undefined, zone: string | null): ParsedTime | null {
+  const time = zone && label ? labelledTime(local, label) : null;
+  if (!zone || !time) return null;
+  return DateTime.fromMillis(time.timestamp, { zone }).offset === DateTime.fromISO(time.iso, { setZone: true }).offset ? time : null;
+}
+
 /**
- * A wall clock's instant under the row's `timeZone`, when that is the offset
- * the row's place keeps at that time. Other rows keep their wall clocks: an
- * offset the place does not have is someone else's clock, and a place without
- * one clock does not say which offset is its own.
+ * A wall clock's instant under the offset written after its place, else the
+ * row's `timeZone`, when that is the offset the row's place keeps at that
+ * time. Other rows keep their wall clocks: an offset the place does not have
+ * is someone else's clock, and a place without one clock does not say which
+ * offset is its own.
  */
 function placedTime(local: string, label: string, location: string, country: string): ParsedTime | null {
   const zone = placeZone(location, country);
-  const time = zone ? labelledTime(local, label) : null;
-  if (!zone || !time) return null;
-  return DateTime.fromMillis(time.timestamp, { zone }).offset === DateTime.fromISO(time.iso, { setZone: true }).offset ? time : null;
+  return keptTime(local, OFFSET_PLACE.exec(location)?.[3], zone) ?? keptTime(local, label, zone);
 }
 
 /** A row as JCEX lists it, before its clock is settled. */
