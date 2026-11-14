@@ -250,7 +250,7 @@
       "stage": "registered",
       "confirmedBy": "live",
       "firstSeen": "2026-10-29",
-      "note": "A courier is assigned to collect the parcel (您的快件将由…). The courier's name and phone follow and are dropped."
+      "note": "A courier is assigned to collect the parcel (您的快件将由快递员上门取件). The courier's name, between the role and the collection, and the phone after it are dropped."
     },
     {
       "code": "200001",
@@ -299,7 +299,7 @@
       "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-11-14",
-      "note": "Worded 已与 and a contact the wording drops; after the arrival at the delivery station and after a round without a delivery, each time followed by another round."
+      "note": "A new round agreed with the recipient (已与收件人约定新的派送时间, 待再次派送), after the arrival at the delivery station and after a round without a delivery, each time followed by another round. The courier's and the station's phones follow and are dropped."
     },
     {
       "code": "11000",

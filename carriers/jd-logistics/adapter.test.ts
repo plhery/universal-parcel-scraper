@@ -336,6 +336,28 @@ describe('JD Logistics international projection', () => {
     expect(policy?.matches?.({ ...incoming, providerCode: '' }, stored)).toBe(false);
   });
 
+  it('lets a domestic scan stored with the wording an earlier contact cut left short take its whole status phrase', () => {
+    const policy = sameInstantIdentityPolicy('jd-logistics', { supportsScanMatching: true });
+    const pairs: Array<[string, string, string]> = [
+      ['200003', '已与', '已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送'],
+      ['200034', '您的快件将由', '您的快件将由快递员上门取件'],
+      ['11000', '您的快件正在派送中，请您准备签收（', '您的快件正在派送中，请您准备签收'],
+      ['10034', '您的快件已送达至【示例】', '您的快件已送达'],
+    ];
+    for (const [providerCode, before, now] of pairs) {
+      const stored = { stage: 'in_transit', location: '', description: before, providerCode };
+      const incoming = { ...stored, description: now };
+      expect(policy?.matches?.(incoming, stored)).toBe(true);
+      // Another code, another place or a stored row without a code needs the whole wording.
+      expect(policy?.matches?.(incoming, { ...stored, providerCode: '200075' })).toBe(false);
+      expect(policy?.matches?.(incoming, { ...stored, location: 'Example City' })).toBe(false);
+    }
+    expect(policy?.matches?.({ stage: '', location: '', description: '已与收件人约定新的派送时间', providerCode: '200003' },
+      { stage: '', location: '', description: '已与', providerCode: '' })).toBe(false);
+    expect(policy?.matches?.({ stage: '', location: '', description: '您的快件已送达', providerCode: '10034' },
+      { stage: '', location: '', description: '您的快件已送达', providerCode: '' })).toBe(true);
+  });
+
   it('sends the official anonymous request with the caller signal', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(history())));
     await new JdLogisticsTracker({ fetcher }).fetch(NUMBER, { budgetMs: 500 });

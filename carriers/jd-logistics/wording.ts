@@ -31,3 +31,10 @@ export function withoutPartnerNumber(text: string): string {
 export function scanWording(text: string): string {
   return withoutPartnerNumber(withoutCourierContact(text));
 }
+
+/** The place or person a domestic delivery was handed to ("已送达至【…】"): a locker, a place or a person. */
+const DELIVERY_PLACE = /(已送达)(?:至|给)?【[^】]{0,40}】/u;
+
+export function withoutDeliveryPlace(text: string): string {
+  return text.replace(DELIVERY_PLACE, '$1');
+}

@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
 import { adapter, DECLINE_HOLD_MS, JdLogisticsTracker, MAX_DECLINE_HOLD_MS } from './adapter.js';
-import { jdDomesticBrowser, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
+import { jdDomesticBrowser, jdDomesticWording, jdRoute, JD_DOMESTIC_PROXY, JD_DOMESTIC_TRACK, parseJdDomestic } from './domestic.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -72,8 +72,54 @@ describe('JD domestic history', () => {
     }
     // The arrival at the delivery station before the round has a state of its own.
     expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: '200075', description: '您的快件已到达【示例站】' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
-    // So does the state that keeps the parcel at the station between rounds, whose wording the contact cut leaves short.
-    expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: '200003', description: '已与' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // So does the state that keeps the parcel at the station between rounds, under its old short wording too.
+    for (const description of ['已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送', '已与']) {
+      expect(statusMapAnswer({ carrier: 'jd-logistics', providerCode: '200003', description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
+  });
+
+  it('keeps the status phrase of a scan that names a courier or the recipient, and no name, phone or place', () => {
+    const NAME = '张三', OTHER_NAME = '李四', PHONE = '10000000000', ADDRESS = '示例市示例路1号';
+    const cases: Array<[string, string]> = [
+      [`您的快件将由快递员${NAME}上门取件，联系电话：${PHONE}`, '您的快件将由快递员上门取件'],
+      [`您的快件将由京东小哥${NAME}揽收`, '您的快件将由京东小哥揽收'],
+      [`您的快件将由快递员${NAME}上门取件，取件地址：${ADDRESS}`, '您的快件将由快递员上门取件'],
+      [`已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送，快递员电话：+86${PHONE}，营业部电话：+86${PHONE}`,
+        '已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送'],
+      [`已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送，派送地址：${ADDRESS}`, '已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送'],
+      [`您的快件正在派送中，请您准备签收（快递员：${NAME}，联系电话：${PHONE}，营业部电话：${PHONE}）。京东已开启“号码保护”，您的电话号码不会被泄露，请放心接听！`,
+        '您的快件正在派送中，请您准备签收'],
+      [`【生鲜快件提醒】您的生鲜快件正在派送中，请当面签收，签收后第一时间开箱验视并放入冰箱储存。（快递员：${NAME}，联系电话：${PHONE}）`,
+        '【生鲜快件提醒】您的生鲜快件正在派送中，请当面签收，签收后第一时间开箱验视并放入冰箱储存'],
+      [`您的快件已送达至【${OTHER_NAME}】，快递员：${NAME}，联系电话：${PHONE}，营业部电话：${PHONE}，感谢您的信任`, '您的快件已送达'],
+      [`您的快件已送达给【${ADDRESS}】`, '您的快件已送达'],
+      // A shape the phrases do not know is cut at its first contact word, as before.
+      [`您的快件将由快递员${NAME}（${PHONE}）上门取件`, '您的快件将由'],
+      [`已与收件人${NAME}约定派送时间，地址：${ADDRESS}`, '已与'],
+      [`已与收件人约定${NAME}${ADDRESS}的派送时间`, '已与'],
+      [`已与收件人约定${NAME}的派送时间`, '已与'],
+    ];
+    for (const [raw, kept] of cases) {
+      const wording = jdDomesticWording(raw);
+      expect(wording).toBe(kept);
+      for (const leak of [NAME, OTHER_NAME, PHONE, '示例市', '示例路']) expect(wording).not.toContain(leak);
+      expect(wording).not.toMatch(/\d{7,}/);
+    }
+  });
+
+  it('reads the page\'s oldest-first rows newest first, so the newest scan sets the status', () => {
+    const data = history();
+    data.obj[0]!.traceAllVoList[0]!.traceVoList = [
+      { operateMessage: '您的快件将由快递员PRIVATE上门取件，联系电话：PRIVATE', trackDay: '2026-04-01', trackTime: '06:05', state: '200034' },
+      { operateMessage: '京东快递已取件', trackDay: '2026-04-01', trackTime: '10:05', state: '200001' },
+      { operateMessage: '已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送，快递员电话：PRIVATE', trackDay: '2026-04-02', trackTime: '11:40', state: '200003' },
+      { operateMessage: '您的快件已送达，快递员：PRIVATE', trackDay: '2026-04-02', trackTime: '18:25', state: '10034' },
+    ] as never;
+    const result = parseJdDomestic(data, NUMBER);
+    expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: '您的快件已送达', last_update_local: '2026-04-02T18:25:00' });
+    expect(result.events?.map(event => event.provider_code)).toEqual(['10034', '200003', '200001', '200034']);
+    expect(result.events?.[1]).toMatchObject({ description: '已与收件人约定新的派送时间（2026-04-02 18:00），待再次派送', stage: 'in_transit' });
+    expect(JSON.stringify(result)).not.toContain('PRIVATE');
   });
 
   it('refuses wrong identities, multiple records and malformed clocks', () => {

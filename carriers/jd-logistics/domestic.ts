@@ -8,7 +8,7 @@ import { clean, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { normalizeJdNumber } from './parser.js';
 import { jdLogisticsStatus } from './status.js';
-import { withoutCourierContact } from './wording.js';
+import { withoutCourierContact, withoutDeliveryPlace } from './wording.js';
 
 const PROVIDER = 'JD Logistics';
 export const JD_DOMESTIC_TRACK = 'https://www.jdl.com/waybill/trackNoPin';
@@ -30,13 +30,29 @@ export function jdRoute(number: string): JdRoute {
 }
 export const jdDomesticUrl = (number: string): string => `${PAGE}?${new URLSearchParams({ waybillCodes: normalizeJdNumber(number) })}`;
 
+const COURIER_ROLE = '快递员|京东小哥|快递小哥|揽收员|配送员';
+/**
+ * Status phrases that name a role, never the person, and run on past a word the contact cut stops at.
+ * A scan that opens with one keeps that phrase alone, without the person's name, and nothing after it.
+ */
+const ROLE_PHRASES: ReadonlyArray<readonly [RegExp, string]> = [
+  // "您的快件将由快递员<name>上门取件，联系电话：<phone>": a courier is assigned to collect the parcel.
+  [new RegExp(`^(您的快件将由)(${COURIER_ROLE})[^，,。；;：:（(）)【】\\s]{0,16}?(上门取件|上门揽收|揽收|取件)`, 'u'), '$1$2$3'],
+  // "已与收件人约定新的派送时间（<date> <time>），待再次派送，快递员电话：<phone>": a round agreed with the recipient.
+  [/^(已与收件人约定(?:新|好|了)?的派送时间)([（(]\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}(?::\d{2})?)?(?: ?[-~至] ?\d{2}:\d{2})?[）)])?(，待再次派送)?/u, '$1$2$3'],
+];
+
 /** Drop the part naming a courier, contact or recipient; the scan's status remains. */
 export function jdDomesticWording(raw: unknown): string {
-  const text = withoutCourierContact(clean(raw, 2000))
+  const text = withoutDeliveryPlace(withoutCourierContact(clean(raw, 2000)))
     .replace(/由[^，。；;]{1,100}签收/gu, '签收')
     .replace(/((?:已|成功)签收)[，,。；;].*$/u, '$1');
+  for (const [phrase, replacement] of ROLE_PHRASES) {
+    const match = phrase.exec(text);
+    if (match) return match[0].replace(phrase, replacement);
+  }
   const contact = /配送员|快递员|揽收员|京东小哥|快递小哥|签收人|收件人|联系电话|联系方式|手机号码?|电话(?:号码?)?|signed(?: for)? by|recipient(?: name)?\s*:|courier(?: name| phone)?\s*:/iu.exec(text);
-  const head = (contact ? text.slice(0, contact.index) : text).replace(/[\s，,；;。:：]+$/u, '').trim();
+  const head = (contact ? text.slice(0, contact.index) : text).replace(/[\s，,；;。:：（(【]+$/u, '').trim();
   if (head) return head;
   // A courier-first sentence can still contain one unambiguous status phrase.
   // Keep that phrase, never the group's current status for an older row.
@@ -106,9 +122,10 @@ export function parseJdDomestic(payload: unknown, raw: string): CarrierResult {
     }
   }
   if (!events.length) throw new IndeterminateError(PROVIDER, 'JD domestic tracking returned a known shipment without scans');
-  // Only explicit instants can be sorted exactly. Unresolved wall clocks keep
-  // the carrier's group/row order, rather than guessing one shared time zone.
+  // The page lists scans oldest first. Explicit instants sort exactly; JD's domestic network keeps
+  // mainland China's single clock, so wall clocks without an offset sort as they are.
   if (events.every(event => event.time)) events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
+  else if (events.every(event => event.local_time)) events.sort((a, b) => b.local_time!.localeCompare(a.local_time!));
   const seen = new Set<string>();
   const unique = events.filter(event => { const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true; });
   const kept = unique.slice(0, 100), latest = kept[0]!;

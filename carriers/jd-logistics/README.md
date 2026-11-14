@@ -35,9 +35,13 @@ attachment or proof-of-delivery route is entered. HTTP recognition never starts 
 step; browser recognition is a separate opt-in.
 
 The domestic page displays `createTime`, otherwise `trackDay` with `trackTime`. An epoch or
-explicit offset keeps its instant. A clock without an offset stays local, in the carrier's
-order; the page's language does not establish its zone. Contact and recipient clauses are
-removed from scan wording, a station's phone too. Each scan keeps its `state` as its provider
+explicit offset keeps its instant. A clock without an offset stays local; the page's language
+does not establish its zone. The page lists scans oldest first, and they are read newest first:
+mainland China keeps one clock, so local clocks sort as they are. Contact and recipient clauses
+are removed from scan wording, a station's phone too, and the place or person a delivery was
+handed to. A phrase naming a role (a courier assigned to collect the parcel, a round agreed with
+the recipient) keeps the role and the agreed time and drops the person and everything after it.
+Each scan keeps its `state` as its provider
 code, and the states recorded in `status.ts` give its stage; the newest scan decides the
 status. Providers relay these scans without the state or the site's name, and the shared
 wording rules read JD Express's collection, arrivals and departures as those states do. Wordless or contact-only rows with
