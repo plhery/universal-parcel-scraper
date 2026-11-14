@@ -54,7 +54,8 @@ sent within Brazil. Tracked through the lookups its two tracking pages make.
 - The recipient's street, number and district, which the page shows beside some lines, are not
   kept, nor are coordinates, facility addresses, the courier's name or the proof-of-delivery file.
 - The page shows the destination's country code from `extra.countryCode` when the reply has one;
-  the adapter keeps it as the destination country.
+  the adapter keeps it as the destination country. Anjun Express carries parcels within Brazil,
+  so its answers have Brazil as their destination, and a scan without a place takes a Brazilian clock.
 - Returning to a sorting centre after failed deliveries is an exception: the parcel can still go
   out again.
 - The reply names no destination carrier's number, so there is no hand-off.

@@ -10,6 +10,7 @@ import { anjunWording, normalizeAnjunNumber, parseAnjun, parseAnjunExpress } fro
 import { anjunStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 
 const DELIVERED = 'AJ260301000000101';
 const IN_TRANSIT = 'AJ260514000000201';
@@ -302,7 +303,7 @@ describe('Anjun HTTP adapter', () => {
     ]);
     expect(result.events!.every((event) => event.time === undefined)).toBe(true);
     expect(JSON.stringify(result)).not.toMatch(/Sample (?:sender|Courier)|Rua|SP-01|-23\.0|Sample City/);
-    expect(result).not.toHaveProperty('destination_country');
+    expect(result.destination_country).toBe('BR');
     for (const change of [
       (rows: Row[]) => { (rows[0]!.nodeDataList as Row[])[0]!.dateTime = '2026-05-12 21:09:46'; },
       (rows: Row[]) => { (rows[0]!.nodeDataList as Row[])[0]!.dateTime = '31-02-2026 21:09:46'; },
@@ -314,6 +315,16 @@ describe('Anjun HTTP adapter', () => {
       expect(() => parseAnjunExpress(changed('express-in-transit', change), DOMESTIC)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }
     expect(() => parseAnjunExpress(fixture('express-unknown'), UNKNOWN)).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
+  });
+
+  it('dates an Anjun Express scan without a place on Brazil\'s clock, not on Anjun\'s in China', () => {
+    // A parcel collected from its sender, with no other scan yet: the collection names the sender's street, which is not kept.
+    const collected = parseAnjunExpress(changed('express-in-transit', (rows) => {
+      rows[0]!.nodeDataList = (rows[0]!.nodeDataList as Row[]).slice(-1);
+    }), DOMESTIC);
+    expect(dateLocalClocks('anjun', collected).events).toMatchObject([
+      { local_time: '2026-05-09T15:31:26', time: '2026-05-09T15:31:26-03:00', time_zone: 'America/Sao_Paulo', time_zone_basis: 'destination' },
+    ]);
   });
 
   it('routes a number filed under Anjun, or detected as one of its numbers, to the adapter', async () => {

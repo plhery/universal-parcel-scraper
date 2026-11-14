@@ -187,10 +187,11 @@ export function parseAnjunExpress(payload: unknown, raw: string): CarrierResult 
   const rows = record.nodeDataList ?? [];
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'Anjun Express returned a history with invalid scans');
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Anjun Express returned an oversized history');
+  // Anjun Express carries parcels within Brazil: a scan without a place is on one of Brazil's clocks, not Anjun's in China.
   return history(rows.map((row) => {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Anjun Express returned an invalid scan');
     return projectNode(row);
-  }), '');
+  }), 'BR');
 }
 
 /** The result of either lookup's scans, without repeats, newest first. */
