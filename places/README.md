@@ -89,6 +89,8 @@ placesForEvents(['Härkingen', 'Zürich'], { carriers: ['swiss-post'] });
   A scan without an offset there takes its town's: Central west of the Apalachicola River,
   except Gulf County south of the Intracoastal Waterway, as 49 CFR 71.5 draws the line, and
   along the county lines it names, Eastern in eastern Tennessee and Central in western Kentucky.
+  In Amazonas, a town west of the line from Tabatinga to Porto Acre, which divides the state
+  in the tz database, keeps Acre's offset (`America/Eirunepe`), and one east of it Manaus's.
 - Context does not outweigh a city of a million people, or a town of 100,000 ten times the
   size of the namesake context picks, when it lies nearer the way between the scans around
   it: "Warsaw" between Lviv and New York is in Poland.

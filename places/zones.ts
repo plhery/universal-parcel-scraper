@@ -141,7 +141,7 @@ const SPLIT_REGIONS: Readonly<Record<string, Readonly<Record<string, readonly st
     ON: ['America/Winnipeg'], QC: ['America/Halifax', 'America/Blanc-Sablon'], SK: ['America/Edmonton'],
   },
   AU: { NSW: ['Australia/Broken_Hill'] },
-  BR: { AM: ['America/Rio_Branco'] },
+  BR: { AM: ['America/Eirunepe'] },
 };
 
 // Florida's line between Eastern and Central time (49 CFR 71.5(f)): down the Apalachicola River from
@@ -159,6 +159,11 @@ function along(line: readonly (readonly [number, number])[], at: number): number
   const [[fromKey, fromValue], [toKey, toValue]] = [line[index - 1]!, line[index]!];
   return fromValue + (toValue - fromValue) * (at - fromKey) / (toKey - fromKey);
 }
+
+// Western Amazonas keeps Acre's clock: the tz database divides the state by the great circle from Tabatinga
+// to Porto Acre, which leaves Eirunepé, Envira and Benjamin Constant west of it and Boca do Acre east.
+// Over this span the circle and the straight line between them differ by far less than a town; [latitude, longitude].
+const TABATINGA_PORTO_ACRE = [[-4.231, -69.939], [-9.588, -67.533]] as const;
 
 // Texas's El Paso and Hudspeth counties keep Mountain time (15 U.S.C. 265). Their east line is Culberson County's west
 // line, 104.92°W in the Census Bureau's TIGER county outlines; only those two counties' towns lie west of it.
@@ -206,12 +211,14 @@ function insideRing(ring: readonly (readonly [number, number])[], latitude: numb
 /**
  * The zone of a point in a state split between zones, where its place decides: Florida's
  * Panhandle keeps Central time, Texas's El Paso and Hudspeth counties Mountain time, eastern
- * Tennessee Eastern time and western Kentucky Central time. Null where the state's main zone holds.
+ * Tennessee Eastern time, western Kentucky Central time and western Amazonas Acre's.
+ * Null where the state's main zone holds.
  */
 export function splitRegionZone(country: string, region: string, latitude: number, longitude: number): string | null {
   if (country === 'US' && region === 'TX') return longitude < CULBERSON_COUNTY_WEST ? 'America/Denver' : null;
   if (country === 'US' && region === 'TN') return insideRing(TENNESSEE_EASTERN, latitude, longitude) ? 'America/New_York' : null;
   if (country === 'US' && region === 'KY') return insideRing(KENTUCKY_CENTRAL, latitude, longitude) ? 'America/Chicago' : null;
+  if (country === 'BR' && region === 'AM') return longitude < along(TABATINGA_PORTO_ACRE, latitude) ? 'America/Eirunepe' : null;
   if (country !== 'US' || region !== 'FL') return null;
   const central = longitude < GULF_COUNTY_WEST
     || (longitude < along(APALACHICOLA_RIVER, latitude) && latitude > along(GULF_WATERWAY, longitude));

@@ -46,6 +46,17 @@ describe('placeTimeZone', () => {
     expect(splitRegionTownZone('US', 'KY', 'BOWLING GREEN')).toBe('America/Chicago');
   });
 
+  it('keeps Acre\'s offset in Amazonas west of the line from Tabatinga to Porto Acre, Manaus\'s east of it', () => {
+    // The tz database's own examples on either side.
+    for (const town of ['Eirunepé, AM', 'Envira, AM', 'Ipixuna, AM', 'Benjamin Constant, AM', 'Atalaia do Norte, AM']) {
+      expect(zoneOf(town), town).toBe('America/Eirunepe');
+    }
+    for (const town of ['Boca do Acre, AM', 'Jutaí, AM', 'Manaus, AM', 'Lábrea, AM', 'Carauari, AM']) expect(zoneOf(town), town).toBe('America/Manaus');
+    expect(splitRegionTownZone('BR', 'AM', 'EIRUNEPE')).toBe('America/Eirunepe');
+    expect(splitRegionTownZone('BR', 'AM', 'Manaus')).toBe('America/Manaus');
+    expect(splitRegionTownZone('BR', 'SP', 'Campinas')).toBeNull();
+  });
+
   it('reads a country of one clock, a state or province, or the nearest zone of a large country', () => {
     expect(zoneOf('Leipzig/Halle Hub')).toBe('Europe/Berlin');
     expect(zoneOf('Changsha')).toBe('Asia/Shanghai');
