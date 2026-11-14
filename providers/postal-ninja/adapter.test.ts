@@ -411,6 +411,18 @@ describe('Postal Ninja result parsing', () => {
       ['En route', 'in_transit'], ['Delivered to local carrier', 'in_transit'],
     ]) expect(parsePostalNinjaResponse(withEvents([{ dt: '2026-08-17T11:17:00', dsc: description }]), number).current_stage).toBe(stage);
   });
+
+  it("reads DHL Parcel Spain's departure, \"Salida de\" translated with its place apart, as transit", () => {
+    const read = (dsc: string, loc?: string) => parsePostalNinjaResponse(withEvents([
+      { ds: 'DHL Parcel Spain', dt: '2026-08-12T08:00:00', dsc: 'Shipment details received' },
+      { ds: 'DHL Parcel Spain', dt: '2026-08-13T21:40:00', dsc, ...(loc ? { loc } : {}) },
+    ]), number).events?.map(({ description, stage, stage_source }) => [description, stage, stage_source]);
+    expect(read('Output of', 'EXAMPLE TOWN')).toEqual([
+      ['Output of', 'in_transit', 'wording:provider'], ['Shipment details received', 'registered', 'wording:language'],
+    ]);
+    // The same words with the place joined into the text are no departure the rule reads.
+    expect(read('Output of EXAMPLE TOWN')?.[0]).toEqual(['Output of EXAMPLE TOWN', 'pending', 'none']);
+  });
 });
 
 describe('Postal Ninja TRAWL capture', () => {
