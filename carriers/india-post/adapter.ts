@@ -19,6 +19,8 @@ import {
   UpstreamHttpError,
 } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
+import { airportTimeZone } from '../../places/index.js';
+import { keepsZone } from '../../places/zones.js';
 import { classifyIndiaPostEvent, indiaPostEventText } from './status.js';
 
 // Protocol provenance (inspected 2026-09-01):
@@ -196,18 +198,26 @@ function airportClockZone(providerCode: string, office: string, trackedAt: strin
  * at most a code ("Office - 00000001", "Office - FRA") for an office it does
  * not name: the code is left out, and so is the PIN when the code names an
  * airport abroad, as the office of exchange there carries an Indian office's
- * PIN. An office of exchange's six-character UPU code ("Office - DEFRAA")
- * opens with its country, and is left out the same way. An office it names
- * after "Office - " keeps its name without it. A PIN starting with 9 is the
+ * PIN. An office of exchange's UPU code ("Office - DEFRAA", "Office - DEFRA")
+ * opens with its country and one of its airports, and is left out the same way.
+ * An office it names after "Office - " keeps its name without it, one word of
+ * five or six letters too ("KANPUR", "PATNA"). A PIN starting with 9 is the
  * Army Postal Service's, which India Post also gives foreign mail, and places
  * no office. `app.ts` reads a location stored with "Office - " as this one.
  */
 function officeLocation(office: string, pincode: string): string {
   const pin = /^[1-8]/.test(pincode) ? pincode : '';
-  const code = /^Office -(?: (?:([A-Z]{2})[A-Z]{3}[A-Z\d]|(?:[A-Z]{2})?([A-Z]{3})))?(?: \d+)?$/.exec(office);
-  if (!code) return [office.replace(/^Office - /, ''), pin].filter(Boolean).join(' ');
-  const country = code[1] ?? (code[2] ? airportCountry(code[2]) : 'IN');
+  const code = /^Office -(?: (?:([A-Z]{2})([A-Z]{3})[A-Z\d]?|([A-Z]{3})))?(?: \d+)?$/.exec(office);
+  const exchange = code?.[1] && code[2] ? exchangeCountry(code[1], code[2]) : undefined;
+  if (!code || (code[1] && !exchange)) return [office.replace(/^Office - /, ''), pin].filter(Boolean).join(' ');
+  const country = exchange ?? (code[3] ? airportCountry(code[3]) : 'IN');
   return country === 'IN' ? pin : '';
+}
+
+/** The country of an office of exchange's code, its two letters, when the airport after them keeps that country's clock. */
+function exchangeCountry(country: string, airport: string): string | undefined {
+  const zone = airportTimeZone(airport);
+  return zone && keepsZone(country, zone) ? country : undefined;
 }
 
 /**

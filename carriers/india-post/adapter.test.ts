@@ -458,8 +458,13 @@ describe('India Post response normalization', () => {
     expect(location('Office - 00000001', '999001')).toBe('');
     // An office of exchange's UPU code opens with its country; an office named abroad keeps its name.
     expect(location('Office - DEFRAA', '400099')).toBe('');
+    expect(location('Office - USJFKA', '400099')).toBe('');
     expect(location('Office - INBOMB', '400099')).toBe('400099');
     expect(location('Office - Example Mail Centre', '')).toBe('Example Mail Centre');
+    // An office named in one word of five or six letters is no code: no airport of a country it opens with follows.
+    expect(location('Office - KANPUR', '208001')).toBe('KANPUR 208001');
+    expect(location('Office - INDORE', '452001')).toBe('INDORE 452001');
+    expect(location('Office - PATNA', '800001')).toBe('PATNA 800001');
   });
 
   it('keeps rows newest first once a take-off is back on its own clock', () => {

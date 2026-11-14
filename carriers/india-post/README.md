@@ -116,8 +116,10 @@ Outcomes:
 - "Office -" followed at most by a code (`Office - 00000000`, `Office - FRA`) stands for an office
   India Post does not name. The location leaves it out and keeps the pincode alone, unless the code
   names an airport abroad: the office of exchange there carries an Indian office's pincode. An
-  office of exchange's six-character UPU code (`Office - DEFRAA`) opens with its country and is
-  left out the same way. An office abroad India Post names after "Office - " keeps its name alone.
+  office of exchange's UPU code (`Office - DEFRAA`, `Office - DEFRA`) opens with its country and is
+  left out the same way, when the airport after the country keeps that country's clock: a name of
+  five or six letters ("KANPUR") is kept. An office abroad India Post names after "Office - " keeps
+  its name alone.
 - A row's `pincode_info` is MySpeedPost's directory entry for the pincode, not for the office:
   "KOLKATA FOREIGN LCAO 900056" comes back as an office in Delhi, and unverified entries can be
   hundreds of kilometres off. Its coordinates become the scan's `point` only when the entry is
