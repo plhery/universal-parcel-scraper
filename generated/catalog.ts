@@ -28108,7 +28108,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "color": "#002e5d",
     "aliases": [
       "International Bridge, Inc.",
-      "ParcelPool"
+      "ParcelPool",
+      "MyIB International Bridge"
     ],
     "countries": [
       "US"

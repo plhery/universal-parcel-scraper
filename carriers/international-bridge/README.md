@@ -5,7 +5,8 @@ International Bridge parcels use enabled universal providers. There is no dedica
 International Bridge, Inc. is a small-parcel shipper for online sellers in Provo, Utah. It ships
 parcels to Hawaii, Alaska, Puerto Rico, Guam, the US Virgin Islands and other countries under its
 own tracking numbers and hands the last mile to USPS and partner carriers. ParcelPool was its
-domestic delivery brand. Its site is myib.com.
+domestic delivery brand. Its site is myib.com. A provider also reports it as "MyIB International
+Bridge", which is kept as an alias.
 
 ## Numbers
 
