@@ -1183,6 +1183,9 @@ function placeClockLine(carrier: string, status: string, location: string): stri
 const RELAYING_POSTS: Readonly<Record<string, string>> = {
   azerpost: 'AZ', 'correios-br': 'BR', 'correo-uruguayo': 'UY', 'la-poste': 'FR', 'slovenska-posta': 'SK',
 };
+// Correios Brazil names the sending post's country in Portuguese after the label ParcelsApp translates
+// from its "País". There a name a Brazilian town shares, which `countryCode` leaves to the town, is the country.
+const CORREIOS_TOWN_COUNTRIES: ReadonlyMap<string, string> = new Map([['FRANCA', 'FR'], ['TAILANDIA', 'TH']]);
 
 /**
  * The clock of a sending post's scan a relaying post names abroad: that
@@ -1191,6 +1194,9 @@ const RELAYING_POSTS: Readonly<Record<string, string>> = {
  */
 function relayedPostZone(carrier: string | undefined, location: string): string | null | undefined {
   const home = carrier && Object.hasOwn(RELAYING_POSTS, carrier) ? RELAYING_POSTS[carrier] : undefined;
+  const labelled = carrier === 'correios-br' ? /^Country,\s*(.+)$/i.exec(location)?.[1] : undefined;
+  const shared = labelled ? CORREIOS_TOWN_COUNTRIES.get(labelled.normalize('NFD').replace(/\p{Mn}/gu, '').trim().toUpperCase()) : undefined;
+  if (shared) return countryTimeZone(shared);
   const named = home ? [lastPlace(location), ...location.split(':')].find((part) => countryCode(part)) : undefined;
   const country = countryCode(named);
   return country && country !== home ? countryTimeZone(named) : undefined;

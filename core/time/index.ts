@@ -223,7 +223,7 @@ const REGION_CODES = new Set(Array.from({ length: 26 * 26 }, (_, index) =>
 const regionKey = (name: string) =>
   name.normalize('NFD').replace(/\p{Mn}/gu, '').toUpperCase().replace(/[\u2019`]/g, "'").replace(/\s+/g, ' ').trim();
 const REGION_BY_NAME = new Map<string, string>();
-for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl']) {
+for (const language of ['en', 'de', 'fr', 'it', 'es', 'nl', 'pt', 'pt-PT']) {
   const names = language === 'en' ? ENGLISH_REGIONS : new Intl.DisplayNames([language], { type: 'region' });
   for (const code of REGION_CODES) {
     const name = names.of(code)!;
@@ -248,9 +248,9 @@ for (const [name, code] of [['United States of America', 'US'], ['USA', 'US'], [
 
 /**
  * The ISO code of any country, whatever its clocks, from the code or its name
- * in English, German, French, Italian, Spanish or Dutch, without regard to
- * case or accents ("South Africa", "Südafrika" and "Afrique du Sud" are ZA);
- * null otherwise.
+ * in English, German, French, Italian, Spanish, Dutch or Portuguese, without
+ * regard to case or accents ("South Africa", "Südafrika" and "Afrique du Sud"
+ * are ZA); null otherwise.
  */
 export function countryCode(country: unknown): string | null {
   if (typeof country !== 'string') return null;

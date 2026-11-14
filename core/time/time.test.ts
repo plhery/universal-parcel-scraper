@@ -181,7 +181,7 @@ describe('time policies', () => {
     for (const value of ['UK', 'FX', 'ON', 'Example Hub', 'EXAMPLE CITY, CA', '', undefined]) expect(countryCode(value)).toBeNull();
   });
 
-  it('names a country in German, French, Italian, Spanish or Dutch, with or without accents', () => {
+  it('names a country in German, French, Italian, Spanish, Dutch or Portuguese, with or without accents', () => {
     for (const name of ['Schweiz', 'Suisse', 'Svizzera', 'Suiza', 'Zwitserland']) expect(countryCode(name), name).toBe('CH');
     for (const name of ['Österreich', 'OESTERREICH', 'osterreich', 'Autriche']) expect(countryCode(name), name).toBe('AT');
     for (const name of ['Vereinigtes Königreich', 'Großbritannien', 'GROSSBRITANNIEN', 'Royaume-Uni', 'Regno Unito', 'Reino Unido', 'Verenigd Koninkrijk']) {
@@ -191,8 +191,10 @@ describe('time policies', () => {
     expect(countryCode('Südafrika')).toBe('ZA');
     expect(countryCode('Afrique du Sud')).toBe('ZA');
     expect(countryCode('Nederland')).toBe('NL');
+    for (const [name, code] of [['ALEMANHA', 'DE'], ['Japão', 'JP'], ['JAPAO', 'JP'], ['Países Baixos', 'NL'], ['SUICA', 'CH'], ['África do Sul', 'ZA'],
+      ['Vietname', 'VN']]) expect(countryCode(name), name).toBe(code);
     // A name a large town shares names the town as often as the country.
-    for (const name of ['Granada', 'Salvador', 'Norfolk', 'Guadalupe', 'San Martín', 'Singapur']) expect(countryCode(name), name).toBeNull();
+    for (const name of ['Granada', 'Salvador', 'Norfolk', 'Guadalupe', 'San Martín', 'Singapur', 'França']) expect(countryCode(name), name).toBeNull();
   });
 
   it('maps US states and territories to their majority zone', () => {

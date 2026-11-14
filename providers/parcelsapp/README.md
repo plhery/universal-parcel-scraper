@@ -116,7 +116,7 @@ step exists for future protocol changes.
   5. the zone routing passes for the parcel.
 
   Steps 3 and 5 only guess where the scan was. A `location` ending with any other country,
-  by ISO code or by name in English, German, French, Italian, Spanish or Dutch ("Example
+  by ISO code or by name in English, German, French, Italian, Spanish, Dutch or Portuguese ("Example
   City, CA, US", "Example City, Brazil"), rules them out and the scan stays as
   labeled, or keeps its wall clock (below). Canada Post's "USA", 4PX's "US 12345" and
   Orange Connex's "United States of America" and "People's Republic of China" name the US
@@ -557,8 +557,8 @@ step exists for future protocol changes.
   own instant. On a tracked letter (an S10 number of the L series) La Poste shows that wall
   clock read as UTC on Paris's clock, as 17TRACK has it, so the digits go back to the wall
   clock first.
-  Correios Brazil names it after "Country, ": read on Brasília's clock, China Post's posting
-  came eleven hours after China Post's own row of it. Albania Post's relays under the foreign post's country ("Finland") keep their wall clock, as
+  Correios Brazil names it after "Country, ", in Portuguese: read on Brasília's clock, China Post's posting
+  came eleven hours after China Post's own row of it. There a name a Brazilian town shares ("FRANCA") is the country. Albania Post's relays under the foreign post's country ("Finland") keep their wall clock, as
   its own tracker leaves them: they run hours ahead of the foreign post's own scans.
 - Speedaf's dates are its sites' wall clocks under a UTC label. Its own feed dates the
   scans up to the departing flight ("Cargo flight departured") on China time and the rest

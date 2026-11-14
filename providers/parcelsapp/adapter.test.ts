@@ -548,6 +548,22 @@ describe('ParcelsApp result parsing', () => {
     }
   });
 
+  it('reads the sending post\'s country Correios Brazil names in Portuguese, also one a Brazilian town shares', () => {
+    // Each digit reads 10:00.
+    const scans = [
+      ['FRANCA, Brazil', '2026-11-07T13:00:00.000Z'], // A town in São Paulo, not France.
+      ['Country, TAILANDIA', '2026-11-06T03:00:00.000Z'],
+      ['Country, FRANCA', '2026-11-05T09:00:00.000Z'],
+      ['Country, JAPÃO', '2026-11-04T01:00:00.000Z'],
+      ['Country, ALEMANHA', '2026-11-03T09:00:00.000Z'],
+    ];
+    const payload = {
+      carriers: ['Correios Brazil'],
+      states: scans.map(([location, time]) => ({ date: `${time!.slice(0, 10)}T10:00:00Z`, status: 'Item in transfer - please wait', carrier: 0, location })),
+    };
+    expect(parseParcelsAppResponse(payload, number, identity()).events?.map((scan) => scan.time)).toEqual(scans.map(([, time]) => time));
+  });
+
   it('falls back to the parcel carrier\'s zone when a scan names no usable carrier or place', () => {
     const payload = { carriers: ['Example Parcel Co'], states: [{ date: '2026-06-10T14:05:00+00:00', status: 'Return to sender', carrier: 0 }] };
     expect(parseParcelsAppResponse(payload, number, identity(), 'Europe/Zurich').events?.[0]?.time).toBe('2026-06-10T12:05:00.000Z');
