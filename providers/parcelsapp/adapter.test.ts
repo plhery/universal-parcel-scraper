@@ -186,6 +186,16 @@ describe('ParcelsApp YTO scans', () => {
     expect(parseParcelsAppResponse({ carriers: ['Morocco Post'], states: [
       { date: '2026-11-03T10:21:00Z', status: 'Package shipped', location: 'Example, Australia', carrier: 0 },
     ] }, number, identity()).events?.map((event) => [event.description, event.local_time])).toEqual([['Package shipped', '2026-11-03']]);
+    // A relay at the scan's minute but at another hour on the dial, or on another day, is a scan of its own.
+    expect(parseParcelsAppResponse({ carriers: ['Australia Post', 'Morocco Post'], states: [
+      { date: '2026-11-04T10:21:00Z', status: 'Package shipped', location: 'Example, Australia', carrier: 1 },
+      { date: '2026-11-03T22:21:11Z', status: 'Cleared and awaiting international departure', location: 'EXAMPLE NSW', carrier: 0 },
+      { date: '2026-11-03T03:21:00Z', status: 'Shipment received for export', location: 'Example, Australia', carrier: 1 },
+    ] }, number, identity()).events?.map((event) => [event.description, event.time ?? event.local_time])).toEqual([
+      ['Package shipped', '2026-11-04'],
+      ['Cleared and awaiting international departure', '2026-11-03T11:21:11.000Z'],
+      ['Shipment received for export', '2026-11-03'],
+    ]);
   });
 
   it("reads Croatia Post's relayed labels by its own map and a post abroad on that office's clock", () => {

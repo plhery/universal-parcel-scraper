@@ -208,9 +208,9 @@ function twelveHourDial(name: unknown): boolean {
  * A twelve-hour dial's copy of another network's scan in the same reply: the sending post's scan,
  * which Morocco Post relays in its own words at that scan's minute (Barid Al-Maghrib's relayed labels). Australia Post's "Received by
  * our network" at 09:18:52 came as "Shipment picked up" at 09:18, and its 22:21:11 clearance
- * awaiting departure as "Package shipped" at 10:21. A clock whole hours from the label keeps the
- * minute, and the dial is within a day of the label. Read by its day alone, the copy would stand
- * beside the scan, so it is not read.
+ * awaiting departure as "Package shipped" at 10:21. The dial keeps the scan's day, its minute and
+ * its hour on a twelve-hour clock; a relay at another hour or on another day is a scan of its own.
+ * Read by its day alone, the copy would stand beside the scan, so it is not read.
  */
 function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<string, unknown> }>(entries: readonly T[]): Set<T> {
   const at = (date: unknown) => {
@@ -224,7 +224,7 @@ function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<
     const dial = relay ? at(copy.date) : null;
     return dial !== null && entries.some((own) => {
       const scan = twelveHourDial(own.name) ? null : at(own.date);
-      return scan !== null && scan.minute === dial.minute && Math.abs(dial.diff(scan, 'hours').hours) <= 24;
+      return scan !== null && scan.hasSame(dial, 'day') && scan.minute === dial.minute && scan.hour % 12 === dial.hour % 12;
     });
   }));
 }

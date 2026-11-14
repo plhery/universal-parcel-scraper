@@ -206,9 +206,9 @@ step exists for future protocol changes.
 - Morocco Post's scans keep their day alone too. Barid Al-Maghrib's tracker prints a
   twelve-hour clock without AM or PM, and ParcelsApp copies it: its relay of Australia Post's
   22:21 clearance awaiting departure came at 10:21, on the sending post's day. ParcelsApp's
-  English for the tracker's wordings is read by Barid Al-Maghrib's map. Such a relay at the
-  minute of another network's scan within a day of it, the sending post's own in the same
-  reply, is that scan's copy and is not read.
+  English for the tracker's wordings is read by Barid Al-Maghrib's map. Such a relay on the
+  day, minute and twelve-hour hour of another network's scan, the sending post's own in the
+  same reply, is that scan's copy and is not read.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They
   skip the steps above and take the zone the
