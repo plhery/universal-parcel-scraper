@@ -74,8 +74,9 @@ consumer portal, whose milestones the group's guest service gives too: each once
 newest date and without a place. A BRTcode is asked there, and its answer
 stands for BRT's when DPD places the parcel in Italy. The milestones are staged as in DPD's
 leg, and the hand-over is to BRT. The portal archives a parcel after thirty days. Any other
-answer leaves the outage, so enabled providers answer. Shipment numbers and parcel IDs have
-no such route.
+answer leaves the outage, so enabled providers answer. A BRTcode is asked the same way while
+BRT's gateway answers HTTP 502, 503 or 504 for the server behind it, as it does for a while
+most nights. Shipment numbers and parcel IDs have no such route.
 
 BRT's page gives no delivery estimate for its own shipments either. While a BRTcode no
 partner brought is on its way (accepted, in transit, in customs or out for delivery) and no

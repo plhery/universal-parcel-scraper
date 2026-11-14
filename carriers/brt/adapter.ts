@@ -1,5 +1,5 @@
 import { accepted, readerLanguage, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, IndeterminateError, MaintenanceError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, IndeterminateError, MaintenanceError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -14,6 +14,8 @@ const BASE = 'https://vas.brt.it/vas/';
 const ORIGIN_RESERVE_MS = 500;
 /** The stages of a parcel on its way, whose estimate the DPD group's guest service gives. */
 const ON_THE_WAY = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
+/** The statuses BRT's gateway answers while the server behind it is down, as it is for a while most nights. */
+const GATEWAY_FAILURES = new Set([502, 503, 504]);
 
 /** A partner's lookup of the number BRT tracks a parcel under. */
 export type BrtOriginLookup = (number: string, context: TrackingContext) => Promise<CarrierResult>;
@@ -129,10 +131,12 @@ export class BrtTracker {
       },
     }, {
       id: 'group',
-      // While BRT's tracker is down, the DPD group's guest service reads a BRTcode DPD places in
-      // Italy, each milestone once and without places. Any other answer leaves the outage.
+      // While BRT's tracker is down, for maintenance or behind its gateway, the DPD group's guest service
+      // reads a BRTcode DPD places in Italy, each milestone once and without places. Any other answer
+      // leaves the outage.
       enabled: number.length === 14 && Boolean(this.options.group),
-      recovers: (error) => error instanceof MaintenanceError,
+      recovers: (error) => error instanceof MaintenanceError
+        || (error instanceof UpstreamHttpError && error.provider === 'BRT' && GATEWAY_FAILURES.has(error.status)),
       run: async ({ signal, remainingMs, previousError }) => {
         const answer = await this.options.group!(number, { signal, budgetMs: remainingMs }).catch(() => {
           context.signal?.throwIfAborted();

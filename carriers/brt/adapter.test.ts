@@ -827,6 +827,26 @@ describe('BRT through the DPD group while its tracker is down', () => {
     expect(group).not.toHaveBeenCalled();
   });
 
+  it('asks the group while BRT\'s gateway answers for a server that is down, and keeps that failure when the group cannot answer', async () => {
+    const group = vi.fn<BrtOriginLookup>(async () => answer(milestone('IN_TRANSIT', 'Your parcel is on its way', '2026-01-12T22:56:06+01:00'),
+      milestone('PARCEL_HANDED', 'Parcel handed to DPD', '2026-01-12T18:38:11+01:00')));
+    const gateway = (status: number) => new BrtTracker({ group,
+      fetcher: vi.fn<typeof fetch>(async () => new Response('<html><body><center><h1>502 Bad Gateway</h1></center></body></html>',
+        { status, headers: { 'Content-Type': 'text/html' } })) });
+    for (const status of [502, 503, 504]) {
+      expect((await gateway(status).fetch(NUMBER, { budgetMs: 10_000 })).events!.map(event => event.description))
+        .toEqual(['Your parcel is on its way', 'Parcel handed to BRT']);
+    }
+    expect(group).toHaveBeenCalledTimes(3);
+    group.mockRejectedValueOnce(new IndeterminateError('BRT', 'DPD returned no Italian country evidence'));
+    await expect(gateway(502).fetch(NUMBER)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 502 });
+    // A server error that is not the gateway's, and a shipment number, ask no one.
+    group.mockClear();
+    await expect(gateway(500).fetch(NUMBER)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 500 });
+    await expect(gateway(502).fetch(SHIPMENT)).rejects.toMatchObject({ name: 'UpstreamHttpError', status: 502 });
+    expect(group).not.toHaveBeenCalled();
+  });
+
   it('asks the group once for the estimate of a BRTcode on its way, and adds only that', async () => {
     // BRT's own shipment, out for delivery on its day 14.01, without the locker's scans.
     const onTheWay = edit($ => $('.table_stato_dati tr').slice(1, 3).remove());
