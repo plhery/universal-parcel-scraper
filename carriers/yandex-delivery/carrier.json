@@ -1,0 +1,48 @@
+{
+  "id": "yandex-delivery",
+  "displayName": "Yandex Delivery",
+  "aliases": [
+    "Яндекс Доставка",
+    "Яндекс.Доставка",
+    "ООО «Яндекс.Доставка»",
+    "Boxberry",
+    "Боксберри"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#fc4714"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",
+    "searchUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "dostavka.yandex.ru"
+      ],
+      "pathPattern": "^/ndd/tracking/?$",
+      "params": [
+        "order_tracking_id"
+      ]
+    }
+  ],
+  "detection": []
+}

@@ -3998,6 +3998,12 @@
     "reason": "One reverse pickup waybill in a review starts with 2; one sample does not establish the family."
   },
   {
+    "carrier": "yandex-delivery",
+    "pattern": "^LO\\d{9}$",
+    "kind": "by_design",
+    "reason": "Yandex Delivery's tracking page gives its numbers as LO- and nine digits with one example; GLS Italy's numbers share the two letters and nine digits, and one example is too little for a rule."
+  },
+  {
     "carrier": "yanwen",
     "pattern": "^S\\d{14}$",
     "kind": "open",

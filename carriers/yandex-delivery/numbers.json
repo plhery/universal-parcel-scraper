@@ -1,0 +1,27 @@
+{
+  "carrier": "yandex-delivery",
+  "records": [
+    {
+      "number": "LO-835645864",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://dostavka.yandex.ru/ndd/tracking/",
+        "date": "2026-11-14",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "note": "Yandex Delivery's tracking page gives this as its example tracking number, next to the layout LO- and nine digits.",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      }
+    }
+  ]
+}

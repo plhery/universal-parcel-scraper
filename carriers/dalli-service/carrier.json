@@ -1,0 +1,36 @@
+{
+  "id": "dalli-service",
+  "displayName": "Dalli",
+  "aliases": [
+    "ДАЛЛИ",
+    "Dalli Service",
+    "ДАЛЛИ-СЕРВИС",
+    "ООО «ДАЛЛИ-СЕРВИС»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#002a47"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://dalli-service.com/tracking/",
+    "canaryUrl": "https://dalli-service.com/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

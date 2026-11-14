@@ -1,0 +1,35 @@
+{
+  "id": "rail-continent",
+  "displayName": "Rail Continent",
+  "aliases": [
+    "Рейл Континент",
+    "ТК Рейл Континент",
+    "ООО «Реил Континент М»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#ffd12d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.railcontinent.ru/tracking/",
+    "canaryUrl": "https://www.railcontinent.ru/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

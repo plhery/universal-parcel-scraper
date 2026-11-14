@@ -1,0 +1,34 @@
+{
+  "id": "peshkariki",
+  "displayName": "Peshkariki",
+  "aliases": [
+    "Пешкарики",
+    "ООО «ДОСТАВКА-СЕРВИС»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#dc3c24"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://peshkariki.ru/tracking",
+    "canaryUrl": "https://peshkariki.ru/tracking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

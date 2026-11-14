@@ -1,0 +1,34 @@
+{
+  "id": "skif-cargo",
+  "displayName": "Skif-Cargo",
+  "aliases": [
+    "Скиф-Карго",
+    "ООО «Компания Скиф-Карго»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#ce1226"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.skif-cargo.ru/tracking/",
+    "canaryUrl": "https://www.skif-cargo.ru/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

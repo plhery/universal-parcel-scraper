@@ -1,0 +1,34 @@
+{
+  "id": "logsis",
+  "displayName": "Logsis",
+  "aliases": [
+    "Логсис",
+    "ООО «Логсис Групп»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#3492f7"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://logsis.ru/traking",
+    "canaryUrl": "https://logsis.ru/traking",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "magnit-post",
+  "displayName": "Magnit Post",
+  "aliases": [
+    "Магнит Пост",
+    "ООО «Магнит Маркет»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#ff462d"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://post.magnit.ru/tracking/",
+    "canaryUrl": "https://post.magnit.ru/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

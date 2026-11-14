@@ -1,0 +1,34 @@
+{
+  "id": "baikal-service",
+  "displayName": "Baikal Service",
+  "aliases": [
+    "Байкал Сервис",
+    "ООО «Байкал-Сервис ТК»"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#00a0de"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "universal",
+    "steps": []
+  },
+  "capabilities": [],
+  "portal": {
+    "searchUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "canaryUrl": "https://www.baikalsr.ru/tools/tracking/",
+    "shows": [],
+    "scraped": [],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -36,8 +36,8 @@ delivery service takes over. Tracked through the lookup its tracking page makes.
   adapter strips it from the wording and gives the newest as the estimate until delivery.
 - Once the parcel is booked with a local carrier, a notice names it and its number and links
   its tracker. The hand-off is set only when that link is CDEK's or Russian Post's tracker and
-  carries the number shown. DPD Russia, Boxberry and IML are not in the catalog, so their
-  notices give none.
+  carries the number shown. DPD Russia and IML are not in the catalog, and Boxberry, now Yandex
+  Delivery, has no link rule for its old tracker, so their notices give none.
 - Phone numbers are removed from scans. The destination town, delivery type, batch and the
   delivery time in days on the page are not kept.
 
