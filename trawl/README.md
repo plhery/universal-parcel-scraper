@@ -90,12 +90,10 @@ within the same two-puzzle limit and deadline. Worker errors, cancellation and t
 do not trigger that refresh. The replacement must have a new identifier and background,
 and its image must be displayed before solving it. A `china-post.prompt-refresh` warning
 records the recovery's bound scan count without puzzle content. The helper
-retains only scan state labels and local clocks. If the entry form fails to load,
-it reloads the official page once before sending any tracking request. An identified
+retains only scan state labels and local clocks. An entry form that fails to load
+ends the lookup; reloading the page rarely brought it back. An identified
 unsolved verification on an HTTP 200 page reaches the adapter as a challenge,
-with its phase retained in a `china-post.verification` warning.
-The `china-post.form-reload` warning records whether the form recovered and
-a bound scan reply arrived, without identifiers or page content. A `china-post.timing`
+with its phase retained in a `china-post.verification` warning. A `china-post.timing`
 warning gives each lookup's final phase, puzzle count, OCR time and the times its page,
 form, first puzzle and tracking reply arrived. Its two-scan guest window stays marked
 incomplete; the helper enters no phone digits and signs into no account.

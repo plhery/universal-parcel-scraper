@@ -37,9 +37,8 @@ form and solves its ordered-character challenge offline. The helper binds both
 the check and tracking requests to the whole number, then checks every returned
 scan's number. It retains only state labels, scan codes and local clocks. The
 web preview always sets `history_truncated`; phone and account dialogs are not
-completed. A form that fails to initialise gets one reload on the same official
-page, before any matching tracking request starts and within the lookup's budget.
-HTTP recognition continues to use the app alone.
+completed. A form that fails to initialise ends the lookup; reloading the page
+rarely brought it back. HTTP recognition continues to use the app alone.
 
 The character prompt is read one glyph at a time after removing coloured
 interference lines; a whole-line read can omit required clicks. Other prompt

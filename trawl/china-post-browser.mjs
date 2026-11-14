@@ -52,7 +52,7 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
   const stopped = new AbortController();
   const operationSignal = signal ? AbortSignal.any([signal, stopped.signal]) : stopped.signal;
   let context, page, observer, requestObserver, timer, abort, accepting = true, expired = false, statusCode = 0, totalBytes = 0, verificationStatus = 0, phase = 'setup';
-  let formReloaded = false, formReadyAfterReload = false, unreadableChallenge = false, trackingStarted = false;
+  let unreadableChallenge = false, trackingStarted = false;
   let promptRefreshed = false, previousPrompt;
   let puzzles = 0, ocrMs = 0, solvingSince = null;
   // Offsets from the start; a phase that was not reached stays null.
@@ -150,22 +150,9 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
         const input = page.locator('input[placeholder="输入最多20个邮件号(多个请用空格或,隔开)"]');
         phase = 'form';
         // Its firewall can return executable HTML with 412, then navigate to the form.
-        try { await input.fill(number, { timeout: remaining(15000) }); }
-        catch (error) {
-          // A cleared firewall page can leave its scripts unloaded. Reload only
-          // before any tracking request, once, on the same official entry page.
-          const location = new URL(page.url());
-          if (operationSignal.aborted || trackingStarted || entries.length || remaining() < 15000
-            || ![200, 403, 405, 412].includes(statusCode) || location.origin !== ORIGIN || location.pathname !== '/queryList') throw error;
-          formReloaded = true;
-          phase = 'form-reload';
-          const reloaded = await page.reload({ waitUntil: 'domcontentloaded', timeout: remaining(15000) });
-          statusCode = reloaded?.status() ?? 0;
-          if ([403, 405, 412].includes(statusCode)) verificationStatus = statusCode;
-          phase = 'form';
-          await input.fill(number, { timeout: remaining(15000) });
-          formReadyAfterReload = true;
-        }
+        // A form that does not appear ends the lookup: reloading the page rarely
+        // brought it back and cost up to half a minute of the budget.
+        await input.fill(number, { timeout: remaining(15000) });
         if (await input.inputValue({ timeout: remaining(3000) }) !== number) throw new Error('China Post input changed');
         // Blurring commits the typed value to the form's list of waybills.
         await input.evaluate(element => element.blur(), undefined, { timeout: remaining(3000) });
@@ -250,13 +237,12 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
   } finally {
     const failedVerification = !entries.length && identifiedChallenge(), failurePhase = phase;
     const failureCause = unreadableChallenge ? 'unreadable' : 'firewall', failurePageStatus = statusCode, failureVerificationStatus = verificationStatus;
-    const reloadedFormReady = formReadyAfterReload;
     const solvedMs = ocrMs + (solvingSince === null ? 0 : Date.now() - solvingSince);
-    let reloadScans = 0;
-    if (formReloaded || promptRefreshed) {
+    let refreshScans = 0;
+    if (promptRefreshed) {
       try {
         const last = entries.at(-1), payload = JSON.parse(last?.body ?? 'null');
-        if (last?.url === API && last.status === 200 && payload?.success === true && payload.match === true && Array.isArray(payload.scans)) reloadScans = payload.scans.length;
+        if (last?.url === API && last.status === 200 && payload?.success === true && payload.match === true && Array.isArray(payload.scans)) refreshScans = payload.scans.length;
       } catch { /* A failed reply supplies no history. */ }
     }
     expired = true; accepting = false; stopped.abort(); clearTimeout(timer); signal?.removeEventListener('abort', abort);
@@ -268,16 +254,12 @@ export async function runChinaPostBrowser({ url, handle, tier, maxTimeout, captu
         phase: failurePhase, cause: failureCause, pageStatus: failurePageStatus, verificationStatus: failureVerificationStatus })); }
       catch { /* Diagnostics cannot change tracking or cleanup. */ }
     }
-    if (formReloaded) {
-      try { console.warn(JSON.stringify({ level: 'warn', event: 'china-post.form-reload', host: 'www.ems.com.cn',
-        formReady: reloadedFormReady, scans: reloadScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
-    }
     if (promptRefreshed) {
       try { console.warn(JSON.stringify({ level: 'warn', event: 'china-post.prompt-refresh', host: 'www.ems.com.cn',
-        scans: reloadScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
+        scans: refreshScans })); } catch { /* Diagnostics cannot change tracking or cleanup. */ }
     }
     try {
-      onTiming({ phase: failurePhase, responses: entries.length, formReloaded, puzzles, ...marks, ocrMs: solvedMs,
+      onTiming({ phase: failurePhase, responses: entries.length, puzzles, ...marks, ocrMs: solvedMs,
         durationMs: Date.now() - started });
     } catch { /* Diagnostics cannot change tracking or cleanup. */ }
   }

@@ -14,13 +14,13 @@ const response = (payload = found, overrides = {}) => ({ url: () => api, status:
   headers: () => ({ 'content-type': 'application/json', 'set-cookie': 'PRIVATE' }),
   body: async () => Buffer.from(JSON.stringify(payload)), ...overrides });
 function fixture() {
-  const handlers = {}, state = { closed: 0, counted: 0, navigated: 0, timings: [] };
+  const handlers = {}, state = { closed: 0, counted: 0, navigated: 0, reloads: 0, timings: [] };
   let submitted = number;
   const page = {
     on: (name, fn) => { handlers[name] = fn; }, off: name => { delete handlers[name]; },
     goto: async () => { state.navigated++; return { status: () => 200 }; },
     url: () => 'https://www.ems.com.cn/queryList',
-    reload: async () => { state.navigated++; return { status: () => 200 }; },
+    reload: async () => { state.reloads++; return { status: () => 200 }; },
     locator: () => ({ fill: async n => { submitted = n; }, inputValue: async () => submitted,
       waitFor: async () => {}, evaluate: async () => {} }),
     waitForResponse: async () => ({ status: () => 200, body: async () => Buffer.from(JSON.stringify({ data: {
@@ -47,7 +47,7 @@ test('times each phase of a lookup with fixed labels and counts only', async t =
   } });
   const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 14000 });
   assert.equal(result.capturedResponses.length, 1);
-  assert.deepEqual(f.state.timings, [{ phase: 'history', responses: 1, formReloaded: false, puzzles: 1,
+  assert.deepEqual(f.state.timings, [{ phase: 'history', responses: 1, puzzles: 1,
     navigationMs: 3000, formMs: 3000, pictureMs: 4000, replyMs: 9500, ocrMs: 4000, durationMs: 9500 }]);
 });
 
@@ -262,50 +262,27 @@ test('ends stalled work, aborts OCR and closes late contexts', async () => {
   assert.equal(late.state.closed, 1); assert.equal(late.state.navigated, 0);
 });
 
-test('reloads a missing form once before searching and keeps only bound tracking history', async t => {
+test('a missing form ends the lookup without reloading the page or searching', async t => {
   const logs = [];
   t.mock.method(console, 'warn', text => { logs.push(JSON.parse(text)); });
-  const f = fixture(), locator = f.page.locator;
-  let fills = 0, searches = 0, verifies = 0;
-  f.page.locator = (...args) => {
-    const item = locator(...args), fill = item.fill;
-    item.fill = async (...values) => {
-      if (++fills === 1) {
-        f.handlers.request({ url: () => api, method: () => 'POST', postDataJSON: () => ({ list: [other], value: [{ orderNum: [other] }] }) });
-        throw new Error('PRIVATE selector');
-      }
-      await fill(...values);
-    };
-    return item;
-  };
-  f.page.getByRole = (_role, { name }) => ({ evaluate: async () => {
-    if (name === '查询') searches++;
-    if (name === '验证') { verifies++; f.handlers.response(response()); }
-  } });
+  const f = fixture();
+  let searches = 0;
+  f.page.locator = () => ({ fill: async () => { throw new Error('PRIVATE selector'); } });
+  f.page.getByRole = () => ({ evaluate: async () => { searches++; } });
   const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 30000 });
-  assert.equal(f.state.navigated, 2);
-  assert.equal(searches, 1); assert.equal(verifies, 1);
-  assert.equal(result.capturedResponses.length, 1);
-  assert.equal(JSON.parse(result.capturedResponses[0].body).match, true);
+  assert.equal(f.state.navigated, 1);
+  assert.equal(f.state.reloads, 0);
+  assert.equal(searches, 0);
+  // Without an earlier firewall response the page is no identified challenge.
+  assert.equal(result.status, 'error');
+  assert.equal(result.reason, 'china-post-form');
+  assert.equal(result.statusCode, 200);
+  assert.equal(result.capturedResponses.length, 0);
   assert.equal(f.state.closed, 1);
-  assert.deepEqual(logs, [{ level: 'warn', event: 'china-post.form-reload', host: 'www.ems.com.cn', formReady: true, scans: 1 }]);
-  assert.equal(JSON.stringify(logs).includes(number), false);
-  assert.equal(JSON.stringify(logs).includes('PRIVATE'), false);
-});
-
-test('does not reload repeatedly, after cancellation, with a short budget or on another page', async t => {
-  t.mock.method(console, 'warn', () => {});
-  for (const mode of ['twice', 'short', 'aborted', 'other']) {
-    const f = fixture(), control = new AbortController();
-    let reloads = 0, fills = 0;
-    f.page.locator = () => ({ fill: async () => { fills++; if (mode === 'aborted') control.abort(); throw new Error('PRIVATE'); } });
-    f.page.reload = async () => { reloads++; return { status: () => 200 }; };
-    if (mode === 'other') f.page.url = () => 'https://example.test/queryList';
-    await runChinaPostBrowser({ ...f.options, maxTimeout: mode === 'short' ? 200 : 30000, signal: control.signal });
-    assert.equal(reloads, mode === 'twice' ? 1 : 0);
-    assert.equal(fills, mode === 'twice' ? 2 : 1);
-    assert.equal(f.state.closed, 1);
-  }
+  assert.deepEqual(f.handlers, {});
+  assert.deepEqual(logs, []);
+  assert.deepEqual(f.state.timings.map(row => [row.phase, row.formMs]), [['form', null]]);
+  assert.equal(JSON.stringify(result).includes('PRIVATE'), false);
 });
 
 test('preserves a known firewall challenge after its final page becomes HTTP 200', async t => {
@@ -318,8 +295,10 @@ test('preserves a known firewall challenge after its final page becomes HTTP 200
     return { status: () => 200 };
   };
   f.page.locator = () => ({ fill: async () => { throw new Error('PRIVATE'); } });
-  const result = await runChinaPostBrowser(f.options);
+  const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 30000 });
+  assert.equal(f.state.reloads, 0);
   assert.equal(result.status, 'success');
+  assert.equal(result.reason, 'china-post-form');
   assert.equal(result.statusCode, 200);
   assert.equal(result.verificationStatus, 412);
   assert.equal(result.capturedResponses.length, 0);
@@ -349,20 +328,4 @@ test('an earlier firewall response does not turn later stalled tracking into a v
   assert.equal(result.capturedResponses.length, 0);
   assert.equal(f.state.closed, 1);
   assert.deepEqual(logs, []);
-});
-
-test('never reloads after its matching tracking request starts, even before the reply arrives', async t => {
-  t.mock.method(console, 'warn', () => {});
-  const f = fixture(); let reloads = 0;
-  f.page.locator = () => ({ fill: async () => {
-    f.handlers.request(response().request());
-    throw new Error('PRIVATE pending request');
-  } });
-  f.page.reload = async () => { reloads++; return { status: () => 200 }; };
-  const result = await runChinaPostBrowser({ ...f.options, maxTimeout: 30000 });
-  assert.equal(reloads, 0);
-  assert.equal(result.capturedResponses.length, 0);
-  assert.equal(result.status, 'error');
-  assert.equal(f.state.closed, 1);
-  assert.deepEqual(f.handlers, {});
 });
