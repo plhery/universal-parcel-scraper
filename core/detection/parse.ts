@@ -12,6 +12,7 @@ import { CARRIER_DEFINITIONS } from '../catalog/definitions.js';
 import { TRACKING_LINK_RULES, matchesDomain, type TrackingLinkRule } from '../catalog/linkRules.js';
 import { ALTERNATIVE_WORDS, candidateScan, isDateToken, keywordNumberInText, recognizedNumberInScan } from './candidates.js';
 import { detectCarrierMatch } from './detect.js';
+import { normalizeTrackingNumber } from './normalize.js';
 import { validTrackingNumber } from './valid.js';
 import type { TrackingInputMatch } from './types.js';
 
@@ -69,8 +70,15 @@ function bareTrackingLinks(input: string): string[] {
     });
 }
 
+/**
+ * The first number a link's value holds. A list joins its codes with commas, bars or spaces
+ * (`formattedParcelCodes=<code>%20<code>` on Swiss Post's links). Groups a number prints apart
+ * stay one number: a space parts only codes that are each a whole number of eight characters or more.
+ */
 function cleanLinkTrackingNumber(raw: string): string {
-  return raw.split(/[,|]/, 1)[0]!.trim();
+  const first = raw.split(/[,|]/, 1)[0]!.trim();
+  const parts = first.split(/\s+/);
+  return parts.length > 1 && parts.every((part) => normalizeTrackingNumber(part).length >= 8 && validTrackingNumber(part)) ? parts[0]! : first;
 }
 
 function queryParam(url: URL, names: string[]): string | undefined {

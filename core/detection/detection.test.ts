@@ -503,6 +503,13 @@ describe('the detection engine', () => {
     }
     expect(parseTrackingInput('https://www.post.ch/de/empfangen/sendung-verfolgen?formattedParcelCodes=RA123456785IR').carrier)
       .not.toBe('swiss-post');
+    // Codes a link joins with a space are several, and the first is read, as after a comma; groups printed apart stay one number.
+    expect(parseTrackingInput('https://www.post.ch/swisspost-tracking?formattedParcelCodes=RA123456785IR%20RA987654326IR&lang=de'))
+      .toMatchObject({ trackingNumber: 'RA123456785IR', carrier: 'swiss-post', source: 'link' });
+    expect(parseTrackingInput('https://www.post.ch/swisspost-tracking?formattedParcelCodes=99.60.123456.12345678+99.60.123456.12345679')
+      .trackingNumber).toBe('99.60.123456.12345678');
+    expect(parseTrackingInput('https://www.post.ch/swisspost-tracking?formattedParcelCodes=99%2060%20123456%2012345678').trackingNumber)
+      .toBe('99 60 123456 12345678');
   });
 
   it('reads the links Transpress and CVC tracking forms open', () => {
