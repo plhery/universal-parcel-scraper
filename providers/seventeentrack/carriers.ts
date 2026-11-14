@@ -1,3 +1,5 @@
+import { carrierDefinition } from '../../core/catalog/definitions.js';
+
 /**
  * 17TRACK's keys for catalog carriers, from its public carrier list
  * (`res.17track.net/asset/carrier/info/carrier.all.js`), with the name it
@@ -53,4 +55,19 @@ export function seventeenTrackCarrierKeys(carrier: string | null | undefined): r
   const key = carrier && Object.hasOwn(CARRIER_KEYS, carrier) ? CARRIER_KEYS[carrier] : undefined;
   if (!carrier || key === undefined) return undefined;
   return [key, ...(SAME_CARRIER_KEYS[carrier] ?? [])];
+}
+
+/**
+ * Catalog carriers whose leg 17TRACK names too briefly for the name alone to
+ * tell, by the key of the leg, with the name it shows. Such a leg takes the
+ * catalog's name.
+ */
+const LEG_CARRIERS: Readonly<Record<number, string>> = {
+  191903: 'xuchuan-logistics', // XC
+};
+
+/** The name of 17TRACK's leg: the catalog's for a carrier its key stands for, else 17TRACK's own. */
+export function seventeenTrackLegName(provider: Record<string, unknown>): unknown {
+  const carrier = typeof provider.key === 'number' && Object.hasOwn(LEG_CARRIERS, provider.key) ? LEG_CARRIERS[provider.key] : undefined;
+  return carrier ? carrierDefinition(carrier).displayName : provider.name;
 }

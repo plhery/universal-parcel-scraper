@@ -54289,7 +54289,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "Xuchuan International Logistics",
     "color": "#0a2463",
     "aliases": [
-      "XC",
       "Xuchuan Logistics",
       "旭川国际物流",
       "xcwl.ltd Logistics"

@@ -105,7 +105,9 @@ carrier.
   wrong: for one parcel, the China Post leg put `+08:00` on the same wall clock that
   USPS reported at `-07:00`. Each event keeps `provider_time_iso`, `time_provenance`
   (`provider_inferred`, `carrier_reported` or `unspecified`) and the reporting carrier's
-  name and key, whatever zone the rules below read it on. A row read on another zone names
+  name and key, whatever zone the rules below read it on. A leg whose name is too short to
+  tell its carrier takes the catalog's name by its key ([carriers.ts](carriers.ts)):
+  Xuchuan International Logistics' (191903), which 17TRACK names XC. A row read on another zone names
   it and how it was chosen (`time_zone`, `time_zone_basis`): `place` (its location, or the
   side of the border its words name), `neighbour` (a nearby scan's), `destination` (the
   recipient's country) or `carrier` (the leg's own clock). UTC is named by none. Other rows
@@ -277,7 +279,7 @@ carrier.
   17TRACK asks Webtrack again, stamped with that moment. It echoes the status, so it is left
   out, as [DHL eCommerce's adapter](../../carriers/dhl-ecommerce/README.md) leaves it out.
 - Original scan text is kept: the English interface does not translate descriptions. China
-  Post's leg, and JHGJ's and XC's, which relay China Post's labels, show a label in the English the
+  Post's leg, and JHGJ's and Xuchuan's (XC), which relay China Post's labels, show a label in the English the
   [China Post adapter](../../carriers/china-post/README.md) shows, its places left to the location,
   and a copy stored in Chinese takes the English in place. A label that names its place only in 【】
   ("启运【Example】") with no location gives it that place; a partner's scan abroad gives its

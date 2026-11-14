@@ -4,7 +4,9 @@ Xuchuan International Logistics parcels use enabled universal providers. There i
 adapter.
 
 Xuchuan International Logistics (旭川国际物流) is a Xiamen forwarder whose site is xcwl.ltd.
-17TRACK names it XC, and relays China Post's labels on its line.
+17TRACK names its leg XC, under carrier key 191903, and relays China Post's labels on it. The
+key, not the two letters, files that leg under Xuchuan: a provider writing XC can mean another
+company.
 
 ## Numbers
 

@@ -2,10 +2,12 @@
 import { DateTime } from 'luxon';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, onTestFinished, vi } from 'vitest';
+import { carrierIdFromName } from '../../core/catalog/hints.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { carrierErrorKind } from '../../core/errors/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
+import { universalCarrierHints } from '../shared/hints.js';
 import { adapter, parse17TrackResponse, SeventeenTrackTracker } from './adapter.js';
 
 const number = 'ZZ12345678900';
@@ -1259,6 +1261,27 @@ describe('17TRACK result parsing', () => {
     expect(result.events?.[0]?.location).toBeUndefined();
     expect(result).toMatchObject({ reported_carriers: ['Swiss Post'], discovered_carrier: 'swiss-post' });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
+  });
+
+  it('names Xuchuan’s leg by its key, 191903, and not by the XC 17TRACK writes for it, which names no carrier alone', () => {
+    const xuchuan = 'XC9999999980CN';
+    const reply = (key: number) => ({ meta: { code: 200 }, shipments: [{ number: xuchuan, code: 200, shipment: {
+      latest_status: { status: 'InTransit' },
+      tracking: { providers: [{ provider: { key, name: 'XC', country: 'CN' }, events: [{
+        time_iso: '2026-10-17T09:00:00+08:00', time_utc: null, time_raw: { date: '2026-10-17', time: '09:00:00', timezone: null },
+        description: '送交境外进口海关', location: '', stage: null, sub_status: 'InTransit_Other' }] }] } } }] });
+    const named = parse17TrackResponse(reply(191903), xuchuan);
+    const leg = 'Xuchuan International Logistics';
+    expect(named).toMatchObject({ reported_carriers: [leg], discovered_carrier: 'xuchuan-logistics' });
+    expect(named.events?.[0]).toMatchObject({ reporting_carrier: leg, reporting_carrier_key: 191903, stage: 'customs' });
+    // The name alone still names the carrier, as a consumer that reads the names again finds it.
+    expect(universalCarrierHints([leg], xuchuan).discovered_carrier).toBe('xuchuan-logistics');
+    // Another leg 17TRACK writes XC keeps the name and names nobody.
+    expect(carrierIdFromName('XC')).toBeUndefined();
+    const other = parse17TrackResponse(reply(190000), xuchuan);
+    expect(other.reported_carriers).toEqual(['XC']);
+    expect(other.discovered_carrier).toBeUndefined();
+    expect(other.events?.[0]).toMatchObject({ reporting_carrier: 'XC', reporting_carrier_key: 190000 });
   });
 
   it('rejects demos, ambiguity, unfinished polling and verification errors', () => {

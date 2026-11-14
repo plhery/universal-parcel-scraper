@@ -325,7 +325,8 @@ describe('Hualei delivery partners', () => {
     const tenant = { ...GZYL, unlabelledPartners: ['dhl'] } as const;
     const partner = (label: string) => parseHualeiTrack(handedOver(label, DHL, 'IT'), NUMBER, tenant, READ_AT)!.delivery_carrier;
     // A network of the partner's brand, or the tenant itself, is no other carrier.
-    for (const label of ['', 'DHL', 'DHL Paket', 'DHL Express Line', '欧洲DHL快线-A', 'GZYL Europe', '欧洲专线']) expect(partner(label), label).toBe('dhl');
+    // Two letters such as XC name no carrier.
+    for (const label of ['', 'DHL', 'DHL Paket', 'DHL Express Line', '欧洲DHL快线-A', 'GZYL Europe', '欧洲专线', 'XC DHL Line']) expect(partner(label), label).toBe('dhl');
     for (const label of ['FedEx', 'Swiss Post', '瑞士邮政', 'Europe UPS Line']) expect(partner(label), label).toBeUndefined();
     // A tenant that names no such carrier hands nothing over without the channel's table.
     expect(parseHualeiTrack(handedOver('DHL', DHL, 'IT'), NUMBER, GZYL, READ_AT)!.delivery_carrier).toBeUndefined();

@@ -37,7 +37,7 @@ import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
 import { facilityZone, LatestScan, relaysFacilityClock } from '../shared/facilityClock.js';
 import { numberOf, place, result, text, trailingPlace, type UniversalSource } from '../shared/result.js';
-import { seventeenTrackCarrierKeys } from './carriers.js';
+import { seventeenTrackCarrierKeys, seventeenTrackLegName } from './carriers.js';
 import { seventeenTrackEvent, undatedScan } from './events.js';
 
 const SOURCE: UniversalSource = '17TRACK';
@@ -501,7 +501,7 @@ function nzPostDestination(shipment: Record<string, unknown>, providers: unknown
 
 /** 17TRACK's carrier 3011, China Post. */
 const CHINA_POST = 3011;
-/** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list) and XC (191903). */
+/** China Post's leg and those of forwarders that relay its labels: JHGJ (九好国际, 192049 in 17TRACK's carrier list) and Xuchuan's XC (191903). */
 const CHINA_POST_LABELS: ReadonlySet<unknown> = new Set([CHINA_POST, 192049, 191903]);
 /** Legs whose English wording ends with the place in brackets: Pengyou (捧友, 191878 in 17TRACK's carrier list). */
 const BRACKETED_PLACES: ReadonlySet<unknown> = new Set([191878]);
@@ -706,7 +706,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
   for (const provider of tracking.providers) {
     if (!isRecord(provider) || !Array.isArray(provider.events)) throw new SchemaError(SOURCE, '17TRACK returned invalid provider history');
     const reported = isRecord(provider.provider) ? provider.provider : {};
-    const name = universalCarrierHints([reported.name]).reported_carriers[0];
+    const name = universalCarrierHints([seventeenTrackLegName(reported)]).reported_carriers[0];
     const operator = { ...(name ? { reporting_carrier: name } : {}),
       ...(typeof reported.key === 'number' && Number.isSafeInteger(reported.key) ? { reporting_carrier_key: reported.key } : {}) };
     const utc = relaysUtcClock(reported.key);
@@ -864,7 +864,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
   const answer = result(events, SOURCE);
   return { ...answer, ...carrierEstimate(shipment, answer.current_stage), ...(undated ? { undated_event_count: undated } : {}),
     ...universalCarrierHints(tracking.providers.map((provider) =>
-    isRecord(provider) && isRecord(provider.provider) ? provider.provider.name : undefined), number) };
+    isRecord(provider) && isRecord(provider.provider) ? seventeenTrackLegName(provider.provider) : undefined), number) };
 }
 
 export interface SeventeenTrackOptions {

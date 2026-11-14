@@ -873,7 +873,7 @@
                 },
                 "reporting_carrier": {
                   "type": "string",
-                  "description": "The carrier a universal provider says reported the scan, by the name the provider gives it."
+                  "description": "The carrier a universal provider says reported the scan, by the name the provider gives it, or the catalog's where the provider's key for the carrier says more than its name."
                 }
               },
               "additionalProperties": true
