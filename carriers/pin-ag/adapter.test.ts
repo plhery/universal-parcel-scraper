@@ -114,6 +114,27 @@ describe('PIN AG HTTP adapter', () => {
     expect(() => parsePinAg({ statuses: [{ statusCode: 'NOT_FOUND_HINT' }] }, PARCEL)).toThrow(expect.objectContaining({ kind: 'not_found' }));
   });
 
+  it('keeps progress after a historical missing hint and uses only a final hint for absence', () => {
+    const payload = fixture('delivered');
+    rows(payload).unshift({ statusCode: 'NOT_FOUND_HINT' });
+    expect(parsePinAg(payload, PARCEL)).toMatchObject({ status: 'delivered', events: expect.any(Array) });
+    expect(parsePinAg(payload, PARCEL).events).toHaveLength(4);
+    expect(parsePinAg(payload, PARCEL).events!.some(e => e.provider_code === 'NOT_FOUND_HINT')).toBe(false);
+    rows(payload).push({ statusCode: 'NOT_FOUND_HINT' });
+    expect(() => parsePinAg(payload, PARCEL)).toThrow(expect.objectContaining({ kind: 'not_found' }));
+    (payload.statuses as unknown[])[1] = null;
+    expect(() => parsePinAg(payload, PARCEL)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('keeps generic HTTP 410 indeterminate during retrieval and recognition', async () => {
+    for (const body of [JSON.stringify({ error: { message: 'Gone', status: 410 } }), '<html>Gone</html>']) {
+      const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(body, { status: 410 }));
+      await expect(carrier(fetcher).track({ number: PARCEL })).rejects.toMatchObject({ kind: 'indeterminate' });
+      await expect(carrier(fetcher).recognize!(PARCEL)).rejects.toMatchObject({ kind: 'indeterminate' });
+      expect(fetcher).toHaveBeenCalledTimes(2);
+    }
+  });
+
   it('keeps an unknown number, an item type PIN does not track and other refusals apart', async () => {
     const lookup = (response: Response) => carrier(vi.fn<typeof fetch>().mockResolvedValue(response)).track({ number: PARCEL });
     await expect(lookup(unknown())).rejects.toMatchObject({ kind: 'not_found' });

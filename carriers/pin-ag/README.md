@@ -21,9 +21,10 @@ tracking page calls.
   waits there for collection, so it reads ready for pickup.
 - An unknown number, or one whose statuses PIN deleted after six months, gets HTTP 404 with the
   message "kein Zustellstatus gefunden": `NotFoundError`. So does a status coded
-  `NOT_FOUND_HINT`, which the page treats the same way. HTTP 405 is an item type PIN does not
+  `NOT_FOUND_HINT` in its final row, which the page treats the same way. An older
+  hint is omitted when a later status reports progress. HTTP 405 is an item type PIN does not
   track, such as a standard letter: inconclusive with the reason `tracking_withheld`. Any other
-  refusal, and an empty status list, is inconclusive too.
+  refusal, including a generic HTTP 410, and an empty status list are inconclusive too.
 - Recognition makes the same request. `pin-ag-1` offers PIN AG for sixteen digits opening `0100`
   next to DHL eCommerce and TNT, and preflight asks it only for a German country hint, since
   other carriers print such runs too.

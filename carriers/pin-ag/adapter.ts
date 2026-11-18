@@ -23,7 +23,7 @@ export class PinAgTracker {
       const { response, bytes } = await fetchBounded(url, { signal, headers: {
         Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: PIN_AG_MAX_BYTES,
-        allowHttpStatuses: [404, 405], fetcher: this.options.fetcher });
+        allowHttpStatuses: [404, 405, 410], fetcher: this.options.fetcher });
       const text = decodeText(bytes);
       if (response.status !== 200) return parsePinAgMissing(response.status, text);
       let reply: unknown;

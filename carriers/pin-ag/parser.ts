@@ -83,10 +83,13 @@ export function parsePinAg(reply: unknown, raw: string): CarrierResult {
   // The tracker lists the oldest status first.
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
+  const last: unknown = reply.statuses.at(-1);
+  let missing = false;
   for (const row of reply.statuses) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'PIN AG returned an invalid status');
     const code = field(row, 'statusCode', 32);
-    if (code === NOT_FOUND_HINT) throw new NotFoundError(PROVIDER, 'PIN AG holds no status for this number');
+    // The native page's missing-item view depends only on the final row.
+    if (code === NOT_FOUND_HINT) { missing = row === last; continue; }
     const stageName = field(row, 'stage', 64);
     const description = plain(field(row, 'label', 2_000)) || field(row, 'statusDescription') || stageName;
     if (!code || !description) throw new SchemaError(PROVIDER, 'PIN AG returned a status without code or wording');
@@ -99,9 +102,10 @@ export function parsePinAg(reply: unknown, raw: string): CarrierResult {
     const key = JSON.stringify(event);
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
+  if (missing) throw new NotFoundError(PROVIDER, 'PIN AG holds no status for this number');
   events.reverse();
   const latest = events[0]!;
-  const last = reply.statuses.at(-1) as Record<string, unknown>;
+  if (!isRecord(last)) throw new SchemaError(PROVIDER, 'PIN AG returned an invalid status');
   const mapped = pinAgStatus(field(last, 'stage', 64), field(last, 'statusCode', 32));
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time ?? null,
