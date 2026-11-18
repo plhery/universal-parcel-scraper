@@ -47750,7 +47750,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "puntopost"
     },
     "canaryUrl": "https://www.puntopost.mx/tracking-summary/",
     "trackingUrlTemplate": "https://www.puntopost.mx/tracking-summary/#{trackingNumber}",

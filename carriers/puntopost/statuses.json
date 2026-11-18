@@ -1,4 +1,149 @@
 {
   "carrier": "puntopost",
-  "entries": []
+  "entries": [
+    {
+      "code": "created",
+      "wording": "Guía generada",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "in_origin_point",
+      "wording": "Tu envío se ha puesto en marcha",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The shop has handed the parcel over at its origin point."
+    },
+    {
+      "code": "in_rerouted_point",
+      "wording": "Redirigiendo tu envío a otro PuntoPost",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "bundle",
+      "note": "Sent on to another pickup point."
+    },
+    {
+      "code": "in_transit_depot",
+      "wording": "En camino al almacén",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "in_depot",
+      "wording": "En almacén",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "in_transit_destination",
+      "wording": "En ruta hacia el punto de entrega",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "On the way to the pickup point, not to the recipient's door."
+    },
+    {
+      "code": "in_destination_point",
+      "wording": "Disponible en punto de entrega",
+      "language": "es",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "note": "Waiting at the PuntoPost point for the recipient."
+    },
+    {
+      "code": "delivered",
+      "wording": "Entregado",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Collected by the recipient at the point."
+    },
+    {
+      "code": "return_in_destination_point",
+      "wording": "Entrega fallida, inicio proceso de devolución",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "note": "Not collected at the point: the return starts."
+    },
+    {
+      "code": "return_in_transit_depot",
+      "wording": "Devolución en camino al almacén",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "return_in_depot",
+      "wording": "Devolución en almacén",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "return_in_transit_origin",
+      "wording": "Devolución en ruta hacia el punto de entrega",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "note": "On the way back to the origin point."
+    },
+    {
+      "code": "return_in_origin_point",
+      "wording": "Devolución disponible en punto de entrega",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "note": "Back at the origin point."
+    },
+    {
+      "code": "return_in_rerouted_point",
+      "wording": "Redirigiendo tu devolución a otro PuntoPost",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "return_delivered",
+      "wording": "Devolución entregada",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "note": "Handed back to the sender."
+    },
+    {
+      "code": "return_fail_in_origin_point",
+      "wording": "Devolución al remitente",
+      "language": "es",
+      "stage": "returned",
+      "confirmedBy": "bundle",
+      "note": "The page words every return_fail code alike and shows nothing after this one."
+    },
+    {
+      "code": "incidence",
+      "wording": "Incidencia detectada, revisando",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "cancelled",
+      "wording": "Cancelado",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "bundle"
+    },
+    {
+      "code": "lost",
+      "wording": "Siniestrado",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "bundle",
+      "note": "Lost or damaged."
+    }
+  ]
 }

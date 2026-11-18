@@ -1,0 +1,446 @@
+{
+  "detail": {
+    "tracking": "MXT00930J290H",
+    "label": "MXL0000016G39",
+    "status": "delivered",
+    "status_history": [
+      {
+        "status": "created",
+        "when": "2025-11-29T09:33:18-06:00"
+      },
+      {
+        "status": "in_origin_point",
+        "when": "2025-12-01T16:59:14-06:00"
+      },
+      {
+        "status": "in_transit_depot",
+        "when": "2025-12-02T13:53:24-06:00"
+      },
+      {
+        "status": "in_depot",
+        "when": "2025-12-02T21:42:38-06:00"
+      },
+      {
+        "status": "in_transit_destination",
+        "when": "2025-12-03T08:23:50-06:00"
+      },
+      {
+        "status": "in_destination_point",
+        "when": "2025-12-03T11:49:32-06:00"
+      },
+      {
+        "status": "delivered",
+        "when": "2025-12-03T13:14:17-06:00"
+      }
+    ],
+    "origin": {
+      "id": "01K8PJXFGK4EGSRF8ATT2HQTRE",
+      "external_id": "CANNA001",
+      "type": "merchant",
+      "name": "Almacén Cannaland",
+      "address": {
+        "postal_code": "04600",
+        "city": "Coyoacán",
+        "address": "San Jorge 922, Colonia Pedregal de Santa Ursula",
+        "coordinate": {
+          "latitude": 19.309011,
+          "longitude": -99.15805
+        }
+      },
+      "schedule": null,
+      "schedule_items": []
+    },
+    "destination": {
+      "id": "01JPJG4RFGPPC98X7FBVQG4D64",
+      "external_id": "MX000666",
+      "type": "pudo",
+      "name": "Super Valle de Chalco",
+      "address": {
+        "postal_code": "56613",
+        "city": "Valle de Chalco Solidaridad",
+        "address": "Calle Nte 36, Colonia del Carmen, Valle de Chalco Solidaridad, Méx., México",
+        "coordinate": {
+          "latitude": 19.309894,
+          "longitude": -98.952056
+        }
+      },
+      "schedule": "Lun, Mar, Mie, Jue, Vie, Sab, Dom: 08:00 - 22:00.",
+      "schedule_items": [
+        {
+          "day": "mon",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "tue",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "wed",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "thu",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "fri",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "sat",
+          "start": "08:00",
+          "end": "22:00"
+        },
+        {
+          "day": "sun",
+          "start": "08:00",
+          "end": "22:00"
+        }
+      ]
+    },
+    "movements": [
+      {
+        "status": "in_origin",
+        "origin": {
+          "id": "01K8PJXFGK4EGSRF8ATT2HQTRE",
+          "external_id": "CANNA001",
+          "type": "merchant",
+          "name": "Almacén Cannaland",
+          "address": {
+            "postal_code": "04600",
+            "city": "Coyoacán",
+            "address": "San Jorge 922, Colonia Pedregal de Santa Ursula",
+            "coordinate": {
+              "latitude": 19.309011,
+              "longitude": -99.15805
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "created_at": "2025-12-01T16:59:17-06:00"
+      },
+      {
+        "status": "in_transit",
+        "origin": {
+          "id": "01K8PJXFGK4EGSRF8ATT2HQTRE",
+          "external_id": "CANNA001",
+          "type": "merchant",
+          "name": "Almacén Cannaland",
+          "address": {
+            "postal_code": "04600",
+            "city": "Coyoacán",
+            "address": "San Jorge 922, Colonia Pedregal de Santa Ursula",
+            "coordinate": {
+              "latitude": 19.309011,
+              "longitude": -99.15805
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "created_at": "2025-12-02T13:53:23-06:00"
+      },
+      {
+        "status": "in_destination",
+        "origin": {
+          "id": "01K8PJXFGK4EGSRF8ATT2HQTRE",
+          "external_id": "CANNA001",
+          "type": "merchant",
+          "name": "Almacén Cannaland",
+          "address": {
+            "postal_code": "04600",
+            "city": "Coyoacán",
+            "address": "San Jorge 922, Colonia Pedregal de Santa Ursula",
+            "coordinate": {
+              "latitude": 19.309011,
+              "longitude": -99.15805
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "created_at": "2025-12-02T21:42:36-06:00"
+      },
+      {
+        "status": "in_origin",
+        "origin": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JPJG4RFGPPC98X7FBVQG4D64",
+          "external_id": "MX000666",
+          "type": "pudo",
+          "name": "Super Valle de Chalco",
+          "address": {
+            "postal_code": "56613",
+            "city": "Valle de Chalco Solidaridad",
+            "address": "Calle Nte 36, Colonia del Carmen, Valle de Chalco Solidaridad, Méx., México",
+            "coordinate": {
+              "latitude": 19.309894,
+              "longitude": -98.952056
+            }
+          },
+          "schedule": "Lun, Mar, Mie, Jue, Vie, Sab, Dom: 08:00 - 22:00.",
+          "schedule_items": [
+            {
+              "day": "mon",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "tue",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "wed",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "thu",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "fri",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sat",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sun",
+              "start": "08:00",
+              "end": "22:00"
+            }
+          ]
+        },
+        "created_at": "2025-12-02T21:42:36-06:00"
+      },
+      {
+        "status": "in_transit",
+        "origin": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JPJG4RFGPPC98X7FBVQG4D64",
+          "external_id": "MX000666",
+          "type": "pudo",
+          "name": "Super Valle de Chalco",
+          "address": {
+            "postal_code": "56613",
+            "city": "Valle de Chalco Solidaridad",
+            "address": "Calle Nte 36, Colonia del Carmen, Valle de Chalco Solidaridad, Méx., México",
+            "coordinate": {
+              "latitude": 19.309894,
+              "longitude": -98.952056
+            }
+          },
+          "schedule": "Lun, Mar, Mie, Jue, Vie, Sab, Dom: 08:00 - 22:00.",
+          "schedule_items": [
+            {
+              "day": "mon",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "tue",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "wed",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "thu",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "fri",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sat",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sun",
+              "start": "08:00",
+              "end": "22:00"
+            }
+          ]
+        },
+        "created_at": "2025-12-03T08:23:48-06:00"
+      },
+      {
+        "status": "in_destination",
+        "origin": {
+          "id": "01JQ9NVJ0S80VABQDTB3P7PSQF",
+          "external_id": "CDMX0001",
+          "type": "logistic",
+          "name": "Almacén CDMX",
+          "address": {
+            "postal_code": "02400",
+            "city": "Azcapotzalco",
+            "address": "San Juan Tlihuaca 55, San Juan Tlihuaca, Azcapotzalco, 02400, Ciudad de México, CDMX",
+            "coordinate": {
+              "latitude": 19.493178,
+              "longitude": -99.202614
+            }
+          },
+          "schedule": null,
+          "schedule_items": []
+        },
+        "destination": {
+          "id": "01JPJG4RFGPPC98X7FBVQG4D64",
+          "external_id": "MX000666",
+          "type": "pudo",
+          "name": "Super Valle de Chalco",
+          "address": {
+            "postal_code": "56613",
+            "city": "Valle de Chalco Solidaridad",
+            "address": "Calle Nte 36, Colonia del Carmen, Valle de Chalco Solidaridad, Méx., México",
+            "coordinate": {
+              "latitude": 19.309894,
+              "longitude": -98.952056
+            }
+          },
+          "schedule": "Lun, Mar, Mie, Jue, Vie, Sab, Dom: 08:00 - 22:00.",
+          "schedule_items": [
+            {
+              "day": "mon",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "tue",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "wed",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "thu",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "fri",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sat",
+              "start": "08:00",
+              "end": "22:00"
+            },
+            {
+              "day": "sun",
+              "start": "08:00",
+              "end": "22:00"
+            }
+          ]
+        },
+        "created_at": "2025-12-03T11:49:37-06:00"
+      }
+    ],
+    "created_at": "2025-11-29T09:33:18-06:00"
+  }
+}

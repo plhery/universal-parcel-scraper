@@ -219,6 +219,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /Código de rastreo|Número de guía|no se encontró información|Rastrear Envío/i,
     forwarding: { notFound: /Lo sentimos, no se encontró información/i } },
   // The page looks the number up on load and clears it when Paquetexpress does not know it.
+  { carrier: 'puntopost', number: 'MXZZZZZZZZZZZZ',
+    route: /^https:\/\/www\.puntopost\.mx\/tracking-summary\/#MXZZZZZZZZZZZZ$/,
+    marker: /Estado del pedido/, forwarding: { notFound: /No se ha encontrado ningún pedido con el código de seguimiento proporcionado/ } },
   { carrier: 'paquetexpress', number: '999999999999',
     route: /^https:\/\/www\.paquetexpress\.com\.mx\/rastreo\/999999999999$/,
     marker: /Oops! Wrong tracking number, please check your info and try again\./,

@@ -573,6 +573,7 @@ import { adapter as proships } from '../carriers/proships/adapter.js';
 import { adapter as ptsWorldwideExpress } from '../carriers/pts-worldwide-express/adapter.js';
 import { adapter as ptt } from '../carriers/ptt/adapter.js';
 import { adapter as pullmanCargo } from '../carriers/pullman-cargo/adapter.js';
+import { adapter as puntopost } from '../carriers/puntopost/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
 import { adapter as pwb } from '../carriers/pwb/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
@@ -1381,6 +1382,7 @@ export const REGISTRY: RegistryDefinition = {
     "pts-worldwide-express": ptsWorldwideExpress,
     "ptt": ptt,
     "pullman-cargo": pullmanCargo,
+    "puntopost": puntopost,
     "purolator": purolator,
     "pwb": pwb,
     "qatar-post": qatarPost,
@@ -2924,7 +2926,7 @@ export const REGISTRY: RegistryDefinition = {
     "pts-worldwide-express": "pts-worldwide-express",
     "ptt": "ptt",
     "pullman-cargo": "pullman-cargo",
-    "puntopost": "universal",
+    "puntopost": "puntopost",
     "purolator": "purolator",
     "pushpak-courier": "universal",
     "pwb": "pwb",

@@ -47746,7 +47746,7 @@
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "puntopost"
     },
     "canaryUrl": "https://www.puntopost.mx/tracking-summary/",
     "trackingUrlTemplate": "https://www.puntopost.mx/tracking-summary/#{trackingNumber}",
