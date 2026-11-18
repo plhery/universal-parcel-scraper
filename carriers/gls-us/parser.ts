@@ -150,6 +150,7 @@ export function parseGlsUs(payload: unknown, raw: string): CarrierResult {
     ...(address ? { receiver_address: address } : {}),
     ...(signedBy ? { signed_by: signedBy } : {}),
     ...(newest ? {} : { summary_only: true }),
+    ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
     events: events.slice(0, MAX_EVENTS),
   };
 }
