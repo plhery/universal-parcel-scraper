@@ -347,11 +347,12 @@ const ZH_FINAL: ReadonlyArray<readonly [RegExp, Stage]> = [
   [new RegExp(String.raw`${ZH_LEAD}代收[点點][签簽]收 ?$`), 'delivered'],
   // Held for the recipient by a collection point, as J&T China's and ZTO's maps read a bare "已代收".
   [new RegExp(String.raw`${ZH_LEAD}已[经經]?代收${ZH_END}`), 'ready_for_pickup'],
+  [new RegExp(String.raw`${ZH_LEAD}已[经經]?被?取走${ZH_END}`), 'delivered'],
   // Kept in a locker or at a pickup point ("已投递至【…智能快件箱】", "已存放至【…驿站】，请您及时取件",
   // "已由【…驿站】代收", "已送達，請於7日內取件"), or waiting there for the recipient or with a pickup code. A parcel waiting
   // for a courier, sent out of a warehouse ("已出库待取件") or ordered by the sender ("预计取件时间"),
   // is no pickup point.
-  [new RegExp(String.raw`^(?!.*(?:揽|攬|寄件人|下单|下單|预约|預約|上门|上門|预计|預計|出库|出庫)).*(?:取件码|取件碼|提[货貨]码|提[货貨]碼|[请請]您?(?:及时|及時|尽快|儘快)?(?:前往|到|凭|憑)?[^，,。；;]{0,20}?(?:取件|[领領]取|自取|取[货貨])|(?:待|等待)(?:客户|客戶|收件人|您)(?:到?(?:网点|網點|自提点|自提點))?(?:取件|[领領]取|自提)|到达待取|到達待取|(?:投[递遞]|放入|存入|存放|放置|投放|送达|送達|到达|到達|投入)(?:至|到|在|于|於|进|進)?[^，,。；;]{0,40}${ZH_PICKUP_PLACE}|${ZH_PICKUP_PLACE}[^，,。；;]{0,10}(?:代收|代[签簽]收?|[签簽]收)|已投柜|已投櫃)`), 'ready_for_pickup'],
+  [new RegExp(String.raw`^(?!.*(?:揽|攬|寄件人|下单|下單|预约|預約|上门|上門|预计|預計|出库|出庫)).*(?:(?:凭|憑|使用)(?:取件|提[货貨])[码碼]|[请請]您?(?:及时|及時|尽快|儘快)?(?:前往|到|凭|憑)?[^，,。；;]{0,20}?(?:取件|[领領]取|自取|取[货貨])|(?:待|等待)(?:客户|客戶|收件人|您)(?:到?(?:网点|網點|自提点|自提點))?(?:取件|[领領]取|自提)|到达待取|到達待取|(?:投[递遞]|放入|存入|存放|放置|投放|送达|送達|到达|到達|投入)(?:至|到|在|于|於|进|進)?[^，,。；;]{0,40}${ZH_PICKUP_PLACE}|${ZH_PICKUP_PLACE}[^，,。；;]{0,10}(?:代收|代[签簽]收?|[签簽]收)|已投柜|已投櫃)`), 'ready_for_pickup'],
   // Delivered ("已妥投", "邮件已妥投", "【…】已妥投"), signed for ("已签收", "本人签收", "他人代收"), or
   // handed over ("已送达"). "未妥投", "请签收" and "签收后" are not deliveries, nor is an arrival at the
   // place in brackets ("已送达【…转运中心】").
