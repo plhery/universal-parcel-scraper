@@ -434,33 +434,28 @@ function track91Rows(events: readonly unknown[]): JsonObject[] {
 const FLIGHT_TO = /^Flight No:\s*[A-Z0-9]{2}\d{1,4}[A-Z]?\s*\(From [A-Z]{3,5} To ([A-Z]{3}|[A-Z]{5})\)$/;
 
 /**
- * track91 names no destination. The scans after the latest arrival, coded or
- * worded, are the country's it landed in, on its wall clock under India's
- * label as on MySpeedPost's page, unless that is India or a country the
- * airport does not tell. A take-off names only its next airport, often a hub on the way, so it
- * places nothing; flight rows keep their own reading. Without an arrival, the
- * scans the destination's post marks inbound ("(Inb)") are still its own, on
- * a clock the reply does not name.
+ * Ground scans follow the most recent strictly earlier arrival, in the clock labels
+ * of the feed. A new flight cannot redate scans recorded before it landed.
  */
-function track91Abroad(rows: readonly JsonObject[]): { abroad: Set<number>; zone: string | null } {
-  const labelled = rows.map((row) => isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? Number.NaN);
-  const flown = rows.map((row) => FLIGHT_TO.exec(clean(row.remarks, 500))?.[1] ?? null);
-  const code = (row: JsonObject) => clean(row.event_type, 100);
-  let latest = -Infinity;
+function track91Abroad(rows: readonly JsonObject[]): Map<number, string | null> {
+  const scans = rows.map((row, index) => {
+    const code = clean(row.event_type, 100);
+    const airport = FLIGHT_TO.exec(clean(row.remarks, 500))?.[1];
+    const arrival = airport && (ARRIVAL_CODES.has(code) || TRACK91_ARRIVALS.has(clean(row.event, 100)));
+    return { index, at: isoTime(row.tracked_at, INDIA_ZONE, 100)?.timestamp ?? NaN,
+      arrival: arrival ? airport : null, ground: !airport && code !== TAKE_OFF_CODE };
+  }).filter(scan => Number.isFinite(scan.at));
+  const inbound = scannedAbroad(rows, { code: null, name: '' });
+  const zones = new Map<number, string | null>();
   let country: string | null = null;
-  for (const [index, to] of flown.entries()) {
-    const arrival = ARRIVAL_CODES.has(code(rows[index]!)) || TRACK91_ARRIVALS.has(clean(rows[index]!.event, 100));
-    if (!to || !arrival || !(labelled[index]! > latest)) continue;
-    latest = labelled[index]!;
-    country = to.length === 5 ? to.slice(0, 2) : airportCountry(to);
+  // At equal clocks an arrival only governs subsequent timestamps.
+  scans.sort((a, b) => a.at - b.at || Number(Boolean(a.arrival)) - Number(Boolean(b.arrival)));
+  for (const scan of scans) {
+    if (scan.arrival) country = scan.arrival.length === 5 ? scan.arrival.slice(0, 2) : airportCountry(scan.arrival);
+    else if (scan.ground && country && country !== 'IN') zones.set(scan.index, countryTimeZone(country));
+    else if (scan.ground && !country && inbound.has(scan.index)) zones.set(scan.index, null);
   }
-  const abroad = new Set<number>();
-  if (!country) return { abroad: scannedAbroad(rows, { code: null, name: '' }), zone: null };
-  if (!country || country === 'IN') return { abroad, zone: null };
-  flown.forEach((to, index) => {
-    if (!to && code(rows[index]!) !== TAKE_OFF_CODE && labelled[index]! > latest) abroad.add(index);
-  });
-  return { abroad, zone: countryTimeZone(country) };
+  return zones;
 }
 
 /** The result track91's tracker holds once its worker has asked India Post. */
@@ -473,8 +468,7 @@ export function parseIndiaPostTrack91Result(value: unknown, trackingNumber: stri
   if (!Array.isArray(result.events)) throw new SchemaError('India Post', 'India Post returned invalid tracking events');
   const rows = track91Rows(result.events.slice(0, 500));
   if (rows.length === 0) throw new SchemaError('India Post', 'India Post returned no usable tracking events');
-  const { abroad, zone } = track91Abroad(rows);
-  return indiaPostResult(rows, { destination: null, service: '', syncedAt: result.tracked_at, abroad, destinationZone: zone });
+  return indiaPostResult(rows, { destination: null, service: '', syncedAt: result.tracked_at, abroad: track91Abroad(rows) });
 }
 
 /** track91's tracker component on its page or in an update, for this number. */
@@ -518,12 +512,12 @@ export function parseIndiaPostTrackingHtml(
   }
   const destination = destinationOf($);
   const rows = events.slice(0, 500);
+  const zone = destination ? countryTimeZone(destination.code) : null;
   return indiaPostResult(rows, {
     destination,
     service: articleTypeOf($),
     syncedAt: trackingRequest.synced_at,
-    abroad: scannedAbroad(rows, destination),
-    destinationZone: destination ? countryTimeZone(destination.code) : null,
+    abroad: new Map([...scannedAbroad(rows, destination)].map(index => [index, zone])),
   });
 }
 
@@ -532,12 +526,11 @@ interface RowContext {
   service: string;
   syncedAt: unknown;
   /** The rows the destination's post scanned, on its wall clock under India's label. */
-  abroad: Set<number>;
-  destinationZone: string | null;
+  abroad: Map<number, string | null>;
 }
 
 /** The result from MySpeedPost's raw rows, as its page or track91 relays them. */
-function indiaPostResult(rows: readonly JsonObject[], { destination, service, syncedAt: synced, abroad, destinationZone }: RowContext): CarrierResult {
+function indiaPostResult(rows: readonly JsonObject[], { destination, service, syncedAt: synced, abroad }: RowContext): CarrierResult {
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
   const reported = handOverReportZones(rows);
@@ -550,7 +543,7 @@ function indiaPostResult(rows: readonly JsonObject[], { destination, service, sy
     // after a flight's arrival in the destination country; a scan abroad on the
     // destination's.
     const zone = airportClockZone(providerCode, office, clean(rawEvent.tracked_at, 100)) ?? reported[index]!;
-    const foreign = abroad.has(index) && !zone ? foreignClock(rawEvent.tracked_at, destinationZone) : null;
+    const foreign = abroad.has(index) && !zone ? foreignClock(rawEvent.tracked_at, abroad.get(index) ?? null) : null;
     const time = foreign ? ('time' in foreign ? foreign.time : null) : zone
       ? mislabeledLocalTime(rawEvent.tracked_at, zone, 100)
       : isoTime(rawEvent.tracked_at, INDIA_ZONE, 100);
