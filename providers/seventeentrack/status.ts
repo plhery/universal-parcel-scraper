@@ -21,6 +21,8 @@ export const SUB_STAGES: Record<string, Stage> = {
 
 // Correios Brazil's posting and its export unit abroad receiving the item, which 17TRACK files as information received.
 const SCANNED = /^objeto (?:postado|recebido na unidade de exporta(?:ção|cao) no pa(?:í|i)s de origem)\.?$/i;
+// A shipping partner collecting and moving a USPS item before USPS has it, which 17TRACK files the same way.
+const PARTNER_SCANNED = /^(?:(?:arrived|departed) shipping partner facility|picked up by shipping partner)\b/i;
 
 /**
  * The stage a scan's `sub_status` gives it over the stage its wording got
@@ -35,7 +37,7 @@ const SCANNED = /^objeto (?:postado|recebido na unidade de exporta(?:ção|cao) 
 export function subStatusStage(code: string, worded: Stage, description = ''): Stage | undefined {
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
   if (!mapped || (code === 'InTransit_Other' && worded !== 'pending')) return undefined;
-  if (code === 'InfoReceived' && SCANNED.test(description.trim())) return undefined;
+  if (code === 'InfoReceived' && [SCANNED, PARTNER_SCANNED].some((scan) => scan.test(description.trim()))) return undefined;
   if (mapped === 'out_for_delivery' && worded === 'delivered') return undefined;
   return mapped !== 'delivered' || worded === 'delivered' ? mapped : undefined;
 }

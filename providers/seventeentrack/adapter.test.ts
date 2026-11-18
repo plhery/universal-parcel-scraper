@@ -134,8 +134,15 @@ describe('17TRACK result parsing', () => {
       .toMatchObject({ current_stage: 'in_transit', events: [{ stage: 'in_transit', provider_code: 'InfoReceived' }] });
     expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', 'Objeto postado')]), number))
       .toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted', provider_code: 'InfoReceived' }] });
+    // USPS's shipping partner moving the item, as 17TRACK words it.
+    const partner = 'Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 6:00 pm on November 18, 2026 in EXAMPLE CITY, KY 12345. A delivery date will be provided when USPS receives the package.';
+    expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', partner)]), number))
+      .toMatchObject({ current_stage: 'in_transit', events: [{ stage: 'in_transit', provider_code: 'InfoReceived' }] });
+    expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', 'Picked Up by Shipping Partner, EXAMPLE CITY, KY 12345')]), number))
+      .toMatchObject({ current_stage: 'accepted', events: [{ stage: 'accepted', provider_code: 'InfoReceived' }] });
     // A notice keeps the code's stage, also where the shared rules read customs or movement in it.
-    for (const description of ['Shipment information received', 'Order processed', 'Pre-advice received, customs declaration generated']) {
+    for (const description of ['Shipment information received', 'Order processed', 'Pre-advice received, customs declaration generated',
+      'Shipping Label Created, USPS Awaiting Item -> A shipping label has been prepared for your item in EXAMPLE CITY, KY 12345.']) {
       expect(parse17TrackResponse(postalHistory([postalScan('InfoReceived', description)]), number))
         .toMatchObject({ current_stage: 'registered', events: [{ stage: 'registered', provider_code: 'InfoReceived' }] });
     }
