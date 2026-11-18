@@ -33,7 +33,7 @@
     "delivery_tracking_number"
   ],
   "portal": {
-    "searchUrl": "https://eurodis.com/",
+    "searchUrl": "https://eurodis.com/track-trace",
     "helpUrl": "https://eurodis.com/",
     "canaryUrl": "https://eurodis.com/track-trace",
     "shows": [

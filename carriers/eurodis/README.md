@@ -5,10 +5,9 @@ its members; Austrian Post is the member for Austria and trans-o-flex the member
 shipment is carried by the member in the country of dispatch and handed to the member that
 delivers it. Tracked through EURODIS's own tracker for the whole network.
 
-EURODIS's site now shows only a notice that it is being updated, which sends readers to the
-dispatching or delivering member in their country and lists them; its tracker answers 404,
-which the adapter reports as a moved page, not a missing parcel. The catalog builds no parcel
-link and points the search and help links at that notice.
+The search link opens the carrier's Track & Trace form. Select the tracking method to see its
+fields. Shipment-number searches use a form submission, so the catalog supplies the search
+page without a parcel number.
 
 ## How it works
 

@@ -39,7 +39,7 @@ describe('carrier search pages (rendered at phone size)', () => {
 
   // The app links these pages when a shared parcel hides its number, and it is
   // read mostly on phones, where some trackers drop the field they show on a desktop.
-  it.for(searchPages)('$name shows a field for the number', { timeout: RENDER_WINDOW_MS + 45_000, concurrent: true }, async ({ url }, context) => {
+  it.for(searchPages)('$name shows a field for the number', { timeout: RENDER_WINDOW_MS + 45_000, concurrent: true }, async ({ name, url }, context) => {
     const { viewport, userAgent, deviceScaleFactor, isMobile, hasTouch } = devices['iPhone 15'];
     const phoneContext = await browser.newContext({ viewport, userAgent, deviceScaleFactor, isMobile, hasTouch, locale: 'en-US' });
     const page = await phoneContext.newPage();
@@ -59,6 +59,11 @@ describe('carrier search pages (rendered at phone size)', () => {
           context.skip('HTTP endpoint reachable; browser transport failed, search page remains unverified');
         }
         throw error;
+      }
+      // EURODIS keeps the fields inside collapsed tracking methods on phones.
+      if (name === 'eurodis') {
+        const shipmentNumberMethod = page.getByText('Tracking by EURODIS shipment number', { exact: true });
+        if (await shipmentNumberMethod.isVisible()) await shipmentNumberMethod.click({ timeout: 5_000 });
       }
       let fields = 0;
       // Allow hydration and client redirects; stop at the first field.

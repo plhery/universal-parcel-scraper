@@ -19740,7 +19740,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://domex.lk/Order-Details.php",
     "trackingUrlTemplate": "https://domex.lk/Order-Details.php?wbno={trackingNumber}",
-    "trackingSearchUrl": "https://domex.lk/Order-Details.php",
+    "trackingSearchUrl": "https://www.domex.lk/",
     "linkRules": [
       {
         "domains": [
@@ -23219,7 +23219,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "localClocks": true
     },
     "canaryUrl": "https://eurodis.com/track-trace",
-    "trackingSearchUrl": "https://eurodis.com/",
+    "trackingSearchUrl": "https://eurodis.com/track-trace",
     "helpUrl": "https://eurodis.com/",
     "linkRules": [
       {
