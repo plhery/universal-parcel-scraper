@@ -26741,7 +26741,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "garudavega",
+      "localClocks": true
     },
     "canaryUrl": "https://www.garudavega.com/track/",
     "trackingUrlTemplate": "https://www.garudavega.com/track/{trackingNumber}",

@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'garudavega', number: '98170364259',
+    route: /^https:\/\/www\.garudavega\.com\/track\/98170364259$/,
+    marker: /Sorry, your tracking attempt was not successful/ },
   { carrier: 'apg-ecommerce', number: '99999999999999',
     route: /^https:\/\/apgecommerce\.com\/track-result\/\?track_sequenceNo=99999999999999$/,
     marker: /Sorry, order not found/i },
