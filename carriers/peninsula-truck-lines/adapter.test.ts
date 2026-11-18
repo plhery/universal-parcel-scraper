@@ -93,6 +93,8 @@ describe('Peninsula Truck Lines HTTP adapter', () => {
     const sameDay = (log: Record<string, string>[]) => parsePeninsula(shipment('in-transit', (body) => {
       body.shipmentLog = log.map((row) => ({ location: 'SAMPLEVILLE, WA', ...row }));
     }), IN_TRANSIT);
+    const tied = ['DOCK', 'DEL MFST'].map(activity => ({ date: '2026-05-06', time: '8:00am', activity }));
+    expect(sameDay(tied)).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'DEL MFST' });
     const log = [{ date: '2026-05-06', time: '6:05am', activity: 'PICKUP' }, { date: '2026-05-06', time: '11:47am', activity: 'DOCK' },
       { date: '2026-05-06', time: '', activity: 'DEL MFST' }];
     expect(sameDay(log)).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'DEL MFST' });
