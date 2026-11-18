@@ -83,3 +83,13 @@ describe('readNewestStage', () => {
       .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', last_status_text: 'Service point closed' });
   });
 });
+
+it('takes the later tied stage in an oldest-first history', () => {
+  const events = [
+    scan('2026-11-01T08:00:00Z', 'Accepted', 'accepted'),
+    scan('2026-11-01T09:00:00Z', 'On the road', 'out_for_delivery'),
+    scan('2026-11-01T09:00:00Z', 'Attempt', 'failed_attempt'),
+    scan('2026-11-01T10:00:00Z', 'Unknown'),
+  ];
+  expect(readNewestStage(unknown(events)).current_stage).toBe('failed_attempt');
+});
