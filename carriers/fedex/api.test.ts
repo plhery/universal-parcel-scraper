@@ -159,6 +159,7 @@ describe('FedEx official API reply', () => {
     // Days FedEx dates at midnight stay days: a range of them, or one day.
     expect(estimate([], { begins: '2026-09-02T00:00:00+02:00', ends: '2026-09-04T00:00:00+02:00' })).toEqual(['2026-09-02', '2026-09-04']);
     expect(estimate([], { begins: '2026-09-04', ends: '2026-09-04' })).toEqual([null, '2026-09-04']);
+    expect(estimate([], { ends: '2026-02-31T13:00:00+02:00' })).toEqual([null, null]);
     // A window missing its start, or running backwards, gives its end's day.
     expect(estimate([], { ends: '2026-09-04T13:00:00+02:00' })).toEqual([null, '2026-09-04']);
     expect(estimate([], { begins: '2026-09-04T13:00:00+02:00', ends: '2026-09-04T09:00:00+02:00' })).toEqual([null, '2026-09-04']);

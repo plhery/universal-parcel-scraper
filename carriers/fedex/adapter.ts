@@ -231,8 +231,8 @@ function scanDescription(status: string, details: string): string {
 
 /** Delivery-date estimate as a calendar day; anything else is not an estimate. */
 function expectedDelivery(value: unknown): string | null {
-  const match = /^(\d{4}-\d{2}-\d{2})/.exec(cleanScalar(value, 64));
-  return match ? match[1]! : null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})/.exec(cleanScalar(value, 64));
+  return match ? calendarDay(Number(match[1]), Number(match[2]), Number(match[3])) : null;
 }
 
 /** A delivery estimate: its day, or the end of a window whose start is `expected_delivery_from`. */
