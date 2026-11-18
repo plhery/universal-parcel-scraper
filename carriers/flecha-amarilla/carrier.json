@@ -19,17 +19,51 @@
   "timezone": "America/Mexico_City",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "flecha-amarilla",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "offset_timestamps",
+    "signed_by"
+  ],
   "portal": {
     "searchUrl": "https://www.paqueteria-flechaamarilla.com.mx/inicio",
     "canaryUrl": "https://www.paqueteria-flechaamarilla.com.mx/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "offset_timestamps",
+      "signatory"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "provider_code"
+    ]
   },
   "links": [],
   "detection": [

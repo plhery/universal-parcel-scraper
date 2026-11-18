@@ -1,0 +1,130 @@
+{
+  "codigoEstado": 200,
+  "codigoMensaje": "COM-20001'0",
+  "idioma": "ESPAÑOL",
+  "mensajeTecnico": "OK",
+  "mensajeUsuario": "OK",
+  "respuesta": [
+    {
+      "estado": "ENTREGADA",
+      "eventos": [
+        {
+          "ciudadActual": "ARANDAS",
+          "estadoActual": "DOCUMENTADA",
+          "fecha": "/Date(1468007085000-0600)/",
+          "fechaFormato": "2016-07-08",
+          "fechaTexto": "2016-07-08 13:44:45",
+          "horaFormato": "13:44:45",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "ARANDAS",
+          "estadoActual": "EMBARCADA",
+          "fecha": "/Date(1468010116000-0600)/",
+          "fechaFormato": "2016-07-08",
+          "fechaTexto": "2016-07-08 14:35:16",
+          "horaFormato": "14:35:16",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "ARANDAS",
+          "estadoActual": "EN TRÁFICO",
+          "fecha": "/Date(1468011615000-0600)/",
+          "fechaFormato": "2016-07-08",
+          "fechaTexto": "2016-07-08 15:00:15",
+          "horaFormato": "15:00:15",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "LEON",
+          "estadoActual": "DESEMBARCADA",
+          "fecha": "/Date(1468023014000-0600)/",
+          "fechaFormato": "2016-07-08",
+          "fechaTexto": "2016-07-08 18:10:14",
+          "horaFormato": "18:10:14",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "LEON",
+          "estadoActual": "TRASBORDO",
+          "fecha": "/Date(1468023014000-0600)/",
+          "fechaFormato": "2016-07-08",
+          "fechaTexto": "2016-07-08 18:10:14",
+          "horaFormato": "18:10:14",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "LEON",
+          "estadoActual": "EMBARCADA",
+          "fecha": "/Date(1468063481000-0600)/",
+          "fechaFormato": "2016-07-09",
+          "fechaTexto": "2016-07-09 05:24:41",
+          "horaFormato": "05:24:41",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "LEON",
+          "estadoActual": "EN TRÁFICO",
+          "fecha": "/Date(1468072340000-0600)/",
+          "fechaFormato": "2016-07-09",
+          "fechaTexto": "2016-07-09 07:52:20",
+          "horaFormato": "07:52:20",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "DESEMBARCADA",
+          "fecha": "/Date(1468091890000-0600)/",
+          "fechaFormato": "2016-07-09",
+          "fechaTexto": "2016-07-09 13:18:10",
+          "horaFormato": "13:18:10",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "EN OCURRE",
+          "fecha": "/Date(1468091890000-0600)/",
+          "fechaFormato": "2016-07-09",
+          "fechaTexto": "2016-07-09 13:18:10",
+          "horaFormato": "13:18:10",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "CENTRAL MEX",
+          "estadoActual": "ENTREGADA",
+          "fecha": "/Date(1469207175000-0600)/",
+          "fechaFormato": "2016-07-22",
+          "fechaTexto": "2016-07-22 11:06:15",
+          "horaFormato": "11:06:15",
+          "observaciones": "",
+          "receptor": "MARTINEZ CORTES WILLIAMS",
+          "referencia": "Entregado a MARTINEZ CORTES WILLIAMS a las 11:06:15"
+        }
+      ],
+      "nombreDestinatario": "",
+      "nombreDestino": "MEXICO",
+      "nombreOrigen": "ARANDAS",
+      "nombreRemitente": "ANTONIO IBARRA VERA",
+      "numeroGuia": "286186",
+      "prefijo": "P "
+    }
+  ]
+}

@@ -16,6 +16,7 @@ import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
 import { statusMap as laserLogistics } from '../../carriers/laser-logistics/status.js';
 import { statusMap as puntopost } from '../../carriers/puntopost/status.js';
 import { statusMap as southPost } from '../../carriers/south-post/status.js';
+import { statusMap as flechaAmarilla } from '../../carriers/flecha-amarilla/status.js';
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
@@ -831,6 +832,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'laser-logistics': laserLogistics,
   'puntopost': puntopost,
   'south-post': southPost,
+  'flecha-amarilla': flechaAmarilla,
   'amazon-order': amazonOrder,
   whatsship: whatsShip,
   'onlog-express': onlogExpress,

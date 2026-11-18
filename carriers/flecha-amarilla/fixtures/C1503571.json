@@ -1,0 +1,130 @@
+{
+  "codigoEstado": 200,
+  "codigoMensaje": "COM-20001'0",
+  "idioma": "ESPAÑOL",
+  "mensajeTecnico": "OK",
+  "mensajeUsuario": "OK",
+  "respuesta": [
+    {
+      "estado": "ENTREGADA",
+      "eventos": [
+        {
+          "ciudadActual": "PUEBLA",
+          "estadoActual": "DOCUMENTADA",
+          "fecha": "/Date(1488499782000-0600)/",
+          "fechaFormato": "2017-03-02",
+          "fechaTexto": "2017-03-02 18:09:42",
+          "horaFormato": "18:09:42",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "PUEBLA",
+          "estadoActual": "EMBARCADA",
+          "fecha": "/Date(1488502126000-0600)/",
+          "fechaFormato": "2017-03-02",
+          "fechaTexto": "2017-03-02 18:48:46",
+          "horaFormato": "18:48:46",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "PUEBLA",
+          "estadoActual": "EN TRÁFICO",
+          "fecha": "/Date(1488502444000-0600)/",
+          "fechaFormato": "2017-03-02",
+          "fechaTexto": "2017-03-02 18:54:04",
+          "horaFormato": "18:54:04",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "TRASBORDO",
+          "fecha": "/Date(1488514925000-0600)/",
+          "fechaFormato": "2017-03-02",
+          "fechaTexto": "2017-03-02 22:22:05",
+          "horaFormato": "22:22:05",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "DESEMBARCADA",
+          "fecha": "/Date(1488514925000-0600)/",
+          "fechaFormato": "2017-03-02",
+          "fechaTexto": "2017-03-02 22:22:05",
+          "horaFormato": "22:22:05",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "EMBARCADA",
+          "fecha": "/Date(1488571762000-0600)/",
+          "fechaFormato": "2017-03-03",
+          "fechaTexto": "2017-03-03 14:09:22",
+          "horaFormato": "14:09:22",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MEXICO",
+          "estadoActual": "EN TRÁFICO",
+          "fecha": "/Date(1488662193000-0600)/",
+          "fechaFormato": "2017-03-04",
+          "fechaTexto": "2017-03-04 15:16:33",
+          "horaFormato": "15:16:33",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MONTERREY",
+          "estadoActual": "EN OCURRE",
+          "fecha": "/Date(1488841087000-0600)/",
+          "fechaFormato": "2017-03-06",
+          "fechaTexto": "2017-03-06 16:58:07",
+          "horaFormato": "16:58:07",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MONTERREY",
+          "estadoActual": "DESEMBARCADA",
+          "fecha": "/Date(1488841087000-0600)/",
+          "fechaFormato": "2017-03-06",
+          "fechaTexto": "2017-03-06 16:58:07",
+          "horaFormato": "16:58:07",
+          "observaciones": "",
+          "receptor": "",
+          "referencia": ""
+        },
+        {
+          "ciudadActual": "MONTERREY 01",
+          "estadoActual": "ENTREGADA",
+          "fecha": "/Date(1488912974000-0600)/",
+          "fechaFormato": "2017-03-07",
+          "fechaTexto": "2017-03-07 12:56:14",
+          "horaFormato": "12:56:14",
+          "observaciones": "",
+          "receptor": "FELIPE POMPOSO",
+          "referencia": "Entregado a FELIPE POMPOSO a las 12:56:14"
+        }
+      ],
+      "nombreDestinatario": "BIO LIFE S.A. DE C.V.",
+      "nombreDestino": "MONTERREY",
+      "nombreOrigen": "PUEBLA",
+      "nombreRemitente": "ANDREA PAULINA CORTES ARRIETA",
+      "numeroGuia": "1503571",
+      "prefijo": "C "
+    }
+  ]
+}
