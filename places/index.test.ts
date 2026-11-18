@@ -737,6 +737,10 @@ describe('placesForEvents', () => {
     expect(locatePlace('SA', { countries: ['AU', 'SA'] })).toMatchObject({ country: 'SA', precision: 'country' });
     expect(locatePlace('SA', { countries: ['FR'] })?.country).toBe('SA');
     // A reply that writes a country by its code alone writes its others so: Meest's "NL" beside its "US".
+    for (const suffix of [' CA', ', CA']) {
+      expect(placesForEvents(['MX', 'San Diego' + suffix, 'CA', 'Los Angeles' + suffix], { destinationCountry: 'US' })[2])
+        .toMatchObject({ country: 'US', region: 'CA' });
+    }
     const coded = placesForEvents(['US', 'NL'], { carriers: ['meest'] });
     expect(coded.map((found) => found && [found.country, found.precision])).toEqual([['US', 'country'], ['NL', 'country']]);
     expect(coded[1]?.region).toBeUndefined();
