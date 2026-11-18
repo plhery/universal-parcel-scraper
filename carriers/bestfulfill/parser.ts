@@ -79,13 +79,16 @@ export function parseBestfulfill(payload: unknown, raw: string): CarrierResult {
   const events = payload.events.map(scanOf).map((event, index) => ({ event, index }))
     .sort((a, b) => Date.parse(b.event.time!) - Date.parse(a.event.time!) || a.index - b.index).map(({ event }) => event);
   const newest = events[0];
-  if (!newest) throw new NoHistoryError(PROVIDER, 'BestFulfill Packet has no scans for the shipment yet', { reason: 'listed' });
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;
   const destination = text(payload.destCountry, 2).toUpperCase();
-  const local = normalizeTrackingNumber(text(payload.localNumber, 40));
+  const local = typeof payload.localNumber === 'string' && payload.localNumber.length <= 64
+    ? normalizeTrackingNumber(payload.localNumber) : '';
   const named = events.map((event) => LAST_MILE.exec(event.description!)?.[1]).find(Boolean);
   const partner = /^[A-Z0-9]{8,40}$/.test(local) ? local : named?.toUpperCase();
+  if (!newest) throw new NoHistoryError(PROVIDER, 'BestFulfill Packet has no scans for the shipment yet', {
+    reason: 'listed', ...(partner && partner !== number ? { deliveryTrackingNumber: partner } : {}),
+  });
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: current!.stage_source! } : {}),

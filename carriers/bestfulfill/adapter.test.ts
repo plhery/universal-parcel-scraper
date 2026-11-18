@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { noHistoryHandoff } from '../../core/catalog/handoff.js';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InvalidInputError, NoHistoryError } from '../../core/errors/index.js';
@@ -138,4 +139,16 @@ describe('BestFulfill Packet status map', () => {
     expect(statusMapAnswer({ carrier: 'bestfulfill', providerCode: 'OutForDelivery_Other', description: 'Out for Delivery' }))
       .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
   });
+});
+
+it('keeps a distinct last-mile number when the history is empty', () => {
+  const number = '1Z' + '9'.repeat(15) + '2';
+  const parcel = { ...fixture(), localNumber: number, events: [] };
+  let error: unknown;
+  try { parseBestfulfill(parcel, NUMBER); } catch (caught) { error = caught; }
+  expect(noHistoryHandoff('bestfulfill', NUMBER, error)).toMatchObject({ carrier: 'ups', number });
+  for (const localNumber of [NUMBER, 'invalid!', 'X'.repeat(41)]) {
+    expect(() => parseBestfulfill({ ...parcel, localNumber }, NUMBER))
+      .toThrow(expect.not.objectContaining({ deliveryTrackingNumber: expect.any(String) }));
+  }
 });
