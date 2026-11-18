@@ -279,3 +279,14 @@ it('lets a failed scan supersede the delivery round summary', () => {
   }), NUMBER);
   expect(result.current_stage).toBe('failed_attempt');
 });
+
+it('keeps westbound scans in feed order across local clocks', () => {
+  const result = parseGlsUs(changed(s => {
+    s.status = '';
+    s.transitDetails = [
+      { eventDateTime: '2026-03-05T09:45:00', eventDetails: 'ON ROUTE FOR DELIVERY', location: 'Mesquite,NV,US' },
+      { eventDateTime: '2026-03-05T09:50:00', eventDetails: 'SCANNED AT DELIVERY DEPOT', location: 'St. George,UT,US' },
+    ];
+  }), NUMBER);
+  expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update_local: '2026-03-05T09:45:00' });
+});

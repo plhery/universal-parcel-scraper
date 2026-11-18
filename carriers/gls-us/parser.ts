@@ -66,8 +66,8 @@ function scans(record: Record<string, unknown>): CarrierEvent[] {
       : worded && worded.source !== 'none' ? { stage: worded.stage, stage_source: worded.source } : {};
     events.push({ local_time: localTime, description, ...(location ? { location } : {}), ...staged });
   }
-  // The reply lists scans newest first; the newest clock leads whatever the order.
-  return events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  // GLS lists scans newest first. Facility-local clocks can go backwards on a westbound leg.
+  return events;
 }
 
 /**
