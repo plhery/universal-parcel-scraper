@@ -39,6 +39,12 @@ describe('WP Ground tracking', () => {
     expect(parseWpGround(answer([row({ trackingNumber: 'WPG0000000002', remarks: 'Other parcel' }), row()]), NUMBER).events).toHaveLength(1);
   });
 
+  it('flags a history only when distinct scans exceed the cap', () => {
+    const rows = Array.from({ length: 101 }, (_, i) => row({ remarks: `Movement ${i}` }));
+    expect(parseWpGround(answer(rows), NUMBER).history_truncated).toBe(true);
+    expect(parseWpGround(answer([...rows.slice(0, 100), rows[0]!]), NUMBER).history_truncated).toBeFalsy();
+  });
+
   it('keeps refusals and changed answers apart from absence', () => {
     expect(() => parseWpGround({ success: false, message: 'busy' }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseWpGround({ success: true, data: {} }, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));

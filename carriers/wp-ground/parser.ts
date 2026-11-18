@@ -75,6 +75,7 @@ export function parseWpGround(body: unknown, raw: string): CarrierResult {
     status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
     last_status_text: newest.description!, last_update: null, last_update_local: newest.local_time,
+    ...(events.length > 100 ? { history_truncated: true } : {}),
     expected_delivery: null, events: events.slice(0, 100),
   };
 }

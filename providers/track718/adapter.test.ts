@@ -30,6 +30,7 @@ describe('Track718 for Juxi only', () => {
     payload.data[0]!.from = Array.from({ length: 340 }, (_, i) => ({
       ...row().from[0]!, ondate: new Date(Date.UTC(2025, 0, 1, 0, i)).toISOString(),
     }));
+    expect(parseTrack718([payload], number).history_truncated).toBe(true);
     expect(parseTrack718([payload, payload, payload], number).events).toHaveLength(100);
   });
 
