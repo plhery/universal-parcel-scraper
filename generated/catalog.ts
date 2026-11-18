@@ -24576,7 +24576,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "faster-shipe"
     },
     "canaryUrl": "https://fastershipe.com/track.html",
     "trackingUrlTemplate": "https://fastershipe.com/track.html?id={trackingNumber}",

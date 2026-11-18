@@ -24572,7 +24572,7 @@
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "faster-shipe"
     },
     "canaryUrl": "https://fastershipe.com/track.html",
     "trackingUrlTemplate": "https://fastershipe.com/track.html?id={trackingNumber}",

@@ -1,4 +1,33 @@
 {
   "carrier": "faster-shipe",
-  "entries": []
+  "entries": [
+    {
+      "wording": "في انتظار المندوب للاستلام",
+      "language": "ar",
+      "code": "received",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "استلم المندوب الشحنة",
+      "language": "ar",
+      "code": "picked_up",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "في الطريق إليك",
+      "language": "ar",
+      "code": "transit",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "تم التوصيل",
+      "language": "ar",
+      "code": "delivered",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
 }
