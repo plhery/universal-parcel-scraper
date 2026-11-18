@@ -24,6 +24,13 @@ The site's tracking page is SXW's own tenant of the Hualei (华磊) platform at
 - The tracker writes the line's English rows beside the platform's Chinese ones; the status map
   reads both. The platform's Chinese rows show the English the platform's other tenants give
   them, such as "Arrived at the receiving point".
+- Rows are read on Beijing's clock until the first row placed abroad, one whose place ends in
+  another country's code ("…, GB", "AU"). From that row on, rows keep their wall clock, which the
+  places then date: the partner abroad gives the destination's, and so does the delivery carrier
+  whose rows SXW copies after them. Read on Beijing's clock, an Australian row would come before
+  the platform wrote it, and Royal Mail dates the acceptance SXW copies at that wall clock in the
+  UK. The identity policy lets such a row take over the one earlier releases stored on Beijing's
+  clock.
 - A not-found leaves the enabled universal providers to answer.
 
 ## Limitations

@@ -53,10 +53,10 @@ export interface HualeiTenant {
   readonly wallClocks?: true;
   /**
    * How a row's clock reads where the record settles it row by row: on the
-   * platform's clock, as a wall clock, or as its day alone. It takes the place
-   * of `wallClocks`.
+   * platform's clock, as a wall clock, or as its day alone, given the record's
+   * rows. It takes the place of `wallClocks`.
    */
-  readonly clock?: (row: HualeiRow) => 'platform' | 'wall' | 'day';
+  readonly clock?: (row: HualeiRow, rows: readonly HualeiRow[]) => 'platform' | 'wall' | 'day';
   /**
    * Whether a row's wording repeats another's, at the same clock, place and
    * kind, with more around it: the row then counts once, as the other. Two rows
@@ -326,7 +326,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   rows.forEach((row, index) => {
     const local = clocks[index]!;
     const placed = isoTime(local, HUALEI_ZONE)!;
-    const reading = tenant.clock?.(row) ?? (tenant.wallClocks ? 'wall' : 'platform');
+    const reading = tenant.clock?.(row, rows) ?? (tenant.wallClocks ? 'wall' : 'platform');
     const { wording, description, location, staged } = read[index]!;
     const english = wording ? tenant.english?.(row.code || null, normalizeStatusWording(wording), wording) : undefined;
     // A row held back is named by its clock as the tenant reads it, and listed as a step at that same clock,

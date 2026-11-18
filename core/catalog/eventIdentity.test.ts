@@ -941,6 +941,8 @@ describe('same-instant identity policies', () => {
       ...(['yto', 'china-post', 'jrt', 'js-express', 'mayiyinfu', 'lingdong'].includes(source) ? { matchWallClock: true } : {}),
       // JS Express relays China Post's scans from a feed that keeps minutes and one that keeps seconds.
       ...(source === 'js-express' ? { matchWithinMinute: true } : {}),
+      // SXW Express once read its rows abroad on Beijing's clock.
+      ...(source === 'sxw-express' ? { relabelledFrom: 'Asia/Shanghai' } : {}),
     });
     const stored = { stage, description: chinese, location: 'Sample Town', providerCode: code };
     const incoming = { ...stored, description: ` ${english.toUpperCase()} `, location: 'Sample Town ' };

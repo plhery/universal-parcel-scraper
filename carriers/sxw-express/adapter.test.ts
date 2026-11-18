@@ -5,6 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { parseHualeiTrack } from '../gzyl/hualei.js';
 import { adapter, SxwTracker } from './adapter.js';
 import carrier from './carrier.json' with { type: 'json' };
@@ -73,6 +74,29 @@ describe('SXW Express tracking adapter', () => {
     }
     // A number of another shape is no GOFO hand-off under any channel.
     expect(record({ channel_name: 'GOFO', business_channeltransfercode: '9400000000000000000000' }).delivery_carrier).toBeUndefined();
+  });
+
+  it('keeps the wall clock of the rows from the destination, from the first one placed abroad', () => {
+    // A synthetic record shaped like a parcel to the UK: SXW copies the partner's rows and Royal Mail's acceptance on UK time.
+    const payload = JSON.parse(own('track.json'));
+    const row = (date: string, written: string, content: string, location: string) =>
+      ({ ...payload[0].data[0].trackDetails[0], track_date: date, track_createdate: written, track_content: content, track_location: location });
+    Object.assign(payload[0].data[0], { consigneeCountry: 'GB', trackDetails: [
+      row('2026-11-18 04:04:37', '2026-11-18 13:32:27', 'Royal Mail Acceptance', 'EXAMPLE MC'),
+      row('2026-11-17 11:22:38', '2026-11-17 19:44:33', 'Departed from facility', 'EXAMPLETOWN, EXAMPLE, GB'),
+      row('2026-11-16 20:25:00', '2026-11-17 06:50:37', 'International flight has arrived', 'GB'),
+      row('2026-11-16 13:51:00', '2026-11-16 15:17:12', 'International flight has departed', ''),
+      row('2026-11-15 16:01:59', '2026-11-15 17:48:42', 'Arrived at the origin international hub', 'EXAMPLECITY, CN'),
+    ] });
+    const result = parseHualeiTrack(payload, NUMBER, SXW, Date.parse('2026-11-18T12:00:00Z'))!;
+    expect(result.events?.map((event) => [event.time, event.local_time])).toEqual([
+      [undefined, '2026-11-18T04:04:37'], [undefined, '2026-11-17T11:22:38'], [undefined, '2026-11-16T20:25:00'],
+      ['2026-11-16T13:51:00+08:00', undefined], ['2026-11-15T16:01:59+08:00', undefined],
+    ]);
+    // Places then date them on the UK's clock, the acceptance by the leg it is on.
+    expect(dateLocalClocks('sxw-express', result).events?.slice(0, 3).map((event) => event.time)).toEqual([
+      '2026-11-18T04:04:37+00:00', '2026-11-17T11:22:38+00:00', '2026-11-16T20:25:00+00:00',
+    ]);
   });
 
   it('settles the interface’s no-row answer with the page', async () => {
