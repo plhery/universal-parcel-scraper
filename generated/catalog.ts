@@ -23170,9 +23170,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "ets-express",
-      "recognitionRank": 734,
-      "localClocks": true
+      "adapter": "universal"
     },
     "canaryUrl": "https://www.ets-express.com/",
     "trackingSearchUrl": "https://www.ets-express.com/inquiry.html",
