@@ -87,7 +87,8 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
   const expected = date ? calendarDay(Number(date[3]), Number(date[2]), Number(date[1])) : null;
   if (etaText && (!expected || clean(etaLabel.text()) !== 'Scheduled For Delivery By')) throw new SchemaError(PROVIDER, 'Direct Freight returned an unreadable delivery estimate');
   let staged = directFreightStage(newest.description!);
-  if (staged?.stage === 'delivered' && (!largestItemCount || !newestDeliveredCount || newestDeliveredCount < largestItemCount)) {
+  // A delivery of fewer items than the consignment's earlier scans counted leaves the rest under way.
+  if (staged?.stage === 'delivered' && newestDeliveredCount > 0 && newestDeliveredCount < largestItemCount) {
     staged = { stage: 'in_transit', source: 'carrier_map' };
   }
   return { status: staged ? languageStageStatus(staged.stage) : 'unknown',

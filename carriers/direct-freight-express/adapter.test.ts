@@ -108,3 +108,9 @@ it('keeps a consignment open after delivery of one piece', () => {
   expect(result.status).toBe('in_transit');
   expect(result.events?.[0]?.stage).toBe('delivered');
 });
+
+it('keeps a delivery whose scans give no item counts', () => {
+  const result = parseDirectFreight(page(rows().map((scan): Row => [scan[0], scan[1], scan[2], ''])), NUMBER);
+  expect(result.current_stage).toBe('delivered');
+  expect(parseDirectFreight(page(rows().slice(0, 1)), NUMBER).current_stage).toBe('delivered');
+});
