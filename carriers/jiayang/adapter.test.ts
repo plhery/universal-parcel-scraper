@@ -168,3 +168,11 @@ it('clears delivery after a later revocation', () => {
   expect(result.events?.at(-1)?.stage).toBe('delivered');
   expect(result.current_stage).toBeUndefined();
 });
+
+it('keeps a delivery the summary reports over scans without a stage', () => {
+  const result = parseJiayang(changed('in-transit', item => {
+    item.status = 'Delivered';
+    item.details = [{ content: 'Synthetic note', create_time: '2026-03-28 08:00:00' }];
+  }), IN_TRANSIT);
+  expect(result.current_stage).toBe('delivered');
+});
