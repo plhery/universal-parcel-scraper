@@ -765,6 +765,26 @@ describe('PostNL domestic tracker', () => {
     expect(String(fetcher.mock.calls[0]![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${fourteen}-NL-1234AB?language=en`);
   });
 
+  it('asks the domestic tracker about a postal item from abroad only with its postcode', async () => {
+    const item = 'CB999999987GB';
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(jsonResponse(reply(collo({ barcode: item }))));
+    const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(tracker.track({ number: item, postcode: '1234AB' }, {})).resolves.toMatchObject({ status: 'out_for_delivery' });
+    expect(String(fetcher.mock.calls[0]![0])).toBe(`https://jouw.postnl.nl/track-and-trace/api/trackAndTrace/${item}-NL-1234AB?language=en`);
+    // Without one, the international tracker calls the number incorrect, and no postcode is asked for.
+    const incorrect = { data: { items: [{ item, message: 'The shipment barcode was incorrect.', events: [] }] } };
+    const international = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url).endsWith('/token')
+      ? jsonResponse({ access_token: 'visitor-token' }) : jsonResponse(incorrect)));
+    const error = await new PostNLTracker({ fetcher: international }).fetch(item).catch((caught: unknown) => caught);
+    expect(error).toMatchObject({ kind: 'indeterminate' });
+    expect(international.mock.calls.some(([url]) => domesticUrl(url))).toBe(false);
+    // A number that fails the S10 check digit is not sent to the domestic tracker.
+    const unchecked = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url).endsWith('/token')
+      ? jsonResponse({ access_token: 'visitor-token' }) : jsonResponse(incorrect)));
+    await new PostNLTracker({ fetcher: unchecked }).fetch('CB999999980GB', {}, '1234AB').catch(() => undefined);
+    expect(unchecked.mock.calls.some(([url]) => domesticUrl(url))).toBe(false);
+  });
+
   it("asks the domestic tracker with another country's postcode given with that country, as PostNL's page does", async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => jsonResponse(reply(collo())));
     const tracker = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });

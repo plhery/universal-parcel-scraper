@@ -10,8 +10,8 @@ it; everything user-facing says PostNL.
 ## How it works
 
 1. `domestic`: only for a `3S` barcode of 13 or 15 characters, or of 14 with a four-letter
-   customer code, given with a Dutch postcode, or with another country's postcode and that
-   country (`postcodeCountry`). A GET to
+   customer code, or for a valid S10 number, given with a Dutch postcode, or with another
+   country's postcode and that country (`postcodeCountry`). A GET to
    `jouw.postnl.nl/track-and-trace/api/trackAndTrace/{barcode}-{country}-{postcode}`, the request
    PostNL's own tracking page makes, with the postcode sent without spaces or hyphens: the page
    splits that key on hyphens.
@@ -145,6 +145,11 @@ it; everything user-facing says PostNL.
   destination country and postcode. A postcode is read as Dutch unless its country comes with
   it, so a parcel bound abroad is looked up there only when the consumer knows the
   postcode's country.
+- A postal item from abroad that PostNL delivers, such as Royal Mail's, is on the domestic
+  tracker under its S10 number, with customs and the delivery in the Netherlands. The
+  international tracker calls such a number incorrect. Without a postcode the adapter asks
+  for none: it is asked about the item as a delivery partner, and the consumer gives the
+  postcode it has.
 - The endpoints are undocumented and can change without notice.
 
 ## Testing

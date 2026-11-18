@@ -28,6 +28,7 @@
  */
 import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
+import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { DateTime } from 'luxon';
 import {
   CarrierError, IndeterminateError, InputRequiredError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError, TransportError,
@@ -84,6 +85,10 @@ const INCORRECT_MESSAGE = /barcode was incorrect/i;
 const READABLE_3S = /^3S[A-Z]{4}\d{9}$/;
 // The 3S barcodes the domestic tracker may hold, and the Dutch postcode it takes them with.
 const THREE_S = /^(?:(?=.{13}$|.{15}$)3S[A-Z]{1,4}\d+|3S[A-Z]{4}\d{8})$/;
+/** The numbers the domestic tracker holds: PostNL's 3S barcodes, and the S10 number of a postal item PostNL delivers. */
+function domesticNumber(number: string): boolean {
+  return THREE_S.test(number) || isValidS10TrackingNumber(number);
+}
 const DUTCH_POSTCODE = /^([1-9]\d{3}) ?([A-Z]{2})$/;
 // A postcode abroad, as the tracking page sends it: the page splits its key on hyphens.
 const FOREIGN_POSTCODE = /^[A-Z0-9]{2,10}$/;
@@ -599,7 +604,7 @@ export class PostNLTracker {
     if (!Number.isFinite(budget) || budget <= 0) throw new TypeError('PostNL timeout must be positive');
     const supplied = postcode?.trim().toUpperCase() ?? '';
     const address = supplied ? domesticAddress(supplied, country?.trim().toUpperCase() ?? '') : null;
-    const domestic = THREE_S.test(comparableIdentifier(trackingNumber)) && address !== null;
+    const domestic = domesticNumber(comparableIdentifier(trackingNumber)) && address !== null;
     return runSteps({ carrier: 'spring-gds', budgetMs: budget, signal: context.signal, recorder: this.recorder }, [
       {
         id: 'domestic',
