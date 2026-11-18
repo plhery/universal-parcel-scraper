@@ -78,7 +78,7 @@ export class JAndTCnTracker {
       if (jAndTCnHasScans(answer) || typeof answer.code !== 'string' || !answer.code) return parseJAndTCn(answer, number);
       // An answer without scans: the page asks the second stage with the code the answer gave, then lists those.
       const scans = `${J_AND_T_CN_SCANS_API}?${new URLSearchParams({ waybillList: answer.keyword as string, code: answer.code })}`;
-      const second = jAndTCnAnswer(await this.get(scans, signal, timeoutMs - (Date.now() - started)), number);
+      const second = jAndTCnAnswer(await this.get(scans, signal, timeoutMs - (Date.now() - started)), number, true);
       return parseJAndTCn({ ...answer, details: second.details }, number);
     };
     // A request that fails to reach the site, or hangs, gets one more try: the
