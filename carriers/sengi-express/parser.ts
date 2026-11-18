@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
@@ -27,7 +28,7 @@ const text = (value: unknown, max = 300): string | undefined => {
 /** `2026-03-10T10:05:00` and Sengi's offset in hours, which its page shows as `GMT+1`, as an instant with that offset. */
 function stated(clock: string, hours: unknown): string | null {
   if (typeof hours !== 'number' || !Number.isFinite(hours) || Math.abs(hours) > 14) return null;
-  const minutes = Math.round(hours * 60);
+  const minutes = hours * 60;
   if (minutes % 15) return null;
   const sign = minutes < 0 ? '-' : '+';
   const abs = Math.abs(minutes);
@@ -44,7 +45,7 @@ function scan(row: unknown, number: string): CarrierEvent {
   }
   const description = text(row.description) ?? text(row.zhDescription);
   const clock = typeof row.eventTime === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(row.eventTime) ? row.eventTime : undefined;
-  if (!description || !clock) throw new SchemaError(PROVIDER, 'Sengi Express returned a row without a wording or a time');
+  if (!description || !clock || DateTime.fromISO(clock, { zone: 'UTC' }).toISO({ includeOffset: false, suppressMilliseconds: true }) !== clock) throw new SchemaError(PROVIDER, 'Sengi Express returned a row without a wording or a time');
   const code = text(row.eventCode, 16) ?? '';
   const place = text(row.location, 80);
   const time = stated(clock, row.timeZone);
