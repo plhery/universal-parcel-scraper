@@ -191,7 +191,7 @@ const CUSTOMS_PENDING = new RegExp([
   String.raw`\bnao\b(?: \w+){0,3}? (?:desalfandegad[oa]s?|desembaracad[oa]s?|(?:liberad[oa]s?|saiu) (?:pela|na|da|de) (?:alfandega|aduana|fiscalizacao))\b|\b(?:aguardando|a aguardar|aguarda|em espera de|pendente de|sera|serao|vai ser|deve ser)\b(?: \w+){0,2}? (?:desalfandeg|(?:liberad|liberacao|desembarac)\w*${SENTENCE}*?\b(?:alfandeg|aduan[ae]|fiscalizacao))`,
   String.raw`\b(?:nie|oczekuje na|czeka na|w trakcie|przed)\b(?: \w+){0,2}? (?:odpraw|zwolnion)\w*${SENTENCE}*?\b(?:celn|urzad)`,
   // A release negated or awaited in Ukrainian or Russian: "не випущено з митниці", "ожидает выпуска".
-  String.raw`${CYRILLIC_START}(?:не|ще не|еще не)(?: [а-яієґ']+)? (?:випущен|выпущен|пропущен|пройден|завершен|оформлен)|${CYRILLIC_START}(?:очіку\S* |ожида\S* )(?:\S+ )?(?:випуск|выпуск|митн|мытн|тамож)`,
+  String.raw`${CYRILLIC_START}до завершения таможенного|${CYRILLIC_START}(?:не|ще не|еще не)(?: [а-яієґ']+)? (?:випущен|выпущен|пропущен|пройден|завершен|оформлен)|${CYRILLIC_START}(?:очіку\S* |ожида\S* )(?:\S+ )?(?:випуск|выпуск|митн|мытн|тамож)`,
 ].join('|'));
 /** Clearance completed or the parcel released, in each language. */
 const CUSTOMS_RELEASED = new RegExp([
@@ -245,7 +245,7 @@ const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
   String.raw`(?:开始)?出口(?:报关|清关)(?:中|进行中)|开始出口(?:报关|清关)`,
 ].join('|'));
 /** Customs holding, inspecting or detaining a parcel, which an export clearance under way does not end. */
-const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|查验|扣留|扣押|滞留|留存/;
+const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|\b(?:customs )?clearance (?:has )?failed\b|查验|扣留|扣押|滞留|留存/;
 /** A parcel customs holds, detains or retains, in each language. */
 const CUSTOMS_HOLD = new RegExp(String.raw`\bcustoms (?:hold|detention)\b|\b(?:held|on hold|detained|retained) (?:by|in|at) (?:the )?${CUSTOMS_SIDE}customs?\b|retenu en douane|vom zoll zuruckgehalten|fermo in dogana|retenido en aduana|retido na alfandega|zatrzyman[ay] przez (?:urzad celny|cel)`);
 /** Import charges named on a scan: duties, import taxes or customs fees. */
@@ -502,7 +502,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/(?<!\b(?:sera|seran|ser|sea|for) )\bentregad[oa]s? (?:(?:el|su|tu) (?:paquete|envio|pedido|bulto) )?(?:a|al|en) (?:el |la |un |una |nuestr[oa] )?(?:transportista|agencia (?:de )?(?:transporte|colaboradora|destino|origen)|operador(?: postal| logistico)?|mensajer(?:o|ia)|courier|empresa de (?:transporte|mensajeria|paqueteria)|compania (?:aerea|de transporte)|aerolinea|distribuidora?|centro (?:de )?(?:clasificacion|distribucion|tratamiento|logistico|operaciones)|almacen|delegacion|plataforma|hub|correos|seur|mrw|nacex|tipsa|ctt|gls|dhl|dpd|ups|fedex|tnt|envialia|zeleris|paack|celeritas|inpost)\b|\bentregad[oa] por (?:el remitente|la aerolinea|aerolinea)\b|(?<!\b(?:sera|serao|ser|seja|for) )\bentregues? (?:(?:a|o) (?:encomenda|envio|objeto) )?(?:a|ao|aos|as|na|no|nos|em) (?:transportadora|transportador|operador(?: postal| logistico)?|parceiro|companhia aerea|centro (?:de )?(?:distribuicao|tratamento|triagem|operacional|logistico)|armazem|plataforma|hub|ctt|correios|dpd|gls|dhl|ups|fedex|tnt|seur|mrw|nacex|tipsa|inpost)\b|\bentregue pelo remetente\b/.test(text)) return 'in_transit';
   // A forwarder naming the last-mile carrier it handed the parcel to, and that carrier's number:
   // "LM Carrier: [DHL] , LM Tracking No.: [1234567890]".
-  if (/^lm carrier ?: ?\[[^[\]]{1,60}\] ?, ?lm tracking no\.? ?: ?\[[^[\]]{0,60}\]$/.test(text)) return 'in_transit';
+  if (/^lm carrier ?: ?\[[^[\]]{1,60}\] ?, ?lm tracking no\.? ?: ?\[[a-z0-9]{4,40}\]$/.test(text)) return 'in_transit';
   // Cleared to leave the country of origin, whoever then carries it on.
   if (/\bready to leave (?:the )?foreign territory\b/.test(text)) return 'in_transit';
   // YunExpress's export declaration in China, read as its own map reads it wherever a provider relays it: the

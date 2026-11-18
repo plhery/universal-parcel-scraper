@@ -6,6 +6,7 @@ import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { delayedFetcher } from '../../core/testing/hang.js';
 import { fakeBudgetClock } from '../../testing/budgetClock.js';
+import { AdapterRegistry } from '../../core/adapter/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, ALPHASTLINE_API, AlphastlineTracker } from './adapter.js';
 import { normalizeAlphastlineNumber, parseAlphastline } from './parser.js';
@@ -316,4 +317,16 @@ describe('Alphastline status vocabulary', () => {
     expect(['Default', 'Pending', 'ToPickuped', 'Sented', 'Finished', 'Failed'].map(alphastlineShipmentStage))
       .toEqual([undefined, 'registered', 'registered', 'in_transit', 'delivered', 'exception']);
   });
+});
+
+it('passes a listed shipment’s USPS reference to the facade handoff', async () => {
+  const payload = shipped();
+  payload.trackingData.All.arr[0]!.detail = [];
+  const fetcher = vi.fn<typeof fetch>().mockResolvedValue(json(payload));
+  const track = vi.fn().mockResolvedValue({ status: 'delivered', current_stage: 'delivered', events: [] });
+  const registry = new AdapterRegistry({ factories: { alphastline: adapter, usps: () => ({ id: 'usps', steps: ['direct'], track }) },
+    carriers: { alphastline: 'alphastline', usps: 'usps' } }, { fetcher, env: {}, recorder: NOOP_RECORDER, trawl: null, browserExecutablePath: null });
+  const tracker = createTracker({ registry, providers: [], env: {} });
+  await expect(tracker.track({ carrier: 'alphastline', number: KNOWN })).resolves
+    .toMatchObject({ source: 'usps', handoff: { carrier: 'usps', number: LINE, confirmed: true } });
 });

@@ -10,6 +10,7 @@ import { AEROPOST_API, AEROPOST_MAX_BYTES, normalizeAeropostNumber, parseAeropos
 
 function failure(status: number, retryAfter?: string): Error {
   if ([400, 401, 403].includes(status)) return new ChallengeError(PROVIDER, 'Aeropost did not accept browser verification');
+  if (status === 404 || status === 410) return new TransportError(PROVIDER, 'Aeropost tracking endpoint is unavailable', { status });
   if (!status) return new TransportError(PROVIDER, 'Aeropost browser tracking did not finish');
   const wait = retryAfter === undefined ? NaN : /^\d+$/.test(retryAfter) ? Number(retryAfter) * 1000 : Date.parse(retryAfter) - Date.now();
   return new UpstreamHttpError(PROVIDER, status, Number.isFinite(wait) ? Math.max(0, wait) : undefined);

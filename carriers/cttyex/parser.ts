@@ -1,5 +1,7 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { leadingScan, movesNothing } from '../../core/result/unstaged.js';
+import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { countryCode, zonedTime } from '../../core/time/index.js';
@@ -35,6 +37,7 @@ export type TrackingByNosCarrier = {
   normalize: (raw: string) => string;
   stage: (wording: string) => ClassifiedWording | null;
   summaryStage: (wording: string) => Stage | undefined;
+  statusMap?: CarrierStatusMap;
   notFound: readonly string[];
 };
 
@@ -129,9 +132,11 @@ export function parseTrackingByNos(payload: unknown, raw: string, carrier: Track
 
   const newest = events[0]!;
   // The newest staged scan decides; the summary's status only when no scan has a stage.
-  const scanned = events.find((event) => event.stage);
+  const scanned = carrier.statusMap ? leadingScan(events, carrier.statusMap) : events.find((event) => event.stage);
   const summary = carrier.summaryStage(status);
-  const stage = (scanned?.stage ?? summary) as Stage | undefined;
+  const terminal = summary === 'delivered' || summary === 'returned';
+  const fallback = terminal && carrier.statusMap && events.some(event => !movesNothing(event, carrier.statusMap!)) ? undefined : summary;
+  const stage = (scanned?.stage ?? fallback) as Stage | undefined;
   const source = scanned?.stage_source ?? 'carrier_map';
   const destination = text(provider, item, 'toCountry', 40);
   const country = COUNTRY_BY_NAME.get(destination) ?? countryCode(destination);

@@ -1,9 +1,10 @@
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { leadingScan } from '../../core/result/unstaged.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
-import { sengiExpressStage } from './status.js';
+import { statusMap, sengiExpressStage } from './status.js';
 
 export const PROVIDER = 'Sengi Express';
 export const SENGI_MAX_BYTES = 256 * 1024;
@@ -75,7 +76,7 @@ export function parseSengiExpress(payload: unknown, raw: string): CarrierResult 
   if (!rows.length) throw new NotFoundError(PROVIDER);
   const events = rows.map((row) => scan(row, number)).reverse();
   const latest = events[0]!;
-  const staged = events.find((event) => event.stage);
+  const staged = leadingScan(events, statusMap);
   const stage = staged?.stage as Stage | undefined;
   const newest = rows.at(-1) as Record<string, unknown>;
   const relabel = text(newest.relabelTrackingNumber, 64);

@@ -412,3 +412,9 @@ describe('Austrian Post detection', () => {
     expect(detectCarrierMatch('10000000000000000000001').candidates).not.toContain('austrian-post');
   });
 });
+
+it('keeps an unsuccessful recipient handover out of delivered', () => {
+  const text = 'Sendung konnte nicht an Empfänger∗in übergeben werden';
+  expect(austrianPostEventStatus('IZ', 'BH', text)?.stage).toBe('failed_attempt');
+  expect(statusMap.stage('IZ', text)).not.toBe('delivered');
+});

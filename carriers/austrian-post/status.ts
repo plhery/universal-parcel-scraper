@@ -43,7 +43,7 @@ export function austrianPostShowsEstimate(summary: string, newestReason: string)
 // although the scan carries status IZ; putting it in the box (UPB or 2034)
 // made it ready for collection, as the page's summary EB then says. So is the
 // parcel handed to the recipient, "an Empfänger∗in übergeben", also under IZ.
-const DELIVERED = /\b(?:wurde zugestellt|aus postempfangsbox abgeholt|successfully delivered|an empfänger(?:[∗*:_/]?in)? übergeben)\b/i;
+const DELIVERED = /\b(?:wurde zugestellt|aus postempfangsbox abgeholt|successfully delivered|^(?:sendung (?:wurde )?)?an empfänger(?:[∗*:_/]?in)? übergeben)\b/i;
 
 // Scans of an item another post sends to Austria: the sending post's posting
 // (BNT) or acceptance (ANI) and dispatch, as Austrian Post relays them, then its
@@ -71,8 +71,8 @@ const RETURNING = /\b(?:rücksendung|zurückgesandt|return to sender)\b/i;
 const OUT_FOR_DELIVERY = /\b(?:in zustellung|out for delivery)\b/i;
 
 export function austrianPostEventStatus(code: string, reason: string, text: string): ClassifiedStatus | undefined {
-  if (reason === 'ZA' || reason === 'ZPB' || DELIVERED.test(text) || byWording(text)?.stage === 'delivered') return SUMMARY.ZU;
   if (['BH', 'BN', 'HB', 'NZ', '2055', '2065'].includes(reason)) return { status: 'exception', stage: 'failed_attempt' };
+  if (reason === 'ZA' || reason === 'ZPB' || DELIVERED.test(text) || byWording(text)?.stage === 'delivered') return SUMMARY.ZU;
   if (['EAW', 'HO', 'UPB', '2034'].includes(reason)) return SUMMARY.EB;
   if (RETURNING.test(text)) return SUMMARY.RE;
   if (code === 'AZT' || OUT_FOR_DELIVERY.test(text)) return SUMMARY.IZ;

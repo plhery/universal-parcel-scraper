@@ -555,3 +555,7 @@ describe('SPX Express Brazil status vocabulary', () => {
     expect(spxBrStage('F777', 'Aviso sintético')).toBeNull();
   });
 });
+
+it('closes a seller return only at F999', () => {
+  expect(['F988', 'F999'].map(code => spxBrStage(code, '')?.stage)).toEqual(['exception', 'returned']);
+});

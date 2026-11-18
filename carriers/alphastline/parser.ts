@@ -141,7 +141,9 @@ export function parseAlphastline(payload: unknown, raw: string): CarrierResult {
   if (!rows.length) {
     if (NOT_FOUND.test(error) && (!status || status === 'Default')) throw new NotFoundError(PROVIDER);
     if (error) throw new IndeterminateError(PROVIDER, 'Alphastline did not complete the lookup');
-    throw new NoHistoryError(PROVIDER);
+    const partner = handoff(shipment, number);
+    throw new NoHistoryError(PROVIDER, undefined, { reason: 'listed', deliveryCarrier: partner.delivery_carrier,
+      deliveryTrackingNumber: partner.delivery_tracking_number });
   }
 
   const scans: { at: number; event: CarrierEvent }[] = [];

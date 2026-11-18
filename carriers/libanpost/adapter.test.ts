@@ -109,3 +109,8 @@ describe('LibanPost mobile guest tracking', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 });
+
+it('clears delivery after a later revocation', () => {
+  const html = fixture().replace('</div></body>', '<div class="trackingListing"><div class="trackDate">13/11/2025<span class="trackTime">08:41</span></div><div class="trtackingDetails"><p class="trackEvent">POD annulled</p><p class="trackLocation"></p></div></div></div></body>');
+  expect(parseLibanPost(html, NUMBER).current_stage).toBeUndefined();
+});

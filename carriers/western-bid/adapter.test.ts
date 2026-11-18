@@ -88,3 +88,9 @@ describe('Western Bid verified guest retrieval', () => {
     expect(h.fetcher).not.toHaveBeenCalled();
   });
 });
+
+it('prefers the current milestone when two steps share a minute', async () => {
+  const html = fixture().replace('04/21/2031 12:30 PM', '04/22/2031 3:46 PM');
+  const { tracker } = harness(page(html));
+  await expect(tracker.fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'delivered', last_status_text: 'Delivered' });
+});

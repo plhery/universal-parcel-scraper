@@ -251,11 +251,19 @@ function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<
     return home ? digits.setZone(home) : digits;
   };
   return new Set(entries.filter((copy) => {
-    const relay = twelveHourDial(copy.name) && typeof copy.name === 'string'
-      && carrierScan(carrierIdFromName(copy.name), relayedLabel(copy.raw.status)) !== undefined;
-    const dial = relay ? at(copy.date) : null;
+    if (!twelveHourDial(copy.name)) return false;
+    const dial = at(copy.date);
+    const country = countryCode(lastPlace(copy.location));
+    const label = relayedLabel(copy.raw.status).trim().toLowerCase();
     return dial !== null && entries.some((own, index) => {
-      const scan = twelveHourDial(own.name) ? null : ownClock(own, index);
+      const wording = relayedLabel(own.raw.status).trim().toLowerCase();
+      const carrier = typeof own.name === 'string' ? carrierIdFromName(own.name) : undefined;
+      const paired = carrier === 'australia-post' && country === 'AU' && (
+        (label === 'shipment picked up' && wording === 'received by our network')
+        || (label === 'package shipped' && wording === 'cleared and awaiting international departure'))
+        || (carrier === 'bpost' && country === 'BE' && label === 'package shipped' && wording === 'item dispatched abroad');
+      if (!paired) return false;
+      const scan = ownClock(own, index);
       return scan !== null && scan.toISODate() === dial.toISODate() && scan.minute === dial.minute && scan.hour % 12 === dial.hour % 12;
     });
   }));

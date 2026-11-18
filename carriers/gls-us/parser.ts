@@ -66,8 +66,8 @@ function scans(record: Record<string, unknown>): CarrierEvent[] {
       : worded && worded.source !== 'none' ? { stage: worded.stage, stage_source: worded.source } : {};
     events.push({ local_time: localTime, description, ...(location ? { location } : {}), ...staged });
   }
-  // The reply lists scans newest first; the newest clock leads whatever the order.
-  return events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  // GLS lists scans newest first. Facility-local clocks can go backwards on a westbound leg.
+  return events;
 }
 
 /**
@@ -132,7 +132,9 @@ export function parseGlsUs(payload: unknown, raw: string): CarrierResult {
   const staged = leadingScan(events, statusMap);
   const scanned = staged ? scanStatus(staged) : undefined;
   // The status can lag a scan the reply already lists: a scan further along leads.
-  const current = summary && !(scanned && (PROGRESS[scanned.stage] ?? 0) > (PROGRESS[summary.stage] ?? 0)) ? summary : scanned ?? summary;
+  const endedRound = summary?.stage === 'out_for_delivery' && scanned?.stage === 'failed_attempt';
+  const current = scanned && (!summary || endedRound || (PROGRESS[scanned.stage] ?? 0) > (PROGRESS[summary.stage] ?? 0))
+    ? scanned : summary;
   if (!newest && !summary) throw new IndeterminateError(PROVIDER, 'GLS US returned a shipment without scans or status');
   const open = current?.status !== 'delivered' && current?.stage !== 'returned';
   const source = current && current !== summary ? staged?.stage_source ?? 'carrier_map' : 'carrier_map';

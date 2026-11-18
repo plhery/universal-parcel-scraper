@@ -16,8 +16,7 @@ package's scans. Portuguese postal references use the universal providers.
 A few percent of lookups get an error reply, the one the tracking page shows as "Ha ocurrido un
 error". CTT repeats it for that shipment for a quarter of an hour or more while other shipments
 read normally, so it is not read again at once; the parcel reads on a later poll, and the
-message carries CTT's description of the error, with email addresses and runs of four digits or more
-masked, grouped ones included. A body that is not JSON and a request that
+exception uses a fixed description to keep recipient details out of diagnostics. A body that is not JSON and a request that
 fails to reach the service are read once more. A number with no shipment gets HTTP 200 with an empty body, which the
 tracking page reads as a shipment it has not located; two empty reads in a row are not found.
 Every code in CTT Express's agency list starts with `00`, so detection claims a reference only when

@@ -73,3 +73,8 @@ describe('Aeropost shipper tracking', () => {
     expect(JSON.stringify(error)).not.toContain('PRIVATE');
   });
 });
+
+it('treats a retired POST endpoint as unavailable', async () => {
+  const response = fixture([capture({ message: 'API retired' }, 410)]);
+  await expect(response.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 410 });
+});

@@ -1,5 +1,5 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { ChallengeError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, SchemaError, TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -18,13 +18,14 @@ export class SengiExpressTracker {
     context.signal?.throwIfAborted();
     const number = normalizeSengiExpressNumber(raw);
     const read = async (signal: AbortSignal, timeoutMs: number) => {
-      const { bytes } = await fetchBounded(SENGI_API, {
+      const { bytes, response } = await fetchBounded(SENGI_API, {
         method: 'POST', signal, body: JSON.stringify({ trackingNumberList: [number], type: 1 }),
         headers: {
           Accept: 'application/json, text/plain, */*', 'Content-Type': 'application/json',
           Origin: SENGI_PAGE.slice(0, -1), Referer: SENGI_PAGE, 'User-Agent': userAgentOf(this.options.userAgent),
         },
-      }, { provider: PROVIDER, fetcher: this.options.fetcher, maxBytes: SENGI_MAX_BYTES, timeoutMs: Math.max(1, Math.floor(timeoutMs)) });
+      }, { provider: PROVIDER, fetcher: this.options.fetcher, maxBytes: SENGI_MAX_BYTES, allowHttpStatuses: [404, 410], timeoutMs: Math.max(1, Math.floor(timeoutMs)) });
+      if (response.status === 404 || response.status === 410) throw new TransportError(PROVIDER, 'Sengi Express tracking endpoint is unavailable', { status: response.status });
       const body = decodeText(bytes);
       let payload: unknown;
       try {
