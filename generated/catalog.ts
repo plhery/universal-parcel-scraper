@@ -36224,7 +36224,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "laser-logistics"
     },
     "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
     "trackingUrlTemplate": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",

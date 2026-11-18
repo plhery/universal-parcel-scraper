@@ -13,6 +13,7 @@
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
 import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
+import { statusMap as laserLogistics } from '../../carriers/laser-logistics/status.js';
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
@@ -825,6 +826,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'apd-parcel': apdParcel,
   'carrybee': carrybee,
   'huuneh': huuneh,
+  'laser-logistics': laserLogistics,
   'amazon-order': amazonOrder,
   whatsship: whatsShip,
   'onlog-express': onlogExpress,
