@@ -205,6 +205,33 @@ describe('HuaHan guest tracking', () => {
     expect(several.events!.every(event => !event.time)).toBe(true);
   });
 
+  it('reads Landmark Global\'s relay on US Central time, its record of the sender\'s data and everything after the hand-off', () => {
+    const relayed = fixture();
+    Object.assign(relayed.data[0]!, { Status: 'Out for delivery', Local_Carrier: '', Local_Number: '', Country_code: 'BE' });
+    relayed.data[0]!.Detail = [
+      { Occur_date: '2026-11-12 05:59:00', Status: 'ND', Comment: 'Out for delivery (On the way)', track_area: 'Sample Town' },
+      { Occur_date: '2026-11-09 16:03:00', Status: 'CB', Comment: 'Outgoing scan at facility', track_area: 'Sample Depot' },
+      { Occur_date: '2026-11-09 15:57:00', Status: 'CA', Comment: 'Incoming scan at facility', track_area: 'Sample Depot' },
+      { Occur_date: '2026-11-09 15:25:38', Status: 'JY', Comment: 'Has been given to local carrier', track_area: 'NL' },
+      { Occur_date: '2026-11-07 13:16:44', Status: 'LD', Comment: 'Arrived at destination airport', track_area: 'NL' },
+      { Occur_date: '2026-11-01 04:39:00', Status: 'DF', Comment: 'Departed from origin facility', track_area: 'SHENZHEN' },
+      { Occur_date: '2026-10-31 08:25:00', Status: '', Comment: 'Processed', track_area: 'Sample Depot' },
+      { Occur_date: '2026-10-31 08:25:00', Status: '', Comment: 'Shipment Data Uploaded', track_area: 'Sample Depot' },
+      { Occur_date: '2026-10-29 16:04:16', Status: 'IR', Comment: 'Shipment information received', track_area: '' },
+    ];
+    const result = parseHuahan(relayed, NUMBER);
+    // bpost dated the round's start at 12:59 in Brussels and Landmark's record of the data at 14:25.
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_update: '2026-11-12T05:59:00-06:00' });
+    expect(result.events!.map(event => event.time ?? event.local_time)).toEqual(['2026-11-12T05:59:00-06:00',
+      '2026-11-09T16:03:00-06:00', '2026-11-09T15:57:00-06:00', '2026-11-09T15:25:38', '2026-11-07T13:16:44',
+      '2026-11-01T04:39:00', '2026-10-31T08:25:00-05:00', '2026-10-31T08:25:00-05:00', '2026-10-29T16:04:16']);
+    expect(result.events![0]).toMatchObject({ local_time: '2026-11-12T05:59:00', time_zone: 'America/Chicago', time_zone_basis: 'carrier' });
+    // Without Landmark's own words, a destination of one zone places the relayed scans, and nothing before the hand-off.
+    relayed.data[0]!.Detail = relayed.data[0]!.Detail.filter(scan => !/scan at facility|data uploaded/i.test(scan.Comment));
+    expect(parseHuahan(relayed, NUMBER).events!.map(event => event.time ?? event.local_time)).toEqual(['2026-11-12T05:59:00+01:00',
+      '2026-11-09T15:25:38', '2026-11-07T13:16:44', '2026-11-01T04:39:00', '2026-10-31T08:25:00', '2026-10-29T16:04:16']);
+  });
+
   it('reads CTT Express\'s relayed notice of the parcel coming on Madrid\'s clock, before the hand-off', () => {
     const notice = fixture();
     Object.assign(notice.data[0]!, { Status: 'Departed from origin facility', Local_Carrier: 'CTT Express', Country_code: 'ES' });

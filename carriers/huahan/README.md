@@ -34,8 +34,12 @@ to the destination carrier's scans.
 - Clocks have no offsets. After `Has been given to local carrier` (`JY`) the reply relays the
   destination carrier's scans on that carrier's clock, cut to the minute: a French history
   matched its partner's own tracker in French time. A destination country of one zone
-  places those scans. HuaHan's own scans, in China and at the destination airport, stay
-  local times. CTT Express's notice of the parcel coming (`Pendiente de recepción en CTT
+  places those scans. Landmark Global's page writes every clock in US Central time, and
+  HuaHan relays it so: when the reply holds Landmark's own words (`Shipment Data Uploaded`,
+  its depot's incoming and outgoing scans), the scans after the hand-off and Landmark's
+  uncoded record of the sender's data and its processing are read on Chicago's clock. Read
+  so, they fall at the instants bpost and Posta Romana give the same steps. HuaHan's own scans,
+  in China and at the destination airport, stay local times. CTT Express's notice of the parcel coming (`Pendiente de recepción en CTT
   Express`), relayed before the hand-off, is on CTT Express's own clock, Madrid's, on parcels
   bound for Portugal too: read so, it falls minutes after HuaHan's arrival scan in China, and
   hours before it on China's clock or an hour after it on Lisbon's.

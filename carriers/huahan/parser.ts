@@ -113,6 +113,19 @@ function withoutGenericCopies(scans: Scan[]): Scan[] {
 const CTT_NOTICE = 'pendiente de recepción en ctt express';
 const CTT_ZONE = 'Europe/Madrid';
 
+/**
+ * Landmark Global's page writes every scan's clock in US Central time, wherever the scan was, and
+ * HuaHan relays its rows so: its record of the sender's data before HuaHan's receipt in China, then
+ * everything after the hand-off, its depot scans and its copies of bpost's and the destination
+ * post's scans. Read so, they fell at the instants bpost and Posta Romana gave the same steps,
+ * which a destination's clock put seven or eight hours earlier.
+ */
+const LANDMARK_ZONE = 'America/Chicago';
+/** Landmark Global's own wordings, which tell its relay apart. */
+const LANDMARK_OWN = new Set(['shipment data uploaded', 'incoming scan at facility', 'outgoing scan at facility']);
+/** Its record of the sender's data and its processing, relayed without a code before the hand-off. */
+const LANDMARK_MANIFEST = new Set(['shipment data uploaded', 'processed']);
+
 function partnerClock(event: CarrierEvent): CarrierEvent {
   if (!event.local_time || event.time || event.description?.toLowerCase() !== CTT_NOTICE) return event;
   const time = isoTime(event.local_time, CTT_ZONE)?.iso;
@@ -160,13 +173,17 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
   const current = huahanStage(newest.provider_code ?? '', newest.description!) ?? huahanStage('', text(row, 'Status'));
   const country = countryCode(partnerText(row, 'Country_code')) ?? undefined;
   // The scans after the hand-off to the destination carrier (JY) relay that
-  // carrier's own clock: a destination of one zone places them. HuaHan's own
-  // scans keep their wall clocks.
+  // carrier's own clock: a destination of one zone places them, Landmark
+  // Global's relay its own. HuaHan's own scans keep their wall clocks.
   const handedOver = events.findIndex((event) => event.provider_code === 'JY');
-  const zone = handedOver > 0 && country ? countryTimeZone(country) : null;
+  const landmark = events.some((event) => LANDMARK_OWN.has(event.description!.toLowerCase()));
+  const zone = landmark ? LANDMARK_ZONE : handedOver > 0 && country ? countryTimeZone(country) : null;
+  const relayed = (event: CarrierEvent, index: number) => index < handedOver
+    || (landmark && !event.provider_code && LANDMARK_MANIFEST.has(event.description!.toLowerCase()));
   const placed = (zone ? events.map(({ local_time, ...event }, index): CarrierEvent => {
-    const time = index < handedOver ? isoTime(local_time, zone)?.iso : undefined;
-    return time ? { time, ...event } : { local_time, ...event };
+    const time = relayed(event, index) ? isoTime(local_time, zone)?.iso : undefined;
+    if (!time) return { local_time, ...event };
+    return landmark ? { local_time, time, ...event, time_zone: zone, time_zone_basis: 'carrier' } : { time, ...event };
   }) : events).map(partnerClock);
   const latest = placed[0]!;
   return { status: current ? languageStageStatus(current.stage) : 'unknown',
