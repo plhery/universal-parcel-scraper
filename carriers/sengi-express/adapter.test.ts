@@ -156,3 +156,8 @@ it('clears delivery after a later revocation', () => {
   expect(result.events?.at(-1)?.stage).toBe('delivered');
   expect(result.current_stage).toBeUndefined();
 });
+
+it('treats a missing POST endpoint as unavailable', async () => {
+  const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('endpoint retired', { status: 404 }));
+  await expect(new SengiExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 404 });
+});
