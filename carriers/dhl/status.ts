@@ -82,6 +82,7 @@ const RETURN_UNDER_WAY = /\bis (?:being )?returned to (?:the )?sender\b|\bis ret
 
 export function stageForText(text: string, fallback = 'in_transit'): string {
   const value = text.toLowerCase().replace(/\b(\d{1,2})\.(?=\s*(?:januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)\b)/g, '$1');
+  if (/\b(?:wenn|falls)\b[^.!?]*\bnicht abgeholt\b/.test(value) && RETURN_UNDER_WAY.test(value)) return 'ready_for_pickup';
   if (RETURN_UNDER_WAY.test(value)) return 'returned';
   // A return still to come, such as a parcel left uncollected past its storage period: the parcel
   // has not started back yet, so it is an exception, never its acceptance or the return itself.
