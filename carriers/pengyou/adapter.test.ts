@@ -170,3 +170,8 @@ describe('Pengyou tracking adapter', () => {
     expect(statusMapAnswer({ carrier: 'pengyou', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
   });
 });
+
+it('keeps sender delivery wording intact', () => {
+  expect(statusMap.stage(null, 'delivered back to sender')).toBe('returned');
+  expect(splitPengyouRow('Delivered back to sender', '')).toEqual({ content: 'Delivered back to sender', location: '' });
+});

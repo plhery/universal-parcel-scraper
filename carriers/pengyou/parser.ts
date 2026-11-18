@@ -29,7 +29,7 @@ export function splitPengyouRow(content: string, location: string): { content: s
   const match = DELIVERED.exec(text);
   if (!match || location.trim()) return { content, location };
   const town = match[2]!.replace(POSTCODE, '').trim();
-  if (!town || /\d/.test(town) || !TOWN.test(town)) return { content, location };
+  if (!/^\p{Lu}/u.test(town) || /^(?:back|again|successfully)\b/i.test(town) || /\d/.test(town) || !TOWN.test(town)) return { content, location };
   return { content: match[1]!, location: town };
 }
 
