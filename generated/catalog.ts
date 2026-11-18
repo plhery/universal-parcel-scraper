@@ -13640,7 +13640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dhaka",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "carrybee"
     },
     "canaryUrl": "https://carrybee.com/track",
     "trackingUrlTemplate": "https://carrybee.com/track?consignmentId={trackingNumber}",

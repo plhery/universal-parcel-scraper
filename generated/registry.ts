@@ -92,6 +92,7 @@ import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
+import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
 import { adapter as castleParcels } from '../carriers/castle-parcels/adapter.js';
 import { adapter as castores } from '../carriers/castores/adapter.js';
 import { adapter as cblLogistica } from '../carriers/cbl-logistica/adapter.js';
@@ -897,6 +898,7 @@ export const REGISTRY: RegistryDefinition = {
     "canada-post": canadaPost,
     "canpar": canpar,
     "cargus": cargus,
+    "carrybee": carrybee,
     "castle-parcels": castleParcels,
     "castores": castores,
     "cbl-logistica": cblLogistica,
@@ -1864,7 +1866,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargus": "cargus",
     "caribe-pack": "universal",
     "carry-flap": "universal",
-    "carrybee": "universal",
+    "carrybee": "carrybee",
     "castle-parcels": "castle-parcels",
     "castores": "castores",
     "cathedis": "universal",
