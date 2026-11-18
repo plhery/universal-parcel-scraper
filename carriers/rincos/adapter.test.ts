@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
+import { noHistoryHandoff } from '../../core/catalog/handoff.js';
 import { describe, expect, it, vi } from 'vitest';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -222,4 +223,10 @@ describe('Rincos HTTP adapter', () => {
     expect(fetcher.mock.calls.length).toBeLessThanOrEqual(2);
     expect(signals.every(signal => signal.aborted)).toBe(true);
   });
+});
+
+it('preserves the delivery handoff without origin scans', async () => {
+  const result = Promise.resolve().then(() => parseRincos(edit(page => { emptyHistory(page); setDetail(page, 'STATUS', ''); }), NUMBER));
+  await expect(result.catch(error => noHistoryHandoff('rincos', NUMBER, error)))
+    .resolves.toMatchObject({ carrier: 'sagawa', number: parseRincos(fixture(), NUMBER).delivery_tracking_number });
 });

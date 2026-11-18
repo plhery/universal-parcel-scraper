@@ -132,9 +132,12 @@ export function parseSuhu(payload: unknown, raw: string): CarrierResult {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     } });
   }
+  const partner = handoff(order, number);
   if (!scans.length) {
     if (cleanScalar(order.errorMsg)) throw new IndeterminateError(PROVIDER, 'Suhu Express answered the order with an error');
-    throw new NoHistoryError(PROVIDER);
+    throw new NoHistoryError(PROVIDER, undefined, {
+      deliveryCarrier: partner.delivery_carrier, deliveryTrackingNumber: partner.delivery_tracking_number,
+    });
   }
   // Newest first; equal clocks keep the reply's order.
   scans.sort((left, right) => right.local.localeCompare(left.local));
@@ -149,7 +152,7 @@ export function parseSuhu(payload: unknown, raw: string): CarrierResult {
     last_update: null,
     last_update_local: scans[0]!.local,
     ...(country ? { destination_country: country } : {}),
-    ...handoff(order, number),
+    ...partner,
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };

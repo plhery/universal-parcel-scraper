@@ -1,3 +1,4 @@
+import { noHistoryHandoff } from '../../core/catalog/handoff.js';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionCandidates } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/detect.js';
@@ -161,4 +162,10 @@ describe('Etomars transport and recognition', () => {
     await expect(new EtomarsTracker({ fetcher }).fetch('7642097516')).rejects.toMatchObject({ kind: 'indeterminate' });
     expect(fetcher).not.toHaveBeenCalled();
   });
+});
+
+it('preserves the delivery handoff without origin scans', async () => {
+  const result = Promise.resolve().then(() => parseEtomars(page([]), NUMBER));
+  await expect(result.catch(error => noHistoryHandoff('etomars', NUMBER, error)))
+    .resolves.toMatchObject({ carrier: 'sagawa', number: PARTNER });
 });

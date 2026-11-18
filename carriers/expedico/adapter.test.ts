@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
-import { deliveryHandoff, hasDirectHandoffAdapter } from '../../core/catalog/handoff.js';
+import { noHistoryHandoff, deliveryHandoff, hasDirectHandoffAdapter } from '../../core/catalog/handoff.js';
 import { normalizeExpedicoNumber, parseExpedico } from './parser.js';
 
 const NUMBER = '9734628105691', PARTNER = '9746825103681427F6048';
@@ -75,4 +75,13 @@ describe('Expedico history', () => {
     expect(normalizeExpedicoNumber(' 9734628 105691 ')).toBe(NUMBER);
     expect(() => normalizeExpedicoNumber('TRACKING99')).toThrow(expect.objectContaining({ reason: 'unsupported_reference' }));
   });
+});
+
+it('preserves the delivery handoff without origin scans', async () => {
+  const data = fixture();
+  data.data.tracking[0].events = [];
+  data.data.tracking[0].trackingCode = NUMBER;
+  const result = Promise.resolve().then(() => parseExpedico(data, NUMBER));
+  await expect(result.catch(error => noHistoryHandoff('expedico', NUMBER, error)))
+    .resolves.toMatchObject({ carrier: 'fan-courier', number: NUMBER });
 });

@@ -128,7 +128,10 @@ export function parseKuayuan(payload: unknown, raw: string): CarrierResult {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     } });
   }
-  if (!scans.length) throw new NoHistoryError(PROVIDER);
+  const partner = handoff(shipment, number);
+  if (!scans.length) throw new NoHistoryError(PROVIDER, undefined, {
+    deliveryCarrier: partner.delivery_carrier, deliveryTrackingNumber: partner.delivery_tracking_number,
+  });
   // Newest first; equal clocks keep the reply's order.
   scans.sort((left, right) => right.local.localeCompare(left.local));
   const events = scans.map(({ event }) => event);
@@ -148,7 +151,7 @@ export function parseKuayuan(payload: unknown, raw: string): CarrierResult {
     ...(country ? { destination_country: country } : {}),
     ...(name ? { receiver_name: name } : {}),
     ...(town ? { receiver_address: town } : {}),
-    ...handoff(shipment, number),
+    ...partner,
     events,
   };
 }

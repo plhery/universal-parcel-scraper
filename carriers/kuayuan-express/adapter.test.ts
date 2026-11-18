@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { noHistoryHandoff } from '../../core/catalog/handoff.js';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
@@ -246,4 +247,10 @@ describe('Kuayuan Express status vocabulary', () => {
     expect(kuayuanStage(null, 'Sample note')).toBeNull();
     expect(statusMapAnswer({ carrier: 'kuayuan-express', providerCode: 'ZZ', description: 'Sample note' })).toEqual({ kind: 'unknown' });
   });
+});
+
+it('preserves the delivery handoff without origin scans', async () => {
+  const result = Promise.resolve().then(() => parseKuayuan(changed(row => { row.track_detail_list = []; }), IN_TRANSIT));
+  await expect(result.catch(error => noHistoryHandoff('kuayuan-express', IN_TRANSIT, error)))
+    .resolves.toMatchObject({ carrier: 'china-post', number: LINE });
 });
