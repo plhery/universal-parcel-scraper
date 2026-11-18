@@ -254,3 +254,12 @@ it('preserves the delivery handoff without origin scans', async () => {
   await expect(result.catch(error => noHistoryHandoff('suhu', IN_TRANSIT, error)))
     .resolves.toMatchObject({ carrier: 'j-and-t-de', number: LINE });
 });
+
+it('preserves newest-first order across a backward wall clock', () => {
+  const data = changed(record => {
+    const row = record.trackResponses[0]!;
+    record.trackResponses = [{ ...row, Date: '2026/10/25 2:10:00', Content: 'Latest scan' },
+      { ...row, Date: '2026/10/25 2:50:00', Content: 'Earlier scan' }];
+  });
+  expect(parseSuhu(data, IN_TRANSIT).last_status_text).toBe('Latest scan');
+});

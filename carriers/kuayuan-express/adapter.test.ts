@@ -254,3 +254,12 @@ it('preserves the delivery handoff without origin scans', async () => {
   await expect(result.catch(error => noHistoryHandoff('kuayuan-express', IN_TRANSIT, error)))
     .resolves.toMatchObject({ carrier: 'china-post', number: LINE });
 });
+
+it('preserves newest-first order across a backward wall clock', () => {
+  const data = changed(record => {
+    const row = record.track_detail_list[0]!;
+    record.track_detail_list = [{ ...row, track_date: '2026-01-10 08:00:00', track_content: 'Latest scan' },
+      { ...row, track_date: '2026-01-10 12:00:00', track_content: 'Earlier scan' }];
+  });
+  expect(parseKuayuan(data, IN_TRANSIT).last_status_text).toBe('Latest scan');
+});
