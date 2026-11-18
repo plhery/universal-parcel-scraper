@@ -16,16 +16,28 @@
   "timezone": "America/Chicago",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "king-solutions",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://kingsolutionsglobal.com/track/?pros={trackingNumber}",
     "searchUrl": "https://kingsolutionsglobal.com/track/",
     "canaryUrl": "https://kingsolutionsglobal.com/track/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at"
+    ],
     "discarded": [],
     "unavailable": []
   },

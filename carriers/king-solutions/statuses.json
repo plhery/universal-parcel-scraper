@@ -1,4 +1,17 @@
 {
   "carrier": "king-solutions",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Enroute",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
 }
