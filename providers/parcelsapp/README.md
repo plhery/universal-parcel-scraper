@@ -261,7 +261,9 @@ step exists for future protocol changes.
   US reading and half a day after China's: a DHLink row under a US town and state takes that
   state's clock, and DHLink's only label row SwiftX's label clock. Its other rows keep China's.
 - 4PX's page relays GOFO's US scans in Spanish ("Llegó al centro regional de gofo") at GOFO's
-  digits to the second. Matching seconds, equivalent wording and compatible places identify a copy. It still lends its zone to 4PX's own scans in the reply. A second of :00 can be a
+  digits to the second, with another scan's place or none. A 4PX state at the second and stage
+  of a GOFO state is that copy and is not read as a scan: it came twice, on another clock than
+  GOFO's. It still lends its zone to 4PX's own scans in the reply. A second of :00 can be a
   minute-only clock's, so it matches nothing. A 4PX site code the adapter knows, the country
   and the city's code ("USHOUA", its Houston operation point), places its scan in that town.
 - The postal feeds, UPU's and EMS's, and the post they relay can each give the same UPU event at

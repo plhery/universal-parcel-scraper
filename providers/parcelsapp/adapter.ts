@@ -2246,29 +2246,23 @@ function dropDhlinkCopies(entries: { name: unknown; date: unknown; wording: stri
  * 4PX Express's page relays its last-mile partner's scans in Spanish at the partner's digits
  * to the second: on a parcel to the US, each of GOFO's scans came again under 4PX ("Llegó al
  * centro regional de gofo"), with another scan's place or none, and read on another clock
- * than GOFO's own, an hour apart. Matching seconds, wording and compatible places identify a copy. It still lends its zone to the relay's own scans, as
+ * than GOFO's own, an hour apart. A relay's state at the second and stage of its partner's state
+ * is that copy and is not read as a scan; a scan of another stage at that second, as 4PX's own
+ * departure beside GOFO's label, is not. It still lends its zone to the relay's own scans, as
  * the clock of the relay's network. A second of :00 can be a minute-only clock's, so it
  * matches nothing.
  */
 const RELAYED_PARTNERS = new Map([['4pxexpress', new Set(['gofoexpress'])]]);
-const GOFO_TRANSLATIONS = new Map([
-  ['entregado, pudo.', 'delivered, pudo.'],
-  ['llegó al centro regional de gofo', 'arrived at gofo regional hub'],
-  ['etiqueta de envío creada', 'shipping label created'],
-]);
-function relayCopies<T extends { name: unknown; date: unknown; wording: string; location: string }>(entries: readonly T[]): Set<T> {
+function relayCopies<T extends { name: unknown; date: unknown; wording: string; scan: CarrierScan | undefined }>(entries: readonly T[]): Set<T> {
   const second = (date: unknown) => {
     const wall = mislabeledWallTime(date);
     return wall && !/:00(?:\.0+)?$/.test(wall) ? wall.slice(0, 19) : '';
   };
+  const stage = (entry: T) => entry.scan?.stage ?? eventStage(entry.wording);
   return new Set(entries.filter((copy) => {
     const partners = RELAYED_PARTNERS.get(nameKey(copy.name));
     const key = partners ? second(copy.date) : '';
-    const wording = copy.wording.trim().toLowerCase();
-    const place = copy.location.trim().toLowerCase();
-    return key && entries.some((own) => partners!.has(nameKey(own.name)) && second(own.date) === key
-      && (!place || !own.location || place === own.location.trim().toLowerCase() || own.location.trim().toLowerCase().startsWith(place + ','))
-      && (GOFO_TRANSLATIONS.get(wording) ?? wording) === own.wording.trim().toLowerCase());
+    return key && entries.some((own) => partners!.has(nameKey(own.name)) && second(own.date) === key && stage(own) === stage(copy));
   }));
 }
 
