@@ -339,6 +339,9 @@ describe('DHLink HTTP adapter', () => {
       ['2026-03-03T22:10:08-06:00', null, 'in_transit', null],
       ['2026-03-03T16:43:50-06:00', null, 'out_for_delivery', null],
     ]);
+    const processed = (stamp: string, place: string) => ({ ...row(stamp, '2026-03-05 10:00:00', 'Parcel processed.'), place });
+    expect(relayed([processed('2026-03-03 10:00:00', 'Chicago IL'), processed('2026-03-03 16:00:00', 'Springfield IL')]).events)
+      .toHaveLength(2);
     // A copy recorded before its UTC reading, another second, or another destination: two scans.
     const early = [twins[3]!, { ...twins[1]!, createDate: '2026-03-04 10:00:00' }];
     expect(relayed(early).events).toHaveLength(2);

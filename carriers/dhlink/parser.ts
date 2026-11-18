@@ -227,6 +227,15 @@ export function dhlinkWithoutTown(description: string, location: string): string
   return location.trim().toLowerCase().startsWith(`${town[1]} ${town[2]}`.toLowerCase()) ? description.slice(town[0].length) : description;
 }
 
+function copyPlace(event: CarrierEvent): string {
+  const town = TOWN_FIRST.exec(event.description ?? '');
+  return (event.location || (town ? town[1] + ' ' + town[2] : '')).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
+function compatiblePlaces(left: string, right: string): boolean {
+  return !left || !right || left === right;
+}
+
 function outranks(left: readonly number[], right: readonly number[]): boolean {
   const index = left.findIndex((value, position) => value !== right[position]);
   return index >= 0 && left[index]! > right[index]!;
@@ -329,7 +338,7 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   const dated = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
     .map((scan) => {
       const zone = scanZone(scan, destination, last?.leg.beijingClock === true && !(scan.hub && last.leg.hubClockPickup));
-      return { scan, zone, time: zone ? isoTime(scan.stamp, zone) : null };
+      return { scan, place: copyPlace(scan.event), zone, time: zone ? isoTime(scan.stamp, zone) : null };
     });
   // A US partner's scan can come twice, as UniUni's do: on its hub's wall clock, often after the
   // hub's town, and on UTC. The UTC copy's clock is the other's on a US reading, to the second,
@@ -340,7 +349,7 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
       if (utcCopies.has(local)) continue;
       const wording = unplaced(local.scan.event.description);
       const copy = dated.find((other) => {
-        if (other === local || utcCopies.has(other) || unplaced(other.scan.event.description) !== wording) return false;
+        if (other === local || !compatiblePlaces(local.place, other.place) || utcCopies.has(other) || unplaced(other.scan.event.description) !== wording) return false;
         const instant = isoTime(other.scan.stamp, 'UTC')?.timestamp;
         return instant !== undefined && instant <= Math.min(local.scan.recorded, other.scan.recorded) + CLOCK_SKEW_MS
           && usClockZone(local.scan.stamp, instant, local.scan.state) !== null;
