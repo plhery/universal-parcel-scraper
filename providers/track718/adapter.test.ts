@@ -25,6 +25,27 @@ describe('Track718 for Juxi only', () => {
     expect(parseTrack718([local], number).events!.at(-1)).toMatchObject({ local_time: '2031-03-04T12:30:00' });
   });
 
+  it('counts distinct scans across repeated snapshots', () => {
+    const payload = found();
+    payload.data[0]!.from = Array.from({ length: 340 }, (_, i) => ({
+      ...row().from[0]!, ondate: new Date(Date.UTC(2025, 0, 1, 0, i)).toISOString(),
+    }));
+    expect(parseTrack718([payload, payload, payload], number).events).toHaveLength(100);
+  });
+
+  it('bounds snapshot count, snapshot size and distinct scans independently', () => {
+    const payload = found();
+    expect(() => parseTrack718(Array(9).fill(payload), number)).toThrow('too many snapshots');
+    payload.data[0]!.from = Array(500).fill(row().from[0]);
+    expect(() => parseTrack718([payload], number)).toThrow('invalid scans');
+    const snapshots = Array.from({ length: 3 }, (_, snapshot) => {
+      const item = found();
+      item.data[0]!.from = Array.from({ length: 340 }, (_, i) => ({ ...row().from[0]!, status: `Scan ${snapshot}-${i}` }));
+      return item;
+    });
+    expect(() => parseTrack718(snapshots, number)).toThrow('too many scans');
+  });
+
   it('waits for a completed reply and never calls a queued lookup missing', () => {
     const empty = { ...row(), result: 0, from: [], to: [], origin: '04' };
     expect(() => parseTrack718([{ status: { code: 3 }, data: [empty], pending: true }], number))
