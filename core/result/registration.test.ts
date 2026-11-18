@@ -139,3 +139,11 @@ describe('late registrations', () => {
     expect(resolveResult(result(events)).events[0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
   });
 });
+
+it.each(['delivered', 'returned', 'out_for_delivery'] as const)('keeps %s after a partner label', stage => {
+  const events = [scan('2030-01-10T12:00:30Z', 'Shipping label created', 'registered'),
+    scan('2030-01-10T12:00:00Z', stage, stage)];
+  const answer = resolveResult(result(events, { status: 'pending', current_stage: 'registered' }));
+  expect(answer.current_stage).toBe(stage);
+  expect(answer.status).toBe(stage === 'returned' ? 'exception' : stage);
+});
