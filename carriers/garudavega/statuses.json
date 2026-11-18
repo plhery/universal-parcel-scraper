@@ -1,4 +1,23 @@
 {
   "carrier": "garudavega",
-  "entries": []
+  "entries": [
+    {
+      "wording": "OK DELIVERY",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "SHIPMENT RECEIVED",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Open Manifest Arrived Hub",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
 }

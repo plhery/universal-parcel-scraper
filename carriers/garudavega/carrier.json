@@ -16,16 +16,30 @@
   "timezone": "Asia/Kolkata",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "garudavega",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://www.garudavega.com/track/{trackingNumber}",
     "searchUrl": "https://www.garudavega.com/track/",
     "canaryUrl": "https://www.garudavega.com/track/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },

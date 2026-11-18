@@ -282,6 +282,7 @@ import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
+import { adapter as garudavega } from '../carriers/garudavega/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
 import { adapter as gdex } from '../carriers/gdex/adapter.js';
 import { adapter as gebruederWeiss } from '../carriers/gebrueder-weiss/adapter.js';
@@ -1096,6 +1097,7 @@ export const REGISTRY: RegistryDefinition = {
     "fukuyama": fukuyama,
     "fxdc-post": fxdcPost,
     "gaash": gaash,
+    "garudavega": garudavega,
     "gati": gati,
     "gdex": gdex,
     "gebrueder-weiss": gebruederWeiss,
@@ -2282,7 +2284,7 @@ export const REGISTRY: RegistryDefinition = {
     "gaash": "gaash",
     "gaaubesi": "universal",
     "garantpost": "universal",
-    "garudavega": "universal",
+    "garudavega": "garudavega",
     "gati": "gati",
     "gbs-broker": "universal",
     "gcx": "universal",
