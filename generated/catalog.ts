@@ -33273,6 +33273,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jch": {
+    "displayName": "JCH",
+    "color": "#ED5049",
+    "aliases": [
+      "JCH Express",
+      "JCH Exp",
+      "金岂",
+      "浙江金岂供应链管理有限公司",
+      "Zhejiang JCH Supply Chain Management Co., Ltd."
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jch"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^JCHSG\\d{13}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "jcw-express": {
     "displayName": "JCW Express",
     "color": "#e94a25",
@@ -65815,6 +65843,7 @@ export const CARRIER_IDS = [
   "jaskipin",
   "jb-hunt",
   "jcex",
+  "jch",
   "jcw-express",
   "jdiex",
   "jeebly",
@@ -67675,6 +67704,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jaskipin": [],
   "jb-hunt": [],
   "jcex": ["jcex-1"],
+  "jch": ["jch-1"],
   "jcw-express": [],
   "jdiex": [],
   "jeebly": ["jeebly-1"],

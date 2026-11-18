@@ -1,0 +1,24 @@
+{
+  "carrier": "jch",
+  "records": [
+    {
+      "number": "JCHSG0000003334625",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260521203637/https://www.parcelpanel.com/couriers/jch-exp/",
+        "date": "2026-05-21",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "jch",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's JCH page offered it to try, as an archived copy shows. JCH's tracker answers it as a parcel on its line to the United States, which SpeedX delivered."
+    }
+  ]
+}

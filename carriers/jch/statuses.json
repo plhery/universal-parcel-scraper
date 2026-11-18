@@ -1,0 +1,30 @@
+{
+  "carrier": "jch",
+  "entries": [
+    {"wording": "Waybill Generated", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The order row, before the line has the parcel."},
+    {"wording": "货物电子信息已经收到", "language": "zh", "english": "The electronic cargo information has been received", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The platform's order row: the shipment's data received."},
+    {"wording": "Electronic notification of order creation received.", "language": "en", "stage": "registered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The line's order row: the shop's order data, before the line has the parcel."},
+    {"wording": "Item has been collected", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The line's first scan of the parcel."},
+    {"wording": "Item inbound in sorting center.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The line's sorting centre in China."},
+    {"wording": "Item outbound in sorting center.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Leaving the line's sorting centre in China."},
+    {"wording": "Item departed from origin.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Arrive at international airport to abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "At the airport of departure, before the export clearance."},
+    {"wording": "Released From Export Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "China's export clearance done, before the flight: the parcel is not held."},
+    {"wording": "Item Flight departure", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Initial landing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "A first landing on the way, before the connecting flight."},
+    {"wording": "Connecting flights flight takeoff", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Item Flight landing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The flight landing in the destination country."},
+    {"wording": "NOA-Notification of arrival from GHA", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The ground handler's notice of arrival at the destination airport."},
+    {"wording": "The goods have been picked up abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Collected from the destination airport's ground handler."},
+    {"wording": "Released From Import Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The destination's import clearance done: the parcel goes on."},
+    {"wording": "Delivery to local courier", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Handed to the delivery carrier in the destination country."},
+    {"wording": "ARRIVE TRANSITHUB", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivery carrier's hub in Canada."},
+    {"wording": "TASK ASSIGNED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivery carrier in Canada assigns the delivery, before sorting it to its round."},
+    {"wording": "ORDER SORTED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "OUTBOUND SCANNED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Leaving the delivery carrier's hub, before the delivery round."},
+    {"wording": "Processing at Designated Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivery carrier's facility in the United States."},
+    {"wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Delivered. Position: Front porch", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivery carrier in the United States names where it left the parcel."},
+    {"wording": "DELIVERED", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-18"}
+  ]
+}
