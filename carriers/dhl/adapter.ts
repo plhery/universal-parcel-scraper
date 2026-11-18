@@ -31,7 +31,7 @@ import {
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { carrierIdFromPartnerLinks } from '../../core/catalog/hints.js';
-import { hasGs1CheckDigit } from '../../core/detection/numericChecksums.js';
+import { detectCarrier } from '../../core/detection/detect.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { runSteps, singleFlight, takeTurn } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -76,7 +76,7 @@ const BARE_SSCC = /^34043\d{13}$/;
 export function normalizeDHLTrackingNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{5,40}$/.test(value)) throw new InvalidInputError(PROVIDER, 'DHL tracking number is invalid');
-  return BARE_SSCC.test(value) && hasGs1CheckDigit(value) ? `00${value}` : value;
+  return BARE_SSCC.test(value) && detectCarrier(value) === 'dhl' ? `00${value}` : value;
 }
 
 export function dhlTrackingUrl(number: string): string {
