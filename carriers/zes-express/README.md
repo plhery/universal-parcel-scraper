@@ -29,8 +29,6 @@ fields are omitted. No document request is made.
 The browser page uses a slider and a plain-HTTP bare IP address, so no parcel link
 is published. A standalone CDEK waybill belongs with [CDEK](../cdek/README.md).
 
-The direct HTTP lookup requires the host to set `ZES_EXPRESS_ALLOW_HTTP=1`. Otherwise enabled providers can handle the lookup.
-
 ## Testing
 
 `ZES_EXPRESS_TRACKING_NUMBER=… ZES_EXPRESS_UNKNOWN_NUMBER=… npm run test:live -- carriers/zes-express/adapter.live.test.ts`

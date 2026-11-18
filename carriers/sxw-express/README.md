@@ -42,8 +42,6 @@ The tracker is plain HTTP and takes numbers through its form, so no link opens o
 The site answers plain HTTP only, and the canary takes HTTPS only, so it checks 17TRACK, which the
 site links to beside its tracking box.
 
-The direct HTTP lookup requires the host to set `SXW_EXPRESS_ALLOW_HTTP=1`. Otherwise enabled providers can handle the lookup.
-
 ## Testing
 
 Set `SXW_EXPRESS_TRACKING_NUMBER` (and `SXW_EXPRESS_UNKNOWN_NUMBER` for the not-found answer)

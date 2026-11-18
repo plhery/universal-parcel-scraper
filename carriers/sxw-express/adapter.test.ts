@@ -19,7 +19,7 @@ const READ_AT = Date.parse('2026-11-14T00:00:00Z');
 const own = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8');
 const shared = (name: string) => readFileSync(new URL(`../gzyl/fixtures/${name}`, import.meta.url), 'utf8');
 const reply = (body: string) => new Response(body, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
-const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: { SXW_EXPRESS_ALLOW_HTTP: '1' }, trawl: null, browserExecutablePath: null });
+const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('SXW Express numbers', () => {
   it('takes the universal providers’ names for the forwarder', () => {
@@ -41,7 +41,7 @@ describe('SXW Express tracking adapter', () => {
     vi.useFakeTimers({ now: READ_AT, toFake: ['Date'] });
     try {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(own('track.json')));
-      const result = await new SxwTracker({ allowPlainHttp: true, fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER.toLowerCase());
+      const result = await new SxwTracker({ fetcher, recorder: NOOP_RECORDER }).fetch(NUMBER.toLowerCase());
       expect(String(fetcher.mock.calls[0]![0])).toBe(`${SXW_ORIGIN}/selectTrack.htm?documentCode=${NUMBER}`);
       expect(result).toMatchObject({
         current_stage: 'in_transit', current_stage_source: 'carrier_map', destination_country: 'US',
@@ -104,10 +104,4 @@ describe('SXW Express tracking adapter', () => {
     expect(carrier.portal).not.toHaveProperty('url');
     expect(carrier.links).toEqual([]);
   });
-});
-
-it('requires explicit permission before sending a parcel over HTTP', async () => {
-  const fetcher = vi.fn<typeof fetch>();
-  await expect(new SxwTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
-  expect(fetcher).not.toHaveBeenCalled();
 });

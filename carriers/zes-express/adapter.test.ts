@@ -21,7 +21,7 @@ describe('ZES Express guest RTB56 adapter', () => {
   it('uses the whole forwarding identifier and query-derived key through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response(fixture()));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
-    const result = await new ZesExpressTracker({ allowPlainHttp: true, fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(NUMBER.toLowerCase().replace(/(\d+)/, ' $1 '), { budgetMs: 5000 });
+    const result = await new ZesExpressTracker({ fetcher, recorder, userAgent: 'SyntheticHost/1.0' }).fetch(' zesze 7312064859 yq ', { budgetMs: 5000 });
     expect(result.current_stage).toBe('delivered');
     expect(fetcher).toHaveBeenCalledOnce();
     const [url, init] = fetcher.mock.calls[0]!;
@@ -32,7 +32,7 @@ describe('ZES Express guest RTB56 adapter', () => {
     expect(requested.searchParams.get('method')).toBe('track');
     expect(requested.searchParams.get('key')).toMatch(/^[A-Za-z0-9+/]+=*$/);
     expect(init).toMatchObject({ redirect: 'manual', signal: expect.any(AbortSignal), headers: {
-      Referer: ZES_PAGE, 'User-Agent': 'SyntheticHost/1.0',
+      Referer: `${ZES_PAGE}?track_number=${NUMBER}`, 'User-Agent': 'SyntheticHost/1.0',
     } });
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'zes-express', step: 'direct', outcome: 'ok' }));
   });
@@ -89,7 +89,7 @@ describe('ZES Express guest RTB56 adapter', () => {
 
   it('distinguishes exact missing from empty history, changed schema and a challenged page', async () => {
     const missing = { success: 0, enmessage: 'No query to track information' };
-    await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher: vi.fn<typeof fetch>().mockResolvedValue(response(missing)) }).fetch(UNKNOWN))
+    await expect(new ZesExpressTracker({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(response(missing)) }).fetch(UNKNOWN))
       .rejects.toMatchObject({ kind: 'not_found' });
     expect(() => parseZesExpress(changed(d => { d.data[0].details = []; }), NUMBER))
       .toThrowError(expect.objectContaining({ kind: 'indeterminate' }));
@@ -98,29 +98,29 @@ describe('ZES Express guest RTB56 adapter', () => {
     expect(() => parseZesExpress(changed(d => { d.data[0].details[0].track_occur_date = '2031-02-30 11:58:49'; }), NUMBER))
       .toThrowError(expect.objectContaining({ kind: 'schema' }));
     const blocked = vi.fn<typeof fetch>().mockResolvedValue(new Response('<title>Just a moment</title><script>_cf_chl_opt</script>'));
-    await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher: blocked }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+    await expect(new ZesExpressTracker({ fetcher: blocked }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     expect(blocked).toHaveBeenCalledOnce();
   });
 
   it('keeps endpoint and rate-limit failures separate and retries only an unreachable transport', async () => {
     for (const status of [301, 404, 410]) {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response({}, status));
-      await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status });
+      await expect(new ZesExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status });
       expect(fetcher).toHaveBeenCalledOnce();
     }
     const limited = vi.fn<typeof fetch>().mockResolvedValue(response({}, 429, { 'retry-after': '7' }));
-    await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher: limited }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 7000 });
+    await expect(new ZesExpressTracker({ fetcher: limited }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 7000 });
     expect(limited).toHaveBeenCalledOnce();
     const flaky = vi.fn<typeof fetch>().mockRejectedValueOnce(new TypeError('synthetic network')).mockResolvedValueOnce(response(fixture()));
-    await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher: flaky }).fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'delivered' });
+    await expect(new ZesExpressTracker({ fetcher: flaky }).fetch(NUMBER)).resolves.toMatchObject({ current_stage: 'delivered' });
     expect(flaky).toHaveBeenCalledTimes(2);
   });
 
   it('preserves cancellation and supplied budget without invoking a browser', async () => {
     const controller = new AbortController(); controller.abort(); const fetcher = vi.fn<typeof fetch>();
-    await expect(new ZesExpressTracker({ allowPlainHttp: true, fetcher }).fetch(NUMBER, { signal: controller.signal })).rejects.toBeDefined();
+    await expect(new ZesExpressTracker({ fetcher }).fetch(NUMBER, { signal: controller.signal })).rejects.toBeDefined();
     expect(fetcher).not.toHaveBeenCalled();
-    const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: { ZES_EXPRESS_ALLOW_HTTP: '1' }, trawl: null, browserExecutablePath: null });
+    const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
     expect(instance.recognizeWithBrowser).toBeUndefined();
     expect(instance.steps).toEqual(['direct', 'retry']);
   });
@@ -131,19 +131,13 @@ describe('ZES Express guest RTB56 adapter', () => {
     expect(hasDirectHandoffAdapter('zes-express', NUMBER)).toBe(true);
     expect(hasDirectHandoffAdapter('zes-express', '7312064859')).toBe(false);
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => response(fixture()));
-    const answer = await createTracker({ providers: [], env: { ZES_EXPRESS_ALLOW_HTTP: '1' }, fetcher }).track({ number: NUMBER });
+    const answer = await createTracker({ providers: [], env: {}, fetcher }).track({ number: NUMBER });
     expect(answer).toMatchObject({ carrier: 'zes-express', source: 'zes-express', result: { current_stage: 'delivered' } });
     expect(fetcher).toHaveBeenCalledTimes(2);
-    const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: { ZES_EXPRESS_ALLOW_HTTP: '1' }, trawl: null, browserExecutablePath: null });
+    const instance = adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
     expect(await instance.recognize!('7312064859')).toMatchObject({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(2);
   });
-});
-
-it('requires explicit permission before sending a parcel over HTTP', async () => {
-  const fetcher = vi.fn<typeof fetch>();
-  await expect(new ZesExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
-  expect(fetcher).not.toHaveBeenCalled();
 });
 
 it('retains distinct English scans at the same clock and place', () => {

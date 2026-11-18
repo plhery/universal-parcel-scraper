@@ -1,5 +1,5 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { IndeterminateError, TransportError } from '../../core/errors/index.js';
+import { TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
@@ -18,16 +18,15 @@ export function zesExpressLookupUrl(number: string): string {
 }
 
 export class ZesExpressTracker {
-  constructor(private readonly options: { allowPlainHttp?: boolean; fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
+  constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
 
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
     context.signal?.throwIfAborted();
     const number = normalizeZesExpressNumber(raw);
-    if (!this.options.allowPlainHttp) throw new IndeterminateError(PROVIDER, 'Plain HTTP tracking is disabled');
     const read = async (signal: AbortSignal, timeoutMs: number) => {
       const { response, bytes } = await fetchBounded(zesExpressLookupUrl(number), { method: 'GET', signal, headers: {
         Accept: 'text/javascript, application/javascript, */*; q=0.01',
-        Referer: ZES_PAGE, 'User-Agent': userAgentOf(this.options.userAgent),
+        Referer: `${ZES_PAGE}?${new URLSearchParams({ track_number: number })}`, 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, fetcher: this.options.fetcher, maxBytes: ZES_MAX_BYTES,
         timeoutMs: Math.max(1, Math.floor(timeoutMs)), redirect: 'manual', allowHttpStatuses: [...RTB56_REDIRECTS, 404, 410] });
       if (response.status !== 200) throw new TransportError(PROVIDER, 'ZES Express guest endpoint is unavailable', { status: response.status });
@@ -42,7 +41,7 @@ export class ZesExpressTracker {
 }
 
 export const adapter: AdapterFactory = environment => {
-  const tracker = new ZesExpressTracker({ allowPlainHttp: environment.env.ZES_EXPRESS_ALLOW_HTTP === '1', fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
+  const tracker = new ZesExpressTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
   return { id: 'zes-express', recordsSteps: true, steps: ['direct', 'retry'], track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
       () => accepted(() => normalizeZesExpressNumber(number))),

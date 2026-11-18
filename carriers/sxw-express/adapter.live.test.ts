@@ -3,7 +3,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter } from './adapter.js';
 
-const direct = () => adapter({ recorder: NOOP_RECORDER, env: process.env, trawl: null, browserExecutablePath: null });
+const direct = () => adapter({ recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('SXW Express live retrieval', () => {
   it.skipIf(!process.env.SXW_EXPRESS_TRACKING_NUMBER)('retrieves the history of the requested parcel with providers disabled', async () => {

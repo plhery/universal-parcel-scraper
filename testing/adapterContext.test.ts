@@ -172,9 +172,7 @@ vi.stubGlobal('fetch', refuse);
 
 function environment(fetcher: typeof fetch, browsers: Browsers, recorder: StepRecorder = NOOP_RECORDER): AdapterEnvironment {
   return {
-    fetcher, userAgent: HOST_USER_AGENT, recorder,
-    // Exercise the opt-in carrier transports against the refusing test fetcher.
-    env: { ZES_EXPRESS_ALLOW_HTTP: '1', SXW_EXPRESS_ALLOW_HTTP: '1' },
+    fetcher, userAgent: HOST_USER_AGENT, recorder, env: {},
     trawl: browsers.service ? new TrawlClient(BROWSER_SERVICE, fetcher) : null,
     browserExecutablePath: browsers.chromium ? '/synthetic/chromium' : null,
   };
