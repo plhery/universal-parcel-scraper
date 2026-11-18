@@ -1,6 +1,6 @@
 {
   "carrier": "flyt-express",
-  "gap": "No number has been checked on Flyt Express's own tracker, which needs a picture CAPTCHA.",
+  "gap": "Flyt Express's own tracker returned no shipment history for either shopper sample.",
   "records": [
     {
       "number": "A0000921110209FY",
@@ -20,7 +20,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "A shopper posted this number on a review page for Flyt Express. Flyt's tracker needs a picture CAPTCHA, so it was not checked there."
+      "note": "A shopper posted this number on a review page for Flyt Express. After verification, Flyt's tracker returned the same no-information placeholder as for an unknown number."
     },
     {
       "number": "A000071711010228",
@@ -43,7 +43,7 @@
           "royal-mail"
         ]
       },
-      "note": "A shopper posted this number on a review page for Flyt Express. Flyt's tracker needs a picture CAPTCHA, so it was not checked there."
+      "note": "A shopper posted this number on a review page for Flyt Express. After verification, Flyt's tracker returned the same no-information placeholder as for an unknown number."
     }
   ]
 }
