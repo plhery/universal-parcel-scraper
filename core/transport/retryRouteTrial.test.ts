@@ -219,3 +219,20 @@ it('rejects names and limits that cannot be stored or reached', () => {
   expect(() => trial(store, { now: 0 }, { marginBytes: -1 })).toThrow(TypeError);
   expect(() => trial(store, { now: 0 }, { maxResidentialBytes: 10 * MB })).toThrow(TypeError);
 });
+
+it('releases a residential grant committed after the assignment timed out', async () => {
+  const clock = { now: 1000 }, memory = memoryRetryRouteTrialStore(() => clock.now);
+  let release!: () => void;
+  const gate = new Promise<void>(resolve => { release = resolve; });
+  const subject = trial({ ...memory, reserve: async request => {
+    await gate;
+    return memory.reserve(request);
+  } }, clock, { random: () => 0.9, storeTimeoutMs: 20 });
+  expect((await subject.assign()).route).toBe('datacenter');
+  await subject.flush();
+  release();
+  await new Promise<void>(resolve => setImmediate(resolve));
+  await subject.flush();
+  expect([...memory.rows.values()].find(row => row.route === 'residential'))
+    .toMatchObject({ outcome: 'not_started', chargedBytes: 0 });
+});

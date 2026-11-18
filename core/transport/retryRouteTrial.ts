@@ -326,9 +326,12 @@ export class RetryRouteTrial {
     waitMs = deadline - this.#options.now();
     if (waitMs <= 0) return false;
     const { targetAttempts, maxResidentialBytes, durationMs, leaseMs } = this.#options;
+    const reserved = this.#copy(attempt);
+    const reservation = Promise.resolve().then(() => this.#options.store.reserve({
+      attempt: reserved, targetAttempts, maxResidentialBytes, durationMs, leaseMs,
+    }));
     try {
-      const result = await bounded(this.#options.store.reserve({ attempt: this.#copy(attempt), targetAttempts, maxResidentialBytes, durationMs, leaseMs }),
-        waitMs, 'Retry route trial store did not answer');
+      const result = await bounded(reservation, waitMs, 'Retry route trial store did not answer');
       this.#storeFailing = false;
       if (result.granted) { this.#noteStart(result.startedAt); return true; }
       if ('end' in result && validEnd(result.end)) this.#end(result.end.reason, result.end.at);
@@ -336,7 +339,10 @@ export class RetryRouteTrial {
     } catch {
       this.#failed();
       // The reservation may still land; mark it unused, so it is neither a sample nor a charge.
-      this.#persist({ ...attempt, settledAt: this.#options.now(), outcome: NOT_STARTED, chargedBytes: 0 });
+      const unused = { ...reserved, settledAt: this.#options.now(), outcome: NOT_STARTED, chargedBytes: 0 };
+      this.#persist(unused);
+      // A settlement cannot create a reservation. Repeat it if the store commits after the timeout.
+      void reservation.then(result => { if (result.granted) this.#persist(unused); }, () => {});
       return false;
     }
   }
