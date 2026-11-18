@@ -87,7 +87,7 @@ instead.
 - The platform can write a partner's row again. A copy written after a European clock change
   reads the partner's clock an hour off: Meso Global's DHL rows written in summer time came again,
   written after the change, an hour later. Of two rows alike but for clocks an hour apart, the one
-  written later is dropped.
+  written later is dropped only when the writes are at least a day apart.
 - GZYL leaves a row's place empty and writes the town after some wordings, as in "Leaving the
   sorting center" followed by the town, a postcode sometimes before it. The adapter cuts the
   postcode and reads that town as the place, so a wording reads the same for every town. A row can also name its city after the wording, in brackets,

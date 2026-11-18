@@ -372,7 +372,7 @@ function scans(rows: readonly HualeiRow[], tenant: HualeiTenant, readAt: number,
   const copies = unrepeated.filter((entry) => !unrepeated.some((other) => other !== entry
     && other.event.description === entry.event.description && other.event.location === entry.event.location
     && other.event.provider_code === entry.event.provider_code && hourApart(other.clock, entry.clock)
-    && Date.parse(other.event.written_at ?? '') < Date.parse(entry.event.written_at ?? '')));
+    && Date.parse(entry.event.written_at ?? '') - Date.parse(other.event.written_at ?? '') >= 86_400_000));
   const deliveries = copies.filter(({ event }) => event.stage === 'delivered').map(({ clock }) => Date.parse(`${clock}Z`));
   const unique = tenant.departure ? copies.filter(({ clock, event }) => event.provider_code !== tenant.departure
     || !deliveries.some((at) => Date.parse(`${clock}Z`) - at >= 86_400_000)) : copies;
