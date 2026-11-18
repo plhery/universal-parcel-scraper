@@ -104,3 +104,11 @@ describe('Seino Super Express HTTP tracking', () => {
     expect(fetcher).toHaveBeenCalledTimes(4);
   });
 });
+
+it('keeps unread estimate fields from the summary after fetching detail', async () => {
+  const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(html(fixture('summary', { designated: '01/04' })))
+    .mockResolvedValueOnce(html(fixture('detail')));
+  const result = await new SeinoSuperExpressTracker({ fetcher }).fetch(NUMBER);
+  expect(result.unread_estimates).toEqual(['summary.designated_day']);
+  expect(result.events).toHaveLength(3);
+});
