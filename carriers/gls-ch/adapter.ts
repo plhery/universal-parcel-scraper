@@ -348,7 +348,9 @@ function parseEvents(parcel: JsonObject): ParsedEvent[] {
   // parcel from the shop next. After one, the parcel waits there for its recipient.
   for (const entry of parsed) {
     if (entry.coded || !PARCELSHOP_SCAN.test(entry.event.description ?? '')) continue;
-    const carried = parsed.some((other) => other.timestamp < entry.timestamp && !['pending', 'registered'].includes(other.event.stage ?? ''));
+    const carried = parsed.some((other) => other.timestamp < entry.timestamp && other.status !== 'unknown'
+      && ['accepted', 'in_transit', 'out_for_delivery', 'failed_attempt', 'customs', 'ready_for_pickup', 'delivered'].includes(other.event.stage ?? '')
+      && (other.coded || !PARCELSHOP_SCAN.test(other.event.description ?? '')));
     if (!carried) Object.assign(entry, { status: 'in_transit', event: { ...entry.event, stage: 'accepted' } });
   }
   return parsed.slice(0, MAX_EVENTS_TO_RETURN);

@@ -329,6 +329,7 @@ describe('GLS Switzerland response normalization', () => {
     const entered = { date: '2026-06-18', time: '12:40:57', evtDscr: 'The parcel data was entered into the GLS IT system; the parcel was not yet handed over to GLS.' };
     const provided = { date: '2026-06-18', time: '20:23:21', evtDscr: 'The parcel was provided by the sender for collection by GLS.' };
     const shop = { date: '2026-06-19', time: '06:48:54', evtDscr: 'The parcel has reached the Parcelshop.' };
+    expect(read([shop, { ...entered, evtDscr: 'The parcel will be delivered tomorrow.' }]).current_stage).toBe('accepted');
     const dropped = read([shop, provided, entered]);
     expect(dropped).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(dropped.events?.map((event) => event.stage)).toEqual(['accepted', 'registered', 'registered']);
