@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { fetchPosteItalianeInBrowser } from './browser.js';
 
 import { accepted, lookupBudget, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
@@ -161,8 +162,8 @@ function pacedMs(state: SearchState, now: number): number {
  */
 function rateLimited(state: SearchState, retryAfter: string | null | undefined): RateLimitedError {
   const value = retryAfter?.trim() ?? '';
-  const named = /^\d+$/.test(value) ? Number(value) * 1000 : Date.parse(value) - Date.now();
-  const waitMs = Number.isFinite(named) && named > 0 ? Math.min(named, HOUR_MS) : CAPTCHA_PAUSE_MS;
+  const named = /^\d+$/.test(value) ? Number(value) * 1000 : DateTime.fromHTTP(value).toMillis() - Date.now();
+  const waitMs = Number.isFinite(named) ? Math.max(0, Math.min(named, HOUR_MS)) : CAPTCHA_PAUSE_MS;
   state.pausedUntil = Math.max(state.pausedUntil, Date.now() + waitMs);
   return new RateLimitedError('Poste Italiane', pacedMs(state, Date.now()));
 }
