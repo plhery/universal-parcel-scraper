@@ -17,7 +17,7 @@ keeps all returned scans, including rows marked invisible to a digital channel, 
 mapping does. It drops contact, address, payment and proof fields. Scan clocks stay local: the
 reply relays overseas facilities too. `expected_time` repeats the scan clock and is not used as
 an estimate. A stated larger history count or a newer summary keeps the answer incomplete, so
-enabled providers can fill it. Recognized physical scan codes can stage a shipment whose
+enabled providers can fill it. A bound delivery summary can report completion without a dated scan. Recognized physical scan codes can stage a shipment whose
 workflow summary is unclassified; record-entry actions alone do not establish movement.
 
 Checksum-valid `EM…QA` identifiers offer Qatar as an HTTP recognition candidate. The guest

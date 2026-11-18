@@ -81,11 +81,16 @@ export function parseQatarPost(payload: unknown, raw: string): CarrierResult {
   // The app returns oldest first, including origin scans. Retain its sequence without comparing different facility zones.
   events.reverse();
   const newest = events[0];
-  if (!newest) throw new NoHistoryError(PROVIDER, 'Qatar Post returned no dated shipment scans');
   const summary = text(payload.currentStatus, 'currentStatusDescription');
   const summaryCode = payload.currentStatus.currentStatusCode;
   if (!Number.isSafeInteger(summaryCode) || Number(summaryCode) < 0 || Number(summaryCode) > 10_000 || !summary) throw new SchemaError(PROVIDER, 'Qatar Post changed its current status');
-  const headline = qatarPostStage(String(summaryCode), summary), staged = headline ?? qatarPostStage(newest.provider_code!, newest.description!);
+  const headline = qatarPostStage(String(summaryCode), summary);
+  if (!newest) {
+    if (headline?.stage !== 'delivered') throw new NoHistoryError(PROVIDER, 'Qatar Post returned no dated shipment scans');
+    return { status: 'delivered', current_stage: headline.stage, current_stage_source: headline.source,
+      last_status_text: summary, provider_code: String(summaryCode), last_update: null, summary_only: true, events: [] };
+  }
+  const staged = headline ?? qatarPostStage(newest.provider_code!, newest.description!);
   const incomplete = Number(detail.total_count) > detail.track_trace_details.length || events.length > 100
     || !!(headline && headline.stage !== newest.stage);
   return { status: staged ? languageStageStatus(staged.stage) : 'unknown',
