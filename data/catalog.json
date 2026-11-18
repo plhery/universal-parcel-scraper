@@ -11463,7 +11463,8 @@
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bigfoot-express",
+      "localClocks": true
     },
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
     "trackingSearchUrl": "https://bigfootexpress.pperfect.com/",

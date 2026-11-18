@@ -11467,7 +11467,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bigfoot-express",
+      "localClocks": true
     },
     "canaryUrl": "https://bigfootexpress.pperfect.com/",
     "trackingSearchUrl": "https://bigfootexpress.pperfect.com/",
