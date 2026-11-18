@@ -468,7 +468,7 @@ export function parseIndiaPostTrack91Result(value: unknown, trackingNumber: stri
   if (!Array.isArray(result.events)) throw new SchemaError('India Post', 'India Post returned invalid tracking events');
   const rows = track91Rows(result.events.slice(0, 500));
   if (rows.length === 0) throw new SchemaError('India Post', 'India Post returned no usable tracking events');
-  return indiaPostResult(rows, { destination: null, service: '', syncedAt: result.tracked_at, abroad: track91Abroad(rows) });
+  return indiaPostResult(rows, { destination: null, service: '', syncedAt: result.tracked_at, inputTruncated: result.events.length > 500, abroad: track91Abroad(rows) });
 }
 
 /** track91's tracker component on its page or in an update, for this number. */
@@ -517,6 +517,7 @@ export function parseIndiaPostTrackingHtml(
     destination,
     service: articleTypeOf($),
     syncedAt: trackingRequest.synced_at,
+    inputTruncated: events.length > 500,
     abroad: new Map([...scannedAbroad(rows, destination)].map(index => [index, zone])),
   });
 }
@@ -525,12 +526,13 @@ interface RowContext {
   destination: Destination | null;
   service: string;
   syncedAt: unknown;
+  inputTruncated: boolean;
   /** The rows the destination's post scanned, on its wall clock under India's label. */
   abroad: Map<number, string | null>;
 }
 
 /** The result from MySpeedPost's raw rows, as its page or track91 relays them. */
-function indiaPostResult(rows: readonly JsonObject[], { destination, service, syncedAt: synced, abroad }: RowContext): CarrierResult {
+function indiaPostResult(rows: readonly JsonObject[], { destination, service, syncedAt: synced, inputTruncated, abroad }: RowContext): CarrierResult {
   const parsed: ParsedEvent[] = [];
   const seen = new Set<string>();
   const reported = handOverReportZones(rows);
@@ -606,6 +608,7 @@ function indiaPostResult(rows: readonly JsonObject[], { destination, service, sy
     // host may confirm with its own lookup.
     ...(destination?.code ? { destination_country: destination.code }
       : destination ? { destination_country_name: destination.name } : {}),
+    ...(inputTruncated || parsed.length > 100 ? { history_truncated: true } : {}),
     events: parsed.slice(0, 100).map((item) => item.event),
   };
 }
