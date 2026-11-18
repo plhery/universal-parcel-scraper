@@ -14,6 +14,7 @@ import {
   royalMailTrackingUrl,
 } from './adapter.js';
 import { fetchRoyalMailInBrowser } from './browser.js';
+import { dateLocalClocks } from '../../places/clocks.js';
 import { royalMailScanStage, royalMailStage, royalMailStatus, statusMap } from './status.js';
 
 vi.mock(import('./browser.js'), async (importOriginal) => {
@@ -517,6 +518,26 @@ describe('Royal Mail structured response', () => {
       '2026-10-20T23:07:00+01:00', '2026-10-20T22:55:00+01:00', '2026-10-20T22:54:00+01:00', '2026-10-11T08:00:00+01:00', '2026-10-10T03:31:09+01:00',
     ]);
     expect(result.last_update).toBe('2026-10-20T23:07:00+01:00');
+  });
+
+  it('keeps the wall clock of a scan placed in Australia, which Royal Mail labels with central Australia\'s offset', () => {
+    // Shape of a parcel from Australia, whose post dates these scans at 14:01 and 00:22 in Sydney's summer (+11:00).
+    const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', lastEventCode: 'EVHOE',
+        lastEventDateTime: '2026-11-17T14:52:00+00:00' },
+      events: [
+        { eventCode: 'EVHOE', eventName: 'Item Leaving overseas', eventDateTime: '2026-11-17T14:52:00+00:00', locationName: 'Australia' },
+        { eventCode: 'EVOAC', eventName: 'Item received at', eventDateTime: '2026-11-17T04:31:00+00:00', locationName: 'Australia' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => [event.time, event.local_time])).toEqual([
+      [undefined, '2026-11-18T00:22:00'], [undefined, '2026-11-17T14:01:00'],
+    ]);
+    expect(result).toMatchObject({ last_update: null, last_update_local: '2026-11-18T00:22:00' });
+    // The country names none of its zones; the scans take the one most Australians live on.
+    expect(dateLocalClocks('parcelforce', result).events?.map(event => [event.time, event.time_zone])).toEqual([
+      ['2026-11-18T00:22:00+11:00', 'Australia/Sydney'], ['2026-11-17T14:01:00+11:00', 'Australia/Sydney'],
+    ]);
   });
 
   it('dates a summary-only delivery from its last event and ignores an unusable destination', () => {

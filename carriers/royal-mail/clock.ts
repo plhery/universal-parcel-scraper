@@ -7,6 +7,13 @@ import { countryTimeZone } from '../../core/time/index.js';
  */
 export const ROYAL_MAIL_RELAY_CLOCK = 'Europe/Brussels';
 
+/**
+ * The offset Royal Mail labels an Australian office's wall clock with, central
+ * Australia's standard time, wherever the office is: Australia Post dates the
+ * same scans 30 minutes earlier in Brisbane and 1 h 30 earlier in Sydney's summer.
+ */
+export const ROYAL_MAIL_AUSTRALIA_LABEL = 'UTC+9:30';
+
 /** The UK and the Crown Dependencies, which keep the UK's clock. */
 export const ROYAL_MAIL_HOME: ReadonlySet<string> = new Set(['GB', 'JE', 'GG', 'IM']);
 

@@ -74,6 +74,10 @@ answers are not retried. An unavailable browser fails fast.
   Mail's own facilities (`MC`, `DO`, `HWDC`) stays on the UK's clock. Beyond
   Europe, the label is the scan's instant, as at home: the South African post's
   own tracker gives a South African office's scans the same instants on its clock.
+  Australia is the exception: Royal Mail labels its offices' wall clocks with
+  central Australia's standard offset, +09:30, wherever the office is, as Australia
+  Post's own scans of the same items show. Such a scan keeps that wall clock in
+  `local_time`, since "Australia" names none of the country's zones.
   Offset-free or invalid clocks remain in `provider_time_text`; sorting requires
   every event clock to resolve.
 - The app identity policy in [identity.ts](identity.ts) lets a scan whose wall
