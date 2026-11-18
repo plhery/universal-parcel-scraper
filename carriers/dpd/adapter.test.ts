@@ -720,6 +720,18 @@ describe('DPD scan times', () => {
     }
   });
 
+  it('rejects another parcel panel beside a recent search', () => {
+    const page = `<aside>Recent searches: ${TRACKING_NUMBER}</aside><section><h2>Parcel ${'2'.repeat(14)}</h2>
+      <li class="content-item-track"><span class="entry-body">Delivered</span></li></section>`;
+    expect(() => parseDPDTrackingHtml(page, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('requires an identifier outside recent searches to bind the timeline', () => {
+    const page = `<nav>Recent searches: ${TRACKING_NUMBER}</nav><main>
+      <li class="content-item-track"><span class="entry-body">Delivered</span></li></main>`;
+    expect(() => parseDPDTrackingHtml(page, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('reads a page as a miss only when it shows no steps, and refuses a page with neither', () => {
     const miss = parseDPDTrackingHtml(`<html><body><h1>${TRACKING_NUMBER}</h1>
       <p class="alert">No parcel found.</p></body></html>`, TRACKING_NUMBER);

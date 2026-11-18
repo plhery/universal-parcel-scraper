@@ -656,6 +656,28 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
     throw new SchemaError('DPD', 'DPD did not return the requested parcel');
   }
   const events: CarrierEvent[] = [];
+  // Bind each timeline to the nearest enclosing panel that identifies a parcel.
+  const panelNumbers = new Map<AnyNode, Set<string>>();
+  for (const element of $('li.content-item-track, .parcelStatus, .gray-out').toArray()) {
+    let panel = $(element).parent();
+    let bound = false;
+    while (panel[0]) {
+      let numbers = panelNumbers.get(panel[0]);
+      if (!numbers) {
+        const identity = panel.clone();
+        identity.find('nav, aside, footer, form, [class*="recent" i], li.content-item-track, .gray-out').remove();
+        const tokens = spacedText($, identity).match(/[0-9A-Z]+/gi) ?? [];
+        numbers = new Set(tokens.flatMap(token => dpdParcelNumber(token.toUpperCase()) ?? []));
+        panelNumbers.set(panel[0], numbers);
+      }
+      if (numbers.size) {
+        bound = numbers.size === 1 && numbers.has(trackingNumber);
+        break;
+      }
+      panel = panel.parent();
+    }
+    if (!bound) throw new SchemaError('DPD', 'DPD returned an unidentified or different tracking panel');
+  }
   $('li.content-item-track').each((_, element) => {
     const row = $(element);
     const description = clean(row.find('.entry-body').text());
