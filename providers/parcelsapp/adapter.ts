@@ -1387,17 +1387,17 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   // tracker dates its rows in China and Hong Kong at the same instants to the second.
   if (carrier === 'shouwu') return null;
   // PostNL's scans in Britain have their UTC instants: FIC shows the same scans on Dutch time. Its scans
-  // in another country are that country's wall clock, as in PostNL's own feed: read on the clock most of
-  // the country lives on ("Chile"). Spain's and Portugal's, which also keep island clocks, and those of
-  // countries whose regions the steps read, are left to their place.
+  // in another country are that country's wall clock, as in PostNL's own feed. In countries with several
+  // clocks the city or region dates the scan.
   // So do its customs stamps, whose own feed states a real UTC instant to the fraction of a second (carriers/spring-gds):
   // read on Dutch time, the clearance came an hour before Cainiao's copy of it, stated +01:00.
   if (carrier === 'spring-gds' && POSTNL_CUSTOMS_STAMP.test(status.trim())) return null;
   const postnlPlace = carrier === 'spring-gds' ? lastPlace(scanLocation(name, state.location)) : undefined;
   const postnlCountry = countryCode(postnlPlace);
   if (postnlCountry === 'GB') return null;
-  if (postnlCountry && postnlCountry !== 'NL' && !['ES', 'PT'].includes(postnlCountry) && !REGIONAL_CLOCKS.has(postnlCountry)) {
-    const zone = countryTimeZone(postnlPlace) ?? (hasSeveralClocks(postnlCountry) ? mainZone(postnlCountry) : null);
+  if (postnlCountry && hasSeveralClocks(postnlCountry)) return undefined;
+  if (postnlCountry && postnlCountry !== 'NL') {
+    const zone = countryTimeZone(postnlPlace);
     if (zone) return zone;
   }
   if (key === 'sunyousytrack' && SUNYOU_DESTINATION_LEG.test(status.trim())) return countryTimeZone(destination) ?? undefined;
@@ -1515,6 +1515,14 @@ function siteZone(payload: Record<string, unknown>, state: Record<string, unknow
   if (carrier === 'swiftx') return swiftxSiteZone(payload, state, location) ?? undefined;
   const relayed = carrier === 'dhlink' && swiftxRelayed(number, destination) ? usStateClock(location) : null;
   if (relayed) return relayed;
+  if (carrier === 'spring-gds') {
+    const country = countryCode(lastPlace(location));
+    if (country && hasSeveralClocks(country)) {
+      const found = locatePlace(location, { countries: [country] });
+      if (found?.country === country && (found.precision === 'city' || found.region)) return placeTimeZone(found);
+      return regionScanZone(name, location, inNorthAmerica, distrusted)?.zone ?? null;
+    }
+  }
   // A facility's clock, whatever the label: no other step applies to it.
   if (relaysFacilityClock(name)) return facilityZone(location);
   if (carrier === 'china-post' && inChina(location)) return CHINA_POST_ZONE;
