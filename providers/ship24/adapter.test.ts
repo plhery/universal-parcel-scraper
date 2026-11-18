@@ -404,6 +404,8 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     const events = [scan('2026-10-31T06:59:00', `Your shipment ${asked} is at the delivery depot`),
       scan('2026-10-31T02:19:00', `Your shipment ${asked} has been collected`), scan('2026-10-30T17:53:00', 'Your shipment 99999000000001 is part delivered')];
     expect(read({ events })).toEqual([`Your shipment ${asked} is at the delivery depot`, `Your shipment ${asked} has been collected`]);
+    const delivery = `Your shipment ${asked} was delivered under collection reference ${"8".repeat(8)}`;
+    expect(read({ events: [scan("2026-11-01T12:00:00", delivery), ...events] })).toContain(delivery);
     // A number Ship24 lists for the same parcel is the parcel's, and another feed's sentence is not read so.
     expect(read({ events, tracking_numbers: [{ tracking_number: asked, is_main: true }, { tracking_number: '99999000000001' }] })).toHaveLength(3);
     const other = events.map((event) => ({ ...event, courier: { crawler_code: 'example-tracking' } }));

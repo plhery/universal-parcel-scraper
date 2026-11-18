@@ -296,7 +296,8 @@ const NAMING_FEEDS = new Set(['dhlparcel-uk-tracking']);
 /** The numbers a naming feed's scan names; none for another feed's. */
 function namedNumbers(scan: Record<string, unknown>): string[] {
   const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
-  return typeof code === 'string' && NAMING_FEEDS.has(code) && typeof scan.status === 'string' ? scan.status.match(/\d{7,}/g) ?? [] : [];
+  if (typeof code !== 'string' || !NAMING_FEEDS.has(code) || typeof scan.status !== 'string') return [];
+  return Array.from(scan.status.matchAll(/\bshipment\s+(\d{7,})\b/gi), (match) => match[1]!);
 }
 
 /**
