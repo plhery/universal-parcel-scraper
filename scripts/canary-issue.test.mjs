@@ -198,3 +198,15 @@ test('creates the first issue and closes it by the number it was given', () => {
   main({ env: env(linksFailing([link('spx-br'), changed])), gh, today: '2026-11-04' });
   assert.deepEqual(writes(), [['create', '--title'], ['close', '13']]);
 });
+
+test('fits a broad outage into an issue while retaining check history', () => {
+  const failures = lines(Array.from({ length: 75 }, (_, i) => [link('carrier-' + i), changed.repeat(2)]));
+  const jobs = Object.fromEntries(['adapters', 'tracking-links', 'search-pages'].map(job => [job, { result: 'failure', outputs: { failures } }]));
+  const state = nextState(empty, jobs, '2026-11-15');
+  const body = renderBody(state, '2026-11-15', runUrl);
+  assert.ok(body.length <= 65_536);
+  assert.deepEqual(readState(body), state);
+  const actions = plan({ issue: { state: 'CLOSED', body }, needs: jobs, today: '2026-11-16', runUrl });
+  assert.ok(actions.some(action => action.type === 'comment'));
+  assert.ok(actions.every(action => !action.body || action.body.length <= 65_536));
+});

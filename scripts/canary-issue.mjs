@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { deflateRawSync, inflateRawSync } from 'node:zlib';
 import { pathToFileURL } from 'node:url';
 
 // The carrier canary's issue. Hundreds of live checks against carriers' own
@@ -53,7 +54,8 @@ export function readState(body) {
   const match = STATE.exec(body ?? '');
   if (!match) return { checks: {}, notified: [] };
   try {
-    const state = JSON.parse(match[1]);
+    const state = JSON.parse(match[1].startsWith('z:')
+      ? inflateRawSync(Buffer.from(match[1].slice(2), 'base64'), { maxOutputLength: 8 * 1024 * 1024 }).toString() : match[1]);
     return { checks: state.checks ?? {}, notified: state.notified ?? [] };
   } catch {
     return { checks: {}, notified: [] };
@@ -160,13 +162,31 @@ function serialize(state) {
 export function renderBody(state, today, runUrl) {
   const groups = sections(state, today);
   const head = groups.look.length || groups.longDown.length ? [] : ['Nothing needs a look.', ''];
-  const render = (withReasons) => [...head,
-    ...section('look', groups.look), ...section('longDown', groups.longDown),
+  const visible = (withReasons) => [...head,
+    ...section('look', groups.look, { withReasons }), ...section('longDown', groups.longDown, { withReasons }),
     ...section('down', groups.down, { collapsed: true, withReasons }), ...section('once', groups.once, { collapsed: true, withReasons }),
-    `Run: ${runUrl}`, '', serialize(state)].join('\n');
-  const body = render(true);
+    `Run: ${runUrl}`, ''].join('\n');
+  const body = visible(true) + '\n' + serialize(state);
   // A runner-wide bad day can list too much: the record matters more than the reasons.
-  return body.length <= BODY_LIMIT ? body : render(false);
+  if (body.length <= BODY_LIMIT) return body;
+  const summary = Object.entries(groups).filter(([, items]) => items.length)
+    .map(([group, items]) => `${HEADINGS[group][0]}: ${items.length}`).join('\n');
+  const compact = (record) => {
+    const json = JSON.stringify(record);
+    if (Buffer.byteLength(json) > 8 * 1024 * 1024) return '';
+    const encoded = deflateRawSync(json).toString('base64');
+    const recordText = `<!-- canary-state\nz:${encoded}\n-->`;
+    const listed = visible(false) + '\n' + recordText;
+    if (listed.length <= BODY_LIMIT) return listed;
+    return `${summary}\nRun: ${runUrl}\n\n${recordText}`;
+  };
+  const packed = compact(state);
+  if (packed && packed.length <= BODY_LIMIT) return packed;
+  const checks = Object.fromEntries(Object.entries(state.checks).map(([job, entries]) => [job,
+    Object.fromEntries(Object.entries(entries).map(([check, entry]) => [check, { ...entry, reason: '' }]))]));
+  const counts = compact({ ...state, checks });
+  if (counts && counts.length <= BODY_LIMIT) return counts;
+  return `${summary}\nCheck history exceeded the issue limit. See the run log.\n${runUrl}`.slice(0, BODY_LIMIT);
 }
 
 /** The issue writes for this run, given the canary issue as it stands, if any. */
@@ -179,7 +199,8 @@ export function plan({ issue, needs, today, runUrl, timedOut }) {
   const fresh = actionable.filter(item => !known.has(item.key));
   state.notified = actionable.map(item => item.key);
   const body = renderBody(state, today, runUrl);
-  const notice = [...section('look', fresh.filter(item => !item.down)), ...section('longDown', fresh.filter(item => item.down)), `Run: ${runUrl}`].join('\n');
+  const details = [...section('look', fresh.filter(item => !item.down)), ...section('longDown', fresh.filter(item => item.down)), `Run: ${runUrl}`].join('\n');
+  const notice = details.length <= BODY_LIMIT ? details : `${fresh.length} new failures need attention. See the issue body and run log.\n${runUrl}`.slice(0, BODY_LIMIT);
   const actions = [];
   if (!issue) {
     // The record has to live somewhere, even when nothing needs a look yet.
