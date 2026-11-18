@@ -81,7 +81,7 @@ export function movedParcel(text: string): boolean {
 const RETURN_UNDER_WAY = /\bis (?:being )?returned to (?:the )?sender\b|\bis returning to (?:the )?sender\b|\bauf dem weg zurück zum absender\b|\bwird\b[^.]*\bzurück(?:gesandt|geschickt)\b/;
 
 export function stageForText(text: string, fallback = 'in_transit'): string {
-  const value = text.toLowerCase();
+  const value = text.toLowerCase().replace(/\b(\d{1,2})\.(?=\s*(?:januar|februar|märz|april|mai|juni|juli|august|september|oktober|november|dezember)\b)/g, '$1');
   if (RETURN_UNDER_WAY.test(value)) return 'returned';
   // A return still to come, such as a parcel left uncollected past its storage period: the parcel
   // has not started back yet, so it is an exception, never its acceptance or the return itself.
