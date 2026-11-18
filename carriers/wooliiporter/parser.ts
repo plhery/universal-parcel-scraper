@@ -49,7 +49,9 @@ function instant(value: string): string {
     || Number(match[4]) > 23 || Number(match[5]) > 59 || Number(match[6] ?? 0) > 59) invalid('WooliiPorter returned an invalid scan time');
   const parsed = DateTime.fromISO(value, { setZone: true });
   if (!parsed.isValid) invalid('WooliiPorter returned an invalid scan time');
-  return parsed.startOf('second').toISO({ suppressMilliseconds: true });
+  const iso = parsed.startOf('second').toISO({ suppressMilliseconds: true });
+  const fraction = /\.(\d+)/.exec(value)?.[1]?.replace(/0+$/, '');
+  return fraction ? iso.slice(0, 19) + '.' + fraction.padEnd(3, '0') + iso.slice(19) : iso;
 }
 
 /** One scan: its instant, English wording, place and status code. */
@@ -91,7 +93,8 @@ export function parseWoolii(payload: unknown, raw: string): CarrierResult {
     return seen.has(key) ? false : (seen.add(key), true);
   });
   // Newest first by the instant; scans at one instant keep the reply's order.
-  events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
+  const nanos = (time: string) => Number((/\.(\d+)/.exec(time)?.[1] ?? '').padEnd(9, '0'));
+  events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!) || nanos(b.time!) - nanos(a.time!));
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;

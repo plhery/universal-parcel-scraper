@@ -47,6 +47,12 @@ describe('WooliiPorter', () => {
     }
   });
 
+  it.each([['100', '900'], ['100000001', '100000009']])('orders scans within a second at source precision (%s, %s)', (early, late) => {
+    const events = [{ eventAt: `2031-05-02T03:20:00.${early}Z`, status: 'OUT_FOR_DELIVERY' },
+      { eventAt: `2031-05-02T03:20:00.${late}Z`, status: 'DELIVERED' }];
+    expect(parseWoolii({ ...delivered(), events }, NUMBER)).toMatchObject({ current_stage: 'delivered', last_update: events[1]!.eventAt });
+  });
+
   it('binds the reply to the number, takes a reference\'s public number, and reads a shipment without scans as no history yet', () => {
     expect(() => parseWoolii({ ...delivered(), trackingNumber: 'WP1000000000017' }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(parseWoolii(delivered(), 'WPTRK-AB12')).toMatchObject({ canonical_tracking_number: NUMBER });
