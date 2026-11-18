@@ -179,6 +179,13 @@ describe('Evri International delivery partners', () => {
     expect(result.events?.slice(3).every((event) => event.local_time && !event.time)).toBe(true);
     expect(result).toMatchObject({ last_update: '2026-06-08T12:08:00.000Z', delivery_carrier: 'paack' });
     expect(result).not.toHaveProperty('last_update_local');
+    const scans = Array.from({ length: 100 }, (_, i) =>
+      `<tr><td>2026-06-09 10:00:00</td><td>At the local depot</td><td>Depot ${i}</td><td></td></tr>`).join('');
+    const long = arrived(partner('Paack 48H', NUMBER)).replace('<tbody>', '<tbody>' + scans);
+    const capped = parse(long, NUMBER);
+    expect(capped.events).toHaveLength(100);
+    expect(capped.last_update).toBe('2026-06-09T10:00:00.000Z');
+    expect(capped.events?.every(event => event.time === capped.last_update)).toBe(true);
     // Another partner's scans keep their wall clocks.
     expect(parse(arrived(html), NUMBER).events?.every((event) => event.local_time && !event.time)).toBe(true);
   });

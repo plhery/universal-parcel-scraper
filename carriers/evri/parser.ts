@@ -147,16 +147,16 @@ export function parseEvriInternational(html: string, requested: string): EvriInt
   const weight = /^(\d+(?:\.\d+)?)\s*kg$/.exec(fields.get('Weight:') ?? '');
   const finished = ['delivered', 'returned'].includes(status?.stage ?? '') || ['delivered', 'returned'].includes(latest.stage ?? '');
   const weightKg = weight ? Number(weight[1]) : NaN;
-  return {
-    system, carrierTracking, carrierLabel: fields.get('Carrier:') ?? '',
-    result: {
-      status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
-      last_status_text: description, last_update: null, last_update_local: latest.local_time,
-      expected_delivery: finished ? null : estimate,
-      ...(Number.isFinite(weightKg) && weightKg > 0 ? { weight_kg: weightKg } : {}),
-      events: events.slice(0, 100),
-    },
+  const carrierLabel = fields.get('Carrier:') ?? '';
+  const result: CarrierResult = {
+    status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
+    last_status_text: description, last_update: null, last_update_local: latest.local_time,
+    expected_delivery: finished ? null : estimate,
+    ...(Number.isFinite(weightKg) && weightKg > 0 ? { weight_kg: weightKg } : {}),
+    events,
   };
+  const dated = evriPartner(carrierLabel) === 'paack' ? paackLegInstants(result) : result;
+  return { system, carrierTracking, carrierLabel, result: { ...dated, events: dated.events!.slice(0, 100) } };
 }
 
 /**
@@ -178,7 +178,7 @@ export function deliveryPartner(shipment: EvriInternationalShipment): { carrier:
  * second, so they become instants and the newest gives `last_update`. Evri's
  * scans before them keep their wall clocks.
  */
-export function paackLegInstants(result: CarrierResult): CarrierResult {
+function paackLegInstants(result: CarrierResult): CarrierResult {
   const events = result.events ?? [];
   const arrival = events.findIndex((event) => event.description === 'Arrived In Country');
   if (arrival < 0) return result;
@@ -201,7 +201,7 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   if (shipment.system !== number) throw new SchemaError(PROVIDER, 'Evri returned a different shipment');
   const partner = deliveryPartner(shipment);
   return {
-    ...(evriPartner(shipment.carrierLabel) === 'paack' ? paackLegInstants(shipment.result) : shipment.result),
+    ...shipment.result,
     ...(partner ? { delivery_carrier: partner.carrier, delivery_tracking_number: partner.number } : {}),
   };
 }
