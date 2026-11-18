@@ -210,3 +210,10 @@ test('fits a broad outage into an issue while retaining check history', () => {
   assert.ok(actions.some(action => action.type === 'comment'));
   assert.ok(actions.every(action => !action.body || action.body.length <= 65_536));
 });
+
+test('starts an outage streak on the first timeout after a schema failure', () => {
+  const schema = nextState(empty, linksFailing(['sample', changed]), '2026-11-01');
+  const outage = nextState(schema, linksFailing(['sample', timeout]), '2026-11-15');
+  assert.equal(sections(outage, '2026-11-15').longDown.length, 0);
+  assert.equal(sections(outage, '2026-11-15').down[0].since, '2026-11-15');
+});

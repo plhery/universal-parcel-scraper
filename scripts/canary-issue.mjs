@@ -67,8 +67,10 @@ function daysBetween(from, to) {
 }
 
 function failing(previous, reason, today) {
+  const down = carrierDown(reason);
+  if (previous?.down !== down) previous = undefined;
   const days = !previous ? 1 : previous.last === today ? previous.days : previous.days + 1;
-  return { reason, down: carrierDown(reason), since: previous?.since ?? today, last: today, days };
+  return { reason, down, since: previous?.since ?? today, last: today, days };
 }
 
 /**
