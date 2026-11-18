@@ -1,4 +1,281 @@
 {
   "carrier": "south-post",
-  "entries": []
+  "entries": [
+    {
+      "code": "135",
+      "wording": "PENDIENTE DE STOCK",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply."
+    },
+    {
+      "code": "136",
+      "wording": "PICKING",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply."
+    },
+    {
+      "code": "138",
+      "wording": "PROGRAMACION",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply."
+    },
+    {
+      "code": "70",
+      "wording": "EN DISTRIBUCION",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply."
+    },
+    {
+      "code": "39",
+      "wording": "ENTREGADA",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply."
+    },
+    {
+      "code": "118",
+      "wording": "No Visitado",
+      "stage": null,
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "In the public sample's reply, between two days out for delivery: the page says technical problems put the visit off. It moves nothing."
+    },
+    {
+      "wording": "pendiente de retiro",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "pendiente",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "armado",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "recibido en south post",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "recibido en casa central",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "retiro en planta",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "tránsito a sucursal.",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "transito a sucursal",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "programacion suc",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "programacion suc.",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "despachado a sucursal gire",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "en distribucion.",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "recibido en punto de entrega",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "retira en planta",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "retirado",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "1° visita no responde.",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "2° visita no responde.",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "custodia",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "se encuentra de vacaciones",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "se encuentra de vacaciones.",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "zona intransitable / inundada",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "desconoce destinatario",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "no existe numero",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "domicilio incompleto",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "se rehúsan a recibir el envío",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "informan que el destinatario falleció",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "el destinatario se mudó",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "no existe calle",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "siniestro",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "no entrega por mal estado",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "envío anulado por el destinatario",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "visitas reiteradas",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "zona peligrosa",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "datos confusos",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "anulado",
+      "stage": "exception",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "retornando a casa central",
+      "stage": "returned",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "devolución recibida",
+      "stage": "returned",
+      "language": "es",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "devuelto al remitente",
+      "stage": "returned",
+      "language": "es",
+      "confirmedBy": "bundle"
+    }
+  ]
 }

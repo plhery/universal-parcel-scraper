@@ -53382,10 +53382,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "south-post"
     },
     "canaryUrl": "https://www.southpost.com.ar/",
-    "trackingUrlTemplate": "https://www.southpost.com.ar/t/{trackingNumber}",
+    "trackingUrlTemplate": "https://www.southpost.com.ar/#/t/{trackingNumber}",
     "trackingSearchUrl": "https://www.southpost.com.ar/",
     "linkRules": [
       {
@@ -53394,6 +53394,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "southpost.com.ar"
         ],
         "path": "^/t/([0-9]+)/?$"
+      },
+      {
+        "domains": [
+          "www.southpost.com.ar",
+          "southpost.com.ar"
+        ],
+        "fragment": "^/t/([0-9]{1,7})/?$"
       }
     ],
     "detectionRules": []

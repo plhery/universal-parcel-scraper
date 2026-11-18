@@ -16,18 +16,45 @@
   "timezone": "America/Argentina/Buenos_Aires",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "south-post",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "offset_timestamps",
+    "signed_by"
+  ],
   "portal": {
-    "url": "https://www.southpost.com.ar/t/{trackingNumber}",
+    "url": "https://www.southpost.com.ar/#/t/{trackingNumber}",
     "searchUrl": "https://www.southpost.com.ar/",
     "canaryUrl": "https://www.southpost.com.ar/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "signatory",
+      "event_details",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "offset_timestamps",
+      "signatory"
+    ],
+    "discarded": [
+      "event_details",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "location",
+      "eta"
+    ]
   },
   "links": [
     {
@@ -36,6 +63,13 @@
         "southpost.com.ar"
       ],
       "path": "^/t/([0-9]+)/?$"
+    },
+    {
+      "domains": [
+        "www.southpost.com.ar",
+        "southpost.com.ar"
+      ],
+      "fragment": "^/t/([0-9]{1,7})/?$"
     }
   ],
   "detection": []

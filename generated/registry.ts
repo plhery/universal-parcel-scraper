@@ -650,6 +650,7 @@ import { adapter as slovakParcelService } from '../carriers/slovak-parcel-servic
 import { adapter as slovenskaPosta } from '../carriers/slovenska-posta/adapter.js';
 import { adapter as smsaExpress } from '../carriers/smsa-express/adapter.js';
 import { adapter as southAfricanPostOffice } from '../carriers/south-african-post-office/adapter.js';
+import { adapter as southPost } from '../carriers/south-post/adapter.js';
 import { adapter as southeasternFreightLines } from '../carriers/southeastern-freight-lines/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
 import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
@@ -1459,6 +1460,7 @@ export const REGISTRY: RegistryDefinition = {
     "slovenska-posta": slovenskaPosta,
     "smsa-express": smsaExpress,
     "south-african-post-office": southAfricanPostOffice,
+    "south-post": southPost,
     "southeastern-freight-lines": southeasternFreightLines,
     "sp-express": spExpress,
     "spee-dee": speeDee,
@@ -3104,7 +3106,7 @@ export const REGISTRY: RegistryDefinition = {
     "sol-express": "universal",
     "sorthub": "universal",
     "south-african-post-office": "south-african-post-office",
-    "south-post": "universal",
+    "south-post": "south-post",
     "southeastern-freight-lines": "southeastern-freight-lines",
     "southwestern-motor-transport": "universal",
     "sp-express": "sp-express",
