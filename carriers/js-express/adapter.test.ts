@@ -721,7 +721,23 @@ describe('JS Express tracking adapter', () => {
     expect(result).toMatchObject({ history_truncated: true, last_update_local: '2026-05-01T01:59:00' });
   });
 
-  it('takes JS Express waybills, and nothing else, without a request', async () => {
+  it("reads a shop's order number by the waybill the lookup answers it with, which becomes the canonical number", async () => {
+    const ORDER = 'SN000000000009';
+    const answer = waybill([row('2026-05-01 10:00:00', 'Sample Hub', 'Item Flight landing')]);
+    expect(parseJsExpress(answer, ORDER)).toMatchObject({ status: 'in_transit', canonical_tracking_number: DELIVERED });
+    expect(parseJsExpress(answer, DELIVERED)).not.toHaveProperty('canonical_tracking_number');
+    // Another order's waybill is not this one's, and a waybill is matched by its own number only.
+    expect(() => parseJsExpress(answer, 'SN000000000008')).toThrow('another waybill');
+    expect(() => parseJsExpress(waybill([], { orderNo: IN_TRANSIT }), IN_TRANSIT)).toThrow('another waybill');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(JSON.stringify(answer)));
+    await expect(carrier(fetcher).track({ number: ' sn 000000000009 ' })).resolves.toMatchObject({ canonical_tracking_number: DELIVERED });
+    expect(fetcher.mock.calls[0]![1]).toMatchObject({ body: `card_num=${ORDER}` });
+    // Recognition asks about waybills only.
+    await expect(carrier(fetcher).recognize!(ORDER)).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it("takes JS Express waybills and shops' order numbers, and nothing else, without a request", async () => {
     const fetcher = vi.fn<typeof fetch>();
     for (const number of ['JSEZZ000000001YQ', 'JSEZZ00000000001YQ', 'JSEZZ0000000001YR', 'FEISH0000000001YQ', 'WNBZZ0000000001YQ',
       'JSE0000000000001YQ', '12345678901', `JSEZZ${'0'.repeat(70)}YQ`]) {

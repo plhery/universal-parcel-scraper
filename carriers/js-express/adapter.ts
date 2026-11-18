@@ -8,7 +8,7 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import { trawlPageStep } from '../../core/transport/trawlPage.js';
-import { JS_EXPRESS_MAX_BYTES, jsExpressReply, normalizeJsExpressNumber, parseJsExpress, PROVIDER } from './parser.js';
+import { JS_EXPRESS_MAX_BYTES, jsExpressReply, normalizeJsExpressNumber, normalizeJsExpressWaybill, parseJsExpress, PROVIDER } from './parser.js';
 
 /** The English tracking page, whose script posts the number to the lookup as `card_num`. */
 export const JS_EXPRESS_PAGE = 'https://www.js-exp.com/EN/index.php?page=19';
@@ -71,6 +71,7 @@ export const adapter: AdapterFactory = (environment) => {
     id: 'js-express', recordsSteps: true, steps: ['direct', 'retry', 'trawl'],
     track: (input, context) => tracker.fetch(input.number, context),
     recognize: (number, context) => recognizeFromLookup(() => http.fetch(number, context),
-      () => accepted(() => normalizeJsExpressNumber(number))),
+      // Recognition asks about waybills only: an order number names no carrier.
+      () => accepted(() => normalizeJsExpressWaybill(number))),
   };
 };

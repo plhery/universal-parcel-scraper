@@ -24,6 +24,10 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   refusal alone in place of the answer is a challenge. A 404 or a redirect is a moved route.
 - The reply must name the whole requested number as `jsWaybillNo`. The tracker matches whole
   numbers only.
+- The lookup also answers a shop's order number, letters then digits, with the waybill whose
+  `orderNo` it is whole, and that waybill becomes the canonical number. Universal providers file
+  such numbers under the carrier. Recognition asks about waybills only, since an order number's
+  shape names no carrier.
 - Recognition stays on HTTP and opens no browser session. A rate limit, explicit missing
   parcel or changed schema does not start browser recovery.
 

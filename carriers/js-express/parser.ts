@@ -21,6 +21,9 @@ export const JS_EXPRESS_MAX_BYTES = 256 * 1024;
 
 // JSE, two letters, ten digits and YQ.
 const NUMBER = /^JSE[A-Z]{2}\d{10}YQ$/;
+// A shop's order number, letters then digits, which the lookup answers with the waybill it belongs to. Other
+// forwarders' YQ waybills and bare runs of digits are not taken for one.
+const ORDER_NUMBER = /^(?!JSE)[A-Z]{2,8}\d{6,20}$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 // The lookup's answer for a number it does not know.
 const NOT_FOUND = '未获取到任何数据';
@@ -68,9 +71,18 @@ const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
 /** A JS Express waybill number; anything else is not one it issues. */
-export function normalizeJsExpressNumber(raw: string): string {
+export function normalizeJsExpressWaybill(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
   if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'JS Express waybills are JSE, two letters, ten digits and YQ');
+  return number;
+}
+
+/** A JS Express waybill number, or a shop's order number the lookup answers with its waybill. */
+export function normalizeJsExpressNumber(raw: string): string {
+  const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
+  if (!NUMBER.test(number) && !ORDER_NUMBER.test(number)) {
+    throw new InvalidInputError(PROVIDER, 'JS Express takes its waybills, JSE, two letters, ten digits and YQ, and shops\' order numbers');
+  }
   return number;
 }
 
@@ -239,8 +251,10 @@ function roundDay(event: CarrierEvent): string | null {
  * number: `code` 0 and the waybill, with the country it goes to, the
  * destination courier's number once it has one, and the scans newest first by
  * wall clock, each a date, a place, a wording, a code and an offset. An
- * unknown number gets `code` 1 and "未获取到任何数据,请提供有效单号!". The
- * shop's order number and the delivery photos are not read.
+ * unknown number gets `code` 1 and "未获取到任何数据,请提供有效单号!". A
+ * shop's order number is answered with the waybill whose whole `orderNo` it
+ * is, and that waybill becomes the canonical number. The delivery photos are
+ * not read.
  */
 export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResult {
   const number = normalizeJsExpressNumber(rawNumber);
@@ -256,9 +270,11 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
   const waybills = payload.data.map((waybill: unknown) => {
     if (!isRecord(waybill) || typeof waybill.jsWaybillNo !== 'string') throw new SchemaError(PROVIDER, 'JS Express returned a waybill without its number');
     return waybill;
-  }).filter((waybill) => normalizeTrackingNumber(clean(waybill.jsWaybillNo, 64)) === number);
+  }).filter((waybill) => normalizeTrackingNumber(clean(waybill.jsWaybillNo, 64)) === number
+    || (!NUMBER.test(number) && typeof waybill.orderNo === 'string' && normalizeTrackingNumber(clean(waybill.orderNo, 64)) === number));
   if (waybills.length !== 1) throw new SchemaError(PROVIDER, 'JS Express answered for another waybill');
   const waybill = waybills[0]!;
+  const own = normalizeTrackingNumber(clean(waybill.jsWaybillNo, 64));
   const rows = waybill.tracking;
   if (!Array.isArray(rows)) throw new SchemaError(PROVIDER, 'JS Express returned a waybill with invalid scans');
   // The page's script says "暂无轨迹数据" for a waybill without scans.
@@ -335,6 +351,7 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
       : (stage === 'out_for_delivery' ? roundDay(current!) : null) ?? estimateDay(waybill),
     ...(country ? { destination_country: country } : destination ? { destination_country_name: destination } : {}),
     ...handoff(waybill, number, country, scans.map((scan) => scan.description)),
+    ...(own !== number ? { canonical_tracking_number: own } : {}),
     events: events.slice(0, MAX_EVENTS),
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
   };
