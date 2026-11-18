@@ -38,6 +38,7 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['FPX_M_IT', { status: 'in_transit', stage: 'in_transit' }],
   ['FPX_O_DW', { status: 'in_transit', stage: 'in_transit' }], // Left the origin sorting centre.
   ['FPX_O_RC', { status: 'in_transit', stage: 'in_transit' }], // At the hub the line haul leaves from.
+  ['FPX_O_NM', { status: 'in_transit', stage: 'in_transit' }], // At the origin facility, waiting for the line haul's pickup.
   ['FPX_Q_ECC', { status: 'in_transit', stage: 'in_transit' }], // Export clearance complete; the parcel moves on.
   // The airline refused the parcel because its weight differed from the declared one: it stays at the origin
   // facility to be measured again, a problem to resolve rather than a step on the way.

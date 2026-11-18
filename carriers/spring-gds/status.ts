@@ -98,6 +98,8 @@ const DOMESTIC_STAGE = new Map<string, Stage>([
   ["your parcel's at a sorting centre in the destination country", 'in_transit'],
   ['your shipment is on its way to the recipient', 'out_for_delivery'],
   ["we missed you; we'll try again", 'failed_attempt'],
+  // A new delivery day, the morning after PostNL received the parcel and before any round: a delay, not an attempt.
+  ["sorry, delivery time has been updated. we're unable to deliver your parcel today", 'in_transit'],
 ]);
 
 /** The stage of one domestic tracker observation, or undefined when unmapped. Its labels write the apostrophe either way. */

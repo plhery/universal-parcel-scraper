@@ -453,6 +453,15 @@
       "note": "The hub the line haul leaves from, just before the hand-over to the service provider."
     },
     {
+      "code": "FPX_O_NM",
+      "wording": "Waiting for pick up",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "At the origin facility, after its arrival scan and before it departs: the parcel waits for the line haul, not for the recipient."
+    },
+    {
       "wording": "Export customs clearance started",
       "language": "en",
       "stage": "in_transit",
