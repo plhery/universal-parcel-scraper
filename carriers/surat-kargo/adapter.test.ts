@@ -104,3 +104,15 @@ describe('Sürat Kargo merchant tracking flow', () => {
     }
   });
 });
+
+it('retains scanned pieces when another piece has no history', () => {
+  const empty = parseSuratHistory([]);
+  expect(() => suratKargoResult([empty, empty])).toThrow();
+  for (const piece of [history(), history().slice(1)]) {
+    const result = suratKargoResult([parseSuratHistory(piece), empty]);
+    expect(result.history_truncated).toBe(true);
+    expect(result.current_stage).not.toBe('delivered');
+    expect(result.delivered_at).toBeUndefined();
+    expect(result.events).toHaveLength(piece.length);
+  }
+});

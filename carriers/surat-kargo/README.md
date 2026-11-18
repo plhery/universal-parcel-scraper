@@ -17,7 +17,7 @@ JSON in the same guest session. Desktop and mobile copies of one capability are 
 The adapter retains operational scan labels and offices, with local clocks and deduced Istanbul
 instants. Recipient details, signatures and delivery addresses are excluded; guest capabilities
 are omitted from results and transport diagnostics. A shipment remains active while any piece
-is undelivered.
+is undelivered. An empty piece leaves the other pieces’ scans available as a partial history.
 
 An unknown number can return an empty search form rather than an explicit missing answer.
 That stays inconclusive. Block pages, failed verification, rate limits and changed replies keep
