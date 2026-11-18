@@ -265,15 +265,16 @@ test('deadline abort kills an active image decoder process', async () => {
     png.writeUInt32BE(1, 16);png.writeUInt32BE(1, 20);
     const decoding = decodeSfExpressPng(png, controller.signal);
     const outcome = assert.rejects(decoding, /decoding failed/);
-    for (let attempt = 0; attempt < 100; attempt++) {
-      try { pid = Number(await readFile(pidFile, 'utf8')); break; } catch {}
+    // A loaded machine can take seconds to start node: wait for the decoder by a deadline, not a count of polls.
+    for (const startBy = Date.now() + 15_000; Date.now() < startBy;) {
+      try { pid = Number(await readFile(pidFile, 'utf8')); if (pid > 0) break; } catch {}
       await new Promise(resolve => setTimeout(resolve, 10));
     }
     assert.ok(pid > 0, 'decoder process started');
     controller.abort();
     await outcome;
     let exited = false;
-    for (let attempt = 0; attempt < 100; attempt++) {
+    for (const exitBy = Date.now() + 5_000; Date.now() < exitBy;) {
       try { process.kill(pid, 0); } catch { exited = true; break; }
       await new Promise(resolve => setTimeout(resolve, 10));
     }
