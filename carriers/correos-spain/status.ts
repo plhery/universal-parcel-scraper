@@ -85,6 +85,7 @@ const EVENT_STATUS: Record<string, ClassifiedStatus> = {
   'E05F000V': { status: 'in_transit', stage: 'customs' },
   // In the origin country's customs; then the processing completed, which puts the parcel back in transit.
   'B170000V': { status: 'in_transit', stage: 'customs' },
+  'B180000V': { status: 'in_transit', stage: 'in_transit' },
   'E510000V': { status: 'in_transit', stage: 'in_transit' },
   'E500000V': { status: 'in_transit', stage: 'customs' },
   // A further round after the charges: in processing, then completed, once or twice a minute apart,

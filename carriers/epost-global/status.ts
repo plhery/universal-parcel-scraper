@@ -45,6 +45,11 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['arrived in customs', 'customs'],
   ['shipment departed depot', 'in_transit'],
   ['ready for collection', 'ready_for_pickup'],
+  // The delivering partner at the destination: duties the recipient owes, their payment, and a pickup point holding
+  // the parcel. Charges due read as customs, as the shared wordings do.
+  ['duty &/or tax fees requested', 'customs'],
+  ['received payment', 'in_transit'],
+  ['the item is available at the pickuppoint', 'ready_for_pickup'],
 ]);
 
 // The handover a minute after shipping: "In transit to {service} tracking #: {number}".

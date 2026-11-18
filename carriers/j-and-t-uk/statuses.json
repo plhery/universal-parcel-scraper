@@ -6,6 +6,7 @@
     {"wording": "The parcel is dispatched from the transit center to the next destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "The parcel has been collected and is on its way", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The courier's collection for the delivery round: the reply files it as a delivery scan (派件扫描) with the parcel out for delivery (派件中). The shared rules would read it as transit."},
     {"wording": "The parcel has been successfully delivered to the recipient", "stage": "delivered", "language": "en", "confirmedBy": "live"},
-    {"wording": "The delivery address is incomplete or incorrect.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The reply's problem scan (问题件扫描), hours after the parcel went out for delivery on the same day: the round's outcome."}
+    {"wording": "The delivery address is incomplete or incorrect.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The reply's problem scan (问题件扫描), hours after the parcel went out for delivery on the same day: the round's outcome."},
+    {"wording": "Delivery was attempted, but no one was available to receive the package at the address; the package was taken to a pickup location for the customer to collect.", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The round's outcome: no one at the address, so the parcel waits at a pickup location, as other carriers' failed attempts that leave it at one read."}
   ]
 }

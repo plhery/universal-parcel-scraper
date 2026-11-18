@@ -79,6 +79,8 @@
     { "code": "2W", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-07", "note": "actCode: \"DELIVERED\" after the receiver collected the parcel from an access point." },
     { "code": "YC", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "actCode: \"Package delivered by local post office\", USPS's delivery after LX." },
     { "code": "8Q", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-17", "note": "actCode: \"DELIVERED\", the scan that closed a delivery round hours after OT." },
+    { "code": "3C", "wording": "Due to operating conditions, your package may be delayed. / Delivery will be delayed by one business day.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "actCode: a possible delay, the parcel still on its way." },
+    { "code": "O1", "wording": "We received a request from the receiver to reschedule the delivery.", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "actCode: the receiver asked for another delivery day; the parcel waits in the network." },
     { "wording": "Return to Sender", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Adapter result status: exception." },
     { "wording": "Returned", "language": "en", "stage": "returned", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Adapter result status: exception." },
     { "wording": "Delivery Attempted", "language": "en", "stage": "failed_attempt", "confirmedBy": "prior-art", "firstSeen": "2026-09-12", "note": "Adapter result status: exception." },

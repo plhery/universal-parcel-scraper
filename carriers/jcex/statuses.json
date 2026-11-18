@@ -39,6 +39,8 @@
     {"code": "Exception_Other", "wording": "Votre colis n'a pas pu vous être remis. Il sera mis en livraison demain (hors dimanche et jours fériés).", "stage": "failed_attempt", "language": "fr", "confirmedBy": "live", "note": "Relayed from Colissimo: a failed visit, with delivery again the next working day; the code's exception is too broad."},
     {"code": "InTransit_Other", "wording": "Handed over to the trucking company, waiting for transport（已交卡车公司 待运输）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "InTransit_Departure", "wording": "turck transferring（卡车运输中）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
-    {"code": "InTransit_Other", "wording": "Votre Colissimo est en cours de traitement sur le site de tri local.", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from Colissimo."}
+    {"code": "InTransit_Other", "wording": "Votre Colissimo est en cours de traitement sur le site de tri local.", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from Colissimo."},
+    {"wording": "已下单", "stage": "registered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Order placed, without a code: the sender's order, before JCEX has the parcel."},
+    {"wording": "Your parcel has been left at a safe place (ATL)", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Relayed without a code from the delivering partner: left at a safe place under an authority to leave (ATL), the delivery."}
   ]
 }

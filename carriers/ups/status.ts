@@ -90,14 +90,15 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   // Delays and new delivery plans: a late flight, a possible delay, a new
   // plan, a delivery a day early, a Saturday delivery requested, a day's delay for weather
   // or for a labor dispute outside UPS, a delivery a business day later than expected, and
-  // a delay for events outside UPS's control.
+  // a delay for events outside UPS's control, and one UPS's operating conditions may cause.
   ['18', 'in_transit'], ['Q5', 'in_transit'], ['E3', 'in_transit'], ['2U', 'in_transit'], ['RF', 'in_transit'],
-  ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'], ['C5', 'in_transit'],
+  ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'], ['C5', 'in_transit'], ['3C', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
-  // one to the receiver's address instead of the access point. A missort UPS
+  // one to the receiver's address instead of the access point, and the receiver's request for another day. A missort UPS
   // has rerouted (34) goes on too.
   ['AL', 'in_transit'], ['HM', 'in_transit'], ['34', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'], ['VM', 'in_transit'],
+  ['O1', 'in_transit'],
   ['ZA', 'in_transit'], ['ZB', 'in_transit'], ['ZC', 'in_transit'],
   // Ground Saver's hand-off to the post office: moving there, transferred, and
   // received by it.
