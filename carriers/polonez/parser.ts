@@ -130,7 +130,12 @@ export function parsePolonez(xml: string, raw: string): CarrierResult {
     if (seen.has(key)) return false;
     seen.add(key); return true;
   });
-  shown.sort((a, b) => b.local.localeCompare(a.local) || b.index - a.index);
+  // A day containing an untimed scan has only one shared chronology: the source order.
+  const untimedDays = new Set(shown.filter(row => row.local.length === 10).map(row => row.local));
+  shown.sort((a, b) => {
+    const day = b.local.slice(0, 10);
+    return day.localeCompare(a.local.slice(0, 10)) || (!untimedDays.has(day) && b.local.localeCompare(a.local)) || b.index - a.index;
+  });
   const newest = shown[0]!;
   const stage = shown.find(row => row.stage)?.stage;
   const partner = [...partners][0];
