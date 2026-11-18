@@ -140,11 +140,11 @@ const clockDay = (event: CarrierEvent) => {
  * after the delivery depot's Saturday sort. From Friday to Sunday "lundi prochain" can only be the coming
  * Monday; earlier in the week it could be a week later, so the scan names no day.
  */
-function nextMonday(code: string, description: string, event: CarrierEvent): string | undefined {
+function nextMonday(code: string, description: string, event: CarrierEvent): string | null | undefined {
   if (code !== 'IS' || description.trim().toLowerCase() !== 'livraison prévue lundi prochain') return undefined;
   const day = clockDay(event);
   const date = day ? DateTime.fromISO(day, { zone: 'UTC' }) : null;
-  return date?.isValid && date.weekday >= 5 ? date.plus({ days: 8 - date.weekday }).toISODate() ?? undefined : undefined;
+  return date?.isValid && date.weekday >= 5 ? date.plus({ days: 8 - date.weekday }).toISODate() : null;
 }
 
 /** Stages on the way to a planned delivery. */
@@ -281,7 +281,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
   let promised: WindowEstimate | null = null;
   for (const scan of projected) {
     if (scan.redelivery !== undefined) promised = scan.redelivery ? { expected_delivery: scan.redelivery } : null;
-    else if (scan.monday) promised = { expected_delivery: scan.monday };
+    else if (scan.monday !== undefined) promised = scan.monday ? { expected_delivery: scan.monday } : null;
     else if (scan.appointment !== undefined) promised = scan.appointment;
     else if (promised && (clockDay(scan.event) > (promised.expected_delivery ?? '').slice(0, 10)
       || (!scan.notification && !ONGOING.has(scan.mapped.stage)))) {

@@ -315,6 +315,9 @@ describe('Chronopost direct tracking', () => {
     expect(parseChronopostTrackingXml(history(sorted, monday, tuesday), number).expected_delivery).toBeNull();
     // Early in the week "lundi prochain" could be a week on: no day.
     const midweek = scan('IS', '2026-06-30T06:26:00+02:00', 'Livraison prévue lundi prochain');
+    const booked = scan('IS', '2026-06-29T09:00:00+02:00', 'Rendez-vous',
+      { 'Début créneau RDV': '01/07/2026 09:00', 'Fin créneau RDV': '01/07/2026 12:00' });
+    expect(parseChronopostTrackingXml(history(booked, midweek), number).expected_delivery).toBeNull();
     expect(parseChronopostTrackingXml(history(tuesday, midweek), number).expected_delivery).toBeNull();
   });
 
