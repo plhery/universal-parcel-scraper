@@ -60334,7 +60334,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "usea-express",
+      "localClocks": true
     },
     "canaryUrl": "https://nxclient.usea56.com/tracking",
     "trackingSearchUrl": "https://nxclient.usea56.com/tracking",
