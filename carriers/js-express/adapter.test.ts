@@ -577,6 +577,11 @@ describe('JS Express tracking adapter', () => {
       stated('2026-10-23 12:15:00', '', 'Sample courier note', 'GMT+2', 'oit'),
       stated('2026-10-18 21:27:54', 'Shenzhen General Warehouse', 'Item has been collected', '+08:00', 'OPU'),
     ];
+    for (const offset of ['+02:00', '+03:00']) {
+      const overlap = stated('2026-10-25 03:15:00', '', 'Item arrival at collection point for pick-up', offset);
+      expect(parseJsExpress(waybill([overlap], { country: 'Cyprus' }), DELIVERED).events?.[0]?.time)
+        .toBe('2026-10-25T03:15:00' + offset);
+    }
     const cyprus = parseJsExpress(waybill(rows, { country: 'Cyprus' }), DELIVERED);
     expect(cyprus.events?.map((event) => [event.time ?? event.local_time, event.provider_code, event.stage])).toEqual([
       ['2026-10-30T08:18:00+02:00', 'DOD', 'ready_for_pickup'],

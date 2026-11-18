@@ -5,7 +5,7 @@ import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detectio
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
-import { calendarDay, canadaProvinceTimeZone, countryCode, firstOccurrence, isoTime } from '../../core/time/index.js';
+import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
@@ -153,9 +153,11 @@ function scanZone(local: string, description: string, location: string, label: s
  * country's post or not. Other rows' offsets are not read: Straightship's
  * carry China's, and the airports' can be another country's.
  */
-function statedZone(local: string, offset: string, country: string | null): string | null {
+function destinationInstant(local: string, offset: string, country: string | null): string | null {
   const zone = country && OFFSET.test(offset) && !hasSeveralClocks(country) ? mainZone(country) : null;
-  return zone && firstOccurrence(DateTime.fromISO(local, { zone })).toFormat('ZZ') === offset ? zone : null;
+  if (!zone) return null;
+  const stated = DateTime.fromISO(local + offset, { setZone: true });
+  return stated.setZone(zone).toFormat("yyyy-MM-dd'T'HH:mm:ss") === local ? stated.toISO({ suppressMilliseconds: true }) : null;
 }
 
 /**
@@ -288,8 +290,8 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
   const receivers = new Map<CarrierEvent, string>();
   const events = scans.map(({ local, label, description, whole, location, offset, code }): CarrierEvent => {
     const stated = statedInstant(local, offset, description);
-    const zone = stated ? null : scanZone(local, description, location, label, straightship, utcFeed) ?? (location ? null : statedZone(local, offset, country));
-    const time = stated ?? (zone ? isoTime(local, zone)?.iso : undefined);
+    const zone = stated ? null : scanZone(local, description, location, label, straightship, utcFeed);
+    const time = stated ?? (zone ? isoTime(local, zone)?.iso : !location ? destinationInstant(local, offset, country) : undefined);
     const staged = jsExpressStage(description, code);
     const event: CarrierEvent = {
       ...(time ? { time } : { local_time: local }),
