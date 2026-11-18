@@ -37,6 +37,7 @@ function clock(value: string): string {
 export function parseQatarPostResponse(body: string, status: number, raw: string): CarrierResult {
   const number = normalizeQatarPostNumber(raw);
   if (new TextEncoder().encode(body).byteLength > QATAR_MAX_BYTES) throw new SchemaError(PROVIDER, 'Qatar Post returned an oversized response');
+  if (status === 410) throw new TransportError(PROVIDER, 'Qatar Post guest tracking is unavailable', { status });
   if (status === 403) throw new ChallengeError(PROVIDER, 'Qatar Post refused its public guest request');
   if (/^\s*</.test(body)) {
     if (/Request Rejected|captcha|_cf_chl_opt|<title>\s*(?:Just a moment|Access Denied)|verify.*human/i.test(body)) throw new ChallengeError(PROVIDER, 'Qatar Post returned browser verification');

@@ -21,7 +21,7 @@ export class QatarPostTracker {
           Accept: 'application/json, text/plain, */*', Platform: 'Mobile', 'Guest-API-Token': qatarGuestToken(),
           'User-Agent': userAgentOf(this.options.userAgent),
         } }, { provider: PROVIDER, fetcher: this.options.fetcher, timeoutMs: Math.max(1, Math.floor(timeoutMs)),
-          maxBytes: QATAR_MAX_BYTES, allowHttpStatuses: [400, 403, 404] });
+          maxBytes: QATAR_MAX_BYTES, allowHttpStatuses: [400, 403, 404, 410] });
         signal.throwIfAborted();
         return parseQatarPostResponse(decodeText(bytes), response.status, number);
       } catch (error) {

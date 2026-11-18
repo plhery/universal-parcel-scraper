@@ -233,3 +233,8 @@ describe('Qatar Post guest transport and routing', () => {
     await expect(new QatarPostTracker({ fetcher }).fetch(NUMBER, { signal: controller.signal })).rejects.toThrow(); expect(fetcher).not.toHaveBeenCalled();
   });
 });
+
+it('reports a retired service route as a transport error', async () => {
+  const fetcher = async () => new Response('Service retired', { status: 410 });
+  await expect(new QatarPostTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+});

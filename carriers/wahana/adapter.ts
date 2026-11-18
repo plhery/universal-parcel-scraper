@@ -39,7 +39,7 @@ export class WahanaTracker {
       const request = async (url: string | URL, maxBytes: number) => {
         const { response, bytes } = await fetchBounded(url, { signal, headers: {
           'User-Agent': userAgentOf(this.options.userAgent), Referer: HOME, Origin: new URL(HOME).origin,
-        } }, { provider: PROVIDER, fetcher, timeoutMs: Math.min(8_000, left()), maxBytes, allowHttpStatuses: [400, 403, 404, 422] });
+        } }, { provider: PROVIDER, fetcher, timeoutMs: Math.min(8_000, left()), maxBytes, allowHttpStatuses: [400, 403, 404, 410, 422] });
         left();
         if (response.status === 403) throw new ChallengeError(PROVIDER, 'Wahana refused its guest request');
         if (response.status !== 200) throw new TransportError(PROVIDER, 'Wahana guest tracking is unavailable', { status: response.status });
