@@ -138,7 +138,7 @@ const ARRIVED_ABROAD = '516';
 const DESTINATION_ARRIVAL = '459';
 
 function scanOffice(scan: Record<string, unknown>): string {
-  return JSON.stringify([wallClock(scan.time) ?? '', cleanScalar(scan.orgCode, 8).toUpperCase(), clean(scan.orgName, 100)]);
+  return JSON.stringify([wallClock(scan.time)?.slice(0, 16) ?? '', cleanScalar(scan.orgCode, 8).toUpperCase(), clean(scan.orgName, 100)]);
 }
 
 function scanTime(value: unknown): string {

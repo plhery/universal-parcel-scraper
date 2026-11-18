@@ -369,6 +369,7 @@ describe('China Post trace projection', () => {
     // would have crossed the Pacific in six hours.
     expect(dated('2026-09-01 16:05:00')).toMatchObject({ local_time: '2026-09-01T16:05:00', time_zone_basis: 'place' });
     expect(dated('2026-09-01 16:05:00')?.time).not.toMatch(/\+08:00$/);
+    expect(dated('2026-09-01 16:05:01')).toMatchObject({ local_time: '2026-09-01T16:05:01', time_zone_basis: 'place' });
     expect(dated('2026-09-01 14:05:00')).toMatchObject({ time: '2026-09-01T14:05:00+08:00', time_zone_basis: 'carrier' });
   });
 
