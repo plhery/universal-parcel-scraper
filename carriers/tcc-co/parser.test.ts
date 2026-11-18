@@ -83,6 +83,15 @@ describe('TCC secondary history parser', () => {
     expect(result).toMatchObject({ current_stage: 'failed_attempt', history_truncated: true, events: [{ stage: 'failed_attempt', provider_code: '252' }] });
   });
 
+  it('retains an open top-level incident duplicated in ordinary history', () => {
+    const body = fixture(), one = shipment(body);
+    one.pasoestado = '5'; one.fechaentrega = null; one.novedades = null;
+    one.novedad = 'MERCANCÍA NO ENTREGADA A DESTINATARIO - NO SE ENCUENTRA EL DESTINATARIO O NO HAY NADIE EN LA DIRECCIÓN';
+    one.estadonovedad = 'Informada';
+    one.estados = { estado: [{ descripcion: one.novedad, fecha: one.fechanovedad }] };
+    expect(parseTcc(body, NUMBER)).toMatchObject({ current_stage: 'failed_attempt', events: [{ stage: 'failed_attempt' }] });
+  });
+
   it('does not create scans for an undated future progress rail', () => {
     const body = fixture(), one = shipment(body);
     one.pasoestado = '4'; one.fechaentrega = '2034-02-28T12:00:00.000-05:00';

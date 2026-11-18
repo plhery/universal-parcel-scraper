@@ -100,3 +100,11 @@ describe('Direct Freight transport', () => {
     await expect(new DirectFreightTracker({ fetcher }).fetch(NUMBER, { signal: caller.signal })).rejects.toThrow(); expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });
+
+it('keeps a consignment open after delivery of one piece', () => {
+  const scans = rows();
+  scans[1]![3] = '2';
+  const result = parseDirectFreight(page(scans), NUMBER);
+  expect(result.status).toBe('in_transit');
+  expect(result.events?.[0]?.stage).toBe('delivered');
+});

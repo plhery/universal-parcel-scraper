@@ -329,3 +329,14 @@ describe('ROZETKA Delivery HTTP retrieval', () => {
     expect(recorder.lookup).not.toHaveBeenCalled();
   });
 });
+
+it('keeps delivery first during the repeated Kyiv hour', () => {
+  const data = history(), detail = data.data[0]!;
+  const delivery = '2026-10-25 03:10:00';
+  detail.status_groups[2]!.statuses[0]!.date = '2026-10-25 03:55:00';
+  detail.status_groups[3]!.statuses[0]!.date = delivery;
+  detail.last_status.date = delivery;
+  const result = parse(data, overview(NUMBER, 60030, delivery));
+  expect(result.current_stage).toBe('delivered');
+  expect(result.events![0]!.stage).toBe('delivered');
+});

@@ -57,7 +57,6 @@ export function suratHistoryTokens(html: string, raw: string, requestedUrl: stri
 
 export function parseSuratHistory(payload: unknown): CarrierEvent[] {
   if (!Array.isArray(payload) || payload.length > 500) throw new SchemaError(PROVIDER, 'Sürat Kargo returned an invalid history');
-  if (!payload.length) throw new NoHistoryError(PROVIDER);
   const events = payload.map((row): CarrierEvent => {
     if (!isRecord(row) || typeof row.HareketTarihi !== 'string' || !/^\d{1,2}\.\d{1,2}\.\d{4} \d{2}:\d{2}:\d{2}$/.test(row.HareketTarihi)
       || typeof row.HareketTipi !== 'string' || !row.HareketTipi.trim() || row.HareketTipi.length > 2000
@@ -76,17 +75,20 @@ export function parseSuratHistory(payload: unknown): CarrierEvent[] {
 
 /** A delivered piece never completes a shipment whose other pieces remain active. */
 export function suratKargoResult(histories: readonly CarrierEvent[][]): CarrierResult {
-  if (!histories.length || histories.some(events => !events.length)) throw new NoHistoryError(PROVIDER);
-  const active = histories.map(events => events[0]!).filter(event => event.stage !== 'delivered');
-  const candidates = active.length ? active : histories.map(events => events[0]!);
+  const heads = histories.flatMap(events => events.slice(0, 1));
+  if (!heads.length) throw new NoHistoryError(PROVIDER);
+  const partial = heads.length < histories.length;
+  const active = heads.filter(event => event.stage !== 'delivered');
+  const candidates = active.length ? active : heads;
   const current = [...candidates].sort((a, b) => b.time!.localeCompare(a.time!))[0]!;
   const seen = new Set<string>();
   const events = histories.flat().sort((a, b) => b.time!.localeCompare(a.time!)).filter(event => {
     const key = JSON.stringify(event); if (seen.has(key)) return false; seen.add(key); return true;
   });
-  return { status: current.stage ? languageStageStatus(current.stage as Stage) : 'unknown',
-    ...(current.stage ? { current_stage: current.stage, current_stage_source: current.stage_source } : {}),
-    last_status_text: current.description!, last_update: current.time, last_update_local: current.local_time,
-    expected_delivery: null, events: events.slice(0, 100), ...(events.length > 100 ? { history_truncated: true } : {}),
-    ...(!active.length ? { delivered_at: current.time } : {}) };
+  const stage = partial && current.stage === 'delivered' ? 'in_transit' : current.stage;
+  return { status: stage ? languageStageStatus(stage as Stage) : 'unknown',
+    ...(current.stage ? { current_stage: stage, current_stage_source: current.stage_source } : {}),
+    last_status_text: stage !== current.stage ? 'Delivery of individual pieces' : current.description!, last_update: current.time, last_update_local: current.local_time,
+    expected_delivery: null, events: events.slice(0, 100), ...(partial || events.length > 100 ? { history_truncated: true } : {}),
+    ...(!partial && !active.length ? { delivered_at: current.time } : {}) };
 }

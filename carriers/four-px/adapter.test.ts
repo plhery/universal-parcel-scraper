@@ -298,14 +298,14 @@ describe('4PX result projection', () => {
     }
   });
 
-  it("reads a line haul's info receipt after the measuring as transit", () => {
+  it("keeps a delivered headline after a line haul's info receipt", () => {
     const payload = fixture();
     const tracks = payload.data[0].tracks;
     payload.data[0].tracks = [{ ...tracks[0], tkCode: 'FPX_O_IR', tkDesc: 'Shipment info received', tkDateStr: '2026-03-29 09:00:00' }, ...tracks];
     expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ stage: 'registered', stage_source: 'carrier_map' });
     const result = readLateRegistrations(normalizeCarrierResult(parse(payload, NUMBER)));
     expect(result.events?.[0]).toMatchObject({ description: 'Shipment info received', stage: 'in_transit' });
-    expect(result.current_stage).toBe('in_transit');
+    expect(result.current_stage).toBe('delivered');
   });
 
   it('leaves a relayed step unstaged when its wording says nothing', () => {

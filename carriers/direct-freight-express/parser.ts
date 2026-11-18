@@ -54,6 +54,7 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
     throw new SchemaError(PROVIDER, 'Direct Freight changed its responsive history panels');
   }
   const events: CarrierEvent[] = [], seen = new Set<string>();
+  let largestItemCount = 0, newestDeliveredCount = 0;
   for (let index = 1; index < desktop.length; index++) {
     const cells = desktop.eq(index).children('div'), alternate = mobile.eq(index - 1).children('div');
     if (cells.length !== 4 || alternate.length !== 4 || cells.toArray().some(e => $(e).text().length > 2000)) throw new SchemaError(PROVIDER, 'Direct Freight returned a malformed scan');
@@ -68,6 +69,9 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
     const description = values[2]!;
     if (!description || description.length > 500 || values[1]!.length > 160 || (values[3] && !/^\d{1,4}$/.test(values[3]))) throw new SchemaError(PROVIDER, 'Direct Freight changed its scan fields');
     const local = clock(values[0]!), key = JSON.stringify([local, description, values[1]]);
+    const count = Number(values[3]);
+    if (index > 1) largestItemCount = Math.max(largestItemCount, count);
+    if (index === 1) newestDeliveredCount = count;
     if (seen.has(key)) continue;
     seen.add(key);
     const staged = directFreightStage(description);
@@ -82,9 +86,12 @@ export function parseDirectFreight(html: string, raw: string): CarrierResult {
   const date = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(paddedDate(etaText));
   const expected = date ? calendarDay(Number(date[3]), Number(date[2]), Number(date[1])) : null;
   if (etaText && (!expected || clean(etaLabel.text()) !== 'Scheduled For Delivery By')) throw new SchemaError(PROVIDER, 'Direct Freight returned an unreadable delivery estimate');
-  const staged = directFreightStage(newest.description!);
+  let staged = directFreightStage(newest.description!);
+  if (staged?.stage === 'delivered' && (!largestItemCount || !newestDeliveredCount || newestDeliveredCount < largestItemCount)) {
+    staged = { stage: 'in_transit', source: 'carrier_map' };
+  }
   return { status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
-    last_status_text: newest.description, last_update: null, last_update_local: newest.local_time,
+    last_status_text: newest.stage === 'delivered' && staged?.stage !== 'delivered' ? 'Delivery of individual items' : newest.description, last_update: null, last_update_local: newest.local_time,
     expected_delivery: expected, ...(events.length > 100 ? { history_truncated: true } : {}), events: events.slice(0, 100) };
 }

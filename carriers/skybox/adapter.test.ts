@@ -161,3 +161,8 @@ describe('SkyBox status map', () => {
     expect(statusMapAnswer({ carrier: 'skybox', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });
 });
+
+it('keeps the airport transfer first during the repeated Miami hour', () => {
+  const page = withRows(row('TRANSFERRED TO AIRPORT', 'MIAMI', '11/01/2026 01:05'), row('SKYBILL CREATED', 'MIAMI', '11/01/2026 01:55'));
+  expect(parseSkybox(page, NUMBER).current_stage).toBe('in_transit');
+});

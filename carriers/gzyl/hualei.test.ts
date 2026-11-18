@@ -115,8 +115,10 @@ describe('Hualei track interface', () => {
     const times = (payload: Reply) => parseHualeiTrack(payload, NUMBER, { ...GZYL, oneBatch: undefined }, READ_AT)!.events!
       .filter((event) => event.description === 'Item arrives at destination airport').map((event) => event.time);
     expect(times(rewritten('2026-03-05 20:00:00'))).toEqual(['2026-03-04T14:40:05+08:00']);
-    // Written before the first, the copy is the one kept.
-    expect(times(rewritten('2026-03-04 14:00:00'))).toEqual(['2026-03-04T15:40:05+08:00']);
+    // Writes on the same afternoon do not establish a later import.
+    expect(times(rewritten('2026-03-04 14:00:00'))).toHaveLength(2);
+    // Two separate movements, each written seconds after its scan.
+    expect(times(rewritten('2026-03-04 15:40:20'))).toHaveLength(2);
     // Two hours off, or without the time it was written, it is another scan.
     expect(times(rewritten('2026-03-05 20:00:00', '2026-03-04 16:40:05'))).toHaveLength(2);
     expect(times(edited((record) => { record.trackDetails.unshift({ ...airport(record), track_date: '2026-03-04 15:40:05', track_createdate: '' }); }))).toHaveLength(2);

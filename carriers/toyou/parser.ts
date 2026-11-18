@@ -67,7 +67,8 @@ export function parseToyou(payload: unknown, raw: string): CarrierResult {
     const stage = toyouStage(description);
     events.push({ local_time: local, description, ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) });
   }
-  events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  // Customer details run oldest first, including during the repeated autumn hour.
+  events.reverse();
   const current = events.find(event => event.stage);
   return {
     status: current?.stage ? languageStageStatus(current.stage as Stage) : 'unknown',

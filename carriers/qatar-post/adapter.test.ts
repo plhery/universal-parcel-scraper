@@ -118,6 +118,8 @@ describe('Qatar Post guest history', () => {
       (d: ReturnType<typeof fixture>) => { d.otherDetails.response[0]!.track_trace_details[0]!.event_code = ''; },
     ]) { const d = fixture(); mutate(d); expect(() => parseQatarPost(d, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' })); }
     const empty = fixture(); empty.otherDetails.response[0]!.track_trace_details = []; empty.otherDetails.response[0]!.total_count = 0;
+    expect(parseQatarPost(empty, NUMBER)).toMatchObject({ current_stage: 'delivered', summary_only: true, events: [], last_update: null });
+    empty.currentStatus.currentStatusCode = 999;
     expect(() => parseQatarPost(empty, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 

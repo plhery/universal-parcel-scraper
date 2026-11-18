@@ -4,6 +4,7 @@ import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, S
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
+import { locatePlace, placeTimeZone } from '../../places/index.js';
 import { wpGroundStage } from './status.js';
 
 export const PROVIDER = 'WP Ground';
@@ -51,7 +52,7 @@ export function parseWpGround(body: unknown, raw: string): CarrierResult {
   const rows = list.filter((row): row is Row => Boolean(row) && typeof row === 'object'
     && typeof (row as Row).trackingNumber === 'string' && normalizeTrackingNumber(String((row as Row).trackingNumber).slice(0, 64)) === number);
   if (!rows.length) throw new IndeterminateError(PROVIDER, 'WP Ground answered for another number');
-  const events: CarrierEvent[] = [];
+  let events: CarrierEvent[] = [];
   const seen = new Set<string>();
   for (const row of rows) {
     const local = wallClock(row.trackTime);
@@ -68,7 +69,16 @@ export function parseWpGround(body: unknown, raw: string): CarrierResult {
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
-  events.sort((a, b) => b.local_time!.localeCompare(a.local_time!));
+  // Compare facility instants only when every row can be placed. Otherwise keep the portal sequence.
+  const placed = events.map(event => {
+    const place = locatePlace(event.location, { countries: ['US', 'CA'] });
+    const zone = place?.precision === 'city' ? placeTimeZone(place) : null;
+    const readings = zone ? DateTime.fromISO(event.local_time!, { zone }).getPossibleOffsets() : [];
+    return { event, instant: readings.length === 1 ? readings[0]!.toMillis() : undefined };
+  });
+  if (placed.every(scan => scan.instant !== undefined)) {
+    events = placed.sort((a, b) => b.instant! - a.instant!).map(scan => scan.event);
+  }
   const newest = events[0]!;
   const staged = wpGroundStage(newest.description!) ?? wpGroundStage(newest.provider_code ?? '');
   return {

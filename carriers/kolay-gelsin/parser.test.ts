@@ -147,3 +147,9 @@ describe('Kolay Gelsin guest milestone parser', () => {
     expect(() => parseKolayGelsin('<html>Unavailable</html>', NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 });
+
+it('keeps delivery first when the last milestones share a minute', () => {
+  const data = fixture(), rows = shipment(data).Statuses;
+  rows.at(-2).Date = rows.at(-1).Date;
+  expect(parseKolayGelsin(page(data), NUMBER)).toMatchObject({ current_stage: 'delivered', last_update: shipment(data).DeliveryDate });
+});

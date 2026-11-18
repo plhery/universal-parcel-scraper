@@ -21,7 +21,7 @@ keep their failure kinds.
   parcel's status; the title (`nodeCode`) is kept as the provider code. No wording has been seen
   yet, so the shared classifier reads each one and an unread wording leaves the row without a stage.
 - Row clocks name no zone. They are kept as wall clocks, which Node lookups date on a deduced zone
-  ([clocks](../../places/README.md#clocks)), the row's place first.
+  ([clocks](../../places/README.md#clocks)), the row's place first. Known facility instants order the scans across zones. Ambiguous routes retain the portal sequence.
 - A row's address loses its postcode; an address that still holds a number is a street's and is left
   out. Sender and recipient cities, proof-of-delivery photos, the recipient-name check that opens
   them, sizes and weights are never read.

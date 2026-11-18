@@ -19,6 +19,7 @@ const DELIVERED_AT = 'delivered ';
  * one, groups many wordings and decides nothing.
  */
 export function pengyouStage(_code: string | null, wording: string): Stage | undefined {
+  if (/^delivered (?:back )?to (?:the )?(?:sender|shipper)\b/.test(wording)) return 'returned';
   return WORDINGS.get(wording) ?? WORDINGS.get(wording.replace(PLACE_TAIL, ''))
     ?? (wording.startsWith(DELIVERED_AT) && TOWN.test(wording.slice(DELIVERED_AT.length)) ? 'delivered' : undefined);
 }

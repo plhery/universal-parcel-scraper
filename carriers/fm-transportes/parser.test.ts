@@ -113,7 +113,7 @@ describe('FM Transportes guest response parser', () => {
     fail(payload, 'schema');
   });
 
-  it('deduplicates equal instants and keeps distinct equal-time wordings in source order', () => {
+  it('deduplicates equal instants and keeps distinct equal-time wordings in reverse source order', () => {
     const value = fixture();
     value.data.volumes[0]!.events = [
       { date: '2026-11-01T12:00:00Z', description: 'Encomenda Conferida' },
@@ -123,7 +123,7 @@ describe('FM Transportes guest response parser', () => {
     ];
     const result = parseFmTransportes(value, NUMBER);
     expect(result.events!.map(event => [event.time, event.description])).toEqual([
-      ['2026-11-01T12:00:00.100Z', 'Novidade A'], ['2026-11-01T12:00:00.1Z', 'Novidade B'],
+      ['2026-11-01T12:00:00.1Z', 'Novidade B'], ['2026-11-01T12:00:00.100Z', 'Novidade A'],
       ['2026-11-01T12:00:00Z', 'Encomenda Conferida'],
     ]);
     expect(result.events!.slice(0, 2).every(event => event.stage === undefined)).toBe(true);
@@ -162,4 +162,10 @@ describe('FM Transportes guest response parser', () => {
     expect(fmTransportesStage('Outra novidade')).toBeNull();
     expect(statusMap.gaps).toEqual([]);
   });
+});
+
+it('keeps delivery first when the last milestones share an instant', () => {
+  const value = fixture();
+  rows(value).at(-2)!.date = rows(value).at(-1)!.date;
+  expect(parseFmTransportes(value, NUMBER).current_stage).toBe('delivered');
 });

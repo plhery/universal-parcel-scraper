@@ -28,7 +28,7 @@ tracking page on bestfulfillpacket.com asks.
   [`statuses.json`](statuses.json).
 - A United States place's trailing ZIP code is dropped from the location.
 - The last-mile carrier's number comes from the reply's `localNumber`, or else from the scan
-  `Last Mile Tracking Number: …`, and is kept as the delivery number. The reply's summary status is
+  `Last Mile Tracking Number: …`, and is kept as the delivery number, including when the reply has no scans. The reply's summary status is
   not read; the scans decide.
 - While the parcel is out for delivery, a relayed USPS round, `Out for Delivery, Expected Delivery
   Between 11:15am and 1:15pm`, is the estimate: the slot on the scan's day at the offset it states,

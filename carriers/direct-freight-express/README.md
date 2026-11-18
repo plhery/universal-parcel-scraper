@@ -11,8 +11,9 @@ is sufficient; no carrier-specific service module is needed.
 
 The page renders desktop and mobile copies of each scan. The parser checks that they agree,
 then keeps one complete timeline, depot locations and the stated delivery-estimate day. Scan
-clocks stay local because the page gives no offset. Capped histories stay incomplete. Pickup and
-delivery addresses, item counts and proof-of-delivery controls are omitted.
+item counts distinguish piece deliveries from completed consignments. Scan clocks stay local
+because the page gives no offset. Capped histories stay incomplete. Pickup and delivery
+addresses, item counts and proof-of-delivery controls are omitted.
 
 The dispatch API requires an account's key and account number. The adapter uses the public
 tracking page, without account access.

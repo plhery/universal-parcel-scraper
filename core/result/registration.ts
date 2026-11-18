@@ -3,7 +3,7 @@
  * Every adapter's and provider's result goes through it before it leaves the package.
  */
 import { STAGES, type Stage } from '../../generated/catalog.js';
-import { classifyWording } from '../status/index.js';
+import { classifyWording, languageStageStatus } from '../status/index.js';
 import { explicitOffsetTime } from '../time/index.js';
 import { isRecord } from '../types.js';
 import type { CarrierEvent, CarrierResult } from './index.js';
@@ -47,8 +47,8 @@ export function clocks(events: readonly unknown[]): (number | null)[] {
  * provider dates seconds after the scan it came with is that scan's record. Its stage then
  * comes from this reading of the carrier's sequence, so its source is `carrier_map`. A result
  * whose current stage is registered for its newest scan, a registration after a movement, is
- * in transit, or accepted when that registration is the record of the acceptances the parcel's
- * only movements are.
+ * at the latest physical stage. An acceptance advances to transit for a later partner registration
+ * once the first movement's minute has passed.
  */
 export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const events: unknown[] = Array.isArray(result.events) ? result.events : [];
@@ -59,6 +59,7 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
   const late = new Set<number>();
   const settled = new Set<number>();
   let movedAt: number | null = null;
+  let physical: Stage = 'accepted';
   for (let start = 0; start < order.length;) {
     let end = start;
     while (end < order.length && at[order[end]!] === at[order[start]!]) end++;
@@ -68,19 +69,21 @@ export function readLateRegistrations(result: CarrierResult): CarrierResult {
       late.add(index);
       if (at[index]! - movedAt > SAME_MOMENT_MS) settled.add(index);
     }
-    if (movedAt === null && together.some(index => MOVED.has(read[index] as Stage))) movedAt = at[order[start]!]!;
+    const movement = together.find(index => MOVED.has(read[index] as Stage));
+    if (movement !== undefined) {
+      movedAt ??= at[movement]!;
+      physical = read[movement]!;
+    }
     start = end;
   }
   if (!late.size) return result;
   const newest = order.filter(index => at[index] === at[order.at(-1)!]);
   const headline = result.current_stage === 'registered' && newest.some(index => late.has(index))
     && newest.every(index => read[index] !== 'registered' || late.has(index));
-  // Within the minute, the registration is the record of the movement it came with: an acceptance stays one.
-  const stage: Stage = newest.some(index => settled.has(index)) || order.some(index => MOVED.has(read[index] as Stage) && read[index] !== 'accepted')
-    ? 'in_transit' : 'accepted';
+  const stage = physical === 'accepted' && newest.some(index => settled.has(index)) ? 'in_transit' : physical;
   return {
     ...result,
-    ...(headline ? { current_stage: stage, current_stage_source: 'carrier_map', ...(result.status === 'pending' ? { status: 'in_transit' } : {}) } : {}),
+    ...(headline ? { current_stage: stage, current_stage_source: 'carrier_map', status: languageStageStatus(stage) } : {}),
     events: events.map((event, index) => settled.has(index)
       ? { ...event as CarrierEvent, stage: 'in_transit', stage_source: 'carrier_map' } : event) as CarrierEvent[],
   };

@@ -674,6 +674,7 @@ describe('classifyWording', () => {
     'The parcel is now expected to be delivered on 17.07.2026', 'Your parcel is due to be delivered on Monday 02nd November 2026',
     'Your shipment is due to be delivered on Monday',
     // A condition is one too: "once the parcel is delivered" still waits for it.
+    'You will receive a notification once your parcel has been successfully delivered',
     'Once the parcel is delivered to the selected machine, the recipient will receive an e-mail with the details',
     'You will get a text when your parcel is delivered', 'Keep this number until it has been delivered'])('gives the notice "%s" no stage', wording => {
     expect(trackingLanguageStage(wording)).toBeUndefined();
