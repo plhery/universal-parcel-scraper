@@ -271,3 +271,11 @@ describe('GLS US status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'gls-us', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });
 });
+
+it('lets a failed scan supersede the delivery round summary', () => {
+  const result = parseGlsUs(changed(s => {
+    s.status = 'out for delivery';
+    s.transitDetails[0]!.eventDetails = 'DELIVERY ATTEMPTED - BUSINESS CLOSED';
+  }), NUMBER);
+  expect(result.current_stage).toBe('failed_attempt');
+});
