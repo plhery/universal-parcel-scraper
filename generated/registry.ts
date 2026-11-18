@@ -342,6 +342,7 @@ import { adapter as hrx } from '../carriers/hrx/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
+import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
 import { adapter as iccWorldwide } from '../carriers/icc-worldwide/adapter.js';
 import { adapter as icsCourier } from '../carriers/ics-courier/adapter.js';
@@ -1148,6 +1149,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": huahan,
     "huaya-express": huayaExpress,
     "hunter-express": hunterExpress,
+    "huuneh": huuneh,
     "hywl": hywl,
     "icc-worldwide": iccWorldwide,
     "ics-courier": icsCourier,
@@ -2392,7 +2394,7 @@ export const REGISTRY: RegistryDefinition = {
     "hub-group-final-mile": "universal",
     "hunter-express": "hunter-express",
     "hurtig-gutta": "universal",
-    "huuneh": "universal",
+    "huuneh": "huuneh",
     "hy-express": "universal",
     "hye": "universal",
     "hywl": "hywl",

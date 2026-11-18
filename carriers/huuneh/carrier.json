@@ -14,18 +14,60 @@
   "timezone": "America/Toronto",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "huuneh",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "sender_name",
+    "receiver_name",
+    "receiver_address"
+  ],
   "portal": {
     "url": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
     "searchUrl": "https://huuneh.com/dashboard/tracking.php",
     "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "remarks",
+      "sender_name",
+      "sender_address",
+      "receiver_name",
+      "receiver_address",
+      "origin",
+      "destination",
+      "shipped_on",
+      "pieces",
+      "contents"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "remarks",
+      "sender_name",
+      "receiver_name",
+      "receiver_address"
+    ],
+    "discarded": [
+      "sender_address",
+      "origin",
+      "shipped_on",
+      "pieces",
+      "contents"
+    ],
+    "unavailable": [
+      "location",
+      "offset_timestamps",
+      "eta",
+      "weight",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

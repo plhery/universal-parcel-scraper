@@ -30729,7 +30729,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "huuneh",
+      "localClocks": true
     },
     "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
     "trackingUrlTemplate": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
