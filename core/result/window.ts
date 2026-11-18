@@ -39,10 +39,15 @@ function moment(value: unknown): Moment | null {
 export function windowEstimate(start: unknown, end: unknown): WindowEstimate {
   const [first, last] = [moment(start), moment(end)];
   if (!first || !last) return { expected_delivery: (last ?? first)?.day ?? null };
+  if (first.instant && last.instant) {
+    const from = Date.parse(first.instant), to = Date.parse(last.instant);
+    if (from > to) return { expected_delivery: last.day };
+    if (from === to) return { expected_delivery: last.instant };
+    return { expected_delivery_from: first.instant, expected_delivery: last.instant };
+  }
   if (first.day === last.day) {
     if (!first.clock || !last.clock || first.clock > last.clock) return { expected_delivery: last.day };
     if (first.clock === last.clock) return { expected_delivery: last.instant ?? `${last.day} ${last.clock}` };
-    if (first.instant && last.instant) return { expected_delivery_from: first.instant, expected_delivery: last.instant };
     return { expected_delivery: `${first.day} ${first.clock}–${last.clock}` };
   }
   if (first.day > last.day) return { expected_delivery: last.day };
