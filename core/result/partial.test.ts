@@ -33,6 +33,10 @@ describe('partial carrier answers', () => {
     expect(filled?.events).toEqual(history.events);
     // A carrier's withdrawn estimate is one of its facts too.
     const withdrawn = { ...summary, expected_delivery: null, expected_delivery_withdrawn: true as const };
+    const stale = { ...history, expected_delivery: summary.expected_delivery, expected_delivery_from: '2026-01-04' };
+    const merged = fillPartialAnswer('ups', NUMBER, withdrawn, stale);
+    expect(merged).toMatchObject({ expected_delivery: null, expected_delivery_withdrawn: true });
+    expect(merged).not.toHaveProperty('expected_delivery_from');
     expect(fillPartialAnswer('ups', NUMBER, withdrawn, history)).toMatchObject({ expected_delivery_withdrawn: true });
   });
 

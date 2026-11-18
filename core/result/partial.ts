@@ -163,6 +163,15 @@ function withCarrierFacts<T extends CarrierResult>(raw: T, answer: ResolvedResul
     if (merged.expected_delivery != null) merged.expected_delivery = null;
     delete merged.expected_delivery_from;
   }
+  if (direct.expected_delivery_withdrawn && answer.expected_delivery) {
+    const withdrawal = newestSpan(direct);
+    const provider = newestSpan(answer);
+    if (!provider || !withdrawal || provider.earliest <= withdrawal.latest) {
+      merged.expected_delivery = null;
+      delete merged.expected_delivery_from;
+      merged.expected_delivery_withdrawn = true;
+    }
+  }
   for (const group of CARRIER_FACTS) {
     if (group[0] === 'expected_delivery' && FINAL_STAGES.has(stage ?? '')) continue;
     if (group[0] === 'pickup_point' && deliveredToDoor({ ...answer, current_stage: stage })) continue;
