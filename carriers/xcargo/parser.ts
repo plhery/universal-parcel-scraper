@@ -75,7 +75,7 @@ export function parseXcargo(payload: unknown, raw: string, httpStatus = 200): Ca
   if (!Array.isArray(payload.data) || payload.data.length > 500) throw new SchemaError(PROVIDER, 'X-Cargo returned an invalid scan list');
   if (!payload.data.length) throw new NoHistoryError(PROVIDER, 'X-Cargo returned no dated history');
   const rows: { event: CarrierEvent; index: number; timestamp: number }[] = [];
-  const seen = new Set<string>(); let partial = false;
+  const seen = new Set<string>();
   for (const [index, row] of (payload.data as unknown[]).entries()) {
     if (!isRecord(row) || row.order_id !== payload.id || !isRecord(row.status_code)
       || !Number.isSafeInteger(row.status_code.code) || Number(row.status_code.code) < 0 || Number(row.status_code.code) > 99999
@@ -84,7 +84,6 @@ export function parseXcargo(payload: unknown, raw: string, httpStatus = 200): Ca
     }
     const code = String(row.status_code.code), mapped = xcargoState(code), time = clock(row.created_at, row.gmt_offset);
     if (mapped && mapped.type !== row.status_code.code_type) throw new SchemaError(PROVIDER, 'X-Cargo changed a scan status meaning');
-    if (!mapped) partial = true;
     // Notes, employees, proof, GPS and free wording are deliberately excluded.
     const event: CarrierEvent = { time, provider_code: code, description: mapped?.description ?? 'Tracking update',
       ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
@@ -97,5 +96,5 @@ export function parseXcargo(payload: unknown, raw: string, httpStatus = 200): Ca
   return { status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}), provider_code: newest.provider_code,
     last_status_text: newest.description, last_update: newest.time!, expected_delivery: null,
-    ...(partial || rows.length > 100 ? { history_truncated: true } : {}), events: rows.slice(0, 100).map(row => row.event) };
+    ...(rows.length > 100 ? { history_truncated: true } : {}), events: rows.slice(0, 100).map(row => row.event) };
 }
