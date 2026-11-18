@@ -865,7 +865,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "aliexpress"
+          "aliexpress",
+          "slovak-parcel-service"
         ]
       },
       "note": "Made-up number in the shape of a parcel Cainiao's tracker followed from its warehouse in China, while no universal provider but one knew it. Its serial sits far beyond the range in use."

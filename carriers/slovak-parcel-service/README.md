@@ -28,6 +28,9 @@ Anonymous: no key, cookie, `Origin` or browser.
   barcode (the parcel number and two digits more), the parcel number without its `703` prefix,
   and an SK label code. The reply names parcels by their barcode, so it must name the
   requested number or the barcode it is short for; two barcodes must agree in full.
+- Detection offers SPS at low confidence for the fourteen-digit parcel number and for an SK
+  label code in the form SPS's tracker validates. Other networks print SK-prefixed labels too,
+  so recognition asks SPS before the parcel is filed under it.
 - Each scan's numeric code alone decides the stage; the Slovak wording is kept as the
   description. Cash-on-delivery and delivery-notice steps move nothing and are intentional
   gaps in the `statusMap`. From a return to the sender on, the parcel stays returned.

@@ -104940,10 +104940,23 @@
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
-      "aliexpress"
+      "aliexpress",
+      "slovak-parcel-service"
     ],
     "asked": [
-      "aliexpress"
+      "aliexpress",
+      "slovak-parcel-service"
+    ]
+  },
+  {
+    "input": "SK0ZZZ00000001TN0Z",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "slovak-parcel-service"
+    ],
+    "asked": [
+      "slovak-parcel-service"
     ]
   },
   {

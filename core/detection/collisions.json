@@ -8555,5 +8555,13 @@
       "pdu"
     ],
     "reason": "Colis Privé accepts any twelve letters and digits; PDU's numbers to Colombia end in PD after its country code and eight digits. Both rules are low, and the carrier that knows the number decides."
+  },
+  {
+    "shape": "SK0SCZD followed by ten digits and N",
+    "carriers": [
+      "aliexpress",
+      "slovak-parcel-service"
+    ],
+    "reason": "SPS's tracker accepts any SK label code of SK, five letters or digits, two digits and nine letters or digits, which takes in Cainiao's SK0SCZD series. Both rules are low confidence and only suggest the carriers; the tracker that knows the number confirms it."
   }
 ]

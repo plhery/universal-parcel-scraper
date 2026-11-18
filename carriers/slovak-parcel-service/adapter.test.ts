@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, SlovakParcelServiceTracker, SPS_API } from './adapter.js';
@@ -32,6 +34,16 @@ const service = (answers: { shipment?: () => Response; search?: () => Response; 
     return answer();
   });
 const missing = () => service({ shipment: () => reply('upstream-error', 502), search: () => reply('not-found', 404) });
+
+describe('Slovak Parcel Service numbers', () => {
+  it('suggests SPS for an SK label code its tracker validates, and recognition asks it', () => {
+    expect(detectCarrierMatch(RETURNED)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['slovak-parcel-service'] });
+    expect(recognitionAskedCarriers(RETURNED)).toContain('slovak-parcel-service');
+    for (const number of [`${RETURNED}1`, RETURNED.slice(0, -1), `SI${RETURNED.slice(2)}`, `${RETURNED.slice(0, 7)}Z${RETURNED.slice(8)}`, `${RETURNED.slice(0, 2)}I${RETURNED.slice(3)}`]) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('slovak-parcel-service');
+    }
+  });
+});
 
 describe('Slovak Parcel Service HTTP adapter', () => {
   it('asks the shipment service once for the compact number, in Slovak, through the supplied transport', async () => {

@@ -53038,6 +53038,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^703\\d{11}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^SK[A-HJ-NP-Z0-9]{5}\\d{2}[A-HJ-NP-Z0-9]{9}$",
+        "confidence": "low"
       }
     ]
   },
@@ -68260,7 +68264,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "skynet-worldwide": [],
   "skypostal": ["skypostal-1","skypostal-2"],
   "slgtrax": [],
-  "slovak-parcel-service": ["slovak-parcel-service-1"],
+  "slovak-parcel-service": ["slovak-parcel-service-1","slovak-parcel-service-2"],
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
   "slx-kr": [],
   "sm-express": [],
