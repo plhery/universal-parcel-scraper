@@ -95,10 +95,10 @@ describe('CTT Express direct tracking', () => {
     // CTT repeats an error reply for the shipment, so it is not read again at once; its description names the error.
     const fetcher = vi.fn(async () => json({ data: null, error: { errorDescription: 'Envío 0012345 no disponible: a@b.es' } })) as unknown as typeof fetch;
     await expect(new CttExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate',
-      message: 'CTT Express returned an inconclusive tracking response (Envío … no disponible: …)' });
+      message: 'CTT Express returned an inconclusive tracking response (carrier error)' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const grouped = { data: null, error: { errorDescription: 'Error 500: llame al +34 612 34 56 78 o 612.345.678' } };
-    expect(() => parseCttExpress(grouped, NUMBER)).toThrowError('CTT Express returned an inconclusive tracking response (Error 500: llame al … o …)');
+    expect(() => parseCttExpress(grouped, NUMBER)).toThrowError('CTT Express returned an inconclusive tracking response (carrier error)');
   });
 
   it.each([
@@ -434,4 +434,9 @@ describe('CTT Express direct tracking', () => {
     await expect(new CttExpressTracker({ fetcher: waiting }).fetch(NUMBER, { budgetMs: 400 })).rejects.toMatchObject({ kind: 'transport' });
     expect(waiting).toHaveBeenCalledTimes(3);
   });
+});
+
+it('omits recipient details from unrecognized carrier errors', () => {
+  expect(() => parseCttExpress({ error: { message: 'Invalid address Example Street 12, Sample Person' } }, NUMBER))
+    .toThrowError(expect.objectContaining({ reason: 'carrier_error', message: 'CTT Express returned an inconclusive tracking response (carrier error)' }));
 });
