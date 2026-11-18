@@ -572,7 +572,7 @@ export function parseDPDTrackingApi(
   const listed = expectedDelivery(payload);
   // A notice whose day is read is a forecast, not a scan: that day is the estimate, or has
   // lapsed. One without a readable day stays, the only place its words are kept.
-  const timeline = events.filter((event) => !(DELIVERY_NOTICE.test(event.description ?? '') && noticeEstimate(event.description ?? '')));
+  const timeline = events.filter((event) => !(NOTICE_SCANS.has(event.provider_code ?? '') && DELIVERY_NOTICE.test(event.description ?? '') && noticeEstimate(event.description ?? '')));
   // Never projected: `receiver` (name, contact, address, geoPosition), the
   // sender's id and address, `customerReference1/2`, `gttsZipCode`, `podUrl`
   // and `product`, which holds the recipient's delivery preference.

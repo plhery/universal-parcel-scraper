@@ -531,6 +531,13 @@ describe('DPD delivery notices', () => {
     ]);
   });
 
+  it('retains a delivery round carrying a forecast', () => {
+    const description = OUT[3] + '. ' + ESTIMATED[3];
+    const result = notices([DEPOT, [OUT[0], OUT[1], OUT[2], description]]);
+    expect(result.events?.[0]?.provider_code).toBe('DLO');
+    expect(result.expected_delivery).toBe('2026-07-17');
+  });
+
   it('reads the email window as a 24-hour wall clock', () => {
     expect(notices([DEPOT, CHANGED, OUT, EMAILED]).expected_delivery).toBe('2026-07-16 12:32–13:32');
     const window = (text: string) => notices([DEPOT, [...EMAILED.slice(0, 3), text] as Scan]).expected_delivery;
