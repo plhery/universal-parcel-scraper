@@ -102,8 +102,9 @@ export function parseWesternBid(html: string, raw: string, actualUrl: string): C
   const rows = steppers.children('.MuiStep-root');
   if (rows.length > 500) throw new SchemaError(PROVIDER, 'Western Bid returned too many milestones');
   const events: CarrierEvent[] = [];
+  const currentSteps = new Set<CarrierEvent>();
   const seen = new Set<string>();
-  for (const row of rows.toArray()) {
+  for (const row of rows.toArray().reverse()) {
     const content = $(row).find('.MuiStepLabel-label p.paragraph-small');
     if (content.length !== 1) throw new SchemaError(PROVIDER, 'Western Bid changed its milestone layout');
     if (content.hasClass('is--future') || (!content.hasClass('is--past') && !content.hasClass('is--now'))) continue;
@@ -123,10 +124,12 @@ export function parseWesternBid(html: string, raw: string, actualUrl: string): C
     if (seen.has(key)) continue;
     seen.add(key);
     const staged = westernBidStage(description);
-    events.push({ local_time: local, description, ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
+    const event = { local_time: local, description, ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
+    events.push(event);
+    if (content.hasClass('is--now')) currentSteps.add(event);
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
-  events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  events.sort((left, right) => right.local_time!.localeCompare(left.local_time!) || Number(currentSteps.has(right)) - Number(currentSteps.has(left)));
   const current = events.find(event => event.stage);
   return {
     status: current?.stage ? languageStageStatus(current.stage as Stage) : 'unknown',
