@@ -69,16 +69,16 @@ export function parseWpGround(body: unknown, raw: string): CarrierResult {
     if (!seen.has(key)) { seen.add(key); events.push(event); }
   }
   if (!events.length) throw new NoHistoryError(PROVIDER);
-  // Compare facility instants only when every row can be placed. Otherwise keep the portal sequence.
+  // Facility instants order the rows when every row can be placed; otherwise their wall clocks do.
   const placed = events.map(event => {
     const place = locatePlace(event.location, { countries: ['US', 'CA'] });
     const zone = place?.precision === 'city' ? placeTimeZone(place) : null;
     const readings = zone ? DateTime.fromISO(event.local_time!, { zone }).getPossibleOffsets() : [];
     return { event, instant: readings.length === 1 ? readings[0]!.toMillis() : undefined };
   });
-  if (placed.every(scan => scan.instant !== undefined)) {
-    events = placed.sort((a, b) => b.instant! - a.instant!).map(scan => scan.event);
-  }
+  events = placed.every(scan => scan.instant !== undefined)
+    ? placed.sort((a, b) => b.instant! - a.instant!).map(scan => scan.event)
+    : events.sort((a, b) => b.local_time!.localeCompare(a.local_time!));
   const newest = events[0]!;
   const staged = wpGroundStage(newest.description!) ?? wpGroundStage(newest.provider_code ?? '');
   return {

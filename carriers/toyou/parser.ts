@@ -67,8 +67,8 @@ export function parseToyou(payload: unknown, raw: string): CarrierResult {
     const stage = toyouStage(description);
     events.push({ local_time: local, description, ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) });
   }
-  // Customer details run oldest first, including during the repeated autumn hour.
-  events.reverse();
+  // Customer details run oldest first: their sequence orders a repeated autumn hour, which clocks cannot.
+  if (events[0]!.local_time! < events.at(-1)!.local_time!) events.reverse();
   const current = events.find(event => event.stage);
   return {
     status: current?.stage ? languageStageStatus(current.stage as Stage) : 'unknown',

@@ -89,6 +89,6 @@ it('keeps dispatch first during the repeated UK hour', () => {
   const data = fixture(), rows = data.payload[0].customerDetails.slice(0, 2);
   rows[0].dateAndTime = 'Oct 25, 2026, 1:55:00 AM';
   rows[1].dateAndTime = 'Oct 25, 2026, 1:05:00 AM';
-  data.payload[0].customerDetails = rows;
+  data.payload[0].customerDetails = [{ ...rows[0], dateAndTime: 'Oct 24, 2026, 6:00:00 PM' }, ...rows];
   expect(parseToyou(data, NUMBER).current_stage).toBe('in_transit');
 });
