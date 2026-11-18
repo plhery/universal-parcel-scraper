@@ -201,7 +201,8 @@ export class UniversalTracker {
     if (number.length <= SHORT_NUMBER_LENGTH && !carriersParcel(result, carrier!, number)) {
       throw new NoHistoryError(source, `${source} names another carrier, or none, for a number this short`, { reason: 'unattributed_history' });
     }
-    return readLateRegistrations(withoutRepeatedScans(withoutMinuteCopies(withoutScriptCopies(withScopedWording(result, source), source))));
+    const history = withoutMinuteCopies(withoutScriptCopies(withScopedWording(result, source), source));
+    return readLateRegistrations(withoutRepeatedScans(history, { distinguishCodes: true }));
   }
 
   /** One provider adapter, built from this tracker's environment. */
