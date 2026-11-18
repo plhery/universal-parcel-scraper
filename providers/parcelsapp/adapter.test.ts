@@ -4182,3 +4182,11 @@ it('keeps an empty SpeedPAK handoff unstaged', () => {
   expect(result.events?.[0]?.stage).not.toBe('in_transit');
   expect(result.current_stage).not.toBe('in_transit');
 });
+
+it('keeps a Moroccan pickup beside an unrelated Australian registration', () => {
+  const result = parseParcelsAppResponse({ carriers: ['Australia Post', 'Morocco Post'], states: [
+    { date: '2026-11-03T22:21:11Z', status: 'Shipping information received by Australia Post', location: 'EXAMPLE NSW', carrier: 0 },
+    { date: '2026-11-03T10:21:00Z', status: 'Shipment picked up', location: 'Rabat, Morocco', carrier: 1 },
+  ] }, number, identity());
+  expect(result.events?.map(event => event.description)).toContain('Shipment picked up');
+});
