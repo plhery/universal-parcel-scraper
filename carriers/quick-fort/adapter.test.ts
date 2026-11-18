@@ -89,6 +89,11 @@ describe('Quick Fort adapter', () => {
     expect(result.status).toBe('in_transit');
   });
 
+  it.each([404, 410])('treats endpoint HTTP %i as unavailable', async status => {
+    const fetcher = async () => new Response('Endpoint retired', { status });
+    await expect(new QuickFortTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+  });
+
   it('keeps a block page a challenge', async () => {
     const fetcher = (async () => new Response('<html><head><title>Just a moment...</title></head></html>', { status: 200 })) as typeof fetch;
     await expect(new QuickFortTracker({ fetcher }).fetch(NUMBER)).rejects.toHaveProperty('kind', 'challenge');

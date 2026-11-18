@@ -23,9 +23,9 @@ export class LogisticsSolutionTracker {
       const { response, bytes } = await fetchBounded(url, {
         method: 'GET', signal,
         headers: { Accept: '*/*', Referer: 'https://logistics-solution.eu/en', 'User-Agent': userAgentOf(this.options.userAgent) },
-      }, { provider: PROVIDER, timeoutMs: remainingMs, fetcher: this.options.fetcher, maxBytes: 1_000_000, allowHttpStatuses: [404] });
-      if (response.status === 404) {
-        if (MISSING.test(decodeText(bytes.subarray(0, 1_000)))) throw new NotFoundError(PROVIDER);
+      }, { provider: PROVIDER, timeoutMs: remainingMs, fetcher: this.options.fetcher, maxBytes: 1_000_000, allowHttpStatuses: [404, 410] });
+      if (!response.ok) {
+        if (response.status === 404 && bytes.length <= 1_000 && MISSING.test(decodeText(bytes.subarray(0, 1_000)))) throw new NotFoundError(PROVIDER);
         throw new TransportError(PROVIDER, 'Logistics Solution tracking endpoint is unavailable');
       }
       let payload: unknown;
