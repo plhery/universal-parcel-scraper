@@ -532,7 +532,9 @@ export class MondialRelayTracker {
             context.signal?.throwIfAborted();
             return null;
           });
-          return website?.expected_delivery ? { ...result, expected_delivery: website.expected_delivery } : result;
+          const latestDay = expectedDelivery(result.last_update ?? result.last_update_local);
+          const estimate = website?.expected_delivery;
+          return estimate && (!latestDay || estimate >= latestDay) ? { ...result, expected_delivery: estimate } : result;
         },
       },
       {

@@ -31,6 +31,7 @@ so only the Spanish names resolve here. InPost Spain's own `FV` numbers are read
      per such lookup. Without a browser service, or when the website fails or
      takes more than 15 seconds, the app's answer stands without an estimate:
      lookups run one at a time, so a hanging read would hold the ones behind it.
+     The website's estimate must fall on or after the latest app scan's day in Paris.
      A caller's `knownEstimate` whose day is after today in Paris stands in its
      place, and the website is not read, while the app shows no scan newer than
      the estimate's `lastUpdate`.
