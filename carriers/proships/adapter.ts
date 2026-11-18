@@ -19,6 +19,13 @@ const CHALLENGE = /_cf_chl_opt|cf-turnstile|challenge-platform|<title>\s*(?:Just
 // The plugin's answer to a nonce it does not accept, and WordPress's own.
 const NONCE_REFUSED = /^(?:Error de seguridad|-1)$/;
 
+function assertTrackingResponse(response: Response, phase: 'page' | 'lookup'): void {
+  if (response.status === 202 && response.headers.get('x-amzn-waf-action') === 'challenge') {
+    throw new ChallengeError(PROVIDER, 'ProShips requires browser verification', { status: response.status });
+  }
+  if (response.status !== 200) throw new TransportError(PROVIDER, `ProShips tracking ${phase} is unavailable`);
+}
+
 function json(body: string): unknown {
   if (NONCE_REFUSED.test(body.trim())) throw new IndeterminateError(PROVIDER, 'ProShips refused the tracking page’s nonce', { reason: 'nonce_expired' });
   try {
@@ -44,7 +51,7 @@ export class ProshipsTracker {
       const page = await fetchBounded(`${PROSHIPS_PAGE}?${new URLSearchParams({ tracking: number })}`, { method: 'GET', signal, headers: {
         Accept: 'text/html,application/xhtml+xml', 'Accept-Language': 'es-CO,es;q=0.9', 'User-Agent': userAgent,
       } }, options(PROSHIPS_PAGE_MAX_BYTES, [404, 410]));
-      if (page.response.status !== 200) throw new TransportError(PROVIDER, 'ProShips tracking page is unavailable');
+      assertTrackingResponse(page.response, 'page');
       const nonce = parseProshipsNonce(decodeText(page.bytes));
       const { response, bytes } = await fetchBounded(PROSHIPS_API, { method: 'POST', signal, headers: {
         Accept: 'application/json, text/javascript, */*', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', 'User-Agent': userAgent,
@@ -52,7 +59,7 @@ export class ProshipsTracker {
       options(PROSHIPS_MAX_BYTES, [400, 404, 410]));
       // The tracker answers every number with HTTP 200. WordPress answers an
       // action no plugin registers with HTTP 400 and `0`; a 404 is a moved route.
-      if (response.status !== 200) throw new TransportError(PROVIDER, 'ProShips tracking lookup is unavailable');
+      assertTrackingResponse(response, 'lookup');
       return parseProships(json(decodeText(bytes)), number);
     };
     // A read that fails to reach the site, or hangs, gets one more try: the

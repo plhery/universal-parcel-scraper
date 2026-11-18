@@ -189,6 +189,17 @@ describe('ProShips HTTP adapter', () => {
     await expect(lookup(() => json(fixture('not-found')), () => html('<html><title>Proships</title></html>'))).rejects.toMatchObject({ kind: 'schema' });
   });
 
+  it.each(['page', 'lookup'] as const)('classifies a 202 AWS WAF challenge from the %s', async phase => {
+    const blocked = () => new Response('', { status: 202, headers: { 'x-amzn-waf-action': 'challenge' } });
+    const fetcher = phase === 'page' ? site(() => json(fixture('customs')), blocked) : site(blocked);
+    await expect(carrier(fetcher).track({ number: CUSTOMS })).rejects.toMatchObject({ kind: 'challenge', status: 202 });
+    expect(fetcher).toHaveBeenCalledTimes(phase === 'page' ? 1 : 2);
+
+    const accepted = () => new Response('', { status: 202 });
+    const other = phase === 'page' ? site(() => json(fixture('customs')), accepted) : site(accepted);
+    await expect(carrier(other).track({ number: CUSTOMS })).rejects.toMatchObject({ kind: 'transport' });
+  });
+
   it.each([[403, 'challenge'], [429, 'rate_limited'], [500, 'indeterminate'], [503, 'maintenance']] as const)(
     'preserves HTTP %s as %s from the page and from the lookup', async (status, kind) => {
       const fromLookup = site(() => new Response('', { status }));

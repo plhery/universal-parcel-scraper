@@ -23,6 +23,8 @@ tracking page makes.
   400, read as a moved lookup.
 - The reply echoes the number as it was sent, in any case, and must name the whole number asked.
 - The site loads reCAPTCHA for its contact forms; the tracking lookup sends no token.
+- An HTTP 202 with the AWS WAF challenge header means verification is required. The lookup
+  reports a challenge and stops, including when the tracking page supplies no nonce.
 
 ## Notes
 
