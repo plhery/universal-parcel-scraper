@@ -47,7 +47,8 @@ page makes.
 - DHLink's firewall answers clients it refuses, such as a headless browser's User-Agent, with a
   block page and HTTP 403, on the page and the lookup alike. A block is a challenge, never a
   missing parcel. Redirects are not followed.
-- Recognition makes the same request.
+- Recognition makes the same request. A parcel listed under the number asked, before a scan, is
+  known to it, without an activity date.
 
 ## Notes
 

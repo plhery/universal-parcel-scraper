@@ -513,6 +513,11 @@ describe('DHLink HTTP adapter', () => {
       expect(fetcher).toHaveBeenCalledTimes(2);
     });
 
+  it('recognizes a parcel DHLink lists under the number asked before a scan', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply(changed('swiftx-at-warehouse', (parcel) => { parcel.trackinfoList = []; })));
+    await expect(carrier(fetcher).recognize!(WAREHOUSE)).resolves.toEqual({ known: true, lastActivityAt: null });
+  });
+
   it('recognizes a known parcel and the unknown-number answer, and asks nothing for a number it cannot take', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('usps-relayed'))).mockResolvedValueOnce(reply(fixture('not-found')));
     await expect(carrier(fetcher).recognize!(LINE)).resolves.toMatchObject({ known: true });
