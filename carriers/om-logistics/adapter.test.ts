@@ -52,6 +52,20 @@ describe('Om Logistics guest form', () => {
     expect(result.destination_country).toBeUndefined();
   });
 
+  it('deduplicates dispatch rows with linear serialization work', () => {
+    const rows = Array.from({ length: 100 }, (_, i) => ({
+      SOURCE: 'Depot', DESTINATION: `Depot ${i}`, OUT_DATE: '01-JAN-2026', ARRIVAL_ENTRY: '02-JAN-2026',
+    }));
+    let calls = 0;
+    const stringify = JSON.stringify;
+    const spy = vi.spyOn(JSON, 'stringify').mockImplementation((value) => { calls++; return stringify(value); });
+    try {
+      const result = parseOm(fixture.summary, { error: false, cn_enquiry_detail: [...rows, ...rows] }, NUMBER);
+      expect(result.events).toHaveLength(200);
+      expect(calls).toBeLessThanOrEqual(400);
+    } finally { spy.mockRestore(); }
+  });
+
   it('rejects malformed dates, unfamiliar rows and empty histories without claiming not-found', () => {
     for (const out of ['31-FEB-2026', '01-JAN-2026 00:10AM', '01-JAN-2026 13:10PM', '01-JAN-2026 03:99PM', '01-JAN-1999']) {
       const history = structuredClone(fixture.history); history.cn_enquiry_detail[0].OUT_DATE = out;

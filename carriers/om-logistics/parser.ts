@@ -83,8 +83,13 @@ export function parseOm(summary: JsonObject, history: JsonObject, raw: string): 
     throw new SchemaError(PROVIDER, 'Om Logistics changed its dispatch history');
   }
   const events: CarrierEvent[] = [];
+  const seen = new Set<string>();
   const add = (value: unknown, description: string, stage: Stage, location?: string) => {
-    events.push({ local_time: clock(value), description, stage, stage_source: 'carrier_map', ...(location ? { location } : {}) });
+    const event = { local_time: clock(value), description, stage, stage_source: 'carrier_map', ...(location ? { location } : {}) };
+    const key = JSON.stringify(event);
+    if (seen.has(key)) return;
+    seen.add(key);
+    events.push(event);
   };
   for (const scan of history.cn_enquiry_detail) {
     if (!isRecord(scan)) throw new SchemaError(PROVIDER, 'Om Logistics returned an invalid dispatch row');
@@ -102,11 +107,10 @@ export function parseOm(summary: JsonObject, history: JsonObject, raw: string): 
       add(scan.OUT_DATE, `Out Date: ${source} → ${destination}`, 'in_transit', source);
     } else throw new SchemaError(PROVIDER, 'Om Logistics returned an unrecognised dispatch row');
   }
-  const unique = events.filter((event, index) => events.findIndex(other => JSON.stringify(other) === JSON.stringify(event)) === index);
-  if (!unique.length) throw new NoHistoryError(PROVIDER);
-  const latest = unique[0]!;
+  if (!events.length) throw new NoHistoryError(PROVIDER);
+  const latest = events[0]!;
   const service = clean(row.BOOKING_MODE, 80);
   return { status: languageStageStatus(latest.stage as Stage), current_stage: latest.stage, current_stage_source: 'carrier_map',
     last_status_text: latest.description, last_update: null, last_update_local: latest.local_time, expected_delivery: null,
-    ...(service ? { service_name: service } : {}), events: unique };
+    ...(service ? { service_name: service } : {}), events };
 }
