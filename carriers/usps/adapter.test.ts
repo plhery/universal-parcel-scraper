@@ -160,6 +160,11 @@ describe('USPS rendered page', () => {
     const home = parseUSPSTrackingHtml(page('Delivered', 'Delivered, To Original Sender'), DELIVERED_NUMBER);
     expect(home).toMatchObject({ status: 'exception', current_stage: 'returned', last_status_text: 'Returned to the sender' });
     expect(home.events?.[0]).toMatchObject({ description: 'Returned to the sender', stage: 'returned', provider_leg: 'return' });
+    const long = page('Delivered', 'Delivered').replace(scan('Refused', 'March 12, 2025 12:40 PM'),
+      scan('Arrived at USPS Facility', 'March 13, 2025 10:00 AM').repeat(100));
+    const capped = parseUSPSTrackingHtml(long, DELIVERED_NUMBER);
+    expect(capped.current_stage).toBe('returned');
+    expect(capped.events).toHaveLength(100);
     // Without a return, the same scans are the delivery to the recipient.
     const out = parseUSPSTrackingHtml(page('In Transit', 'Arrived at USPS Facility').replace(scan('Refused', 'March 12, 2025 12:40 PM'), '')
       .replace(scan('Return to Sender Processed', 'March 12, 2025 12:13 PM'), ''), DELIVERED_NUMBER);

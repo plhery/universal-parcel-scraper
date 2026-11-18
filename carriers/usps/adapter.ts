@@ -369,8 +369,8 @@ export function parseUSPSTrackingHtml(page: string, trackingNumber: string, read
   rows.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
   // The current timeline is newest-first. Keep its order even when some scans
   // have no resolvable timezone; sorting those behind dated scans loses meaning.
-  const events = reminderStages(returnLeg(handoffsInTransit(timeline.length ? timeline.slice(0, MAX_EVENTS_TO_RETURN)
-    : rows.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event))));
+  const events = reminderStages(returnLeg(handoffsInTransit(timeline.length ? timeline
+    : rows.map(({ event }) => event)))).slice(0, MAX_EVENTS_TO_RETURN);
   const summary = statusArea || banner;
   const statusText = (ORIGIN_POST_NOTICE.test(summary) ? events[0]?.description : undefined) || summary
     || events[0]?.description || 'Tracking information received';
