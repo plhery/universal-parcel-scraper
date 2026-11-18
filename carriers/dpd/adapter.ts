@@ -6,7 +6,7 @@ import type { AnyNode } from 'domhandler';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
-import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
+import { BudgetExceededError, carrierErrorKind, ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, RateLimitedError, SchemaError, TransportError, UpstreamHttpError, type CarrierErrorKind, type CarrierErrorOptions } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { listsNewestFirst } from '../../core/result/order.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -684,7 +684,12 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
   const labels = $('.gray-out').map((_, element) => clean($(element).text())).get().filter(Boolean);
   if (events.length === 0 && labels.length === 0) {
     // Steps and status labels win over not-found wording, which a banner or help text can carry.
-    if (PAGE_MISS.test(spacedText($, $('body')))) {
+    const messages = $('.alert, [role="alert"], .parcelStatus').filter((_, node) => !$(node).closest('footer, nav, aside').length)
+      .map((_, node) => spacedText($, $(node))).get();
+    if (messages.some(message => /(?:service|tracking).*temporarily unavailable/i.test(message))) {
+      throw new TransportError('DPD', 'DPD tracking is temporarily unavailable');
+    }
+    if (messages.some(message => PAGE_MISS.test(message))) {
       return {
         status: 'unknown',
         last_status_text: 'No parcel found',
