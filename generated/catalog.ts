@@ -35121,7 +35121,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "king-solutions"
     },
     "canaryUrl": "https://kingsolutionsglobal.com/track/",
     "trackingUrlTemplate": "https://kingsolutionsglobal.com/track/?pros={trackingNumber}",
