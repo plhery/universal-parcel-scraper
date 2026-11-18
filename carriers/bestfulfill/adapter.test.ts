@@ -53,8 +53,8 @@ describe('BestFulfill Packet tracking', () => {
     expect(events).toHaveLength(11);
     expect(events[0]).toEqual({ time: '2026-01-12T13:03:18-05:00', description: 'Delivered', location: 'SAMPLE TOWN, NY',
       provider_code: 'Delivered_Other', stage: 'delivered', stage_source: 'carrier_map' });
-    // Scans of one instant keep the service's order.
-    expect(events.slice(1, 3).map((event) => event.description)).toEqual(['Out for Delivery, Expected Delivery Between 11:15am and 1:15pm', 'Out for Delivery']);
+    // Scans of one instant show the later source milestone first.
+    expect(events.slice(1, 3).map((event) => event.description)).toEqual(['Out for Delivery', 'Out for Delivery, Expected Delivery Between 11:15am and 1:15pm']);
     expect(events.at(-1)).toEqual({ time: '2026-01-05T07:25:20+00:00', description: 'order received',
       provider_code: 'InfoReceived_InfoReceived', stage: 'registered', stage_source: 'carrier_map' });
     expect(events.find((event) => event.description === 'PICK UP')).toMatchObject({ location: 'Sample Origin', stage: 'accepted' });
@@ -151,4 +151,10 @@ it('keeps a distinct last-mile number when the history is empty', () => {
     expect(() => parseBestfulfill({ ...parcel, localNumber }, NUMBER))
       .toThrow(expect.not.objectContaining({ deliveryTrackingNumber: expect.any(String) }));
   }
+});
+
+it('keeps delivery first when the last milestones share an instant', () => {
+  const value = fixture();
+  value.events.at(-1)!.time = value.events.at(-2)!.time!;
+  expect(parseBestfulfill(value, NUMBER).current_stage).toBe('delivered');
 });

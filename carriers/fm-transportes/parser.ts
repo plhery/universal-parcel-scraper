@@ -86,7 +86,7 @@ export function parseFmTransportes(payload: unknown, rawNumber: string): Carrier
     } });
   });
   // The API lists oldest first; ties keep the response's order.
-  scans.sort((left, right) => right.timestamp - left.timestamp || left.index - right.index);
+  scans.sort((left, right) => right.timestamp - left.timestamp || right.index - left.index);
   const events = scans.map(scan => scan.event);
   const current = events.find(event => event.stage);
   const stage = current?.stage as Stage | undefined;

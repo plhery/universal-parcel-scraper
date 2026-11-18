@@ -62,7 +62,7 @@ function roundDelivery(events: readonly CarrierEvent[]): string | null {
 /**
  * The open tracking service's answer, `GET /openapi/v1/external/tracking?number=`:
  * the number, the origin and destination countries, a summary status and the
- * scans, in no set order, each with an instant and its offset, a place, a
+ * scans, oldest first, each with an instant and its offset, a place, a
  * wording and a 17TRACK-style sub-status. The number must be the one asked.
  * The summary status is not read; the scans decide. While the parcel is out
  * for delivery, a relayed USPS round gives the estimate.
@@ -75,9 +75,9 @@ export function parseBestfulfill(payload: unknown, raw: string): CarrierResult {
   const shown = typeof payload.number === 'string' && payload.number.length <= 64 ? normalizeTrackingNumber(payload.number) : '';
   if (!shown) throw new SchemaError(PROVIDER, 'BestFulfill Packet returned a reply without the number asked');
   if (shown !== number) throw new IndeterminateError(PROVIDER, 'BestFulfill Packet answered for another number');
-  // Scans of one instant keep the reply's order.
+  // The later source milestone comes first when two scans share an instant.
   const events = payload.events.map(scanOf).map((event, index) => ({ event, index }))
-    .sort((a, b) => Date.parse(b.event.time!) - Date.parse(a.event.time!) || a.index - b.index).map(({ event }) => event);
+    .sort((a, b) => Date.parse(b.event.time!) - Date.parse(a.event.time!) || b.index - a.index).map(({ event }) => event);
   const newest = events[0];
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;

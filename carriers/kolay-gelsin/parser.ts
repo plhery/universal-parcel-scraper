@@ -105,7 +105,7 @@ export function parseKolayGelsin(html: string, raw: string, isKg?: boolean, qid?
     scans.push({ event, local, staged });
   }
   if (!scans.length) throw new NoHistoryError(PROVIDER);
-  scans.sort((left, right) => right.local.localeCompare(left.local));
+  scans.reverse().sort((left, right) => right.local.localeCompare(left.local));
   const current = scans.find(scan => scan.staged)?.staged;
   const latest = scans[0]!;
   return {
