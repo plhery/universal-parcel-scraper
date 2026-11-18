@@ -31,7 +31,7 @@ import { HYWL_CHINA_ZONE, hywlInChina } from '../../carriers/hywl/clock.js';
 import { juxiExpressAbroadZone } from '../../carriers/juxi-express/clock.js';
 import { placedInIndia } from '../../carriers/shiprocket/clock.js';
 import { swissPostDestinationZone } from '../../carriers/swiss-post/clock.js';
-import { uspsRowZone, uspsScanZone } from '../../carriers/usps/clock.js';
+import { uspsMailerLabel, uspsRowZone, uspsScanZone } from '../../carriers/usps/clock.js';
 import { ytoRelayedWording } from '../../carriers/yto/wording.js';
 import { universalCarrierHints } from '../shared/hints.js';
 import { capturedBodies, captureFailure, loadCapture, type CaptureSpec } from '../shared/capture.js';
@@ -770,7 +770,9 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const posted = office && !LA_POSTE_COUNTRIES.has(office) && typeof raw.time_iso === 'string' && explicitOffsetTime(raw.time_iso)
         ? partnerWall(raw.time_iso, IMPORT, false) : null;
       // A USPS facility's clock in its state's zone, where its place names one.
-      const facility = usps ? uspsScanZone(text(raw.location)) : null;
+      const mailer = usps && uspsMailerLabel(text(raw.description));
+      const uspsCountry = usps ? locationCountry(raw.location) : null;
+      const facility = usps && (!uspsCountry || uspsCountry === 'US') ? uspsScanZone(text(raw.location)) : null;
       // A USPS row on the clock of the town the gazetteer finds, abroad that country's, or its wall clock alone where the country keeps several.
       const located = usps && !facility ? uspsPlaceZone(text(raw.location), uspsBound) : undefined;
       // Correos's copy of the origin post's scan on an item from abroad: that post's zone, or null for its wall clock.
@@ -790,7 +792,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const site = named ?? (intake ? 'Europe/Madrid' : null);
       // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Anjun Express's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
       // Correios Brazil's copy of the sending post's scan, which 17TRACK labels with Brasília's offset.
-      const read = facility || located !== undefined || juxiAbroad !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
+      const read = mailer || facility || located !== undefined || juxiAbroad !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile
         || anjunExpress || shiprocket || daiPost || quickRabbit || sent !== undefined || sending !== undefined;
       // Any other row 17TRACK labelled with its zone's offset on the day it looks, not on the scan's.
       const season = relayed || hywl || read || poland || posted ? null : seasonZone(raw, labelled, now);
@@ -800,7 +802,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // The zone the wall clock is read on, and how it was chosen.
       const at = (zone: string | null, basis: ZoneBasis): Placed | null => zone ? { zone, basis } : null;
       const chosen = !wall ? null : posted ? at(countryTimeZone(office), 'place') : season ? at(season, 'carrier') : hywl ? at(relayed, 'place')
-        : located !== undefined ? at(located, 'place') : juxiAbroad !== undefined ? at(juxiAbroad, 'place') : relayed ? at(relayed, 'destination')
+        : mailer ? at('UTC', 'carrier') : located !== undefined ? at(located, 'place') : juxiAbroad !== undefined ? at(juxiAbroad, 'place') : relayed ? at(relayed, 'destination')
         : scanned ? at(scanned, 'place') : site ? at(site, intake ? 'neighbour' : 'place') : own ? at(own, 'place')
         : sent !== undefined ? at(sent, 'place') : sending !== undefined ? at(sending, 'place') : abroad.has(index) ? abroad.get(index) ?? null
         : exchange ? at(origin, 'place') : arrived ? at(inbound, 'destination') : utc ? at('UTC', 'carrier')
@@ -832,7 +834,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       // The place such a leg writes after its wording is the location where 17TRACK gives none.
       const trailing = !english && !parsed.location && BRACKETED_PLACES.has(reported.key) ? trailingPlace(parsed.description ?? '') : undefined;
       if (trailing) Object.assign(parsed, { description: trailing.wording, location: trailing.place });
-      const day = undatedClock(raw) ?? (usps ? dayAlone(raw) ?? (USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
+      const day = undatedClock(raw) ?? (usps ? dayAlone(raw) ?? (!mailer && USPS_UNPLACED.test(text(raw.location)) ? facilityWall(raw) : null)
         : (brt && BRT_ROUND.test(text(raw.description).trim())) || (fedex && FEDEX_PICKUP.test(text(raw.description).trim())) ? dayAlone(raw) : null);
       if (day) {
         const local: CarrierEvent = { ...parsed, local_time: day };

@@ -721,6 +721,14 @@ describe('17TRACK result parsing', () => {
     ]), number).events?.map((event) => event.time)).toEqual(['2026-11-03T00:49:00.000Z', '2026-11-02T11:04:00.000Z']);
     expect(parse17TrackResponse(reply(21051, [row('2026-07-09', '16:05:00', '-04:00', 'JAMAICA', 'Processed Through USPS Facility')]), number)
       .events?.[0]?.time).toBe('2026-07-09T20:05:00.000Z');
+    for (const [place, wording, instant] of [
+      ['Perth, WA, AUSTRALIA', 'Processed Through Facility', '04:00'],
+      ['CHINA', 'Shipping Label Created', '12:00'],
+      ['', 'Shipping Label Created', '12:00'],
+    ] as const) {
+      const scan = row('2026-11-03', '12:00:00', '-05:00', place, wording);
+      expect(parse17TrackResponse(reply(21051, [scan]), number).events?.[0]?.time).toBe(`2026-11-03T${instant}:00.000Z`);
+    }
     const canada = parse17TrackResponse(reply(21051, [row('2026-11-02', '19:04:00', '-05:00', 'CANADA', 'Acceptance')]), number).events?.[0];
     expect(canada).toMatchObject({ local_time: '2026-11-02T19:04:00' });
     expect(canada?.time).toBeUndefined();
