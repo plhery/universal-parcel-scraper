@@ -223,8 +223,9 @@ step exists for future protocol changes.
   twelve-hour clock without AM or PM, and ParcelsApp copies it: its relay of Australia Post's
   22:21 clearance awaiting departure came at 10:21, on the sending post's day. ParcelsApp's
   English for the tracker's wordings is read by Barid Al-Maghrib's map. Such a relay on the
-  sending post's day and dial minute is omitted only for a documented milestone pair in that post's country. That scan is compared on its own wall clock:
-  a scan read as an instant is taken at the offset it states or on its carrier's home clock, so
+  day, minute and twelve-hour hour of another network's scan of the same stage, the sending
+  post's own in the same reply, is that scan's copy and is not read. That scan is compared on
+  its own wall clock: a scan read as an instant is taken at the offset it states or on its carrier's home clock, so
   bpost's 13:05 UTC matches the dial's 2:05.
 - DHL Express scans carry the facility's clock, whatever the label: DHL's mobile API gives
   the same clocks scan for scan, and Ship24 gives them with the facility's offset. They

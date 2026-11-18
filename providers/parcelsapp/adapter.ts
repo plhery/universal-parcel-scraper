@@ -226,14 +226,15 @@ function twelveHourDial(name: unknown): boolean {
  * which Morocco Post relays in its own words at that scan's minute (Barid Al-Maghrib's relayed labels). Australia Post's "Received by
  * our network" at 09:18:52 came as "Shipment picked up" at 09:18, and its 22:21:11 clearance
  * awaiting departure as "Package shipped" at 10:21. The dial keeps the scan's day, its minute and
- * its hour on a twelve-hour clock; a relay at another hour or on another day is a scan of its own.
+ * its hour on a twelve-hour clock, and the copy the scan's stage; a relay at another hour, on
+ * another day or of another stage (a pickup beside the sending post's registration) is a scan of its own.
  * The scan is compared on its own wall clock: its digits where a zone places them or nothing
  * reads them as an instant, else its instant at the offset it states or on its carrier's home
  * clock (bpost's 13:05 UTC is 2:05 on the dial in Brussels).
  * Read by its day alone, the copy would stand beside the scan, so it is not read.
  */
-function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<string, unknown>; offset: string | null; location: string;
-  nationwide: boolean; wallOnly: boolean }>(entries: readonly T[], zones: readonly { zone: string | null }[]): Set<T> {
+function twelveHourCopies<T extends { name: unknown; date: unknown; offset: string | null; location: string;
+  nationwide: boolean; wallOnly: boolean; scan: CarrierScan | undefined; wording: string }>(entries: readonly T[], zones: readonly { zone: string | null }[]): Set<T> {
   const at = (date: unknown) => {
     const wall = mislabeledWallTime(date);
     const read = wall ? DateTime.fromISO(wall, { zone: 'utc' }) : null;
@@ -251,18 +252,10 @@ function twelveHourCopies<T extends { name: unknown; date: unknown; raw: Record<
     return home ? digits.setZone(home) : digits;
   };
   return new Set(entries.filter((copy) => {
-    if (!twelveHourDial(copy.name)) return false;
-    const dial = at(copy.date);
-    const country = countryCode(lastPlace(copy.location));
-    const label = relayedLabel(copy.raw.status).trim().toLowerCase();
+    const relayed = twelveHourDial(copy.name) ? copy.scan?.stage : undefined;
+    const dial = relayed ? at(copy.date) : null;
     return dial !== null && entries.some((own, index) => {
-      const wording = relayedLabel(own.raw.status).trim().toLowerCase();
-      const carrier = typeof own.name === 'string' ? carrierIdFromName(own.name) : undefined;
-      const paired = carrier === 'australia-post' && country === 'AU' && (
-        (label === 'shipment picked up' && wording === 'received by our network')
-        || (label === 'package shipped' && wording === 'cleared and awaiting international departure'))
-        || (carrier === 'bpost' && country === 'BE' && label === 'package shipped' && wording === 'item dispatched abroad');
-      if (!paired) return false;
+      if (twelveHourDial(own.name) || (own.scan?.stage ?? eventStage(own.wording)) !== relayed) return false;
       const scan = ownClock(own, index);
       return scan !== null && scan.toISODate() === dial.toISODate() && scan.minute === dial.minute && scan.hour % 12 === dial.hour % 12;
     });
