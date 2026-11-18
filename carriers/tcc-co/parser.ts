@@ -100,10 +100,10 @@ export function parseTcc(payload: unknown, raw: string): CarrierResult {
   };
   // The novelty carries a code and resolution that an identical history row lacks.
   for (const row of novelties) add(row, true);
-  for (const row of history) add(row, false);
   if (!novelties.length && shipment.novedad != null && shipment.fechanovedad != null) {
     add({ descripcion: shipment.novedad, fecha: shipment.fechanovedad, estado: shipment.estadonovedad }, true);
   }
+  for (const row of history) add(row, false);
   const delivery = step === '6' && shipment.fechaentrega != null && shipment.fechaentrega !== '' ? clock(shipment.fechaentrega) : null;
   if (delivery && !scans.some(scan => scan.timestamp === delivery.timestamp && scan.event.stage === 'delivered')) {
     scans.push({ timestamp: delivery.timestamp, open: false, stage: 'delivered',
