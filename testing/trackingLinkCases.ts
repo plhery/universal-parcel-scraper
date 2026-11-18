@@ -1785,6 +1785,9 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /We couldn't find any package with the tracking number you provided|Tracking Number/ },
   // The page checks the device, moves a desktop to its `tracking` route and renders over Blazor's
   // connection; an unknown number gets the sentence in place of the shipment.
+  { carrier: 'transportes-rapex', number: '000000000000',
+    route: /^https:\/\/transportes-rapex\.pt\/pt\/tracking\?tracking=000000000000$/,
+    marker: /Não encontrámos correspondências para o código de envio/ },
   { carrier: 'transaher', number: '103000000000000000000000000',
     route: /^https:\/\/clientes\.transaher\.es\/webclient\/h?tracking\/-5,0,103000000000000000000000000$/,
     marker: /No se ha encontrado la expedición indicada/i,

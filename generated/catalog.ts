@@ -58545,7 +58545,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Lisbon",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "transportes-rapex",
+      "localClocks": true
     },
     "canaryUrl": "https://transportes-rapex.pt/pt/tracking",
     "trackingUrlTemplate": "https://transportes-rapex.pt/pt/tracking?tracking={trackingNumber}",
