@@ -1316,3 +1316,9 @@ it('classifies the loss a sender reports, and keeps its notice of a parcel on th
   expect(wordingStage('The sender has notified us that a parcel is on its way to our terminal. '
     + 'When we have received the parcel, the tracking will be updated.')).toBe('registered');
 });
+
+it.each(['Задержано до завершения таможенного оформления', 'Export customs clearance started; customs clearance failed'])(
+  'keeps a blocked clearance in customs for %s', wording => {
+    expect(wordingStage(wording)).toBe('customs');
+  },
+);

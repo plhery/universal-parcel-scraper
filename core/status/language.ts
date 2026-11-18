@@ -191,7 +191,7 @@ const CUSTOMS_PENDING = new RegExp([
   String.raw`\bnao\b(?: \w+){0,3}? (?:desalfandegad[oa]s?|desembaracad[oa]s?|(?:liberad[oa]s?|saiu) (?:pela|na|da|de) (?:alfandega|aduana|fiscalizacao))\b|\b(?:aguardando|a aguardar|aguarda|em espera de|pendente de|sera|serao|vai ser|deve ser)\b(?: \w+){0,2}? (?:desalfandeg|(?:liberad|liberacao|desembarac)\w*${SENTENCE}*?\b(?:alfandeg|aduan[ae]|fiscalizacao))`,
   String.raw`\b(?:nie|oczekuje na|czeka na|w trakcie|przed)\b(?: \w+){0,2}? (?:odpraw|zwolnion)\w*${SENTENCE}*?\b(?:celn|urzad)`,
   // A release negated or awaited in Ukrainian or Russian: "не випущено з митниці", "ожидает выпуска".
-  String.raw`${CYRILLIC_START}(?:не|ще не|еще не)(?: [а-яієґ']+)? (?:випущен|выпущен|пропущен|пройден|завершен|оформлен)|${CYRILLIC_START}(?:очіку\S* |ожида\S* )(?:\S+ )?(?:випуск|выпуск|митн|мытн|тамож)`,
+  String.raw`${CYRILLIC_START}до завершения таможенного|${CYRILLIC_START}(?:не|ще не|еще не)(?: [а-яієґ']+)? (?:випущен|выпущен|пропущен|пройден|завершен|оформлен)|${CYRILLIC_START}(?:очіку\S* |ожида\S* )(?:\S+ )?(?:випуск|выпуск|митн|мытн|тамож)`,
 ].join('|'));
 /** Clearance completed or the parcel released, in each language. */
 const CUSTOMS_RELEASED = new RegExp([
@@ -245,7 +245,7 @@ const EXPORT_CLEARANCE_UNDER_WAY = new RegExp([
   String.raw`(?:开始)?出口(?:报关|清关)(?:中|进行中)|开始出口(?:报关|清关)`,
 ].join('|'));
 /** Customs holding, inspecting or detaining a parcel, which an export clearance under way does not end. */
-const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|查验|扣留|扣押|滞留|留存/;
+const EXPORT_HOLD = /\b(?:held|hold|holding|detain\w*|retain\w*|inspect\w*|examin\w*|seiz\w*|confiscat\w*)\b|\b(?:customs )?clearance (?:has )?failed\b|查验|扣留|扣押|滞留|留存/;
 /** A parcel customs holds, detains or retains, in each language. */
 const CUSTOMS_HOLD = new RegExp(String.raw`\bcustoms (?:hold|detention)\b|\b(?:held|on hold|detained|retained) (?:by|in|at) (?:the )?${CUSTOMS_SIDE}customs?\b|retenu en douane|vom zoll zuruckgehalten|fermo in dogana|retenido en aduana|retido na alfandega|zatrzyman[ay] przez (?:urzad celny|cel)`);
 /** Import charges named on a scan: duties, import taxes or customs fees. */
