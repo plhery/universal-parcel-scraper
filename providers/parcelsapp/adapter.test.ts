@@ -4174,3 +4174,11 @@ describe('ParcelsApp slow lookup recovery', () => {
     expect(fetcher.mock.calls.every(([, init]) => init!.signal!.aborted)).toBe(true);
   });
 });
+
+it('keeps an empty SpeedPAK handoff unstaged', () => {
+  const result = parseParcelsAppResponse({ carriers: ['SpeedPAK'], states: [
+    { date: '2026-10-27T09:18:00Z', status: 'LM Carrier: [Uni Uni] , LM tracking No.: []', carrier: 0 },
+  ] }, number, identity());
+  expect(result.events?.[0]?.stage).not.toBe('in_transit');
+  expect(result.current_stage).not.toBe('in_transit');
+});
