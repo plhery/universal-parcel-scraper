@@ -124,11 +124,12 @@ export function chinaClock(local: string): Pick<CarrierEvent, 'local_time' | 'ti
 
 // The destination post's scans the app copies on that post's wall clock, to the
 // minute of the post's or UPU's own: arrival at its processing centre (459),
+// the import office of exchange's hold (485, a minute after that arrival),
 // presentation to import customs (486), customs' hold (493) and release (487),
 // departure from the processing centre (460), arrival at the delivery office
 // (461), out for delivery (462), delivery (463) and departure from a transit
 // office (489).
-const DESTINATION_CLOCK = new Set(['459', '460', '461', '462', '463', '486', '487', '489', '493']);
+const DESTINATION_CLOCK = new Set(['459', '460', '461', '462', '463', '485', '486', '487', '489', '493']);
 
 // The arrival in the destination country (516) is China Post's own, on China's clock, unless it
 // falls on the minute and office of the destination post's arrival at its processing centre (459):
