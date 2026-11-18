@@ -35,6 +35,8 @@ import {
   UpstreamHttpError, UpstreamNetworkError,
 } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { unreadEstimates } from '../../core/result/unread.js';
+import { windowEstimate, type WindowEstimate } from '../../core/result/window.js';
 import { runSteps } from '../../core/runner/index.js';
 import { paused } from '../../core/runner/pause.js';
 import { classifyWording, languageStageStatus, type ClassifiedWording } from '../../core/status/index.js';
@@ -250,10 +252,23 @@ function domesticText(value: unknown): string {
 }
 
 /**
+ * The delivery estimate in the domestic reply's `eta`: a slot (`Specific`, start and end with
+ * offsets) or a day (`WholeDay`). Other types, and minutes past the slot, go to `unread_estimates`.
+ */
+function domesticEstimate(collo: JsonObject): { estimate: WindowEstimate; unread: Pick<CarrierResult, 'unread_estimates'> } {
+  const eta = record(collo.eta);
+  const kind = text(eta.type).trim();
+  const estimate = kind === 'Specific' ? windowEstimate(eta.start, eta.end)
+    : kind === 'WholeDay' ? windowEstimate(null, eta.start) : { expected_delivery: null };
+  return { estimate, unread: unreadEstimates({ eta: estimate.expected_delivery ? null : collo.eta, 'eta.minutesOverdue': eta.minutesOverdue }) };
+}
+
+/**
  * Projects one domestic tracker reply, keyed by barcode under `colli`. The
  * delivery is not among its observations: `isDelivered` says it happened and
- * `deliveryDate`, when present, when. Recipient, sender and route details are
- * not read. Pure: the offline tests target this.
+ * `deliveryDate`, when present, when. The estimate holds until delivery, a
+ * pick-up point or a return. Recipient, sender and route details are not read.
+ * Pure: the offline tests target this.
  */
 export function parsePostNLDomesticResponse(value: unknown, trackingNumber: string): CarrierResult {
   const colli = record(value).colli;
@@ -284,6 +299,7 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
   });
   const delivered = collo.isDelivered === true;
   const deliveredAt = delivered ? explicitOffsetTime(collo.deliveryDate) : null;
+  const { estimate, unread } = domesticEstimate(collo);
   // The observations come newest first; the delivery, when dated, ends them.
   if (deliveredAt) {
     scans.unshift({ observation: {}, description: phaseMessage || 'Delivered', time: deliveredAt, classified: { stage: 'delivered', source: 'carrier_map' } });
@@ -295,7 +311,7 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
     if (phase.index !== 0 || !phaseMessage) throw new NoHistoryError(PROVIDER, 'PostNL lists the parcel without scans', { reason: 'listed' });
     return {
       status: 'pending', current_stage: 'registered', current_stage_source: 'carrier_map',
-      last_status_text: phaseMessage, last_update: null, expected_delivery: null, summary_only: true, events: [],
+      last_status_text: phaseMessage, last_update: null, ...estimate, ...unread, summary_only: true, events: [],
     };
   }
   const events = scans.map(({ observation, description, time, classified }): CarrierEvent => {
@@ -310,12 +326,14 @@ export function parsePostNLDomesticResponse(value: unknown, trackingNumber: stri
   });
   // `isDelivered` decides: the phase already reads delivered while a parcel waits at a pick-up point.
   const current: ClassifiedWording | null = delivered ? { stage: 'delivered', source: 'carrier_map' } : latest.classified;
+  const settled = delivered || collo.isAtRetailLocation === true
+    || (current !== null && ['delivered', 'ready_for_pickup', 'returned'].includes(current.stage));
   return {
     status: current ? languageStageStatus(current.stage) : 'unknown',
     ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),
     last_status_text: (delivered && phaseMessage) || latest.description || null,
     last_update: latest.time?.iso ?? null,
-    expected_delivery: null,
+    ...(settled ? { expected_delivery: null } : { ...estimate, ...unread }),
     ...(deliveredAt ? { delivered_at: deliveredAt.iso } : {}),
     events,
   };

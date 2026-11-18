@@ -24,6 +24,9 @@ it; everything user-facing says PostNL.
      `isDelivered` says it happened and `deliveryDate`, when present, dates it. The status
      phase alone is not read as delivered, because it already reads so while a parcel waits
      at a pick-up point. An announced parcel without observations is kept as a summary.
+   - `eta` is the delivery slot from PostNL's page. `Specific` has a start and an end with
+     offsets, and `WholeDay` gives the day only. PostNL keeps it after delivery and at a pick-up
+     point, so the adapter drops it then. Other types go to `unread_estimates`.
    - The reply names the recipient, the sender and their addresses; none of that is read.
      Errors leave out the request address, which holds the postcode.
 2. `direct`: two POSTs on the same host.
@@ -128,7 +131,8 @@ it; everything user-facing says PostNL.
 
 ## Limitations
 
-- No delivery estimate: the endpoint publishes none, so `expected_delivery` is always null.
+- The international tracker has no delivery estimate. Only the domestic tracker, which needs
+  the postcode, has one.
 - The endpoint answers "The shipment barcode was incorrect." for 13- and 14-character `3S`
   barcodes, which are PostNL's (Parcel EU among them), and for 15-character ones without a
   four-letter customer code. The lookup then stays inconclusive.

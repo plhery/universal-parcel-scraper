@@ -733,6 +733,31 @@ describe('PostNL domestic tracker', () => {
     expect(parsePostNLDomesticResponse(reply(collo({ statusPhase: { index: 4, message: 'Synthetic phase' } })), barcode).status).toBe('out_for_delivery');
   });
 
+  it('reads the delivery slot or day until delivery or a pick-up point', () => {
+    const slot = { type: 'Specific', start: '2026-05-12T14:30:00+02:00', end: '2026-05-12T16:30:00+02:00', minutesOverdue: null };
+    const onTheWay = parsePostNLDomesticResponse(reply(collo({ eta: slot })), barcode);
+    expect(onTheWay).toMatchObject({ expected_delivery_from: '2026-05-12T14:30:00+02:00', expected_delivery: '2026-05-12T16:30:00+02:00' });
+    expect(onTheWay.unread_estimates).toBeUndefined();
+    const day = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'WholeDay', start: '2026-05-12T00:00:00+02:00', end: '2026-05-12T23:59:00+02:00' } })), barcode);
+    expect(day.expected_delivery).toBe('2026-05-12');
+    expect(day.expected_delivery_from).toBeUndefined();
+    // An announced parcel keeps its slot too.
+    const announced = { index: 0, message: 'Shipment expected, but not yet arrived or processed at PostNL' };
+    expect(parsePostNLDomesticResponse(reply(collo({ observations: [], statusPhase: announced, eta: slot })), barcode).expected_delivery)
+      .toBe('2026-05-12T16:30:00+02:00');
+    // PostNL keeps the slot after delivery and at a pick-up point.
+    for (const fields of [{ isDelivered: true, deliveryDate: '2026-05-12T15:02:00+02:00' }, { isAtRetailLocation: true }]) {
+      const settled = parsePostNLDomesticResponse(reply(collo({ eta: slot, ...fields })), barcode);
+      expect(settled.expected_delivery).toBeNull();
+      expect(settled.expected_delivery_from).toBeUndefined();
+    }
+    // Other types and minutes past the slot go to unread_estimates.
+    const other = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'Synthetic', start: '2026-05-12T14:30:00+02:00' } })), barcode);
+    expect(other).toMatchObject({ expected_delivery: null, unread_estimates: ['eta'] });
+    expect(parsePostNLDomesticResponse(reply(collo({ eta: { ...slot, minutesOverdue: 25 } })), barcode).unread_estimates).toEqual(['eta.minutesOverdue']);
+    expect(parsePostNLDomesticResponse(reply(collo()), barcode)).toMatchObject({ expected_delivery: null });
+  });
+
   it('keeps an announced parcel as a summary, and a parcel without scans as no history', () => {
     const announced = { index: 0, message: 'Shipment expected, but not yet arrived or processed at PostNL' };
     expect(parsePostNLDomesticResponse(reply(collo({ observations: [], statusPhase: announced })), barcode))
