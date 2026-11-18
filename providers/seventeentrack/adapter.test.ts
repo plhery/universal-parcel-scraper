@@ -1044,13 +1044,16 @@ describe('17TRACK result parsing', () => {
         row('2026-10-31', '16:28:00', 'Posting/Collection', 'CHINA'),
       ] }] } } }] });
     const times = (requested: string) => parse17TrackResponse(reply(requested), requested).events?.map(e => e.time);
+    const returning = reply(`ZZ${'0'.repeat(8)}5CN`);
+    returning.shipments[0]!.shipment.tracking.providers[0]!.events[1]!.location = 'Tokyo, Japan';
+    expect(parse17TrackResponse(returning, returning.shipments[0]!.number).events?.find(event => event.location === 'Tokyo, Japan')?.time).toBe('2026-10-31T09:42:00.000Z');
     // China Post's acceptance at 16:28 Beijing time, under 17TRACK's +09:00.
     expect(times('ZZ123456785CN')).toEqual(['2026-11-04T00:10:00.000Z', '2026-10-31T10:42:00.000Z', '2026-10-31T10:41:00.000Z',
       '2026-10-31T08:28:00.000Z']);
-    // An origin on several clocks, or Japan's own, keeps 17TRACK's reading.
+    // Without a usable issuer clock the unplaced row keeps its label. The rows in China still use Beijing.
     for (const requested of ['ZZ123456785US', 'ZZ123456785JP']) {
-      expect(times(requested)).toEqual(['2026-11-04T00:10:00.000Z', '2026-10-31T09:42:00.000Z', '2026-10-31T09:41:00.000Z',
-        '2026-10-31T07:28:00.000Z']);
+      expect(times(requested)).toEqual(['2026-11-04T00:10:00.000Z', '2026-10-31T10:41:00.000Z', '2026-10-31T09:42:00.000Z',
+        '2026-10-31T08:28:00.000Z']);
     }
   });
 

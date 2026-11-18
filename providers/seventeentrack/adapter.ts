@@ -759,7 +759,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
-      const exchange = origin !== null && (relay ? originRelayed(relay, number.slice(-2), raw) : ORIGIN_EXCHANGE.test(text(raw.description).trim()));
+      const japanOutward = reported.key === JAPAN_POST && OUTWARD_SCAN.test(text(raw.description).trim());
+      const scanPlace = japanOutward ? locatePlace(text(raw.location), { countries: ['JP'] }) : null;
+      const exchange = scanPlace || (origin && (relay ? originRelayed(relay, number.slice(-2), raw) : ORIGIN_EXCHANGE.test(text(raw.description).trim())));
+      const exchangeZone = !scanPlace ? origin : scanPlace.precision === 'city' ? placeTimeZone(scanPlace) : countryTimeZone(scanPlace.country);
       const arrived = destination.has(index);
       const own = !salvador ? null : OUTBOUND.test(text(raw.description)) ? sender : 'UTC';
       // The destination post's scan Swiss Post relays, its wall clock under Swiss Post's offset, or Huiyi Logistics' row in China under "+00:00".
@@ -803,7 +806,7 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
         : located !== undefined ? at(located, 'place') : juxiAbroad !== undefined ? at(juxiAbroad, 'place') : relayed ? at(relayed, 'destination')
         : scanned ? at(scanned, 'place') : site ? at(site, intake ? 'neighbour' : 'place') : own ? at(own, 'place')
         : sent !== undefined ? at(sent, 'place') : sending !== undefined ? at(sending, 'place') : abroad.has(index) ? abroad.get(index) ?? null
-        : exchange ? at(origin, 'place') : arrived ? at(inbound, 'destination') : utc ? at('UTC', 'carrier')
+        : exchange ? at(exchangeZone, 'place') : arrived ? at(inbound, 'destination') : utc ? at('UTC', 'carrier')
         : polish ? at(polish, left ? 'destination' : 'carrier') : handed ? at(handed, 'destination')
         : nz ? at('Pacific/Auckland', 'carrier') : quickRabbit ? at('Europe/Madrid', 'carrier')
         : chile ? at(facilityZone(text(raw.location)), 'place') ?? at('America/Santiago', 'carrier')
