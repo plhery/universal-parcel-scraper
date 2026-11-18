@@ -5,7 +5,7 @@ mainland and to the islands. Tracked through its tracking page.
 
 ## How it works
 
-1. `direct`: one `GET https://www.viadireta.pt/tracking?codigo={number}`, the address the
+1. `direct`: one `GET https://www.viadireta.pt/pt/tracking?codigo={number}`, the address the
    page's own form opens, asked in Portuguese. It needs no cookie, token, postcode or browser.
    The server renders the page: a card with the number, a summary and the last update, then the
    movements, newest first, each a wall clock and a wording.

@@ -2650,9 +2650,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "adapter": "austrian-post",
       "recognitionRank": 830
     },
-    "canaryUrl": "https://www.post.at/en/s/track-and-trace-search",
-    "trackingUrlTemplate": "https://www.post.at/en/s/track-and-trace-search",
-    "trackingSearchUrl": "https://www.post.at/en/s/track-and-trace-search",
+    "canaryUrl": "https://www.post.at/v2/tnt/en/track-and-trace",
+    "trackingUrlTemplate": "https://www.post.at/v2/tnt/en/track-and-trace",
+    "trackingSearchUrl": "https://www.post.at/v2/tnt/en/track-and-trace",
     "helpUrl": "https://www.post.at/k/c/kontakt",
     "linkRules": [],
     "detectionRules": [
@@ -60895,16 +60895,16 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "recognitionRank": 72,
       "localClocks": true
     },
-    "canaryUrl": "https://www.viadireta.pt/tracking",
-    "trackingUrlTemplate": "https://www.viadireta.pt/tracking?codigo={trackingNumber}",
-    "trackingSearchUrl": "https://www.viadireta.pt/tracking",
+    "canaryUrl": "https://www.viadireta.pt/pt/tracking",
+    "trackingUrlTemplate": "https://www.viadireta.pt/pt/tracking?codigo={trackingNumber}",
+    "trackingSearchUrl": "https://www.viadireta.pt/pt/tracking",
     "linkRules": [
       {
         "domains": [
           "www.viadireta.pt",
           "viadireta.pt"
         ],
-        "pathPattern": "^/tracking/?$",
+        "pathPattern": "^/(?:(?:pt|en|es)/)?tracking/?$",
         "params": [
           "codigo"
         ]

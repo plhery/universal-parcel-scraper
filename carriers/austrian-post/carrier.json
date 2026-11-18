@@ -35,10 +35,10 @@
     "canonical_tracking_number"
   ],
   "portal": {
-    "url": "https://www.post.at/en/s/track-and-trace-search",
-    "searchUrl": "https://www.post.at/en/s/track-and-trace-search",
+    "url": "https://www.post.at/v2/tnt/en/track-and-trace",
+    "searchUrl": "https://www.post.at/v2/tnt/en/track-and-trace",
     "helpUrl": "https://www.post.at/k/c/kontakt",
-    "canaryUrl": "https://www.post.at/en/s/track-and-trace-search",
+    "canaryUrl": "https://www.post.at/v2/tnt/en/track-and-trace",
     "shows": [
       "status",
       "history",

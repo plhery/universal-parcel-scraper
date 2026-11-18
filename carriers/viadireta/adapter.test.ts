@@ -52,6 +52,13 @@ describe('ViaDireta numbers', () => {
     }
   });
 
+  it('recognizes its legacy and localized tracking links', () => {
+    for (const prefix of ['', '/pt', '/en', '/es']) {
+      const url = `https://www.viadireta.pt${prefix}/tracking?codigo=${DELIVERED}`;
+      expect(parseTrackingInput(url)).toMatchObject({ trackingNumber: DELIVERED, carrier: 'viadireta', source: 'link' });
+    }
+  });
+
   it('names ViaDireta for its own names', () => {
     for (const name of ['ViaDireta', 'Via Direta', 'Via Directa', 'Viadirecta']) expect(carrierIdFromName(name), name).toBe('viadireta');
   });
@@ -65,7 +72,7 @@ describe('ViaDireta HTTP adapter', () => {
       .resolves.toMatchObject({ status: 'delivered' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const [url, init] = fetcher.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe(`${VIADIRETA_TRACKER}?codigo=${DELIVERED}`);
+    expect(url).toBe(`https://www.viadireta.pt/pt/tracking?codigo=${DELIVERED}`);
     expect(url).toBe(viadiretaLookupUrl(DELIVERED));
     expect(init).toMatchObject({ method: 'GET', redirect: 'manual', signal: expect.any(AbortSignal),
       headers: { 'User-Agent': 'SyntheticHost/1.0', 'Accept-Language': 'pt-PT,pt;q=0.9' } });

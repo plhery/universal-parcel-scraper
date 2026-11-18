@@ -31,9 +31,9 @@
     "eta"
   ],
   "portal": {
-    "url": "https://www.viadireta.pt/tracking?codigo={trackingNumber}",
-    "searchUrl": "https://www.viadireta.pt/tracking",
-    "canaryUrl": "https://www.viadireta.pt/tracking",
+    "url": "https://www.viadireta.pt/pt/tracking?codigo={trackingNumber}",
+    "searchUrl": "https://www.viadireta.pt/pt/tracking",
+    "canaryUrl": "https://www.viadireta.pt/pt/tracking",
     "shows": [
       "status",
       "history",
@@ -63,7 +63,7 @@
         "www.viadireta.pt",
         "viadireta.pt"
       ],
-      "pathPattern": "^/tracking/?$",
+      "pathPattern": "^/(?:(?:pt|en|es)/)?tracking/?$",
       "params": [
         "codigo"
       ]

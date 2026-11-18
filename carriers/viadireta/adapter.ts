@@ -8,7 +8,7 @@ import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/inde
 import { CARRIER, normalizeViadiretaNumber, parseViadireta, PROVIDER, VIADIRETA_MAX_BYTES } from './parser.js';
 
 /** ViaDireta's tracking page, which looks up the number in its `codigo` parameter. */
-export const VIADIRETA_TRACKER = 'https://www.viadireta.pt/tracking';
+export const VIADIRETA_TRACKER = 'https://www.viadireta.pt/pt/tracking';
 const REDIRECTS = [301, 302, 303, 307, 308];
 // The page answers any number with HTTP 200: a missing route is not a missing shipment.
 const GONE = [404, 405, 410];

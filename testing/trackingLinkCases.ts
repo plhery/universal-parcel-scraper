@@ -370,7 +370,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/www\.yuntrack\.com\/parcelTracking\?id=/,
     marker: /Tracking|Track.*parcel|Tracking Number/i },
   { carrier: 'austrian-post', number: '1000000000000000000001',
-    route: /^https:\/\/www\.post\.at\/en\/s\/track-and-trace-search/,
+    route: /^https:\/\/www\.post\.at\/v2\/tnt\/en\/track-and-trace\/?$/,
     marker: /Track.*Trace|Track a shipment|Shipment tracking|tracking number/i, forwarding: 'none' },
   { carrier: 'tnt', number: '123456784',
     route: /^https:\/\/www\.tnt\.com\/express\/en_gb\/site\/shipping-tools\/tracking\.html\?/,
@@ -733,7 +733,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /Track your parcel \/ Parcel Tracking/ },
   // The server-rendered page names the reference and its not-found notice repeats it.
   { carrier: 'dpd-pt', number: '09999999999999',
-    route: /^https:\/\/tracking\.dpd\.pt\/\?reference=09999999999999$/,
+    route: /^https:\/\/tracking\.dpd\.pt\/pt\?reference=09999999999999$/,
     marker: /No results were found for 09999999999999|Não encontrámos resultados para 09999999999999/ },
   { carrier: 'fan-courier', number: '9999999999990',
     route: /^https:\/\/www\.fancourier\.ro\/awb-tracking\/\?tracking=/,
@@ -2260,7 +2260,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     marker: /TRK#000000000017|Não encontrámos correspondências para o código de envio/ },
   // The server renders the page, keeps the number in its form and shows its try-again notice for a made-up one.
   { carrier: 'viadireta', number: 'VD900000000017',
-    route: /^https:\/\/www\.viadireta\.pt\/tracking\?codigo=VD900000000017$/,
+    route: /^https:\/\/www\.viadireta\.pt\/pt\/tracking\?codigo=VD900000000017$/,
     marker: /ainda não está a ser possível verificar o estado da sua encomenda|not yet possible to check the status of your order|Envio Nº|Shipment No\./ },
   // The single-page tracker asks its gateway for the number in its address and goes back to its search form
   // when the gateway does not know it.

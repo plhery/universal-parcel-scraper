@@ -57,7 +57,7 @@ function deliveryDay(wording: string, newest: string): string | null {
 }
 
 /**
- * ViaDireta's tracking page for one number, `/tracking?codigo={number}`,
+ * ViaDireta's tracking page for one number, `/pt/tracking?codigo={number}`,
  * which its server renders. Its form keeps the number asked. A shipment it
  * shows gets a card with the number, a summary and the last update, then
  * its movements, newest first, each a wall clock and a wording.
