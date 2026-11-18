@@ -376,6 +376,8 @@ function townRegion(place: EventPlace): string | null {
  */
 export function placeTimeZone(place: EventPlace): string | null {
   if (place.precision === 'country') return (place.region ? regionZone(place.country, place.region) : null) ?? mainZone(place.country);
+  // Michigan City is in LaPorte County, on Central time at Indiana's northern boundary.
+  if (place.country === 'US' && place.name === 'Michigan City' && townRegion(place) === 'IN') return 'America/Chicago';
   const key = `${place.country}|${place.latitude.toFixed(2)}|${place.longitude.toFixed(2)}`;
   if (zoneCache.has(key)) return zoneCache.get(key)!;
   const region = ZONED_REGIONS.has(place.country) ? regionNear(place.country, place.latitude, place.longitude) : null;

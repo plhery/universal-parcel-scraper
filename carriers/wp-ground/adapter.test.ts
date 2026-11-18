@@ -72,3 +72,11 @@ describe('WP Ground tracking', () => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status }))).track({ number: NUMBER })).rejects.toMatchObject({ kind });
   });
 });
+
+it('keeps delivery first across Indiana clock zones', () => {
+  const delivery = row({ trackTime: '2026-01-10 09:55', trackAddress: 'Michigan City, IN', remarks: 'Delivered' });
+  const round = row({ trackTime: '2026-01-10 10:05', trackAddress: 'South Bend, IN', remarks: 'Out for delivery' });
+  for (const route of [[delivery, round], [round, delivery]]) {
+    expect(parseWpGround(answer(route), NUMBER).current_stage).toBe('delivered');
+  }
+});
