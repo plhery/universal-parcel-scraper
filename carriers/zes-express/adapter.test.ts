@@ -145,3 +145,12 @@ it('requires explicit permission before sending a parcel over HTTP', async () =>
   await expect(new ZesExpressTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
   expect(fetcher).not.toHaveBeenCalled();
 });
+
+it('retains distinct English scans at the same clock and place', () => {
+  const result = parseZesExpress(changed(d => {
+    const rows = d.data[0].details;
+    rows.unshift({ ...rows[0], track_code: '', track_description_en: 'POD annulled' });
+  }), NUMBER);
+  expect(result.events?.map(event => event.description)).toContain('POD annulled');
+  expect(result.current_stage).toBeUndefined();
+});

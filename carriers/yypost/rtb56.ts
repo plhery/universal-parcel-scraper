@@ -124,7 +124,8 @@ export function rtb56Scans(rows: unknown[], provider: string, stage: (wording: s
     if (!description) return [];
     const code = codes ? rtb56Text(row, 'track_code', provider, 16).toUpperCase() : '';
     if (code && !CODE.test(code)) throw new SchemaError(provider, `${provider} returned an invalid scan code`);
-    const twin = JSON.stringify([instant?.iso ?? clock.local, location, rtb56Text(row, 'track_description', provider)]);
+    const sourceWording = rtb56Text(row, 'track_description', provider) || rtb56Text(row, 'track_description_en', provider);
+    const twin = JSON.stringify([instant?.iso ?? clock.local, location, sourceWording]);
     return [{ local: clock.local, instant, description, location, code, twin }];
   });
   const coded = new Set(read.filter((scan) => scan.code).map((scan) => scan.twin));

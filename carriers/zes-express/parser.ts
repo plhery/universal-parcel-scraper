@@ -6,7 +6,8 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode } from '../../core/time/index.js';
 import { isRecord } from '../../core/types.js';
 import { RTB56_MAX_BYTES, rtb56Entry, rtb56Scans, rtb56Text } from '../yypost/rtb56.js';
-import { zesExpressStage } from './status.js';
+import { leadingScan } from '../../core/result/unstaged.js';
+import { statusMap, zesExpressStage } from './status.js';
 
 export const PROVIDER = 'ZES Express';
 export const ZES_MAX_BYTES = RTB56_MAX_BYTES;
@@ -35,7 +36,7 @@ export function parseZesExpress(payload: unknown, raw: string): CarrierResult {
   } : row);
   const events = rtb56Scans(safeRows, PROVIDER, zesExpressStage, { offsets: true, codes: true });
   const latest = events[0]!;
-  const staged = events.find(event => event.stage);
+  const staged = leadingScan(events, statusMap);
   const stage = staged?.stage as Stage | undefined;
   const onward = normalizeTrackingNumber(rtb56Text(item, 'channel_hawbcode', PROVIDER, 64));
   return {
