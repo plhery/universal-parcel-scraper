@@ -7,7 +7,7 @@ import { listsNewestFirst } from '../../core/result/order.js';
 import { calendarDay, explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { classifyCttExpressStatus } from './status.js';
+import { classifyCttExpressStatus, PORTUGAL_LEG } from './status.js';
 
 /** A reply that carries an error in place of the shipment. */
 export class CttExpressErrorReply extends IndeterminateError {}
@@ -40,8 +40,6 @@ function scanClock(value: unknown): ScanClock {
  * scans, with its offsets, are an hour later to the second, in winter and in summer. Its own
  * scans before the hand-over keep the instant it gives.
  */
-const PORTUGAL_LEG = new Set(['1500', '1600', '2100', '2310', '2900']);
-
 function lisbonClock(clock: ScanClock): ScanClock {
   if (!clock.time) return clock;
   const local = DateTime.fromISO(clock.time).setZone('Europe/Madrid').toISO({ includeOffset: false, suppressMilliseconds: true });

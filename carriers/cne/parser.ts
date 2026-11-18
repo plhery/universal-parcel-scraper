@@ -7,6 +7,7 @@ import { explicitOffsetTime, isoTime } from '../../core/time/index.js';
 import { clean, cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import cttExpressStatuses from '../ctt-express/statuses.json' with { type: 'json' };
+import { PORTUGAL_LEG } from '../ctt-express/status.js';
 
 const PROVIDER = 'CNE Express';
 const WORDING: Readonly<Record<string, Stage>> = {
@@ -64,6 +65,13 @@ const BEIJING = 'Asia/Shanghai';
 const CTT_EXPRESS_LABELS: ReadonlySet<string> = new Set([...cttExpressStatuses.entries.map(({ wording }) => wording), 'Entregado']
   .map((wording) => wording.toLowerCase()));
 const CTT_EXPRESS_CLOCK = 'UTC+2';
+// On a parcel bound for Portugal, CTT Express gives CTT Portugal's steps Lisbon's wall clock under
+// Madrid's offset, and CNE's copies come two hours after that instant: an hour after the scan, all year.
+// Read so, they fall on CTT Portugal's own rows to the second.
+const CTT_PORTUGAL_LABELS: ReadonlySet<string> = new Set([...cttExpressStatuses.entries
+  .filter((entry) => 'code' in entry && PORTUGAL_LEG.has(String(entry.code))).map(({ wording }) => wording), 'Entregado']
+  .map((wording) => wording.toLowerCase()));
+const CTT_PORTUGAL_CLOCK = 'UTC+1';
 
 export function normalizeCneNumber(raw: string): string {
   const number = normalizeTrackingNumber(raw);
@@ -81,7 +89,7 @@ function scanTime(value: string) {
 // CNE's clocks name no zone, and its legs cross zones: a valid one stays a
 // wall clock in `local_time`, never placed in a zone, unless its label is one
 // CNE writes on Beijing time or a relayed CTT Express status.
-function scanClock(value: string, description: string): { time?: string; local_time?: string; provider_time_text?: string } {
+function scanClock(value: string, description: string, portugal: boolean): { time?: string; local_time?: string; provider_time_text?: string } {
   const instant = scanTime(value);
   if (instant) return { time: instant.iso };
   const wall = DateTime.fromFormat(value, 'yyyy-MM-dd HH:mm:ss', { zone: 'UTC' });
@@ -90,8 +98,9 @@ function scanClock(value: string, description: string): { time?: string; local_t
     const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true });
     // China keeps one offset all year: every valid wall clock is an instant there.
     if (BEIJING_LABELS.has(labelOf(description).toLowerCase())) return { time: isoTime(local, BEIJING)!.iso };
-    if (description.includes(',') && CTT_EXPRESS_LABELS.has(commaLabelOf(description).toLowerCase())) {
-      return { time: isoTime(local, CTT_EXPRESS_CLOCK)!.iso };
+    const relayed = description.includes(',') ? commaLabelOf(description).toLowerCase() : '';
+    if (CTT_EXPRESS_LABELS.has(relayed)) {
+      return { time: isoTime(local, portugal && CTT_PORTUGAL_LABELS.has(relayed) ? CTT_PORTUGAL_CLOCK : CTT_EXPRESS_CLOCK)!.iso };
     }
     return { local_time: local };
   }
@@ -119,12 +128,12 @@ export function cneScanStage(description: string, code: string): { stage: Stage;
   return CODES[code] ? { stage: CODES[code], source: 'carrier_map' } : undefined;
 }
 
-function scan(raw: unknown): CarrierEvent {
+function scan(raw: unknown, portugal: boolean): CarrierEvent {
   if (!isRecord(raw) || !clean(raw.details, 1000)) throw new SchemaError(PROVIDER, 'CNE returned an invalid movement');
   const description = clean(raw.details, 1000), clock = clean(raw.date, 64);
   const location = clean(raw.place, 200), code = cleanScalar(raw.state);
   const mapped = cneScanStage(description, code);
-  return { description, ...(location ? { location } : {}), ...scanClock(clock, description),
+  return { description, ...(location ? { location } : {}), ...scanClock(clock, description, portugal),
     ...(mapped ? { stage: mapped.stage, stage_source: mapped.source } : {}),
     ...(code ? { provider_code: code } : {}) };
 }
@@ -148,7 +157,8 @@ export function parseCne(payload: unknown, raw: string): CarrierResult {
   if (!payload.trackingEventList.length) throw new IndeterminateError(PROVIDER, 'CNE returned no shipment movements');
   // The official client reverses the oldest-first array. Preserve that order
   // even when its unqualified cross-border clocks cannot resolve to instants.
-  const events = payload.trackingEventList.map(scan).reverse();
+  const country = clean(identity.Destination, 64).toUpperCase();
+  const events = payload.trackingEventList.map((movement) => scan(movement, country === 'PT')).reverse();
   const latest = events[0]!;
   // A terminal or blocking summary outranks the latest row, which can stop at
   // the hand-off to the last-mile partner. Shipping defers to the rows.
@@ -156,7 +166,6 @@ export function parseCne(payload: unknown, raw: string): CarrierResult {
   const summaryStage = summaryCode !== '1' && summaryCode !== '2' ? CODES[summaryCode] : undefined;
   const stage = summaryStage ?? latest.stage;
   const source = summaryStage ? 'carrier_map' : latest.stage_source;
-  const country = clean(identity.Destination, 64).toUpperCase();
   // A named supplier declares the hand-off. Without one, transNbr can be a
   // merchant's reference, and referNbr always is: neither is followed.
   const supplier = isRecord(payload.lastMileSupplier) ? clean(payload.lastMileSupplier.code, 64) : '';

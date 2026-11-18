@@ -1,6 +1,9 @@
 import type { ClassifiedStatus } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
+/** The steps CTT Portugal takes on a parcel bound for Portugal: its rounds, a failed attempt, a pickup point's availability and the delivery. */
+export const PORTUGAL_LEG: ReadonlySet<string> = new Set(['1500', '1600', '2100', '2310', '2900']);
+
 const codes: Record<string, ClassifiedStatus> = {
   '0000': { status: 'pending', stage: 'registered' },
   '0500': { status: 'in_transit', stage: 'accepted' },

@@ -165,6 +165,17 @@ describe('CNE response projection', () => {
     expect(times.get('Pendiente de recepción en CTT Express,Ya tenemos todos los detalles de tu envío.')).toEqual(['2026-11-02T17:50:46+02:00', undefined]);
     expect(times.get('Enviado,Te entregaremos tu envío lo antes posible.')).toEqual(['2026-11-15T08:49:06+02:00', undefined]);
     expect(times.get('Entregado,Ya hemos entregado tu envío.')).toEqual(['2026-07-16T15:27:44+02:00', undefined]);
+    // Bound for Portugal, CTT Portugal's steps come an hour after the scan, winter and summer: CTT Portugal's own
+    // rows give the round at 08:03:23 UTC and the delivery at 14:27:44 Lisbon time.
+    payload.Response_Info.Destination = 'PT';
+    payload.trackingEventList.push(
+      { date: '2026-11-16 09:03:23', place: 'EXAMPLE CITY', details: 'En reparto,Hoy te entregaremos tu envío.', state: '2' },
+    );
+    const portugal = new Map(parseCne(payload, HANDOFF_NUMBER).events?.map(event => [event.description, event.time]));
+    expect(portugal.get('En reparto,Hoy te entregaremos tu envío.')).toBe('2026-11-16T09:03:23+01:00');
+    expect(portugal.get('Entregado,Ya hemos entregado tu envío.')).toBe('2026-07-16T15:27:44+01:00');
+    // CTT Express's own steps in Spain keep their two hours.
+    expect(portugal.get('Enviado,Te entregaremos tu envío lo antes posible.')).toBe('2026-11-15T08:49:06+02:00');
   });
 
   it('names a supplier only with the transfer number it tracks', () => {
