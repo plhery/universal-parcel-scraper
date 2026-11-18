@@ -63634,7 +63634,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "yandex-delivery",
+      "localClocks": true
     },
     "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
     "trackingUrlTemplate": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",

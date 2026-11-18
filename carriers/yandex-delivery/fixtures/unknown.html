@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Отследить заказ по трек-номеру, SMS и в приложении — Яндекс Доставка</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="48x48">
+  <meta name="description" content="Где заказ? Отследите отправление Яндекс Доставки по номеру, по ссылке из СМС или в приложении Яндекс Go. Статус доставки, маршрут курьера и дата получения — онлайн.">
+  <link rel="canonical" href="https://dostavka.yandex.ru/ndd/tracking">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Яндекс Доставка">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:url" content="https://dostavka.yandex.ru/ndd/tracking">
+  <meta property="og:title" content="Отследить заказ по трек-номеру, SMS и в приложении — Яндекс Доставка">
+  <meta property="og:description" content="Где заказ? Отследите отправление Яндекс Доставки по номеру, по ссылке из СМС или в приложении Яндекс Go. Статус доставки, маршрут курьера и дата получения — онлайн.">
+  <meta property="og:image" content="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/1200h630_1_fde6051a20.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Отслеживание заказа Яндекс Доставки">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/1200h630_1_fde6051a20.png">
+  <meta name="twitter:title" content="Отследить заказ по трек-номеру, SMS и в приложении — Яндекс Доставка">
+  <meta name="twitter:description" content="Введите номер заказа и узнайте, где он: статус, маршрут курьера и дата получения.">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://dostavka.yandex.ru/#organization",
+        "name": "Яндекс Доставка",
+        "url": "https://dostavka.yandex.ru/",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://dostavka.yandex.ru/#logo",
+          "url": "https://yastatic.net/s3/newbiz-static-ru/strapi-admin/YD_Logo_Full_3_1_b86e83afab.svg",
+          "caption": "Яндекс Доставка"
+        },
+        "image": { "@id": "https://dostavka.yandex.ru/#logo" }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://dostavka.yandex.ru/#website",
+        "url": "https://dostavka.yandex.ru/",
+        "name": "Яндекс Доставка",
+        "inLanguage": "ru-RU",
+        "publisher": { "@id": "https://dostavka.yandex.ru/#organization" }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://dostavka.yandex.ru/ndd/tracking#webpage",
+        "url": "https://dostavka.yandex.ru/ndd/tracking",
+        "name": "Отследить заказ по трек-номеру, SMS и в приложении — Яндекс Доставка",
+        "description": "Где заказ? Отследите отправление Яндекс Доставки по номеру, по ссылке из СМС или в приложении Яндекс Go. Статус доставки, маршрут курьера и дата получения — онлайн.",
+        "inLanguage": "ru-RU",
+        "isPartOf": { "@id": "https://dostavka.yandex.ru/#website" },
+        "about": { "@id": "https://dostavka.yandex.ru/#organization" },
+        "breadcrumb": { "@id": "https://dostavka.yandex.ru/ndd/tracking#breadcrumb" },
+        "primaryImageOfPage": { "@id": "https://dostavka.yandex.ru/#logo" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "@id": "https://dostavka.yandex.ru/ndd/tracking#breadcrumb",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Яндекс Доставка",
+            "item": "https://dostavka.yandex.ru/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Отследить заказ",
+            "item": "https://dostavka.yandex.ru/ndd/tracking"
+          }
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://dostavka.yandex.ru/ndd/tracking#faq",
+        "inLanguage": "ru-RU",
+        "isPartOf": { "@id": "https://dostavka.yandex.ru/ndd/tracking#webpage" },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Как отследить заказ Яндекс Доставки?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Введите трек-номер или номер заказа в поле выше и нажмите «Отследить». Статус и история движения появятся под формой."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Где найти номер заказа для отслеживания?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "В день доставки приходит пуш-уведомление в Яндекс Go со ссылкой на отслеживание. Если приложения нет — SMS со ссылкой на веб-версию Яндекс Go. Номер заказа также есть в письме-подтверждении от отправителя."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как отследить заказ без трек-номера?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Откройте раздел с доставками в Яндекс Go — там собраны все заказы, номер вводить не нужно. Если приложения нет, перейдите по ссылке из SMS. Номер заказа также есть в письме-подтверждении от отправителя."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Не пришла ссылка из SMS — как отследить?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "SMS приходит в день доставки, поэтому раньше ссылки не будет. Проверьте папку со спамом и уточните у отправителя номер телефона, который он указал. Отследить заказ можно и без ссылки — введите номер заказа в поле выше."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Сколько хранится заказ и что нужно для получения?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "В пункте выдачи (ПВЗ) — 7 дней, продление ещё на 7 дней в приложении Яндекс Go. В постамате — 3 дня, продление ещё на 2. Для получения нужен номер заказа (или фамилия в ПВЗ) и код из SMS; постоплата в постамате недоступна."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Можно ли изменить адрес или дату доставки?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Адрес можно изменить один раз до статуса «Доставлен» — в том числе сменить способ (курьер, ПВЗ или постамат). Новый адрес должен попадать в зону доставки. Интервал на день курьерской доставки переносится по согласованию с курьером."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что делать, если заказ задерживается?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Курьер делает до 3 попыток доставки, между попытками не меньше суток — поэтому в некоторых городах ожидание занимает несколько дней. Актуальная дата получения видна в отслеживании и обновляется, если срок меняется."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Что значат статусы доставки?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "«В пути» — отправление едет между складами и пунктами выдачи. «В пункте выдачи» — заказ ждёт получателя; нужны номер заказа или фамилия и код из SMS. «Доставлено» — заказ получили. «Возвращается отправителю» — заказ не забрали или 3 попытки доставки не удались; возврат занимает примерно срок прямой доставки плюс до 10 дней. Если статус «Доставлено», но заказ не получали, свяжитесь с отправителем заказа. Полная расшифровка всех статусов — в разделе «Что значат статусы доставки»."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <style>
+    /* ── Design tokens ─────────────────────────────────────── */
+    :root {
+      --c-black:          #000000;
+      --c-white:          #ffffff;
+      --c-control-black:  #21201F;
+      --c-black-80:       #2F2F2F;
+      --c-text-grey:      #848484;
+      --c-grey-70:        #B3B3B3;
+      --c-grey-90:        #E6E6E6;
+      --c-warm-85:        #DDDBD5;
+      --c-warm-90:        #EFEEEB;
+      --c-warm-95:        #F5F4F2;
+      --c-warm-97:        #F8F8F6;
+      --c-focus-blue:     #169CDC;
+      --c-red:            #FF4C00;  /* prod --red */
+      --c-red-bg:         #FFEEEA;  /* prod --error */
+
+      --r-section: 32px;   /* large sections */
+      --r-card:    32px;   /* cards — prod uses 3.2rem */
+      --r-inner:   16px;   /* nested blocks, media */
+      --r-button:  12px;   /* rectangular buttons — prod 1.2rem */
+      --r-pill:    30px;   /* pill buttons / switcher items */
+      --r-input:   40px;   /* inputs */
+    }
+
+    /* ── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    a                       { text-decoration: none; color: inherit; }
+    ul                      { list-style: none; }
+    button                  { font: inherit; background: none; border: none; cursor: pointer; }
+    img                     { display: block; }
+
+    /* ── Base ──────────────────────────────────────────────── */
+    html { font-size: 10px; }
+
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1.6rem;
+      line-height: 1.5;
+      background: var(--c-warm-95);
+      color: var(--c-control-black);
+      /* prod layout: 1200 px content, full-bleed below that */
+      padding: 4px max(0px, calc((100vw - 1200px) / 2)) 0;
+      /* sticky footer */
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── Shared button ─────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      font-size: 1.6rem;
+      border: 2px solid transparent;
+      border-radius: var(--r-button);
+      transition: background 0.15s ease-out;
+      white-space: nowrap;
+    }
+    .btn:focus-visible { outline: 2px solid var(--c-focus-blue); outline-offset: 1px; }
+
+    .btn--secondary {
+      background: var(--c-warm-95);
+      color: var(--c-control-black);
+    }
+    .btn--secondary:hover { background: var(--c-warm-90); }
+    .btn--secondary:active { background: var(--c-warm-85); }
+
+    .btn--icon {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border-radius: 50%;
+      background: var(--c-warm-95);
+    }
+    .btn--icon:hover { background: var(--c-warm-90); }
+
+    .btn--dark {
+      align-self: flex-start;
+      background: var(--c-black);
+      color: var(--c-white);
+    }
+    .btn--dark:hover { background: var(--c-black-80); }
+
+    /* ════════════════════════════════════════════════════════
+       HEADER
+       ════════════════════════════════════════════════════════ */
+    .site-header {
+      display: flex;
+      align-items: center;
+      height: 80px;
+      padding: 0 16px;
+      background: var(--c-white);
+      border-radius: var(--r-section);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin-bottom: 4px;
+    }
+
+    /* Logo */
+    .header-logo { display: flex; align-items: center; flex: 1; }
+    .header-logo svg { height: 30px; width: auto; }
+
+    /* Nav switcher — centred between logo and actions */
+    .header-nav { margin: 0 auto; }
+
+    .nav-switcher {
+      display: flex;
+      background: var(--c-warm-95);
+      border-radius: 16px;
+      height: 48px;
+      padding: 4px;
+      gap: 2px;
+    }
+
+    .nav-switcher__tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 160px;
+      padding: 0 16px;
+      font-size: 1.6rem;
+      border-radius: var(--r-button);
+      transition: background 0.15s ease-out, color 0.15s ease-out;
+      white-space: nowrap;
+    }
+    .nav-switcher__tab--active {
+      background: var(--c-control-black);
+      color: var(--c-white);
+    }
+    .nav-switcher__tab--inactive { color: var(--c-control-black); }
+    .nav-switcher__tab--inactive:hover { background: var(--c-warm-90); }
+
+    /* Right actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      flex: 1;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ════════════════════════════════════════════════════════ */
+    .site-main { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+
+    /* Section wrapper (white rounded block) */
+    .content-section {
+      background: var(--c-white);
+      border-radius: var(--r-section);
+      padding: 64px;
+      flex: 1;
+    }
+
+    .content-section__title {
+      font-size: 4.3rem;
+      font-weight: 500;
+      line-height: 4rem;
+      letter-spacing: -0.025em;
+      margin-bottom: 24px;
+    }
+
+    h2.content-section__title {
+      font-size: 2.8rem;
+      line-height: 3.1rem;
+    }
+
+    /* Cards row */
+    .cards-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .card {
+      flex: 1;
+      min-width: 0;
+      background: var(--c-warm-95);
+      border-radius: var(--r-card);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card__title {
+      font-size: 2rem;
+      font-weight: 500;
+      line-height: 2.4rem;
+    }
+
+    .card__body {
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--c-text-grey);
+      line-height: 1.6;
+    }
+
+    /* Input field */
+    .form-field { display: flex; flex-direction: column; gap: 6px; }
+
+    .form-field__label {
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+    }
+
+    .form-field__input {
+      width: 100%;
+      height: 56px;
+      padding: 0 20px;
+      background: var(--c-warm-95);
+      border: 1px solid transparent;
+      border-radius: var(--r-input);
+      font-size: 1.6rem;
+      font-family: inherit;
+      color: var(--c-control-black);
+      transition: background 0.15s ease-out, border-color 0.15s ease-out;
+    }
+    .form-field__input::placeholder { color: var(--c-grey-70); }
+    .form-field__input:focus {
+      outline: 1px solid var(--c-black);
+      outline-offset: -1px;
+      background: var(--c-white);
+      border-color: var(--c-black);
+    }
+
+    /* Order section */
+    .predictor-card {
+      font-size: 2rem;
+      border-radius: var(--r-card);
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      /* default: light green */
+      background: #E9F6EC;
+      color: #1E7B34;
+    }
+    .predictor-card--destination_location_updated,
+    .predictor-card--delivery_interval_updated {
+      /* warning: light red */
+      background: var(--c-red-bg);
+      color: var(--c-red);
+    }
+
+    .notfound-card {
+      margin-top: 24px;
+      font-size: 2rem;
+      border-radius: var(--r-card);
+      padding: 20px 24px;
+      background: var(--c-red-bg);
+      color: var(--c-red);
+    }
+
+    .order-payment {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .order-track {
+      display: flex;
+      flex-direction: column;
+      background: var(--c-warm-97);
+      border-radius: var(--r-card);
+      padding: 24px;
+    }
+
+    /* Track "beads" timeline */
+    .track-item {
+      display: flex;
+      align-items: stretch;
+      gap: 16px;
+      min-height: 64px;
+    }
+
+    .track-marker {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      align-self: stretch;
+      width: 16px;
+    }
+
+    /* connector segments: ::before = line above the bead, ::after = line below */
+    .track-marker::before,
+    .track-marker::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 2px;
+      transform: translateX(-50%);
+      background: var(--c-grey-70);
+    }
+    .track-marker::before { top: 0; bottom: 50%; }
+    .track-marker::after { top: 50%; bottom: 0; }
+    .track-item:first-child .track-marker::before { display: none; }
+    .track-item:last-child .track-marker::after { display: none; }
+
+    .track-bead {
+      position: relative;
+      z-index: 1;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--c-grey-70);
+    }
+
+    /* line before a bead matches the bead; the segment leading into the next
+       bead is yellow only when that next bead is also done */
+    .track-item--done .track-bead,
+    .track-item--done .track-marker::before,
+    .track-item--done:has(+ .track-item--done) .track-marker::after { background: #FCE000; }
+
+    .track-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .track-time {
+      font-size: 1.4rem;
+      line-height: 1.5;
+      min-height: 2.1rem;
+      color: var(--c-text-grey);
+    }
+
+    .track-subtitle {
+      font-size: 1.4rem;
+      line-height: 1.5;
+      min-height: 2.1rem;
+      color: var(--c-text-grey);
+    }
+
+    /* ════════════════════════════════════════════════════════
+       FOOTER
+       ════════════════════════════════════════════════════════ */
+    .site-footer {
+      background: var(--c-black);
+      color: var(--c-white);
+      border-radius: var(--r-section) var(--r-section) 0 0;
+      padding: 64px;
+      margin-top: 4px;
+    }
+
+    .footer-layout {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    /* Left: logo + nav + text */
+    .footer-primary { flex: 1 1 480px; display: flex; flex-direction: column; gap: 20px; }
+
+    .footer-logo { height: 30px; width: auto; align-self: flex-start; }
+
+    .footer-body { display: flex; gap: 48px; flex-wrap: wrap; }
+
+    /* Navigation columns */
+    .footer-nav { min-width: 300px; display: flex; flex-direction: column; gap: 0; }
+
+    .footer-nav__group { display: flex; flex-direction: column; }
+
+    /* Hidden checkbox — the accordion toggle */
+    .footer-nav__toggle { display: none; }
+
+    /* Label acts as the clickable title row */
+    .footer-nav__group-title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 0;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--c-grey-90);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    /* Chevron arrow inside the label */
+    .footer-nav__arrow {
+      flex-shrink: 0;
+      color: var(--c-grey-90);
+      transition: transform 0.2s ease;
+    }
+
+    /* Links list: collapsed by default */
+    .footer-nav__links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding-bottom: 0;
+      transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.5s ease;
+    }
+
+    /* Expand when checkbox is checked — adjacent sibling chain */
+    .footer-nav__toggle:checked + .footer-nav__group-title + .footer-nav__links {
+      max-height: 100rem;
+      opacity: 1;
+      padding-bottom: 14px;
+    }
+
+    /* Rotate arrow when open */
+    .footer-nav__toggle:checked + .footer-nav__group-title .footer-nav__arrow { transform: rotate(180deg); }
+
+    .footer-nav__link {
+      font-size: 1.6rem;
+      color: var(--c-text-grey);
+      transition: color 0.15s ease-out;
+    }
+    .footer-nav__link:hover { color: var(--c-white); }
+
+    /* Disclaimer + legal */
+    .footer-text { flex: 1 1 320px; display: flex; flex-direction: column; gap: 20px; }
+
+    .footer-disclaimer {
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+      line-height: 1.5rem;
+    }
+
+    .footer-legal-links { display: flex; flex-direction: column; gap: 10px; }
+
+    .footer-legal-link {
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+      text-decoration: underline;
+      transition: color 0.15s ease-out;
+    }
+    .footer-legal-link:hover { color: var(--c-white); }
+
+    /* Right: country selector */
+    .footer-countries {
+      min-width: 204px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .footer-countries__toggle { display: none; }
+
+    .footer-countries__title {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      padding: 14px 0;
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--c-grey-90);
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .footer-countries__arrow {
+      flex-shrink: 0;
+      color: var(--c-grey-90);
+      transition: transform 0.2s ease;
+    }
+
+    .footer-countries__links {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      padding-bottom: 0;
+      transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.5s ease;
+    }
+
+    .footer-countries__toggle:checked + .footer-countries__title + .footer-countries__links {
+      max-height: 100rem;
+      opacity: 1;
+      padding-bottom: 14px;
+    }
+    .footer-countries__toggle:checked + .footer-countries__title .footer-countries__arrow { transform: rotate(180deg); }
+
+    .footer-countries__link {
+      font-size: 2rem;
+      color: var(--c-text-grey);
+      transition: color 0.15s ease-out;
+    }
+    .footer-countries__link:hover { color: var(--c-white); }
+
+    /* Search form */
+    .section-subtitle {
+      font-size: 2rem;
+      color: var(--c-text-grey);
+      margin-bottom: 32px;
+    }
+
+    .track-form { display: flex; flex-direction: column; gap: 8px; }
+
+    .track-form__row { display: flex; gap: 12px; }
+    .track-form__row .form-field__input { flex: 1 1 auto; min-width: 0; }
+
+    .track-form__submit {
+      flex-shrink: 0;
+      height: 56px;
+      padding: 0 32px;
+      background: var(--c-black);
+      color: var(--c-white);
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .track-form__submit:hover { background: var(--c-black-80); }
+
+    .form-hint {
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+    }
+
+    /* FAQ accordion (same mechanism as the footer) */
+    .faq-item { border-bottom: 1px solid var(--c-grey-90); }
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-toggle { display: none; }
+
+    .faq-question {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+      font-size: 2rem;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .faq-arrow {
+      flex-shrink: 0;
+      color: var(--c-text-grey);
+      transition: transform 0.2s ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      font-size: 1.6rem;
+      line-height: 1.6;
+      color: var(--c-text-grey);
+      transition: max-height 0.25s ease, opacity 0.25s ease, padding 0.25s ease;
+    }
+
+    .faq-toggle:checked + .faq-question + .faq-answer {
+      max-height: 100rem;
+      opacity: 1;
+      padding-bottom: 20px;
+    }
+    .faq-toggle:checked + .faq-question .faq-arrow { transform: rotate(180deg); }
+
+    /* ── Breadcrumbs ───────────────────────────────────────── */
+    .breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+    }
+    .breadcrumbs__link { transition: color 0.15s ease-out; }
+    .breadcrumbs__link:hover { color: var(--c-control-black); }
+    .breadcrumbs__sep { color: var(--c-grey-70); }
+
+    /* ── Inline text link ──────────────────────────────────── */
+    .link-inline {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .link-inline:hover { text-decoration: none; }
+
+    /* ── "Order not found" card ────────────────────────────── */
+    .notfound-card__hint {
+      display: block;
+      margin-top: 8px;
+      font-size: 1.4rem;
+      color: var(--c-text-grey);
+    }
+
+    /* ── Clickable card (entry point to the app) ───────────── */
+    .card--link { transition: background 0.15s ease-out; }
+    .card--link:hover { background: var(--c-warm-90); }
+
+    .card__cta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+    .card__cta svg { flex-shrink: 0; }
+    .card--link:hover .card__cta svg { transform: translateX(3px); }
+    .card__cta svg { transition: transform 0.15s ease-out; }
+
+    /* ── Wide card (business scenario) ─────────────────────── */
+    .card--wide {
+      margin-top: 8px;
+      flex-direction: row;
+      align-items: center;
+      gap: 32px;
+    }
+    .card__content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .card__media { flex: 0 0 40%; }
+
+    /* ── Media (screenshots from the old page) ─────────────── */
+    .media-img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--r-inner);
+    }
+
+    /* ── Two-column section: text + screenshot ─────────────── */
+    .split {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+    }
+    .split__text {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 1.6rem;
+      color: var(--c-text-grey);
+      line-height: 1.6;
+    }
+    .split__media { flex: 0 0 300px; }
+
+    /* ── Numbered steps — prod style: white digit in a red circle ── */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      counter-reset: step;
+    }
+    .steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .steps li::before {
+      counter-increment: step;
+      content: counter(step);
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--c-red);
+      color: var(--c-white);
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 24px;
+      text-align: center;
+    }
+
+    .card__steps {
+      font-size: 1.6rem;
+      line-height: 1.9rem;
+      color: var(--c-control-black);
+    }
+
+    .steps__title { font-size: 1.8rem; font-weight: 500; margin-bottom: 4px; }
+    .steps__body { font-size: 1.6rem; color: var(--c-text-grey); line-height: 1.6; }
+
+    /* ── App store links inside a card ─────────────────────── */
+    .app-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .app-links .btn { background: var(--c-white); }
+    .app-links .btn:hover { background: var(--c-warm-90); }
+    /* buttons standing on the page background, not inside a card */
+    .app-links--row { margin-top: 8px; }
+    .app-links--row .btn { background: var(--c-warm-95); }
+
+    /* ── Delivery statuses note ────────────────────────────── */
+    .status-note {
+      margin-top: 24px;
+      font-size: 1.6rem;
+      color: var(--c-text-grey);
+      line-height: 1.6;
+    }
+
+    /* ── Reasons list ("order not found" section) ──────────── */
+    .reasons {
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .reasons li {
+      background: var(--c-warm-95);
+      border-radius: var(--r-card);
+      padding: 20px 24px;
+      align-items: flex-start;
+    }
+
+    .helper-lines { display: flex; flex-direction: column; gap: 12px; }
+    .helper-lines p { font-size: 1.6rem; color: var(--c-text-grey); line-height: 1.6; }
+
+    /* ── Pickup points block ───────────────────────────────── */
+    .pickup { display: flex; flex-direction: column; gap: 20px; }
+    .pickup__body { font-size: 1.6rem; color: var(--c-text-grey); line-height: 1.6; }
+    .pickup__map-link {
+      display: block;
+      border-radius: var(--r-card);
+      overflow: hidden;
+      background: var(--c-warm-97);
+    }
+    .pickup__map-link .media-img {
+      height: 320px;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 0;
+      transition: transform 0.2s ease-out;
+    }
+    .pickup__map-link:hover .media-img { transform: scale(1.02); }
+
+    /* ════════════════════════════════════════════════════════
+       RESPONSIVE — portrait / narrow screens
+       ════════════════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+      body { padding: 4px 0 0; }
+      .site-main { gap: 2px; }
+
+      .header-nav { display: none; }
+
+      .content-section { padding: 24px 16px; }
+      .header-logo svg { height: 22px; }
+      .btn__long { display: none; }
+
+      .cards-row { flex-direction: column; }
+
+      .track-form__row { flex-direction: column; }
+      .track-form__submit { width: 100%; }
+
+      .site-footer { padding: 40px 24px; }
+      .footer-layout { flex-direction: column; gap: 32px; }
+      .footer-body { flex-direction: column; gap: 24px; }
+      .footer-nav { min-width: 0; }
+      .order-payment { flex-wrap: wrap; }
+
+      .app-links .btn { flex: 1 1 auto; text-align: center; }
+
+      .card--wide { flex-direction: column; align-items: stretch; gap: 20px; }
+      .card__media { flex: none; }
+
+      .split { flex-direction: column; align-items: stretch; gap: 24px; }
+      .split__media { flex: none; align-self: center; max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════ HEADER ════════════ -->
+  <header class="site-header">
+
+    <a class="header-logo" href="https://dostavka.yandex.ru/" aria-label="Яндекс Доставка">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 240 30">
+        <path d="M44.8143 29.0999H41.7985V25.4156H33.4449V29.0999H30.4291V22.5964H31.4243C31.746 21.9129 32.0073 21.1013 32.2084 20.1616C32.4094 19.2005 32.5703 18.186 32.6909 17.1181C32.8115 16.0501 32.892 14.9609 32.9322 13.8503C32.9724 12.7397 32.9925 11.6824 32.9925 10.6786V9.30101H43.2159V22.5964H44.8143V29.0999ZM10.2838 6.16138H8.65525C7.14737 6.16138 6.01143 6.52447 5.24744 7.25064C4.48344 7.97682 4.10144 8.93793 4.10144 10.134C4.10144 10.8174 4.17181 11.4155 4.31255 11.9281C4.45328 12.4193 4.65433 12.8785 4.9157 13.3056C5.19717 13.7328 5.53896 14.1386 5.94106 14.5231C6.36327 14.8861 6.85584 15.2706 7.41879 15.6764L9.25841 16.9899L3.95066 25.4156H0L4.76491 17.8869C4.08134 17.3743 3.46813 16.8511 2.92529 16.3171C2.40256 15.7832 1.96025 15.2172 1.59836 14.6192C1.23646 14.0211 0.954993 13.3804 0.753942 12.6969C0.572996 11.9921 0.482523 11.2126 0.482523 10.3582C0.482523 9.29033 0.653416 8.31854 0.995203 7.44287C1.3571 6.54583 1.87983 5.78762 2.5634 5.16824C3.24698 4.52749 4.09139 4.03626 5.09665 3.69453C6.12201 3.33145 7.29816 3.1499 8.6251 3.1499H13.9328V25.4156H10.2838V6.16138ZM49.3983 18.6238C49.4586 20.0761 49.7803 21.1547 50.3633 21.8595C50.9464 22.5643 51.9315 22.9168 53.3188 22.9168C54.1632 22.9168 54.9975 22.7672 55.8219 22.4682C56.6663 22.1479 57.3599 21.7955 57.9027 21.411V24.3264C57.38 24.7108 56.7165 25.0419 55.9123 25.3195C55.1081 25.5972 54.1431 25.736 53.0172 25.736C50.7654 25.736 49.0263 25.0526 47.7999 23.6856C46.5936 22.3187 45.9905 20.2256 45.9905 17.4064C45.9905 16.189 46.1111 15.0677 46.3523 14.0425C46.6137 13.0173 47.0058 12.131 47.5285 11.3834C48.0512 10.6145 48.7046 10.0272 49.4887 9.62138C50.2929 9.19422 51.2278 8.98064 52.2934 8.98064C53.1579 8.98064 53.942 9.11947 54.6457 9.39713C55.3695 9.67478 55.9827 10.1233 56.4853 10.7427C56.988 11.3621 57.3699 12.163 57.6313 13.1455C57.9128 14.1066 58.0535 15.2919 58.0535 16.7016V18.6238H49.3983ZM28.6196 9.30101V25.4156H25.3324V18.5918H20.2358V25.4156H16.9486V9.30101H20.2358V15.7725H25.3324V9.30101H28.6196ZM64.0549 17.3103V25.4156H60.7677V9.30101H64.0549V17.086L69.3626 9.30101H72.8006L67.6437 16.8618L73.4641 25.4156H69.6039L64.0549 17.3103ZM80.4908 25.736C78.1184 25.736 76.3592 25.0205 75.2132 23.5895C74.0873 22.1585 73.5244 20.0868 73.5244 17.3743C73.5244 16.1569 73.6651 15.0356 73.9466 14.0105C74.2482 12.9639 74.6805 12.0776 75.2434 11.3514C75.8264 10.6039 76.5402 10.0272 77.3846 9.62138C78.229 9.19422 79.2142 8.98064 80.34 8.98064C81.2046 8.98064 81.9485 9.0554 82.5717 9.2049C83.195 9.33305 83.6875 9.51459 84.0494 9.74953V12.8251C83.7076 12.5901 83.2352 12.3659 82.632 12.1523C82.0289 11.9387 81.3956 11.8319 80.7321 11.8319C79.5057 11.8319 78.5607 12.2911 77.8973 13.2095C77.2539 14.1066 76.9322 15.4628 76.9322 17.2782C76.9322 19.0082 77.2238 20.3751 77.8068 21.379C78.3898 22.3828 79.3549 22.8847 80.7019 22.8847C81.4257 22.8847 82.049 22.7886 82.5717 22.5964C83.1146 22.3828 83.6071 22.1158 84.0494 21.7955V24.7429C83.6272 25.0632 83.1246 25.3089 82.5416 25.4797C81.9786 25.6506 81.295 25.736 80.4908 25.736ZM39.9288 12.1203H35.8876V12.7931C35.8876 13.4979 35.8675 14.2881 35.8273 15.1638C35.7871 16.0395 35.7167 16.9258 35.6162 17.8229C35.5157 18.7199 35.375 19.5849 35.194 20.4179C35.0332 21.2508 34.8221 21.977 34.5607 22.5964H39.9288V12.1203ZM52.2331 11.7999C51.3083 11.7999 50.6146 12.163 50.1522 12.8892C49.6898 13.594 49.4385 14.6298 49.3983 15.9968H54.706V15.5803C54.706 15.0463 54.6658 14.5551 54.5854 14.1066C54.505 13.6367 54.3642 13.2309 54.1632 12.8892C53.9822 12.5474 53.7309 12.2805 53.4092 12.0882C53.1077 11.896 52.7156 11.7999 52.2331 11.7999Z" fill="black"/>
+        <path d="M124.732 29.9999V22.3604H126.148C126.63 21.5081 126.971 20.2828 127.172 18.6845C127.392 17.065 127.553 14.9341 127.653 12.2917L127.955 3.1499H140.242V22.3604H142.2V29.9999H138.797V25.3651H128.135V29.9999H124.732ZM131.087 12.8031C131.047 14.1243 130.986 15.2963 130.906 16.3192C130.826 17.342 130.725 18.237 130.605 19.0042C130.505 19.7713 130.384 20.4319 130.244 20.986C130.103 21.5187 129.952 21.9769 129.792 22.3604H136.598V6.15455H131.298L131.087 12.8031Z" fill="black"/>
+        <path d="M150.406 8.9674C151.389 8.9674 152.293 9.14853 153.116 9.5108C153.939 9.87306 154.642 10.4165 155.224 11.141C155.806 11.8442 156.258 12.7179 156.579 13.762C156.921 14.7849 157.091 15.9676 157.091 17.3101C157.091 18.6526 156.921 19.8459 156.579 20.8901C156.258 21.9342 155.806 22.8186 155.224 23.5431C154.642 24.2463 153.939 24.7791 153.116 25.1413C152.293 25.5036 151.389 25.6847 150.406 25.6847C149.422 25.6847 148.518 25.5036 147.695 25.1413C146.872 24.7791 146.169 24.2463 145.587 23.5431C145.005 22.8186 144.543 21.9449 144.202 20.922C143.88 19.8779 143.72 18.6845 143.72 17.342C143.72 15.9995 143.88 14.8062 144.202 13.762C144.543 12.7179 145.005 11.8442 145.587 11.141C146.169 10.4165 146.872 9.87306 147.695 9.5108C148.518 9.14853 149.422 8.9674 150.406 8.9674ZM150.406 22.6801C151.409 22.6801 152.152 22.2539 152.634 21.4015C153.136 20.5491 153.387 19.1853 153.387 17.3101C153.387 15.4348 153.136 14.0817 152.634 13.2506C152.152 12.3982 151.409 11.972 150.406 11.972C149.402 11.972 148.649 12.3982 148.147 13.2506C147.665 14.103 147.424 15.4668 147.424 17.342C147.424 19.2173 147.665 20.5811 148.147 21.4335C148.649 22.2645 149.402 22.6801 150.406 22.6801Z" fill="black"/>
+        <path d="M166.003 25.6847C163.594 25.6847 161.807 24.9709 160.642 23.5431C159.478 22.1154 158.896 20.0484 158.896 17.342C158.896 16.1274 159.036 15.0087 159.317 13.9858C159.618 12.9416 160.06 12.0573 160.642 11.3328C161.245 10.5869 161.978 10.0116 162.841 9.60669C163.704 9.1805 164.708 8.9674 165.853 8.9674C166.756 8.9674 167.529 9.04199 168.172 9.19115C168.814 9.31901 169.326 9.50014 169.707 9.73455V12.9629C169.346 12.7285 168.854 12.5048 168.232 12.2917C167.609 12.0786 166.947 11.972 166.244 11.972C165.059 11.972 164.156 12.4195 163.534 13.3145C162.911 14.1882 162.6 15.4988 162.6 17.2462C162.6 18.9083 162.881 20.2295 163.443 21.2097C164.005 22.19 164.929 22.6801 166.214 22.6801C166.977 22.6801 167.629 22.5842 168.172 22.3924C168.734 22.2006 169.246 21.9342 169.707 21.5933V24.6938C168.844 25.3544 167.609 25.6847 166.003 25.6847Z" fill="black"/>
+        <path d="M179.012 12.2917V25.3651H175.428V12.2917H171.212V9.28705H183.228V12.2917H179.012Z" fill="black"/>
+        <path d="M193.09 18.0453H192.578C191.032 18.0453 189.928 18.237 189.265 18.6206C188.603 18.9829 188.271 19.6222 188.271 20.5385C188.271 21.2204 188.452 21.7744 188.813 22.2006C189.195 22.6055 189.767 22.8079 190.53 22.8079C191.173 22.8079 191.705 22.6907 192.126 22.4563C192.548 22.2006 192.869 21.8916 193.09 21.5294V18.0453ZM196.674 21.4335C196.674 22.7547 196.734 24.0652 196.854 25.3651H193.361C193.301 25.1946 193.241 24.9922 193.18 24.7578C193.14 24.5234 193.11 24.2996 193.09 24.0865H192.939C192.598 24.4701 192.156 24.8217 191.614 25.1413C191.072 25.4397 190.279 25.5888 189.235 25.5888C187.85 25.5888 186.725 25.152 185.862 24.2783C185.019 23.4046 184.597 22.1473 184.597 20.5065C184.597 18.8657 185.23 17.5978 186.494 16.7028C187.759 15.7865 189.767 15.3283 192.518 15.3283H193.09V14.4333C193.09 13.5596 192.889 12.9523 192.488 12.6113C192.086 12.2491 191.454 12.0679 190.59 12.0679C190.128 12.0679 189.657 12.1212 189.175 12.2278C188.693 12.313 188.231 12.4302 187.789 12.5794C187.368 12.7285 186.966 12.899 186.585 13.0908C186.223 13.2826 185.922 13.4744 185.681 13.6662V10.5017C186.223 10.1607 186.946 9.83044 187.85 9.5108C188.753 9.19115 189.807 9.03133 191.012 9.03133C192.919 9.03133 194.335 9.43621 195.258 10.246C196.202 11.0557 196.674 12.4409 196.674 14.4013V21.4335Z" fill="black"/>
+        <path d="M205.88 9.28705C209.233 9.28705 210.909 10.6509 210.909 13.3785C210.909 14.3374 210.668 15.1259 210.186 15.7438C209.725 16.3405 209.082 16.7667 208.259 17.0224C209.283 17.1929 210.076 17.5871 210.638 18.2051C211.2 18.8017 211.481 19.6328 211.481 20.6983C211.481 22.2326 210.98 23.394 209.976 24.1824C208.992 24.9709 207.606 25.3651 205.82 25.3651H199.555V9.28705H205.88ZM203.049 18.5247V22.5522H205.518C206.241 22.5522 206.813 22.3924 207.235 22.0728C207.657 21.7318 207.868 21.1884 207.868 20.4426C207.868 19.7607 207.667 19.2706 207.265 18.9722C206.864 18.6739 206.281 18.5247 205.518 18.5247H203.049ZM203.049 12.0999V15.7438H205.338C206.02 15.7438 206.542 15.584 206.904 15.2644C207.285 14.9447 207.476 14.5079 207.476 13.9538C207.476 12.7179 206.803 12.0999 205.458 12.0999H203.049Z" fill="black"/>
+        <path d="M217.462 17.5978V25.3651H213.878V9.28705H217.462V16.8306L222.522 9.28705H226.136L221.076 16.8306L226.828 25.3651H222.763L217.462 17.5978Z" fill="black"/>
+        <path d="M236.235 18.0453H235.723C234.177 18.0453 233.073 18.237 232.411 18.6206C231.748 18.9829 231.417 19.6222 231.417 20.5385C231.417 21.2204 231.597 21.7744 231.959 22.2006C232.34 22.6055 232.913 22.8079 233.676 22.8079C234.318 22.8079 234.85 22.6907 235.272 22.4563C235.693 22.2006 236.015 21.8916 236.235 21.5294V18.0453ZM239.819 21.4335C239.819 22.7547 239.88 24.0652 240 25.3651H236.506C236.446 25.1946 236.386 24.9922 236.326 24.7578C236.286 24.5234 236.256 24.2996 236.235 24.0865H236.085C235.744 24.4701 235.302 24.8217 234.76 25.1413C234.218 25.4397 233.425 25.5888 232.38 25.5888C230.995 25.5888 229.871 25.152 229.007 24.2783C228.164 23.4046 227.743 22.1473 227.743 20.5065C227.743 18.8657 228.375 17.5978 229.64 16.7028C230.905 15.7865 232.913 15.3283 235.663 15.3283H236.235V14.4333C236.235 13.5596 236.035 12.9523 235.633 12.6113C235.232 12.2491 234.599 12.0679 233.736 12.0679C233.274 12.0679 232.802 12.1212 232.32 12.2278C231.838 12.313 231.377 12.4302 230.935 12.5794C230.513 12.7285 230.112 12.899 229.73 13.0908C229.369 13.2826 229.068 13.4744 228.827 13.6662V10.5017C229.369 10.1607 230.092 9.83044 230.995 9.5108C231.899 9.19115 232.953 9.03133 234.157 9.03133C236.065 9.03133 237.48 9.43621 238.404 10.246C239.347 11.0557 239.819 12.4409 239.819 14.4013V21.4335Z" fill="black"/>
+        <g clip-path="url(#logo-box-clip-outer)">
+          <rect x="90.6887" width="28.2519" height="30" rx="14.126" fill="#E6E6E6"/>
+          <g clip-path="url(#logo-box-clip-inner)">
+            <path d="M89.7 6.67495L102.06 1.94995L114.42 6.67495V23.475L102.06 28.1999L89.7 23.475V6.67495Z" fill="#FF7751"/>
+            <path d="M89.7 6.67505L102.06 11.4V28.2L89.7 23.475V6.67505Z" fill="#E13100"/>
+            <path d="M114.42 6.67505L102.06 11.4V28.2L114.42 23.475V6.67505Z" fill="#FC4714"/>
+            <path d="M113.06 20.4648C110.407 23.1945 106.15 24.7559 103.42 24.1914V22.7139C106.095 23.2934 110.387 21.8784 113.06 18.9883V20.4648ZM107.583 16.1533L106.707 16.4932V20.4541L104.515 21.3008V17.3408L103.638 17.6777L105.611 11.9629L107.583 16.1533ZM112.842 14.1211L111.965 14.4609V18.4209L109.774 19.2676V15.3066L108.898 15.6455L110.87 9.93066L112.842 14.1211Z" fill="white"/>
+          </g>
+        </g>
+        <defs>
+          <clipPath id="logo-box-clip-outer">
+            <rect x="90.6887" width="28.2519" height="30" rx="14.126" fill="white"/>
+          </clipPath>
+          <clipPath id="logo-box-clip-inner">
+            <rect width="24.7204" height="26.25" fill="white" transform="translate(89.7 1.94995)"/>
+          </clipPath>
+        </defs>
+      </svg>
+    </a>
+
+    <nav class="header-nav" aria-label="Разделы сайта">
+      <div class="nav-switcher" role="tablist">
+        <a class="nav-switcher__tab nav-switcher__tab--inactive"
+           href="https://dostavka.yandex.ru/"
+           role="tab" aria-selected="false">Нужна доставка</a>
+        <a class="nav-switcher__tab nav-switcher__tab--inactive"
+           href="https://dostavka.yandex.ru/delivery-jobs/"
+           role="tab" aria-selected="false">Для курьеров</a>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn--secondary" href="https://dostavka.yandex.ru/account2/">Войти<span class="btn__long">&nbsp;в кабинет</span></a>
+    </div>
+
+  </header>
+
+
+  <!-- ════════════ MAIN ════════════ -->
+  <main class="site-main">
+
+    <section class="content-section" aria-labelledby="section-title">
+      <nav class="breadcrumbs" aria-label="Хлебные крошки">
+        <a class="breadcrumbs__link" href="https://dostavka.yandex.ru/">Яндекс Доставка</a>
+        <span class="breadcrumbs__sep" aria-hidden="true">→</span>
+        <span class="breadcrumbs__current" aria-current="page">Отследить заказ</span>
+      </nav>
+      <h1 class="content-section__title" id="section-title">Отследить заказ Яндекс Доставки</h1>
+      <p class="section-subtitle">Введите трек-номер или номер заказа — покажем статус, ожидаемую дату и историю движения.</p>
+
+      <form class="track-form" action="" method="get">
+        <label class="form-field__label" for="order_tracking_id">Трек-номер</label>
+        <div class="track-form__row">
+          <input
+            class="form-field__input"
+            id="order_tracking_id"
+            name="order_tracking_id"
+            type="text"
+            placeholder="Например, LO-835645864"
+          />
+          <input class="btn track-form__submit" type="submit" value="Отследить">
+        </div>
+        <div class="form-hint">6–40 символов: латиница, цифры, дефис</div>
+      </form>
+
+      <div class="notfound-card">
+        Заказ LO-000000000 не найден — <a class="link-inline" href="#order-not-found">что делать, если заказ не находится</a>
+        <span class="notfound-card__hint">Проверьте номер: формат LO-XXXXXXXXX, без лишних пробелов</span>
+      </div>
+    </section>
+
+
+    <section class="content-section" aria-labelledby="howto-title">
+      <h2 class="content-section__title" id="howto-title">Как отследить заказ</h2>
+      <div class="cards-row">
+        <article class="card">
+          <h3 class="card__title">По трек-номеру</h3>
+          <p class="card__body">Введите трек-номер на этой странице — статус и маршрут откроются сразу, без приложения. Пример: LO-835645864.</p>
+        </article>
+        <article class="card">
+          <h3 class="card__title">По ссылке из SMS</h3>
+          <p class="card__body">Когда заказ передают в доставку, приходит SMS со ссылкой на отслеживание в реальном времени.</p>
+        </article>
+        <a class="card card--link" href="https://yandex.go.link/2QxMW" target="_blank" rel="noopener noreferrer">
+          <h3 class="card__title">В приложении Яндекс Go</h3>
+          <p class="card__body">Откройте Яндекс Go → активные доставки: статус, маршрут и сведения об отправлении. Все ваши доставки собраны в одном месте — номер вводить не нужно.</p>
+          <span class="card__cta">
+            Перейти в приложение
+            <svg viewBox="0 0 24 24" fill="none" width="20" height="20" aria-hidden="true">
+              <path d="M5 12h13M13 7l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+      <article class="card card--wide">
+        <div class="card__content">
+          <h3 class="card__title">Если вы бизнес и делали заказ через кабинет, по API или с помощью модуля</h3>
+          <ol class="steps card__steps">
+            <li>Войдите в кабинет по Яндекс ID</li>
+            <li>Откройте раздел «Заказы»</li>
+            <li>Найдите нужный заказ по номеру или получателю</li>
+            <li>Посмотрите статус и маршрут доставки</li>
+          </ol>
+          <div class="app-links">
+            <a class="btn btn--secondary" href="https://dostavka.yandex.ru/auth/list">Войти в кабинет</a>
+          </div>
+        </div>
+        <div class="card__media">
+          <img
+            class="media-img"
+            src="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/Frame_2087328571_82859a49d7.png"
+            alt="Раздел «Заказы» в бизнес-кабинете Яндекс Доставки"
+            width="1910"
+            height="1995"
+            loading="lazy"
+          />
+        </div>
+      </article>
+    </section>
+
+    <section class="content-section" aria-labelledby="statuses-title" id="delivery-statuses">
+      <h2 class="content-section__title" id="statuses-title">Что значат статусы доставки</h2>
+      <div class="faq-item">
+        <input type="checkbox" id="status-1" class="faq-toggle">
+        <label class="faq-question" for="status-1">
+          Заказ оформлен
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Отправитель создал заказ, но курьер его ещё не забрал. Дождитесь, пока заказ передадут в доставку: в отслеживании он появляется не сразу.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-2" class="faq-toggle">
+        <label class="faq-question" for="status-2">
+          Передана курьеру
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Курьер забрал заказ у отправителя. Делать ничего не нужно — следите за статусом.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-3" class="faq-toggle">
+        <label class="faq-question" for="status-3">
+          В пути
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Отправление едет между складами и пунктами выдачи. Ожидаемую дату получения видно в отслеживании.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-4" class="faq-toggle">
+        <label class="faq-question" for="status-4">
+          В пункте выдачи
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Заказ ждёт вас в пункте выдачи или постамате. Возьмите номер заказа (или фамилию для ПВЗ) и код из SMS. Хранение — 7 дней в ПВЗ, 3 дня в постамате.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-5" class="faq-toggle">
+        <label class="faq-question" for="status-5">
+          Задерживается
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Доставка идёт дольше запланированного срока. Курьер делает до 3 попыток доставки с интервалом не меньше суток — дождитесь следующей попытки, актуальная дата получения видна в отслеживании.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-6" class="faq-toggle">
+        <label class="faq-question" for="status-6">
+          Доставлено
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Заказ получили — курьер передал его или его забрали из пункта выдачи. Если заказ вы не получали, свяжитесь с отправителем заказа.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="status-7" class="faq-toggle">
+        <label class="faq-question" for="status-7">
+          Возвращается отправителю
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Заказ не забрали или 3 попытки доставки не удались. Возврат занимает примерно срок прямой доставки плюс до 10 дней. Повторную доставку согласуйте с отправителем.</div>
+      </div>
+
+      <p class="status-note">Статус долго не меняется — это нормально: между складами отправление может ехать несколько дней, и статус в это время не обновляется. Ожидаемая дата получения видна в отслеживании и обновляется, если срок меняется.</p>
+    </section>
+
+    <section class="content-section" aria-labelledby="notfound-title" id="order-not-found">
+      <h2 class="content-section__title" id="notfound-title">Что делать, если заказ не найден</h2>
+      <ol class="steps reasons">
+        <li>
+          <div>
+            <h3 class="steps__title">Проверьте номер</h3>
+            <p class="steps__body">Формат номера — LO-XXXXXXXXX. Скопируйте его целиком, без лишних пробелов и переносов строки.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 class="steps__title">Заказ появляется в отслеживании не сразу</h3>
+            <p class="steps__body">После оформления нужно время, чтобы заказ попал в систему. Попробуйте проверить статус позже.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <h3 class="steps__title">Номер выдала другая служба доставки</h3>
+            <p class="steps__body">Здесь отслеживаются только заказы Яндекс Доставки. Если номер не наш, проверьте статус на сайте своей службы доставки.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="helper-lines">
+        <p>Где взять номер? Он есть в СМС от Яндекс Доставки, в письме магазина и в приложении Яндекс Go.</p>
+        <p>Не знаете номер? Все ваши доставки — в приложении Яндекс Go, вводить ничего не нужно.</p>
+        <p>Заказывали экспресс-доставку по городу? Такие заказы по номеру не отслеживаются — <a class="link-inline" href="#express-tracking">смотрите статус в Яндекс Go</a>.</p>
+      </div>
+
+      <div class="app-links app-links--row">
+        <a class="btn btn--secondary" href="https://apps.apple.com/ru/app/id472650686" target="_blank" rel="noopener noreferrer">App Store →</a>
+        <a class="btn btn--secondary" href="https://play.google.com/store/apps/details?id=ru.yandex.taxi" target="_blank" rel="noopener noreferrer">Google Play →</a>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="express-title" id="express-tracking">
+      <h2 class="content-section__title" id="express-title">Экспресс-доставку отслеживают в Яндекс Go</h2>
+      <div class="split">
+        <div class="split__text">
+          <p>По номеру на этой странице отслеживаются заказы Яндекс Доставки по России: до пункта выдачи, постамата или курьером на следующий день.</p>
+          <p>Экспресс-доставку по городу — срочно или в течение дня — по номеру отследить нельзя. Маршрут курьера, время в пути и машину видно в приложении Яндекс Go: откройте раздел с доставками и выберите нужный заказ. Получателю приходит SMS со ссылкой на отслеживание, приложение для неё не нужно.</p>
+          <div class="app-links app-links--row">
+            <a class="btn btn--secondary" href="https://apps.apple.com/ru/app/id472650686" target="_blank" rel="noopener noreferrer">App Store →</a>
+            <a class="btn btn--secondary" href="https://play.google.com/store/apps/details?id=ru.yandex.taxi" target="_blank" rel="noopener noreferrer">Google Play →</a>
+          </div>
+        </div>
+        <div class="split__media">
+          <img
+            class="media-img"
+            src="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/1619_Map_100_d_3_2ffdb9aa25.png"
+            alt="Маршрут курьера экспресс-доставки в приложении Яндекс Go"
+            width="970"
+            height="1117"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="pickup-title">
+      <h2 class="content-section__title" id="pickup-title">Пункты выдачи заказов</h2>
+      <div class="pickup">
+        <p class="pickup__body">Пункты выдачи и постаматы Яндекс Доставки по всей России. Посмотрите на карте, какой ближе к вам, и выберите его при оформлении заказа.</p>
+        <a class="pickup__map-link" href="https://dostavka.yandex.ru/pickup-point/">
+          <img
+            class="media-img"
+            src="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/Map_h_2x_1bb4e7544c.png"
+            alt="Карта пунктов выдачи Яндекс Доставки"
+            width="1200"
+            height="950"
+            loading="lazy"
+          />
+        </a>
+        <div class="app-links">
+          <a class="btn btn--secondary" href="https://dostavka.yandex.ru/pickup-point/">Найти пункт выдачи</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section" aria-labelledby="faq-title">
+      <h2 class="content-section__title" id="faq-title">Частые вопросы</h2>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-1" class="faq-toggle">
+        <label class="faq-question" for="faq-1">
+          Как отследить заказ Яндекс Доставки?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Введите трек-номер или номер заказа в поле выше и нажмите «Отследить». Статус и история движения появятся под формой.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-2" class="faq-toggle">
+        <label class="faq-question" for="faq-2">
+          Где найти номер заказа для отслеживания?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">В день доставки приходит пуш-уведомление в Яндекс Go со ссылкой на отслеживание. Если приложения нет — SMS со ссылкой на веб-версию Яндекс Go. Номер заказа также есть в письме-подтверждении от отправителя.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-3" class="faq-toggle">
+        <label class="faq-question" for="faq-3">
+          Как отследить заказ без трек-номера?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Откройте раздел с доставками в <a class="link-inline" href="https://apps.apple.com/ru/app/id472650686" target="_blank" rel="noopener noreferrer">Яндекс Go</a> — там собраны все заказы, номер вводить не нужно. Если приложения нет, перейдите по ссылке из SMS. Номер заказа также есть в письме-подтверждении от отправителя.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-4" class="faq-toggle">
+        <label class="faq-question" for="faq-4">
+          Не пришла ссылка из SMS — как отследить?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">SMS приходит в день доставки, поэтому раньше ссылки не будет. Проверьте папку со спамом и уточните у отправителя номер телефона, который он указал. Отследить заказ можно и без ссылки — введите номер заказа в поле выше.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-5" class="faq-toggle">
+        <label class="faq-question" for="faq-5">
+          Сколько хранится заказ и что нужно для получения?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">В пункте выдачи (ПВЗ) — 7 дней, продление ещё на 7 дней в приложении Яндекс Go. В постамате — 3 дня, продление ещё на 2. Для получения нужен номер заказа (или фамилия в ПВЗ) и код из SMS; постоплата в постамате недоступна.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-6" class="faq-toggle">
+        <label class="faq-question" for="faq-6">
+          Можно ли изменить адрес или дату доставки?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Адрес можно изменить один раз до статуса «Доставлен» — в том числе сменить способ (курьер, ПВЗ или постамат). Новый адрес должен попадать в зону доставки. Интервал на день курьерской доставки переносится по согласованию с курьером.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-7" class="faq-toggle">
+        <label class="faq-question" for="faq-7">
+          Что делать, если заказ задерживается?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">Курьер делает до 3 попыток доставки, между попытками не меньше суток — поэтому в некоторых городах ожидание занимает несколько дней. Актуальная дата получения видна в отслеживании и обновляется, если срок меняется.</div>
+      </div>
+
+      <div class="faq-item">
+        <input type="checkbox" id="faq-8" class="faq-toggle">
+        <label class="faq-question" for="faq-8">
+          Что значат статусы доставки?
+          <svg class="faq-arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <div class="faq-answer">«В пути» — отправление едет между складами и пунктами выдачи. «В пункте выдачи» — заказ ждёт получателя; нужны номер заказа или фамилия и код из SMS. «Доставлено» — заказ получили. «Возвращается отправителю» — заказ не забрали или 3 попытки доставки не удались; возврат занимает примерно срок прямой доставки плюс до 10 дней. Если статус «Доставлено», но заказ не получали, свяжитесь с отправителем заказа. Полная расшифровка всех статусов — в разделе <a class="link-inline" href="#delivery-statuses">«Что значат статусы доставки»</a>.</div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ════════════ FOOTER ════════════ -->
+  <footer class="site-footer">
+    <div class="footer-layout">
+
+      <div class="footer-primary">
+        <img
+          class="footer-logo"
+          src="https://yastatic.net/s3/newbiz-static-ru/strapi-admin/YD_Logo_Full_3_1_b86e83afab.svg"
+          alt="Яндекс Доставка"
+          width="240"
+          height="30"
+          loading="lazy"
+        />
+
+        <div class="footer-body">
+
+          <nav class="footer-nav" aria-label="Нижняя навигация">
+
+            <div class="footer-nav__group">
+              <input type="checkbox" id="nav-business" class="footer-nav__toggle">
+              <label class="footer-nav__group-title" for="nav-business">
+                Бизнесу
+                <svg class="footer-nav__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+                  <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <ul class="footer-nav__links">
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/business/">Стать клиентом</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/account2/">Войти в кабинет</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/business/#form">Написать в поддержку</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/about/">О компании</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-nav__group">
+              <input type="checkbox" id="nav-users" class="footer-nav__toggle">
+              <label class="footer-nav__group-title" for="nav-users">
+                Пользователям
+                <svg class="footer-nav__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+                  <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <ul class="footer-nav__links">
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/ndd/tracking">Отследить заказ</a></li>
+                <li><a class="footer-nav__link" href="mailto:help@dostavka.yandex.ru">Написать в поддержку</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/safety/">Как защититься от мошенников</a></li>
+                <li><a class="footer-nav__link" href="https://yandex.ru/legal/insurance_delivery_consent/ru/">Как работает страховка</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-nav__group">
+              <input type="checkbox" id="nav-couriers" class="footer-nav__toggle">
+              <label class="footer-nav__group-title" for="nav-couriers">
+                Курьерам
+                <svg class="footer-nav__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+                  <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <ul class="footer-nav__links">
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/for-courier/">Работа курьером</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/for-courier/courier-driver/">Работа автокурьером</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/for-driver/cargo-driver/">Работа водителем грузовой машины</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-nav__group">
+              <input type="checkbox" id="nav-careers" class="footer-nav__toggle">
+              <label class="footer-nav__group-title" for="nav-careers">
+                Карьера в Доставке
+                <svg class="footer-nav__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+                  <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <ul class="footer-nav__links">
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/careers/">Немного про Доставку</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/careers/jobs/">Вакансии</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-nav__group">
+              <input type="checkbox" id="nav-cities" class="footer-nav__toggle">
+              <label class="footer-nav__group-title" for="nav-cities">
+                Доставка в вашем городе
+                <svg class="footer-nav__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+                  <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+                </svg>
+              </label>
+              <ul class="footer-nav__links">
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/region/">Заказать доставку прямо сейчас</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/express-delivery/region/">Экспресс-доставка</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/courier/region/">Курьерская доставка</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/cargo/region/">Грузовая доставка</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/next-day-delivery/region/">Доставка на следующий день</a></li>
+                <li><a class="footer-nav__link" href="https://dostavka.yandex.ru/24-hours/">Круглосуточная доставка</a></li>
+              </ul>
+            </div>
+
+          </nav>
+
+          <div class="footer-text">
+            <p class="footer-disclaimer">
+              Яндекс Доставка — услуги для юридических лиц. Яндекс Go — информационный сервис.<br><br>
+              Транспортные и иные услуги оказываются партнёрами сервиса.<br><br>
+              Google Play и логотип Google Play являются товарными знаками корпорации Google LLC.<br><br>
+              App Store является знаком обслуживания компании Apple Inc.<br><br>
+              App Gallery, HUAWEI и логотип HUAWEI являются товарными знаками компании Huawei Technologies Co., Ltd.<br><br>
+              Скидка 30% действует на все доставки в приложении Яндекс Go до 30.06.2026 по тарифу «На маркетплейсы» при оплате картой.
+            </p>
+            <ul class="footer-legal-links">
+              <li><a class="footer-legal-link" href="https://dostavka.yandex.ru/tariffs/rus/moscow/courier/">Тарифы</a></li>
+              <li><a class="footer-legal-link" href="https://taxi.yandex.ru/action/logistics/">Партнёры</a></li>
+              <li><a class="footer-legal-link" href="https://yandex.ru/legal/delivery_tou/">Пользовательское соглашение</a></li>
+              <li><a class="footer-legal-link" href="https://yandex.ru/legal/confidential/ru/">Политика конфиденциальности</a></li>
+              <li><a class="footer-legal-link" href="https://yandex.ru/legal/recommendations/#index__dostavka">Как работают рекомендации</a></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="footer-countries">
+        <input type="checkbox" id="nav-countries" class="footer-countries__toggle">
+        <label class="footer-countries__title" for="nav-countries">
+          Россия
+          <svg class="footer-countries__arrow" viewBox="0 0 24 24" fill="none" width="24" height="24" aria-hidden="true">
+            <path d="M16.5 10.9844L12 15.4844L7.5 10.9844" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <ul class="footer-countries__links">
+          <li><a class="footer-countries__link" href="https://delivery.yandex.com/am-ru/">Армения</a></li>
+          <li><a class="footer-countries__link" href="https://delivery.yandex.by/">Беларусь</a></li>
+          <li><a class="footer-countries__link" href="https://delivery.yandex.com/ge-en/">Грузия</a></li>
+          <li><a class="footer-countries__link" href="https://delivery.yandex.kz/">Казахстан</a></li>
+          <li><a class="footer-countries__link" href="https://delivery.yandex.kg/">Кыргызстан</a></li>
+          <li><a class="footer-countries__link" href="https://dostavka.yandex.ru/">Россия</a></li>
+          <li><a class="footer-countries__link" href="https://delivery.yandex.uz/">Узбекистан</a></li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript">
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js', 'ym');
+
+    ym(62915509, 'init', {webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/62915509" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+<!-- Цели Метрики: воронка поиска по номеру заказа.
+     tracking_search_focus  — человек начал вводить номер (фокус в поле, один раз за загрузку)
+     tracking_search_submit — отправил форму с непустым номером
+     tracking_search_done   — страница с результатом открылась после его же отправки
+                              (страховка: submit может не долететь из-за перехода) -->
+<script type="text/javascript">
+    (function () {
+        var COUNTER = 62915509;
+        var FLAG = 'ndd_tracking_search';
+
+        function reachGoal(target) {
+            if (typeof window.ym === 'function') { window.ym(COUNTER, 'reachGoal', target); }
+        }
+
+        function ready(fn) {
+            if (document.readyState !== 'loading') { fn(); }
+            else { document.addEventListener('DOMContentLoaded', fn); }
+        }
+
+        ready(function () {
+            var form = document.querySelector('.track-form');
+            var input = document.getElementById('order_tracking_id');
+
+            if (input) {
+                input.addEventListener('focus', function onFirstFocus() {
+                    input.removeEventListener('focus', onFirstFocus);
+                    reachGoal('tracking_search_focus');
+                });
+            }
+
+            if (form && input) {
+                form.addEventListener('submit', function () {
+                    if (!input.value.trim()) { return; }
+                    reachGoal('tracking_search_submit');
+                    try { sessionStorage.setItem(FLAG, '1'); } catch (e) {}
+                });
+            }
+
+            try {
+                if (sessionStorage.getItem(FLAG)) {
+                    sessionStorage.removeItem(FLAG);
+                    reachGoal('tracking_search_done');
+                }
+            } catch (e) {}
+        });
+    })();
+</script>
+</body>
+</html>

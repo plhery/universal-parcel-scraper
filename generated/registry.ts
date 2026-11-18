@@ -788,6 +788,7 @@ import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
+import { adapter as yandexDelivery } from '../carriers/yandex-delivery/adapter.js';
 import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
@@ -1599,6 +1600,7 @@ export const REGISTRY: RegistryDefinition = {
     "xyl-ships": xylShips,
     "yalidine": yalidine,
     "yamato": yamato,
+    "yandex-delivery": yandexDelivery,
     "yanwen": yanwen,
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
@@ -3433,7 +3435,7 @@ export const REGISTRY: RegistryDefinition = {
     "yalidine": "yalidine",
     "yamato": "yamato",
     "yamato-america": "universal",
-    "yandex-delivery": "universal",
+    "yandex-delivery": "yandex-delivery",
     "yanwen": "yanwen",
     "yc-delivery": "universal",
     "ycs-logistics": "ycs-logistics",

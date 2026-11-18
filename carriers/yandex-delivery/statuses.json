@@ -1,4 +1,152 @@
 {
   "carrier": "yandex-delivery",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Создан",
+      "stage": "registered",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page."
+    },
+    {
+      "wording": "Принят пунктом приёма",
+      "stage": "accepted",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page: the drop-off point took the parcel in."
+    },
+    {
+      "wording": "Едет в сортировочный центр",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page."
+    },
+    {
+      "wording": "Приехал в сортировочный центр",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page."
+    },
+    {
+      "wording": "Отгружен из сортировочного центра",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page."
+    },
+    {
+      "wording": "Принят пунктом выдачи",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page, a minute before it waits for the recipient there."
+    },
+    {
+      "wording": "Ждёт вручения в пункте выдачи",
+      "stage": "ready_for_pickup",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page, with the storage deadline under it."
+    },
+    {
+      "wording": "Изменён срок хранения в пункте выдачи",
+      "stage": null,
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page: the pickup point keeps the parcel longer."
+    },
+    {
+      "wording": "Отменен",
+      "stage": "exception",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page, after its storage ran out."
+    },
+    {
+      "wording": "Возвращается в пункт выдачи",
+      "stage": "returned",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page, with the cancellation."
+    },
+    {
+      "wording": "Изменена дата возврата",
+      "stage": null,
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page: the return is put off to another day."
+    },
+    {
+      "wording": "Возврат принят пунктом приема",
+      "stage": "returned",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page, without a clock."
+    },
+    {
+      "wording": "Ждёт вручения в пункте приема",
+      "stage": "returned",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page: back at the drop-off point, waiting for the sender."
+    },
+    {
+      "wording": "Заказ утилизирован",
+      "stage": "exception",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "In the public sample's page."
+    },
+    {
+      "wording": "Заказ оформлен",
+      "stage": "registered",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    },
+    {
+      "wording": "Передана курьеру",
+      "stage": "accepted",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    },
+    {
+      "wording": "В пути",
+      "stage": "in_transit",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    },
+    {
+      "wording": "В пункте выдачи",
+      "stage": "ready_for_pickup",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    },
+    {
+      "wording": "Задерживается",
+      "stage": null,
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section. A delivery taking longer than planned."
+    },
+    {
+      "wording": "Доставлено",
+      "stage": "delivered",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    },
+    {
+      "wording": "Возвращается отправителю",
+      "stage": "returned",
+      "language": "ru",
+      "confirmedBy": "portal",
+      "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."
+    }
+  ]
 }
