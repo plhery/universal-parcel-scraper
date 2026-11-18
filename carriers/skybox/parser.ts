@@ -67,8 +67,8 @@ function eventsOf($: CheerioAPI): CarrierEvent[] {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     };
   });
-  // Newest first; the table lists them so, and a stable sort keeps scans of one minute in its order.
-  return events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  // The table is newest first, including when local clocks turn back.
+  return events;
 }
 
 /**

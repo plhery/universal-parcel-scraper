@@ -149,6 +149,16 @@ export function parseRozetkaHistory(payload: unknown, summary: RozetkaSummary): 
     if (scans.length + group.statuses.length > MAX_SCANS) invalid('ROZETKA Delivery returned an oversized history');
     scans.push(...group.statuses.map(scanOf));
   }
+  // The backend supplies reached scans oldest first. Choose the second occurrence of
+  // a repeated hour when the first would place a scan before its predecessor.
+  for (let index = 1; index < scans.length; index++) {
+    const scan = scans[index]!, previous = scans[index - 1]!.order;
+    if (scan.order < previous && scan.event.local_time) {
+      const candidates = DateTime.fromISO(scan.event.local_time, { zone: 'Europe/Kyiv' }).getPossibleOffsets();
+      const later = candidates.find(clock => clock.toMillis() >= previous);
+      if (later) scan.order = later.toMillis();
+    }
+  }
   // Stable ties reverse the official oldest-first order, keeping the last
   // reached scan first when several movements share a clock.
   const sorted = scans.map((scan, index) => ({ ...scan, index }))
