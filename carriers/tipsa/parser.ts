@@ -133,7 +133,7 @@ export function parseTipsaDetail(html: string, raw: string): CarrierResult {
     else if (round !== undefined && AGENCY_READ.test(key) && day === round) {
       event.stage = 'out_for_delivery';
       loading.add(event);
-    } else if (event.stage) round = undefined;
+    } else round = undefined;
   }
   const newest = events[0]!;
   const current = tipsaStatus(loading.has(newest) ? 'REPARTO' : newest.description!);
