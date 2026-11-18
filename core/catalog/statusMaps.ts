@@ -10,6 +10,7 @@
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
@@ -819,6 +820,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'western-bid': westernBid,
   libanpost,
   'om-logistics': omLogistics,
+  'apd-parcel': apdParcel,
   'amazon-order': amazonOrder,
   whatsship: whatsShip,
   'onlog-express': onlogExpress,

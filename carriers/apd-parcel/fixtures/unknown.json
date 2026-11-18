@@ -1,0 +1,11 @@
+{
+  "query": {
+    "@attributes": {
+      "item": "R0000000",
+      "status": "failed",
+      "style": "item",
+      "count": "0",
+      "reason": "no history found"
+    }
+  }
+}

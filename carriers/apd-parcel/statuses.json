@@ -1,4 +1,11 @@
 {
   "carrier": "apd-parcel",
-  "entries": []
+  "entries": [
+    {"code": "pickup", "wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "The tracking page's script shows it as Picked Up."},
+    {"code": "indepot", "wording": "Arrived In Depot", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The script's In Depot step."},
+    {"code": "carriermanifest", "wording": "Transshipped", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "Handed to another carrier; the summary shows it as out for delivery only when no driver loaded the parcel."},
+    {"code": "accept", "wording": "Loaded for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "A driver accepted the parcel; the script's Out for Delivery step."},
+    {"code": "failed", "wording": "Attempted Delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "The script's Attempted Delivery step."},
+    {"code": "deliver", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "The script's Delivered step, with the signature and the name taken."}
+  ]
 }

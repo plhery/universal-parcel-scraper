@@ -9191,7 +9191,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Adelaide",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "apd-parcel"
     },
     "canaryUrl": "https://online.apdparcel.com.au/track",
     "trackingSearchUrl": "https://online.apdparcel.com.au/track",

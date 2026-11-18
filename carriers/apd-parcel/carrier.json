@@ -18,17 +18,47 @@
   "timezone": "Australia/Adelaide",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "apd-parcel",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "signed_by"
+  ],
   "portal": {
     "searchUrl": "https://online.apdparcel.com.au/track",
     "canaryUrl": "https://online.apdparcel.com.au/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "signatory",
+      "signature_image",
+      "driver_name",
+      "coordinates",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "delivered_at",
+      "signatory"
+    ],
+    "discarded": [
+      "signature_image",
+      "driver_name",
+      "coordinates",
+      "remarks"
+    ],
+    "unavailable": [
+      "eta",
+      "location"
+    ]
   },
   "links": [],
   "detection": []
