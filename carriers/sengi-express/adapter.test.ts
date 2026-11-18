@@ -148,3 +148,11 @@ describe('Sengi Express status map', () => {
     }
   });
 });
+
+it('clears delivery after a later revocation', () => {
+  const history = [{ description: 'Delivered', eventTime: '2026-03-27T08:00:00' },
+    { description: 'POD annulled', eventTime: '2026-03-28T08:00:00' }];
+  const result = parseSengiExpress({ [NUMBER]: history }, NUMBER);
+  expect(result.events?.at(-1)?.stage).toBe('delivered');
+  expect(result.current_stage).toBeUndefined();
+});

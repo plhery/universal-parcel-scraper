@@ -158,3 +158,13 @@ describe('Jiayang status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'jiayang', providerCode: null, description: 'Synthetic note' })).toEqual({ kind: 'unknown' });
   });
 });
+
+it('clears delivery after a later revocation', () => {
+  const result = parseJiayang(changed('in-transit', item => {
+    item.status = 'Delivered';
+    item.details = [{ content: 'POD annulled', create_time: '2026-03-28 08:00:00' },
+      { content: 'Delivered', create_time: '2026-03-27 08:00:00' }];
+  }), IN_TRANSIT);
+  expect(result.events?.at(-1)?.stage).toBe('delivered');
+  expect(result.current_stage).toBeUndefined();
+});

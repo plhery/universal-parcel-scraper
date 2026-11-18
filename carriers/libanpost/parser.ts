@@ -2,11 +2,12 @@ import { load, type CheerioAPI } from 'cheerio';
 import { DateTime } from 'luxon';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { leadingScan } from '../../core/result/unstaged.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { clean } from '../../core/transport/text.js';
-import { libanPostStage } from './status.js';
+import { statusMap, libanPostStage } from './status.js';
 
 export const PROVIDER = 'LibanPost';
 export const LIBANPOST_MAX_BYTES = 512 * 1024;
@@ -88,7 +89,7 @@ export function parseLibanPost(html: string, raw: string): CarrierResult {
   // carrier sequence across international zones rather than sort unlike clocks.
   events.reverse();
   const latest = events[0]!;
-  const staged = events.find(event => event.stage);
+  const staged = leadingScan(events, statusMap);
   const stage = staged?.stage as Stage | undefined;
   const service = clean(detail($, 'Name of service'), 120);
   return { status: stage ? languageStageStatus(stage) : 'unknown',
