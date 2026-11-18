@@ -72,7 +72,7 @@ carrier.
     parcel bound to another country, where a town of that name may lie, keeps that
     country's clock.
   - The acceptance CTT records with no place up to a minute before a scan at an agency or
-    such a town is on Madrid's clock too.
+    such a town uses that site's clock.
   - Any other scan is CTT's, on Portugal's clock.
   - Ship24's, ParcelsApp's and 17TRACK's copies keep CTT's digits, so a location they relay
     takes the same clock: a CTT Express agency's scan is Madrid's there too.
