@@ -40,7 +40,8 @@ keep the stage before them.
 
 Ciblex answers any number it has no scans for with the number's banner over an
 empty table, whether the label is not scanned yet or was never issued. That
-page is an answer without history, never proof of absence. Form errors, blank
+page is an answer without history, never proof of absence: it carries
+`portal_not_found`, and recognition leaves Ciblex open. Form errors, blank
 responses, redirects and generic HTTP errors remain inconclusive.
 
 ## Testing

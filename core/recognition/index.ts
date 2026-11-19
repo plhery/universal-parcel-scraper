@@ -3,6 +3,7 @@ import type { Recognition, TrackingContext } from '../adapter/index.js';
 import { carrierBrand } from '../catalog/networks.js';
 import { followsPartnerNumbers } from '../catalog/partners.js';
 import type { RecognitionCandidate } from '../catalog/recognition.js';
+import { CarrierError } from '../errors/index.js';
 import { isoTime } from '../time/index.js';
 import { CARRIER_RECOGNITION_RANKS } from '../../generated/recognition.js';
 
@@ -35,6 +36,22 @@ export interface RecognitionOutcome extends RecognitionCandidate {
   status: RecognitionStatus;
   lastActivityAt: string | null;
   lastActivityLocal?: string | null;
+  /**
+   * For a `failed` outcome whose check threw a carrier error, that error's kind and reason; absent
+   * when the check found no carrier error or did not answer in time. `portal_not_found` is the
+   * carrier's own answer that it holds no history under the number, which does not rule it out.
+   */
+  failure?: { kind: string; reason?: string };
+}
+
+/** The kind and reason of the first carrier error in the chain. */
+function failureOf(error: unknown): RecognitionOutcome['failure'] {
+  const seen = new Set<unknown>();
+  for (let current = error; current instanceof Error && !seen.has(current) && seen.size < 8; current = current.cause) {
+    seen.add(current);
+    if (current instanceof CarrierError) return { kind: current.kind, ...(current.reason ? { reason: current.reason } : {}) };
+  }
+  return undefined;
 }
 
 /**
@@ -66,8 +83,10 @@ export async function recognizeAll(
       if (controller.signal.aborted) return;
       outcomes[index] = { ...candidate, status: answer.known ? 'known' : 'unknown', lastActivityAt: answer.lastActivityAt ?? null,
         ...(answer.lastActivityLocal ? { lastActivityLocal: answer.lastActivityLocal } : {}) };
-    } catch {
-      // Stays failed: an outage is no answer about the number.
+    } catch (error) {
+      // Stays failed: an outage is no answer about the number, and an empty answer does not rule the carrier out.
+      const failure = controller.signal.aborted ? undefined : failureOf(error);
+      if (failure) outcomes[index] = { ...outcomes[index]!, failure };
     }
   });
   try {

@@ -68,7 +68,7 @@ export function parseCiblexTrackingHtml(html: string, raw: string): CarrierResul
   if (header.join('|') !== 'date|heure livraison|action|lieu') throw new SchemaError('Ciblex', 'Ciblex tracking columns changed');
   // The page Ciblex shows for any number it has no scans for, a label not yet
   // scanned or one it never issued: an answer about the number, not an outage.
-  if (rows.length === 1) throw new NoHistoryError('Ciblex', 'Ciblex returned no parcel history');
+  if (rows.length === 1) throw new NoHistoryError('Ciblex', 'Ciblex returned no parcel history', { reason: 'portal_not_found' });
   const scanned: CarrierEvent[] = [];
   const seen = new Set<string>();
   for (const row of rows.slice(1).toArray()) {

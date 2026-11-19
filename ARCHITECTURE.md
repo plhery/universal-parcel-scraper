@@ -398,7 +398,9 @@ is detected on its own. A link printed without its scheme, as text messages give
 them, is read as a link only on a host a link rule names.
 Consumers bound concurrency, cache answers and
 decide when another check is due. `recognizeAll` passes cancellation and its budget to each
-callback and discards late answers.
+callback and discards late answers. A failed outcome that threw a carrier error carries its kind
+and reason as `failure`: `portal_not_found` is the carrier's own empty answer, which leaves the
+carrier offered by its rule; a check without `failure` threw no carrier error or did not answer in time.
 Pass the earlier HTTP error as the browser method's third argument so the adapter retains
 its recovery policy, including rate limits and malformed responses.
 

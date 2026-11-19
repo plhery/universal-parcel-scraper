@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { detectCarrierMatch } from '../detection/detect.js';
 import { recognitionCandidates, recognitionNumberShape, recognizeAll, settleRecognition, type RecognitionOutcome } from './index.js';
 import { recognitionAskedCarriers } from '../catalog/recognition.js';
+import { IndeterminateError, NoHistoryError, UpstreamHttpError } from '../errors/index.js';
 
 const outcome = (carrier: string, status: RecognitionOutcome['status'], extra: Partial<RecognitionOutcome> = {}): RecognitionOutcome => ({
   carrier, status, needsInput: null, preferred: false, lastActivityAt: null, ...extra,
@@ -303,6 +304,21 @@ describe('asking carriers', () => {
       ['hermes-de', 'failed'], ['dpd-be', 'failed'], ['dpd', 'known'], ['dpd-nl', 'failed'], ['dpd-de', 'failed'], ['chronopost', 'failed'], ['seur', 'unknown'], ['brt', 'unknown'], ['dpd-uk', 'failed'], ['dpd-pt', 'failed'], ['dpd-hu', 'failed'], ['ciblex', 'failed'], ['delhivery', 'failed'],
     ]);
     expect(outcomes[2]!.lastActivityAt).toBe('2026-09-09T08:00:00Z');
+  });
+  it('says why a check failed when it threw a carrier error, and nothing for a late answer', async () => {
+    const outcomes = await recognizeAll(recognitionCandidates('12345678901231'), async (carrier) => {
+      if (carrier === 'ciblex') throw new NoHistoryError('Ciblex', undefined, { reason: 'portal_not_found' });
+      if (carrier === 'brt') throw new Error('direct failed', { cause: new IndeterminateError('BRT', undefined, { reason: 'portal_not_found' }) });
+      if (carrier === 'seur') throw new UpstreamHttpError('SEUR', 503);
+      if (carrier === 'dpd') throw new Error('upstream down');
+      return new Promise(() => undefined);
+    }, 20);
+    const failures = Object.fromEntries(outcomes.map(({ carrier, status, failure }) => [carrier, [status, failure]]));
+    expect(failures.ciblex).toEqual(['failed', { kind: 'indeterminate', reason: 'portal_not_found' }]);
+    expect(failures.brt).toEqual(['failed', { kind: 'indeterminate', reason: 'portal_not_found' }]);
+    expect(failures.seur).toEqual(['failed', { kind: expect.any(String) }]);
+    expect(failures.dpd).toEqual(['failed', undefined]);
+    expect(failures['hermes-de']).toEqual(['failed', undefined]);
   });
 });
 
