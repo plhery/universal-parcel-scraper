@@ -6,6 +6,9 @@ const STAGES: Readonly<Record<string, Stage>> = {
   DataReceived: 'registered', SupplierDataReceived: 'registered', OriginalWarehouseReceive: 'accepted',
   OriginalWarehouseProcess: 'in_transit', OriginalWarehouseDeparture: 'in_transit',
   LinehaulAgencyReceive: 'in_transit', LinehaulAgencyDeparture: 'in_transit', LinehaulDeparture: 'in_transit',
+  // The origin's export inspection, between the line-haul agent's customs declaration and its departure: the journey
+  // goes on at origin, as other export clearances read, not the destination's customs.
+  CustomsArrival: 'in_transit',
   LinehaulArrival: 'in_transit', CustomsCleared: 'in_transit', SupplierAndLastMileReceive: 'in_transit',
   LastMileWarehouseReceive: 'in_transit', LastMileInTransit: 'in_transit', LastMileOutForDelivery: 'out_for_delivery', LastMileDeliveryReady: 'out_for_delivery',
   LastMileDeliveryFailed: 'failed_attempt', LastMileDeliveryTried: 'failed_attempt', LastMileWaitForCollection: 'ready_for_pickup',

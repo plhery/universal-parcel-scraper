@@ -47,6 +47,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "CustomsArrival",
+      "wording": "Customs inspection has not yet released",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The origin's export inspection, after the line-haul agent's customs declaration and before its departure and the flight; the destination's customs comes later, uncoded as \"Arrive dest customs\"."
+    },
+    {
       "code": "LinehaulAgencyDeparture",
       "wording": "Parcel departure in Transit Facility, Parcel Departure",
       "language": "en",

@@ -172,6 +172,8 @@ describe('WanbExpress', () => {
     // clearance, which carries the parcel on rather than accepting it.
     expect(wanbStage(null, 'processing center collecting')).toBe('in_transit');
     expect(wanbStage(null, 'Arrive dest customs')).toBe('customs');
+    // The origin's export inspection, coded, before the line-haul agent's departure: the journey goes on.
+    expect(wanbStage('CustomsArrival', 'Customs inspection has not yet released')).toBe('in_transit');
     expect(wanbStage(null, 'The parcel has been successfully picked up and is being prepared for transportation.')).toBe('in_transit');
     expect(wanbStage(null, 'The parcel arrives at the distribution center and is prepared for transport to the next destination.')).toBe('in_transit');
     // Waiting at the sorting centre for the partner that delivers it.

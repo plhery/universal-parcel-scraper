@@ -524,7 +524,8 @@ describe('status map answers', () => {
     expect(answer('spring-gds', 'Z1', 'Shipment received by PostNL')).toEqual(mapped('accepted'));
     expect(answer('spring-gds', null, 'Driver is en route')).toEqual(mapped('out_for_delivery'));
     // PostNL's international item scans, as a universal provider relays them without their category.
-    for (const description of ['The item is received by PostNL', 'The item is at the PostNL sorting center', 'The item is processed at the PostNL sorting center']) {
+    for (const description of ['The item is received by PostNL', 'The item is at the PostNL sorting center', 'The item is processed at the PostNL sorting center',
+      'Item is nested to commercial bag']) {
       expect(answer('spring-gds', null, description), description).toEqual(mapped('in_transit'));
       expect(relayedWordingStage('spring-gds', description), description).toBe('in_transit');
     }
