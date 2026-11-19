@@ -193,10 +193,10 @@
     },
     {
       "code": "DO4",
-      "stage": "customs",
+      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-08",
-      "note": "Event code: duties paid. Under the group AARPAY they are paid online before delivery."
+      "note": "Event code: duties paid. Under the group AARPAY they are paid online after the release (DO2 under AARTAXDOU) asked for them, so the parcel is on its way to delivery; under DESPAY they are paid at the door with the delivery."
     },
     {
       "code": "DESPAY",

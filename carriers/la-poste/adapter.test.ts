@@ -853,7 +853,9 @@ describe('La Poste status vocabulary', () => {
     const paidAtDoor = 'Vous avez payé vos droits et taxes de douane lors de la distribution.';
     expect(eventStage('DESPAY', 'DO4', paidAtDoor)).toBe('delivered');
     expect(eventStatus('DESPAY', 'DO4', paidAtDoor, true)).toBe('delivered');
-    expect(eventStage('AARPAY', 'DO4', 'Les droits et taxes de douane de cet envoi ont été payés en ligne.')).toBe('customs');
+    // Paid online after the release asked for them: on its way to delivery, not back in customs.
+    expect(eventStage('AARPAY', 'DO4', 'Les droits et taxes de douane de cet envoi ont été payés en ligne.')).toBe('in_transit');
+    expect(statusMap.stage('AARPAY/DO4', 'Les droits et taxes de douane de cet envoi ont été payés en ligne.')).toBe('in_transit');
     expect(eventStage('EDRINT', 'PC2', "Votre colis a été déposé par l'expéditeur chez notre partenaire postal dans son pays d'origine.")).toBe('accepted');
     // The recipient chose a postal point: on its way there, not yet waiting.
     const chosen = 'Vous avez choisi de vous faire livrer dans un point postal. Votre colis va y être acheminé. Vous recevrez une notification dès que votre colis sera disponible.';

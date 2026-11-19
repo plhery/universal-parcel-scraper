@@ -32,6 +32,7 @@ export const GROUP_STATUSES = new Map<string, CarrierStatus>([
   ['DESTIN', 'delivered'],
   ['DESLIVD', 'delivered'],
   ['DESPAY', 'delivered'],
+  ['AARPAY', 'in_transit'],
   ['RETOUR', 'exception'],
 ]);
 
@@ -77,6 +78,11 @@ const BACK_WITH_SENDER_CODE = 'DI2';
 const BACK_WITH_SENDER_GROUPS = new Set(['DESLREXP', 'DESMDREXP']);
 /** Duties paid at the door: the scan follows the delivery under its own group. */
 const PAID_AT_DELIVERY_GROUP = 'DESPAY';
+/**
+ * Duties paid online: the release (`DO2` under `AARTAXDOU`) came first and asked for them, so the
+ * parcel is on its way to delivery, not back in customs, though the sentence names customs duties.
+ */
+const PAID_ONLINE_GROUP = 'AARPAY';
 /** Acceptance at the origin, by La Poste (`PC1`) or its partner abroad (`PC2`). */
 const ACCEPTANCE_CODES = new Set(['PC1', 'PC2']);
 
@@ -151,6 +157,7 @@ export function eventStage(group: string, code: string, label: string): Stage {
   if (['incident', 'anomalie', 'avarie', 'endommage', 'refuse', 'adresse incorrecte', 'adresse de livraison est incomplete']
     .some((term) => value.includes(term))) return 'exception';
   if (normalizedGroup === PAID_AT_DELIVERY_GROUP) return 'delivered';
+  if (normalizedGroup === PAID_ONLINE_GROUP) return 'in_transit';
   if (normalizedCode === CUSTOMS_ENTRY_CODE || worded === 'customs') return 'customs';
   const status = eventStatus(normalizedGroup, normalizedCode, label, true);
   if (status === 'pending') return 'registered';
