@@ -7,9 +7,10 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InputRequiredError, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, DX_FREIGHT_LOOKUP, dxFreightUrl, DxTracker } from './adapter.js';
-import { dxWording, normalizeDxNumber, normalizeDxPostcode, parseDxFreight, parseDxLookupPage } from './parser.js';
+import { dxWording, normalizeDxNumber, normalizeDxPostcode, parseDxFreight, parseDxLookupPage, splitDxPostcode } from './parser.js';
 import { dxMappedStage, dxStage, statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -173,6 +174,22 @@ describe('DX Freight tracking adapter', () => {
     expect(normalizeDxNumber('w 000-0001')).toBe('W0000001');
     expect(normalizeDxPostcode(' sw1a   1aa ')).toBe('SW1A 1AA');
     expect(carrier(fetcher).recognize).toBeUndefined();
+  });
+
+  it('takes apart a UK postcode typed on the end of a freight number, and prefers the field\'s', async () => {
+    const typed = tracker();
+    await expect(carrier(typed).track({ number: `${DELIVERED.toLowerCase()} zz1 1zz` })).resolves.toMatchObject({ status: 'delivered' });
+    expect(String(typed.mock.calls[0]![0])).toBe(`${DX_FREIGHT_LOOKUP}?consno=${DELIVERED}&postcode=ZZ1%201ZZ`);
+    const field = tracker();
+    await expect(carrier(field).track({ number: `${DELIVERED}ZZ11ZZ`, postcode: 'ZZ9 9ZZ' })).resolves.toMatchObject({ status: 'delivered' });
+    expect(String(field.mock.calls[0]![0])).toBe(`${DX_FREIGHT_LOOKUP}?consno=${DELIVERED}&postcode=ZZ9%209ZZ`);
+    expect(splitDxPostcode('12345678 sw1a 1aa')).toEqual({ number: '12345678', postcode: 'SW1A 1AA' });
+    expect(splitDxPostcode(`${DELIVERED}M11AE`)).toEqual({ number: DELIVERED, postcode: 'M1 1AE' });
+    for (const number of [DELIVERED, `${DELIVERED}1AA`, `${DELIVERED}SW1A`]) expect(splitDxPostcode(number), number).toEqual({ number, postcode: null });
+    expect(normalizeDxNumber(`${DELIVERED} SW1A 1AA`)).toBe(DELIVERED);
+    // dx-2 suggests DX for the typed form; a letter other than C, L or W is left alone.
+    expect(detectCarrierMatch(`${DELIVERED}SW1A1AA`)).toMatchObject({ confidence: 'low', candidates: expect.arrayContaining(['dx']) });
+    expect(detectCarrierMatch('A1234566SW1A1AA').candidates ?? []).not.toContain('dx');
   });
 
   it('reads a browser check or a refusal as a challenge, and keeps a rate limit as one', async () => {

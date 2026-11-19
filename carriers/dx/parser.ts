@@ -20,6 +20,9 @@ export const DX_MAX_BYTES = 512 * 1024;
 // The patterns DX's tracking page reads from its `/jsoptions/` script to pick
 // a tracker: Freight first after Network Services, then the secure tracker for the rest.
 const FREIGHT = /^(?:[A-Z]\d{7}|\d{8})$/;
+// A freight consignment with a UK postcode typed on the end, spaces gone: the
+// outward code, then the inward code's digit and two letters.
+const WITH_POSTCODE = /^([A-Z]\d{7}|\d{8})([A-Z]{1,2}\d[A-Z\d]?)(\d[A-Z]{2})$/;
 const NETWORK_SERVICES = /^\d{12}$/;
 const SECURE = /^.{4,30}$/;
 // The page's own check on a freight postcode, after the catalog's.
@@ -52,8 +55,18 @@ const MAX_EVENTS = 100;
  * and anything else of four to thirty characters to its secure delivery
  * tracker, which the adapter does not read.
  */
+/**
+ * A freight consignment and the UK postcode typed on its end, taken apart, the
+ * postcode written with its space; the number as typed otherwise.
+ */
+export function splitDxPostcode(raw: string): { number: string; postcode: string | null } {
+  const typed = raw.length <= 64 ? WITH_POSTCODE.exec(normalizeTrackingNumber(raw)) : null;
+  return typed ? { number: typed[1]!, postcode: `${typed[2]} ${typed[3]}` } : { number: raw, postcode: null };
+}
+
 export function normalizeDxNumber(raw: string): string {
-  const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
+  const { number: consignment } = splitDxPostcode(raw);
+  const number = consignment.length <= 64 ? normalizeTrackingNumber(consignment) : '';
   if (FREIGHT.test(number)) return number;
   if (NETWORK_SERVICES.test(number)) {
     throw new IndeterminateError(PROVIDER, 'DX tracks twelve-digit numbers in its Network Services tracker, which the adapter does not read');

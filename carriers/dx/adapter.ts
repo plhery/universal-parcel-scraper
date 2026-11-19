@@ -7,7 +7,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
-import { DX_MAX_BYTES, normalizeDxNumber, normalizeDxPostcode, parseDxFreight, parseDxLookupPage, PROVIDER } from './parser.js';
+import { DX_MAX_BYTES, normalizeDxNumber, normalizeDxPostcode, parseDxFreight, parseDxLookupPage, PROVIDER, splitDxPostcode } from './parser.js';
 
 const ORIGIN = 'https://dx-track.com';
 /** Where DX's tracking page sends a freight consignment and its delivery postcode. */
@@ -59,8 +59,9 @@ export class DxTracker {
 
   async fetch(raw: string, rawPostcode: string | null | undefined, context: TrackingContext = {}): Promise<CarrierResult> {
     const number = normalizeDxNumber(raw);
-    // Without the postcode the tracker shows nothing, so no request is made.
-    const url = dxFreightUrl(number, rawPostcode);
+    // Without the postcode the tracker shows nothing, so no request is made. A postcode
+    // typed on the end of the number serves when the field has none.
+    const url = dxFreightUrl(number, rawPostcode?.trim() ? rawPostcode : splitDxPostcode(raw).postcode);
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const deadline = performance.now() + timeoutMs;
       const request = async (address: string, cookie?: string) => {

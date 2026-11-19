@@ -19,6 +19,8 @@ DX's other trackers are left to enabled universal providers.
   adapter makes no request and reports `input_required`, and enabled universal providers
   answer instead. The tracking page checks only that a freight postcode has two to eight
   characters, so the catalog takes any country's.
+- Readers type a freight number with its UK postcode on the end. The adapter takes the postcode
+  off and uses it when the postcode field is empty; the field's postcode wins.
 - The postcode's space is sent as `%20`. The tracker matches `+` against no postcode.
 - An unknown number, a wrong postcode and a delivery more than 30 days old get the same
   notice, so it is `indeterminate` (`portal_not_found`). A page redirecting to that notice
@@ -62,8 +64,8 @@ DX's other trackers are left to enabled universal providers.
 DX's tracking page reads its routing patterns from `/jsoptions/`: a letter and seven digits,
 or eight digits, go to DX Freight, twelve digits to DX Network Services and any other
 reference to its secure delivery tracker. `dx-1` suggests DX for a `C`, `L` or `W` and seven
-digits at low confidence, because GLS references share the length. Ten digits are not
-claimed.
+digits at low confidence, because GLS references share the length. `dx-2` does the same for
+such a number followed by a UK postcode without spaces. Ten digits are not claimed.
 
 ## Links
 

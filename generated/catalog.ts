@@ -2280,7 +2280,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": [
       {
-        "pattern": "^(?![CLR][A-Z]\\d{9}DE$)(?!U[A-TV-Z]\\d{9}DE$)(?!(?:[CELR][A-Z]|F[TZ])\\d{9}TW$)(?![CEL][A-Z]\\d{9}AU$)(?![CELR][A-Z]\\d{9}SK$)(?![CELR][A-Z]\\d{9}AL$)(?![CELR][A-Z]\\d{9}RS$)(?![CELR][A-Z]\\d{9}UA$)(?![CELR][A-Z]\\d{9}RU$)(?![CELR][A-Z]\\d{9}SI$)(?![CELR][A-Z]\\d{9}HR$)(?![CELR][A-Z]\\d{9}LV$)(?!(?:[CE][A-Z]|HC)\\d{9}LT$)(?![CELR][A-Z]\\d{9}AE$)(?!(?:C[A-UW-Z]|[ELR][A-Z])\\d{9}PL$)(?!(?:C[A-QS-UW-Z]|R[A-NP-Z]|[EL][A-Z])\\d{9}EE$)(?!AS\\d{9}US$)(?!(?:C[A-DF-UW-Z]|[ELR][A-Z])\\d{9}US$)(?![CELR][A-Z]\\d{9}IT$)(?!ZC\\d{9}IT$)(?!(?:PZ|XR|XT|XU|XW|XY))[A-Z]{2}\\d{9}(?!WW$|CA$|CH$|FR$|IN$|NL$|GB$|IE$|BE$|PT$|NZ$|SG$|JP$|KR$|TH$|HK$|MY$|CN$|NO$|BR$|ES$|SE$|DK$|AT$|YP$|TS$|JF$|JB$|RV$|VF$|TY$|MI$|XX$|GO$|MH$|YW$|CS$|EN$|MB$|CL$)[A-Z]{2}$",
+        "pattern": "^(?![CLR][A-Z]\\d{9}DE$)(?!U[A-TV-Z]\\d{9}DE$)(?!(?:[CELR][A-Z]|F[TZ])\\d{9}TW$)(?![CEL][A-Z]\\d{9}AU$)(?![CELR][A-Z]\\d{9}SK$)(?![CELR][A-Z]\\d{9}AL$)(?![CELR][A-Z]\\d{9}RS$)(?![CELR][A-Z]\\d{9}UA$)(?![CELR][A-Z]\\d{9}RU$)(?![CELR][A-Z]\\d{9}SI$)(?![CELR][A-Z]\\d{9}HR$)(?![CELR][A-Z]\\d{9}LV$)(?!(?:[CE][A-Z]|HC)\\d{9}LT$)(?![CELR][A-Z]\\d{9}AE$)(?!(?:C[A-UW-Z]|[ELR][A-Z])\\d{9}PL$)(?!(?:C[A-QS-UW-Z]|R[A-NP-Z]|[EL][A-Z])\\d{9}EE$)(?!AS\\d{9}US$)(?!(?:C[A-DF-UW-Z]|[ELR][A-Z])\\d{9}US$)(?![CELR][A-Z]\\d{9}IT$)(?!ZC\\d{9}IT$)(?!(?:PZ|XR|XT|XU|XW|XY))[A-Z]{2}\\d{9}(?!WW$|CA$|CH$|FR$|IN$|NL$|GB$|IE$|BE$|PT$|NZ$|SG$|JP$|KR$|TH$|HK$|MY$|CN$|NO$|BR$|ES$|SE$|DK$|AT$|YP$|TS$|JF$|JB$|RV$|VF$|TY$|MI$|XX$|GO$|MH$|YW$|CS$|EN$|MB$|DY$|OI$|XB$|CL$)[A-Z]{2}$",
         "confidence": "high",
         "checksum": "s10"
       }
@@ -21054,6 +21054,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "detectionRules": [
       {
         "pattern": "^[CLW]\\d{7}$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^[CLW]\\d{7}[A-Z]{1,2}\\d[A-Z\\d]?\\d[A-Z]{2}$",
         "confidence": "low"
       }
     ]
@@ -66911,7 +66915,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hermes-de": ["hermes-de-1","hermes-de-022","hermes-de-2","hermes-de-padded","hermes-de-3"],
   "gls-de": ["gls-de-1","gls-de-2","gls-de-3"],
   "delivengo": [],
-  "intl-post": ["intl-post-3"],
+  "intl-post": ["intl-post-4"],
   "unknown": [],
   "royal-mail": ["royal-mail-1","royal-mail-2","royal-mail-3"],
   "parcelforce": ["parcelforce-1","parcelforce-2"],
@@ -67423,7 +67427,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dsv": ["dsv-stt"],
   "dtd-pk": [],
   "duxiuexp": [],
-  "dx": ["dx-1"],
+  "dx": ["dx-1","dx-2"],
   "dylo-express": [],
   "dynalogic": [],
   "e-cargo": [],

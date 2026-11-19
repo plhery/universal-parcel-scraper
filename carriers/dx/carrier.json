@@ -108,6 +108,11 @@
       "id": "dx-1",
       "pattern": "^[CLW]\\d{7}$",
       "confidence": "low"
+    },
+    {
+      "id": "dx-2",
+      "pattern": "^[CLW]\\d{7}[A-Z]{1,2}\\d[A-Z\\d]?\\d[A-Z]{2}$",
+      "confidence": "low"
     }
   ]
 }
