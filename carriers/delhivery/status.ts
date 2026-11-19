@@ -16,6 +16,8 @@ const statuses: Record<string, ClassifiedStatus> = {
   // The status of a returning shipment that reached the seller's city.
   'REACHED SEL CITY': { status: 'in_transit', stage: 'in_transit' },
   MANIFESTED: { status: 'pending', stage: 'registered' },
+  // A shipment booked and not yet collected, as a token, with no scan before it.
+  'WAITING PICKUP': { status: 'pending', stage: 'registered' },
   'RTO DELIVERED': { status: 'exception', stage: 'returned' },
   'DELIVERED SELLER': { status: 'exception', stage: 'returned' },
   // Return to origin and a customer return, each scanned on delivery to the seller.

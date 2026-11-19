@@ -5,6 +5,8 @@
     {"wording": "unloading hub line", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Unloaded from the hub line at a hub or at the delivering station."},
     {"wording": "loading delivery trip", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "Loaded onto the courier's delivery tour."},
     {"wording": "delivery consignee", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Delivered to the recipient. The page can list the delivery twice at the same minute; the adapter keeps it once."},
+    {"wording": "picked up - shipment picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The English of \"Abgeholt - Sendung übernommen\": collected from the sender."},
+    {"wording": "recording station", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The English of \"Erfassung Station\": the station recorded the shipment."},
     {"wording": "Abgeholt - Sendung übernommen", "stage": "accepted", "language": "de", "confirmedBy": "portal", "note": "Collected from the sender. Seen in an archived capture of the German page."},
     {"wording": "Eingang Station", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "The shipment entered a station. Seen in an archived capture of the German page."},
     {"wording": "Erfassung Station", "stage": "in_transit", "language": "de", "confirmedBy": "portal", "note": "The station recorded the shipment. Seen in an archived capture of the German page."},

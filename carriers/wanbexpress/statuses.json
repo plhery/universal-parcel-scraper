@@ -400,6 +400,62 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
       "note": "The handover to DPD for the last mile, without a code, the day after the destination's customs clearance: in transit, not DPD's acceptance of a new parcel."
+    },
+    {
+      "wording": "arrive at processing center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The origin's processing centre taking the parcel in, without a code, after the sorting centre's departure and before the line's."
+    },
+    {
+      "wording": "processing center collecting",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The origin's processing centre collecting the parcel, without a code, between its arrival there and its delivery to the line."
+    },
+    {
+      "wording": "delivery from processing center",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The origin's processing centre sending the parcel on, without a code, before the line coded LinehaulAgencyDeparture."
+    },
+    {
+      "wording": "Arrive dest customs",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The destination's customs taking the parcel in, without a code, an hour before the line coded CustomsCleared."
+    },
+    {
+      "wording": "The parcel has been successfully picked up and is being prepared for transportation.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The last-mile partner's collection, without a code, two days after the destination's customs clearance: in transit, not a new acceptance."
+    },
+    {
+      "wording": "The parcel is dispatched from the transit center to the next destination",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The last-mile partner's transit centre sending the parcel on, without a code."
+    },
+    {
+      "wording": "The parcel arrives at the distribution center and is prepared for transport to the next destination.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The last-mile partner's distribution centre taking the parcel in, without a code, before its out-for-delivery line."
     }
   ]
 }

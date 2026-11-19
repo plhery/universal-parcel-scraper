@@ -653,6 +653,8 @@ function providerWordingStage(description: string): Stage | undefined {
   // destination's last-mile carrier, as its own map reads them.
   if (/^domestic allocation has begun[.!]?$|^under domestic allocation[.!]?$/i.test(value)) return 'in_transit';
   if (/^delivery to local courier[.!]?$/i.test(value)) return 'in_transit';
+  // Its flight leaving the transshipment hub, between the departure and the first landing, as its own map reads it.
+  if (/^uplifted from transshipment hub[.!]?$/i.test(value)) return 'in_transit';
   // YunExpress's handler taking the parcel from the airline's cargo terminal after its flight, as its own map reads it.
   if (/^collected at cargo terminal[.!]?$/i.test(value)) return 'in_transit';
   // 4PX's operation point packing a parcel for the carrier that takes it in next, before that carrier's acceptance,

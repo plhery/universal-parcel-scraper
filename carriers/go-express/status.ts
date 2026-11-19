@@ -13,6 +13,9 @@ const STAGES: ReadonlyMap<string, Stage> = new Map([
   ['unloading hub line', 'in_transit'],
   ['loading delivery trip', 'out_for_delivery'],
   ['delivery consignee', 'delivered'],
+  // The English of "Abgeholt - Sendung übernommen" and "Erfassung Station".
+  ['picked up - shipment picked up', 'accepted'],
+  ['recording station', 'in_transit'],
   // The courier collected the shipment from the sender.
   ['abgeholt - sendung übernommen', 'accepted'],
   // The shipment entered a station, then the station recorded it.

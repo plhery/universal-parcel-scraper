@@ -148,6 +148,12 @@ describe('WanbExpress', () => {
     expect(wanbStage(null, 'Departed from the sorting center')).toBe('in_transit');
     // The handover to DPD for the last mile carries the parcel on; DPD's own scans accept it.
     expect(wanbStage(null, 'Parcel handed to DPD')).toBe('in_transit');
+    // The origin's processing centre, the destination's customs, then the last-mile partner's collection after the
+    // clearance, which carries the parcel on rather than accepting it.
+    expect(wanbStage(null, 'processing center collecting')).toBe('in_transit');
+    expect(wanbStage(null, 'Arrive dest customs')).toBe('customs');
+    expect(wanbStage(null, 'The parcel has been successfully picked up and is being prepared for transportation.')).toBe('in_transit');
+    expect(wanbStage(null, 'The parcel arrives at the distribution center and is prepared for transport to the next destination.')).toBe('in_transit');
     // Waiting at the sorting centre for the partner that delivers it.
     expect(statusMapAnswer({ carrier: 'wanbexpress', providerCode: null, description: 'Parcel is ready for hand over to distributor' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });

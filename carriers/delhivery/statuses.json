@@ -32,6 +32,13 @@
       "note": "The status of a returning shipment that reached the seller's city."
     },
     {
+      "wording": "WAITING_PICKUP",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A shipment booked and not yet collected, as a token, the only row of a shipment with no scan."
+    },
+    {
       "wording": "In Transit",
       "language": "en",
       "stage": "in_transit",

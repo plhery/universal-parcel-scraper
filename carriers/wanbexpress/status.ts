@@ -55,6 +55,18 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   // The handover to DPD for the last mile, after the destination's customs clearance.
   ['parcel handed to dpd', 'in_transit'],
   ['consignee contacted', null],
+  // The origin's processing centre taking the parcel in, collecting it and sending it on, after the sorting
+  // centre's departure and before the line's.
+  ['arrive at processing center', 'in_transit'],
+  ['processing center collecting', 'in_transit'],
+  ['delivery from processing center', 'in_transit'],
+  // The destination's customs taking the parcel in, an hour before its line coded CustomsCleared.
+  ['arrive dest customs', 'customs'],
+  // The last-mile partner's collection after the clearance, its transit centre's dispatch and its distribution
+  // centre's arrival before the round: the collection is the journey going on, not a new acceptance.
+  ['the parcel has been successfully picked up and is being prepared for transportation.', 'in_transit'],
+  ['the parcel is dispatched from the transit center to the next destination', 'in_transit'],
+  ['the parcel arrives at the distribution center and is prepared for transport to the next destination.', 'in_transit'],
 ]);
 
 /**
