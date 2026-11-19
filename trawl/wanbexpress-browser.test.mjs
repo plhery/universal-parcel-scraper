@@ -35,6 +35,9 @@ test('WanbExpress runner accepts only its exact tracking URL and capture endpoin
     assert.equal(wanbBrowserNumber(candidate, capture), null);
   }
   assert.equal(wanbBrowserNumber(url, { captureResponses: [api, 'https://example.test'] }), null);
+  // The Cainiao Express number a parcel to France was relabelled with, whole.
+  assert.equal(wanbBrowserNumber(url.replace(number, 'DOFR9990000000001HD'), capture), 'DOFR9990000000001HD');
+  assert.equal(wanbBrowserNumber(url.replace(number, 'DOFR999000000001HD'), capture), null);
 });
 
 test('observes before navigation, retains the verification transition and ignores another parcel', async () => {

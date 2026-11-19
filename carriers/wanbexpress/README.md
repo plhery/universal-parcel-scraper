@@ -1,6 +1,11 @@
 # WanbExpress
 
-Tracks WanbExpress's own parcel identifiers through `tracking.wanbexpress.com`.
+Tracks WanbExpress's own parcel identifiers through `tracking.wanbexpress.com`. A parcel filed under
+WanbExpress, as from its tracking link, can also be looked up by the Cainiao Express number
+(`DOFR…HD` or `CNFR…HD`) WanbExpress relabels parcels to France with: its tracker finds the parcel
+under it from the first scan in China, before Cainiao Express receives it. Recognition asks only
+about the parcel identifier, since Cainiao's rules claim those numbers and most are not
+WanbExpress's.
 The tracker refuses plain requests with its verification code, so a lookup starts in a private
 Playwright browser configured with `WANBEXPRESS_BROWSER_WS_ENDPOINT`, then the optional TRAWL
 service. Only without either does it make the direct HTTP request. HTTP recognition makes the
@@ -23,8 +28,9 @@ stay in the isolated context; the adapter reads only bounded responses for the c
 requested identifier.
 A final rejection remains a challenge even when an earlier reply succeeded.
 
-The tracking reply must name the requested parcel and identify a parcel-ID match. Reference
-and delivery-number matches stay inconclusive. Only the explicit unknown-parcel envelope is
+The tracking reply must name the requested parcel and identify a parcel-ID match, or for a
+courier number the parcel's own courier number, matched whole. Reference matches stay
+inconclusive. Only the explicit unknown-parcel envelope is
 not-found. Scans carry UTC instants; their display offsets are not applied a second time.
 A scan's place is left out when it names the linehaul agent, a role, the system that wrote the
 courier's label ("SYSTEM"), or only a country on order

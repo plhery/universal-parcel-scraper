@@ -7,7 +7,7 @@ export function wanbBrowserNumber(rawUrl, capture = {}) {
   try { url = new URL(rawUrl); } catch { return null; }
   const number = url.searchParams.get('trackingNumbers') ?? '';
   return url.origin === ORIGIN && !url.username && !url.password && url.pathname === '/' && !url.hash
-    && [...url.searchParams].length === 1 && /^WNB[A-Z]{2}\d{10}YQ$/.test(number)
+    && [...url.searchParams].length === 1 && /^(?:WNB[A-Z]{2}\d{10}YQ|(?:DO|CN)FR\d{13}HD)$/.test(number)
     && capture.captureResponses?.length === 1 && capture.captureResponses[0] === API ? number : null;
 }
 

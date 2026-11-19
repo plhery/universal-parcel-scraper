@@ -17,9 +17,26 @@ export const API = `${ORIGIN}/TrackPoints/Track`;
 export const COURIER_API = `${ORIGIN}/Common/TrackLastMileCarrier`;
 export const MAX_BYTES = 1_000_000;
 
+const PARCEL_ID = /^WNB[A-Z]{2}\d{10}YQ$/;
+/**
+ * Cainiao Express's home-delivery numbers in France, the courier number WanbExpress relabels
+ * a parcel with on its service there; its tracker finds the parcel under the whole number.
+ */
+const COURIER_NUMBER = /^(?:DO|CN)FR\d{13}HD$/;
+
+/** WanbExpress's own parcel identifier, the only number recognition asks it about. */
 export function normalizeWanbNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!/^WNB[A-Z]{2}\d{10}YQ$/.test(number)) throw new InvalidInputError(PROVIDER, 'WanbExpress requires its WNB parcel identifier');
+  if (!PARCEL_ID.test(number)) throw new InvalidInputError(PROVIDER, 'WanbExpress requires its WNB parcel identifier');
+  return number;
+}
+
+/** A number a lookup takes: the parcel identifier, or the courier number of a parcel filed under WanbExpress. */
+export function normalizeWanbLookup(raw: string): string {
+  const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
+  if (!PARCEL_ID.test(number) && !COURIER_NUMBER.test(number)) {
+    throw new InvalidInputError(PROVIDER, 'WanbExpress takes its WNB parcel identifier or the courier number it relabelled the parcel with');
+  }
   return number;
 }
 
@@ -37,7 +54,7 @@ function wanbPlace(location: string, stage: Stage | null | undefined): string | 
 }
 
 export function parseWanb(payload: unknown, raw: string): CarrierResult {
-  const number = normalizeWanbNumber(raw);
+  const number = normalizeWanbLookup(raw);
   if (!isRecord(payload) || typeof payload.Succeeded !== 'boolean') throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid envelope');
   if (!payload.Succeeded) {
     const error = isRecord(payload.Error) ? payload.Error : {};
@@ -50,7 +67,12 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
   }
   if (!Array.isArray(data.TrackPoints) || data.TrackPoints.length > 1000) throw new SchemaError(PROVIDER, 'WanbExpress returned invalid scans');
   if (data.Match === 'Unknown' && !data.TrackPoints.length && data.Metadata === null && data.Status === null) throw new NotFoundError(PROVIDER);
-  if (data.Match !== 'ParcelId') throw new IndeterminateError(PROVIDER, 'WanbExpress matched a reference instead of its parcel identifier');
+  const metadata = isRecord(data.Metadata) ? data.Metadata : {};
+  // A courier number binds only as the parcel's own courier number, whole; a reference stays inconclusive.
+  const bound = PARCEL_ID.test(number) ? data.Match === 'ParcelId'
+    : data.Match === 'ParcelTrackingNumber' && typeof metadata.TrackingNumber === 'string' && metadata.TrackingNumber.length <= 64
+      && normalizeTrackingNumber(metadata.TrackingNumber) === number;
+  if (!bound) throw new IndeterminateError(PROVIDER, 'WanbExpress matched a reference instead of the number asked');
   const events: CarrierEvent[] = data.TrackPoints.map((row) => {
     if (!isRecord(row) || typeof row.Content !== 'string' || !row.Content.trim() || typeof row.Time !== 'string'
       || !/(?:Z|[+-]\d{2}:\d{2})$/.test(row.Time)
@@ -78,7 +100,6 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
   const current = events.find(event => event.stage);
   const mapped = typeof data.Status === 'string' && Object.hasOwn(CURRENT, data.Status) ? CURRENT[data.Status] : undefined;
   const stage = mapped ?? (current?.stage as Stage | undefined);
-  const metadata = isRecord(data.Metadata) ? data.Metadata : {};
   const country = (key: string) => typeof metadata[key] === 'string' && /^[A-Z]{2}$/.test(metadata[key]) ? metadata[key] : undefined;
   const delivery = deliveryNumber(metadata, number);
   return { status: stage ? languageStageStatus(stage) : 'unknown', current_stage: stage,

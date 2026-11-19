@@ -82,6 +82,39 @@ describe('WanbExpress', () => {
     expect(() => parseWanb(reference, number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('finds a parcel under the Cainiao Express number it was relabelled with, bound as its courier number', async () => {
+    const courier = 'DOFR9990000000001HD';
+    const relabelled = () => {
+      const value = found();
+      Object.assign(value.Data, { TrackingNumber: courier, Match: 'ParcelTrackingNumber', Status: 'InTransit' });
+      Object.assign(value.Data.Metadata, { TrackingNumber: courier, ShippingServiceId: 'COE_STD_PH', DestinationCountryCode: 'FR' });
+      value.Data.TrackPoints.pop();
+      return value;
+    };
+    const result = parseWanb(relabelled(), courier.toLowerCase());
+    expect(result).toMatchObject({ current_stage: 'in_transit', destination_country: 'FR', events: [{ stage: 'registered' }] });
+    expect(result.delivery_tracking_number).toBeUndefined();
+    // Another courier number under that match, a reference, or the parcel id matched as a courier number stays inconclusive.
+    const other = relabelled(); Object.assign(other.Data.Metadata, { TrackingNumber: 'DOFR9990000000002HD' });
+    const reference = relabelled(); reference.Data.Match = 'ReferenceId';
+    for (const value of [other, reference]) expect(() => parseWanb(value, courier)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    const parcel = found(); parcel.Data.Match = 'ParcelTrackingNumber';
+    expect(() => parseWanb(parcel, number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    for (const input of ['DOFR999000000001HD', 'DEFR9990000000001HD', '1234567890']) {
+      expect(() => parseWanb(relabelled(), input)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
+    }
+    const fetcher = vi.fn<typeof fetch>();
+    const browser = new TrawlClient('http://browser.test', async (_url, init) => {
+      expect(JSON.parse(String(init?.body))).toMatchObject({ url: `https://tracking.wanbexpress.com/?trackingNumbers=${courier}` });
+      return reply({ tier: 3, statusCode: 200, html: '', capturedResponses: [capture(relabelled(), 200, courier)] });
+    });
+    const carrier = adapter({ env: {}, fetcher, trawl: browser, browserExecutablePath: null, recorder: NOOP_RECORDER });
+    await expect(carrier.track({ number: courier }, { budgetMs: 8000 })).resolves.toMatchObject({ current_stage: 'in_transit' });
+    // Recognition asks only about the parcel id: the courier number is Cainiao's to recognize.
+    await expect(carrier.recognize!(courier)).resolves.toEqual({ known: false });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+
   it('stages the last-mile partner\'s scans by iMile\'s sentences, a run that did not deliver as a failed attempt', () => {
     const point = (Time: string, Content: string, Status: string | null = null) => ({ Time, TimeZone: 2, Content, Status, Location: '' });
     const result = parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null, Metadata: null, TrackPoints: [
