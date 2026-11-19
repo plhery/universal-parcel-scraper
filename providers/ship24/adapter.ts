@@ -182,7 +182,9 @@ interface Journey {
  * - 17FEIA's say Z on the wall clocks its own rows keep, and drop the country
  *   of its order data and warehouse steps (carriers/17feia/clock.ts);
  * - iMile's say none, on the recipient country's clock, which iMile's own
- *   tracker shows every scan on (carriers/imile/clock.ts).
+ *   tracker shows every scan on (carriers/imile/clock.ts);
+ * - GLS Italy's say none, on Italy's clock, as GLS group's copies of the same
+ *   scans state it and GLS Italy's own tracker reads it (carriers/gls-it).
  */
 interface Feed {
   /** Ship24's crawler code, which keeps one feed's scans together. */
@@ -223,6 +225,8 @@ const RELABELLED_FEEDS: Readonly<Record<string, Omit<Feed, 'code'>>> = {
   'feia-tracking': { place: (location, _journey, status) => seventeenFeiaCopyZone(status.replace(/,\s*[^,]*$/, ''), location), walls: true },
   // A country of several clocks keeps its wall clocks, as iMile's adapter does, not iMile's Dubai clock.
   'imile-tracking': { clock: (journey) => journey.destination ? imileCountryClock(journey.destination) : null, walls: true },
+  // Its depots' names need not name Italy, and neither the parcel's clock nor GLS's catalog clock is the Italian network's.
+  'gls-italy-tracking': { clock: () => 'Europe/Rome', keepsOffsets: true },
   // DHL's feed relays the rows of DHL's German parcel network with no offset and no place for the
   // delivery base's and the delivery vehicle's steps ("loaded onto the delivery vehicle").
   'dhl-express-tracking': { keepsOffsets: true },

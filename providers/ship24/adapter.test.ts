@@ -403,6 +403,21 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     expect(read('US')?.map((event) => event.time ?? event.local_time)).toEqual(['2026-11-08T21:06:11', '2026-11-05T19:11:40']);
   });
 
+  it("reads GLS Italy's offset-less feed on Italy's clock, as GLS group's copies of the same scans date them", () => {
+    // Live shape: both feeds relay each scan, GLS group's to the second with an offset, GLS Italy's to the minute
+    // without one, at a depot named without its country, for a parcel the reply gives no country.
+    const scan = (timestamp: string, crawler: string, location: string) => ({ timestamp, datetime: `${timestamp.slice(0, 19)}.000Z`,
+      status: 'The parcel has reached the parcel center.', location, courier: { crawler_code: crawler } });
+    const read = (couriers: unknown[]) => parseShip24Response({ data: { tracking_number: number, couriers,
+      events: [scan('2026-11-19T07:32:00', 'gls-italy-tracking', 'Example Depot (Hub)'),
+        scan('2026-11-19T07:32:53+01:00', 'gls-tracking', 'IT')] } }, number, 'UTC').events;
+    // Neither the parcel's clock nor GLS's catalog clock, Zurich's, is the Italian network's.
+    for (const couriers of [[], [{ translation: { name: 'GLS' } }]]) {
+      expect(read(couriers)?.map((event) => [event.time, event.time_zone ?? null])).toEqual([
+        ['2026-11-19T06:32:53.000Z', null], ['2026-11-19T06:32:00.000Z', 'Europe/Rome']]);
+    }
+  });
+
   it('leaves out a DHL Parcel UK row about another shipment, which is no delivery of this one', () => {
     // Live shape: the feed relayed "Your shipment <another number> is part delivered" beside this parcel's rows.
     const asked = '99999999999981';

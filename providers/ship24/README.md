@@ -95,6 +95,10 @@ No account, cookie, fingerprint or issued token is used.
   every scan on the recipient country's clock ([iMile](../../carriers/imile/README.md)), so they
   are read on it (`destination_country_code`), before any other reading, or keep their wall
   clock where that country has several, rather than iMile's catalog clock, Dubai's.
+- `gls-italy-tracking` gives GLS Italy's wall clocks with no offset, at depots whose names
+  need not name Italy. `gls-tracking` relays the same scans with Italy's offset, and
+  [GLS Italy](../../carriers/gls-it/README.md) reads every scan on Italy's clock, so they are
+  read on it rather than on the parcel's clock or GLS's catalog clock, Zurich's.
 - `dhl-express-tracking` relays the rows of DHL's German parcel network with no offset, and
   without a place for the steps of the delivery base and vehicle and the sender's data. Its
   offsets stand where it gives them; its unplaced wall clocks borrow a zone as the relabelling
