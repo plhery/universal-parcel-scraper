@@ -277,6 +277,13 @@ describe('Yanwen result projection', () => {
     expect(result).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
   });
 
+  it("reads USPS's relayed facility scans on the way to the delivering office as transit", () => {
+    for (const wording of ['Arrived at USPS Facility', 'Departed USPS Facility', 'Arrived at USPS Regional Facility', 'Departed USPS Regional Facility']) {
+      expect(yanwenStatus(wording)?.stage, wording).toBe('in_transit');
+      expect(statusMap.stage(null, normalizeStatusWording(wording)), wording).toBe('in_transit');
+    }
+  });
+
   it("reads a postal leg's posting as a handover, its arrival awaiting customs, and its delivery office", () => {
     for (const [wording, stage] of [['Item posted over the counter', 'in_transit'], ['International arrival - awaiting clearance', 'customs'],
       ['Dispatch out to domestic location', 'in_transit'], ['Item arrived at delivery office', 'in_transit']] as const) {

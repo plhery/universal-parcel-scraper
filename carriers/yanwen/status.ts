@@ -47,6 +47,11 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Votre Colissimo va bientôt nous être confié ! Il est en cours de préparation chez votre expéditeur.', { status: 'pending', stage: 'registered' }],
   ['Accepted at USPS Origin Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at USPS Regional Origin Facility', { status: 'in_transit', stage: 'in_transit' }],
+  // USPS's later facility scans on the way to the delivering office, relayed the same way.
+  ['Arrived at USPS Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Departed USPS Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at USPS Regional Facility', { status: 'in_transit', stage: 'in_transit' }],
+  ['Departed USPS Regional Facility', { status: 'in_transit', stage: 'in_transit' }],
   ['In Transit to Next Facility, Arriving On Time', { status: 'in_transit', stage: 'in_transit' }],
   ['Your shipment has been accepted by delivery carrier', { status: 'in_transit', stage: 'in_transit' }],
   ['Parcel Picked Up', { status: 'in_transit', stage: 'in_transit' }],

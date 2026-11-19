@@ -17,6 +17,8 @@
     {"wording": "Arrived at origin facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The line's facility in China, before its sort facility."},
     {"wording": "Departed from sort facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Leaving the line's sort facility in China."},
     {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "At the airport of departure, before the flight."},
+    {"wording": "Arrive at international airport to abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "At the airport for the flight abroad, after the departure from origin and before the export release."},
+    {"wording": "Released From Export Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "China's export release at the airport, before the flight: the parcel is not held."},
     {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The flight landing in the destination country."},
     {"wording": "NOA received", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The airline's notice of arrival at the destination."},
     {"wording": "Collected at Cargo Terminal", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Collected from the destination airport's cargo terminal."},

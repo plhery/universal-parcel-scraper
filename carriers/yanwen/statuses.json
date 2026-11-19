@@ -287,6 +287,38 @@
       "note": "USPS's first sorting centre after the hand-over."
     },
     {
+      "wording": "Arrived at USPS Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "USPS's arrival at one of its facilities between the first sorting centre and the delivering office."
+    },
+    {
+      "wording": "Departed USPS Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-16",
+      "note": "USPS's departure from one of its facilities on the way to the delivering office."
+    },
+    {
+      "wording": "Arrived at USPS Regional Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-17",
+      "note": "USPS's arrival at a regional sorting centre on the way to the delivering office."
+    },
+    {
+      "wording": "Departed USPS Regional Facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-16",
+      "note": "USPS's departure from a regional sorting centre on the way to the delivering office."
+    },
+    {
       "wording": "In Transit to Next Facility, Arriving On Time",
       "language": "en",
       "stage": "in_transit",
