@@ -66,6 +66,10 @@ label's first fifteen characters.
   the parcel in transit. One that found the sender had not prepared the parcel ("Remetente não
   preparou o pedido") says SPX does not have it, posting or not: it stays registered, and the
   posting before it reads registered too, until a collection.
+- The fleet feed sends a bare "Delivering", with no hub, the day the order is created: the order
+  handed to SPX's delivery chain, not a round, so it reads in transit. A hub's round, whose line
+  opens with that hub in brackets, or the delivery follows hours or days later. The round is out
+  for delivery and keeps its hub in the wording, so a stored row tells the two apart.
 - Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres keep the place and
   coordinates the reply gives. Pickups, postings, deliveries and the return to the seller would
   name the seller's or the recipient's town, so they keep none: the town a posting's wording
@@ -78,7 +82,8 @@ label's first fifteen characters.
 - The reply can list a customs check filed late among later scans; the history is ordered by
   the clocks.
 - A fleet line opens with its hub in brackets. The hub leaves the wording and is the place of
-  the hub taking the parcel in; a pickup or a delivery keeps none. A drop-off point's line opens
+  the hub taking the parcel in; a pickup or a delivery keeps none. A delivery round keeps its
+  hub in the wording. A drop-off point's line opens
   with the point's name, often its keeper's, and a partner carrier's delivery with the partner's
   code; both are dropped, and neither keeps a place. Line-haul
   lines name internal transfer and trip ids, which are dropped. An unloading, in English in

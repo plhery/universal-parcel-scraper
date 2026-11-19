@@ -267,8 +267,9 @@ function projectFleetRow(row: Record<string, unknown>): Scan {
   const line = worded;
   // The hub leaves the wording, so it reads the same from hub to hub, and is the place of
   // the hub taking the parcel in. A pickup or a delivery names the hub that made it, not
-  // where it happened.
-  const hub = HUB.exec(line);
+  // where it happened. A delivery round keeps its hub, which tells it from the bare
+  // "Delivering" of the order's creation, as stored rows are read again.
+  const hub = /^delivering$/i.test(code) ? null : HUB.exec(line);
   // A line haul's unloading keeps its verb, at the hub it names; the transfer and trip ids
   // leave, as does the transfer id of a line haul leaving for a hub.
   const haul = LINE_HAUL.exec(line);

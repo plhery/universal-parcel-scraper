@@ -349,7 +349,8 @@ describe('SPX Express Brazil HTTP adapter', () => {
         receiver_name: 'Destinatária Sintética', signed_by: 'Destinatária Sintética' });
       expect(result.events!.map((event) => [event.time, event.provider_code, event.stage, event.location ?? null, event.description])).toEqual([
         ['2026-05-19T12:53:20Z', 'Delivered', 'delivered', null, 'Seu pacote foi entregue a [Destinatária Sintética]'],
-        ['2026-05-19T08:26:40Z', 'Delivering', 'out_for_delivery', null, 'Seu pacote está sendo entregue pelo entregador'],
+        // A round keeps the hub that sends the courier out, which tells it from the bare line of the order's creation.
+        ['2026-05-19T08:26:40Z', 'Delivering', 'out_for_delivery', null, '[LM Hub_RJ_Porto Modelo] Seu pacote está sendo entregue pelo entregador'],
         // A hub taking the parcel in is the scan's place; the hub leaves the wording.
         // A hub's own scan stands for the line haul's unloading there, which leaves.
         ['2026-05-19T03:43:20Z', 'LMHub_Received', 'in_transit', 'LM Hub_RJ_Porto Modelo', 'Seu pacote foi recebido pelo centro de distribuição'],
@@ -401,6 +402,26 @@ describe('SPX Express Brazil HTTP adapter', () => {
     fleet.data.tracking_list = [{ timestamp: 1_779_200_000, status: '3PL_Delivered', message: '[00000] Pacote foi entregue a ' }];
     expect(parseSpxBrFleet(fleet, 'BR2600000000045')).toMatchObject({ current_stage: 'delivered', current_stage_source: 'carrier_map',
       last_status_text: 'Pacote foi entregue', events: [{ provider_code: '3PL_Delivered', stage: 'delivered', description: 'Pacote foi entregue' }] });
+  });
+
+  it('reads the bare "Delivering" of the order\'s creation as transit, and only a hub\'s round as out for delivery', () => {
+    const fleet = fixture('fleet-delivered') as unknown as { data: { tracking_list: Record<string, unknown>[] } };
+    const line = 'Seu pacote está sendo entregue pelo entregador';
+    fleet.data.tracking_list = [
+      { timestamp: 1_779_050_000, status: 'Delivering', message: line },
+      { timestamp: 1_779_000_000, status: 'Created', message: 'O pedido foi criado' },
+    ];
+    expect(parseSpxBrFleet(fleet, FLEET)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', current_stage_source: 'carrier_map',
+      events: [{ provider_code: 'Delivering', stage: 'in_transit', description: line }, { provider_code: 'Created', stage: 'registered' }] });
+    for (const hub of ['OF Hub_SP_Exemplo', 'XPT_SP_Exemplo', 'LM Hub_RJ_Porto Modelo']) {
+      fleet.data.tracking_list = [{ timestamp: 1_779_140_000, status: 'Delivering', message: `[${hub}] ${line}` }, ...fleet.data.tracking_list.slice(-2)];
+      expect(parseSpxBrFleet(fleet, FLEET), hub).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery',
+        events: [{ provider_code: 'Delivering', stage: 'out_for_delivery', description: `[${hub}] ${line}` }, { stage: 'in_transit' }, { stage: 'registered' }] });
+    }
+    // Stored rows read again the same way.
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Delivering', description: line })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'Delivering', description: `[OF Hub_SP_Exemplo] ${line}` }))
+      .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
   });
 
   it('keeps the order lookup’s answer unless the fleet feed holds the parcel or says it has no scans', async () => {

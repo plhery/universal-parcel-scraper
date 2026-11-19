@@ -61,27 +61,34 @@ const FLEET: ReadonlyMap<string, Stage> = new Map(([
   // A courier takes the parcel from the last-mile hub to a service point and hands it over ("Pacote entrege"):
   // the page's milestones stay at sorting, before the courier's delivery and the delivery.
   ['Transporting_to_sp', 'in_transit'], ['Transported_to_sp', 'in_transit'],
-  ['Delivering', 'out_for_delivery'], // F600.
+  // A delivery round, F600. Its line opens with the hub that sends the courier out; see `ROUND`.
+  ['Delivering', 'out_for_delivery'],
   ['Delivered', 'delivered'], // F980.
   ['3PL_Delivered', 'delivered'], // Delivered by the partner carrier SPX handed the parcel to after its sorting centre.
   ['Start_Confiscation', 'exception'], // The parcel entered confiscation: it is held, not delivered.
 ] as const).map(([status, stage]) => [status.toUpperCase(), stage]));
 
-/** The stage SPX's order code or fleet status gives a scan. */
-export function spxBrMappedStage(code: string): Stage | undefined {
+// The fleet feed also sends "Delivering" with no hub, the day the order is created: the order handed
+// to SPX's delivery chain, which a hub's round or the delivery follows hours or days later. Only a
+// line that names its hub, "[OF Hub_…] Seu pacote está sendo entregue pelo entregador", is the round.
+const ROUND = /^\[[^\]]+\]/;
+
+/** The stage SPX's order code or fleet status gives a scan with this wording. */
+export function spxBrMappedStage(code: string, wording: string): Stage | undefined {
   const key = code.toUpperCase();
+  if (key === 'DELIVERING' && !ROUND.test(wording.trim())) return 'in_transit';
   return CODES.get(key) ?? FLEET.get(key);
 }
 
 /** A scan's stage: its code, else the shared wording rules, else nothing. */
 export function spxBrStage(code: string, wording: string): ClassifiedWording | null {
-  const mapped = spxBrMappedStage(code);
+  const mapped = spxBrMappedStage(code, wording);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
   const worded = classifyWording(wording, 'in_transit');
   return worded.source === 'none' ? null : worded;
 }
 
 export const statusMap: CarrierStatusMap = {
-  stage: (code) => (code ? spxBrMappedStage(code) : undefined),
+  stage: (code, wording) => (code ? spxBrMappedStage(code, wording) : undefined),
   gaps: [],
 };

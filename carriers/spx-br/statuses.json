@@ -578,11 +578,19 @@
     },
     {
       "code": "Delivering",
-      "wording": "Seu pacote está sendo entregue pelo entregador",
+      "wording": "[…] Seu pacote está sendo entregue pelo entregador",
       "language": "pt",
       "stage": "out_for_delivery",
       "confirmedBy": "live",
-      "note": "Fleet feed: paired with F600."
+      "note": "Fleet feed: paired with F600. The round opens with the hub that sends the courier out, which stays in the wording."
+    },
+    {
+      "code": "Delivering",
+      "wording": "Seu pacote está sendo entregue pelo entregador",
+      "language": "pt",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Fleet feed: the same line with no hub, sent the day the order is created. The order is handed to SPX's delivery chain; a hub's round or the delivery comes hours or days later."
     },
     {
       "code": "Delivered",
