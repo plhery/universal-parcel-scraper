@@ -12,11 +12,16 @@ export const PROVIDER = 'Israel Post';
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
-/** Postal S10 items, including imports, and Israel Post's domestic courier identifiers. */
+/**
+ * The thirteen characters its search page asks for, letters and digits together: postal S10
+ * items, including imports, with a valid check digit, Israel Post's domestic courier
+ * identifiers, and the other layouts its tracker follows, such as a partner's number for a
+ * parcel it delivers.
+ */
 export function normalizeIsraelPostNumber(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (isValidS10TrackingNumber(number) || /^\d{11}IL$/.test(number)) return number;
-  throw new InvalidInputError(PROVIDER, 'Israel Post requires an S10 item or domestic courier number');
+  if (/^[A-Z]{2}\d{9}[A-Z]{2}$/.test(number) ? isValidS10TrackingNumber(number) : /^(?=.*\d)(?=.*[A-Z])[A-Z\d]{13}$/.test(number)) return number;
+  throw new InvalidInputError(PROVIDER, 'Israel Post requires a thirteen-character item number');
 }
 
 function text(value: unknown): string {

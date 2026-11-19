@@ -19,7 +19,9 @@ and ECO POST items carry UPU S10 numbers ending `IL`. Their issuer proposes Isra
 for HTTP recognition; an identity-bound history confirms that it knows the item.
 Its courier service numbers items with eleven digits and `IL`, which `israel-post-1` claims;
 archived lookups on the tracker show both layouts. Other layouts looked up there, such as
-eleven digits and `RG`, are not described and stay unclaimed.
+eleven digits and `RG`, are not described and stay unclaimed. The tracker also follows a
+partner's thirteen-character number for a parcel Israel Post delivers, so the adapter takes any
+thirteen letters and digits together, and checks the check digit of S10-shaped ones.
 
 Its [tracker page](https://web.archive.org/web/20201129223749/https://www.israelpost.co.il/itemtrace.nsf/mainsearchNOHE?OpenForm&L=EN)
 says it follows EMS and ECO POST items sent from abroad, so a postal item going to Israel is

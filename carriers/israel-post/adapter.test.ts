@@ -81,15 +81,17 @@ describe('Israel Post guest tracking', () => {
     expect(parseIsraelPost(data, NUMBER)).toMatchObject({ status: 'exception', current_stage: 'exception' });
   });
 
-  it('accepts imported S10 items and domestic courier identifiers without widening detection', async () => {
-    const imported = 'ZZ000000014DE';
-    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture.replaceAll(NUMBER, imported)))).track({ number: imported }))
-      .resolves.toMatchObject({ status: 'delivered' });
-    const domestic = '00000000001IL';
-    await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(reply(fixture.replaceAll(NUMBER, domestic)))).track({ number: domestic }))
-      .resolves.toMatchObject({ status: 'delivered' });
+  it('accepts imported S10 items, domestic courier identifiers and other thirteen-character items without widening detection', async () => {
+    for (const number of ['ZZ000000014DE', '00000000001IL', '00000000001RG', 'ZZ0000000000Z']) {
+      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture.replaceAll(NUMBER, number)));
+      await expect(carrier(fetcher).track({ number })).resolves.toMatchObject({ status: 'delivered' });
+      expect(fetcher.mock.calls[0]![0]).toBe(ISRAEL_POST_ENDPOINT + number);
+    }
+    for (const number of ['00000000001RG', 'ZZ0000000000Z']) {
+      expect(recognitionCandidates(number).some(c => c.carrier === 'israel-post')).toBe(false);
+    }
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['ZZ000000015IL', '12345678', '00000000001RG', 'ABC']) {
+    for (const number of ['ZZ000000015IL', '12345678', '0000000000001', 'ZZZZZZZZZZZZZ', 'ZZ0000000000ZZ', 'ABC']) {
       await expect(carrier(fetcher).track({ number })).rejects.toMatchObject({ kind: 'invalid_input' });
       await expect(carrier(fetcher).recognize!(number)).resolves.toEqual({ known: false });
     }
