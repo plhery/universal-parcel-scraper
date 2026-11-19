@@ -57,7 +57,10 @@ const CODES = new Map<string, ClassifiedStatus>([
   ['200077', MOVING],
   ['200019', MOVING],
   ['200000', MOVING],
+  ['10032', MOVING],
   ['10054', MOVING],
+  // On board a flight about to take off, after leaving a sorting center.
+  ['200073', MOVING],
   // Arrived at the delivery station, before the courier's round.
   ['200075', MOVING],
   // A new round agreed with the recipient (已与收件人约定新的派送时间, 待再次派送). It came after the arrival at the delivery

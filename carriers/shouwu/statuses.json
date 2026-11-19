@@ -1101,6 +1101,46 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-11",
       "note": "DPD's failed round with its reason joined, a wrong address. DPD's own map reads the sentence as a failed attempt whatever the reason, and the parcel went back to the depot, not to the sender."
+    },
+    {
+      "wording": "InTransit_PickedUp",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-24",
+      "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means. The pickup, after the order's registration."
+    },
+    {
+      "wording": "InTransit_Arrival",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-27",
+      "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means."
+    },
+    {
+      "wording": "InTransit_Departure",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-28",
+      "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means."
+    },
+    {
+      "wording": "InTransit_CustomsProcessing",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-29",
+      "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means."
+    },
+    {
+      "wording": "InTransit_CustomsReleased",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-10-31",
+      "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means. Released from customs, the parcel moves on."
     }
   ]
 }

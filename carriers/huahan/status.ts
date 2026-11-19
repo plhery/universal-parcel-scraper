@@ -70,9 +70,12 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   // China Post's receipt on the postal line, after HuaHan's own acceptance: the hand-over to the post.
   ['中国邮政已收取邮件', 'in_transit'],
   // HuaHan's transfer warehouse taking the parcel in after its departure from the origin facility,
-  // and sending the shipments on before the export declaration.
+  // and sending the shipments on before the export declaration; on another line, its collection
+  // there and its shipping out a day or two later, before the departure to the next facility.
   ['shipment received', 'in_transit'],
   ['shipments were sent', 'in_transit'],
+  ['parcel has been collected.', 'in_transit'],
+  ['parcel has been shipped out of the warehouse.', 'in_transit'],
 ]);
 // Milestones in Chinese with the English after them, and lines with a day, a flight, a time or a place.
 const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [

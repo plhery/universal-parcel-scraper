@@ -328,6 +328,20 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-03",
       "note": "Arrived at a sorting center abroad (Your package has arrived at 【…】)."
+    },
+    {
+      "code": "10032",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "Arrived at a sorting center (已到达【…】)."
+    },
+    {
+      "code": "200073",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "On board a flight about to take off (…航班…起飞), after leaving a sorting center."
     }
   ]
 }

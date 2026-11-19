@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { SUB_STAGES } from '../../providers/seventeentrack/status.js';
 import { imileRelayedStage } from '../imile/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -39,13 +40,19 @@ const PATTERNS: readonly [RegExp, Stage][] = [
   [/^failed delivery for reason: \S/, 'failed_attempt'],
 ];
 
+// 17TRACK's sub-status names, which Shouwu gives as a scan's wording on a line it reads from 17TRACK
+// ("InTransit_CustomsReleased"): they mean what 17TRACK's sub-statuses mean.
+const SUB_STATUS_NAMES: ReadonlyMap<string, Stage> = new Map(Object.entries(SUB_STAGES)
+  .map(([name, stage]) => [name.toLowerCase(), stage]));
+
 /**
  * A wording's stage in Shouwu's map, the wording in `normalizeStatusWording` form. On the line into
  * Italy the delivering partner is iMile, whose rows open with its centre in 【】 ("【Milan center】Received."):
  * iMile's sentences read them.
  */
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? imileRelayedStage(wording);
+  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
+    ?? imileRelayedStage(wording);
 }
 
 // Rows that send the parcel back to its sender: DHL's "Shipment will be returned to origin-Bad address" and the

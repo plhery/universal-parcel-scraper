@@ -353,6 +353,10 @@ describe('HuaHan status map', () => {
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: 'ZZ', description: 'Departed from origin facility' })).toEqual({ kind: 'unknown' });
     // The destination carrier's address change, relayed without a code after the hand-off.
     expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Change of delivery address' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // Its transfer warehouse collecting the parcel after the departure from the origin facility and shipping it out.
+    for (const description of ['Parcel has been collected.', 'Parcel has been shipped out of the warehouse.']) {
+      expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description }), description).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    }
     // China Post's scans on the postal line, offices in 【】, and the destination post's as China Post copies them.
     for (const [code, description, stage] of [
       [null, '中国邮政已收取邮件', 'in_transit'],

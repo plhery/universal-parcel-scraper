@@ -78,6 +78,8 @@
     {"code": "CA", "wording": "Incoming scan at facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "Landmark Global's depot receipt after the hand-off to bpost's network."},
     {"code": "CB", "wording": "Outgoing scan at facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-09", "note": "Landmark Global's depot departure under HuaHan's out-for-delivery code, days before a delivery round: the words decide."},
     {"code": "ND", "wording": "Out for delivery (On the way)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "Landmark Global's relay of the destination round."},
-    {"wording": "Delivery attempt (Delivery not possible)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "Landmark Global's relay of a round that did not deliver, without a code."}
+    {"wording": "Delivery attempt (Delivery not possible)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "Landmark Global's relay of a round that did not deliver, without a code."},
+    {"wording": "Parcel has been collected.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-14", "note": "HuaHan's transfer warehouse collecting the parcel the day after its departure from the origin facility, without a code."},
+    {"wording": "Parcel has been shipped out of the warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The same warehouse shipping the parcel out two days later, before its departure to the next facility."}
   ]
 }
