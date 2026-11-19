@@ -16,7 +16,6 @@ const LABELS = new Map<string, ClassifiedStatus>([
   ['TRANSITO', { status: 'in_transit', stage: 'in_transit' }],
   ['LEIDO EN DESTINO', { status: 'in_transit', stage: 'in_transit' }],
   ['REPARTO', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
-  ['FIN DE REPARTO', { status: 'in_transit', stage: 'in_transit' }],
   ['AUSENTE', { status: 'exception', stage: 'failed_attempt' }],
   // Delivery asked for at another address: the parcel is rerouted.
   ['SOLICITADA EN OTRA DIRECCION', { status: 'in_transit', stage: 'in_transit' }],

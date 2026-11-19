@@ -31,9 +31,9 @@ not ask.
 - Labels map through `status.ts`; others fall to the shared Spanish wording rules, and
   stay unmapped when those don't know them either.
 - The destination agency reads the parcel again as it loads the van, mostly at the round's
-  (`REPARTO`) minute, sometimes minutes or hours later. Consecutive agency reads on that day
-  belong to the round. `FIN DE REPARTO` closes it. After another activity, agency reads
-  again mean the parcel is in transit.
+  (`REPARTO`) minute, sometimes minutes or hours later. Agency reads that follow the round
+  on its day, with no other activity between, belong to it and are out for delivery. After
+  any other activity, an agency read means the parcel is in transit again.
 - A row's place (`POBLACIÓN`) is the town of the agency that recorded it. Hub reads name
   their hub ("LECTURA EN HUB BAILEN"). TIPSA's central agency is at San Fernando de
   Henares, where the Madrid hub's reads are placed, and reads of other hubs, Bailén's and
