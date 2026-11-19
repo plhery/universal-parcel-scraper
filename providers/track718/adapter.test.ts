@@ -76,13 +76,12 @@ describe('Track718 for Juxi only', () => {
     expect(fetcher).toHaveBeenCalledTimes(1);
   });
 
-  it('asks Track718 for Juxi after the providers that answer, and for no other carrier', () => {
-    expect(universalPlan({ carriers: ['juxi-express'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718']);
-    expect(universalPlan({ trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718']);
-    expect(universalPlan({ carriers: ['juxi-express'], trackingNumber: number, enablePostalNinja: true }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK', 'Track718']);
+  it('is asked only on request: the plan leaves it out for Juxi and every other carrier', () => {
+    expect(universalPlan({ carriers: ['juxi-express'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
+    expect(universalPlan({ trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
+    expect(universalPlan({ carriers: ['juxi-express'], trackingNumber: number, enablePostalNinja: true }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
     expect(priorityUniversalSource(number)).toBeUndefined();
     expect(universalPlan({ carriers: ['ups'], trackingNumber: number }).sources).not.toContain('Track718');
-    expect(universalPlan({ carriers: ['ups', 'juxi-express'], trackingNumber: number }).sources).not.toContain('Track718');
     expect(universalPlan({ trackingNumber: 'YT900000000001' }).sources).toContain('17TRACK');
     expect(universalPlan().sources).not.toContain('Track718');
   });

@@ -18,9 +18,9 @@ report no available history. A challenge, rate limit, busy service or unfinished
 a failure. Explicit scan offsets are preserved; clocks without an offset stay local and do
 not acquire the carrier's default zone. An undated history can therefore need another provider.
 
-For Juxi, the provider plan asks Track718 after ParcelsApp, Ship24 and 17TRACK, which answer
-for most Juxi parcels; [COVERAGE.md](../COVERAGE.md) gives the evidence.
-Track718 must still be explicitly enabled by the consumer.
+The provider plan leaves Track718 out: ParcelsApp and 17TRACK answer for most Juxi parcels,
+and Track718 found none of them ([COVERAGE.md](../COVERAGE.md)). It answers only a request
+that names it, with Track718 enabled by the consumer.
 
 ## Testing
 

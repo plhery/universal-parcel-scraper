@@ -9,8 +9,8 @@ the piece's movement against the knob, and keeps generation checks through the h
 An ambiguous image abstains. It permits at most two drags and two bound tracking requests,
 within the caller's deadline, and closes its fresh context. The helper abstains often, within
 seconds and before any drag, so the adapter asks it once more when the budget left still holds
-a solved run of about half a minute: the new context draws another image. Unsupported
-puzzles and refused verification leave enabled universal providers available. Every answer
+a solved run of about half a minute: the new context draws another image. No provider
+is asked about a J&T Brazil parcel ([COVERAGE.md](../../providers/COVERAGE.md)). Every answer
 costs a solved puzzle, about half a minute of browser time, so the catalog asks for a refresh
 at most every half hour, and an hour after a failed one, out for delivery included.
 
@@ -29,7 +29,7 @@ The guest flow accepts the fifteen-digit domestic waybills beginning with 888. E
 seen so far begins with 8880, and no other carrier's does, so a high-confidence rule files those
 under J&T Brazil ahead of BRT's and Yunda's fifteen digits. There is no HTTP recognizer, and a
 browser check takes longer than recognition allows, so the rule files the number rather than
-suggesting it: a parcel J&T Brazil does not know falls back to the other carriers and providers.
+suggesting it: a parcel J&T Brazil does not know falls back to the other carriers.
 Other aliases and the CPF/CNPJ, account and proof-of-delivery branches are outside this adapter.
 
 Samples and provenance live in [`numbers.json`](numbers.json). The current portal's query

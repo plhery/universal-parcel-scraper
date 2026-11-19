@@ -49,6 +49,17 @@ describe('universal discovery chain', () => {
     expect(universalPlan({ carriers: ['usps'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
   });
 
+  it('asks no provider about a carrier none has answered for, unless another carrier is named first', () => {
+    for (const carrier of ['flash-courier', 'j-and-t-br', 'j-and-t-de']) {
+      expect(universalPlan({ carriers: [carrier], trackingNumber: number, enablePostalNinja: true }).sources, carrier).toEqual([]);
+      expect(universalPlan({ carriers: [null, carrier], trackingNumber: number }).sources, carrier).toEqual([]);
+    }
+    // Providers are the only route for a carrier without an adapter.
+    expect(universalPlan({ carriers: ['gzyl'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
+    expect(universalPlan({ carriers: ['azul-cargo'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
+    expect(universalPlan({ carriers: ['usps', 'j-and-t-de'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+  });
+
   it('starts with ParcelsApp and stops after success', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(parcels));
     const browserLookup = vi.fn().mockRejectedValue(new Error('Unavailable'));

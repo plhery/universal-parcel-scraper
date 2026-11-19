@@ -63,6 +63,12 @@ export function orderUniversalSources(eligible: readonly Source[], tiers: Partia
 const CARRIERS: ReadonlySet<string> = new Set(CARRIER_IDS.filter((carrier) => carrier !== 'unknown'));
 
 /**
+ * Carriers with an adapter of their own whose parcels no provider has answered for:
+ * no provider is asked about them. The evidence is in COVERAGE.md.
+ */
+const UNANSWERED: ReadonlySet<string> = new Set(['flash-courier', 'j-and-t-br', 'j-and-t-de']);
+
+/**
  * Whether a carrier's number is the token of the link that opens the parcel (`tracking.linkToken`),
  * as an Amazon order's: it means nothing to a provider, so none is asked about it.
  */
@@ -92,17 +98,17 @@ export function universalPlan(options: {
   const carriers = options.carriers ?? [];
   const carrier = carriers.find((candidate) => coverageTiers(candidate)) ?? null;
   const tiers = coverageTiers(carrier);
-  if (carriers.some(numberIsLinkToken)) {
+  const first = carriers.find(candidate => candidate && CARRIERS.has(candidate));
+  if (carriers.some(numberIsLinkToken) || (first && UNANSWERED.has(first))) {
     return { sources: [], carrier, tier: (source) => tiers?.[source] ?? 'unknown', rank: (source) => tierRank(tiers, source) };
   }
-  const named = carriers.some((candidate) => candidate && CARRIERS.has(candidate));
+  const named = !!first;
   const postalNinja = enablePostalNinja && (!named || ['full', 'partial'].includes(tiers?.['Postal Ninja'] ?? 'unknown'));
   const defaults: Source[] = postalNinja ? ['ParcelsApp', 'Ship24', '17TRACK', 'Postal Ninja', 'UPU'] : [...UNIVERSAL_SOURCES];
-  const juxi = carriers.find(candidate => candidate && CARRIERS.has(candidate)) === 'juxi-express' || !named && !!trackingNumber && /^JXC[A-Z]{2}\d{10}YQ$/.test(normalizeTrackingNumber(trackingNumber));
-  const eligible = defaults.filter(source => (source !== 'Track718' || juxi)
+  // Track718 found none of the Juxi parcels it was asked about, and each try costs a browser read:
+  // the plan leaves it out, and only an explicit request asks it.
+  const eligible = defaults.filter(source => source !== 'Track718'
     && (source !== 'UPU' || trackingNumber === undefined || isValidS10TrackingNumber(trackingNumber)));
-  // Track718 rarely holds a Juxi parcel the others lack, and each try costs a browser read: it comes last.
-  if (juxi && !eligible.includes('Track718')) eligible.push('Track718');
   const ordered = orderUniversalSources(eligible, tiers);
   if (options.enableTrack123 && carriers[0] === 'fedex' && !!trackingNumber
     && /^(?:\d{12}|\d{15}|\d{20})$/.test(normalizeTrackingNumber(trackingNumber))) ordered.unshift('Track123');

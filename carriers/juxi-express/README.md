@@ -1,7 +1,8 @@
 # Juxi Express
 
 Juxi Express parcels use enabled universal providers. The Juxi-only Track718 integration
-uses the carrier the sender selects on its guest page; it is not native carrier confirmation.
+answers only a request that names it, and uses the carrier the sender selects on its guest
+page; it is not native carrier confirmation.
 See [Track718](../../providers/track718/README.md).
 
 Juxi Express is 上海驹隙国际物流有限公司 (驹隙物流), a Shanghai cross-border forwarder whose site

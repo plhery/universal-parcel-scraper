@@ -294,7 +294,11 @@ writing coverage.json, including partial history, stale references, wrong carrie
 formats. Extra references inform provider ordering but are not averaged into the README's
 comparison. Run `npm run generate` to update the tables and summary.
 
-Juxi Express asks ParcelsApp, Ship24 and 17TRACK before Track718. ParcelsApp and 17TRACK
-answered nearly every Juxi check, while Track718 found none of those parcels, and each of its
-tries costs a browser read. Track718 is enabled only for Juxi and remains opt-in. Its
+Juxi Express asks ParcelsApp, Ship24 and 17TRACK. ParcelsApp and 17TRACK answered nearly
+every Juxi check, while Track718 found none of those parcels, and each of its tries costs a
+browser read, so the plan leaves Track718 out; it answers only an explicit request. Its
 [README](track718/README.md) describes the guest flow.
+
+No provider is asked about a Flash Courier, J&T Brazil or J&T Germany parcel. Each carrier has
+its own adapter, and no provider returned history for any of their parcels, though each was
+asked about many. Azul Cargo Express, which has no adapter, still asks them.

@@ -196,7 +196,7 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   [benchmark](../benchmark/README.md) for it: `node scripts/benchmark.mjs probe --sources <name>`.
 - Run the package checks.
 
-Track718 is an opt-in source restricted to Juxi Express. That carrier asks it after ParcelsApp,
-Ship24 and 17TRACK. See [the scoped integration](track718/README.md).
+Track718 is an opt-in source restricted to Juxi Express. The provider plan leaves it out, so it
+answers only an explicit request. See [the scoped integration](track718/README.md).
 
 [Track123](track123/README.md) is an additional opt-in public-page fallback restricted to named FedEx lookups. Its guest flow uses no paid API credentials.
