@@ -68,6 +68,24 @@ describe('APG eCommerce guest tracker', () => {
     expect(result).toMatchObject({ current_stage: 'exception', events: [{ stage: 'exception' }, { stage: 'failed_attempt' }] });
   });
 
+  it('leaves out only a scan worded outside APG\'s wording, and marks the history incomplete', async () => {
+    const result = await trackerFor(history(
+      row('02/09/26', '09:00 GMT', 'Left at door 12B')
+      + row('01/09/26', '08:00 GMT', 'Signed by A Neighbour')
+      + row('01/09/26', '07:01 GMT', 'Delivered', 'Croatia')
+      + row('31/08/26', '06:04 GMT', 'Out for Delivery'),
+    )).fetch(NUMBER);
+    expect(result).toMatchObject({ current_stage: 'delivered', last_status_text: 'Delivered', history_truncated: true, events: [
+      { description: 'Delivered', time: '2026-09-01T07:01:00Z', stage: 'delivered' },
+      { description: 'Out for Delivery', time: '2026-08-31T06:04:00Z', location: 'HR' },
+    ] });
+    expect(result.events).toHaveLength(2);
+    expect(result.events?.[0]).not.toHaveProperty('location');
+    expect(JSON.stringify(result)).not.toMatch(/12B|Neighbour|Croatia/);
+    const whole = await trackerFor(history(row('01/09/26', '07:01 GMT', 'Delivered'))).fetch(NUMBER);
+    expect(whole).not.toHaveProperty('history_truncated');
+  });
+
   it.each([
     row('31/02/26', '07:01 GMT', 'Delivered'),
     row('01/09/26', '07:01', 'Delivered'),

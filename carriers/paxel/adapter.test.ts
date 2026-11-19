@@ -87,6 +87,13 @@ describe('Paxel supplied browser boundary', () => {
       .rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 12_000 });
   });
 
+  it('reads a redirect answer to the bound form POST as a transport failure, never a missing parcel', async () => {
+    // The browser cannot read a redirect's body, so the helper reports it unreadable.
+    for (const reply of [capture({ status: 302, body: null, error: 'body_unreadable' }), capture({ status: 302, body: '' })]) {
+      await expect(harness([reply]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport', status: 302 });
+    }
+  });
+
   it('retains the invalid-AWB uncertainty at the adapter boundary', async () => {
     const body = `<table><tbody><tr><td>${NUMBER}</td><td><span class="tx-red">AWB Tidak Valid</span></td></tr></tbody></table>`;
     await expect(harness([capture({ body })]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'invalid_awb' });

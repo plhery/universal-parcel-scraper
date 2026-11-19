@@ -63,21 +63,27 @@ export function parseApgHistory(html: string, number: string): CarrierResult {
   }
   const events: CarrierEvent[] = [];
   const seen = new Set<string>();
+  let omitted = false;
   for (const row of rows) {
     const columns = $(row).children('td');
     if (columns.length !== COLUMNS.length) throw new SchemaError(PROVIDER, 'APG returned an invalid scan row');
     const date = clean(columns.eq(0).text()), time = clean(columns.eq(1).text());
     const location = clean(columns.eq(2).text()), description = clean(columns.eq(4).text());
-    if (!description || description.length > 140 || /[\d@<>]|https?:/i.test(description) || hasPrivateDeliveryDetails(description)
-      || (location && !/^[A-Z]{2}$/.test(location))) {
-      throw new SchemaError(PROVIDER, 'APG returned an invalid scan description or location');
+    const scanTime = timestamp(date, time);
+    // A description outside APG's short wording (a digit, an address, markup, a link or a signer)
+    // costs only its own row, and a place that is not a country code only that place.
+    if (!description || description.length > 140 || /[\d@<>]|https?:/i.test(description) || hasPrivateDeliveryDetails(description)) {
+      omitted = true;
+      continue;
     }
+    const country = /^[A-Z]{2}$/.test(location) ? location : '';
     const stage = apgEcommerceStage(description);
-    const scan = { time: timestamp(date, time), description, ...(location ? { location } : {}),
+    const scan = { time: scanTime, description, ...(country ? { location: country } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
     const key = JSON.stringify(scan);
     if (!seen.has(key)) { seen.add(key); events.push(scan); }
   }
+  if (!events.length && omitted) throw new SchemaError(PROVIDER, 'APG returned no readable scan');
   if (!events.length) throw new NoHistoryError(PROVIDER, 'APG returned a bound result without scans');
   events.sort((a, b) => b.time!.localeCompare(a.time!));
   const latest = events[0]!;
@@ -85,5 +91,5 @@ export function parseApgHistory(html: string, number: string): CarrierResult {
   return { status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_update: latest.time!, last_status_text: latest.description!, expected_delivery: null,
-    events: events.slice(0, 100), ...(events.length > 100 ? { history_truncated: true } : {}) };
+    events: events.slice(0, 100), ...(events.length > 100 || omitted ? { history_truncated: true } : {}) };
 }

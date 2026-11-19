@@ -7,8 +7,10 @@ heading. Merchant order references and partner barcodes stay with provider fallb
 
 The history table labels its clock GMT and gives the country separately. The adapter keeps the
 explicit GMT time, the country code and the canonical event description. It omits the
-merchant reference and detailed event text. An attempt or return in progress can precede
-a later delivery.
+merchant reference and detailed event text. A scan whose description holds a digit, markup,
+a link or a signer is left out, and the history is then marked incomplete so enabled
+providers can fill it; a place that is not a country code is left out of its scan. An
+attempt or return in progress can precede a later delivery.
 
 An exact missing-order reply must repeat the requested reference. Unavailable pages and
 verification refusals keep their own failure kinds. A network failure can be retried within
