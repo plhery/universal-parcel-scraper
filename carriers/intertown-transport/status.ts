@@ -1,9 +1,5 @@
-import type { Stage } from '../../core/status/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { parcelPerfectStages } from '../bigfoot-express/parcelPerfect.js';
 import statuses from './statuses.json' with { type: 'json' };
 
-const stages = new Map(statuses.entries.map(entry => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
-
-export function stageOf(wording: string): Stage | undefined {
-  return stages.get(normalizeStatusWording(wording));
-}
+/** The stage of a scan's wording, whatever depot it names. */
+export const stageOf = parcelPerfectStages(statuses.entries);

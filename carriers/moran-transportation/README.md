@@ -7,7 +7,8 @@ message means no shipment only when it names the requested PRO.
 The trace timestamps stay as local clocks because it supplies no time zone and the carrier
 operates across multiple zones. The adapter keeps the event wording and facility remarks
 that give a place. The trace's delivery flag settles delivery. Other shipment references,
-parties and signature details are omitted.
+parties and signature details are omitted. "Received At Moran" names the terminal after it, and
+any terminal reads alike. "En-route" after the parcel is out for delivery is the round.
 
 Set `MORAN_TRANSPORTATION_TRACKING_NUMBER` and optionally `MORAN_TRANSPORTATION_UNKNOWN_NUMBER`
 outside the repository and run `npm run test:carriers:live -- carriers/moran-transportation`.

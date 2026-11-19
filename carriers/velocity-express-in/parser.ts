@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus } from '../../core/status/index.js';
+import { hasPrivateDeliveryDetails, languageStageStatus } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
-import { stageOf } from './status.js';
+import { stageOf, wordingOf } from './status.js';
 
 const provider = 'velocity-express-in';
 
@@ -41,13 +41,15 @@ export function parseTracking(body: string, number: string, httpStatus: number):
     if (seen.has(key)) continue;
     seen.add(key);
     const stage = stageOf(Statuscode);
-    events.push({ local_time, description: Remarks, provider_code: Statuscode, ...(location ? { location } : {}),
+    // A remark that names who signed or a delivery code gives way to the status's own wording.
+    const description = hasPrivateDeliveryDetails(Remarks) ? wordingOf(Statuscode) ?? Statuscode : Remarks;
+    events.push({ local_time, description, provider_code: Statuscode, ...(location ? { location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
   }
 
   events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
   const newest = events[0];
-  if (!newest) throw new IndeterminateError(provider, 'Velocity Express returned no history');
+  if (!newest) throw new NoHistoryError(provider);
   const stage = stageOf(newest.provider_code!);
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',

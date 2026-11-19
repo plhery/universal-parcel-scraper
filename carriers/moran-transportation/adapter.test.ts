@@ -12,6 +12,16 @@ describe('Moran Transportation tracking', () => {
     expect(result.events).toHaveLength(9);
   });
 
+  it('reads every receiving terminal alike, and a truck en route during the round as the round', () => {
+    const number = /<pronumb>(\d+)<\/pronumb>/.exec(fixture('found'))![1]!;
+    const stages = (xml: string) => parseTracking(xml, number, 200).events!.map(event => `${event.description} ${event.stage}`);
+    expect(stages(fixture('found')).slice(0, 5)).toEqual(['Delivered delivered', 'En-route out_for_delivery',
+      'Out For Delivery out_for_delivery', 'Manifested in_transit', 'Received At Moran Fort Wayne in_transit']);
+    expect(stages(fixture('found').replace('Received At Moran Fort Wayne', 'Received At Moran Indianapolis'))[4])
+      .toBe('Received At Moran Indianapolis in_transit');
+    expect(stages(fixture('found')).at(-2)).toBe('Picked Up accepted');
+  });
+
   it('rejects a result for another shipment', () => {
     expect(() => parseTracking(fixture('found'), '0000000000', 200)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });

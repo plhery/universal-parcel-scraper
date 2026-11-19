@@ -1,9 +1,9 @@
 import { DateTime } from 'luxon';
-import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
-import type { CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus } from '../../core/status/index.js';
+import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
-import { stageOf } from './status.js';
+import { isEnRoute, stageOf } from './status.js';
 
 const provider = 'moran-transportation';
 export const maxBytes = 256 * 1024;
@@ -27,7 +27,7 @@ export function parseTracking(xml: string, number: string, httpStatus: number): 
 
   const histories = root.children.filter(child => child.name === 'shiphists' && !child.uri);
   if (histories.length !== 1) throw new IndeterminateError(provider, 'Moran returned no usable history');
-  const events = histories[0]!.children.map(row => {
+  const events: CarrierEvent[] = histories[0]!.children.map(row => {
     if (row.name !== 'shiphist' || row.uri) throw new SchemaError(provider, 'Invalid history row');
     const description = field(row, 'histcode');
     const day = field(row, 'histdate');
@@ -41,12 +41,17 @@ export function parseTracking(xml: string, number: string, httpStatus: number): 
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   }).sort((left, right) => right.local_time.localeCompare(left.local_time));
 
+  let previous: string | undefined;
+  for (const event of [...events].reverse()) {
+    if (previous === 'out_for_delivery' && isEnRoute(event.description!)) event.stage = previous;
+    previous = event.stage ?? previous;
+  }
   const newest = events[0];
-  if (!newest) throw new IndeterminateError(provider, 'Moran returned no history');
-  const stage = field(root, 'prodelivered').toLowerCase() === 'yes' ? 'delivered' : events.find(event => event.stage)?.stage;
+  if (!newest) throw new NoHistoryError(provider);
+  const stage = field(root, 'prodelivered').toLowerCase() === 'yes' ? 'delivered' : events.find(event => event.stage)?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
-    last_status_text: newest.description, last_update_local: newest.local_time, events,
+    last_status_text: newest.description!, last_update_local: newest.local_time!, events,
   };
 }

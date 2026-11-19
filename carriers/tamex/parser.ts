@@ -20,6 +20,9 @@ export function parseTracking(html: string, number: string, httpStatus: number):
 
   const rows = $('.card-body').filter((_, card) => $(card).children('h5.card-title, p.card-text').length > 0);
   if (!rows.length && headings.siblings('p.text-center').text().trim() === 'لايتوفر سجل للشحنة') throw new NotFoundError(provider);
+  // Oldest first. The warehouses receive the parcel again in the customer's city, after the sorting: a receipt then
+  // moves it on rather than accepting it.
+  let moved = false;
   const events = rows.toArray().map(card => {
     const date = $(card).children('h5.card-title');
     const wording = $(card).children('p.card-text');
@@ -29,7 +32,9 @@ export function parseTracking(html: string, number: string, httpStatus: number):
         || !/^\d{4}-\d{2}-\d{2}$/.test(local_time) || !DateTime.fromISO(local_time, { zone: 'utc' }).isValid) {
       throw new SchemaError(provider, 'Invalid Tamex history row');
     }
-    const stage = stageOf(description);
+    const mapped = stageOf(description);
+    const stage = mapped === 'accepted' && moved ? 'in_transit' : mapped;
+    if (stage && stage !== 'registered' && stage !== 'accepted') moved = true;
     return { local_time, description, ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   }).reverse();
 

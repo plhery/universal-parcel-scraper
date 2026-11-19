@@ -12,6 +12,16 @@ describe('Velocity Express tracking', () => {
     expect(result.events).toHaveLength(13);
   });
 
+  it('words a remark that names the signer by its status instead', () => {
+    const reply = JSON.parse(fixture('found'));
+    const number: string = reply[0].Parent[0].AirwayBill;
+    const delivered = reply[0].Child.find((row: { Statuscode: string }) => row.Statuscode === 'SPD');
+    delivered.Remarks = 'Delivered, signed by A Neighbour';
+    const result = parseTracking(JSON.stringify(reply), number, 200);
+    expect(result.events![0]).toMatchObject({ description: 'Delivered', provider_code: 'SPD', stage: 'delivered' });
+    expect(JSON.stringify(result)).not.toContain('Neighbour');
+  });
+
   it('rejects a result for another shipment', () => {
     expect(() => parseTracking(fixture('found'), 'VIN0000000', 200)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });

@@ -1,4 +1,4 @@
-import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
@@ -26,7 +26,7 @@ export function parseTracking(text: string, number: string, httpStatus: number):
     return { description, local_time: clock.toFormat("yyyy-MM-dd'T'HH:mm:ss"), ...(typeof row.location === 'string' && row.location ? { location: row.location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
   });
-  if (!events.length) throw new IndeterminateError(provider, 'Shipment has no visible history');
+  if (!events.length) throw new NoHistoryError(provider);
   const newest = events[0]!;
   const stage = stageOf(newest.description);
   return {

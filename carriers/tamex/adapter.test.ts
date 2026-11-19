@@ -10,6 +10,9 @@ describe('Tamex tracking', () => {
     expect(result.current_stage).toBe('delivered');
     expect(result.last_update_local).toBe('2026-08-18');
     expect(result.events).toHaveLength(6);
+    // The second warehouse receipt, after the sorting, is the destination's.
+    expect(result.events!.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit',
+      'accepted', 'registered']);
   });
 
   it('rejects a result for another shipment', () => {
