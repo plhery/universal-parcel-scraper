@@ -301,4 +301,6 @@ browser read, so the plan leaves Track718 out; it answers only an explicit reque
 
 No provider is asked about a Flash Courier, J&T Brazil or J&T Germany parcel. Each carrier has
 its own adapter, and no provider returned history for any of their parcels, though each was
-asked about many. Azul Cargo Express, which has no adapter, still asks them.
+asked about many. Azul Cargo Express, which has no adapter, still asks them. Ship24 is not
+asked about a GZYL parcel: it returned none of their histories, while 17TRACK and ParcelsApp
+answered for most of the same parcels.

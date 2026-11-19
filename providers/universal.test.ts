@@ -55,9 +55,14 @@ describe('universal discovery chain', () => {
       expect(universalPlan({ carriers: [null, carrier], trackingNumber: number }).sources, carrier).toEqual([]);
     }
     // Providers are the only route for a carrier without an adapter.
-    expect(universalPlan({ carriers: ['gzyl'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
     expect(universalPlan({ carriers: ['azul-cargo'], trackingNumber: number }).sources).toEqual(['ParcelsApp', 'Ship24', '17TRACK']);
     expect(universalPlan({ carriers: ['usps', 'j-and-t-de'], trackingNumber: number }).sources).toEqual(['17TRACK', 'ParcelsApp', 'Ship24']);
+  });
+
+  it('leaves out only the provider that has not answered for a carrier', () => {
+    expect(universalPlan({ carriers: ['gzyl'], trackingNumber: number }).sources).toEqual(['ParcelsApp', '17TRACK']);
+    expect(universalPlan({ carriers: ['gzyl'], trackingNumber: number, enablePostalNinja: true }).sources).not.toContain('Ship24');
+    expect(universalPlan({ carriers: ['usps', 'gzyl'], trackingNumber: number }).sources).toContain('Ship24');
   });
 
   it('starts with ParcelsApp and stops after success', async () => {
