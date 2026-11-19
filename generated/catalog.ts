@@ -11392,7 +11392,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Sarajevo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bh-posta",
+      "localClocks": true
     },
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
     "trackingSearchUrl": "https://www.posta.ba/pracenje-posiljaka/",

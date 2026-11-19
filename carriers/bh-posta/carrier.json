@@ -17,15 +17,29 @@
   "timezone": "Europe/Sarajevo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "bh-posta",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://www.posta.ba/pracenje-posiljaka/",
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },

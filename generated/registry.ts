@@ -67,6 +67,7 @@ import { adapter as bestOverniteExpress } from '../carriers/best-overnite-expres
 import { adapter as bestfulfill } from '../carriers/bestfulfill/adapter.js';
 import { adapter as betterTrucks } from '../carriers/better-trucks/adapter.js';
 import { adapter as bexExpress } from '../carriers/bex-express/adapter.js';
+import { adapter as bhPosta } from '../carriers/bh-posta/adapter.js';
 import { adapter as bigfootExpress } from '../carriers/bigfoot-express/adapter.js';
 import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapter.js';
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
@@ -896,6 +897,7 @@ export const REGISTRY: RegistryDefinition = {
     "bestfulfill": bestfulfill,
     "better-trucks": betterTrucks,
     "bex-express": bexExpress,
+    "bh-posta": bhPosta,
     "bigfoot-express": bigfootExpress,
     "bjs-home-delivery": bjsHomeDelivery,
     "blue-dart": blueDart,
@@ -1835,7 +1837,7 @@ export const REGISTRY: RegistryDefinition = {
     "bex-express": "bex-express",
     "bfe-express": "universal",
     "bft-logistik": "universal",
-    "bh-posta": "universal",
+    "bh-posta": "bh-posta",
     "bhs-logistics": "universal",
     "big-smart": "universal",
     "bigfoot-express": "bigfoot-express",

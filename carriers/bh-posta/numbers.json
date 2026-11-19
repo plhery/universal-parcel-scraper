@@ -1,5 +1,21 @@
 {
   "carrier": "bh-posta",
-  "gap": "BH Pošta's tracking pages show no example number.",
-  "records": []
+  "records": [
+    {
+      "number": "EE647131288BA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://parcelplus.app/carriers/ba-post-bh-posta/track?number=EE647131288BA"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Public dated history, confirmed by the official guest form."
+    }
+  ]
 }

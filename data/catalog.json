@@ -11388,7 +11388,8 @@
     "timezone": "Europe/Sarajevo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "bh-posta",
+      "localClocks": true
     },
     "canaryUrl": "https://bhpwebout.posta.ba/trackwebapp/",
     "trackingSearchUrl": "https://www.posta.ba/pracenje-posiljaka/",

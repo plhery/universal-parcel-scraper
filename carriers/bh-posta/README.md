@@ -1,31 +1,19 @@
 # BH Pošta
 
-BH Pošta parcels use enabled universal providers. There is no dedicated adapter.
+BH Pošta, JP BH POŠTA d.o.o. Sarajevo, tracks its postal items and mail it receives from other networks through the guest form embedded on its [tracking page](https://www.posta.ba/pracenje-posiljaka/).
 
-BH Pošta, JP BH POŠTA d.o.o. Sarajevo, is a public postal operator in Bosnia and Herzegovina. It
-carries letters, parcels, its BH PostExpress express items and EMS, at home and abroad, and
-universal providers name it for the scans of international mail bound for the country.
+## Retrieval
+
+The adapter opens the ASP.NET form at bhpwebout.posta.ba and posts fresh view state with the whole S10 item code in the same anonymous cookie jar. Both the returned input and event-table heading must name the requested item. Scan clocks remain local without an invented offset. The free-text notes column is not read.
+
+An empty event table carries no explicit missing verdict, so it stays inconclusive and enabled universal providers can continue. Verification pages, rate limits, changed tables and transport failures retain their error kinds.
 
 ## Numbers
 
-Its tracking page follows items by their 13-character UPU S10 numbers.
-[Hrvatska pošta Mostar](../hp-mostar/README.md) and [Pošte Srpske](../poste-srpske/README.md) also
-issue S10 numbers ending in `BA`, so the suffix does not name the operator. Generic postal detection handles S10 numbers, so no BH Pošta
-rule claims them.
-
-## Why there is no adapter
-
-The tracking page embeds a form from bhpwebout.posta.ba that posts the number back with the page's
-ASP.NET view state. Universal providers relay its scans, so there is no adapter.
-
-The providers relay its scans in Bosnian, each step marked for export ("Izvoz") or import ("Uvoz"). The
-providers' shared reading stages them.
-
-## Links
-
-Its tracking page takes numbers only through a form that posts them, so no address opens one item.
+The three postal operators in Bosnia and Herzegovina share the S10 suffix `BA`; it does not identify BH Pošta. Generic postal detection remains in place. The adapter confirms service ownership through actual history rather than a new number rule.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+BH_POSTA_TRACKING_NUMBER=<public-or-private-input> npm run test:carriers:live -- carriers/bh-posta/adapter.live.test.ts
+```

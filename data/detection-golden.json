@@ -86494,6 +86494,17 @@
     ]
   },
   {
+    "input": "EE647131288BA",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "EE787485919TW",
     "carrier": "chunghwa-post",
     "confidence": "high",
