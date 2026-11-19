@@ -1,0 +1,56 @@
+{
+  "searchStr": "BYDEZI502002",
+  "consignmentFound": true,
+  "itemFound": false,
+  "conNoteId": "BYDEZI502002",
+  "eventResults": [
+    {
+      "eventTypeName": "Delivery",
+      "finished": "2024-10-16T13:48:44.173731+13:00",
+      "eventOutcomeId": 0,
+      "eventOutcome": "Succeeded",
+      "reasonName": null,
+      "location": "Orewa, Orewa"
+    },
+    {
+      "eventTypeName": "Out For Delivery",
+      "finished": "2024-10-15T22:08:27.70563+13:00",
+      "eventOutcomeId": 1,
+      "eventOutcome": "Succeeded with Errors",
+      "reasonName": null,
+      "location": "Mangere, Auckland"
+    },
+    {
+      "eventTypeName": "In Depot",
+      "finished": "2024-10-15T13:57:39.992882+13:00",
+      "eventOutcomeId": 0,
+      "eventOutcome": "Succeeded",
+      "reasonName": null,
+      "location": "Mangere, Auckland"
+    },
+    {
+      "eventTypeName": "In Depot",
+      "finished": "2024-10-15T13:19:37.477271+13:00",
+      "eventOutcomeId": 0,
+      "eventOutcome": "Succeeded",
+      "reasonName": null,
+      "location": "Mangere, Auckland"
+    },
+    {
+      "eventTypeName": "Pickup",
+      "finished": "2024-10-15T10:42:43.542234+13:00",
+      "eventOutcomeId": 0,
+      "eventOutcome": "Succeeded",
+      "reasonName": null,
+      "location": "East Tamaki, Auckland"
+    },
+    {
+      "eventTypeName": "Manifested",
+      "finished": "2024-10-15T10:37:19.6405256+13:00",
+      "eventOutcomeId": 0,
+      "eventOutcome": "Succeeded",
+      "reasonName": null,
+      "location": null
+    }
+  ]
+}

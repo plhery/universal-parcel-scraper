@@ -61611,7 +61611,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Pacific/Auckland",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "walker-logistics"
     },
     "canaryUrl": "https://walkerlogistics.tempo.delivery/tracker/",
     "trackingUrlTemplate": "https://walkerlogistics.tempo.delivery/tracker/#/{trackingNumber}",
