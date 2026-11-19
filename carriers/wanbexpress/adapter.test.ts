@@ -84,6 +84,24 @@ describe('WanbExpress', () => {
     expect(() => parseWanb(reference, number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
+  it('reads J&T Australia\'s copies back on the China clock J&T hands WanbExpress, and keeps every other row\'s instant', () => {
+    const rows = [
+      { Time: '2031-04-13T02:57:00Z', TimeZone: 8, Source: 'Supplier', Content: 'Depart airport', Status: 'LinehaulDeparture', Location: 'CN HKG' },
+      { Time: '2031-04-13T12:38:00Z', TimeZone: 10, Source: 'Supplier', Content: 'Arrive dest airport', Status: 'LinehaulArrival', Location: 'AU MEL' },
+      { Time: '2031-04-15T00:00:00Z', TimeZone: null, Source: 'Supplier', Content: 'The parcel arrives at the distribution center and is prepared for transport to the next destination.', Status: null, Location: 'AU MELBOURNE' },
+      { Time: '2031-04-16T23:59:52Z', TimeZone: 10, Source: 'Supplier', Content: 'The parcel is dispatched from the transit center to the next destination', Status: null, Location: 'AU MELBOURNE' },
+      { Time: '2031-04-17T18:39:32Z', TimeZone: 10, Source: 'Supplier', Content: 'Your parcel is out for delivery.  , .', Status: 'LastMileOutForDelivery', Location: 'AU SUNSHINE' },
+      { Time: '2031-04-18T18:12:28Z', TimeZone: 10, Source: 'Supplier', Content: "We couldn't deliver - the address details appear to be incorrect. Please update your delivery address.", Status: 'LastMileDeliveryTried', Location: 'AU SUNSHINE' },
+    ];
+    const times = (courier: string) => parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null,
+      Metadata: { OriginCountryCode: 'CN', DestinationCountryCode: 'AU', TrackingNumber: courier }, TrackPoints: rows } }, number).events!.map(e => e.time);
+    // J&T's own reply dates the same scans two hours later, to the second.
+    expect(times('JTAU000000000001')).toEqual(['2031-04-18T20:12:28Z', '2031-04-17T20:39:32Z', '2031-04-17T01:59:52Z',
+      '2031-04-15T00:00:00Z', '2031-04-13T12:38:00Z', '2031-04-13T02:57:00Z']);
+    expect(times('XY987654321098765')).toEqual(['2031-04-18T18:12:28Z', '2031-04-17T18:39:32Z', '2031-04-16T23:59:52Z',
+      '2031-04-15T00:00:00Z', '2031-04-13T12:38:00Z', '2031-04-13T02:57:00Z']);
+  });
+
   it('finds a parcel under the Cainiao Express number it was relabelled with, bound as its courier number', async () => {
     const courier = 'DOFR9990000000001HD';
     const relabelled = () => {

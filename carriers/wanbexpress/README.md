@@ -32,6 +32,10 @@ The tracking reply must name the requested parcel and identify a parcel-ID match
 courier number the parcel's own courier number, matched whole. Reference matches stay
 inconclusive. Only the explicit unknown-parcel envelope is
 not-found. Scans carry UTC instants; their display offsets are not applied a second time.
+J&T Express Australia's scans are the exception: J&T hands them over on its China clock (UTC+8),
+and WanbExpress dates that wall clock as the row's own zone (`TimeZone` 10), two hours early. On a
+parcel whose courier number is J&T Australia's, a partner's row in one of J&T's sentences is read
+back on the China clock, which matches J&T's own reply to the second.
 A scan's place is left out when it names the linehaul agent, a role, the system that wrote the
 courier's label ("SYSTEM"), or only a country on order
 data written before the parcel is handed over, such as a partner's note that the sender is still

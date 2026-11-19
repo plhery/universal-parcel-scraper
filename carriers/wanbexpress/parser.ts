@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
@@ -8,6 +9,7 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { repairMisreadUtf8 } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+import { jAndTAuMappedStage } from '../j-and-t-au/status.js';
 import { wanbStage } from './status.js';
 
 export const PROVIDER = 'WanbExpress';
@@ -40,6 +42,21 @@ export function normalizeWanbLookup(raw: string): string {
   return number;
 }
 
+/**
+ * A scan's instant. J&T Express Australia passes WanbExpress its scans on J&T's China clock
+ * (UTC+8), and WanbExpress dates them as if that wall clock were the row's own zone, its
+ * `TimeZone` (10 in Melbourne): such a copy comes `TimeZone` − 8 hours early. On a parcel
+ * whose courier number is J&T Australia's, a partner's row in one of J&T's sentences is read
+ * back on the China clock; every other row keeps the instant WanbExpress states.
+ */
+function scanTime(row: Record<string, unknown>, content: string, jAndTAu: boolean): string | undefined {
+  const time = explicitOffsetTime(row.Time)?.iso;
+  const zone = row.TimeZone;
+  if (!time || !jAndTAu || row.Source !== 'Supplier' || typeof zone !== 'number' || !Number.isInteger(zone) || zone === 8
+    || zone < -12 || zone > 14 || !jAndTAuMappedStage(content.replace(/[\s,.]+$/u, ''))) return time;
+  return DateTime.fromISO(time, { setZone: true }).plus({ hours: zone - 8 }).toUTC().toISO({ suppressMilliseconds: true }) ?? undefined;
+}
+
 const CURRENT: Readonly<Record<string, Stage>> = { Delivered: 'delivered', InTransit: 'in_transit', OutForDelivery: 'out_for_delivery' };
 
 /**
@@ -68,6 +85,8 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
   if (!Array.isArray(data.TrackPoints) || data.TrackPoints.length > 1000) throw new SchemaError(PROVIDER, 'WanbExpress returned invalid scans');
   if (data.Match === 'Unknown' && !data.TrackPoints.length && data.Metadata === null && data.Status === null) throw new NotFoundError(PROVIDER);
   const metadata = isRecord(data.Metadata) ? data.Metadata : {};
+  const courier = deliveryNumber(metadata, number);
+  const jAndTAu = courier !== undefined && detectCarrierMatch(courier).carrier === 'j-and-t-au';
   // A courier number binds only as the parcel's own courier number, whole; a reference stays inconclusive.
   const bound = PARCEL_ID.test(number) ? data.Match === 'ParcelId'
     : data.Match === 'ParcelTrackingNumber' && typeof metadata.TrackingNumber === 'string' && metadata.TrackingNumber.length <= 64
@@ -79,11 +98,11 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
       || (row.Status != null && typeof row.Status !== 'string') || (row.Location != null && typeof row.Location !== 'string')) {
       throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid scan');
     }
-    const time = explicitOffsetTime(row.Time)?.iso;
-    if (!time) throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid scan clock');
     const code = typeof row.Status === 'string' ? row.Status : '';
     // A partner's text can arrive with its UTF-8 read as Latin-1, as DHL's German places do ("KÃ¶ln").
     const content = repairMisreadUtf8(row.Content);
+    const time = scanTime(row, content, jAndTAu);
+    if (!time) throw new SchemaError(PROVIDER, 'WanbExpress returned an invalid scan clock');
     const mapped = wanbStage(code || null, content);
     const wording = mapped === undefined ? classifyWording(content) : null;
     const location = row.Location ? wanbPlace(row.Location, mapped ?? wording?.stage) : undefined;
@@ -101,14 +120,13 @@ export function parseWanb(payload: unknown, raw: string): CarrierResult {
   const mapped = typeof data.Status === 'string' && Object.hasOwn(CURRENT, data.Status) ? CURRENT[data.Status] : undefined;
   const stage = mapped ?? (current?.stage as Stage | undefined);
   const country = (key: string) => typeof metadata[key] === 'string' && /^[A-Z]{2}$/.test(metadata[key]) ? metadata[key] : undefined;
-  const delivery = deliveryNumber(metadata, number);
   return { status: stage ? languageStageStatus(stage) : 'unknown', current_stage: stage,
     current_stage_source: mapped ? 'carrier' : current?.stage_source, events: events.slice(0, 100),
     last_status_text: events[0]!.description, last_update: events[0]!.time,
     ...(events.length > 100 ? { history_truncated: true } : {}),
     ...(country('OriginCountryCode') ? { origin_country: country('OriginCountryCode') } : {}),
     ...(country('DestinationCountryCode') ? { destination_country: country('DestinationCountryCode') } : {}),
-    ...(delivery ? { delivery_tracking_number: delivery } : {}) };
+    ...(courier ? { delivery_tracking_number: courier } : {}) };
 }
 
 /** The courier's number, which the tracker shows as `TrackingNo` once WanbExpress has relabelled the parcel. */
