@@ -1,4 +1,35 @@
 {
   "carrier": "tamex",
-  "entries": []
+  "entries": [
+    {
+      "wording": "شحنة منشأة فقط لم تسلم من الشاحن",
+      "language": "ar",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "استلام بالمستودعات",
+      "language": "ar",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "في اجراءات الفرز والنقل الى مدينة العميل",
+      "language": "ar",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "الشحنة مع المندوب للتوصيل",
+      "language": "ar",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "تم تسليم الشحنة للعميل بنجاح",
+      "language": "ar",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
 }

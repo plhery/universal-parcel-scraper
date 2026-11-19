@@ -55629,7 +55629,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tamex",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://tamex.com.sa/track",
     "trackingUrlTemplate": "https://tamex.com.sa/track/{trackingNumber}",
