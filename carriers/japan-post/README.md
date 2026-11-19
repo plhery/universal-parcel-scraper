@@ -28,6 +28,8 @@ from Japan. Detection leaves `U`-prefixed numbers ending `JP` out.
   discarded.
 - Not-found is the result table (`照会結果`) holding the number and `** Your item was not found…`.
   HTTP 404/410 means the endpoint is gone (transport error), not the parcel.
+- During system maintenance the portal answers every number with HTTP 200 and a page titled
+  `メンテナンス中`; it reads as maintenance, never as an absent item.
 - History rows come in pairs: the event row, then a postal-code row that is not an event. Postal
   codes, the free-form details column and office contacts are discarded.
 - The history header labels overseas scans as local time: a scan abroad carries the clock of the

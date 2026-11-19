@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { isValidS10TrackingNumber, normalizeTrackingNumber } from '../../core/detection/index.js';
-import { ChallengeError, InvalidInputError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
+import { ChallengeError, InvalidInputError, MaintenanceError, NotFoundError, SchemaError, TransportError, UpstreamHttpError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { calendarDay, countryCode, countryTimeZone, firstOccurrence } from '../../core/time/index.js';
@@ -88,6 +88,8 @@ export function parse(html: string, trackingNumber: string): CarrierResult {
   const $ = load(html);
   if (/just a moment|verify.*human|captcha/i.test($('title').text())
     || $('.g-recaptcha, .h-captcha, input[name="captcha"]').length) throw new ChallengeError(PROVIDER);
+  // The portal's maintenance page, served with HTTP 200 for every number ("ただいまメンテナンス中です。").
+  if ($('title').text().includes('メンテナンス')) throw new MaintenanceError(PROVIDER, "Japan Post's tracker is down for maintenance");
   $('script, style, noscript').remove();
 
   const result = $('table[summary="照会結果"]');

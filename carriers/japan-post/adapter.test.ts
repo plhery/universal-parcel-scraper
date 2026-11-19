@@ -233,6 +233,13 @@ describe('Japan Post result projection', () => {
     expect(() => parse(fixture('absent') + fixture(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('reads the portal maintenance page as maintenance, never as an absent item', async () => {
+    expect(() => parse(fixture('maintenance'), NUMBER)).toThrow(expect.objectContaining({ kind: 'maintenance' }));
+    const answering = adapter({ fetcher: vi.fn<typeof fetch>().mockResolvedValue(new Response(fixture('maintenance'))),
+      trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(answering.recognize!(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' });
+  });
+
   it.each(['header', 'missing-row', 'missing-cell', 'bad-rowspan', 'bad-date', 'empty-status', 'empty-history', 'duplicate-history'])(
     'rejects %s schema drift rather than reporting stale progress', (mode) => {
       const $ = load(fixture());
