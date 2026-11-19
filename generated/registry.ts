@@ -766,6 +766,7 @@ import { adapter as valmo } from '../carriers/valmo/adapter.js';
 import { adapter as vaspExpresso } from '../carriers/vasp-expresso/adapter.js';
 import { adapter as veho } from '../carriers/veho/adapter.js';
 import { adapter as veloces } from '../carriers/veloces/adapter.js';
+import { adapter as velocityExpressIn } from '../carriers/velocity-express-in/adapter.js';
 import { adapter as venipak } from '../carriers/venipak/adapter.js';
 import { adapter as viaCargo } from '../carriers/via-cargo/adapter.js';
 import { adapter as viadireta } from '../carriers/viadireta/adapter.js';
@@ -1590,6 +1591,7 @@ export const REGISTRY: RegistryDefinition = {
     "vasp-expresso": vaspExpresso,
     "veho": veho,
     "veloces": veloces,
+    "velocity-express-in": velocityExpressIn,
     "venipak": venipak,
     "via-cargo": viaCargo,
     "viadireta": viadireta,
@@ -3369,7 +3371,7 @@ export const REGISTRY: RegistryDefinition = {
     "veho": "veho",
     "veloblitz": "universal",
     "veloces": "veloces",
-    "velocity-express-in": "universal",
+    "velocity-express-in": "velocity-express-in",
     "venipak": "venipak",
     "veoy": "universal",
     "vert-chez-vous": "universal",

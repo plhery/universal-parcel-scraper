@@ -1,4 +1,68 @@
 {
   "carrier": "velocity-express-in",
-  "entries": []
+  "entries": [
+    {
+      "code": "SPD",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OFD",
+      "wording": "Out For Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ITR",
+      "wording": "In Transit",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "LDP",
+      "wording": "Forward To Branch/ Load Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "SMR",
+      "wording": "Shipment Misrouted",
+      "language": "en",
+      "stage": "exception",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "SAO",
+      "wording": "Shipment Arrival In Origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "PUD",
+      "wording": "PickUp Done",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OFP",
+      "wording": "Out For Pickup",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "SPU",
+      "wording": "Data Received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    }
+  ]
 }
