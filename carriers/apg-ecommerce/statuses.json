@@ -1,4 +1,14 @@
 {
   "carrier": "apg-ecommerce",
-  "entries": []
+  "entries": [
+    {"wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Attempted Delivery", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Parcel In Transit back to Sender", "stage": "exception", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Parcel processing at final carrier Hub", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"wording": "In Transit to Local Carrier", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Parcel to Be Delivered by Local Carrier", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Parcel cleared by customs", "stage": "in_transit", "language": "en", "confirmedBy": "portal"},
+    {"wording": "Parcel Processed", "stage": "in_transit", "language": "en", "confirmedBy": "portal"}
+  ]
 }

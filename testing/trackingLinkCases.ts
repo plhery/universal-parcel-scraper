@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'apg-ecommerce', number: '99999999999999',
+    route: /^https:\/\/apgecommerce\.com\/track-result\/\?track_sequenceNo=99999999999999$/,
+    marker: /Sorry, order not found/i },
   { carrier: 'flash-courier', number: 'SYNTHETIC123',
     route: /^https:\/\/www\.flashcourier\.com\.br\/rastreio\/SYNTHETIC123$/,
     marker: /Consulte sua\s+entrega|Digite o código de rastreio/i },

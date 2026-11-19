@@ -22,17 +22,23 @@
   "timezone": "Europe/London",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "apg-ecommerce",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://apgecommerce.com/track-result/?track_sequenceNo={trackingNumber}",
     "searchUrl": "https://apgecommerce.com/track/",
     "canaryUrl": "https://apgecommerce.com/track/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
+    "shows": ["status", "history", "location"],
+    "scraped": ["status", "history", "location"],
+    "discarded": ["merchant reference", "detailed event text"],
     "unavailable": []
   },
   "links": [

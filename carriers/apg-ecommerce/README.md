@@ -1,28 +1,22 @@
 # APG eCommerce Solutions
 
-APG eCommerce Solutions parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the server-rendered history on APG's
+[public tracker](https://apgecommerce.com/track/). The tracker needs no session or secondary
+input. The result must repeat the whole fourteen-digit APG reference in the tracking-number
+heading. Merchant order references and partner barcodes stay with provider fallback.
 
-APG eCommerce Solutions, formerly Aramex Global Solutions, is Australia Post's cross-border
-e-commerce consolidator. It carries retailers' parcels from the UK, Europe, China, the US and
-Australia and hands them to a destination carrier such as Australia Post, NZ Post or USPS. Its
-site is apgecommerce.com.
+The history table labels its clock GMT and gives the country separately. The adapter keeps the
+explicit GMT time, the country code and the canonical event description. It omits the
+merchant reference and detailed event text. An attempt or return in progress can precede
+a later delivery.
 
-## Numbers
+An exact missing-order reply must repeat the requested reference. Unavailable pages and
+verification refusals keep their own failure kinds. A network failure can be retried within
+the lookup budget.
 
-Its tracker takes APG's own references, retailers' order numbers and the destination carrier's
-number. Its references are plain digits of lengths many carriers share, so there is no rule.
+Supply `APG_ECOMMERCE_TRACKING_NUMBER` and optionally `APG_ECOMMERCE_UNKNOWN_NUMBER` outside
+the repository and run:
 
-## Why there is no adapter
-
-Its result page renders a shipment's history as HTML from a GET without a session, and answers
-an unknown reference with HTTP 200 and an "order not found" message. No current public reference
-is known to build a fixture from.
-
-## Links
-
-The result page opens a reference from its `track_sequenceNo` parameter.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npm run test:carriers:live -- carriers/apg-ecommerce/adapter.live.test.ts
+```

@@ -9217,7 +9217,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/London",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "apg-ecommerce"
     },
     "canaryUrl": "https://apgecommerce.com/track/",
     "trackingUrlTemplate": "https://apgecommerce.com/track-result/?track_sequenceNo={trackingNumber}",

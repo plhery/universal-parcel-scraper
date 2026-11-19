@@ -72,6 +72,43 @@
         ]
       },
       "note": "A reference the tracker of Aramex Global Solutions, APG's former name, answered with its history, as an archived page shows."
+    },
+    {
+      "number": "05113004871574",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260824140605id_/https://apgecommerce.com/track-result/?track_sequenceNo=05113004871574",
+        "date": "2026-08-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "mondial-relay",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "Public capture of the APG result page. The same tracking reference returns dated carrier scans in the current guest tracker."
     }
   ]
 }
