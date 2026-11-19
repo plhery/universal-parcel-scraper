@@ -22,7 +22,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Example on TrackShip's C3xpress page; C3X's tracker returned its delivered history."

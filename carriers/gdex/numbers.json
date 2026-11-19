@@ -27,6 +27,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -58,6 +59,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -89,6 +91,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -120,6 +123,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -151,6 +155,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -239,6 +244,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -265,7 +271,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A Lowyat forum post about the GDex courier service gives it as the tracking number of a parcel sent through a GDex branch."

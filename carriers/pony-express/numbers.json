@@ -23,7 +23,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on Pony Express's own tracker; the opened capture shows the form with an empty result table, so the history was not visible."
@@ -50,7 +51,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on Pony Express's own tracker; the capture holds the site's anti-bot challenge, so the history was not visible."
@@ -77,7 +79,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on Pony Express's own tracker; the capture holds the site's anti-bot challenge, so the history was not visible."
@@ -105,7 +108,8 @@
           "estafeta",
           "box-now",
           "cdl",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on Pony Express's own tracker; the capture holds the site's anti-bot challenge, so the history was not visible."
@@ -135,6 +139,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -164,6 +169,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -191,7 +197,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on Pony Express's own tracker address; the capture is a redirect and was not opened, so the history was not visible."

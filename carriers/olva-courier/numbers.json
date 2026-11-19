@@ -21,7 +21,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Olva's help article on finding the tracking number gives it as the example of the code printed on the purchase receipt."

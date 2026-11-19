@@ -118,7 +118,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup of this ten-digit number on KIT's own direct tracking link; the archive holds a 403 reply for it. KIT's tracker finds the consignment by these ten digits alone, under a forwarding receipt that ends in them, from the new order to its issue at the terminal."

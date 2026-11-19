@@ -84,7 +84,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A public OCU complaint addressed to Envialia gives it as the tracking reference."

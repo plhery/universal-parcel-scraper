@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on TST-CF Express's own tracker; it redirects to a result capture of the same minute that shows this PRO number in transit between Windsor and Toledo."
@@ -52,7 +53,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The example PRO number of TST-CF's XML tracing guide, in its sample request and in its sample result for freight on a terminal's dock."

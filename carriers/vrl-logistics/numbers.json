@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on VRL's LR tracking page shows this LR with booking details, a not-delivered status and a cancelled delivery run."
@@ -52,7 +53,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on VRL's LR tracking page shows this LR with booking details, a not-delivered status and a delivery run cancelled as refused."
@@ -82,6 +84,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -132,6 +135,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -162,6 +166,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },

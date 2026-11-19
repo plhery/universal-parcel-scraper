@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on BlueEX's former tracking page shows the consignment note from processing in Karachi to delivery, with a failed attempt."
@@ -52,7 +53,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on BlueEX's former tracking page shows the consignment note from processing in Karachi to delivery."
@@ -80,7 +82,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on BlueEX's former tracking page shows the consignment note with four failed attempts before delivery."
@@ -108,7 +111,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on BlueEX's former home page tracker; the opened capture holds the tracking page, whose result loaded separately and was not archived, so no history is visible."
@@ -136,7 +140,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Sent to BlueEX's own tracker on blue-ex.com, as an archived address shows; the capture was not opened."
@@ -164,7 +169,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Sent to BlueEX's own tracker on blue-ex.com, as an archived address shows; the capture was not opened. BlueEX's tracker knows it, with a history."
@@ -192,7 +198,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The opened archived lookup on BlueEX's own tracking page shows the number with its progress steps; the history it loads separately was not archived."
@@ -220,7 +227,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The opened archived lookup on BlueEX's own tracking page shows the number with its progress steps; the history it loads separately was not archived. BlueEX's tracker knows it, with a history."

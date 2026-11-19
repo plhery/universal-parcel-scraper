@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Bombino's own tracker shows this air waybill as SHIPMENT SENT TO DESTINATION from Mumbai, with an India Post number as its corresponding tracking number."

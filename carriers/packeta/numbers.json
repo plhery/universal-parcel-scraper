@@ -173,7 +173,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z; customer reports Poland-to-Hungary delivery."
@@ -202,7 +203,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The broker review shows the ten digits without the label's Z. Packeta's tracking returns the history of the Z-prefixed barcode."

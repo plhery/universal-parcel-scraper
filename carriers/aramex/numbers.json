@@ -122,6 +122,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -151,6 +152,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -249,6 +251,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -349,6 +352,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -449,6 +453,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -545,7 +550,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Ten-digit number from a review of Aramex. Aramex's tracker does not find it."

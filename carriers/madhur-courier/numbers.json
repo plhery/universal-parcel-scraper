@@ -28,6 +28,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki",
           "gls-es"
         ]
@@ -110,7 +111,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A Voxya complaint against Madhur Courier Service gives it as the consignment number of a Jodhpur to Jaipur courier handed to the wrong person."

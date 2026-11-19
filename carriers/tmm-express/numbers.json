@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, an English lookup; the history runs from the Warsaw hub to delivery in Ukraine."
@@ -52,7 +53,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, an English lookup; the history runs from the Warsaw hub through customs in Kyiv to delivery."
@@ -82,6 +84,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -110,7 +113,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, a Russian lookup; the history runs from the Warsaw hub through customs to delivery in Ukraine."
@@ -138,7 +142,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, a Russian lookup; the history runs from the Warsaw hub to a Kyiv warehouse."
@@ -166,7 +171,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, a Russian lookup; the history runs from the Warsaw hub to an Odesa warehouse."
@@ -197,6 +203,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -225,7 +232,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, a Ukrainian lookup; the history shows a domestic shipment from Kyiv delivered in Chernihiv."
@@ -253,7 +261,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, an English lookup; the history runs from the Warsaw hub to delivery in Uman."
@@ -281,7 +290,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Archived lookup on TMM Express's own tracker, an English lookup; the history runs from the Warsaw hub to delivery in Berdiansk."

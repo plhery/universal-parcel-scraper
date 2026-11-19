@@ -17,7 +17,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Made-up ten-digit shipment number. Its shape overlaps other carriers; the portal's answer attributes it. Its serial sits far beyond the range in use."
@@ -76,7 +77,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Public report naming DHL Parcel Spain for a domestic parcel; the portal returned the history."
@@ -392,7 +394,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Given as the DHL shipment number; the Iberian tracker returns its history, including a delivery marked early."
@@ -423,6 +426,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },

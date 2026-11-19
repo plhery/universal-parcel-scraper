@@ -13,7 +13,11 @@ const EXACT: ReadonlyMap<string, Stage> = new Map([
   ['loaded by customer ready for collection', 'registered'],
   ['out for collection', 'registered'],
   ['collected', 'accepted'],
+  // Handed in by the sender, at a DHL Service Point for a Swedish domestic parcel.
+  ['shipment handover by sender', 'accepted'],
   ['received at terminal', 'in_transit'],
+  // Told of the coming delivery, or that a Service Point parcel can be collected; the row says not which.
+  ['receiver notified', 'in_transit'],
   ['shipped from terminal', 'in_transit'],
   ['arrival at destination', 'in_transit'],
   ['loaded into ferry', 'in_transit'],

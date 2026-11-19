@@ -39,7 +39,8 @@
       "trawl"
     ],
     "recognition": {
-      "rank": 437
+      "rank": 437,
+      "servedCountriesOnly": true
     },
     "localClocks": true,
     "browser": true
@@ -114,6 +115,11 @@
     }
   ],
   "detection": [
+    {
+      "id": "dhl-freight-se-domestic",
+      "pattern": "^\\d{10}$",
+      "confidence": "low"
+    },
     {
       "id": "dhl-freight-2",
       "pattern": "^JND\\d{17}$",

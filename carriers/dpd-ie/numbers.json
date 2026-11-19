@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Looked up on DPD Ireland's former QuickTrack tracker, as an archived address shows; the capture was not opened."
@@ -177,7 +178,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Looked up on DPD Ireland's own tracker, as an archived address shows; the capture was not opened."

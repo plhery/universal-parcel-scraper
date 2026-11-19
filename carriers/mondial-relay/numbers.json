@@ -30,7 +30,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Mondial Relay, which stays one candidate among several."
@@ -206,7 +207,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The customer also names 61376870 for the same Amazon return. The correspondence fits the documented brand-prefixed form; it does not establish a universal 85 prefix. Detection remains ambiguous."
@@ -232,7 +234,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Published literally as the tracking reference for a Vinted shipment attributed to Mondial Relay. The prefix role is unresolved; do not infer a canonical shipment by removing it. Detection characterizes the normalized input only.",
@@ -498,7 +501,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The customer explicitly names this as the Mondial Relay collection reference and separately names a GLS return reference. The partner legs do not establish interchangeable tracking identities."
@@ -839,7 +843,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived tracking link with brand code M1 and the 10-digit form. Mondial Relay's tracker returns its history without a postcode: a parcel dropped at a relay and delivered to the merchant."
@@ -1109,7 +1114,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived tracking link with the 10-digit form. Mondial Relay's tracker finds no parcel under it any more."

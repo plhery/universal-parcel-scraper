@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, DHL_FREIGHT_SEARCH, DhlFreightTracker } from './adapter.js';
@@ -52,6 +54,8 @@ describe('DHL Freight HTTP adapter', () => {
       `?search=consignmentId&at=package&valuePackageField=00${SSCC}&focus=search3&searchConsignmentId=track&l=EN`,
     ]);
     expect(dhlFreightQuery('900000002')).toEqual({ number: '900000002', field: 'consignment', value: '900000002' });
+    // A Swedish domestic consignment, such as a parcel for a DHL Service Point, has ten digits.
+    expect(dhlFreightQuery('9900000017')).toEqual({ number: '9900000017', field: 'consignment', value: '9900000017' });
     expect(dhlFreightQuery('SMPDL0000002')).toEqual({ number: 'SMPDL0000002', field: 'consignment', value: 'SMP-DL-0000002' });
   });
 
@@ -180,6 +184,14 @@ describe('DHL Freight HTTP adapter', () => {
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'retry', outcome: 'ok' }));
   });
 
+  it('offers DHL Freight for ten digits at low confidence, asked only for a country hint it serves', () => {
+    expect(detectCarrierMatch('9900000017')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['dhl-freight']) });
+    for (const number of ['990000001', '99000000171', '990000001A']) expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('dhl-freight');
+    expect(recognitionAskedCarriers('9900000017', { countryHint: 'SE' })[0]).toBe('dhl-freight');
+    expect(recognitionAskedCarriers('9900000017', { countryHint: 'US' })).not.toContain('dhl-freight');
+    expect(recognitionAskedCarriers('9900000017')).not.toContain('dhl-freight');
+  });
+
   it('recognizes a known number and the unknown-number answer, and asks nothing for a number DHL Freight does not issue', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(fixture('delivered')))
       .mockResolvedValueOnce(reply(fixture('not-found')));
@@ -192,7 +204,7 @@ describe('DHL Freight HTTP adapter', () => {
 
   it('rejects numbers DHL Freight does not issue and pre-aborted lookups without a request', async () => {
     const fetcher = vi.fn<typeof fetch>();
-    for (const number of ['SMP-D-0000001', '0001234567', 'JND0000000000000003', '340000000000000015', 'SAMPLETRACKING', `00${'0'.repeat(63)}`]) {
+    for (const number of ['SMP-D-0000001', '00012345', 'JND0000000000000003', '340000000000000015', 'SAMPLETRACKING', `00${'0'.repeat(63)}`]) {
       await expect(carrier(fetcher).track({ number }), number).rejects.toMatchObject({ kind: 'invalid_input' });
     }
     await expect(carrier(fetcher).track({ number: DELIVERED }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled');

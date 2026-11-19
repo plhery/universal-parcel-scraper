@@ -231,7 +231,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to TIPSA, which stays one candidate among several."

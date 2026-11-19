@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Waybill number in the sample reply of Exline's own tracking API documentation, with an Almaty to Kokshetau history; archived page. Exline's current tracker, which reads another system, does not know it."
@@ -52,7 +53,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Waybill number in the sample reply of the waybill details call in Exline's own API documentation; archived page. Exline's current tracker, which reads another system, does not know it."
@@ -80,7 +82,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Waybill number in the sample reply of the create-waybill call in Exline's own API documentation, for a test customer; archived page. Exline's current tracker, which reads another system, does not know it."
@@ -108,7 +111,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Customer review on Exline's 2GIS page giving it as the waybill (накладная) of a shipment from Aktobe to Almaty. Exline's tracker shows its history."

@@ -18,6 +18,8 @@
     {"wording": "Not Collected - customer not ready", "stage": "registered", "language": "en", "confirmedBy": "documentation", "note": "Listed in ActiveTracing's event table at https://viya.me/integrations/dhl-active-tracing/docs/onboarding."},
     {"wording": "Collected", "stage": "accepted", "language": "en", "confirmedBy": "live"},
     {"wording": "Received at terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Shipment handover by sender", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The sender handed the consignment in, at a DHL Service Point for a Swedish domestic parcel."},
+    {"wording": "Receiver notified", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The consignee was told of the coming delivery, or that a Service Point parcel can be collected; the row does not say which."},
     {"wording": "Shipped from terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "On hold - in customs clearance.", "stage": "customs", "language": "en", "confirmedBy": "documentation", "note": "Listed in ActiveTracing's event table at https://viya.me/integrations/dhl-active-tracing/docs/onboarding."},
     {"wording": "Customs cleared", "stage": "in_transit", "language": "en", "confirmedBy": "documentation", "note": "Listed in ActiveTracing's event table at https://viya.me/integrations/dhl-active-tracing/docs/onboarding."},

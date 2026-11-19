@@ -27,6 +27,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -55,7 +56,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Example in the number field of Evropat's own tracking page. Evropat's tracking lookup answers it as a delivered waybill."

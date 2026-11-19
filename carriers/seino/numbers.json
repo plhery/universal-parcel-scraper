@@ -24,7 +24,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Looked up on Seino Transportation's own tracker, as an archived address shows; the capture was not opened."
@@ -54,6 +55,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -82,7 +84,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Seino Transportation's own tracker; the capture shows this number with its status code and milestones."
@@ -109,7 +112,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Seino Transportation's own tracker; the capture shows this number with its status code and milestones."
@@ -137,7 +141,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Seino Transportation's own tracker; the capture shows this number with its status code and milestones."
@@ -165,7 +170,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Seino Transportation's own tracker; the capture shows this number with its status code and milestones."
@@ -196,6 +202,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -224,7 +231,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "An archived lookup on Seino Transportation's own tracker; the capture shows this number with its status code and milestones."
@@ -251,7 +259,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Looked up on Seino Transportation's own tracker, as an archived address shows; the capture was not opened."
@@ -280,6 +289,7 @@
           "packeta",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "fragilepak"
         ]
       },

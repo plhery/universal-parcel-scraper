@@ -21,7 +21,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -46,7 +47,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -71,7 +73,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -96,7 +99,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -121,7 +125,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -149,6 +154,7 @@
           "acs-courier",
           "box-now",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "geniki-taxydromiki"
         ]
       },
@@ -174,7 +180,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "TrackingMore lists it as an example on its Estes page; it is not described as a live shipment."
@@ -202,6 +209,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -230,6 +238,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },

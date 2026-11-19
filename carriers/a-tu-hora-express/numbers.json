@@ -23,7 +23,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this ten-digit tracking number for a parcel with repeated delivery attempts."
@@ -50,7 +51,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this ten-digit tracking number for an undelivered Temu parcel."
@@ -77,7 +79,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this ten-digit tracking number and describes its history on the carrier's tracker."

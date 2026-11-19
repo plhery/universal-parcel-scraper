@@ -53,7 +53,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "Ward's tracker prints the PRO number in this form, with its terminal prefix and a dash, in the archived lookup of the same shipment."

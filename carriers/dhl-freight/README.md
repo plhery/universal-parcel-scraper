@@ -52,9 +52,11 @@ Tracked through ActiveTracing's own search.
 ActiveTracing searches by order code, consignment ID or package ID. Order codes are three
 letters for the terminal, two for the product and seven digits, hyphenated. No rule claims
 them: detection compares numbers with hyphens stripped, and the code is then five letters and
-seven digits, which another carrier's numbers also fit. Consignment IDs are nine digits or,
-for domestic consignments, eleven digits with leading zeros; digit runs like these are shared
-by many carriers, so no rule claims them.
+seven digits, which another carrier's numbers also fit. Consignment IDs are nine digits or, for
+domestic consignments, ten digits in Sweden, such as a parcel for a DHL Service Point, or eleven
+digits with leading zeros. `dhl-freight-se-domestic` suggests DHL Freight for ten digits with low
+confidence, and recognition asks ActiveTracing about them only for a country hint DHL Freight
+serves: many carriers print ten-digit numbers. No rule claims nine or eleven digits.
 
 Package IDs are DHL licence plates, `JND` and seventeen digits, or pallets' SSCCs.
 `dhl-freight-2` suggests DHL Freight for licence plates with low confidence, because licence

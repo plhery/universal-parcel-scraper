@@ -17,8 +17,8 @@ export const DHL_FREIGHT_MAX_BYTES = 1024 * 1024;
 // An order code: the terminal's three letters, the product's two and seven
 // digits, typed with or without its hyphens.
 const ORDER_CODE = /^([A-Z]{3})([A-Z]{2})(\d{7})$/;
-// Consignment IDs: nine digits, or eleven for a domestic consignment.
-const CONSIGNMENT_ID = /^(?:\d{9}|\d{11})$/;
+// Consignment IDs: nine digits, or ten (Sweden) or eleven for a domestic consignment.
+const CONSIGNMENT_ID = /^\d{9,11}$/;
 // Package IDs: DHL's licence plates, or an SSCC with or without its `00`.
 const LICENCE_PLATE = /^JND\d{17}$/;
 const SSCC = /^(?:00)?(\d{18})$/;

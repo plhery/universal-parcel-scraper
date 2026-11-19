@@ -137,7 +137,8 @@
           "relais-colis",
           "estafeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The README of tex-tracker, an open-source scraper of Total Express's former tracker, shows it as the AWB of a parcel with its full history. Today's tracker does not know it."

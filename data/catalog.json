@@ -19056,6 +19056,7 @@
       "mode": "automatic",
       "adapter": "dhl-freight",
       "recognitionRank": 437,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true,
       "browser": true
     },
@@ -19076,6 +19077,10 @@
       }
     ],
     "detectionRules": [
+      {
+        "pattern": "^\\d{10}$",
+        "confidence": "low"
+      },
       {
         "pattern": "^JND\\d{17}$",
         "confidence": "low"

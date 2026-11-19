@@ -145,6 +145,7 @@
           "box-now",
           "cargus",
           "dhl-ecommerce-es",
+          "dhl-freight",
           "gls-es"
         ]
       },
@@ -240,7 +241,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The Wayback Machine indexes a CEVA Home Delivery tracking lookup for this number; the capture was not opened."
@@ -427,7 +429,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The Wayback Machine indexes a request to CEVA's tracking service for this house bill number; the capture was not opened."
@@ -455,7 +458,8 @@
           "estafeta",
           "packeta",
           "box-now",
-          "dhl-ecommerce-es"
+          "dhl-ecommerce-es",
+          "dhl-freight"
         ]
       },
       "note": "The Wayback Machine indexes a request to CEVA's tracking service for this house bill number; the capture was not opened."
