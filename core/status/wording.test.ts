@@ -1208,7 +1208,7 @@ describe('classifyWording', () => {
       ['Carga consolidada para importación recibida', 'in_transit'], ['Ingresó a bodega', 'in_transit'],
       // A forwarder's warehouse scans before the flight, relayed by providers.
       ['Warehouse scanning bagging', 'in_transit'], ['Master Airway Bill Number Received', 'in_transit'],
-      ['Master air waybill assigned', 'in_transit'], ['Unbagging', 'in_transit'],
+      ['Master air waybill assigned', 'in_transit'], ['MAWB Received', 'in_transit'], ['Unbagging', 'in_transit'],
       ['Parcel has been packed and is ready for outbound shipping', 'in_transit'],
       ['Inbound scan【ABC】', 'in_transit'], ['Inbound scan [ABC]', 'in_transit'], ['Item inbound scanning', 'in_transit'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
