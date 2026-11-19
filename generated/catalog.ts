@@ -7683,10 +7683,19 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "universal"
     },
-    "canaryUrl": "https://www.akashganga.info/",
-    "trackingUrlTemplate": "https://www.akashganga.info/Tracking.aspx?AWB={trackingNumber}",
-    "trackingSearchUrl": "https://www.akashganga.info/",
+    "canaryUrl": "https://agcgroup.in/track-now/",
+    "trackingUrlTemplate": "https://agcgroup.in/track-now/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://agcgroup.in/track-now/",
     "linkRules": [
+      {
+        "domains": [
+          "agcgroup.in"
+        ],
+        "pathPattern": "^/track-now/?$",
+        "params": [
+          "awb"
+        ]
+      },
       {
         "domains": [
           "akashganga.info"
