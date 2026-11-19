@@ -5,6 +5,7 @@ import { logTierFailures } from '/app/apps/api/src/tier-failure-log.mjs';
 import { trawlLicense } from '/app/packages/tiers/src/utils/license.mjs';
 import { fedexBrowserPool } from '/app/packages/tiers/src/utils/fedex-session.mjs';
 import { isolateSiteCookies } from '/app/packages/tiers/src/utils/site-cookies.mjs';
+import { forgetUspsOutageSessions } from '/app/packages/tiers/src/utils/usps-tracking.mjs';
 
 // Every caller of the reCAPTCHA solver stops once Google blocks or refuses its audio.
 const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
@@ -189,6 +190,9 @@ const attempt = '      ...(r.reason === undefined ? {} : { reason: r.reason }),'
 if (orchestrator.split(attempt).length !== 2) throw new Error('TRAWL attempt history changed');
 writeFileSync(orchestratorPath, orchestrator.replace(attempt, attempt + '\n      ...(r.status === "success"'
   + ' || r.statusCode === undefined ? {} : { statusCode: r.statusCode, responseHeaders: r.responseHeaders }),'));
+
+// A USPS session sent to the outage page is dropped rather than replayed.
+writeFileSync(orchestratorPath, forgetUspsOutageSessions(readFileSync(orchestratorPath, 'utf8')));
 
 // FedEx's verified session keeps its browser: the pool returns to it and holds it past
 // the recycle count. The helper has no dependency on BrowserPool and shares the tier singleton.

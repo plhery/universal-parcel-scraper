@@ -39,7 +39,8 @@ FLARESOLVERR_URL for browser fallback')`.
    as HTML.
 
 The verification wrapper can stay blank when its tracking request redirects to
-USPS's service outage page. The service captures that exact redirect. It concerns one
+USPS's service outage page. The service captures that exact redirect; it drops a session
+USPS sent there rather than replay it, and keeps none from a fresh browser sent there. It concerns one
 read, but redirects come in runs that do not follow how often we read: a read straight
 after one redirect usually loads, one after two about half the time, and after three in a
 row the next read is redirected more often than not, whether it comes seconds or minutes
@@ -202,6 +203,10 @@ anonymous default. Developer authentication is not integrated into this adapter.
 
 - Browser access is intermittent: some sessions get only the challenge. That surfaces as
   `ChallengeError` so the router can fall back to universal providers.
+- USPS judges the browser more than its address. In some spells it sends every fresh automated
+  browser to the outage page on every route, headed or headless, Chromium or Camoufox, while an
+  established desktop Chrome loads tracking; universal providers answer then. Webshare's proxies
+  refuse tunnels to USPS.
 - The public page shows city/state/ZIP only; no recipient, signature or photo is read.
 
 ## Testing

@@ -49,3 +49,30 @@ export function attachUspsTrackingCapture(page, url, options) {
     },
   };
 }
+
+/** Whether a tier's reply holds the bound tracking request's redirect to the outage page. */
+export function uspsOutage(result) {
+  return Array.isArray(result?.capturedResponses) && result.capturedResponses.some(response =>
+    response?.status === 302 && response.headers?.location === OUTAGE && typeof response.url === 'string'
+    && response.url.startsWith(`${ORIGIN}/tracking/`) && typeof response.trackingNumberSubmitted === 'string'
+    && response.trackingNumberSubmitted !== '');
+}
+
+// A session that USPS sent to the outage page carries the cookies it flagged: replayed, it is
+// sent there again. TRAWL keeps a replayed session that returned any page, so it would replay
+// that one until it expired. A replay sent to the outage page drops the site's session instead,
+// and a fresh browser sent there saves none.
+const SESSION_PATCHES = [
+  ['        if (t2.cookies && t2.cookies.length > 0) {',
+    '        if (uspsOutage(t2)) await deps.invalidateSession(domain)\n        else if (t2.cookies && t2.cookies.length > 0) {'],
+  ['        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !importedCookies) {',
+    '        const cookies: Cookie[] = t3.cookies ?? []\n        if (cookies.length > 0 && !explicitProxy && !importedCookies && !uspsOutage(t3)) {'],
+];
+
+/** Patches TRAWL's orchestrator, and stops the build when the code it changes has moved. */
+export function forgetUspsOutageSessions(source) {
+  return 'import { uspsOutage } from "./utils/usps-tracking.mjs"\n' + SESSION_PATCHES.reduce((code, [needle, text]) => {
+    if (code.split(needle).length !== 2) throw new Error('TRAWL orchestrator changed: review the USPS outage session patch');
+    return code.replace(needle, text);
+  }, source);
+}

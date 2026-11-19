@@ -39,6 +39,8 @@ cookies or the rendered page. Ozon Rocket references are outside that helper's s
 USPS also captures its tracking request's redirect to the official outage page.
 That redirect can leave the verification wrapper blank; retaining it lets the
 adapter distinguish temporary unavailability from an unresolved challenge.
+A session USPS sent there is dropped instead of replayed, and a fresh browser sent
+there saves none ([usps-tracking.mjs](usps-tracking.mjs)).
 
 Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
 is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
