@@ -32,5 +32,11 @@
     "unavailable": []
   },
   "links": [],
-  "detection": []
+  "detection": [
+    {
+      "id": "cmt-express-1",
+      "pattern": "^CMT\\d{12}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -15498,7 +15498,12 @@
     "canaryUrl": "https://www.cmtexpress.com.cn/track.aspx",
     "trackingSearchUrl": "https://www.cmtexpress.com.cn/track.aspx",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^CMT\\d{12}$",
+        "confidence": "low"
+      }
+    ]
   },
   "cn-express-za": {
     "displayName": "CN Express",

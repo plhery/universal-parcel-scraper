@@ -15502,7 +15502,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.cmtexpress.com.cn/track.aspx",
     "trackingSearchUrl": "https://www.cmtexpress.com.cn/track.aspx",
     "linkRules": [],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^CMT\\d{12}$",
+        "confidence": "low"
+      }
+    ]
   },
   "cn-express-za": {
     "displayName": "CN Express",
@@ -67329,7 +67334,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cj-packet": ["cj-packet-1"],
   "ckeex": [],
   "closer-logistics": [],
-  "cmt-express": [],
+  "cmt-express": ["cmt-express-1"],
   "cn-express-za": [],
   "cne": ["cne-1"],
   "codexpress": [],

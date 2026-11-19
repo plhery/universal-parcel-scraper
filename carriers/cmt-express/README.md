@@ -7,12 +7,13 @@ services and Guangzhou small-parcel lines from China. Its site is cmtexpress.com
 
 ## Numbers
 
-No public page shows one of its numbers, so there is no rule.
+Its waybills are CMT and twelve digits. A low rule offers CMT Express for that shape.
 
 ## Why there is no adapter
 
-Its waybill query is a page of a hosted forwarding system served on its own site and takes up to 30 numbers
-without a login. No public number is known to see a found reply.
+Its waybill query, `tms.cmtexpress.com.cn/trackIndex.htm`, is a page of a hosted forwarding system. It takes
+up to 30 numbers in a form post without a login and answers with server-rendered HTML: the shipper's
+reference, destination, latest status and recipient, then the scans. No adapter reads it yet.
 
 ## Links
 
