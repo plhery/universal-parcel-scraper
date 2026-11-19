@@ -5,6 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import type { TrawlCapturedResponse, TrawlClient, TrawlScrapeResponse } from '../../core/transport/trawl.js';
 import { adapter, DAO_ENDPOINT, DaoTracker, daoTrackingUrl } from './adapter.js';
 import { normalizeDaoNumber, parseDao } from './parser.js';
 import { daoStage, statusMap } from './status.js';
@@ -276,5 +277,56 @@ describe('DAO status vocabulary', () => {
     for (const code of ['constructor', 'toString', '__proto__', '11', 'Home', 'home/11', '']) expect(statusMap.stage(code, ''), code).toBeUndefined();
     expect(statusMap.stage(null, 'parcel delivered')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'dao', providerCode: 'Home/77', description: 'Synthetic event' })).toEqual({ kind: 'unknown' });
+  });
+});
+
+describe('DAO browser recovery', () => {
+  const setup = (rows?: TrawlCapturedResponse[]) => {
+    const url = `https://dao.as/en/track-your-parcel/#q=${HOME}`;
+    const row: TrawlCapturedResponse = { url: daoTrackingUrl(HOME), status: 200, headers: {}, body: text('home'), trackingNumberSubmitted: HOME,
+      error: null, truncated: false, base64Encoded: false };
+    const page: TrawlScrapeResponse = { url, html: '', cookies: [], userAgent: null, tier: 3, statusCode: 200, capturedResponses: rows ?? [row], raw: {} };
+    const scrape = vi.fn().mockResolvedValue(page);
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => reply('{"code":"dao_bot_check_failed"}', 403));
+    const trawl = { scrape } as unknown as TrawlClient;
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const instance = adapter({ fetcher, recorder, env: {}, trawl, browserExecutablePath: null });
+    return { instance, fetcher, scrape, page, row, recorder };
+  };
+  it('recovers a challenged HTTP read with whole-bound native history, while recognition remains HTTP-only', async () => {
+    const f = setup(); await expect(f.instance.track({ number: HOME })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(f.fetcher).toHaveBeenCalledOnce(); expect(f.scrape).toHaveBeenCalledOnce();
+    expect(f.scrape).toHaveBeenCalledWith(expect.objectContaining({ url: f.page.url, skipHttp: true, maxTier: 3, captureResponses: [daoTrackingUrl(HOME)] }),
+      expect.objectContaining({ signal: expect.any(AbortSignal), requireSolved: false, fetcher: f.fetcher, captureWindow: 'last' }));
+    expect(f.recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', fallbackReason: 'challenge', outcome: 'ok' }));
+    await expect(f.instance.recognize!(HOME)).rejects.toMatchObject({ kind: 'challenge' }); expect(f.scrape).toHaveBeenCalledOnce();
+  });
+  it('does not use a browser for a definite answer, rate limit, schema failure or invalid input', async () => {
+    for (const [body, status] of [[text('not-found'), 200], ['broken', 200], ['{}', 429], ['{}', 400]] as const) {
+      const f = setup(); f.fetcher.mockResolvedValue(reply(body, status)); await expect(f.instance.track({ number: HOME })).rejects.toBeDefined(); expect(f.scrape).not.toHaveBeenCalled();
+    }
+    const f = setup(); await expect(f.instance.track({ number: 'bad' })).rejects.toMatchObject({ kind: 'invalid_input' }); expect(f.scrape).not.toHaveBeenCalled();
+  });
+  it('keeps unbound responses, wrong identities and malformed payloads out of history', async () => {
+    for (const change of [
+      { trackingNumberSubmitted: undefined }, { trackingNumberSubmitted: OTHER }, { body: text('home').replaceAll(HOME, OTHER) }, { body: 'bad' },
+    ]) { const f = setup(); Object.assign(f.page.capturedResponses[0]!, change); await expect(f.instance.track({ number: HOME })).rejects.toMatchObject({ kind: 'schema' }); }
+  });
+  it('keeps native unknown, empty history, challenge, rate limit, transport and incomplete capture distinct', async () => {
+    for (const [change, kind] of [
+      [{ body: text('not-found') }, 'not_found'], [{ body: '{"found":true,"parcel":null}' }, 'indeterminate'],
+      [{ status: 403 }, 'challenge'], [{ status: 400 }, 'indeterminate'], [{ status: 429, headers: { 'retry-after': '60' } }, 'rate_limited'],
+      [{ status: 404 }, 'transport'], [{ status: 503 }, 'maintenance'], [{ truncated: true }, 'transport'], [{ error: 'challenge-html' }, 'challenge'],
+    ] as const) { const f = setup(); Object.assign(f.page.capturedResponses[0]!, change); await expect(f.instance.track({ number: HOME })).rejects.toMatchObject({ kind }); }
+    const f = setup([]); await expect(f.instance.track({ number: HOME })).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+  });
+  it('uses the final bounded native reply rather than an intermediate verification refusal', async () => {
+    const f = setup(); f.page.capturedResponses.unshift({ ...f.row, status: 403, body: null });
+    await expect(f.instance.track({ number: HOME })).resolves.toMatchObject({ current_stage: 'delivered' });
+    f.page.capturedResponses.reverse(); await expect(f.instance.track({ number: HOME })).rejects.toMatchObject({ kind: 'challenge' });
+  });
+  it('respects cancellation and the remaining browser budget before starting recovery', async () => {
+    const f = setup(); await expect(f.instance.track({ number: HOME }, { budgetMs: 100 })).rejects.toMatchObject({ kind: 'budget' }); expect(f.scrape).not.toHaveBeenCalled();
+    await expect(f.instance.track({ number: HOME }, { signal: AbortSignal.abort(new Error('cancelled')) })).rejects.toThrow('cancelled'); expect(f.scrape).not.toHaveBeenCalled();
   });
 });

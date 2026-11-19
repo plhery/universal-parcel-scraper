@@ -17941,7 +17941,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "dao",
       "recognitionRank": 515,
-      "localClocks": true
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://dao.as/find-din-pakke/",
     "trackingUrlTemplate": "https://dao.as/find-din-pakke/#q={trackingNumber}",

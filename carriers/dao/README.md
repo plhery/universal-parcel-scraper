@@ -5,17 +5,17 @@ tracking page asks.
 
 ## How it works
 
-`dao.as/find-din-pakke/` asks `GET https://dao.as/wp-json/dao-wp/v1/track-parcel?barcode={number}&lang=EN`
-for the parcel. The page sends its WordPress nonce and a Cloudflare Turnstile token, one token per
-request, from an invisible widget. The service refuses a request without the token with HTTP 403
-and `dao_bot_check_failed`, which the adapter reads as a challenge: it sends neither, so every
-lookup is challenged until a browser route gets the token. A request that fails to reach DAO is
-sent once more within the budget.
+The adapter first asks `GET https://dao.as/wp-json/dao-wp/v1/track-parcel?barcode={number}&lang=EN`.
+If DAO challenges that read, a configured TRAWL service opens the English tracking page in a
+fresh context. The page owns its WordPress nonce, timing header and single-use Turnstile token.
+The helper waits for the interactive widget and clicks its visible checkbox at most three times,
+then captures the whole-number request. It returns selected identity and scan fields without
+cookies, tokens or a rendered page. A failed connection gets one HTTP retry within the budget.
 
 A number the service does not know, including a malformed one, comes back as `{"found":false}`,
 so it is not found. A known parcel without scans, which older numbers return, has no history. The
 reply must name the requested SSCC. A missing route, a rejected request, block pages, HTTP errors
-and malformed replies keep their own failure kinds. Recognition uses the same lookup.
+and malformed replies keep their own failure kinds. Recognition stays HTTP-only and never starts browser verification.
 
 ## Numbers
 
@@ -45,6 +45,7 @@ are not read.
 
 ## Limitations
 
+Browser verification can remain unfinished within its bounded attempts; provider fallback stays available.
 The service gives scan clocks without an offset, so they stay local wall clocks. No live reply
 carried a partner number, and the thirteen-digit and e-label forms were not checked live.
 The business tracking API at `api.dao.as` needs a customer id and code, and the DAO app's API at
