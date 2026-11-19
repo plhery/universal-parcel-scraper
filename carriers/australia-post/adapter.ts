@@ -27,6 +27,13 @@ const MAX_BYTES = 1_000_000;
 const DIRECT_TIMEOUT_MS = 10_000;
 const RETRY_MIN_BROWSER_MS = 8_000;
 /**
+ * Browser time for a read another route can follow. Answered reads take at most about 13 s; a route
+ * whose page hangs would otherwise hold the whole budget and leave the next route none. The cut
+ * applies only while the next read still fits after it, with time for the browser service's reply.
+ */
+const ROUTE_READ_MS = 20_000;
+const ROUTE_REPLY_MS = 1_000;
+/**
  * How long `adaptive` sends first reads through the proxy after the original route was refused.
  * Refusals come in spells, and the retry after one starts with what the refusal left of the budget,
  * so it often runs out. A short window spares the next reads that loss; a longer one mostly slows
@@ -416,9 +423,14 @@ export class AustraliaPostTracker {
     } : recorder;
     // The browser service's own server errors: such a read carries no word from Australia Post.
     const serviceFailures = new WeakSet<object>();
+    // Reads cut short so the next route keeps time: such a read says nothing about the parcel.
+    const routeTimeouts = new WeakSet<object>();
     const browser = async (signal: AbortSignal, remainingMs: number, next: Route): Promise<CarrierResult> => {
-      const timeoutMs = Math.floor(remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS);
-      if (timeoutMs < 1) throw new BudgetExceededError(PROVIDER, budgetMs);
+      const available = Math.floor(remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS);
+      if (available < 1) throw new BudgetExceededError(PROVIDER, budgetMs);
+      const capped = taken < order.length && available > ROUTE_READ_MS
+        && remainingMs - ROUTE_READ_MS - ROUTE_REPLY_MS >= TRAWL_TRANSPORT_ALLOWANCE_MS + RETRY_MIN_BROWSER_MS;
+      const timeoutMs = capped ? ROUTE_READ_MS : available;
       const proxy = next === 'residential' ? this.fallbackProxy
         : next === 'datacenter' ? this.datacenterProxies[Math.floor(Math.random() * this.datacenterProxies.length)]! : null;
       route = next; reads++; history = false;
@@ -428,7 +440,10 @@ export class AustraliaPostTracker {
       }, { provider: 'TRAWL while fetching Australia Post', timeoutMs, signal, maxBytes: 6_000_000, requireSolved: false })
         .catch((error: unknown) => {
           if (error instanceof UpstreamHttpError && error.status >= 500 && !trawlOutOfTime(error)) serviceFailures.add(error);
-          return budgetWhenOutOfTime(PROVIDER, budgetMs)(error);
+          try { return budgetWhenOutOfTime(PROVIDER, budgetMs)(error); } catch (failure) {
+            if (capped && failure instanceof BudgetExceededError) routeTimeouts.add(failure);
+            throw failure;
+          }
         });
       signal.throwIfAborted();
       if (![2, 3].includes(page.tier) || ![200, 304].includes(page.statusCode)) {
@@ -463,16 +478,18 @@ export class AustraliaPostTracker {
       try {
         return await browser(signal, remainingMs, next);
       } catch (error) {
-        // Each refusal on the original route starts the window again.
-        if (next === 'default' && error instanceof ChallengeError && this.firstRoute === 'adaptive') this.proxiesUntil = Date.now() + ADAPTIVE_WINDOW_MS;
+        // Each refusal or hang on the original route starts the window again.
+        if (next === 'default' && (error instanceof ChallengeError || (error instanceof Error && routeTimeouts.has(error)))
+          && this.firstRoute === 'adaptive') this.proxiesUntil = Date.now() + ADAPTIVE_WINDOW_MS;
         throw error;
       }
     };
-    // The next route after a challenge. A read through a proxy also moves on when the proxy fails to
-    // carry it or the browser service fails on it, so a proxy outage leaves the other routes.
+    // The next route after a challenge, or after a read cut short for it. A read through a proxy also
+    // moves on when the proxy fails to carry it or the browser service fails on it, so a proxy outage
+    // leaves the other routes.
     const nextStep = (index: number) => ({
       id: 'trawl', enabled: trawl !== null && order.length > index,
-      recovers: (error: unknown) => (error instanceof ChallengeError
+      recovers: (error: unknown) => (error instanceof ChallengeError || (error instanceof Error && routeTimeouts.has(error))
         || (route !== 'default' && (carrierErrorKind(error) === 'transport' || (error instanceof Error && serviceFailures.has(error)))))
         && deadline - performance.now() >= TRAWL_TRANSPORT_ALLOWANCE_MS + RETRY_MIN_BROWSER_MS,
       run: ({ signal, remainingMs, previousError }: StepContext) => read(signal, remainingMs, previousError),

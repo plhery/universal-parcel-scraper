@@ -129,7 +129,8 @@ export async function runAustraliaPostBrowser({ url, handle, tier, maxTimeout, c
   } catch (error) {
     const category = expired ? signal?.aborted ? 'aborted' : 'budget_exhausted' : failureCategory(error);
     return { tier, status: 'error', durationMs: Date.now() - start,
-      reason: expired ? 'Australia Post browser budget exhausted'
+      // TRAWL's reply keeps only the reason, so it names the phase the deadline reached.
+      reason: expired ? `Australia Post browser budget exhausted (phase=${phase})`
         : `Australia Post browser retrieval failed (phase=${phase}; category=${category})`,
       diagnostic: { phase, category } };
   } finally {

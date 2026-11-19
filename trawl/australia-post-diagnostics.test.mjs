@@ -98,13 +98,13 @@ test('proxy filter installation has its own safe phase and closes the supplied c
   assert.doesNotMatch(JSON.stringify(result), /PRIVATE|private\.invalid|secret|password|proxy-user/);
 });
 
-test('deadline retains the exact budget reason and late context closes once', async () => {
+test('deadline names its phase in the budget reason and late context closes once', async () => {
   const f = fixture(); let release;
   f.options.openContext = () => new Promise(resolve => { release = resolve; });
   f.options.maxTimeout = 5;
   const { runAustraliaPostBrowser } = await load(source, f.attach);
   const result = await runAustraliaPostBrowser(f.options);
-  assert.equal(result.reason, 'Australia Post browser budget exhausted');
+  assert.equal(result.reason, 'Australia Post browser budget exhausted (phase=context_creation)');
   assert.deepEqual(result.diagnostic, { phase: 'context_creation', category: 'budget_exhausted' });
   release(f.context); await new Promise(resolve => setTimeout(resolve, 10));
   assert.equal(f.state.closed, 1); assert.equal(f.state.policy, 0);
@@ -117,7 +117,7 @@ test('abort retains legacy reason and cleans a late injected context', async () 
   const { runAustraliaPostBrowser } = await load(source, f.attach);
   const pending = runAustraliaPostBrowser(f.options); controller.abort(new Error('PRIVATE cancellation'));
   const result = await pending;
-  assert.equal(result.reason, 'Australia Post browser budget exhausted');
+  assert.equal(result.reason, 'Australia Post browser budget exhausted (phase=context_creation)');
   assert.deepEqual(result.diagnostic, { phase: 'context_creation', category: 'aborted' });
   release(f.context); await new Promise(resolve => setTimeout(resolve, 10));
   assert.equal(f.state.closed, 1); assert.equal(f.state.policy, 0);
@@ -131,7 +131,7 @@ test('pre-abort and invalid budget remain non-opening', async () => {
     else f.options.maxTimeout = 0;
     const { runAustraliaPostBrowser } = await load(source, f.attach);
     const result = await runAustraliaPostBrowser(f.options);
-    assert.equal(result.reason, 'Australia Post browser budget exhausted');
+    assert.equal(result.reason, 'Australia Post browser budget exhausted (phase=validation)');
     assert.equal(result.diagnostic.phase, 'validation'); assert.equal(f.state.opens, 0);
   }
 });
@@ -142,7 +142,7 @@ test('an accounting callback throwing after late creation still closes the conte
   f.options.maxTimeout = 5;
   const { runAustraliaPostBrowser } = await load(source, f.attach);
   const result = await runAustraliaPostBrowser(f.options);
-  assert.equal(result.reason, 'Australia Post browser budget exhausted');
+  assert.equal(result.reason, 'Australia Post browser budget exhausted (phase=context_creation)');
   assert.equal(f.state.closed, 0);
   release(f.context); await new Promise(resolve => setTimeout(resolve, 10));
   assert.equal(f.state.counted, 1); assert.equal(f.state.closed, 1); assert.equal(f.state.policy, 0);

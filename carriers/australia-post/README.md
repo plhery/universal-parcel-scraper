@@ -37,8 +37,10 @@ refusal there leaves the number unchecked instead of starting the browser.
 `AUSTRALIA_POST_FALLBACK_PROXY_URL` (a residential proxy) opt into more browser reads after a
 captured browser challenge, cheapest first: the original route, then one of the datacenter proxies
 at random, then the residential proxy. Each read sends the whole browser context through its proxy.
-The first browser read keeps its full budget; a later one starts only when the transport allowance
-and usable browser time remain. Missing parcels, inconclusive replies, rate limits and schema errors
+A read another route can follow gets at most 20 s of browser time while the next read still fits after
+it: answered reads take at most about 13 s, and a page that hangs on one route would otherwise hold the
+whole budget. A read cut short this way moves on like a challenge. A later read starts only when the
+transport allowance and usable browser time remain. Missing parcels, inconclusive replies, rate limits and schema errors
 take no other route. A read a proxy fails to carry, or the browser service fails on with a server
 error, moves to the next route. Step telemetry names the route (`default`, `datacenter` or
 `residential`), never the proxy, and does not infer an IP family. HTTP recognition never uses a
@@ -54,7 +56,7 @@ warning is logged at most hourly.
 through the proxies, datacenter first, and keeps the original route for last. DataDome can challenge
 the browser service's own address on every read for hours, so a deployment can keep that address
 for the end. `AUSTRALIA_POST_FIRST_ROUTE=adaptive` puts the proxies first only for 15 minutes after
-the original route was last refused, and the original route first otherwise. Refusals come in
+the original route was last refused or cut short, and the original route first otherwise. Refusals come in
 spells, and a read after one starts with what the refusal left of the budget, so it often runs out;
 outside a spell the original route answers sooner and needs no proxy request. The window is kept
 per tracker instance. Without a proxy the setting changes nothing. An unknown value is read as
@@ -62,7 +64,8 @@ per tracker instance. Without a proxy the setting changes nothing. An unknown va
 
 Budget: 45 s by default (max 60 s). `trawl` keeps a 15 s transport allowance and fails when less
 remains. A browser read TRAWL gives up for lack of time (its deadline passed, or the page step ran
-out of budget or was aborted at it) fails as `budget`, not as the service's HTTP 500. Either reply is capped at 1 MB. On the capture, 401/403 is a challenge and 429 is rate
+out of budget or was aborted at it) fails as `budget`, not as the service's HTTP 500; the helper's
+reason names the phase the deadline reached. Either reply is capped at 1 MB. On the capture, 401/403 is a challenge and 429 is rate
 limited; a missing capture or changed schema is an error for normal provider fallback.
 
 ## Mobile app

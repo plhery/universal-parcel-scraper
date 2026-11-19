@@ -613,7 +613,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
     expect(browser).toHaveBeenCalledTimes(2);
     const [primary, retry] = browser.mock.calls.map(call => JSON.parse(String(call[1]!.body)));
     expect(primary).not.toHaveProperty('proxy');
-    expect(primary.maxTimeout).toBeGreaterThan(29_000);
+    expect(primary.maxTimeout).toBe(20_000);
     expect(retry).toMatchObject({ proxy, url: australiaPostTrackingUrl(NUMBER), captureResponses: [australiaPostApiUrl(NUMBER)], skipHttp: true, maxTier: 3 });
     expect(retry.maxTimeout).toBeLessThanOrEqual(30_000);
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'challenge', networkRoute: 'default', networkAttempt: 'initial', historyAvailable: false }));
@@ -622,12 +622,12 @@ describe('Australia Post opt-in browser proxy recovery', () => {
     expect(JSON.stringify(recorder.step.mock.calls)).not.toContain(proxy);
   });
 
-  it('keeps a successful primary browser read and its full budget without a paid request', async () => {
+  it('keeps a successful primary browser read without a paid request, leaving the next route its time', async () => {
     const { client, browser } = routed([service()]);
     await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
     expect(browser).toHaveBeenCalledTimes(1);
     const first = JSON.parse(String(browser.mock.calls[0]![1]!.body));
-    expect(first.maxTimeout).toBeGreaterThan(29_000);
+    expect(first.maxTimeout).toBe(20_000);
     expect(first).not.toHaveProperty('proxy');
   });
 
@@ -673,7 +673,7 @@ describe('Australia Post opt-in browser proxy recovery', () => {
     await expect(client.fetch(NUMBER)).resolves.toEqual(parse(fixture(), NUMBER));
     const [primary, retry] = bodies(browser);
     expect(primary).toMatchObject({ proxy, url: australiaPostTrackingUrl(NUMBER), captureResponses: [australiaPostApiUrl(NUMBER)] });
-    expect(primary!.maxTimeout).toBeGreaterThan(29_000);
+    expect(primary!.maxTimeout).toBe(20_000);
     expect(retry).not.toHaveProperty('proxy');
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'challenge', networkRoute: 'residential', networkAttempt: 'initial' }));
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok', networkRoute: 'default', networkAttempt: 'retry', historyAvailable: true }));
@@ -701,17 +701,19 @@ describe('Australia Post opt-in browser proxy recovery', () => {
   const trawlFailure = (reason: string, error = 'Max tier reached without success', status = 500) => () => new Response(
     JSON.stringify({ error, timings: [{ tier: 3, status: 'error', reason }] }), { status, headers: { 'Content-Type': 'application/json' } });
 
-  it('reads on the original route when the browser service fails on the first read through the proxy, but not when it ran out of time', async () => {
-    for (const failure of [trawlFailure('Navigation failed'), trawlFailure('proxy-connection-failed'), trawlFailure('busy', 'Service unavailable', 503)]) {
+  it('reads on the original route when the browser service fails on the first read through the proxy, or the read ran out of its share', async () => {
+    for (const failure of [trawlFailure('Navigation failed'), trawlFailure('proxy-connection-failed'), trawlFailure('busy', 'Service unavailable', 503),
+      trawlFailure('Scrape deadline exceeded', 'Scrape deadline exceeded')]) {
       const { client, browser, recorder } = routed([failure, service()], undefined, 'residential');
       await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
       expect(bodies(browser).map(body => body.proxy ?? null)).toEqual([proxy, null]);
       expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'trawl', outcome: 'ok', networkRoute: 'default', networkAttempt: 'retry' }));
     }
-    // Out of time, refused by TRAWL itself, or a server error Australia Post answered: no second read.
-    for (const [failure, failed] of [[trawlFailure('Scrape deadline exceeded', 'Scrape deadline exceeded'), { kind: 'budget' }],
-      [trawlFailure('busy', 'Too many requests', 429), { kind: 'rate_limited' }], [service([capture({}, 503)]), { provider: 'Australia Post', status: 503 }]] as const) {
-      const { client, browser } = routed([failure, service()], undefined, 'residential');
+    // Out of the whole budget, refused by TRAWL itself, or a server error Australia Post answered: no second read.
+    for (const [failure, failed, budgetMs] of [[trawlFailure('Scrape deadline exceeded', 'Scrape deadline exceeded'), { kind: 'budget' }, 30_000],
+      [trawlFailure('busy', 'Too many requests', 429), { kind: 'rate_limited' }, undefined],
+      [service([capture({}, 503)]), { provider: 'Australia Post', status: 503 }, undefined]] as const) {
+      const { client, browser } = routed([failure, service()], budgetMs, 'residential');
       await expect(client.fetch(NUMBER)).rejects.toMatchObject(failed);
       expect(browser).toHaveBeenCalledTimes(1);
     }
@@ -935,6 +937,50 @@ describe('Australia Post routes, cheapest first', () => {
     await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
     expect(browser).toHaveBeenCalledTimes(2);
     clock.mockRestore();
+  });
+
+  it('cuts a read another route can follow at 20 s, and moves on when the page hangs that long', async () => {
+    const hang = () => new Response(JSON.stringify({ error: 'Max tier reached without success',
+      timings: [{ tier: 3, status: 'error', reason: 'Australia Post browser budget exhausted (phase=navigation)' }] }),
+    { status: 500, headers: { 'Content-Type': 'application/json' } });
+    let elapsed = 0;
+    vi.spyOn(performance, 'now').mockImplementation(() => elapsed);
+    const { client, browser, recorder, proxies } = routes([], { firstRoute: 'adaptive' });
+    const timeouts = () => browser.mock.calls.map(call => (JSON.parse(String(call[1]!.body)) as { maxTimeout: number }).maxTimeout);
+    const answer = (answered: boolean) => browser.mockImplementation(async (_input, init) => {
+      const { maxTimeout } = JSON.parse(String(init!.body)) as { maxTimeout: number };
+      elapsed += maxTimeout;
+      return maxTimeout === 20_000 || !answered ? hang() : Response.json(service());
+    });
+    answer(true);
+    await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    // 60 s: 20 s on the original route, then all that remains through a datacenter proxy, since a
+    // third read would not fit after another 20 s.
+    expect(timeouts()).toEqual([20_000, 25_000]);
+    expect(proxies().map(value => value === residential ? 'residential' : value ? 'datacenter' : 'default')).toEqual(['default', 'datacenter']);
+    const steps = recorder.step.mock.calls.map(([record]) => record).filter(record => record.step === 'trawl');
+    expect(steps.map(record => [record.networkRoute, record.outcome])).toEqual([['default', 'budget'], ['datacenter', 'ok']]);
+    // The hang on the original route sends the next lookup through the proxies first.
+    elapsed = 0; browser.mockClear();
+    browser.mockImplementation(async () => Response.json(service()));
+    await expect(client.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    expect(proxies()).toEqual([expect.stringMatching(/^http:\/\/dc-user/)]);
+    // Without that window, two hangs fail as the budget, and a 45 s budget leaves the second read the rest.
+    const later = routes([], { timeoutMs: 45_000 });
+    elapsed = 0;
+    browser.mockReset();
+    later.browser.mockImplementation(async (_input, init) => { elapsed += (JSON.parse(String(init!.body)) as { maxTimeout: number }).maxTimeout; return hang(); });
+    await expect(later.client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'budget' });
+    expect(later.browser.mock.calls.map(call => (JSON.parse(String(call[1]!.body)) as { maxTimeout: number }).maxTimeout)).toEqual([20_000, 10_000]);
+  });
+
+  it('keeps the whole remaining budget for the last route, and its running out as the budget', async () => {
+    const { client, browser } = routes([], { fallbackProxyUrl: undefined, datacenterProxyUrls: [] });
+    browser.mockImplementation(async () => new Response(JSON.stringify({ error: 'Scrape deadline exceeded', timings: [] }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }));
+    await expect(client.fetch(NUMBER)).rejects.toMatchObject({ kind: 'budget' });
+    expect(browser).toHaveBeenCalledTimes(1);
+    expect((JSON.parse(String(browser.mock.calls[0]![1]!.body)) as { maxTimeout: number }).maxTimeout).toBeGreaterThan(44_000);
   });
 
   it('reads a datacenter list separated by spaces or commas and validates each entry without exposing it', async () => {
