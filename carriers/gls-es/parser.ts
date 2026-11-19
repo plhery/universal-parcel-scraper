@@ -33,7 +33,10 @@ export function normalizeGLSSpainPostcode(raw: string | null | undefined): strin
   const postcode = deliveryPostcodeText(raw ?? '');
   if (!postcode) throw new InputRequiredError(PROVIDER, 'postcode', 'GLS Spain requires the delivery postcode');
   if (!DELIVERY_POSTCODE.test(postcode)) throw new InvalidInputError(PROVIDER, 'GLS Spain requires a valid delivery postcode');
-  return postcode;
+  // The service matches a Portuguese postcode only as 9999-999: seven digits
+  // without the hyphen, or with a space, are not found.
+  const portuguese = /^(\d{4})[ -]?(\d{3})$/.exec(postcode);
+  return portuguese ? `${portuguese[1]}-${portuguese[2]}` : postcode;
 }
 
 /** An optional text field; an object, array or other non-scalar is a changed reply. */

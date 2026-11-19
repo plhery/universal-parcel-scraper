@@ -21,7 +21,9 @@ carrier of its own on Lisbon's clock would also split the clock the GLS networks
   includes it with the maintainer's approval. The service refuses a timestamp minutes off
   its clock, so every try signs anew.
 - The postcode is required. The service looks up the whole number with it: a number or
-  postcode one character off is not found.
+  postcode one character off is not found. It matches a Portuguese postcode only as
+  `9999-999`, so seven digits without the hyphen, or with a space, are sent in that form;
+  the first four digits alone are not found.
 - A number GLS does not know with that postcode returns HTTP 404 with its `notFound` error:
   `NotFoundError`. Any other error reply or web page is inconclusive, and a bot check is a
   challenge. A rejected signature is HTTP 401 or 403, which the transport reports as a

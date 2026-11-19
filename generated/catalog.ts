@@ -27813,7 +27813,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "validator": "internationalPostcode",
           "label": "Delivery postcode",
           "type": "text",
-          "help": "GLS Spain shows a shipment only with its delivery postcode.",
+          "help": "GLS Spain shows a shipment only with its delivery postcode, all seven digits for Portugal.",
           "pattern": "^(?=.{3,12}$)(?=.*[0-9])[A-Za-z0-9]+(?:[ \\-][A-Za-z0-9]+)*$",
           "maxLength": 12,
           "inputMode": "text",

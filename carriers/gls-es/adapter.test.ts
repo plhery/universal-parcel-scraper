@@ -226,7 +226,7 @@ describe('GLS Spain direct tracking', () => {
       expect(() => normalizeGLSSpainNumber(number), number).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
     expect(normalizeGLSSpainPostcode(' 99999 ')).toBe(POSTCODE);
-    expect(normalizeGLSSpainPostcode('9999-999')).toBe('9999-999');
+    for (const postcode of ['9999-999', '9999999', '9999 999']) expect(normalizeGLSSpainPostcode(postcode), postcode).toBe('9999-999');
     expect(normalizeGLSSpainPostcode('ad 999')).toBe('AD 999');
     for (const postcode of ['', '  ', null, undefined]) {
       expect(() => normalizeGLSSpainPostcode(postcode), String(postcode)).toThrow(expect.objectContaining({ kind: 'input_required', field: 'postcode' }));
