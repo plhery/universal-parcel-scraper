@@ -82,7 +82,7 @@ export class CorreiosTracker {
         try { payload = parseJsonBytes(bytes, 'Correios'); }
         catch (cause) { throw new SchemaError('Correios', 'Correios returned invalid tracking JSON', { cause }); }
         if (isCorreiosCaptchaError(payload) && attempt === 0) continue;
-        return parseCorreios(payload, number);
+        return parseCorreios(payload, number, true);
       }
       throw new ChallengeError('Correios', 'Correios rejected the text CAPTCHA');
     } }, { id: 'trawl', enabled: !!trawl, recovers: error => error instanceof ChallengeError,

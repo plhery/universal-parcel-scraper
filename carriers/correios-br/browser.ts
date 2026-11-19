@@ -35,5 +35,5 @@ export async function correiosBrowser(trawl: TrawlClient, number: string, signal
   let payload: unknown;
   try { payload = JSON.parse(response.body); }
   catch (cause) { throw new SchemaError(PROVIDER, 'Correios returned invalid tracking JSON', { cause }); }
-  return parseCorreios(payload, number);
+  return parseCorreios(payload, number, true);
 }

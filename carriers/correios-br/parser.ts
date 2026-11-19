@@ -1,6 +1,6 @@
 import { DateTime, IANAZone } from 'luxon';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
-import { ChallengeError, IndeterminateError, InvalidInputError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { firstOccurrence } from '../../core/time/index.js';
@@ -97,12 +97,20 @@ function laterPostingsInTransit(events: CarrierEvent[]): void {
   }
 }
 
-export function parseCorreios(payload: unknown, number: string): CarrierResult {
+export function parseCorreios(payload: unknown, number: string, requestBound = false): CarrierResult {
   const requested = normalizeCorreiosNumber(number);
   if (!isRecord(payload)) throw new SchemaError('Correios');
-  if (isCorreiosCaptchaError(payload)) throw new ChallengeError('Correios', 'Correios rejected the text CAPTCHA');
-  // Period errors and other unbound error replies prove neither absence nor identity.
-  if (payload.erro === true || payload.erro === 'true') throw new IndeterminateError('Correios', 'Correios returned an inconclusive tracking response');
+  if (payload.erro === true || payload.erro === 'true') {
+    const message = typeof payload.mensagem === 'string' ? clean(payload.mensagem
+      .replace(/\b[A-Z]{2}[\s.-]*(?:\d[\s.-]*){9}[A-Z]{2}\b/gi, '[redacted]')
+      .replace(/[\w.!#$%&'*+/=?^\x60{|}~-]+@[\w.-]+/g, '[redacted]'), 200) : '';
+    const detail = message ? `Correios: ${message}` : 'Correios returned an inconclusive tracking response';
+    if (isCorreiosCaptchaError(payload)) throw new ChallengeError('Correios', detail);
+    // An echoed identity takes precedence; otherwise only the bound single-object query can prove absence.
+    const bound = payload.codObjeto === undefined ? requestBound : payload.codObjeto === requested;
+    if (bound && /^objeto não encontrado\.?$/i.test(message)) throw new NotFoundError('Correios', detail);
+    throw new IndeterminateError('Correios', detail);
+  }
   if (payload.codObjeto !== requested) throw new SchemaError('Correios', 'Correios returned a different tracking object');
   if (!Array.isArray(payload.eventos) || payload.eventos.length > 500) throw new SchemaError('Correios');
   // Mail from abroad keeps the S10 number of the post that sent it, whose country ends it.
