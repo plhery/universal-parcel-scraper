@@ -144,6 +144,16 @@ describe('JRT tracking adapter', () => {
     expect(failure('JRT0000000002ZZ')).toMatchObject({ name: 'NoHistoryError', reason: 'listed', deliveryCarrier: undefined, deliveryTrackingNumber: undefined });
   });
 
+  it('reads JRT collecting the parcel from the airline as transit', () => {
+    const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const scan = payload[0]!.data[0]!.trackDetails[0]!;
+    scan.track_content = 'Your parcel had been recovery from airline';
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-03-15T00:00:00Z'))!;
+    expect(result.events!.find(({ description }) => description === scan.track_content)).toMatchObject({
+      stage: 'in_transit', stage_source: 'carrier_map',
+    });
+  });
+
   it('reads the landing, the clearance and the hand-over in Germany after DHL’s label data as transit', () => {
     const payload = fixture('track-dhl') as { data: { trackDetails: Record<string, string>[] }[] }[];
     const record = payload[0]!.data[0]!;

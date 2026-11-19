@@ -1,6 +1,8 @@
 {
   "carrier": "js-express",
   "entries": [
+    {"wording": "飞机进港，飞机进港（到达目的地）","stage": "in_transit","language": "zh","confirmedBy": "source","note": "The aircraft arrived at the destination airport."},
+    {"wording": "Item delivery operation","stage": "in_transit","language": "en","confirmedBy": "source","note": "A delivery handling scan between transit scans."},
     {"wording": "Electronic notification of order creation received.", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "JS Express's first row: the shop's order data, before its warehouse has the parcel."},
     {"wording": "PRE-ADVICE", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "A partner's advice of the parcel's data, after the order and before JS Express's warehouse collects the parcel."},
     {"wording": "Item has been collected", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "JS Express's warehouse took the parcel."},
@@ -78,6 +80,7 @@
     {"wording": "The shipment arrived in the region of recipient and will be transported to the delivery base in the next step.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "SHIPMENT RECEIVED IN DEPOT", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The delivering courier's depot, after the hand-off to the local courier and seconds before that courier's own acceptance scan."},
     {"wording": "SHIPPING INFORMATION RECEIVED", "unmapped": true, "language": "en", "confirmedBy": "live", "note": "A partner's record of the parcel's data, written while the parcel was already flying; it moves nothing."},
+    {"wording": "The delivery method has been confirmed with the recipient as 【self-pickup】.","language": "en","confirmedBy": "source","unmapped": true,"note": "The recipient agreed to self-pickup. The preceding scan still decides the stage until the pickup point has the parcel."},
     {"wording": "Data Received", "unmapped": true, "language": "en", "confirmedBy": "live", "note": "A partner's record of the parcel's data, after JS Express's warehouse had collected the parcel and on another clock; it moves nothing."},
     {"wording": "Shipping Label Created, USPS Awaiting Item", "unmapped": true, "language": "en", "confirmedBy": "live", "note": "USPS's record of the label, written while JS Express's warehouse in China had the parcel; it moves nothing."},
     {"wording": "SHIPMENT CREATED", "unmapped": true, "language": "en", "confirmedBy": "live", "note": "A partner's record of the parcel's data, written after JS Express had the order; it moves nothing."},

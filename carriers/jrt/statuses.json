@@ -2,6 +2,13 @@
   "carrier": "jrt",
   "entries": [
     {
+      "wording": "Your parcel had been recovery from airline",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "source",
+      "note": "The parcel was collected from the airline."
+    },
+    {
       "wording": "货物电子信息已经收到",
       "language": "zh",
       "english": "The electronic cargo information has been received",

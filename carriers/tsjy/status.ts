@@ -26,6 +26,7 @@ const RELAYED: ReadonlyMap<string, Stage> = new Map([
   ['已下单', 'accepted'],
   // That line booking the parcel out of its warehouse, in Chinese, after taking it in there ("已入库").
   ['已出库', 'in_transit'],
+  ['已装柜，预计…开船，预计…到港', 'in_transit'],
   ['the package is on the way to the facility.', 'in_transit'],
   ['warehouse receipt.', 'in_transit'],
   ['the order has information pending customer confirmation.', 'in_transit'],
@@ -55,10 +56,13 @@ export function isTsjyDelay(wording: string): boolean {
   return normalizeStatusWording(wording) === DELAY;
 }
 
+// The container has been loaded, with the estimated sailing and arrival days in month.day form.
+const CONTAINER_DATES = /^已装柜，预计\d{1,2}\.\d{1,2}开船，预计\d{1,2}\.\d{1,2}到港$/;
+
 /** The stage TSJY's map gives a row's wording: its own steps, then 17FEIA's milestones. */
 export function tsjyMappedStage(wording: string): Stage | undefined {
   const key = normalizeStatusWording(wording);
-  return OWN.get(key) ?? RELAYED.get(key);
+  return OWN.get(key) ?? RELAYED.get(key.replace(CONTAINER_DATES, '已装柜，预计…开船，预计…到港'));
 }
 
 /**

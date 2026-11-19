@@ -12,6 +12,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['Shipment information sent to last mile service provider', 'registered'],
   ['Notification sent to recipient', 'in_transit'],
   ['Handed Over to Delivery Partner', 'in_transit'],
+  ['Parcel dropped off with carrier', 'in_transit'],
   ['Arrived at sorting center', 'in_transit'],
   ['Dispatched from sorting center', 'in_transit'],
   ['Assigned to Transport', 'in_transit'],

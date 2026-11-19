@@ -3,6 +3,9 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
 import { SUB_STAGES } from '../../providers/seventeentrack/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
+// The uncoded Shenzhen hub receipt can include a trailing place and country.
+const HUB_RECEIPT = /^(深圳集散中心 已收货) *, *[^,]+, *cn$/;
+
 const key = (code: string | null, wording: string) => JSON.stringify([code, wording]);
 // The rows seen, by their code and `normalizeStatusWording` wording.
 const ROWS = new Map<string, Stage>(statuses.entries
@@ -18,7 +21,7 @@ const ROWS = new Map<string, Stage>(statuses.entries
  * delivery. A row without a code is read by its wording.
  */
 export function jcexStage(code: string | null, wording: string): Stage | undefined {
-  const seen = ROWS.get(key(code, wording));
+  const seen = ROWS.get(key(code, code ? wording : wording.replace(HUB_RECEIPT, '$1')));
   if (seen || !code) return seen;
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
   if (mapped === 'delivered' && classifyWording(wording, 'pending').stage !== 'delivered') return undefined;

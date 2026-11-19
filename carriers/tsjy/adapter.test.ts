@@ -126,6 +126,14 @@ describe('TSJY HTTP adapter', () => {
     expect(result.events![1]!.time).toBeUndefined();
   });
 
+  it.each(['已装柜，预计11.22开船，预计12.7到港', '已装柜，预计1.8开船，预计2.15到港'])('reads TSJY container loading with sailing dates: %s', (wording) => {
+    const result = parseTsjy(changed('relayed-journey', (order) => {
+      order.trackList[0]!.event = wording;
+    }), JOURNEY, LATER);
+    expect(result.events![0]).toMatchObject({ description: wording, stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'tsjy', description: wording })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it('holds back rows dated after the read', () => {
     const result = parseTsjy(fixture('relayed-journey'), JOURNEY, Date.parse('2026-03-16T20:00:00+08:00'));
     expect(result).toMatchObject({ current_stage: 'in_transit', last_status_text: 'Flight Arrived at Clearance Port.', last_update_local: '2026-03-16T15:30:00' });

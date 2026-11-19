@@ -1,6 +1,7 @@
 {
   "carrier": "mhi",
   "entries": [
+    {"wording": "Parcel dropped off with carrier","stage": "in_transit","language": "en","confirmedBy": "source","note": "The parcel was handed to a carrier during transit."},
     {"wording": "Your order has been processed at the UK export facility. It is now on route to the receiver.", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "MHI's own scan: the item left its export facility in the United Kingdom. Often the only event an untracked item has."},
     {"wording": "Shipment information sent to last mile service provider", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "The courier in the destination country has the item's data, not yet the item."},
     {"wording": "Notification sent to recipient", "stage": "in_transit", "language": "en", "confirmedBy": "portal", "note": "The courier told the recipient the item is coming."},

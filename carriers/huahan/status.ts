@@ -21,6 +21,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['arrived at origin facility', 'accepted'],
   ['departed from origin facility', 'in_transit'],
   ['transfer to origin airport', 'in_transit'],
+  ['the shipment is still in the process of arranging flights', 'in_transit'],
   ['export customs clearance completed', 'in_transit'],
   ['departed from airport of origin', 'in_transit'],
   ['import customs clearance started', 'customs'],

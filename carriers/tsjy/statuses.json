@@ -1,6 +1,7 @@
 {
   "carrier": "tsjy",
   "entries": [
+    {"wording": "已装柜，预计…开船，预计…到港","stage": "in_transit","language": "zh","confirmedBy": "source","note": "The parcel is loaded in a container. The sailing and arrival dates are estimates."},
     {"wording": "订单已提交，等待系统确认", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "The customer submitted the shipping order for goods TSJY's warehouse stores; nothing is picked yet."},
     {"wording": "仓库开始拣货", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "The warehouse starts picking the order's goods."},
     {"wording": "仓库拣货完成", "stage": "accepted", "language": "zh", "confirmedBy": "live"},
