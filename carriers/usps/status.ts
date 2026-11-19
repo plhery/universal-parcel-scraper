@@ -33,6 +33,12 @@ const OUT_FOR_DELIVERY_TERMS = ['out for delivery'];
 // holding an international item ("Held at Delivery Depot/Delivery Office") is the same wait.
 const READY_FOR_PICKUP_TERMS = ['available for pickup', 'available for pick-up', 'pickup', 'pick up', 'held at post office',
   'held at delivery depot', 'held at delivery office'];
+// A shipping partner holds the item before USPS does. Its pickup ("Picked Up by Shipping Partner, USPS Awaiting Item")
+// accepts the item, and its facilities' arrivals and departures move it: "USPS Awaiting Item" says only that USPS has
+// not received it yet, which does not make these scans a label. USPS's sentence for them reads the same way
+// ("Your item departed a shipping partner facility at …").
+const PARTNER_ACCEPTED = /\bpicked up by (?:a )?shipping partner\b/;
+const PARTNER_IN_TRANSIT = /\b(?:arrived|departed)(?: at)?(?: a)? shipping partner facility\b/;
 // A label printed at the counter is dated by its day alone; the item's acceptance is the scan of it that follows.
 // A merchant's notice that it received the order ("Merchant Order Receipt Notification") comes before any label.
 const REGISTERED_TERMS = [
@@ -75,6 +81,8 @@ export function uspsStage(text: string): Stage | null {
   // A customs line the shared rules read as cleared ("Cleared customs") is a step in transit.
   if (CUSTOMS_TERMS.some((term) => value.includes(term))) return trackingLanguageStage(text) === 'in_transit' ? 'in_transit' : 'customs';
   if (EXCEPTION_TERMS.some((term) => value.includes(term))) return 'exception';
+  if (PARTNER_IN_TRANSIT.test(value)) return 'in_transit';
+  if (PARTNER_ACCEPTED.test(value)) return 'accepted';
   if (REGISTERED_TERMS.some((term) => value.includes(term))) return 'registered';
   if (ACCEPTED_TERMS.some((term) => value.includes(term))) return 'accepted';
   if (IN_TRANSIT_TERMS.some((term) => value.includes(term))) return 'in_transit';

@@ -394,6 +394,15 @@ describe('shared provider result', () => {
     }
   });
 
+  it("reads USPS's shipping partner moving an item before USPS has it as providers relay it, not as a label", () => {
+    for (const wording of ['Departed Shipping Partner Facility, USPS Awaiting Item', 'Arrived Shipping Partner Facility, USPS Awaiting Item',
+      'Departed Shipping Partner Facility, EXAMPLE CITY, KY 12345',
+      'Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 6:00 pm on November 18, 2026 in EXAMPLE CITY, KY 12345. A delivery date will be provided when USPS receives the package.']) {
+      expect(event('2026-11-18T18:00:00-05:00', wording)?.stage, wording).toBe('in_transit');
+    }
+    expect(event('2026-11-18T18:00:00-05:00', 'Picked Up by Shipping Partner, USPS Awaiting Item')?.stage).toBe('accepted');
+  });
+
   it("reads Interpost's import clearance by its caption, without the status code ParcelsApp heads it with", () => {
     expect(event('2026-01-07T12:45:00+01:00', 'B2C Clearance 4. Customs Import cleared'))
       .toMatchObject({ description: 'Customs Import cleared', stage: 'in_transit' });

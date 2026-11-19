@@ -90,6 +90,15 @@ describe('USPS status vocabulary', () => {
     expect(uspsStage('Accepted at USPS Origin Facility')).toBe('accepted');
     expect(uspsStage('Acceptance')).toBe('accepted');
     expect(uspsStage('Acceptance Pending')).toBe('registered');
+    // A shipping partner holds the item before USPS does: its pickup accepts it and its facilities move it.
+    // "USPS Awaiting Item" does not make those scans a label, as it does a label's.
+    expect(uspsStage('Departed Shipping Partner Facility')).toBe('in_transit');
+    expect(uspsStage('Departed Shipping Partner Facility, USPS Awaiting Item')).toBe('in_transit');
+    expect(uspsStage('Arrived Shipping Partner Facility, USPS Awaiting Item')).toBe('in_transit');
+    expect(uspsStage('Picked Up by Shipping Partner, USPS Awaiting Item')).toBe('accepted');
+    expect(uspsStage('Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 6:00 pm on November 18, 2026 in EXAMPLE CITY, KY 12345. A delivery date will be provided when USPS receives the package.')).toBe('in_transit');
+    expect(statusMapAnswer({ carrier: 'usps', description: 'departed shipping partner facility, usps awaiting item' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(uspsStage('Shipping Label Created, USPS Awaiting Item')).toBe('registered');
     expect(uspsStage('Arrived at USPS Facility')).toBe('in_transit');
     expect(uspsStage('Arrived at USPS Regional Facility')).toBe('in_transit');
     // The international service center's export dispatch, before the flight abroad.
@@ -338,6 +347,8 @@ describe('USPS rendered page', () => {
     expect(read('Shipping Label Created', '2026-11-03T13:00:00Z').last_update).toBe('2026-11-03T04:40:00Z');
     // Another row the facility's zone dates ahead stays on it, a planned scan the due filter holds back.
     expect(read('Arrived at USPS Regional Facility', '2026-11-03T05:00:00Z').last_update).toBe('2026-11-03T04:40:00-08:00');
+    // So does a shipping partner's scan before USPS has the item, which is no label.
+    expect(read('Departed Shipping Partner Facility, USPS Awaiting Item', '2026-11-03T05:00:00Z').last_update).toBe('2026-11-03T04:40:00-08:00');
   });
 
   it('reads the estimate banner, whose date parts sit apart, and not its tooltips as the verdict', () => {
