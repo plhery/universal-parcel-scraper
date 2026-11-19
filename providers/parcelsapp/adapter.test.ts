@@ -2789,6 +2789,10 @@ describe('ParcelsApp result parsing', () => {
     expect(times(['CTT Express'], [scan('2026-11-05T14:38:00Z', 'C.O. EXAMPLE B10'), scan('2026-10-29T16:15:42Z'),
       scan('2026-07-04T12:23:00Z', 'C.O. EXAMPLE B10')]))
       .toEqual(['2026-11-05T13:38:00.000Z', '2026-10-29T16:15:42.000Z', '2026-07-04T10:23:00.000Z']);
+    // International Bridge's rows are UTC instants, at the minutes USPS states for the same scans, wherever its place.
+    expect(times(['International Bridge'], [scan('2026-11-18T23:00:00Z', 'United States, Example, NY, 10001'),
+      scan('2026-11-18T18:54:14Z', 'United States, Example, NY, 10001'), scan('2026-11-13T16:43:03Z')]))
+      .toEqual(['2026-11-18T23:00:00.000Z', '2026-11-18T18:54:14.000Z', '2026-11-13T16:43:03.000Z']);
     // Landmark Global's page clock is US Central's, whatever zone the check suggests.
     const landmark = { carriers: ['Landmark Global'], states: [scan('2026-10-14T09:00:00Z', 'Example City, Germany'), scan('2026-01-14T09:00:00Z')] };
     for (const hint of [null, 'Europe/Zurich']) {

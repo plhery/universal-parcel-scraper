@@ -469,7 +469,9 @@ step exists for future protocol changes.
   from abroad ("Hong Kong"). "Singapore Post" has SingPost's "+08:00" digits, also for its
   scans in China, and "SunYou - Sytrack" those of the origin leg of SunYou's feed, on
   "+08:00". "Landmark Global" has its tracking page's US Central clock, also for the
-  partner scans it relays. Step 1 reads them on that clock. SunYou's feed dates its destination leg,
+  partner scans it relays. Step 1 reads them on that clock. "International Bridge" has UTC
+  instants, wherever the scan was: its receipt and departure at a facility came at the minutes
+  USPS states for the same scans, so they are read as UTC, not on its Utah clock. SunYou's feed dates its destination leg,
   from "Arrived At Destination Country Airport" to the delivery, on the destination's clock
   ("+02:00" for Spain, where EcoScooting's own instants agree), so those scans take the
   destination's single clock, or else only a guess. "iMile" has the digits of iMile's

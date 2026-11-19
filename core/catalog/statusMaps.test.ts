@@ -1835,7 +1835,7 @@ describe("universal providers' answers", () => {
       ['交接成功-交出（派送员派送途中）', 'out_for_delivery'],
       ['Delivery branch. In the hands of the mailman', 'out_for_delivery'],
       ['FOR DELIVERY', 'out_for_delivery'],
-      ['The shipment has left origin country', 'in_transit'], ['Shipment has been sent from origin country.', 'in_transit'], ['Przesyłka w oddziale FedEx.', 'in_transit'],
+      ['The shipment has left origin country', 'in_transit'], ['Shipment has been sent from origin country.', 'in_transit'], ['Package Received By IB', 'in_transit'], ['Przesyłka w oddziale FedEx.', 'in_transit'],
       ['Przesyłka wydana do doręczenia kurierowi FedEx.', 'out_for_delivery'],
       ['The shipment is handled by a return consolidator', 'exception'],
       ['Delivery. Your order has been shipped from the distribution center', 'in_transit'],

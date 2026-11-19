@@ -1458,6 +1458,10 @@ function carrierClock(payload: Record<string, unknown>, state: Record<string, un
   if (russianPostExportCopy(carrier, status, state.date)) return null;
   if (russianPostCopy(carrier, status)) return undefined;
   if (Object.hasOwn(HOME_CLOCKS, key)) return HOME_CLOCKS[key]!;
+  // International Bridge's rows are instants under ParcelsApp's UTC label, wherever its place: on a parcel
+  // USPS delivered, its receipt and departure at a facility came at the minutes USPS states for the same
+  // scans with the facility's offset. Read on its Utah base's clock, the catalog's, they came 7 hours late.
+  if (carrier === 'international-bridge') return 'UTC';
   if (carrier === 'correios-br') return CORREIOS_BRAZIL_CLOCK;
   if (carrier === 'spx-br') return SHOPEE_BRAZIL_CLOCK;
   if (carrier === 'ctt-express') return scanLocation(name, state.location) ? CTT_EXPRESS_CLOCK : null;

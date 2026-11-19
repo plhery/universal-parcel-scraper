@@ -321,6 +321,8 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // pickup and the sorting centres, as AliExpress's, iMile's and its other partners' maps read them.
   if (/^received by logistics company[.!]?$/i.test(description)) return 'accepted';
   if (/^received by warehouse[.!]?$/i.test(description)) return 'in_transit';
+  // International Bridge's receipt at its facility, which USPS copies as "Arrived Shipping Partner Facility".
+  if (/^package received by ib[.!]?$/i.test(description)) return 'in_transit';
   // Sender pre-advice such as Quickpac's "Shipment recorded by sender (data delivered)".
   if (/being prepared by the sender|recorded by (?:the )?(?:foreign )?sender|\bdata delivered\b|en route to .*awaiting processing/i.test(description)) return 'registered';
   // 17FEIA's customs broker taking the parcel to its warehouse after the flight, as Ship24 relays it with
