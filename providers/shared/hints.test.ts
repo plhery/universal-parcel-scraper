@@ -57,8 +57,8 @@ describe('carrier names reported by universal providers', () => {
   });
 
   it('keeps names with the punctuation and marks carriers write in them', () => {
-    // GO! Express's twelve digits fit no rule, so the name alone proposes it.
-    expect(universalCarrierHints(['GO! Express'], '100000000012')).toEqual({ reported_carriers: ['GO! Express'], discovered_carrier: 'go-express' });
+    // No rule claims GO! Express's twelve digits, so its name alone proposes it.
+    expect(universalCarrierHints(['GO! Express'], '123456789012')).toEqual({ reported_carriers: ['GO! Express'], discovered_carrier: 'go-express' });
     for (const name of ['Kuehne+Nagel', 'WE|DO', 'time:matters', 'TJW Fragt A/S', 'ООО «Логсис Групп»', 'แฟลช เอ็กซ์เพรส', 'ອານຸສິດ ໂລຈິສຕິກ']) {
       expect(universalCarrierHints([name]).reported_carriers).toEqual([name]);
     }
