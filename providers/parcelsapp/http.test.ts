@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, expect, it, vi } from 'vitest';
-import { parcelsAppChecksum, parcelsAppRequest, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
+import { parcelsAppChecksum, parcelsAppRequest, parcelsAppUserAgent, ParcelsAppHttpClient, PARCELSAPP_API } from './http.js';
 
 describe('ParcelsApp public request protocol', () => {
   it.each([
@@ -22,6 +22,16 @@ describe('ParcelsApp public request protocol', () => {
     expect([...form.keys()]).toEqual(['trackingId', 'carrier', 'language', 'country', 'platform', 'wd', 'c', 'p', 'l', 'se']);
   });
 
+  it('names the Chrome version stable releases have reached, since ParcelsApp refuses an outdated one', () => {
+    const chrome = (date: number) => parcelsAppUserAgent(date).match(/Chrome\/(\d+)\.0\.0\.0 Safari\/537\.36$/)?.[1];
+    expect(chrome(Date.UTC(2025, 9, 28))).toBe('142');
+    expect(chrome(Date.UTC(2025, 10, 24))).toBe('142');
+    expect(chrome(Date.UTC(2025, 10, 25))).toBe('143');
+    // ParcelsApp refused Chrome 149 and earlier, and answered 150 and later, in November 2026.
+    expect(Number(chrome(Date.UTC(2026, 10, 19)))).toBeGreaterThanOrEqual(150);
+    expect(chrome(Date.UTC(2025, 0, 1))).toBe('142');
+  });
+
   it('preserves leading zeros and alphanumeric postcodes, without allowing extra fields', () => {
     for (const postcode of ['01234', 'SW1A 1AA', '12-345', '01234&extra[email]=test']) {
       const form = new URLSearchParams(parcelsAppRequest('ZZ12345678900', ` ${postcode} `).toString());
@@ -41,7 +51,9 @@ describe('ParcelsApp public request protocol', () => {
     const headers = new Headers(fetcher.mock.calls[0]![1]!.headers);
     expect(headers.get('Content-Type')).toContain('application/x-www-form-urlencoded');
     expect(headers.get('User-Agent')).toMatch(/^Mozilla\/5\.0 \(Macintosh;.* Chrome\/\d/);
+    expect(headers.get('User-Agent')).toBe(parcelsAppUserAgent());
     expect(headers.get('Accept-Language')).toBe('en-US,en;q=0.9');
+    expect(headers.get('Accept')).toBe('application/json, text/javascript, */*; q=0.01');
     expect(headers.has('cookie')).toBe(false);
   });
 

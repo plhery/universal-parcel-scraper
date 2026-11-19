@@ -9,10 +9,19 @@ export const PARCELSAPP_API = 'https://parcelsapp.com/api/v2/parcels';
 // this fixed telemetry profile of Chrome on a Mac, including its documented
 // "undefined" stack fallback, when the window's inner size (third) fits inside its
 // outer size (first). It refuses a window larger inside than outside, a request
-// without Accept-Language and a User-Agent that names no browser, with a bare
-// NO_DATA. The checksum below binds the profile to each number. The ticket (pt) and
-// sensor (s2) fields the page now adds are not required.
-const BROWSER_USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36';
+// without Accept-Language or jQuery's JSON Accept, and a User-Agent that names no
+// browser or an outdated Chrome, with a bare NO_DATA. The checksum below binds the
+// profile to each number. The ticket (pt), sensor (s2) and detected-carrier fields the
+// page now adds are not required.
+const CHROME_142_RELEASE = Date.UTC(2025, 9, 28);
+const CHROME_RELEASE_CYCLE_MS = 28 * 86_400_000;
+
+/** Desktop Chrome on a Mac, at the major version Chrome's four-week stable releases have reached. */
+export function parcelsAppUserAgent(now = Date.now()): string {
+  const major = 142 + Math.max(0, Math.floor((now - CHROME_142_RELEASE) / CHROME_RELEASE_CYCLE_MS));
+  return `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${major}.0.0.0 Safari/537.36`;
+}
+
 const TELEMETRY = '1470x832,1470x832,1470x709,no,MacIntel,Gecko,Mozilla,Netscape,Google Inc.,true,true,'
   + 'Google Inc. (Apple),ANGLE (Apple, ANGLE Metal Renderer: Apple M1, Unspecified Version),true,true,'
   + Buffer.from('parcelsapp.com').toString('base64') + ',' + Buffer.from('undefined').toString('base64');
@@ -62,7 +71,8 @@ export class ParcelsAppHttpClient {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
         Origin: 'https://parcelsapp.com', Referer: `https://parcelsapp.com/en/tracking/${number}`,
-        'User-Agent': BROWSER_USER_AGENT, 'Accept-Language': 'en-US,en;q=0.9', 'X-Requested-With': 'XMLHttpRequest',
+        'User-Agent': parcelsAppUserAgent(), 'Accept-Language': 'en-US,en;q=0.9', 'X-Requested-With': 'XMLHttpRequest',
+        Accept: 'application/json, text/javascript, */*; q=0.01',
       },
       body: parcelsAppRequest(number, postcode),
     }, { provider: 'ParcelsApp', fetcher: this.fetcher, timeoutMs: Math.floor(timeoutMs), maxBytes: 2_000_000 });

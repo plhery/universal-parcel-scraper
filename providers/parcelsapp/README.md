@@ -72,12 +72,17 @@ Built from the site's tracking bundle (`packs/js/application-….js`; the
   (seed 978) of `encodeURIComponent(number) + telemetry`. The adapter sends one fixed
   telemetry profile, whose inner window (third field) fits inside its outer window (first
   field). Without the trailing checksum tuple the API returns `RELOAD`.
-- Headers: a desktop Chrome `User-Agent` and `Accept-Language`.
+- Headers: `Accept-Language`, jQuery's JSON `Accept`
+  (`application/json, text/javascript, */*; q=0.01`) and a desktop Chrome `User-Agent` whose
+  major version follows Chrome's four-week stable releases, counted from Chrome 142.
 - A stored postcode uses `extra[zipcode]`.
 
 ParcelsApp refuses, with a bare `NO_DATA`, a window larger inside than outside, a request
-without `Accept-Language` and a `User-Agent` that names no browser. The ticket (`pt`,
-`ptv`), sensor (`s2`) and CSRF fields the page also sends are not required.
+without `Accept-Language` or that `Accept`, and a `User-Agent` that names no browser or an
+outdated Chrome. A fixed version would age into a refusal, so the adapter names the version
+Chrome has reached.
+The ticket (`pt`, `ptv`), sensor (`s2`), detected-carrier (`extra[detectedSlugs]`) and CSRF
+fields the page also sends are not required.
 
 `se` is a public checksum, not an issued credential, so Node alone is enough. The browser
 step exists for future protocol changes.
