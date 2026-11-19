@@ -30,6 +30,7 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['F550', 'in_transit'], ['F580', 'in_transit'], ['A101', 'in_transit'], ['A103', 'in_transit'], // Line haul and progress notices.
   ['F596', 'in_transit'], ['F599', 'in_transit'], // Last-mile hub.
   ['F600', 'out_for_delivery'],
+  ['F601', 'ready_for_pickup'], // "Pedido deve ser retirado na agência": the parcel waits at an agency for the recipient.
   ['F650', 'failed_attempt'], // The day's delivery could not be completed; the route is replanned for another attempt.
   ['A106', 'failed_attempt'], // The notice F650's round can give instead: an unforeseen event, another attempt to follow.
   ['F671', 'returned'], ['F672', 'returned'], ['F674', 'returned'], ['F677', 'returned'], ['F680', 'returned'], // On the way back.

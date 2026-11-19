@@ -28,10 +28,15 @@ const FACILITY = /^F(?:[2-5]\d\d|67\d|680)$/;
 // Wordings that name the centre, origin or port of their scan after a colon:
 // "Seu pedido saiu do centro logístico: Cidade Exemplo - SP", and the arrival
 // "O pedido chegou ao centro de : Cidade Exemplo - SP e segue para a próxima etapa.".
+// A parcel waiting at an agency for its recipient names that agency's town the same way:
+// "Pedido deve ser retirado na agência: Cidade Exemplo - SP".
 const PLACED = [
   /^(.*\b(?:centro log[ií]stico|origem|porto de tr[âa]nsito))\s*:\s*([^:]*\S)$/i,
   /^(O pedido chegou ao centro) de\s*:\s*(\S.*?)( e segue para a próxima etapa\.?)$/i,
+  /^(.*\bretirad[oa] na ag[êe]ncia)\s*:\s*([^:]*\S)$/i,
 ];
+// The agency pickup, the one scan away from SPX's facilities whose wording names its place.
+const AT_AGENCY = 'F601';
 
 // A posting names the town of the point where the seller dropped the parcel off after its
 // wording ("Pedido postado Cidade Exemplo - SP"): the seller's town, which a pickup keeps none of.
@@ -124,7 +129,7 @@ function projectRow(row: Record<string, unknown>): Scan | null {
   if (!time) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned an invalid scan time');
   const facility = FACILITY.test(code);
   // The reply's place stands; a place named only in the wording stands in for it.
-  const named = facility ? spxBrPlacedText(description) : { description: spxBrPostedText(description), location: '' };
+  const named = facility || code === AT_AGENCY ? spxBrPlacedText(description) : { description: spxBrPostedText(description), location: '' };
   const place = facility && isRecord(row.current_location) ? row.current_location : null;
   const location = (place ? clean(text(place, 'location_name'), 120) : '') || clean(named.location, 120);
   const point = place && location ? eventPoint(place.lat, place.lng) : null;

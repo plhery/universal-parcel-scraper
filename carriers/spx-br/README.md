@@ -79,6 +79,9 @@ label's first fifteen characters.
   centro logístico: Cidade Exemplo - SP"). The name leaves the wording, so it reads the same from
   town to town, and is the scan's place when the reply gives none: a departure from a logistics
   centre often names it only there. Rows stored with the name in their wording keep their row.
+  A parcel waiting at an agency for its recipient (F601, "Pedido deve ser retirado na agência")
+  names the agency's town the same way; that town is its place, and the reply's coordinates are
+  not read for it.
 - The reply can list a customs check filed late among later scans; the history is ordered by
   the clocks.
 - A fleet line opens with its hub in brackets. The hub leaves the wording and is the place of
