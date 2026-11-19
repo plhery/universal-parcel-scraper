@@ -139,6 +139,60 @@
       "note": "Invented number whose S10 check digit passes but whose MB suffix names no country. Brazilian couriers such as Flash Courier track senders' own codes, and a sender can print this layout with a suffix of its own, so it is not international mail."
     },
     {
+      "number": "RR999999987DY",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose DY suffix names no country, so it is not international mail."
+    },
+    {
+      "number": "RR999999987OI",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose OI suffix names no country, so it is not international mail."
+    },
+    {
+      "number": "RR999999987XB",
+      "role": "negative",
+      "evidence": "synthetic",
+      "derivedFrom": "invented",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "chronopost"
+        ],
+        "not": [
+          "intl-post"
+        ]
+      },
+      "note": "Invented number whose S10 check digit passes but whose XB suffix names no country, so it is not international mail."
+    },
+    {
       "number": "RO400351158EE",
       "role": "shipment",
       "evidence": "public_shipment_report",

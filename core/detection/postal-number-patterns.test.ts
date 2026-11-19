@@ -5,7 +5,8 @@ import { checksumRejections, detectCarrierMatch, parseTrackingInput } from './in
 import { carrierIdFromName } from '../catalog/hints.js';
 
 describe('S10-shaped numbers', () => {
-  it.each(['RR999999987TY', 'RR999999987MI', 'RR999999987XX', 'RR999999987GO', 'RR999999987YW', 'RR999999987CS', 'RR999999987EN', 'RR999999987MB'])(
+  it.each(['RR999999987TY', 'RR999999987MI', 'RR999999987XX', 'RR999999987GO', 'RR999999987YW', 'RR999999987CS', 'RR999999987EN', 'RR999999987MB',
+    'RR999999987DY', 'RR999999987OI', 'RR999999987XB'])(
     'leaves %s out of international mail: its suffix names no issuing country',
     (number) => {
       expect(detectCarrierMatch(number)).toMatchObject({ carrier: 'unknown', confidence: 'low' });
