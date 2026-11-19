@@ -74,8 +74,8 @@ input, so recognition reads them as unknown rather than as a transport failure.
   ("Incident : livraison impossible" arrives with code `DR1`, meaning
   registered).
 - `DISTOU`/`MD1` ("sur son site de distribution. Nous le préparons pour le mettre en
-  livraison") is out for delivery, for parcels and letters alike. It is the sort into the
-  morning's round: La Poste's own timeline shows it as step 4, "Colis en cours de livraison",
+  livraison") is out for delivery. On a parcel it is the sort into the morning's round: La
+  Poste's own timeline shows it as step 4, "Colis en cours de livraison",
   the arrival at the delivery site being step 3. The delivery or a failed attempt follows the
   same day, and La Poste sends no other round scan.
 - `PB1` is a delivery that could not happen that day. Parcels word it as a

@@ -318,6 +318,10 @@ describe('classifyWording', () => {
       'Delivered to an access point location and awaiting customer pickup.',
       // A pick-up/drop-off point (PUDO) signing for the parcel, in Cainiao's last mile.
       'Delivered to PUDO',
+      // The recipient told, or not told when the text failed, that the parcel waits in a Pickup point, as DPD France
+      // words it, its own spelling included.
+      'Le destinataire est avisé par SMS de la disponibilté de son colis dans le relais Pickup',
+      "Le destinataire ne peut être avisé de la disponibilité de son colis dans le relais Pickup car l'envoi de l'e-mail ou SMS a échoué",
     ]) expect(classifyWording(wording)).toEqual({ stage: 'ready_for_pickup', source: 'wording:language' });
     // An order ready for the courier to collect from its sender is a registration.
     expect(classifyWording('Order information has been received and ready for pickup')).toEqual({ stage: 'registered', source: 'wording:language' });

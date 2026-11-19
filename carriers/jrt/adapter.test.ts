@@ -7,7 +7,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
-import { JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
+import { dateJrtUspsSentences, JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
 import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
@@ -264,6 +264,31 @@ describe('JRT tracking adapter', () => {
     expect(elsewhere.events?.[0]).toMatchObject({ local_time: '2026-02-14T05:12:40', location: 'Example Town,GA' });
     expect(elsewhere.events?.[0]?.time).toBeUndefined();
     expect(dateLocalClocks('jrt', elsewhere).events?.[0]).toMatchObject({ time: '2026-02-14T05:12:40-05:00', time_zone_basis: 'place' });
+  });
+
+  it('dates USPS’s sentence at the clock and state it names, beside the partner’s row at that minute', () => {
+    // Live shape: the tracker gives the partner's departure on the platform's clock at the right instant, and the
+    // sentence naming 3:14 am in Illinois an hour before it, as if on Eastern time.
+    const sentence = 'Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 3:14 am on November 9, 2026 in EXAMPLE TOWN, IL . A delivery date will be available when USPS receives the package.';
+    const result = dateJrtUspsSentences({ status: 'in_transit', last_status_text: 'Departed Shipping Partner Facility, USPS Awaiting Item',
+      last_update: '2026-11-09T17:14:00+08:00', expected_delivery: null, events: [
+        { time: '2026-11-09T17:14:00+08:00', description: 'Departed Shipping Partner Facility, USPS Awaiting Item', location: 'EXAMPLE TOWN, IL' },
+        { time: '2026-11-09T16:46:00+08:00', description: 'Arrived Shipping Partner Facility, USPS Awaiting Item', location: 'EXAMPLE TOWN, IL' },
+        { time: '2026-11-09T16:14:00+08:00', description: sentence, location: 'EXAMPLE TOWN, IL' },
+        { time: '2026-11-09T13:30:00+08:00', description: 'Picked Up By Shipping Partner, USPS Awaiting Item', location: 'EXAMPLE TOWN, IL' },
+      ] });
+    expect(result.events?.map(({ time, time_zone, time_zone_basis }) => [time, time_zone, time_zone_basis])).toEqual([
+      ['2026-11-09T17:14:00+08:00', undefined, undefined],
+      ['2026-11-09T03:14:00-06:00', 'America/Chicago', 'place'],
+      ['2026-11-09T16:46:00+08:00', undefined, undefined],
+      ['2026-11-09T13:30:00+08:00', undefined, undefined],
+    ]);
+    expect(result.events?.[1]?.description).toBe(sentence);
+    expect(result.last_update).toBe('2026-11-09T17:14:00+08:00');
+    // A sentence naming no state it can date keeps the tracker's clock.
+    const unplaced = { status: 'in_transit' as const, last_status_text: sentence, last_update: '2026-11-09T16:14:00+08:00', expected_delivery: null,
+      events: [{ time: '2026-11-09T16:14:00+08:00', description: sentence.replace(', IL .', ', ZZ .') }] };
+    expect(dateJrtUspsSentences(unplaced)).toBe(unplaced);
   });
 
   it('reads UPS’s access point note on UPS’s wall clock, as its other rows', () => {

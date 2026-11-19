@@ -493,6 +493,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // "Delivered to" a pickup point or an intermediary is not delivery to the
   // recipient; a parcel already waiting at its pickup point outranks the
   // "sera remis" (will be handed over) that follows in La Poste's sentence.
+  // The recipient told, or not told because the text or email failed, that the parcel waits at a relay point: either
+  // way it waits there, as DPD France's own map reads "… de la disponibilité de son colis dans le relais Pickup".
+  if (/\bdisponibili?te de (?:son|votre|leur) colis (?:en |au |dans (?:le |un |votre )?)(?:point (?:de )?retrait|point relais|relais|consigne|locker|bureau de poste)\b/.test(text)) return 'ready_for_pickup';
   if (/delivered (?:to|at|in(?:to)?) [^.;,]*?(?:pick ?up (?:point|location)|pudo\b|parcel ?shop|access point|packstation|parcel locker|relay point|service ?point|collection point|retrieval point)|livre (?:au|en|dans (?:le|un|votre)) (?:point (?:de )?retrait|point relais|relais|consigne|locker)|(?:est|colis|envoi) disponible (?:dans|au|en) (?:votre |le |un )?(?:point (?:de )?retrait|point relais|relais|consigne|bureau de poste)/.test(text)) return 'ready_for_pickup';
   // A driver handing the parcel to a pickup shop after an attempt, or the shop
   // taking it over, as DPD words them: "Takeover by Pickup parcel shop".
