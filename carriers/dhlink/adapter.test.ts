@@ -37,6 +37,35 @@ const BLOCK_PAGE = '<!doctype html><html><head><meta charset=utf-8><title>403 Fo
   + '<span class=emu>https://www.dhlink.com/stage-api/trbiz/track/queryTrack</span><p>00000000_ZZ-000-000000_00000-00000</p>'
   + '<script>e("et").innerText=0==n?"抱歉，您的请求被阻断了":"Sorry, you have been blocked"</script></body></html>';
 
+it.each([
+  ['Parcel departed from transit facility.', 'in_transit'],
+  ['In transit to next facility.', 'in_transit'],
+  ['Flight arrived at destination country port', 'in_transit'],
+  ['Package in transit to destination country', 'in_transit'],
+  ['货物已清关完成， Import Customs Clearance Complete', 'in_transit'],
+  ['Customs released', 'in_transit'],
+  ['Flight arrived, pallet breakdown in progress', 'in_transit'],
+  ['Item outbound in sorting center.', 'in_transit'],
+  ['Picked up at destination airport', 'in_transit'],
+] as const)('maps the DHLink scan %s to %s', (wording, stage) => {
+  const payload = changed('swiftx-at-warehouse', (parcel) => {
+    parcel.trackinfoList.push({ trackTime: '2026-03-03 14:00:00', createDate: null, place: null, info: wording, nodeCode: null, nodeName: null });
+  });
+  expect(parseDhlink(payload, WAREHOUSE, LATER).events?.[0]).toMatchObject({
+    description: wording, stage, stage_source: 'carrier_map',
+  });
+});
+
+it('keeps a delayed flight estimate without a movement stage', () => {
+  const wording = 'Flight delayed. Estimated departure: Oct. 6';
+  const payload = changed('swiftx-at-warehouse', (parcel) => {
+    parcel.trackinfoList.push({ trackTime: '2026-03-03 14:00:00', createDate: null, place: null, info: wording, nodeCode: null, nodeName: null });
+  });
+  const newest = parseDhlink(payload, WAREHOUSE, LATER).events?.[0];
+  expect(newest).toMatchObject({ description: wording });
+  expect(newest?.stage).toBeUndefined();
+});
+
 describe('DHLink HTTP adapter', () => {
   it('asks the tracking page’s lookup for the whole number once, through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('swiftx-at-warehouse')));

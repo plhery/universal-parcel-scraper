@@ -139,6 +139,10 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   ['The parcel is being stored in the GLS parcel center. It could not be delivered as the parcel box was occupied.', FAILED_ATTEMPT],
   // GOFO's line haul between its facilities, relayed without the next one.
   ['In Transit', { status: 'in_transit', stage: 'in_transit' }],
+  ["Arrived at Carrier's Delivery Station", { status: 'in_transit', stage: 'in_transit' }],
+  ["Votre colis est en transit sur nos plateformes logistiques.", { status: 'in_transit', stage: 'in_transit' }],
+  ["Votre Colissimo est en transit sur nos plateformes logistiques.", { status: 'in_transit', stage: 'in_transit' }],
+  ["Arrived at Pickup Facility", { status: 'in_transit', stage: 'in_transit' }],
   // China Post's scans in Chinese after YunExpress hands a parcel to it: its receipt is that
   // hand-over, and a presentation to export or import customs holds the parcel there until its release,
   // which puts it back in transit.
@@ -164,6 +168,7 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
  * and its delivery round.
  */
 const PATTERNS: ReadonlyArray<readonly [RegExp, ClassifiedStatus]> = [
+  [/^in transit \([a-z0-9-]{1,12}\)$/, { status: 'in_transit', stage: 'in_transit' }],
   [/^delivery failed, type: ?recipient absent or delivery location inaccessible\b/, FAILED_ATTEMPT],
   [/^your shipment delivery attempt failed(?: \[[^\]]{1,200}\])?$/, FAILED_ATTEMPT],
   [/^your item has been accepted in \S.* depot$/, { status: 'in_transit', stage: 'in_transit' }],

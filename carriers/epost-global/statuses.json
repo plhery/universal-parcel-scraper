@@ -33,6 +33,18 @@
     {"code": "DRFC", "wording": "Ready for Collection", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-08", "note": "Royal Mail's British partner: the parcel waits for the recipient at a collection point."},
     {"code": "1215", "wording": "Duty &/or tax fees requested", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivering partner asks the recipient for duties or taxes before it delivers."},
     {"code": "1257", "wording": "Received payment", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Those charges paid; the parcel goes on."},
-    {"code": "75", "wording": "The item is available at the pickuppoint", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivering partner's pickup point holds the parcel for the recipient."}
+    {"code": "75", "wording": "The item is available at the pickuppoint", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The delivering partner's pickup point holds the parcel for the recipient."},
+    {"wording": "Item released by customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The consignment has arrived in the country of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item has arrived in the country of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item has been processed in the country of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item is at customs", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "The item is at the PostNL sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item is being processed by customs", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "The item is on transport to the country of destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item is out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "The item is processed at the PostNL sorting center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item is received by PostNL", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "The item will be scheduled for a new delivery attempt", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"}
   ]
 }

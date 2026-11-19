@@ -30,6 +30,14 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.filter((entry) => !
 const PATTERNS: readonly [RegExp, Stage][] = [
   [/^[a-z0-9]{1,12}[，,] ?申报过港中$/, 'in_transit'],
   [/^(?:二程)?预计\d{1,2}号的航班$/, 'in_transit'],
+  // The line repeats the milestone before a pipe and appends information about the same scan.
+  [/^goods leaving the operation center \| (?:the outbound scan at the operation center is complete|the shipment has been loaded onto the transport vehicle)\.?$/, 'in_transit'],
+  [/^shipment started the customs clearance process at origin \| export declaration data has been prepared\.?$/, 'in_transit'],
+  [/^the shipment has been loaded onto the delivery vehicle \| (?:delivery to the recipient address is in progress|the courier has the shipment for delivery|the courier is heading to the delivery address|the delivery round is still open|the out-for-delivery scan is on record|the parcel is still out with the courier|the shipment has not been signed for|the shipment is on the delivery route)\.?$/, 'out_for_delivery'],
+  // USPS's status title can be followed by its free-text description with the time and place.
+  [/^delivered, front door\/porch -> your item was delivered at the front door or porch\b/, 'delivered'],
+  [/^on the way in transit, arriving on time -> your package is moving within the usps network\b/, 'in_transit'],
+  [/^on the way, departed usps facility -> your item departed our usps facility\b/, 'in_transit'],
   // The partner's sort and departure in China after its collection, naming the facility's town.
   [/^arrived at sort facility [a-z][a-z .-]{1,60}$/, 'in_transit'],
   [/^departed facility in [a-z][a-z .-]{1,60}$/, 'in_transit'],

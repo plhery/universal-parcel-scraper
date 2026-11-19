@@ -1043,6 +1043,10 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-16",
       "note": "Relayed from USPS: its facilities on the last mile."
-    }
+    },
+    {"wording": "Arrived at Carrier's Delivery Station", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Votre colis est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Votre Colissimo est en transit sur nos plateformes logistiques.", "language": "fr", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at Pickup Facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }

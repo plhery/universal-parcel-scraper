@@ -30,6 +30,29 @@ function rewrite(name: string, change: (details: Details) => void, echoed?: stri
   return html.replace(call[0], () => handler);
 }
 
+it.each([
+  ['Item released by customs', 'in_transit'],
+  ['The consignment has arrived in the country of destination', 'in_transit'],
+  ['The item has arrived in the country of destination', 'in_transit'],
+  ['The item has been processed in the country of destination', 'in_transit'],
+  ['The item is at customs', 'customs'],
+  ['The item is at the PostNL sorting center', 'in_transit'],
+  ['The item is being processed by customs', 'customs'],
+  ['The item is on transport to the country of destination', 'in_transit'],
+  ['The item is out for delivery', 'out_for_delivery'],
+  ['The item is processed at the PostNL sorting center', 'in_transit'],
+  ['The item is received by PostNL', 'in_transit'],
+  ['The item will be scheduled for a new delivery attempt', 'failed_attempt'],
+] as const)('maps the PostNL relay %s to %s', (wording, stage) => {
+  const html = rewrite('spring-delivered', (details) => {
+    const event = details.Events[0]!;
+    details.Events = [{ ...event, ECode: '27', Event: wording }];
+  });
+  expect(parseEpostGlobal(html, SPRING).events?.[0]).toMatchObject({
+    description: wording, stage, stage_source: 'carrier_map',
+  });
+});
+
 describe('ePost Global HTTP adapter', () => {
   it('posts the whole number to the tracking page’s lookup once, through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(text('spring-delivered')));
@@ -54,10 +77,10 @@ describe('ePost Global HTTP adapter', () => {
     expect(result.delivered_at).toBeUndefined();
     expect(result.events!.map((event) => [event.time ?? event.local_time, event.provider_code, event.stage, event.stage_source, event.location ?? null])).toEqual([
       ['2026-03-12T10:45:00', '3043', 'delivered', 'wording:language', 'FR'],
-      ['2026-03-12T08:20:00', '74', 'out_for_delivery', 'wording:language', 'FR'],
+      ['2026-03-12T08:20:00', '74', 'out_for_delivery', 'carrier_map', 'FR'],
       ['2026-03-11T07:55:00', 'EPG-1265', 'in_transit', 'wording:language', null],
-      ['2026-03-10T14:34:00', '30', 'in_transit', 'wording:language', 'FR'],
-      ['2026-03-09T00:51:00', '301', 'in_transit', 'wording:language', 'NL'],
+      ['2026-03-10T14:34:00', '30', 'in_transit', 'carrier_map', 'FR'],
+      ['2026-03-09T00:51:00', '301', 'in_transit', 'carrier_map', 'NL'],
       // PostNL's acceptance after ePost Global shipped the parcel.
       ['2026-03-07T08:59:00', '173', 'in_transit', 'carrier_map', 'NL'],
       ['2026-03-05T19:02:00', '6010', 'customs', 'wording:language', 'NL'],
@@ -300,12 +323,12 @@ describe('ePost Global status vocabulary', () => {
   it('records every wording the map knows with the stage it gives, whatever the code', () => {
     for (const entry of statuses.entries) {
       expect(epostGlobalScanStage(entry.wording, entry.code)).toBe(entry.stage);
-      expect(statusMap.stage(entry.code, entry.wording.toLowerCase())).toBe(entry.stage);
+      expect(statusMap.stage(entry.code ?? null, entry.wording.toLowerCase())).toBe(entry.stage);
     }
     expect(statusMapAnswer({ carrier: 'epost-global', providerCode: '41', description: 'In transit via Post NL PACKTRACKED DIRECT tracking #:  LX000000005NL' }))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     // PostNL's 30 is not ePost Global's receipt.
-    expect(statusMapAnswer({ carrier: 'epost-global', providerCode: '30', description: 'The item has been processed in the country of destination' }))
+    expect(statusMapAnswer({ carrier: 'epost-global', providerCode: '30', description: 'Synthetic unrecognized partner wording' }))
       .toEqual({ kind: 'unknown' });
   });
 

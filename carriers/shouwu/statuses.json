@@ -1205,6 +1205,23 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-19",
       "note": "A round that did not deliver, with the delivering carrier's note repeating it."
-    }
+    },
+    {"wording": "International transit", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Failed delivery", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"},
+    {"wording": "In delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "Arrived at the origin international airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Clearance processing completed - Import", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Customs clearance is in progress", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"wording": "Goods leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "International flight has arrived", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Parcel arrived at exchange office", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Shipment picked up", "language": "en", "stage": "accepted", "confirmedBy": "live"},
+    {"wording": "The shipment has been loaded onto the delivery vehicle", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"wording": "Your package is being prepared by the sender and will be handed over to us soon", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"wording": "Accepted at USPS facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Arrived at USPS facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed USPS facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "In transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }

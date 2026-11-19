@@ -17,6 +17,21 @@ const fixture = (name = 'in-transit') => JSON.parse(readFileSync(new URL(`./fixt
 const captured = (body = fixture()): TrawlScrapeResponse => ({ url: 'https://www.yuntrack.com/parcelTracking', html: '<div>Tracking results</div>', tier: 2,
   statusCode: 200, userAgent: null, cookies: [], raw: {}, capturedResponses: [{ url: API, status: 200, headers: {}, body: JSON.stringify(body), base64Encoded: false, truncated: false, error: null }] });
 
+it.each([
+  ["Arrived at Carrier's Delivery Station", "in_transit"],
+  ["Votre colis est en transit sur nos plateformes logistiques.", "in_transit"],
+  ["Votre Colissimo est en transit sur nos plateformes logistiques.", "in_transit"],
+  ["Arrived at Pickup Facility", "in_transit"],
+  ["In transit (12)", "in_transit"], ] as const)('maps the YunExpress scan %s to %s', (wording, stage) => {
+  const payload = fixture();
+  const item = payload.ResultList[0];
+  item.TrackInfo.LastTrackEvent.ProcessContent = wording;
+  item.TrackData.ProcessGroupList[0].ProcessDetailList[0].ProcessContent =
+    `${wording}----${item.TrackInfo.LastTrackEvent.ProcessLocation}`;
+  expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ description: wording, stage });
+  expect(statusMap.stage(null, normalizeStatusWording(wording))).toBe(stage);
+});
+
 describe('YunExpress captured response projection', () => {
   it('binds both result identities, preserves per-event clock evidence and reads the consignee', () => {
     const result = normalizeCarrierResult(parse(fixture(), NUMBER));

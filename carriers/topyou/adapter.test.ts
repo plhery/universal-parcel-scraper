@@ -32,6 +32,19 @@ const reply = (body: unknown, init: ResponseInit = {}) => new Response(typeof bo
 const scans = (result: CarrierResult) => result.events!.map((event) => [event.time ?? event.local_time, event.provider_code, event.stage]);
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
+it.each([
+  ["Export customs clearance completed", "in_transit"],
+  ["Awaiting international departure", "in_transit"],
+  ["Departed country/region of origin", "in_transit"], ] as const)('maps the TopYou scan %s to %s', (wording, stage) => {
+  const payload = changed('in-transit', (track) => {
+    const row = track.trackInfo![0]!;
+    track.trackInfo = [{ ...row, record: wording, status: '15' }];
+  });
+  expect(parseTopyou(payload, IN_TRANSIT).events?.[0]).toMatchObject({
+    description: wording, stage, stage_source: 'carrier_map',
+  });
+});
+
 describe('TopYou HTTP adapter', () => {
   it('posts the whole waybill in capitals to the tracker’s lookup once, through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(fixture('in-transit')));
@@ -322,9 +335,9 @@ describe('TopYou HTTP adapter', () => {
 describe('TopYou status vocabulary', () => {
   it('stages every wording in its map, with its code, the way the app asks', () => {
     for (const entry of statuses.entries) {
-      expect(statusMap.stage(entry.code, entry.wording.toLowerCase()), entry.wording).toBe(entry.stage);
+      expect(statusMap.stage(entry.code ?? null, entry.wording.toLowerCase()), entry.wording).toBe(entry.stage);
       // The scan comes from TopYou's map, which the sync files as mapped, not from the shared rules.
-      expect(topyouStage(entry.code, entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
+      expect(topyouStage(entry.code ?? '', entry.wording), entry.wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'topyou', providerCode: entry.code, description: entry.wording }))
         .toEqual({ kind: 'mapped', stage: entry.stage });
     }

@@ -35,6 +35,45 @@ const reply = (body: string, init: ResponseInit = {}) => new Response(body,
   { ...init, headers: { 'Content-Type': 'application/json;charset=UTF-8', ...init.headers } });
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
+it.each([
+  ['International transit', 'in_transit'],
+  ['Failed delivery', 'failed_attempt'],
+  ['In delivery', 'out_for_delivery'],
+  ['Arrived at the origin international airport', 'in_transit'],
+  ['Clearance processing completed - Import', 'in_transit'],
+  ['Customs clearance is in progress', 'customs'],
+  ['Goods leaving the operation center', 'in_transit'],
+  ['International flight has arrived', 'in_transit'],
+  ['Parcel arrived at exchange office', 'in_transit'],
+  ['Shipment picked up', 'accepted'],
+  ['The shipment has been loaded onto the delivery vehicle', 'out_for_delivery'],
+  ['Your package is being prepared by the sender and will be handed over to us soon', 'registered'],
+  ['Accepted at USPS facility', 'in_transit'],
+  ['Arrived at Post Office', 'in_transit'],
+  ['Arrived at USPS facility', 'in_transit'],
+  ['Departed USPS facility', 'in_transit'],
+  ['In transit to next facility', 'in_transit'],
+  ['Goods leaving the operation center | The outbound scan at the operation center is complete.', 'in_transit'],
+  ['Goods leaving the operation center | The shipment has been loaded onto the transport vehicle.', 'in_transit'],
+  ['Shipment started the customs clearance process at origin | Export declaration data has been prepared.', 'in_transit'],
+  ['The shipment has been loaded onto the delivery vehicle | Delivery to the recipient address is in progress.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The courier has the shipment for delivery.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The courier is heading to the delivery address.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The delivery round is still open.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The out-for-delivery scan is on record.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The parcel is still out with the courier.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The shipment is on the delivery route.', 'out_for_delivery'],
+  ['The shipment has been loaded onto the delivery vehicle | The shipment has not been signed for.', 'out_for_delivery'],
+  ['Delivered, Front Door/Porch -> Your item was delivered at the front door or porch at noon.', 'delivered'],
+  ['On the way in transit, arriving on time -> Your package is moving within the USPS network.', 'in_transit'],
+  ['On the way, Departed USPS facility -> Your item departed our USPS facility.', 'in_transit'],
+] as const)('maps the Shouwu scan %s to %s', (wording, stage) => {
+  const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+  expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({
+    description: wording, stage, stage_source: 'carrier_map',
+  });
+});
+
 describe('Shouwu International HTTP adapter', () => {
   it('asks the tracking page’s lookup for the whole number through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(text('delivered')));

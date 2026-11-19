@@ -127,6 +127,15 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['transferring to the airport', 'in_transit'],
   ['terminal, arrival terminal, mail in transit', 'in_transit'],
   ['customs clearance completed cn', 'in_transit'],
+  ['parcel departed from transit facility.', 'in_transit'],
+  ['in transit to next facility.', 'in_transit'],
+  ['flight arrived at destination country port', 'in_transit'],
+  ['package in transit to destination country', 'in_transit'],
+  ['货物已清关完成， import customs clearance complete', 'in_transit'],
+  ['customs released', 'in_transit'],
+  ['flight arrived, pallet breakdown in progress', 'in_transit'],
+  ['item outbound in sorting center.', 'in_transit'],
+  ['picked up at destination airport', 'in_transit'],
 ]);
 
 /** DHLink's and China Post's scans in Chinese, and a relayed USPS notice. */
@@ -219,6 +228,9 @@ export function dhlinkEnglish(wording: string): string | undefined {
 /** The flight DHLink books the parcel on, written before it: no scan, so the adapter drops the row. */
 export const FLIGHT_BOOKED = /^预计配载航班(?:\d{1,2}月\d{1,2}日|时间[:：])/;
 
+// The airline announces a later departure without reporting a new movement.
+const FLIGHT_DELAY_NOTICE = /^flight delayed\. estimated departure:\s*\S/;
+
 /**
  * A row's stage: its node, by code then by name, DHLink's map of the wording,
  * else the shared rules, which read the partners' relayed English. Null when
@@ -227,6 +239,7 @@ export const FLIGHT_BOOKED = /^预计配载航班(?:\d{1,2}月\d{1,2}日|时间[
 export function dhlinkStage(code: string, name: string, wording: string): ClassifiedWording | null {
   const mapped = NODE_CODES.get(code) ?? NODE_NAMES.get(normalizeStatusWording(name)) ?? wordingStage(wording);
   if (mapped) return { stage: mapped, source: 'carrier_map' };
+  if (FLIGHT_DELAY_NOTICE.test(normalizeStatusWording(wording))) return null;
   const worded = classifyWording(wording, 'pending');
   return worded.source === 'none' ? null : worded;
 }
@@ -241,6 +254,7 @@ export const statusMap: CarrierStatusMap = {
   gaps: [],
   gapNote: (_code, wording) => (FLIGHT_BOOKED.test(wording)
     ? 'The flight the parcel is booked on, any date, not a movement: the adapter drops the row and the parcel keeps the stage it had.'
-    : CLOCK_ONLY.test(normalizeStatusWording(wording)) ? 'A clock alone in brackets, no wording: it names no step, so the parcel keeps the stage it had.'
+    : FLIGHT_DELAY_NOTICE.test(normalizeStatusWording(wording)) ? 'A delayed flight with an estimated departure, without a movement scan.'
+      : CLOCK_ONLY.test(normalizeStatusWording(wording)) ? 'A clock alone in brackets, no wording: it names no step, so the parcel keeps the stage it had.'
       : STOCKTAKING.test(normalizeStatusWording(wording)) ? 'A delay while the warehouse counts its stock, not a movement: the parcel keeps the stage it had.' : undefined),
 };

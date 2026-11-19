@@ -117,6 +117,15 @@
     {"wording": "目的国海关查验", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The destination country's customs inspecting the parcel after import clearance."},
     {"code": "YC001", "wording": "Package has been detained", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The hold the day after the destination customs' inspection; 海关扣关 names it in Chinese."},
     {"wording": "海关扣关", "stage": "customs", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "Customs detained the parcel."},
-    {"wording": "Stocktaking delay", "unmapped": true, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "A delay while the destination warehouse counts its stock: no movement, so the parcel keeps the stage it had."}
+    {"wording": "Stocktaking delay", "unmapped": true, "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "A delay while the destination warehouse counts its stock: no movement, so the parcel keeps the stage it had."},
+    {"wording": "Parcel departed from transit facility.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "In transit to next facility.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Flight arrived at destination country port", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Package in transit to destination country", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "货物已清关完成， Import Customs Clearance Complete", "language": "zh", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Customs released", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Flight arrived, pallet breakdown in progress", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Item outbound in sorting center.", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Picked up at destination airport", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }
