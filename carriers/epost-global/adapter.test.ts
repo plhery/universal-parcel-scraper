@@ -308,4 +308,11 @@ describe('ePost Global status vocabulary', () => {
     expect(statusMapAnswer({ carrier: 'epost-global', providerCode: '30', description: 'The item has been processed in the country of destination' }))
       .toEqual({ kind: 'unknown' });
   });
+
+  it("reads the delivering partner's pickup point holding the parcel, written without a space, as ready for pickup", () => {
+    expect(epostGlobalScanStage('The item is available at the pickuppoint')).toBe('ready_for_pickup');
+    expect(epostGlobalScanStage('The item is available at the pickuppoint', '75')).toBe('ready_for_pickup');
+    expect(statusMapAnswer({ carrier: 'epost-global', providerCode: '75', description: 'The item is available at the pickuppoint' }))
+      .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+  });
 });
