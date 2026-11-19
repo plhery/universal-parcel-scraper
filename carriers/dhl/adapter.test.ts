@@ -539,6 +539,8 @@ describe('DHL public tracking normalization', () => {
     expect(normalizeDHLTrackingNumber('340424509999999997')).toBe('340424509999999997');
     const wholesaler = '34043366' + '0'.repeat(9) + '7';
     expect(normalizeDHLTrackingNumber(wholesaler)).toBe(wholesaler);
+    // A bare SSCC in DHL Paket's wider range, which only the whole SSCC's rule names, keeps its (00) too.
+    expect(normalizeDHLTrackingNumber('34043300' + '0'.repeat(9) + '1')).toBe('0034043300' + '0'.repeat(9) + '1');
     expect(parseDHLTrackingResponse({ sendungen: [{ id: wholesaler, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] }, wholesaler))
       .toMatchObject({ events: [] });
     const payload = { sendungen: [{ id: sscc, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] };
