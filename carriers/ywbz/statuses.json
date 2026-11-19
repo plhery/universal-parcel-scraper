@@ -1,0 +1,9 @@
+{
+  "carrier": "ywbz",
+  "entries": [
+    {"wording": "First Mile - Pickup", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The line collects the parcel from YWBZ's Yiwu facility for its export centre."},
+    {"wording": "Handover to local carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the destination's airport, before the delivering network's first scan."},
+    {"wording": "The package leaves the processing center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Leaving the line's processing centre in China."},
+    {"wording": "Accepted at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS takes the parcel over from the line after its flight; the parcel is long accepted by then."}
+  ]
+}

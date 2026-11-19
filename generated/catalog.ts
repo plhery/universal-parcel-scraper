@@ -64254,6 +64254,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ywbz": {
+    "displayName": "YWBZ Express",
+    "color": "#2fa4e7",
+    "aliases": [
+      "YWBZ",
+      "Bai Zhou Huo Yun",
+      "义乌百洲",
+      "义乌百洲国际货运代理有限公司",
+      "Yiwu Baizhou"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ywbz"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^YWBZ\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "ywe": {
     "displayName": "YWE",
     "color": "#055aa1",
@@ -66769,6 +66797,7 @@ export const CARRIER_IDS = [
   "yuexi-logistics",
   "yurtici-kargo",
   "yusuda",
+  "ywbz",
   "ywe",
   "yypost",
   "z-leading",
@@ -68630,6 +68659,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yuexi-logistics": [],
   "yurtici-kargo": [],
   "yusuda": [],
+  "ywbz": ["ywbz-1"],
   "ywe": ["ywe-1"],
   "yypost": ["yypost-1"],
   "z-leading": ["z-leading-1"],

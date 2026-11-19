@@ -1,0 +1,39 @@
+{
+  "carrier": "ywbz",
+  "records": [
+    {
+      "number": "YWBZ2025775701",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.parcelpanel.com/couriers/ywbzexpress",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ywbz",
+        "confidence": "high"
+      },
+      "note": "ParcelPanel's example for Bai Zhou Huo Yun, as a search engine indexed the page; YWBZ's tracker answers it with a parcel USPS delivered."
+    },
+    {
+      "number": "YWBZ2026900577",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/ywbzexpress/",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ywbz",
+        "confidence": "high"
+      },
+      "note": "CWILL's example for Bai Zhou Huo Yun, where ParcelPanel's page now leads; YWBZ's tracker answers it with a parcel handed to SwiftX."
+    }
+  ]
+}

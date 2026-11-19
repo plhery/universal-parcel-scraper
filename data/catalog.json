@@ -64250,6 +64250,34 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "ywbz": {
+    "displayName": "YWBZ Express",
+    "color": "#2fa4e7",
+    "aliases": [
+      "YWBZ",
+      "Bai Zhou Huo Yun",
+      "义乌百洲",
+      "义乌百洲国际货运代理有限公司",
+      "Yiwu Baizhou"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ywbz"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": [
+      {
+        "pattern": "^YWBZ\\d{10}$",
+        "confidence": "high"
+      }
+    ]
+  },
   "ywe": {
     "displayName": "YWE",
     "color": "#055aa1",

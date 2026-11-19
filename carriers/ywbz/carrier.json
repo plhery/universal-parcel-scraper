@@ -1,0 +1,84 @@
+{
+  "id": "ywbz",
+  "displayName": "YWBZ Express",
+  "aliases": [
+    "YWBZ",
+    "Bai Zhou Huo Yun",
+    "义乌百洲",
+    "义乌百洲国际货运代理有限公司",
+    "Yiwu Baizhou"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#2fa4e7"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ywbz",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "delivery_partner",
+    "delivery_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_tracking_number",
+      "offset_timestamps",
+      "customer_reference",
+      "postcodes",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "offset_timestamps"
+    ],
+    "discarded": [
+      "provider_code",
+      "customer_reference",
+      "postcodes",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "service_name",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "pickup_point",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": [
+    {
+      "id": "ywbz-1",
+      "pattern": "^YWBZ\\d{10}$",
+      "confidence": "high"
+    }
+  ]
+}
