@@ -7,8 +7,11 @@ be followed through the sender.
 The [guest page](https://ncskurir.com/ncskurir/track) fills its field from the `awb`
 query parameter and opens a reCAPTCHA checkbox before requesting
 `ncskurir/home/ajaxTracking?awb=...`. The callback sends no verification token to
-that tracking endpoint. Its generic missing response carries no returned identity
-and does not establish a working positive retrieval path.
+that tracking endpoint. The published widget configuration uses Google's test
+site key. Two ordinary guest checkbox completions each reached an HTTP 200
+tracking reply with code `450` for an archived public reference. That missing
+response carries no returned identity. A dated public positive remains
+necessary.
 
 The official [My NCS Android app](https://play.google.com/store/apps/details?id=com.visionaryteam.myncs)
 uses `POST ncskurir/api/trace` with JSON `{awb}` and an application-wide `Auth`

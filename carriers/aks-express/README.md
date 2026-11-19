@@ -8,9 +8,13 @@ The [aks.rs guest form](https://www.aks.rs/pracenje-posiljke/) posts `shipping_i
 and a reCAPTCHA v2 response. The carrier's [terms](https://www.aks.rs/opsti-uslovi/)
 also identify `akskurir.com` as an official tracking portal.
 
-That portal's [guest page](https://www.akskurir.com/Tracking/Index) shows a
-BotDetect image challenge, while its request builder posts the whole number as
-a JSON string to `/Tracking/GetTrackData`. The endpoint can answer without a
+That portal's [guest page](https://www.akskurir.com/Tracking/Index) uses a
+BotDetect image challenge before its request builder posts the whole number as
+a JSON string to `/Tracking/GetTrackData`. Reading enlarged grayscale and
+contrast views manually passed one of three verification attempts with a
+public ten-digit reference. The accepted attempt returned HTTP 200, `Res: 101`
+and an empty `lstData`. This measures a small manual sample, with no positive
+history or unattended recognition established. The endpoint can answer without a
 verification token. Its `Res=101` selects the page's missing-shipment notice;
 successful replies use `lstData`, rendered as status, location and clock.
 No usable public reference establishes a dated positive and returned identity

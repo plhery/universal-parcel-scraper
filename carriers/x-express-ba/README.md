@@ -18,8 +18,11 @@ opens one parcel.
 
 ## Why there is no adapter
 
-The tracking page posts the number with a reCAPTCHA v3 token it fetches as it loads, and X
-Express has no app that tracks parcels. So X Express parcels stay on universal providers.
+The [public form](https://www.x-express.ba/korisnicki-panel/pracenje-posiljke)
+posts the whole number with a reCAPTCHA v3 response it fetches as it loads and
+the answer to its displayed addition. One ordinary form submission with a
+carrier-published example reached the explicit missing-shipment notice. A
+dated public positive and an automated retrieval control remain necessary.
 
 ## Testing
 

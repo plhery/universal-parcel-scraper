@@ -32,8 +32,12 @@ the tracker opens with an empty form. Archived lookups used the former `track.ht
 BUFFALO's tracker asks for the last four digits of the parcel's phone number, an image code and a
 Cloudflare Turnstile check before it shows a history, and its app tracks only a signed-in
 customer's orders, so BUFFALO stays on universal providers. Domestic South African orders start
-`BUFEX-` and belong to BUFFALO's South African site, which answers requests from Europe, the
-Americas and Asia with its firewall's block page.
+`BUFEX-` and belong to BUFFALO's South African site. Its
+[tracker](https://www.buffaloex.co.za/track.html) can return HTTP 418 with an
+access-block page and the cookie names `HWWAFSESID` and `HWWAFSESTIME`. The
+block page contains no tracking form or interactive verification control. An
+ordinary tracker session and a fresh private homepage session both remained
+blocked; a country-wide restriction has not been established.
 
 ## Testing
 

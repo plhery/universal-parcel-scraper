@@ -12,6 +12,11 @@ proof. The browser executes that client; keys and verification tokens remain in 
 `VIETTEL_POST_BROWSER_PROXY_URL` routes the whole context through the caller's configured
 proxy, including verification and tracking. It never falls back to another address.
 
+An ordinary browser can complete the checkbox and still fail at the tracking
+API's CORS preflight when the response omits `Access-Control-Allow-Origin`.
+A checked widget alone does not establish that the API received a tracking
+request or returned history.
+
 The capture starts before navigation and retains bounded verification refusals and retries.
 The shipment and every scan must repeat the whole waybill. Hidden query echoes and empty
 histories remain inconclusive. Contacts, addresses, recipient prose and delivery controls

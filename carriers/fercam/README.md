@@ -16,12 +16,20 @@ same shape, so no rule claims it.
 
 ## Links
 
-The tracker opens its result in a new window after an image CAPTCHA, so no address opens one
-shipment.
+The public form opens `tracktrace.fercam.com/home/BaseTracking` in a new window,
+with an encrypted `shipmentNumber` returned by its verification request. The library
+does not construct that value.
 
 ## Why there is no adapter
 
-Every search needs the image CAPTCHA. The myFERCAM portal needs a customer account.
+The public form loads an image from `function/de/Captcha/Index` and submits its
+answer to `function/en/Captcha/CheckSpeditionCaptcha`. An enlarged-image manual
+reading passed in one of one attempts and opened the result for a synthetic
+shipment, which showed “Tracking was not found.” This small manual sample does
+not measure unattended recognition. A dated public positive and a repeatable
+automatic image reader are still needed.
+
+The myFERCAM portal needs a customer account.
 
 ## Testing
 
