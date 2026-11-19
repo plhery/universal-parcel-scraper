@@ -4,6 +4,7 @@ import statuses from './statuses.json' with { type: 'json' };
 import { carrierErrorKind, InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
+import type { StepRecorder } from '../../core/telemetry/index.js';
 import { DIRECT_REST_MS } from '../../core/runner/directRest.js';
 import type { TrawlCapturedResponse, TrawlClient } from '../../core/transport/trawl.js';
 import { CORREIOS_BROWSER_READS, CORREIOS_BROWSER_WINDOW_MS, CorreiosTracker } from './adapter.js';
@@ -19,7 +20,7 @@ const image = () => new Response(new Uint8Array([1, 2, 3]), { headers: { 'Conten
 const clone = () => structuredClone(fixture);
 const scan = (code: string, kind: string, description: string, clock: unknown) => ({ codigo: code, tipo: kind, descricao: description, dtHrCriado: clock });
 
-function portal(payload: unknown = fixture) {
+function portal(payload: unknown = fixture, recorder?: StepRecorder) {
   const calls: { url: URL; init?: RequestInit }[] = [];
   const fetcher = vi.fn(async (raw: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(raw));
@@ -33,7 +34,7 @@ function portal(payload: unknown = fixture) {
     return json(payload);
   }) as unknown as typeof fetch;
   const solveCaptcha = vi.fn(async () => 'a1b2');
-  return { tracker: new CorreiosTracker({ fetcher, solveCaptcha }), calls, fetcher, solveCaptcha };
+  return { tracker: new CorreiosTracker({ fetcher, solveCaptcha, recorder }), calls, fetcher, solveCaptcha };
 }
 
 describe('Correios parser', () => {
@@ -321,6 +322,24 @@ describe('Correios session and transport', () => {
     expect(exhausted.calls).toHaveLength(5);
   });
 
+  it('records a bound absence and preserves other Correios error kinds', async () => {
+    const missing = portal({ erro: true, mensagem: 'Objeto não encontrado.' });
+    await expect(missing.tracker.fetch(NUMBER)).rejects.toMatchObject({
+      kind: 'not_found', message: 'Correios: Objeto não encontrado.',
+    });
+    const recorder = { step: vi.fn(), lookup: vi.fn() };
+    const other = portal({ erro: 'true', mensagem: `Período inválido: ${NUMBER}` }, recorder);
+    await expect(other.tracker.fetch(NUMBER)).rejects.toMatchObject({
+      kind: 'indeterminate', message: 'Correios: Período inválido: [redacted]',
+    });
+    expect(recorder.step).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({
+      outcome: 'indeterminate',
+      error: expect.objectContaining({ message: 'Correios: Período inválido: [redacted]' }),
+    }));
+    const mismatch = portal({ erro: true, codObjeto: 'different-object', mensagem: 'Objeto não encontrado.' });
+    await expect(mismatch.tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+  });
+
   it('bounds unreadable OCR retries, image bytes, content type and invalid JSON', async () => {
     const unreadable = portal();
     unreadable.solveCaptcha.mockResolvedValue('ABC?');
@@ -364,7 +383,7 @@ describe('Correios session and transport', () => {
       expect.objectContaining({ provider: 'Correios', requireSolved: false }));
     for (const [captured, kind] of [[[], 'challenge'], [[{ trackingNumberSubmitted: 'BB000000005BR' }], 'challenge'],
       [[{ status: 403, body: null }], 'challenge'], [[{ status: 429, body: null }], 'rate_limited'], [[{ truncated: true }], 'transport'],
-      [[{ body: '{"erro":true,"mensagem":"Objeto não encontrado"}' }], 'indeterminate'], [[{ body: '<html>' }], 'schema']] as const) {
+      [[{ body: '{"erro":true,"mensagem":"Objeto não encontrado"}' }], 'not_found'], [[{ body: '<html>' }], 'schema']] as const) {
       const trawl = browser(...captured);
       await expect(new CorreiosTracker({ fetcher: turnstile(), trawl: trawl as unknown as TrawlClient }).fetch(NUMBER)).rejects.toMatchObject({ kind });
       expect(trawl.scrape).toHaveBeenCalledTimes(1);

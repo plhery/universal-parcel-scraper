@@ -38,8 +38,9 @@ documents without a code, such as its import guide's payment notice, stages a sc
 not recorded and a copy alike; a recorded code still decides. Scans keep
 the provider's newest-first order, including unresolved clocks. Valid explicit
 per-row IANA zones provide instants; missing, invalid or ambiguous zones retain
-local clocks. Error replies without identity, including period errors, remain
-inconclusive. The delivery forecast is a calendar day, kept only where the portal
+local clocks. The single-object query treats an explicit object-not-found reply as absence when it is
+bound to the requested object. Other portal errors, including period errors, stay
+inconclusive and carry the portal’s message in lookup diagnostics. The delivery forecast is a calendar day, kept only where the portal
 shows it: for an object in transit that it does not mark as late. The service is the
 product category the portal names, such as SEDEX. Addresses, recipients, proof images
 and tokens are excluded.
