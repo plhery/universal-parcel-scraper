@@ -64,6 +64,8 @@ const VERIFIED_WORDING: Readonly<Record<string, Stage>> = {
   "your parcel has left our sortation facility and is on it's onwards journey": 'in_transit',
   'the parcel has arrived at the delivery depot': 'in_transit',
   'the parcel is in transit to its final destination': 'in_transit',
+  // The summary alone, while the history holds no scan after the order record.
+  'in transit': 'in_transit',
   'the parcel is undergoing customs clearance': 'customs',
   'duties and taxes paid': 'customs',
   'the parcel has now cleared customs': 'in_transit',

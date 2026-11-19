@@ -10,6 +10,7 @@
     { "wording": "Your parcel has arrived at our depot", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Your parcel is at our depot ready for delivery", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-28", "note": "A depot scan as DPD rewords it once the parcel is ready for its round; later it reads \"Your parcel is at our depot\"." },
     { "wording": "Your parcel has left our sortation facility and is on it's onwards journey", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "On a parcel leaving the UK." },
+    { "wording": "In transit", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-26", "note": "DPD's current summary with no time, while the history holds only the order record." },
     { "wording": "The parcel is in transit to its final destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "The partner's wording on a parcel delivered abroad, as are the other entries starting with \"The parcel\"." },
     { "wording": "The parcel is undergoing customs clearance", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-08" },
     { "wording": "Duties and Taxes paid", "language": "en", "stage": "customs", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "Between the clearance scan and its release." },
