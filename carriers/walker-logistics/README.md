@@ -10,7 +10,10 @@ A response that echoes the search and explicitly reports no item or consignment 
 Piece-only matches are inconclusive.
 
 Scans keep their stated offset. The adapter reads the event type, outcome, reason and location.
-A delivery event only sets the delivered stage when its outcome is successful.
+A delivery event only sets the delivered stage when its outcome is successful. A step whose
+outcome is not successful is staged by the shared wording rules on its step, outcome and reason,
+so a failed delivery reads as an attempt; a pickup or manifest that did not succeed is the
+sender's side and has no stage.
 
 ## Testing
 

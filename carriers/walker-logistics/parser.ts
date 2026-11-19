@@ -1,6 +1,6 @@
 import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { classifyWording, languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
@@ -14,6 +14,20 @@ const stages = new Map<string, Stage>([
   ['Out For Delivery', 'out_for_delivery'],
   ['Delivery', 'delivered'],
 ]);
+// The sender's side: a pickup or manifest that did not succeed is no attempt to deliver.
+const SENDER_STEPS = new Set(['Manifested', 'Pickup']);
+
+/**
+ * A scan's stage: the map for a successful step, else the shared wording rules on the whole
+ * description ("Delivery — Failed — No One Home"), which leave an unread outcome without one.
+ */
+function scanStage(type: string, outcome: number, description: string): ClassifiedWording | null {
+  const mapped = outcome === 0 || (type === 'Out For Delivery' && outcome === 1) ? stages.get(type) : undefined;
+  if (mapped) return { stage: mapped, source: 'carrier_map' };
+  if (SENDER_STEPS.has(type)) return null;
+  const worded = classifyWording(description, 'in_transit');
+  return worded.source === 'none' ? null : worded;
+}
 
 export function parseWalkerLogistics(payload: unknown, number: string): CarrierResult {
   if (!isRecord(payload) || typeof payload.consignmentFound !== 'boolean' || typeof payload.itemFound !== 'boolean'
@@ -32,16 +46,17 @@ export function parseWalkerLogistics(payload: unknown, number: string): CarrierR
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Invalid Tempo event');
     const clock = explicitOffsetTime(row.finished);
     const type = clean(row.eventTypeName, 120);
-    if (!clock || !type || !Number.isSafeInteger(row.eventOutcomeId)) throw new SchemaError(PROVIDER, 'Invalid dated Tempo event');
-    const stage = row.eventOutcomeId === 0 || (type === 'Out For Delivery' && row.eventOutcomeId === 1)
-      ? stages.get(type) : undefined;
+    const outcomeId = row.eventOutcomeId;
+    if (!clock || !type || typeof outcomeId !== 'number' || !Number.isSafeInteger(outcomeId)) throw new SchemaError(PROVIDER, 'Invalid dated Tempo event');
     const reason = clean(row.reasonName, 160);
-    const outcome = row.eventOutcomeId === 0 ? '' : clean(row.eventOutcome, 80);
+    const outcome = outcomeId === 0 ? '' : clean(row.eventOutcome, 80);
     const location = clean(row.location, 120);
+    const description = [type, outcome, reason].filter(Boolean).join(' — ');
+    const stage = scanStage(type, outcomeId, description);
     return { timestamp: clock.timestamp, event: {
-      time: clock.iso, description: [type, outcome, reason].filter(Boolean).join(' — '),
+      time: clock.iso, description,
       ...(location ? { location } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}),
     } };
   });
   if (!history.length) throw new NoHistoryError(PROVIDER);
@@ -49,7 +64,7 @@ export function parseWalkerLogistics(payload: unknown, number: string): CarrierR
   const latest = events[0]!;
   return {
     status: latest.stage ? languageStageStatus(latest.stage) : 'unknown',
-    ...(latest.stage ? { current_stage: latest.stage, current_stage_source: 'carrier_map' } : {}),
+    ...(latest.stage ? { current_stage: latest.stage, current_stage_source: latest.stage_source } : {}),
     last_status_text: latest.description,
     last_update: latest.time,
     expected_delivery: null,
