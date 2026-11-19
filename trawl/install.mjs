@@ -53,7 +53,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && asendiaBrowserNumber(url, capture)) return await runAsendiaBrowser(carrierRun)
   if (carrierPage && correiosBrowserNumber(url, capture)) return await runCorreiosBrowser(carrierRun)
   if (carrierPage && onlogExpressBrowserNumber(url, capture)) return await runOnlogExpressBrowser({ ...carrierRun, signal: budget.signal })
-  if (carrierPage && flashCourierRequest(url, capture)) return await runFlashCourierGuest({ ...carrierRun, signal: budget.signal, validateTarget: address => budget.run(() => validateOutboundUrl(address)) })
+  if (carrierPage && flashCourierRequest(url, capture)) return await runFlashCourierGuest({ ...carrierRun, signal: budget.signal, validateTarget: validateOutboundUrl ? address => budget.run(() => validateOutboundUrl(address)) : undefined })
   if (carrierPage && paxelBrowserNumber(url, capture)) return await runPaxelBrowser({ ...carrierRun, signal: budget.signal,
     createContext: () => newWanbContext(handle.browser, { onCreated: handle.noteTemporaryContext,
       requestReplacement: handle.requestBrowserReplacement, ignoreHttpsErrors: ${fresh ? 'ignoreCertificateErrors' : 'false'} }),

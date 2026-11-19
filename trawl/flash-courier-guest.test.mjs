@@ -80,6 +80,35 @@ test('Python contract suite has no carrier or model egress', () => {
 test('both tiers dispatch before opening a browser and Docker includes relative assets', () => {
   const install = readFileSync(new URL('./install.mjs', import.meta.url), 'utf8'), docker = readFileSync(new URL('./Dockerfile', import.meta.url), 'utf8');
   assert.ok(install.includes('if (carrierPage && flashCourierRequest(url, capture))'));
-  assert.ok(install.includes('signal: budget.signal, validateTarget: address => budget.run(() => validateOutboundUrl(address))'));
+  assert.ok(install.includes('signal: budget.signal, validateTarget: validateOutboundUrl ? address => budget.run(() => validateOutboundUrl(address)) : undefined'));
   for (const f of ['flash-courier-guest.mjs', 'flash-courier-guest.py']) assert.ok(docker.includes(`COPY ${f} /app/packages/tiers/src/utils/${f}`));
+});
+
+// Execute the installer's actual dispatch expression: the service's validator is optional.
+test('tier dispatch accepts an absent validator and preserves supplied policy and budget', async () => {
+  const install = readFileSync(new URL('./install.mjs', import.meta.url), 'utf8');
+  const expression = /if \(carrierPage && flashCourierRequest\(url, capture\)\) return await ([^\n]+)/.exec(install)?.[1];
+  assert.ok(expression);
+  const dispatch = new Function('runFlashCourierGuest', 'carrierRun', 'budget', 'validateOutboundUrl', `return ${expression}`);
+  for (const tier of [2, 3]) {
+    const targets = []; let budgetCalls = 0;
+    const budget = { signal: new AbortController().signal, async run(fn) { budgetCalls++; return fn(); } };
+    const run = async opts => {
+      assert.equal(opts.signal, budget.signal); assert.equal(opts.tier, tier);
+      return runFlashCourierGuest({ ...opts, spawnWorker: fake(envelope()) });
+    };
+    const absent = await dispatch(run, { ...options, tier }, budget, undefined);
+    assert.equal(absent.capturedResponses.length, 1); assert.equal(budgetCalls, 0);
+    const present = await dispatch(run, { ...options, tier }, budget, async address => { targets.push(address); });
+    assert.equal(present.capturedResponses.length, 1);
+    assert.deepEqual(targets, [url, 'https://www.flashcourier.com.br/api/captcha/generate/', flashCourierApi(number)]);
+    assert.equal(budgetCalls, 3);
+    let spawns = 0;
+    const blocked = async opts => runFlashCourierGuest({ ...opts, spawnWorker: () => { spawns++; } });
+    await assert.rejects(dispatch(blocked, { ...options, tier }, budget, async () => { throw new Error('policy_refusal'); }), /policy_refusal/);
+    assert.equal(spawns, 0);
+    const ended = { ...budget, async run() { throw new Error('deadline'); } };
+    await assert.rejects(dispatch(blocked, { ...options, tier }, ended, async () => {}), /deadline/);
+    assert.equal(spawns, 0);
+  }
 });
