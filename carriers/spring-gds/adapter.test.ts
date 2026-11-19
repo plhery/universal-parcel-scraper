@@ -757,10 +757,15 @@ describe('PostNL domestic tracker', () => {
       expect(settled.expected_delivery).toBeNull();
       expect(settled.expected_delivery_from).toBeUndefined();
     }
-    // Other types and minutes past the slot go to unread_estimates.
+    // Minutes past the slot are the time since its end, which the slot already says.
+    const overdue = parsePostNLDomesticResponse(reply(collo({ eta: { ...slot, minutesOverdue: 34 } })), barcode);
+    expect(overdue).toMatchObject({ expected_delivery_from: '2026-05-12T14:30:00+02:00', expected_delivery: '2026-05-12T16:30:00+02:00' });
+    expect(overdue.unread_estimates).toBeUndefined();
+    // Other types go to unread_estimates, with their minutes past.
     const other = parsePostNLDomesticResponse(reply(collo({ eta: { type: 'Synthetic', start: '2026-05-12T14:30:00+02:00' } })), barcode);
     expect(other).toMatchObject({ expected_delivery: null, unread_estimates: ['eta'] });
-    expect(parsePostNLDomesticResponse(reply(collo({ eta: { ...slot, minutesOverdue: 25 } })), barcode).unread_estimates).toEqual(['eta.minutesOverdue']);
+    expect(parsePostNLDomesticResponse(reply(collo({ eta: { type: 'Synthetic', start: '2026-05-12T14:30:00+02:00', minutesOverdue: 25 } })), barcode)
+      .unread_estimates).toEqual(['eta', 'eta.minutesOverdue']);
     expect(parsePostNLDomesticResponse(reply(collo()), barcode)).toMatchObject({ expected_delivery: null });
   });
 

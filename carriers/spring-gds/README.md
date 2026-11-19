@@ -26,7 +26,9 @@ it; everything user-facing says PostNL.
      at a pick-up point. An announced parcel without observations is kept as a summary.
    - `eta` is the delivery slot from PostNL's page. `Specific` has a start and an end with
      offsets, and `WholeDay` gives the day only. PostNL keeps it after delivery and at a pick-up
-     point, so the adapter drops it then. Other types go to `unread_estimates`.
+     point, so the adapter drops it then. Other types go to `unread_estimates`. Its
+     `minutesOverdue` is the time since the slot's end when PostNL answers, which the slot
+     already says.
    - The reply names the recipient, the sender and their addresses; none of that is read.
      Errors leave out the request address, which holds the postcode.
 2. `direct`: two POSTs on the same host.
