@@ -137,6 +137,9 @@ describe('Hermes Germany', () => {
     const forecast = (from: string, to: string, extra: Record<string, unknown> = {}) => parseHermesGermanyResponse([{
       barcode: NUMBER, forecast: { deliveryTimeFromUTC: from, deliveryTimeToUTC: to }, ...extra,
       parcelProgress: [{ parcelStatus: 'SORTED', timestamp: '2026-11-02T09:00:00Z' }] }], NUMBER);
+    const point = forecast('2026-11-04T23:00:00Z', '2026-11-04T23:00:00Z');
+    expect(point.expected_delivery).toBe('2026-11-05');
+    expect(point).not.toHaveProperty('expected_delivery_from');
     const day = forecast('2026-11-04T23:00:00Z', '2026-11-05T22:59:59.999Z');
     expect(day.expected_delivery).toBe('2026-11-05');
     expect(day).not.toHaveProperty('expected_delivery_from');

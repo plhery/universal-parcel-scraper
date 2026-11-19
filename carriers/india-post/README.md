@@ -75,9 +75,8 @@ Outcomes:
   `(Inb)` marks and bare codes without them, so both signals are needed. These rows are read in the
   destination's zone; for a country with several zones or none known they keep the wall time in
   `local_time` with no offset. Flight rows keep their own reading.
-- track91 gives no Destination card, article type or office PIN. The country its latest flight
-  arrival lands in (an airport or a UN/LOCODE such as `AUSYD`) stands in for the destination: the
-  rows after that arrival are that country's, unless it is India. A take-off names only its next
+- track91 gives no Destination card, article type or office PIN. Each ground scan uses the country of its preceding flight
+  arrival (an airport or a UN/LOCODE such as `AUSYD`), until the next arrival changes it. A take-off names only its next
   airport, often a hub on the way, so it places no rows; they keep India's label, but for the rows
   marked `(Inb)`, which keep their wall time in `local_time`. Its replies alternate between
   codes and prose; a prose take-off reads "Aircraft Departure" and is typed as a take-off, and a

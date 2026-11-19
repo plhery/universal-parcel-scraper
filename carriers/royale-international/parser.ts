@@ -92,8 +92,13 @@ export function parseRoyaleInternational(html: string, raw: string): CarrierResu
   const captured = (event: CarrierEvent) => normalizeStatusWording(wordings.get(event) ?? event.description!) === 'pod details captured';
   if (proof) {
     // The portal lists proof separately. Its capture entry anchors it without sorting overseas wall clocks.
-    const capture = events.findIndex(event => captured(event)
-      && event.local_time!.slice(0, 10) === proof.local_time!.slice(0, 10) && event.local_time! >= proof.local_time!);
+    const proofClock = Date.parse(proof.local_time + 'Z');
+    let capture = -1, nearest = 24 * 60 * 60_000;
+    for (const [index, event] of events.entries()) {
+      if (!captured(event)) continue;
+      const delay = Date.parse(event.local_time + 'Z') - proofClock;
+      if (delay >= 0 && delay < nearest) { capture = index; nearest = delay; }
+    }
     if (capture < 0) throw new SchemaError(PROVIDER, 'Royale International returned proof without its dated capture context');
     events.splice(capture + 1, 0, proof);
   }

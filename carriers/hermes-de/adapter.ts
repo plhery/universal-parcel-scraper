@@ -65,6 +65,7 @@ function forecastEstimate(value: unknown): Estimate | null {
   const to = at(value.deliveryTimeToUTC);
   if (!from || !to) return from || to ? { expected_delivery: (from ?? to)!.toISODate() } : null;
   if (to < from) return null;
+  if (to.equals(from)) return { expected_delivery: from.toISODate() };
   // An end a millisecond before a minute, as a day's 23:59:59.999, closes at that minute.
   const end = to.millisecond === 999 ? to.plus({ milliseconds: 1 }) : to.startOf('second');
   const start = from.startOf('second');

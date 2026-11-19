@@ -49,6 +49,7 @@ const US_TOWN = /^([^,]+),\s*([A-Z]{2})\s+(\d{5})$/u;
  * country stays last.
  */
 function bracketPlace(value: string, carriers: ReadonlySet<string>): string {
+  if (/^(?:CUSTOMS|CLEARANCE|TRANSIT|DELIVERY|WAREHOUSE|SORTING|EXPORT|IMPORT)$/i.test(value.trim())) return '';
   const us = US_TOWN.exec(value.trim());
   if (us && usStateTimeZone(us[2])) {
     const town = townName(us[1]!.trim(), carriers, true);

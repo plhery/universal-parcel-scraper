@@ -121,7 +121,10 @@ describe('Ship24 result parsing', () => {
   });
 
   it('keeps the day alone of an ECMS flight row Ship24 dates at midnight UTC', () => {
-    const scan = (timestamp: string, status: string) => ({ timestamp, status, courier: { crawler_code: 'example-tracking' } });
+    const scan = (timestamp: string, status: string, name = 'ECMS Express') => ({ timestamp, status, courier: { translation: { name } } });
+    const other = scan('2026-11-02T00:00:00Z', 'Flight arrival', 'DHL Express');
+    expect(parseShip24Response({ data: { tracking_number: number, events: [other] } }, number).events?.[0]?.time)
+      .toBe('2026-11-02T00:00:00.000Z');
     const parsed = parseShip24Response({ data: { tracking_number: number, origin_country_code: 'CN', destination_country_code: 'US', events: [
       scan('2026-11-02T00:00:00Z', 'Flight arrival'), scan('2026-10-30T00:00:00.000+00:00', 'Flight departure'),
       scan('2026-10-30T07:10:00Z', 'Flight departure'), scan('2026-10-30T00:00:00Z', 'Shipment departed from origin facility.')] } }, number);

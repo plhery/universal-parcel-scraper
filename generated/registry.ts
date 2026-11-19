@@ -225,7 +225,6 @@ import { adapter as estafeta } from '../carriers/estafeta/adapter.js';
 import { adapter as estes } from '../carriers/estes/adapter.js';
 import { adapter as estesForwarding } from '../carriers/estes-forwarding/adapter.js';
 import { adapter as etomars } from '../carriers/etomars/adapter.js';
-import { adapter as etsExpress } from '../carriers/ets-express/adapter.js';
 import { adapter as eurodis } from '../carriers/eurodis/adapter.js';
 import { adapter as euroexpressBa } from '../carriers/euroexpress-ba/adapter.js';
 import { adapter as europochta } from '../carriers/europochta/adapter.js';
@@ -1029,7 +1028,6 @@ export const REGISTRY: RegistryDefinition = {
     "estes": estes,
     "estes-forwarding": estesForwarding,
     "etomars": etomars,
-    "ets-express": etsExpress,
     "eurodis": eurodis,
     "euroexpress-ba": euroexpressBa,
     "europochta": europochta,
@@ -2151,7 +2149,7 @@ export const REGISTRY: RegistryDefinition = {
     "ethiopian-post": "universal",
     "etkin-dagitim": "universal",
     "etomars": "etomars",
-    "ets-express": "ets-express",
+    "ets-express": "universal",
     "eu-entrego": "universal",
     "eurodis": "eurodis",
     "euroexpress-ba": "euroexpress-ba",

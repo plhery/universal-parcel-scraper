@@ -274,6 +274,9 @@ const MIDNIGHT_UTC = /^(\d{4}-\d{2}-\d{2})T00:00(?::00(?:\.0+)?)?(?:Z|[+-]00:00)
 const ECMS_FLIGHTS = new Set(['flight departure', 'flight arrival']);
 
 function flightDay(scan: Record<string, unknown>): string | null {
+  const courier = isRecord(scan.courier) ? scan.courier : null;
+  const name = isRecord(courier?.translation) ? courier.translation.name : null;
+  if (courier?.crawler_code !== 'ecms-express-tracking' && !(typeof name === 'string' && carrierIdFromName(name) === 'ecms-express')) return null;
   const day = typeof scan.timestamp === 'string' ? MIDNIGHT_UTC.exec(scan.timestamp)?.[1] : undefined;
   return day && typeof scan.status === 'string' && ECMS_FLIGHTS.has(scan.status.trim().toLowerCase()) ? day : null;
 }

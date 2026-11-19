@@ -11,8 +11,8 @@ enabled universal providers remain available for fallback.
 
 The page lists updates oldest first. The adapter reverses that sequence without assigning a
 home time zone to overseas scans. A dated proof supplies a delivery event; its separate POD
-capture update is administrative. The proof must have a same-day capture context to place it
-in the history. POD capture alone does not prove delivery. The latest update clock can therefore
+capture update is administrative. The nearest capture within the following 24 hours anchors the proof
+in the history, including across midnight. POD capture alone does not prove delivery. The latest update clock can therefore
 be later than the physical delivery clock.
 
 The consignee becomes the receiver, and the dated proof row's recipient the signer once the

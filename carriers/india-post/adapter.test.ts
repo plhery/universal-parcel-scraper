@@ -909,3 +909,26 @@ describe('India Post Livewire session', () => {
       .resolves.toMatchObject({ status: 'delivered' });
   });
 });
+
+it('keeps the clock of an intermediate track91 ground scan after another arrival', () => {
+  const result = track91Result();
+  const rows = result.events as Record<string, unknown>[];
+  rows[1]!.remarks = 'Flight No: ZZ0102 (From BOM To SIN)';
+  const received = () => parseIndiaPostTrack91Result(result, SAMPLE_NUMBER).events?.find(e => e.description === 'Item Received')?.time;
+  const before = received();
+  expect(before).toBeTruthy();
+  rows.unshift({ ...rows[1], tracked_at: '2026-07-20T09:34:00+01:00', remarks: 'Flight No: ZZ0103 (From SIN To DXB)' });
+  expect(received()).toBe(before);
+});
+
+it('marks track91 history truncated at either the output or input cap', () => {
+  const result = track91Result();
+  const first = (result.events as Record<string, unknown>[])[0]!;
+  for (const [count, distinct] of [[100, 100], [101, 101], [501, 1]] as const) {
+    result.events = Array.from({ length: count }, (_, i) => ({ ...first,
+      tracked_at: new Date(Date.UTC(2026, 10, 1, 0, i % distinct)).toISOString() }));
+    const parsed = parseIndiaPostTrack91Result(result, SAMPLE_NUMBER);
+    expect(parsed.events).toHaveLength(Math.min(distinct, 100));
+    expect(Boolean(parsed.history_truncated)).toBe(count > 100);
+  }
+});

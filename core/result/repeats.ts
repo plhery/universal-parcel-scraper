@@ -20,9 +20,10 @@ export const comparablePlace = (value: unknown): string =>
  * A scan with an earlier scan's wording, place and stage, at most ten minutes after it, is left
  * out: a gateway that records one departure several times, or a failed attempt written once by
  * each of a carrier's systems, is one step. A scan of another stage between them keeps the
- * repeat, as a second round after a failed attempt. Scans without a wording or a clock stay.
+ * repeat, as a second round after a failed attempt. Provider results distinguish milestone codes,
+ * while a direct carrier can record a single step under several internal codes.
  */
-export function withoutRepeatedScans(result: CarrierResult): CarrierResult {
+export function withoutRepeatedScans(result: CarrierResult, { distinguishCodes = false } = {}): CarrierResult {
   const events: unknown[] = Array.isArray(result.events) ? result.events : [];
   if (events.length < 2) return result;
   const at = clocks(events);
@@ -31,22 +32,32 @@ export function withoutRepeatedScans(result: CarrierResult): CarrierResult {
   const tie = (index: number): number => { const event = events[index]; return isRecord(event) && typeof event.tie_order === 'number' ? event.tie_order : 0; };
   const order = events.flatMap((_, index) => at[index] === null ? [] : [index]).sort((left, right) => at[left]! - at[right]! || tie(left) - tie(right));
   // The newest kept scan of each wording, place and stage, and the stages of the scans kept since.
-  const kept = new Map<string, { at: number; since: (Stage | null)[] }>();
+  const kept = new Map<string, { index: number; at: number; code: string; since: (Stage | null)[] }>();
   const repeats = new Set<number>();
+  const addedCodes = new Map<number, string>();
   for (const index of order) {
     const event = events[index];
     const wording = isRecord(event) ? text(event.description) : '';
     const key = isRecord(event) && wording ? `${wording}\n${text(event.location)}\n${text(event.stage)}` : '';
     const earlier = key ? kept.get(key) : undefined;
-    if (earlier && at[index]! - earlier.at <= REPEAT_MS && earlier.since.every(stage => stage === null || stage === read[index])) {
+    const code = distinguishCodes && isRecord(event) && typeof event.provider_code === 'string' ? event.provider_code : '';
+    if (earlier && (!code || !earlier.code || code === earlier.code) && at[index]! - earlier.at <= REPEAT_MS && earlier.since.every(stage => stage === null || stage === read[index])) {
+      if (!earlier.code && code) {
+        earlier.code = code;
+        addedCodes.set(earlier.index, code);
+      }
       repeats.add(index);
       continue;
     }
     for (const scan of kept.values()) scan.since.push(read[index] ?? null);
-    if (key) kept.set(key, { at: at[index]!, since: [] });
+    if (key) kept.set(key, { index, at: at[index]!, code, since: [] });
   }
   if (!repeats.size) return result;
-  return { ...result, events: events.filter((_, index) => !repeats.has(index)) as CarrierEvent[] };
+  return { ...result, events: (events as CarrierEvent[]).flatMap((event, index) => {
+    if (repeats.has(index)) return [];
+    const code = addedCodes.get(index);
+    return [code ? { ...event, provider_code: code } : event];
+  }) };
 }
 
 const MINUTE_MS = 60_000;
@@ -83,11 +94,13 @@ export function withoutMinuteCopies(result: CarrierResult): CarrierResult {
   }
   if (!merged.size) return result;
   const listed = events as CarrierEvent[];
-  const places = new Map([...merged].map(([minute, second]) => [second, listed[minute]!.location]));
+  const minutes = new Map([...merged].map(([minute, second]) => [second, listed[minute]!]));
   return { ...result, events: listed.flatMap((event, index) => {
     if (merged.has(index)) return [];
-    const place = places.get(index);
-    return [place && !event.location ? { ...event, location: place } : event];
+    const minute = minutes.get(index);
+    if (!minute) return [event];
+    return [{ ...event, ...(minute.location && !event.location ? { location: minute.location } : {}),
+      ...(minute.provider_code && !event.provider_code ? { provider_code: minute.provider_code } : {}) }];
   }) };
 }
 

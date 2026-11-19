@@ -73,7 +73,7 @@ it('keeps scan locations from the API while excluding a delivery-service label a
   // A town given again as its region, spaced, before the letters that end the place.
   expect(parse('Exampleton Exampleton Gb')?.location).toBe('Exampleton Gb');
   expect(parse('New Example New Example Us')?.location).toBe('New Example Us');
-  for (const location of ['Exampleton Exampleshire Gb', 'Example Town Va', 'Example Example', 'Example Example Wa', 'Example Example Example Kr']) {
+  for (const location of ['Wagga Wagga Au', 'Exampleton Exampleshire Gb', 'Example Town Va', 'Example Example', 'Example Example Wa', 'Example Example Example Kr']) {
     expect(parse(location)?.location).toBe(location);
   }
 });

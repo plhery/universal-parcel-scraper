@@ -14,16 +14,17 @@ const stages = new Set<string>(STAGES);
  * lists them oldest first.
  */
 export function newestStagedScan(events: readonly CarrierEvent[]): CarrierEvent | null {
+  const oldestFirst = listsNewestFirst(events) === false;
   const newest = new Map<boolean, { index: number; at: number }>();
   events.forEach((event, index) => {
     const time = stages.has(event.stage ?? '') ? scanTime(event) : null;
     if (time === null) return;
     const held = newest.get(time.wall);
-    if (!held || time.at > held.at) newest.set(time.wall, { index, at: time.at });
+    if (!held || time.at > held.at || (oldestFirst && time.at === held.at)) newest.set(time.wall, { index, at: time.at });
   });
   const indexes = [...newest.values()].map(({ index }) => index);
   if (indexes.length === 0) return null;
-  const scan = events[listsNewestFirst(events) === false ? Math.max(...indexes) : Math.min(...indexes)]!;
+  const scan = events[oldestFirst ? Math.max(...indexes) : Math.min(...indexes)]!;
   return scan.stage === 'delivered' || scan.stage === 'returned' ? null : scan;
 }
 

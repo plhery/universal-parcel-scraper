@@ -7,7 +7,8 @@
  * What it is not: part of the tracking contract. It follows that app.
  */
 import type { CarrierId } from '../../generated/catalog.js';
-import { linkRulesForHost } from '../detection/parse.js';
+import { linkRulesForHost, numberFromRule } from '../detection/parse.js';
+import { normalizeTrackingNumber } from '../detection/normalize.js';
 import { supportsSwissPostHandoff } from '../detection/s10.js';
 import { amazonOrdersUrl, requiresAmazonAccount } from './amazon.js';
 import { carrierInfo, localizedCarrierUrl, tracksAutomatically } from './index.js';
@@ -121,10 +122,16 @@ function savedCarrierUrl(carrier: CarrierInfo, number: string, saved: string): s
   const catalog = parsedUrl(carrier.trackingUrl?.(number));
   const ownHttp = url.protocol === 'http:' && catalog?.protocol === 'http:' && url.origin === catalog.origin;
   if (url.protocol !== 'https:' && !ownHttp) return undefined;
-  if (url.hostname !== catalog?.hostname && !linkRulesForHost(url.hostname).some((rule) => rule.carrier === carrier.id)) {
+  const rules = linkRulesForHost(url.hostname);
+  if (url.hostname !== catalog?.hostname && !rules.some((rule) => rule.carrier === carrier.id)) {
     return undefined;
   }
   try {
+    if (rules.some(rule => rule.carrier !== carrier.id)) {
+      const bound = rules.some(rule => rule.carrier === carrier.id && (!rule.pathPattern || rule.pathPattern.test(url.pathname))
+        && normalizeTrackingNumber(numberFromRule(url, rule) ?? '') === normalizeTrackingNumber(number));
+      if (!bound) return undefined;
+    }
     return carrierCapabilityUrl(carrier.id, number, saved) ?? saved;
   } catch {
     return undefined;

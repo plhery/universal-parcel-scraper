@@ -67,3 +67,9 @@ describe('Royale International history', () => {
     expect(() => parseRoyaleInternational($.html(), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 });
+
+it('anchors proof to a capture just after midnight', () => {
+  const html = fixture().replace('15:00:00', '23:55:00')
+    .replace('2026-07-04</td><td>16:30:00', '2026-07-05</td><td>00:05:00');
+  expect(parseRoyaleInternational(html, NUMBER).current_stage).toBe('delivered');
+});

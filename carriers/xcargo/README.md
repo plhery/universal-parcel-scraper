@@ -28,7 +28,7 @@ Registration does not establish custody; the acceptance that follows it does. A
 station's later receipt stays in transit. Assignment to a route stays in transit;
 the operator's actual dispatch establishes out for delivery. A return to the
 delivery station is not a return to sender. All source rows are validated before
-projected deduplication and the output cap; unknown codes keep history partial.
+deduplication and the output cap. Unmapped scans keep their carrier codes.
 Notes, recipient/proof fields, employees, contact details and GPS are omitted.
 
 Scan clocks retain their stated GMT offsets, including offsets on Colombian

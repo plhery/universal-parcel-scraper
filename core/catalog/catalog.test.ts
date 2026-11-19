@@ -315,3 +315,13 @@ describe('saved tracking links', () => {
     expect(history(`https://www.ups.com/track?loc=de_DE&tracknum=${UPS}`)).toEqual([`https://www.ups.com/track?loc=de_DE&tracknum=${UPS}`]);
   });
 });
+
+it('checks the tenant and parcel on shared freight links', () => {
+  const number = 'TESTFREIGHT1';
+  const own = carrierInfo('fmd-distribution').trackingUrl!(number);
+  const alternate = own.replace('boldetail.htm?wbtn=PRO&wpro1=', 'facts.htm?pronum=');
+  expect(parcelTrackingLinks({ carrier: 'fmd-distribution', trackingNumber: number, trackingUrl: alternate })[0]?.url).toBe(alternate);
+  for (const saved of [carrierInfo('ross-express').trackingUrl!(number), own.replace(number, 'OTHER')]) {
+    expect(parcelTrackingLinks({ carrier: 'fmd-distribution', trackingNumber: number, trackingUrl: saved })[0]?.url).toBe(own);
+  }
+});

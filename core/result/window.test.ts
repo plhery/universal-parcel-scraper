@@ -54,3 +54,8 @@ describe('a result estimate', () => {
     expect(normalizeCarrierResult({ expected_delivery: '2026-11-04 08:00–12:00' })).toMatchObject({ expected_delivery: '2026-11-04 08:00–12:00' });
   });
 });
+
+it('keeps both instants of a window across the autumn clock change', () => {
+  const start = '2026-11-01T01:45:00-04:00', end = '2026-11-01T01:15:00-05:00';
+  expect(windowEstimate(start, end)).toEqual({ expected_delivery_from: start, expected_delivery: end });
+});

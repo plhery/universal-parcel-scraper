@@ -65,10 +65,12 @@ describe('X-Cargo group tracking parser', () => {
     expect(statusMap.stage('360', 'ignored private wording')).toBe('delivered');
   });
 
-  it('keeps unmapped scans generic/partial and validates all source rows before dedupe and the cap', () => {
+  it('keeps unmapped scans without claiming a truncated history and validates all source rows before dedupe and the cap', () => {
     const unknown = fixture(); unknown.data.at(-1).status_code.code = 999;
     const result = parseXcargo(unknown, NUMBER);
-    expect(result).toMatchObject({ status: 'unknown', history_truncated: true, last_status_text: 'Tracking update' });
+    expect(result).toMatchObject({ status: 'unknown', last_status_text: 'Tracking update' });
+    expect(result).not.toHaveProperty('history_truncated');
+    expect(result.events![0]?.provider_code).toBe('999');
     expect(result.events![0]?.stage).toBeUndefined();
     const repeated = fixture(); repeated.data.push({ ...repeated.data[9], id: 5000, notes: 'DIFFERENT_PRIVATE_NOTE' });
     expect(parseXcargo(repeated, NUMBER).events).toHaveLength(10);

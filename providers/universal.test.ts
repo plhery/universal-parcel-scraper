@@ -382,3 +382,14 @@ describe('universal discovery chain', () => {
     await expect(bare.fetchSource('Ship24', number)).resolves.toMatchObject({ tracking_provider: 'Ship24' });
   });
 });
+
+it('keeps Ship24 milestones with distinct codes through fetchSource', async () => {
+  const events = ['00', '37'].map((seconds, i) => ({
+    description: 'Processed', time: `2026-11-04T12:00:${seconds}Z`, provider_code: String(i),
+  }));
+  const tracker = new UniversalTracker({ browserLookup: vi.fn().mockResolvedValue({ events }) });
+  expect((await tracker.fetchSource('Ship24', number)).events).toHaveLength(2);
+  events.splice(1, 0, { description: 'Processed', time: '2026-11-04T12:00:05Z', provider_code: '' });
+  const kept = (await tracker.fetchSource('Ship24', number)).events;
+  expect(kept?.map(scan => scan.provider_code).sort()).toEqual(['0', '1']);
+});

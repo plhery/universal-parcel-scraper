@@ -61,6 +61,9 @@ export class SeinoSuperExpressTracker {
         // The detail transaction list supplies the scan clocks, not the summary's current-status clock.
         const result = parseSeinoSuperExpressPage(detail.html, number, 'detail').result;
         left();
+        if (page.result.unread_estimates?.length) {
+          result.unread_estimates = [...new Set([...page.result.unread_estimates, ...result.unread_estimates ?? []])];
+        }
         return result;
       } },
     ]);

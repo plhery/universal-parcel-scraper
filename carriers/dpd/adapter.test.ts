@@ -751,6 +751,8 @@ describe('DPD scan times', () => {
     expect(miss).toMatchObject({ status: 'unknown', last_status_text: 'No parcel found', events: [] });
     const banner = '<div class="cookies">Your saved settings were not found. <a href="#">Choose again</a></div>';
     const faq = '<footer><h3>Help</h3><p>What if my parcel is not found?</p></footer>';
+    expect(() => parseDPDTrackingHtml(`<h1>${TRACKING_NUMBER}</h1><p class="alert">Service temporarily unavailable</p>${faq}`, TRACKING_NUMBER))
+      .toThrowError(expect.objectContaining({ kind: 'transport' }));
     const steps = parseDPDTrackingHtml(`<html><body>${banner}<div>${TRACKING_NUMBER}</div>
       <li class="content-item-track"><span class="entry-date">15.07.2026</span><span class="entry-time">11:28</span>
       <span class="entry-body">Parcel handed to DPD</span></li>${faq}</body></html>`, TRACKING_NUMBER);

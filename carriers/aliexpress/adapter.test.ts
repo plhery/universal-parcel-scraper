@@ -407,7 +407,7 @@ describe('Cainiao projection', () => {
     expect(scan('[EXAMPLEVILLE 99999] Arrived').events?.[0]).toMatchObject({ location: 'EXAMPLEVILLE 99999', description: 'Arrived' });
     expect(scan('Arrived').events?.[0]).not.toHaveProperty('original_description');
     // Other codes, abbreviations, carrier names, numbers and a bracket alone are no place.
-    for (const wording of ['[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
+    for (const wording of ['[CUSTOMS] Import clearance started', '[Fr] Arrived', '[GOFO] Arrived', '[Example Post] Arrived', '[Post(NL)] Arrived',
       '[Hub 12] Arrived', '[Hub 123456] Arrived', '[ABCD] Arrived', '[Exampleville]', 'Arrived [Exampleville]',
       '[USA,GOFO] Arrived', '[USA,Example Post] Arrived', '[Exampleville,Example City] Arrived',
       '[Exampleville, ZZ 00000] Arrived', '[Example Post, CA 00000] Arrived', '[Exampleville, CA 0000] Arrived', '[GOFO, CA 00000] Arrived']) {

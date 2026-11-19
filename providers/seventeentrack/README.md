@@ -241,8 +241,8 @@ carrier.
 - Japan Post's leg (carrier key 10021) relays the origin post's acceptance, export customs and
   outward exchange scans on that post's wall clock, as Japan Post's tracker shows them, and
   17TRACK labels them `+09:00`: China Post's posting came an hour before China Post's own leg
-  puts it. On an S10 number from a country on one clock they are read on that clock;
-  elsewhere, and for Japan Post's own scans, 17TRACK's reading stays.
+  puts it. An outward scan uses its stated place's clock. When the place is unresolved,
+  a foreign S10 issuer on a single clock supplies the zone.
 - ePOST's leg for Korea Post (carrier key 11051), Pakistan Post's (16011) and Saudi Post's
   (19071) relay the origin post's scans the same way under `+09:00`, `+05:00` and `+03:00`,
   each repeating China Post's own Beijing minute. A copy worded as the origin's (Korea Post's

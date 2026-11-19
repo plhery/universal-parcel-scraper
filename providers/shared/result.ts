@@ -8,6 +8,7 @@
  * 17TRACK and Postal Ninja all render the same aggregated scans), not a
  * carrier status map. Its decisions retain their wording-rule provenance.
  */
+import { REPEATED_TOWNS } from '../../generated/regionTowns.js';
 import { DateTime } from 'luxon';
 import { trackingLanguageStage } from '../../core/status/index.js';
 import { countryCode, countryKeepsOffset, usStateTimeZone } from '../../core/time/index.js';
@@ -142,7 +143,9 @@ function withoutSpacedRepeat(location: string): string {
   const half = name.length / 2;
   const repeated = /^\p{Lu}\p{Ll}$/u.test(code) && countryCode(code.toUpperCase()) !== null && Number.isInteger(half) && half > 0
     && name.slice(0, half).join(' ').toLowerCase() === name.slice(half).join(' ').toLowerCase();
-  return repeated ? [...name.slice(0, half), code].join(' ') : location;
+  if (!repeated) return location;
+  if (REPEATED_TOWNS.has(`${code.toUpperCase()}:${name.join(' ').toLowerCase()}`)) return location;
+  return [...name.slice(0, half), code].join(' ');
 }
 
 /**

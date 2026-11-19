@@ -171,7 +171,6 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "estes": 20,
   "estes-forwarding": 754,
   "etomars": 99,
-  "ets-express": 734,
   "euroexpress-ba": 816,
   "europochta": 786,
   "evdemo-lojistik": 813,

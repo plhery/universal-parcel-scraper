@@ -94,7 +94,7 @@ function queryParam(url: URL, names: string[]): string | undefined {
   return undefined;
 }
 
-function numberFromRule(url: URL, rule: TrackingLinkRule): string | undefined {
+export function numberFromRule(url: URL, rule: TrackingLinkRule): string | undefined {
   const fromQuery = rule.params ? queryParam(url, rule.params) : undefined;
   const fromBareQuery = rule.query?.exec(decodeURIComponent(url.search.slice(1)))?.[1];
   const fromPath = rule.path?.exec(url.pathname)?.[1];
