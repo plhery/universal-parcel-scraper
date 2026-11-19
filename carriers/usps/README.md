@@ -55,14 +55,17 @@ unavailability. An unresolved verification page remains a challenge; a complete 
 history takes precedence over an earlier outage reply.
 
 USPS turns some server addresses away for hours while others load. With
-`USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, such as a residential connection, reads
-go through it while the service's own reads are paused, starting with the lookup whose
-redirect began the pause; read then, it loads more often than the paused route would. The
-browser service carries the whole context through the proxy and never falls back to its own
-address. Outside a pause the proxy carries nothing, so its traffic stays at the consumer's
-own refresh rate during a spell. The proxy keeps its own run:
-a redirect through it ends the lookup, and three in a row pause it too. Each read's step
-record names its route, `default` or `residential`, without the proxy's address.
+`USPS_FALLBACK_PROXY_URL` set to an HTTP(S) proxy, such as a residential connection, other
+lookups read through it while the service's own reads are paused. The browser service carries
+the whole context through the proxy and never falls back to its own address. Outside a pause
+the proxy carries nothing. A lookup that met the outage page is never read again through the
+proxy: USPS's outage pages follow its own hours, and reads through the proxy met them too. Once
+USPS sends a read through the proxy to its outage page, the proxy rests until the own route's
+pause ends, and lookups until then end as `self_paced`. Each read's step record names its
+route, `default` or `residential`, without the proxy's address.
+
+A host that keeps adapters' holds (`keepAdapterHolds`, see [ARCHITECTURE.md](../../ARCHITECTURE.md))
+keeps both pauses across restarts.
 
 USPS sends no rate limit of its own: a lookup that ends as `rate_limited` is the outage pause,
 `self_paced`, and sent nothing. Each lookup opens a browser, and checking followed parcels every

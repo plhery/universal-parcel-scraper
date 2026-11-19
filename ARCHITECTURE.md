@@ -129,6 +129,14 @@ service then skip it for a few hours, and the next one after that asks it again.
 refusal starts a rest, and a tracker without a browser service, such as HTTP recognition's,
 always asks directly.
 
+Such pauses and pacing live in the process. A long-lived host that restarts often can keep them
+with `keepAdapterHolds(store)` from `universal-parcel-scraper/node`
+([holds](core/runner/holds.ts)): each hold is saved as it starts, with its kind, a key holding no
+address or secret, and when it ends, and the holds still running are taken up at start. The
+direct-step rest, USPS's outage pause, Correios's read window and the numbers Cainiao had no
+record of for iMile are kept this way. A saved hold is never longer than its rule allows, and a
+store that fails leaves the adapters as they are without one.
+
 ## A lookup
 
 Browser route trials are opt-in. The shared transport helper assigns one alternate route

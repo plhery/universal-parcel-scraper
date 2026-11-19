@@ -3,6 +3,7 @@ import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
 import { BudgetExceededError, ChallengeError, IndeterminateError, SchemaError } from '../../core/errors/index.js';
 import { DirectRest } from '../../core/runner/directRest.js';
+import { serviceTag } from '../../core/runner/holds.js';
 import { ReadWindow } from '../../core/runner/readWindow.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
@@ -89,7 +90,7 @@ export class CorreiosTracker {
         const service = trawl!.endpoint?.href;
         if (!service) return correiosBrowser(trawl!, number, signal, remainingMs);
         const started = performance.now();
-        await new ReadWindow('Correios', `correios-br ${service}`, CORREIOS_BROWSER_READS, CORREIOS_BROWSER_WINDOW_MS).take(remainingMs, signal);
+        await new ReadWindow('Correios', `correios-br ${serviceTag(service)}`, CORREIOS_BROWSER_READS, CORREIOS_BROWSER_WINDOW_MS).take(remainingMs, signal);
         return correiosBrowser(trawl!, number, signal, remainingMs - (performance.now() - started));
       } }]);
   }

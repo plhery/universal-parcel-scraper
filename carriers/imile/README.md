@@ -27,7 +27,8 @@ makes, with the China leg Cainiao's global tracker holds under the same number.
    at most eight seconds. A slider, a rate limit, a changed reply or a number Cainiao does not
    know is recorded with its kind and leaves iMile's answer as it is. A number Cainiao does not know
    goes unasked there for a day: most iMile parcels never passed through Cainiao, and these reads
-   share Cainiao's pace with AliExpress's lookups.
+   share Cainiao's pace with AliExpress's lookups. A host that keeps adapters' holds
+   (`keepAdapterHolds`) keeps that day across restarts.
 
 - An unknown number is HTTP 200 with `"resultObject": null`, which the page reports as no data.
   A missing or wrong `sign` gets the same reply, so after an empty reply the adapter reads the

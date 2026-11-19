@@ -4,6 +4,7 @@ import {
   BudgetExceededError, carrierErrorKind, ChallengeError, NotFoundError, RateLimitedError, retryAfterMsOf, SchemaError, TransportError,
 } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
+import { HoldKind } from '../../core/runner/holds.js';
 import { runSteps } from '../../core/runner/index.js';
 import { firstAttemptMs, isNetworkFailure } from '../../core/runner/networkRetry.js';
 import { paused } from '../../core/runner/pause.js';
@@ -72,9 +73,15 @@ const CAINIAO_UNKNOWN_KEPT = 10_000;
 /**
  * Until when each number Cainiao answered it has no record of goes unasked, by transport: most iMile
  * parcels never passed through Cainiao, and every answered check asked it again within Cainiao's pace,
- * which AliExpress's lookups share. A restart forgets them.
+ * which AliExpress's lookups share. A restart forgets them unless the host keeps adapters' holds
+ * (`keepAdapterHolds`); the answers it takes up hold for every transport.
  */
 const cainiaoUnknown = new WeakMap<object, Map<string, number>>();
+const savedUnknown = new Map<string, number>();
+const unknownHolds = new HoldKind('imile-cainiao-unknown', (number, until) => {
+  savedUnknown.set(number, Math.max(savedUnknown.get(number) ?? 0, Math.min(until, Date.now() + CAINIAO_UNKNOWN_MS)));
+  if (savedUnknown.size > CAINIAO_UNKNOWN_KEPT) savedUnknown.delete(savedUnknown.keys().next().value!);
+});
 
 function unknownToCainiao(fetcher: typeof fetch | undefined): Map<string, number> {
   const key = transportOf(fetcher) ?? GLOBAL_FETCH;
@@ -232,9 +239,10 @@ export class ImileTracker {
     // A number Cainiao had no record of in the last day is not asked again.
     const unknown = unknownToCainiao(this.options.fetcher);
     const now = (this.options.now ?? Date.now)();
-    const until = unknown.get(number);
-    if (until !== undefined && until > now) return result;
+    const until = Math.max(unknown.get(number) ?? 0, savedUnknown.get(number) ?? 0);
+    if (until > now) return result;
     unknown.delete(number);
+    savedUnknown.delete(number);
     const budgetMs = Math.min(CAINIAO_MS, Math.floor(remainingMs / 2));
     try {
       if (budgetMs < CAINIAO_MIN_MS) throw new BudgetExceededError(CAINIAO, budgetMs);
@@ -246,6 +254,7 @@ export class ImileTracker {
       if (error instanceof NotFoundError) {
         unknown.set(number, now + CAINIAO_UNKNOWN_MS);
         if (unknown.size > CAINIAO_UNKNOWN_KEPT) unknown.delete(unknown.keys().next().value!);
+        unknownHolds.save(number, now + CAINIAO_UNKNOWN_MS);
       }
       return result;
     }

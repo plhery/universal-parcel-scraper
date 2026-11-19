@@ -222,6 +222,7 @@
       "escapeRegExp",
       "fedexRetryTrial",
       "fetchBounded",
+      "keepAdapterHolds",
       "lookupBudget",
       "memoryRetryRouteTrialStore",
       "outcomeOf",
@@ -247,6 +248,8 @@
     "types": [
       "AdapterEnvironment",
       "AdapterFactory",
+      "AdapterHold",
+      "AdapterHoldStore",
       "BrowserRecognition",
       "CarrierAdapter",
       "DpdSession",

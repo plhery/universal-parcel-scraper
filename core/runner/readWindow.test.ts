@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { keepAdapterHolds, resetAdapterHolds, type AdapterHold } from './holds.js';
 import { ReadWindow } from './readWindow.js';
 
 describe('ReadWindow', () => {
@@ -18,6 +19,23 @@ describe('ReadWindow', () => {
     expect(waited).toBe(true);
     // One with five seconds left would not have time for the read after the wait.
     await expect(window().take(5_000)).rejects.toMatchObject({ kind: 'rate_limited', reason: 'self_paced', retryAfterMs: 10_000 });
+  });
+
+  it("saves the window's reads to the host's holds, and counts saved ones after a restart", async () => {
+    const saved: AdapterHold[] = [];
+    await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+    try {
+      const before = Date.now();
+      await new ReadWindow('Example', 'example saved', 2, 10_000).take(20_000);
+      expect(saved).toEqual([{ key: 'read-window/example saved', until: expect.any(Number), value: [expect.any(Number)] }]);
+      expect(saved[0]!.until - (saved[0]!.value as number[])[0]!).toBe(10_000);
+      // A process that starts within the window counts the reads saved before it, and drops ones it cannot read.
+      await keepAdapterHolds({ load: async () => [{ key: 'read-window/example restarted', until: before + 10_000,
+        value: [before, before, 'soon', Date.now() + 60_000] }], save: async () => undefined });
+      await expect(new ReadWindow('Example', 'example restarted', 1, 10_000).take(1_000)).rejects.toMatchObject({ kind: 'rate_limited' });
+    } finally {
+      resetAdapterHolds();
+    }
   });
 
   it('releases an aborted wait and caps concurrent reads when the window opens', async () => {

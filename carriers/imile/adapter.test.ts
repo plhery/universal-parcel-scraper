@@ -6,6 +6,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
+import { keepAdapterHolds, resetAdapterHolds, type AdapterHold } from '../../core/runner/holds.js';
 import { adapter, CAINIAO_UNKNOWN_MS, IMILE_API, IMILE_PAGE, IMILE_SIGNING, ImileTracker, imileSignature, scriptSigning, type ImileSigning } from './adapter.js';
 import { cainiaoScans, withCainiaoLeg } from './cainiao.js';
 import { imileReceiver, imileSummary, imileWording, normalizeImileNumber, parseImile } from './parser.js';
@@ -669,6 +670,27 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
     const other = site(FIRST, { [DELIVERED]: fixture('delivered') }, { cainiao: sliders });
     for (let check = 0; check < 2; check += 1) await new ImileTracker({ fetcher: other, signing: FIRST.signing }).fetch(DELIVERED);
     expect(sliders).toHaveBeenCalledTimes(2);
+  });
+
+  it('saves the numbers Cainiao had no record of to the host\'s holds, and takes them up after a restart', async () => {
+    const saved: AdapterHold[] = [];
+    await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+    try {
+      let now = Date.now();
+      const cainiao = vi.fn((number: string) => reply(cainiaoUnknown(number)));
+      const transport = () => site(FIRST, { [DELIVERED]: fixture('delivered') }, { cainiao });
+      await new ImileTracker({ fetcher: transport(), signing: FIRST.signing, now: () => now }).fetch(DELIVERED);
+      expect(saved).toEqual([{ key: `imile-cainiao-unknown/${DELIVERED}`, until: now + CAINIAO_UNKNOWN_MS }]);
+      // A process that starts within the day leaves the number unasked on any transport, until the day is over.
+      await keepAdapterHolds({ load: async () => saved, save: async () => undefined });
+      await new ImileTracker({ fetcher: transport(), signing: FIRST.signing, now: () => now }).fetch(DELIVERED);
+      expect(cainiao).toHaveBeenCalledTimes(1);
+      now += CAINIAO_UNKNOWN_MS + 1;
+      await new ImileTracker({ fetcher: transport(), signing: FIRST.signing, now: () => now }).fetch(DELIVERED);
+      expect(cainiao).toHaveBeenCalledTimes(2);
+    } finally {
+      resetAdapterHolds();
+    }
   });
 
   it('gives Cainiao half of the time iMile left, and nothing when that is too short to ask', async () => {

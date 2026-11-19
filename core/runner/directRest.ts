@@ -1,4 +1,5 @@
 import type { TrawlClient } from '../transport/trawl.js';
+import { HoldKind, serviceTag } from './holds.js';
 
 /**
  * How long a carrier's lookups go straight to their browser step after its direct step met a check
@@ -8,9 +9,13 @@ export const DIRECT_REST_MS = 6 * 3_600_000;
 
 /**
  * When each carrier's direct step may run again, by carrier and browser service. Every tracker in
- * the process that uses the service shares it, as a host's several registries do; a restart forgets it.
+ * the process that uses the service shares it, as a host's several registries do. A restart forgets
+ * it unless the host keeps adapters' holds (`keepAdapterHolds`).
  */
 const restedUntil = new Map<string, number>();
+const rests = new HoldKind('direct-rest', (key, until) => {
+  restedUntil.set(key, Math.max(restedUntil.get(key) ?? 0, Math.min(until, Date.now() + DIRECT_REST_MS)));
+});
 
 /**
  * A carrier's direct step that a check only a browser passes keeps refusing, such as a Turnstile
@@ -23,7 +28,7 @@ export class DirectRest {
 
   constructor(carrier: string, trawl: TrawlClient | null | undefined) {
     const service = trawl?.endpoint?.href;
-    this.#key = service ? `${carrier} ${service}` : null;
+    this.#key = service ? `${carrier} ${serviceTag(service)}` : null;
   }
 
   /** Whether lookups skip the direct step now. */
@@ -33,6 +38,9 @@ export class DirectRest {
 
   /** The direct step met a check only a browser passes. */
   refused(): void {
-    if (this.#key !== null) restedUntil.set(this.#key, Date.now() + DIRECT_REST_MS);
+    if (this.#key === null) return;
+    const until = Date.now() + DIRECT_REST_MS;
+    restedUntil.set(this.#key, until);
+    rests.save(this.#key, until);
   }
 }
