@@ -769,6 +769,7 @@ import { adapter as vintedGo } from '../carriers/vinted-go/adapter.js';
 import { adapter as vozovoz } from '../carriers/vozovoz/adapter.js';
 import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
+import { adapter as walkerLogistics } from '../carriers/walker-logistics/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
@@ -1586,6 +1587,7 @@ export const REGISTRY: RegistryDefinition = {
     "vozovoz": vozovoz,
     "vrl-logistics": vrlLogistics,
     "wahana": wahana,
+    "walker-logistics": walkerLogistics,
     "wanbexpress": wanbexpress,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
@@ -3381,7 +3383,7 @@ export const REGISTRY: RegistryDefinition = {
     "w-express-ph": "universal",
     "wahana": "wahana",
     "wakilni": "universal",
-    "walker-logistics": "universal",
+    "walker-logistics": "walker-logistics",
     "walkers-transport": "universal",
     "wanbexpress": "wanbexpress",
     "wangjing-3cq": "universal",

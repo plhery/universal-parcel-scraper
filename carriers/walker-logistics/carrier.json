@@ -16,16 +16,33 @@
   "timezone": "Pacific/Auckland",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "walker-logistics",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://walkerlogistics.tempo.delivery/tracker/#/{trackingNumber}",
     "searchUrl": "https://walkerlogistics.tempo.delivery/tracker/",
     "canaryUrl": "https://walkerlogistics.tempo.delivery/tracker/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "offset_timestamps"
+    ],
     "discarded": [],
     "unavailable": []
   },

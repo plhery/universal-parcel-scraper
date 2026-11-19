@@ -1,29 +1,17 @@
 # Walker Logistics
 
-Walker Logistics parcels use enabled universal providers. There is no dedicated adapter.
+Walker Logistics is a New Zealand courier and freight company in Auckland and Christchurch.
 
-Walker Logistics is a New Zealand courier and freight company in Auckland and Christchurch. It
-runs overnight courier as Walker Courier, economy and road freight services, and air and ocean
-freight with customs clearance. It is not Walkers Transport, a different company. Its site is
-walkerlogistics.co.nz.
+## Retrieval
 
-## Numbers
+The carrier's Tempo tracker reads a guest JSON endpoint on its own host. The adapter uses
+the same endpoint and requires both the echoed search and the consignment number to match.
+A response that echoes the search and explicitly reports no item or consignment is not found.
+Piece-only matches are inconclusive.
 
-The only public example is six letters and six digits, from an aggregator, so there is no
-rule.
-
-## Why there is no adapter
-
-Its tracker is a Tempo page on the carrier's own `walkerlogistics.tempo.delivery` subdomain, an
-AngularJS app that reads the number from the fragment's route and asks the host's
-`/trackerapi/api/v1/` for it.
-
-## Links
-
-`walkerlogistics.tempo.delivery/tracker/#/<number>` opens one consignment. The rule reads only
-the carrier's own Tempo subdomain.
+Scans keep their stated offset. The adapter reads the event type, outcome, reason and location.
+A delivery event only sets the delivered stage when its outcome is successful.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`WALKER_LOGISTICS_TRACKING_NUMBER=… WALKER_LOGISTICS_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/walker-logistics`
