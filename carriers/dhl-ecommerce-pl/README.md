@@ -40,6 +40,10 @@ planned day. History rows retain facility-local clocks without an invented
 offset, including international scans. Unknown history wording remains
 unclassified.
 
+A return DHL announces after a wrong address abroad is not always the end:
+DHL can withdraw it, and the API's status then goes back to `Route`, with the
+parcel on its way to the recipient.
+
 DHL rewords a scan in place: a terminal arrival later gains its planned
 delivery day. History scans carry no code, so the identity policy in
 [identity.ts](identity.ts) lets a scan at the same instant and named place take
