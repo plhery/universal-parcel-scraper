@@ -24,6 +24,10 @@ page and a changed page keep their failure kinds.
   reads a sentence the map lacks, and an unread one leaves the row without a stage.
 - Every row is on the tracker's own Hong Kong clock, wherever the scan was: 17TRACK dates the same
   rows on that clock, and a departure from Toronto then falls at night there.
+- The rows of a German or Canadian leg are not read on the destination's clock either. In both
+  histories the app has seen, each row comes a steady day or two after the one before, at any hour,
+  as a timeline planned ahead would. On any clock some fall at night, such as a German delivery
+  round starting at midnight on the tracker's clock.
 - Some rows write a place before, within or after the sentence, with a region or country code and
   a postcode: English rows name it after "in" or ", serving". The adapter takes it out of the
   sentence and keeps its names and codes as the row's place, without the postcode. The English
@@ -31,8 +35,8 @@ page and a changed page keep their failure kinds.
 
 ## Numbers
 
-The one parcel the app has seen carries QFT and twelve digits, and 17TRACK filed its whole
-history under Quick Fort. No public number has been found, so `quick-fort-1` has low confidence
+The parcels the app has seen carry QFT and twelve digits, and 17TRACK filed the first one's
+whole history under Quick Fort. No public number has been found, so `quick-fort-1` has low confidence
 and the corpus holds a synthetic one. The tracker takes any number of letters and digits, so the
 adapter sends one of 6 to 40.
 
