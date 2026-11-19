@@ -1512,6 +1512,12 @@
     "reason": "The eight-character Track ID is the GLS group's, which other GLS networks issue and their low rules suggest."
   },
   {
+    "carrier": "gls-ca",
+    "pattern": "^W\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not offer GLS Canada for the W-prefixed tracking numbers shown on created shipments in its Shopify manual."
+  },
+  {
     "carrier": "gls-hu",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

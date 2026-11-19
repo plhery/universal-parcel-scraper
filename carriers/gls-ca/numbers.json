@@ -1,5 +1,47 @@
 {
   "carrier": "gls-ca",
-  "gap": "No public page shows a GLS Canada number.",
-  "records": []
+  "records": [
+    {
+      "number": "W01019874",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://gls-group.com/CA/downloads/GLS-Canada_Shopify_User-Manual_EN-v1.1.pdf#page=7",
+        "date": "2023-07-05",
+        "dateKind": "document creation",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GLS Canada Shopify fulfillment",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier's Shopify manual shows this number in the Tracking column of a created shipment and repeats it in the pickup screenshot."
+    },
+    {
+      "number": "W01020132",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://gls-group.com/CA/downloads/GLS-Canada_Shopify_User-Manual_EN-v1.1.pdf#page=7",
+        "date": "2023-07-05",
+        "dateKind": "document creation",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "GLS Canada Shopify fulfillment",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier's Shopify manual shows this number in the Tracking column of a second created shipment."
+    }
+  ]
 }
