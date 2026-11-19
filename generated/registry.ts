@@ -42,6 +42,7 @@ import { adapter as anserx } from '../carriers/anserx/adapter.js';
 import { adapter as anteraja } from '../carriers/anteraja/adapter.js';
 import { adapter as apcOvernight } from '../carriers/apc-overnight/adapter.js';
 import { adapter as apcPostalLogistics } from '../carriers/apc-postal-logistics/adapter.js';
+import { adapter as apdParcel } from '../carriers/apd-parcel/adapter.js';
 import { adapter as appleExpress } from '../carriers/apple-express/adapter.js';
 import { adapter as aquiline } from '../carriers/aquiline/adapter.js';
 import { adapter as aramex } from '../carriers/aramex/adapter.js';
@@ -91,6 +92,7 @@ import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
+import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
 import { adapter as castleParcels } from '../carriers/castle-parcels/adapter.js';
 import { adapter as castores } from '../carriers/castores/adapter.js';
 import { adapter as cblLogistica } from '../carriers/cbl-logistica/adapter.js';
@@ -260,6 +262,7 @@ import { adapter as flashCourier } from '../carriers/flash-courier/adapter.js';
 import { adapter as flashExpress } from '../carriers/flash-express/adapter.js';
 import { adapter as flashExpressPh } from '../carriers/flash-express-ph/adapter.js';
 import { adapter as flashbirdCa } from '../carriers/flashbird-ca/adapter.js';
+import { adapter as flechaAmarilla } from '../carriers/flecha-amarilla/adapter.js';
 import { adapter as fleetex } from '../carriers/fleetex/adapter.js';
 import { adapter as fleetoptics } from '../carriers/fleetoptics/adapter.js';
 import { adapter as flickpost } from '../carriers/flickpost/adapter.js';
@@ -339,6 +342,7 @@ import { adapter as hrx } from '../carriers/hrx/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
 import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
+import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
 import { adapter as iccWorldwide } from '../carriers/icc-worldwide/adapter.js';
 import { adapter as icsCourier } from '../carriers/ics-courier/adapter.js';
@@ -408,6 +412,7 @@ import { adapter as laPosteSenegal } from '../carriers/la-poste-senegal/adapter.
 import { adapter as laarCourier } from '../carriers/laar-courier/adapter.js';
 import { adapter as labaih } from '../carriers/labaih/adapter.js';
 import { adapter as landmarkGlobal } from '../carriers/landmark-global/adapter.js';
+import { adapter as laserLogistics } from '../carriers/laser-logistics/adapter.js';
 import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapter.js';
 import { adapter as latvijasPasts } from '../carriers/latvijas-pasts/adapter.js';
 import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
@@ -569,6 +574,7 @@ import { adapter as proships } from '../carriers/proships/adapter.js';
 import { adapter as ptsWorldwideExpress } from '../carriers/pts-worldwide-express/adapter.js';
 import { adapter as ptt } from '../carriers/ptt/adapter.js';
 import { adapter as pullmanCargo } from '../carriers/pullman-cargo/adapter.js';
+import { adapter as puntopost } from '../carriers/puntopost/adapter.js';
 import { adapter as purolator } from '../carriers/purolator/adapter.js';
 import { adapter as pwb } from '../carriers/pwb/adapter.js';
 import { adapter as qatarPost } from '../carriers/qatar-post/adapter.js';
@@ -645,6 +651,7 @@ import { adapter as slovakParcelService } from '../carriers/slovak-parcel-servic
 import { adapter as slovenskaPosta } from '../carriers/slovenska-posta/adapter.js';
 import { adapter as smsaExpress } from '../carriers/smsa-express/adapter.js';
 import { adapter as southAfricanPostOffice } from '../carriers/south-african-post-office/adapter.js';
+import { adapter as southPost } from '../carriers/south-post/adapter.js';
 import { adapter as southeasternFreightLines } from '../carriers/southeastern-freight-lines/adapter.js';
 import { adapter as spExpress } from '../carriers/sp-express/adapter.js';
 import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
@@ -726,6 +733,7 @@ import { adapter as tracxLogis } from '../carriers/tracx-logis/adapter.js';
 import { adapter as transaher } from '../carriers/transaher/adapter.js';
 import { adapter as transcorp } from '../carriers/transcorp/adapter.js';
 import { adapter as transmission } from '../carriers/transmission/adapter.js';
+import { adapter as transportesRapex } from '../carriers/transportes-rapex/adapter.js';
 import { adapter as trendyolExpress } from '../carriers/trendyol-express/adapter.js';
 import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
 import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
@@ -780,6 +788,7 @@ import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
 import { adapter as xylShips } from '../carriers/xyl-ships/adapter.js';
 import { adapter as yalidine } from '../carriers/yalidine/adapter.js';
 import { adapter as yamato } from '../carriers/yamato/adapter.js';
+import { adapter as yandexDelivery } from '../carriers/yandex-delivery/adapter.js';
 import { adapter as yanwen } from '../carriers/yanwen/adapter.js';
 import { adapter as ycsLogistics } from '../carriers/ycs-logistics/adapter.js';
 import { adapter as ydh } from '../carriers/ydh/adapter.js';
@@ -846,6 +855,7 @@ export const REGISTRY: RegistryDefinition = {
     "anteraja": anteraja,
     "apc-overnight": apcOvernight,
     "apc-postal-logistics": apcPostalLogistics,
+    "apd-parcel": apdParcel,
     "apple-express": appleExpress,
     "aquiline": aquiline,
     "aramex": aramex,
@@ -895,6 +905,7 @@ export const REGISTRY: RegistryDefinition = {
     "canada-post": canadaPost,
     "canpar": canpar,
     "cargus": cargus,
+    "carrybee": carrybee,
     "castle-parcels": castleParcels,
     "castores": castores,
     "cbl-logistica": cblLogistica,
@@ -1064,6 +1075,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express": flashExpress,
     "flash-express-ph": flashExpressPh,
     "flashbird-ca": flashbirdCa,
+    "flecha-amarilla": flechaAmarilla,
     "fleetex": fleetex,
     "fleetoptics": fleetoptics,
     "flickpost": flickpost,
@@ -1143,6 +1155,7 @@ export const REGISTRY: RegistryDefinition = {
     "huahan": huahan,
     "huaya-express": huayaExpress,
     "hunter-express": hunterExpress,
+    "huuneh": huuneh,
     "hywl": hywl,
     "icc-worldwide": iccWorldwide,
     "ics-courier": icsCourier,
@@ -1212,6 +1225,7 @@ export const REGISTRY: RegistryDefinition = {
     "laar-courier": laarCourier,
     "labaih": labaih,
     "landmark-global": landmarkGlobal,
+    "laser-logistics": laserLogistics,
     "last-one-mile-coop": lastOneMileCoop,
     "latvijas-pasts": latvijasPasts,
     "lbc-express": lbcExpress,
@@ -1373,6 +1387,7 @@ export const REGISTRY: RegistryDefinition = {
     "pts-worldwide-express": ptsWorldwideExpress,
     "ptt": ptt,
     "pullman-cargo": pullmanCargo,
+    "puntopost": puntopost,
     "purolator": purolator,
     "pwb": pwb,
     "qatar-post": qatarPost,
@@ -1449,6 +1464,7 @@ export const REGISTRY: RegistryDefinition = {
     "slovenska-posta": slovenskaPosta,
     "smsa-express": smsaExpress,
     "south-african-post-office": southAfricanPostOffice,
+    "south-post": southPost,
     "southeastern-freight-lines": southeasternFreightLines,
     "sp-express": spExpress,
     "spee-dee": speeDee,
@@ -1530,6 +1546,7 @@ export const REGISTRY: RegistryDefinition = {
     "transaher": transaher,
     "transcorp": transcorp,
     "transmission": transmission,
+    "transportes-rapex": transportesRapex,
     "trendyol-express": trendyolExpress,
     "tsb-es": tsbEs,
     "tsjy": tsjy,
@@ -1584,6 +1601,7 @@ export const REGISTRY: RegistryDefinition = {
     "xyl-ships": xylShips,
     "yalidine": yalidine,
     "yamato": yamato,
+    "yandex-delivery": yandexDelivery,
     "yanwen": yanwen,
     "ycs-logistics": ycsLogistics,
     "ydh": ydh,
@@ -1718,7 +1736,7 @@ export const REGISTRY: RegistryDefinition = {
     "aparcels": "universal",
     "apc-overnight": "apc-overnight",
     "apc-postal-logistics": "apc-postal-logistics",
-    "apd-parcel": "universal",
+    "apd-parcel": "apd-parcel",
     "apg-ecommerce": "universal",
     "apg-global": "universal",
     "apollo-budbiler": "universal",
@@ -1862,7 +1880,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargus": "cargus",
     "caribe-pack": "universal",
     "carry-flap": "universal",
-    "carrybee": "universal",
+    "carrybee": "carrybee",
     "castle-parcels": "castle-parcels",
     "castores": "castores",
     "cathedis": "universal",
@@ -2223,7 +2241,7 @@ export const REGISTRY: RegistryDefinition = {
     "flash-express-la": "universal",
     "flash-express-ph": "flash-express-ph",
     "flashbird-ca": "flashbird-ca",
-    "flecha-amarilla": "universal",
+    "flecha-amarilla": "flecha-amarilla",
     "flechacarga": "universal",
     "fleetex": "fleetex",
     "fleetoptics": "fleetoptics",
@@ -2388,7 +2406,7 @@ export const REGISTRY: RegistryDefinition = {
     "hub-group-final-mile": "universal",
     "hunter-express": "hunter-express",
     "hurtig-gutta": "universal",
-    "huuneh": "universal",
+    "huuneh": "huuneh",
     "hy-express": "universal",
     "hye": "universal",
     "hywl": "hywl",
@@ -2560,7 +2578,7 @@ export const REGISTRY: RegistryDefinition = {
     "lafasta": "universal",
     "landmark-global": "landmark-global",
     "lao-post": "universal",
-    "laser-logistics": "universal",
+    "laser-logistics": "laser-logistics",
     "last-one-mile-coop": "last-one-mile-coop",
     "latam-cargo": "universal",
     "latam-global-express": "universal",
@@ -2917,7 +2935,7 @@ export const REGISTRY: RegistryDefinition = {
     "pts-worldwide-express": "pts-worldwide-express",
     "ptt": "ptt",
     "pullman-cargo": "pullman-cargo",
-    "puntopost": "universal",
+    "puntopost": "puntopost",
     "purolator": "purolator",
     "pushpak-courier": "universal",
     "pwb": "pwb",
@@ -3095,7 +3113,7 @@ export const REGISTRY: RegistryDefinition = {
     "sol-express": "universal",
     "sorthub": "universal",
     "south-african-post-office": "south-african-post-office",
-    "south-post": "universal",
+    "south-post": "south-post",
     "southeastern-freight-lines": "southeastern-freight-lines",
     "southwestern-motor-transport": "universal",
     "sp-express": "sp-express",
@@ -3256,7 +3274,7 @@ export const REGISTRY: RegistryDefinition = {
     "transport-rdl": "universal",
     "transportes-bertolini": "universal",
     "transportes-condesa": "universal",
-    "transportes-rapex": "universal",
+    "transportes-rapex": "transportes-rapex",
     "transports-besson": "universal",
     "transpress": "universal",
     "travel-express": "universal",
@@ -3420,7 +3438,7 @@ export const REGISTRY: RegistryDefinition = {
     "yalidine": "yalidine",
     "yamato": "yamato",
     "yamato-america": "universal",
-    "yandex-delivery": "universal",
+    "yandex-delivery": "yandex-delivery",
     "yanwen": "yanwen",
     "yc-delivery": "universal",
     "ycs-logistics": "ycs-logistics",

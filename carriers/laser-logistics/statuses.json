@@ -1,4 +1,11 @@
 {
   "carrier": "laser-logistics",
-  "entries": []
+  "entries": [
+    {"code": "WBLCRE", "wording": "Waybill Created", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "Written at a branch before the line haul."},
+    {"code": "WBLALL", "wording": "In Transit", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "WBLDAL", "wording": "On Floor", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "At the delivering hub."},
+    {"code": "WBLALD", "wording": "In Trip", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "note": "At the delivering hub, hours before the proof of delivery."},
+    {"code": "PODCRE", "wording": "POD", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The proof of delivery, at the delivered time the waybill gives."},
+    {"code": "WBLDLV", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"}
+  ]
 }

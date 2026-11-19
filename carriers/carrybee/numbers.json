@@ -17,7 +17,7 @@
         "carrier": "unknown",
         "confidence": "none"
       },
-      "note": "TrackShip's CarryBee page gives it as a tracking code example."
+      "note": "TrackShip's CarryBee page gives it as a tracking code example; CarryBee's tracking service returns its delivered history."
     }
   ]
 }

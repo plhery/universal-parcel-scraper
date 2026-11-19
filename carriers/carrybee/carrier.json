@@ -17,18 +17,63 @@
   "timezone": "Asia/Dhaka",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "carrybee",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "offset_timestamps",
+    "eta",
+    "eta_window",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://carrybee.com/track?consignmentId={trackingNumber}",
     "searchUrl": "https://carrybee.com/track",
     "canaryUrl": "https://carrybee.com/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "progress_rail",
+      "eta",
+      "driver_name",
+      "contact_details",
+      "order_contents",
+      "payment_details",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "progress_rail",
+      "offset_timestamps",
+      "eta",
+      "eta_window",
+      "delivered_at"
+    ],
+    "discarded": [
+      "driver_name",
+      "contact_details",
+      "order_contents",
+      "payment_details",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "weight"
+    ],
+    "unavailable": [
+      "location",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

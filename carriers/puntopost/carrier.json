@@ -17,18 +17,53 @@
   "timezone": "America/Mexico_City",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "puntopost",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "delivered_at",
+    "provider_code",
+    "pickup_point",
+    "sender_name",
+    "canonical_tracking_number"
+  ],
   "portal": {
     "url": "https://www.puntopost.mx/tracking-summary/#{trackingNumber}",
     "searchUrl": "https://www.puntopost.mx/tracking-summary/",
     "canaryUrl": "https://www.puntopost.mx/tracking-summary/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "pickup_point",
+      "opening_hours",
+      "coordinates",
+      "origin"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at",
+      "provider_code",
+      "offset_timestamps",
+      "pickup_point",
+      "sender_name",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "opening_hours",
+      "coordinates"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "dimensions",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

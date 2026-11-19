@@ -1,4 +1,53 @@
 {
   "carrier": "transportes-rapex",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Pendente",
+      "stage": "registered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entrada em Rede",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Em recolha",
+      "stage": "registered",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Recolhido",
+      "stage": "accepted",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Aceite",
+      "stage": "accepted",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Em transporte",
+      "stage": "in_transit",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Em distribuição",
+      "stage": "out_for_delivery",
+      "language": "pt",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entregue",
+      "stage": "delivered",
+      "language": "pt",
+      "confirmedBy": "live"
+    }
+  ]
 }

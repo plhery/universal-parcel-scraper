@@ -1,0 +1,6 @@
+{
+  "type": "NOT_FOUND",
+  "title": "Parcel not found",
+  "detail": "The requested parcel does not exist",
+  "instance": "parcel"
+}

@@ -12,9 +12,9 @@
         "access": "full_page"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
-      "note": "Yandex Delivery's tracking page gives this as its example tracking number, next to the layout LO- and nine digits.",
+      "note": "Yandex Delivery's tracking page gives this as its example tracking number, next to the layout LO- and nine digits, and answers it with a parcel left uncollected at a Moscow pickup point, returned and disposed of.",
       "expect": {
         "carrier": "unknown",
         "confidence": "low",

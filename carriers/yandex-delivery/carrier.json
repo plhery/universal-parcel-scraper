@@ -20,18 +20,40 @@
   "timezone": "Europe/Moscow",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "yandex-delivery",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",
     "searchUrl": "https://dostavka.yandex.ru/ndd/tracking/",
     "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "pickup_deadline",
+      "event_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "pickup_deadline",
+      "event_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "provider_code"
+    ]
   },
   "links": [
     {

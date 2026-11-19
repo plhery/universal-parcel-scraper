@@ -9191,7 +9191,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Adelaide",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "apd-parcel"
     },
     "canaryUrl": "https://online.apdparcel.com.au/track",
     "trackingSearchUrl": "https://online.apdparcel.com.au/track",
@@ -13640,7 +13640,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Dhaka",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "carrybee"
     },
     "canaryUrl": "https://carrybee.com/track",
     "trackingUrlTemplate": "https://carrybee.com/track?consignmentId={trackingNumber}",
@@ -25517,7 +25517,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "flecha-amarilla"
     },
     "canaryUrl": "https://www.paqueteria-flechaamarilla.com.mx/",
     "trackingSearchUrl": "https://www.paqueteria-flechaamarilla.com.mx/inicio",
@@ -30728,7 +30728,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "huuneh",
+      "localClocks": true
     },
     "canaryUrl": "https://huuneh.com/dashboard/tracking.php",
     "trackingUrlTemplate": "https://huuneh.com/dashboard/track.php?order_track={trackingNumber}",
@@ -36250,7 +36251,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "laser-logistics"
     },
     "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
     "trackingUrlTemplate": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",
@@ -47776,7 +47777,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Mexico_City",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "puntopost"
     },
     "canaryUrl": "https://www.puntopost.mx/tracking-summary/",
     "trackingUrlTemplate": "https://www.puntopost.mx/tracking-summary/#{trackingNumber}",
@@ -53412,10 +53413,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "south-post"
     },
     "canaryUrl": "https://www.southpost.com.ar/",
-    "trackingUrlTemplate": "https://www.southpost.com.ar/t/{trackingNumber}",
+    "trackingUrlTemplate": "https://www.southpost.com.ar/#/t/{trackingNumber}",
     "trackingSearchUrl": "https://www.southpost.com.ar/",
     "linkRules": [
       {
@@ -53424,6 +53425,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "southpost.com.ar"
         ],
         "path": "^/t/([0-9]+)/?$"
+      },
+      {
+        "domains": [
+          "www.southpost.com.ar",
+          "southpost.com.ar"
+        ],
+        "fragment": "^/t/([0-9]{1,7})/?$"
       }
     ],
     "detectionRules": []
@@ -58576,7 +58584,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Lisbon",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "transportes-rapex",
+      "localClocks": true
     },
     "canaryUrl": "https://transportes-rapex.pt/pt/tracking",
     "trackingUrlTemplate": "https://transportes-rapex.pt/pt/tracking?tracking={trackingNumber}",
@@ -63656,7 +63665,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "yandex-delivery",
+      "localClocks": true
     },
     "canaryUrl": "https://dostavka.yandex.ru/ndd/tracking/",
     "trackingUrlTemplate": "https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}",

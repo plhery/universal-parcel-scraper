@@ -1,7 +1,5 @@
 # Paquetería Flecha Amarilla
 
-Paquetería Flecha Amarilla parcels use enabled universal providers. There is no dedicated adapter.
-
 Servicios de Paquetería y Envíos Flecha Amarilla S.A. de C.V., of León, Guanajuato, is the parcel
 and courier arm of Grupo Flecha Amarilla's bus network. It carries parcels between its branches
 across Mexico, for collection at a branch or delivery to the door. Its site is
@@ -13,13 +11,29 @@ A guía is a prefix and a number, printed with a space between them. Archived lo
 tracker show P and C guías of six or seven digits and CB guías of six digits; those suggest
 Paquetería Flecha Amarilla at low confidence, since other networks print short shapes like them.
 Its tracker also lists I, PB and TP prefixes, which no public guía shows yet, so the rule leaves
-them out.
+them out. The adapter reads all six prefixes, written with the digits, a space or a hyphen.
 
-## Why there is no adapter
+## Retrieval
 
-The tracker sends the prefix and the number apart to an open JSON service, with a fixed key from its
-public page, and needs nothing else. No current lookup of a public guía has been made yet. An
-adapter can follow.
+The tracking page's script posts a JSON list of guías, each with its prefix and digits apart, to
+an AWS API Gateway service, with a fixed `Authorization` key from its public page. The adapter
+sends the same request for one guía and requires the reply to name both parts of it; the prefix
+comes padded with spaces. A request without the header answers HTTP 502.
+
+An unknown guía is left out of the reply's `respuesta` list. The service answers the same empty
+list for guías it knows when it is asked too often in a short time, so an empty list is
+inconclusive with the reason `portal_not_found`, never not found.
+
+Each scan names its state, the branch and two clocks: a .NET `/Date(…)/` instant with the branch's
+offset, and the same wall clock as text. The adapter keeps the stated offset and requires both to
+agree. The reply lists the oldest scan first. The delivery scan's `receptor` names who took the
+parcel. The names of the sender and the addressee, the branches of origin and destination, and the
+delivery note that repeats the receiver are left out.
+
+## Stages
+
+The states seen on public guías are staged. "En ocurre" is the destination branch holding the parcel
+for collection. Any other state keeps its wording without a stage.
 
 ## Links
 
@@ -28,5 +42,4 @@ are no tracking links.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`FLECHA_AMARILLA_TRACKING_NUMBER=… FLECHA_AMARILLA_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/flecha-amarilla`

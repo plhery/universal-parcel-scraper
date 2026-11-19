@@ -14,18 +14,58 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "laser-logistics",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "provider_code",
+    "delivered_at",
+    "weight",
+    "service_name",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://www.laserlogistics.co.za/parcel-tracking/?waybillnumber={trackingNumber}",
     "searchUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
     "canaryUrl": "https://www.laserlogistics.co.za/parcel-tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "depot_code",
+      "delivered_at",
+      "parcel_count",
+      "weight",
+      "service_name",
+      "customer_reference",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "delivered_at",
+      "weight",
+      "service_name",
+      "destination_country"
+    ],
+    "discarded": [
+      "depot_code",
+      "parcel_count",
+      "customer_reference",
+      "origin",
+      "destination"
+    ],
+    "unavailable": [
+      "eta",
+      "location",
+      "offset_timestamps",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

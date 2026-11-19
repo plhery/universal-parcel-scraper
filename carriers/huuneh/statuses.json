@@ -1,4 +1,31 @@
 {
   "carrier": "huuneh",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Pick_up",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Its note says the customer created the pickup; the courier has not collected the parcel yet."
+    },
+    {
+      "wording": "Picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "On Route",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The local courier's delivery round: the sample is delivered hours later the same day."
+    },
+    {
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

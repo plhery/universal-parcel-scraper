@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en-ZA">
+<head>
+<meta charset="UTF-8">
+<title>Parcel Tracking - Laser Logistics</title>
+</head>
+<body>
+<div class="wrapper">
+
+    <div class="container nosidebar">
+
+        <div class="copy">
+
+            <div class="titlebar">
+                <h1>Parcel Tracking</h1>
+                            </div><!-- /titlebar -->
+
+            
+                    <!--PART 0 -->
+
+                    
+
+<!--PART 5 -->
+
+
+
+<!--PART 6 -->
+
+<!--
+DATA:
+stdClass Object
+(
+    [result] => 
+    [pcReturnData] => <?xml version="1.0" ?>
+<ShipmentDetail><Waybill><WaybillNumber>MUS11289883</WaybillNumber><ServiceType>ECONOMY ROAD</ServiceType><CurrentStatus>Proof of delivery</CurrentStatus><CurrentStatusCode>POD</CurrentStatusCode><DeliveredDate>24072024</DeliveredDate><DeliveredTime>1200</DeliveredTime><ReceiverName>SIGNED</ReceiverName><NumberOfPieces>1</NumberOfPieces><TotalWeight>          14.49</TotalWeight><Contents>BOX</Contents><ManifestReference/><OriginSuburb>HALFWAY HOUSE</OriginSuburb><OriginHub>JNB</OriginHub><DestinationSuburb>PINETOWN</DestinationSuburb><DestinationHub>DBN</DestinationHub><ShipperReference>PO106937</ShipperReference><BookingDate/><PODImgURL/><TrackingEvents><BranchCode>CHLR</BranchCode><EventDate>23072024</EventDate><EventTime>1653</EventTime><EventDescription>Waybill Created</EventDescription><EventCode>WBLCRE</EventCode></TrackingEvents><TrackingEvents><BranchCode>JNB</BranchCode><EventDate>23072024</EventDate><EventTime>2056</EventTime><EventDescription>In Transit</EventDescription><EventCode>WBLALL</EventCode></TrackingEvents><TrackingEvents><BranchCode>DBN</BranchCode><EventDate>24072024</EventDate><EventTime>0757</EventTime><EventDescription>On Floor</EventDescription><EventCode>WBLDAL</EventCode></TrackingEvents><TrackingEvents><BranchCode>DBN</BranchCode><EventDate>24072024</EventDate><EventTime>0858</EventTime><EventDescription>In Trip</EventDescription><EventCode>WBLALD</EventCode></TrackingEvents><TrackingEvents><BranchCode>CHLR</BranchCode><EventDate>24072024</EventDate><EventTime>1200</EventTime><EventDescription>POD</EventDescription><EventCode>PODCRE</EventCode></TrackingEvents><TrackingEvents><BranchCode>DBN</BranchCode><EventDate>24072024</EventDate><EventTime>1834</EventTime><EventDescription>Waybill MUS11289883 Confirmed delivery by driver off delivery sheet ODDBN-00340243</EventDescription><EventCode>WBLDEB</EventCode></TrackingEvents><TrackingEvents><BranchCode>DBN</BranchCode><EventDate>24072024</EventDate><EventTime>1834</EventTime><EventDescription>Delivered</EventDescription><EventCode>WBLDLV</EventCode></TrackingEvents></Waybill></ShipmentDetail>
+    [pcGeneralError] => 
+)
+
+-->
+                    
+                        <form name="parcel-tracking" method="get" action="https://www.laserlogistics.co.za/parcel-tracking/" class="tracking-form">
+                            <label>Your Waybill Number:</label>
+                            <input type="text" name="waybillnumber" placeholder="eg. 0123456789">
+                            <input type="submit" value="submit">
+                        </form>
+
+                        <p>
+
+                            
+                        <div class="table_border">
+
+                            <table>
+                                <tr class="waybill-info">
+                                    <td>Waybill Number</td>
+                                    <td>MUS11289883</td>
+                                    <td>Service Type</td>
+                                    <td>ECONOMY ROAD</td>
+                                </tr>
+                                <tr class="waybill-info">
+                                    <td>Current Status</td>
+                                    <td>Proof of delivery</td>
+                                    <td>Delivered Date</td>
+                                    <td>2024-07-24</td>
+                                </tr>
+                                <tr class="waybill-info">
+                                    <td>Number of Pieces</td>
+                                    <td>1</td>
+                                    <td>Delivered Time</td>
+                                    <td>12:00</td>
+                                </tr>
+                                <tr class="waybill-info">
+                                    <td>Total Weight (KG)</td>
+                                    <td>          14.49</td>
+                                    <!--<td>Contents</td>
+			                                             <td>BOX</td>-->
+                                    <td>Shipper Reference</td>
+                                    <td>PO106937</td>
+                                </tr>
+                                <tr class="waybill-info">
+                                    <td>Origin Hub</td>
+                                    <td>JNB</td>
+                                    <td>Manifest Reference</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="waybill-info">
+                                    <td>Destination Suburb</td>
+                                    <td>PINETOWN</td>
+                                    <td>Destination Hub</td>
+                                    <td>DBN</td>
+                                </tr>
+                                <!--<tr class="waybill-info">
+			                                             <td>Shipper Reference</td>
+			                                             <td>PO106937</td>
+			                                             <td>Destination Hub</td>
+			                                             <td>DBN</td>
+			                                        </tr> -->
+                            </table>
+
+                            <br><br>
+
+                            <table class="events-info">
+                                <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Branch</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr><td>2024-07-24</td><td>18:34</td><td>DBN</td><td>Delivered</td></tr><tr><td>2024-07-24</td><td>18:34</td><td>DBN</td><td>Waybill MUS11289883 Confirmed delivery by driver off delivery sheet ODDBN-00340243</td></tr><tr><td>2024-07-24</td><td>12:00</td><td>CHLR</td><td>POD</td></tr><tr><td>2024-07-24</td><td>08:58</td><td>DBN</td><td>In Trip</td></tr><tr><td>2024-07-24</td><td>07:57</td><td>DBN</td><td>On Floor</td></tr><tr><td>2024-07-23</td><td>20:56</td><td>JNB</td><td>In Transit</td></tr><tr><td>2024-07-23</td><td>16:53</td><td>CHLR</td><td>Waybill Created</td></tr>                                </tbody>
+                            </table>
+
+                        </div>
+
+                    
+
+                
+        </div><!--/copy -->
+    </div><!--/container -->
+</div><!--/wrapper -->
+</body>
+</html>

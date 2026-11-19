@@ -10,6 +10,14 @@
  * universal providers, whose map is the reading they give a scan
  * (`providers/status.ts`).
  */
+import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
+import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
+import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
+import { statusMap as laserLogistics } from '../../carriers/laser-logistics/status.js';
+import { statusMap as puntopost } from '../../carriers/puntopost/status.js';
+import { statusMap as southPost } from '../../carriers/south-post/status.js';
+import { statusMap as flechaAmarilla } from '../../carriers/flecha-amarilla/status.js';
+import { statusMap as yandexDelivery } from '../../carriers/yandex-delivery/status.js';
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
@@ -821,6 +829,14 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'western-bid': westernBid,
   libanpost,
   'om-logistics': omLogistics,
+  'apd-parcel': apdParcel,
+  'carrybee': carrybee,
+  'huuneh': huuneh,
+  'laser-logistics': laserLogistics,
+  'puntopost': puntopost,
+  'south-post': southPost,
+  'flecha-amarilla': flechaAmarilla,
+  'yandex-delivery': yandexDelivery,
   'amazon-order': amazonOrder,
   whatsship: whatsShip,
   'onlog-express': onlogExpress,

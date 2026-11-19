@@ -1,4 +1,12 @@
 {
   "carrier": "flecha-amarilla",
-  "entries": []
+  "entries": [
+    {"wording": "DOCUMENTADA", "stage": "accepted", "language": "es", "confirmedBy": "live", "note": "The first state, at the branch where the sender hands the parcel in."},
+    {"wording": "EMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Loaded at a branch."},
+    {"wording": "EN TRÁFICO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "On its way after loading."},
+    {"wording": "TRASBORDO", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Transferred at a hub branch on the way."},
+    {"wording": "DESEMBARCADA", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "Unloaded at a branch."},
+    {"wording": "EN OCURRE", "stage": "ready_for_pickup", "language": "es", "confirmedBy": "live", "note": "At the destination branch for the addressee to collect; public guías show it before a delivery at that branch."},
+    {"wording": "ENTREGADA", "stage": "delivered", "language": "es", "confirmedBy": "live", "note": "Delivered; the scan names who took the parcel."}
+  ]
 }
