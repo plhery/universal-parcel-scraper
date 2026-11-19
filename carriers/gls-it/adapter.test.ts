@@ -113,7 +113,7 @@ describe('GLS Italy direct tracking', () => {
   it('maps every recorded sentence, and the status map answers as the parser stages', () => {
     for (const entry of statuses.entries) {
       if (!('wording' in entry)) continue;
-      const wording = entry.wording!.replace('<date>', '06/11/26');
+      const wording = entry.wording!.replace('<date>', '06/11/26').replace('<n>', '48');
       expect(glsItalyScanStage(wording), wording).toEqual({ stage: entry.stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'gls-it', description: wording })).toEqual({ kind: 'mapped', stage: entry.stage });
     }
@@ -121,6 +121,8 @@ describe('GLS Italy direct tracking', () => {
     expect(statusMapAnswer({ carrier: 'gls-it', providerCode: 'DELIVERED', description: 'Delivered.' })).toEqual({ kind: 'unknown' });
     expect(statusMapAnswer({ carrier: 'gls-it', description: 'Delivered' })).toEqual({ kind: 'unknown' });
     for (const wording of ['constructor', 'toString', 'Zxq.']) expect(glsItalyScanStage(wording), wording).toBeNull();
+    expect(glsItalyScanStage('Area served in 72 hours, we will deliver within the next three business days.')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(glsItalyScanStage('Area served in many hours, we will deliver within the next two business days.')).toBeNull();
   });
 
   it('shows the English locale sentence for an Italian one', () => {

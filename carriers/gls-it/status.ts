@@ -22,6 +22,15 @@ export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   'Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.': 'failed_attempt',
   // Held at the depot until the recipient answers the redelivery link.
   'Not in delivery. Awaiting instructions by link included in received email or sms': 'exception',
+  // A shipment sent on to another GLS country gets that country's GLS group sentences. Its
+  // receipt from GLS Italy is a handover to GLS after the shipment has left the sending depot,
+  // so it is no acceptance: GLS Italy's own first movement is the sending depot's dispatch.
+  'The parcel was handed over to GLS.': 'in_transit',
+  'The parcel data was entered into the GLS IT system; the parcel was not yet handed over to GLS.': 'registered',
+  'Forwarded abroad': 'in_transit',
+  'The parcel has left the parcel center.': 'in_transit',
+  'The parcel has reached the parcel center.': 'in_transit',
+  'The parcel is expected to be delivered during the day.': 'out_for_delivery',
 };
 
 /**
@@ -78,9 +87,12 @@ export function glsItalyBookedDay(sentence: string): string | undefined {
   return day.getUTCMonth() === month - 1 && day.getUTCDate() === date ? `${year}-${match[2]}-${match[1]}` : undefined;
 }
 
+// The receiving depot serves the recipient's area only every few days, so the shipment waits there.
+const AREA_SERVED = /^area served in \d{1,3} hours, we will deliver within the next [a-z]+ business days\.?$/;
+
 /** The stage the map gives a sentence, by `normalizeStatusWording` form. */
 function mappedStage(wording: string): Stage | undefined {
-  return SCANS.get(wording) ?? (BOOKED.test(paddedDate(wording)) ? 'in_transit' : undefined);
+  return SCANS.get(wording) ?? (BOOKED.test(paddedDate(wording)) || AREA_SERVED.test(wording) ? 'in_transit' : undefined);
 }
 
 /** The stage a scan's sentence gives it: the map first, then the shared wording rules. */

@@ -34,6 +34,9 @@ numbers, so this adapter does not share their route.
   `Accept-Language` gets an internal error instead. When the newest sentence gives no stage, the
   current step of the page's progress rail stands in. GLS's return flag makes the shipment
   returned.
+- A shipment sent on to another GLS country gets that country's GLS group sentences too. Its
+  handover to GLS there is that country's receipt from GLS Italy, so it reads as in transit:
+  GLS Italy's own first movement is the sending depot's dispatch.
 - A redelivery the recipient books after a failed attempt is a scan in Italian only, "Consegna
   prenotata il dd/mm/yy": the parcel is on its way again, and the booked day is the estimate
   while that scan is the newest.

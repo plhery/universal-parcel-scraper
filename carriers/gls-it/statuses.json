@@ -90,6 +90,62 @@
       "note": "Held at the depot after a failed attempt until the recipient books a redelivery through the link."
     },
     {
+      "wording": "The parcel was handed over to GLS.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "On a shipment sent on to another GLS country, that country's receipt of it from GLS Italy, after the sending depot's dispatch. It is no acceptance."
+    },
+    {
+      "wording": "The parcel data was entered into the GLS IT system; the parcel was not yet handed over to GLS.",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The next GLS country's pre-advice of a shipment GLS Italy sends on. Written after the dispatch, it reads as in transit."
+    },
+    {
+      "wording": "Forwarded abroad",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "GLS Italy sent the shipment on to another GLS country."
+    },
+    {
+      "wording": "The parcel has left the parcel center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A depot of the next GLS country dispatched the shipment."
+    },
+    {
+      "wording": "The parcel has reached the parcel center.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A depot of the next GLS country received the shipment."
+    },
+    {
+      "wording": "The parcel is expected to be delivered during the day.",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The next GLS country's morning scan of the delivery round."
+    },
+    {
+      "wording": "Area served in <n> hours, we will deliver within the next two business days.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The receiving depot serves the recipient's area only every so many hours, so the shipment waits there for the next round."
+    },
+    {
       "wording": "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.",
       "language": "it",
       "english": "The shipment has been created by the sender, we are waiting for it to be entrusted to us for dispatch to its destination.",
