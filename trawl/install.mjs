@@ -54,6 +54,8 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && asendiaBrowserNumber(url, capture)) return await runAsendiaBrowser(carrierRun)
   if (carrierPage && costaRicaBrowserNumber(url, capture)) return await runCostaRicaBrowser({ ...carrierRun, signal: budget.signal,
     solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
+  if (carrierPage && pasarexBrowserNumber(url, capture)) return await runPasarexBrowser({ ...carrierRun, signal: budget.signal,
+    solveNativeCaptcha: (page, timeout, report) => solveDhlPolandNative(page, timeout, budget.signal, report) })
   if (carrierPage && correiosBrowserNumber(url, capture)) return await runCorreiosBrowser(carrierRun)
   if (carrierPage && daoBrowserNumber(url, capture)) return await runDaoBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && onlogExpressBrowserNumber(url, capture)) return await runOnlogExpressBrowser({ ...carrierRun, signal: budget.signal })
@@ -138,6 +140,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { dhlPolandBrowserNumber, runDhlPolandBrowser } from "../utils/dhl-poland-browser.mjs"\n'
     + 'import { asendiaBrowserNumber, runAsendiaBrowser } from "../utils/asendia-browser.mjs"\n'
     + 'import { costaRicaBrowserNumber, runCostaRicaBrowser } from "../utils/correos-costa-rica-browser.mjs"\n'
+    + 'import { pasarexBrowserNumber, runPasarexBrowser } from "../utils/pasarex-browser.mjs"\n'
     + 'import { correiosBrowserNumber, runCorreiosBrowser } from "../utils/correios-browser.mjs"\n'
     + 'import { daoBrowserNumber, runDaoBrowser } from "../utils/dao-browser.mjs"\n'
     + 'import { onlogExpressBrowserNumber, runOnlogExpressBrowser } from "../utils/onlog-express-browser.mjs"\n'

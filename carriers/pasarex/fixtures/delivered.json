@@ -1,0 +1,130 @@
+{
+  "kind": "history",
+  "number": "AMZPSR025530371",
+  "groups": [
+    {
+      "status": "DELIVERED",
+      "rows": [
+        {
+          "description": "Shipment delivered in perfect condition",
+          "city": "Cucuta",
+          "date": "13/08/2026",
+          "hour": "15:31:03"
+        }
+      ]
+    },
+    {
+      "status": "OUT FOR DISTRIBUTION",
+      "rows": [
+        {
+          "description": "Shipment left to local route for final delivery",
+          "city": "",
+          "date": "13/08/2026",
+          "hour": "09:33:23"
+        }
+      ]
+    },
+    {
+      "status": "IN WAREHOUSE",
+      "rows": [
+        {
+          "description": "Package received in warehouse.",
+          "city": "Cucuta",
+          "date": "13/08/2026",
+          "hour": "08:56:09"
+        },
+        {
+          "description": "Package received in warehouse.",
+          "city": "Cucuta",
+          "date": "11/08/2026",
+          "hour": "07:46:55"
+        },
+        {
+          "description": "Reception of consolidated cargo at a station.",
+          "city": "Cucuta",
+          "date": "11/08/2026",
+          "hour": "07:44:25"
+        }
+      ]
+    },
+    {
+      "status": "IN TRANSIT",
+      "rows": [
+        {
+          "description": "Package in transit",
+          "city": "Cucuta",
+          "date": "12/08/2026",
+          "hour": "15:15:56"
+        },
+        {
+          "description": "Package in ground transit",
+          "city": "",
+          "date": "10/08/2026",
+          "hour": "13:17:24"
+        }
+      ]
+    },
+    {
+      "status": "SHIPPING WITH DELIVERY ISSUE",
+      "rows": [
+        {
+          "description": "Applies to cargo that may experience delivery delays due to disturbances or protests",
+          "city": "Cucuta",
+          "date": "11/08/2026",
+          "hour": "16:50:05"
+        }
+      ]
+    },
+    {
+      "status": "RECEIVED FOR DELIVERY",
+      "rows": [
+        {
+          "description": "Cleared by customs and transferred to OPS.",
+          "city": "Bogota",
+          "date": "10/08/2026",
+          "hour": "09:50:33"
+        }
+      ]
+    },
+    {
+      "status": "IN CUSTOMS PROCESS",
+      "rows": [
+        {
+          "description": "Entry to station for customs processing.",
+          "city": "Bogota",
+          "date": "10/08/2026",
+          "hour": "09:47:46"
+        },
+        {
+          "description": "Cleared by customs by PasarEx.",
+          "city": "Bogota",
+          "date": "10/08/2026",
+          "hour": "09:47:44"
+        },
+        {
+          "description": "Entry to station for customs processing.",
+          "city": "Bogota",
+          "date": "10/08/2026",
+          "hour": "09:44:23"
+        },
+        {
+          "description": "Reception of consolidated cargo in import.",
+          "city": "Bogota",
+          "date": "10/08/2026",
+          "hour": "01:48:00"
+        }
+      ]
+    },
+    {
+      "status": "COMMENTS",
+      "rows": [
+        {
+          "description": "Information (Manifest) of the shipment received.",
+          "city": "",
+          "date": "07/08/2026",
+          "hour": "13:51:01"
+        }
+      ]
+    }
+  ]
+}

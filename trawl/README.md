@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica and DAO. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO and PasarEX. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -343,3 +343,8 @@ CSRF session and reCAPTCHA answer. The helper binds the whole main-frame POST an
 redirected result document, then returns only the shipment identity and movement rows.
 Signer details, cookies, verification fields and page HTML stay in the context. An audio
 pause leaves one checkbox-only attempt; an unfinished verification keeps provider fallback.
+
+PasarEX ticks its tracking form's reCAPTCHA checkbox in a fresh context, or solves it by
+audio outside the audio pause, and sends the form's own GET. The helper binds that one
+main-frame request to the whole number and returns the order's number and its status groups
+of rows. The token, cookies and page HTML stay in the context.

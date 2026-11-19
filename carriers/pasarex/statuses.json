@@ -3,6 +3,18 @@
   "entries": [
     {"wording": "Orden de pedido recibida - paquete no arribado", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The order is booked and the parcel has not reached PasarEX yet."},
     {"wording": "Carga consolidada para importación recibida", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The consolidated import load reached Bogotá, ahead of customs."},
-    {"wording": "Ingresó a bodega", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The parcel entered a PasarEX warehouse in Colombia, after customs and between legs of the domestic route."}
+    {"wording": "Ingresó a bodega", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The parcel entered a PasarEX warehouse in Colombia, after customs and between legs of the domestic route."},
+    {"wording": "Information (Manifest) of the shipment received.", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The shipment's manifest data, under COMMENTS: before PasarEX has the parcel."},
+    {"wording": "Reception of consolidated cargo in import.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The consolidated import load reached PasarEX's station, ahead of customs."},
+    {"wording": "Entry to station for customs processing.", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under IN CUSTOMS PROCESS: the parcel enters the station for clearance."},
+    {"wording": "Cleared by customs by PasarEx.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "PasarEX, the customs broker, cleared the parcel."},
+    {"wording": "Cleared by customs and transferred to OPS.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under RECEIVED FOR DELIVERY: cleared and handed to operations."},
+    {"wording": "Package in ground transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under IN TRANSIT: by road between stations."},
+    {"wording": "Package in transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under IN TRANSIT."},
+    {"wording": "Reception of consolidated cargo at a station.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under IN WAREHOUSE: the load reached the destination station."},
+    {"wording": "Package received in warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under IN WAREHOUSE."},
+    {"wording": "Applies to cargo that may experience delivery delays due to disturbances or protests", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under SHIPPING WITH DELIVERY ISSUE: a notice of possible delay, after which the parcel moved on."},
+    {"wording": "Shipment left to local route for final delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under OUT FOR DISTRIBUTION."},
+    {"wording": "Shipment delivered in perfect condition", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Under DELIVERED."}
   ]
 }

@@ -1,27 +1,38 @@
 # PasarEX
 
-PasarEX parcels use enabled universal providers. There is no dedicated adapter.
-
 PasarEX (Pasar Express) is a Bogotá courier running international express, air cargo and last-mile
 delivery in Colombia, Chile, Panama and Barbados. It delivers Amazon parcels in Colombia. Its site
 is pasarex.com.
 
+## How it works
+
+One `trawl` step: the tracker answers only after a reCAPTCHA checkbox, so the browser service
+opens `https://tracking.pasarex.com/?awb=<number>`, ticks the checkbox and sends the form
+([helper](../../trawl/pasarex-browser.mjs)). The checkbox has passed without a picture; the
+service's audio solver is the fallback. The form sends `GET /tracking` with `awb` and the
+checkbox's `g-recaptcha-response` token, and the page comes back rendered on the server, in
+English whatever language the browser asks for. The helper binds that one request to the whole
+number and returns the number the page names and its rows. The token stays in the browser.
+
+## Notes
+
+- The page groups its rows under its own statuses (DELIVERED, IN CUSTOMS PROCESS, COMMENTS, …),
+  not in time order. The adapter puts them newest first. A row's status is broader than its
+  sentence, and the map reads the sentence.
+- A row has a day and a second without a zone, on the clock of the station that scanned it,
+  in Colombia so far; the rows keep them as wall clocks.
+- The tracker's only notice, `Guía no encontrada`, answers both a number it does not hold and a
+  token it refuses. The helper sends the token seconds after the checkbox issues it, well within
+  its two minutes, so the notice reads as not found.
+
+## Limitations
+
+Without the browser service there is no lookup. The page has no ETA, weight, sender or recipient.
+
 ## Numbers
 
 Amazon numbers of AMZPSR and nine digits were looked up on PasarEX's tracker, as archived copies
-show. The copies keep only the search form and come from one source, so the rule is low.
-
-## Why there is no adapter
-
-The tracker answers only after a reCAPTCHA checkbox. Its form sends
-`GET https://tracking.pasarex.com/tracking` with `awb` and the checkbox's `g-recaptcha-response`
-token, and the page comes back with the history rendered on the server: a plain request with a
-token the checkbox issued gets the same page, with no cookie. Without a token, or with a refused
-one, the tracker says no parcel was found, so that answer proves nothing about the parcel.
-
-An adapter would need a browser helper that ticks the checkbox, submits the form and reads the
-result page bound to the whole `awb`. The checkbox passed without an image challenge from a
-residential network; whether it does from a server is untested.
+show, and the tracker answers them. The copies come from one source, so the rule is low.
 
 ## Links
 
@@ -29,5 +40,5 @@ Tracking links carry the number as `awb` on tracking.pasarex.com.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`npm run test:carriers:live -- carriers/pasarex`, with `FLARESOLVERR_URL`, `PASAREX_TRACKING_NUMBER`
+and optionally `PASAREX_UNKNOWN_NUMBER` set outside the repository.

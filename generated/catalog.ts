@@ -44524,7 +44524,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Bogota",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "pasarex",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 60
+      },
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://pasarex.com/co/",
     "trackingUrlTemplate": "https://tracking.pasarex.com/?awb={trackingNumber}",

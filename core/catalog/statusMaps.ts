@@ -21,6 +21,7 @@ import { statusMap as yandexDelivery } from '../../carriers/yandex-delivery/stat
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
 import { statusMap as costaRica } from '../../carriers/correos-costa-rica/status.js';
+import { statusMap as pasarex } from '../../carriers/pasarex/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
 import { statusMap as sicepat } from '../../carriers/sicepat/status.js';
 import { statusMap as aneLogistics } from '../../carriers/ane-logistics/status.js';
@@ -867,7 +868,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'royale-international': royaleInternational,
 
   'direct-freight-express': directFreightExpress,
-  'qatar-post': qatarPost, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, 'russian-post': russianPost, 'surat-kargo': suratKargo,
+  'qatar-post': qatarPost, 'nepal-post': nepalPost, 'wp-ground': wpGround, 'logistics-solution': logisticsSolution, 'quick-fort': quickFort, pasarex, 'russian-post': russianPost, 'surat-kargo': suratKargo,
   '17feia': seventeenFeia, '2go': twoGo, '4-72': fourSeventyTwo, '4sides': fourSides, '5post': fivePost, '99minutos': ninetynineMinutos,
   'aaa-cooper': aaaCooper, 'a-duie-pyle': aDuiePyle, 'a-tu-hora-express': aTuHoraExpress, 'a1-post': a1Post, 'ab-courier': abCourier, 'abf-freight': abfFreight, 'aci-express-kr': aciExpressKr,
   'acs-courier': acsCourier, 'aex-paraguay': aexParaguay, 'airpak-express': airpakExpress, 'ait-worldwide': aitWorldwide, ajex,

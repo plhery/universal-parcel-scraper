@@ -21,18 +21,44 @@
   "timezone": "America/Bogota",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "pasarex",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true,
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 60
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://tracking.pasarex.com/?awb={trackingNumber}",
     "searchUrl": "https://tracking.pasarex.com/",
     "canaryUrl": "https://pasarex.com/co/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps",
+      "recipient_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
