@@ -363,6 +363,7 @@ export const CARRIER_RECOGNITION_RANKS: Readonly<Record<string, number>> = {
   "pcs-logistics-vn": 686,
   "pdn-express": 838,
   "pdq-chile": 646,
+  "pdu": 734,
   "pengyou": 67,
   "pfc-express": 856,
   "pflogistics": 775,

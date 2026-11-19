@@ -21,7 +21,10 @@
     "adapter": "pdu",
     "steps": [
       "direct"
-    ]
+    ],
+    "recognition": {
+      "rank": 734
+    }
   },
   "capabilities": [
     "history",

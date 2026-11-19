@@ -45057,7 +45057,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "pdu"
+      "adapter": "pdu",
+      "recognitionRank": 734
     },
     "canaryUrl": "https://www.pduni.com/",
     "trackingUrlTemplate": "https://www.pduni.com/",

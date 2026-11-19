@@ -1,4 +1,4 @@
-import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
+import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { TransportError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { runSteps } from '../../core/runner/index.js';
@@ -30,5 +30,8 @@ export class PduTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new PduTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'pdu', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  return { id: 'pdu', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context),
+    // The waybill inquiry answers an unknown number with an empty list, so one request settles it.
+    recognize: (number, context) => recognizeFromLookup(() => tracker.fetch(number, context),
+      () => accepted(() => normalizePduNumber(number))) };
 };

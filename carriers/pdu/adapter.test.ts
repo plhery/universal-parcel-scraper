@@ -1,8 +1,9 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
-import { PduTracker } from './adapter.js';
+import { adapter, PduTracker } from './adapter.js';
 import { normalizePduNumber, parsePdu, PDU_ENDPOINT, pduJson } from './parser.js';
 import { pduStage, statusMap } from './status.js';
 
@@ -114,6 +115,23 @@ describe('PDU guest adapter', () => {
     for (const entry of statuses.entries) {
       expect(statusMap.stage(entry.code ?? null, entry.wording ?? ''), `${entry.code ?? ''} ${entry.wording ?? ''}`).toBe(entry.stage);
     }
+  });
+
+  it('recognizes by the waybill inquiry: an unknown number is unknown, a listed waybill known', async () => {
+    const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
+    const empty = vi.fn<typeof fetch>().mockImplementation(async () => response(unknownReply([])));
+    await expect(carrier(empty).recognize!(NUMBER)).resolves.toEqual({ known: false });
+    expect(empty).toHaveBeenCalledOnce();
+    await expect(carrier(vi.fn<typeof fetch>().mockImplementation(async () => response(fixture()))).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
+    const unused = vi.fn<typeof fetch>();
+    await expect(carrier(unused).recognize!('CO-1')).resolves.toEqual({ known: false });
+    expect(unused).not.toHaveBeenCalled();
+    const blocked = vi.fn<typeof fetch>().mockImplementation(async () => response('<html><title>Just a moment...</title></html>'));
+    await expect(carrier(blocked).recognize!(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });
+  });
+
+  it('is asked beside Colis Privé, whose numbers share the shape', () => {
+    expect(recognitionAskedCarriers(NUMBER)).toEqual(expect.arrayContaining(['pdu', 'colis-prive']));
   });
 
   it('offers PDU for its numbers without claiming other layouts', () => {

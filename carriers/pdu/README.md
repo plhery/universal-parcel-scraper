@@ -7,7 +7,8 @@ reads the service behind its public tracking page over plain HTTP.
 ## Numbers
 
 A parcel to Colombia carried the destination's country code, eight digits and PD. A low rule
-offers PDU for that shape; other destinations' numbers have not been seen.
+offers PDU for that shape; other destinations' numbers have not been seen. Recognition asks PDU,
+because the shape also fits Colis Privé's and only the tracker can tell them apart.
 
 ## How it works
 
