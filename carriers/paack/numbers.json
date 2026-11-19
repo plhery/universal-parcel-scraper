@@ -76,14 +76,8 @@
         "date": "2025-12-08"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "paack",
-          "bpost",
-          "ecoscooting",
-          "gls-es"
-        ]
+        "carrier": "paack",
+        "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack, whose 5340 rule suggests it."
     },
@@ -96,14 +90,8 @@
         "date": "2026-09-22"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "paack",
-          "bpost",
-          "ecoscooting",
-          "gls-es"
-        ]
+        "carrier": "paack",
+        "confidence": "high"
       },
       "note": "Publicly reported shipment number; the attribution was not independently verified. The source attributes it to Paack, whose 5340 rule suggests it. Amazon order."
     },
@@ -211,14 +199,8 @@
         "assessment": "confirmed"
       },
       "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "paack",
-          "bpost",
-          "ecoscooting",
-          "gls-es"
-        ]
+        "carrier": "paack",
+        "confidence": "high"
       },
       "note": "An archived Paack tracking link, which carries this label number and the delivery postcode. Paack's own page showed the parcel's history with that postcode."
     }

@@ -109,8 +109,7 @@
     {
       "id": "paack-5340",
       "pattern": "^5340\\d{14}$",
-      "confidence": "low",
-      "preferred": true
+      "confidence": "high"
     },
     {
       "id": "paack-shein",

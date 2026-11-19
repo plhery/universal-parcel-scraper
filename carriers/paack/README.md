@@ -42,10 +42,10 @@ Spain and other carriers deliver them elsewhere, so that shape only suggests Paa
 
 - Most numbers are retailer order numbers or label barcodes with no stable shape, so they have
   no detection rule: a rule would cost precision for every other carrier. Label numbers of
-  `5340` and fourteen digits recur in public reports and on parcels Paack's page holds, so
-  detection suggests Paack first for them, beside the other carriers whose rules take any
-  eighteen digits. Paack is picked
-  manually or through a link to its tracker, on `mydeliveries.paack.app` or under
+  `5340` and fourteen digits recur in public reports and on parcels Paack's page holds, and
+  none has turned out to belong to another of the carriers whose rules take any eighteen
+  digits, so detection names Paack for them. Other numbers are picked
+  manually or through a link to Paack's tracker, on `mydeliveries.paack.app` or under
   `paack.co/shipments/tracking`. The rest of `paack.co` is the company site.
 - The `PK` numbers from Evri International hand-overs have a rule of their own. They are
   Paack's even though Evri International knows them too: detection offers Paack alone, and an

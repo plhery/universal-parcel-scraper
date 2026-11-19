@@ -52161,43 +52161,25 @@
   },
   {
     "input": "534000021250958171",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "paack",
+    "confidence": "high",
     "candidates": [
-      "paack",
-      "bpost",
-      "ecoscooting",
-      "gls-es"
-    ],
-    "preferred": [
       "paack"
     ]
   },
   {
     "input": "534000021263149358",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "paack",
+    "confidence": "high",
     "candidates": [
-      "paack",
-      "bpost",
-      "ecoscooting",
-      "gls-es"
-    ],
-    "preferred": [
       "paack"
     ]
   },
   {
     "input": "534000021265325582",
-    "carrier": "unknown",
-    "confidence": "low",
+    "carrier": "paack",
+    "confidence": "high",
     "candidates": [
-      "paack",
-      "bpost",
-      "ecoscooting",
-      "gls-es"
-    ],
-    "preferred": [
       "paack"
     ]
   },

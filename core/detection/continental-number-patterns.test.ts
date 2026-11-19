@@ -417,13 +417,11 @@ describe('SHEIN package numbers Paack and Ecoscooting deliver in Spain', () => {
 });
 
 describe('Paack label numbers of eighteen digits', () => {
-  it('suggests Paack first for 5340 and fourteen digits, beside the bare eighteen-digit rules', () => {
-    const detected = detectCarrierMatch('534000000000000001');
-    expect(detected).toMatchObject({ carrier: 'unknown', confidence: 'low', preferred: ['paack'] });
-    expect(detected.candidates[0]).toBe('paack');
-    expect(detected.candidates).toEqual(expect.arrayContaining(['bpost', 'ecoscooting']));
+  it('names Paack for 5340 and fourteen digits, and leaves other eighteen digits to the bare rules', () => {
+    expect(detectCarrierMatch('534000000000000001')).toMatchObject({ carrier: 'paack', confidence: 'high' });
     // Paack needs the postcode, so recognition does not ask it.
     expect(recognitionAskedCarriers('534000000000000001')).not.toContain('paack');
+    expect(detectCarrierMatch('534100000000000001').candidates).toEqual(expect.arrayContaining(['bpost', 'ecoscooting']));
     for (const number of ['534100000000000001', '53400000000000001', '5340000000000000001', '354000000000000001']) {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('paack');
     }
