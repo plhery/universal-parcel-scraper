@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import { DateTime } from 'luxon';
 import { IndeterminateError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { hasPrivateDeliveryDetails, languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
 
 export const PROVIDER = 'Tusk Logistics';
@@ -39,7 +39,8 @@ export function parseTuskLogistics(html: string, number: string): CarrierResult 
     const location = [city, state].filter(Boolean).join(', ');
     return {
       local_time: wall.toFormat("yyyy-MM-dd'T'HH:mm:ss"),
-      description: details || status,
+      // The partner's sentence, unless it names who signed or a code: then the status alone.
+      description: details && !hasPrivateDeliveryDetails(details) ? details : status,
       ...(location ? { location } : {}),
       ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
     };

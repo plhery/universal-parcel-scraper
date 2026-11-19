@@ -1,31 +1,20 @@
 import { IndeterminateError, NoHistoryError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { languageStageStatus } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
+// MTE Xpress tracks on Ship Logic, the portal Internet Express tracks on: the same status codes and wording.
+import { HIDDEN_CODES, internetExpressStage, internetExpressWording } from '../internet-express/status.js';
 
 export const PROVIDER = 'MTE Xpress';
 export const PROVIDER_ID = 14;
-
-const stages = new Map<string, Stage>([
-  ['submitted', 'registered'],
-  ['collection-assigned', 'registered'],
-  ['collected', 'accepted'],
-  ['at-hub', 'in_transit'],
-  ['in-transit', 'in_transit'],
-  ['out-for-delivery', 'out_for_delivery'],
-  ['delivered', 'delivered'],
-]);
 
 function status(code: unknown) {
   if (typeof code !== 'string' || !/^[a-z][a-z0-9-]{0,63}$/.test(code)) {
     throw new SchemaError(PROVIDER, 'Invalid Ship Logic status code');
   }
-  const description = code === 'collection-assigned'
-    ? 'Collection assigned to driver'
-    : code.charAt(0).toUpperCase() + code.slice(1).replaceAll('-', ' ');
-  return { code, description, stage: stages.get(code) };
+  return { code, description: internetExpressWording(code), stage: internetExpressStage(code) };
 }
 
 export function parseMteXpress(payload: unknown, number: string): CarrierResult {
@@ -41,7 +30,8 @@ export function parseMteXpress(payload: unknown, number: string): CarrierResult 
     if (!isRecord(row) || typeof row.parcel_id !== 'number' || !Number.isSafeInteger(row.parcel_id) || row.parcel_id < 0) {
       throw new SchemaError(PROVIDER, 'Invalid scan record');
     }
-    if (row.parcel_id !== 0) return [];
+    // Piece scans, and the operational events the portal leaves out of the history it shows.
+    if (row.parcel_id !== 0 || (typeof row.status === 'string' && HIDDEN_CODES.has(row.status))) return [];
     const clock = explicitOffsetTime(row.date);
     if (!clock) throw new SchemaError(PROVIDER, 'Invalid scan time');
     const scan = status(row.status);
@@ -54,7 +44,8 @@ export function parseMteXpress(payload: unknown, number: string): CarrierResult 
   });
   if (!history.length) throw new NoHistoryError(PROVIDER);
   const events = history.sort((a, b) => b.timestamp - a.timestamp).map(scan => scan.event);
-  const current = status(shipment.status);
+  const summary = status(shipment.status);
+  const current = HIDDEN_CODES.has(summary.code) ? status(events[0]!.provider_code) : summary;
   const delivered = current.stage === 'delivered' ? events.find(event => event.stage === 'delivered') : undefined;
   const service = clean(shipment.service_level_name, 80);
   return {

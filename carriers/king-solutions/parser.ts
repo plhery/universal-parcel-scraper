@@ -1,6 +1,6 @@
 import { IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { hasPrivateDeliveryDetails, languageStageStatus, type Stage } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
 
 export const PROVIDER = 'King Solutions';
@@ -22,14 +22,17 @@ export function parseReply(body: string, number: string): CarrierResult {
   if (result.searchString !== number || result.proNum !== item.proNumber || (item.proNumber !== number && item.carrierProNum !== number)) throw new IndeterminateError(PROVIDER, 'PRO mismatch');
   if (typeof item.status !== 'string' || !item.status.trim() || !Array.isArray(result.externalNotes)) throw new SchemaError(PROVIDER, 'Incomplete shipment');
   const stage = stages.get(item.status);
-  const events: CarrierEvent[] = result.externalNotes.map((note: unknown) => {
+  let omitted = false;
+  const events: CarrierEvent[] = result.externalNotes.flatMap((note: unknown) => {
     if (!isRecord(note) || typeof note.comments !== 'string' || !note.comments.trim()) throw new SchemaError(PROVIDER, 'Invalid trace note');
+    // The notes are written by hand: one naming who signed, or a code, costs only its own row.
+    if (hasPrivateDeliveryDetails(note.comments)) { omitted = true; return []; }
     const noteStage = typeof note.traceStatus === 'string' ? stages.get(note.traceStatus) : undefined;
-    return { time: instant(note.traceDate), description: note.comments, ...(noteStage ? { stage: noteStage, stage_source: 'carrier_map' } : {}) };
+    return [{ time: instant(note.traceDate), description: note.comments.trim(), ...(noteStage ? { stage: noteStage, stage_source: 'carrier_map' } : {}) }];
   });
   events.sort((a, b) => b.time!.localeCompare(a.time!));
   const delivery = stage === 'delivered' && item.actualDeliveryDate ? instant(item.actualDeliveryDate) : undefined;
   return { status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: item.status, last_update: [delivery, events[0]?.time].filter(Boolean).sort().at(-1) ?? null, expected_delivery: null,
-    ...(delivery ? { delivered_at: delivery } : {}), ...(!events.length ? { summary_only: true } : {}), events };
+    ...(delivery ? { delivered_at: delivery } : {}), ...(!events.length ? { summary_only: true } : {}), ...(omitted ? { history_truncated: true } : {}), events };
 }

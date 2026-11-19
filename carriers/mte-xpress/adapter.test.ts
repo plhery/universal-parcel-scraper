@@ -15,6 +15,17 @@ describe('MTE Xpress', () => {
     expect(result.delivered_at).toBe('2026-04-10T09:52:18.882Z');
   });
 
+  it('reads Ship Logic codes as Internet Express does, and leaves out the operational events the portal hides', () => {
+    const shipment = found.shipments[0]!;
+    const latest = { parcel_id: 0, date: '2026-04-10T12:00:00Z' };
+    const rows = [{ ...latest, status: 'delivery-failed-attempt' }, { ...latest, date: '2026-04-10T12:30:00Z', status: 'on-hold-internal' },
+      ...(shipment.tracking_events as unknown[])];
+    const result = parseMteXpress({ shipments: [{ ...shipment, status: 'on-hold-internal', tracking_events: rows }] }, number);
+    expect(result).toMatchObject({ current_stage: 'failed_attempt', last_status_text: 'Delivery failed attempt' });
+    expect(result.events?.[0]).toMatchObject({ description: 'Delivery failed attempt', provider_code: 'delivery-failed-attempt', stage: 'failed_attempt' });
+    expect(result.events).toHaveLength(11);
+  });
+
   it('requires both the whole reference and the correct tenant', () => {
     expect(() => parseMteXpress(found, 'ZZZZZZZZZ')).toThrow();
     const other = { shipments: [{ ...found.shipments[0], provider_id: 9 }] };

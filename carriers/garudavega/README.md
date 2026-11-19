@@ -11,7 +11,7 @@ carriers' numbers too, so there is no rule.
 
 ## Retrieval
 
-The guest page renders the shipment number and its scans in HTML. The adapter checks the shipment heading and reads the dated timeline in page order. Scan clocks have no offset and can span countries, so they keep their local time. The fixture contains the heading and timeline from the public example listed in `numbers.json`.
+The guest page renders the shipment number and its scans in HTML. The adapter checks the shipment heading and reads the dated timeline in page order. Each piece repeats a scan, so identical rows are read once, and the expected-arrival row, a forecast, is left out. "SHIPMENT RECEIVED" repeats at the hubs after the branch has sorted and manifested the parcel, so it reads as transit. Scan clocks have no offset and can span countries, so they keep their local time. The fixture contains the heading and timeline from the public example listed in `numbers.json`.
 
 ## Testing
 

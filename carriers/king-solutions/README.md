@@ -11,7 +11,7 @@ The only public example is SO, nine digits and SO, from an aggregator, so there 
 
 ## Retrieval
 
-The guest page looks up one or more PRO numbers through KingREST. The adapter requests one and checks the matched King or carrier PRO against the shipment record. The shipment status and actual delivery date come from the summary. Dated external notes are kept in time order, including dispatch updates entered after delivery. The fixture is the KingREST reply for the public example in `numbers.json`.
+The guest page looks up one or more PRO numbers through KingREST. The adapter requests one and checks the matched King or carrier PRO against the shipment record. The shipment status and actual delivery date come from the summary. Dated external notes are kept in time order, including dispatch updates entered after delivery. The notes are written by hand: one naming who signed or a code is left out, and the history is then marked incomplete. The fixture is the KingREST reply for the public example in `numbers.json`.
 
 ## Testing
 

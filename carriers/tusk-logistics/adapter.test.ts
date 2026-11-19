@@ -17,6 +17,14 @@ describe('Tusk Logistics guest page', () => {
     });
   });
 
+  it("keeps the status alone where the partner's sentence names who signed", () => {
+    const signed = found.replace('Your Parcel has been delivered', 'Delivered, signed by A Neighbour');
+    expect(signed).not.toBe(found);
+    const result = parseTuskLogistics(signed, number);
+    expect(result.events?.[0]).toMatchObject({ stage: 'delivered' });
+    expect(JSON.stringify(result)).not.toContain('Neighbour');
+  });
+
   it('separates the explicit negative, unrelated result and unfinished page', () => {
     expect(() => parseTuskLogistics('<h1>Shipment not found!</h1>', unknownNumber)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseTuskLogistics(found, unknownNumber)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));

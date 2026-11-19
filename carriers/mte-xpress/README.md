@@ -10,7 +10,9 @@ single shipment from that provider with the same waybill or short reference. The
 HTTP 404 naming the requested reference means it has no result for that reference.
 
 The adapter reads shipment-level scans and keeps the offset in each scan's timestamp. It uses
-the shipment status for the summary and keeps the service level. Piece scans, addresses,
+the shipment status for the summary and keeps the service level. Status codes and their
+wording are Ship Logic's, read as [Internet Express](../internet-express/README.md) reads
+them, and the operational events the portal hides stay out. Piece scans, addresses,
 free-text scan notes and delivery estimates are omitted.
 
 ## Testing

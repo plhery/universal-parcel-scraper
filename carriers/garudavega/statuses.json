@@ -1,23 +1,17 @@
 {
   "carrier": "garudavega",
   "entries": [
-    {
-      "wording": "OK DELIVERY",
-      "language": "en",
-      "stage": "delivered",
-      "confirmedBy": "live"
-    },
-    {
-      "wording": "SHIPMENT RECEIVED",
-      "language": "en",
-      "stage": "accepted",
-      "confirmedBy": "live"
-    },
-    {
-      "wording": "Open Manifest Arrived Hub",
-      "language": "en",
-      "stage": "in_transit",
-      "confirmedBy": "live"
-    }
+    {"wording": "Sorted to Destination", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The booking branch sorting the parcel to its destination, its first scan."},
+    {"wording": "OpenManifest In Transit", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Open Manifest Arrived Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Forwarding To Destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "SHIPMENT RECEIVED", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "A hub's receipt, which repeats after the branch has sorted and manifested the parcel."},
+    {"wording": "SHIPMENT SENT TO DESTINATION", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "PREPARED EXPORT DOCUMENTS", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "ARRIVED AT EXPORT TERMINAL", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "HANDED OVER TO AIRLINE", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Departed City-Link origin facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination partner's first scan after the flight."},
+    {"wording": "Arrived City-Link facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "OK DELIVERY", "language": "en", "stage": "delivered", "confirmedBy": "live"}
   ]
 }
