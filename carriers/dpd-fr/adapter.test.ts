@@ -17,6 +17,7 @@ import {
 } from './adapter.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { classifyStatus, statusMap } from './status.js';
+import { resultStage } from '../../core/result/resolve.js';
 
 type Row = [date: string, clock: string, description: string, location: string];
 type Detail = [label: string, value: string];
@@ -226,6 +227,7 @@ describe('DPD France rendered tracking', () => {
     ] }), TEST_TRACKING_NUMBER);
     expect(shipped.status).toBe('out_for_delivery');
     expect(shipped.events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'none' });
+    expect(shipped.current_stage).toBe('out_for_delivery');
     const shipment = normalizeStatusWording("Le destinataire a été notifié par SMS de l'expédition de son colis");
     expect(statusMap.stage(null, shipment)).toBeUndefined();
     expect(statusMap.gapNote?.(null, shipment)).toMatch(/on its way.*keeps the stage/);
@@ -336,6 +338,23 @@ describe('DPD France rendered tracking', () => {
     ]);
   });
 
+  it('reads a parcel left at a Pickup point after the recipient was absent as waiting there', () => {
+    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
+      ['05/03/2026', '15:36', 'Le destinataire est avisé par SMS de la disponibilté de son colis dans le relais Pickup', ''],
+      ['05/03/2026', '14:37', "Le destinataire ne peut être avisé de la disponibilité de son colis dans le relais Pickup car l'envoi de l'e-mail ou SMS a échoué", ''],
+      ['05/03/2026', '14:34', 'Votre colis est disponible en relais Pickup, nous en avons informé le destinataire par SMS/e-mail', 'Relais Pickup'],
+      ['05/03/2026', '14:32', 'Le destinataire était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup', 'Agence DPD de Exemple (998)'],
+      ['05/03/2026', '06:58', 'Votre colis est en cours de livraison', 'Agence DPD de Exemple (998)'],
+    ] }), TEST_TRACKING_NUMBER);
+    expect(result.events?.map((event) => event.stage)).toEqual([
+      'ready_for_pickup', 'ready_for_pickup', 'ready_for_pickup', 'failed_attempt', 'out_for_delivery',
+    ]);
+    // The status says out for delivery for every row waiting at a Pickup point; the newest row's stage leads.
+    expect(result).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
+    expect(resultStage(result)).toBe('ready_for_pickup');
+    expect(statusMap.stage(null, normalizeStatusWording(result.events![3]!.description!))).toBe('failed_attempt');
+  });
+
   it('leaves unrecognized wording without a stage and falls back to the newest mapped row', () => {
     const result = parseDPDFranceTrackingHtml(trackingFixture({
       outboundRows: [
@@ -350,6 +369,7 @@ describe('DPD France rendered tracking', () => {
     // The unmapped row decides nothing: the newest recognized row still does.
     expect(result.status).toBe('delivered');
     expect(result.last_status_text).toBe('Votre colis fait l’objet d’un traitement particulier');
+    expect(result).not.toHaveProperty('current_stage');
   });
 
   it('reports status unknown when no event wording is recognized', () => {

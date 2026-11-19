@@ -457,6 +457,30 @@
       "firstSeen": "2026-11-17",
       "note": "\"Les instructions de livraison ont bien été prises en compte. Le destinataire a programmé une nouvelle livraison à son adresse pour le <day>\": the recipient booked a new day, which is read as the expected delivery while the booking is the newest recognized row."
     },
-    {"wording": "Votre colis est disponible au retrait dans votre agence DPD", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "live"}
+    {"wording": "Votre colis est disponible au retrait dans votre agence DPD", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "live"},
+    {
+      "wording": "etait absent lors du passage",
+      "language": "fr",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "\"Le destinataire était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup\": the round did not deliver, minutes before the Pickup point's own row. The result status becomes exception."
+    },
+    {
+      "wording": "de la disponibilite de son colis",
+      "language": "fr",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "\"Le destinataire ne peut être avisé de la disponibilité de son colis dans le relais Pickup car l'envoi de l'e-mail ou SMS a échoué\", after the Pickup point's own row: the parcel waits there. The result status becomes out_for_delivery."
+    },
+    {
+      "wording": "de la disponibilte de son colis",
+      "language": "fr",
+      "stage": "ready_for_pickup",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "\"Le destinataire est avisé par SMS de la disponibilté de son colis dans le relais Pickup\", spelled so by DPD: the parcel waits in the Pickup point. The result status becomes out_for_delivery."
+    }
   ]
 }

@@ -74,7 +74,15 @@ non-2xx statuses are indeterminate.
   round that did not deliver. The notice that the delivery is put off
   ("… du report de sa livraison") names no reason, so it reads `in_transit`: the parcel waits in the
   network for its new day.
-- Unrecognized wording keeps the row with no `stage`; the result status comes
+- A round that found the recipient absent and left the parcel at a Pickup point ("Le destinataire
+  était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup")
+  reads `failed_attempt`; the Pickup point's own row follows. The notices that the parcel waits
+  there ("… avisé par SMS de la disponibilité de son colis dans le relais Pickup", which DPD spells
+  "disponibilté", and "… ne peut être avisé … car l'envoi de l'e-mail ou SMS a échoué") read
+  `ready_for_pickup`.
+- A staged newest row, a notice included, gives the result's `current_stage`: the result status
+  says `out_for_delivery` for a parcel waiting at a Pickup point too.
+- Unrecognized wording keeps the row with no `stage` and gives no `current_stage`; the result status comes
   from the newest recognized row. `statusMap` in [status.ts](status.ts) answers the app's
   review queue by the same wording.
 - The fourth cell is the depot or sorting centre. The delivered row puts "Livré au

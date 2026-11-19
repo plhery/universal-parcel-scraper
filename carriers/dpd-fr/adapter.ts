@@ -236,6 +236,9 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
   const latest = parsedEvents.find((event) => event.status !== 'unknown');
   const status = latest?.status ?? 'unknown';
   const lastStatusText = events[0]?.description ?? 'Tracking information received';
+  // A staged newest row leads, a notice to the recipient with the stage it kept included: the result status alone
+  // says out for delivery for a parcel waiting in a Pickup point.
+  const currentStage = events[0]?.stage;
 
   const details = $(`${detailsSelector} .tableInfosAR`).toArray().map((element) => {
     const row = $(element);
@@ -256,6 +259,7 @@ export function parseDPDFranceTrackingHtml(html: string, rawTrackingNumber: stri
 
   return {
     status,
+    ...(currentStage ? { current_stage: currentStage } : {}),
     last_status_text: lastStatusText,
     last_update: events[0]?.time ?? null,
     expected_delivery: ['delivered', 'exception'].includes(status) ? null : expectedDelivery,

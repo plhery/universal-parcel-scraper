@@ -101,6 +101,9 @@ export function classifyStatus(description: string): ClassifiedStatus {
     // "Votre livraison n'a pas pu être réalisée ce jour, elle est reprogrammée au prochain jour ouvré", hours after
     // the round's scan: the round did not deliver.
     'n a pas pu etre realisee',
+    // "Le destinataire était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup":
+    // the round did not deliver, and the Pickup point's own row follows.
+    'etait absent lors du passage',
     'retard',
     'prise de rendez vous necessaire',
   ])) return { status: 'exception', stage: 'failed_attempt' };
@@ -122,6 +125,10 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'attend en relais',
     'disponible au point relais',
     'a disposition',
+    // The recipient told by SMS that the parcel waits in the Pickup point, or not told because the SMS or e-mail
+    // failed: either way it waits there. One of them spells it "disponibilté".
+    'de la disponibilite de son colis',
+    'de la disponibilte de son colis',
   ])) return { status: 'out_for_delivery', stage: 'ready_for_pickup' };
 
   // The same-day notices ("le destinataire est informé par SMS de la livraison
