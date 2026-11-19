@@ -14,16 +14,31 @@
   "timezone": "America/Chicago",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "tusk-logistics",
+    "steps": [
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://shipmenttracking.tusklogistics.com/?trackingNumber={trackingNumber}",
     "searchUrl": "https://www.tusklogistics.com/track-your-shipment",
     "canaryUrl": "https://shipmenttracking.tusklogistics.com/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },

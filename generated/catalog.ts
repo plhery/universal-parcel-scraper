@@ -59396,7 +59396,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tusk-logistics",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://shipmenttracking.tusklogistics.com/",
     "trackingUrlTemplate": "https://shipmenttracking.tusklogistics.com/?trackingNumber={trackingNumber}",
