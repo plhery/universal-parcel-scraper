@@ -26,8 +26,8 @@ Recognition asks the same page: a scan says GO Logistics holds the number.
   the signatory and the pieces, and the signatory is read; the stage comes from the delivery's
   own words. The signature image and the driver's number are not kept.
 - The tracker keeps scans for years, and a number used again lists every consignment under it,
-  oldest first. A delivery followed by a new booking or collection closes the earlier one, so only
-  the latest consignment is read.
+  oldest first. A new booking or collection after a delivery opens the next consignment, even
+  with an upload row in between, and only the latest consignment is read.
 
 ## Numbers
 

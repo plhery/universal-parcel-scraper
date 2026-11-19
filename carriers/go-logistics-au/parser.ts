@@ -51,14 +51,21 @@ function scansOf($: CheerioAPI): CarrierEvent[] {
 
 /**
  * The scans of the latest consignment under the number. A number used again
- * lists every consignment, oldest first: a delivery followed by a new start
- * closes the earlier one.
+ * lists every consignment, oldest first: a new booking or collection after a
+ * delivery opens the next one, even with rows such as an upload in between,
+ * and the scans up to the delivery, its signatory with them, are left out.
  */
 function latestConsignment(scans: CarrierEvent[]): CarrierEvent[] {
   let start = 0;
-  scans.forEach((scan, index) => {
-    if (index > 0 && (scan.stage === 'registered' || scan.stage === 'accepted') && scans[index - 1]!.stage === 'delivered') start = index;
-  });
+  let delivery: number | null = null;
+  for (const [index, scan] of scans.entries()) {
+    if (scan.stage === 'delivered') {
+      delivery = index;
+    } else if (delivery !== null && (scan.stage === 'registered' || scan.stage === 'accepted')) {
+      start = delivery + 1;
+      delivery = null;
+    }
+  }
   return scans.slice(start);
 }
 

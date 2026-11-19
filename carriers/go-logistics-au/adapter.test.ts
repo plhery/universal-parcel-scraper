@@ -83,6 +83,28 @@ describe('GO Logistics tracking', () => {
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
   });
 
+  it('keeps an earlier consignment and its signatory out of a number used again', () => {
+    const earlier = [
+      line('3 Mar 2025', '2:40 PM', 'Consignment Collected'),
+      line('4 Mar 2025', '1:10 PM', 'Consignment Delivered<br><span class="NTsignedby">Signed by Earlier Recipient - 1 piece</span>'),
+    ];
+    // Rows between the delivery and the next consignment's booking or collection.
+    for (const later of [
+      [line('4 Mar 2025', '6:00 PM', 'Data Uploaded'), line('9 Jun 2025', '9:00 AM', 'Consignment Collected')],
+      [line('9 Jun 2025', '9:00 AM', 'Data Uploaded'), line('9 Jun 2025', '9:05 AM', 'Synthetic note'), line('9 Jun 2025', '9:10 AM', 'Add To Consignment')],
+    ]) {
+      const result = parseGoLogistics(withLines(...earlier, ...later), NUMBER);
+      expect(JSON.stringify(result)).not.toMatch(/Earlier Recipient|Consignment Delivered/);
+      expect(result.events).toHaveLength(later.length);
+      expect(result.status).not.toBe('delivered');
+    }
+    // Without a new booking or collection, a later row is still the delivered consignment's.
+    const same = parseGoLogistics(withLines(...earlier, line('4 Mar 2025', '6:00 PM', 'Data Uploaded')), NUMBER);
+    expect(same.events?.map((event) => event.description)).toEqual([
+      'Data Uploaded', 'Consignment Delivered Signed by Earlier Recipient - 1 piece', 'Consignment Collected',
+    ]);
+  });
+
   it('keeps scans of one minute in the page’s order and stages another wording by the shared rules or not at all', () => {
     const result = parseGoLogistics(withLines(
       line('3 Mar 2025', '2:40 PM', 'Consignment Collected'),
