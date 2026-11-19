@@ -8,6 +8,7 @@
     {"wording": "预计…航班/Flight scheduled for …", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight it is booked on, after leaving the warehouse; the flight's day, month.day and in English, is read as an ellipsis."},
     {"wording": "预计…航班/Scheduled flight on …", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-14", "note": "The same wait for the booked flight in another English, its day read as an ellipsis."},
     {"wording": "送往航司途中【On the way to the airline company】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "On its way to the airline after leaving the warehouse."},
+    {"wording": "Expected flight on …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The same wait for the booked flight in a third English, its month abbreviated, \"Nov. 19th\", read as an ellipsis. Whatever Chinese half comes before it, the English half stages the row."},
     {"wording": "预计…号航班【Expect flight ….】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "Waiting for the flight it is booked on; the flight's day of the month, in Chinese and in English, is read as an ellipsis."},
     {"wording": "航班已起飞【The flight has taken off.】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The booked flight has left."},
     {"wording": "航班抵达【Flight arrival】", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has landed."},

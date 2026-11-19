@@ -18,6 +18,8 @@ const labels: Record<string, ClassifiedStatus> = {
   // The partner abroad that delivers the parcel has it for delivery, given at the minute of FOR DELIVERY.
   'TO BE DELIVERED': { status: 'in_transit', stage: 'in_transit' },
   'UNKNOWN/INCOMPLETE CONSIGNEE': { status: 'exception', stage: 'failed_attempt' },
+  // The partner abroad that delivers the parcel could not deliver it at the address given. The label is cut short as shown.
+  'NON-EXISTENT/INCOMPLETE ADDRES': { status: 'exception', stage: 'failed_attempt' },
   // The courier found no one in and left a notice.
   'NOTICE OF ATTEMPTED DELIVERY': { status: 'exception', stage: 'failed_attempt' },
   // The partner abroad found no one in on its round; the next round or a return follows.

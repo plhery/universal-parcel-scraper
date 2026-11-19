@@ -84,6 +84,14 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "NON-EXISTENT/INCOMPLETE ADDRES",
+      "language": "en",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The partner abroad that delivers the parcel could not deliver it at the address given, as UNKNOWN/INCOMPLETE CONSIGNEE. The wording is cut short as shown."
+    },
+    {
       "wording": "NOTICE OF ATTEMPTED DELIVERY",
       "language": "en",
       "stage": "failed_attempt",

@@ -21,17 +21,23 @@ const WORDINGS = new Map<string, Stage>(statuses.entries.flatMap((entry) => {
 const FLIGHT_DAY = /^(预计)\d{1,2}\.\d{1,2}(航班\/(?:flight scheduled for|scheduled flight on) )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
 const FLIGHT_DATE = /^(预计)\d{1,2}(号航班【expect flight )\d{1,2}(?:st|nd|rd|th)(\.?】)$/;
 // The same days in the English halves shown alone.
-const ENGLISH_FLIGHT_DAY = /^((?:flight scheduled for|scheduled flight on) )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
+const ENGLISH_FLIGHT_DAY = /^((?:flight scheduled for|scheduled flight on|expected flight on) )[a-z]+\.? \d{1,2}(?:st|nd|rd|th)$/;
 const ENGLISH_FLIGHT_DATE = /^(expect flight )\d{1,2}(?:st|nd|rd|th)(\.?)$/;
+
+function mapped(wording: string): Stage | undefined {
+  return WORDINGS.get(wording.replace(FLIGHT_DAY, '$1…$2…').replace(FLIGHT_DATE, '$1…$2…$3')
+    .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2'));
+}
 
 /**
  * The stage Lingdong International's map gives a row, by its `normalizeStatusWording` wording or
- * the English half shown for it, with a booked flight's day read as an ellipsis.
+ * the English half shown for it, with a booked flight's day read as an ellipsis. A row in both
+ * languages that the map lacks whole is read by its English half.
  * A row's kind code, when it has one, groups many wordings and decides nothing.
  */
 export function lingdongStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.get(wording.replace(FLIGHT_DAY, '$1…$2…').replace(FLIGHT_DATE, '$1…$2…$3')
-    .replace(ENGLISH_FLIGHT_DAY, '$1…').replace(ENGLISH_FLIGHT_DATE, '$1…$2'));
+  const english = lingdongEnglish(wording);
+  return mapped(wording) ?? (english === undefined ? undefined : mapped(english));
 }
 
 export const statusMap: CarrierStatusMap = { stage: lingdongStage, gaps: [] };

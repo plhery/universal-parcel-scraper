@@ -39,9 +39,11 @@ const CODES: Readonly<Record<string, Stage>> = {
   V: 'failed_attempt',
   // It could not be delivered and goes to the post office, where it can be collected.
   VDO: 'failed_attempt',
+  PIP: 'failed_attempt',
   // Waiting at the post office for the recipient.
   IZR: 'ready_for_pickup',
   PVI: 'ready_for_pickup',
+  VDI: 'ready_for_pickup',
   // "Pošiljka je bila prevzeta": the recipient collected it at the post office, a delivery.
   VR: 'delivered',
 };

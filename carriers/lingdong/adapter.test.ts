@@ -171,7 +171,8 @@ describe('Lingdong International tracking adapter', () => {
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description: '合成的记录' })).toEqual({ kind: 'unknown' });
     for (const description of ['预计10.28航班/Flight scheduled for October 28th', '预计1.2航班/Flight scheduled for January 2nd', '预计30号航班【Expect flight 30th.】', '预计2号航班【Expect flight 2nd.】',
-      '预计11.9航班/Scheduled flight on November 9st', '预计12.21航班/Scheduled flight on December 21st']) {
+      '预计11.9航班/Scheduled flight on November 9st', '预计12.21航班/Scheduled flight on December 21st', 'Expected flight on Nov. 19th',
+      '预计11.19航班/Expected flight on Nov. 19th', '预计航班【Expected flight on Dec. 2nd】']) {
       expect(statusMapAnswer({ carrier: 'lingdong', providerCode: null, description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
     }
     // The label before the first scan, the hand-over to GOFO in the United States after the release, and GOFO's hub.
