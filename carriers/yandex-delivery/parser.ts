@@ -1,10 +1,11 @@
 import { load } from 'cheerio';
 import { DateTime } from 'luxon';
-import { ChallengeError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { ChallengeError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
+import { yandexDeliveryRequestNumber } from './number.js';
 import { statusMap, yandexDeliveryStage } from './status.js';
 
 export const PROVIDER = 'Yandex Delivery';
@@ -19,12 +20,8 @@ const CLOCK = /^(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2})$/;
 const DETAIL_WORDING = /^(?:ждёт вручения|ждет вручения|изменён|изменен|отмен)/i;
 const DETAIL_LINE = /^(?:срок хранения|до \d|на \d|истек)/i;
 
-/** A tracking or order number as the page's form takes it: 6 to 40 Latin letters, digits and hyphens. */
-export function normalizeYandexDeliveryNumber(raw: string): string {
-  const number = typeof raw === 'string' ? raw.trim().toUpperCase() : '';
-  if (!/^[A-Z0-9-]{6,40}$/.test(number)) throw new InvalidInputError(PROVIDER, 'Yandex Delivery numbers are 6 to 40 Latin letters, digits and hyphens');
-  return number;
-}
+/** A tracking or order number as the page's form takes it (`yandexDeliveryRequestNumber`). */
+export const normalizeYandexDeliveryNumber = yandexDeliveryRequestNumber;
 
 /** A scan's "28.04.2026 15:36", checked as a calendar minute and kept as a wall clock. */
 function wallClock(raw: string): string | null {

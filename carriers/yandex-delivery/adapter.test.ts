@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { CARRIERS, trackingNumberForLink } from '../../core/catalog/index.js';
 import { languageStageStatus, STAGES } from '../../core/status/index.js';
 import { normalizeStatusWording, statusGapNote } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -57,6 +58,18 @@ describe('Yandex Delivery guest adapter', () => {
     expect(() => parseYandexDeliveryPage(captcha, NUMBER)).toThrow(expect.objectContaining({ kind: 'challenge' }));
     const moved = vi.fn<typeof fetch>().mockResolvedValue(new Response(null, { status: 301, headers: { Location: 'https://dostavka.yandex.ru/' } }));
     await expect(new YandexDeliveryTracker({ fetcher: moved }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+  });
+
+  it('gives a stored LO number back the hyphen the tracker needs, in requests and links', async () => {
+    const stored = NUMBER.replace('-', '');
+    expect(normalizeYandexDeliveryNumber(stored)).toBe(NUMBER);
+    expect(normalizeYandexDeliveryNumber('LO00000000')).toBe('LO00000000');
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(html(page('disposed')));
+    const result = await new YandexDeliveryTracker({ fetcher }).fetch(stored);
+    expect(result.events).toHaveLength(14);
+    expect(String(fetcher.mock.calls[0]![0])).toBe(`https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id=${NUMBER}`);
+    expect(trackingNumberForLink('yandex-delivery', stored)).toBe(NUMBER);
+    expect(CARRIERS['yandex-delivery'].trackingUrl?.(stored)).toBe(`https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id=${NUMBER}`);
   });
 
   it('takes the page\'s 6 to 40 Latin letters, digits and hyphens, upper-cased', () => {

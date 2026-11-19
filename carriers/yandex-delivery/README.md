@@ -10,7 +10,9 @@ deliveries by partner couriers. Boxberry's site now sends visitors to a Yandex D
 Its tracking page takes a tracking or order number of 6 to 40 Latin letters, digits and hyphens,
 gives the layout as `LO-` and nine digits, and shows one example. Two letters and nine digits is
 also the shape of GLS Italy's numbers, so there is no detection rule; the adapter answers an
-explicit selection. It upper-cases the number, which the page reads either way.
+explicit selection. It upper-cases the number, which the page reads either way. The page answers an
+LO number without its hyphen as not found, and normalized numbers drop hyphens, so the adapter and
+the link put it back after LO.
 
 ## Retrieval
 
@@ -41,7 +43,7 @@ them.
 ## Links
 
 `https://dostavka.yandex.ru/ndd/tracking/?order_tracking_id={trackingNumber}` opens the tracking
-page on the number. A pasted dostavka.yandex.ru tracking link with an `order_tracking_id` names
+page on the number, an LO number with its hyphen. A pasted dostavka.yandex.ru tracking link with an `order_tracking_id` names
 Yandex Delivery.
 
 ## Testing

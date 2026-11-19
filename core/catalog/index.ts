@@ -25,6 +25,7 @@ import { normalizeTntItalyNumber } from '../../carriers/tnt-it/number.js';
 import { ZR_EXPRESS_LAYOUT, zrExpressRequestNumber } from '../../carriers/zr-express/number.js';
 import { postlogisticsIdentifier } from '../../carriers/postlogistics/number.js';
 import { normalizeUpayaNumber, UPAYA_LAYOUT } from '../../carriers/upaya/number.js';
+import { YANDEX_DELIVERY_LAYOUT, yandexDeliveryRequestNumber } from '../../carriers/yandex-delivery/number.js';
 import type { CarrierId } from '../../generated/catalog.js';
 import { regionalGofoRequestNumber } from '../detection/gofo.js';
 import { isMondialRelayBarcodeHead, isValidMondialRelayBarcode } from '../detection/mondialRelay.js';
@@ -89,6 +90,8 @@ export function trackingNumberForLink(carrierId: CarrierId, raw: string): string
   // Flip Post prints its waybills with dashes, and its tracking API finds one only with them, so a
   // link gives seven or nine digits their dashes. Eight digits fit two layouts and stay as given.
   if (carrierId === 'flippost' && FLIPPOST_ONE_LAYOUT.test(normalized)) return flippostWaybills(normalized)[0]!;
+  // Yandex Delivery's page finds an LO number only with the hyphen after LO.
+  if (carrierId === 'yandex-delivery' && YANDEX_DELIVERY_LAYOUT.test(normalized)) return yandexDeliveryRequestNumber(normalized);
   // Ecoscooting's page finds a Cainiao reference only with its CN.
   if (carrierId === 'ecoscooting' && ecoscootingReference(normalized) !== normalized) return ecoscootingReference(normalized);
   return raw;
