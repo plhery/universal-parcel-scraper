@@ -6,10 +6,11 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
+import { isRecord } from '../../core/types.js';
 import { domexStage } from './status.js';
 
 export const PROVIDER = 'Domex';
-// A waybill's page is about 50 kilobytes, most of it the site's header, footer and scripts.
+// Bound both the result JSON and the older server-rendered reply.
 export const DOMEX_MAX_BYTES = 512 * 1024;
 // Waybills are digits, sometimes after a letter prefix. The tracker checks
 // nothing itself, so this takes a margin around the shapes seen.
@@ -75,17 +76,62 @@ export function domexLine(text: string): { description: string; location?: strin
 
 interface Row { event: CarrierEvent; at: number; order: number }
 
-/**
- * The page `domex.lk/Order-Details.php?wbno={number}` answers. The server
- * renders the waybill's tables, headed by its number, then its tracking
- * table, oldest first: a clock and a status line naming the branch or hub
- * that recorded it. A waybill without a record gets "Record Not Found!" and
- * the number in the search box. The waybill, sender, delivery and receiver
- * tables are not read past the waybill's number.
- */
-export function parseDomex(html: string, raw: string): CarrierResult {
+/** Read just the status and clock. Waybill details and free-text remarks can contain recipient data. */
+function historyRow(text: string, time: string, at: number, order: number): Row {
+  const { description, location } = domexLine(text);
+  if (!description) invalid('Domex returned a scan without its status');
+  const staged = domexStage(description);
+  return { at, order, event: {
+    time, description,
+    ...(location ? { location } : {}),
+    ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
+  } };
+}
+
+function requireWhole(id: unknown, number: string): void {
+  if (typeof id !== 'string' && !(typeof id === 'number' && Number.isSafeInteger(id))) {
+    invalid('Domex returned a record without its waybill');
+  }
+  if (String(id).toUpperCase() !== number) throw new IndeterminateError(PROVIDER, 'Domex answered for another number');
+}
+
+const JSON_CLOCK = /^\d{4}-\d{2}-\d{2}T(?:[01]\d|2[0-3]):[0-5]\d:[0-5]\d(?:\.\d{1,9})?(Z|[+-](?:[01]\d|2[0-3]):[0-5]\d)?$/;
+
+/** Preserve source precision and any stated offset. Domestic unzoned clocks belong to Colombo. */
+function jsonClock(value: unknown): { time: string; at: number } {
+  if (typeof value !== 'string') invalid('Domex returned an invalid scan time');
+  const parts = JSON_CLOCK.exec(value);
+  if (!parts) invalid('Domex returned an invalid scan time');
+  const clock = firstOccurrence(DateTime.fromISO(value, { zone: ZONE, setZone: true }));
+  if (!clock.isValid || clock.toFormat("yyyy-MM-dd'T'HH:mm:ss") !== value.slice(0, 19)) invalid('Domex returned an invalid scan time');
+  return { time: parts[1] ? value : value + clock.toFormat('ZZ'), at: clock.toMillis() };
+}
+
+/** The JSON used by the result page. Each scan and the shipment details carry their own trackingNo. */
+function jsonHistory(text: string, number: string): CarrierResult {
+  let data: unknown;
+  try { data = JSON.parse(text); } catch { invalid('Domex returned malformed tracking JSON'); }
+  if (!isRecord(data) || typeof data.success !== 'boolean') invalid('Domex returned an invalid tracking envelope');
+  // The same generic failure can mean the source could not retrieve the shipment.
+  if (!data.success) throw new IndeterminateError(PROVIDER, 'Domex could not retrieve the waybill details');
+  if (!isRecord(data.details) || !Array.isArray(data.history)) invalid('Domex returned an incomplete tracking reply');
+  requireWhole(data.details.trackingNo, number);
+  if (data.history.length > MAX_ROWS) invalid('Domex returned an oversized history');
+  const rows = data.history.map((row: unknown, order: number) => {
+    if (!isRecord(row)) invalid('Domex returned an invalid scan');
+    requireWhole(row.trackingNo, number);
+    if (typeof row.status !== 'string') invalid('Domex returned a scan without its status');
+    const { time, at } = jsonClock(row.statusDate);
+    return historyRow(row.status, time, at, order);
+  });
+  return resultFromRows(rows);
+}
+
+export function parseDomex(body: string, raw: string): CarrierResult {
   const number = normalizeDomexNumber(raw);
-  const $ = load(html);
+  if (body.trimStart().startsWith('{')) return jsonHistory(body, number);
+  // Keep reading fully rendered waybills and their identity-bound missing notice.
+  const $ = load(body);
   const shown = $('#WayBillNumber');
   if (!shown.length) {
     if (MISSING.test(clean($('body').text(), 200_000))) {
@@ -95,7 +141,7 @@ export function parseDomex(html: string, raw: string): CarrierResult {
       }
       throw new NotFoundError(PROVIDER);
     }
-    if (BLOCKED.test(html.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'Domex answered with a block page');
+    if (BLOCKED.test(body.slice(0, 64_000))) throw new ChallengeError(PROVIDER, 'Domex answered with a block page');
     invalid('Domex returned a page without its waybill');
   }
   if (shown.length !== 1) invalid('Domex returned more than one waybill');
@@ -111,20 +157,15 @@ export function parseDomex(html: string, raw: string): CarrierResult {
     const cells = $(line).children('td');
     if (cells.length !== 2) invalid('Domex returned a scan without its clock or status');
     const { time, at } = scanTime(clean(cells.eq(0).text(), 40));
-    const { description, location } = domexLine(cells.eq(1).text());
-    if (!description) invalid('Domex returned a scan without its status');
-    const staged = domexStage(description);
-    const event: CarrierEvent = {
-      time,
-      ...(location ? { location } : {}),
-      description,
-      ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
-    };
-    return { event, at, order };
+    return historyRow(cells.eq(1).text(), time, at, order);
   });
+  return resultFromRows(rows);
+}
+
+function resultFromRows(rows: Row[]): CarrierResult {
   if (!rows.length) throw new NoHistoryError(PROVIDER);
 
-  // Newest first; scans at the same minute keep the page's order, turned round.
+  // Newest first, reversing the source order for equal clocks.
   const seen = new Set<string>();
   const events = rows.sort((a, b) => b.at - a.at || b.order - a.order).filter(({ event }) => {
     const identity = JSON.stringify([event.time, event.description, event.location ?? '']);

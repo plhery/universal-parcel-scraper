@@ -49,12 +49,34 @@ describe('Domex HTTP adapter', () => {
       .resolves.toMatchObject({ current_stage: 'in_transit' });
     expect(fetcher).toHaveBeenCalledTimes(1);
     const [url, init] = fetcher.mock.calls[0]!;
-    expect(String(url)).toBe(`${DOMEX_TRACKING}?wbno=${IN_TRANSIT}`);
-    expect(domexTrackingUrl('000 000 001')).toBe(`${DOMEX_TRACKING}?wbno=${DELIVERED}`);
+    expect(String(url)).toBe(`${DOMEX_TRACKING}?ajax=1&trackingNo=${IN_TRANSIT}`);
+    expect(domexTrackingUrl('000 000 001')).toBe(`${DOMEX_TRACKING}?ajax=1&trackingNo=${DELIVERED}`);
     expect(init).toMatchObject({ method: 'GET', redirect: 'manual', signal: expect.any(AbortSignal),
-      headers: { Accept: 'text/html', 'User-Agent': 'SyntheticHost/1.0' } });
+      headers: { Accept: 'application/json', 'User-Agent': 'SyntheticHost/1.0' } });
     expect(init!.body).toBeUndefined();
     expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ carrier: 'domex', step: 'direct', outcome: 'ok' }));
+  });
+
+  it('reads the JSON the current portal requests and leaves personal details out of events', async () => {
+    const scan = { trackingNo: IN_TRANSIT, statusDate: '2026-03-04T14:00:01.123456', status: 'Parcel Received By Hilltown', remark: 'private note' };
+    const body = { success: true, details: { trackingNo: IN_TRANSIT, senderName: 'private sender' }, history: [scan,
+      { ...scan, statusDate: '2026-03-04T11:12:13Z', status: 'Out For Delivery' }] };
+    const result = await new DomexTracker({ fetcher: answering(() => Response.json(body)) }).fetch(IN_TRANSIT);
+    expect(result.events).toMatchObject([{ time: '2026-03-04T11:12:13Z', stage: 'out_for_delivery' },
+      { time: '2026-03-04T14:00:01.123456+05:30', location: 'Hilltown', stage: 'in_transit' }]);
+    expect(JSON.stringify(result)).not.toContain('private');
+  });
+
+  it('requires whole identity on the shipment and every JSON row', () => {
+    const scan = { trackingNo: DELIVERED, statusDate: '2026-03-04T12:00:00', status: 'Delivered' };
+    const read = (id: unknown, history: unknown[]) => parseDomex(JSON.stringify({ success: true, details: { trackingNo: id }, history }), DELIVERED);
+    expect(() => read(RETURNED, [scan])).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => read(DELIVERED, [scan, { ...scan, trackingNo: RETURNED }])).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
+    expect(() => read(DELIVERED, [{ ...scan, trackingNo: undefined }])).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => read(DELIVERED, [{ ...scan, statusDate: '2026-02-30T15:03:02' }])).toThrow(expect.objectContaining({ kind: 'schema' }));
+    expect(() => read(DELIVERED, [])).toThrow(expect.objectContaining({ name: 'NoHistoryError' }));
+    expect(() => parseDomex('{"success":false,"message":"Unable to retrieve waybill details."}', DELIVERED))
+      .toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
 
   it('reads a delivered history newest first, in Colombo time, at the branches that recorded it', () => {

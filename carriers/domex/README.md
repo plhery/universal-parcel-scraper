@@ -6,24 +6,20 @@ delivers. Tracked through its tracking page.
 
 ## How it works
 
-1. `direct`: one `GET https://domex.lk/Order-Details.php?wbno={number}`, the page the tracking
-   forms on domex.lk open. It needs no cookie, token, key or browser. The server renders the
-   waybill's tables and its tracking table, oldest first.
+1. `direct`: one GET to the public JSON service the result page calls,
+   `https://domex.lk/track.php?ajax=1&trackingNo={number}`. It needs no session or credentials.
 2. `retry`: one more request when the first fails to reach the site or hangs. The first gets
    half of the budget, so the retry fits in the rest.
 
-- An unknown waybill is HTTP 200 with "Record Not Found!" and the number in the search box,
-  which is not found. A 404, a 410 or a redirect is a moved route.
-- The waybill table is headed by the number it answers, which must be the number asked. The
-  page matches the whole waybill, in capitals or not, and never a part of it.
+- The shipment details and every history row must identify the requested whole waybill.
+  A generic retrieval failure stays inconclusive. A redirect or missing endpoint is a transport failure.
+  The parser can also read a fully rendered waybill or the older number-bound missing notice.
 - Recognition makes the same request.
 
 ## Notes
 
-- Each line's clock is to the minute, with no zone. Domex delivers only in Sri Lanka, which has
-  one zone and no daylight saving, and its clocks follow the Sri Lankan working day: delivery
-  rounds in the morning, hub scans overnight. They are read as Colombo time, +05:30, and give
-  instants and `delivered_at`.
+- Scans keep the source's seconds and fractional seconds. An explicit offset takes precedence.
+  A clock without an offset uses Colombo time for this domestic service.
 - A status line names the branch, hub or department that recorded it after "By", as
   "Parcel Received By {branch}". The wording before it stages the scan and the branch is its
   location. A line recorded at the sender's premises or by a head office department keeps its

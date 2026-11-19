@@ -7,15 +7,15 @@ import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js'
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { DOMEX_MAX_BYTES, normalizeDomexNumber, parseDomex, PROVIDER } from './parser.js';
 
-/** The page the tracking forms on domex.lk open for a waybill number. */
-export const DOMEX_TRACKING = 'https://domex.lk/Order-Details.php';
+/** The guest JSON request published by the Domex result page. */
+export const DOMEX_TRACKING = 'https://domex.lk/track.php';
 const REDIRECTS = [301, 302, 303, 307, 308];
-// The page answers an unknown waybill with HTTP 200; a missing route is not a missing parcel.
+// A missing route says nothing about the waybill.
 const GONE = [404, 410];
 
 /** The page's address for one whole waybill number. */
 export function domexTrackingUrl(number: string): string {
-  return `${DOMEX_TRACKING}?${new URLSearchParams({ wbno: normalizeDomexNumber(number) })}`;
+  return `${DOMEX_TRACKING}?${new URLSearchParams({ ajax: '1', trackingNo: normalizeDomexNumber(number) })}`;
 }
 
 export class DomexTracker {
@@ -25,7 +25,7 @@ export class DomexTracker {
     const number = normalizeDomexNumber(raw);
     const read = async (signal: AbortSignal, timeoutMs: number): Promise<CarrierResult> => {
       const { response, bytes } = await fetchBounded(domexTrackingUrl(number), { method: 'GET', signal, headers: {
-        Accept: 'text/html', 'User-Agent': userAgentOf(this.options.userAgent),
+        Accept: 'application/json', 'User-Agent': userAgentOf(this.options.userAgent),
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: DOMEX_MAX_BYTES, redirect: 'manual',
         fetcher: this.options.fetcher, allowHttpStatuses: [...REDIRECTS, ...GONE] });
       if (REDIRECTS.includes(response.status)) throw new TransportError(PROVIDER, 'Domex redirected its tracking page', { status: response.status });

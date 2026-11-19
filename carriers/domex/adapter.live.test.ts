@@ -12,9 +12,9 @@ describe('Domex live retrieval', () => {
     expect(answer.attempts[0]).toMatchObject({ source: 'domex', kind: 'ok' });
     expect(answer.result.current_stage).toBeTruthy();
     expect(answer.result.events.length).toBeGreaterThan(0);
-    // Every scan has its wording and an instant at Colombo's offset.
+    // Every scan has its wording and an instant, including the source seconds.
     expect(answer.result.events.every((event) => event.description && event.local_time === undefined
-      && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00\+05:30$/.test(String(event.time)))).toBe(true);
+      && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(String(event.time)))).toBe(true);
     expect(answer.result.last_update).toBe(answer.result.events[0]!.time);
     // A branch is a place, not part of the wording, and nobody is named.
     expect(answer.result.events.every((event) => !event.location || !/ By /.test(event.description ?? ''))).toBe(true);
@@ -26,8 +26,7 @@ describe('Domex live retrieval', () => {
     await expect(direct().recognize!(process.env.DOMEX_TRACKING_NUMBER!)).resolves.toMatchObject({ known: true });
   });
 
-  it.skipIf(!process.env.DOMEX_UNKNOWN_NUMBER)('reads an unknown waybill as not found', async () => {
-    await expect(direct().track({ number: process.env.DOMEX_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'not_found' });
-    await expect(direct().recognize!(process.env.DOMEX_UNKNOWN_NUMBER!)).resolves.toEqual({ known: false });
+  it.skipIf(!process.env.DOMEX_UNKNOWN_NUMBER)('keeps the generic unknown response inconclusive', async () => {
+    await expect(direct().track({ number: process.env.DOMEX_UNKNOWN_NUMBER! })).rejects.toMatchObject({ kind: 'indeterminate' });
   });
 });
