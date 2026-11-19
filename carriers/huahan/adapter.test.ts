@@ -147,6 +147,16 @@ describe('HuaHan guest tracking', () => {
     expect(() => parseHuahan(duplicate, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('reads HuaHan arranging flights as transit', () => {
+    const reply = fixture();
+    const wording = 'The shipment is still in the process of arranging flights';
+    Object.assign(reply.data[0]!.Detail[0]!, { Status: '', Comment: wording });
+    const result = parseHuahan(reply, NUMBER);
+    expect(result.events!.find(({ description }) => description === wording)).toMatchObject({
+      stage: 'in_transit', stage_source: 'carrier_map',
+    });
+  });
+
   it('names the carrier of the number a transfer row gives when the partner fields name none', () => {
     const transfer = (local: Record<string, unknown>, comment = '转单:1Z999AA10123456784') => {
       const reply = fixture();

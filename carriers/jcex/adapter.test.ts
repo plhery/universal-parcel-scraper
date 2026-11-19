@@ -146,6 +146,16 @@ describe('JCEX HTTP adapter', () => {
     expect([0, 3, 9].map((index) => result.events![index]!.local_time)).toEqual(['2026-04-20T10:05:00', '2026-04-18T13:07:00', '2026-04-11T01:09:38']);
   });
 
+  it.each(['深圳集散中心 已收货 , Sample Town,cn', '深圳集散中心 已收货, Another Hub, CN', '已落地'])('reads the uncoded JCEX transit scan %s', (wording) => {
+    const result = parseJcex(changed('delivered', (content) => {
+      Object.assign(content.trackDetails[0]!, { eventDetailEn: '', eventDetailCn: wording, platformEventCode: '' });
+    }), NUMBER, READ);
+    expect(result.events!.find(({ description }) => description === wording)).toMatchObject({
+      stage: 'in_transit', stage_source: 'carrier_map',
+    });
+    expect(statusMapAnswer({ carrier: 'jcex', description: wording })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it("dates the delivering partner's label by the offset JCEX writes after its state, and its own row on that state's clock", () => {
     const withLabel = (source: Row, copy: Row) => changed('delivered', (content) => {
       const row = (fields: Row) => ({ countryCode: 'US', platformEventCode: 'InfoReceived', eventDetailCn: null, ...fields });

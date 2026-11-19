@@ -1,6 +1,8 @@
 {
   "carrier": "jcex",
   "entries": [
+    {"wording": "已落地","stage": "in_transit","language": "zh","confirmedBy": "source","note": "The flight landed."},
+    {"wording": "深圳集散中心 已收货","stage": "in_transit","language": "zh","confirmedBy": "source","note": "The Shenzhen distribution hub received the parcel. The scan can append a place and country."},
     {"code": "InfoReceived", "wording": "Shipment order info received", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order data, written before JCEX's warehouse has the parcel; the row names no place."},
     {"code": "InfoReceived", "wording": "The order information has been sent", "stage": "registered", "language": "en", "confirmedBy": "live"},
     {"code": "InfoReceived", "wording": "货物电子信息已经收到", "stage": "registered", "language": "zh", "confirmedBy": "live"},

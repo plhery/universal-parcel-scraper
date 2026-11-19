@@ -335,6 +335,20 @@ describe('JS Express tracking adapter', () => {
     expect(statusMap.stage('OIT', normalizeStatusWording('Start on-site transportation and shipment'))).toBe('in_transit');
   });
 
+  it.each(['Item delivery operation', '飞机进港，飞机进港（到达目的地）'])('reads the JS Express transit scan %s', (wording) => {
+    const scan = { ...row('2026-05-03 09:00:00', '', wording), code: 'OIT' };
+    const result = parseJsExpress(withList([scan]), DELIVERED);
+    expect(result.events![0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
+  });
+
+  it('records the bracketed iMile self-pickup agreement as an intentional gap', () => {
+    const wording = 'The delivery method has been confirmed with the recipient as 【self-pickup】.';
+    const scan = { ...row('2026-05-03 09:00:00', '', wording), code: 'OIT' };
+    const result = parseJsExpress(withList([scan]), DELIVERED);
+    expect(result.events![0]).not.toHaveProperty('stage');
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'OIT', description: wording })).toMatchObject({ kind: 'intentional_gap' });
+  });
+
   it("reads USPS's forwarding alert, which names its time, day and town, as the parcel going on", () => {
     const alert = 'Alert, Forwarded -> Your item was forwarded to a different address at 7:00 am on January 2, 2030 in SAMPLE TOWN, MA. '
       + 'This was because of forwarding instructions or because the address or ZIP Code on the label was incorrect.';

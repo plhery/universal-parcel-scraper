@@ -1,6 +1,7 @@
 {
   "carrier": "huahan",
   "entries": [
+    {"wording": "The shipment is still in the process of arranging flights","stage": "in_transit","language": "en","confirmedBy": "source","note": "The shipment is waiting for a flight to be arranged."},
     {"code": "IR", "wording": "快件电子信息已经收到 Shipment information received", "stage": "registered", "language": "zh", "confirmedBy": "official-doc", "note": "In the tracking example of HuaHan's API documentation: the order data. Scan texts give the Chinese wording, then the English one."},
     {"code": "IR", "wording": "Shipment information received", "stage": "registered", "language": "en", "confirmedBy": "official-doc", "note": "The same scan in English only, in the documentation's later tracking example."},
     {"wording": "运单电子信息已收到", "stage": "registered", "language": "zh", "confirmedBy": "official-doc", "note": "In the tracking example of HuaHan's API documentation: the latest-event summary listed beside a parcel that has only its order data."},

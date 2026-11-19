@@ -74,6 +74,14 @@ describe('Huaya Express tracking adapter', () => {
     for (const value of ['Synthetic Recipient', 'Example Street', 'HY-TEST-001', 'HYTEST0000000000001']) expect(text, value).not.toContain(value);
   });
 
+  it('reads Huaya preparing for delivery as transit', () => {
+    const reply = fixture('track') as [{ data: [{ trackDetails: Record<string, string>[] }] }];
+    reply[0].data[0].trackDetails[0]!.track_content = 'Preparing for delivery';
+    expect(parseHuayaTrack(reply, NUMBER, READ_AT)!.events![0]).toMatchObject({
+      description: 'Preparing for delivery', stage: 'in_transit', stage_source: 'carrier_map',
+    });
+  });
+
   it('reads a label row written at "US, SYSTEM, SYSTEM", that place repeated in its wording, with no place', () => {
     const reply = structuredClone(fixture('track')) as [{ data: [{ trackDetails: Record<string, string>[] }] }];
     const rows = reply[0].data[0].trackDetails;

@@ -119,6 +119,12 @@ describe('MHI HTTP adapter', () => {
     expect(parseMhi(untracked.replace(/local poster number/g, 'sample text'), POSTED)).not.toHaveProperty('delivery_tracking_number');
   });
 
+  it('reads the MHI carrier drop-off as transit', () => {
+    const page = newest((row) => row.replace('Successfully delivered', 'Parcel dropped off with carrier')
+      .replace('<div class="itemdetail">Delivery</div>', '<div class="itemdetail">Others</div>'));
+    expect(parseMhi(page, PARCEL).events![0]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
+  });
+
   it('gives a text the map does not know the shared wording rules’ stage, else its category’s', () => {
     const changed = (wording: string, category: string) => parseMhi(newest((row) => row
       .replace('Successfully delivered', wording).replace('<div class="itemdetail">Delivery</div>', `<div class="itemdetail">${category}</div>`)), PARCEL);
