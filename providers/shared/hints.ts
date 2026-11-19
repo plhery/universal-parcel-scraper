@@ -102,6 +102,10 @@ const NAME_SISTERS: Readonly<Record<string, readonly string[]>> = {
   'fan-courier': ['fan-courier-international'],
 };
 
+// A carrier's name: letters with their marks (Thai, Lao and Indic scripts write vowels as marks), digits and
+// the punctuation names carry (GO! Express, Kuehne+Nagel, WE|DO, time:matters, A/S, «…», （…）), but no address.
+const CARRIER_NAME = /^(?!.*:\/\/)[\p{L}\p{M}\p{N} .,&'’‘()（）«»+!:/|@·・–—-]+$/u;
+
 /**
  * Names are hints only. A direct adapter must confirm the shipment before
  * adoption. The looked-up number resolves a bare brand name, and rules out a
@@ -118,7 +122,7 @@ const NAME_SISTERS: Readonly<Record<string, readonly string[]>> = {
  */
 export function universalCarrierHints(raw: unknown[], trackingNumber?: string): { reported_carriers: string[]; discovered_carrier?: string } {
   const names = [...new Set(raw.filter((value): value is string => typeof value === 'string'
-    && value.length <= 80 && /^[\p{L}\p{N} .&'()-]+$/u.test(value)).map((value) => value.trim()))].filter(Boolean).slice(0, 10);
+    && value.length <= 80 && CARRIER_NAME.test(value)).map((value) => value.trim()))].filter(Boolean).slice(0, 10);
   const refused = new Set(trackingNumber ? [...checksumFailures(trackingNumber)
     .filter(({ rule }) => ADAPTER_CHECKED_RULES.has(rule) || NAME_CHECKED_RULES.has(rule)).map(({ carrier }) => carrier as string),
   ...Object.keys(ADAPTER_NUMBERS).filter((carrier) => !ADAPTER_NUMBERS[carrier]!(trackingNumber))] : []);

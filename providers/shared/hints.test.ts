@@ -56,6 +56,16 @@ describe('carrier names reported by universal providers', () => {
     expect(universalCarrierHints(['DPD (BE)'], '06080000000002').discovered_carrier).toBeUndefined();
   });
 
+  it('keeps names with the punctuation and marks carriers write in them', () => {
+    // GO! Express's twelve digits fit no rule, so the name alone proposes it.
+    expect(universalCarrierHints(['GO! Express'], '100000000012')).toEqual({ reported_carriers: ['GO! Express'], discovered_carrier: 'go-express' });
+    for (const name of ['Kuehne+Nagel', 'WE|DO', 'time:matters', 'TJW Fragt A/S', 'ООО «Логсис Групп»', 'แฟลช เอ็กซ์เพรส', 'ອານຸສິດ ໂລຈິສຕິກ']) {
+      expect(universalCarrierHints([name]).reported_carriers).toEqual([name]);
+    }
+    // Markup and addresses are not names.
+    expect(universalCarrierHints(['<b>DPD</b>', 'https://example.com', 'DPD; drop table', 'a\nb']).reported_carriers).toEqual([]);
+  });
+
   it('names DPD France for its own labels when a provider names DPD in France', () => {
     // A `250` label with its GS1 check digit fits DPD France's rules and no other DPD network's.
     const label = '2500000000000016';
