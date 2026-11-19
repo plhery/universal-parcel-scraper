@@ -19,14 +19,15 @@ page and a changed page keep their failure kinds.
 
 - A history with more than 100 distinct scans returns the newest 100 and sets `history_truncated`.
 
-- The rows relay the carrying network's scans in French. They have no codes, so the carrier's map
-  reads each sentence, with any city or airport it names as an ellipsis. The shared classifier
+- The rows relay the carrying network's scans in French or English. They have no codes, so the
+  carrier's map reads each sentence, with any city, airport or country it names as an ellipsis. The shared classifier
   reads a sentence the map lacks, and an unread one leaves the row without a stage.
 - Every row is on the tracker's own Hong Kong clock, wherever the scan was: 17TRACK dates the same
   rows on that clock, and a departure from Toronto then falls at night there.
-- Some rows write a place before or after the sentence, with a region or country code and a
-  postcode. The adapter takes it out of the sentence and keeps its names and codes as the row's
-  place, without the postcode.
+- Some rows write a place before, within or after the sentence, with a region or country code and
+  a postcode: English rows name it after "in" or ", serving". The adapter takes it out of the
+  sentence and keeps its names and codes as the row's place, without the postcode. The English
+  delivery row ends with the recipient's street and house number, which the adapter leaves out.
 
 ## Numbers
 
