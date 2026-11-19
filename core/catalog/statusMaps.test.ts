@@ -979,7 +979,8 @@ describe('status map answers', () => {
 
   it("answers Packeta by its event sentences, and not by the parcel's status wording", () => {
     expect(answer('packeta', null, 'We are aware of your parcel and are waiting for the sender to hand it over to us.')).toEqual(mapped('registered'));
-    expect(answer('packeta', null, 'We have successfully received the parcel for transport. DEPO Example')).toEqual(mapped('in_transit'));
+    // The first receipt; the adapter reads a later one, or one after the parcel set off for the depot, in transit.
+    expect(answer('packeta', null, 'We have successfully received the parcel for transport. DEPO Example')).toEqual(mapped('accepted'));
     expect(answer('packeta', null, 'The parcel is ready for pickup. Z-BOX Example 1')).toEqual(mapped('ready_for_pickup'));
     expect(answer('packeta', null, 'The parcel is with you. Thank you, and we look forward to next time.')).toEqual(mapped('delivered'));
     expect(answer('packeta', null, 'We have returned the parcel back to the sender.')).toEqual(mapped('returned'));

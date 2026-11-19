@@ -64,7 +64,8 @@ const EVENT_TEXT_STAGES: Array<[substring: string, stage: Stage]> = [
   ['aware of your parcel and are waiting for the sender', 'registered'],
   ['assigned a tracking number', 'registered'],
   ['awaiting consignment by the sender', 'registered'],
-  ['successfully received the parcel for transport', 'in_transit'],
+  // Packeta taking the parcel in, at the point the sender dropped it at or at the depot a courier brought it to.
+  ['successfully received the parcel for transport', 'accepted'],
   ['on its way to the depot', 'in_transit'],
   ['arrived at the depot', 'in_transit'],
   ['arrived at the micro-depot', 'in_transit'],

@@ -122,6 +122,13 @@ export function parsePacketaTrackingResponse(payload: unknown, trackingNumber: s
   });
   if (listsNewestFirst(parsed.map(({ event }) => event)) === false) parsed.reverse();
   parsed.sort((left, right) => right.timestamp - left.timestamp);
+  // Only the first receipt accepts the parcel: one after it, or after a courier set the parcel on its way
+  // to the depot, is a step on the way.
+  let moved = false;
+  for (const { event } of [...parsed].reverse()) {
+    if (moved && event.stage === 'accepted') event.stage = 'in_transit';
+    moved ||= event.stage !== undefined && !['registered', 'pending'].includes(event.stage);
+  }
   const events = parsed.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
   const partner = deliveryPartner(parsed.flatMap(({ links }) => links));
   // Sender (merchant) and branchAddress (Z-BOX/partner shop) carry no

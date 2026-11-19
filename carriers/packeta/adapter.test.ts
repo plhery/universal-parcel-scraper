@@ -380,6 +380,20 @@ describe('Packeta hand-off to a delivery partner', () => {
     expect(policy?.matches?.({ ...incoming, description: '' }, { ...stored, description: '' })).toBe(false);
   });
 
+  it('accepts the parcel at its first receipt, and reads a receipt after it set off for the depot as a step on the way', () => {
+    const stages = (details: Array<{ text: string; time: string }>) => parsePacketaTrackingResponse({ item: packet({ trackingDetails: details }) },
+      TRACKING_NUMBER).events?.map((event) => event.stage);
+    expect(stages([
+      { text: 'The parcel is currently on its way to the depot.', time: '2026-07-04 11:00:00' },
+      { text: 'We have successfully received the parcel for transport. Example Point, Example Street 1', time: '2026-07-04 09:00:00' },
+      { text: 'The parcel has been assigned a tracking number: 1234567890 and will soon be handed over to the carrier.', time: '2026-07-04 08:00:00' },
+    ])).toEqual(['in_transit', 'accepted', 'registered']);
+    expect(stages([
+      { text: 'We have successfully received the parcel for transport. DEPO Example, Example Street', time: '2026-07-04 13:00:00' },
+      { text: 'The parcel is currently on its way to the depot.', time: '2026-07-04 12:00:00' },
+    ])).toEqual(['in_transit', 'in_transit']);
+  });
+
   it('reads the depot or point a sentence names as its place, and keeps a row stored with it in the sentence', () => {
     const result = parsePacketaTrackingResponse({ item: packet({ trackingDetails: [
       { text: 'The parcel has arrived at the micro-depot. Example-West, Example Lane 7/1', time: '2026-07-07 05:00:00' },
@@ -391,7 +405,7 @@ describe('Packeta hand-off to a delivery partner', () => {
       ['The parcel has arrived at the micro-depot.', 'Example-West, Example Lane 7/1', 'in_transit'],
       ['Your parcel has arrived at the depot. We’re now preparing it for delivery.', 'Example-East, Example Street 2/4', 'in_transit'],
       ['We have successfully received the parcel for transport.', 'DEPO Example, Example Street', 'in_transit'],
-      ['We have successfully received the parcel for transport.', '', 'in_transit'],
+      ['We have successfully received the parcel for transport.', '', 'accepted'],
     ]);
     const policy = sameInstantIdentityPolicy('packeta', { supportsScanMatching: true });
     const incoming = { stage: 'in_transit', description: 'We have successfully received the parcel for transport.', location: 'DEPO Example, Example Street', providerCode: '' };
