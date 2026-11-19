@@ -40670,7 +40670,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "mte-xpress"
     },
     "canaryUrl": "https://portal.mtexpress.co.za/track",
     "trackingUrlTemplate": "https://portal.mtexpress.co.za/track?ref={trackingNumber}",

@@ -40666,7 +40666,7 @@
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "mte-xpress"
     },
     "canaryUrl": "https://portal.mtexpress.co.za/track",
     "trackingUrlTemplate": "https://portal.mtexpress.co.za/track?ref={trackingNumber}",

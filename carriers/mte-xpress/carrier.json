@@ -16,16 +16,38 @@
   "timezone": "Africa/Johannesburg",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "mte-xpress",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "delivered_at",
+    "service_name",
+    "provider_code",
+    "offset_timestamps"
+  ],
   "portal": {
     "url": "https://portal.mtexpress.co.za/track?ref={trackingNumber}",
     "searchUrl": "https://portal.mtexpress.co.za/track",
     "canaryUrl": "https://portal.mtexpress.co.za/track",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at",
+      "service_name",
+      "provider_code",
+      "offset_timestamps"
+    ],
     "discarded": [],
     "unavailable": []
   },

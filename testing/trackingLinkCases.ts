@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'mte-xpress', number: 'ZZZZZZZZZ',
+    route: /^https:\/\/portal\.mtexpress\.co\.za\/track\?ref=ZZZZZZZZZ$/,
+    marker: /Could not find shipment or parcel with reference ZZZZZZZZZ/i },
   { carrier: 'king-solutions', number: 'SO000000000SO',
     route: /^https:\/\/kingsolutionsglobal\.com\/track\/\?pros=SO000000000SO(?:##track_table)?$/,
     marker: /Could not find tracking number: SO000000000SO/ },

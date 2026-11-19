@@ -1,4 +1,54 @@
 {
   "carrier": "mte-xpress",
-  "entries": []
+  "entries": [
+    {
+      "code": "submitted",
+      "wording": "Submitted",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "collection-assigned",
+      "wording": "Collection assigned to driver",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "collected",
+      "wording": "Collected",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "at-hub",
+      "wording": "At hub",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "in-transit",
+      "wording": "In transit",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "out-for-delivery",
+      "wording": "Out for delivery",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "delivered",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
 }

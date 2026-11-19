@@ -474,6 +474,7 @@ import { adapter as mongolInfinityPost } from '../carriers/mongol-infinity-post/
 import { adapter as morningGlobal } from '../carriers/morning-global/adapter.js';
 import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
+import { adapter as mteXpress } from '../carriers/mte-xpress/adapter.js';
 import { adapter as mtscn } from '../carriers/mtscn/adapter.js';
 import { adapter as mylerz } from '../carriers/mylerz/adapter.js';
 import { adapter as nacex } from '../carriers/nacex/adapter.js';
@@ -1290,6 +1291,7 @@ export const REGISTRY: RegistryDefinition = {
     "morning-global": morningGlobal,
     "mrl-global": mrlGlobal,
     "mrw": mrw,
+    "mte-xpress": mteXpress,
     "mtscn": mtscn,
     "mylerz": mylerz,
     "nacex": nacex,
@@ -2725,7 +2727,7 @@ export const REGISTRY: RegistryDefinition = {
     "mrw": "mrw",
     "mrw-ve": "universal",
     "msg-post": "universal",
-    "mte-xpress": "universal",
+    "mte-xpress": "mte-xpress",
     "mtscn": "mtscn",
     "multidrop": "universal",
     "multientrega": "universal",
