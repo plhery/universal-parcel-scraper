@@ -38,6 +38,7 @@
   ],
   "portal": {
     "url": "https://rastreo.forzadelivery.com/{trackingNumber}",
+    "searchUrl": "https://rastreo.forzadelivery.com/",
     "canaryUrl": "https://rastreo.forzadelivery.com/",
     "shows": [
       "status",

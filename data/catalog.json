@@ -26107,6 +26107,7 @@
     },
     "canaryUrl": "https://rastreo.forzadelivery.com/",
     "trackingUrlTemplate": "https://rastreo.forzadelivery.com/{trackingNumber}",
+    "trackingSearchUrl": "https://rastreo.forzadelivery.com/",
     "linkRules": [
       {
         "domains": [

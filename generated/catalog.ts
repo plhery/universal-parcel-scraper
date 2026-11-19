@@ -26111,6 +26111,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://rastreo.forzadelivery.com/",
     "trackingUrlTemplate": "https://rastreo.forzadelivery.com/{trackingNumber}",
+    "trackingSearchUrl": "https://rastreo.forzadelivery.com/",
     "linkRules": [
       {
         "domains": [

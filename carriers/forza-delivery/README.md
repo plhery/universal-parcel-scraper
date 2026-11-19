@@ -72,6 +72,8 @@ guía of each length the rule takes.
 
 ## Links
 
+The tracker's home page has a field to enter a guía.
+
 The tracker opens one guía at `rastreo.forzadelivery.com/` followed by the guía, an address
 Forza's own site builds. The tracker drops `FD` from the address and adds it back, so the
 address works with or without the prefix. It shows the guía only after the reCAPTCHA.
