@@ -1,6 +1,7 @@
 import { accepted, recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, ChallengeError, IndeterminateError, MaintenanceError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, IndeterminateError, MaintenanceError, NotFoundError, SchemaError, UpstreamHttpError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
+import { paused } from '../../core/runner/pause.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/transport/index.js';
 import { normalizeDhlEcommerceEsNumber, parseDhlEcommerceEs } from './parser.js';
@@ -14,6 +15,14 @@ const BANNER = 'https://clientesparcel.dhl.es/LiveTracking.GTW/api/banner';
 const BANNER_MIN_MS = 1_000;
 const BANNER_MAX_MS = 5_000;
 const GATEWAY_FAILURES = new Set([500, 502, 503, 504]);
+// The gateway's balancer sends some requests to a member that answers a shipment it holds with
+// the empty 204 at once, and the next request, sent the same way, gets the shipment; another few
+// get a bare 500, for known and unknown numbers alike. Those answers are asked again, after a
+// pause, while the budget allows: a missing parcel is an empty 204 with nothing but 204s and
+// 500s around it, and 500s alone stay a failure.
+const EMPTY_TRIES = 4;
+const EMPTY_PAUSE_MS = 150;
+const EMPTY_RETRY_MIN_MS = 2_000;
 
 export class DhlEcommerceEsTracker {
   constructor(private readonly options: { fetcher?: typeof fetch; recorder?: StepRecorder; userAgent?: string } = {}) {}
@@ -27,18 +36,39 @@ export class DhlEcommerceEsTracker {
       const deadline = performance.now() + remainingMs;
       const url = new URL(ENDPOINT);
       url.searchParams.set('number', number);
-      const { response, bytes } = await fetchBounded(url, { signal, headers: { Accept: 'application/json', 'Accept-Language': 'en-US',
+      const ask = () => fetchBounded(url, { signal, headers: { Accept: 'application/json', 'Accept-Language': 'en-US',
         cultura: 'en', 'User-Agent': userAgentOf(this.options.userAgent) } }, {
-        provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 2_000_000,
+        provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(deadline - performance.now())), maxBytes: 2_000_000,
         allowHttpStatuses: [409, 503], fetcher: this.options.fetcher,
       });
-      // An unknown or purged number is an empty 204. A 409 asks for the postcode
-      // of a number two shipments share. During maintenance the gateway gives every
-      // number the empty 204 while its other endpoints fail, the banner among them.
-      if (response.status === 204 && !bytes.byteLength) {
+      const empty = (reply: { response: Response; bytes: Uint8Array }) => reply.response.status === 204 && !reply.bytes.byteLength;
+      let reply: Awaited<ReturnType<typeof ask>> | undefined;
+      let failure: unknown;
+      let emptied = false;
+      for (let tries = 0; tries < EMPTY_TRIES; tries++) {
+        if (tries) {
+          if (deadline - performance.now() < EMPTY_RETRY_MIN_MS) break;
+          if (!await paused(EMPTY_PAUSE_MS, signal)) signal.throwIfAborted();
+        }
+        try {
+          reply = await ask();
+        } catch (cause) {
+          if (!(cause instanceof UpstreamHttpError && cause.status === 500)) throw cause;
+          [reply, failure] = [undefined, cause];
+          continue;
+        }
+        if (!empty(reply)) break;
+        emptied = true;
+      }
+      // An unknown or purged number is an empty 204, every time it is asked. A 409 asks
+      // for the postcode of a number two shipments share. During maintenance the gateway
+      // gives every number the empty 204 while its other endpoints fail, the banner among them.
+      if (!reply || empty(reply)) {
+        if (!emptied) throw failure;
         if (await this.#down(signal, deadline)) throw new MaintenanceError(PROVIDER, "DHL eCommerce Iberia's tracker is down for maintenance");
         throw new NotFoundError(PROVIDER);
       }
+      const { response, bytes } = reply;
       if (response.status !== 200) throw new IndeterminateError(PROVIDER, 'DHL eCommerce Iberia returned an inconclusive tracking response');
       // The firewall rejects a request with an HTML page under HTTP 200.
       if (!/json/i.test(response.headers.get('content-type') ?? '')) {

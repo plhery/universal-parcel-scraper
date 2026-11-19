@@ -266,6 +266,31 @@ describe('DHL eCommerce Iberia adapter', () => {
     await expect(broken.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'schema' });
   });
 
+  it('asks again after an empty 204, which the gateway also gives a shipment it holds, and reads absence only from one every time', async () => {
+    const gateway = (replies: (() => Response)[], asked: string[]): typeof fetch => async (url) => {
+      asked.push(new URL(String(url)).pathname);
+      return (replies.shift() ?? (() => new Response(null, { status: 204 })))();
+    };
+    const empty = () => new Response(null, { status: 204 });
+    const found: string[] = [];
+    const flaky = adapter(environment(gateway([empty, empty, () => Response.json(clone())], found)));
+    await expect(flaky.track({ number: NUMBER })).resolves.toMatchObject({ current_stage: 'delivered' });
+    expect(found).toHaveLength(3);
+    const missing: string[] = [];
+    const unknown = adapter(environment(gateway([], missing)));
+    await expect(unknown.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    expect(missing.filter((path) => path.endsWith('/shipment-detail'))).toHaveLength(4);
+    // The bare 500 it gives now and then, for any number, is asked again too: it neither hides a shipment nor
+    // makes an absence a failure, and 500s alone stay a failure.
+    const failed = () => new Response('{"Messages":[]}', { status: 500 });
+    const recovered = adapter(environment(gateway([failed, () => Response.json(clone())], [])));
+    await expect(recovered.track({ number: NUMBER })).resolves.toMatchObject({ current_stage: 'delivered' });
+    const absent = adapter(environment(gateway([empty, failed, failed], [])));
+    await expect(absent.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'not_found' });
+    const failing = adapter(environment(gateway([failed, failed, failed, failed], [])));
+    await expect(failing.track({ number: NUMBER })).rejects.toMatchObject({ status: 500 });
+  });
+
   it('reads the empty 204 as maintenance only while the banner fails as the gateway does', async () => {
     const OUTAGE = '{"Messages":["An error occur.Try it again."]}';
     const gateway = (banner: () => Promise<Response>, asked: string[] = []): typeof fetch => async (url) => {
@@ -277,7 +302,7 @@ describe('DHL eCommerce Iberia adapter', () => {
     const down = adapter(environment(gateway(async () => new Response(OUTAGE, { status: 500, headers: { 'content-type': 'application/json' } }), asked)));
     await expect(down.track({ number: NUMBER })).rejects.toMatchObject({ kind: 'maintenance' });
     await expect(down.recognize?.(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' });
-    expect(asked.slice(0, 2)).toEqual([`/LiveTracking.GTW/api/shipment-detail?number=${NUMBER}`, '/LiveTracking.GTW/api/banner']);
+    expect(asked.slice(0, 5)).toEqual([...Array(4).fill(`/LiveTracking.GTW/api/shipment-detail?number=${NUMBER}`), '/LiveTracking.GTW/api/banner']);
     for (const banner of [
       async () => Response.json('Aviso'),
       async () => new Response(null, { status: 204 }),
@@ -291,7 +316,7 @@ describe('DHL eCommerce Iberia adapter', () => {
     const hurried = adapter(environment(gateway(async () => new Response(OUTAGE, { status: 500 }), late)));
     await expect(hurried.track({ number: NUMBER }, { budgetMs: 500 })).rejects.toMatchObject({ kind: 'not_found' });
     expect(late).toHaveLength(1);
-  });
+  }, 10_000);
 
   it('recognizes a known parcel without an instant and leaves other answers inconclusive', async () => {
     const known = adapter(environment(async () => Response.json(clone())));
