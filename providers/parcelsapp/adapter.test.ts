@@ -1769,6 +1769,22 @@ describe('ParcelsApp result parsing', () => {
       .events?.[0]?.time).toBe('2026-11-03T05:54:00.000Z');
   });
 
+  it('keeps the instant of a mailer\'s label in USPS\'s page\'s words, its place after them', () => {
+    // Live shape: read on Texas's clock, the copy came six hours after USPS's own row of the same label.
+    const label = 'Shipping Label Created, USPS Awaiting Item, EXAMPLE CITY, TX';
+    expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
+      { date: '2026-11-18T05:47:00Z', status: 'Arrived at USPS Regional Facility', carrier: 0, location: 'EXAMPLE CITY TX DISTRIBUTION CENTER' },
+      { date: '2026-11-16T14:54:00Z', status: label, carrier: 0, location: 'EXAMPLE CITY, TX' },
+    ] }, number, identity(), null, Date.parse('2026-11-19T00:00:00Z')).events?.map((scan) => [scan.time, scan.description])).toEqual([
+      ['2026-11-18T11:47:00.000Z', 'Arrived at USPS Regional Facility'], // USPS's own row, on Texas's clock
+      ['2026-11-16T14:54:00.000Z', label],
+    ]);
+    // Without its place, it is USPS's other label row, which keeps its place's clock as USPS's adapter does.
+    expect(parseParcelsAppResponse({ carriers: ['USPS'], states: [
+      { date: '2026-11-16T14:54:00Z', status: 'Shipping Label Created, USPS Awaiting Item', carrier: 0, location: 'EXAMPLE CITY, TX' },
+    ] }, number, identity(), null, Date.parse('2026-11-19T00:00:00Z')).events?.[0]?.time).toBe('2026-11-16T20:54:00.000Z');
+  });
+
   it('reads a shipping partner\'s steps filed under USPS on their place\'s clock, as USPS dates them', () => {
     // Live shape: USPS's own tracker dated the pickup and the arrival on these digits, on their
     // place's clock. Read as an instant, the departure came before the arrival at the same facility.

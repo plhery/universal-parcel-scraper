@@ -319,6 +319,11 @@ step exists for future protocol changes.
   Cainiao scans of unlisted wording or in a reply that names no destination, and by EMS
   scans in a reply that places none of EMS's: a cancelled export in China, and US scans
   under a Chicago postcode in a reply that names neither the US nor a state.
+
+  A mailer's label filed under USPS is not a wall clock: "Shipping Label Created" alone, with
+  its place after it, or after "USPS Awaiting Item" with its place, keeps ParcelsApp's date as
+  its instant, as USPS's adapter reads the mailer's label on UTC. Read on its place's clock,
+  each copy came the place's offset after USPS's own row of the same minute.
 - Known clocks, from each carrier's own offsets. GOFO's feed dates its labels ("Shipping
   Label Created") on Pacific time wherever the parcel is injected (a Florida parcel's at
   -07:00), and GOFO Canada's on Toronto time, also for a parcel bound for British Columbia:
