@@ -460,6 +460,9 @@ function providerWordingStage(description: string): Stage | undefined {
   // recipient who cannot be reached closes the delivery and starts the return.
   if (/^order submit+ed[.!]?$/i.test(value)) return 'registered';
   if (/^we have received the shipment from the sender[.!]?$/i.test(value)) return 'accepted';
+  // The sender's hand-over, between the consignment's record and a terminal's receipt, as Ship24 relays a Nordic road
+  // network's rows.
+  if (/^shipment handover by (?:the )?sender[.!]?$/i.test(value)) return 'accepted';
   // An export warehouse receiving the parcel after the origin's sorting centre has sent it on.
   if (/^received at (?:the )?origin warehouse[.!]?$/i.test(value)) return 'in_transit';
   // Scans aggregators relay in the network's words: a checkpoint passed, and the network's receipt of

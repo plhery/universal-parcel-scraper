@@ -1930,6 +1930,7 @@ describe("universal providers' answers", () => {
       ['Carrier prealert. At sender', 'registered'], ['At sender', 'registered'],
       ['The request has been registered. Prepare your order', 'registered'],
       ['Customer Booking Received', 'registered'], ['Shipment Entered into System', 'registered'],
+      ['Shipment handover by sender', 'accepted'],
       ['Received at terminal', 'in_transit'], ['Shipment in warehouse - awaiting delivery appointment', 'in_transit'],
       ['International shipment release - Import', 'in_transit'], ['International shipment release - Export', 'in_transit'],
       ['Restricted item - Battery item', 'in_transit'],
@@ -2052,7 +2053,7 @@ describe("universal providers' answers", () => {
     // DPD Poland's messages to the recipient as ParcelsApp relays them.
     for (const wording of ['Email notification', 'SMS notification']) expect(answer('unknown', null, wording)).toEqual(gap);
     for (const wording of ['Shipment parameters updated', 'Tax ID. Form received', 'Keine weiteren Details erforderlich', 'Filiale / Agentur',
-      'Benachrichtigt', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Package received', 'Received.', 'Received', 'Shipped', 'Driver assigned',
+      'Benachrichtigt', 'Receiver notified', 'In progress', 'Delivery cannot be changed', 'PIOS notice', 'Update on your parcel', 'Carrier update', '110', 'Item received', 'Package received', 'Received.', 'Received', 'Shipped', 'Driver assigned',
       'Parcel is with the driver', 'Not received from retailer', 'Pickup document attached', 'Delivery branch. Rescheduling',
       'Parcel to be taken to a Yodel Store', 'The parcel has reached the ParcelShop', 'Barcode scanning', 'Packaged', 'Ready for dispatch',
       'Customer Documentation Cut-off', 'All Import Documents Received']) expect(answer('unknown', null, wording), wording).toEqual(gap);
