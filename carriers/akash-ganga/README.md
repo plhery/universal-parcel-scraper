@@ -13,16 +13,15 @@ are printed by many other carriers, so no rule claims them.
 
 ## Retrieval lead
 
-`Tracking.aspx?AWB={number}` renders the answer on the server, without a challenge: the
-booking (from and to centre, date and time, consignee), the current status, then transit and
-delivery details. A number it does not show leaves those fields empty under the number. No
-found reply has been seen, so there is no adapter.
+The tracker is `agcgroup.in/track-now/`, whose form sends the number as `awb` by GET. The
+older site at `akashganga.info` no longer answers. No found reply has been seen, so there is no
+adapter.
 
 ## Links
 
-The home page opens the tracker at `Tracking.aspx` with the number as `AWB`, which is the
-tracking address. Lookups archived from the older tracker carry it as `ConNo` on
-`OnlineTracking.aspx`; the number is read from both.
+The tracker carries the number as `awb` on `agcgroup.in/track-now/`. Links to the older site
+carry it as `AWB` on `Tracking.aspx` or `ConNo` on `OnlineTracking.aspx`; the number is read
+from all three.
 
 ## Testing
 

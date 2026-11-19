@@ -23,15 +23,24 @@
   },
   "capabilities": [],
   "portal": {
-    "url": "https://www.akashganga.info/Tracking.aspx?AWB={trackingNumber}",
-    "searchUrl": "https://www.akashganga.info/",
-    "canaryUrl": "https://www.akashganga.info/",
+    "url": "https://agcgroup.in/track-now/?awb={trackingNumber}",
+    "searchUrl": "https://agcgroup.in/track-now/",
+    "canaryUrl": "https://agcgroup.in/track-now/",
     "shows": [],
     "scraped": [],
     "discarded": [],
     "unavailable": []
   },
   "links": [
+    {
+      "domains": [
+        "agcgroup.in"
+      ],
+      "pathPattern": "^/track-now/?$",
+      "params": [
+        "awb"
+      ]
+    },
     {
       "domains": [
         "akashganga.info"
