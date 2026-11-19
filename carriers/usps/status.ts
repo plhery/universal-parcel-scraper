@@ -70,6 +70,7 @@ export function uspsStage(text: string): Stage | null {
   if (FAILED_ATTEMPT_TERMS.some((term) => value.includes(term))) return 'failed_attempt';
   if (DELIVERED_TERMS.some((term) => value.includes(term))) return 'delivered';
   if (OUT_FOR_DELIVERY_TERMS.some((term) => value.includes(term))) return 'out_for_delivery';
+  if (/\bheld\b/.test(value) && CUSTOMS_TERMS.some(term => value.includes(term))) return 'customs';
   if (READY_FOR_PICKUP_TERMS.some((term) => value.includes(term))) return 'ready_for_pickup';
   // A customs line the shared rules read as cleared ("Cleared customs") is a step in transit.
   if (CUSTOMS_TERMS.some((term) => value.includes(term))) return trackingLanguageStage(text) === 'in_transit' ? 'in_transit' : 'customs';

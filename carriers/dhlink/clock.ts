@@ -15,6 +15,17 @@ export function usClockCopy(wall: string, timestamp: number): boolean {
   return usClockZone(wall, timestamp) !== null;
 }
 
+/** Distinct US readings of a local clock, preferring the named state's zone at an equal instant. */
+export function usClockReadings(wall: string, state?: string | null) {
+  const seen = new Set<number>();
+  return [...new Set(state ? [state, ...US_ZONES] : US_ZONES)].flatMap(zone => {
+    const time = isoTime(wall, zone);
+    if (!time || seen.has(time.timestamp)) return [];
+    seen.add(time.timestamp);
+    return [{ zone, time }];
+  }).sort((a, b) => b.time.timestamp - a.time.timestamp);
+}
+
 /** The US zone, the state's first, on whose clock `wall` strikes at `timestamp`; null when none does. */
 export function usClockZone(wall: string, timestamp: number, state?: string | null): string | null {
   return [...(state ? [state] : []), ...US_ZONES].find((zone) => isoTime(wall, zone)?.timestamp === timestamp) ?? null;

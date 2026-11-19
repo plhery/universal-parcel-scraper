@@ -24,7 +24,7 @@ import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.j
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { chronopostOfficeLabel } from './chronopost.js';
-import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
+import { agencyIntake, agencyZone, cttSiteZone } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
 import { IMPORT, LA_POSTE_COUNTRIES, partnerWall } from '../../carriers/la-poste/clock.js';
@@ -762,8 +762,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
     const labelled = labelZone(reported);
     const ctt = reported.key === CTT;
     const countries = ctt ? [recipientCountry(shipment, 'shipper_address'), recipientCountry(shipment)] : [];
-    const agencyScans = ctt ? provider.events.flatMap((raw: unknown) => isRecord(raw) && isCttExpressPlace(text(raw.location))
-      ? [wallMillis(raw)] : []) : [];
+    const agencyScans = ctt ? provider.events.flatMap((raw: unknown) => isRecord(raw)
+      ? [{ at: wallMillis(raw), zone: agencyZone(text(raw.location), countries) }] : []) : [];
     for (const [index, raw] of provider.events.entries()) {
       if (++count > MAX_EVENTS || !isRecord(raw)) throw new SchemaError(SOURCE, '17TRACK returned invalid events');
       if (undatedScan(raw)) undated++;
@@ -794,10 +794,10 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       const polish = !poland ? null : left ? partner : 'Europe/Warsaw';
       // FIC's partner's scan from the handover on, unless placed in Britain, on the recipient's clock.
       const handed = delivering && (rawClock(raw) ?? '') >= handedOver && locationCountry(raw.location) !== 'GB' ? delivering : null;
-      // CTT's scan on the clock its place names, or Madrid's for the acceptance as a CTT Express agency takes the parcel in.
+      // CTT's scan on the clock its place names, or the paired site's clock for a blank-place acceptance.
       const named = ctt ? cttSiteZone(text(raw.location), countries) : null;
-      const intake = ctt && !named && !text(raw.location) && agencyIntake(wallMillis(raw), agencyScans);
-      const site = named ?? (intake ? 'Europe/Madrid' : null);
+      const intake = ctt && !text(raw.location) ? agencyIntake(wallMillis(raw), agencyScans) : null;
+      const site = named ?? intake;
       // A facility's clock, CTT's, A1's UTC, NZ Post's, Poland Post's, FIC's partner's, Correos de El Salvador's, Correos de Chile's, Anjun Express's, Shiprocket's, DAI Post's, Quick Rabbit's, Juxi Express's partner's abroad or an origin post's, on which 17TRACK puts one offset for the whole parcel.
       // Correios Brazil's copy of the sending post's scan, which 17TRACK labels with Brasília's offset.
       const read = mailer || facility || located !== undefined || juxiAbroad !== undefined || site || relaysFacilityClock(name) || utc || nz || abroad.has(index) || polish || handed || exchange || arrived || own || chile

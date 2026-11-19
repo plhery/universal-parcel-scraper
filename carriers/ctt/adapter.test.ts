@@ -245,6 +245,15 @@ describe('CTT response parsing', () => {
       expect(scanAt('2026-10-20T19:12:27Z', '0099999 - (CO) C.O. EXAMPLE')).toBe('2026-10-20T19:12:27+01:00');
     });
 
+    it('dates a blank acceptance on the paired Canary Islands site clock', () => {
+      const result = parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ RecipientCountryCode: 'PT',
+        Events: { List: [
+          { DateTime: '2026-11-11T15:02:47Z', StateId: 11, Event: 'Arrived', EventCode: 'EMB', Local: 'Las Palmas' },
+          { DateTime: '2026-11-11T15:02:46Z', StateId: 2, Event: 'Accepted', EventCode: 'EMA', Local: '' },
+        ] } }) } }, TRACKING_NUMBER);
+      expect(result.events?.map(event => event.time)).toEqual(['2026-11-11T15:02:47+00:00', '2026-11-11T15:02:46+00:00']);
+    });
+
     it('drops a bare office code as a place but keeps it for the clock', () => {
       const number = 'LT000000005ES';
       const result = parseCttTrackingResponse({ data: { ObjectEventsFromQuery: record({ ObjectCode: number, RecipientCountryCode: 'PT',

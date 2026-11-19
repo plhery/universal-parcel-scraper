@@ -97,12 +97,6 @@ export function parsePostOneTrackingHtml(html: string, raw: string): CarrierResu
       ...(known ? { provider_code: known.code, stage: known.stage, stage_source: 'carrier_map' } : {}) };
     scans.push({ event, index, key: JSON.stringify(event) });
   }
-  if (!scans.length) throw new NoHistoryError(PROVIDER, 'Post One knows the item but returned no reached scans', { reason: 'parcel_found' });
-  // Every source row is checked before deduplication, ordering and the public output cap.
-  const seen = new Set<string>();
-  const distinct = scans.filter(scan => { if (seen.has(scan.key)) return false; seen.add(scan.key); return true; });
-  distinct.sort((a, b) => b.event.local_time!.localeCompare(a.event.local_time!) || b.index - a.index);
-  const events = distinct.map(scan => scan.event), newest = events[0]!, stage = postOneStatus(newest.description!)?.stage;
   const partnerNumber = field('tracking_number'), partnerName = field('partner'), partnerLink = field('tracking_link');
   let handoff: Pick<CarrierResult, 'delivery_carrier' | 'delivery_tracking_number'> = {};
   if (partnerNumber && partnerName && partnerLink && compact(partnerName.text()).toUpperCase() === 'SPS SLOVAKIA') {
@@ -121,6 +115,13 @@ export function parsePostOneTrackingHtml(html: string, raw: string): CarrierResu
       } catch { /* Optional routing evidence cannot invalidate the bound own history. */ }
     }
   }
+  if (!scans.length) throw new NoHistoryError(PROVIDER, 'Post One knows the item but returned no reached scans', { reason: 'parcel_found',
+    deliveryCarrier: handoff.delivery_carrier, deliveryTrackingNumber: handoff.delivery_tracking_number });
+  // Every source row is checked before deduplication, ordering and the public output cap.
+  const seen = new Set<string>();
+  const distinct = scans.filter(scan => { if (seen.has(scan.key)) return false; seen.add(scan.key); return true; });
+  distinct.sort((a, b) => b.event.local_time!.localeCompare(a.event.local_time!) || b.index - a.index);
+  const events = distinct.map(scan => scan.event), newest = events[0]!, stage = postOneStatus(newest.description!)?.stage;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
     ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),

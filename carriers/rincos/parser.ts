@@ -121,21 +121,23 @@ export function parseRincos(html: string, raw: string): CarrierResult {
     seen.add(key); return true;
   });
   const newest = events[0], summaryText = clean(summary, 500), mappedSummary = summaryText ? rincosStage(summaryText) : null;
-  if (!newest && !mappedSummary) throw new NoHistoryError(PROVIDER, 'Rincos returned no usable shipment history');
-  const incomplete = !newest || !!(mappedSummary && mappedSummary.stage !== newest.stage);
-  const current = incomplete && mappedSummary ? mappedSummary : newest?.stage
-    ? { stage: newest.stage as Stage, source: newest.stage_source } : null;
   const courier = fields.get('Local Courier') ?? '';
   const country = /\(Nation Code\s*:\s*([A-Z]{2})\)\s*$/.exec(courier)?.[1];
   const partner = country === 'JP' && /^Sagawa Express AIR\s*\(/i.test(courier) ? 'sagawa'
     : /^FedEx(?: MallTail)?\s*\(/i.test(courier) ? 'fedex' : null;
   const partnerNumber = normalizeTrackingNumber(fields.get('Local Tracking No.') ?? '');
+  const eligible = partner && /^\d{12}$/.test(partnerNumber);
+  if (!newest && !mappedSummary) throw new NoHistoryError(PROVIDER, 'Rincos returned no usable shipment history',
+    eligible ? { deliveryCarrier: partner, deliveryTrackingNumber: partnerNumber } : undefined);
+  const incomplete = !newest || !!(mappedSummary && mappedSummary.stage !== newest.stage);
+  const current = incomplete && mappedSummary ? mappedSummary : newest?.stage
+    ? { stage: newest.stage as Stage, source: newest.stage_source } : null;
   return { status: current ? languageStageStatus(current.stage) : 'unknown',
     ...(current ? { current_stage: current.stage, current_stage_source: current.source } : {}),
     last_status_text: incomplete && mappedSummary ? summaryText : newest?.description ?? summaryText,
     last_update: newest?.time ?? null, last_update_local: newest?.local_time ?? null, expected_delivery: null,
     ...(country ? { destination_country: country } : {}),
-    ...(partner && /^\d{12}$/.test(partnerNumber) ? { delivery_carrier: partner, delivery_tracking_number: partnerNumber } : {}),
+    ...(eligible ? { delivery_carrier: partner, delivery_tracking_number: partnerNumber } : {}),
     ...(!newest ? { summary_only: true } : {}),
     ...(events.length > MAX_EVENTS || (newest && incomplete) ? { history_truncated: true } : {}),
     events: events.slice(0, MAX_EVENTS) };

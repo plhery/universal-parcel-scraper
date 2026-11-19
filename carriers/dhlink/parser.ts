@@ -8,7 +8,7 @@ import { countryCode, firstOccurrence, isoTime, usStateTimeZone } from '../../co
 import { cleanScalar } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 import { countryZones } from '../../places/zones.js';
-import { DHLINK_RECORD_ZONE as RECORD_ZONE, usClockCopy, usClockZone } from './clock.js';
+import { DHLINK_RECORD_ZONE as RECORD_ZONE, usClockReadings } from './clock.js';
 import { dhlinkEnglish, dhlinkStage, FLIGHT_BOOKED } from './status.js';
 
 export const PROVIDER = 'DHLink';
@@ -227,6 +227,15 @@ export function dhlinkWithoutTown(description: string, location: string): string
   return location.trim().toLowerCase().startsWith(`${town[1]} ${town[2]}`.toLowerCase()) ? description.slice(town[0].length) : description;
 }
 
+function copyPlace(event: CarrierEvent): string {
+  const town = TOWN_FIRST.exec(event.description ?? '');
+  return (event.location || (town ? town[1] + ' ' + town[2] : '')).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
+}
+
+function compatiblePlaces(left: string, right: string): boolean {
+  return !left || !right || left === right;
+}
+
 function outranks(left: readonly number[], right: readonly number[]): boolean {
   const index = left.findIndex((value, position) => value !== right[position]);
   return index >= 0 && left[index]! > right[index]!;
@@ -329,37 +338,49 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
   const dated = [...scans.values()].sort((left, right) => (left.stamp < right.stamp ? 1 : left.stamp > right.stamp ? -1 : 0))
     .map((scan) => {
       const zone = scanZone(scan, destination, last?.leg.beijingClock === true && !(scan.hub && last.leg.hubClockPickup));
-      return { scan, zone, time: zone ? isoTime(scan.stamp, zone) : null };
+      return { scan, place: copyPlace(scan.event), zone, time: zone ? isoTime(scan.stamp, zone) : null };
     });
   // A US partner's scan can come twice, as UniUni's do: on its hub's wall clock, often after the
   // hub's town, and on UTC. The UTC copy's clock is the other's on a US reading, to the second,
   // before DHLink recorded either: one scan, on that US clock.
-  const utcCopies = new Set<(typeof dated)[number]>();
+  const copies = new Set<(typeof dated)[number]>();
   if (destination === 'US') {
-    for (const local of dated) {
-      if (utcCopies.has(local)) continue;
-      const wording = unplaced(local.scan.event.description);
-      const copy = dated.find((other) => {
-        if (other === local || utcCopies.has(other) || unplaced(other.scan.event.description) !== wording) return false;
-        const instant = isoTime(other.scan.stamp, 'UTC')?.timestamp;
-        return instant !== undefined && instant <= Math.min(local.scan.recorded, other.scan.recorded) + CLOCK_SKEW_MS
-          && usClockZone(local.scan.stamp, instant, local.scan.state) !== null;
-      });
-      if (!copy) continue;
-      const zone = usClockZone(local.scan.stamp, isoTime(copy.scan.stamp, 'UTC')!.timestamp, local.scan.state)!;
-      Object.assign(local, { zone, time: isoTime(local.scan.stamp, zone) });
-      utcCopies.add(copy);
+    const rows = dated.map(entry => ({
+      entry, wording: unplaced(entry.scan.event.description), utc: Date.parse(entry.scan.stamp + 'Z'),
+      readings: usClockReadings(entry.scan.stamp, entry.scan.state),
+    }));
+    // The source already has one row per wall stamp. Lookup by UTC instant and check its wording and place.
+    const utcRows = new Map(rows.map(row => [row.utc, row]));
+    for (const local of rows) {
+      if (copies.has(local.entry)) continue;
+      for (const { zone, time } of local.readings) {
+        const copy = utcRows.get(time.timestamp);
+        if (!copy || copy.wording !== local.wording || copies.has(copy.entry)
+          || !compatiblePlaces(local.entry.place, copy.entry.place)
+          || copy.utc > Math.min(local.entry.scan.recorded, copy.entry.scan.recorded) + CLOCK_SKEW_MS) continue;
+        Object.assign(local.entry, { zone, time });
+        copies.add(copy.entry);
+        break;
+      }
+    }
+    // A Beijing-timed record can also have a copy on a partner's US clock.
+    const recorded = new Map<string, typeof dated>();
+    const key = (event: CarrierEvent, instant: number) => JSON.stringify([event.description, instant]);
+    for (const entry of dated) {
+      if (!entry.time || !(last?.leg.beijingClock || entry.zone === RECORD_ZONE)) continue;
+      const id = key(entry.scan.event, entry.time.timestamp);
+      const group = recorded.get(id) ?? [];
+      group.push(entry);
+      recorded.set(id, group);
+    }
+    for (const { entry, readings } of rows) {
+      if (readings.some(({ time }) => recorded.get(key(entry.scan.event, time.timestamp))
+        ?.some(other => other !== entry))) copies.add(entry);
     }
   }
-  // Beside DHLink's own record of a partner's scan on Beijing time, the partner's copy can come
-  // on its US wall clock: the same wording, at the instant of DHLink's row on a US reading.
-  // Without a partner known to be relayed on Beijing time, DHLink's row must be read on it.
-  const copies = destination === 'US' ? dated.filter(({ scan }) => dated.some((other) =>
-    other.scan !== scan && other.time && (last?.leg.beijingClock || other.zone === RECORD_ZONE)
-    && other.scan.event.description === scan.event.description && usClockCopy(scan.stamp, other.time.timestamp))) : [];
   // A place naming only the destination country is the parcel's, not the scan's: a Canada line's
   // airline hand-over in China reads "Canada".
-  const kept = dated.filter((entry) => !copies.includes(entry) && !utcCopies.has(entry));
+  const kept = dated.filter((entry) => !copies.has(entry));
   const events = kept
     .map(({ scan, time }): CarrierEvent => {
       const { location, ...event } = scan.event;

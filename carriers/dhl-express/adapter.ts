@@ -129,7 +129,7 @@ function unifiedResult(shipment: Record<string, unknown>): CarrierResult {
     if (!isRecord(row) || typeof row.description !== 'string' || !row.description.trim()) throw new SchemaError(PROVIDER, 'DHL returned an invalid event');
     // A delivery reads "Delivered", as the mobile API words it, so both feeds give the record one wording; DHL's own stays beside it.
     const worded = clean(row.description).slice(0, 1000);
-    const description = row.statusCode === 'delivered' ? 'Delivered' : worded;
+    const description = row.statusCode === 'delivered' && !isDhlExpressPieceDelivery(worded) ? 'Delivered' : worded;
     const mapped = dhlExpressStage(description, typeof row.status === 'string' ? row.status : null);
     const time = typeof row.timestamp === 'string' && /(?:Z|[+-](?:[01]\d|2[0-3]):?[0-5]\d)$/i.test(row.timestamp)
       ? explicitOffsetTime(row.timestamp)?.iso : undefined;

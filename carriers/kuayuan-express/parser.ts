@@ -128,9 +128,13 @@ export function parseKuayuan(payload: unknown, raw: string): CarrierResult {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),
     } });
   }
-  if (!scans.length) throw new NoHistoryError(PROVIDER);
-  // Newest first; equal clocks keep the reply's order.
-  scans.sort((left, right) => right.local.localeCompare(left.local));
+  const partner = handoff(shipment, number);
+  if (!scans.length) throw new NoHistoryError(PROVIDER, undefined, {
+    deliveryCarrier: partner.delivery_carrier, deliveryTrackingNumber: partner.delivery_tracking_number,
+  });
+  // The carrier lists scans newest first, including across local clock changes.
+  // Reverse an oldest-first reply only if even the full UTC offset range cannot reverse its endpoints.
+  if (Date.parse(scans.at(-1)!.local + 'Z') - Date.parse(scans[0]!.local + 'Z') > 26 * 3_600_000) scans.reverse();
   const events = scans.map(({ event }) => event);
   const newest = events[0]!;
   // A delivery stands only while no newer scan may have undone it, unless that scan moves nothing (`leadingScan`).
@@ -148,7 +152,7 @@ export function parseKuayuan(payload: unknown, raw: string): CarrierResult {
     ...(country ? { destination_country: country } : {}),
     ...(name ? { receiver_name: name } : {}),
     ...(town ? { receiver_address: town } : {}),
-    ...handoff(shipment, number),
+    ...partner,
     events,
   };
 }

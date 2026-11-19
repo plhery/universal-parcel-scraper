@@ -128,3 +128,8 @@ describe('Wahana guest verification', () => {
     expect(fetcher).toHaveBeenCalledTimes(3);
   });
 });
+
+it('reports a retired service route as a transport error', async () => {
+  const fetcher = async () => new Response('Service retired', { status: 410 });
+  await expect(new WahanaTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
+});

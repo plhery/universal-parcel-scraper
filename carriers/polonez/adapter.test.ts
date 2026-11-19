@@ -50,6 +50,11 @@ describe('Polonez bound guest history', () => {
     expect(result).not.toHaveProperty('delivered_at');
   });
 
+  it('keeps a later date-only delivery above timed scans on the same day', () => {
+    const result = parsePolonez(xml.replace('2026-01-22<', '2026-01-21<'), NUMBER);
+    expect(result.events?.[0]?.local_time).toBe('2026-01-21');
+  });
+
   it('names GLS Poland only with consistent Polish destination evidence', () => {
     const otherCountry = xml.replaceAll('<Country_EN>PL</Country_EN>', '<Country_EN>DE</Country_EN>');
     expect(parsePolonez(otherCountry, NUMBER).delivery_carrier).toBeUndefined();

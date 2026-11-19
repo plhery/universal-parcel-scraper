@@ -76,24 +76,21 @@ export function isCttExpressAgency(location: string): boolean {
   return CTT_EXPRESS_AGENCY.test(location) && !CTT_SITE.test(location);
 }
 
-/**
- * Whether a location is one of CTT Express's: one of its agencies or a Spanish provincial
- * capital named bare. CTT records its acceptance with no place as the parcel reaches either.
- */
-export function isCttExpressPlace(location: string): boolean {
-  return isCttExpressAgency(location) || spanishTownZone(location, []) !== null;
+/** The zone of a CTT Express agency or a bare Spanish capital on this route. */
+export function agencyZone(location: string, countries: readonly (string | null)[]): string | null {
+  return isCttExpressAgency(location) ? 'Europe/Madrid' : spanishTownZone(location, countries);
 }
 
-/** The acceptance CTT records with no place as a CTT Express agency takes a parcel in comes up to this long before. */
-const AGENCY_INTAKE_MS = 60_000;
-
-/**
- * Whether a CTT scan with no place, at `at`, is that acceptance: at most a minute before one of
- * `agencyScans`, the scans at CTT Express's places (`isCttExpressPlace`). Both are wall clocks
- * read as UTC, only to compare them. It is on Madrid's clock, as the agency's scan is.
- */
-export function agencyIntake(at: number, agencyScans: readonly number[]): boolean {
-  return agencyScans.some((agency) => agency - at >= 0 && agency - at <= AGENCY_INTAKE_MS);
+/** The closest CTT Express arrival up to a minute after the blank-place intake supplies its zone. */
+export function agencyIntake(at: number, scans: readonly { at: number; zone: string | null }[]): string | null {
+  let nearest = 60_001, zone: string | null = null;
+  for (const scan of scans) {
+    const gap = scan.at - at;
+    if (!scan.zone || !(gap >= 0 && gap <= 60_000)) continue;
+    if (gap < nearest) { nearest = gap; zone = scan.zone; }
+    else if (gap === nearest && zone !== scan.zone) zone = null;
+  }
+  return zone;
 }
 
 /** The country of the office of exchange leading a location, if one does. */

@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
@@ -326,6 +327,13 @@ describe('DHLink HTTP adapter', () => {
       parcel.lastTurnNo = null;
       parcel.trackinfoList = rows;
     }), WAREHOUSE, LATER);
+    const conversions = vi.spyOn(DateTime, 'fromISO');
+    try {
+      const rows = Array.from({ length: 30 }, (_, i) => row('2026-03-03 10:00:' + String(i).padStart(2, '0'),
+        '2026-03-05 10:00:00', 'Parcel processed.'));
+      expect(relayed(rows).events).toHaveLength(rows.length);
+      expect(conversions.mock.calls.length).toBeLessThan(30 * rows.length);
+    } finally { conversions.mockRestore(); }
     const twins = [
       row('2026-03-05 17:04:05', '2026-03-06 08:30:26', 'Sampletown IL, Parcel scanned and in transit.'),
       row('2026-03-04 04:10:08', '2026-03-04 21:27:15', 'Parcel received at UniUni Sorting Hub.'),
@@ -339,6 +347,9 @@ describe('DHLink HTTP adapter', () => {
       ['2026-03-03T22:10:08-06:00', null, 'in_transit', null],
       ['2026-03-03T16:43:50-06:00', null, 'out_for_delivery', null],
     ]);
+    const processed = (stamp: string, place: string) => ({ ...row(stamp, '2026-03-05 10:00:00', 'Parcel processed.'), place });
+    expect(relayed([processed('2026-03-03 10:00:00', 'Chicago IL'), processed('2026-03-03 16:00:00', 'Springfield IL')]).events)
+      .toHaveLength(2);
     // A copy recorded before its UTC reading, another second, or another destination: two scans.
     const early = [twins[3]!, { ...twins[1]!, createDate: '2026-03-04 10:00:00' }];
     expect(relayed(early).events).toHaveLength(2);

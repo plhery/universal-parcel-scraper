@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it } from 'vitest';
-import { deliveryHandoff } from '../../core/catalog/handoff.js';
+import { noHistoryHandoff, deliveryHandoff } from '../../core/catalog/handoff.js';
 import { MAX_BYTES, normalizePostOneNumber, parsePostOneTrackingHtml, postOneTrackingUrl } from './parser.js';
 import { postOneStage, statusMap as postOneStatusMap } from './status.js';
 
@@ -194,4 +194,10 @@ describe('Post One optional SPS handoff evidence', () => {
     expect(result.delivery_carrier).toBeUndefined(); expect(result.delivery_tracking_number).toBeUndefined();
     expect(deliveryHandoff('post-one', NUMBER, result)).toBeNull();
   });
+});
+
+it('preserves the delivery handoff without origin scans', async () => {
+  const result = Promise.resolve().then(() => parsePostOneTrackingHtml(mutate($ => { $('.is-done').removeClass('is-done'); }), NUMBER));
+  await expect(result.catch(error => noHistoryHandoff('post-one', NUMBER, error)))
+    .resolves.toMatchObject({ carrier: 'slovak-parcel-service', number: PARTNER });
 });

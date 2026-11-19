@@ -58,7 +58,7 @@ function failure(payload: Record<string, unknown>): Error {
  * code 1 with one answer in `data` per waybill it knows, naming the waybill
  * in `keyword`. A waybill left out is one the page reports as not found.
  */
-export function jAndTCnAnswer(payload: unknown, number: string): Record<string, unknown> {
+export function jAndTCnAnswer(payload: unknown, number: string, confirmed = false): Record<string, unknown> {
   if (!isRecord(payload) || typeof payload.code !== 'number') throw new SchemaError(PROVIDER, 'J&T Express China returned an invalid envelope');
   if (payload.code !== ANSWERED) throw failure(payload);
   const answers = payload.data ?? [];
@@ -73,6 +73,7 @@ export function jAndTCnAnswer(payload: unknown, number: string): Record<string, 
   }
   if (answers.length > 1) throw new SchemaError(PROVIDER, 'J&T Express China returned more than one answer for the waybill');
   const answer = answers[0] as Record<string, unknown> | undefined;
+  if (!answer && confirmed) throw new NoHistoryError(PROVIDER);
   if (!answer) throw new NotFoundError(PROVIDER);
   if (answer.details !== undefined && answer.details !== null && !Array.isArray(answer.details)) {
     throw new SchemaError(PROVIDER, 'J&T Express China returned invalid scans');

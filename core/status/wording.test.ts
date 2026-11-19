@@ -1225,6 +1225,7 @@ describe('classifyWording', () => {
       ['您的快件已妥收【本人签收，示例人】', 'delivered'], ['已签收', 'delivered'], ['已簽收', 'delivered'], ['您的快件已签收', 'delivered'],
       ['已签收（本人）', 'delivered'], ['本人签收', 'delivered'], ['他人代收', 'delivered'], ['已由门卫代收', 'delivered'],
       ['成功签收', 'delivered'], ['已送达', 'delivered'], ['投递成功', 'delivered'],
+      ['包裹已取走，取件码已失效', 'delivered'],
       ['已投递至【示例智能快件箱】，请凭取件码取件', 'ready_for_pickup'], ['您的快件已存放至【示例驿站】，请您及时取件', 'ready_for_pickup'],
       ['已由【示例驿站】代收', 'ready_for_pickup'], ['已到达【示例自提点】', 'ready_for_pickup'], ['已放入丰巢柜', 'ready_for_pickup'],
       ['邮件已到达【示例营业部】，请您前往领取', 'ready_for_pickup'], ['等待客户网点取件', 'ready_for_pickup'], ['到达待取', 'ready_for_pickup'],
@@ -1248,6 +1249,8 @@ describe('classifyWording', () => {
       // Receipt confirmed on the order, as ParcelsApp relays JD's.
       ['已确认收货', 'delivered'], ['您的订单已确认收货，感谢您的购物', 'delivered'], ['系统已自动确认收货', 'delivered'], ['已確認收貨', 'delivered'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    expect(classifyWording('如果包裹已取走', 'pending').stage).not.toBe('delivered');
+    expect(classifyWording('取件码已失效', 'pending').stage).not.toBe('ready_for_pickup');
     // A centre sending the item back, a return under way, a note about after the signature, an abnormal
     // signature, a parcel waiting for a courier, a courier's pickup from the sender and cash on delivery
     // are no final scan.

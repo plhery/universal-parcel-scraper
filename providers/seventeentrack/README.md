@@ -192,8 +192,7 @@ carrier.
   `undated_event_count`, and when it is the reply's latest scan the reply is inconclusive.
 - CTT's leg (carrier key 16101) shows CTT's wall clocks with Portugal's offset. A row is read
   on the clock its place names, as the [CTT adapter](../../carriers/ctt/README.md) reads it: a
-  CTT Express agency's scan in Spain, and the acceptance with no place up to a minute before
-  it, on Madrid's clock.
+  CTT Express arrival in Spain and the blank-place acceptance up to a minute earlier share the site's clock.
 - Quick Rabbit's leg (carrier key 101309) shows the clocks Quick Rabbit's page shows, and
   17TRACK labels them `-04:00`. Its rows are read on Madrid's clock, as the
   [Quick Rabbit adapter](../../carriers/quick-rabbit/README.md) reads them.

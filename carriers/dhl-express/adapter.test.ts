@@ -79,8 +79,8 @@ describe('DHL Express projection', () => {
     expect(parse({ results: [{ ...web.results[0]!, checkpoints: web.results[0]!.checkpoints.slice(3) }] }, number))
       .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'none', last_status_text: partial });
     const unified = unifiedPayload();
-    unified.shipments[0]!.status = { description: partial, statusCode: 'transit', timestamp: '2026-10-05T13:14:00-04:00' };
-    unified.shipments[0]!.events = [{ description: partial, statusCode: 'transit', timestamp: '2026-10-05T13:14:00-04:00' }, ...unified.shipments[0]!.events.slice(1)] as typeof unified.shipments[0]['events'];
+    unified.shipments[0]!.status = { description: partial, statusCode: 'delivered', timestamp: '2026-10-05T13:14:00-04:00' };
+    unified.shipments[0]!.events = [{ description: partial, statusCode: 'delivered', timestamp: '2026-10-05T13:14:00-04:00' }, ...unified.shipments[0]!.events.slice(1)] as typeof unified.shipments[0]['events'];
     const read = parseUnified(unified, number);
     expect(read).toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery', current_stage_source: 'none' });
     expect(read.events?.[0]).toMatchObject({ stage: 'out_for_delivery', stage_source: 'none' });

@@ -86,7 +86,10 @@ export function parseExpedico(payload: unknown, raw: string): CarrierResult {
     throw new SchemaError(PROVIDER, 'Expedico returned an unbound parcel or invalid history');
   }
   const summary = code(record.packetState);
-  if (!record.events.length) throw new NoHistoryError(PROVIDER, 'Expedico returned no dated history');
+  // The portal names this national service explicitly. The full partner reference stays unchanged.
+  const fan = record.carrier.id === '180' && record.carrier.labelLocal === 'RO Fan';
+  if (!record.events.length) throw new NoHistoryError(PROVIDER, 'Expedico returned no dated history', {
+    deliveryCarrier: fan ? 'fan-courier' : undefined, deliveryTrackingNumber: partner });
   const events: CarrierEvent[] = [], seen = new Set<string>();
   for (const row of [...record.events as unknown[]].reverse()) {
     if (!isRecord(row)) throw new SchemaError(PROVIDER, 'Expedico returned an invalid scan');
@@ -106,8 +109,6 @@ export function parseExpedico(payload: unknown, raw: string): CarrierResult {
     weight = Number(value);
   }
   const stage = expedicoStage(summary, newest.description!);
-  // The portal names this national service explicitly. The full partner reference stays unchanged.
-  const fan = record.carrier.id === '180' && record.carrier.labelLocal === 'RO Fan';
   return { status: stage ? languageStageStatus(stage) : 'unknown', ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     provider_code: summary, last_status_text: newest.description, last_update: newest.time ?? null,
     ...(newest.local_time ? { last_update_local: newest.local_time } : {}), expected_delivery: null,

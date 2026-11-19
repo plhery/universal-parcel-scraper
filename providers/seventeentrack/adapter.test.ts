@@ -578,6 +578,8 @@ describe('17TRACK result parsing', () => {
     expect(times(16101, [row('2026-10-22', '16:27:53', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
       row('2026-10-22', '16:27:52', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null)]))
       .toEqual(['2026-10-22T14:27:53.000Z', '2026-10-22T14:27:52.000Z']);
+    expect(times(16101, [row('2026-11-11', '15:02:47', 'Arrived', 'Las Palmas'), row('2026-11-11', '15:02:46', 'Accepted', null)]))
+      .toEqual(['2026-11-11T15:02:47.000Z', '2026-11-11T15:02:46.000Z']);
     // Each names the zone it is read on: the agency's from its place, the acceptance's borrowed from the agency's scan.
     expect(parse17TrackResponse(reply(16101, [row('2026-10-22', '16:27:53', 'Em trânsito, Chegou ao centro operacional', '009999 - (PL) EXAMPLE AGENCY'),
       row('2026-10-22', '16:27:52', 'Aceite, O envio foi aceite. O processo de envio foi iniciado', null)]), number).events

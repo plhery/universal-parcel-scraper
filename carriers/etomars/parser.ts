@@ -111,17 +111,18 @@ export function parseEtomars(html: string, raw: string): CarrierResult {
     events.push({ local_time: local, description, provider_code: state.code, ...(detail.location ? { location: detail.location } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
   }
-  if (!events.length) throw new NoHistoryError(PROVIDER, 'SHIPNERGY returned no dated scans');
-  // The portal groups destination phases ahead of customs, even when their clocks are older.
-  // This scoped Korean/Japanese service keeps the same local clock in both countries.
-  events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
-  const currentEvent = events.find(event => event.provider_code === summary.code);
-  const staged = currentEvent ? etomarsStage(currentEvent.provider_code!, currentEvent.description!) : null;
   const partner = fields.eq(4), partnerNumber = normalizeTrackingNumber(fields.eq(3).text());
   const links = partner.find('a'), noLink = fields.eq(3).find('a');
   const sagawaUrl = (url: string | undefined) => url === 'https://e-customer.sagawa-exp.co.jp/k2k';
   const handoff = clean(partner.text()).toUpperCase() === 'SAGAWA' && /^\d{12}$/.test(partnerNumber)
     && links.length === 1 && noLink.length === 1 && sagawaUrl(links.attr('href')) && sagawaUrl(noLink.attr('href'));
+  if (!events.length) throw new NoHistoryError(PROVIDER, 'SHIPNERGY returned no dated scans',
+    handoff ? { deliveryCarrier: 'sagawa', deliveryTrackingNumber: partnerNumber } : undefined);
+  // The portal groups destination phases ahead of customs, even when their clocks are older.
+  // This scoped Korean/Japanese service keeps the same local clock in both countries.
+  events.sort((left, right) => right.local_time!.localeCompare(left.local_time!));
+  const currentEvent = events.find(event => event.provider_code === summary.code);
+  const staged = currentEvent ? etomarsStage(currentEvent.provider_code!, currentEvent.description!) : null;
   return { status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
     provider_code: currentEvent?.provider_code ?? summary.code,

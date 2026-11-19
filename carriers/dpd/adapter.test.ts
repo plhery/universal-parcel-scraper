@@ -531,6 +531,13 @@ describe('DPD delivery notices', () => {
     ]);
   });
 
+  it('retains a delivery round carrying a forecast', () => {
+    const description = OUT[3] + '. ' + ESTIMATED[3];
+    const result = notices([DEPOT, [OUT[0], OUT[1], OUT[2], description]]);
+    expect(result.events?.[0]?.provider_code).toBe('DLO');
+    expect(result.expected_delivery).toBe('2026-07-17');
+  });
+
   it('reads the email window as a 24-hour wall clock', () => {
     expect(notices([DEPOT, CHANGED, OUT, EMAILED]).expected_delivery).toBe('2026-07-16 12:32–13:32');
     const window = (text: string) => notices([DEPOT, [...EMAILED.slice(0, 3), text] as Scan]).expected_delivery;
@@ -718,6 +725,18 @@ describe('DPD scan times', () => {
     for (const shown of [`1${TRACKING_NUMBER}`, `${TRACKING_NUMBER}7`.repeat(2), `${TRACKING_NUMBER}${wrong}`, `00${TRACKING_NUMBER}0001756`]) {
       expect(() => parseDPDTrackingHtml(page(shown), TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
     }
+  });
+
+  it('rejects another parcel panel beside a recent search', () => {
+    const page = `<aside>Recent searches: ${TRACKING_NUMBER}</aside><section><h2>Parcel ${'2'.repeat(14)}</h2>
+      <li class="content-item-track"><span class="entry-body">Delivered</span></li></section>`;
+    expect(() => parseDPDTrackingHtml(page, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+  });
+
+  it('requires an identifier outside recent searches to bind the timeline', () => {
+    const page = `<nav>Recent searches: ${TRACKING_NUMBER}</nav><main>
+      <li class="content-item-track"><span class="entry-body">Delivered</span></li></main>`;
+    expect(() => parseDPDTrackingHtml(page, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
   it('reads a page as a miss only when it shows no steps, and refuses a page with neither', () => {

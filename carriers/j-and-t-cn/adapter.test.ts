@@ -110,6 +110,8 @@ describe('J&T Express China HTTP adapter', () => {
     expect(failure).toBeInstanceOf(UpstreamHttpError);
     expect(failure.request?.url).toContain('code=SYNTHETICSTAGECODE');
     // A second stage without scans leaves a waybill J&T knows without history.
+    const absentDetails = site(() => reply(fixture('without-scans')), () => reply({ code: 1, data: [] }));
+    await expect(carrier(absentDetails).track({ number: NUMBER, phoneDigits: DIGITS })).rejects.toBeInstanceOf(NoHistoryError);
     const empty = site(() => reply(fixture('without-scans')), () => reply(changed('second-stage', (body) => { body.data[0]!.details = []; })));
     await expect(carrier(empty).track({ number: NUMBER, phoneDigits: DIGITS })).rejects.toBeInstanceOf(NoHistoryError);
   });
