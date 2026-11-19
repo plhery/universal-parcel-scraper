@@ -1101,7 +1101,7 @@ describe('17TRACK result parsing', () => {
     }
   });
 
-  it("reads the origin post's scans Korea Post, Pakistan Post and Saudi Post relay on that post's clock, and their own as labeled", () => {
+  it("reads the origin post's scans Korea Post, Pakistan Post, Saudi Post and Norway Post relay on that post's clock, and their own as labeled", () => {
     const row = (offset: string) => (date: string, time: string, description: string, location: string) => ({
       time_iso: `${date}T${time}${offset}`, time_utc: null, time_raw: { date, time, timezone: null },
       description, location, stage: null, sub_status: 'InTransit_Other' });
@@ -1135,6 +1135,19 @@ describe('17TRACK result parsing', () => {
       saudi('2026-10-20', '09:00:00', 'Your shipment is on its way to destination', 'RIYADH'),
       saudi('2026-10-13', '05:03:00', 'Your shipment is on its way to destination', 'GUANGZHOU EM'),
     ], 'ZZ123456785CN')).toEqual(['2026-10-20T06:00:00.000Z', '2026-10-12T21:03:00.000Z']);
+    // Norway Post's copies of China Post's export scans at Beijing's minute under +01:00; its own scans as labeled.
+    const norway = row('+01:00');
+    const norwayRows = [
+      norway('2026-11-16', '10:00:00', 'The shipment has arrived in Norway.', ''),
+      norway('2026-11-11', '03:09:00', 'The shipment has been sent from origin country.', ''),
+      norway('2026-11-11', '03:09:00', 'The shipment has cleared export customs.', ''),
+      norway('2026-11-10', '23:03:00', 'The shipment has arrived at the export terminal.', ''),
+      norway('2026-11-10', '21:58:00', 'The parcel has been collected and is in transit.', ''),
+    ];
+    expect(times(14081, 'NO', norwayRows, 'ZZ123456785CN')).toEqual(['2026-11-16T09:00:00.000Z', '2026-11-10T19:09:00.000Z',
+      '2026-11-10T19:09:00.000Z', '2026-11-10T15:03:00.000Z', '2026-11-10T13:58:00.000Z']);
+    expect(times(14081, 'NO', norwayRows, 'ZZ123456785NO')).toEqual(['2026-11-16T09:00:00.000Z', '2026-11-11T02:09:00.000Z',
+      '2026-11-11T02:09:00.000Z', '2026-11-10T22:03:00.000Z', '2026-11-10T20:58:00.000Z']);
   });
 
   it('reads Correos de El Salvador\'s scans in UTC, its copies of the origin post\'s and Swiss Post\'s relays on their offices\' clocks', () => {

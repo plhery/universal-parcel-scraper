@@ -574,18 +574,21 @@ interface OriginRelay { home: string; outward?: RegExp; placed?: true }
 /**
  * Destination posts' legs that relay the origin post's scans on an item from abroad at that post's
  * wall clock under their own country's offset, keyed by 17TRACK's carrier: Japan Post's (10021),
- * ePOST, Korea Post's (11051), Pakistan Post's (16011) and Saudi Post's (19071). The last three
- * repeated China Post's own Beijing digits: Korea Post's arrival at Guangzhou's outward office of
- * exchange showed at 22:46 +09:00 as China Post presented the item to export customs there at 22:46
- * +08:00, and Pakistan Post's and Saudi Post's copies of China Post's export customs scans kept their
- * minute under +05:00 and +03:00. Their copies are worded as the origin's, or placed in the origin
- * country, a name both countries share counting as the post's own.
+ * ePOST, Korea Post's (11051), Pakistan Post's (16011), Saudi Post's (19071) and Norway Post's
+ * (14081). The last four repeated China Post's own Beijing digits: Korea Post's arrival at
+ * Guangzhou's outward office of exchange showed at 22:46 +09:00 as China Post presented the item to
+ * export customs there at 22:46 +08:00, Pakistan Post's and Saudi Post's copies of China Post's
+ * export customs scans kept their minute under +05:00 and +03:00, and Norway Post's collection,
+ * export terminal and export clearance kept the minutes of China Post's receipt, presentation to
+ * export customs and export customs release under +01:00. Their copies are worded as the origin's,
+ * or placed in the origin country, a name both countries share counting as the post's own.
  */
 const ORIGIN_RELAYS = new Map<unknown, OriginRelay>([
   [JAPAN_POST, { home: 'JP', outward: OUTWARD_SCAN }],
   [11051, { home: 'KR', outward: /^(?:Posting\/Collection\b|(?:Arrival at|Dispatch from) outward office of exchange$|Item (?:presented to|returned from) export Customs$)/, placed: true }],
   [16011, { home: 'PK', outward: / in origin country$/, placed: true }],
   [19071, { home: 'SA', placed: true }],
+  [14081, { home: 'NO', outward: /^The (?:parcel has been collected and is in transit|shipment has arrived at the export terminal|consignment is going through export customs clearance|shipment has cleared export customs|shipment has been sent from origin country)\.?$/ }],
 ]);
 
 /** Whether a row of a relaying post's leg is the origin post's scan, as its wording or place shows. */
