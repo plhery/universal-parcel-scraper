@@ -189,6 +189,33 @@ describe('17TRACK result parsing', () => {
     ]);
   });
 
+  it("gives Chronopost's scans their label at their office, as Chronopost does, without the scan's extra fields", () => {
+    const scan = (time: string, subStatus: string, description: string, location?: string) => ({
+      time_iso: `2026-11-17T${time}+01:00`, time_utc: `2026-11-17T${time}+01:00`, time_raw: { date: '2026-11-17', time, timezone: '+01:00' },
+      description, ...(location ? { location } : {}), stage: null, sub_status: subStatus });
+    const payload = postalHistory([
+      scan('20:31:00', 'InTransit_Other', 'SAMPLE HUB, Shipment in transit'),
+      scan('17:36:00', 'InTransit_TransportArrived', 'SAMPLE HUB, Parcel at departure site, Comment : Example, in transit', 'SAMPLE HUB, Parcel at departure site'),
+      scan('11:17:00', 'InTransit_Other', 'EXAMPLE CEDEX, Parcel handed over from Pickup point to the driver, Delivery point : Example Shop',
+        'EXAMPLE CEDEX, Parcel handed over from Pickup point to the driver'),
+      scan('09:00:00', 'InfoReceived', 'Sample site, Shipment being prepared, Partner number : GEO/00000000000000A',
+        'Sample site, Shipment being prepared'),
+      // Anything else keeps 17TRACK's words.
+      scan('08:00:00', 'InfoReceived', 'Shipment details received', 'SAMPLE, Other place'),
+    ], 'InTransit');
+    const providers = (payload.shipments[0]!.shipment as { tracking: { providers: { provider: unknown }[] } }).tracking.providers;
+    providers[0]!.provider = { key: 100273, name: 'Chronopost' };
+    const result = parse17TrackResponse(payload, number);
+    expect(result.events?.map((event) => [event.description, event.location ?? ''])).toEqual([
+      ['Shipment in transit', 'SAMPLE HUB'],
+      ['Parcel at departure site', 'SAMPLE HUB'],
+      ['Parcel handed over from Pickup point to the driver', 'EXAMPLE CEDEX'],
+      ['Shipment being prepared', 'Sample site'],
+      ['Shipment details received', 'SAMPLE, Other place'],
+    ]);
+    expect(JSON.stringify(result)).not.toMatch(/GEO\/|Example Shop|Comment/);
+  });
+
   it('reads an exact voided label as a problem despite the generic transit code', () => {
     const label = { ...postalScan('InfoReceived', 'Shipping Label Created'),
       time_iso: '2026-09-19T12:22:00+08:00', time_utc: '2026-09-19T04:22:00Z' };

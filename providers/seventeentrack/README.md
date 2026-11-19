@@ -295,6 +295,10 @@ carrier.
   becomes the location, and a copy stored with the brackets takes the new form in place. XDP's
   scans come as their type and description ("CREATE, --"); they keep the description, or the
   type where XDP gives "--", as ParcelsApp words them, so the two copies of a scan meet.
+  Chronopost's scans come with the office and the label as the location ("EXAMPLE CEDEX, Shipment
+  in transit") and both, then the scan's extra fields, as the description, or with no location
+  and the office ahead of the label; they keep the label at the office, as Chronopost's own
+  result does, and a copy stored in 17TRACK's form takes the new one in place.
 - Each scan keeps the `location` 17TRACK reports, unless it
   is Posti's "ULKOMAILLA" ("abroad") or the "目的国" ("destination country") China Post's feed
   gives an airline's arrival in place of a country's code: neither names a place. China

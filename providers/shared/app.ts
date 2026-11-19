@@ -3,6 +3,7 @@ import { matchesLocationEnrichment, matchesRereadLocation } from '../../core/cat
 import { chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
 import { ytoRelayedWording } from '../../carriers/yto/wording.js';
 import { withoutCarrierNote } from '../../carriers/aliexpress/status.js';
+import { chronopostOfficeLabel } from '../seventeentrack/chronopost.js';
 import { place, trailingPlace } from './result.js';
 
 const normalized = (value: string) => value.replace(/\s+/g, ' ').trim().toLocaleLowerCase('en-US');
@@ -58,6 +59,18 @@ function matchesCarrierNote(incoming: SameInstantScan, stored: SameInstantScan):
 }
 
 /**
+ * A Chronopost scan stored as 17TRACK writes it, its office and label as the location or ahead of
+ * the description, before 17TRACK's copy kept the label at the office (`chronopostOfficeLabel`):
+ * the same label at the same office, with provider codes that agree.
+ */
+function matchesChronopostOffice(incoming: SameInstantScan, stored: SameInstantScan): boolean {
+  const read = chronopostOfficeLabel(stored.location.trim(), stored.description.trim());
+  return read !== null && normalized(read.description) === normalized(incoming.description)
+    && normalized(read.location) === normalized(incoming.location)
+    && (!incoming.providerCode || !stored.providerCode || incoming.providerCode === stored.providerCode);
+}
+
+/**
  * A delivery stored as a bare "Delivered", before the providers kept the
  * carrier's own wording and a place naming a door or a signatory: a delivery
  * in any words, at the location stored or where none was, with provider codes
@@ -80,5 +93,5 @@ export const sameInstantIdentityPolicy: SameInstantIdentityPolicy = {
   matches: (incoming, stored) => matchesLocationEnrichment(incoming, stored)
     || matchesRereadLocation(incoming, stored, place) || matchesChinaPostEnglish(incoming, stored)
     || matchesTrailingPlace(incoming, stored) || matchesYtoContacts(incoming, stored) || matchesCarrierNote(incoming, stored)
-    || matchesBareDelivery(incoming, stored),
+    || matchesBareDelivery(incoming, stored) || matchesChronopostOffice(incoming, stored),
 };

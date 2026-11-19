@@ -303,6 +303,21 @@ describe('same-instant identity policies', () => {
     expect(policy?.matches?.(incoming, { ...stored, description: '您的快件在【示例市】已揽收' })).toBe(false);
   });
 
+  it("lets a universal copy of a Chronopost scan at its office take over the row stored with 17TRACK's office and label", () => {
+    const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
+    const incoming = { stage: 'in_transit', description: 'Shipment in transit', location: 'EXAMPLE CEDEX', providerCode: 'InTransit_Other' };
+    const located = { ...incoming, location: 'EXAMPLE CEDEX, Shipment in transit', description: 'EXAMPLE CEDEX, Shipment in transit, Comment: example' };
+    expect(policy?.matches?.(incoming, located)).toBe(true);
+    expect(policy?.matches?.(incoming, { ...located, description: located.location })).toBe(true);
+    expect(policy?.matches?.(incoming, { ...incoming, location: '', description: 'EXAMPLE CEDEX, Shipment in transit' })).toBe(true);
+    for (const different of [
+      { ...located, location: 'OTHER CEDEX, Shipment in transit', description: 'OTHER CEDEX, Shipment in transit' },
+      { ...located, location: 'EXAMPLE CEDEX, Shipment delivered', description: 'EXAMPLE CEDEX, Shipment delivered' },
+      { ...located, providerCode: 'InTransit_PickedUp' },
+      { ...located, description: 'Shipment in transit' },
+    ]) expect(policy?.matches?.(incoming, different)).toBe(false);
+  });
+
   it('lets a universal delivery in the carrier\'s own words take over the row stored as a bare "Delivered"', () => {
     const policy = sameInstantIdentityPolicy('unknown', { supportsScanMatching: true });
     const stored = { stage: 'delivered', description: 'Delivered', location: '', providerCode: 'Delivered_Other' };

@@ -19,10 +19,11 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { countryCode, countryTimeZone, explicitOffsetTime, firstOccurrence } from '../../core/time/index.js';
 import type { TrawlClient } from '../../core/transport/index.js';
-import { isRecord } from '../../core/types.js';
+import { isRecord, type JsonObject } from '../../core/types.js';
 import { locatePlace, placeTimeZone, type ZoneBasis } from '../../places/index.js';
 import { trackingPlace } from '../../places/trackingLocation.js';
 import { chinaPostDestinationRows, chinaPostEnglish, chinaPostLabelPlace } from '../../carriers/china-post/status.js';
+import { chronopostOfficeLabel } from './chronopost.js';
 import { agencyIntake, cttSiteZone, isCttExpressPlace } from '../../carriers/ctt/clock.js';
 import { correosOriginZone } from '../../carriers/correos-spain/clock.js';
 import { daiPostRelayZone } from '../../carriers/dai-post/clock.js';
@@ -525,6 +526,13 @@ function xdpRelayedWording(description: string): string {
   if (!scan) return description;
   return scan[1]!.trim() === '--' ? description.trim().slice(0, -scan[1]!.length - 2) : scan[1]!.trim();
 }
+/** 17TRACK's carrier 100273, Chronopost. */
+const CHRONOPOST = 100273;
+/** A Chronopost scan as Chronopost's own result gives it, its label at its office (`chronopostOfficeLabel`). */
+function chronopostRelayed(raw: JsonObject): JsonObject {
+  const read = chronopostOfficeLabel(text(raw.location), text(raw.description));
+  return read ? { ...raw, ...read } : raw;
+}
 /** China Post's mirror of the origin post's outward exchange office: "arrived at" or "left the exchange office abroad". */
 const ORIGIN_EXCHANGE = /^(?:到达|离开)境外出口互换局/;
 
@@ -817,7 +825,8 @@ export function parse17TrackResponse(payload: unknown, trackingNumber: string, p
       let parsed: CarrierEvent | null;
       // YTO's wording without the courier's name and phone and its hotline, as YTO's own result keeps neither.
       const scan = reported.key === YTO ? { ...raw, description: ytoRelayedWording(text(raw.description)) }
-        : reported.key === XDP ? { ...raw, description: xdpRelayedWording(text(raw.description)) } : raw;
+        : reported.key === XDP ? { ...raw, description: xdpRelayedWording(text(raw.description)) }
+          : reported.key === CHRONOPOST ? chronopostRelayed(raw) : raw;
       try { parsed = seventeenTrackEvent(scan, operator, placed?.isValid ? placed.toUTC().toISO() ?? undefined : undefined); }
       catch (cause) { throw new SchemaError(SOURCE, '17TRACK returned an invalid tracking event', { cause }); }
       if (!parsed || (reported.key === DHL_ECOMMERCE_US && !parsed.location && DHL_ECOMMERCE_EN_ROUTE.test(parsed.description ?? ''))) continue;
