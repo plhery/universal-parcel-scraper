@@ -78,13 +78,22 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
 
+// USPS's status followed by its sentence, which names the time, day and town: "Departed Shipping Partner Facility -> Your
+// item departed a shipping partner facility at … in …". The status before the arrow takes its own entry.
+const USPS_SENTENCE = /^([^>]{1,80}?) -> your item\b/;
+const uspsSentenceStage = (key: string): Stage | undefined => {
+  const status = USPS_SENTENCE.exec(key)?.[1];
+  return status ? WORDINGS.stage(status) : undefined;
+};
+
 /**
  * The stage JRT's map gives a row, by its whole `normalizeStatusWording` wording:
  * JRT's own, or the English the adapter shows for it.
  * A row's kind code, when it has one, groups many wordings and decides nothing.
  */
 export function jrtStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(jrtScanKey(wording));
+  const key = jrtScanKey(wording);
+  return WORDINGS.stage(key) ?? uspsSentenceStage(key);
 }
 
 /**

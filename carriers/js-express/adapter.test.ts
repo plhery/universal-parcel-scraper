@@ -385,6 +385,7 @@ describe('JS Express tracking adapter', () => {
       ['OIT', 'The customs clearance agent has picked up the goods', 'customs'],
       ['DCF', 'Released from customs: customs cleared.', 'in_transit'], ['OIT', 'Depart from the destination distribution center.', 'in_transit'],
       ['OIT', 'Accepted at USPS Facility', 'in_transit'], ['DOP', 'Enviado', 'in_transit'], ['OIT', 'Consignee Contacted', 'pending'],
+      ['DZT', 'The recipient has selected a Packstation as the new delivery address.', 'pending'],
     ] as const) {
       expect(jsExpressStage(description, code), description).toEqual({ stage, source: 'carrier_map' });
       expect(statusMapAnswer({ carrier: 'js-express', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });

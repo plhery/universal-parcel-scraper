@@ -52,6 +52,9 @@ browser is needed, and no portal link is published.
   Beijing time would fall before dawn there. Rows in UPS's words, its note that the parcel goes to
   an access point included, or at a place in the United States keep their wall clocks, which the scan's state dates, or a neighbouring scan's for a
   row without a place. The flight row names its month and day, read as an ellipsis.
+- USPS's rows for the partner that carries the parcel before USPS has it ("Departed Shipping Partner
+  Facility, USPS Awaiting Item") can also come as the status and, after an arrow, USPS's sentence
+  naming the time, day and town. The status before the arrow decides the stage.
 - The line into the United States can end with GOFO instead. The tracker copies GOFO's scans in
   GOFO's English under the town and its state's code ("EXAMPLE TOWN,IL"), and GOFO's label
   ("Shipping Label Created") without a place, at the digits GOFO's own reply gives: a station GOFO

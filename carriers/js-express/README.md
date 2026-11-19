@@ -109,7 +109,8 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   recipient's request, so it does not step back to in transit. The recipient's redirect after the
   third miss moves the parcel on. USPS's reminder to book a redelivery is such a notice too.
   A call to the recipient ("Consignee Contacted") moves nothing:
-  the miss at its second still leads.
+  the miss at its second still leads. Nor does DHL's record that the recipient chose a Packstation as
+  the new delivery address.
 - The waybill's `estimateArriveTime` is the expected delivery, its day alone since a clock after
   it names no zone. Straightship's round gives its own day in the town's province instead, while
   the parcel is on it.

@@ -525,6 +525,9 @@ describe('JRT tracking adapter', () => {
     expect(answer('Picked Up By Shipping Partner, USPS Awaiting Item')).toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(answer('Arrived Shipping Partner Facility, USPS Awaiting Item')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Departed Shipping Partner Facility, USPS Awaiting Item')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // USPS's status with its sentence, whatever time, day and town it names.
+    expect(answer('Departed Shipping Partner Facility -> Your item departed a shipping partner facility at 3:14 am on November 9, 2026 in EXAMPLE, IL. A delivery date will be available when USPS receives the package.'))
+      .toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Europe: the order data sent to DPD, the landing with the clearance under way, the cargo
     // collected at the airport, worded as a delivery, the completed clearance and the hand-over to the delivering carrier.
     expect(answer('Order information has been transmitted to DPD.')).toEqual({ kind: 'mapped', stage: 'registered' });
