@@ -87,7 +87,7 @@ describe('Logistics Solution tracking', () => {
     await expect(page('<html><title>Logistics Solution</title></html>')).rejects.toMatchObject({ kind: 'schema' });
   });
 
-  it.each([[403, 'challenge'], [429, 'rate_limited'], [500, 'indeterminate'], [503, 'maintenance']] as const)('preserves HTTP %i as %s', async (status, kind) => {
+  it.each([[410, 'transport'], [403, 'challenge'], [429, 'rate_limited'], [500, 'indeterminate'], [503, 'maintenance']] as const)('preserves HTTP %i as %s', async (status, kind) => {
     await expect(carrier(vi.fn<typeof fetch>().mockResolvedValue(new Response('', { status }))).track({ number: NUMBER })).rejects.toMatchObject({ kind });
   });
 });

@@ -17,6 +17,8 @@ keep their failure kinds.
 
 ## Notes
 
+- A history with more than 100 distinct scans returns the newest 100 and sets `history_truncated`.
+
 - A row's wording is its `remarks`, the line the site shows under the row's title and as the
   parcel's status; the title (`nodeCode`) is kept as the provider code. No wording has been seen
   yet, so the shared classifier reads each one and an unread wording leaves the row without a stage.

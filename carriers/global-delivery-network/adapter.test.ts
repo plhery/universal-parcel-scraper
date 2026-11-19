@@ -39,6 +39,10 @@ describe('Global Delivery Network tracker page', () => {
     expect(detectCarrierMatch(NUMBER).candidates).not.toContain('global-delivery-network');
   });
 
+  it('rejects an impossible scan day', () => {
+    expect(() => parseGdn(page([row('2/31/2026 10:30:00 AM', 'Delivered')]), NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('reads the scans newest first on their wall clocks and the recipient, without the weight or reference', () => {
     const result = parseGdn(page(), NUMBER);
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', last_status_text: 'Delivered',

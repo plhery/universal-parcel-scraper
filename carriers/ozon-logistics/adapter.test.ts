@@ -45,7 +45,7 @@ describe('Ozon guest tracking', () => {
     payload.items = [{ event: 'Received', moment: '2031-04-07T13:00:00Z' }];
     expect(parseOzon(payload).events![0]!.description).toBe('Заказ успешно доставлен получателю.');
     payload.items = [{ event: 'NewEvent', moment: '2031-04-07T13:00:00' }];
-    expect(parseOzon(payload)).toMatchObject({ status: 'unknown', events: [{ provider_code: 'NewEvent', local_time: '2031-04-07T13:00:00' }] });
+    expect(parseOzon(payload)).toMatchObject({ status: 'unknown', last_update_local: '2031-04-07T13:00:00', events: [{ provider_code: 'NewEvent', local_time: '2031-04-07T13:00:00' }] });
     for (const bad of [{}, { ...found(), items: [null] }, { ...found(), items: [{ event: 'Created', moment: 'not a date' }] }]) {
       expect(() => parseOzon(bad)).toThrow(expect.objectContaining({ kind: 'schema' }));
     }

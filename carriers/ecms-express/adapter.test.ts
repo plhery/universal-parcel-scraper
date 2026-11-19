@@ -38,6 +38,15 @@ describe('ECMS history', () => {
     expect(isPartialAnswer(result)).toBe(false);
   });
 
+  it('keeps a midnight partner delivery instant', () => {
+    const data = fixture();
+    const order = data.orderInfo[0]!;
+    order.baseInfo.operatorTime = order.infoList[0]!.operatorTime = Date.UTC(2026, 6, 4);
+    const result = parseEcmsExpress(data, NUMBER);
+    expect(result.last_update).toBe('2026-07-04T00:00:00Z');
+    expect(result.events![0]!.time).toBe(result.last_update);
+  });
+
   it("keeps the day alone of a flight row at midnight sharp, and a clock a second after it", () => {
     const data = fixture();
     data.orderInfo[0]!.infoList[1]!.operatorTime = Date.UTC(2026, 6, 3);

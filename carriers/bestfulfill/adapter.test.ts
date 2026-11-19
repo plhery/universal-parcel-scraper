@@ -35,6 +35,12 @@ describe('BestFulfill Packet numbers', () => {
 });
 
 describe('BestFulfill Packet tracking', () => {
+  it('rejects an impossible scan day', () => {
+    const reply = fixture();
+    reply.events[0]!.time = '2026-02-31T10:30:00-05:00';
+    expect(() => parseBestfulfill(reply, NUMBER)).toThrow(expect.objectContaining({ kind: 'schema' }));
+  });
+
   it('asks the open service for the number once', async () => {
     const fetcher = replying(() => json(fixture()));
     await carrier(fetcher).track({ number: NUMBER });

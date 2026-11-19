@@ -22,6 +22,9 @@ export function juxiNumber(raw: string, carrier?: string | null): string {
 /** One complete identifier and the Juxi source key must agree in every reply. */
 export function parseTrack718(payloads: unknown[], raw: string): CarrierResult {
   const number = juxiNumber(raw), events: CarrierEvent[] = [];
+  // The browser capture retains eight snapshots with at most 500 rows each.
+  if (payloads.length > 8) throw new SchemaError(SOURCE, 'Track718 returned too many snapshots');
+  const seen = new Set<string>();
   let pending = true, terminal = false, partial = false;
   for (const payload of payloads) {
     if (!isRecord(payload) || !isRecord(payload.status) || !Number.isInteger(payload.status.code)) throw new SchemaError(SOURCE);
@@ -36,17 +39,24 @@ export function parseTrack718(payloads: unknown[], raw: string): CarrierResult {
     pending = payload.pending === true || code === 3;
     terminal ||= code === 0 && row.origin === '04' && row.result === 0;
     partial ||= row.isMerge === true || row.mergeType === 10 || row.mergeType === 20;
+    let snapshotSize = 0;
     for (const field of ['from', 'to', 'frist', 'wms']) {
-      if (!Array.isArray(row[field]) || row[field].length > 500) throw new SchemaError(SOURCE, 'Track718 returned invalid scans');
+      if (!Array.isArray(row[field])) throw new SchemaError(SOURCE, 'Track718 returned invalid scans');
+      snapshotSize += row[field].length;
+      if (snapshotSize > 500) throw new SchemaError(SOURCE, 'Track718 returned invalid scans');
       for (const scan of row[field]) {
         if (!isRecord(scan) || typeof scan.ondate !== 'string' || typeof scan.status !== 'string') throw new SchemaError(SOURCE);
         const description = text(scan.status);
         if (!description || isNotice(description)) continue;
+        const location = text(scan.address);
+        const key = JSON.stringify([scan.ondate, description, location]);
+        if (seen.has(key)) continue;
+        seen.add(key);
         const instant = explicitOffsetTime(scan.ondate);
         const wall = !instant && /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}$/.test(scan.ondate)
           ? DateTime.fromISO(scan.ondate.replace(' ', 'T'), { zone: 'utc' }) : null;
         if (!instant && !wall?.isValid) throw new SchemaError(SOURCE, 'Track718 returned an invalid scan clock');
-        events.push({ description, ...classifyEvent(description), ...(text(scan.address) ? { location: text(scan.address) } : {}),
+        events.push({ description, ...classifyEvent(description), ...(location ? { location } : {}),
           ...(instant ? { time: instant.iso } : { local_time: wall!.toFormat("yyyy-MM-dd'T'HH:mm:ss") }) });
         if (events.length > 1000) throw new SchemaError(SOURCE, 'Track718 returned too many scans');
       }

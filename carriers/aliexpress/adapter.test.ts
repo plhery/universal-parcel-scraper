@@ -720,11 +720,20 @@ describe('Cainiao projection', () => {
     expect(retried.events?.[1]).toMatchObject({ provider_code: 'GTMS_DEL_FAILURE', stage: 'failed_attempt' });
   });
 
-  const journey = (codes: string[]) => parseCainiaoTrackingResponse({ module: [{
+  const journey = (codes: string[], globalEtaInfo?: unknown) => parseCainiaoTrackingResponse({ module: [{
     mailNo: 'LP00000000000005',
+    globalEtaInfo,
     latestTrace: { actionCode: codes[0], standerdDesc: 'Newest scan' },
     detailList: codes.map((actionCode, index) => ({ actionCode, standerdDesc: `Scan ${codes.length - index}` })),
   }] }, 'LP00000000000005');
+
+  it('clears single and paired estimates after a return to sender', () => {
+    for (const eta of [{ deliveryMinTime: '1773100800000' }, { deliveryMinTime: '1773100800000', deliveryMaxTime: '1773273600000' }]) {
+      const parcel = journey(['RT_EX_SIGNED'], eta);
+      expect(parcel).toMatchObject({ current_stage: 'returned', expected_delivery: null });
+      expect(parcel).not.toHaveProperty('expected_delivery_from');
+    }
+  });
 
   it('reads the delivery and return codes of local partners and pickup points', () => {
     // A partner accepting the parcel after the hand-off moves it along, and a sorting delay is no fault.

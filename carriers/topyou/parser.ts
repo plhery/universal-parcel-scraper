@@ -88,7 +88,8 @@ const namedCountry = (value: string): string | null => countryCode(value) ?? (AL
 function place(row: Record<string, unknown>, own: boolean): string {
   const location = text(row, 'location', 120);
   const parts = location.split(',').map((part) => part.trim());
-  if (own && parts.some((part) => namedCountry(part)) && parts.every((part) => countryCode(part) || ALPHA3.test(part))) return '';
+  const country = own ? namedCountry(parts[0]!) : null;
+  if (country && parts.every(part => namedCountry(part) === country)) return '';
   return location;
 }
 

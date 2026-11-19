@@ -71,6 +71,16 @@ describe('Quick Fort parser', () => {
     expect(() => parseQuickFort(empty, NUMBER)).toThrow(expect.objectContaining({ name: 'NoHistoryError', kind: 'indeterminate' }));
   });
 
+  it('flags a history only when distinct scans exceed the cap', () => {
+    const page = (count: number) => {
+      const rows = Array.from({ length: count }, (_, i) => `<tr><td>2026-03-02 10:00:00</td><td>Movement ${i}</td></tr>`);
+      return fixture('found').replace(/<tbody>[\s\S]*<\/tbody>/, '<tbody>' + rows.join('') + rows[0] + '</tbody>');
+    };
+    expect(parseQuickFort(page(100), NUMBER).history_truncated).toBeFalsy();
+    expect(parseQuickFort(page(101), NUMBER)).toMatchObject({ history_truncated: true, events: expect.any(Array) });
+    expect(parseQuickFort(page(101), NUMBER).events).toHaveLength(100);
+  });
+
   it('refuses a number the tracker\'s path cannot carry', () => {
     expect(() => parseQuickFort(fixture('found'), 'QFT/1')).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
   });
@@ -87,6 +97,11 @@ describe('Quick Fort adapter', () => {
     const result = await new QuickFortTracker({ fetcher }).fetch(' qft 900000000017 ');
     expect(asked).toEqual([`${QUICK_FORT_ENDPOINT}${NUMBER}`]);
     expect(result.status).toBe('in_transit');
+  });
+
+  it.each([404, 410])('treats endpoint HTTP %i as unavailable', async status => {
+    const fetcher = async () => new Response('Endpoint retired', { status });
+    await expect(new QuickFortTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'transport' });
   });
 
   it('keeps a block page a challenge', async () => {

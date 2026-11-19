@@ -60,6 +60,7 @@ export function parseOzon(payload: unknown): CarrierResult {
   const day = (value: unknown): string | undefined => typeof value === 'string' && explicitOffsetTime(value) ? value.slice(0, 10) : undefined;
   return { status, ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     last_status_text: latest.description, ...(latest.time ? { last_update: latest.time } : {}),
+    ...(latest.local_time ? { last_update_local: latest.local_time } : {}),
     ...(stage === 'delivered' && latest.time ? { delivered_at: latest.time } : {}),
     expected_delivery_from: day(payload.deliveryDateBegin), expected_delivery: day(payload.deliveryDateEnd), events };
 }

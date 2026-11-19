@@ -3,6 +3,7 @@ import { IndeterminateError, InvalidInputError, NoHistoryError, SchemaError } fr
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { uspsRoundDelivery } from '../../core/result/round.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { bestfulfillStage } from './status.js';
@@ -36,7 +37,7 @@ function scanOf(value: unknown): CarrierEvent {
   const time = typeof value.time === 'string' ? value.time.trim() : '';
   const description = text(value.content, 300);
   const code = text(value.status, 64);
-  if (!INSTANT.test(time) || !Number.isFinite(Date.parse(time)) || !description || (code && !/^[A-Za-z]+(?:_[A-Za-z]+)?$/.test(code))) {
+  if (!INSTANT.test(time) || !explicitOffsetTime(time) || !description || (code && !/^[A-Za-z]+(?:_[A-Za-z]+)?$/.test(code))) {
     throw new SchemaError(PROVIDER, 'BestFulfill Packet returned an invalid scan');
   }
   const location = text(value.location, 120).replace(ZIP, '');

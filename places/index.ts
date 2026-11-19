@@ -1517,6 +1517,9 @@ export function placesForEvents(
     && found.place.country === codes[index]);
   const coded = (found: Located | null, index: number): Located | null => {
     const code = codes[index];
+    if (code && found?.place.region === code && found.place.country === destinationCountry
+      && [index - 1, index + 1].every(at => read[at]?.place.precision === 'city'
+        && read[at]?.place.country === destinationCountry && /(?:,|\s)\s*([A-Z]{2})$/.exec(locations[at]?.trim() ?? '')?.[1] === code)) return found;
     return countryCoded && code && found?.place.region && found.place.country !== code && !codes.includes(found.place.country)
       ? countryPlace(gazetteer(), code, true) ?? found : found;
   };

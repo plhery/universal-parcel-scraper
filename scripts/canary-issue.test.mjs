@@ -160,7 +160,10 @@ function fakeGh({ issues, jobs = '', annotations = '' }) {
     calls.push({ args, input });
     if (args[0] === 'api' && args[1].endsWith('/jobs')) return jobs;
     if (args[0] === 'api' && args[1].includes('/check-runs/')) return annotations;
-    if (args[0] === 'api') return JSON.stringify(issues);
+    if (args[0] === 'api') {
+      const page = Number(args.find(arg => arg.startsWith('page='))?.slice(5) ?? 1);
+      return JSON.stringify(issues.slice((page - 1) * 100, page * 100));
+    }
     if (args[0] === 'issue' && args[1] === 'create') return 'https://github.com/example/carriers/issues/13\n';
     return '';
   };
@@ -168,6 +171,15 @@ function fakeGh({ issues, jobs = '', annotations = '' }) {
 }
 
 const env = needs => ({ GH_REPO: 'example/carriers', RUN_ID: '100', RUN_URL: runUrl, NEEDS: JSON.stringify(needs) });
+
+test('updates the open issue on the second page', () => {
+  const closed = { number: 6, title: 'Daily carrier canary failures', state: 'closed', body: '' };
+  const issues = [closed, ...Array.from({ length: 99 }, () => ({ title: 'Other issue' })),
+    { ...closed, number: 12, state: 'open' }];
+  const { gh, writes } = fakeGh({ issues });
+  main({ env: env(linksFailing([link('spx-br'), changed])), gh, today: '2026-11-04' });
+  assert.deepEqual(writes(), [['edit', '12'], ['close', '12']]);
+});
 
 test('writes to the open issue before a closed one', () => {
   const issues = [

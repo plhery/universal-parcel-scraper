@@ -70,12 +70,16 @@ export function parseQuickFort(html: string, raw: string): CarrierResult {
   if (rows.length > MAX_ROWS) throw new SchemaError(PROVIDER, 'Quick Fort returned too many scans');
   if (!rows.length) throw new NoHistoryError(PROVIDER);
   const events: (CarrierEvent & { time: string })[] = [];
+  const seen = new Set<string>();
   for (const row of rows) {
     const cells = $(row).children('td');
     const written = cells.length === 2 ? clean(cells.eq(1).text(), 400) : '';
     const time = cells.length === 2 ? zonedTime(cells.eq(0).text(), 'yyyy-MM-dd HH:mm:ss', ZONE)?.iso : undefined;
     if (!written || !time) throw new SchemaError(PROVIDER, 'Quick Fort returned an invalid scan');
     const { description, location } = splitRow(written);
+    const key = JSON.stringify([time, description, location]);
+    if (seen.has(key)) continue;
+    seen.add(key);
     const staged = quickFortStage(description);
     events.push({ time, description, ...(location ? { location } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
@@ -87,6 +91,7 @@ export function parseQuickFort(html: string, raw: string): CarrierResult {
     status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
     last_status_text: newest.description!, last_update: newest.time, expected_delivery: null,
+    ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
     events: events.slice(0, MAX_EVENTS),
   };
 }

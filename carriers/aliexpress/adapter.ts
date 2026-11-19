@@ -302,6 +302,7 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
   // The estimate's bounds, epoch milliseconds as a number or as digits; a window
   // with one bound is that day.
   const eta = record(trackingModule.globalEtaInfo);
+  const completed = status === 'delivered' || currentStage === 'returned';
   const expectedFrom = etaDay(eta.deliveryMinTime);
   const expected = etaDay(eta.deliveryMaxTime) ?? expectedFrom;
   const handoff = cainiaoHandoffNumber(trackingModule);
@@ -316,8 +317,8 @@ export function parseCainiaoTrackingResponse(value: unknown, trackingNumber: str
     last_status_text: placedWording(shownWording(headline), carriers).description || text(trackingModule.statusDesc) || rawStatus,
     last_update: 'time' in latestClock ? latestClock.time || null : null,
     ...('local_time' in latestClock ? { last_update_local: latestClock.local_time } : {}),
-    expected_delivery: status === 'delivered' ? null : expected,
-    ...(status === 'delivered' || expectedFrom == null || expectedFrom === expected
+    expected_delivery: completed ? null : expected,
+    ...(completed || expectedFrom == null || expectedFrom === expected
       ? {}
       : { expected_delivery_from: expectedFrom }),
     ...(deliveredAt ? { delivered_at: deliveredAt } : {}),

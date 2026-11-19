@@ -1,5 +1,7 @@
 import { countryTimeZone } from '../../core/time/index.js';
 
+import { locatePlace } from '../../places/index.js';
+
 /**
  * The clock of a European partner's scans abroad: they reach Royal Mail on
  * Central European time, whatever the country's own clock, and Royal Mail
@@ -35,5 +37,10 @@ export const partnerPlace = (location: string): boolean => !location || !HOME_FA
  * partner's bare facility name, or it has none, and the parcel goes to a
  * European country abroad.
  */
-export const destinationRelay = (location: string, description: string, destination: string | null): boolean =>
-  partnerPlace(location) && europeanAbroad(destination) && IN_DESTINATION.test(description);
+export const destinationRelay = (location: string, description: string, destination: string | null): boolean => {
+  if (!europeanAbroad(destination) || !IN_DESTINATION.test(description)) return false;
+  if (partnerPlace(location)) return true;
+  const town = /^(.+?)\s+(?:Hub|Depot)$/i.exec(location)?.[1];
+  const place = town ? locatePlace(town) : null;
+  return place?.precision === 'city' && place.country === destination;
+};

@@ -289,9 +289,11 @@ describe('Mondial Relay app step', () => {
     }
   });
 
-  it('adds the website’s estimate to the app’s answer for a parcel on its way, which stands without it', async () => {
+  it.each([['2026-01-02', null], ['2026-01-03', '2026-01-03'], ['2026-08-31', '2026-08-31']])(
+    'adds the website estimate %s only if the app activity has not outlived it', async (estimate, expected) => {
     const website = JSON.parse(readFileSync(new URL('./fixtures/available-at-relay.json', import.meta.url), 'utf8')) as { Expedition: Record<string, unknown> };
     website.Expedition.Numero = SHIPMENT;
+    website.Expedition.EstimatedDeliveryDate = estimate;
     const replies = [
       { tier: 3, statusCode: 200, url: 'https://www.mondialrelay.fr/suivi-de-colis/', html: '<div id="tracking" token="SYNTHETIC_PAGE_TOKEN_1234567890"></div>' },
       { tier: 3, statusCode: 200, url: `https://www.mondialrelay.fr/api/tracking?shipment=${SHIPMENT}&postcode=${POSTCODE}&brand=&codePays=fr`, html: `<pre>${JSON.stringify(website)}</pre>` },
@@ -303,7 +305,7 @@ describe('Mondial Relay app step', () => {
       .fetch(SHIPMENT, POSTCODE);
     // The website's two requests, then only its estimate: the app's history, status and source stay.
     expect(browser).toHaveBeenCalledTimes(2);
-    expect(result).toEqual({ ...app, expected_delivery: '2026-08-31' });
+    expect(result).toEqual({ ...app, expected_delivery: expected });
 
     const failing = vi.fn<typeof fetch>(() => Promise.reject(new Error('browser unavailable')));
     await expect(new MondialRelayTracker({ app: service().client, trawl: new TrawlClient(trawlServiceUrl, failing), fetcher: failing })

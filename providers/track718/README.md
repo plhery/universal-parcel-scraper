@@ -11,6 +11,8 @@ observes both before navigation, binds the complete identifier and Juxi source k
 bounded tracking replies from that session. It returns scan fields without recipient details,
 account data, tokens or the rendered page. No account is required.
 
+Repeated snapshots share a single scan history. The result flags truncation when more than 100 distinct eligible scans remain.
+
 The initial “Grabbing” response is a pending lookup. Only a completed matching response can
 report no available history. A challenge, rate limit, busy service or unfinished lookup stays
 a failure. Explicit scan offsets are preserved; clocks without an offset stay local and do

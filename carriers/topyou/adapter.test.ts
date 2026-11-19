@@ -141,6 +141,15 @@ describe('TopYou HTTP adapter', () => {
     expect(codedPlaces.get('2026-10-26T21:26:40+08:00')).toBeNull();
   });
 
+  it('keeps an airport beside its country on an origin scan', () => {
+    const reply = changed('relayed-europe', track => {
+      for (const row of track.trackInfo!) row.location = 'PVG,CN';
+    });
+    const track = reply.data.tracks[0]!;
+    expect(parseTopyou(reply, String(track.trackNumber)).events!.find(event => event.time === '2026-10-26T21:26:40+08:00')?.location)
+      .toBe('PVG,CN');
+  });
+
   it('reads iMile’s scans it relays stated +08:00 on UTC wall clocks, and TopYou’s own on China’s', () => {
     // iMile dates its delivery round 07:19:36+01:00; TopYou relays it as 06:19:36 "+08:00".
     const relayed = changed('in-transit', (track) => {

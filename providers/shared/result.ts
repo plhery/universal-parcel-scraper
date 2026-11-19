@@ -1116,6 +1116,7 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
     status, current_stage: current ?? 'pending', current_stage_source: currentEvent?.stage_source ?? 'none',
     last_status_text: unique[0]!.description,
     last_update: unique[0]!.time ?? null, expected_delivery: null, timezone: 'UTC',
+    ...(source === 'Track718' && kept.length > ordered.length ? { history_truncated: true } : {}),
     tracking_provider: source, events: unique,
   };
 }

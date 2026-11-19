@@ -810,6 +810,13 @@ describe('PosteItalianeTracker fetch', () => {
     const dated = limited({ 'Retry-After': new Date(now + 300_000).toUTCString() });
     await expect(new PosteItalianeTracker({ fetcher: dated, trawl: null }).fetch(TRACKING_NUMBER))
       .rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 300_000 });
+    for (const value of ['0', new Date(now - 1000).toUTCString()]) {
+      const immediate = new PosteItalianeTracker({ fetcher: limited({ 'Retry-After': value }), trawl: null });
+      await expect(immediate.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: 0 });
+      await expect(immediate.fetch(TRACKING_NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    }
+    const malformed = new PosteItalianeTracker({ fetcher: limited({ 'Retry-After': '-1' }), trawl: null });
+    await expect(malformed.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ retryAfterMs: CAPTCHA_PAUSE_MS });
     const unnamed = limited({});
     const quiet = new PosteItalianeTracker({ fetcher: unnamed, trawl: null });
     await expect(quiet.fetch(TRACKING_NUMBER)).rejects.toMatchObject({ kind: 'rate_limited', retryAfterMs: CAPTCHA_PAUSE_MS });

@@ -3,7 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { classifyWording, languageStageStatus, type Stage } from '../../core/status/index.js';
-import { countryCode } from '../../core/time/index.js';
+import { calendarDay, countryCode } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { gdnStage } from './status.js';
 
@@ -32,7 +32,8 @@ function wallClock(value: string): string {
   const [, month, day, year, hour, minute, second, half] = match;
   const hours = (Number(hour) % 12) + (half === 'PM' ? 12 : 0);
   const local = `${year}-${month!.padStart(2, '0')}-${day!.padStart(2, '0')}T${String(hours).padStart(2, '0')}:${minute}:${second}`;
-  if (Number(hour) < 1 || Number(hour) > 12 || Number.isNaN(Date.parse(`${local}Z`))) {
+  if (Number(hour) < 1 || Number(hour) > 12 || Number(minute) > 59 || Number(second) > 59
+    || !calendarDay(Number(year), Number(month), Number(day))) {
     throw new SchemaError(PROVIDER, 'Global Delivery Network returned an invalid scan clock');
   }
   return local;

@@ -249,9 +249,14 @@ export function main({ env = process.env, gh = defaultGh, today = new Date().toI
   // The issues this workflow opened, an open one before any closed one. Not a
   // search: the search index once missed the open issue, and a second one was
   // opened beside it. A failed listing ends the step instead of opening another.
-  const issues = JSON.parse(gh(['api', '-X', 'GET', `repos/${repo}/issues`, '-f', 'state=all', '-f', 'creator=github-actions[bot]', '-F', 'per_page=100']))
-    .filter(item => item.title === TITLE && !item.pull_request);
-  const found = issues.find(item => item.state === 'open') ?? issues[0];
+  let found;
+  for (let page = 1; ; page++) {
+    const issues = JSON.parse(gh(['api', '-X', 'GET', `repos/${repo}/issues`, '-f', 'state=all', '-f', 'creator=github-actions[bot]',
+      '-F', 'per_page=100', '-F', `page=${page}`]));
+    const matches = issues.filter(item => item.title === TITLE && !item.pull_request);
+    found = matches.find(item => item.state === 'open') ?? found ?? matches[0];
+    if (found?.state === 'open' || issues.length < 100) break;
+  }
   const issue = found ? { number: String(found.number), state: found.state.toUpperCase(), body: found.body ?? '' } : null;
   const actions = plan({ issue, needs, today, runUrl: env.RUN_URL, timedOut });
   let number = issue?.number;
