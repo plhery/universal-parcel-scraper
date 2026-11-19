@@ -40364,7 +40364,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "moran-transportation",
+      "localClocks": true
     },
     "canaryUrl": "https://tracking.carrierlogistics.com/scripts/mor.pol/facts.htm",
     "trackingUrlTemplate": "https://tracking.carrierlogistics.com/scripts/mor.pol/boldetail.htm?wbtn=PRO&wpro1={trackingNumber}",

@@ -1,0 +1,59 @@
+<protrace>
+  <pronumb>1003306592</pronumb>
+  <prodelivered>Yes</prodelivered>
+  <shiphists>
+    <shiphist>
+      <histcode>Delivered</histcode>
+      <histdate>2024-04-02</histdate>
+      <histtime>13:07</histtime>
+      <histremarks>Fort Wayne, IN</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>En-route</histcode>
+      <histdate>2024-04-02</histdate>
+      <histtime>12:32</histtime>
+      <histremarks>Moran South Bend, IN</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Out For Delivery</histcode>
+      <histdate>2024-04-02</histdate>
+      <histtime>09:30</histtime>
+      <histremarks>Moran Fort Wayne, IN</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Manifested</histcode>
+      <histdate>2024-04-02</histdate>
+      <histtime>05:11</histtime>
+      <histremarks>Moran South Bend, IN</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Received At Moran Fort Wayne</histcode>
+      <histdate>2024-03-29</histdate>
+      <histtime>04:00</histtime>
+      <histremarks>Fort Wayne, IN</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Loaded On Trailer</histcode>
+      <histdate>2024-03-28</histdate>
+      <histtime>18:23</histtime>
+      <histremarks>Moran Chicago, IL</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Scanned On Dock</histcode>
+      <histdate>2024-03-28</histdate>
+      <histtime>17:44</histtime>
+      <histremarks>Elk Grove, IL</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Picked Up</histcode>
+      <histdate>2024-03-28</histdate>
+      <histtime>14:09</histtime>
+      <histremarks>Glenview, IL</histremarks>
+    </shiphist>
+    <shiphist>
+      <histcode>Pickup Request Received</histcode>
+      <histdate>2024-03-28</histdate>
+      <histtime>11:38</histtime>
+    </shiphist>
+  </shiphists>
+</protrace>
