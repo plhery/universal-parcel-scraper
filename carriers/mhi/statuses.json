@@ -13,6 +13,12 @@
     {"wording": "Delivery scheduled in the final delivery depot", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "note": "The item is on the day's delivery round."},
     {"wording": "Delivery attempted", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "Filed under Delivery by the page; nobody took the item."},
     {"wording": "Arrived at Pick-up Point", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "portal", "note": "Filed under Out for delivery by the page; the item waits at a pick-up point."},
-    {"wording": "Successfully delivered", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The item was delivered or collected."}
+    {"wording": "Successfully delivered", "stage": "delivered", "language": "en", "confirmedBy": "portal", "note": "The item was delivered or collected."},
+    {"wording": "Shipment en route", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Arrival in destination country", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Customs processing", "stage": "customs", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Import clearance under way at the destination."},
+    {"wording": "Completion of customs processing", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Customs at the destination finished; the parcel goes on."},
+    {"wording": "Arrival at transport hub", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18"},
+    {"wording": "Delivery attempted - recipient not at home (card left)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Nobody was at the address; a card was left."}
   ]
 }

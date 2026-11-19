@@ -21,6 +21,12 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['Delivery attempted', 'failed_attempt'],
   ['Arrived at Pick-up Point', 'ready_for_pickup'],
   ['Successfully delivered', 'delivered'],
+  ['Shipment en route', 'in_transit'],
+  ['Arrival in destination country', 'in_transit'],
+  ['Customs processing', 'customs'],
+  ['Completion of customs processing', 'in_transit'],
+  ['Arrival at transport hub', 'in_transit'],
+  ['Delivery attempted - recipient not at home (card left)', 'failed_attempt'],
 ] as const).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));
 
 // A category settles a stage only where it cannot hide another one.

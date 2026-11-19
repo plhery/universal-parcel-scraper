@@ -9,6 +9,9 @@ const codes: Record<string, ClassifiedStatus> = {
   'BDI/01': { status: 'delivered', stage: 'delivered' },
   'BDE/10': { status: 'exception', stage: 'failed_attempt' },
   'BDE/20': { status: 'exception', stage: 'failed_attempt' },
+  // The postman found nobody to take the item on the delivery run ("carteiro não atendido").
+  'BDE/02': { status: 'exception', stage: 'failed_attempt' },
+  'BDE/25': { status: 'exception', stage: 'failed_attempt' },
   // The postman found no such address on the delivery run.
   'BDE/99': { status: 'exception', stage: 'failed_attempt' },
   'BDE/23': { status: 'exception', stage: 'returned' },
@@ -40,6 +43,8 @@ const codes: Record<string, ClassifiedStatus> = {
   'PO/09': { status: 'in_transit', stage: 'accepted' },
   'PAR/07': { status: 'in_transit', stage: 'in_transit' },
   'PAR/21': { status: 'in_transit', stage: 'customs' },
+  // Customs in Brazil finished its inspection, and the item goes on to delivery.
+  'PAR/19': { status: 'in_transit', stage: 'in_transit' },
   // The import waits for the recipient's tax number before customs can clear it.
   'FC/16': { status: 'in_transit', stage: 'customs' },
   // The import waits for customs to settle the product's classification code.

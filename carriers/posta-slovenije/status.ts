@@ -24,6 +24,8 @@ const CODES: Readonly<Record<string, Stage>> = {
   EMK: 'in_transit',
   EMF: 'in_transit',
   EMG: 'in_transit',
+  // UPU's attempted, unsuccessful delivery at the address, with the customer notified.
+  EMH: 'failed_attempt',
   // UPU's final delivery to the recipient, after the inward events above.
   EMI: 'delivered',
   // "Pošiljka bo predvidoma dostavljena danes": with the postman, on its way to the address.
