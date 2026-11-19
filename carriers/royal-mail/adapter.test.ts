@@ -498,6 +498,29 @@ describe('Royal Mail structured response', () => {
       ],
     } }, IN_TRANSIT_NUMBER);
     expect(outbound.events?.map(event => event.time)).toEqual(['2026-10-20T11:40:00+02:00', '2026-10-15T03:31:09+01:00']);
+    // Mail to Europe: a partner's facility named alone after the item leaves the UK is in the destination;
+    // the arrival at its delivery office came a minute after the scans placed there, on their clock.
+    const delivery = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', destinationCountryCode: 'NL' },
+      events: [
+        { eventCode: 'EVIDD', eventName: 'Arrived at Delivery Office', eventDateTime: '2026-11-12T17:23:00+00:00', locationName: 'EXAMPLETOWN' },
+        { eventCode: 'EVIBR', eventName: 'Item received at Sorting Office', eventDateTime: '2026-11-12T17:21:00+00:00', locationName: 'Example Sorting Office, Netherlands' },
+        { eventCode: 'EVHOE', eventName: 'Item Leaving the UK', eventDateTime: '2026-11-10T20:13:35+00:00', locationName: 'Example HWDC' },
+        { eventCode: 'EVDAC', eventName: 'Item Received', eventDateTime: '2026-11-10T01:16:31+00:00', locationName: 'Example Facility' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(delivery.events?.map(event => event.time)).toEqual([
+      '2026-11-12T17:23:00+01:00', '2026-11-12T17:21:00+01:00', '2026-11-10T20:13:35Z', '2026-11-10T01:16:31Z',
+    ]);
+    // Beyond Europe, it keeps Royal Mail's label.
+    const far = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', destinationCountryCode: 'CA' },
+      events: [
+        { eventCode: 'EVIDD', eventName: 'Arrived at Delivery Office', eventDateTime: '2026-11-12T17:23:00+00:00', locationName: 'EXAMPLETOWN' },
+        { eventCode: 'EVHOE', eventName: 'Item Leaving the UK', eventDateTime: '2026-11-10T20:13:35+00:00', locationName: 'Example HWDC' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(far.events?.[0]!.time).toBe('2026-11-12T17:23:00Z');
   });
 
   it('keeps Royal Mail\'s label as the instant of a scan beyond Europe', () => {

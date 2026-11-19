@@ -69,8 +69,10 @@ answers are not retried. An unavailable browser fails fast.
   does an unplaced scan "in the destination country" bound for Europe; they are
   read on that clock, and the summary's copy of the newest scan follows. A
   partner's facility can go by its bare name: it is abroad when the wording puts
-  it in the destination, or when it comes before the scan that leaves a European
-  country of origin ("Item Leaving overseas"). A bare name shaped like Royal
+  it in the destination, when it comes after "Item Leaving the UK" on an item bound
+  for a European country (a Dutch delivery office's arrival came a minute after the
+  partner's scans before it, on their clock), or when it comes before the scan that
+  leaves a European country of origin ("Item Leaving overseas"). A bare name shaped like Royal
   Mail's own facilities (`MC`, `DO`, `HWDC`) stays on the UK's clock. Beyond
   Europe, the label is the scan's instant, as at home: the South African post's
   own tracker gives a South African office's scans the same instants on its clock.
