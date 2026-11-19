@@ -128,6 +128,32 @@ describe('runSteps cancellation and the last millisecond', () => {
     expect(run).not.toHaveBeenCalled();
   });
 
+  it('reads a step that lets its deadline escape as the budget running out, and keeps a caller\'s cancellation', async () => {
+    const sink = recorder();
+    const later = vi.fn(async () => 'never');
+    await expect(runSteps({ carrier: 'ups', budgetMs: 20, recorder: sink }, [
+      { id: 'direct', run: async ({ signal }) => {
+        await new Promise((resolve) => { signal.addEventListener('abort', resolve, { once: true }); });
+        signal.throwIfAborted();
+        return 'never';
+      } },
+      { id: 'trawl', run: later },
+    ])).rejects.toMatchObject({ kind: 'budget', cause: expect.objectContaining({ name: 'TimeoutError' }) });
+    expect(sink.steps.map((step) => [step.step, step.outcome])).toEqual([['direct', 'budget']]);
+    expect(sink.lookups).toEqual([expect.objectContaining({ finalStep: 'direct', outcome: 'budget' })]);
+    expect(later).not.toHaveBeenCalled();
+    const controller = new AbortController();
+    const reason = new Error('caller cancelled');
+    await expect(runSteps({ carrier: 'ups', budgetMs: 1_000, signal: controller.signal }, [{ id: 'direct', run: async ({ signal }) => {
+      controller.abort(reason);
+      signal.throwIfAborted();
+      return 'never';
+    } }])).rejects.toBe(reason);
+    // A timeout from the step's own work, with its budget still open, is left as it is.
+    const own = new DOMException('The operation timed out', 'TimeoutError');
+    await expect(runSteps({ carrier: 'ups', budgetMs: 1_000 }, [{ id: 'direct', run: async () => { throw own; } }])).rejects.toBe(own);
+  });
+
   it('does not start a recovery with under a millisecond of budget left', async () => {
     let time = 0;
     const later = vi.fn(async () => 'never');

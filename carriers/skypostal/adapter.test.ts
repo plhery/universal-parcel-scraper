@@ -286,7 +286,7 @@ describe('SkyPostal sealed lookup', () => {
       const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply);
       derivation.allowed = 0;
       let holding = held();
-      const sealing = expect(carrier(fetcher).track({ number: DELIVERED }, { budgetMs: 200 })).rejects.toMatchObject({ name: 'TimeoutError' });
+      const sealing = expect(carrier(fetcher).track({ number: DELIVERED }, { budgetMs: 200 })).rejects.toMatchObject({ kind: 'budget' });
       await holding;
       await vi.advanceTimersByTimeAsync(200);
       await sealing;

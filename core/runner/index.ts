@@ -100,17 +100,20 @@ export async function runSteps<T>(options: RunOptions, steps: readonly StepSpec<
     attempt += 1;
     lastStep = step.id;
     const stepStarted = now();
+    const signal = combinedSignal(options.signal, remainingMs);
     try {
-      const value = await step.run({
-        signal: combinedSignal(options.signal, remainingMs), remainingMs, attempt, previousError,
-      });
+      const value = await step.run({ signal, remainingMs, attempt, previousError });
       recorder.step({
         carrier: options.carrier, step: step.id, attempt, outcome: 'ok', errorType: null,
         durationMs: Math.max(0, now() - stepStarted), ...fallback(),
       });
       finish('ok');
       return value;
-    } catch (error) {
+    } catch (thrown) {
+      // A step that lets its signal's own deadline escape, as `signal.throwIfAborted()` does once
+      // the budget has run out, ran out of budget: the bare timeout names no failure kind.
+      const error = signal.aborted && thrown === signal.reason && thrown instanceof DOMException && thrown.name === 'TimeoutError'
+        ? new BudgetExceededError(options.carrier, options.budgetMs, { cause: thrown }) : thrown;
       recorder.step({
         carrier: options.carrier, step: step.id, attempt, outcome: outcomeOf(error), errorType: errorTypeOf(error),
         durationMs: Math.max(0, now() - stepStarted), ...fallback(), error,
