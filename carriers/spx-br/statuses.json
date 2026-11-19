@@ -38,7 +38,7 @@
       "language": "pt",
       "stage": "registered",
       "confirmedBy": "live",
-      "note": "Hidden on the public page. A failed pickup leaves the parcel with its seller; one after a posting at a drop-off point (F098) leaves it at the point and reads accepted."
+      "note": "Hidden on the public page. A failed pickup leaves the parcel with its seller; one after a posting at a drop-off point (F098) leaves it at the point and reads accepted, unless, as here, it found the sender had not prepared the parcel: then the posting before it reads registered too."
     },
     {
       "code": "F096",

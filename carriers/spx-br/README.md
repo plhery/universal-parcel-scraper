@@ -63,7 +63,9 @@ label's first fifteen characters.
 - A pickup that collected nothing (F001) leaves the parcel with its seller, so it is registered.
   One after the parcel was posted at a drop-off point leaves it at the point and reads accepted,
   as the point's pickup on hold does; read as a registration after the posting, it would put
-  the parcel in transit.
+  the parcel in transit. One that found the sender had not prepared the parcel ("Remetente não
+  preparou o pedido") says SPX does not have it, posting or not: it stays registered, and the
+  posting before it reads registered too, until a collection.
 - Scans at SPX's warehouses, forwarders, ports, hubs and sorting centres keep the place and
   coordinates the reply gives. Pickups, postings, deliveries and the return to the seller would
   name the seller's or the recipient's town, so they keep none: the town a posting's wording

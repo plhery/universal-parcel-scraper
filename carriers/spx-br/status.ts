@@ -10,7 +10,7 @@ import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 const CODES: ReadonlyMap<string, Stage> = new Map([
   ['A000', 'registered'], // Shopee created the tracking number.
   ['F000', 'registered'], // The seller is preparing the parcel.
-  ['F001', 'registered'], // A pickup at the seller that collected nothing; the parser reads one after a posting as accepted.
+  ['F001', 'registered'], // A pickup at the seller that collected nothing; the parser reads one after a posting as accepted, unless the sender had not prepared the parcel.
   ['F004', 'registered'], // A driver is assigned to the pickup.
   ['F096', 'accepted'], // "[China] Pedido enviado": the seller in China sent the parcel on to Shopee's sorting centre.
   ['F098', 'accepted'], // Posted by the seller at a drop-off point in Brazil.

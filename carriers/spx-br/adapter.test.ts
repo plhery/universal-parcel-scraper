@@ -157,6 +157,20 @@ describe('SPX Express Brazil HTTP adapter', () => {
     // One before the posting leaves the parcel with its seller.
     const unprepared = await track(fixture('delivered'));
     expect(unprepared.events.find((event) => event.provider_code === 'F001')).toMatchObject({ stage: 'registered' });
+    // One after it that found the sender had not prepared the parcel says SPX does not have it, nor did the posting
+    // hand it over, until a collection.
+    const unpreparedAfter = (collected: boolean) => changed('delivered', (tracking) => {
+      tracking.records = tracking.records.filter((row) => ['F001', 'F004', 'F000', ...(collected ? ['F100'] : [])].includes(String(row.tracking_code)));
+      const pickup = tracking.records.find((row) => row.tracking_code === 'F001')!;
+      Object.assign(tracking.records.find((row) => row.tracking_code === 'F004')!, { tracking_code: 'F098', tracking_name: 'Dropped Off',
+        description: 'Pedido postado', display_flag: 1, actual_time: Number(pickup.actual_time) - 3600 });
+      pickup.description = 'Não conseguimos coletar o pedido: Remetente não preparou o pedido';
+    });
+    const unpreparedWaiting = await track(unpreparedAfter(false));
+    expect(unpreparedWaiting).toMatchObject({ current_stage: 'registered', current_stage_source: 'carrier_map' });
+    expect(unpreparedWaiting.events.map((event) => [event.provider_code, event.stage])).toEqual([['F001', 'registered'], ['F098', 'registered'], ['F000', 'registered']]);
+    expect((await track(unpreparedAfter(true))).events.map((event) => [event.provider_code, event.stage]))
+      .toEqual([['F100', 'accepted'], ['F001', 'registered'], ['F098', 'registered'], ['F000', 'registered']]);
   });
 
   it('reads the way back of a return the page hides, before the return it shows', () => {
@@ -217,6 +231,7 @@ describe('SPX Express Brazil HTTP adapter', () => {
 
     // A posting names the town of its drop-off point, the seller's town: it leaves the wording and is no place.
     const posted = parseSpxBr(changed('delivered', (tracking) => {
+      tracking.records = tracking.records.filter((record) => record.tracking_code !== 'F001');
       Object.assign(tracking.records.find((record) => record.tracking_code === 'F000')!, { tracking_code: 'F098', description: 'Pedido postado Cidade Exemplo - SP' });
     }), DELIVERED).events!.find((event) => event.provider_code === 'F098')!;
     expect(posted).toMatchObject({ description: 'Pedido postado', stage: 'accepted', stage_source: 'carrier_map' });

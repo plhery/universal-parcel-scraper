@@ -36,6 +36,8 @@ const PLACED = [
 // A posting names the town of the point where the seller dropped the parcel off after its
 // wording ("Pedido postado Cidade Exemplo - SP"): the seller's town, which a pickup keeps none of.
 const POSTED = /^(Pedido postado)\s+\S.*\s-\s[A-Z]{2}$/i;
+// A failed pickup's reason when the sender had not prepared the parcel: "Não conseguimos coletar o pedido: Remetente não preparou o pedido".
+const UNPREPARED = /remetente n[aã]o preparou/i;
 
 /** A posting's wording without the town of its drop-off point. */
 export function spxBrPostedText(wording: string): string {
@@ -204,8 +206,17 @@ function summarize(scans: readonly Scan[]): CarrierResult {
   events.sort((a, b) => Date.parse(b.time!) - Date.parse(a.time!));
   // A pickup that collected nothing after the parcel was posted at a drop-off point leaves it
   // there, as the point's pickup on hold does: accepted, not a registration after a movement.
+  // One that found the sender had not prepared the parcel says SPX does not have it, posting or
+  // not: it stays registered, and so do the postings before it, back to a scan that moved it.
   events.forEach((event, index) => {
-    if (event.provider_code === 'F001' && events.slice(index + 1).some((older) => older.stage === 'accepted')) {
+    if (event.provider_code !== 'F001') return;
+    const older = events.slice(index + 1);
+    if (UNPREPARED.test(event.description ?? '')) {
+      for (const scan of older) {
+        if (scan.provider_code === 'F098') Object.assign(scan, { stage: 'registered', stage_source: 'carrier_map' });
+        else if (scan.stage && scan.stage !== 'registered') break;
+      }
+    } else if (older.some((scan) => scan.stage === 'accepted')) {
       Object.assign(event, { stage: 'accepted', stage_source: 'carrier_map' });
     }
   });
