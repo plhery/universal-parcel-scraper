@@ -743,6 +743,7 @@ import { adapter as tsbEs } from '../carriers/tsb-es/adapter.js';
 import { adapter as tsjy } from '../carriers/tsjy/adapter.js';
 import { adapter as tstCfExpress } from '../carriers/tst-cf-express/adapter.js';
 import { adapter as tufesa } from '../carriers/tufesa/adapter.js';
+import { adapter as tuskLogistics } from '../carriers/tusk-logistics/adapter.js';
 import { adapter as twsExpress } from '../carriers/tws-express/adapter.js';
 import { adapter as ubiSmartParcel } from '../carriers/ubi-smart-parcel/adapter.js';
 import { adapter as ukpWorldwide } from '../carriers/ukp-worldwide/adapter.js';
@@ -1561,6 +1562,7 @@ export const REGISTRY: RegistryDefinition = {
     "tsjy": tsjy,
     "tst-cf-express": tstCfExpress,
     "tufesa": tufesa,
+    "tusk-logistics": tuskLogistics,
     "tws-express": twsExpress,
     "ubi-smart-parcel": ubiSmartParcel,
     "ukp-worldwide": ukpWorldwide,
@@ -3310,7 +3312,7 @@ export const REGISTRY: RegistryDefinition = {
     "turbo-eg": "universal",
     "turkmenpost": "universal",
     "tusass": "universal",
-    "tusk-logistics": "universal",
+    "tusk-logistics": "tusk-logistics",
     "tusou": "universal",
     "two-day-transportation": "universal",
     "tws-express": "tws-express",
