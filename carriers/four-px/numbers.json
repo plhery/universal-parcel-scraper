@@ -294,6 +294,18 @@
         ]
       },
       "note": "Made-up number in the shape of 4PX waybills the app tracked, which 4PX's own tracker answered. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "4XP3001521662170CN",
+      "role": "composite",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "four-px",
+        "confidence": "high"
+      },
+      "note": "The open-source example 4PX3001521662170CN with the P and the X swapped, as readers type 4PX's numbers."
     }
   ]
 }

@@ -16,7 +16,8 @@ const ENDPOINT = 'https://track.4px.com/track/v2/front/listTrackV3';
 export function normalizeFourPxNumber(raw: string): string {
   const number = raw.toUpperCase().replace(/[\s.-]/g, '');
   if (!/^[A-Z0-9]{8,40}$/.test(number)) throw new InvalidInputError('4PX', '4PX requires an alphanumeric parcel reference');
-  return number;
+  // Readers type 4PX's own numbers with the P and the X swapped.
+  return /^4XP\d{13}CN$/.test(number) ? `4PX${number.slice(3)}` : number;
 }
 
 function eventTime(raw: Record<string, unknown>): Pick<CarrierEvent, 'time'> & { local_time?: string } {

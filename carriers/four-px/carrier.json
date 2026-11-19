@@ -72,6 +72,11 @@
       "confidence": "high"
     },
     {
+      "id": "four-px-swapped",
+      "pattern": "^4XP\\d{13}CN$",
+      "confidence": "high"
+    },
+    {
       "id": "four-px-cainiao-reference",
       "pattern": "^LP\\d{13}CN$",
       "confidence": "low"

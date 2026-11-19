@@ -4194,6 +4194,10 @@
         "confidence": "high"
       },
       {
+        "pattern": "^4XP\\d{13}CN$",
+        "confidence": "high"
+      },
+      {
         "pattern": "^LP\\d{13}CN$",
         "confidence": "low"
       },

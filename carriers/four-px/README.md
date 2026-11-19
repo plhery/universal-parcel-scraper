@@ -6,6 +6,8 @@ order. Multi-package orders require separate parcel histories and fall back to
 the providers.
 
 Cainiao-style `LP` references ending in `CN` suggest 4PX without selecting it.
+Its own numbers typed with `4XP` in front of the thirteen digits and `CN` are 4PX's, the
+P and the X swapped: `four-px-swapped` names 4PX and the adapter asks with `4PX`.
 Emile's barcodes of `EM`, sixteen digits and `CA`, on parcels 4PX hands to Emile in Canada,
 suggest 4PX ahead of [Emile](../emile/README.md): Emile's history names 4PX as the shipper,
 and 4PX's feed holds the whole journey where Emile's holds the Canadian leg, so recognition

@@ -6,6 +6,7 @@ import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, FourPxTracker, parse } from './adapter.js';
 import { statusMap } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 
 const NUMBER = '4PX0000000000001CN';
 const fixture = (name = 'delivered') => JSON.parse(readFileSync(new URL(`./fixtures/${name}.json`, import.meta.url), 'utf8'));
@@ -35,6 +36,17 @@ describe('4PX result projection', () => {
     expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).queryCodes).toEqual([number]);
     await expect(instance.recognize!('INVALID')).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it('asks with 4PX for one of its numbers typed with the P and the X swapped', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async () => new Response(JSON.stringify(fixture())));
+    const instance = adapter({ fetcher, trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER });
+    await expect(instance.recognize!('4xp0000000000001cn', { budgetMs: 1000 })).resolves.toMatchObject({ known: true });
+    expect(JSON.parse(String(fetcher.mock.calls[0]?.[1]?.body)).queryCodes).toEqual([NUMBER]);
+    expect(detectCarrierMatch('4XP0000000000001CN')).toMatchObject({ carrier: 'four-px', confidence: 'high' });
+    // Only 4PX's own layout is turned back: another 4XP reference is asked as typed.
+    await expect(instance.recognize!('4XP00000000000001', { budgetMs: 1000 })).rejects.toThrow(/different or ambiguous/);
+    expect(JSON.parse(String(fetcher.mock.calls[1]?.[1]?.body)).queryCodes).toEqual(['4XP00000000000001']);
   });
 
   it('keeps wrong-identity recognition replies distinct from the explicit missing result', async () => {
