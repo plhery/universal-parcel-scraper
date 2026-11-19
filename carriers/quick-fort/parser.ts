@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, SchemaError } from '../../core/errors/index.js';
+import { CLOCK_SKEW_MS } from '../../core/result/due.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { zonedTime } from '../../core/time/index.js';
@@ -58,9 +59,9 @@ function splitRow(text: string): { description: string; location?: string } {
 /**
  * The tracker's page for one order: its rows, newest first, each with a date and a sentence. The
  * page names the number only in its search field, and a number it does not hold gets the site's
- * notice that no order was found.
+ * notice that no order was found. A delivery dated after `readAt` is the day the plan expects.
  */
-export function parseQuickFort(html: string, raw: string): CarrierResult {
+export function parseQuickFort(html: string, raw: string, readAt = Date.now()): CarrierResult {
   const number = quickFortNumber(raw);
   const $ = load(html);
   const notice = $('.system-message');
@@ -94,12 +95,15 @@ export function parseQuickFort(html: string, raw: string): CarrierResult {
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) });
   }
   events.sort((a, b) => Date.parse(b.time) - Date.parse(a.time));
+  // The timeline is planned: a delivery dated after the lookup is the expected day, on the tracker's clock, and the
+  // adapter's planned scans hold the row back until it is due.
+  const planned = events.find(event => event.stage === 'delivered' && Date.parse(event.time) > readAt + CLOCK_SKEW_MS);
   const newest = events[0]!;
   const staged = quickFortStage(newest.description!);
   return {
     status: staged ? languageStageStatus(staged.stage) : 'unknown',
     ...(staged ? { current_stage: staged.stage, current_stage_source: staged.source } : {}),
-    last_status_text: newest.description!, last_update: newest.time, expected_delivery: null,
+    last_status_text: newest.description!, last_update: newest.time, expected_delivery: planned ? planned.time.slice(0, 10) : null,
     ...(events.length > MAX_EVENTS ? { history_truncated: true } : {}),
     events: events.slice(0, MAX_EVENTS),
   };

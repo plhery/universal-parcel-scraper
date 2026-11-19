@@ -28,6 +28,9 @@ page and a changed page keep their failure kinds.
   histories the app has seen, each row comes a steady day or two after the one before, at any hour,
   as a timeline planned ahead would. On any clock some fall at night, such as a German delivery
   round starting at midnight on the tracker's clock.
+- A row dated after the lookup is part of that plan, not a scan: the adapter holds it back until
+  it is due, and a delivery dated ahead gives the expected day instead. The tracker has so far
+  shown each row only once its time has come, so a row already due reads as a scan.
 - Some rows write a place before, within or after the sentence, with a region or country code and
   a postcode: English rows name it after "in" or ", serving". The adapter takes it out of the
   sentence and keeps its names and codes as the row's place, without the postcode. The English

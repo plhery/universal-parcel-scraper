@@ -1,6 +1,10 @@
 import { readFileSync } from 'node:fs';
-import { describe, expect, it } from 'vitest';
-import { QUICK_FORT_ENDPOINT, QuickFortTracker } from './adapter.js';
+import { describe, expect, it, vi } from 'vitest';
+import { AdapterRegistry } from '../../core/adapter/index.js';
+import { trackCarrier } from '../../core/adapter/track.js';
+import { NOOP_RECORDER } from '../../core/telemetry/index.js';
+import type { UniversalTracker } from '../../providers/universal.js';
+import { adapter, QUICK_FORT_ENDPOINT, QuickFortTracker } from './adapter.js';
 import { parseQuickFort } from './parser.js';
 import { quickFortStage, statusMap } from './status.js';
 
@@ -120,6 +124,32 @@ describe('Quick Fort parser', () => {
     expect(parseQuickFort(page(100), NUMBER).history_truncated).toBeFalsy();
     expect(parseQuickFort(page(101), NUMBER)).toMatchObject({ history_truncated: true, events: expect.any(Array) });
     expect(parseQuickFort(page(101), NUMBER).events).toHaveLength(100);
+  });
+
+  it('reads a delivery dated after the lookup as the expected day, and holds the planned rows back', async () => {
+    // Synthetic rows: the tracker's plan lists the round and the delivery ahead of the lookup.
+    const rows = [
+      ['2026-03-21 12:00:00', 'Delivered'],
+      ['2026-03-20 09:00:00', 'Out for delivery'],
+      ['2026-03-18 08:00:00', 'Parcel arrived at the local delivery station.'],
+      ['2026-03-11 08:00:00', 'Shipment arrived at DE Airport'],
+    ].map(([time, text]) => `<tr><td>${time}</td><td>${text}</td></tr>`);
+    const page = fixture('found').replace(/<tbody>[\s\S]*<\/tbody>/, `<tbody>${rows.join('')}</tbody>`);
+    const readAt = Date.parse('2026-03-19T12:00:00+08:00');
+    expect(parseQuickFort(page, NUMBER, readAt)).toMatchObject({ expected_delivery: '2026-03-21' });
+    expect(parseQuickFort(page, NUMBER, Date.parse('2026-03-22T00:00:00+08:00'))).toMatchObject({ expected_delivery: null, current_stage: 'delivered' });
+    const fetcher = (async () => new Response(page, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } })) as typeof fetch;
+    const registry = new AdapterRegistry({ factories: { 'quick-fort': adapter }, carriers: { 'quick-fort': 'quick-fort' } },
+      { trawl: null, browserExecutablePath: null, env: {}, recorder: NOOP_RECORDER, fetcher });
+    vi.useFakeTimers({ now: readAt, toFake: ['Date'] });
+    try {
+      const result = await trackCarrier('quick-fort', { number: NUMBER }, { registry, universal: {} as UniversalTracker });
+      expect(result.events?.map(event => event.time)).toEqual(['2026-03-18T08:00:00+08:00', '2026-03-11T08:00:00+08:00']);
+      expect(result).toMatchObject({ expected_delivery: '2026-03-21', last_update: '2026-03-18T08:00:00+08:00' });
+      expect(result.current_stage).not.toBe('delivered');
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('refuses a number the tracker\'s path cannot carry', () => {

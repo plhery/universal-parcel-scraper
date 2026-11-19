@@ -31,5 +31,6 @@ export class QuickFortTracker {
 
 export const adapter: AdapterFactory = environment => {
   const tracker = new QuickFortTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'quick-fort', recordsSteps: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
+  // Rows of the planned timeline dated after the lookup wait until they are due.
+  return { id: 'quick-fort', recordsSteps: true, plannedScans: true, steps: ['direct'], track: (input, context) => tracker.fetch(input.number, context) };
 };
