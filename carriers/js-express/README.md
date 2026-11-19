@@ -26,8 +26,9 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   numbers only.
 - The lookup also answers a shop's order number, letters then digits, with the waybill whose
   `orderNo` it is whole, and that waybill becomes the canonical number. Universal providers file
-  such numbers under the carrier. Recognition asks about waybills only, since an order number's
-  shape names no carrier.
+  such numbers under the carrier. Recognition asks about waybills and about
+  [JCH](../jch/README.md)'s references, `JCHSG` and thirteen digits, which JCH books with JS
+  Express on some lines; another order number's shape names no carrier.
 - Recognition stays on HTTP and opens no browser session. A rate limit, explicit missing
   parcel or changed schema does not start browser recovery.
 

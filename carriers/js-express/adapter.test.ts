@@ -732,9 +732,23 @@ describe('JS Express tracking adapter', () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(JSON.stringify(answer)));
     await expect(carrier(fetcher).track({ number: ' sn 000000000009 ' })).resolves.toMatchObject({ canonical_tracking_number: DELIVERED });
     expect(fetcher.mock.calls[0]![1]).toMatchObject({ body: `card_num=${ORDER}` });
-    // Recognition asks about waybills only.
+    // Recognition asks about waybills and JCH's references: another order number names no carrier.
     await expect(carrier(fetcher).recognize!(ORDER)).resolves.toEqual({ known: false });
     expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+
+  it("recognizes a JCH reference the lookup answers with the waybill JCH booked it on", async () => {
+    const JCH = 'JCHSG9900000000001';
+    const answer = waybill([row('2026-05-01 10:00:00', 'China, Transit Center', 'Item outbound in sorting center.')], { orderNo: JCH });
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(JSON.stringify(answer)))
+      .mockResolvedValueOnce(reply(page('not-found')));
+    await expect(carrier(fetcher).recognize!(JCH)).resolves.toMatchObject({ known: true });
+    await expect(carrier(fetcher).recognize!('JCHSG9900000000002')).resolves.toEqual({ known: false });
+    expect(fetcher.mock.calls[0]![1]).toMatchObject({ body: `card_num=${JCH}` });
+    // A JCH reference is thirteen digits after JCHSG.
+    await expect(carrier(fetcher).recognize!('JCHSG990000000001')).resolves.toEqual({ known: false });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    expect(detectCarrierMatch(JCH)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['jch', 'js-express'] });
   });
 
   it("takes JS Express waybills and shops' order numbers, and nothing else, without a request", async () => {

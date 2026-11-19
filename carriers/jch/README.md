@@ -14,6 +14,8 @@ The site's tracking form posts to JCH's own tenant of the Hualei (华磊) platfo
    not-found.
 2. `retry`: the same read once more after a request fails to reach the tracker or hangs.
 
+Recognition asks the same lookup: a row says JCH holds the number.
+
 ## Notes
 
 - The line's rows in China carry no place or its "Transit Center" and are read on Beijing's
@@ -32,8 +34,9 @@ The site's tracking form posts to JCH's own tenant of the Hualei (华磊) platfo
 
 ## Numbers
 
-JCH's waybills have `JCHSG` and thirteen digits, as ParcelPanel's sample shows. The prefix is the
-company's own code, so the rule names JCH with high confidence.
+JCH's references have `JCHSG` and thirteen digits, as ParcelPanel's sample shows. JCH also books
+parcels with [JS Express](../js-express/README.md) under them, and then only JS Express's lookup
+knows the number, so both rules are low and the tracker that knows it decides.
 
 ## Links
 

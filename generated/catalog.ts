@@ -33290,14 +33290,15 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "jch"
+      "adapter": "jch",
+      "recognitionRank": 19
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
     "detectionRules": [
       {
         "pattern": "^JCHSG\\d{13}$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },
@@ -34323,6 +34324,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^JSE[A-Z]{2}\\d{10}YQ$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^JCHSG\\d{13}$",
+        "confidence": "low"
       }
     ]
   },
@@ -67773,7 +67778,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jp-logistics": [],
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
-  "js-express": ["js-express-1"],
+  "js-express": ["js-express-1","js-express-jch"],
   "jumppoint": ["jumppoint-1"],
   "jumppoint-international": ["jumppoint-international-1"],
   "junfeng-international": [],

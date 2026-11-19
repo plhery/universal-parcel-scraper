@@ -91322,9 +91322,27 @@
   },
   {
     "input": "JCHSG0000003334625",
-    "carrier": "jch",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
+      "jch",
+      "js-express"
+    ],
+    "asked": [
+      "js-express",
+      "jch"
+    ]
+  },
+  {
+    "input": "JCHSG9900000000001",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "jch",
+      "js-express"
+    ],
+    "asked": [
+      "js-express",
       "jch"
     ]
   },

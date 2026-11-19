@@ -81,6 +81,11 @@
       "id": "js-express-1",
       "pattern": "^JSE[A-Z]{2}\\d{10}YQ$",
       "confidence": "high"
+    },
+    {
+      "id": "js-express-jch",
+      "pattern": "^JCHSG\\d{13}$",
+      "confidence": "low"
     }
   ]
 }

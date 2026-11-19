@@ -28,8 +28,8 @@ describe('JCH numbers', () => {
     }
   });
 
-  it('claims its own JCHSG waybills whole, and nothing shorter or longer', () => {
-    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'jch', confidence: 'high', candidates: ['jch'] });
+  it('offers its JCHSG references whole, with JS Express, and nothing shorter or longer', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['jch', 'js-express'] });
     for (const number of [NUMBER.slice(0, -1), `${NUMBER}0`, `JCHSA${NUMBER.slice(5)}`, `JCSG${NUMBER.slice(5)}`]) {
       expect(detectCarrierMatch(number).candidates, number).not.toContain('jch');
     }
@@ -72,6 +72,14 @@ describe('JCH tracking adapter', () => {
       .mockResolvedValueOnce(reply(shared('page-unknown.html').replaceAll('NOTFOUND000001', UNKNOWN)));
     await expect(adapter(environment(fetcher)).track({ number: UNKNOWN })).rejects.toMatchObject({ kind: 'not_found' });
     expect(String(fetcher.mock.calls[1]![0])).toBe(`${JCH_ORIGIN}/trackIndex.htm`);
+  });
+
+  it('recognizes by the same lookup, since JS Express also answers some of its references', async () => {
+    const unknown = vi.fn<typeof fetch>().mockResolvedValueOnce(reply(own('unknown.json')))
+      .mockResolvedValueOnce(reply(shared('page-unknown.html').replaceAll('NOTFOUND000001', UNKNOWN)));
+    await expect(adapter(environment(unknown)).recognize!(UNKNOWN)).resolves.toEqual({ known: false });
+    const known = vi.fn<typeof fetch>().mockResolvedValue(reply(own('track.json')));
+    await expect(adapter(environment(known)).recognize!(NUMBER)).resolves.toMatchObject({ known: true });
   });
 
   it('maps every row it has written, and the app reads the map', () => {

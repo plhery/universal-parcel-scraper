@@ -24,7 +24,10 @@
     "steps": [
       "direct",
       "retry"
-    ]
+    ],
+    "recognition": {
+      "rank": 19
+    }
   },
   "capabilities": [
     "history",
@@ -95,7 +98,7 @@
     {
       "id": "jch-1",
       "pattern": "^JCHSG\\d{13}$",
-      "confidence": "high"
+      "confidence": "low"
     }
   ]
 }

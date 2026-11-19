@@ -8,5 +8,9 @@ export class JchTracker extends HualeiTracker {
 
 export const adapter: AdapterFactory = (environment) => {
   const tracker = new JchTracker({ fetcher: environment.fetcher, recorder: environment.recorder, userAgent: environment.userAgent });
-  return { id: 'jch', recordsSteps: true, steps: ['direct', 'retry'], track: (input, context) => tracker.fetch(input.number, context) };
+  return {
+    id: 'jch', recordsSteps: true, steps: ['direct', 'retry'],
+    track: (input, context) => tracker.fetch(input.number, context),
+    recognize: (number, context) => tracker.recognize(number, context),
+  };
 };

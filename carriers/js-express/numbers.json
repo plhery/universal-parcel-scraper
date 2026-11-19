@@ -152,6 +152,22 @@
         "confidence": "high"
       },
       "note": "Given as a JS Express tracking number example on TrackingMore's JS Express page. JS Express's tracker no longer finds it."
+    },
+    {
+      "number": "JCHSG9900000000001",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "jch",
+          "js-express"
+        ]
+      },
+      "note": "Made-up number in the shape of a JCH reference the app tracked, which JCH's tracker did not know and JS Express's lookup answered on its waybill to France. Its serial sits far beyond the range in use."
     }
   ]
 }

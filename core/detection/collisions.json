@@ -8563,5 +8563,13 @@
       "slovak-parcel-service"
     ],
     "reason": "SPS's tracker accepts any SK label code of SK, five letters or digits, two digits and nine letters or digits, which takes in Cainiao's SK0SCZD series. Both rules are low confidence and only suggest the carriers; the tracker that knows the number confirms it."
+  },
+  {
+    "shape": "JCHSG and thirteen digits",
+    "carriers": [
+      "jch",
+      "js-express"
+    ],
+    "reason": "JCHSG and thirteen digits are JCH's references: JCH's own tracker holds the parcels on its own lines, and JS Express's lookup answers those JCH books with it, on the waybill it gives them. Both rules are low, and the carrier that knows the number decides."
   }
 ]

@@ -24,6 +24,8 @@ const NUMBER = /^JSE[A-Z]{2}\d{10}YQ$/;
 // A shop's order number, letters then digits, which the lookup answers with the waybill it belongs to. Other
 // forwarders' YQ waybills and bare runs of digits are not taken for one.
 const ORDER_NUMBER = /^(?!JSE)[A-Z]{2,8}\d{6,20}$/;
+// JCH's references, JCHSG and thirteen digits: JCH books some parcels with JS Express under them.
+const JCH_REFERENCE = /^JCHSG\d{13}$/;
 const CLOCK = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2})$/;
 // The lookup's answer for a number it does not know.
 const NOT_FOUND = '未获取到任何数据';
@@ -70,10 +72,12 @@ const CODE = /^[A-Z]{2,4}$/;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
 
-/** A JS Express waybill number; anything else is not one it issues. */
-export function normalizeJsExpressWaybill(raw: string): string {
+/** A number recognition asks about: a JS Express waybill, or a JCH reference, which the catalog offers JS Express for. */
+export function normalizeJsExpressRecognizable(raw: string): string {
   const number = raw.length <= 64 ? normalizeTrackingNumber(raw) : '';
-  if (!NUMBER.test(number)) throw new InvalidInputError(PROVIDER, 'JS Express waybills are JSE, two letters, ten digits and YQ');
+  if (!NUMBER.test(number) && !JCH_REFERENCE.test(number)) {
+    throw new InvalidInputError(PROVIDER, 'JS Express recognizes its waybills and JCH\'s references');
+  }
   return number;
 }
 

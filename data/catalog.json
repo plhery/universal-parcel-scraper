@@ -33286,14 +33286,15 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "jch"
+      "adapter": "jch",
+      "recognitionRank": 19
     },
     "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
     "detectionRules": [
       {
         "pattern": "^JCHSG\\d{13}$",
-        "confidence": "high"
+        "confidence": "low"
       }
     ]
   },
@@ -34319,6 +34320,10 @@
       {
         "pattern": "^JSE[A-Z]{2}\\d{10}YQ$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^JCHSG\\d{13}$",
+        "confidence": "low"
       }
     ]
   },
