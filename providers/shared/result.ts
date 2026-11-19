@@ -418,6 +418,11 @@ function providerWordingStage(description: string): Stage | undefined {
   if (/^prepared for shipping[.!]?$/iu.test(value)) return 'registered';
   if (/^прием[.!]?$|^acceptance[.!]?$/iu.test(value)) return 'accepted';
   if (/^(?:обработка[,.:–—-]\s*)?(?:прибыло в|покинуло) место международного обмена[.!]?$/iu.test(value)) return 'in_transit';
+  // Israel Post's lines on mail from abroad, as ParcelsApp translates its Hebrew, an office or nothing before the comma:
+  // the sending post's notice of the item, its acceptance, and its dispatch from the office of exchange.
+  if (/^received information about a package intended to be sent[.!]?$/i.test(value)) return 'registered';
+  if (/^(?:[^,]{0,60})?,\s*-\s*the item has been received for shipping[.!]?$/i.test(value)) return 'accepted';
+  if (/^(?:[^,]{0,60})?,\s*-\s*the item has been shipped[.!]?$/i.test(value)) return 'in_transit';
   // The origin country a parcel left, as 17TRACK words the export.
   if (/^shipped from \p{L}[\p{L} .'-]{1,39}[.!]?$/iu.test(value)) return 'in_transit';
   // MRW's delivery address lacking details, as its own map reads it: the wording names no attempt.

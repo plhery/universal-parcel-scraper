@@ -13,6 +13,11 @@ const wording: Record<string, ClassifiedStatus> = {
   'The shipment has reached Aramex transit office and is on its way to the final destination office': { status: 'in_transit', stage: 'in_transit' },
   'The shipment is being processed and on its way to the next destination': { status: 'in_transit', stage: 'in_transit' },
   'Shipment collected from the shipper': { status: 'in_transit', stage: 'accepted' },
+  // The label before Aramex has the parcel, then its origin office's receipt: the first scan.
+  'Shipper generated a new shipment label, but the shipment has not been handed over to Aramex, yet. Shipment will be updated once collected from shipper and received in Aramex offices': { status: 'pending', stage: 'registered' },
+  'The shipment has been received at our Aramex origin office and will continue its journey to the destination country': { status: 'in_transit', stage: 'accepted' },
+  // The last-mile carrier's label, put on while the parcel moves between Aramex's offices.
+  'Label added to shipment, shipment now waiting to be handed to the last mile courier.': { status: 'in_transit', stage: 'in_transit' },
   // Collection or delivery is still to come.
   "Shipment is on its way to the final destination's sorting facility and will be updated once ready for collection/delivery": { status: 'in_transit', stage: 'in_transit' },
   'Shipment Confiscated by Customs Authorities': { status: 'exception', stage: 'exception' },

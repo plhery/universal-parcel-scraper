@@ -627,6 +627,14 @@
       "note": "Relayed from the last-mile carrier after YunExpress delivered the parcel to it: its intake, a hand-over like Package accepted at courier partner, not the parcel's acceptance."
     },
     {
+      "wording": "Parcel handed to DPD Pick-up (first scan)",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Relayed from DPD Switzerland after the flight and the import, at the second of DPD's own PARCEL_HANDED row: DPD's first scan of the parcel YunExpress handed to it, a hand-over like Item accepted, not the parcel's acceptance."
+    },
+    {
       "wording": "Item is out for delivery",
       "stage": "out_for_delivery",
       "language": "en",

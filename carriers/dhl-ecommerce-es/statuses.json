@@ -16,6 +16,7 @@
     {"code": "A", "wording": "Out for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
     {"code": "R", "wording": "Entregado", "language": "es", "stage": "delivered", "confirmedBy": "live"},
     {"code": "R", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live"},
+    {"code": "EB", "wording": "Delivered to mailbox", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "After the round, in place of R: the parcel left in the recipient's mailbox."},
     {"code": "PC", "wording": "Delivered, POD pending", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Can come early: a later delivery round or failed attempt shows the parcel was still on its way."},
     {"code": "NH", "wording": "The delivery could not be made due to consignee absent", "language": "en", "stage": "failed_attempt", "confirmedBy": "live"},
     {"code": "GT", "wording": "An attempt was made to contact the recipient by phone", "language": "en", "stage": "in_transit", "confirmedBy": "live"},

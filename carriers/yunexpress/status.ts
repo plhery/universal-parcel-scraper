@@ -112,6 +112,8 @@ const ENTRIES: ReadonlyArray<readonly [string, ClassifiedStatus]> = [
   // brought the parcel to it: a hand-over, not the parcel's acceptance.
   ['Package accepted at courier partner', { status: 'in_transit', stage: 'in_transit' }],
   ['Item accepted', { status: 'in_transit', stage: 'in_transit' }],
+  // DPD's first scan of the parcel YunExpress handed to it, at the second of DPD's own hand-over row.
+  ['Parcel handed to DPD Pick-up (first scan)', { status: 'in_transit', stage: 'in_transit' }],
   // The same carrier's round, before its delivery to the letterbox.
   ['Item is out for delivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // An American last-mile carrier's intake after the label it printed, then its facilities.

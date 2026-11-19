@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { DEFAULT_USER_AGENT } from '../../core/transport/index.js';
 import { AramexTracker } from './adapter.js';
 import { aramexDetailUrl, parseAramex } from './parser.js';
+import { classifyAramexStatus } from './status.js';
 
 const NUMBER = '00000000001';
 const html = readFileSync(new URL('./fixtures/delivered.html', import.meta.url), 'utf8');
@@ -28,6 +29,13 @@ describe('Aramex direct tracking', () => {
     expect(later.events?.[0]?.stage).toBe('in_transit');
     const readdressed = html.replace('</th></tr>\n', `</th></tr>\n${row('The delivery address has been updated')}${row('Updated delivery address required from customer')}`);
     expect(parseAramex(readdressed, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+  it('stages the label before Aramex has the parcel, the origin office receipt and the last-mile label', () => {
+    expect([
+      'Shipper generated a new shipment label, but the shipment has not been handed over to Aramex, yet. Shipment will be updated once collected from shipper and received in Aramex offices',
+      'The shipment has been received at our Aramex origin office and will continue its journey to the destination country',
+      'Label added to shipment, shipment now waiting to be handed to the last mile courier.',
+    ].map((wording) => classifyAramexStatus(wording)?.stage)).toEqual(['registered', 'accepted', 'in_transit']);
   });
   it('reads the service, weight and destination country from the shipment details', () => {
     const result = parseAramex(html, NUMBER);

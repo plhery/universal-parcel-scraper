@@ -295,6 +295,16 @@ describe('shared provider result', () => {
     expect(event('2026-01-07T12:45:00+03:00', 'Tracking number assigned')).toMatchObject({ stage: 'registered', stage_source: 'wording:provider' });
   });
 
+  it("reads Israel Post's lines on mail from abroad, as ParcelsApp translates them", () => {
+    const stages: ReadonlyArray<readonly [string, string]> = [
+      ['Received information about a package intended to be sent', 'registered'],
+      [', - The item has been received for shipping', 'accepted'],
+      ['EXAMPLE 1 AB, - the item has been shipped', 'in_transit'],
+    ];
+    for (const [wording, stage] of stages) {
+      expect(event('2026-11-05T00:00:00+02:00', wording)).toMatchObject({ stage, stage_source: 'wording:provider' });
+    }
+  });
   it("reads Russian Post's steps on mail from abroad, as 17TRACK and ParcelsApp relay them", () => {
     const stages: ReadonlyArray<readonly [string, string]> = [
       ['Prepared for shipping', 'registered'],

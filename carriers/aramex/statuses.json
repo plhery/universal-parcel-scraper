@@ -38,6 +38,30 @@
       "confirmedBy": "live"
     },
     {
+      "wording": "Shipper generated a new shipment label, but the shipment has not been handed over to Aramex, yet. Shipment will be updated once collected from shipper and received in Aramex offices",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "The label, before Aramex has the parcel."
+    },
+    {
+      "wording": "The shipment has been received at our Aramex origin office and will continue its journey to the destination country",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "The origin office's receipt after the label: Aramex's first scan of the parcel."
+    },
+    {
+      "wording": "Label added to shipment, shipment now waiting to be handed to the last mile courier.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "The last-mile carrier's label, put on between Aramex's offices: the parcel moves on."
+    },
+    {
       "wording": "The shipment has arrived at the Aramex office at the destination and is being prepared for customer pickup/delivery",
       "language": "en",
       "stage": "in_transit",
