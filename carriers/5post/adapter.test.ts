@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { detectCarrierMatch } from '../../core/detection/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, FIVE_POST_API, FivePostTracker } from './adapter.js';
@@ -205,6 +206,27 @@ describe('5Post HTTP adapter', () => {
     expect(fetcher).not.toHaveBeenCalled();
     expect(normalizeFivePostNumber(' p 0000-0000 025 ')).toBe(IN_TRANSIT);
     expect(normalizeFivePostNumber('BX00000000000000FRW')).toBe('BX00000000000000FRW');
+  });
+
+  it('offers 5Post for Avito’s P order numbers, whole, at low confidence beside Colis Privé', () => {
+    const match = detectCarrierMatch(IN_TRANSIT);
+    expect(match).toMatchObject({ carrier: 'unknown', confidence: 'low' });
+    expect(match.candidates).toEqual(expect.arrayContaining(['5post', 'colis-prive']));
+    for (const number of [IN_TRANSIT.slice(0, -1), `${IN_TRANSIT}0`, `R${IN_TRANSIT.slice(1)}`, `PP${IN_TRANSIT.slice(2)}`, DELIVERED]) {
+      expect(detectCarrierMatch(number).candidates, number).not.toContain('5post');
+    }
+  });
+
+  it('recognizes by the order list: an empty list is unknown, a listed order with its history known', async () => {
+    const empty = vi.fn<typeof fetch>().mockImplementation(async () => reply(fixture('not-found')));
+    await expect(carrier(empty).recognize!(IN_TRANSIT)).resolves.toEqual({ known: false });
+    expect(empty).toHaveBeenCalledTimes(1);
+    await expect(carrier(routes(fixture('in-transit'))).recognize!(IN_TRANSIT)).resolves.toMatchObject({ known: true });
+    const unused = vi.fn<typeof fetch>();
+    await expect(carrier(unused).recognize!('P0000/25')).resolves.toEqual({ known: false });
+    expect(unused).not.toHaveBeenCalled();
+    const blocked = vi.fn<typeof fetch>().mockImplementation(async () => new Response(SERVICEPIPE, { headers: { 'Content-Type': 'text/html' } }));
+    await expect(carrier(blocked).recognize!(IN_TRANSIT)).rejects.toMatchObject({ kind: 'challenge' });
   });
 
   it('routes a number filed under 5Post to the adapter', async () => {

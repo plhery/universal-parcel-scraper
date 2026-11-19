@@ -6072,7 +6072,8 @@
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "5post"
+      "adapter": "5post",
+      "recognitionRank": 691
     },
     "canaryUrl": "https://fivepost.ru/",
     "trackingUrlTemplate": "https://fivepost.ru/tracking?id={trackingNumber}",
@@ -6089,7 +6090,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^P\\d{11}$",
+        "confidence": "low"
+      }
+    ]
   },
   "66post": {
     "displayName": "66Post",

@@ -22,6 +22,8 @@ as Pyaterochka, and to parcel lockers. Tracked through the guest lookup of its a
 - ServicePipe fronts X5's hosts. Its check page, even with HTTP 200, is a challenge.
 - The website's tracker sends its search with a reCAPTCHA token, and asks for the recipient's
   phone digits when several orders share the number. The app's lookup asks for neither.
+- Recognition makes the same lookup for Avito's `P` numbers, the only ones a rule offers: an
+  empty list is unknown, so most numbers take one request.
 
 ## Notes
 
@@ -53,9 +55,11 @@ as Pyaterochka, and to parcel lockers. Tracked through the guest lookup of its a
 5Post's tracker asks for the order number the shop gave, so its numbers follow each sender.
 Archived lookups on the tracker and a public complaint show fourteen digits starting `9999`,
 `9988` or `9911`, some of them opened from AliExpress order pages, `P` and eleven digits from
-Avito, and `BX`, fourteen digits and `FRW`. Lookups also show other shops' order numbers. No
-rule claims any of them: the digit runs share their shape with other carriers, and the other
-families belong to senders whose parcels may travel with other carriers. The adapter takes
+Avito, and `BX`, fourteen digits and `FRW`. Lookups also show other shops' order numbers.
+`5post-avito` offers 5Post for Avito's `P` numbers at low confidence, beside Colis Privé, whose
+references share the layout: Avito also ships with other carriers, so the shape only suggests
+5Post. No rule claims the others: the digit runs share their shape with other carriers, and the
+other families belong to senders whose parcels may travel with other carriers. The adapter takes
 three to forty letters and digits, as the app asks for at least three. The samples and their
 sources are in [`numbers.json`](numbers.json).
 

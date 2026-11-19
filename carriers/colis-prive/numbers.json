@@ -494,7 +494,8 @@
         "carrier": "unknown",
         "confidence": "low",
         "candidates": [
-          "colis-prive"
+          "colis-prive",
+          "5post"
         ]
       },
       "note": "An archived link to Colis Privé's detail page, whose numColis is this number followed by the delivery postcode. Colis Privé's own page showed the parcel's history with that postcode."

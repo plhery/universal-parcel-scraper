@@ -6076,7 +6076,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "5post"
+      "adapter": "5post",
+      "recognitionRank": 691
     },
     "canaryUrl": "https://fivepost.ru/",
     "trackingUrlTemplate": "https://fivepost.ru/tracking?id={trackingNumber}",
@@ -6093,7 +6094,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^P\\d{11}$",
+        "confidence": "low"
+      }
+    ]
   },
   "66post": {
     "displayName": "66Post",
@@ -66955,7 +66961,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "4-72": ["4-72-s10"],
   "4a-express": [],
   "4sides": [],
-  "5post": [],
+  "5post": ["5post-avito"],
   "66post": [],
   "7hours-express": [],
   "99minutos": [],

@@ -22,7 +22,10 @@
     "steps": [
       "direct",
       "retry"
-    ]
+    ],
+    "recognition": {
+      "rank": 691
+    }
   },
   "capabilities": [
     "history",
@@ -80,5 +83,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "5post-avito",
+      "pattern": "^P\\d{11}$",
+      "confidence": "low"
+    }
+  ]
 }

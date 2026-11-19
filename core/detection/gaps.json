@@ -30,12 +30,6 @@
     "reason": "A sender's order number family whose issuer is unknown, so it does not establish 5Post as the carrier."
   },
   {
-    "carrier": "5post",
-    "pattern": "^P\\d{11}$",
-    "kind": "by_design",
-    "reason": "Avito order numbers that Avito may also send with other carriers."
-  },
-  {
     "carrier": "99minutos",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
