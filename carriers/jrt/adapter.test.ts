@@ -543,6 +543,11 @@ describe('JRT tracking adapter', () => {
     expect(answer('Expected flight on Nov. 20th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Departed from Port of Origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // On the line into Canada the hand-over to the delivering courier, which it names, is no delivery round.
+    expect(answer('Your parcel has been released by customs')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Your package has been handed over to the courier Example')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Your package has been handed over to the courier Sample Express')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Parcel received by UniUni')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Latin America the booked flight and the flight name the destination and the day.
     expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });

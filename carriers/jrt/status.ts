@@ -38,6 +38,8 @@ const SCHEDULED_FLIGHT = /^(预计)\d{1,2}\.\d{1,2}(航班\/(?:flight scheduled 
 const LOADED_FLIGHT = /^(预计配载航班)\d{1,2}月\d{1,2}日[,，] ?(expected flight on )[a-z]+ \d{1,2}(?:st|nd|rd|th)$/;
 // Its English half also comes alone, the month cut short: "Expected flight on Nov. 20th".
 const EXPECTED_FLIGHT = /^(expected flight on )[a-z]{3,9}\.? ?\d{1,2}(?:st|nd|rd|th)$/;
+// On the line into Canada the hand-over to the delivering courier names it: "Your package has been handed over to the courier Example".
+const HANDED_TO_COURIER = /^(your package has been handed over to the courier )\S.*$/;
 
 // On the line into Mexico the booked flight is in Spanish, naming the destination and the day:
 // "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
@@ -71,7 +73,7 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
-  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
+  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
 
 /**

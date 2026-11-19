@@ -619,6 +619,30 @@
       "note": "The English half of the loaded flight's row alone, its day with the month cut short (\"Nov. 20th\"); the map reads the day as an ellipsis. The flight is still to come."
     },
     {
+      "wording": "Your parcel has been released by customs",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Released by the destination's customs on the line into Canada, minutes before the hand-over to the delivering courier."
+    },
+    {
+      "wording": "Your package has been handed over to the courier …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The hand-over to the delivering courier, named after \"courier\", which the map reads as an ellipsis: minutes before the courier's receipt and a day before its delivery round, so no round yet."
+    },
+    {
+      "wording": "Parcel received by UniUni",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "UniUni, the delivering courier in Canada, taking the parcel in before its round."
+    },
+    {
       "wording": "Departed from Port of Origin",
       "language": "en",
       "stage": "in_transit",
