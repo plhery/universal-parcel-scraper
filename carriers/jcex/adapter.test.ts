@@ -123,15 +123,20 @@ describe('JCEX HTTP adapter', () => {
     expect(JSON.stringify(result)).not.toMatch(/SAMPLEVILLE|99999|XYZ0000000001|00000"/);
   });
 
-  it('counts a delivered code only with wording that reads as a delivery', () => {
+  it('counts a delivered code only with wording that reads as a delivery, and other wording by what it reads', () => {
     const handover = parseJcex(changed('handed-over', (content) => {
       content.trackDetails.splice(1, 3);
       content.trackDetails[0]!.eventDetailEn = 'Handed to the last-mile carrier';
     }), HANDED_OVER, Date.parse('2026-11-01T00:00:00Z'));
     expect(handover.events![0]).toMatchObject({ provider_code: 'Delivered_Other', description: 'Handed to the last-mile carrier' });
     expect(handover.current_stage).not.toBe('delivered');
-    expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Delivered_Other', description: 'Handed to the last-mile carrier' })).toEqual({ kind: 'unknown' });
+    expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Delivered_Other', description: 'Handed to the last-mile carrier' }))
+      .toEqual({ kind: 'mapped', stage: handover.current_stage });
     expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Delivered_Other', description: 'Delivered, in mailbox' })).toEqual({ kind: 'mapped', stage: 'delivered' });
+    // The delivering partner's depot scan under the same code.
+    expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Delivered_Other',
+      description: 'Received and ready for processing, your parcel has arrived at Exampleville depot' })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'jcex', providerCode: 'Delivered_Other', description: 'Teleported' })).toEqual({ kind: 'unknown' });
   });
 
   it('keeps a wall clock whose offset its place does not have then', () => {

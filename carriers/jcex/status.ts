@@ -16,16 +16,19 @@ const ROWS = new Map<string, Stage>(statuses.entries
  * sub-statuses (`platformEventCode`), and the code decides for rows the map
  * has not seen: JCEX's own event codes group scans of several stages, and the
  * code keeps its origin warehouse's "Arrive at the delivery point" in transit.
- * JCEX also files its handover to the delivering partner as delivered, so
- * `Delivered_Other` counts only with wording the shared rules read as a
- * delivery. A row without a code is read by its wording.
+ * JCEX also files its handover to the delivering partner, and the partner's
+ * own scans after it, as delivered, so `Delivered_Other` counts only with
+ * wording the shared rules read as a delivery; other wording keeps the stage
+ * they read ("…, your parcel has arrived at <town> depot"), if any. A row
+ * without a code is read by its wording.
  */
 export function jcexStage(code: string | null, wording: string): Stage | undefined {
   const seen = ROWS.get(key(code, code ? wording : wording.replace(HUB_RECEIPT, '$1')));
   if (seen || !code) return seen;
   const mapped = Object.hasOwn(SUB_STAGES, code) ? SUB_STAGES[code] : undefined;
-  if (mapped === 'delivered' && classifyWording(wording, 'pending').stage !== 'delivered') return undefined;
-  return mapped;
+  if (mapped !== 'delivered') return mapped;
+  const worded = classifyWording(wording, 'pending');
+  return worded.source === 'none' ? undefined : worded.stage;
 }
 
 export const statusMap: CarrierStatusMap = { stage: jcexStage, gaps: [] };
