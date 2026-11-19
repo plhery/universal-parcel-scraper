@@ -42,6 +42,8 @@
     {"code": "InTransit_Other", "wording": "Handed over to the trucking company, waiting for transport（已交卡车公司 待运输）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "InTransit_Departure", "wording": "turck transferring（卡车运输中）", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "InTransit_Other", "wording": "Votre Colissimo est en cours de traitement sur le site de tri local.", "stage": "in_transit", "language": "fr", "confirmedBy": "live", "note": "Relayed from Colissimo."},
+    {"wording": "parcel arrived at exchange office", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Without a code, in China after the site transport and an hour before the operation centre's departure: the office the parcel is exchanged at on its way out, not the destination's."},
+    {"wording": "Goods leaving the operation center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Without a code, before the hub and the origin airport."},
     {"wording": "已下单", "stage": "registered", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Order placed, without a code: the sender's order, before JCEX has the parcel."},
     {"wording": "Your parcel has been left at a safe place (ATL)", "stage": "delivered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Relayed without a code from the delivering partner: left at a safe place under an authority to leave (ATL), the delivery."}
   ]
