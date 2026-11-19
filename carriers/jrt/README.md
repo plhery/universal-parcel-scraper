@@ -63,6 +63,11 @@ browser is needed, and no portal link is published.
   dates on its zone takes that zone and the label Pacific time ([GOFO](../gofo/README.md)). A row at
   another US town and state keeps its wall clock, which the state dates. Read on Beijing time, the
   hub scan came 14 hours before GOFO's own row.
+- The line into Canada ends with UniUni. The tracker copies its receipt, and the customs release
+  and hand-over before it, under the town and its province's code ("Example Town ON"), on the wall
+  clock there: read on Beijing time, UniUni's receipt came 13 hours before UniUni's own row at the
+  same minute and second. A row at a Canadian town and its province's code is read on that
+  province's clock; a row at the country alone stays on the platform's.
 - The line into Mexico ends with J&T Express Mexico. The tracker copies J&T's rows in Spanish, the
   town and the site in brackets, on J&T's clock in Mexico City, the one its own tracker answers on:
   read on Beijing time, the night's sorting at J&T's centre would fall in the morning. The map reads

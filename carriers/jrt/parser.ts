@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
+import { canadaProvinceTimeZone, firstOccurrence, usStateTimeZone } from '../../core/time/index.js';
 import { dateDhlRows } from '../gzyl/dhl-rows.js';
 import { dateHualeiGofoRows, dateWallClocks, isHualeiUsPartnerRow } from '../gzyl/gofo-rows.js';
 import { normalizeHualeiNumber, parseHualeiPage, parseHualeiTrack, type HualeiTenant } from '../gzyl/hualei.js';
@@ -9,6 +9,14 @@ import {
 } from './status.js';
 
 export const PROVIDER = 'JRT';
+
+// On the line into Canada the tracker copies the courier's rows, and the customs release before them,
+// under the town and its province's code ("Example Town ON"), on the wall clock there: read on Beijing
+// time, UniUni's receipt came 13 hours before UniUni's own row at the same minute and second.
+const CANADA_TOWN = /^[^,]*\p{L}[^,]*?[ ,]\s*(AB|BC|MB|NB|NL|NS|NT|NU|ON|PE|QC|SK|YT)$/u;
+/** The zone of a place the tracker writes as a Canadian town and its province's code; null for another place. */
+export const jrtCanadaZone = (place: string): string | null => canadaProvinceTimeZone(CANADA_TOWN.exec(place.trim())?.[1]);
+
 export const JRT_ORIGIN = 'http://106.53.64.22:8082';
 // Once JRT hands a parcel over, the record's tracking number is the delivering carrier's, as
 // DHL's into Europe or FedEx's on the line to Ireland, whose product names FedEx, and JRT's
@@ -16,7 +24,7 @@ export const JRT_ORIGIN = 'http://106.53.64.22:8082';
 export const JRT: HualeiTenant = {
   carrier: 'jrt', provider: PROVIDER, origin: JRT_ORIGIN, stage: jrtStage, english: jrtEnglish,
   clock: ({ content, location }) => (isJrtUpsRow(content, location) || isHualeiUsPartnerRow(content, location) || isJrtDhlRow(content)
-    || isJrtJtMexicoRow(content) ? 'wall' : 'platform'),
+    || isJrtJtMexicoRow(content) || jrtCanadaZone(location) !== null ? 'wall' : 'platform'),
   ownNumber: /^JRT\d{10}[A-Z]{2}$/, unlabelledPartners: ['dhl'], productPartners: [[/\bFEDEX\b/i, 'fedex']],
 };
 
@@ -36,6 +44,12 @@ const JT_MEXICO_ZONE = 'America/Mexico_City';
 /** The result with the rows the tracker copies from J&T Express Mexico dated on J&T's clock. */
 export const dateJrtJtMexicoRows = (result: CarrierResult): CarrierResult => dateWallClocks(result,
   (event) => (isJrtJtMexicoRow(event.description ?? '') ? { zone: JT_MEXICO_ZONE, basis: 'carrier' } : null));
+
+/** The result with the rows at a Canadian town dated on its province's clock. */
+export const dateJrtCanadaRows = (result: CarrierResult): CarrierResult => dateWallClocks(result, (event) => {
+  const zone = jrtCanadaZone(event.location ?? '');
+  return zone ? { zone, basis: 'place' } : null;
+});
 
 // USPS's sentence names its own clock, day and the facility's state ("… at 3:14 am on November 9, 2026 in EXAMPLE, IL.").
 // The tracker dates it an hour early, on Eastern time, beside the partner's own row at that minute on Chicago's.
@@ -68,9 +82,9 @@ export function dateJrtUspsSentences(result: CarrierResult): CarrierResult {
   return { ...result, last_update: events[0]?.time ?? result.last_update, events };
 }
 
-/** The result with the rows the tracker copies from DHL, J&T Express Mexico, GOFO and USPS dated on their clocks. */
+/** The result with the rows the tracker copies from DHL, J&T Express Mexico, the courier into Canada, GOFO and USPS dated on their clocks. */
 export const dateJrtRows = (result: CarrierResult): CarrierResult =>
-  dateJrtUspsSentences(dateHualeiGofoRows(dateJrtJtMexicoRows(dateJrtDhlRows(result))));
+  dateJrtUspsSentences(dateHualeiGofoRows(dateJrtCanadaRows(dateJrtJtMexicoRows(dateJrtDhlRows(result)))));
 
 export const normalizeJrtNumber = (raw: string): string => normalizeHualeiNumber(raw, PROVIDER);
 /** The track interface's reply, or null when it holds no row for the number. */

@@ -7,7 +7,7 @@ import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { dateLocalClocks } from '../../places/clocks.js';
 import { adapter } from './adapter.js';
-import { dateJrtUspsSentences, JRT_ORIGIN, parseJrtPage, parseJrtTrack } from './parser.js';
+import { dateJrtUspsSentences, JRT_ORIGIN, jrtCanadaZone, parseJrtPage, parseJrtTrack } from './parser.js';
 import { isJrtDhlGermanRow, isJrtDhlRow, isJrtJtMexicoRow, isJrtUpsRow, jrtEnglish, statusMap } from './status.js';
 import carrier from './carrier.json' with { type: 'json' };
 import statuses from './statuses.json' with { type: 'json' };
@@ -313,6 +313,35 @@ describe('JRT tracking adapter', () => {
     const ups = statuses.entries.filter(({ note }) => /^(?:Copied from UPS\b|UPS's label row\b)/.test(note ?? ''));
     expect(ups.length).toBeGreaterThan(8);
     expect(ups.filter(({ wording }) => !isJrtUpsRow(wording, '')).map(({ wording }) => wording)).toEqual([]);
+  });
+
+  it('reads the rows at a Canadian town on the line into Canada on its province’s clock', () => {
+    // Live shape: the courier's receipt, the customs release and the hand-over under "Town ON", at the minute and
+    // second of the courier's own scan on Toronto's clock; read on Beijing time they came 13 hours early.
+    const payload = fixture('track-dhl') as { data: Record<string, unknown>[] }[];
+    const record = payload[0]!.data[0]! as { trackDetails: Record<string, string>[] } & Record<string, unknown>;
+    const template = record.trackDetails.at(-1)!;
+    const row = (track_date: string, track_location: string, track_content: string) => ({ ...template, track_date, track_createdate: '2026-11-19 21:14:33',
+      track_location, track_content });
+    Object.assign(record, { trackingNumber: 'JRT0000000001MM', consigneeCountry: 'CA' });
+    record.trackDetails = [
+      row('2026-11-18 14:53:32', 'Example Town ON', 'Parcel received by UniUni'),
+      row('2026-11-18 14:51:32', 'Example Town ON', 'Your package has been handed over to the courier supplier'),
+      row('2026-11-18 14:48:32', 'Example Town, NS', 'Your parcel has been released by customs'),
+      row('2026-11-17 11:42:42', 'Canada', 'Your parcel had been collected from Airline'),
+      row('2026-11-17 09:05:56', '', 'Landed, customs clearance in progress'),
+    ];
+    const result = parseJrtTrack(payload, UP_REFERENCE, Date.parse('2026-11-19T20:00:00Z'))!;
+    expect(result.last_update).toBe('2026-11-18T14:53:32-05:00');
+    expect(result.events?.map(({ time, time_zone, time_zone_basis, location }) => [time, time_zone, time_zone_basis, location])).toEqual([
+      ['2026-11-18T14:53:32-05:00', 'America/Toronto', 'place', 'Example Town ON'],
+      ['2026-11-18T14:51:32-05:00', 'America/Toronto', 'place', 'Example Town ON'],
+      ['2026-11-18T14:48:32-04:00', 'America/Halifax', 'place', 'Example Town, NS'],
+      // A country names no town, and JRT's own rows stay on the platform's clock.
+      ['2026-11-17T11:42:42+08:00', undefined, undefined, 'Canada'],
+      ['2026-11-17T09:05:56+08:00', undefined, undefined, undefined],
+    ]);
+    expect(['Example Town', 'ON', 'Shenzhen GD', 'EXAMPLE TOWN,IL', 'Example Town on'].map(jrtCanadaZone)).toEqual([null, null, null, null, null]);
   });
 
   it('reads J&T Express Mexico’s rows on the line into Mexico on J&T’s clock in Mexico City', () => {
