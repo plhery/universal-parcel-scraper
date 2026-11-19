@@ -10,17 +10,19 @@ postal detection handles these numbers, so no rule for Ghana Post claims them.
 ## Links
 
 Ghana Post's local tracker at `epstools.ghanapost.com.gh/tracklocal.php` posts the number with
-a reCAPTCHA and has no address for one item.
+a reCAPTCHA through a full-page form POST to the same URL and has no address for one item.
 
 ## Why there is no adapter
 
-The local tracker returns an item's history only for a lookup that carries a solved Google
-reCAPTCHA checkbox answer. The server checks that answer: without one, or with an empty one, it
-returns "Please complete the reCAPTCHA." instead of a history. The track box on ghanapost.com.gh
-only opens the tracker site, and its international tracker is the UPU's Global Track & Trace,
-which the UPU provider already reads. Ghana Post's Android apps cover digital addresses, rides
-and its riders' rounds; none tracks an item. A dedicated verification flow is not implemented,
-so Ghana Post stays on universal providers.
+The local tracker checks the solved Google reCAPTCHA checkbox answer before returning a
+result. Missing or empty answers produce "Please complete the reCAPTCHA." The native form
+POST navigates to an HTML document, including its missing-record notice. Browser capture
+must observe that navigation and bind the submitted number before parsing the result.
+
+The homepage opens this tracker. Its international tracker uses the UPU's Global Track &
+Trace, already covered by the UPU provider. The Speedlink app's guest route serves Swoove
+deliveries; coverage of Ghana Post postal items is unconfirmed. A dated positive and an
+automated verification control are still missing, so there is no dedicated adapter.
 
 ## Testing
 

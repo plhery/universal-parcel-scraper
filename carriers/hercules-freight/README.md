@@ -22,11 +22,11 @@ details pages at `herculesfreight.com/users/viewPRODetails/{number}` and
 ## Why there is no adapter
 
 The Track Shipment form posts the search type and the number to its own page, with no token,
-captcha or sign-in. The site's firewall refuses form posts from whole countries, though: from
-Switzerland and Germany, Sucuri answers every POST on the site, the tracking form's included,
-with HTTP 403 and its "Access from your Country was disabled" page, while the pages themselves
-load. Opening the page with the form's fields in the address runs no lookup, and Hercules
-publishes no tracking app, so Hercules Freight stays on universal providers.
+captcha or sign-in. Sucuri refuses the tracking POST from Switzerland and Germany with
+HTTP 403 and its "Access from your Country was disabled" page, while the form itself loads. An allowed US connection can submit the guest form. Its `Invalid PRO# number` result
+is separate from a country refusal or a shipment with dated history. Opening the page with
+the form's fields in the address runs no lookup. A current found-result control is still
+missing, so Hercules Freight stays on universal providers.
 
 ## Testing
 
