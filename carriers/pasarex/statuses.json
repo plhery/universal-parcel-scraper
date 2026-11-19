@@ -1,4 +1,8 @@
 {
   "carrier": "pasarex",
-  "entries": []
+  "entries": [
+    {"wording": "Orden de pedido recibida - paquete no arribado", "stage": "registered", "language": "es", "confirmedBy": "live", "note": "The order is booked and the parcel has not reached PasarEX yet."},
+    {"wording": "Carga consolidada para importación recibida", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The consolidated import load reached Bogotá, ahead of customs."},
+    {"wording": "Ingresó a bodega", "stage": "in_transit", "language": "es", "confirmedBy": "live", "note": "The parcel entered a PasarEX warehouse in Colombia, after customs and between legs of the domestic route."}
+  ]
 }
