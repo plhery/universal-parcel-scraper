@@ -117,6 +117,10 @@ describe('SXW Express tracking adapter', () => {
 
   it('maps every row it has written, and the app reads the map', () => {
     for (const entry of statuses.entries) expect(statusMap.stage(null, normalizeStatusWording(entry.wording)), entry.wording).toBe(entry.stage);
+    // A row with a mark and no words moves nothing; one with words stays for review.
+    expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: '.' }))
+      .toEqual({ kind: 'intentional_gap', note: expect.stringMatching(/without words/) });
+    expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Sample wording' }).kind).toBe('unknown');
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Parcel picked up' }))
       .toEqual({ kind: 'mapped', stage: 'accepted' });
     expect(statusMapAnswer({ carrier: 'sxw-express', providerCode: null, description: 'Parcel is leaving Airport, Parcel Leaving Port' }))

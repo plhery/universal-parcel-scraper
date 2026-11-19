@@ -51,6 +51,7 @@
     {"wording": "Item Flight landing", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "…-Notification of arrival from …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's notice of the flight's arrival; the two codes name the airports or carriers."},
     {"wording": "The goods have been picked up abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The partner abroad collected the goods from the arrival flight before import customs, as at the cargo terminal; not the collection from the sender."},
-    {"wording": "Released From Import Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"wording": "Released From Import Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Returned parcel has been recieved by shipper", "language": "en", "stage": "returned", "confirmedBy": "live", "note": "Spelled so. The seller took the parcel back at the origin; it can send it again under the same waybill, and the rows that follow then lead."}
   ]
 }

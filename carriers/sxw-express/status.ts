@@ -20,4 +20,10 @@ const ARRIVAL_NOTICE = /^[a-z0-9]{2,4}-notification of arrival from [a-z0-9]{2,4
 /** The English the adapter shows for a row the platform words only in Chinese, by its `normalizeStatusWording` wording. */
 export const sxwEnglish = (_code: string | null, wording: string): string | undefined => WORDINGS.english(wording);
 
-export const statusMap: CarrierStatusMap = { stage: sxwStage, gaps: [] };
+// A row at a place with no words, only a mark such as ".": it moves nothing.
+const WORDLESS = /^[^\p{L}\p{N}]*$/u;
+
+export const statusMap: CarrierStatusMap = {
+  stage: sxwStage, gaps: [],
+  gapNote: (_code, wording) => (WORDLESS.test(wording) ? 'A row without words: the parcel keeps the stage it had.' : undefined),
+};

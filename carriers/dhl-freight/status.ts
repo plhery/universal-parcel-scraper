@@ -33,6 +33,8 @@ const EXACT: ReadonlyMap<string, Stage> = new Map([
   ['direct delivery', 'in_transit'],
   ['out for delivery', 'out_for_delivery'],
   ['received by consignee', 'delivered'],
+  // The consignee collected the goods, as at the terminal or a Service Point.
+  ['picked up by receiver', 'delivered'],
   ['delivered', 'delivered'],
   ['shipment delivered - new delivery address following consignee instruction', 'delivered'],
   ['shipment delivered with exception', 'delivered'],
