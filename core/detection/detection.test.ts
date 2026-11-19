@@ -405,6 +405,18 @@ describe('normalization', () => {
     }
   });
 
+  it('reads a letter O among a WanbExpress waybill\'s digits as a zero', () => {
+    for (const typed of ['WNBZZO000000001YQ', 'wnbzz o00000000o yq']) {
+      const waybill = typed.startsWith('W') ? 'WNBZZ0000000001YQ' : 'WNBZZ0000000000YQ';
+      expect(normalizeTrackingNumber(typed), typed).toBe(waybill);
+      expect(detectCarrierMatch(typed), typed).toMatchObject({ carrier: 'wanbexpress', confidence: 'high' });
+    }
+    // The series letters keep a letter O, and anything off WanbExpress's length stays as typed.
+    for (const typed of ['WNBZO0000000001YQ', 'WNBZZO00000001YQ', 'WNBZZO0000000001YQ', 'WNBZZO000000001AB']) {
+      expect(normalizeTrackingNumber(typed), typed).toBe(typed);
+    }
+  });
+
   it('reads a zero typed for a JS Express waybill\'s second letter as the letter O', () => {
     for (const [typed, waybill] of [['JSEA00000000001YQ', 'JSEAO0000000001YQ'], ['jsea0 000000001o yq', 'JSEAO0000000010YQ']] as const) {
       expect(normalizeTrackingNumber(typed), typed).toBe(waybill);

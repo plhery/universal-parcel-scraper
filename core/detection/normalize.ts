@@ -35,7 +35,10 @@ function hasCheckedShape(number: string): boolean {
  * digits and YQ, holds only digits between its letters, so a letter O there is
  * a zero typed as a letter: the tracker knows the number with the zero. A zero
  * typed for its second letter, which leaves eleven digits, is the letter O: the
- * tracker knows the number with the letter. GOFO's GFUS and GFCA waybills go on
+ * tracker knows the number with the letter. WanbExpress's WNB waybills, two
+ * letters, ten digits and YQ, hold only digits between their letters too, and
+ * their public numbers' digits open with a zero, so a letter O among them is a
+ * zero typed as a letter. GOFO's GFUS and GFCA waybills go on
  * with a zero, so a letter O there is that zero: no carrier issues GFUS or GFCA,
  * a letter O and thirteen digits, and GOFO's tracker knows the number with the
  * zero. Allegro One's AD0 numbers hold no vowel after AD0, so a letter O in one
@@ -69,6 +72,8 @@ export function normalizeTrackingNumber(raw: string): string {
   if (jsExpress && (jsExpress[2] === '0' || jsExpress[3]!.includes('O'))) {
     return `${jsExpress[1]}${jsExpress[2] === '0' ? 'O' : jsExpress[2]}${jsExpress[3]!.replace(/O/g, '0')}YQ`;
   }
+  const wanb = /^(WNB[A-Z]{2})([\dO]{10})YQ$/.exec(value);
+  if (wanb?.[2]!.includes('O')) return `${wanb[1]}${wanb[2]!.replace(/O/g, '0')}YQ`;
   const serial = /^([A-Z]{2})([\dO]{9})([A-Z]{2})$/.exec(value);
   if (!serial?.[2]!.includes('O')) return value;
   const digits = serial[2]!.replace(/O/g, '0');

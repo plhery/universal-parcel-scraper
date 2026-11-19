@@ -73,6 +73,8 @@ describe('WanbExpress', () => {
       last_update: '2031-04-18T19:30:00Z', events: [{ time: '2031-04-18T19:30:00Z', stage: 'delivered' }, { stage: 'registered' }] });
     expect(JSON.stringify(result)).not.toContain('PRIVATE');
     expect(normalizeWanbNumber(number.toLowerCase())).toBe(number);
+    // A letter O typed among the digits is the zero the tracker knows.
+    expect(normalizeWanbNumber('WNBZZO000000001YQ')).toBe('WNBZZ0000000001YQ');
     for (const input of ['1234567890', 'WNBZZ999000000YQ', number + '0', 'WNB/ZZ9990000001YQ']) {
       expect(() => normalizeWanbNumber(input)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }

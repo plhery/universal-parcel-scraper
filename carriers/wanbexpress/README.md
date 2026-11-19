@@ -5,7 +5,7 @@ WanbExpress, as from its tracking link, can also be looked up by the Cainiao Exp
 (`DOFR…HD` or `CNFR…HD`) WanbExpress relabels parcels to France with: its tracker finds the parcel
 under it from the first scan in China, before Cainiao Express receives it. Recognition asks only
 about the parcel identifier, since Cainiao's rules claim those numbers and most are not
-WanbExpress's.
+WanbExpress's. A letter O typed among the identifier's digits reads as the zero the tracker knows.
 The tracker refuses plain requests with its verification code, so a lookup starts in a private
 Playwright browser configured with `WANBEXPRESS_BROWSER_WS_ENDPOINT`, then the optional TRAWL
 service. Only without either does it make the direct HTTP request. HTTP recognition makes the
