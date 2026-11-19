@@ -56,6 +56,8 @@
   "capabilities": [
     "history",
     "location",
+    "eta",
+    "eta_window",
     "delivered_at",
     "provider_code"
   ],
@@ -74,13 +76,14 @@
       "status",
       "history",
       "location",
+      "eta",
+      "eta_window",
       "delivered_at",
       "provider_code",
       "destination_country"
     ],
     "discarded": [],
     "unavailable": [
-      "eta",
       "sender_name"
     ]
   },

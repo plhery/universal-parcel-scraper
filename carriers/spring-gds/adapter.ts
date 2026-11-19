@@ -23,8 +23,9 @@
  *
  * A 3S barcode sent within the Netherlands is not there: PostNL's domestic
  * tracker on jouw.postnl.nl shows it, given the barcode, the country and the
- * delivery postcode. With a Dutch postcode, or another country's postcode
- * given with that country, that tracker is asked first.
+ * delivery postcode, as it shows a postal item from abroad PostNL delivers under
+ * its S10 number. With a Dutch postcode, or another country's postcode given
+ * with that country, that tracker is asked first.
  */
 import { recognizeFromLookup, type AdapterFactory, type TrackingContext } from '../../core/adapter/index.js';
 import { CARRIER_DEFINITIONS } from '../../core/catalog/definitions.js';
@@ -533,7 +534,7 @@ export class PostNLTracker {
     }
   }
 
-  /** The domestic tracker's answer for a 3S barcode and the country and postcode of its delivery address. */
+  /** The domestic tracker's answer for a number and the country and postcode of its delivery address. */
   private async domestic(trackingNumber: string, address: string, signal: AbortSignal, timeoutMs: number, deadline: number): Promise<CarrierResult> {
     const key = `${encodeURIComponent(trackingNumber)}-${address}`;
     let bytes: Uint8Array;
@@ -665,7 +666,7 @@ export const adapter: AdapterFactory = (environment) => {
   return {
     id: 'spring-gds',
     recordsSteps: true,
-    // The domestic tracker runs only for a 3S barcode with a postcode it can take. The
+    // The domestic tracker runs only for a 3S barcode or a valid S10 number with a postcode it can take. The
     // international visitor token and lookup are one step: both are keyless HTTP
     // on the same host, and each replays inside the step, the tracking call up to four times after a 429.
     steps: ['domestic', 'direct'],

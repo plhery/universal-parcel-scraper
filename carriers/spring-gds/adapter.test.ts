@@ -356,6 +356,12 @@ describe('official PostNL status categories', () => {
 
 describe('PostNL declared capabilities and privacy', () => {
   const delivered = parsePostNLTrackingResponse(fixture('delivered.json'), 'LX999999987NL');
+  // The domestic tracker's slot, from a synthetic reply.
+  const slotted = parsePostNLDomesticResponse({ colli: { '3SABCD123456789': {
+    barcode: '3SABCD123456789', isDelivered: false, statusPhase: { index: 3, message: 'Driver is en route' },
+    observations: [{ observationDate: '2026-05-12T08:38:33+02:00', observationCode: 'J05', description: 'Driver is en route' }],
+    eta: { type: 'Specific', start: '2026-05-12T14:30:00+02:00', end: '2026-05-12T16:30:00+02:00' },
+  } } }, '3SABCD123456789');
   const checks: Record<string, (result: CarrierResult) => boolean> = {
     history: (result) => (result.events?.length ?? 0) > 0,
     location: (result) => (result.events ?? []).some((event) => Boolean(event.location)),
@@ -422,7 +428,7 @@ describe('PostNL declared capabilities and privacy', () => {
   it.each(carrier.capabilities)('declares %s and a fixture proves it', (capability) => {
     const check = checks[capability];
     expect(check, `unknown capability ${capability}`).toBeTypeOf('function');
-    expect(check!(delivered)).toBe(true);
+    expect([delivered, slotted].some((result) => check!(result))).toBe(true);
   });
 
   it('drops the recipient and the signature', () => {
