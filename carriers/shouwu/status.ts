@@ -53,13 +53,16 @@ const PATTERNS: readonly [RegExp, Stage][] = [
 const SUB_STATUS_NAMES: ReadonlyMap<string, Stage> = new Map(Object.entries(SUB_STAGES)
   .map(([name, stage]) => [name.toLowerCase(), stage]));
 
+// FedEx can relay these scans with the depot's place and ZIP before the wording.
+const FEDEX_PLACE = /^[a-z][a-z .'-]{1,60}, [a-z]{2}, us, \d{5}(?:-\d{4})?, (picked up|arrived at fedex location|departed fedex location)$/;
+
 /**
  * A wording's stage in Shouwu's map, the wording in `normalizeStatusWording` form. On the line into
  * Italy the delivering partner is iMile, whose rows open with its centre in 【】 ("【Milan center】Received."):
  * iMile's sentences read them.
  */
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
+  return WORDINGS.get(FEDEX_PLACE.exec(wording)?.[1] ?? wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
     ?? imileRelayedStage(wording);
 }
 

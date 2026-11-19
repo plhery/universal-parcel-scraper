@@ -62,6 +62,15 @@ describe('Techlink HTTP adapter', () => {
     expect(deliveryHandoff('techlink', IN_TRANSIT, result)).toEqual({ carrier: 'poczta-polska', number: LAST_MILE, basis: 'destination' });
   });
 
+  it.each(['In transit to destination facility', 'Processing at transit facility'])(
+    'maps the transit family wording %s from the shipment history', (description) => {
+      const payload = changed((scans) => {
+        Object.assign(scans[0]!, { track_code: 'InTransit', track_sub_code: 'InTransit_Other', description });
+      });
+      const result = normalizeCarrierResult(parseTechlink(payload, IN_TRANSIT));
+      expect(result.events![0]).toMatchObject({ description, stage: 'in_transit', stage_source: 'carrier_map' });
+    });
+
   it('keeps the wall clock of a scan away from Techlink, and turns an oldest-first list round', () => {
     const abroad = changed((scans) => {
       scans.unshift({ ...scans[0], track_code: 'Delivered', track_sub_code: 'Delivered', track_name: '已签收',

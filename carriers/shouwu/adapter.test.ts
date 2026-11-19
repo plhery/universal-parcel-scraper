@@ -425,6 +425,17 @@ describe('Shouwu International HTTP adapter', () => {
 });
 
 describe('Shouwu International stored scans', () => {
+  it.each(['Picked up', 'Arrived at FedEx location', 'Departed FedEx location'])(
+    'stages the FedEx relay %s when it includes the depot', (status) => {
+      const wording = `Sampleville, CA, US, 00000, ${status}`;
+      const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+      expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({
+        description: status, stage: 'in_transit', stage_source: 'carrier_map',
+      });
+      expect(statusMapAnswer({ carrier: 'shouwu', providerCode: null, description: wording }))
+        .toEqual({ kind: 'mapped', stage: 'in_transit' });
+    });
+
   it('lets a scan abroad, stored at the instant its wall clock reads in Beijing, take over its row by wording and place', () => {
     const policy = sameInstantIdentityPolicy('shouwu', { supportsScanMatching: true });
     expect(policy).toMatchObject({ storedSources: ['shouwu'], requireProviderCode: false, matchEachScan: true,

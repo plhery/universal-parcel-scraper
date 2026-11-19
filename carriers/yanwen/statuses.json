@@ -1218,6 +1218,7 @@
       "confirmedBy": "portal",
       "firstSeen": "2026-10-08",
       "note": "Category on the identity field, labelled by the page's status filter."
-    }
+    },
+    {"wording": "Arrived at Post Office", "stage": "in_transit", "language": "en", "confirmedBy": "live"}
   ]
 }

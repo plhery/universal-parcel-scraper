@@ -23,6 +23,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['Received by carrier', 'in_transit'],
   ['Received by Final Mile Carrier', 'in_transit'],
   ['Processed in carrier facility', 'in_transit'],
+  ['Arrived at sorting hub', 'in_transit'],
+  ['In customs', 'customs'],
   ['In transit', 'in_transit'],
   ['In Transit, with carrier', 'in_transit'],
   ['In Transit, with delivery carrier', 'in_transit'],

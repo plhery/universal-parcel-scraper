@@ -56,6 +56,16 @@ describe('Take Send HTTP adapter', () => {
     expect(detectCarrierMatch(PARTNER)).toMatchObject({ carrier: 'ywe', confidence: 'high' });
   });
 
+  it.each([
+    ['Arrived at destination airport', 'in_transit'],
+    ['Custom clearance in process - import', 'customs'],
+    ['Customs clearance completed', 'in_transit'],
+    ['Next stop destination airport', 'in_transit'],
+  ] as const)('reads %s as %s in the shipment history', (description, stage) => {
+    const payload = fixture('in-transit').replace('intro="Packaged" statusname="" ', `intro="${description}" statusname="" `);
+    expect(parseTakesend(payload, NUMBER).events![0]).toMatchObject({ description, stage, stage_source: 'carrier_map' });
+  });
+
   it('falls back to the record’s status code, and names no partner for its own number', () => {
     const coded = fixture('in-transit').replace(/intro="Packaged" statusname="" /, 'intro="Synthetic note" statusname="" ')
       .replace(/transbillid="[^"]*"/, 'transbillid=""').replace(/ billid="YWE\d+"/, ` billid="${NUMBER}"`)

@@ -156,6 +156,10 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-16",
       "note": "China's export declaration done before the flight, between two departures: no customs hold."
-    }
+    },
+    {"wording": "Arrived at destination airport", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Custom clearance in process - import", "stage": "customs", "language": "en", "confirmedBy": "live"},
+    {"wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Next stop destination airport", "stage": "in_transit", "language": "en", "confirmedBy": "live"}
   ]
 }

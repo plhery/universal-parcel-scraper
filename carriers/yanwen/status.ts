@@ -117,6 +117,7 @@ const WORDING = new Map<string, ClassifiedStatus>([
   ['Cleared Customs', { status: 'in_transit', stage: 'in_transit' }],
   ['Scanned arrived at FB Canada', { status: 'in_transit', stage: 'in_transit' }],
   ['Received from Prior Carrier', { status: 'in_transit', stage: 'in_transit' }],
+  ['Arrived at Post Office', { status: 'in_transit', stage: 'in_transit' }],
   ['Arrived at Terminal Location', { status: 'in_transit', stage: 'in_transit' }],
   ['Loaded on Truck', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   // A leg into Turkey, each line a scan in plain words and the postal event it records, from the dispatch

@@ -1,5 +1,6 @@
 import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { yweMappedStage } from '../ywe/status.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 interface Entry { readonly wording: string; readonly stage: string }
@@ -13,8 +14,16 @@ const ENTRIES: readonly Entry[] = statuses.entries;
  */
 const WORDINGS: ReadonlyMap<string, Stage> = new Map(ENTRIES.map((entry) => [normalizeStatusWording(entry.wording), entry.stage as Stage]));
 
+// The line handed the parcel to a different last-mile carrier.
+const NEW_VENDOR = /^the warehouse changed the last-mile vendor due to the weight difference, the new tracking number is [a-z0-9]{4,40}$/;
+
 function mappedStage(wording: string): Stage | undefined {
-  return WORDINGS.get(normalizeStatusWording(wording));
+  const normalized = normalizeStatusWording(wording);
+  const mapped = WORDINGS.get(normalized);
+  if (mapped) return mapped;
+  if (NEW_VENDOR.test(normalized)) return 'in_transit';
+  // YWE's hub receipt after the handover. The suffix is its depot code.
+  return normalized.startsWith('parcel received by in ') ? yweMappedStage(normalized) : undefined;
 }
 
 /** A scan's stage: the map, else the shared wording rules, else nothing. */

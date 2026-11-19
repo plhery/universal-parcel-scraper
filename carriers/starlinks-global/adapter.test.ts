@@ -40,6 +40,17 @@ const atHub = () => edited((parcel) => {
 });
 
 describe('Starlinks Global HTTP adapter', () => {
+  it.each([
+    ['Arrived at sorting hub at VOORBEELD, ZUID-HOLLAND, NL, FR', 'in_transit'],
+    ['In customs at Sampleville, NL', 'customs'],
+  ] as const)('stages the partner wording %s with its place attached', (description, stage) => {
+    const payload = edited((parcel) => {
+      parcel.events[0] = { ...parcel.events[0], title: 'Sample state', description };
+    });
+    const result = parseStarlinksGlobal(payload, PARCEL);
+    expect(result.events![0]).toMatchObject({ stage, stage_source: 'carrier_map' });
+  });
+
   it('opens the tracking page at the number’s address', async () => {
     const fetcher = replying(() => html(text('delivered.html')));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };

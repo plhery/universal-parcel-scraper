@@ -474,6 +474,13 @@ describe('Yanwen result projection', () => {
     }
   });
 
+  it('reads arrival at the post office as transit', () => {
+    const wording = 'Arrived at Post Office';
+    const result = history([['2026-10-27', '17:00:03 [GMT+08]', 'EXAMPLE DEPOT', wording]]);
+    expect(result.events![0]).toMatchObject({ description: wording, stage: 'in_transit' });
+    expect(statusMap.stage(null, normalizeStatusWording(wording))).toBe('in_transit');
+  });
+
   it('files every recorded wording, code and category under its recorded stage', () => {
     for (const entry of statuses.entries) {
       if (entry.code === 'LM40') expect(yanwenStatus(entry.wording ?? '', entry.code)?.stage, entry.code).toBe(entry.stage);

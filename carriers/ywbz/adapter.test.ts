@@ -113,6 +113,36 @@ describe('YWBZ Express HTTP adapter', () => {
     expect(channel).not.toHaveProperty('delivery_carrier');
   });
 
+  it.each([
+    ['Arrived at export center', 'in_transit'],
+    ['Arrived at weighing district of warehouse', 'in_transit'],
+    ['Customs clearance completed', 'in_transit'],
+    ['Customs released from origin port', 'in_transit'],
+    ['Departed from export center', 'in_transit'],
+    ['Exports center sorting and packing', 'in_transit'],
+    ['In processing at transit facility.', 'in_transit'],
+    ['In transit to next facility.', 'in_transit'],
+    ['Item arrived at airport', 'in_transit'],
+    ['Mainland China CN Departed from Sort Facility', 'in_transit'],
+    ['Departed from Sort Facility', 'in_transit'],
+    ['Mainland China, CN, Arrived at Origin Facility', 'in_transit'],
+    ['Arrived at Origin Facility', 'in_transit'],
+    ['Parcel departed from facility.', 'in_transit'],
+    ['Parcel has been delivered.(Other secured locations)', 'delivered'],
+    ['Parcel is out for delivery.', 'out_for_delivery'],
+    ['Received by local delivery company', 'in_transit'],
+    ['Parcel received by in LAX01.', 'in_transit'],
+    ['Shipment information received', 'registered'],
+    ['The flight has departed', 'in_transit'],
+    ['The flight has landed', 'in_transit'],
+    ['The warehouse changed the last-mile vendor due to the weight difference, the new tracking number is SAMPLE', 'in_transit'],
+  ] as const)('reads %s as %s', (wording, stage) => {
+    const payload = changed((item) => {
+      item.details = [scan('2026-07-08 08:00:00', '+08:00', wording)];
+    });
+    expect(parseYwbz(payload, PARCEL).events![0]).toMatchObject({ stage, stage_source: 'carrier_map' });
+  });
+
   it('stages an unmapped wording by the shared rules, and leaves a parcel with no staged scan unknown', () => {
     const worded = parseYwbz(changed((item) => {
       item.details = [scan('2026-07-08 08:00:00', '-04:00', 'Delivered, signed by SAMPLE RECIPIENT', 'SAMPLE TOWN'),

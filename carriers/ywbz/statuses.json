@@ -4,6 +4,26 @@
     {"wording": "First Mile - Pickup", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The line collects the parcel from YWBZ's Yiwu facility for its export centre."},
     {"wording": "Handover to local carrier", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the destination's airport, before the delivering network's first scan."},
     {"wording": "The package leaves the processing center", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Leaving the line's processing centre in China."},
-    {"wording": "Accepted at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS takes the parcel over from the line after its flight; the parcel is long accepted by then."}
+    {"wording": "Accepted at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "USPS takes the parcel over from the line after its flight; the parcel is long accepted by then."},
+    {"wording": "Arrived at export center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at weighing district of warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Customs clearance completed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Customs released from origin port", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed from export center", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Exports center sorting and packing", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In processing at transit facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In transit to next facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Item arrived at airport", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Mainland China CN Departed from Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departed from Sort Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Mainland China, CN, Arrived at Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrived at Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Parcel departed from facility.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Parcel has been delivered.(Other secured locations)", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Parcel is out for delivery.", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live"},
+    {"wording": "Received by local delivery company", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Shipment information received", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"wording": "The flight has departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "The flight has landed", "stage": "in_transit", "language": "en", "confirmedBy": "live"}
   ]
 }

@@ -28,6 +28,8 @@
     {"wording": "Delivery awaiting collection", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "portal", "note": "Event title: the parcel waits at a pick-up point."},
     {"wording": "Item Available at Pick-up Point", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "portal", "note": "Text: the parcel waits at a pick-up point."},
     {"wording": "Returned to Origin", "stage": "returned", "language": "en", "confirmedBy": "portal", "note": "Event title: the parcel went back to the shipper's country."},
-    {"wording": "Shipment Returned to Origin", "stage": "returned", "language": "en", "confirmedBy": "portal", "note": "Text beside \"Returned to Origin\"."}
+    {"wording": "Shipment Returned to Origin", "stage": "returned", "language": "en", "confirmedBy": "portal", "note": "Text beside \"Returned to Origin\"."},
+    {"wording": "Arrived at sorting hub", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "In customs", "stage": "customs", "language": "en", "confirmedBy": "live"}
   ]
 }
