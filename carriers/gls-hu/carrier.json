@@ -1,0 +1,62 @@
+{
+  "id": "gls-hu",
+  "displayName": "GLS Hungary",
+  "aliases": [
+    "GLS Magyarország",
+    "GLS General Logistics Systems Hungary"
+  ],
+  "region": {
+    "countries": [
+      "HU"
+    ]
+  },
+  "brand": {
+    "color": "#ffdd00"
+  },
+  "selectable": true,
+  "timezone": "Europe/Budapest",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gls-hu",
+    "steps": [
+      "direct"
+    ],
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 240
+    }
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://gls-group.com/HU/hu/csomagkovetes/?match={trackingNumber}",
+    "searchUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "canaryUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "gls-group.com",
+        "gls-group.eu"
+      ],
+      "pathPattern": "^/HU/",
+      "params": [
+        "match",
+        "parcelNumber",
+        "matchParcelNumber"
+      ]
+    }
+  ],
+  "detection": []
+}

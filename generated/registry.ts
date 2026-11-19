@@ -299,6 +299,7 @@ import { adapter as glsCh } from '../carriers/gls-ch/adapter.js';
 import { adapter as glsDe } from '../carriers/gls-de/adapter.js';
 import { adapter as glsEs } from '../carriers/gls-es/adapter.js';
 import { adapter as glsFr } from '../carriers/gls-fr/adapter.js';
+import { adapter as glsHu } from '../carriers/gls-hu/adapter.js';
 import { adapter as glsIt } from '../carriers/gls-it/adapter.js';
 import { adapter as glsNl } from '../carriers/gls-nl/adapter.js';
 import { adapter as glsUs } from '../carriers/gls-us/adapter.js';
@@ -1125,6 +1126,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-de": glsDe,
     "gls-es": glsEs,
     "gls-fr": glsFr,
+    "gls-hu": glsHu,
     "gls-it": glsIt,
     "gls-nl": glsNl,
     "gls-us": glsUs,
@@ -2341,6 +2343,7 @@ export const REGISTRY: RegistryDefinition = {
     "gls-de": "gls-de",
     "gls-es": "gls-es",
     "gls-fr": "gls-fr",
+    "gls-hu": "gls-hu",
     "gls-it": "gls-it",
     "gls-nl": "gls-nl",
     "gls-pl": "gls-de",

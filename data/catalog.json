@@ -2195,7 +2195,7 @@
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|HU|IE|LU|NL|RO|RS|SI|SK)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|IE|LU|NL|RO|RS|SI|SK)/",
         "params": [
           "match",
           "parcelNumber",
@@ -27869,6 +27869,45 @@
         "confidence": "low"
       }
     ]
+  },
+  "gls-hu": {
+    "displayName": "GLS Hungary",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Magyarország",
+      "GLS General Logistics Systems Hungary"
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-hu",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "trackingUrlTemplate": "https://gls-group.com/HU/hu/csomagkovetes/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/HU/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-it": {
     "displayName": "GLS Italy",

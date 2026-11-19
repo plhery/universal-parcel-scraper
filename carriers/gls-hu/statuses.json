@@ -1,0 +1,10 @@
+{
+  "carrier": "gls-hu",
+  "entries": [
+    { "code": "PREADVICE", "stage": "registered", "confirmedBy": "live", "note": "Parcel data entered; the parcel is not yet with GLS." },
+    { "code": "INPICKUP", "stage": "accepted", "confirmedBy": "portal", "note": "GLS collected the parcel." },
+    { "code": "INTRANSIT", "stage": "in_transit", "confirmedBy": "portal", "note": "" },
+    { "code": "DELIVERED", "stage": "delivered", "confirmedBy": "live", "note": "" },
+    { "code": "CANCELED", "stage": "returned", "confirmedBy": "live", "note": "The collection was cancelled; reported as status 'exception', as across GLS." }
+  ]
+}

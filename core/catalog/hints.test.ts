@@ -428,7 +428,8 @@ describe('zones implied by carrier names', () => {
     expect(carrierIdFromName('Correos Chile')).toBe('correos-chile');
     // DPD Portugal took over Chronopost Portugal's network.
     expect(carrierIdFromName('Chronopost Portugal')).toBe('dpd-pt');
-    for (const name of ['GLS Hungary', 'DHL Parcel Italy', 'DPD Group']) expect(carrierIdFromName(name)).toBeUndefined();
+    expect(carrierIdFromName('GLS Hungary')).toBe('gls-hu');
+    for (const name of ['DHL Parcel Italy', 'DPD Group']) expect(carrierIdFromName(name)).toBeUndefined();
   });
 
   it('lists the zones of a bare brand only when all of its carriers keep a local clock', () => {
@@ -437,9 +438,9 @@ describe('zones implied by carrier names', () => {
     // London never shares the others' clock, so DPD's brand zone stays off whatever networks join.
     expect(new Set(brandTimeZones('DPD Group'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London', 'Europe/Dublin', 'Africa/Johannesburg', 'Europe/Brussels', 'Europe/Amsterdam', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Bucharest', 'Europe/Budapest', 'Europe/Athens', 'Asia/Hong_Kong']));
     expect(new Set(brandTimeZones('dpd'))).toEqual(new Set(['Europe/Zurich', 'Europe/Paris', 'Europe/Berlin', 'Europe/Warsaw', 'Europe/London', 'Europe/Dublin', 'Africa/Johannesburg', 'Europe/Brussels', 'Europe/Amsterdam', 'Europe/Lisbon', 'Europe/Vienna', 'Europe/Bucharest', 'Europe/Budapest', 'Europe/Athens', 'Asia/Hong_Kong']));
-    // GLS Italy, Spain, Poland, Austria and the Netherlands keep the same clock as the other networks, so GLS scans
+    // GLS Italy, Spain, Poland, Austria, Hungary and the Netherlands keep the same clock as the other networks, so GLS scans
     // keep their instants. Hermes Austria keeps Hermes Germany's clock too.
-    expect(new Set(brandTimeZones('GLS'))).toEqual(new Set(['Europe/Zurich', 'Europe/Berlin', 'Europe/Paris', 'Europe/Rome', 'Europe/Madrid', 'Europe/Warsaw', 'Europe/Vienna', 'Europe/Amsterdam']));
+    expect(new Set(brandTimeZones('GLS'))).toEqual(new Set(['Europe/Zurich', 'Europe/Berlin', 'Europe/Paris', 'Europe/Rome', 'Europe/Madrid', 'Europe/Warsaw', 'Europe/Vienna', 'Europe/Amsterdam', 'Europe/Budapest']));
     expect(brandTimeZones('Hermes')).toEqual(['Europe/Berlin', 'Europe/Vienna']);
     // DHL eCommerce is UTC, so the brand's clock is unknown.
     for (const name of ['DHL', 'DHL Group', 'DPD Local', 'DPD UK', 'Post', 'Example Parcel Co']) expect(brandTimeZones(name)).toEqual([]);

@@ -417,7 +417,11 @@ export function parseGLSSwitzerlandTrackingResponse(
   payload: unknown,
   rawTrackingNumber: string,
 ): CarrierResult {
-  const parcel = selectGLSParcel(payload, rawTrackingNumber);
+  return parseGLSParcel(selectGLSParcel(payload, rawTrackingNumber));
+}
+
+/** One parcel row of a GLS reply, once it is bound to the requested number. */
+export function parseGLSParcel(parcel: JsonObject): CarrierResult {
   if (!isRecord(parcel.progressBar)) {
     throw new SchemaError(PROVIDER, 'GLS did not return a shipment status');
   }

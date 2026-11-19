@@ -1512,6 +1512,18 @@
     "reason": "The eight-character Track ID is the GLS group's, which other GLS networks issue and their low rules suggest."
   },
   {
+    "carrier": "gls-hu",
+    "pattern": "^\\d{10}$",
+    "kind": "by_design",
+    "reason": "GLS Hungary's ten-digit national parcel numbers share their shape with DHL and other carriers' numeric numbers, and nothing in the number points to GLS Hungary."
+  },
+  {
+    "carrier": "gls-hu",
+    "pattern": "^\\d{11}$",
+    "kind": "by_design",
+    "reason": "Eleven digits are GLS's international parcel numbers, which other GLS networks track too, and GLS Hungary's national numbers written with a leading zero; neither names GLS Hungary."
+  },
+  {
     "carrier": "gls-it",
     "pattern": "^[A-Z]{2}\\d{10}$",
     "kind": "open",

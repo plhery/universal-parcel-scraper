@@ -2199,7 +2199,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "gls-group.eu",
           "gls-group.com"
         ],
-        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|HU|IE|LU|NL|RO|RS|SI|SK)/",
+        "pathPattern": "^/(?:GROUP|BE|BG|CZ|DK|FI|HR|IE|LU|NL|RO|RS|SI|SK)/",
         "params": [
           "match",
           "parcelNumber",
@@ -27873,6 +27873,45 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "gls-hu": {
+    "displayName": "GLS Hungary",
+    "color": "#ffdd00",
+    "aliases": [
+      "GLS Magyarország",
+      "GLS General Logistics Systems Hungary"
+    ],
+    "countries": [
+      "HU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Budapest",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gls-hu",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 240
+      }
+    },
+    "canaryUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "trackingUrlTemplate": "https://gls-group.com/HU/hu/csomagkovetes/?match={trackingNumber}",
+    "trackingSearchUrl": "https://gls-group.com/HU/hu/csomagkovetes/",
+    "linkRules": [
+      {
+        "domains": [
+          "gls-group.com",
+          "gls-group.eu"
+        ],
+        "pathPattern": "^/HU/",
+        "params": [
+          "match",
+          "parcelNumber",
+          "matchParcelNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "gls-it": {
     "displayName": "GLS Italy",
@@ -65771,6 +65810,7 @@ export const CARRIER_IDS = [
   "gls-at",
   "gls-ca",
   "gls-es",
+  "gls-hu",
   "gls-it",
   "gls-nl",
   "gls-pl",
@@ -67633,6 +67673,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gls-at": ["gls-at-1","gls-at-2"],
   "gls-ca": [],
   "gls-es": ["gls-es-1","gls-es-2"],
+  "gls-hu": [],
   "gls-it": ["gls-it-1","gls-it-digit-depot"],
   "gls-nl": ["gls-nl-1","gls-nl-2","gls-nl-3"],
   "gls-pl": ["gls-pl-1","gls-pl-2"],
