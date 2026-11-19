@@ -1,0 +1,65 @@
+{
+  "shipments": [
+    {
+      "provider_id": 14,
+      "custom_tracking_reference": "UAMTDR3FB",
+      "short_tracking_reference": "39L86C",
+      "status": "delivered",
+      "service_level_name": "Economy",
+      "tracking_events": [
+        {
+          "status": "delivered",
+          "date": "2026-04-10T09:52:18.882Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "out-for-delivery",
+          "date": "2026-04-10T09:52:13.236Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "out-for-delivery",
+          "date": "2026-04-10T05:54:14.92Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "collected",
+          "date": "2026-04-10T05:54:13.92Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "collection-assigned",
+          "date": "2026-04-10T05:54:11.288Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "in-transit",
+          "date": "2026-04-09T17:24:48.060966Z",
+          "parcel_id": 0,
+          "location": "Johannesburg"
+        },
+        {
+          "status": "at-hub",
+          "date": "2026-04-09T15:36:59.489535Z",
+          "parcel_id": 0,
+          "location": "Johannesburg"
+        },
+        {
+          "status": "collected",
+          "date": "2026-04-09T13:32:16.431Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "collection-assigned",
+          "date": "2026-04-09T10:09:18.477761Z",
+          "parcel_id": 0
+        },
+        {
+          "status": "submitted",
+          "date": "2026-04-09T10:09:18.462887Z",
+          "parcel_id": 0
+        }
+      ]
+    }
+  ]
+}
