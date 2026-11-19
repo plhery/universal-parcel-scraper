@@ -474,6 +474,7 @@ import { adapter as midlandTransport } from '../carriers/midland-transport/adapt
 import { adapter as mngKargo } from '../carriers/mng-kargo/adapter.js';
 import { adapter as mondialRelay } from '../carriers/mondial-relay/adapter.js';
 import { adapter as mongolInfinityPost } from '../carriers/mongol-infinity-post/adapter.js';
+import { adapter as moranTransportation } from '../carriers/moran-transportation/adapter.js';
 import { adapter as morningGlobal } from '../carriers/morning-global/adapter.js';
 import { adapter as mrlGlobal } from '../carriers/mrl-global/adapter.js';
 import { adapter as mrw } from '../carriers/mrw/adapter.js';
@@ -1297,6 +1298,7 @@ export const REGISTRY: RegistryDefinition = {
     "mng-kargo": mngKargo,
     "mondial-relay": mondialRelay,
     "mongol-infinity-post": mongolInfinityPost,
+    "moran-transportation": moranTransportation,
     "morning-global": morningGlobal,
     "mrl-global": mrlGlobal,
     "mrw": mrw,
@@ -2727,7 +2729,7 @@ export const REGISTRY: RegistryDefinition = {
     "montenegro-post": "universal",
     "moova": "universal",
     "moovin": "universal",
-    "moran-transportation": "universal",
+    "moran-transportation": "moran-transportation",
     "morning-global": "morning-global",
     "motorex": "universal",
     "mountain-movers": "universal",
