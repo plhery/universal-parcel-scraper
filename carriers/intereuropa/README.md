@@ -23,11 +23,16 @@ lookups on Intereuropa's tracker show. The Croatian site links an older form at
 
 ## Why there is no adapter
 
-The tracker on `www.intereuropa.si` shows a shipment's statuses only after a reCAPTCHA check on
-each search. The older form the Croatian site links, `orders.intereuropa.si/ietracking`, answers
-its `GetPaketInfo.aspx?Input={number}` lookup without one, but it lists only an order's piece
-barcodes, with no status, date or place, even for orders whose scans archived lookups of the
-main tracker show. So Intereuropa stays on universal providers.
+The main tracker uses two ASP.NET postbacks. The first opens reCAPTCHA; the native
+verification callback submits the second, which returns a `pageRedirect` to the tracking
+page's `code` query. The browser must keep its guest session through that continuation.
+Verification and the redirect are understood, but a current dated-history response is
+still needed to establish the adapter's parser contract.
+
+The older form linked by the Croatian site answers
+`orders.intereuropa.si/ietracking/GetPaketInfo.aspx?Input={number}` without verification.
+It lists an order's piece barcodes, with no status, date or place. It cannot replace the
+main tracker's history, so enabled universal providers remain available.
 
 ## Testing
 
