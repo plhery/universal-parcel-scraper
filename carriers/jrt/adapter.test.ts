@@ -507,6 +507,11 @@ describe('JRT tracking adapter', () => {
     expect(answer(absent)).toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(isJrtDhlRow(absent)).toBe(true);
     expect(isJrtDhlRow('The recipient could not be found at the address on the shipment.')).toBe(true);
+    // The recipient's choice of another address names it; DHL's note at the destination, on its clock there, that moves nothing.
+    const address = 'The recipient has selected a new one-time delivery address: Example Street 1, 99999 Sample';
+    expect(answer(address)).toEqual({ kind: 'mapped', stage: 'pending' });
+    expect(isJrtDhlRow(address)).toBe(true);
+    expect(isJrtDhlGermanRow(address)).toBe(false);
     expect(isJrtDhlGermanRow(absent)).toBe(false);
     // A hand-over to the delivering carrier, not a delivery.
     expect(answer('已交服务商 Delivered to service provider')).toEqual({ kind: 'mapped', stage: 'in_transit' });

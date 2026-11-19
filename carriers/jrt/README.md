@@ -45,8 +45,8 @@ browser is needed, and no portal link is published.
   the parcel goes to FedEx when FedEx's detection offers the number. DHL's collection after the
   hand-off is transit, and its rows of a
   return, the refusal included, are returned: the delivery that follows is the one back to the
-  sender. Its note of the recipient's preferred location moves nothing: the newest row that
-  moves the parcel leads it.
+  sender. Its notes of the recipient's preferred location and of another address the recipient
+  chose move nothing: the newest row that moves the parcel leads it.
 - The line into the United States ends with UPS. The tracker copies UPS's rows in Chinese, and
   they show UPS's English. They come on UPS's wall clock at the scan's place: a delivery read on
   Beijing time would fall before dawn there. Rows in UPS's words, its note that the parcel goes to

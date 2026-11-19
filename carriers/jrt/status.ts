@@ -40,6 +40,8 @@ const LOADED_FLIGHT = /^(预计配载航班)\d{1,2}月\d{1,2}日[,，] ?(expecte
 const EXPECTED_FLIGHT = /^(expected flight on )[a-z]{3,9}\.? ?\d{1,2}(?:st|nd|rd|th)$/;
 // On the line into Canada the hand-over to the delivering courier names it: "Your package has been handed over to the courier Example".
 const HANDED_TO_COURIER = /^(your package has been handed over to the courier )\S.*$/;
+// DHL's record of the recipient's choice of another address names it: "The recipient has selected a new one-time delivery address: …".
+const NEW_ADDRESS = /^(the recipient has selected a new one-time delivery address: )\S.*$/;
 
 // On the line into Mexico the booked flight is in Spanish, naming the destination and the day:
 // "Se espera que el vuelo salga hacia México el 3 de noviembre". The flight then names the destination.
@@ -73,7 +75,7 @@ export const jrtScanKey = (wording: string): string => jtMexicoKey(wording).repl
   .replace(CLEARED_FLIGHT_DAY, '$1…$2…').replace(TAKE_OFF_DAY, '$1…')
   .replace(FLIGHT_DATES, '$1…$2…').replace(LANDING_DATE, '$1…$2').replace(BOOKED_FLIGHT, '…$1').replace(ESTIMATED_DAY, '$1…')
   .replace(PORT_FLIGHT_DAY, '货物到达口岸，预计…号航班起飞').replace(EXPECTED_FLIGHT_DAY, '$1…$2')
-  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
+  .replace(SCHEDULED_FLIGHT, '$1…$2…').replace(LOADED_FLIGHT, '$1…月…日,$2…').replace(EXPECTED_FLIGHT, '$1…').replace(HANDED_TO_COURIER, '$1…').replace(NEW_ADDRESS, '$1…').replace(SPANISH_FLIGHT, '$1…$2…').replace(FLIGHT_EN_ROUTE, '$1…')
   .replace(TRANSPORTED_TO, '$1…').replace(DELAYED_FLIGHT, '$1…$2…');
 
 /**
@@ -102,8 +104,10 @@ export const isJrtUpsRow = (wording: string, place: string): boolean =>
   UPS_ROWS.has(normalizeStatusWording(wording)) || /(?:^|,)\s*US$/.test(place.trim());
 
 // DHL's English sentences, as the tracker copies them on the line into Europe: "The shipment has arrived at the parcel center.",
-// the recipient's preferred location for its delivery, and a round that found no one, or no such recipient, at the address.
-const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b|^a preferred location was designated as a reception option for this shipment\b|^the recipient (?:was not present|could not be found)\b/i;
+// the recipient's preferred location for its delivery, a round that found no one, or no such recipient, at the address,
+// and the recipient's choice of another address.
+const DHL_SENTENCE = /^the (?:international )?shipment\b|^the instruction data for this shipment\b|^a preferred location was designated as a reception option for this shipment\b|^the recipient (?:was not present|could not be found|has selected)\b/i;
+
 // DHL's rows from Germany, before the parcel leaves for the destination country: the sender's data, the transport to
 // DHL, the parcel centre of origin, the export parcel centre and the transport abroad.
 const DHL_GERMAN_ROW = /^the instruction data\b|\b(?:in transit to dhl|of origin|export parcel center|transported to the destination country)\b/i;

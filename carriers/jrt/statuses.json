@@ -1193,6 +1193,14 @@
       "note": "Copied from DHL: the recipient's preferred place for the delivery, recorded while the parcel is still on its way to DHL. It moves nothing."
     },
     {
+      "wording": "The recipient has selected a new one-time delivery address: …",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Copied from DHL at the destination, on its clock there: the recipient's choice of another address for this delivery, which the sentence names. It moves nothing."
+    },
+    {
       "wording": "分拣包裹已出库",
       "language": "zh",
       "english": "Sorted parcel has left the warehouse",
