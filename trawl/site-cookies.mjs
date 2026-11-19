@@ -4,6 +4,12 @@
 // carrier's cookies, and the session cached from it would replay them. These
 // patches give tier 2 its own context, as it already has through a proxy, and
 // keep only the cookies of the requested or final page's site.
+//
+// The pool replaces a browser after BROWSER_RECYCLE_AFTER_CONTEXTS temporary
+// contexts, a count meant for challenge solves. A replay without a proxy only
+// loads a page with cookies, so its context is left out of that count, as it was
+// while replays shared the pool's context: counted, the busiest carriers' replays
+// replaced each browser every few minutes. Memory-pressure recycling still applies.
 
 // Second-level labels under which a country's registrable domains sit (co.uk, com.au).
 const SECOND_LEVEL = new Set(['ac', 'co', 'com', 'edu', 'go', 'gob', 'gouv', 'gov', 'mil', 'ne', 'net', 'nic', 'or', 'org']);
@@ -31,6 +37,8 @@ const PATCHES = {
     ['      proxyUrl || capture.networkProxy ? openingContext : (openingPage ?? page),', '      openingContext,'],
     ['    if (proxyUrl || capture.networkProxy) {\n      const transportProxy = capture.networkProxy',
       '    {\n      const transportProxy = capture.networkProxy'],
+    ['        onCreated: handle.noteTemporaryContext,',
+      '        onCreated: proxyUrl || capture.networkProxy ? handle.noteTemporaryContext : undefined,'],
     ['    const cookies: Cookie[] = toCookies(await activeContext.cookies())',
       '    const cookies: Cookie[] = toCookies(siteCookies(await activeContext.cookies(), [url, page.url()]))'],
   ],

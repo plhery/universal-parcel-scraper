@@ -23,7 +23,11 @@ const upstream = {
       const transportProxy = capture.networkProxy
         ? await capture.networkProxy(proxyUrl)
         : proxyUrl
-      openingContext = newFreshContext(handle.browser, { proxy: transportProxy, onCreated: handle.noteTemporaryContext })
+      openingContext = newFreshContext(handle.browser, {
+        proxy: transportProxy,
+        onCreated: handle.noteTemporaryContext,
+        requestReplacement: handle.requestBrowserReplacement,
+      })
       activeContext = await openingContext
     }
     openingPage = activeContext.newPage()
@@ -94,7 +98,8 @@ test('tier 2 replays a session in its own context and returns only its site\'s c
   assert.equal(browser.contexts.length, 1);
   assert.equal(browser.contexts[0].proxy, undefined);
   assert.equal(browser.contexts[0].closed, true);
-  assert.equal(browser.noted(), 1);
+  // A replay without a proxy does not count toward the pool's browser recycling.
+  assert.equal(browser.noted(), 0);
 });
 
 test('a proxied tier 2 keeps its proxy, and the browser tiers return only the site\'s cookies', async () => {
@@ -102,6 +107,7 @@ test('a proxied tier 2 keeps its proxy, and the browser tiers return only the si
   const proxied = fakeBrowser(url);
   await runTier2Task(url, proxied.handle, session, {}, 'http://proxy.invalid:8080');
   assert.equal(proxied.contexts[0].proxy, 'http://proxy.invalid:8080');
+  assert.equal(proxied.noted(), 1);
   const browser = fakeBrowser(url);
   const result = await runBrowserTierTask(url, browser.handle);
   assert.deepEqual(result.cookies, [{ name: 'session', domain: 'tracking.carrier.example' }]);
@@ -112,6 +118,8 @@ test('the patches stop when TRAWL\'s code has moved', () => {
     /TRAWL tier2 changed/);
   assert.throws(() => isolateSiteCookies({ ...upstream, browser: upstream.browser.replace('await context.cookies()', 'await context.cookies([url])') }),
     /TRAWL browser changed/);
+  assert.throws(() => isolateSiteCookies({ ...upstream, tier2: upstream.tier2.replace('onCreated: handle.noteTemporaryContext,', 'onCreated: handle.noteContext,') }),
+    /TRAWL tier2 changed/);
 });
 
 test('a site is its registrable domain, under a country\'s second level too', () => {
