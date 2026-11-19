@@ -158,9 +158,9 @@ describe('Pactic HTTP adapter', () => {
     expect(parsePactic(booked(DPD, `https://tracking.dpd.de/parcelstatus?query=${DPD}&locale=en_HU`), DPD))
       .toMatchObject({ delivery_carrier: 'dpd-de' });
     expect(parsePactic(booked(DPD, `https://tracking.dpd.de/parcelstatus?query=${DPD}`), DPD).delivery_tracking_number).toBeUndefined();
-    // GLS's group site tracks Hungarian parcels as GLS Germany's tracker does.
+    // GLS's Hungarian path names GLS Hungary, whose national numbers only that path knows.
     expect(parsePactic(booked(GLS, `https://gls-group.eu/HU/en/parcel-tracking?match=${GLS}`), GLS))
-      .toMatchObject({ delivery_carrier: 'gls-de' });
+      .toMatchObject({ delivery_carrier: 'gls-hu' });
   });
 
   it('names the partner’s own number when the link names a waybill of the history other than the one asked', () => {
