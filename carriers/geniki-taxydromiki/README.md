@@ -45,8 +45,7 @@ tracker itself answers any text with not found.
 - The reply's coordinates are the scanning device's position, at the recipient's door for a
   delivery, so they are never read. Nor are the name of whoever received the parcel, the
   return voucher, the delivery summary or the overall status line.
-- Recognition asks the tracker and knows a voucher when it returns checkpoints. No detection
-  rule offers Geniki Taxydromiki, so recognition is not asked until one does.
+- Recognition asks the tracker and knows a voucher when it returns checkpoints.
 
 ## Links
 
