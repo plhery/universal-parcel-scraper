@@ -80,6 +80,8 @@
     {"code": "ND", "wording": "Out for delivery (On the way)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "Landmark Global's relay of the destination round."},
     {"wording": "Delivery attempt (Delivery not possible)", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "Landmark Global's relay of a round that did not deliver, without a code."},
     {"wording": "Parcel has been collected.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-14", "note": "HuaHan's transfer warehouse collecting the parcel the day after its departure from the origin facility, without a code."},
-    {"wording": "Parcel has been shipped out of the warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The same warehouse shipping the parcel out two days later, before its departure to the next facility."}
+    {"wording": "Parcel has been shipped out of the warehouse.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The same warehouse shipping the parcel out two days later, before its departure to the next facility."},
+    {"code": "ND", "wording": "The shipment is in transit to DHL.", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The parcel on its way to DHL, the delivering carrier, relayed under HuaHan's code for the destination carrier's scans."},
+    {"code": "IA", "wording": "Transferred to service provider(交仓）", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The hand-over to the service provider's warehouse (交仓), between HuaHan's facilities."}
   ]
 }

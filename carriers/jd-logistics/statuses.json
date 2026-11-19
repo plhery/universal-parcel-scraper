@@ -342,6 +342,13 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-19",
       "note": "On board a flight about to take off (…航班…起飞), after leaving a sorting center."
+    },
+    {
+      "code": "200074",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Landed: arrived at 【…】 off the flight, to be sent on to 【…】 by road (飞行任务达成，准备陆地冲刺)."
     }
   ]
 }

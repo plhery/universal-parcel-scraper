@@ -3,6 +3,7 @@
   "entries": [
     {"wording": "Registered parcel data, parcel not dispatched yet", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09"},
     {"wording": "Collection request created", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "The sender's order for the courier to collect the parcel, at the same minute as its registration: nothing has moved yet."},
+    {"wording": "Collection request dispatched to Courier", "stage": "registered", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "The collection order passed to the courier the next morning, before the collection: the parcel is still with its sender."},
     {"wording": "Parcel collected by courier", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The courier's collection. Its stage depends on the scans before it: it accepts the parcel from the sender, and after an earlier acceptance or depot scan, such as at the pickup point the sender dropped it at or in another country's network, it is a hand-over in transit."},
     {"wording": "Parcel collected", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "Seen on parcels from other DPD countries, before or after their depot scans; staged like a courier's collection."},
     {"wording": "Parcel dropped-off in pickup point", "stage": "accepted", "language": "en", "confirmedBy": "live", "firstSeen": "2026-10-09", "note": "The sender dropped the parcel off at a pickup point."},

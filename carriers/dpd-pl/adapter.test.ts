@@ -165,6 +165,18 @@ describe('DPD Poland direct tracking', () => {
     expect(noticeFirst.events?.map(event => [event.stage, event.stage_source])).toEqual([['in_transit', 'carrier_map'], ['registered', 'none']]);
   });
 
+  it('keeps a collection order passed to the courier before the collection', () => {
+    const ordered = [['2026-07-02', '07:19:17', 'Collection request dispatched to Courier', ''],
+      ['2026-07-01', '14:04:16', 'Registered parcel data, parcel not dispatched yet', ''],
+      ['2026-07-01', '14:04:15', 'Collection request created', '']] as [string, string, string, string][];
+    const waiting = parseDpdPl(history(...ordered), NUMBER);
+    expect(waiting).toMatchObject({ current_stage: 'registered', last_status_text: 'Collection request dispatched to Courier' });
+    expect(waiting.events?.map(event => [event.stage, event.stage_source])).toEqual([['registered', 'carrier_map'],
+      ['registered', 'carrier_map'], ['registered', 'carrier_map']]);
+    const collected = parseDpdPl(history(['2026-07-02', '15:00:00', 'Parcel collected by courier', 'ZZ1'], ...ordered), NUMBER);
+    expect(collected.events?.map(event => event.stage)).toEqual(['accepted', 'registered', 'registered', 'registered']);
+  });
+
   it('ends delivery at a refusal, and the history at a return, without keeping the return number', () => {
     const result = parseDpdPl(history(['2026-07-04', '10:00:00', 'Parcel return<br>Return parcel number:&nbsp;<a href="./parcelDetails?p1=9999000000003L">9999000000003L</a>', 'ZZ1'],
       ['2026-07-03', '10:00:00', 'Parcel not delivered - recipient resigned', ''], ['2026-07-02', '10:00:00', 'Parcel collected by courier', ''],

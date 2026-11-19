@@ -1141,6 +1141,70 @@
       "confirmedBy": "live",
       "firstSeen": "2026-10-31",
       "note": "17TRACK's sub-status name, which Shouwu gives as the scan's wording on a line it reads from 17TRACK: it means what 17TRACK's sub-status means. Released from customs, the parcel moves on."
+    },
+    {
+      "wording": "Awaiting Customs Clearance",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Held for the destination's import clearance."
+    },
+    {
+      "wording": "Destination country customs clearance completed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Released by the destination's customs; the parcel moves on."
+    },
+    {
+      "wording": "Arrived in transit country/region Arrive attransit country or district.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: arrival in a transit country, its description misspelt by the source."
+    },
+    {
+      "wording": "Shipment on the way Shipment on the way",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: a movement between facilities."
+    },
+    {
+      "wording": "Leaving transit country/region Parcel outbound from transit facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: the parcel leaves a transit facility."
+    },
+    {
+      "wording": "Departed from transit country/region Depart from transit country or district",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: departure from a transit country."
+    },
+    {
+      "wording": "Received by local delivery company Received by local delivery company",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A line's milestone title followed by its description, as Shouwu relays them on the line into Europe: the delivering carrier's receipt, before its round."
+    },
+    {
+      "wording": "Delivery attempt unsuccessful, Carrier note: Delivery attempt unsuccessful",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "A round that did not deliver, with the delivering carrier's note repeating it."
     }
   ]
 }

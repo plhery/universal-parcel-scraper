@@ -14,6 +14,8 @@ export const DPD_PL_SCANS: Readonly<Record<string, Stage>> = {
   'Registered parcel data, parcel not dispatched yet': 'registered',
   // The sender orders the courier's collection, with the parcel's registration: nothing has moved yet.
   'Collection request created': 'registered',
+  // The order passed to the courier who will collect the parcel: still before the collection.
+  'Collection request dispatched to Courier': 'registered',
   'Parcel dropped-off in pickup point': 'accepted',
   'Parcel received by DPD depot': 'in_transit',
   'Sent outside Poland': 'in_transit',

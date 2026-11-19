@@ -28,6 +28,9 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['import customs clearance completed', 'in_transit'],
   ['has been given to local carrier', 'in_transit'],
   ['data processed', 'in_transit'],
+  // The line to DHL, relayed under ND, and the hand-over to the service provider's warehouse (交仓), under IA.
+  ['the shipment is in transit to dhl.', 'in_transit'],
+  ['transferred to service provider(交仓）', 'in_transit'],
   ['we will pick up your parcel from the sender soon.', 'registered'],
   // CTT Express's notice of the parcel coming, relayed while HuaHan still has it in China.
   ['pendiente de recepción en ctt express', 'registered'],
