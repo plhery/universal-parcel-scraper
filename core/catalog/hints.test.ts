@@ -22,6 +22,8 @@ describe('brand networks', () => {
     expect(carrierIdFromName('Innofulfill')).toBe('shree-maruti');
     expect(carrierIdFromName('Nova Poshta Global')).toBe('nova-global');
     expect(carrierIdFromName('Nova Poshta')).toBe('nova-poshta');
+    // 17TRACK names J&T China's parcels with the country after the brand, as J&T's other networks.
+    expect(carrierIdFromName('J&T Express (CN)')).toBe('j-and-t-cn');
     // Providers name the line providers whose numbers DHLink tracks.
     expect(carrierIdFromName('XZG')).toBe('dhlink');
     expect(carrierIdFromName('QYEXP')).toBe('dhlink');

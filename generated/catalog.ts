@@ -32609,7 +32609,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "极兔速递",
       "极兔速运",
       "极兔快递",
-      "J&T 极兔速递"
+      "J&T 极兔速递",
+      "J&T Express (CN)",
+      "J&T Express CN"
     ],
     "countries": [
       "CN"
