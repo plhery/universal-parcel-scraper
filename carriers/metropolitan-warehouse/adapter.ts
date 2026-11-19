@@ -62,16 +62,28 @@ export class MetropolitanWarehouseTracker {
     ]);
   }
 
-  /** The tracker's own check: an order it holds is known, without a date. */
+  /**
+   * The tracker's own check: an order it holds is known, without a date. A
+   * number it does not hold fails the step as not found, so the recorded
+   * lookup does not read as a find.
+   */
   async recognize(raw: string, context: TrackingContext = {}): Promise<Recognition> {
     if (!accepted(() => normalizeMetropolitanWarehouseNumber(raw))) return { known: false };
     const number = normalizeMetropolitanWarehouseNumber(raw);
-    const known = await runSteps({ carrier: 'metropolitan-warehouse', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
-      recorder: this.options.recorder ?? NOOP_RECORDER }, [
-      { id: 'direct', run: ({ signal, remainingMs }) => this.knows(number, signal, firstAttemptMs(remainingMs)) },
-      networkRetryStep(({ signal, remainingMs }) => this.knows(number, signal, remainingMs)),
-    ]);
-    return known ? { known: true, lastActivityAt: null } : { known: false };
+    const check = async (signal: AbortSignal, timeoutMs: number) => {
+      if (!await this.knows(number, signal, timeoutMs)) throw new NotFoundError(PROVIDER);
+    };
+    try {
+      await runSteps({ carrier: 'metropolitan-warehouse', budgetMs: context.budgetMs ?? 15_000, signal: context.signal,
+        recorder: this.options.recorder ?? NOOP_RECORDER }, [
+        { id: 'direct', run: ({ signal, remainingMs }) => check(signal, firstAttemptMs(remainingMs)) },
+        networkRetryStep(({ signal, remainingMs }) => check(signal, remainingMs)),
+      ]);
+    } catch (error) {
+      if (error instanceof NotFoundError) return { known: false };
+      throw error;
+    }
+    return { known: true, lastActivityAt: null };
   }
 }
 

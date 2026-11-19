@@ -260,6 +260,15 @@ describe('Metropolitan Warehouse HTTP adapter', () => {
     expect(flaky).toHaveBeenCalledTimes(2);
   });
 
+  it('records a number the check does not hold as not found, not as a find', async () => {
+    const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };
+    const tracker = new MetropolitanWarehouseTracker({ fetcher: replies(json(read('unknown.json'))), recorder });
+    await expect(tracker.recognize(UNKNOWN)).resolves.toEqual({ known: false });
+    expect(recorder.step).toHaveBeenCalledTimes(1);
+    expect(recorder.step).toHaveBeenCalledWith(expect.objectContaining({ step: 'direct', outcome: 'not_found' }));
+    expect(recorder.lookup).toHaveBeenCalledWith(expect.objectContaining({ outcome: 'not_found' }));
+  });
+
   it('routes a number filed under Metropolitan to the adapter', async () => {
     const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => String(url).startsWith(METROPOLITAN_WAREHOUSE_CHECK)
       ? json(read('known.json')) : String(url).startsWith(METROPOLITAN_WAREHOUSE_LINK) ? html(PATH) : html(page('delivered')));
