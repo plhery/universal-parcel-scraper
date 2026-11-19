@@ -41,6 +41,21 @@
         ]
       },
       "note": "The archived reply of Morning Global's tracking API, captured with the tracker page's lookup of this number, shows its history from order creation in Hong Kong to out for delivery in Canada."
+    },
+    {
+      "number": "BS123456789MG",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "morning-global"
+        ]
+      },
+      "note": "Made-up number in the shape of a Morning Global parcel whose BS series its tracker answered with a history; like the BR series, its last digit is not a postal check digit."
     }
   ]
 }

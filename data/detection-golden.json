@@ -80519,6 +80519,17 @@
     ]
   },
   {
+    "input": "BS123456789MG",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "morning-global"
+    ],
+    "asked": [
+      "morning-global"
+    ]
+  },
+  {
     "input": "BSIC1064576117",
     "carrier": "ekart",
     "confidence": "high",

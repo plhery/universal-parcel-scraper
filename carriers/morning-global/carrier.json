@@ -108,7 +108,7 @@
   "detection": [
     {
       "id": "morning-global-1",
-      "pattern": "^BR\\d{9}MG$",
+      "pattern": "^B[RS]\\d{9}MG$",
       "confidence": "low"
     }
   ]
