@@ -53759,7 +53759,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:AE|EG|GH|IE|KE|KZ|MA|MU|MV|NG|PK|RE|RW|SA|TR|UG|ZA|ZM)\\d{12}T?$",
+        "pattern": "^(?:AE|CV|EG|GH|IE|KE|KZ|MA|MU|MV|NG|PK|RE|RW|SA|TR|UG|ZA|ZM)\\d{12}T?$",
         "confidence": "low"
       },
       {

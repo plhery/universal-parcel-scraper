@@ -84333,6 +84333,17 @@
     ]
   },
   {
+    "input": "CV123456789012",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "speedaf"
+    ],
+    "asked": [
+      "speedaf"
+    ]
+  },
+  {
     "input": "CV176951644IN",
     "carrier": "india-post",
     "confidence": "high",
