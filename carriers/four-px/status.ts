@@ -62,7 +62,7 @@ const WORDED = new Set(['FPX_O_IR', 'FPX_O_IRI']);
 // the shared result reads such a late registration as transit. iMile's order data in
 // Italy is "Order submited.", as iMile's own map reads it.
 const WORDING: ReadonlyMap<string, Stage> = new Map([['waybill generated', 'registered'], ['order data transmitted', 'registered'],
-  ['label creation', 'registered'], ['label created', 'registered'], ['manifest created', 'in_transit'], ['parcel arrival notified', 'registered'],
+  ['label creation', 'registered'], ['label created', 'registered'], ['shipping label created', 'registered'], ['manifest created', 'in_transit'], ['parcel arrival notified', 'registered'],
   ['shipment info received', 'registered'], ['order submited.', 'registered']]);
 const LABEL_FOR = /^waybill generated for [a-z0-9]+$|^order information has been transmitted to [a-z][a-z .-]{0,30}$/;
 // Scans a partner relays without a code, by `normalizeStatusWording` wording.

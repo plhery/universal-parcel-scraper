@@ -456,6 +456,7 @@
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
       "note": "\"Les instructions de livraison ont bien été prises en compte. Le destinataire a programmé une nouvelle livraison à son adresse pour le <day>\": the recipient booked a new day, which is read as the expected delivery while the booking is the newest recognized row."
-    }
+    },
+    {"wording": "Votre colis est disponible au retrait dans votre agence DPD", "language": "fr", "stage": "ready_for_pickup", "confirmedBy": "live"}
   ]
 }

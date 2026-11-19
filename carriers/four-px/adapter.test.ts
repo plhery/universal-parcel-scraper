@@ -26,6 +26,14 @@ function atShop() {
   return payload;
 }
 
+it('reads a partner shipping label under the wording-dependent FPX_O_IRI code', () => {
+  const wording = 'Shipping Label Created';
+  const payload = fixture();
+  const order = payload.data[0];
+  order.tracks = [{ ...order.tracks[0], tkCode: 'FPX_O_IRI', tkDesc: wording }];
+  expect(parse(payload, NUMBER).events?.[0]).toMatchObject({ stage: 'registered', stage_source: 'carrier_map' });
+});
+
 describe('4PX result projection', () => {
   it('confirms an LP reference only through matching shipment scans', async () => {
     const number = 'LP0000000000001CN';

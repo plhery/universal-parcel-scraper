@@ -22,6 +22,15 @@ const shared = (name: string) => readFileSync(new URL(`../gzyl/fixtures/${name}`
 const reply = (body: string) => new Response(body, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
+it('maps the inward mail centre automation scan as onward transit', () => {
+  const wording = 'Inward MC - Automation Acceptance';
+  const payload = JSON.parse(own('track.json'));
+  const shipment = payload[0].data[0];
+  shipment.trackDetails[0].track_content = wording;
+  expect(parseHualeiTrack(payload, NUMBER, SXW, READ_AT)?.events?.find((event) => event.description === wording))
+    .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
+});
+
 describe('SXW Express numbers', () => {
   it('takes the universal providers’ names for the forwarder', () => {
     for (const name of ['SXW', 'SXW Wuliu', 'SXW Express', '胜兴旺', '深圳胜兴旺供应链管理有限公司']) {

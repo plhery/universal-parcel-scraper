@@ -13,6 +13,7 @@ const STATUSES: Record<string, ClassifiedStatus> = {
   'in transit': { status: 'in_transit', stage: 'in_transit' },
   'in customs': { status: 'in_transit', stage: 'customs' },
   'customs cleared': { status: 'in_transit', stage: 'in_transit' },
+  'export customs clearance complete': { status: 'in_transit', stage: 'in_transit' },
   'departed origin country': { status: 'in_transit', stage: 'in_transit' },
   'arrived in country': { status: 'in_transit', stage: 'in_transit' },
   'handed to partner carrier': { status: 'in_transit', stage: 'in_transit' },

@@ -13,6 +13,12 @@ const html = readFileSync(new URL('./fixtures/international.html', import.meta.u
 const empty = readFileSync(new URL('./fixtures/not-found.html', import.meta.url), 'utf8');
 const capabilities = (JSON.parse(readFileSync(new URL('./carrier.json', import.meta.url), 'utf8')) as { capabilities: string[] }).capabilities;
 
+it('reads export clearance complete as transit', () => {
+  const wording = 'Export customs clearance complete';
+  const result = parse(html.replaceAll('Delivery Attempted', wording), NUMBER);
+  expect(result.events?.[0]).toMatchObject({ description: wording, stage: 'in_transit' });
+});
+
 describe('Evri International parser', () => {
   it('binds the shipment identity independently of the partner-alias form field', () => {
     const result = parse(html, NUMBER);

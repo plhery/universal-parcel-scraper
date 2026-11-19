@@ -117,6 +117,7 @@ export function classifyStatus(description: string): ClassifiedStatus {
     'disponible en relais',
     'disponible au relais',
     'disponible en agence',
+    'disponible au retrait dans votre agence dpd',
     'disponible en consigne',
     'attend en relais',
     'disponible au point relais',

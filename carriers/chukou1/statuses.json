@@ -65,6 +65,8 @@
     {"wording": "航空公司启运", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "China Post's scan in its feed, after the place, read as China Post's scans relayed in Chinese are."},
     {"wording": "飞机进港", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "China Post's scan in its feed, after the place, read as China Post's scans relayed in Chinese are."},
     {"wording": "到达寄达地", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "China Post's scan in its feed, after the place, read as China Post's scans relayed in Chinese are."},
-    {"wording": "到达境外经转局", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "China Post's scan in its feed, after the place, read as China Post's scans relayed in Chinese are."}
+    {"wording": "到达境外经转局", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-10-19", "note": "China Post's scan in its feed, after the place, read as China Post's scans relayed in Chinese are."},
+    {"wording": "The instruction data for this shipment have been provided by the sender to DHL electronically.", "language": "en", "stage": "registered", "confirmedBy": "live"},
+    {"wording": "The shipment is in transit to DHL", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }

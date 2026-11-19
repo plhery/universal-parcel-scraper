@@ -27,6 +27,13 @@ const json = (body: unknown) => new Response(JSON.stringify(body), { headers: { 
 const html = (body: string) => new Response(body, { headers: { 'Content-Type': 'text/html;charset=UTF-8' } });
 const environment = (fetcher: typeof fetch) => ({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
+it.each(['Clearance agency picked', 'Package picked up by last-mile carrier'])('reads the BYT handover %s as transit', (wording) => {
+  const payload = track((record) => { record.trackDetails[0]!.track_content = wording; });
+  expect(parseBytTrack(payload, NUMBER, READ_AT)?.events?.[0]).toMatchObject({
+    description: wording, stage: 'in_transit', stage_source: 'carrier_map',
+  });
+});
+
 describe('BYT numbers', () => {
   it('claims BYT and fourteen digits, and nothing shorter, longer or under another prefix', () => {
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'byt', confidence: 'high', candidates: ['byt'] });

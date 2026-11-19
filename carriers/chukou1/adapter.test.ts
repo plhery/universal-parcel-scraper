@@ -46,6 +46,18 @@ function opened(body: { securityKey: string; securityValue: string }): string {
   return Buffer.concat([decipher.update(Buffer.from(body.securityValue, 'hex')), decipher.final()]).toString('utf8');
 }
 
+it.each([
+  ['The instruction data for this shipment have been provided by the sender to DHL electronically.', 'registered'],
+  ['The shipment is in transit to DHL', 'in_transit'],
+] as const)('reads the DHL relay %s as %s', (description, stage) => {
+  const body = changed('delivered', (shipment) => {
+    shipment.supplierTrackingDetails[0]!.trackingDetails = [{ description, dateTimeString: 'Sep 21 2026 10:00 AM', viewOrder: 1 }];
+  });
+  expect(parseChukou1(body, DELIVERED).events?.find((event) => event.description === description)).toMatchObject({
+    stage, stage_source: 'carrier_map',
+  });
+});
+
 describe('Chukou1 HTTP adapter', () => {
   it('signs the number as the tracking page does, with the UTC clock to the hundredth', () => {
     const body = signChukou1Lookup(DELIVERED, INSTANT);

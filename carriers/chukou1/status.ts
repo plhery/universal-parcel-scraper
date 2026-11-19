@@ -33,6 +33,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['turned over to last mile facility', 'in_transit'], // Handed to the destination carrier.
   ['last mile ascan', 'in_transit'], // The destination carrier's first scan.
   ['arrived at post office', 'in_transit'],
+  ['the instruction data for this shipment have been provided by the sender to dhl electronically.', 'registered'],
+  ['the shipment is in transit to dhl', 'in_transit'],
   ['in transit', 'in_transit'],
   ['shipment is out for delivery', 'out_for_delivery'],
   ['wrong address', 'failed_attempt'],

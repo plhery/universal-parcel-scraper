@@ -89,6 +89,14 @@ function recordingRecorder(): { recorder: StepRecorder; steps: StepRecord[] } {
 
 afterEach(() => vi.restoreAllMocks());
 
+it('reads the depot collection notice as ready for pickup', () => {
+  const wording = 'Votre colis est disponible au retrait dans votre agence DPD';
+  const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
+    ['08/10/2026', '10:00', wording, 'Agence DPD de Exemple'],
+  ] }), TEST_TRACKING_NUMBER);
+  expect(result.events?.[0]).toMatchObject({ description: wording, stage: 'ready_for_pickup' });
+});
+
 describe('DPD France tracking input', () => {
   it('accepts the official 12-to-15-digit formats and builds the public URL', () => {
     expect(normalizeDPDFranceTrackingNumber('1059 4002 3786 11')).toBe('10594002378611');
