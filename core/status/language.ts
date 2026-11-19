@@ -864,6 +864,14 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // aggregators word it: "Item arrival at collection point for pick-up", "Receive item at collection point for pick-up (Inb)",
   // and La Poste's "Item arrived at the collection point waiting for your collect".
   if (/^(?:(?:the )?item )?(?:arrival|arrived|receive item) at (?:the )?collection point (?:for pick ?up|waiting for (?:your |the )?collect(?:ion)?)\b/.test(text)) return 'ready_for_pickup';
+  // Royal Mail's mail centre scans as providers relay them, "Inward MC - Handheld Acceptance": the mail centre (MC)
+  // taking the item in on its way, as Royal Mail reads its mail centre receipts.
+  if (/^(?:inward|outward) mc (?:[a-z]+ )?acceptance$/.test(text)) return 'in_transit';
+  // PasarEX's import steps in Spanish, as ParcelsApp relays them: the order on record with the parcel still to come
+  // ("Orden de pedido recibida - paquete no …"), then the consolidated cargo received for import and the parcel
+  // taken into a warehouse after customs ("Ingresó a bodega"; its customs warehouse, "bodega aduanera", is customs).
+  if (/^orden de (?:pedido|compra) recibida\b/.test(text)) return 'registered';
+  if (/^carga consolidada para importacion recibida$|^ingreso a (?:la )?bodega$/.test(text)) return 'in_transit';
   // A forwarder's receipt at its warehouse in the sending country, as 17TRACK relays it before the
   // parcel departs that warehouse.
   if (/^(?:package|parcel) received (?:&|and) scanned at (?:the )?carrier's domestic warehouse$/.test(text)) return 'accepted';
@@ -877,10 +885,10 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // A cross-dock transfer, a flight taking off, gone or landing, a tally in a bonded
   // warehouse, a hand-over to the last mile being prepared or to an airline, a
   // parcel bagged, unbagged or consolidated onto a master air waybill, a parcel
-  // ready for a facility's outbound dispatch or leaving a warehouse, and a
+  // ready for a facility's outbound dispatch, leaving a warehouse or shipped out of it, and a
   // forwarder's inbound scan at a facility, which may follow in brackets, move
   // the parcel on.
-  if (/\bcross ?dock(?:ed|ing)?\b|\bready for outbound\b|^(?:(?:item|parcel|package|shipment) )?inbound scan(?:ned|ning)?\b|\b(?:un)?bagg(?:ed|ing)\b|\bmaster (?:air ?way ?bill|awb)(?: (?:number|no))? (?:received|assigned|allocated)\b|\bhand ?over to (?:the |an )?(?:airline|air carrier)\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:has )?left (?:the|our) warehouse$|\b(?:flight|leg)\b[^.;]*\b(?:is taking off|took off|has taken off|has left|landed)\b|\bflight (?:take ?off|landing)\b|^(?:initial|final) landing$|\bcargo tally in the supervised warehouse\b|\bprepared for (?:the )?last[- ]mile hand ?over\b/.test(text)) return 'in_transit';
+  if (/\bcross ?dock(?:ed|ing)?\b|\bready for outbound\b|^(?:(?:item|parcel|package|shipment) )?inbound scan(?:ned|ning)?\b|\b(?:un)?bagg(?:ed|ing)\b|\bmaster (?:air ?way ?bill|awb)(?: (?:number|no))? (?:received|assigned|allocated)\b|\bhand ?over to (?:the |an )?(?:airline|air carrier)\b|^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:(?:has )?left|(?:has been |was )?shipped out of) (?:the|our) warehouse$|\b(?:flight|leg)\b[^.;]*\b(?:is taking off|took off|has taken off|has left|landed)\b|\bflight (?:take ?off|landing)\b|^(?:initial|final) landing$|\bcargo tally in the supervised warehouse\b|\bprepared for (?:the )?last[- ]mile hand ?over\b/.test(text)) return 'in_transit';
   // The airline's notice of arrival (NOA) reaching the destination agent, after the landing and
   // before clearance, as Shouwu, JRT and the ground handlers word it.
   if (/^(?:the )?noa (?:has been |was )?received$|^noa-notification of arrival\b/.test(text)) return 'in_transit';

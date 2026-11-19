@@ -1192,13 +1192,21 @@ describe('classifyWording', () => {
       ['Parcel was handed over to Pickup parcel shop', 'ready_for_pickup'], ['Takeover by Pickup parcel shop', 'ready_for_pickup'],
       ['Takeover by pickup parcel shop_shop', 'ready_for_pickup'], ['Parcel handed over to DPD at the Pickup parcel shop', 'accepted'],
       ['Has been put into storage', 'accepted'], ['Has left the warehouse', 'in_transit'],
-      ['Package left the warehouse', 'in_transit'],
+      ['Package left the warehouse', 'in_transit'], ['Parcel has been shipped out of the warehouse.', 'in_transit'],
+      // Royal Mail's mail centre receipts as providers relay them.
+      ['Inward MC - Handheld Acceptance', 'in_transit'], ['Outward MC - Mechanised Acceptance', 'in_transit'],
+      // PasarEX's import steps in Spanish as ParcelsApp relays them: the order on record, the cargo received for
+      // import and the warehouse after customs.
+      ['Orden de pedido recibida', 'registered'], ['Orden de pedido recibida - paquete no generado', 'registered'],
+      ['Carga consolidada para importación recibida', 'in_transit'], ['Ingresó a bodega', 'in_transit'],
       // A forwarder's warehouse scans before the flight, relayed by providers.
       ['Warehouse scanning bagging', 'in_transit'], ['Master Airway Bill Number Received', 'in_transit'],
       ['Master air waybill assigned', 'in_transit'], ['Unbagging', 'in_transit'],
       ['Parcel has been packed and is ready for outbound shipping', 'in_transit'],
       ['Inbound scan【ABC】', 'in_transit'], ['Inbound scan [ABC]', 'in_transit'], ['Item inbound scanning', 'in_transit'],
     ] as const) expect(classifyWording(wording, 'pending'), wording).toEqual({ stage, source: 'wording:language' });
+    // PasarEX's customs warehouse is customs, not the warehouse after it.
+    expect(wordingStage('Ingresó a bodega aduanera', 'pending')).toBe('customs');
     // A delivery window is not a sender's notice.
     expect(wordingStage('Expected from tomorrow', 'pending')).toBe('pending');
     expect(wordingStage('Expected from 9am to 11am', 'pending')).toBe('pending');
