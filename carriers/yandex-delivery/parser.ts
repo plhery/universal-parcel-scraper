@@ -63,7 +63,7 @@ export function parseYandexDeliveryPage(html: string, rawNumber: string): Carrie
   }
 
   if (titles.length !== 1) throw new SchemaError(PROVIDER, 'Yandex Delivery returned a page without the order asked about');
-  // The page echoes the number as it was asked, in "Заказ LO-835645864".
+  // The page echoes the number as it was asked, in "Заказ LO-000000000".
   const title = titles.first().text();
   const asked = /^\s*Заказ\s+(\S{1,40})\s*$/.exec(title);
   if (!asked || asked[1]!.toUpperCase() !== number) throw new SchemaError(PROVIDER, 'Yandex Delivery answered for another order');

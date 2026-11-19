@@ -218,10 +218,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
     route: /^https:\/\/cs\.estafeta\.com\/es\/Tracking\/searchByGet/,
     marker: /Código de rastreo|Número de guía|no se encontró información|Rastrear Envío/i,
     forwarding: { notFound: /Lo sentimos, no se encontró información/i } },
-  // The page looks the number up on load and clears it when Paquetexpress does not know it.
   { carrier: 'puntopost', number: 'MXZZZZZZZZZZZZ',
     route: /^https:\/\/www\.puntopost\.mx\/tracking-summary\/#MXZZZZZZZZZZZZ$/,
     marker: /Estado del pedido/, forwarding: { notFound: /No se ha encontrado ningún pedido con el código de seguimiento proporcionado/ } },
+  // The page looks the number up on load and clears it when Paquetexpress does not know it.
   { carrier: 'paquetexpress', number: '999999999999',
     route: /^https:\/\/www\.paquetexpress\.com\.mx\/rastreo\/999999999999$/,
     marker: /Oops! Wrong tracking number, please check your info and try again\./,
@@ -1521,10 +1521,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'team-global-express', number: '9900000000000',
     route: /^https:\/\/www\.myteamge\.com\/\?externalSearchQuery=9900000000000$/,
     marker: /0 shipments\s+matched|Track your shipment/i },
-  // The page answers an unknown number with a notice and an empty form.
   { carrier: 'south-post', number: '9999999',
     route: /^https:\/\/www\.southpost\.com\.ar\/#\/t\/9999999$/,
     marker: /No encontramos tu número de seguimiento/ },
+  // The page answers an unknown number with a notice and an empty form.
   { carrier: 'south-african-post-office', number: 'ZZ000000014ZA',
     route: /^https:\/\/trackingnew\.postoffice\.co\.za\/\?ParcelId=ZZ000000014ZA$/,
     marker: /Enter Parcel Number To Track|PARCEL TRACKING RESULTS/i,
@@ -1802,11 +1802,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'xlcourier', number: 'XLC00000000000',
     route: /^https:\/\/www\.xlcourier\.com\/trackOrder\?number=XLC00000000000$/,
     marker: /We couldn't find any package with the tracking number you provided|Tracking Number/ },
-  // The page checks the device, moves a desktop to its `tracking` route and renders over Blazor's
-  // connection; an unknown number gets the sentence in place of the shipment.
   { carrier: 'transportes-rapex', number: '000000000000',
     route: /^https:\/\/transportes-rapex\.pt\/pt\/tracking\?tracking=000000000000$/,
     marker: /Não encontrámos correspondências para o código de envio/ },
+  // The page checks the device, moves a desktop to its `tracking` route and renders over Blazor's
+  // connection; an unknown number gets the sentence in place of the shipment.
   { carrier: 'transaher', number: '103000000000000000000000000',
     route: /^https:\/\/clientes\.transaher\.es\/webclient\/h?tracking\/-5,0,103000000000000000000000000$/,
     marker: /No se ha encontrado la expedición indicada/i,
