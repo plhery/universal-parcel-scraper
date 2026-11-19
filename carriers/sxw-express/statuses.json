@@ -40,6 +40,7 @@
     {"wording": "Item processed at sorting facility", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Australia Post's sorting on the same line."},
     {"wording": "Onboard for delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Australia Post's delivery round on the same line, before the delivery."},
     {"wording": "Delivered - Left in a safe place", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Australia Post's delivery on the same line, left at the address."},
-    {"wording": "Outward MC - Handheld Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Royal Mail's scan at its mail centre on a line to the UK, after the departure from the sort facility: the last-mile carrier taking the parcel on, not its acceptance."}
+    {"wording": "Outward MC - Handheld Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Royal Mail's scan at its mail centre on a line to the UK, after the departure from the sort facility: the last-mile carrier taking the parcel on, not its acceptance."},
+    {"wording": "Inward MC - Handheld Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Royal Mail's scan at its inward mail centre on the same line, after its outward mail centre's: the last-mile carrier moving the parcel on, not its acceptance."}
   ]
 }
