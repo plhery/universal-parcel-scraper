@@ -5,7 +5,7 @@ import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
 // MTE Xpress tracks on Ship Logic, the portal Internet Express tracks on: the same status codes and wording.
-import { HIDDEN_CODES, internetExpressStage, internetExpressWording } from '../internet-express/status.js';
+import { HIDDEN_CODES, internetExpressStage, internetExpressWording, stageCollectionLegs } from '../internet-express/status.js';
 
 export const PROVIDER = 'MTE Xpress';
 export const PROVIDER_ID = 14;
@@ -46,11 +46,12 @@ export function parseMteXpress(payload: unknown, number: string): CarrierResult 
   const events = history.sort((a, b) => b.timestamp - a.timestamp).map(scan => scan.event);
   const summary = status(shipment.status);
   const current = HIDDEN_CODES.has(summary.code) ? status(events[0]!.provider_code) : summary;
-  const delivered = current.stage === 'delivered' ? events.find(event => event.stage === 'delivered') : undefined;
+  const stage = stageCollectionLegs(events, current.code);
+  const delivered = stage === 'delivered' ? events.find(event => event.stage === 'delivered') : undefined;
   const service = clean(shipment.service_level_name, 80);
   return {
-    status: current.stage ? languageStageStatus(current.stage) : 'unknown',
-    ...(current.stage ? { current_stage: current.stage, current_stage_source: 'carrier_map' } : {}),
+    status: stage ? languageStageStatus(stage) : 'unknown',
+    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
     ...(current.code !== events[0]!.provider_code ? { provider_code: current.code } : {}),
     last_status_text: current.description,
     last_update: events[0]!.time,

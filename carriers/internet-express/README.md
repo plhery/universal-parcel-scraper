@@ -29,6 +29,8 @@ the adapter makes the lookup that portal makes.
   remarks, is not kept.
 - Every clock carries its UTC `Z`, so scans are instants.
 - A failed collection is still `registered`: the parcel waits at the sender for the next try.
+- Once the courier has the parcel, a later collection, a delivery driver taking it from the hub,
+  reads `in_transit`: the codes are those of the sender's collection, but the parcel is moving.
 - The service level name is `service_name`. The estimate is the shipment's delivery window,
   `shipment_estimated_delivery_from` to `shipment_estimated_delivery_to`. A delivered shipment
   keeps its old window, so the estimate is dropped once the shipment is delivered, returned or

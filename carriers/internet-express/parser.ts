@@ -6,7 +6,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { HIDDEN_CODES, internetExpressStage, internetExpressWording } from './status.js';
+import { HIDDEN_CODES, internetExpressStage, internetExpressWording, stageCollectionLegs } from './status.js';
 
 export const PROVIDER = 'Internet Express';
 /** Internet Express's provider id on Ship Logic, which the portal reads from `/providers` for its own host. */
@@ -115,7 +115,7 @@ export function parseInternetExpress(payload: unknown, raw: string): CarrierResu
 
   // The portal shows the summary's status, and for a status it hides, the newest scan it shows.
   const current = HIDDEN_CODES.has(summaryCode) ? events[0]!.provider_code! : summaryCode;
-  const stage: Stage | undefined = internetExpressStage(current);
+  const stage: Stage | undefined = stageCollectionLegs(events, current);
   const newest = events[0]!;
   const delivery = stage === 'delivered' ? events.find((event) => event.stage === 'delivered') : undefined;
   const service = typeof shipment.service_level_name === 'string' ? clean(shipment.service_level_name, 80) : '';

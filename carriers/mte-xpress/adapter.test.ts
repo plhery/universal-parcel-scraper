@@ -13,6 +13,12 @@ describe('MTE Xpress', () => {
     expect(result.events).toHaveLength(10);
     expect(result.current_stage).toBe('delivered');
     expect(result.delivered_at).toBe('2026-04-10T09:52:18.882Z');
+    // The delivery driver collects the parcel at the hub after the transit scans: that leg moves it on.
+    expect(result.events!.map(event => `${event.provider_code} ${event.stage}`)).toEqual([
+      'delivered delivered', 'out-for-delivery out_for_delivery', 'out-for-delivery out_for_delivery', 'collected in_transit',
+      'collection-assigned in_transit', 'in-transit in_transit', 'at-hub in_transit', 'collected accepted',
+      'collection-assigned registered', 'submitted registered',
+    ]);
   });
 
   it('reads Ship Logic codes as Internet Express does, and leaves out the operational events the portal hides', () => {

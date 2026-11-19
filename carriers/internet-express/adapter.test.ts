@@ -84,6 +84,23 @@ describe('Internet Express HTTP adapter', () => {
     expect(unknown).not.toHaveProperty('current_stage');
   });
 
+  it('reads a later leg’s collection at the hub as transit once the courier has the parcel', () => {
+    const later = (status: string, date: string) => ({ parcel_id: 0, date, status, location: 'IE SPT' });
+    const result = parseInternetExpress(changed('in-transit', (shipment) => {
+      shipment.status = 'collected';
+      shipment.tracking_events.unshift(later('collected', '2026-04-12T05:00:01Z'), later('collection-assigned', '2026-04-12T05:00:00Z'));
+    }), IN_TRANSIT);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Collected' });
+    expect(result.events!.map((event) => event.stage))
+      .toEqual(['in_transit', 'in_transit', 'in_transit', 'accepted', 'registered', 'registered']);
+    // The first collection, from the sender, is still the acceptance.
+    const first = parseInternetExpress(changed('in-transit', (shipment) => {
+      shipment.status = 'collected';
+      shipment.tracking_events = shipment.tracking_events.filter((row) => row.status !== 'in-transit');
+    }), IN_TRANSIT);
+    expect(first).toMatchObject({ current_stage: 'accepted' });
+  });
+
   it('keeps the delivery window while the shipment is on its way, not the old one a settled shipment keeps', () => {
     expect(parseInternetExpress(fixture('in-transit'), IN_TRANSIT)).toMatchObject({
       expected_delivery_from: '2026-04-13T06:00:00Z', expected_delivery: '2026-04-14T15:00:00Z' });

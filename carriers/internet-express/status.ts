@@ -1,3 +1,4 @@
+import type { CarrierEvent } from '../../core/result/index.js';
 import type { Stage } from '../../core/status/index.js';
 import type { CarrierStatusMap } from '../../core/status/statusMap.js';
 
@@ -46,6 +47,29 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
 /** The stage a Ship Logic status code gives a scan. */
 export function internetExpressStage(code: string): Stage | undefined {
   return CODES.get(code.toLowerCase());
+}
+
+/** The collection codes, which a later leg reuses when its driver takes the parcel from a hub. */
+const COLLECTION_CODES: ReadonlySet<string> = new Set(['collection-assigned', 'collection-failed-attempt', 'collected']);
+/** Stages that say the courier already has the parcel. */
+const HELD_BY_COURIER: ReadonlySet<string> = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery', 'failed_attempt',
+  'ready_for_pickup']);
+
+/**
+ * Restages the collection codes a later leg reuses, and gives the stage of the `current` status code. Once the courier
+ * has the parcel, a driver collecting it at a hub for the delivery moves it on: the scan reads in transit, not as a
+ * parcel waiting for collection or just collected from the sender. `events` is newest first.
+ */
+export function stageCollectionLegs(events: CarrierEvent[], current: string): Stage | undefined {
+  let held = false;
+  for (let index = events.length - 1; index >= 0; index -= 1) {
+    const event = events[index]!;
+    if (held && COLLECTION_CODES.has(event.provider_code ?? '')) events[index] = { ...event, stage: 'in_transit' };
+    else if (event.stage && HELD_BY_COURIER.has(event.stage)) held = true;
+  }
+  const newest = events[0];
+  if (newest && current === newest.provider_code) return newest.stage as Stage | undefined;
+  return held && COLLECTION_CODES.has(current) ? 'in_transit' : internetExpressStage(current);
 }
 
 /** Operational events the portal leaves out of the history it shows. */
