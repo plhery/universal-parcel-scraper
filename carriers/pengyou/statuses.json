@@ -2,6 +2,7 @@
   "carrier": "pengyou",
   "entries": [
     {"wording": "Shenzhen Processing Center has received it", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The first scan in Pengyou's hands, with the city after it in brackets."},
+    {"wording": "Los Angeles Processing Center has received it", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Shenzhen's opening row at Pengyou's Los Angeles centre: the first scan in Pengyou's hands, which the sorting for the next leg follows, as in the Shenzhen script."},
     {"wording": "Parcel has been sorted and is ready to be sent", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-05", "note": "The processing centre sorting the parcel for the next leg, a day after its receipt, with the city after it in brackets."},
     {"wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The last-mile delivery, with the town after it, unbracketed, and its two-letter state or province when it gives one."},
     {"wording": "Express delivery arrives at the processing center", "language": "en", "stage": "accepted", "confirmedBy": "live", "firstSeen": "2026-11-16", "note": "The first row of the Hong Kong script, with the city after it in brackets: the processing centre receiving the parcel, as the Shenzhen script's first row reads."},
