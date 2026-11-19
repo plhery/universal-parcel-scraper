@@ -1899,7 +1899,8 @@
       "austrian-post",
       "bpost",
       "ciblex",
-      "inpost"
+      "inpost",
+      "express-one"
     ],
     "reason": "Ciblex full label barcodes share the 24-digit space with bpost, InPost and the EURODIS barcodes Austrian Post sends abroad; native recognition must establish the carrier."
   },
@@ -7163,7 +7164,8 @@
       "bpost",
       "ciblex",
       "inpost",
-      "pannon-xp"
+      "pannon-xp",
+      "express-one"
     ],
     "reason": "Pannon XP's shipment numbers are 24 digits starting 35814, which the 24-digit rules of InPost, bpost, Ciblex and Austrian Post also accept with low confidence; Pannon XP's own pages say its numbers start with 35814, so it is named with high confidence."
   },
@@ -7190,7 +7192,8 @@
       "bpost",
       "ciblex",
       "inpost",
-      "nox"
+      "nox",
+      "express-one"
     ],
     "reason": "nox's shipping barcode is 24 digits starting 22000 with a print date, which the 24-digit rules of InPost, bpost, Ciblex and Austrian Post also accept; all of them, nox included, name it with low confidence."
   },
@@ -7580,7 +7583,8 @@
       "austrian-post",
       "bpost",
       "ciblex",
-      "inpost"
+      "inpost",
+      "express-one"
     ],
     "reason": "A Tu Hora Express's long form adds 001 and the delivery postcode to its sixteen-digit number, inside the 24-digit space these carriers' low rules share; recognition must establish the carrier."
   },

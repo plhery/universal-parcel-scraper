@@ -23,7 +23,8 @@
       "retry"
     ],
     "recognition": {
-      "rank": 190
+      "rank": 190,
+      "servedCountriesOnly": true
     },
     "localClocks": true
   },
@@ -74,5 +75,11 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "express-one-1",
+      "pattern": "^\\d{24}$",
+      "confidence": "low"
+    }
+  ]
 }

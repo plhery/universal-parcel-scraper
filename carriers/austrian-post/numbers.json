@@ -230,7 +230,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number in the shape of the EURODIS barcode of a parcel Austrian Post's tracker followed abroad. Its serial sits far beyond the range in use."

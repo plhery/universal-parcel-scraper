@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs';
 import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
-import { parseTrackingInput } from '../../core/detection/index.js';
+import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
+import { detectCarrierMatch, parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { ExpressOneTracker, adapter, expressOneTrackingUrl } from './adapter.js';
@@ -164,6 +165,16 @@ describe('Express One direct tracking', () => {
   it('opens the tracker from its link', () => {
     expect(parseTrackingInput(`https://tracking.expressone.hu/?plc_number=${NUMBER}`))
       .toMatchObject({ trackingNumber: NUMBER, carrier: 'express-one', source: 'link' });
+  });
+
+  it('suggests Express One for twenty-four digits and asks it only from Hungary', () => {
+    expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: expect.arrayContaining(['express-one']) });
+    for (const number of ['10000000000000000000001', '1000000000000000000000012', '10000000000000000000000A']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('express-one');
+    }
+    expect(recognitionAskedCarriers(NUMBER, { countryHint: 'HU' })[0]).toBe('express-one');
+    expect(recognitionAskedCarriers(NUMBER, { countryHint: 'PL' })).not.toContain('express-one');
+    expect(recognitionAskedCarriers(NUMBER)).not.toContain('express-one');
   });
 
   it('asks the tracking page once, in English, with no session, and follows no redirect', async () => {

@@ -45,7 +45,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Invented full label barcode of 24 digits. Real ones end in routing digits that read as a postcode, so none are kept. Its serial sits far beyond the range in use."
@@ -65,7 +66,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Publicly reported full label barcode; the native parcel lookup accepts it unchanged. The shape remains ambiguous pending matching history."
@@ -85,7 +87,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Publicly reported full label barcode; the native parcel lookup accepts it unchanged. The shape remains ambiguous pending matching history."

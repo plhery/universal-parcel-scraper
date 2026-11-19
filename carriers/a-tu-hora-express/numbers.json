@@ -239,7 +239,8 @@
           "inpost",
           "bpost",
           "austrian-post",
-          "a-tu-hora-express"
+          "a-tu-hora-express",
+          "express-one"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this 24-digit tracking number; the carrier replied about the shipment."
@@ -265,7 +266,8 @@
           "inpost",
           "bpost",
           "austrian-post",
-          "a-tu-hora-express"
+          "a-tu-hora-express",
+          "express-one"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this 24-digit tracking number for a parcel marked delivered but not received. The carrier's tracker returns its delivered history with the postcode the number embeds."
@@ -291,7 +293,8 @@
           "inpost",
           "bpost",
           "austrian-post",
-          "a-tu-hora-express"
+          "a-tu-hora-express",
+          "express-one"
         ]
       },
       "note": "A public OCU complaint filed against A Tu Hora Express gives this 24-digit tracking number. The carrier's tracker returns its delivered history with the postcode the number embeds."

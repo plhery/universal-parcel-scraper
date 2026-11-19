@@ -23807,6 +23807,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "mode": "automatic",
       "adapter": "express-one",
       "recognitionRank": 190,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://tracking.expressone.hu/",
@@ -23823,7 +23824,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{24}$",
+        "confidence": "low"
+      }
+    ]
   },
   "express-one-bg": {
     "displayName": "Express One Bulgaria",
@@ -67489,7 +67495,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "expedico": [],
   "explus-logistics": [],
   "express-freight-ni": [],
-  "express-one": [],
+  "express-one": ["express-one-1"],
   "express-one-bg": [],
   "express-one-me": [],
   "express-ru": ["express-ru-1"],

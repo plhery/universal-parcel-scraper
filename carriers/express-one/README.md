@@ -38,9 +38,10 @@ Express One Hungary, a domestic parcel courier. Tracked through its public track
 
 Express One's tracker takes a parcel ID or barcode number, or a sender's reference or document
 number together with the sender's five-digit company code. The adapter takes parcel IDs only:
-twenty-four digits, whose last four repeat the destination postcode, so the corpus keeps none
-of them, and thirteen digits, which the tracker shows on some parcels. Both are bare digit runs
-that other carriers share, so no rule claims them and the user picks Express One.
+twenty-four digits, whose last four usually repeat the destination postcode, and thirteen
+digits, which the tracker shows on some parcels. Both are bare digit runs that other carriers
+share. `express-one-1` only suggests Express One for twenty-four digits, and recognition asks it
+only for a parcel looked up from Hungary. No rule claims thirteen digits.
 
 ## Links
 

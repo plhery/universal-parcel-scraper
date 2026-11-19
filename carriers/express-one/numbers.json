@@ -78,7 +78,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -103,7 +104,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -128,7 +130,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -153,7 +156,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -178,7 +182,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -203,7 +208,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -228,7 +234,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -253,7 +260,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -278,7 +286,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -303,7 +312,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -328,7 +338,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Looked up on Express One's own tracker, as an archived address shows; the capture was not opened. Its last four digits are a Hungarian postcode."
@@ -353,10 +364,37 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Express One's own tracker, archived by the Wayback Machine, shows its history: a parcel delivered in July 2026. Its last four digits are a Hungarian postcode."
+    },
+    {
+      "number": "671555796684000013601214",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20261015082801/https://tracking.expressone.hu/?plc_number=671555796684000013601214",
+        "date": "2026-10-15",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "ciblex",
+          "inpost",
+          "bpost",
+          "austrian-post",
+          "express-one"
+        ]
+      },
+      "note": "An archived lookup on Express One's tracker. The tracker answers it with a parcel that passed through its Budapest central hub."
     }
   ]
 }

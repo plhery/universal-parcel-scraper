@@ -36,7 +36,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Quoted in a merchant's reply. InPost's tracker returns its history; twenty-four digits stay one candidate among several."
@@ -54,7 +55,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Invented number following the 24-digit InPost format. Filed under InPost, which stays one candidate among several. Its serial sits far beyond the range in use."
@@ -73,7 +75,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Open-source project example, not a real shipment. The source attributes it to InPost, which stays one candidate among several."
@@ -163,7 +166,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Public report names this carrier. InPost's tracker returns its history."
@@ -188,7 +192,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "A parcel to an InPost point abroad that was sent back, per a public review. InPost's tracker returns its history. The anonymous ShipX feed also returns identity-bound history."
@@ -225,7 +230,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "The new number the same review gives for the parcel's return. InPost's tracker returns its history, which starts when the outbound parcel turned back. The anonymous ShipX feed also returns identity-bound history."
@@ -353,7 +359,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them. Its serial sits far beyond the range in use."
@@ -371,7 +378,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them."
@@ -389,7 +397,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them."
@@ -407,7 +416,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them."
@@ -425,7 +435,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Made-up number with the first two digits of parcels InPost's tracker answered. Detection lists InPost first for them."
@@ -451,7 +462,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "InPost's own tracking API answered for it, as an archived reply shows: a locker parcel returned to its sender."
@@ -477,7 +489,8 @@
           "inpost",
           "ciblex",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "InPost's own tracking API answered for it, as an archived reply shows: an Allegro locker parcel, delivered."

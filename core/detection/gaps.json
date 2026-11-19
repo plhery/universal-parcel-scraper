@@ -1260,12 +1260,6 @@
     "reason": "Thirteen digits are shared by several carriers and nothing in the number points to Express One."
   },
   {
-    "carrier": "express-one",
-    "pattern": "^\\d{24}$",
-    "kind": "by_design",
-    "reason": "Twenty-four digits are shared by bpost, Ciblex and InPost, and the postcode the number ends in does not single out Express One."
-  },
-  {
     "carrier": "express-one-bg",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

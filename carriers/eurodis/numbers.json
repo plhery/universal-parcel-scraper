@@ -48,7 +48,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "First collo barcode of the same sample result on EURODIS's own results page, listed under that shipment with its delivery in Spain."
@@ -73,7 +74,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "Second collo barcode of the same sample result on EURODIS's own results page, listed under that shipment with its delivery in Spain."
@@ -98,7 +100,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "A collo barcode on an archived EURODIS result page: sent from Austria and delivered in Hungary, where the page names Express One and the same number as the delivery partner's."
@@ -150,7 +153,8 @@
           "ciblex",
           "inpost",
           "bpost",
-          "austrian-post"
+          "austrian-post",
+          "express-one"
         ]
       },
       "note": "A collo barcode on an archived EURODIS result page: sent from the Netherlands to Hungary, in transit through Germany."

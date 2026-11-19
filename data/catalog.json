@@ -23803,6 +23803,7 @@
       "mode": "automatic",
       "adapter": "express-one",
       "recognitionRank": 190,
+      "recognitionServedCountriesOnly": true,
       "localClocks": true
     },
     "canaryUrl": "https://tracking.expressone.hu/",
@@ -23819,7 +23820,12 @@
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^\\d{24}$",
+        "confidence": "low"
+      }
+    ]
   },
   "express-one-bg": {
     "displayName": "Express One Bulgaria",
