@@ -16,8 +16,10 @@ The GLS group tracker that GLS Switzerland and Germany use does not know Italian
 numbers, so this adapter does not share their route.
 
 - The reply names its shipment with a space after the depot code; it must be the requested
-  number, otherwise `SchemaError`. A reply of several rows is read as the page reads it: the
-  shipment first, then its parcels.
+  number, otherwise `SchemaError`. A parcel that also has a GLS international parcel number
+  is listed under that number instead, repeated as the row's international reference; its
+  parcel number reference (`UNITNO`) must then be the requested number. A reply of several
+  rows is read as the page reads it: the shipment first, then its parcels.
 - A number the tracker does not know returns HTTP 404 with its "no results" notice, in
   English or Italian: `NotFoundError`. Any other error reply or web page is inconclusive, and
   a bot check is a challenge.
@@ -35,9 +37,9 @@ numbers, so this adapter does not share their route.
 - A redelivery the recipient books after a failed attempt is a scan in Italian only, "Consegna
   prenotata il dd/mm/yy": the parcel is on its way again, and the booked day is the estimate
   while that scan is the newest.
-- The national search only answers for shipments inside GLS Italy's network, so a timed scan
-  is read in Italian time. A scan with only a date keeps the date as a local clock, and so does
-  an hour the clocks skip in spring.
+- The national search writes every timed scan in Italian time, a depot's abroad on a parcel
+  sent on to another GLS country too, so each is read in Italian time. A scan with only a date
+  keeps the date as a local clock, and so does an hour the clocks skip in spring.
 - The weight, the consignee's town and the masked signer are kept; without the shipment's
   signature, the masked name beside the delivery stands in. The depots, the sender's town,
   the customer's reference and the departure date are never read.

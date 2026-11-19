@@ -38,6 +38,22 @@ function shipmentNumber(row: JsonObject): string {
   return typeof row.tuNo === 'string' ? returnedTrackingNumber(row.tuNo) : '';
 }
 
+/** The row's one reference of this type, as a whole identifier. */
+function reference(row: JsonObject, type: string): string {
+  const found = records(row.references).filter((entry) => entry.type === type);
+  return found.length === 1 ? returnedTrackingNumber(found[0]!.value) : '';
+}
+
+/**
+ * The national number a row is for. A parcel that also has a GLS international
+ * parcel number is listed under it, the row repeats it as its international
+ * reference, and the national number is the row's parcel number (UNITNO).
+ */
+function nationalNumber(row: JsonObject): string {
+  const listed = shipmentNumber(row);
+  return /^\d{11,12}$/.test(listed) && reference(row, 'RifInternazionale') === listed ? reference(row, 'UNITNO') : listed;
+}
+
 /** The row's own count of parcels: the first row of a several-row reply is the shipment the page shows above its parcels. */
 function isShipmentOverview(row: JsonObject): boolean {
   return records(row.infos).some((info) => info.type === 'TOTALAMOUNT');
@@ -49,17 +65,17 @@ function isShipmentOverview(row: JsonObject): boolean {
  * first, then its parcels.
  */
 function shipmentRow(rows: JsonObject[], number: string): JsonObject {
-  const matching = rows.filter((row) => shipmentNumber(row) === number);
+  const matching = rows.filter((row) => nationalNumber(row) === number);
   if (rows.length > 1 && matching[0] === rows[0] && isShipmentOverview(rows[0]!)) return rows[0]!;
   if (matching.length === 1) return matching[0]!;
   throw new SchemaError(PROVIDER, matching.length ? 'GLS Italy returned an ambiguous shipment' : 'GLS Italy returned a different shipment');
 }
 
 /**
- * A scan's clock, from its separate date and time. The national search only
- * answers for shipments inside GLS Italy's network, so a timed scan is read in
- * Italian time. A scan with only a date, and an hour the clocks skip, keep the
- * reply's digits as a local clock.
+ * A scan's clock, from its separate date and time. The national search writes
+ * every timed scan in Italian time, a depot's abroad on a parcel sent on to
+ * another GLS country too. A scan with only a date, and an hour the clocks skip,
+ * keep the reply's digits as a local clock.
  */
 function scanClock(row: JsonObject): { time: string } | { local_time: string } {
   const date = typeof row.date === 'string' ? row.date.trim() : '';

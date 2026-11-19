@@ -161,6 +161,24 @@ describe('GLS Italy direct tracking', () => {
     }
   });
 
+  it('binds a parcel listed under its GLS international number by the national number it names', () => {
+    const international = (references: { type: string; value: string }[]) => shipment((row) => {
+      row.tuNo = '90000000001';
+      row.references = references;
+    });
+    const named = [{ type: 'RifInternazionale', value: '90000000001' }, { type: 'UNITNO', value: 'ZZ 900000001' }];
+    expect(parseGLSItaly(international(named), NUMBER)).toMatchObject({ status: 'delivered' });
+    // The international number must be the row's own, and the parcel number the one asked.
+    for (const references of [
+      [named[1]!],
+      [{ type: 'RifInternazionale', value: '90000000002' }, named[1]!],
+      [named[0]!, { type: 'UNITNO', value: 'ZZ 900000002' }],
+      [...named, { type: 'UNITNO', value: 'ZZ 900000001' }],
+    ]) {
+      expect(() => parseGLSItaly(international(references), NUMBER), JSON.stringify(references)).toThrow(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
   it('validates the reply and its scans', () => {
     expect(() => parseGLSItaly({ tuStatus: [] }, NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseGLSItaly(shipment((row) => { row.history = []; }), NUMBER)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
