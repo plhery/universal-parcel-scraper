@@ -611,6 +611,22 @@
       "note": "The flight the parcel is loaded for, naming its day in both halves (\"11月11日\", \"November 11th\"); the map reads each day as an ellipsis. The flight is still to come."
     },
     {
+      "wording": "Expected flight on …",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The English half of the loaded flight's row alone, its day with the month cut short (\"Nov. 20th\"); the map reads the day as an ellipsis. The flight is still to come."
+    },
+    {
+      "wording": "Departed from Port of Origin",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "The parcel leaving the origin port after the booked flight's row."
+    },
+    {
       "wording": "航班已启运/Package in transit to destination country",
       "language": "zh",
       "stage": "in_transit",

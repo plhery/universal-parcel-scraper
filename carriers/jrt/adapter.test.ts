@@ -540,6 +540,9 @@ describe('JRT tracking adapter', () => {
     expect(jrtEnglish(null, normalizeStatusWording('落地清关中'))).toBe('Landed, customs clearance in progress');
     expect(answer('预计配载航班11月11日,Expected flight on November 11th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('预计配载航班12月2日，Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Expected flight on Nov. 20th')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Expected flight on December 2nd')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Departed from Port of Origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     // On the line into Latin America the booked flight and the flight name the destination and the day.
     expect(answer('Se espera que el vuelo salga hacia Perú el 12 de diciembre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('The flight is en route to the airport in Colombia')).toEqual({ kind: 'mapped', stage: 'in_transit' });
