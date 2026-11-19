@@ -1,0 +1,87 @@
+{
+  "errorcode": "0",
+  "errormessage": "",
+  "total": 10,
+  "results": [
+    {
+      "waybill": "10315434",
+      "event": "Consignment details captured",
+      "eventdate": "2023-05-29",
+      "eventtime": "11:33:32",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Loaded on manifest to Port Elizabeth facility",
+      "eventdate": "2023-05-29",
+      "eventtime": "20:26:42",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Loaded on manifest to Port Elizabeth facility",
+      "eventdate": "2023-05-29",
+      "eventtime": "21:36:56",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Dispatched",
+      "eventdate": "2023-05-30",
+      "eventtime": "06:03:12",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Checked in at Port Elizabeth facility",
+      "eventdate": "2023-05-30",
+      "eventtime": "17:12:55",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Loaded for delivery from Port Elizabeth facility",
+      "eventdate": "2023-05-31",
+      "eventtime": "08:28:01",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Loaded for delivery from Johannesburg facility",
+      "eventdate": "2023-05-31",
+      "eventtime": "08:32:53",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Dispatched",
+      "eventdate": "2023-05-31",
+      "eventtime": "08:33:03",
+      "eventhub": "Johannesburg",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Dispatched",
+      "eventdate": "2023-05-31",
+      "eventtime": "08:47:36",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    },
+    {
+      "waybill": "10315434",
+      "event": "Proof of delivery details captured",
+      "eventdate": "2023-05-31",
+      "eventtime": "11:44:40",
+      "eventhub": "Port Elizabeth",
+      "hidden": null
+    }
+  ]
+}

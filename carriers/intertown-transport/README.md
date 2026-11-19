@@ -1,28 +1,14 @@
 # Intertown Transport
 
-Intertown Transport parcels use enabled universal providers. There is no dedicated adapter.
+Intertown Transport (ITT) tracks its eight-digit waybills through its
+[ParcelPerfect tracker](https://intertown.pperfect.com/). Select the carrier explicitly.
 
-Intertown Transport (ITT) is a courier and road and air freight carrier based in Gqeberha, with
-branches and agents across the Eastern, Western and Southern Cape, the Garden Route, the Karoo and
-Johannesburg. Its site is intertown.co.za.
+The adapter reads the public tenant configuration and calls the tenant's waybill event service.
+Each event must repeat the whole waybill. The service returns the history oldest first, with
+facility names and local clocks. Its explicit empty event reply means no tracking record.
+The all-zero value is excluded because the service returns placeholder events for it.
 
-## Numbers
+The tracker holds the waybill in browser storage, so there is no direct link to a waybill.
 
-The public example is eight digits. Eight bare digits fit many carriers' numbers, so there is no
-rule.
-
-## Why there is no adapter
-
-Its tracker is the same ParcelPerfect app as
-[Bigfoot Express Freight's](../bigfoot-express/README.md): it keeps the searched waybill in the
-browser's storage and posts it as JSON to `trackappservice/Json/index.php` with class `Waybill` and
-method `getEventData`. No found reply has been seen.
-
-## Links
-
-The app takes the waybill in its form and keeps it in the browser, so no address opens one parcel.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `INTERTOWN_TRANSPORT_TRACKING_NUMBER` and optionally `INTERTOWN_TRANSPORT_UNKNOWN_NUMBER`
+outside the repository and run `npm run test:carriers:live -- carriers/intertown-transport`.

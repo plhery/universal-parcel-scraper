@@ -362,6 +362,7 @@ import { adapter as intelValley } from '../carriers/intel-valley/adapter.js';
 import { adapter as intelcom } from '../carriers/intelcom/adapter.js';
 import { adapter as internetExpress } from '../carriers/internet-express/adapter.js';
 import { adapter as interrapidisimo } from '../carriers/interrapidisimo/adapter.js';
+import { adapter as intertownTransport } from '../carriers/intertown-transport/adapter.js';
 import { adapter as intexPaketdienst } from '../carriers/intex-paketdienst/adapter.js';
 import { adapter as israelPost } from '../carriers/israel-post/adapter.js';
 import { adapter as jAndT } from '../carriers/j-and-t/adapter.js';
@@ -1184,6 +1185,7 @@ export const REGISTRY: RegistryDefinition = {
     "intelcom": intelcom,
     "internet-express": internetExpress,
     "interrapidisimo": interrapidisimo,
+    "intertown-transport": intertownTransport,
     "intex-paketdienst": intexPaketdienst,
     "israel-post": israelPost,
     "j-and-t": jAndT,
@@ -2461,7 +2463,7 @@ export const REGISTRY: RegistryDefinition = {
     "international-bridge": "universal",
     "internet-express": "internet-express",
     "interrapidisimo": "interrapidisimo",
-    "intertown-transport": "universal",
+    "intertown-transport": "intertown-transport",
     "intex-courier": "universal",
     "intex-paketdienst": "intex-paketdienst",
     "intigo": "universal",

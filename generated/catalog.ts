@@ -31973,7 +31973,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "intertown-transport",
+      "localClocks": true
     },
     "canaryUrl": "https://intertown.pperfect.com/",
     "trackingSearchUrl": "https://intertown.pperfect.com/",
