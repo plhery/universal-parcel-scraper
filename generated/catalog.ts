@@ -60780,7 +60780,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "velocity-express-in",
+      "localClocks": true
     },
     "canaryUrl": "https://velexp.com/home-tracking",
     "trackingUrlTemplate": "https://velexp.com/home-tracking/{trackingNumber}?type=awb",

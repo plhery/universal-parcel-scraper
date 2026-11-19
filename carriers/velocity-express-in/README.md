@@ -1,27 +1,12 @@
 # Velocity Express
 
-Velocity Express parcels use enabled universal providers. There is no dedicated adapter.
+The adapter tracks Velocity Express India's airway bills through the public `/trackAWB/`
+endpoint on velexp.com. Select the carrier explicitly. The shipment and every history row must
+repeat the airway bill. The endpoint's HTTP 404 with its matching no-data JSON means the
+shipment is unknown.
 
-Velocity Express is a courier in Pune, India. It carries domestic and international courier
-parcels and air freight. Its id ends in `-in` because couriers elsewhere share the name. Its site
-is velexp.com.
+Scans use carrier status codes, city labels and local clocks. Exact duplicate scans appear
+once. Order IDs use a separate lookup and are outside this adapter's scope.
 
-## Numbers
-
-The only public example is VIN and seven digits, from an aggregator, so there is no rule. Its
-tracker also finds shipments by order id.
-
-## Why there is no adapter
-
-Its site is a script app. `/home-tracking/<number>` reads `type`, `awb` or `order`, and on load
-asks `velexp.com/trackAWB/` or `velexp.com/trackOrderId/` for the number.
-
-## Links
-
-`velexp.com/home-tracking/<number>?type=awb` opens one shipment. With `type=order` the same
-address holds an order id, which the link rule also takes as the number.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `VELOCITY_EXPRESS_IN_TRACKING_NUMBER` and optionally `VELOCITY_EXPRESS_IN_UNKNOWN_NUMBER`
+outside the repository and run `npm run test:carriers:live -- carriers/velocity-express-in`.

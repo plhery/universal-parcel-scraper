@@ -1,0 +1,164 @@
+[
+  {
+    "Parent": [
+      {
+        "AirwayBill": "VIN0392703"
+      }
+    ],
+    "Child": [
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Delivered",
+        "Statuscode": "SPD",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "18:08:26",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Out For Delivery",
+        "Statuscode": "OFD",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "14:06:23",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "13:22:15",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "12:34:01",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Forward To Branch/ Load Departure",
+        "Statuscode": "LDP",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "12:34:01",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Shipment Misrouted",
+        "Statuscode": "SMR",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "11:15:36",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "04-Nov-2026",
+        "Statustime": "10:24:41",
+        "LocationCity": "Ahmedabad City"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "In Transit",
+        "Statuscode": "ITR",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Forward To Branch/ Load Departure",
+        "Statuscode": "LDP",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Forward To Branch/ Load Departure",
+        "Statuscode": "LDP",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Forward To Branch/ Load Departure",
+        "Statuscode": "LDP",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Forward To Branch/ Load Departure",
+        "Statuscode": "LDP",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "21:34:06",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Shipment Arrival In Origin",
+        "Statuscode": "SAO",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "17:01:40",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "PickUp Done",
+        "Statuscode": "PUD",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "17:01:40",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Out For Pickup",
+        "Statuscode": "OFP",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "12:23:18",
+        "LocationCity": "Thane"
+      },
+      {
+        "awbno": "VIN0392703",
+        "Remarks": "Data Received",
+        "Statuscode": "SPU",
+        "Statusdate": "03-Nov-2026",
+        "Statustime": "11:17:43",
+        "LocationCity": "Thane"
+      }
+    ],
+    "Error": null
+  }
+]
