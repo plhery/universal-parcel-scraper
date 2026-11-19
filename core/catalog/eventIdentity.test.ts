@@ -44,18 +44,19 @@ describe('same-instant identity policies', () => {
     expect(sameInstantIdentityPolicy('delhivery')).toBeUndefined();
   });
 
-  // A carrier giving wall clocks in no stated zone also matches a scan a better deduced zone re-dates.
+  // A carrier giving wall clocks in no stated zone also matches a scan a better deduced zone re-dates. Royal Mail's
+  // tracker answers for Parcelforce too, so either brand's rows are the same parcel's scans.
   it.each([
     ['ctt', 'UTC', { matchWallClock: true }],
     ['canada-post', 'Etc/GMT+5', { matchWallClock: true }],
-    ['royal-mail', 'Europe/London', { matchWallClock: true }],
-    ['parcelforce', 'Europe/London', {}],
+    ['royal-mail', 'Europe/London', { matchWallClock: true, storedSources: ['royal-mail', 'parcelforce'] }],
+    ['parcelforce', 'Europe/London', { storedSources: ['parcelforce', 'royal-mail'] }],
     ['la-poste', 'Europe/Paris', {}],
     ['correios-br', 'America/Sao_Paulo', { matchWallClock: true }],
     ['posta-slovenije', 'Europe/Ljubljana', { matchWallClock: true }],
-  ])('requires %s scans to retain their provider code, and lets a scan take its own offset', (source, zone, wallClock) => {
+  ])('requires %s scans to retain their provider code, and lets a scan take its own offset', (source, zone, extra) => {
     expect(sameInstantIdentityPolicy(source)).toEqual({
-      sourceCarrierId: source, storedSources: [source], requireProviderCode: true, relabelledFrom: zone, ...wallClock,
+      sourceCarrierId: source, storedSources: [source], requireProviderCode: true, relabelledFrom: zone, ...extra,
     });
   });
 

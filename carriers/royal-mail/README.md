@@ -85,7 +85,8 @@ answers are not retried. An unavailable browser fails fast.
 - The app identity policy in [identity.ts](identity.ts) lets a scan whose wall
   clock now carries another offset take over the row stored under the UK's
   label, and the reverse, by provider code and location, for Royal Mail's
-  parcels and Parcelforce's alike.
+  parcels and Parcelforce's alike. A parcel can be filed under either brand, so each brand's
+  scans take over the rows stored under the other's.
 - Markdown emphasis is removed from summary and scan wording. A scan that ends where the
   page shows its place ("Arrived at", "Due to be delivered today by") takes the place;
   without one, "at" names a Royal Mail office and "by" is dropped. The identity policy lets
