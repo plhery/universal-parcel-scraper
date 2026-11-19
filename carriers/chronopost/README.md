@@ -37,8 +37,8 @@ too, beside the DPD network's other carriers: Chronopost answers either form
 for a DPD parcel it delivers in France, and only the parcel's destination tells
 the carriers apart. Numbers from DPD France's own depots, starting 10, stay DPD
 France's. These shapes suggest a lookup, not carrier ownership.
-XN and twelve digits suggest Chronopost alone: its tracker answers that shape,
-which no public source documents.
+XN and twelve digits, and XR and thirteen, suggest Chronopost alone: its tracker
+answers those shapes, which no public source documents.
 
 Chronopost also answers for other posts' letter and parcel items that pass
 through one of its hubs, often with that single scan. La Poste delivers those

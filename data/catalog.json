@@ -1534,6 +1534,10 @@
       {
         "pattern": "^XN\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^XR\\d{13}$",
+        "confidence": "low"
       }
     ]
   },

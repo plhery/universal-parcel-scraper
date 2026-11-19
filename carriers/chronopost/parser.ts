@@ -29,9 +29,9 @@ export function normalizeChronopostNumber(raw: string): string {
   const value = raw.toUpperCase().replace(/[\s.-]/g, '');
   // A DPD parcel number, with its check character or without it as notices often
   // print it: Chronopost answers either form, echoing the number as asked. Its
-  // tracker also answers XN and twelve digits.
-  if (!/^(?:[A-Z]{2}\d{9}[A-Z]{2}|XN\d{12})$/.test(value) && dpdParcelNumber(value) === null) {
-    throw new InvalidInputError('Chronopost', 'Chronopost requires a postal-shaped identifier, an XN number or a DPD parcel number');
+  // tracker also answers XN and twelve digits, and XR and thirteen.
+  if (!/^(?:[A-Z]{2}\d{9}[A-Z]{2}|XN\d{12}|XR\d{13})$/.test(value) && dpdParcelNumber(value) === null) {
+    throw new InvalidInputError('Chronopost', 'Chronopost requires a postal-shaped identifier, an XN or XR number or a DPD parcel number');
   }
   return value;
 }

@@ -110952,6 +110952,17 @@
     ]
   },
   {
+    "input": "XR9999999999980",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "chronopost"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "XS431625991FR",
     "carrier": "la-poste",
     "confidence": "high",

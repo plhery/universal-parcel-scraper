@@ -108,6 +108,11 @@
       "id": "chronopost-xn",
       "pattern": "^XN\\d{12}$",
       "confidence": "low"
+    },
+    {
+      "id": "chronopost-xr",
+      "pattern": "^XR\\d{13}$",
+      "confidence": "low"
     }
   ]
 }

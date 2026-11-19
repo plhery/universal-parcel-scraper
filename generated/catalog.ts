@@ -1538,6 +1538,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^XN\\d{12}$",
         "confidence": "low"
+      },
+      {
+        "pattern": "^XR\\d{13}$",
+        "confidence": "low"
       }
     ]
   },
@@ -66951,7 +66955,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mondial-relay": ["mondial-relay-1","mondial-relay-2","mondial-relay-3","mondial-relay-4"],
   "relais-colis": ["relais-colis-1","relais-colis-2","relais-colis-3"],
   "la-poste": ["la-poste-1","la-poste-4","la-poste-5","la-poste-6","la-poste-7","la-poste-2","la-poste-3"],
-  "chronopost": ["chronopost-1","chronopost-own-suffix","chronopost-2","chronopost-5","chronopost-3","chronopost-4","chronopost-xn"],
+  "chronopost": ["chronopost-1","chronopost-own-suffix","chronopost-2","chronopost-5","chronopost-3","chronopost-4","chronopost-xn","chronopost-xr"],
   "gls-fr": ["gls-fr-1","gls-fr-2","gls-fr-3","gls-fr-4"],
   "colis-prive": ["colis-prive-1","colis-prive-2"],
   "geodis": ["geodis-1"],
