@@ -51,6 +51,8 @@ const CREDENTIAL_MESSAGE = 'Mondial Relay tracking requires a 26-digit label bar
 // Portugal's postcodes: four digits, then three. Mondial Relay holds them as 1234-567.
 const PORTUGUESE_POSTCODE = /^(\d{4})[ -]?(\d{3})$/;
 const PORTUGUESE_MESSAGE = 'Mondial Relay finds a parcel for Portugal only by its whole seven-digit postcode (1234-567)';
+// The website's error for a shipment number it does not issue.
+const INVALID_SHIPMENT = /^Le num[ée]ro d['’]exp[ée]dition est invalide\b/i;
 
 interface MondialRelayCredential {
   shipment: string;
@@ -311,10 +313,13 @@ export function parseMondialRelayTrackingResponse(
 function parseTrackingResponse(payload: unknown, credential: MondialRelayCredential): CarrierResult {
   if (!isRecord(payload)) throw new SchemaError('Mondial Relay');
   if (!isRecord(payload.Expedition)) {
-    const warning = Array.isArray(payload.status)
-      && payload.status.some((entry) => isRecord(entry) && cleanScalar(entry.state, 32) === 'warn');
+    const statuses = Array.isArray(payload.status) ? payload.status.filter(isRecord) : [];
+    const warning = statuses.some((entry) => cleanScalar(entry.state, 32) === 'warn');
     // The provider echoes the query in that warning; only the fact is kept.
     if (warning || Array.isArray(payload.FiltresRecherche)) throw new NotFoundError('Mondial Relay');
+    if (statuses.some((entry) => cleanScalar(entry.state, 32) === 'error' && INVALID_SHIPMENT.test(plainText(entry.message)))) {
+      throw new InvalidInputError('Mondial Relay', 'Mondial Relay says the shipment number is invalid', { reason: 'wrong_number' });
+    }
     throw new SchemaError('Mondial Relay', 'Mondial Relay returned incomplete tracking details');
   }
 

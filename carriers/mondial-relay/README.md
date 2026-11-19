@@ -64,7 +64,8 @@ at once with a `ChallengeError`. Lookups are serialized per adapter instance
 (`singleFlight`) so the token and the API call stay on one browser identity. Errors: warning
 reply → `NotFoundError`; no token → `ChallengeError`; 8-digit shipment without
 a postcode, or with only the first four digits of a Portuguese one →
-`InputRequiredError`; malformed number → `InvalidInputError`; a reply for another
+`InputRequiredError`; malformed number, or the website's "Le numéro d'expédition est
+invalide" error for a number it does not issue → `InvalidInputError`; a reply for another
 shipment → `SchemaError`.
 
 ## Notes

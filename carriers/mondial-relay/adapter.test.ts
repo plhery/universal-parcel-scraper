@@ -402,6 +402,12 @@ describe('Mondial Relay response normalization', () => {
 
     expect(() => parseMondialRelayTrackingResponse({ status: [] }, PUBLIC_CREDENTIAL))
       .toThrow('incomplete tracking details');
+    // The website's error for a number it does not issue refuses the number; any other error stays a changed reply.
+    expect(() => parseMondialRelayTrackingResponse({ status: [{ state: 'error', message: 'Le numéro d\'expédition est invalide' }] }, PUBLIC_CREDENTIAL))
+      .toThrow(expect.objectContaining({ kind: 'invalid_input', reason: 'wrong_number' }));
+    for (const status of [[{ state: 'error', message: 'Une erreur est survenue' }], [{ state: 'info', message: 'Le numéro d\'expédition est invalide' }]]) {
+      expect(() => parseMondialRelayTrackingResponse({ status }, PUBLIC_CREDENTIAL)).toThrow('incomplete tracking details');
+    }
     expect(() => parseMondialRelayTrackingResponse(
       syntheticSuccessFixture('17185967'),
       PUBLIC_CREDENTIAL,
