@@ -451,6 +451,11 @@ describe('JS Express tracking adapter', () => {
     // The places are dropped only from a wording that opens with one; the sentence itself must match.
     expect(jsExpressMappedStage('Die Sendung ist bei【Sample HUB】 angekommen.')).toBeUndefined();
     expect(jsExpressMappedStage('【Sample District】Die Sendung wurde umgeleitet.')).toBeUndefined();
+    // Its return to a hub, named in square brackets, under the return code: the parcel goes back.
+    expect(jsExpressStage('Ihre Sendung ist zu [Sample HUB] zurückgekehrt.', 'DRS')).toEqual({ stage: 'exception', source: 'carrier_map' });
+    expect(statusMapAnswer({ carrier: 'js-express', providerCode: 'DRS', description: 'Ihre Sendung ist zu [Other HUB] zurückgekehrt.' }))
+      .toEqual({ kind: 'mapped', stage: 'exception' });
+    expect(jsExpressMappedStage('Ihre Sendung ist zu Sample HUB zurückgekehrt.')).toBeUndefined();
   });
 
   it("dates J&T Express Germany's rows by the offset they state, and other rows as before", () => {

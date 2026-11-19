@@ -48,9 +48,13 @@ const BRACKETED = /【[^】]*】/g;
 const bracketedStage = (normalized: string): Stage | undefined =>
   normalized.startsWith('【') ? WORDINGS.stage(normalized.replace(BRACKETED, '【】')) : undefined;
 
+// Its return to a hub after the parcel left it for the delivering depot names the hub in square brackets:
+// "Ihre Sendung ist zu [Beispiel HUB] zurückgekehrt.".
+const RETURNED_TO = /^(ihre sendung ist zu )\[[^\]]*\]( zurückgekehrt\.?)$/;
+
 // iMile's scans as its destination courier, which open with the centre's name in 【】, take iMile's reading.
 const mappedStage = (normalized: string): Stage | undefined =>
-  WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1')) ?? bracketedStage(normalized)
+  WORDINGS.stage(normalized.replace(WAYBILL_REFERENCE, '$1').replace(RETURNED_TO, '$1[]$2')) ?? bracketedStage(normalized)
     ?? (FORWARDED.test(normalized) ? 'in_transit' : undefined)
     ?? uspsSentenceStage(normalized)
     ?? chinaPostRelayedStage(normalized)
