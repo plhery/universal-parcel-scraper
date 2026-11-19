@@ -4,6 +4,7 @@ import { fastRecaptchaAudio } from '/app/packages/tiers/src/utils/recaptcha-audi
 import { logTierFailures } from '/app/apps/api/src/tier-failure-log.mjs';
 import { trawlLicense } from '/app/packages/tiers/src/utils/license.mjs';
 import { fedexBrowserPool } from '/app/packages/tiers/src/utils/fedex-session.mjs';
+import { isolateSiteCookies } from '/app/packages/tiers/src/utils/site-cookies.mjs';
 
 // Every caller of the reCAPTCHA solver stops once Google blocks or refuses its audio.
 const solverPath = '/app/packages/tiers/src/solvers/recaptcha.ts';
@@ -166,6 +167,11 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
       .replace(beforeSolve, 'await pageCapture.prepare?.(budget.remaining())\n    '
         + `const solveRemaining = Math.max(0, budget.remaining() - ${reserveMs})`));
 }
+
+// Each call replays its session in its own context and returns only its site's cookies.
+const sitePaths = { tier2: '/app/packages/tiers/src/tiers/2.ts', browser: '/app/packages/tiers/src/tiers/browser.ts' };
+const siteSources = isolateSiteCookies(Object.fromEntries(Object.entries(sitePaths).map(([file, path]) => [file, readFileSync(path, 'utf8')])));
+for (const [file, path] of Object.entries(sitePaths)) writeFileSync(path, siteSources[file]);
 
 // The client classifies an HTTP-only failure by the page's own status and
 // headers, which TRAWL leaves out of its attempt history.

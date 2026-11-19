@@ -194,6 +194,10 @@ tracking button. It keeps the query that carries those digits as `phoneLast4`, m
 
 Redis is optional. It stores cookies, user agents and the audio pause deadline with a TTL, not tracking history, and a
 cached session that fails falls back to a fresh browser. Do not expose Redis.
+A cached session replays in its own fresh context rather than the pool's shared one, and every
+tier returns and caches only the cookies of the requested or final page's site, so one carrier's
+call never carries another site's cookies. The [patch](site-cookies.mjs) stops the build when
+TRAWL's code it changes moves.
 Keeping a browser session does not make an application CAPTCHA token reusable;
 the site can require fresh verification for each action.
 
