@@ -134,9 +134,9 @@ const ALTERNATIVE_NUMBER = new RegExp(String.raw`^\s+(?:${ALTERNATIVE_WORDS})\s+
 // A date, day or year first: "12.11.2026", "2026-11-12".
 const DATE = /^(?:\d{1,2}([./-])\d{1,2}\1\d{2,4}|\d{4}([./-])\d{1,2}\2\d{1,2})$/;
 // A year that a month and day follow, which Chinese and Japanese text prints with no space
-// after it: "2026年11月12日", "2026/11/12发货".
+// after it: "2026/11/12发货". A year marked 年 is a year whatever follows it: "2026年11月".
 const YEAR_OF_DATE = /^\d{4}([./-])\d{1,2}\1\d{1,2}(?!\d)/;
-const CJK_DATE = /^(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/;
+const MARKED_YEAR = /^\d{4}\s*年/;
 // A phone number in the French and Belgian layout: a 0, then two-digit groups printed apart.
 const PHONE = /^0\d(?:[ .-]\d{2}){4}$/;
 
@@ -187,9 +187,8 @@ export function keywordNumberInText(raw: string): string | undefined {
     // A date printed in groups or with slashes, which end the token, or a year a month and day follow is no number either.
     const after = raw.slice(start);
     const datePrefix = YEAR_OF_DATE.exec(after)?.[0] ?? '';
-    const cjk = CJK_DATE.exec(after);
     if (!claimed && (isDateToken(groups.join('.')) || isDateToken(/^\S*/.exec(after)![0]) || isDateToken(datePrefix)
-      || (cjk && calendarDay(Number(cjk[1]), Number(cjk[2]), Number(cjk[3]))))) continue;
+      || MARKED_YEAR.test(after))) continue;
     if (!claimed && PHONE.test(groups.join(' ').replace(/[.-]+$/, ''))) return undefined;
     const grouped = groups.length > 1 && groups.every((group) => group.length <= 6) && joins.at(-1)!.length >= 8
       ? joins.at(-1) : undefined;

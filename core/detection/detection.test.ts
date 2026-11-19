@@ -757,7 +757,7 @@ describe('the detection engine', () => {
 
   it('reads no year a month and day follow, and goes on to a later label', () => {
     // Chinese text prints the date right after its label, with no space.
-    for (const text of ['您的运单2026年11月12日已发货', '运单2026/11/12发货', '运单 2026 年 11 月 12 日']) {
+    for (const text of ['您的运单2026年11月12日已发货', '运单2026/11/12发货', '运单 2026 年 11 月 12 日', '运单号 2026年11月发货']) {
       expect(keywordNumberInText(text), text).toBeUndefined();
     }
     // Synthetic numbers.
