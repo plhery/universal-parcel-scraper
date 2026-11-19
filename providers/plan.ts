@@ -63,6 +63,15 @@ export function orderUniversalSources(eligible: readonly Source[], tiers: Partia
 const CARRIERS: ReadonlySet<string> = new Set(CARRIER_IDS.filter((carrier) => carrier !== 'unknown'));
 
 /**
+ * Whether a carrier's number is the token of the link that opens the parcel (`tracking.linkToken`),
+ * as an Amazon order's: it means nothing to a provider, so none is asked about it.
+ */
+export function numberIsLinkToken(carrier: string | null | undefined): boolean {
+  return !!carrier && Object.hasOwn(CARRIER_CATALOG, carrier)
+    && CARRIER_CATALOG[carrier as CarrierId].tracking.linkToken === true;
+}
+
+/**
  * The providers to ask for a number, ordered by the coverage evidence of the
  * first of `carriers` that has some (the carrier the lookup is for, then the one
  * confirmed or discovered for the number), otherwise in the default order.
@@ -72,15 +81,6 @@ const CARRIERS: ReadonlySet<string> = new Set(CARRIER_IDS.filter((carrier) => ca
  * evidence shows its history, and about any number no carrier is named for,
  * where it is often the only provider with the parcel.
  */
-/**
- * Whether a carrier's number is the token of the link that opens the parcel (`tracking.linkToken`),
- * as an Amazon order's: it means nothing to a provider, so none is asked about it.
- */
-export function numberIsLinkToken(carrier: string | null | undefined): boolean {
-  return !!carrier && Object.hasOwn(CARRIER_CATALOG, carrier)
-    && CARRIER_CATALOG[carrier as CarrierId].tracking.linkToken === true;
-}
-
 export function universalPlan(options: {
   carriers?: ReadonlyArray<string | null | undefined>;
   trackingNumber?: string;
