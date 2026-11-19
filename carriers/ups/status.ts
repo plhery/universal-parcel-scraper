@@ -95,10 +95,10 @@ const ACTIVITY_STAGES: ReadonlyMap<string, Stage> = new Map<string, Stage>([
   ['DJ', 'in_transit'], ['RY', 'in_transit'], ['8Y', 'in_transit'], ['C5', 'in_transit'], ['3C', 'in_transit'],
   // Address corrections, redirects and receiver requests, including a
   // delivery to an access point that is still pending or only confirmed, and
-  // one to the receiver's address instead of the access point, and the receiver's request for another day. A missort UPS
-  // has rerouted (34) goes on too.
+  // one to the receiver's address instead of the access point, the receiver's request for another day, and the parcel
+  // held in the network until that day. A missort UPS has rerouted (34) goes on too.
   ['AL', 'in_transit'], ['HM', 'in_transit'], ['34', 'in_transit'], ['H6', 'in_transit'], ['TB', 'in_transit'], ['VM', 'in_transit'],
-  ['O1', 'in_transit'],
+  ['O1', 'in_transit'], ['MF', 'in_transit'],
   ['ZA', 'in_transit'], ['ZB', 'in_transit'], ['ZC', 'in_transit'],
   // Ground Saver's hand-off to the post office: moving there, transferred, and
   // received by it.
