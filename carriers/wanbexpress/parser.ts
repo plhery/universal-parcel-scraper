@@ -47,14 +47,19 @@ export function normalizeWanbLookup(raw: string): string {
  * (UTC+8), and WanbExpress dates them as if that wall clock were the row's own zone, its
  * `TimeZone` (10 in Melbourne): such a copy comes `TimeZone` − 8 hours early. On a parcel
  * whose courier number is J&T Australia's, a partner's row in one of J&T's sentences is read
- * back on the China clock; every other row keeps the instant WanbExpress states.
+ * back on the China clock. J&T's scans carry seconds; the rows WanbExpress's agents enter in
+ * Australia, the flight, customs and handover rows, are stamped to the whole minute, even the
+ * handover in J&T's pickup sentence, which J&T's own reply does not list. Those, and every
+ * other row, keep the instant WanbExpress states.
  */
 function scanTime(row: Record<string, unknown>, content: string, jAndTAu: boolean): string | undefined {
   const time = explicitOffsetTime(row.Time)?.iso;
   const zone = row.TimeZone;
   if (!time || !jAndTAu || row.Source !== 'Supplier' || typeof zone !== 'number' || !Number.isInteger(zone) || zone === 8
     || zone < -12 || zone > 14 || !jAndTAuMappedStage(content.replace(/[\s,.]+$/u, ''))) return time;
-  return DateTime.fromISO(time, { setZone: true }).plus({ hours: zone - 8 }).toUTC().toISO({ suppressMilliseconds: true }) ?? undefined;
+  const instant = DateTime.fromISO(time, { setZone: true });
+  if (instant.second === 0 && instant.millisecond === 0) return time;
+  return instant.plus({ hours: zone - 8 }).toUTC().toISO({ suppressMilliseconds: true }) ?? undefined;
 }
 
 const CURRENT: Readonly<Record<string, Stage>> = { Delivered: 'delivered', InTransit: 'in_transit', OutForDelivery: 'out_for_delivery' };
