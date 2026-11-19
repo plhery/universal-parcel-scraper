@@ -1314,6 +1314,13 @@ describe('Total Express AWBs with a shop\'s own letters', () => {
       expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('total-express');
     }
   });
+
+  it("claims Amazon's AMZB and AMZC AWBs, which no other carrier issues", () => {
+    for (const number of ['AMZB123456789TX', 'AMZC123456789TX']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'total-express', confidence: 'high' });
+    }
+    expect(detectCarrierMatch('AMZD123456789TX')).toMatchObject({ carrier: 'unknown', confidence: 'low', candidates: ['total-express'] });
+  });
 });
 
 describe('Röhlig Logistics and 17TRACK names of European carriers', () => {

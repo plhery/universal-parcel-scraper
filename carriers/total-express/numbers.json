@@ -157,6 +157,18 @@
         ]
       },
       "note": "Made-up number in the layout of parcels with a shop's own four letters whose history Total Express's tracker returned; its digits pass the AWB check digit Senior's warehouse software documents."
+    },
+    {
+      "number": "AMZC123456789TX",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-19",
+      "expect": {
+        "carrier": "total-express",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the layout of Amazon parcels with AMZC whose history Total Express's tracker returned; like AMZB, its digits carry no check digit."
     }
   ]
 }

@@ -98,7 +98,7 @@
   "detection": [
     {
       "id": "total-express-awb",
-      "pattern": "^(?:TX[A-Z]{2}|AMZB)\\d{9}TX$",
+      "pattern": "^(?:TX[A-Z]{2}|AMZ[BC])\\d{9}TX$",
       "confidence": "high"
     },
     {

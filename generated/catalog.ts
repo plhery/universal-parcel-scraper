@@ -57836,7 +57836,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^(?:TX[A-Z]{2}|AMZB)\\d{9}TX$",
+        "pattern": "^(?:TX[A-Z]{2}|AMZ[BC])\\d{9}TX$",
         "confidence": "high"
       },
       {
