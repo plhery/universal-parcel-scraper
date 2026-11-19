@@ -656,7 +656,9 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
     throw new SchemaError('DPD', 'DPD did not return the requested parcel');
   }
   const events: CarrierEvent[] = [];
-  // Bind each timeline to the nearest enclosing panel that identifies a parcel.
+  // Bind each timeline to the nearest enclosing panel that identifies a parcel, and refuse one
+  // that does not name the requested parcel. The panel may also name a sibling parcel of the
+  // shipment or a reference of the same shape, so other numbers beside it do not unbind it.
   const panelNumbers = new Map<AnyNode, Set<string>>();
   for (const element of $('li.content-item-track, .parcelStatus, .gray-out').toArray()) {
     let panel = $(element).parent();
@@ -671,7 +673,7 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
         panelNumbers.set(panel[0], numbers);
       }
       if (numbers.size) {
-        bound = numbers.size === 1 && numbers.has(trackingNumber);
+        bound = numbers.has(trackingNumber);
         break;
       }
       panel = panel.parent();

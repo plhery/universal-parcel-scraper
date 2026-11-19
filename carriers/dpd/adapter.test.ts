@@ -733,6 +733,12 @@ describe('DPD scan times', () => {
     expect(() => parseDPDTrackingHtml(page, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
   });
 
+  it('binds a panel naming the requested parcel beside a sibling parcel', () => {
+    const page = `<section><h2>Parcel ${TRACKING_NUMBER}</h2><p>Parcel 2 of 2: ${'2'.repeat(14)}</p>
+      <li class="content-item-track"><span class="entry-body">Delivered</span></li></section>`;
+    expect(parseDPDTrackingHtml(page, TRACKING_NUMBER).events).toHaveLength(1);
+  });
+
   it('requires an identifier outside recent searches to bind the timeline', () => {
     const page = `<nav>Recent searches: ${TRACKING_NUMBER}</nav><main>
       <li class="content-item-track"><span class="entry-body">Delivered</span></li></main>`;
