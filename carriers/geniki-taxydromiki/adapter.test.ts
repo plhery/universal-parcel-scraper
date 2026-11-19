@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
+import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
@@ -134,6 +135,11 @@ describe('Geniki Taxydromiki checkpoints', () => {
     // The error codes that report an attempted delivery.
     expect(statusMap.stage('C_EA_AS', 'attempted delivery - absent recipient')).toBe('failed_attempt');
     expect(statusMap.stage('C_EA_KS', 'attempted delivery - delivery rescheduled')).toBe('failed_attempt');
+    // The delivery put off at the service point with no courier run before it keeps the stage before it.
+    expect(statusMap.stage('C_EA_DP', 'attempted delivery - delivery in 2-3 days')).toBeUndefined();
+    expect(statusMap.gaps).toContainEqual(expect.objectContaining({ code: 'C_EA_DP' }));
+    expect(statusMapAnswer({ carrier: 'geniki-taxydromiki', providerCode: 'C_EA_DP', description: 'Attempted Delivery - Delivery in 2-3 days' }))
+      .toMatchObject({ kind: 'intentional_gap' });
     const statuses = JSON.parse(readFileSync(new URL('./statuses.json', import.meta.url), 'utf8')).entries as { code: string; stage?: string }[];
     for (const entry of statuses) expect(genikiStage(entry.code), entry.code).toBe(entry.stage);
   });

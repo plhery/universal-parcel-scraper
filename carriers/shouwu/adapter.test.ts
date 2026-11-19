@@ -74,6 +74,25 @@ it.each([
   });
 });
 
+// Synthetic Chinese labels after La Poste's sentences, as Shouwu relays them.
+it.each([
+  ['FR, Votre envoi est en cours de traitement sur le site de tri local.,运输中', 'in_transit'],
+  ['FR, Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.,派送中', 'out_for_delivery'],
+  ['FR, Votre envoi a été distribué dans la boîte à lettres.,已签收', 'delivered'],
+  ['FR, Votre envoi a été distribué dans la boîte à lettres.', 'delivered'],
+] as const)('reads the French sentence Shouwu relays in %s', (wording, stage) => {
+  const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+  expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({
+    description: wording, stage, stage_source: 'carrier_map',
+  });
+});
+
+it('leaves a relayed sentence the map has not seen to the shared wording rules', () => {
+  const wording = 'FR, Votre envoi est en attente de dédouanement.,运输中';
+  const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+  expect(parseShouwu(payload, DELIVERED).events?.[0]?.stage_source).not.toBe('carrier_map');
+});
+
 describe('Shouwu International HTTP adapter', () => {
   it('asks the tracking page’s lookup for the whole number through the supplied transport', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(text('delivered')));

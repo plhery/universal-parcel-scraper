@@ -105,6 +105,15 @@
       "note": "Recorded at the service point the parcel returned to after a failed attempt, with the delivery put off."
     },
     {
+      "code": "C_EA_DP",
+      "wording": "Attempted Delivery - Delivery in 2-3 days",
+      "language": "en",
+      "unmapped": true,
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-19",
+      "note": "Recorded at the service point right after the parcel arrived there, with no courier run before it: the delivery is put off two or three days. The tracking page files it with the attempts, but no attempt is shown, so it keeps the stage before it."
+    },
+    {
       "code": "C_W2",
       "wording": "Shipment Delivered",
       "language": "en",

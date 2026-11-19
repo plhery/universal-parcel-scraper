@@ -10,8 +10,12 @@ const WORDINGS = statusWordings(statuses.entries);
  * own, or the English the adapter shows for it. A row's kind code decides nothing.
  */
 export function sxwStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording);
+  return WORDINGS.stage(wording) ?? (ARRIVAL_NOTICE.test(wording) ? 'in_transit' : undefined);
 }
+
+// The partner's notice that a flight brought the parcel, naming the airports or carriers by their codes:
+// "XXX-Notification of arrival from XXX". The map holds it as "…-Notification of arrival from …".
+const ARRIVAL_NOTICE = /^[a-z0-9]{2,4}-notification of arrival from [a-z0-9]{2,4}$/;
 
 /** The English the adapter shows for a row the platform words only in Chinese, by its `normalizeStatusWording` wording. */
 export const sxwEnglish = (_code: string | null, wording: string): string | undefined => WORDINGS.english(wording);

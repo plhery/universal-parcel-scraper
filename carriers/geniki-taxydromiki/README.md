@@ -32,7 +32,8 @@ tracker itself answers any text with not found.
 - Checkpoints are mapped by code in [status.ts](status.ts). The wordings come from live
   replies; C_SC and C_S2 are named only by the tracking page's own code, which files them as
   a customer's voucher and a delivery. Two of the page's error codes (`C_EA_*`) report an
-  attempted delivery. Its other error codes, cancellations and in-progress codes have no
+  attempted delivery. C_EA_DP, "Delivery in 2-3 days", comes at the service point with no courier run
+  before it, so it keeps the stage before it rather than reading as an attempt. Its other error codes, cancellations and in-progress codes have no
   settled meaning, keep no stage and fall to the shared wording rules.
 - C_KK, a service point registering a shipment it was handed, can follow the parcel's
   departure scan. The page shows it as the collection by Geniki, so it is accepted, not

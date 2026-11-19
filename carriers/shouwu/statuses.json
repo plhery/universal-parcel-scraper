@@ -1222,6 +1222,9 @@
     {"wording": "Arrived at Post Office", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Arrived at USPS facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
     {"wording": "Departed USPS facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
-    {"wording": "In transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"wording": "In transit to next facility", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Votre envoi est en cours de traitement sur le site de tri local.", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "note": "La Poste's sort at the local sorting site, which Shouwu gives after the country's code and before its Chinese label."},
+    {"wording": "Votre envoi est sur son site de distribution. Nous le préparons pour le mettre en livraison.", "language": "fr", "stage": "out_for_delivery", "confirmedBy": "live", "note": "La Poste's sort into the delivery round, as Colissimo's map reads it; relayed like the sort above."},
+    {"wording": "Votre envoi a été distribué dans la boîte à lettres.", "language": "fr", "stage": "delivered", "confirmedBy": "live", "note": "Delivered to the letterbox; relayed like the sort above."}
   ]
 }

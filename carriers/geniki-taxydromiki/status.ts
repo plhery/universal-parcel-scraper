@@ -43,11 +43,16 @@ export function genikiStage(code: string): Stage | undefined {
 
 /**
  * What the map says about one scan. Every scan carries its code, so wording
- * alone gets nothing. The page's other error codes (C_EA_*), cancellations (C_E2,
+ * alone gets nothing. C_EA_DP, "Attempted Delivery - Delivery in 2-3 days", keeps
+ * the stage before it. The page's other error codes (C_EA_*), cancellations (C_E2,
  * C_L2, C_K9, C_P4, C_S5, C_S8) and the other codes it counts as in progress
  * have no wording any source settles, so they stay unknown, open for review.
  */
 export const statusMap: CarrierStatusMap = {
   stage: code => (code ? genikiStage(code) : undefined),
-  gaps: [],
+  gaps: [{
+    code: 'C_EA_DP',
+    note: 'Filed with the attempts, but recorded at the service point with no courier run before it: the delivery is '
+      + 'put off two or three days, as on a route that serves an area on set days. It keeps the stage before it.',
+  }],
 };

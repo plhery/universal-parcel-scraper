@@ -44,6 +44,13 @@
     {"wording": "Delivered - Left in a safe place", "language": "en", "stage": "delivered", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Australia Post's delivery on the same line, left at the address."},
     {"wording": "Outward MC - Handheld Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-18", "note": "Royal Mail's scan at its mail centre on a line to the UK, after the departure from the sort facility: the last-mile carrier taking the parcel on, not its acceptance."},
     {"wording": "Inward MC - Handheld Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-19", "note": "Royal Mail's scan at its inward mail centre on the same line, after its outward mail centre's: the last-mile carrier moving the parcel on, not its acceptance."},
-    {"wording": "Inward MC - Automation Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
+    {"wording": "Inward MC - Automation Acceptance", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Item Flight departure", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Initial landing", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The first leg's flight landed at its transfer airport."},
+    {"wording": "Connecting flights flight takeoff", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Item Flight landing", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "…-Notification of arrival from …", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The destination's notice of the flight's arrival; the two codes name the airports or carriers."},
+    {"wording": "The goods have been picked up abroad", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The partner abroad collected the goods from the arrival flight before import customs, as at the cargo terminal; not the collection from the sender."},
+    {"wording": "Released From Import Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"}
   ]
 }
