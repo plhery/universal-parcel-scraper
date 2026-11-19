@@ -6,9 +6,11 @@ tracking page asks.
 ## How it works
 
 `dao.as/find-din-pakke/` asks `GET https://dao.as/wp-json/dao-wp/v1/track-parcel?barcode={number}&lang=EN`
-for the parcel. The page sends its WordPress nonce, which the service does not need without a
-session cookie, and no CAPTCHA token; the adapter sends neither. A request that fails to reach DAO
-is sent once more within the budget.
+for the parcel. The page sends its WordPress nonce and a Cloudflare Turnstile token, one token per
+request, from an invisible widget. The service refuses a request without the token with HTTP 403
+and `dao_bot_check_failed`, which the adapter reads as a challenge: it sends neither, so every
+lookup is challenged until a browser route gets the token. A request that fails to reach DAO is
+sent once more within the budget.
 
 A number the service does not know, including a malformed one, comes back as `{"found":false}`,
 so it is not found. A known parcel without scans, which older numbers return, has no history. The
