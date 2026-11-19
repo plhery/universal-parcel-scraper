@@ -218,8 +218,15 @@
         "reportedRole": "reported_shipment"
       },
       "expect": {
-        "carrier": "ctt-express",
-        "confidence": "high"
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tipsa",
+          "austrian-post",
+          "ctt-express",
+          "usps",
+          "estafeta"
+        ]
       },
       "note": "Called an order number by the poster; CTT Express's tracker returns its history."
     },

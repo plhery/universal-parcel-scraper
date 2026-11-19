@@ -3083,12 +3083,12 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": [
       {
-        "pattern": "^00001000\\d{14}$",
-        "confidence": "low"
+        "pattern": "^00\\d{4}00(?:0002|0207|0301|0421|0506|0604|0720|0721|0722|0818|0829|0868|0899|0908|0912|1000|1055|1060|1094|1095|1103|1124|1129|1130|1132|1214|1306|1315|1415|1423|1514|1522|1534|1605|1721|1820|1834|1903|2002|2005|2101|2209|2315|2411|2412|2530|2611|2712|2903|3008|3010|3029|3102|3115|3202|3326|3405|3501|3510|3513|3515|3516|3631|3633|3708|3802|3808|3911|4000|4005|4024|4030|4034|4037|4047|4050|4053|4101|4202|4304|4332|4407|4521|4522|4638|4653|4700|4707|4815|4907|5004|6001|6002|6003|6005|6008|6009|6010|6011|6012|6013|6017|6021|6022|6023|6024|6025|6026|6027|6030|6031|6032|6033|6034|7932|7933|8053|8280|8290|8291|9000|9141|9168)\\d{10}$",
+        "confidence": "high"
       },
       {
         "pattern": "^00\\d{4}00\\d{14}$",
-        "confidence": "high"
+        "confidence": "low"
       },
       {
         "pattern": "^00\\d{4}00\\d{14}001$",
@@ -66976,7 +66976,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mrw": ["mrw-1","mrw-2"],
   "nacex": ["nacex-1"],
   "ctt": ["ctt-1"],
-  "ctt-express": ["ctt-express-3","ctt-express-1","ctt-express-2"],
+  "ctt-express": ["ctt-express-1","ctt-express-3","ctt-express-2"],
   "poste-italiane": ["poste-italiane-1","poste-italiane-2","poste-italiane-plate","poste-italiane-3","poste-italiane-posta1","poste-italiane-4","poste-italiane-delivery-web","poste-italiane-delivery-europe","poste-italiane-international-express","poste-italiane-own","poste-italiane-s10","poste-italiane-deliverybox","poste-italiane-sda-domestic","poste-italiane-promopacco","poste-italiane-d","poste-italiane-gf","poste-italiane-registered"],
   "brt": ["brt-1","brt-shipment-number","brt-parcel-id","brt-customer-parcel-id"],
   "ecoscooting": ["ecoscooting-postcode-label","ecoscooting-postcode","ecoscooting-1","ecoscooting-2","ecoscooting-without-cn","ecoscooting-shein-package"],

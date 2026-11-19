@@ -19,9 +19,12 @@ read normally, so it is not read again at once; the parcel reads on a later poll
 exception uses a fixed description to keep recipient details out of diagnostics. A body that is not JSON and a request that
 fails to reach the service are read once more. A number with no shipment gets HTTP 200 with an empty body, which the
 tracking page reads as a shipment it has not located; two empty reads in a row are not found.
-Every code in CTT Express's agency list starts with `00`, so detection claims a reference only when
-both its agency codes do. TIPSA numbers share the agency, agency, waybill layout. A reference starting
-`000010` stays ambiguous between the two and any other selects CTT Express.
+Every code in CTT Express's [agency list](https://transfer.cttexpress.com/IT/export/integra/CANALREC.csv)
+starts with `00`, so detection offers it a reference only when both its agency codes do. TIPSA
+numbers share the agency, agency, counter layout, and TIPSA's agencies in provinces 01 to 09 start
+with `00` too. Detection selects CTT Express when the origin agency, the second code, is in that
+list, and otherwise offers both carriers for recognition to settle; an agency added to the list
+since it was copied into the rule is offered that way too.
 
 ## Notes
 

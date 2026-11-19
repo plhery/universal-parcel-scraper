@@ -50,9 +50,10 @@ Links to tip-sa.com's home page and its `datos`, `datos_env` and
 
 - Ten-digit waybills can't be looked up without their agency codes, so detection does not offer
   TIPSA for them and recognition asks it only about 22-digit references.
-- References of the `000010` account stay ambiguous with CTT Express, and recognition
-  asks TIPSA first. Any other reference starting `00` matches CTT Express's
-  high-confidence rule and is filed there until a universal provider names TIPSA.
+- TIPSA's agency codes are a zero and a postcode, so a reference from provinces 01 to 09, or
+  from the `000010` account, has CTT Express's layout. Detection selects CTT Express when the
+  origin agency is in CTT Express's published list; otherwise it offers both, and recognition
+  asks TIPSA first.
 - An expired history and an unknown reference get the same not-located page.
 
 ## Testing

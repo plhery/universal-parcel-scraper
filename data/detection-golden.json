@@ -1645,9 +1645,21 @@
   },
   {
     "input": "0030180030183005437999",
-    "carrier": "ctt-express",
-    "confidence": "high",
+    "carrier": "unknown",
+    "confidence": "low",
     "candidates": [
+      "tipsa",
+      "austrian-post",
+      "ctt-express",
+      "usps",
+      "estafeta"
+    ],
+    "preferred": [
+      "tipsa"
+    ],
+    "asked": [
+      "tipsa",
+      "austrian-post",
       "ctt-express"
     ]
   },
@@ -4101,6 +4113,26 @@
     "asked": [
       "swiss-post-cargo",
       "nz-post"
+    ]
+  },
+  {
+    "input": "0087650087651234567890",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tipsa",
+      "austrian-post",
+      "ctt-express",
+      "usps",
+      "estafeta"
+    ],
+    "preferred": [
+      "tipsa"
+    ],
+    "asked": [
+      "tipsa",
+      "austrian-post",
+      "ctt-express"
     ]
   },
   {
