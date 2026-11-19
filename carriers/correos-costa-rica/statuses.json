@@ -35,6 +35,60 @@
       "language": "es",
       "confirmedBy": "source",
       "note": "Held at the postal customs office for the addressee to collect. ParcelsApp's list."
+    },
+    {
+      "wording": "Tu envío ha sido recibido en nuestra sucursal.",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío fue entregado con éxito.",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Entrega no concretada. Tu envío presentó una situación que impidió completar la entrega en este momento. Te recomendamos consultar futuras actualizaciones en nuestra sección de rastreo para conocer el avance del proceso.",
+      "stage": "failed_attempt",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío está en nuestro centro de distribución, donde se clasifica y se prepara para su traslado hacia la región de destino.",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío ha sido admitido en Correos de Costa Rica.",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío está disponible para retiro en nuestra sucursal.",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío se encuentra en proceso de devolución.",
+      "stage": "returned",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío está siendo trasladado a otra oficina de Correos dentro del país para continuar el recorrido hacia su destino final. Este evento aparecerá cada vez que hacemos un traslado interno.",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Tu envío está en ruta de entrega. Recordá presentar tu identificación.",
+      "stage": "out_for_delivery",
+      "language": "es",
+      "confirmedBy": "live"
     }
   ]
 }

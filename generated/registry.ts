@@ -136,6 +136,7 @@ import { adapter as correoArgentino } from '../carriers/correo-argentino/adapter
 import { adapter as correoUruguayo } from '../carriers/correo-uruguayo/adapter.js';
 import { adapter as correosBolivia } from '../carriers/correos-bolivia/adapter.js';
 import { adapter as correosChile } from '../carriers/correos-chile/adapter.js';
+import { adapter as correosCostaRica } from '../carriers/correos-costa-rica/adapter.js';
 import { adapter as correosCuba } from '../carriers/correos-cuba/adapter.js';
 import { adapter as correosDeMexico } from '../carriers/correos-de-mexico/adapter.js';
 import { adapter as correosElSalvador } from '../carriers/correos-el-salvador/adapter.js';
@@ -963,6 +964,7 @@ export const REGISTRY: RegistryDefinition = {
     "correo-uruguayo": correoUruguayo,
     "correos-bolivia": correosBolivia,
     "correos-chile": correosChile,
+    "correos-costa-rica": correosCostaRica,
     "correos-cuba": correosCuba,
     "correos-de-mexico": correosDeMexico,
     "correos-el-salvador": correosElSalvador,
@@ -1989,7 +1991,7 @@ export const REGISTRY: RegistryDefinition = {
     "correo-uruguayo": "correo-uruguayo",
     "correos-bolivia": "correos-bolivia",
     "correos-chile": "correos-chile",
-    "correos-costa-rica": "universal",
+    "correos-costa-rica": "correos-costa-rica",
     "correos-cuba": "correos-cuba",
     "correos-de-mexico": "correos-de-mexico",
     "correos-ecuador": "universal",

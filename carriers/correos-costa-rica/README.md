@@ -1,27 +1,21 @@
 # Correos de Costa Rica
 
-Correos de Costa Rica parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the public [Sucursal Virtual tracker](https://sucursal.correos.go.cr/web/rastreo)
+through TRAWL. The official form creates its guest session, completes reCAPTCHA and submits
+its own CSRF token. No account, phone digits or recipient input is used.
 
-Correos de Costa Rica S.A. is the national post of Costa Rica. Pymexpress is its domestic
-parcel service for businesses.
+The browser capture binds the whole submitted reference to the POST and its redirect back
+to the result document. Only the matching shipment number and movement rows leave the
+context. Signer details, form fields, cookies and verification values are discarded.
 
-## Numbers
-
-Its items carry UPU S10 numbers ending in CR, and its tracker also follows items from abroad
-under the sending post's number. Generic postal detection handles both, so no carrier rule
-claims the layout: a rule would name a post that recognition cannot ask.
-
-## Links
-
-The tracker at correos.go.cr frames a form on sucursal.correos.go.cr, which posts the number
-with a reCAPTCHA answer, so no address opens one parcel.
-
-## Why there is no adapter
-
-The form's server refuses a search without the CAPTCHA, and a bot manager guards the host.
-The Pymexpress web service needs a business account.
+Native minute clocks remain local wall clocks. The tracker supplies no offset. Its explicit
+unregistered-shipment notice is distinct from verification failures and incomplete results.
+Enabled universal providers remain available when the browser cannot finish verification.
+The adapter is used for filed parcels; it adds no issuer rule or recognition probe.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+CORREOS_COSTA_RICA_TRACKING_NUMBER=... CORREOS_COSTA_RICA_UNKNOWN_NUMBER=... \
+FLARESOLVERR_URL=... npm run test:carriers:live -- carriers/correos-costa-rica/adapter.live.test.ts
+```

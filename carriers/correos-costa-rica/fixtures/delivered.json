@@ -1,0 +1,16 @@
+{
+  "kind": "history",
+  "number": "RR123456785CR",
+  "events": [
+    {
+      "clock": "04/03/26  12:05 PM",
+      "location": "SUCURSAL ESCAZU",
+      "description": "Tu envío fue entregado con éxito."
+    },
+    {
+      "clock": "03/03/26  12:01 AM",
+      "location": "SUCURSAL ESCAZU",
+      "description": "Tu envío ha sido admitido en Correos de Costa Rica."
+    }
+  ]
+}

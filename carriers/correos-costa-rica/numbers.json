@@ -1,5 +1,24 @@
 {
   "carrier": "correos-costa-rica",
-  "gap": "no public sample found yet: the tracker asks for a CAPTCHA, and the one label found in a partner guide fails the S10 check",
-  "records": []
+  "records": [
+    {
+      "number": "RR500142736CR",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sgd.aresep.go.cr/WeblinkPublico/DocView.aspx?id=4766324&dbid=0&repo=RepositorioDocumental&cr=1",
+        "date": "2023-07-04",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "note": "A public regulatory annex reproduces the native postal history; the current guest form returns matching whole-number dated history.",
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      }
+    }
+  ]
 }

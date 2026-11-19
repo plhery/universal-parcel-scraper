@@ -16306,7 +16306,13 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Costa_Rica",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "correos-costa-rica",
+      "refresh": {
+        "minMinutes": 60,
+        "afterFailureMinutes": 60
+      },
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://sucursal.correos.go.cr/web/rastreo",
     "trackingSearchUrl": "https://sucursal.correos.go.cr/web/rastreo",

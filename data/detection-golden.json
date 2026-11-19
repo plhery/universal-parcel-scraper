@@ -104154,6 +104154,17 @@
     ]
   },
   {
+    "input": "RR500142736CR",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR513022184AE",
     "carrier": "emirates-post",
     "confidence": "high",

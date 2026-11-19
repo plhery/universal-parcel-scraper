@@ -20,6 +20,7 @@ import { statusMap as flechaAmarilla } from '../../carriers/flecha-amarilla/stat
 import { statusMap as yandexDelivery } from '../../carriers/yandex-delivery/status.js';
 import { statusMap as amazonOrder } from '../../carriers/amazon-order/status.js';
 import { statusMap as whatsShip } from '../../carriers/whatsship/status.js';
+import { statusMap as costaRica } from '../../carriers/correos-costa-rica/status.js';
 import { statusMap as onlogExpress } from '../../carriers/onlog-express/status.js';
 import { statusMap as sicepat } from '../../carriers/sicepat/status.js';
 import { statusMap as aneLogistics } from '../../carriers/ane-logistics/status.js';
@@ -826,6 +827,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 
 /** By adapter: a carrier served by another's adapter, as Delivengo by La Poste's, reads that map. */
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
+  'correos-costa-rica': costaRica,
   aeropost,
   'western-bid': westernBid,
   libanpost,

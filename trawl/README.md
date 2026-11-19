@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO and HuaHan. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan and Correos de Costa Rica. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -332,3 +332,9 @@ and captures only the matching whole-waybill POST. It enters no CPF/CNPJ or acco
 flow, and retains no images, tokens, remarks, staff or recipient fields.
 
 Flash Courier uses a scoped anonymous HTTP helper with the local CPU OCR environment. It binds the official form and returned shipment to the whole reference, caps fresh images and submissions separately, keeps cookies and answers in memory, and ends the subprocess within the caller budget. No browser context is opened for this route.
+
+Correos de Costa Rica uses its current guest form in a fresh context. The form owns the
+CSRF session and reCAPTCHA answer. The helper binds the whole main-frame POST and its
+redirected result document, then returns only the shipment identity and movement rows.
+Signer details, cookies, verification fields and page HTML stay in the context. An audio
+pause leaves one checkbox-only attempt; an unfinished verification keeps provider fallback.

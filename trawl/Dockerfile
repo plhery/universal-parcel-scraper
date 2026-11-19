@@ -34,6 +34,7 @@ COPY jd-domestic-browser.mjs /app/packages/tiers/src/utils/jd-domestic-browser.m
 COPY jd-icon.mjs /app/packages/tiers/src/utils/jd-icon.mjs
 COPY jd-icon.py /app/packages/tiers/src/utils/jd-icon.py
 COPY asendia-browser.mjs /app/packages/tiers/src/utils/asendia-browser.mjs
+COPY correos-costa-rica-browser.mjs /app/packages/tiers/src/utils/correos-costa-rica-browser.mjs
 COPY correios-browser.mjs /app/packages/tiers/src/utils/correios-browser.mjs
 COPY onlog-express-browser.mjs /app/packages/tiers/src/utils/onlog-express-browser.mjs
 COPY flash-courier-guest.mjs /app/packages/tiers/src/utils/flash-courier-guest.mjs

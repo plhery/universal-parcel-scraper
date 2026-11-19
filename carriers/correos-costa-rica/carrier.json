@@ -20,17 +20,48 @@
   "timezone": "America/Costa_Rica",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "correos-costa-rica",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true,
+    "refresh": {
+      "minMinutes": 60,
+      "afterFailureMinutes": 60
+    }
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://sucursal.correos.go.cr/web/rastreo",
     "canaryUrl": "https://sucursal.correos.go.cr/web/rastreo",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "signatory",
+      "sending_date"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "signatory",
+      "sending_date"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps",
+      "recipient_name",
+      "sender_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []
