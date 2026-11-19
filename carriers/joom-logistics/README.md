@@ -14,6 +14,12 @@ when that differs, and an unknown one with HTTP 404. Every time is labelled UTC,
 scans it relays keep their wall clock under the Z: an "OUT FOR DELIVERY" at 06:10Z. A dedicated
 adapter could read it once it tells relayed scans from Joom Logistics' own.
 
+The [tracking client](https://joomlogistics.com/en/track) formats every `operationTime` in the
+viewer's zone, with no per-event clock distinction. Its displayed times therefore cannot settle
+that ambiguity. Fractional seconds do not identify Joom's own events: relayed scans can also
+carry synthetic millisecond ties. A source-carrier or clock-kind distinction is needed before
+changing any offset.
+
 ## Links
 
 The tracker's `/<language>/track?id=` opens one number, on joomlogistics.com and
