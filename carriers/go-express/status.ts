@@ -48,4 +48,6 @@ export function goExpressStage(wording: string, flaggedError: boolean): Classifi
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => (code ? undefined : goExpressScanStage(wording)),
   gaps: [],
+  // GO!'s scans as Postal Ninja relays them, without a code, are read by this map.
+  wholeWording: true,
 };

@@ -33,7 +33,8 @@ claims them and the user picks GO! Express. Preflight therefore never asks GO! a
 
 Rows carry a wording, a day, a clock and the station or hub, newest first. The wording has no
 code; the map reads it in English and in German, the network's own wording, and wording it does
-not know goes to the shared rules. A row the page marks as an error and nothing else stages is
+not know goes to the shared rules. It reads whole wordings, so a universal provider that names GO!
+behind a scan, as Postal Ninja does, reads that scan's German wording by it too. A row the page marks as an error and nothing else stages is
 an exception. The page can list a delivery twice at the same minute, and packages travelling
 together share their scans, so identical rows are kept once.
 

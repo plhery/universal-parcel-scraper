@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { recognitionAskedCarriers } from '../../core/catalog/recognition.js';
-import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
+import { relayedWordingStage, statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { createTracker } from '../../facade/index.js';
 import { adapter, GO_EXPRESS_ENDPOINT, goExpressRequestBody, GoExpressTracker } from './adapter.js';
@@ -83,6 +83,12 @@ describe('GO! Express tracking adapter', () => {
     // German wording, the network's own, is mapped too.
     const german = parseGoExpress(page('transit').replace('>unloading hub line<', '>Abholung war nicht möglich.<'), TRANSIT);
     expect(german).toMatchObject({ current_stage: 'exception', current_stage_source: 'carrier_map' });
+    // A universal provider that names GO! behind a scan reads its wording by this map, as Postal Ninja relays it.
+    expect(relayedWordingStage('go-express', 'Abgeholt - Sendung übernommen')).toBe('accepted');
+    expect(relayedWordingStage('go-express', 'Entladung Hub-Linie')).toBe('in_transit');
+    expect(relayedWordingStage('go-express', 'Beladung Zustelltour')).toBe('out_for_delivery');
+    expect(relayedWordingStage('go-express', 'Zustellung Empfänger')).toBe('delivered');
+    expect(relayedWordingStage('go-express', 'gate closed')).toBeUndefined();
   });
 
   it('binds the reply to the requested waybill and rejects replies it cannot read', () => {
