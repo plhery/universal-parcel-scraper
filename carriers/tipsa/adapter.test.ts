@@ -114,6 +114,10 @@ describe('TIPSA shipment page', () => {
       ['REPARTO', 'out_for_delivery', undefined],
       ['LECTURA EN AGENCIA DESTINO EJEMPLO 01', 'in_transit', undefined],
     ]);
+    for (const interruption of ['FIN DE REPARTO', 'ACTIVIDAD DESCONOCIDA']) {
+      const ended = page(loading('45', 'LEIDO EN DESTINO'), loading('20', interruption));
+      expect(parseTipsaDetail(ended, NUMBER).current_stage).toBe('in_transit');
+    }
     // A read later that day, before the round's outcome, is still part of the round; the read before the round stays in transit.
     expect(parseTipsaDetail(page(loading('25', 'LECTURA EN AGENCIA DESTINO EJEMPLO 01')), NUMBER))
       .toMatchObject({ status: 'out_for_delivery', current_stage: 'out_for_delivery' });

@@ -208,6 +208,11 @@ describe('Ship24 result parsing', () => {
       ['2026-10-27T05:50:00.000Z', undefined, undefined]]);
     // The return the union's copy names is the action decided at a failed round, which a later round can overtake.
     expect(events[1]!.stage).toBe('exception');
+    const number = '9'.repeat(12);
+    const domestic = { timestamp: '2026-11-07T14:20:42Z', status: 'Processed at facility', location: 'Sydney, Australia', courier: auPost };
+    const advice = { timestamp: '2026-11-07T14:20:00', status: 'Electronic pre-advice', location: 'Frankfurt, Germany', courier: upu };
+    const mixed = parseShip24Response({ data: { tracking_number: number, events: [domestic, advice] } }, number, 'Europe/Berlin');
+    expect(mixed.events?.find((event) => event.description === domestic.status)?.time).toBe('2026-11-07T14:20:42.000Z');
     // A copy on a clock Australia keeps, here the zone routing passes, does not move Australia Post's instant.
     const home = parseShip24Response({ data: { tracking_number: 'ZZ123456785AU',
       couriers: [{ translation: { name: 'Australia Post' } }, { translation: { name: 'UPU' } }],
@@ -404,6 +409,8 @@ describe('Ship24 feeds that relabel the carrier\'s wall clock', () => {
     const events = [scan('2026-10-31T06:59:00', `Your shipment ${asked} is at the delivery depot`),
       scan('2026-10-31T02:19:00', `Your shipment ${asked} has been collected`), scan('2026-10-30T17:53:00', 'Your shipment 99999000000001 is part delivered')];
     expect(read({ events })).toEqual([`Your shipment ${asked} is at the delivery depot`, `Your shipment ${asked} has been collected`]);
+    const delivery = `Your shipment ${asked} was delivered under collection reference ${"8".repeat(8)}`;
+    expect(read({ events: [scan("2026-11-01T12:00:00", delivery), ...events] })).toContain(delivery);
     // A number Ship24 lists for the same parcel is the parcel's, and another feed's sentence is not read so.
     expect(read({ events, tracking_numbers: [{ tracking_number: asked, is_main: true }, { tracking_number: '99999000000001' }] })).toHaveLength(3);
     const other = events.map((event) => ({ ...event, courier: { crawler_code: 'example-tracking' } }));

@@ -122,7 +122,7 @@ No account, cookie, fingerprint or issued token is used.
 - `australia-post-tracking` says `Z` on the delivering post's wall clock abroad, where Australia
   Post's own tracker gives the offset; its scans in Australia carry their instants. Such a scan
   is read on the zone of the postal union's copy listed at the same minute (`upu-tracking`), when
-  that zone lies outside Australia.
+  that zone lies outside Australia and both rows describe the same milestone at compatible places.
 - Correos's copies ("Correos de España") of an origin post's scans on an item from abroad,
   "En oficina de cambio" and "En aduana de origen", are at that post's clock, as on
   Correos's own tracker ([Correos](../../carriers/correos-spain/README.md)). They skip the

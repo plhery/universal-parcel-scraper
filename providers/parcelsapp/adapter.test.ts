@@ -1128,13 +1128,23 @@ describe('ParcelsApp result parsing', () => {
     // PostNL's own feed dates its scans in Chile at the same digits on Chile's clock; read on
     // PostNL's Amsterdam clock they came out four hours early. Its own records, with no place, stay Dutch.
     const result = parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post'], states: [
-      { date: '2026-11-06T01:36:00Z', status: 'The item is at customs', carrier: 0, location: 'Chile' },
-      { date: '2026-11-06T00:59:00Z', status: 'The item has been processed in the country of destination', carrier: 0, location: 'Chile' },
+      { date: '2026-11-06T01:36:00Z', status: 'The item is at customs', carrier: 0, location: 'Santiago, Chile' },
+      { date: '2026-11-06T00:59:00Z', status: 'The item has been processed in the country of destination', carrier: 0, location: 'Santiago, Chile' },
       { date: '2026-10-26T08:16:00Z', status: 'The item is pre-advised to PostNL', carrier: 0 },
     ] }, number, identity(), 'Europe/Budapest');
     expect(result.events?.map((scan) => [scan.time, scan.time_zone, scan.time_zone_basis])).toEqual([
-      ['2026-11-06T04:36:00.000Z', 'America/Santiago', 'carrier'], ['2026-11-06T03:59:00.000Z', 'America/Santiago', 'carrier'],
+      ['2026-11-06T04:36:00.000Z', 'America/Santiago', 'place'], ['2026-11-06T03:59:00.000Z', 'America/Santiago', 'place'],
       ['2026-10-26T07:16:00.000Z', 'Europe/Amsterdam', 'carrier']]);
+  });
+
+  it('dates PostNL scans by the city in a multi-zone destination', () => {
+    const read = (location: string) => parseParcelsAppResponse({ carriers: ['PostNL - Netherlands Post'], states: [
+      { date: '2026-11-06T10:00:00Z', status: 'The item is at customs', carrier: 0, location },
+    ] }, number, identity()).events?.[0];
+    expect(read('Vladivostok, Russia')?.time).toBe('2026-11-06T00:00:00.000Z');
+    expect(read('Manaus, Brazil')?.time).toBe('2026-11-06T14:00:00.000Z');
+    expect(read('Russia')).toMatchObject({ local_time: expect.stringContaining('10:00:00') });
+    expect(read('Russia')?.time).toBeUndefined();
   });
 
   it('reads iMile\'s scans on the destination\'s clock, wherever they happened', () => {

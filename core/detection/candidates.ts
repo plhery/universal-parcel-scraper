@@ -6,6 +6,7 @@
  * What it is not: no carrier decision of its own (it defers to the detection
  * engine) and no provider I/O.
  */
+import { calendarDay } from '../time/index.js';
 import { isKnownCarrierName } from '../catalog/hints.js';
 import { AMAZON_NUMBER_PATTERN } from './amazon.js';
 import { detectCarrierMatch } from './detect.js';
@@ -134,13 +135,21 @@ const ALTERNATIVE_NUMBER = new RegExp(String.raw`^\s+(?:${ALTERNATIVE_WORDS})\s+
 const DATE = /^(?:\d{1,2}([./-])\d{1,2}\1\d{2,4}|\d{4}([./-])\d{1,2}\2\d{1,2})$/;
 // A year that a month and day follow, which Chinese and Japanese text prints with no space
 // after it: "2026年11月12日", "2026/11/12发货".
-const YEAR_OF_DATE = /^\d{4}(?:([./-])\d{1,2}\1\d{1,2}(?!\d)|\s*年)/;
+const YEAR_OF_DATE = /^\d{4}([./-])\d{1,2}\1\d{1,2}(?!\d)/;
+const CJK_DATE = /^(\d{4})\s*年\s*(\d{1,2})\s*月\s*(\d{1,2})\s*日/;
 // A phone number in the French and Belgian layout: a 0, then two-digit groups printed apart.
 const PHONE = /^0\d(?:[ .-]\d{2}){4}$/;
 
 /** Whether a labelled token is a date, written whole or ending a sentence. */
 export function isDateToken(token: string): boolean {
-  return DATE.test(token.replace(/[.,;:]+$/, ''));
+  const value = token.replace(/[.,;:]+$/, '');
+  if (!DATE.test(value)) return false;
+  const [first, middle, last] = value.split(/[./-]/);
+  const yearFirst = first!.length === 4;
+  const year = Number(yearFirst ? first : last);
+  const day = Number(yearFirst ? last : first);
+  return calendarDay(year, Number(middle), day) !== null
+    || (!yearFirst && calendarDay(year, day, Number(middle)) !== null);
 }
 
 /**
@@ -177,12 +186,15 @@ export function keywordNumberInText(raw: string): string | undefined {
     const claimed = joins.slice(1).reverse().find((joined) => detectCarrierMatch(joined).confidence === 'high');
     // A date printed in groups or with slashes, which end the token, or a year a month and day follow is no number either.
     const after = raw.slice(start);
-    if (!claimed && (isDateToken(groups.join('.')) || isDateToken(/^\S*/.exec(after)![0]) || YEAR_OF_DATE.test(after))) continue;
+    const datePrefix = YEAR_OF_DATE.exec(after)?.[0] ?? '';
+    const cjk = CJK_DATE.exec(after);
+    if (!claimed && (isDateToken(groups.join('.')) || isDateToken(/^\S*/.exec(after)![0]) || isDateToken(datePrefix)
+      || (cjk && calendarDay(Number(cjk[1]), Number(cjk[2]), Number(cjk[3]))))) continue;
     if (!claimed && PHONE.test(groups.join(' ').replace(/[.-]+$/, ''))) return undefined;
     const grouped = groups.length > 1 && groups.every((group) => group.length <= 6) && joins.at(-1)!.length >= 8
       ? joins.at(-1) : undefined;
     const candidate = claimed ?? grouped ?? joins[0]!;
-    if (candidate.length < 4 || DATE.test(candidate)) return undefined;
+    if (candidate.length < 4 || isDateToken(candidate)) return undefined;
     return validTrackingNumberInText(candidate) ? candidate : undefined;
   }
   return undefined;

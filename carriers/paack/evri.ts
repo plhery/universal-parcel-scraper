@@ -13,7 +13,7 @@ import type { TrackingContext } from '../../core/adapter/index.js';
 import { SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { fetchEvriInternational } from '../evri/adapter.js';
-import { evriPartner, paackLegInstants, parseEvriInternational } from '../evri/parser.js';
+import { evriPartner, parseEvriInternational } from '../evri/parser.js';
 
 /** The number Paack prints on a parcel from Evri International; the catalog's `paack-1` rule. */
 export const PAACK_EVRI_NUMBER = /^PK\d{18}$/;
@@ -29,7 +29,7 @@ export function parsePaackEvriReply(html: string, number: string): CarrierResult
   if (shipment.carrierTracking !== number || evriPartner(shipment.carrierLabel) !== 'paack') {
     throw new SchemaError('Paack', 'Evri International returned a parcel another carrier delivers');
   }
-  return paackLegInstants(shipment.result);
+  return shipment.result;
 }
 
 export async function trackPaackThroughEvri(

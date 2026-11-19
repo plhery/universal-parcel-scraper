@@ -746,6 +746,11 @@ describe('the detection engine', () => {
       expect(parseTrackingInput(text), text).toMatchObject({ trackingNumber: '', source: 'none' });
       expect(keywordNumberInText(text), text).toBeUndefined();
     }
+    const groups = ['2026', '54', '32'];
+    for (const separator of [' ', '-', '.']) {
+      expect(parseTrackingInput('Tracking number ' + groups.join(separator)).trackingNumber).toBe(groups.join(separator));
+    }
+    expect(parseTrackingInput('Tracking number 2024 02 29').source).toBe('none');
     // A number of the same length is still read.
     expect(keywordNumberInText('Tracking: 20261112')).toBe('20261112');
   });

@@ -72,6 +72,13 @@ describe('Sengi Express tracking', () => {
     expect(parseSengiExpress({ [NUMBER]: elsewhere }, NUMBER).delivery_carrier).toBeUndefined();
   });
 
+  it('rejects impossible calendar dates', () => {
+    for (const eventTime of ['2026-02-31T10:00:00', '2026-02-28T24:00:00']) {
+      const scan = { ...rows()[0], eventTime, timeZone: 1 };
+      expect(() => parseSengiExpress({ [NUMBER]: [scan] }, NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+  });
+
   it('keeps the wall clock of a row without an offset', () => {
     const result = parseSengiExpress({ [NUMBER]: rows().map((row) => ({ ...row, timeZone: null })) }, NUMBER);
     expect(result).toMatchObject({ last_update: null, last_update_local: '2026-04-02T16:45:00' });

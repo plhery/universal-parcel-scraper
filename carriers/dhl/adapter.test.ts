@@ -537,6 +537,10 @@ describe('DHL public tracking normalization', () => {
     // A failing check digit, or eighteen digits outside DHL Paket's prefixes, is asked as typed.
     expect(normalizeDHLTrackingNumber('340434509999999995')).toBe('340434509999999995');
     expect(normalizeDHLTrackingNumber('340424509999999997')).toBe('340424509999999997');
+    const wholesaler = '34043366' + '0'.repeat(9) + '7';
+    expect(normalizeDHLTrackingNumber(wholesaler)).toBe(wholesaler);
+    expect(parseDHLTrackingResponse({ sendungen: [{ id: wholesaler, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] }, wholesaler))
+      .toMatchObject({ events: [] });
     const payload = { sendungen: [{ id: sscc, sendungNichtGefunden: { keineDatenVerfuegbar: true } }] };
     expect(parseDHLTrackingResponse(payload, '340434509999999994')).toMatchObject({ status: 'unknown', events: [] });
     expect(() => parseDHLTrackingResponse({ sendungen: [{ id: '00340434509999999987', sendungNichtGefunden: { keineDatenVerfuegbar: true } }] }, '340434509999999994'))

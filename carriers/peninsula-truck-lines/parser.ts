@@ -112,7 +112,7 @@ function history(rows: unknown[]): CarrierEvent[] {
   // The guide's example lists the oldest row first; a list that way round is turned round. A row with its day
   // and no time orders only against another day, so the first rows that compare decide.
   const direction = order(events[0], events.at(-1)) || events.slice(1).map((event, index) => order(events[index], event)).find(Boolean);
-  return (direction ?? 0) < 0 ? events.reverse() : events;
+  return (direction ?? -1) < 0 ? events.reverse() : events;
 }
 
 /** How two rows' clocks compare: by day, and within a day only when both have a time. */

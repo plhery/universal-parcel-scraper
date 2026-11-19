@@ -199,6 +199,10 @@ describe('Correios parser', () => {
       scan('PAR', '18', 'Objeto recebido na unidade de exportação no país de origem', brasilia('2026-11-11 03:07:00')),
       scan('PO', '01', 'Objeto postado', brasilia('2026-11-10 21:00:00')),
     ];
+    const overseasNumber = fixture.codObjeto.slice(0, -2) + 'CN';
+    const posting = { ...scan('PO', '01', 'Objeto postado', brasilia('2026-11-10 10:00:00')), unidade: inBrazil };
+    expect(parseCorreios({ ...fixture, codObjeto: overseasNumber, eventos: [posting] }, overseasNumber).events?.[0]?.time)
+      .toBe('2026-11-10T10:00:00-03:00');
     const china = parseCorreios({ ...fixture, codObjeto: 'AA000000005CN', eventos: rows }, 'AA000000005CN');
     expect(china.events!.map(({ time, local_time, time_zone, time_zone_basis }) => [time, local_time, time_zone, time_zone_basis])).toEqual([
       ['2026-11-14T10:00:00-03:00', undefined, undefined, undefined],

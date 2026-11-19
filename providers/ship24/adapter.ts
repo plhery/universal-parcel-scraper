@@ -296,7 +296,8 @@ const NAMING_FEEDS = new Set(['dhlparcel-uk-tracking']);
 /** The numbers a naming feed's scan names; none for another feed's. */
 function namedNumbers(scan: Record<string, unknown>): string[] {
   const code = isRecord(scan.courier) ? scan.courier.crawler_code : null;
-  return typeof code === 'string' && NAMING_FEEDS.has(code) && typeof scan.status === 'string' ? scan.status.match(/\d{7,}/g) ?? [] : [];
+  if (typeof code !== 'string' || !NAMING_FEEDS.has(code) || typeof scan.status !== 'string') return [];
+  return Array.from(scan.status.matchAll(/\bshipment\s+(\d{7,})\b/gi), (match) => match[1]!);
 }
 
 /**
@@ -480,8 +481,13 @@ interface Reading {
  */
 function zuluAbroad(reading: Reading, readings: readonly Reading[]): CarrierEvent | null {
   const { zulu } = reading;
-  if (!zulu) return null;
+  if (!zulu || reading.country === zulu.home) return null;
   const zone = readings.find((other) => other.upu && other.zone && other.wall?.slice(0, 16) === zulu.digits.slice(0, 16)
+    && (!reading.country || keepsZone(reading.country, other.zone))
+    && (!reading.event.location || !other.event.location || reading.event.location.toLowerCase() === other.event.location.toLowerCase())
+    && (reading.event.description === other.event.description
+      || [reading.event.description, other.event.description].every(label => /^unsuccessful delivery\b/i.test(label ?? ''))
+      || (reading.event.stage === 'delivered' && other.event.stage === 'delivered'))
     && !keepsZone(zulu.home, other.zone))?.zone;
   const instant = zone ? firstOccurrence(DateTime.fromISO(zulu.digits, { zone })) : null;
   return zone && instant?.isValid ? { ...reading.event, time: instant.toUTC().toISO(), time_zone: zone, time_zone_basis: 'neighbour' } : null;

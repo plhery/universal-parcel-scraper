@@ -1,3 +1,4 @@
+import { isPartialAnswer } from '../../core/result/partial.js';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
@@ -38,6 +39,18 @@ const reply = (payload: unknown, init: ResponseInit = {}) => new Response(typeof
 const carrier = (fetcher: typeof fetch) => adapter({ fetcher, recorder: NOOP_RECORDER, env: {}, trawl: null, browserExecutablePath: null });
 
 describe('GLS US HTTP adapter', () => {
+  it('reports when distinct scans exceed the history cap', () => {
+    const read = (count: number) => parseGlsUs(changed(shipment => {
+      const row = shipment.transitDetails[0]!;
+      shipment.transitDetails = Array.from({ length: count }, (_, i) => ({ ...row, location: `Depot ${i}` }));
+      shipment.transitDetails.push(shipment.transitDetails[0]!);
+    }), NUMBER);
+    expect(isPartialAnswer(read(100))).toBe(false);
+    const capped = read(101);
+    expect(capped.events).toHaveLength(100);
+    expect(isPartialAnswer(capped)).toBe(true);
+  });
+
   it("posts the whole number as the tracking page does, through the supplied transport", async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(reply(body('delivered')));
     const recorder = { ...NOOP_RECORDER, step: vi.fn(), lookup: vi.fn() };

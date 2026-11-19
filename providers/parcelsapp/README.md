@@ -664,9 +664,8 @@ step exists for future protocol changes.
 - So do PostNL's scans in Britain. FedEx International Connect lists the same scans two hours
   after ParcelsApp's digits, on Dutch summer time, so those digits are their UTC instants. Read
   on PostNL's Amsterdam clock, they came out two hours early. PostNL's scans in another country
-  have that country's wall clock, as PostNL's own feed does, and are read on the clock most of the
-  country lives on; read on Amsterdam's, scans in Chile came out four hours early. Spain, Portugal
-  and countries whose regions the steps read are left to the place. PostNL's scans in the
+  have that country's wall clock. In a country with several time zones, the city or region
+  supplies the zone. A country alone leaves the time local. PostNL's scans in the
   Netherlands or with no place keep Amsterdam's clock, except its customs stamps ("Item is cleared
   by customs"), which PostNL's own feed states in UTC: read on Amsterdam's clock, a clearance came
   an hour before Cainiao's copy of it.

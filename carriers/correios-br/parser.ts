@@ -36,6 +36,8 @@ function scanClock(value: unknown, abroad?: string | null, basis = 'place'): Sca
   if (!wall?.isValid) return raw ? { provider_time_text: raw } : {};
   const local = wall.toISO({ includeOffset: false, suppressMilliseconds: true });
   const stated = isRecord(value) && value.timezone_type === 3 ? clean(value.timezone, 64) : '';
+  // Correios labels relayed origin clocks with Brasília's zone. Preserve any other stated zone.
+  if (stated !== 'America/Sao_Paulo') abroad = undefined;
   const zone = abroad === undefined ? stated : abroad ?? '';
   if (!zone || !IANAZone.isValidZone(zone)) return { local_time: local };
   // Use the explicit per-row zone only when its clock exists uniquely. Do not
@@ -125,7 +127,7 @@ export function parseCorreios(payload: unknown, number: string): CarrierResult {
     if (!/^[A-Z]{2,4}$/.test(code) || !/^\d{2}$/.test(subtype) || !description) throw new SchemaError('Correios', 'Correios returned an incomplete scan');
     const providerCode = `${code}/${subtype}`;
     const location = unitPlace(row);
-    const sent = ABROAD.test(providerCode) || (TRANSFERS.has(providerCode) && !location && index > inBrazil);
+    const sent = !location && index > inBrazil && (ABROAD.test(providerCode) || TRANSFERS.has(providerCode));
     const clock = scanClock(row.dtHrCriado, sent ? originZone : undefined, originBasis);
     const key = `${clock.time ?? clock.local_time ?? clock.provider_time_text ?? ''}\u0000${providerCode}\u0000${description}\u0000${location}`;
     if (seen.has(key)) continue;
