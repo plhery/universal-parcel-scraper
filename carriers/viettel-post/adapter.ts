@@ -1,7 +1,7 @@
 import makeFetchCookie from 'fetch-cookie';
 import { CookieJar } from 'tough-cookie';
 import type { AdapterFactory, TrackingContext } from '../../core/adapter/index.js';
-import { BudgetExceededError, ChallengeError, SchemaError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
+import { BudgetExceededError, ChallengeError, SchemaError, TransportError, UpstreamHttpError, UpstreamNetworkError } from '../../core/errors/index.js';
 import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { browserContextProxy } from '../../core/transport/browserRouteTrial.js';
@@ -73,7 +73,12 @@ export class ViettelPostTracker {
         throw new ChallengeError(PROVIDER, 'Viettel Post rejected the text challenge');
       } catch (error) {
         // The bounded transport's raw request/response diagnostics can hold challenge ids, answers and cookies.
-        if (error instanceof UpstreamHttpError) throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
+        if (error instanceof UpstreamHttpError) {
+          if (error.status === 404 || error.status === 410) {
+            throw new TransportError(PROVIDER, 'Viettel Post legacy tracking endpoint is unavailable', { status: error.status });
+          }
+          throw new UpstreamHttpError(error.provider, error.status, error.retryAfterMs);
+        }
         if (error instanceof UpstreamNetworkError) throw new UpstreamNetworkError(error.provider, error.cause);
         throw error;
       }

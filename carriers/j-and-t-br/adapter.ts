@@ -31,7 +31,13 @@ export class JAndTBrTracker {
       const started = Date.now();
       const scrape = (timeoutMs: number) => trawl.scrape({ url, skipHttp: true, maxTier: 3, maxTimeout: timeoutMs,
         captureResponses: [JT_BR_API], settleTimeout: timeoutMs }, { provider: PROVIDER, timeoutMs, signal,
-        fetcher: this.environment.fetcher, maxBytes: 4 * JT_BR_MAX_BYTES, requireSolved: false, captureWindow: 'last' });
+        fetcher: this.environment.fetcher, maxBytes: 4 * JT_BR_MAX_BYTES, requireSolved: false, captureWindow: 'last' }).catch((error: unknown) => {
+        signal.throwIfAborted();
+        if (error instanceof UpstreamHttpError && (error.status === 404 || error.status === 410)) {
+          throw new TransportError(PROVIDER, 'J&T Brazil tracking page or browser service is unavailable', { status: error.status });
+        }
+        throw error;
+      });
       const timeoutMs = Math.floor(Math.min(90_000, remainingMs - TRAWL_TRANSPORT_ALLOWANCE_MS));
       if (timeoutMs < 12000) throw new BudgetExceededError(PROVIDER, remainingMs);
       let page = await scrape(timeoutMs);
@@ -66,7 +72,9 @@ export class JAndTBrTracker {
       }
       if (result) return result;
       if (failure) throw failure;
-      if ([404, 410].includes(page.statusCode)) throw new TransportError(PROVIDER, 'J&T Brazil tracking page is unavailable');
+      if ([0, 404, 410].includes(page.statusCode)) {
+        throw new TransportError(PROVIDER, 'J&T Brazil tracking page is unavailable', { status: page.statusCode || undefined });
+      }
       if (page.statusCode >= 400) throw new UpstreamHttpError(PROVIDER, page.statusCode);
       if (['jt-br-runtime', 'jt-br-capture_missing'].includes(lastReason(page))) {
         throw new TransportError(PROVIDER, 'J&T Brazil could not complete its guest response capture',

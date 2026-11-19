@@ -52,6 +52,17 @@ describe('Viettel Post legacy records', () => {
 });
 
 describe('Viettel Post challenge exchange', () => {
+  it.each([404, 410])('keeps an unavailable legacy endpoint out of missing shipment results (HTTP %i)', async status => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response('endpoint unavailable', { status }));
+    const solveCaptcha = vi.fn();
+    await expect(new ViettelPostTracker({ fetcher, solveCaptcha }).fetch(NUMBER)).rejects.toMatchObject({
+      kind: 'transport',
+      status,
+    });
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(solveCaptcha).not.toHaveBeenCalled();
+  });
+
   it('uses a fresh cookie jar, then posts one number with the answer for that image', async () => {
     const initial = Response.json(opened(), { headers: { 'Set-Cookie': 'SERVERID=synthetic; Path=/' } });
     Object.defineProperty(initial, 'url', { value: 'https://api.viettelpost.vn/api/orders/getCaptcha' });

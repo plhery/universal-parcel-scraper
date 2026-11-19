@@ -22,7 +22,8 @@ The full-history attempt reserves time for the legacy record. When TRAWL is unav
 verification cannot finish, a fresh cookie jar uses `getCaptcha` and `viewTrackingOrders`.
 The bundled local OCR model reads the text code, with one refresh after unreadable or refused
 text. This record can remain at registration after delivery, so it is marked `summary_only`
-and enabled universal providers are asked for richer history.
+and enabled universal providers are asked for richer history. An unavailable legacy endpoint
+is a transport failure.
 
 ## Limitations
 

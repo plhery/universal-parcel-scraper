@@ -97,6 +97,14 @@ describe('J&T Brazil guest history', () => {
   ])('keeps capture failures distinct', async (extra, kind) => {
     await expect(harness([capture(fixture(), extra)]).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind });
   });
+  it.each([0, 404, 410])('reports an unavailable tracking page as transport failure (HTTP %i)', async statusCode => {
+    const h = harness([], { statusCode });
+    await expect(h.tracker.fetch(NUMBER)).rejects.toMatchObject({
+      kind: 'transport',
+      ...(statusCode ? { status: statusCode } : {}),
+    });
+    expect(h.fetcher).toHaveBeenCalledTimes(1);
+  });
   it('asks once more after the helper gives up on a puzzle image, while the budget holds another solved run', async () => {
     const reply = (rows: unknown[], reason: string) => new Response(JSON.stringify({ url: `${JT_BR_PAGE}?waybillNo=${NUMBER}`,
       html: '', tier: 3, statusCode: 200, cookies: [], capturedResponses: rows, timings: [{ reason }] }), { headers: { 'Content-Type': 'application/json' } });
