@@ -26,4 +26,10 @@ describe('Tamex tracking', () => {
   it('treats an unavailable route as a tracking failure', () => {
     expect(() => parseTracking('<html>Unavailable</html>', '30000000000000', 404)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+
+  it('reads a wording its map lacks by the shared wording rules', () => {
+    // Synthetic: the sample's newest row reworded.
+    const result = parseTracking(fixture('found').replace('تم تسليم الشحنة للعميل بنجاح', 'Returned to sender'), '32796769098312', 200);
+    expect(result).toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

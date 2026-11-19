@@ -43,12 +43,15 @@ describe('Huuneh tracking page', () => {
     ] as const) expect(() => parseHuuneh(fixture('delivered').replace(from, to), NUMBER)).toThrow(expect.objectContaining({ kind }));
   });
 
-  it('keeps a new status name without a stage', () => {
-    const result = parseHuuneh(fixture('delivered').replace('Delivered\t', 'Held at depot\t'), NUMBER);
-    expect(result.events![0]).toMatchObject({ description: 'Held at depot: The shipment has been delivered' });
+  it('reads a new status name by the shared wording rules, and keeps one they do not read without a stage', () => {
+    const held = parseHuuneh(fixture('delivered').replace('Delivered\t', 'Held at depot\t'), NUMBER);
+    expect(held).toMatchObject({ current_stage: 'in_transit', current_stage_source: 'wording:language' });
+    const result = parseHuuneh(fixture('delivered').replace('Delivered\t', 'Reassigned\t'), NUMBER);
+    expect(result.events![0]).toMatchObject({ description: 'Reassigned: The shipment has been delivered' });
     expect(result.events![0]).not.toHaveProperty('stage');
     // A newer scan without a stage does not undo the round, as it would a delivery.
-    expect(result).toMatchObject({ current_stage: 'out_for_delivery', last_status_text: 'Held at depot: The shipment has been delivered' });
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', current_stage_source: 'carrier_map',
+      last_status_text: 'Reassigned: The shipment has been delivered' });
   });
 
   it('accepts one waybill and stages the names the page shows', () => {

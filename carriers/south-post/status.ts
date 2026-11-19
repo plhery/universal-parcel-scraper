@@ -1,5 +1,5 @@
-import type { Stage } from '../../core/status/index.js';
-import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 // The tracking page's script reads each scan's `estado` in lower case and groups the wordings
 // into the steps of its rail: preparing the order, ready to deliver, on the way, delivered.
@@ -64,3 +64,13 @@ export const statusMap: CarrierStatusMap = {
     { wording: 'no visitado', note: 'A visit the page says technical problems put off, promising another within two working days; the parcel keeps its stage.' },
   ],
 };
+
+/** A scan's stage: the map, else the shared wording rules, else none. */
+export function scanStage(wording: string): ClassifiedWording | null {
+  const mapped = southPostStage(wording);
+  if (mapped) return { stage: mapped, source: 'carrier_map' };
+  // A wording the map leaves without a stage on purpose keeps none.
+  if (statusGapNote(statusMap, null, normalizeStatusWording(wording)) !== undefined) return null;
+  const worded = classifyWording(wording, 'in_transit');
+  return worded.source === 'none' ? null : worded;
+}

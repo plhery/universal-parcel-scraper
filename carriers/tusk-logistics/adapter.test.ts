@@ -30,4 +30,10 @@ describe('Tusk Logistics guest page', () => {
     expect(() => parseTuskLogistics(found, unknownNumber)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
     expect(() => parseTuskLogistics('<p>Loading...</p>', number)).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   });
+
+  it('reads a status its map lacks by the shared wording rules', () => {
+    // Synthetic: the sample's newest status reworded.
+    const result = parseTuskLogistics(found.replace('>Delivered<', '>Returned to Sender<'), number);
+    expect(result.events?.[0]).toMatchObject({ stage: 'returned', stage_source: 'wording:language' });
+  });
 });

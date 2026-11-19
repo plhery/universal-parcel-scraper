@@ -21,4 +21,11 @@ describe('Faster Shipe public tracking', () => {
   it('rejects a changed response', () => {
     expect(() => parseTracking('<html></html>', 'FS877284074', 200)).toThrow();
   });
+
+  it('reads a milestone its map lacks by the shared wording rules', () => {
+    // Synthetic: the sample's current milestone reworded.
+    const reply = JSON.parse(fixture('found'));
+    reply.timeline[3].label = 'Returned to sender';
+    expect(parseTracking(JSON.stringify(reply), 'FS877284074', 200)).toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

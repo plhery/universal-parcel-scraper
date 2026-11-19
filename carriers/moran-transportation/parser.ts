@@ -3,7 +3,7 @@ import { ChallengeError, IndeterminateError, NoHistoryError, NotFoundError, Sche
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { xmlDocument, type XmlNode } from '../../core/transport/xml.js';
-import { isEnRoute, stageOf } from './status.js';
+import { isEnRoute, scanStage } from './status.js';
 
 const provider = 'moran-transportation';
 export const maxBytes = 256 * 1024;
@@ -36,9 +36,9 @@ export function parseTracking(xml: string, number: string, httpStatus: number): 
     if (!description || !/^\d{4}-\d{2}-\d{2}$/.test(day) || !clock.isValid) throw new SchemaError(provider, 'Invalid history event');
     const local_time = /\d/.test(time) ? clock.toFormat("yyyy-MM-dd'T'HH:mm:ss") : day;
     const remark = field(row, 'histremarks');
-    const stage = stageOf(description);
+    const stage = scanStage(description);
     return { description, local_time, ...(place.test(remark) ? { location: remark } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) };
   }).sort((left, right) => right.local_time.localeCompare(left.local_time));
 
   let previous: string | undefined;
@@ -48,10 +48,12 @@ export function parseTracking(xml: string, number: string, httpStatus: number): 
   }
   const newest = events[0];
   if (!newest) throw new NoHistoryError(provider);
-  const stage = field(root, 'prodelivered').toLowerCase() === 'yes' ? 'delivered' : events.find(event => event.stage)?.stage as Stage | undefined;
+  const lead = events.find(event => event.stage);
+  const delivered = field(root, 'prodelivered').toLowerCase() === 'yes';
+  const stage = delivered ? 'delivered' : lead?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    ...(stage ? { current_stage: stage, current_stage_source: delivered ? 'carrier_map' : lead!.stage_source } : {}),
     last_status_text: newest.description!, last_update_local: newest.local_time!, events,
   };
 }

@@ -1,4 +1,4 @@
-import type { Stage } from '../../core/status/index.js';
+import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import statuses from './statuses.json' with { type: 'json' };
 
@@ -14,4 +14,12 @@ export function stageOf(wording: string): Stage | undefined {
 /** Whether the scan is a truck en route, which after the round has started is the round. */
 export function isEnRoute(wording: string): boolean {
   return key(wording) === 'en-route';
+}
+
+/** A scan's stage: the map, else the shared wording rules, else none. */
+export function scanStage(wording: string): ClassifiedWording | null {
+  const mapped = stageOf(wording);
+  if (mapped) return { stage: mapped, source: 'carrier_map' };
+  const worded = classifyWording(wording, 'in_transit');
+  return worded.source === 'none' ? null : worded;
 }

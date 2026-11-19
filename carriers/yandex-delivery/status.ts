@@ -1,5 +1,5 @@
-import type { Stage } from '../../core/status/index.js';
-import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
+import { classifyWording, type ClassifiedWording, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording, statusGapNote, type CarrierStatusMap } from '../../core/status/statusMap.js';
 
 // The tracking page's scan wordings, and the statuses its "Что значат статусы доставки" section
 // explains. A parcel left uncollected is cancelled, then goes back through the point it was
@@ -46,3 +46,13 @@ export const statusMap: CarrierStatusMap = {
   wholeWording: true,
   gaps: GAPS,
 };
+
+/** A scan's stage: the map, else the shared wording rules, else none. */
+export function scanStage(wording: string): ClassifiedWording | null {
+  const mapped = yandexDeliveryStage(wording);
+  if (mapped) return { stage: mapped, source: 'carrier_map' };
+  // A wording the map leaves without a stage on purpose keeps none.
+  if (statusGapNote(statusMap, null, normalizeStatusWording(wording)) !== undefined) return null;
+  const worded = classifyWording(wording, 'in_transit');
+  return worded.source === 'none' ? null : worded;
+}

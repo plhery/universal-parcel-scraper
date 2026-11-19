@@ -164,4 +164,8 @@ describe('South Post guest adapter', () => {
     for (const number of ['', '12345678', '55 6587', 'A556587', '556587.']) expect(() => normalizeSouthPostNumber(number)).toThrow();
     for (const number of [NUMBER, '1', '0556587']) expect(normalizeSouthPostNumber(` ${number} `)).toBe(number);
   });
+
+  it('reads a status its map lacks by the shared wording rules', () => {
+    expect(parseSouthPost(then('Intento de entrega fallido'), NUMBER)).toMatchObject({ current_stage: 'failed_attempt', current_stage_source: 'wording:language' });
+  });
 });

@@ -27,4 +27,11 @@ describe('King Solutions public tracking reply', () => {
     expect(() => parseReply(found, 'WRONG')).toThrow();
     expect(() => parseReply('<html>Service unavailable</html>', number)).toThrow();
   });
+
+  it('reads a status its map lacks by the shared wording rules', () => {
+    // Synthetic: the sample's status reworded.
+    const reply = JSON.parse(found);
+    reply.trackResults[0].trackItem.status = 'Returned to sender';
+    expect(parseReply(JSON.stringify(reply), number)).toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

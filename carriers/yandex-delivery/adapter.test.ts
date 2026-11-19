@@ -156,4 +156,10 @@ describe('Yandex Delivery statuses', () => {
   it('flags its wall clocks in the catalog', () => {
     expect(carrier.tracking).toMatchObject({ adapter: 'yandex-delivery', steps: ['direct'], localClocks: true });
   });
+
+  it('reads a wording its map lacks by the shared wording rules', () => {
+    // Synthetic: a newer scan in words the shared rules read.
+    expect(parseYandexDeliveryPage(then(scan('08.06.2026 09:00', 'Returned to sender')), NUMBER))
+      .toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

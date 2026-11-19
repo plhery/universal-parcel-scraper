@@ -33,7 +33,8 @@ delivery note that repeats the receiver are left out.
 ## Stages
 
 The states seen on public guías are staged. "En ocurre" is the destination branch holding the parcel
-for collection. Any other state keeps its wording without a stage.
+for collection. Any other state goes to the shared wording rules, and keeps its wording without a
+stage when they do not read it.
 
 ## Links
 

@@ -18,3 +18,9 @@ it('requires a whole number on both the result card and the no-match notice', ()
     expect(() => parseRapex(load(name), '999999999999')).toThrow(expect.objectContaining({ kind: 'indeterminate' }));
   }
 });
+
+it('reads a state its map lacks by the shared wording rules', () => {
+  // Synthetic: the sample's newest state reworded.
+  const result = parseRapex(load('delivered').replace('#48AD01">Entregue</span>', '#48AD01">Devolvido ao remetente</span>'), '090079192043');
+  expect(result.events?.[0]).toMatchObject({ stage: 'returned', stage_source: 'wording:language' });
+});

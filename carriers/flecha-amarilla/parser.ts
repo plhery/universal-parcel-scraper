@@ -5,7 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { explicitOffsetTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { flechaStage, statusMap } from './status.js';
+import { scanStage, statusMap } from './status.js';
 
 export const PROVIDER = 'Paquetería Flecha Amarilla';
 export const FLECHA_AMARILLA_MAX_BYTES = 1024 * 1024;
@@ -78,24 +78,25 @@ export function parseFlecha(payload: unknown, raw: string): CarrierResult {
     const wording = clean(row.estadoActual, 120);
     const at = scanTime(row);
     if (!wording || !at) throw new SchemaError(PROVIDER, 'Paquetería Flecha Amarilla returned an event without a state or a readable clock');
-    const stage = flechaStage(wording);
+    const stage = scanStage(wording);
     const location = clean(row.ciudadActual, 120);
-    if (stage === 'delivered') receiver = clean(row.receptor, 120) || receiver;
+    if (stage?.stage === 'delivered') receiver = clean(row.receptor, 120) || receiver;
     scans.push({ at: at.timestamp, index, event: {
       time: at.iso, description: wording,
       ...(location ? { location } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}),
     } });
   }
   // The tracker lists the oldest scan first, and a branch may log two states on the same second.
   scans.sort((left, right) => right.at - left.at || right.index - left.index);
   const events = scans.map(({ event }) => event);
   // A delivery stands only while no newer state may have undone it (`leadingScan`).
-  const stage = leadingScan(events, statusMap)?.stage as Stage | undefined;
+  const lead = leadingScan(events, statusMap);
+  const stage = lead?.stage as Stage | undefined;
   const delivered = stage === 'delivered' ? events.find(event => event.stage === 'delivered') : undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    ...(stage ? { current_stage: stage, current_stage_source: lead!.stage_source } : {}),
     last_status_text: events[0]!.description!,
     last_update: events[0]!.time ?? null,
     expected_delivery: null,

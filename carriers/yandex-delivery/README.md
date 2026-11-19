@@ -38,7 +38,7 @@ The map follows the page's scan wordings and the statuses its "Что знача
 section explains. A parcel left uncollected is cancelled, then goes back through the point it was
 dropped at and waits there for the sender, which is a return; a disposed order is an exception.
 Changes of the storage deadline or return date, and a delayed delivery, keep the stage before
-them.
+them. Other wordings go to the shared wording rules.
 
 ## Links
 

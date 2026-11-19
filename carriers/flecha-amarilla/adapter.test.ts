@@ -106,4 +106,10 @@ describe('Paquetería Flecha Amarilla guest adapter', () => {
       expect(statusMap.stage(null, entry.wording.toLowerCase())).toBe(entry.stage);
     }
   });
+
+  it('reads a state its map lacks by the shared wording rules', () => {
+    // Synthetic: a newer state after the sample's delivery.
+    const after = parseFlecha(changed(guia => { guia.eventos.push({ ...guia.eventos[9], estadoActual: 'DEVUELTO AL REMITENTE', fecha: '/Date(1488999374000-0600)/', fechaTexto: '2017-03-08 12:56:14', receptor: '' }); }), 'C1503571');
+    expect(after).toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

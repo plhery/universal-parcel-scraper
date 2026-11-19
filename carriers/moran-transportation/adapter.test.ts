@@ -33,4 +33,12 @@ describe('Moran Transportation tracking', () => {
   it('treats an unavailable route as a tracking failure', () => {
     expect(() => parseTracking('<html>Unavailable</html>', '0000000000', 404)).toThrow(expect.objectContaining({ kind: 'schema' }));
   });
+
+  it('reads a wording its map lacks by the shared wording rules', () => {
+    // Synthetic: one of the sample's rows reworded.
+    const number = /<pronumb>(\d+)<\/pronumb>/.exec(fixture('found'))![1]!;
+    const result = parseTracking(fixture('found').replace('<histcode>Manifested</histcode>', '<histcode>Delivery attempt failed</histcode>'), number, 200);
+    expect(result.events!.find(event => event.description === 'Delivery attempt failed'))
+      .toMatchObject({ stage: 'failed_attempt', stage_source: 'wording:language' });
+  });
 });

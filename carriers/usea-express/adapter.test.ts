@@ -21,4 +21,11 @@ describe('USEA EXPRESS public tracking', () => {
   it('rejects a changed response', () => {
     expect(() => parseTracking('<html></html>', 'USEA38270400484097', 200)).toThrow();
   });
+
+  it('reads a wording its map lacks by the shared wording rules', () => {
+    // Synthetic: the sample's newest row reworded.
+    const reply = JSON.parse(fixture('found'));
+    reply.data[0].events[0].content = 'Returned to sender';
+    expect(parseTracking(JSON.stringify(reply), 'USEA38270400484097', 200)).toMatchObject({ current_stage: 'returned', current_stage_source: 'wording:language' });
+  });
 });

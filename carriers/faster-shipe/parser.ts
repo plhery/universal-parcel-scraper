@@ -2,7 +2,7 @@ import { IndeterminateError, NotFoundError, SchemaError } from '../../core/error
 import type { CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
 import { isRecord } from '../../core/types.js';
-import { stageOf } from './status.js';
+import { scanStage } from './status.js';
 
 const provider = 'faster-shipe';
 
@@ -19,9 +19,9 @@ export function parseTracking(text: string, number: string, httpStatus: number):
   if (current.length !== 1 || !isRecord(step) || step.status !== reply.status || typeof step.label !== 'string' || !step.label.trim()) {
     throw new SchemaError(provider, 'Inconsistent current milestone');
   }
-  const stage = stageOf(step.label);
-  return { status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+  const stage = scanStage(step.label);
+  return { status: stage ? languageStageStatus(stage.stage) : 'unknown',
+    ...(stage ? { current_stage: stage.stage, current_stage_source: stage.source } : {}),
     last_status_text: step.label, events: [], summary_only: true };
 
 }

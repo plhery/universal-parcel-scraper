@@ -21,7 +21,8 @@ area. Its site is huuneh.com.
 ## Notes
 
 - Each scan shows a status name, such as `Pick_up` or `On Route`, and a note after a `+`. The
-  stage comes from the name; the note is kept after it when it says more.
+  stage comes from the name, by the map, else the shared wording rules; the note is kept after
+  it when it says more.
 - `Pick_up` is the pickup the customer books, before the courier collects the parcel, so it is
   registered. `On Route` is the local delivery round, so it is out for delivery.
 - Scans are dated to the second with no zone, so each is a `local_time` wall clock, which a

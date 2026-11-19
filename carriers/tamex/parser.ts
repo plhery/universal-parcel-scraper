@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { ChallengeError, IndeterminateError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus } from '../../core/status/index.js';
-import { stageOf } from './status.js';
+import { scanStage } from './status.js';
 
 const provider = 'tamex';
 
@@ -32,17 +32,17 @@ export function parseTracking(html: string, number: string, httpStatus: number):
         || !/^\d{4}-\d{2}-\d{2}$/.test(local_time) || !DateTime.fromISO(local_time, { zone: 'utc' }).isValid) {
       throw new SchemaError(provider, 'Invalid Tamex history row');
     }
-    const mapped = stageOf(description);
-    const stage = mapped === 'accepted' && moved ? 'in_transit' : mapped;
-    if (stage && stage !== 'registered' && stage !== 'accepted') moved = true;
-    return { local_time, description, ...(stage ? { stage, stage_source: 'carrier_map' } : {}) };
+    const read = scanStage(description);
+    const stage = read?.stage === 'accepted' && moved ? { ...read, stage: 'in_transit' as const } : read;
+    if (stage && stage.stage !== 'registered' && stage.stage !== 'accepted') moved = true;
+    return { local_time, description, ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) };
   }).reverse();
 
   const newest = events[0];
   if (!newest) throw new IndeterminateError(provider, 'Tamex returned no history');
   return {
     status: newest.stage ? languageStageStatus(newest.stage) : 'unknown',
-    ...(newest.stage ? { current_stage: newest.stage, current_stage_source: 'carrier_map' } : {}),
+    ...(newest.stage ? { current_stage: newest.stage, current_stage_source: newest.stage_source } : {}),
     last_status_text: newest.description, last_update_local: newest.local_time, events,
   };
 }

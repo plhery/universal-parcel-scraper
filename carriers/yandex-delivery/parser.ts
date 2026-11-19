@@ -6,7 +6,7 @@ import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean } from '../../core/transport/text.js';
 import { yandexDeliveryRequestNumber } from './number.js';
-import { statusMap, yandexDeliveryStage } from './status.js';
+import { scanStage, statusMap } from './status.js';
 
 export const PROVIDER = 'Yandex Delivery';
 export const YANDEX_DELIVERY_URL = 'https://dostavka.yandex.ru/ndd/tracking/';
@@ -86,10 +86,10 @@ export function parseYandexDeliveryPage(html: string, rawNumber: string): Carrie
     if (clock && !local) throw new SchemaError(PROVIDER, 'Yandex Delivery returned an invalid scan clock');
     const line = clean(lines.text(), 200);
     const location = line && !DETAIL_WORDING.test(description) && !DETAIL_LINE.test(line) ? line : '';
-    const stage = yandexDeliveryStage(description);
+    const stage = scanStage(description);
     // A scan the page shows without a clock keeps none, in its place among the others.
     events.push({ ...(local ? { local_time: local } : {}), description, ...(location ? { location } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}) });
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) });
   });
   // The page lists the oldest scan first. Reverse the rows, keeping same-minute order.
   events.reverse();
@@ -99,7 +99,7 @@ export function parseYandexDeliveryPage(html: string, rawNumber: string): Carrie
   const stage = current?.stage as Stage | undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    ...(stage ? { current_stage: stage, current_stage_source: current!.stage_source } : {}),
     last_status_text: newest.description!,
     last_update: null,
     ...(dated ? { last_update_local: dated.local_time! } : {}),

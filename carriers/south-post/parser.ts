@@ -5,7 +5,7 @@ import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { zonedTime, type ParsedTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { southPostStage, statusMap } from './status.js';
+import { scanStage, statusMap } from './status.js';
 
 export const PROVIDER = 'South Post';
 export const SOUTH_POST_URL = 'https://tracker.southpost.com.ar/seguimiento';
@@ -75,17 +75,18 @@ export function parseSouthPost(payload: unknown, rawNumber: string): CarrierResu
     const at = scanTime(row);
     if (!wording || !at) throw new SchemaError(PROVIDER, 'South Post returned a scan without a status or a readable clock');
     const code = typeof row.codigo_estado === 'number' && Number.isInteger(row.codigo_estado) && row.codigo_estado >= 0 ? String(row.codigo_estado) : '';
-    const stage = southPostStage(wording);
+    const stage = scanStage(wording);
     scans.push({ at: at.timestamp, index, signatory: clean(row.receptor, 120) || clean(row.receptor_nombre, 120), event: {
       time: at.iso, description: wording,
       ...(code ? { provider_code: code } : {}),
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}),
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}),
     } });
   }
   // The tracker lists the newest scan first; equal clocks keep its order.
   scans.sort((left, right) => right.at - left.at || left.index - right.index);
   const events = scans.map(({ event }) => event);
-  const stage = leadingScan(events, statusMap)?.stage as Stage | undefined;
+  const lead = leadingScan(events, statusMap);
+  const stage = lead?.stage as Stage | undefined;
   // A delivered shipment gets further "ENTREGADA" rows as its proof goes back to the sender;
   // the first of the newest run of deliveries is the delivery itself.
   const first = stage === 'delivered' ? scans.findIndex(scan => scan.event.stage === 'delivered') : -1;
@@ -96,7 +97,7 @@ export function parseSouthPost(payload: unknown, rawNumber: string): CarrierResu
   const signatory = delivery ? (delivery.signatory || deliveries.find(scan => scan.signatory)?.signatory) : undefined;
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    ...(stage ? { current_stage: stage, current_stage_source: lead!.stage_source } : {}),
     last_status_text: events[0]!.description!,
     last_update: events[0]!.time ?? null,
     expected_delivery: null,

@@ -6,7 +6,7 @@ import { leadingScan } from '../../core/result/unstaged.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { calendarDay } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
-import { huunehStage, statusMap } from './status.js';
+import { scanStage, statusMap } from './status.js';
 
 export const PROVIDER = 'Huuneh';
 export const HUUNEH_TRACK_URL = 'https://huuneh.com/dashboard/track.php';
@@ -80,16 +80,18 @@ export function parseHuuneh(html: string, raw: string): CarrierResult {
     const [status = '', ...rest] = (title.html() ?? '').split(/<br\s*\/?>/i).map(part => clean(load(part).root().text(), 300));
     const note = clean(rest.join(' '), 300).replace(/^\+\s*/, '');
     if (!status) throw new SchemaError(PROVIDER, 'Huuneh returned an unnamed scan');
-    const stage = huunehStage(status);
+    const stage = scanStage(status);
     const description = note && folded(note) !== folded(status) ? `${status}: ${note}` : status;
     scans.push({ index, event: { local_time: local, description,
-      ...(stage ? { stage, stage_source: 'carrier_map' } : {}) } });
+      ...(stage ? { stage: stage.stage, stage_source: stage.source } : {}) } });
   });
   // The page lists the oldest scan first; the page's order settles scans of one second.
   scans.sort((left, right) => right.event.local_time!.localeCompare(left.event.local_time!) || right.index - left.index);
   const events = scans.map(scan => scan.event);
-  const headingStage = huunehStage(heading);
-  const stage = (events.length ? leadingScan(events, statusMap)?.stage : headingStage) as Stage | undefined;
+  const lead = events.length ? leadingScan(events, statusMap) : undefined;
+  const headingStage = events.length ? null : scanStage(heading);
+  const stage = (lead?.stage ?? headingStage?.stage) as Stage | undefined;
+  const source = lead?.stage_source ?? headingStage?.source;
 
   const [sender, recipient] = ['Sender', 'Recipient'].map(name => $('.payment-wrap').filter((_, node) => clean($(node).find('h5.form_sub').first().text(), 40) === name));
   if (sender!.length !== 1 || recipient!.length !== 1) throw new SchemaError(PROVIDER, 'Huuneh changed its shipment blocks');
@@ -98,7 +100,7 @@ export function parseHuuneh(html: string, raw: string): CarrierResult {
   const address = [labelled($, recipient!, 'Contact Address'), labelled($, recipient!, 'Destination city')].filter(Boolean).join('\n');
   return {
     status: stage ? languageStageStatus(stage) : 'unknown',
-    ...(stage ? { current_stage: stage, current_stage_source: 'carrier_map' } : {}),
+    ...(stage ? { current_stage: stage, current_stage_source: source } : {}),
     last_status_text: events[0]?.description ?? heading,
     last_update: null,
     ...(events[0] ? { last_update_local: events[0].local_time } : {}),
