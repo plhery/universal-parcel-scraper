@@ -200,6 +200,22 @@ describe('Postal Ninja result parsing', () => {
     expect(times(parsePostalNinjaResponse(abroad, item))).toEqual(['local 2026-10-05T22:11:00']);
   });
 
+  it('gives Royal Mail\'s Australian scans, after it leaves the UK, the wall clock under Royal Mail\'s label', () => {
+    // Australia Post's arrival at customs at 10:04 Sydney summer time, labelled +09:30 by Royal Mail, came at 00:34 UK time.
+    const item = 'RR123456785GB';
+    const scans = [
+      { ds: 'Royal Mail', dt: '2026-11-13T18:52:00', dsc: 'Item Received' },
+      { ds: 'Royal Mail', dt: '2026-11-14T06:50:00', dsc: 'Item Leaving the UK' },
+      { ds: 'Royal Mail', dt: '2026-11-18T00:34:00', dsc: 'Item Received' },
+    ];
+    expect(times(parsePostalNinjaResponse(postal(item, 'AU', scans), item, 'Europe/London')))
+      .toEqual(['local 2026-11-18T10:04:00', '2026-11-14T06:50:00.000Z', '2026-11-13T18:52:00.000Z']);
+    // Bound elsewhere, or before the scan leaving the UK, Royal Mail's scans keep the UK's clock.
+    expect(times(parsePostalNinjaResponse(postal(item, 'NZ', scans), item, 'Europe/London'))?.[0]).toBe('2026-11-18T00:34:00.000Z');
+    expect(times(parsePostalNinjaResponse(postal(item, 'AU', [scans[0], scans[2]]), item, 'Europe/London'))?.[0])
+      .toBe('2026-11-18T00:34:00.000Z');
+  });
+
   it('reads PostNL\'s scans through Spring GDS, given an hour or two ahead on Amsterdam\'s clock, back on their own', () => {
     // PostNL's sorting at 14:18 Dutch time came at 15:18, and in summer at 16:18; Spring GDS's acceptance, to the second, is an instant.
     const scans = [

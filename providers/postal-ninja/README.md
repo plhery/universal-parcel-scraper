@@ -101,6 +101,12 @@ capture failure.
   Belfast at 00:11 British summer time at 22:11, and Swiss Post's posting at 10:05 Zurich time at
   08:05. They are placed on the office's clock in any history. Read on a carrier's zone they
   borrowed, Royal Mail's London time, they came hours early and showed beside Royal Mail's own.
+  On an item bound for Australia, Royal Mail's scans after the one leaving the UK are the
+  Australian post's. Royal Mail labels an Australian office's wall clock with central Australia's
+  offset, +09:30 ([Royal Mail](../../carriers/royal-mail/README.md)), and Postal Ninja gives that
+  instant on the UK's clock: its "Item Received" at 00:34 was Australia Post's arrival at customs
+  at 10:04 Sydney summer time. Those scans keep the wall clock under the label, since Australia
+  has several zones.
   Spring GDS's scans dated to the minute are PostNL's, whose feed marks a scan's local time as
   UTC ([Spring GDS](../../carriers/spring-gds/README.md)). Postal Ninja reads it as UTC and gives
   it on Amsterdam's clock: three sorting scans at 14:18 and 14:19 Dutch time came at 15:18 and
