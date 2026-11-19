@@ -3,6 +3,8 @@ import { load } from 'cheerio';
 import { describe, expect, it, vi } from 'vitest';
 import { statusMapAnswer } from '../../app.js';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
+import { carrierIdFromName } from '../../core/catalog/hints.js';
+import { relayedWordingStage } from '../../core/catalog/statusMaps.js';
 import { parseTrackingInput } from '../../core/detection/index.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 import { normalizeCarrierResult } from '../../core/result/index.js';
@@ -196,6 +198,10 @@ describe('EURODIS direct tracking', () => {
         .toEqual(stage ? { kind: 'mapped', stage } : { kind: 'intentional_gap', note: expect.any(String) });
     }
     expect(statusMapAnswer({ carrier: 'eurodis', providerCode: null, description: 'Teleported' })).toEqual({ kind: 'unknown' });
+    // A universal provider naming EURODIS behind a scan, as Postal Ninja does, reads its wording by this map.
+    expect(carrierIdFromName('EURODIS')).toBe('eurodis');
+    expect(relayedWordingStage('eurodis', 'Outbound Gateway')).toBe('in_transit');
+    expect(relayedWordingStage('eurodis', 'Teleported')).toBeUndefined();
     for (const wording of ['constructor', 'toString']) expect(eurodisStage(wording)?.source, wording).not.toBe('carrier_map');
   });
 

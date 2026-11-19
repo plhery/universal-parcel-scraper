@@ -87,6 +87,14 @@ it.each([
   });
 });
 
+it('reads a pickup point arrival whatever carrier note follows it', () => {
+  for (const wording of ['Arrived at pick-up point. Package available for collection.',
+    'Arrived at pick-up point. Package available for collection., Carrier note: Waiting for you to pick-up']) {
+    const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));
+    expect(parseShouwu(payload, DELIVERED).events?.[0]).toMatchObject({ stage: 'ready_for_pickup', stage_source: 'carrier_map' });
+  }
+});
+
 it('leaves a relayed sentence the map has not seen to the shared wording rules', () => {
   const wording = 'FR, Votre envoi est en attente de dédouanement.,运输中';
   const payload = changed((rows) => rows.splice(0, rows.length, trace(1775990469, wording)));

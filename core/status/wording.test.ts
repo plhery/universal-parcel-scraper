@@ -1084,6 +1084,9 @@ describe('classifyWording', () => {
       ['Address Corrected. For Delivery Issues & Tracking Support, Contact GOFO at the number on its site', 'in_transit'],
       // Poczta Polska's departure from Poland, as ParcelsApp words it.
       ['Sending the package from Poland', 'in_transit'],
+      // Israel Post's English history of an EMS item from abroad, as Ship24 relays it.
+      ['The EMS item was sent by the sender via the postal unit in Japan.', 'accepted'],
+      ['Notification has been received regarding the EMS item being shipped to Israel', 'in_transit'],
       // Russian Post's operations, as ParcelsApp words them.
       ['Processing: Left pickup location', 'in_transit'], ['Export of international mail', 'in_transit'],
       ['Import of international mail', 'in_transit'], ['Released from Russia', 'in_transit'],

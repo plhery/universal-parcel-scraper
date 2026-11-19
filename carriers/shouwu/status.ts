@@ -63,8 +63,11 @@ const FEDEX_PLACE = /^[a-z][a-z .'-]{1,60}, [a-z]{2}, us, \d{5}(?:-\d{4})?, (pic
  */
 function mappedStage(wording: string): Stage | undefined {
   return WORDINGS.get(FEDEX_PLACE.exec(wording)?.[1] ?? wording) ?? PATTERNS.find(([pattern]) => pattern.test(wording))?.[1] ?? SUB_STATUS_NAMES.get(wording)
-    ?? imileRelayedStage(wording) ?? relayedSentence(wording);
+    ?? imileRelayedStage(wording) ?? relayedSentence(wording) ?? WORDINGS.get(wording.replace(CARRIER_NOTE, ''));
 }
+
+// The last mile's own note appended to a scan: "Arrived at pick-up point. …, Carrier note: …".
+const CARRIER_NOTE = /, carrier note: .*$/;
 
 // The French last mile's sentence, which Shouwu gives after the country's code and before its own Chinese
 // label: "FR, Votre envoi a été distribué dans la boîte à lettres.,签收…". The sentence alone is in the map.

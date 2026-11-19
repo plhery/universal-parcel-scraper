@@ -51,4 +51,6 @@ export const statusMap: CarrierStatusMap = {
   gaps: [
     { wording: 'special delivery agreement', note: 'An arrangement for the delivery, such as another day or place; it moves nothing by itself.' },
   ],
+  // EURODIS's wordings are read whole, so Postal Ninja's relay of EURODIS's scans reads by this map.
+  wholeWording: true,
 };

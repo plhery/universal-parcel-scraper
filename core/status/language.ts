@@ -649,6 +649,11 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   if (/^(?:(?:the |your )?(?:item|parcel|package|shipment) )?(?:(?:has been|was) )?received (?:at|by) (?:the )?destination post(?: office)?$/.test(text)) return 'in_transit';
   // Posting/collection by the carrier, not recipient pickup or data submission.
   if (/^(?:the |your )?(?:item|package|parcel|shipment) (?:has been |was |is )?(?:received for transport|(?:dropped off|deposited) by (?:the )?sender (?:at|with) (?:our |the |a )?postal partner)\b/.test(text)) return 'accepted';
+  // Israel Post's English history of an item from abroad, as Ship24 relays it: the item posted abroad, "The EMS item
+  // was sent by the sender via the postal unit in Japan.", and the origin post's notice that it is on its way,
+  // "Notification has been received regarding the EMS item being shipped to Israel".
+  if (/^the (?:ems |registered )?item was sent by the sender via the postal (?:unit|authority|service) in [a-z][a-z' ]{1,40}$/.test(text)) return 'accepted';
+  if (/^notification has been received regarding the (?:ems |registered )?item being shipped to [a-z][a-z' ]{1,40}$/.test(text)) return 'in_transit';
   // A vehicle load and a gateway scan prove handling, but do not name the delivery round. So does an
   // office of exchange taking in mail from abroad, as a provider words Magyar Posta's "A bejövő
   // küldemény átvétele a kicserélőben".
