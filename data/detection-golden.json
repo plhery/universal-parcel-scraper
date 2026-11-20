@@ -84257,6 +84257,17 @@
     ]
   },
   {
+    "input": "COP0308572",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "CP000846674BO",
     "carrier": "intl-post",
     "confidence": "high",
@@ -91078,6 +91089,17 @@
     ],
     "asked": [
       "colis-prive"
+    ]
+  },
+  {
+    "input": "GTG0406055",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
     ]
   },
   {

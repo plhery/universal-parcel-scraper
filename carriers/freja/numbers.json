@@ -1,5 +1,55 @@
 {
   "carrier": "freja",
-  "gap": "No public page shows a FREJA number.",
-  "records": []
+  "records": [
+    {
+      "number": "GTG0406055",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/freja-transport-logistics-ab",
+        "date": "2026-05-11",
+        "dateKind": "manifest arrival date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "FREJA Sweden ocean forwarding",
+        "reportedRole": "NVOCC House Bill",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The public manifest identifies this exact house bill for a FREJA shipment, separately from the steamship line’s master bill. FREJA’s public sea form asks for a container number, so coverage of house bills remains unclear."
+    },
+    {
+      "number": "COP0308572",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/shipit-logistics",
+        "date": "2026-10-30",
+        "dateKind": "manifest arrival date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "FREJA Denmark ocean forwarding",
+        "reportedRole": "NVOCC House Bill",
+        "assessment": "scope_review"
+      },
+      "quarantine": true,
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The manifest excerpt explicitly identifies this house bill for a FREJA shipment. FREJA’s public sea form asks for a container number, so coverage of house bills remains unclear."
+    }
+  ]
 }
