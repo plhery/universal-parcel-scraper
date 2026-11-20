@@ -62492,6 +62492,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "westjet-cargo": {
+    "displayName": "WestJet Cargo",
+    "color": "#017f7c",
+    "aliases": [
+      "WestJet Air Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "westjet-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "westweg": {
     "displayName": "Westweg",
     "color": "#281569",
@@ -67217,6 +67239,7 @@ export const CARRIER_IDS = [
   "west-postal",
   "western-bid",
   "western-post",
+  "westjet-cargo",
   "westweg",
   "whatsship",
   "whistl",
@@ -69087,6 +69110,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "west-postal": [],
   "western-bid": ["western-bid-1"],
   "western-post": [],
+  "westjet-cargo": [],
   "westweg": [],
   "whatsship": ["whatsship-1"],
   "whistl": ["whistl-1"],

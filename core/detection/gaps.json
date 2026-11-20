@@ -5529,5 +5529,10 @@
     "carrier": "air-greenland",
     "kind": "by_design",
     "reason": "Air Greenland cargo is selectable explicitly. The IATA airwaybill prefix and numeric format have not been assessed against existing carrier assignments."
+  },
+  {
+    "carrier": "westjet-cargo",
+    "kind": "by_design",
+    "reason": "WestJet Cargo is selectable explicitly. The air waybill prefix and check digit have not been assessed against other carriers."
   }
 ]

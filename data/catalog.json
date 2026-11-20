@@ -62488,6 +62488,28 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "westjet-cargo": {
+    "displayName": "WestJet Cargo",
+    "color": "#017f7c",
+    "aliases": [
+      "WestJet Air Cargo"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "westjet-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "westweg": {
     "displayName": "Westweg",
     "color": "#281569",

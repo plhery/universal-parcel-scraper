@@ -1,0 +1,56 @@
+{
+  "id": "westjet-cargo",
+  "displayName": "WestJet Cargo",
+  "aliases": [
+    "WestJet Air Cargo"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#017f7c"
+  },
+  "selectable": true,
+  "timezone": "America/Edmonton",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "westjet-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "searchUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "canaryUrl": "https://westjet.smartkargo.com/FrmAWBTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "weight",
+      "flight_and_routing",
+      "goods_and_package_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "weight"
+    ],
+    "discarded": [
+      "flight_and_routing",
+      "goods_and_package_details"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
