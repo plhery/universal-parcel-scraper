@@ -29,9 +29,6 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
-  { carrier: 'the-delivery-group', number: 'TDGZZZZZZZZ000001',
-    route: /^https:\/\/tracking\.dockethub\.com\/shipment\/TDGZZZZZZZZ000001\?style=TDG$/,
-    marker: /Track Shipment/ },
   { carrier: 'thabit-logistics', number: 'ZZ000000014',
     route: /^https:\/\/thabit-logistics\.com\/track-shipment\/ZZ000000014$/,
     marker: /Record Not Found/ },
@@ -2347,6 +2344,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'the-delivery-group': 'The known parcel can need its delivery postcode; a number-only empty reply is inconclusive, and no rendered-page control was completed for this link.',
   flechacarga: 'The receipt link needs separate letter, branch and serial parameters; the catalog opens the public search form without a single-reference link.',
   tramaco: 'The page sends guia to its lookup, then clears the input. An unknown guide leaves no visible number or specific missing notice, so the DOM-only daily check cannot verify forwarding.',
   'best-express-th': 'the tracking page shows a waybill only after BEST\'s rotate picture is turned upright, which the daily link check does not do; native retrieval solves it before asking',
