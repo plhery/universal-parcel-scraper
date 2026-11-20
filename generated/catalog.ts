@@ -45032,6 +45032,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pacific-air-cargo": {
+    "displayName": "Pacific Air Cargo",
+    "color": "#006B9B",
+    "aliases": [
+      "Pacific Air Cargo Hawaii",
+      "PACTRAK"
+    ],
+    "countries": [
+      "US",
+      "AS",
+      "GU"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Honolulu",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pacific-air-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.pactracking.com/track/",
+    "trackingUrlTemplate": "https://www.pactracking.com/track/",
+    "trackingSearchUrl": "https://www.pactracking.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pacific-international-lines": {
     "displayName": "Pacific International Lines",
     "color": "#d41925",
@@ -68923,6 +68948,7 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
+  "pacific-air-cargo",
   "pacific-international-lines",
   "pack-man",
   "packli-punkt",
@@ -70884,6 +70910,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
+  "pacific-air-cargo": [],
   "pacific-international-lines": [],
   "pack-man": [],
   "packli-punkt": [],

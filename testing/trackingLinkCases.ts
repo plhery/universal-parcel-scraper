@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'pacific-air-cargo', number: '5YR-92203705',
+    route: /^https:\/\/www\.pactracking\.com\/track\/?$/,
+    marker: /Track a Shipment|Air WayBill Number/i, forwarding: 'none' },
   { carrier: 'volaris-cargo', number: '036-18709025',
     route: /^https:\/\/volarisy4\.smartkargo\.com\/FrmAWBTracking\.aspx$/,
     marker: /Track Air Waybill|AWB Numbers|AWB Prefix/iu, forwarding: 'none' },

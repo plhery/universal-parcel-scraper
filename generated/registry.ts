@@ -620,6 +620,7 @@ import { adapter as ouYiHang } from '../carriers/ou-yi-hang/adapter.js';
 import { adapter as overseasExpress } from '../carriers/overseas-express/adapter.js';
 import { adapter as ozonLogistics } from '../carriers/ozon-logistics/adapter.js';
 import { adapter as paack } from '../carriers/paack/adapter.js';
+import { adapter as pacificAirCargo } from '../carriers/pacific-air-cargo/adapter.js';
 import { adapter as pacificInternationalLines } from '../carriers/pacific-international-lines/adapter.js';
 import { adapter as packMan } from '../carriers/pack-man/adapter.js';
 import { adapter as packeta } from '../carriers/packeta/adapter.js';
@@ -1609,6 +1610,7 @@ export const REGISTRY: RegistryDefinition = {
     "overseas-express": overseasExpress,
     "ozon-logistics": ozonLogistics,
     "paack": paack,
+    "pacific-air-cargo": pacificAirCargo,
     "pacific-international-lines": pacificInternationalLines,
     "pack-man": packMan,
     "packeta": packeta,
@@ -3214,6 +3216,7 @@ export const REGISTRY: RegistryDefinition = {
     "ozon-express-ma": "universal",
     "ozon-logistics": "ozon-logistics",
     "paack": "paack",
+    "pacific-air-cargo": "pacific-air-cargo",
     "pacific-international-lines": "pacific-international-lines",
     "pack-man": "pack-man",
     "packeta": "packeta",

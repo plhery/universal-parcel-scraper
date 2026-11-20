@@ -57267,6 +57267,14 @@
     ]
   },
   {
+    "input": "5YR-92203705",
+    "carrier": "wedo",
+    "confidence": "high",
+    "candidates": [
+      "wedo"
+    ]
+  },
+  {
     "input": "6 352 932 558 1",
     "carrier": "unknown",
     "confidence": "low",

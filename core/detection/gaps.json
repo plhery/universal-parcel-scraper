@@ -5979,5 +5979,10 @@
     "carrier": "volaris-cargo",
     "kind": "open",
     "reason": "The published Volaris air waybill starts with 036, which overlaps generic numeric recognition shapes. Select Volaris Cargo explicitly."
+  },
+  {
+    "carrier": "pacific-air-cargo",
+    "kind": "open",
+    "reason": "The confirmed public PACTRAK 5YR waybill currently matches WeDo. Select Pacific Air Cargo explicitly for its waybill or short serial."
   }
 ]
