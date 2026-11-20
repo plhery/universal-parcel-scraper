@@ -77,7 +77,8 @@ page makes.
   clocks. DHLink's own row of GOFO's pickup (`TQ001`) is the exception when it names GOFO's
   hub: it is GOFO's arrival there, at the hub's wall clock. A partner's copy of a scan DHLink
   records can come too, on the partner's US clock, as SwiftX's hub scans do; a scan whose US
-  reading is the instant of another with the same wording is that copy and is dropped. With
+  reading is the instant of another with the same wording, in no other state, is that copy and is
+  dropped. With
   another partner or none known, that other row must be read on Beijing time, as a pickup row
   recorded at once is. UniUni's scans can come twice, on its hub's clock, often after the hub's town, and on
   UTC: when a row read on UTC, before DHLink recorded either, is another's US reading to the

@@ -282,6 +282,13 @@ describe('DHLink HTTP adapter', () => {
       ['2026-03-10T16:10:56+08:00', null, 'in_transit', 'SAMPLE HUB, US'], ['2026-03-10T05:10:56+08:00', null, 'in_transit', 'SAMPLEVILLE, US']]);
     // Elsewhere it is not.
     expect(relayed(hub, 'GB', 'SWX990000000000000001').events).toHaveLength(3);
+    // A hub scan in another state is another scan, though its Chicago clock is the Beijing row's instant.
+    const states = [row('2026-03-10 16:10:56', '2026-03-10 16:11:30', 'SAMPLE CITY, NY, US', 'Arrived at Origin Hub'),
+      row('2026-03-10 03:10:56', '2026-03-10 16:12:00', 'SAMPLEVILLE, IL, US', 'Arrived at Origin Hub')];
+    expect(timeline(relayed(states, 'US', 'SWX990000000000000001').events).map(([, , , place]) => place))
+      .toEqual(['SAMPLE CITY, NY, US', 'SAMPLEVILLE, IL, US']);
+    // In one state, the town's row is still the hub row's copy.
+    expect(relayed([states[0]!, { ...states[1]!, place: 'SAMPLEVILLE, NY, US' }], 'US', 'SWX990000000000000001').events).toHaveLength(1);
     // Without a known partner, a partner's US-clock copy of DHLink's pickup row, recorded on Beijing time, is the same scan.
     const relayedPickup = [{ ...row('2026-03-11 02:57:21', '2026-03-11 02:58:00', 'none', 'Package picked up by last-mile carrier'),
       nodeCode: 'TQ001', nodeName: 'Last mile pickup' }, row('2026-03-10 13:57:21', '2026-03-11 10:00:00', 'none', 'Package picked up by last-mile carrier')];

@@ -232,6 +232,19 @@ function copyPlace(event: CarrierEvent): string {
   return (event.location || (town ? town[1] + ' ' + town[2] : '')).toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
 }
 
+// A US place's state, before the country if any ("Sampleville, IL, US", "SAMPLEVILLE, IL").
+const PLACE_STATE = /,\s*([A-Z]{2})(?:\s*,\s*US)?$/;
+
+/** Whether two scans' places name different US states. */
+function otherStates(left: CarrierEvent, right: CarrierEvent): boolean {
+  const state = (event: CarrierEvent) => {
+    const named = PLACE_STATE.exec((event.location ?? '').toUpperCase())?.[1];
+    return usStateTimeZone(named) ? named : undefined;
+  };
+  const [one, two] = [state(left), state(right)];
+  return !!one && !!two && one !== two;
+}
+
 function compatiblePlaces(left: string, right: string): boolean {
   return !left || !right || left === right;
 }
@@ -373,9 +386,11 @@ export function parseDhlink(payload: unknown, raw: string, readAt = Date.now()):
       group.push(entry);
       recorded.set(id, group);
     }
+    // SwiftX's copy can name its town where DHLink's row names the hub, but a scan in another
+    // state is another scan, whatever its wording and clock.
     for (const { entry, readings } of rows) {
       if (readings.some(({ time }) => recorded.get(key(entry.scan.event, time.timestamp))
-        ?.some(other => other !== entry))) copies.add(entry);
+        ?.some(other => other !== entry && !otherStates(other.scan.event, entry.scan.event)))) copies.add(entry);
     }
   }
   // A place naming only the destination country is the parcel's, not the scan's: a Canada line's
