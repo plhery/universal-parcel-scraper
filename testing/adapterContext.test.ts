@@ -86,7 +86,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   'fm-transportes': ['service'],
   Track718: ['service'],
   fedex: ['service'], 'magyar-posta': ['service'], 'mondial-relay': ['service'], 'old-dominion': ['chromium'], 'royal-mail': ['chromium'],
-  loggi: ['service'], 'posta-moldovei': ['service'], 'sf-express': ['service'], swiftx: ['service'], usps: ['service'], 'emirates-post': ['service'], '17TRACK': ['service'],
+  loggi: ['service'], 'azul-cargo': ['service'], 'posta-moldovei': ['service'], 'sf-express': ['service'], swiftx: ['service'], usps: ['service'], 'emirates-post': ['service'], '17TRACK': ['service'],
   'trendyol-express': ['service'],
   'tusk-logistics': ['chromium'],
   veho: ['service'],

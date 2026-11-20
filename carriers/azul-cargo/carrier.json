@@ -17,18 +17,68 @@
   "timezone": "America/Sao_Paulo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "azul-cargo",
+    "steps": [
+      "trawl"
+    ],
+    "localClocks": true,
+    "browser": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
-    "canaryUrl": "https://www.azulcargoexpress.com.br/Rastreio/Rastreio",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "url": "https://www.azullogistica.com.br/Rastreio/Rastrear?awb={trackingNumber}",
+    "searchUrl": "https://www.azullogistica.com.br/Rastreio",
+    "canaryUrl": "https://www.azullogistica.com.br/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "signatory",
+      "weight",
+      "service_name",
+      "parcel_count",
+      "origin",
+      "destination",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "signatory",
+      "weight",
+      "service_name"
+    ],
+    "discarded": [
+      "parcel_count",
+      "origin",
+      "destination",
+      "progress_rail"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "recipient_name",
+      "recipient_address",
+      "sender_name",
+      "proof_of_delivery"
+    ]
   },
   "links": [
+    {
+      "domains": [
+        "www.azullogistica.com.br",
+        "azullogistica.com.br"
+      ],
+      "pathPattern": "^/+Rastreio/Rastrear$",
+      "params": [
+        "awb"
+      ]
+    },
     {
       "domains": [
         "www.azulcargoexpress.com.br",

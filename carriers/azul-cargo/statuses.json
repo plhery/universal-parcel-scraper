@@ -1,4 +1,17 @@
 {
   "carrier": "azul-cargo",
-  "entries": []
+  "entries": [
+    {"wording": "Preparação", "stage": "accepted", "language": "pt", "confirmedBy": "live", "note": "The tracker's first phase. Its scan, Encomenda enviada, names the origin terminal."},
+    {"wording": "Encomenda enviada", "stage": "accepted", "language": "pt", "confirmedBy": "live", "note": "The first scan, at the origin terminal, before the parcel leaves it."},
+    {"wording": "Trânsito", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "The tracker's phase for the flights between terminals."},
+    {"wording": "Deixou a unidade Azul Cargo Express", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "Left a terminal, which the scan names."},
+    {"wording": "Saída do voo", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "The flight left the terminal the scan names."},
+    {"wording": "Chegada do voo", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "The flight reached the terminal the scan names."},
+    {"wording": "Em Separação no Destino", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "The tracker's phase for sorting at the destination."},
+    {"wording": "Base de Destino", "stage": "in_transit", "language": "pt", "confirmedBy": "live", "note": "Reached the destination terminal; whether it waits there for collection is the phase's to say."},
+    {"wording": "Saiu para Entrega", "stage": "out_for_delivery", "language": "pt", "confirmedBy": "source", "note": "One of the six phases in the tracker's status filter."},
+    {"wording": "Disponível para Retirada", "stage": "ready_for_pickup", "language": "pt", "confirmedBy": "live", "note": "Waits at the destination terminal for the recipient, on a shipment for collection."},
+    {"wording": "Entrega Realizada", "stage": "delivered", "language": "pt", "confirmedBy": "live", "note": "The tracker's last phase."},
+    {"wording": "Encomenda entregue no destino", "stage": "delivered", "language": "pt", "confirmedBy": "live", "note": "Handed over at the destination; the scan names who took it."}
+  ]
 }

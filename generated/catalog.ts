@@ -10437,10 +10437,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Sao_Paulo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "azul-cargo",
+      "localClocks": true,
+      "browser": true
     },
-    "canaryUrl": "https://www.azulcargoexpress.com.br/Rastreio/Rastreio",
+    "canaryUrl": "https://www.azullogistica.com.br/",
+    "trackingUrlTemplate": "https://www.azullogistica.com.br/Rastreio/Rastrear?awb={trackingNumber}",
+    "trackingSearchUrl": "https://www.azullogistica.com.br/Rastreio",
     "linkRules": [
+      {
+        "domains": [
+          "www.azullogistica.com.br",
+          "azullogistica.com.br"
+        ],
+        "pathPattern": "^/+Rastreio/Rastrear$",
+        "params": [
+          "awb"
+        ]
+      },
       {
         "domains": [
           "www.azulcargoexpress.com.br",
