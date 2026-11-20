@@ -59747,6 +59747,29 @@
       }
     ]
   },
+  "tpl-korea": {
+    "displayName": "TPL Korea",
+    "color": "#235b92",
+    "aliases": [
+      "TBorder",
+      "TPL Korea Co., Ltd.",
+      "티피엘코리아"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tpl-korea"
+    },
+    "canaryUrl": "https://www.tborder.com/",
+    "trackingUrlTemplate": "https://www.tborder.com/freight/hawb_tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.tborder.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tpl-rider": {
     "displayName": "Rider",
     "color": "#0189ff",

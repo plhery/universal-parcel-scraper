@@ -59751,6 +59751,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "tpl-korea": {
+    "displayName": "TPL Korea",
+    "color": "#235b92",
+    "aliases": [
+      "TBorder",
+      "TPL Korea Co., Ltd.",
+      "티피엘코리아"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Seoul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tpl-korea"
+    },
+    "canaryUrl": "https://www.tborder.com/",
+    "trackingUrlTemplate": "https://www.tborder.com/freight/hawb_tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.tborder.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tpl-rider": {
     "displayName": "Rider",
     "color": "#0189ff",
@@ -68740,6 +68763,7 @@ export const CARRIER_IDS = [
   "toten-transport",
   "toyou",
   "tp-logistics-th",
+  "tpl-korea",
   "tpl-rider",
   "trablisa-expres",
   "trackings-ge",
@@ -70675,6 +70699,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "toten-transport": [],
   "toyou": [],
   "tp-logistics-th": ["tp-logistics-th-1"],
+  "tpl-korea": [],
   "tpl-rider": [],
   "trablisa-expres": [],
   "trackings-ge": [],

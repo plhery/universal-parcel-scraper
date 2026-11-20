@@ -1,0 +1,47 @@
+{
+  "carrier": "tpl-korea",
+  "entries": [
+    {
+      "wording": "출발지 접수완료",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "출발지 부분입고",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "출발지 입고완료",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "출발지 출고대기",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "출발지 이고대기",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "출발지 출항대기",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "항공운송중",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

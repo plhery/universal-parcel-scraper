@@ -861,6 +861,7 @@ import { adapter as topyou } from '../carriers/topyou/adapter.js';
 import { adapter as torrestir } from '../carriers/torrestir/adapter.js';
 import { adapter as totalExpress } from '../carriers/total-express/adapter.js';
 import { adapter as toyou } from '../carriers/toyou/adapter.js';
+import { adapter as tplKorea } from '../carriers/tpl-korea/adapter.js';
 import { adapter as trackon } from '../carriers/trackon/adapter.js';
 import { adapter as tracxLogis } from '../carriers/tracx-logis/adapter.js';
 import { adapter as tramaco } from '../carriers/tramaco/adapter.js';
@@ -1824,6 +1825,7 @@ export const REGISTRY: RegistryDefinition = {
     "torrestir": torrestir,
     "total-express": totalExpress,
     "toyou": toyou,
+    "tpl-korea": tplKorea,
     "trackon": trackon,
     "tracx-logis": tracxLogis,
     "tramaco": tramaco,
@@ -3617,6 +3619,7 @@ export const REGISTRY: RegistryDefinition = {
     "toten-transport": "universal",
     "toyou": "toyou",
     "tp-logistics-th": "universal",
+    "tpl-korea": "tpl-korea",
     "tpl-rider": "universal",
     "trablisa-expres": "universal",
     "trackings-ge": "universal",

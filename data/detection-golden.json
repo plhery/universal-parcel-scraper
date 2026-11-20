@@ -58329,6 +58329,25 @@
     ]
   },
   {
+    "input": "6076825053198",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "yunda",
+      "korea-post",
+      "aras-kargo",
+      "econt",
+      "fedex-pl",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "fedex-pl",
+      "aras-kargo"
+    ]
+  },
+  {
     "input": "607S3E-0004SN3W",
     "carrier": "unknown",
     "confidence": "none",

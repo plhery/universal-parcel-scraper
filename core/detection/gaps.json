@@ -5849,5 +5849,10 @@
     "carrier": "don-mariano-express",
     "kind": "open",
     "reason": "The numeric guide offers no distinctive routing evidence. More confirmed tracking-code series are needed to evaluate the FLET format."
+  },
+  {
+    "carrier": "tpl-korea",
+    "kind": "open",
+    "reason": "The confirmed waybill is numeric and shares its length with other carriers. The official TBorder lookup supports explicit selection."
   }
 ]
