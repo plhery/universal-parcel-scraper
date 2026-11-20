@@ -63481,6 +63481,30 @@
       }
     ]
   },
+  "xingyou": {
+    "displayName": "Xingyou International",
+    "color": "#1e4c9a",
+    "aliases": [
+      "Xingyou",
+      "星邮国际",
+      "星邮",
+      "上海星邮供应链有限公司",
+      "Shanghai Xingyou Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xingyou",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "xingyunyi": {
     "displayName": "XingYunYi",
     "color": "#3b9dff",

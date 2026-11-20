@@ -63485,6 +63485,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "xingyou": {
+    "displayName": "Xingyou International",
+    "color": "#1e4c9a",
+    "aliases": [
+      "Xingyou",
+      "星邮国际",
+      "星邮",
+      "上海星邮供应链有限公司",
+      "Shanghai Xingyou Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xingyou",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "xingyunyi": {
     "displayName": "XingYunYi",
     "color": "#3b9dff",
@@ -67366,6 +67390,7 @@ export const CARRIER_IDS = [
   "xgs",
   "xindus",
   "xinghe-freight",
+  "xingyou",
   "xingyunyi",
   "xinsu",
   "xlcourier",
@@ -69241,6 +69266,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xgs": [],
   "xindus": [],
   "xinghe-freight": ["xinghe-freight-1","xinghe-freight-truncated"],
+  "xingyou": [],
   "xingyunyi": [],
   "xinsu": [],
   "xlcourier": ["xlcourier-1"],

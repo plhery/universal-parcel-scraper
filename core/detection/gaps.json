@@ -5558,5 +5558,10 @@
     "carrier": "ywd",
     "kind": "open",
     "reason": "One public waybill, YT, fourteen digits and YT: too few to tell the series from other carriers' numbers"
+  },
+  {
+    "carrier": "xingyou",
+    "kind": "open",
+    "reason": "One public waybill, XY, ten digits and PQ: too few to tell the series from other carriers' numbers"
   }
 ]
