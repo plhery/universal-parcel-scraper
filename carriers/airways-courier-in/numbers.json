@@ -1,5 +1,50 @@
 {
   "carrier": "airways-courier-in",
-  "gap": "No public page shows an Airways Courier number.",
-  "records": []
+  "records": [
+    {
+      "number": "221842392",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no=221842392&type=w",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indian domestic courier delivery",
+        "reportedRole": "carrier waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Airways Courier's indexed public waybill link carries the exact number. The retrieved results page shows an empty waybill section."
+    },
+    {
+      "number": "222453221",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no=222453221&type=w",
+        "date": "2026-03-06",
+        "dateKind": "tracking event date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indian domestic courier delivery",
+        "reportedRole": "carrier waybill number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "Airways Courier's own public result matches the waybill and shows a dated booking and delivery history."
+    }
+  ]
 }

@@ -5144,5 +5144,11 @@
     "pattern": "^2000[0-9]{8}$",
     "kind": "open",
     "reason": "An indexed Altex Curier tracking result identifies this numeric AWB. Detection does not offer Altex Curier."
+  },
+  {
+    "carrier": "airways-courier-in",
+    "pattern": "^22[0-9]{7}$",
+    "kind": "open",
+    "reason": "Airways Courier tracking links publish these nine-digit waybills, including one with a dated delivery history. Detection does not offer Airways Courier."
   }
 ]
