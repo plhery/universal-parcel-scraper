@@ -1,4 +1,59 @@
 {
   "carrier": "rayspeed",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Shipment collected by consignee",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "delivered"
+    },
+    {
+      "wording": "National Holiday, will be delivered next business day",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A holiday notice gives a forecast without reporting a new movement."
+    },
+    {
+      "wording": "Shipment waiting for collection",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "ready_for_pickup"
+    },
+    {
+      "wording": "Shipment waiting for delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Shipment Arrived at Rayspeed Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "shipment on custom clearance process",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "customs"
+    },
+    {
+      "wording": "shipment information received",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "wording": "Shipment Processed at Rayspeed Asia Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Electronic AWB created by Admin",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    }
+  ]
 }
