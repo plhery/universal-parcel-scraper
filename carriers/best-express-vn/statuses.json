@@ -1,4 +1,11 @@
 {
   "carrier": "best-express-vn",
-  "entries": []
+  "entries": [
+    {"wording": "successfully ordered", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The order, which opens the history without a scan type."},
+    {"code": "01", "wording": "Đã thu thập", "stage": "accepted", "language": "vi", "confirmedBy": "live", "note": "Collected; the tracker opens it with the site and the courier."},
+    {"code": "02", "wording": "Được gửi đến", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "Sent on; the next site follows."},
+    {"code": "03", "wording": "Đến nơi", "stage": "in_transit", "language": "vi", "confirmedBy": "live", "note": "Arrived; the site follows."},
+    {"code": "04", "wording": "Đang giao hàng", "stage": "out_for_delivery", "language": "vi", "confirmedBy": "live", "note": "Out for delivery; the tracker opens it with the site and the courier."},
+    {"code": "17", "wording": "Ký nhận", "stage": "delivered", "language": "vi", "confirmedBy": "live", "note": "Signed for; who signed comes first."}
+  ]
 }

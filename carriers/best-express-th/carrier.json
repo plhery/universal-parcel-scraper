@@ -21,18 +21,55 @@
   "timezone": "Asia/Bangkok",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "best-express-th",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "receiver_address",
+    "signed_by"
+  ],
   "portal": {
     "url": "https://www.best-inc.co.th/track?bills={trackingNumber}",
     "searchUrl": "https://www.best-inc.co.th/track",
     "canaryUrl": "https://www.best-inc.co.th/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "coordinates",
+      "sender_name",
+      "origin",
+      "recipient_name",
+      "recipient_address",
+      "driver_name",
+      "contact_details",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "delivered_at",
+      "recipient_address",
+      "signatory"
+    ],
+    "discarded": [
+      "coordinates",
+      "origin",
+      "driver_name",
+      "contact_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
   },
   "links": [
     {

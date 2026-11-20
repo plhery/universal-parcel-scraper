@@ -49,7 +49,7 @@
         "access": "indexed_excerpt"
       },
       "context": {
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -72,7 +72,7 @@
           "jadlog"
         ]
       },
-      "note": "An archived lookup on BEST Express Vietnam's own tracker address; the capture was not opened, and the page loads the history by script behind a captcha, so the history was not visible."
+      "note": "An archived lookup on BEST Express Vietnam's own tracker address; the tracker, past its picture check, shows the parcel's history to its delivery."
     },
     {
       "number": "TK649569025",

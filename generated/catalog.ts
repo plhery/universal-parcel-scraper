@@ -11064,7 +11064,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Bangkok",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "best-express-th"
     },
     "canaryUrl": "https://www.best-inc.co.th/track",
     "trackingUrlTemplate": "https://www.best-inc.co.th/track?bills={trackingNumber}",
@@ -11104,7 +11104,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Ho_Chi_Minh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "best-express-vn"
     },
     "canaryUrl": "https://www.best-inc.vn/track",
     "trackingUrlTemplate": "https://www.best-inc.vn/track?bills={trackingNumber}",

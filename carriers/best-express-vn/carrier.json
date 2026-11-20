@@ -18,18 +18,59 @@
   "timezone": "Asia/Ho_Chi_Minh",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "best-express-vn",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "delivered_at",
+    "sender_name",
+    "receiver_name",
+    "receiver_address",
+    "signed_by"
+  ],
   "portal": {
     "url": "https://www.best-inc.vn/track?bills={trackingNumber}",
     "searchUrl": "https://www.best-inc.vn/track",
     "canaryUrl": "https://www.best-inc.vn/track",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "coordinates",
+      "sender_name",
+      "origin",
+      "recipient_name",
+      "recipient_address",
+      "driver_name",
+      "contact_details",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "delivered_at",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "signatory"
+    ],
+    "discarded": [
+      "coordinates",
+      "origin",
+      "driver_name",
+      "contact_details"
+    ],
+    "unavailable": [
+      "eta",
+      "weight"
+    ]
   },
   "links": [
     {

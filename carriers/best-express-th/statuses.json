@@ -1,4 +1,10 @@
 {
   "carrier": "best-express-th",
-  "entries": []
+  "entries": [
+    {"code": "01", "wording": "Pickup", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "Collected; the tracker opens it with the site and the courier."},
+    {"code": "02", "wording": "on the way to", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Sent on; the next site follows."},
+    {"code": "03", "wording": "arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Arrived; the site follows."},
+    {"code": "04", "wording": "delivery on the way", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "Out for delivery; the tracker opens it with the site and the courier."},
+    {"code": "17", "wording": "POD", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Proof of delivery; who signed comes first."}
+  ]
 }
