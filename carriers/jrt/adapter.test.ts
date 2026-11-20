@@ -611,6 +611,9 @@ describe('JRT tracking adapter', () => {
     expect(answer('货物已清关完成，Import customs clearance complete')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('包裹交接给本地物流商处理，Received by local delivery company')).toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('Parcel handed to DPD')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // The delivering company's depot, then its round, worded "out of delivery".
+    expect(answer('At delivery centre')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('Out of delivery')).toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     // The sender still preparing the parcel, and the port of departure after the export clearance.
     expect(answer('Your package is being prepared by the sender and will be handed over to us soon')).toEqual({ kind: 'mapped', stage: 'registered' });
     expect(answer('Arrived At The Port Of Origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });

@@ -1338,6 +1338,22 @@
       "note": "The hand-over to DPD on the line into Europe, a day after the delivering company received the parcel: the parcel moves on, it is not accepted again."
     },
     {
+      "wording": "At delivery centre",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "On the line into Europe, after the hand-over to the delivering company: at its delivery depot, before the round."
+    },
+    {
+      "wording": "Out of delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "On the line into Europe, the round with the parcel, worded so: it comes after the delivery depot and hours before the delivery."
+    },
+    {
       "wording": "Your package is being prepared by the sender and will be handed over to us soon",
       "language": "en",
       "stage": "registered",
