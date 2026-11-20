@@ -42445,6 +42445,24 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "ocean-network-express": {
+    "displayName": "Ocean Network Express",
+    "color": "#e5007e",
+    "aliases": [
+      "ONE",
+      "ONE Line"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ocean-network-express"
+    },
+    "canaryUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "trackingSearchUrl": "https://www.one-line.com/one-ecom/manage-shipment/cargo-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ock-cn": {
     "displayName": "OCK",
     "color": "#d7000f",
@@ -66308,6 +66326,7 @@ export const CARRIER_IDS = [
   "obibox",
   "oca",
   "ocasa",
+  "ocean-network-express",
   "ock-cn",
   "ocolchonespack",
   "ocs-ana",
@@ -68171,6 +68190,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "obibox": ["obibox-1"],
   "oca": ["oca-1"],
   "ocasa": ["ocasa-1"],
+  "ocean-network-express": [],
   "ock-cn": [],
   "ocolchonespack": [],
   "ocs-ana": [],

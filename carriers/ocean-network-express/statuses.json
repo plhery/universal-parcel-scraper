@@ -1,0 +1,29 @@
+{
+  "carrier": "ocean-network-express",
+  "entries": [
+    {"code": "E012", "wording": "Empty Container Release to Shipper", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects the empty container to load it: the booking is made, the cargo not yet handed over."},
+    {"code": "E014", "wording": "Empty Container Door Arrival", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The empty container reaches the shipper's door for loading."},
+    {"code": "E027", "wording": "Gate In to Outbound CY", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters ONE's inland yard, here a rail terminal, before it moves to the port."},
+    {"code": "E029", "wording": "Outbound Rail Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E030", "wording": "Outbound Rail Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E034", "wording": "Outbound Rail Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E035", "wording": "Outbound Rail Unloading", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E040", "wording": "Gate In to Outbound Terminal", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the port of loading's terminal. After a move inland it reads as transit."},
+    {"code": "E058", "wording": "Loaded on Vessel at Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E061", "wording": "Vessel Departure from Port of Loading", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E066", "wording": "Vessel Arrival at T/S Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The vessel reaches a transshipment port."},
+    {"code": "E067-01", "wording": "Unloaded from Vessel at Transshipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The suffix counts the transshipments; the stage holds for any of them."},
+    {"code": "E070-01", "wording": "Loaded on Vessel at Transshipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The suffix counts the transshipments; the stage holds for any of them."},
+    {"code": "E073-01", "wording": "Departure from Transshipment Port", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The suffix counts the transshipments; the stage holds for any of them."},
+    {"code": "E089", "wording": "Vessel Arrival at Port of Discharge", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E090", "wording": "Unloaded from Vessel at Port of Discharging", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E106", "wording": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The full container leaves the port of discharge for the consignee; the page's summary calls it the gate out for final delivery."},
+    {"code": "E109", "wording": "Loaded on rail at inbound rail origin", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E110", "wording": "Inbound Rail Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E117", "wording": "Inbound Rail Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E118", "wording": "Unloaded from rail at inbound rail destination", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "E129", "wording": "Gate Out from Inbound CY for Delivery to Consignee", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The full container leaves ONE's inland yard for the consignee."},
+    {"code": "E133", "wording": "Full Container Delivery to Consignee", "stage": "delivered", "language": "en", "confirmedBy": "live"},
+    {"code": "E138", "wording": "Empty Container Returned from Customer", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The container comes back empty after the consignee unloaded it: the cargo was delivered. ONE can date it before the delivery it follows."}
+  ]
+}

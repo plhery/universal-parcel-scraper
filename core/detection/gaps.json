@@ -4708,6 +4708,12 @@
     "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
   },
   {
+    "carrier": "ocean-network-express",
+    "pattern": "^(?:ONEY[A-Z0-9]{12}|ONEU\\d{7})$",
+    "kind": "open",
+    "reason": "Import records list ONE master bills as ONEY, its carrier code, and the booking, and ONE containers under its ONEU owner code; ONE's tracker returns each sample. Detection does not offer ONE."
+  },
+  {
     "carrier": "rohlig-suus",
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",
