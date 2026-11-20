@@ -101320,6 +101320,32 @@
     ]
   },
   {
+    "input": "PT070655022RS",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "posta-srbije",
+      "chronopost",
+      "m-one"
+    ]
+  },
+  {
+    "input": "PT070655036RS",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "posta-srbije",
+      "chronopost",
+      "m-one"
+    ]
+  },
+  {
     "input": "PT9999999980",
     "carrier": "amazon-logistics",
     "confidence": "high",
