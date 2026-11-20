@@ -1,5 +1,53 @@
 {
   "carrier": "xindus",
-  "gap": "No public page shows an Xindus number.",
-  "records": []
+  "records": [
+    {
+      "number": "X000570999",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/894923335/Tracking-Details-Jul-28-2025-to-Jul-28-2025",
+        "date": "2025-07-28",
+        "dateKind": "shipment creation",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Xindus Lite",
+        "reportedRole": "AWB",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. The current tracker returned its application shell without shipment history."
+    },
+    {
+      "number": "X000571000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/894923335/Tracking-Details-Jul-28-2025-to-Jul-28-2025",
+        "date": "2025-07-28",
+        "dateKind": "shipment creation",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Xindus Lite",
+        "reportedRole": "AWB",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The public shipment report lists this AWB, an Out for Pickup status and a matching Xindus tracking link. The current tracker returned its application shell without shipment history."
+    }
+  ]
 }
