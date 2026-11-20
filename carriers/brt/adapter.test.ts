@@ -535,6 +535,22 @@ describe('BRT in Italian', () => {
     expect(policy.matches!({ ...fromItalian[4]!, location: 'OTHER DEPOT (992)' }, fromEnglish[4]!)).toBe(false);
     expect(policy.matches!(fromItalian[4]!, { ...fromEnglish[4]!, providerCode: 'X1' })).toBe(false);
   });
+
+  it('lets a scan from BRT\'s page and the DPD group\'s copy of it, less than a minute apart, share one row', () => {
+    const policy = sameInstantIdentityPolicy('brt', { supportsScanMatching: true })!;
+    expect(policy.matchWithinMinute).toBe(true);
+    // The page dates the missed delivery to the minute at its depot; the group's guest service, which answers while
+    // BRT's tracker is down, to the second under DPD's code and without a place.
+    const page = { stage: 'failed_attempt', description: 'MANCATA CONSEGNA', location: 'TEST DEPOT (990)', providerCode: '' };
+    const group = { stage: 'failed_attempt', description: 'Unsuccessful delivery attempt', location: '', providerCode: 'UNSUCCESSFUL_DELIVERY_ATTEMPT' };
+    expect(policy.matches!(page, group)).toBe(true);
+    expect(policy.matches!(group, page)).toBe(true);
+    for (const other of [{ ...group, stage: 'in_transit' }, { ...group, location: 'TEST DEPOT (990)' }, { ...group, providerCode: 'X1' }, { ...group, providerCode: '' }]) {
+      expect(policy.matches!(page, other), JSON.stringify(other)).toBe(false);
+    }
+    expect(policy.matches!({ ...page, providerCode: 'DELIVERED' }, group)).toBe(false);
+    expect(policy.matches!({ ...page, stage: '' }, { ...group, stage: '' })).toBe(false);
+  });
 });
 
 describe('BRT origin legs', () => {
