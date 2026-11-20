@@ -302,6 +302,9 @@ describe('Slovenská pošta status vocabulary', () => {
     expect(statusMap.stage(null, 'delivered to addressee')).toBeUndefined();
     expect(statusMapAnswer({ carrier: 'slovenska-posta', providerCode: 'ZNP1AN', description: 'Deposited - addressee not available' }))
       .toEqual({ kind: 'mapped', stage: 'ready_for_pickup' });
+    // The courier did not find the addressee on the round; the item is deposited for collection after it.
+    expect(statusMapAnswer({ carrier: 'slovenska-posta', providerCode: 'P-UAN', description: 'Addressee not located' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'slovenska-posta', providerCode: 'IPS_EMI_BACK', description: 'Delivered to addressee' }))
       .toEqual({ kind: 'mapped', stage: 'returned' });
     for (const code of ['ZDD', 'POD', 'REKL', 'IPS_EDA']) {

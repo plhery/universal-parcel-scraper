@@ -55,6 +55,8 @@ const CODES: Readonly<Record<string, Stage>> = {
   'P-NOOT': 'failed_attempt',
   'P-NZS': 'failed_attempt',
   'P-NZST': 'failed_attempt',
+  // On the round, the courier did not find the addressee; the item goes to the post office for collection.
+  'P-UAN': 'failed_attempt',
   'U-ANZ': 'failed_attempt',
   'U-ANZP': 'failed_attempt',
   'U-ANZT': 'failed_attempt',
@@ -103,7 +105,6 @@ const CODES: Readonly<Record<string, Stage>> = {
   ANZN: 'exception',
   'P-MRT': 'exception',
   'P-NA': 'exception',
-  'P-UAN': 'exception',
   'U-UAN': 'exception',
   'U-NA': 'exception',
   AOP: 'exception',
