@@ -192,8 +192,11 @@ function datedOnly(name: unknown, status: string, date: unknown): string | null 
  * at 00:00:00, while Shiprocket's own tracker gives each of them its minute
  * (2026-10-17), and CDEK's and SEUR's on one minute with seconds that count
  * the scans (07:00:00, 07:00:01...), while CDEK's own lookup has each scan's
- * instant. A network with one scan at midnight keeps it. The rendered page
- * prints no seconds (`minutes`).
+ * instant. Four scans or more on one minute, each with seconds of its own,
+ * are such a count too, whatever their order: ParcelsApp's copies of Pasarex's
+ * Spanish steps, over a week at 00:59:51 to 00:59:59, listed by day. A network
+ * with one scan at midnight keeps it. The rendered page prints no seconds
+ * (`minutes`).
  */
 function dayOnlyNetworks(entries: readonly { name: unknown; date: unknown; offset?: string | null }[], minutes = false): Set<string> {
   const walls = new Map<string, (string | null)[]>();
@@ -205,7 +208,15 @@ function dayOnlyNetworks(entries: readonly { name: unknown; date: unknown; offse
   return new Set([...walls].filter(([key, list]) => STEP_COUNTED_NETWORKS.has(key)
     ? list.every((wall) => wall !== null && STEP_COUNT.test(wall))
     : dials.has(key) ? list.every((wall) => wall !== null)
-      : list.length >= 3 && dayClock(list, minutes) && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2).map(([key]) => key));
+      : list.length >= 3 && (dayClock(list, minutes) || countedClock(list)) && new Set(list.map((wall) => wall!.slice(0, 10))).size >= 2)
+    .map(([key]) => key));
+}
+
+/** Four wall clocks or more on one minute, with whole seconds that all differ. */
+function countedClock(walls: readonly (string | null)[]): boolean {
+  const clocks = walls.map((wall) => wall ? /T(\d{2}:\d{2}):(\d{2})(?:\.0+)?$/.exec(wall) : null);
+  return clocks.length >= 4 && clocks.every((clock) => clock && clock[1] === clocks[0]![1])
+    && new Set(clocks.map((clock) => clock![2])).size === clocks.length;
 }
 
 /**

@@ -217,8 +217,10 @@ step exists for future protocol changes.
   Shiprocket's scans so, while Shiprocket's own tracker gives each its minute. So does a
   network whose scans, again three or more over two days or more, sit on one minute with
   whole seconds counting them one by one in the reply's order (07:00:00, 07:00:01…), as
-  ParcelsApp writes CDEK's and SEUR's while CDEK's own lookup has each scan's instant; the
-  rendered page prints no seconds, so there one minute for all is enough. The day is that
+  ParcelsApp writes CDEK's and SEUR's while CDEK's own lookup has each scan's instant. Four
+  or more on one minute, each with seconds of its own, count the scans in any order, as
+  ParcelsApp writes Pasarex's Spanish steps listed by day. The rendered page prints no
+  seconds, so there one minute for all is enough. The day is that
   of ParcelsApp's digits, the network's clock, not the UTC day of the instant they read as.
   myBRT.it's progress bar is dated that way however few its steps: at the top of an hour,
   the seconds counting the steps. Its "Spedizione consegnata a BRT" is BRT taking the

@@ -1663,6 +1663,16 @@ describe('ParcelsApp result parsing', () => {
     expect(instants(run(['07:00:02', '07:01:01', '07:00:00']))).toBe(true);
     expect(instants(run(['07:00:02', '07:00:01', '07:00:00'], [15, 15, 15]))).toBe(true);
     expect(instants(run(['07:00:01', '07:00:00']))).toBe(true);
+    // Four or more on one minute, each with seconds of its own, count the steps in any order: Pasarex's Spanish copies,
+    // listed by day. Three, two on one second, or one on another minute keep their clocks.
+    const pasarex = ['2026-10-17T05:59:59', '2026-10-17T05:59:56', '2026-10-15T05:59:58', '2026-10-13T05:59:55', '2026-10-13T05:59:54',
+      '2026-10-13T05:59:53', '2026-10-13T05:59:52', '2026-10-11T05:59:51'];
+    const steps = (dates: string[]) => read(['Example Parcel Co'], dates.map((date, index) => scan(`${date}.000Z`, `Paso ${index}`)));
+    expect(steps(pasarex)).toEqual(pasarex.map((date) => date.slice(0, 10)));
+    expect(steps(pasarex.slice(0, 4))).toEqual(pasarex.slice(0, 4).map((date) => date.slice(0, 10)));
+    for (const dates of [pasarex.slice(0, 3), [...pasarex.slice(0, 3), '2026-10-13T05:59:58'], [...pasarex.slice(0, 3), '2026-10-13T05:58:55']]) {
+      expect(steps(dates)?.every((value) => String(value).length > 10), dates.join()).toBe(true);
+    }
     // Another network's scans in the same reply keep theirs.
     const mixed = read(['CDEK', 'Example Parcel Co'], [scan('2026-10-18T08:30:00Z', 'Delivered', 1), ...cdek]);
     expect(mixed?.[0]).toMatch(/^2026-10-18T08:30:00/);
