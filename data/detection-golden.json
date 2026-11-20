@@ -80941,6 +80941,14 @@
     ]
   },
   {
+    "input": "BY000870933JB",
+    "carrier": "chronopost",
+    "confidence": "high",
+    "candidates": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "BY080004154557",
     "carrier": "europochta",
     "confidence": "high",
