@@ -61,6 +61,9 @@ signal.
   character; a longer number that contains it is another parcel. Steps and
   status labels win over not-found wording, which a banner or help text can
   carry. A page with none of the three is refused as malformed.
+- Each timeline belongs to the nearest panel that names a parcel, which must be
+  the requested one. A panel naming several parcels above several timelines
+  leaves each timeline's parcel unknown, so the page is refused.
 - Scan codes take precedence over history enumerations. Unknown wording stays
   visible without an invented milestone. Scans are sorted newest first.
 - A scan code is mapped where a live lookup paired it with a history

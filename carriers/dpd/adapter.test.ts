@@ -775,6 +775,17 @@ describe('DPD scan times', () => {
     expect(parseDPDTrackingHtml(page, TRACKING_NUMBER).events).toHaveLength(1);
   });
 
+  it('refuses timelines that a heading naming two parcels leaves unassigned', () => {
+    const step = (body: string) => `<ul><li class="content-item-track"><span class="entry-date">15.07.2026</span>
+      <span class="entry-time">11:28</span><span class="entry-body">${body}</span></li></ul>`;
+    const shared = `<section><h2>Parcels ${TRACKING_NUMBER} and ${'2'.repeat(14)}</h2>${step('Parcel handed to DPD')}${step('Delivered')}</section>`;
+    expect(() => parseDPDTrackingHtml(shared, TRACKING_NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    // A timeline under its own parcel's heading is that parcel's.
+    const own = `<section><h2>Parcels ${TRACKING_NUMBER} and ${'2'.repeat(14)}</h2>
+      <div><h3>${TRACKING_NUMBER}</h3>${step('Parcel handed to DPD')}</div></section>`;
+    expect(parseDPDTrackingHtml(own, TRACKING_NUMBER)).toMatchObject({ status: 'in_transit', last_status_text: 'Parcel handed to DPD' });
+  });
+
   it('requires an identifier outside recent searches to bind the timeline', () => {
     const page = `<nav>Recent searches: ${TRACKING_NUMBER}</nav><main>
       <li class="content-item-track"><span class="entry-body">Delivered</span></li></main>`;

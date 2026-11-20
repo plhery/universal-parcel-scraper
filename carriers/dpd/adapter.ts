@@ -1,8 +1,8 @@
 import { setTimeout as delay } from 'node:timers/promises';
 
 import { randomBytes } from 'node:crypto';
-import { load, type Cheerio, type CheerioAPI } from 'cheerio';
-import type { AnyNode } from 'domhandler';
+import { contains, load, type Cheerio, type CheerioAPI } from 'cheerio';
+import type { AnyNode, Element } from 'domhandler';
 import { lookupBudget, type AdapterFactory, type LookupBudget, type TrackingContext } from '../../core/adapter/index.js';
 import { DELIVERY_POSTCODE, deliveryPostcodeText } from '../../core/catalog/postcode.js';
 import { dpdParcelNumber } from '../../core/detection/dpd.js';
@@ -651,6 +651,17 @@ function spacedText($: CheerioAPI, element: Cheerio<AnyNode>): string {
 
 const PAGE_MISS = /no parcel|not found|nicht gefunden|aucun colis/i;
 
+/** How many timelines a panel holds: its lists of steps and its status blocks, each counted once. */
+function timelineCount($: CheerioAPI, panel: Cheerio<AnyNode>): number {
+  const roots = new Set<AnyNode>();
+  panel.find('li.content-item-track, .parcelStatus, .gray-out').each((_, node) => {
+    const element = $(node);
+    const root = element.closest('.parcelStatus')[0] ?? element.parent()[0];
+    if (root) roots.add(root);
+  });
+  return [...roots].filter(root => ![...roots].some(other => other !== root && contains(other as Element, root))).length;
+}
+
 export function parseDPDTrackingHtml(html: string, trackingNumber: string): CarrierResult {
   if (/Just a moment|cf-mitigated|Enable JavaScript and cookies/i.test(html)) {
     throw new DPDChallengeError();
@@ -663,7 +674,8 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
   const events: CarrierEvent[] = [];
   // Bind each timeline to the nearest enclosing panel that identifies a parcel, and refuse one
   // that does not name the requested parcel. The panel may also name a sibling parcel of the
-  // shipment or a reference of the same shape, so other numbers beside it do not unbind it.
+  // shipment or a reference of the same shape, so other numbers beside it do not unbind it, unless
+  // it holds several timelines: then which one is the requested parcel's is unknown.
   const panelNumbers = new Map<AnyNode, Set<string>>();
   for (const element of $('li.content-item-track, .parcelStatus, .gray-out').toArray()) {
     let panel = $(element).parent();
@@ -678,7 +690,7 @@ export function parseDPDTrackingHtml(html: string, trackingNumber: string): Carr
         panelNumbers.set(panel[0], numbers);
       }
       if (numbers.size) {
-        bound = numbers.has(trackingNumber);
+        bound = numbers.has(trackingNumber) && (numbers.size === 1 || timelineCount($, panel) === 1);
         break;
       }
       panel = panel.parent();
