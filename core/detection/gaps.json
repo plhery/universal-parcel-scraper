@@ -4802,5 +4802,11 @@
     "pattern": "^99\\d{11}$",
     "kind": "open",
     "reason": "Publicly reported Thabit AWBs include thirteen digits starting with 99. Detection offers other carriers that share the length."
+  },
+  {
+    "carrier": "tig-freight",
+    "pattern": "^7377\\d{9}$",
+    "kind": "open",
+    "reason": "The TIG webinar shows its tracking portal recognizing a thirteen-digit Toll consignment with this prefix. Detection lists other carriers and omits TIG for that reference."
   }
 ]
