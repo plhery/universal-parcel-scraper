@@ -85530,11 +85530,45 @@
     ]
   },
   {
+    "input": "D1296248",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
+    ]
+  },
+  {
     "input": "D13097360",
     "carrier": "unknown",
     "confidence": "low",
     "candidates": [
       "dtdc"
+    ]
+  },
+  {
+    "input": "D1805636",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
