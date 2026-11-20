@@ -38,7 +38,6 @@ const NO_STEP: ReadonlyArray<readonly [wording: string, note: string]> = [
   // Detail lines that sit beside different scans, headings, and a code relayed without its wording.
   ['filiale / agentur', 'A German detail line that sits beside different scans: no step of its own.'],
   ['packstation', 'A detail line naming a Packstation, before the parcel was collected: no step of its own.'],
-  ['vereinfachte zustellung', 'A detail line naming a simplified delivery, beside loading and unloading scans: no step of its own.'],
   ['benachrichtigt', 'A German note that someone was notified, without saying of what: no step of its own.'],
   ['receiver notified', 'A note that the receiver was notified, after the terminal scans, of a delivery to come or of a parcel waiting at a service point: the wording does not say which.'],
   ['in progress', 'A heading that names no step.'],

@@ -106,10 +106,16 @@ describe('classifyWording', () => {
       expect(classifyWording(wording), wording).toEqual({ stage: 'out_for_delivery', source: 'wording:out_for_delivery' });
     }
     for (const wording of ['Ein WunschTag für die Zustellung wurde gebucht.', 'Wunschzustellung gebucht', 'Zustellung an Nachbarn gewünscht',
-      'Ablageort für die Zustellung festgelegt', 'Vereinfachte Zustellung', 'Zustellung ist gestoppt',
+      'Ablageort für die Zustellung festgelegt', 'Zustellung ist gestoppt',
       'Wir planen aktuell die Zustellung deiner Bestellung.', 'Die Zustellung ist in Planung',
       'Zur Terminabstimmung für die Zustellung rufen wir dich an.']) {
       expect(classifyWording(wording), wording).toEqual({ stage: 'in_transit', source: 'none' });
+    }
+  });
+
+  it("reads DHL's simplified delivery to a business customer, booked at the parcel center, as delivered", () => {
+    for (const wording of ['Vereinfachte Zustellung', 'Vereinfachte Firmenzustellung']) {
+      expect(classifyWording(wording), wording).toEqual({ stage: 'delivered', source: 'wording:language' });
     }
   });
 

@@ -664,6 +664,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // YunExpress file it, unless the scan names a pickup, a return or the sender.
   if (HANDED_TO_COURIER.test(text) && !/\b(?:pick ?up|collection|return|sender|shipper|seller|merchant|consignor)/.test(text)) return 'out_for_delivery';
   if (/\bdelivered\b|^final delivery$|delivery complete(?:d)?\b|delivery (?:was )?successful|(?:a ete|est) distribue|^(?:livre|livree)(?:$|[ ,])|(?:colis|envoi|est|a ete) livre|zugestellt|\bconsegnat[oa]\b|livraison effectuee|consegna completata/.test(text)) return 'delivered';
+  // DHL's simplified delivery to a business customer, booked at the parcel center ("Vereinfachte Zustellung",
+  // its "vereinfachte Firmenzustellung" as ParcelsApp relays it): DHL counts the parcel delivered there.
+  if (/^vereinfachte (?:firmen)?zustellung$/.test(text)) return 'delivered';
   // Left in the recipient's letterbox, as Postal Ninja relays PostNL's "Shipment in letterbox".
   if (/^(?:the |your )?(?:shipment|parcel|package|item) (?:(?:is|was|has been) )?(?:(?:placed|left|put) )?in (?:the |your |a )?(?:letter|mail) ?box$/.test(text)) return 'delivered';
   // A delivery still to come ("una vez entregado", "que se entregue", "quando
