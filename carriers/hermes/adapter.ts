@@ -116,6 +116,8 @@ export function parseHermesTrackingResponse(
   const deliveredAt = status === 'delivered' ? events.find((event) => event.stage === 'delivered')?.time : undefined;
   return {
     status,
+    // The summary is the newest scan's words: its stage is that scan's, not a reading of the words alone.
+    ...(events[0] ? { current_stage: events[0].stage } : {}),
     last_status_text: events[0]?.description ?? '',
     last_update: events[0]?.time || null,
     expected_delivery: status === 'delivered' ? null : estimateOf(order),

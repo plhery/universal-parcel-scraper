@@ -145,6 +145,12 @@ describe('Hermes no-data response', () => {
       // Planning the delivery is no round: the parcel stays in transit.
       expect(resolveResult(result).current_stage).toBe('in_transit');
     }
+    // The summary in the planning row's words takes that row's stage, not the words' reading as a round.
+    const planning = onTour({});
+    ((bodyOf(planning).auftragsdaten as Order).statusjourneyDto as Order).auftragstatusdaten = rows.slice(0, 2);
+    const planned = parseHermesTrackingResponse(planning, DELIVERED_NUMBER);
+    expect(planned).toMatchObject({ current_stage: 'in_transit', last_status_text: expect.stringMatching(/^Wir planen/) });
+    expect(resolveResult(planned).current_stage).toBe('in_transit');
   });
 
   it('parses a sanitized fixture from Hermes\'s public delivered sample', () => {

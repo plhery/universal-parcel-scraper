@@ -29,7 +29,8 @@ different company and tracking system from Hermes Germany's parcel network
   ids. Return and cancellation wording ("retour", "zurück", "storniert") maps to
   `failed_attempt`, not `returned`.
 - Rows missing wording or booking timestamp are dropped; the rest are sorted newest first and
-  the newest sets the status. Hermes lists its timeline oldest first and can book two rows in
+  the newest sets the status and the stage, so a summary in its words ("we are planning the
+  delivery") is not read as a round. Hermes lists its timeline oldest first and can book two rows in
   one minute ("we'll call you to arrange the delivery", then "we could not reach you"), so the
   list is turned around before sorting and the later of them leads.
 - Timestamps are kept as sent (`YYYY-MM-DD HH:mm`, no offset); the declared zone is
