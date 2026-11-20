@@ -147,6 +147,12 @@ describe('Colis Privé wording classifier', () => {
     }
   });
 
+  it('reads the parcel sent on to another relay point after missed deliveries as transit', () => {
+    const description = "Votre colis va être livré dans un autre relais. Vous serez informé de l'adresse et horaires par mail.";
+    expect(classifyStatus(description)).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(statusMapAnswer({ carrier: 'colis-prive', description })).toEqual({ kind: 'mapped', stage: 'in_transit' });
+  });
+
   it('leaves wording it does not know unmapped', () => {
     expect(classifyStatus('Une phrase que le transporteur vient d’ajouter'))
       .toEqual({ status: 'unknown' });

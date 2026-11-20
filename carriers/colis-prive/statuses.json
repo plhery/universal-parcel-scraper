@@ -37,6 +37,7 @@
     { "wording": "a été collecté", "language": "fr", "stage": "in_transit", "confirmedBy": "official-doc", "firstSeen": "2026-09-12", "note": "" },
     { "wording": "rendez-vous est confirmé", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-10-08", "note": "The row ends with the appointment day, read as the delivery estimate." },
     { "wording": "arrivé chez le partenaire d'expédition", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "\"Votre colis est arrivé chez le partenaire d'expédition.\" A shipping partner has the parcel and carries it to Colis Privé: transit, as \"pris en charge\" is." },
-    { "wording": "en transit vers", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "\"Votre colis est en transit vers Colis Privé\": the partner carries it there, a day after it took the parcel." }
+    { "wording": "en transit vers", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-12", "note": "\"Votre colis est en transit vers Colis Privé\": the partner carries it there, a day after it took the parcel." },
+    { "wording": "va être livré dans un autre relais", "language": "fr", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "\"Votre colis va être livré dans un autre relais. Vous serez informé de l'adresse et horaires par mail.\" After missed deliveries the parcel goes on to another relay point." }
   ]
 }

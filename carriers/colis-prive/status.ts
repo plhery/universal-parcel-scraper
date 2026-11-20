@@ -96,6 +96,8 @@ export const IN_TRANSIT_PHRASES = [
   // A shipping partner takes the parcel first, then carries it to Colis Privé.
   'arrive chez le partenaire d expedition',
   'en transit vers',
+  // After missed deliveries the parcel goes on to another relay point, whose address comes by mail.
+  'va etre livre dans un autre relais',
 ] as const;
 
 export function classifyStatus(description: string): ClassifiedStatus {
