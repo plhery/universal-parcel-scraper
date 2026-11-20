@@ -17,6 +17,8 @@ export const GLS_ITALY_SCANS: Readonly<Record<string, Stage>> = {
   'The shipment did not arrive at the receiving GLS Depot.': 'in_transit',
   // The morning scan of the delivery round, before the delivery or the failed attempt.
   'Delivery scheduled during the day.': 'out_for_delivery',
+  // The receiving depot books the delivery for the next business day, a day after its area notice: it waits there.
+  'Delivery scheduled for first next business day.': 'in_transit',
   'Available for collection at GLS POINT.': 'ready_for_pickup',
   'Delivered.': 'delivered',
   'Parcel not delivered as the consignee was absent, please book redelivery within 3 working days as per instructions provided by email or sms.': 'failed_attempt',

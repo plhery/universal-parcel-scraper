@@ -146,6 +146,14 @@
       "note": "The receiving depot serves the recipient's area only every so many hours, so the shipment waits there for the next round."
     },
     {
+      "wording": "Delivery scheduled for first next business day.",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The receiving depot books the delivery for the next business day, a day after its area notice; the shipment waits there."
+    },
+    {
       "wording": "La spedizione e' stata creata dal mittente, attendiamo che ci venga affidata per l'invio a destinazione.",
       "language": "it",
       "english": "The shipment has been created by the sender, we are waiting for it to be entrusted to us for dispatch to its destination.",
