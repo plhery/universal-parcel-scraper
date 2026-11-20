@@ -4736,5 +4736,11 @@
     "pattern": "^\\d{15}$",
     "kind": "by_design",
     "reason": "Tramaco guide numbers share their fifteen-digit shape with other carriers; a native whole-guide reply is required."
+  },
+  {
+    "carrier": "pxc-pacific",
+    "pattern": "^888\\d{7}$",
+    "kind": "open",
+    "reason": "Two indexed PXC Pacific tracker links identify ten-digit AWBs with this prefix, and PXC’s tracker knows both. Detection offers other carriers."
   }
 ]

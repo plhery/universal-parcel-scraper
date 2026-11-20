@@ -1,5 +1,63 @@
 {
   "carrier": "pxc-pacific",
-  "gap": "No public page shows a PXC Pacific Global AWB number.",
-  "records": []
+  "records": [
+    {
+      "number": "8880818732",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.pacificexp.net/tracking-details.html?awbno=8880818732",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "International courier",
+        "reportedRole": "AWB number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The carrier’s indexed tracking page publishes this exact value in its AWB query. PXC’s tracking lookup returns its history from PXC’s Mumbai hub to delivery by DTDC Australia."
+    },
+    {
+      "number": "8880822195",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://pacificexp.net/tracking-details.html?awbno=8880822195",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "International courier",
+        "reportedRole": "AWB number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The carrier’s indexed tracking page publishes this exact value in its AWB query. PXC’s tracking lookup returns its history from PXC’s Mumbai hub to delivery by DTDC Australia."
+    }
+  ]
 }

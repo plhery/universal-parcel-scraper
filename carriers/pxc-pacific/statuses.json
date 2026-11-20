@@ -1,4 +1,28 @@
 {
   "carrier": "pxc-pacific",
-  "entries": []
+  "entries": [
+    {"code": "01", "wording": "SHIPMENT INFORMATION RECEIVED", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "PXC's booking in Mumbai, before its hub has the parcel."},
+    {"code": "SH", "wording": "SHIPMENT ARRIVED AT HUB", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "PXC's first handling of the parcel, at its Mumbai hub."},
+    {"code": "90", "wording": "Documentation Prepared", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering partner's own booking of the parcel in India, after PXC's hub has it."},
+    {"code": "SR", "wording": "SHIPMENT ARRIVED AT EXPORT GATEWAY", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "SHIPMENT PROCESSED AT EXPORT GATEWAY", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "FE", "wording": "SHIPMENT DEPARTED FROM EXPORT GATEWAY", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "IT", "wording": "IN TRANSIT", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "91", "wording": "Shipment Finalised", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The delivering partner closes its booking on the day the parcel leaves India."},
+    {"code": "23", "wording": "Sorted to Destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "3", "wording": "In Transit to Destination", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "1250", "wording": "Expected Flight Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The partner's notice of the flight to come, dated before the parcel reaches the transit point."},
+    {"code": "TP", "wording": "SHIPMENT ARRIVED AT TRANSIT POINT", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "SHIPMENT PLANNED FROM TRANSIT POINT {from} TO {to} ON {day}", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The onward flight booked from Kuala Lumpur, written when it is booked."},
+    {"code": "IG", "wording": "SHIPMENT ARRIVED AT IMPORT GATEWAY", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "325", "wording": "Flight Arrival", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "CC", "wording": "AWAITING CUSTOM CLEARANCE", "language": "en", "stage": "customs", "confirmedBy": "live"},
+    {"code": "10", "wording": "Customs Processing", "language": "en", "stage": "customs", "confirmedBy": "live", "note": "Repeated daily while the destination's customs holds the parcel."},
+    {"code": "37", "wording": "Released from Customs", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "4", "wording": "Arrived Hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"code": "15", "wording": "Out for Delivery", "language": "en", "stage": "out_for_delivery", "confirmedBy": "live"},
+    {"code": "124", "wording": "On Hold - In Branch", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "Held at the delivering branch between delivery rounds, without a reason given; the sample was delivered after a week of it."},
+    {"code": "1", "wording": "Delivered", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "The delivering partner's delivery scan."},
+    {"code": "OK", "wording": "DELIVERED", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "PXC's own delivery scan, at the partner's minute."}
+  ]
 }

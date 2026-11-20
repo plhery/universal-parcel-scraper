@@ -2333,6 +2333,11 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'gruber-logistics', number: 'ZZ0000000199',
     route: /^https:\/\/glapptracking\.gruber-logistics\.com\/(?:\?trackingId=ZZ0000000199|search-tracking-number)$/,
     marker: /Cerca tracking spedizione|Numero tracking|Search Tracking Number|Suche nach Tracking-Nummer/ },
+  // The page's script fills its box from `awbno` and looks the number up; an unknown one leaves
+  // the box filled and the results empty.
+  { carrier: 'pxc-pacific', number: 'ZZ0000000000',
+    route: /^https:\/\/(?:www\.)?pacificexp\.net\/tracking-details\.html\?awbno=ZZ0000000000$/,
+    marker: /Enter AWB\s+Numbers in a separate line|PXC Pacific Global Pvt\. Ltd\./ },
 ];
 
 /**

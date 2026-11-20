@@ -1,0 +1,12 @@
+{
+  "Response": {
+    "ResponseCode": "TD01",
+    "ErrorCode": "1",
+    "ErrorDisc": "AWB does not exist..! ",
+    "Tracking": null,
+    "Events": null,
+    "AdditionalData": null,
+    "Dimensions": null,
+    "Performa": null
+  }
+}
