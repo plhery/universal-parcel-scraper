@@ -1021,6 +1021,12 @@
     "reason": "International numbers in the UPU S10 layout that DHLink's line providers issue belong to postal detection even when the check digit fails, and do not point to DHLink."
   },
   {
+    "carrier": "diakinisis",
+    "pattern": "^D\\d{14}$",
+    "kind": "open",
+    "reason": "A confirmed Diakinisis tracking ID has D followed by fourteen digits. Detection returns no carrier."
+  },
+  {
     "carrier": "direct-freight-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",

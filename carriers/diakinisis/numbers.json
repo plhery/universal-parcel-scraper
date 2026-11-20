@@ -1,5 +1,25 @@
 {
   "carrier": "diakinisis",
-  "gap": "No public page shows a Diakinisis voucher number.",
-  "records": []
+  "records": [
+    {
+      "number": "D60664020370603",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260722153141/https://pod.diakinisis.gr/tnt.php?id=D60664020370603",
+        "date": "2026-07-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking ID",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The archived Diakinisis tracking link preloads this ID. The live lookup returned six events and a delivery status dated July 23, 2026."
+    }
+  ]
 }
