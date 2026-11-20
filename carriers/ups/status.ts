@@ -148,12 +148,19 @@ export function upsRecipientAction(code: string): RecipientAction | undefined {
 
 // The receiver's delivery change that sends the parcel back, as UPS words it under ZC: a return set up, not yet made.
 const RETURN_REQUESTED = /\bthe package will be returned to the sender\b/i;
+// The final attempt that failed and starts the return, as UPS words it under 49: the return under way, not another attempt.
+const RETURN_STARTED = /\bwe are returning this package to the sender\b/i;
+
+/** Whether a scan starts the parcel's way back to the sender: the receiver's change under ZC or the final attempt under 49. */
+export function isUpsReturnStart(code: string | undefined, description = ''): boolean {
+  const normalized = (code ?? '').trim().toUpperCase();
+  return (normalized === 'ZC' && RETURN_REQUESTED.test(description)) || (normalized === '49' && RETURN_STARTED.test(description));
+}
 
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
 export function upsActivityStage(code: string, description = ''): Stage | undefined {
-  const normalized = code.trim().toUpperCase();
-  if (normalized === 'ZC' && RETURN_REQUESTED.test(description)) return 'exception';
-  return ACTIVITY_STAGES.get(normalized);
+  if (isUpsReturnStart(code, description)) return 'exception';
+  return ACTIVITY_STAGES.get(code.trim().toUpperCase());
 }
 
 /**

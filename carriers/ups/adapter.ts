@@ -17,7 +17,7 @@ import { otherRegionZones, regionZone } from '../../places/zones.js';
 import { clean, cleanScalar, decodeText, fetchBounded, parseJsonBytes, TRAWL_TRANSPORT_ALLOWANCE_MS, type TrawlClient } from '../../core/transport/index.js';
 import { isRecord, type JsonObject } from '../../core/types.js';
 import { UPSApiClient, upsApiCredentials, upsApiNotFound, upsApiNotices, type UPSApiCredentials } from './api.js';
-import { isUpsNotice, isUpsRequest, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsRecipientAction, upsStatus, upsUncodedScanStage } from './status.js';
+import { isUpsNotice, isUpsRequest, isUpsReturnStart, UPS_PROGRESS_STATUS, UPS_STATUS_TYPE, upsActivityStage, upsBannerStage, upsRecipientAction, upsStatus, upsUncodedScanStage } from './status.js';
 import { decodeEntities } from './text.js';
 
 const TRACKING_BASE = 'https://www.ups.com/track';
@@ -336,6 +336,26 @@ export function parseUPSTrackingHtml(page: string, trackingNumber: string): Carr
  * (newest first), so the parcel app stores it as no step forward. A notice
  * with no scan before it is left without a stage.
  */
+/** The stages a scan on the way back to the sender shows as the return under way. */
+const RETURN_LEG_STAGES = new Set(['accepted', 'in_transit', 'customs', 'out_for_delivery']);
+
+/**
+ * Once a scan starts the return (the receiver's change or the final attempt that sends the parcel back),
+ * the scans after it are the return leg: its movements and rounds are the return under way, an exception,
+ * and its delivery is the parcel back with the sender. Events are newest first.
+ */
+function returnLeg(events: CarrierEvent[]): void {
+  let returning = false;
+  for (const event of [...events].reverse()) {
+    if (returning) {
+      event.provider_leg = 'return';
+      if (event.stage === 'delivered') Object.assign(event, { stage: 'returned', stage_source: 'carrier_map' });
+      else if (RETURN_LEG_STAGES.has(event.stage ?? '')) Object.assign(event, { stage: 'exception', stage_source: 'carrier_map' });
+    }
+    returning ||= isUpsReturnStart(event.provider_code, event.description ?? '');
+  }
+}
+
 function keepNoticeStages(events: CarrierEvent[]): void {
   let previous: string | undefined;
   for (const event of [...events].reverse()) {
@@ -586,6 +606,7 @@ export function parseUPSTrackingResponse(
   }
   laterPickupsInTransit(events);
   requestsBeforeParcel(events);
+  returnLeg(events);
   keepNoticeStages(events);
   const newest = events[0];
   // UPS lists the newest scan first. Its code outranks the coarse progress
@@ -803,6 +824,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
   }
   laterPickupsInTransit(events);
   requestsBeforeParcel(events);
+  returnLeg(events);
   keepNoticeStages(events);
   // The API lists the newest scan first; its code outranks the status type. A notice is no scan.
   const newest = events[0];

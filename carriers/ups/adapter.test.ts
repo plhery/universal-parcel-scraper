@@ -290,7 +290,19 @@ describe('UPS structured response', () => {
       scan('ZC', 'As requested, the UPS My Choice&#174; delivery change was completed. / The package will be returned to the sender.', '20260906 14:31:00'),
     ], { progressBarType: 'OutForDelivery' }), TRACKING_NUMBER, TODAY))
       .toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map',
-        events: [{ stage: 'returned' }, { stage: 'out_for_delivery' }, { stage: 'exception', provider_code: 'ZC' }] });
+        events: [{ stage: 'returned', provider_leg: 'return' }, { stage: 'exception', provider_leg: 'return' }, { stage: 'exception', provider_code: 'ZC' }] });
+    // The final attempt that sends the parcel back starts the return; the rounds and the delivery after it are the return's.
+    const back = parseUPSTrackingResponse(withScans([
+      scan('KB', 'DELIVERED', '20260912 12:00:00'),
+      scan('OT', 'Out For Delivery Today', '20260912 08:00:00'),
+      scan('DP', 'Departed from Facility', '20260909 10:06:00'),
+      scan('OT', 'Out For Delivery Today', '20260908 14:05:52'),
+      scan('49', 'We were unable to deliver the package on our final attempt. We are returning this package to the sender.', '20260908 08:28:00'),
+      scan('49', 'The receiver was not available at the time of the final delivery attempt.', '20260905 15:02:10'),
+    ], { progressBarType: 'Delivered' }), TRACKING_NUMBER, TODAY);
+    expect(back).toMatchObject({ current_stage: 'returned' });
+    expect(back.events?.map((event) => [event.stage, event.provider_leg])).toEqual([
+      ['returned', 'return'], ['exception', 'return'], ['exception', 'return'], ['exception', 'return'], ['exception', undefined], ['failed_attempt', undefined]]);
     // The same request code for another change keeps the parcel going.
     expect(statusMapAnswer({ carrier: 'ups', providerCode: 'ZC', description: 'As requested, the UPS My Choice® delivery change was completed. / The package will be returned to the sender.' }))
       .toEqual({ kind: 'mapped', stage: 'exception' });

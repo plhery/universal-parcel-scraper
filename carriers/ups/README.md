@@ -95,7 +95,9 @@ rendered status, after that wait.
   held parcel stays held. A request right after the label, such as a service upgrade
   (`ZA`), keeps the label's stage: the origin scan after it is no step back. The receiver's
   delivery change that sends the parcel back (`ZC`, "will be returned to the sender") is an
-  exception, a return set up; `UA` marks it made. An acceptance
+  exception, a return set up; so is the final attempt under `49` that says UPS is returning the
+  parcel. The scans after either are the return leg: its movements and rounds are the return under
+  way, an exception, and its delivery is the parcel back with the sender. `UA` marks it made. An acceptance
   code after the delivery leg, such as the "Pickup Scan" when UPS collects a parcel from the
   access point it waited at, is transit.
 - Duties or taxes due (`7F`) and the hold until they are paid (`OQ`) set `recipient_action`
