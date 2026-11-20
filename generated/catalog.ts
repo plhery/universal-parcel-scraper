@@ -31295,6 +31295,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "hrl-cargo": {
+    "displayName": "HRL Cargo",
+    "color": "#ca4c32",
+    "aliases": [
+      "HRL Cargo India",
+      "HRL Cargo Logistics"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hrl-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hrlcargo.com/track/",
+    "trackingUrlTemplate": "https://www.hrlcargo.com/track/",
+    "trackingSearchUrl": "https://www.hrlcargo.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hrvatska-posta": {
     "displayName": "Hrvatska pošta",
     "color": "#ffd100",
@@ -67738,6 +67761,7 @@ export const CARRIER_IDS = [
   "hovership",
   "hp-mostar",
   "hr-parcel",
+  "hrl-cargo",
   "hrvatska-posta",
   "hrx",
   "hss-transport",
@@ -69666,6 +69690,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hovership": [],
   "hp-mostar": [],
   "hr-parcel": ["hr-parcel-1"],
+  "hrl-cargo": [],
   "hrvatska-posta": ["hrvatska-posta-own","hrvatska-posta-s10"],
   "hrx": [],
   "hss-transport": [],

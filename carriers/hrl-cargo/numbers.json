@@ -1,0 +1,26 @@
+{
+  "carrier": "hrl-cargo",
+  "records": [
+    {
+      "number": "2202293",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.hrlcargo.com/track/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Docket sample displayed in the first-party tracking form.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "Submitting the example returns the exact docket, booking and dispatch from Indore and delivery in Bhopal."
+    }
+  ]
+}

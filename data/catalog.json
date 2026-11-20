@@ -31291,6 +31291,29 @@
       }
     ]
   },
+  "hrl-cargo": {
+    "displayName": "HRL Cargo",
+    "color": "#ca4c32",
+    "aliases": [
+      "HRL Cargo India",
+      "HRL Cargo Logistics"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hrl-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hrlcargo.com/track/",
+    "trackingUrlTemplate": "https://www.hrlcargo.com/track/",
+    "trackingSearchUrl": "https://www.hrlcargo.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hrvatska-posta": {
     "displayName": "Hrvatska pošta",
     "color": "#ffd100",

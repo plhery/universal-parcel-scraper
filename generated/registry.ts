@@ -402,6 +402,7 @@ import { adapter as houndExpress } from '../carriers/hound-express/adapter.js';
 import { adapter as houngAhLoun } from '../carriers/houng-ah-loun/adapter.js';
 import { adapter as hovership } from '../carriers/hovership/adapter.js';
 import { adapter as hrParcel } from '../carriers/hr-parcel/adapter.js';
+import { adapter as hrlCargo } from '../carriers/hrl-cargo/adapter.js';
 import { adapter as hrvatskaPosta } from '../carriers/hrvatska-posta/adapter.js';
 import { adapter as hrx } from '../carriers/hrx/adapter.js';
 import { adapter as huahan } from '../carriers/huahan/adapter.js';
@@ -1358,6 +1359,7 @@ export const REGISTRY: RegistryDefinition = {
     "houng-ah-loun": houngAhLoun,
     "hovership": hovership,
     "hr-parcel": hrParcel,
+    "hrl-cargo": hrlCargo,
     "hrvatska-posta": hrvatskaPosta,
     "hrx": hrx,
     "huahan": huahan,
@@ -2713,6 +2715,7 @@ export const REGISTRY: RegistryDefinition = {
     "hovership": "hovership",
     "hp-mostar": "universal",
     "hr-parcel": "hr-parcel",
+    "hrl-cargo": "hrl-cargo",
     "hrvatska-posta": "hrvatska-posta",
     "hrx": "hrx",
     "hss-transport": "universal",

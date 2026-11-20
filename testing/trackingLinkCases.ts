@@ -2506,6 +2506,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'hrl-cargo': 'The search uses a server-rendered POST form, so the link opens the docket field.',
   'servicios-expresos': 'The numbered search opens a modal after a guest POST, so the link opens the form.',
   'pinoy-pride-worldwide': 'The invoice searches through the carrier form and its public endpoint, so the tracking link opens the form.',
   'umac-cargo': 'The public UMAC page embeds a box-number form that sends a POST lookup, so the link opens its search form.',

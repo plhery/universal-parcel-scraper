@@ -5819,5 +5819,10 @@
     "carrier": "servicios-expresos",
     "kind": "open",
     "reason": "The live guide shares a USA prefix with the carrier’s example. Other country guide series and collisions need review."
+  },
+  {
+    "carrier": "hrl-cargo",
+    "kind": "open",
+    "reason": "The confirmed docket is numeric and shares its length with other carriers. The carrier also accepts manually assigned dockets."
   }
 ]
