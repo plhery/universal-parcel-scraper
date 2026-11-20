@@ -463,6 +463,32 @@ describe('Shouwu International HTTP adapter', () => {
     ]);
   });
 
+
+  it('reads the Spanish last mile\'s rows, in capitals without a place, as UTC\'s wall clocks', async () => {
+    // Live shape: its manifest record came eight hours to the second before Shouwu's receipt of the order data in China.
+    const rows = (country: string, change: (row: Row) => Row = (row) => row) => changed((traces, order) => {
+      order.countryCodeTwo = country;
+      traces.splice(0, traces.length, change({ ...trace(1775950200, 'IN DELIVERY', null), createTs: (1775950200 + 40000) * 1000 }),
+        { ...trace(1775900000, 'Shipment information received', 'CN'), traceType: 'TRACE_TYPE_OPERATE' },
+        change({ ...trace(1775900000 - 28800, 'MANIFESTED OR RECORDED', null), createTs: (1775900000 + 360000) * 1000 }));
+    });
+    const fetcher = vi.fn<typeof fetch>().mockImplementation(async (url) => (String(url) === SHOUWU_API
+      ? reply(JSON.stringify(rows('ES'))) : new Response('', { status: 503 })));
+    const answer = await createTracker({ fetcher, providers: [], env: {} }).track({ number: DELIVERED, carrier: 'shouwu' }, { budgetMs: 3000 });
+    expect(answer.result.events.map((event) => [event.time, event.time_zone, event.time_zone_basis])).toEqual([
+      ['2026-04-12T07:30:00Z', 'UTC', 'carrier'],
+      ['2026-04-11T17:33:20+08:00', 'Asia/Shanghai', 'place'],
+      ['2026-04-11T09:33:20Z', 'UTC', 'carrier'],
+    ]);
+    // Another destination, a place, wording not in capitals or another feed keeps the wall clock.
+    for (const [country, change] of [['FR', undefined], ['ES', (row: Row) => ({ ...row, traceLocation: 'Madrid' })],
+      ['ES', (row: Row) => ({ ...row, traceDesc: 'In delivery' })], ['ES', (row: Row) => ({ ...row, traceType: 'TRACE_TYPE_HEAD' })]] as const) {
+      const events = parseShouwu(rows(country, change), DELIVERED).events!;
+      expect(events[0]!.time, `${country} ${String(change)}`).toBeUndefined();
+      expect(events[0]!.local_time).toBe('2026-04-12T07:30:00');
+    }
+  });
+
 });
 
 describe('Shouwu International stored scans', () => {

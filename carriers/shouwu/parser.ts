@@ -33,6 +33,8 @@ const CHINESE_NOTE = /^(?!.*[A-Za-z]{2})(?=.*\p{Script=Han})/su;
 // iMile, the delivering partner in Italy, opens its rows with its centre and gives a missed delivery's reason in angle brackets.
 const IMILE_CENTRE = /^【[^】]+】/u;
 const REASON = /^<[^<>]+>$/;
+// The Spanish last mile's wording in the agent's feed: capitals, as "MANIFESTED OR RECORDED" and "IN DELIVERY".
+const SPANISH_LAST_MILE = /^[A-Z][A-Z ]*$/;
 const MAX_ENTRIES = 20;
 // How far a write time may stray from the clocks it is compared with.
 const CLOCK_SLACK_S = 600;
@@ -131,6 +133,20 @@ function earliestWallInstant(wall: string, location: string, destination: string
   return zones.length ? Math.min(...zones.map((zone) => firstOccurrence(DateTime.fromISO(wall, { zone })).toSeconds())) : null;
 }
 
+/**
+ * Whether a row is the Spanish last mile's, in capitals without a place in the agent's feed, whose wall
+ * clock is UTC's: its manifest record comes eight hours to the second before Shouwu's receipt of the
+ * order data, so its clock went into the back office as Beijing's.
+ */
+function onUtcWall(row: Record<string, unknown>, description: string, location: string, destination: string): boolean {
+  return destination === 'ES' && !location && SPANISH_LAST_MILE.test(description) && text(row, 'traceType', 64) === 'TRACE_TYPE_TAIL';
+}
+
+/** A row whose Beijing wall clock is UTC's. */
+function onUtc(wall: string): Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> {
+  return { time: DateTime.fromISO(wall, { zone: 'UTC' }).toISO({ suppressMilliseconds: true })!, time_zone: 'UTC', time_zone_basis: 'carrier' };
+}
+
 /** A row read at its epoch, on the back office's clock. */
 function onBackOffice(seconds: number): Pick<CarrierEvent, 'time' | 'time_zone' | 'time_zone_basis'> {
   return { time: DateTime.fromSeconds(seconds, { zone: BACK_OFFICE }).toISO({ suppressMilliseconds: true })!,
@@ -177,7 +193,8 @@ function readParcel(entry: Record<string, unknown>, order: Record<string, unknow
     const staged = shouwuStage(description);
     scans.push({ timestamp: clock.seconds, event: {
       local_time: clock.wall,
-      ...(onEpoch(row, description, location) || writtenBeforeWallClock(row, clock, location, destination) ? onBackOffice(clock.seconds) : {}),
+      ...(onUtcWall(row, description, location, destination) ? onUtc(clock.wall)
+        : onEpoch(row, description, location) || writtenBeforeWallClock(row, clock, location, destination) ? onBackOffice(clock.seconds) : {}),
       ...(location ? { location } : {}),
       description,
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}),

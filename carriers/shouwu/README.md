@@ -67,6 +67,10 @@ numbers `shouwu-1` offers.
   `time` on Beijing's clock. The airline's rows under an airport's code (`TRACE_TYPE_HEAD`) and the
   delivering partners' rows are wall clocks: a flight from Shanghai to Amsterdam would otherwise
   last five hours, and La Poste's and DHL's rounds would start at night.
+- The Spanish last mile's rows in the agent's feed, in capitals and without a place, as "IN
+  DELIVERY", carry UTC's wall clock, which went into the back office as Beijing's: its manifest
+  record comes eight hours to the second before Shouwu's receipt of the order data. They give
+  `time` on UTC's clock. Stored rows keep their identity by the wall clock.
 - A row under a country's code or without a place is the epoch's instant too when Shouwu wrote it
   (`createTs`) before the earliest instant its Beijing wall clock stands for anywhere in that
   country, or in the destination: a flight's arrival under US, written five hours after its
