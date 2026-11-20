@@ -34,6 +34,8 @@ function bot(answers: Record<string, Reply[]> = {}, send?: (content: string) => 
   let queue: Reply[] = [];
   const inputs: string[] = [];
   const fetcher = vi.fn<typeof fetch>(async (input, init) => {
+    // The tracker's verification refuses, so the chatbot answers.
+    if (String(input).startsWith('https://service.mtcaptcha.com/')) return new Response('<html>403</html>', { status: 403, headers: { 'Content-Type': 'text/html' } });
     const body = JSON.parse(String(init?.body));
     if (String(input) === HONGKONG_POST_SEND) {
       inputs.push(body.input.content);
@@ -46,7 +48,8 @@ function bot(answers: Record<string, Reply[]> = {}, send?: (content: string) => 
     throw new Error(`Unexpected request to ${String(input)}`);
   });
   const track = (number = NUMBER, context = {}) => adapter(environment(fetcher)).track({ number }, context);
-  return { fetcher, inputs, track };
+  const chatbotCalls = () => fetcher.mock.calls.filter(([url]) => String(url).startsWith('https://chatbot.hongkongpost.hk/'));
+  return { fetcher, inputs, track, chatbotCalls };
 }
 
 describe('Hongkong Post numbers', () => {
@@ -146,11 +149,13 @@ describe('Hongkong Post chatbot menus', () => {
 
 describe('Hongkong Post adapter', () => {
   it('walks one fresh session to Mail Tracing and sends the number last', async () => {
-    const { fetcher, inputs, track } = bot();
+    const { fetcher, inputs, track, chatbotCalls } = bot();
     const result = await track(' rr000000005hk ');
     expect(result).toMatchObject({ status: 'delivered', last_status_text: 'Delivered', last_update_local: '2026-01-03T14:05:00', summary_only: true, events: [] });
     expect(inputs).toEqual(['init', '2', '3', '1', NUMBER]);
-    const calls = fetcher.mock.calls.map(([url, init]) => ({ url: String(url), init: init!, body: JSON.parse(String(init!.body)) }));
+    // The refused verification came first, and never saw the number.
+    expect(fetcher.mock.calls.filter(([url]) => !String(url).startsWith('https://chatbot.')).map(([url]) => String(url).includes(NUMBER))).toEqual([false]);
+    const calls = chatbotCalls().map(([url, init]) => ({ url: String(url), init: init!, body: JSON.parse(String(init!.body)) }));
     expect(calls.map(({ url }) => url)).toEqual(Array.from({ length: 5 }, () => [HONGKONG_POST_SEND, HONGKONG_POST_POLL]).flat());
     const sessions = new Set(calls.map(({ body }) => body.session_id));
     expect(sessions.size).toBe(1);
@@ -169,10 +174,10 @@ describe('Hongkong Post adapter', () => {
   });
 
   it('opens a new session for every lookup', async () => {
-    const { fetcher, track } = bot();
+    const { track, chatbotCalls } = bot();
     await track();
     await track();
-    const sessions = new Set(fetcher.mock.calls.map(([, init]) => JSON.parse(String(init!.body)).session_id));
+    const sessions = new Set(chatbotCalls().map(([, init]) => JSON.parse(String(init!.body)).session_id));
     expect(sessions.size).toBe(2);
   });
 

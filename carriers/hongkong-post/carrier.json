@@ -16,11 +16,17 @@
     "mode": "automatic",
     "adapter": "hongkong-post",
     "steps": [
+      "website",
       "direct"
     ],
     "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country",
+    "service_name"
+  ],
   "portal": {
     "url": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
     "searchUrl": "https://webapp.hongkongpost.hk/en/mail_tracking2/index.html",
@@ -28,15 +34,19 @@
     "shows": [
       "status",
       "history",
-      "location"
+      "location",
+      "destination_country",
+      "service_name"
     ],
     "scraped": [
-      "status"
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "service_name"
     ],
     "discarded": [],
     "unavailable": [
-      "history",
-      "location",
       "eta",
       "offset_timestamps",
       "verified_scan_timezone"

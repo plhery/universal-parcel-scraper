@@ -8,9 +8,12 @@ import arithmeticCharacters from './text-captcha-model/arithmetic-characters.jso
 const profiles = {
   'viettel-post': { width: 200, height: 50, format: 'png' },
   'chunghwa-post': { width: 162, height: 54, format: 'jpeg' },
-  'ecms-express': { width: 200, height: 45, format: 'png', cropWidth: 145, characters: arithmeticCharacters },
+  'ecms-express': { width: 200, height: 45, format: 'png', crop: { left: 0, top: 0, width: 145, height: 45 }, characters: arithmeticCharacters },
   // DTDC's letters reach the picture's sides, where the model drops them without a margin.
   dtdc: { width: 180, height: 60, format: 'png', margin: 20 },
+  // MTCaptcha's photographic pictures run to tens of kilobytes. The text keeps to the middle, and the
+  // model reads it best cut from the margins and stretched to its input.
+  mtcaptcha: { width: 350, height: 100, format: 'gif', maxBytes: 200_000, crop: { left: 30, top: 10, width: 300, height: 80 }, fit: 'fill' },
 };
 const profile = profiles[workerData?.profile ?? 'viettel-post'];
 
@@ -23,17 +26,16 @@ export { decodeTextCaptchaLogits } from './text-captcha-decode.mjs';
 import { decodeTextCaptchaLogits } from './text-captcha-decode.mjs';
 
 async function solve(bytes) {
-  if (!(bytes instanceof Uint8Array) || !bytes.length || bytes.length > 50_000) throw new Error('unsupported-image');
-  if (!profile) throw new Error('unsupported-image');
+  if (!profile || !(bytes instanceof Uint8Array) || !bytes.length || bytes.length > (profile.maxBytes ?? 50_000)) throw new Error('unsupported-image');
   const image = sharp(bytes, { limitInputPixels: profile.width * profile.height, pages: 1, failOn: 'warning' });
   const metadata = await image.metadata().catch(() => { throw new Error('unsupported-image'); });
   if (metadata.format !== profile.format || metadata.width !== profile.width || metadata.height !== profile.height || (metadata.pages ?? 1) !== 1) throw new Error('unsupported-image');
-  // ECMS places the equals sign in the fourth column; it is not part of the expression.
-  if (profile.cropWidth) image.extract({ left: 0, top: 0, width: profile.cropWidth, height: profile.height });
+  // A crop drops what is no text, such as the equals sign in ECMS's fourth column.
+  if (profile.crop) image.extract(profile.crop);
   // Sharp widens a picture after resizing it, so the margin is drawn first.
   const framed = profile.margin ? sharp(await image.flatten({ background: '#ffffff' })
     .extend({ left: profile.margin, right: profile.margin, background: '#ffffff' }).png().toBuffer()) : image;
-  const pixels = await framed.flatten({ background: '#ffffff' }).greyscale().resize(256, 64).raw().toBuffer();
+  const pixels = await framed.flatten({ background: '#ffffff' }).greyscale().resize(256, 64, profile.fit ? { fit: profile.fit } : undefined).raw().toBuffer();
   if (pixels.length !== 256 * 64) throw new Error('unsupported-image');
   if (!session) session = await ort.InferenceSession.create(new Uint8Array(await readFile(new URL('./text-captcha-model/captcha.onnx', import.meta.url))),
     { executionProviders: ['wasm'], graphOptimizationLevel: 'all', logSeverityLevel: 3 });
