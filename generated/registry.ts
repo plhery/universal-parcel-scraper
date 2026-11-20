@@ -2793,6 +2793,7 @@ export const REGISTRY: RegistryDefinition = {
     "multidrop": "universal",
     "multientrega": "universal",
     "mundi-express": "universal",
+    "muser": "universal",
     "mvp-courier": "universal",
     "myanmar-post": "universal",
     "mylerz": "mylerz",
