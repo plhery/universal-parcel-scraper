@@ -1,24 +1,11 @@
 # Post Aruba
 
-Post Aruba parcels use enabled universal providers. There is no dedicated adapter.
+Select Post Aruba to read postal-item history from its IPS Web Tracking site. The adapter
+requires the matching item number and reads the location and event for each scan.
 
-Post Aruba is Aruba's postal operator; its U-Wana service delivers parcels to the door. Its site is postaruba.com.
+The site shows office-local clocks in month/day/year order. It lists scans from oldest to
+newest across postal partners. The adapter preserves those clocks and the carrier's order,
+including scans from the destination post.
 
-## Numbers
-
-Its items carry UPU S10 numbers ending `AW`, which postal detection reads, and U-Wana deliveries `UW`, nine digits
-and `AW`. No public page shows either, so there is no rule of its own.
-
-## Why there is no adapter
-
-Its tracker is its own copy of the UPU's IPS web tracker, the page La Poste Burkina Faso's adapter reads, and
-answers without a session or CAPTCHA. No public number is known to see a found reply.
-
-## Links
-
-The IPS web page opens numbers from its `itemid` parameter.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `ARUBA_POST_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/aruba-post`.

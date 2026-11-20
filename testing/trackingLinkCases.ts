@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'aruba-post', number: 'RR999999995AW',
+    route: /^https:\/\/cds\.postaruba\.com\/ipswt\/IPSWeb_item_events\.aspx\?itemid=RR999999995AW$/,
+    marker: /No information, please check your item identifier/,
+    forwarding: { notFound: /No information, please check your item identifier/ } },
   { carrier: 'airways-courier-in', number: '999999993',
     route: /^https:\/\/airwayscourier\.co\.in\/Tracking_new\.aspx\?awb_no=999999993&type=w$/,
     marker: /Incorrect Waybill\/Reference Number/,

@@ -1,4 +1,47 @@
 {
   "carrier": "aruba-post",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Receive item from customer (Otb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "accepted"
+    },
+    {
+      "wording": "Send item to domestic location (Otb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Receive item at office of exchange (Otb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Insert item into bag (Otb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Receive item at office of exchange (Inb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Send item to customs (Inb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "customs"
+    },
+    {
+      "wording": "Record item customs information (Inb)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "customs"
+    }
+  ]
 }
