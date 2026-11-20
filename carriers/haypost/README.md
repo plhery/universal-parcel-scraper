@@ -24,7 +24,9 @@ through the lookup its tracking page at haypost.am makes.
 
 - The scans are IPS's, the UPU's system, which HayPost and the posts abroad record. Each names
   the event with its leg, "(Otb)" outward, "(Inb)" inward and "(EDI-received)" for a scan the
-  sending post reported as data. The leg does not change the stage.
+  sending post reported as data. The leg does not change the stage, except for "Send item to
+  customs (Otb)": export clearance at the office of exchange, after which the item goes on abroad,
+  so it is in transit.
 - Each scan gives the scanning office's wall clock, without a zone, twice: as the page shows it
   and in ISO form. A scan in Armenia reads on Yerevan time; a relay that gives the same scans
   with offsets puts HayPost's at +04:00. A scan abroad, or in a country the row does not settle,

@@ -5,8 +5,8 @@ import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status
  * HayPost's scan wordings in English. Most are the names of the UPU's IPS
  * events, which HayPost and the posts abroad record, followed by the leg in
  * brackets: "(Otb)" outward, "(Inb)" inward, "(EDI-received)" a scan the
- * sending post reported as data. The leg does not change the stage, so the map
- * keys the name without it.
+ * sending post reported as data. The map keys the name without the leg, which
+ * changes only the outward customs scan's stage.
  */
 export const HAYPOST_EVENTS: Readonly<Record<string, Stage>> = {
   'Receive item from customer': 'accepted',
@@ -37,9 +37,15 @@ const LEG = /\s*\((?:inb|otb|dom|edi-received)\)\s*$/i;
 // The reason the scan gives, after the event.
 const DETAIL = ': ';
 
-/** The stage the map gives a scan's wording, without its reason or leg, if it knows it. */
+// Customs on the outward leg clears the item for export at the office of exchange; it goes on abroad.
+const OUTWARD = /\(otb\)\s*$/i;
+const EXPORT_CUSTOMS = normalizeStatusWording('Send item to customs');
+
+/** The stage the map gives a scan's wording, without its reason, if it knows it; the leg matters only for export customs. */
 export function haypostEventStage(wording: string): Stage | undefined {
-  return EVENTS.get(normalizeStatusWording(wording.split(DETAIL)[0]!.replace(LEG, '')));
+  const event = wording.split(DETAIL)[0]!;
+  const name = normalizeStatusWording(event.replace(LEG, ''));
+  return name === EXPORT_CUSTOMS && OUTWARD.test(event) ? 'in_transit' : EVENTS.get(name);
 }
 
 /** A scan's stage from its wording, else the shared wording rules, else nothing, which keeps it visible for review. */

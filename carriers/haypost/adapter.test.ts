@@ -292,6 +292,9 @@ describe('HayPost status vocabulary', () => {
     expect(haypostStage(' deliver  ITEM ')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(haypostStage('Deliver item (Otb)')).toEqual({ stage: 'delivered', source: 'carrier_map' });
     expect(haypostStage('Send item to customs (EDI-received)')).toEqual({ stage: 'customs', source: 'carrier_map' });
+    // Export clearance on the outward leg, before the item leaves for abroad.
+    expect(haypostStage('Send item to customs (Otb)')).toEqual({ stage: 'in_transit', source: 'carrier_map' });
+    expect(haypostStage('Send item to customs (Inb)')).toEqual({ stage: 'customs', source: 'carrier_map' });
     for (const wording of ['constructor', 'toString', 'Sample event', '(Inb)', '']) expect(haypostEventStage(wording), wording).toBeUndefined();
     expect(haypostStage('')).toBeNull();
   });
