@@ -1,5 +1,76 @@
 {
   "carrier": "dpd-gr",
-  "gap": "DPD Greece publishes no waybill format and no public page shows one of its waybills.",
-  "records": []
+  "records": [
+    {
+      "number": "05122009617077",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230824055514/https://services.dpd.gr/tracking/?shipmentNumber=05122009617077&language=en",
+        "date": "2023-08-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "parcel number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "dpd-fr",
+          "mondial-relay",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "An archived DPD Greece tracking result shows this parcel number and dated history, including an arrival scan in Greece."
+    },
+    {
+      "number": "62465159439",
+      "role": "quarantined",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://help.ecomflow.com/hc/en-us/articles/43063578819353--Countries-Where-We-Can-Hide-the-China-Origin",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Cyprus",
+        "reportedRole": "local tracking number",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl",
+          "speedy"
+        ]
+      },
+      "note": "Ecomflow publishes this as a YunExpress shipment's local tracking number for Cyprus and links to DPD Greece's tracker. The local carrier or issuer in Cyprus is unclear."
+    }
+  ]
 }
