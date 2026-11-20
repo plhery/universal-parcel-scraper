@@ -9,6 +9,7 @@ import { lastMovement } from '../../core/result/pickup.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { paddedDate } from '../../core/time/fields.js';
 import { isoTime, postalOfficeZone } from '../../core/time/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { clean } from '../../core/transport/index.js';
 import { hrvatskaPostaStage } from './status.js';
 
@@ -34,6 +35,10 @@ const OFFICE_NUMBER = /^\d{5}\s+/;
 // A facility abroad comes with its UPU office code before its name ("GBLALA LANGLEY HWDC").
 const FOREIGN_OFFICE = /^([A-Z]{2}[A-Z]{3}[A-Z0-9])\s+\S/;
 const WEIGHT = /^(\d{1,7}) g$/;
+// An item's receipt at the office of exchange, before it is sent on from there.
+const EXCHANGE_STEPS: ReadonlyMap<string, number> = new Map([
+  ['item received at exchange office', 0], ['item sent', 1], ['item sent from exchange office', 1],
+]);
 
 /**
  * The numbers the tracker's own form accepts: an S10 item code, a 3S code, a
@@ -157,8 +162,17 @@ export function parseHrvatskaPosta(html: string, rawNumber: string): CarrierResu
     scans.push({ event, wall: time, index });
   });
   // The page groups scans by milestone, so their clocks can interleave across
-  // groups. Newest first; equal clocks keep the page's order.
+  // groups. Newest first; equal clocks keep the page's order, except that an
+  // item sent on at the second of its receipt at the office of exchange was
+  // received there first, wherever the page's groups list the two.
   scans.sort((left, right) => right.wall > left.wall ? 1 : right.wall < left.wall ? -1 : left.index - right.index);
+  const step = (scan: (typeof scans)[number]) => EXCHANGE_STEPS.get(normalizeStatusWording(scan.event.description!));
+  for (let start = 0, end = 1; start < scans.length; start = end, end = start + 1) {
+    while (end < scans.length && scans[end]!.wall === scans[start]!.wall) end += 1;
+    const slots = scans.slice(start, end).map((scan, offset) => ({ scan, slot: start + offset })).filter(({ scan }) => step(scan) !== undefined);
+    const ordered = slots.map(({ scan }) => scan).sort((left, right) => step(right)! - step(left)!);
+    slots.forEach(({ slot }, position) => { scans[slot] = ordered[position]!; });
+  }
   const events = scans.map(({ event }) => event);
 
   // Oldest first: an acceptance after the item moved on is a facility abroad

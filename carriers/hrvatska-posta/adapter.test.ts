@@ -109,6 +109,20 @@ describe('Hrvatska pošta tracking adapter', () => {
     ]);
   });
 
+  it('puts an item sent on at the second of its receipt at the office of exchange after the receipt, wherever the page lists it', () => {
+    // The page lists the receipt first, in a later milestone's group.
+    const html = page('abroad').replaceAll('03.03.2026', '02.03.2026').replaceAll('02:12:21', '22:43:45')
+      .replace('>Item sent</span>', '>SWAP</span>').replace('>Item received at exchange office</span>', '>Item sent</span>')
+      .replace('>SWAP</span>', '>Item received at exchange office</span>');
+    expect(rows(parseHrvatskaPosta(html, ABROAD)).slice(3, 5)).toEqual([
+      ['2026-03-02T22:43:45+01:00', 'Item sent', 'PRIMJERGRAD', 'in_transit'],
+      ['2026-03-02T22:43:45+01:00', 'Item received at exchange office', 'PRIMJERGRAD', 'in_transit'],
+    ]);
+    // Other scans at one clock keep the page's order.
+    const same = page('abroad').replaceAll('00:39:00', '00:34:00');
+    expect(rows(parseHrvatskaPosta(same, ABROAD)).slice(1, 3).map(([, wording]) => wording)).toEqual(['Item received in destination country', 'Item received']);
+  });
+
   it('dates a foreign facility whose UPU office code names a country with one clock on that clock', () => {
     const abroad = (office: string, day = '05.03.2026') => rows(parseHrvatskaPosta(page('abroad')
       .replaceAll('ZZXMPA', office).replaceAll('05.03.2026', day), ABROAD)).filter(([, , place]) => String(place).endsWith('EXAMPLEVILLE AP'));

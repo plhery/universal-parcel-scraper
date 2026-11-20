@@ -47,7 +47,9 @@ post's code to delivery.
 
 The page groups the scans under milestones, such as "Delivery at the Post Office", whose clocks
 can interleave; the adapter orders them by clock and reads each scan's wording, not its
-milestone. Each scan appears in a desktop and a mobile row, and only the desktop row is read. The
+milestone. Scans at one clock keep the page's order, except an item sent on at the second of its
+receipt at the office of exchange: it was received there first, whatever order the groups give the
+two. Each scan appears in a desktop and a mobile row, and only the desktop row is read. The
 scans carry no code. Wording the map does not know goes to the shared wording rules. An item
 received abroad after it was sent is in transit, and a delivery once the item is on its way back
 is a return.
