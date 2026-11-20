@@ -2604,6 +2604,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'thai-airways-cargo': 'The public THAI Cargo form posts the prefix and serial, so the tracking link opens the form.',
   flashpy: 'The verified marketplace reference opens Amazon in the parcel link resolver. Flashpy’s own numbered page was verified directly.',
   'hrl-cargo': 'The search uses a server-rendered POST form, so the link opens the docket field.',
   'servicios-expresos': 'The numbered search opens a modal after a guest POST, so the link opens the form.',

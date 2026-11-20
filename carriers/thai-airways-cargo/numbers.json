@@ -1,0 +1,73 @@
+{
+  "carrier": "thai-airways-cargo",
+  "records": [
+    {
+      "number": "217-09058722",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1036437539/Sin-Mawb-Copy",
+        "access": "indexed_excerpt",
+        "date": "2026-05-14",
+        "dateKind": "shipment acceptance"
+      },
+      "context": {
+        "reportedRole": "The published master air waybill names Thai Airways International. The carrier returned the same waybill with receipt, flights and delivery at SIN.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "217-04563042",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/958745455/oqo",
+        "access": "indexed_excerpt",
+        "date": "2025-06-26",
+        "dateKind": "shipment acceptance"
+      },
+      "context": {
+        "reportedRole": "A published THAI Cargo transshipment confirmation identifies this master waybill. The carrier returned the same waybill with receipt, flights and delivery at SGN.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

@@ -59023,6 +59023,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "thai-airways-cargo": {
+    "displayName": "THAI Cargo",
+    "color": "#512D6D",
+    "aliases": [
+      "Thai Airways Cargo",
+      "Thai Airways International Cargo"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "thai-airways-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://chorus.thaicargo.com/skychain/app",
+    "trackingUrlTemplate": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "trackingSearchUrl": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "the-delivery-group": {
     "displayName": "The Delivery Group",
     "color": "#87b04a",
@@ -69360,6 +69383,7 @@ export const CARRIER_IDS = [
   "tforce-integrated-solutions",
   "tforce-logistics",
   "thabit-logistics",
+  "thai-airways-cargo",
   "the-delivery-group",
   "the-human-express",
   "thelorry",
@@ -71322,6 +71346,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tforce-integrated-solutions": [],
   "tforce-logistics": ["tforce-logistics-1"],
   "thabit-logistics": [],
+  "thai-airways-cargo": [],
   "the-delivery-group": [],
   "the-human-express": ["the-human-express-1"],
   "thelorry": ["thelorry-1"],

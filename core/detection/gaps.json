@@ -5984,5 +5984,10 @@
     "carrier": "pacific-air-cargo",
     "kind": "open",
     "reason": "The confirmed public PACTRAK 5YR waybill currently matches WeDo. Select Pacific Air Cargo explicitly for its waybill or short serial."
+  },
+  {
+    "carrier": "thai-airways-cargo",
+    "kind": "open",
+    "reason": "The issued Thai Airways air waybills begin with 217 and overlap general numeric shapes. Select THAI Cargo explicitly."
   }
 ]

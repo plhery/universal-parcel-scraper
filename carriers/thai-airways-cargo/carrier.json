@@ -1,0 +1,60 @@
+{
+  "id": "thai-airways-cargo",
+  "displayName": "THAI Cargo",
+  "aliases": [
+    "Thai Airways Cargo",
+    "Thai Airways International Cargo"
+  ],
+  "region": {
+    "countries": [
+      "TH"
+    ]
+  },
+  "brand": {
+    "color": "#512D6D"
+  },
+  "selectable": true,
+  "timezone": "Asia/Bangkok",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "thai-airways-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "searchUrl": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "canaryUrl": "https://chorus.thaicargo.com/skychain/app",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

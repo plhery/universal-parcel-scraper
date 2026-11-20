@@ -59019,6 +59019,29 @@
     ],
     "detectionRules": []
   },
+  "thai-airways-cargo": {
+    "displayName": "THAI Cargo",
+    "color": "#512D6D",
+    "aliases": [
+      "Thai Airways Cargo",
+      "Thai Airways International Cargo"
+    ],
+    "countries": [
+      "TH"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Bangkok",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "thai-airways-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://chorus.thaicargo.com/skychain/app",
+    "trackingUrlTemplate": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "trackingSearchUrl": "https://chorus.thaicargo.com/skychain/app?service=page%2Fnwp%3ATrackshipmt",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "the-delivery-group": {
     "displayName": "The Delivery Group",
     "color": "#87b04a",

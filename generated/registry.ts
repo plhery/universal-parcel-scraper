@@ -863,6 +863,7 @@ import { adapter as tfmExpress } from '../carriers/tfm-express/adapter.js';
 import { adapter as tforceFreight } from '../carriers/tforce-freight/adapter.js';
 import { adapter as tforceLogistics } from '../carriers/tforce-logistics/adapter.js';
 import { adapter as thabitLogistics } from '../carriers/thabit-logistics/adapter.js';
+import { adapter as thaiAirwaysCargo } from '../carriers/thai-airways-cargo/adapter.js';
 import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as theDeliveryGroup } from '../carriers/the-delivery-group/adapter.js';
@@ -1853,6 +1854,7 @@ export const REGISTRY: RegistryDefinition = {
     "tforce-freight": tforceFreight,
     "tforce-logistics": tforceLogistics,
     "thabit-logistics": thabitLogistics,
+    "thai-airways-cargo": thaiAirwaysCargo,
     "thailand-post": thailandPost,
     "the-courier-guy": theCourierGuy,
     "the-delivery-group": theDeliveryGroup,
@@ -3652,6 +3654,7 @@ export const REGISTRY: RegistryDefinition = {
     "tforce-integrated-solutions": "universal",
     "tforce-logistics": "tforce-logistics",
     "thabit-logistics": "thabit-logistics",
+    "thai-airways-cargo": "thai-airways-cargo",
     "thailand-post": "thailand-post",
     "the-courier-guy": "the-courier-guy",
     "the-delivery-group": "the-delivery-group",
