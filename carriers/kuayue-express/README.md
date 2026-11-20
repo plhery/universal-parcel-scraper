@@ -26,6 +26,12 @@ and its visitor bootstrap uses source `10`. These contracts differ from the
 mobile page's scalar waybill and source `30`. The frame's Tencent constructor
 belongs to the page context; an isolated evaluation world need not expose it.
 
+The visitor bootstrap answers `authType` `10` or `20`. `10` opens Tencent's picture check,
+which asks for icons to be clicked in order, before the lookup; `20` asks for the last four
+digits of the sender's or recipient's phone instead. A current public waybill got `20` on every
+lookup, while made-up and expired waybills mostly get `10` and then 暂无运单信息, so tracking a
+live waybill needs those digits.
+
 The customer Android package is `com.oxbix.spanlogistics`. Its protected business
 code has not established a simpler guest tracking API. The operations and driver
 apps are separate from customer guest tracking.
