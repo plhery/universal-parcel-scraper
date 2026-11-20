@@ -1,0 +1,45 @@
+{
+  "carrier": "honour-lane-shipping",
+  "records": [
+    {
+      "number": "CAJU5765298",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/shipping-cargo-logistics",
+        "date": "2026-11-12",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest names this container under Honour Lane house bill HNLTSH269A0666. The carrier matched both the container and the house bill."
+    },
+    {
+      "number": "CAIU6519422",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/hongkong-hengshun-supply-chains",
+        "date": "2026-10-26",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest names this container under Honour Lane house bill HNLTXM269A0807. The carrier matched both the container and the house bill."
+    }
+  ]
+}

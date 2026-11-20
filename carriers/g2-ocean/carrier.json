@@ -1,0 +1,55 @@
+{
+  "id": "g2-ocean",
+  "displayName": "G2 Ocean",
+  "aliases": [
+    "G2 Ocean AS",
+    "GSSW"
+  ],
+  "region": {
+    "countries": [
+      "NO"
+    ]
+  },
+  "brand": {
+    "color": "#233e72"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "g2-ocean",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://myg2.g2ocean.com/cargo-tracking",
+    "searchUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "canaryUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "MyG2 Cargo Tracker"
+  },
+  "links": [],
+  "detection": []
+}

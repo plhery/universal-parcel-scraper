@@ -1,0 +1,57 @@
+{
+  "id": "honour-lane-shipping",
+  "displayName": "Honour Lane Shipping",
+  "aliases": [
+    "HLS Honour Lane",
+    "Honour Lane Shipping Ltd",
+    "HNLT"
+  ],
+  "region": {
+    "countries": [
+      "HK"
+    ]
+  },
+  "brand": {
+    "color": "#17417c"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "honour-lane-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo={trackingNumber}",
+    "canaryUrl": "https://tracking.cargolane.net/tracking/ShipmentInfo",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta",
+      "weight"
+    ],
+    "unavailable": [],
+    "siteName": "HLS Online Service"
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,86 @@
+{
+  "success": true,
+  "msg": "success",
+  "type": "info",
+  "data": {
+    "containerTabVos": [
+      {
+        "ctnNo": "CAJU5765298"
+      }
+    ],
+    "containerStatusDetail": {
+      "CAJU5765298": [
+        {
+          "statusCode": "DS_TM_TK_ECTN_RETURN",
+          "statusName": "EMPTY RETURN",
+          "statusTime": null,
+          "estStatusTime": null,
+          "locationName": null
+        },
+        {
+          "statusCode": "DS_DOOR_DELIVERY",
+          "statusName": "Delivery Date",
+          "statusTime": null,
+          "estStatusTime": null,
+          "locationName": null
+        },
+        {
+          "statusCode": "DS_CC_RELEASE",
+          "statusName": "DS Customs Released",
+          "statusTime": null,
+          "estStatusTime": null,
+          "locationName": null
+        },
+        {
+          "statusCode": "MF_PLD_ARRIVAL",
+          "statusName": "PLACE OF DELIVERY ARRIVAL",
+          "statusTime": "2026-11-12 09:58:00",
+          "estStatusTime": "2026-11-12 14:00:00",
+          "locationName": "HOUSTON, BAY PORT CONTAINER TERMINAL"
+        },
+        {
+          "statusCode": "MF_POD_DISCHARGE",
+          "statusName": "DISCHARGE",
+          "statusTime": "2026-11-13 20:44:00",
+          "estStatusTime": null,
+          "locationName": "HOUSTON, BAY PORT CONTAINER TERMINAL"
+        },
+        {
+          "statusCode": "MF_POD_ARRIVAL",
+          "statusName": "Arrive At POD",
+          "statusTime": "2026-11-12 09:58:00",
+          "estStatusTime": "2026-11-12 14:00:00",
+          "locationName": "HOUSTON, BAY PORT CONTAINER TERMINAL"
+        },
+        {
+          "statusCode": "MF_POL_DEPARTURE",
+          "statusName": "DEPART AT LOADING PORT",
+          "statusTime": "2026-10-01 18:00:00",
+          "estStatusTime": "2026-10-01 08:00:00",
+          "locationName": "SHANGHAI,YANGSHAN SGH GUANDONG TERMINAL"
+        },
+        {
+          "statusCode": "MF_POL_ARRIVAL",
+          "statusName": "ON BOARD",
+          "statusTime": "2026-10-01 14:39:00",
+          "estStatusTime": null,
+          "locationName": "SHANGHAI,YANGSHAN SGH GUANDONG TERMINAL"
+        },
+        {
+          "statusCode": "TM_TK_FCTN_IN_PORT",
+          "statusName": "GATE IN",
+          "statusTime": "2026-09-29 04:15:00",
+          "estStatusTime": null,
+          "locationName": "SHANGHAI, CHINA"
+        },
+        {
+          "statusCode": "TM_TK_ECTN_OUT_PORT",
+          "statusName": "GATE OUT EMPTY",
+          "statusTime": "2026-09-18 23:25:00",
+          "estStatusTime": null,
+          "locationName": "SHANGHAI,SHANGHAI BRIGANTINE 1ST DEPOT WGQ"
+        }
+      ]
+    }
+  }
+}

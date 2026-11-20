@@ -1,0 +1,23 @@
+{
+  "carrier": "salam-pacific-indonesia-lines",
+  "records": [
+    {
+      "number": "SPNU2791153",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://putusan3.mahkamahagung.go.id/direktori/putusan/zaf0e7ef25e1f034a868323232343336.html",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An Indonesian court record names this SPIL container. The public tracker returned the same equipment number and dated movements from a later sailing."
+    }
+  ]
+}

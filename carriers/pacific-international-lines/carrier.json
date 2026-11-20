@@ -1,0 +1,56 @@
+{
+  "id": "pacific-international-lines",
+  "displayName": "Pacific International Lines",
+  "aliases": [
+    "PIL",
+    "PIL Shipping",
+    "PABV"
+  ],
+  "region": {
+    "countries": [
+      "SG"
+    ]
+  },
+  "brand": {
+    "color": "#d41925"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pacific-international-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace&label=containerTandT&module=TrackContStatus&refNo={trackingNumber}",
+    "searchUrl": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace",
+    "canaryUrl": "https://www.pilship.com/digital-solutions/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "PIL Container T&T"
+  },
+  "links": [],
+  "detection": []
+}

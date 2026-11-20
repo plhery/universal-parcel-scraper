@@ -1,0 +1,79 @@
+{
+  "TRANS_RESULT_KEY": "S",
+  "Exception": "",
+  "count": "9",
+  "list": [
+    {
+      "eventDt": "2026-10-31 10:13",
+      "statusNm": "Empty Container Release to Shipper",
+      "statusCd": "TDOYOM",
+      "actTpCd": "A",
+      "placeNm": "BUSAN ,KOREA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-10 03:31",
+      "statusNm": "Gate In to Outbound Terminal",
+      "statusCd": "TAOMDF",
+      "actTpCd": "A",
+      "placeNm": "BUSAN ,KOREA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-11 14:30",
+      "statusNm": "Loaded on 'EASLINE KWANGYANG 2644W' at Port of Loading",
+      "statusCd": "VLLMOF",
+      "actTpCd": "A",
+      "placeNm": "BUSAN ,KOREA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-12 05:48",
+      "statusNm": "'EASLINE KWANGYANG 2644W' Departure from Port of Loading",
+      "statusCd": "VDLMOF",
+      "actTpCd": "A",
+      "placeNm": "BUSAN ,KOREA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-18 11:30",
+      "statusNm": "'EASLINE KWANGYANG 2644W' Arrival at Port of Discharging",
+      "statusCd": "VAUMDF",
+      "actTpCd": "E",
+      "placeNm": "SHANGHAI ,CHINA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-19 12:00",
+      "statusNm": "'EASLINE KWANGYANG 2644W' POD Berthing Destination",
+      "statusCd": "VBUMDF",
+      "actTpCd": "E",
+      "placeNm": "SHANGHAI ,CHINA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-19 12:00",
+      "statusNm": "Unloaded from 'EASLINE KWANGYANG 2644W' at Port of Discharging",
+      "statusCd": "VUUMDF",
+      "actTpCd": "E",
+      "placeNm": "SHANGHAI ,CHINA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-19 12:00",
+      "statusNm": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)",
+      "statusCd": "TDIMOF",
+      "actTpCd": "E",
+      "placeNm": "SHANGHAI ,CHINA",
+      "copNo": "DJS00000000001"
+    },
+    {
+      "eventDt": "2026-11-19 18:00",
+      "statusNm": "Empty Container Returned from Customer",
+      "statusCd": "TAIYDM",
+      "actTpCd": "E",
+      "placeNm": "SHANGHAI ,CHINA",
+      "copNo": "DJS00000000001"
+    }
+  ]
+}

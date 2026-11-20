@@ -1,0 +1,55 @@
+{
+  "id": "sitc-container-lines",
+  "displayName": "SITC Container Lines",
+  "aliases": [
+    "SITC",
+    "SITC Shipping Lines",
+    "海丰集运"
+  ],
+  "region": {
+    "countries": [
+      "HK",
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#1490c7"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sitc-container-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ebusiness.sitcline.com/",
+    "searchUrl": "https://ebusiness.sitcline.com/",
+    "canaryUrl": "https://ebusiness.sitcline.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "SITC E-Business"
+  },
+  "links": [],
+  "detection": []
+}

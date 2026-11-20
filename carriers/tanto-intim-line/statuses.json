@@ -1,0 +1,17 @@
+{
+  "carrier": "tanto-intim-line",
+  "entries": [
+    {
+      "wording": "PORT OF DISCHARGING",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ON SHIP - TANTO BAGUS",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

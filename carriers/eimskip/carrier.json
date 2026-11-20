@@ -1,0 +1,55 @@
+{
+  "id": "eimskip",
+  "displayName": "Eimskip",
+  "aliases": [
+    "Eimskipafélag Íslands",
+    "Eimskip Ísland",
+    "EIMU"
+  ],
+  "region": {
+    "countries": [
+      "IS"
+    ]
+  },
+  "brand": {
+    "color": "#003b70"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "eimskip",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.eimskip.com/find-shipment/",
+    "searchUrl": "https://www.eimskip.com/find-shipment/",
+    "canaryUrl": "https://www.eimskip.com/find-shipment/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Eimskip Find Shipment"
+  },
+  "links": [],
+  "detection": []
+}

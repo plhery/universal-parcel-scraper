@@ -10236,6 +10236,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "atlantic-container-line": {
+    "displayName": "Atlantic Container Line",
+    "color": "#004b86",
+    "aliases": [
+      "ACL Cargo",
+      "Atlantic Container Line AB",
+      "ACLU"
+    ],
+    "countries": [
+      "SE",
+      "GB",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "atlantic-container-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.aclcargo.com/track-trace/",
+    "trackingUrlTemplate": "https://www.aclcargo.com/track-trace/",
+    "trackingSearchUrl": "https://www.aclcargo.com/track-trace/",
+    "trackingSiteName": "ACL Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "atlantic-courier": {
     "displayName": "Atlantic International Express",
     "color": "#e31e24",
@@ -14240,6 +14267,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "cdp-courier": {
+    "displayName": "CDP Courier",
+    "color": "#004778",
+    "aliases": [
+      "CDP Courier Services",
+      "CDP Services Pte Ltd",
+      "Courier Documents Parcels Services"
+    ],
+    "countries": [
+      "FJ"
+    ],
+    "selectable": true,
+    "timezone": "Pacific/Fiji",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cdp-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cdpcourier.com/",
+    "trackingUrlTemplate": "https://cdpcourier.com/",
+    "trackingSearchUrl": "https://cdpcourier.com/",
+    "trackingSiteName": "CDP Courier Track Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "cel-changda": {
     "displayName": "CEL Changda",
     "color": "#4c9529",
@@ -14760,6 +14812,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.95572.com/",
     "trackingSearchUrl": "https://www.95572.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "china-united-lines": {
+    "displayName": "China United Lines",
+    "color": "#003e80",
+    "aliases": [
+      "CU Lines",
+      "CULines",
+      "China United Lines Ltd",
+      "中联航运"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "china-united-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.culines.com/en/site/bill",
+    "trackingUrlTemplate": "https://www.culines.com/en/site/bill",
+    "trackingSearchUrl": "https://www.culines.com/en/site/bill",
+    "trackingSiteName": "CU Lines Cargo Tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -16249,6 +16327,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.cope.com.au/",
     "trackingSearchUrl": "https://www.cope.com.au/",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "cordelia-shipping": {
+    "displayName": "Cordelia Container Shipping Line",
+    "color": "#003e80",
+    "aliases": [
+      "Cordelia Shipping",
+      "Cordelia Line",
+      "CCSL"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cordelia-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cordelialine.com/",
+    "trackingUrlTemplate": "https://cordelialine.com/",
+    "trackingSearchUrl": "https://cordelialine.com/",
+    "trackingSiteName": "Cordelia Track Shipment",
     "linkRules": [],
     "detectionRules": []
   },
@@ -20192,6 +20295,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dongjin-shipping": {
+    "displayName": "Dongjin Shipping",
+    "color": "#003e80",
+    "aliases": [
+      "Dongjin Shipping Co., Ltd.",
+      "Dong Jin Shipping",
+      "동진상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dongjin-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do",
+    "trackingUrlTemplate": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSearchUrl": "https://esvc.djship.co.kr/gnoss/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSiteName": "Dongjin Shipping Cargo Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "doobalhero": {
     "displayName": "Doobalhero",
     "color": "#ea2545",
@@ -22350,6 +22478,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "eimskip": {
+    "displayName": "Eimskip",
+    "color": "#003b70",
+    "aliases": [
+      "Eimskipafélag Íslands",
+      "Eimskip Ísland",
+      "EIMU"
+    ],
+    "countries": [
+      "IS"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "eimskip",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingUrlTemplate": "https://www.eimskip.com/find-shipment/",
+    "trackingSearchUrl": "https://www.eimskip.com/find-shipment/",
+    "trackingSiteName": "Eimskip Find Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ekart": {
     "displayName": "Ekart",
     "color": "#0074D9",
@@ -22479,6 +22632,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://app.elitepost.al/apps/package-tracking",
     "trackingSearchUrl": "https://app.elitepost.al/apps/package-tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "ellerman-city-liners": {
+    "displayName": "Ellerman City Liners",
+    "color": "#132f59",
+    "aliases": [
+      "Ellerman Lines",
+      "Ellerman City Liners Ltd",
+      "ECLK"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ellerman-city-liners",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingUrlTemplate": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingSearchUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingSiteName": "Ellerman Container Track & Trace",
     "linkRules": [],
     "detectionRules": []
   },
@@ -23843,6 +24021,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "evergreen-line": {
+    "displayName": "Evergreen Line",
+    "color": "#00833e",
+    "aliases": [
+      "Evergreen Marine",
+      "Evergreen Marine Corporation",
+      "EGLV",
+      "長榮海運"
+    ],
+    "countries": [
+      "TW"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "evergreen-line",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingUrlTemplate": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingSearchUrl": "https://ct.shipmentlink.com/servlet/TDB1_CargoTracking.do",
+    "trackingSiteName": "ShipmentLink",
+    "linkRules": [],
     "detectionRules": []
   },
   "evri-uk": {
@@ -27124,6 +27329,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "g2-ocean": {
+    "displayName": "G2 Ocean",
+    "color": "#233e72",
+    "aliases": [
+      "G2 Ocean AS",
+      "GSSW"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "g2-ocean",
+      "localClocks": true
+    },
+    "canaryUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingUrlTemplate": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingSearchUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingSiteName": "MyG2 Cargo Tracker",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "g4s-kenya": {
     "displayName": "G4S Courier Kenya",
     "color": "#ef3e42",
@@ -30147,6 +30376,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hecny-shipping": {
+    "displayName": "Hecny Shipping",
+    "color": "#005398",
+    "aliases": [
+      "Hecny Group",
+      "Hecny Transportation",
+      "HYSL"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hecny-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingUrlTemplate": "https://www.hecny.com/en/track-and-trace",
+    "trackingSearchUrl": "https://www.hecny.com/en/track-and-trace",
+    "trackingSiteName": "Hecny Track and Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hellmann": {
     "displayName": "Hellmann Worldwide Logistics",
     "color": "#004c99",
@@ -30352,6 +30606,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "heung-a-line": {
+    "displayName": "Heung-A Line",
+    "color": "#d12024",
+    "aliases": [
+      "Heung A Line",
+      "Heung A Line Co Ltd",
+      "HAL",
+      "HASL",
+      "흥아라인"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "heung-a-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingUrlTemplate": "https://ebiz.heungaline.com/Tracking",
+    "trackingSearchUrl": "https://ebiz.heungaline.com/Tracking",
+    "trackingSiteName": "Heung-A e-Service Tracking",
+    "linkRules": [],
+    "detectionRules": []
   },
   "hey-couriers": {
     "displayName": "Hey Couriers",
@@ -30773,6 +31054,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.hsd-express.cn/",
     "trackingSearchUrl": "https://www.hsd-express.cn/en",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "honour-lane-shipping": {
+    "displayName": "Honour Lane Shipping",
+    "color": "#17417c",
+    "aliases": [
+      "HLS Honour Lane",
+      "Honour Lane Shipping Ltd",
+      "HNLT"
+    ],
+    "countries": [
+      "HK"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "honour-lane-shipping",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.cargolane.net/tracking/ShipmentInfo",
+    "trackingUrlTemplate": "https://tracking.cargolane.net/tracking/ShipmentInfo?paramType=ctn_no&paramNo={trackingNumber}",
+    "trackingSiteName": "HLS Online Service",
     "linkRules": [],
     "detectionRules": []
   },
@@ -44395,6 +44700,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "pacific-international-lines": {
+    "displayName": "Pacific International Lines",
+    "color": "#d41925",
+    "aliases": [
+      "PIL",
+      "PIL Shipping",
+      "PABV"
+    ],
+    "countries": [
+      "SG"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pacific-international-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.pilship.com/digital-solutions/",
+    "trackingUrlTemplate": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace&label=containerTandT&module=TrackContStatus&refNo={trackingNumber}",
+    "trackingSearchUrl": "https://www.pilship.com/digital-solutions/?tab=customer&id=track-trace",
+    "trackingSiteName": "PIL Container T&T",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",
@@ -51524,6 +51854,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "salam-pacific-indonesia-lines": {
+    "displayName": "Salam Pacific Indonesia Lines",
+    "color": "#008046",
+    "aliases": [
+      "SPIL",
+      "PT Salam Pacific Indonesia Lines",
+      "mySPIL"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "salam-pacific-indonesia-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://myspil.com/",
+    "trackingUrlTemplate": "https://myspil.com/",
+    "trackingSearchUrl": "https://myspil.com/",
+    "trackingSiteName": "mySPIL Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sameday": {
     "displayName": "Sameday",
     "color": "#e92427",
@@ -52014,6 +52369,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://schneider.com/track",
     "trackingSearchUrl": "https://schneider.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "sea-legend-line": {
+    "displayName": "Sea Legend Line",
+    "color": "#003e80",
+    "aliases": [
+      "Sea Legend Shipping",
+      "Sea Legend Line Limited",
+      "海杰航运"
+    ],
+    "countries": [
+      "SG",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sea-legend-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.slg-shipping.com/",
+    "trackingUrlTemplate": "https://www.slg-shipping.com/#/home/tracking",
+    "trackingSearchUrl": "https://www.slg-shipping.com/#/home/tracking",
+    "trackingSiteName": "Sea Legend Cargo Tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -53731,6 +54112,58 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sinokor-merchant-marine": {
+    "displayName": "Sinokor Merchant Marine",
+    "color": "#003f70",
+    "aliases": [
+      "Sinokor",
+      "Sinokor Merchant Marine Co Ltd",
+      "SNKO",
+      "장금상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sinokor-merchant-marine",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingUrlTemplate": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingSearchUrl": "https://ebiz.sinokor.co.kr/Tracking",
+    "trackingSiteName": "Sinokor E-Biz Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "sitc-container-lines": {
+    "displayName": "SITC Container Lines",
+    "color": "#1490c7",
+    "aliases": [
+      "SITC",
+      "SITC Shipping Lines",
+      "海丰集运"
+    ],
+    "countries": [
+      "HK",
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sitc-container-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ebusiness.sitcline.com/",
+    "trackingUrlTemplate": "https://ebusiness.sitcline.com/",
+    "trackingSearchUrl": "https://ebusiness.sitcline.com/",
+    "trackingSiteName": "SITC E-Business",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sitra-es": {
     "displayName": "SITRA",
     "color": "#009cf8",
@@ -54404,6 +54837,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.smexpress.in/",
     "trackingSearchUrl": "https://www.smexpress.in/Home/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "sm-line": {
+    "displayName": "SM Line",
+    "color": "#c9192d",
+    "aliases": [
+      "SM Line Corporation",
+      "SMLM",
+      "에스엠상선"
+    ],
+    "countries": [
+      "KR"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sm-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do",
+    "trackingUrlTemplate": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSearchUrl": "https://esvc.smlines.com/smline/CUP_HOM_3301.do?sessLocale=en",
+    "trackingSiteName": "SM Line e-Service",
     "linkRules": [],
     "detectionRules": []
   },
@@ -56853,6 +57311,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/track/([A-Za-z0-9]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "tanto-intim-line": {
+    "displayName": "Tanto Intim Line",
+    "color": "#123b75",
+    "aliases": [
+      "PT Tanto Intim Line",
+      "Tanto Line",
+      "Tanto"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tanto-intim-line",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://www.tantonet.com/",
+    "trackingUrlTemplate": "https://www.tantonet.com/",
+    "trackingSearchUrl": "https://www.tantonet.com/",
+    "trackingSiteName": "Tanto Container Tracking",
+    "linkRules": [],
     "detectionRules": []
   },
   "tanzania-posts": {
@@ -59680,6 +60164,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/awb/([^/]+)/?$"
       }
     ],
+    "detectionRules": []
+  },
+  "translink-shipping": {
+    "displayName": "Translink Shipping",
+    "color": "#174780",
+    "aliases": [
+      "Translink Shipping Inc",
+      "TLKP"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "translink-shipping",
+      "localClocks": true,
+      "dateOnlyScans": true
+    },
+    "canaryUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingUrlTemplate": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingSearchUrl": "https://vip.translinkshipping.com/Pages/CargoTracking.aspx",
+    "trackingSiteName": "Translink Cargo Tracking",
+    "linkRules": [],
     "detectionRules": []
   },
   "transmission": {
@@ -66698,6 +67207,7 @@ export const CARRIER_IDS = [
   "atc-express",
   "athinaiki",
   "ativa-logistica",
+  "atlantic-container-line",
   "atlantic-courier",
   "ats-healthcare",
   "atual-cargas",
@@ -66817,6 +67327,7 @@ export const CARRIER_IDS = [
   "ccfs",
   "cdek",
   "cdl",
+  "cdp-courier",
   "cel-changda",
   "celeritas",
   "celero",
@@ -66834,6 +67345,7 @@ export const CARRIER_IDS = [
   "chic-express",
   "chilexpress",
   "china-railway-express",
+  "china-united-lines",
   "chinz-logistics",
   "chit-chats",
   "choir-express",
@@ -66875,6 +67387,7 @@ export const CARRIER_IDS = [
   "cootranstame",
   "copa-courier",
   "cope-sensitive-freight",
+  "cordelia-shipping",
   "corlan-post-express",
   "corporate-couriers",
   "corre",
@@ -66991,6 +67504,7 @@ export const CARRIER_IDS = [
   "domex-do",
   "domina",
   "dongdu",
+  "dongjin-shipping",
   "doobalhero",
   "doora-logistics",
   "dpd-at",
@@ -67045,11 +67559,13 @@ export const CARRIER_IDS = [
   "efs-asia",
   "egxpress",
   "egypt-post",
+  "eimskip",
   "ekart",
   "eli-express",
   "elianpost",
   "elit-post",
   "elite-post-al",
+  "ellerman-city-liners",
   "elog-luxembourg",
   "elta",
   "em-distribusjon",
@@ -67089,6 +67605,7 @@ export const CARRIER_IDS = [
   "europoshta",
   "eushipments",
   "evdemo-lojistik",
+  "evergreen-line",
   "evri-uk",
   "evropat",
   "ewe",
@@ -67187,6 +67704,7 @@ export const CARRIER_IDS = [
   "furniture-logis",
   "fxdc-post",
   "fynex",
+  "g2-ocean",
   "g4s-kenya",
   "gaash",
   "gaaubesi",
@@ -67273,12 +67791,14 @@ export const CARRIER_IDS = [
   "haypost",
   "hct-logistics",
   "hecny-ecom",
+  "hecny-shipping",
   "hellmann",
   "helthjem",
   "hepsijet",
   "hercules-freight",
   "hermes-at",
   "herona-express",
+  "heung-a-line",
   "hey-couriers",
   "hfd",
   "hgd",
@@ -67294,6 +67814,7 @@ export const CARRIER_IDS = [
   "homexpress",
   "honducor",
   "hongsuda",
+  "honour-lane-shipping",
   "hop-envios",
   "hopexpress",
   "horoz",
@@ -67704,6 +68225,7 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
+  "pacific-international-lines",
   "pack-man",
   "packli-punkt",
   "packlink",
@@ -67913,6 +68435,7 @@ export const CARRIER_IDS = [
   "sahara-express",
   "saia",
   "sailpost",
+  "salam-pacific-indonesia-lines",
   "sameday",
   "samex",
   "samoa-post",
@@ -67928,6 +68451,7 @@ export const CARRIER_IDS = [
   "scg-express",
   "schaeflein",
   "schneider",
+  "sea-legend-line",
   "seabourne-logistics",
   "seino",
   "seino-super-express",
@@ -67979,6 +68503,8 @@ export const CARRIER_IDS = [
   "sicepat",
   "silpo-pack",
   "sinapseria",
+  "sinokor-merchant-marine",
+  "sitc-container-lines",
   "sitra-es",
   "siuntos-autobusais",
   "sjl-express",
@@ -67998,6 +68524,7 @@ export const CARRIER_IDS = [
   "slovenska-posta",
   "slx-kr",
   "sm-express",
+  "sm-line",
   "smafrakt",
   "smsa-express",
   "sofex-post",
@@ -68066,6 +68593,7 @@ export const CARRIER_IDS = [
   "takesend",
   "tamdis",
   "tamex",
+  "tanto-intim-line",
   "tanzania-posts",
   "tapuz-delivery",
   "taqbin-hk",
@@ -68150,6 +68678,7 @@ export const CARRIER_IDS = [
   "transfera",
   "transgo-mx",
   "transilvania-post",
+  "translink-shipping",
   "transmission",
   "transnatur",
   "transnet-couriers",
@@ -68608,6 +69137,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "atc-express": [],
   "athinaiki": [],
   "ativa-logistica": [],
+  "atlantic-container-line": [],
   "atlantic-courier": [],
   "ats-healthcare": [],
   "atual-cargas": [],
@@ -68727,6 +69257,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ccfs": [],
   "cdek": ["cdek-1"],
   "cdl": ["cdl-1","cdl-2"],
+  "cdp-courier": [],
   "cel-changda": [],
   "celeritas": [],
   "celero": [],
@@ -68744,6 +69275,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chic-express": [],
   "chilexpress": [],
   "china-railway-express": [],
+  "china-united-lines": [],
   "chinz-logistics": [],
   "chit-chats": ["chit-chats-1"],
   "choir-express": [],
@@ -68785,6 +69317,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cootranstame": [],
   "copa-courier": ["copa-courier-1"],
   "cope-sensitive-freight": [],
+  "cordelia-shipping": [],
   "corlan-post-express": [],
   "corporate-couriers": [],
   "corre": ["corre-s10"],
@@ -68901,6 +69434,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "domex-do": [],
   "domina": [],
   "dongdu": ["dongdu-1"],
+  "dongjin-shipping": [],
   "doobalhero": [],
   "doora-logistics": [],
   "dpd-at": ["dpd-at-1"],
@@ -68955,11 +69489,13 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "efs-asia": [],
   "egxpress": ["egxpress-1"],
   "egypt-post": ["egypt-post-1","egypt-post-s10"],
+  "eimskip": [],
   "ekart": ["ekart-ecommerce","ekart-merchant"],
   "eli-express": [],
   "elianpost": [],
   "elit-post": [],
   "elite-post-al": [],
+  "ellerman-city-liners": [],
   "elog-luxembourg": [],
   "elta": ["elta-s10"],
   "em-distribusjon": [],
@@ -68999,6 +69535,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "europoshta": [],
   "eushipments": [],
   "evdemo-lojistik": [],
+  "evergreen-line": [],
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],
   "ewe": [],
@@ -69097,6 +69634,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "furniture-logis": [],
   "fxdc-post": [],
   "fynex": [],
+  "g2-ocean": [],
   "g4s-kenya": [],
   "gaash": [],
   "gaaubesi": [],
@@ -69183,12 +69721,14 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "haypost": ["haypost-s10"],
   "hct-logistics": [],
   "hecny-ecom": [],
+  "hecny-shipping": [],
   "hellmann": [],
   "helthjem": ["helthjem-1","helthjem-2"],
   "hepsijet": [],
   "hercules-freight": [],
   "hermes-at": [],
   "herona-express": ["herona-express-1"],
+  "heung-a-line": [],
   "hey-couriers": [],
   "hfd": [],
   "hgd": [],
@@ -69204,6 +69744,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "homexpress": [],
   "honducor": [],
   "hongsuda": [],
+  "honour-lane-shipping": [],
   "hop-envios": [],
   "hopexpress": [],
   "horoz": [],
@@ -69614,6 +70155,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
+  "pacific-international-lines": [],
   "pack-man": [],
   "packli-punkt": [],
   "packlink": ["packlink-1"],
@@ -69823,6 +70365,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sahara-express": [],
   "saia": ["saia-1"],
   "sailpost": [],
+  "salam-pacific-indonesia-lines": [],
   "sameday": ["sameday-1","sameday-2","sameday-3"],
   "samex": [],
   "samoa-post": [],
@@ -69838,6 +70381,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "scg-express": ["scg-express-1"],
   "schaeflein": [],
   "schneider": [],
+  "sea-legend-line": [],
   "seabourne-logistics": [],
   "seino": [],
   "seino-super-express": [],
@@ -69889,6 +70433,8 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sicepat": [],
   "silpo-pack": [],
   "sinapseria": [],
+  "sinokor-merchant-marine": [],
+  "sitc-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],
   "sjl-express": [],
@@ -69908,6 +70454,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "slovenska-posta": ["slovenska-posta-own","slovenska-posta-s10"],
   "slx-kr": [],
   "sm-express": [],
+  "sm-line": [],
   "smafrakt": [],
   "smsa-express": [],
   "sofex-post": [],
@@ -69976,6 +70523,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "takesend": ["takesend-1"],
   "tamdis": [],
   "tamex": [],
+  "tanto-intim-line": [],
   "tanzania-posts": [],
   "tapuz-delivery": [],
   "taqbin-hk": [],
@@ -70060,6 +70608,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "transfera": [],
   "transgo-mx": [],
   "transilvania-post": [],
+  "translink-shipping": [],
   "transmission": ["transmission-1"],
   "transnatur": [],
   "transnet-couriers": [],

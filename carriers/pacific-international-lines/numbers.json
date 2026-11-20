@@ -1,0 +1,25 @@
+{
+  "carrier": "pacific-international-lines",
+  "records": [
+    {
+      "number": "PCIU6051366",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/pacific-international-lines",
+        "date": "2020-03-16",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest lists this container under a PIL bill of lading. PIL’s guest tracker returned it with subsequent movements dated 2023–2024."
+    }
+  ]
+}

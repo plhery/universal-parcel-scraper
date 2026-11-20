@@ -1,0 +1,28 @@
+{
+  "success": true,
+  "data": {
+    "list": [
+      {
+        "containerNo": "SITU9145532",
+        "movementCode": "OUTBOUND PICKUP",
+        "movementName": "客户提空箱",
+        "eventPort": "BUSAN",
+        "eventDate": "2026-10-15 13:17"
+      },
+      {
+        "containerNo": "SITU9145532",
+        "movementCode": "EMPTY DISCHARGE FROM VESSEL",
+        "movementName": "进口空箱入场",
+        "eventPort": "BUSAN",
+        "eventDate": "2026-10-13 10:00"
+      },
+      {
+        "containerNo": "SITU9145532",
+        "movementCode": "LOADED ONTO VESSEL",
+        "movementName": "出口装船",
+        "eventPort": "KOBE",
+        "eventDate": "2026-10-11 23:05"
+      }
+    ]
+  }
+}

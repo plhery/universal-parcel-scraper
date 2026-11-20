@@ -332,6 +332,11 @@
     "reason": "Asyad Express shipment numbers seen so far are plain digits, shared with many carriers; the tracker states no fixed length or prefix."
   },
   {
+    "carrier": "atlantic-container-line",
+    "kind": "open",
+    "reason": "The public tracker confirms a whole shipment number. The adapter is explicitly selected."
+  },
+  {
     "carrier": "atlantic-courier",
     "pattern": "^\\d{6}$",
     "kind": "by_design",
@@ -606,6 +611,11 @@
     "reason": "CDEK's older ten-digit numbers share their shape with DHL and several other carriers, and nothing in the number points to CDEK."
   },
   {
+    "carrier": "cdp-courier",
+    "kind": "open",
+    "reason": "CDP search accepts numeric references and uses explicit carrier selection."
+  },
+  {
     "carrier": "celeritas",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
@@ -681,6 +691,11 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Chilexpress."
+  },
+  {
+    "carrier": "china-united-lines",
+    "kind": "open",
+    "reason": "CU Lines uses equipment identifiers shared across lines and sailings."
   },
   {
     "carrier": "chit-chats",
@@ -770,6 +785,11 @@
     "kind": "open",
     "carrier": "cootranstame",
     "reason": "The native tracker confirms one public numeric guide. The carrier is selectable while its numbering and overlaps remain open."
+  },
+  {
+    "carrier": "cordelia-shipping",
+    "kind": "open",
+    "reason": "The guest form verifies Cordelia bills and shared equipment references. Select Cordelia explicitly."
   },
   {
     "carrier": "correos-bolivia",
@@ -1100,6 +1120,11 @@
     "reason": "Domex waybill numbers are bare runs of eight or nine digits, a shape many carriers share."
   },
   {
+    "carrier": "dongjin-shipping",
+    "kind": "open",
+    "reason": "The guest search accepts shared container equipment identifiers. Select Dongjin Shipping explicitly."
+  },
+  {
     "carrier": "dpd-at",
     "pattern": "^\\d{14}$",
     "kind": "collision",
@@ -1255,6 +1280,16 @@
     "reason": "OCASA in Argentina prints the same ECO and ten-digit layout, so the shape cannot name Eco Express."
   },
   {
+    "carrier": "eimskip",
+    "kind": "open",
+    "reason": "The guest tracker accepts a bare shipment number. Eimskip is selected explicitly."
+  },
+  {
+    "carrier": "ellerman-city-liners",
+    "kind": "open",
+    "reason": "Ellerman’s lookup uses equipment identifiers shared across carriers and sailings."
+  },
+  {
     "carrier": "emirates-post",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
@@ -1337,6 +1372,11 @@
     "pattern": "^1(?:0[1-9]|[12]\\d|3[01])(?:0[1-9]|1[0-2])\\d{7}$",
     "kind": "by_design",
     "reason": "Evdemo Lojistik's twelve-digit numbers, 1 then the registration day and month and a serial, share their shape with many carriers' numeric waybills."
+  },
+  {
+    "carrier": "evergreen-line",
+    "kind": "open",
+    "reason": "The confirmed Evergreen bill is selectable explicitly. The EGLV maritime prefix is not offered by detection."
   },
   {
     "carrier": "evropat",
@@ -1557,6 +1597,11 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Ten digits are shared by many carriers, Seino among them, and nothing in the number points to Fukuyama."
+  },
+  {
+    "carrier": "g2-ocean",
+    "kind": "open",
+    "reason": "The public search accepts the bare bill reference. Select G2 Ocean explicitly."
   },
   {
     "carrier": "gaash",
@@ -1834,6 +1879,11 @@
     "reason": "HCT's ten digits end in a mod-7 check digit, the same layout as DHL Express waybills, so nothing in the number points to HCT."
   },
   {
+    "carrier": "hecny-shipping",
+    "kind": "open",
+    "reason": "Hecny confirms a whole house bill through its guest search. The bare format is shared."
+  },
+  {
     "carrier": "helthjem",
     "pattern": "^00\\d{18}$",
     "kind": "by_design",
@@ -1894,6 +1944,11 @@
     "reason": "Hermes Austria prints Hermes's fourteen-digit parcel number, which Hermes Germany's checksum rule and the DPD networks' rules already suggest, and nothing in the number names the Austrian network."
   },
   {
+    "carrier": "heung-a-line",
+    "kind": "open",
+    "reason": "The e-service confirms the full bill of lading. Select Heung-A Line explicitly."
+  },
+  {
     "carrier": "hi-trans",
     "pattern": "^[A-Z]{3}\\d{3,12}$",
     "kind": "by_design",
@@ -1922,6 +1977,11 @@
     "pattern": "^NT\\d{21}$",
     "kind": "by_design",
     "reason": "NT numbers are the barcodes of council notifications Hispapost delivers. One public sample does not show that Hispapost issues the shape rather than the notifying administration, so no rule claims it."
+  },
+  {
+    "carrier": "honour-lane-shipping",
+    "kind": "open",
+    "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
   },
   {
     "carrier": "horoz",
@@ -2843,6 +2903,11 @@
     "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."
   },
   {
+    "carrier": "pacific-international-lines",
+    "kind": "open",
+    "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
+  },
+  {
     "carrier": "pack-man",
     "pattern": "^A\\d{8}$",
     "kind": "by_design",
@@ -3384,6 +3449,11 @@
     "reason": "The one public Sailpost code is sixteen digits, a length many carriers share, and one sample shows no layout, so no rule claims it."
   },
   {
+    "carrier": "salam-pacific-indonesia-lines",
+    "kind": "open",
+    "reason": "The adapter uses shared shipping container identifiers and is selected explicitly."
+  },
+  {
     "carrier": "sapx-express",
     "pattern": "^[A-Z]{3}\\d{11}(?:\\d{2})?$",
     "kind": "by_design",
@@ -3418,6 +3488,11 @@
     "pattern": "^00\\d{18}$",
     "kind": "by_design",
     "reason": "Schäflein's colli numbers are SSCCs with their 00 identifier, and an SSCC carries the GS1 company prefix of whoever issued it, not the carrier, so no rule can name Schäflein from it."
+  },
+  {
+    "carrier": "sea-legend-line",
+    "kind": "open",
+    "reason": "The guest search confirms a shared equipment identifier. Select Sea Legend Line explicitly."
   },
   {
     "carrier": "seino",
@@ -3569,6 +3644,16 @@
     "reason": "Twelve digits are FedEx's layout and other carriers print them too, so a leading 00 does not point to SiCepat."
   },
   {
+    "carrier": "sinokor-merchant-marine",
+    "kind": "open",
+    "reason": "The guest site confirms the full Sinokor bill of lading. The adapter is selected explicitly."
+  },
+  {
+    "carrier": "sitc-container-lines",
+    "kind": "open",
+    "reason": "SITC tracks equipment identifiers that can be reused across carriers and voyages."
+  },
+  {
     "carrier": "skroutz-last-mile",
     "pattern": "^[A-Z0-9]{13}$",
     "kind": "by_design",
@@ -3627,6 +3712,11 @@
     "pattern": "^\\d{11}$",
     "kind": "by_design",
     "reason": "SPS's tracker also takes a parcel number without its 703 country prefix, eleven digits that nothing ties to SPS."
+  },
+  {
+    "carrier": "sm-line",
+    "kind": "open",
+    "reason": "The bare bill format is shared. SM Line confirms ownership through its guest bill search."
   },
   {
     "carrier": "smsa-express",
@@ -3764,6 +3854,11 @@
     "pattern": "^D\\d{17}T\\d$",
     "kind": "open",
     "reason": "One public reference, which ParcelsApp tracks under Tamdis; one sample does not establish the family."
+  },
+  {
+    "carrier": "tanto-intim-line",
+    "kind": "open",
+    "reason": "The guest form uses container numbers, and equipment ownership does not identify the shipment carrier."
   },
   {
     "carrier": "taxydema",
@@ -4033,6 +4128,11 @@
     "carrier": "transdirect",
     "kind": "by_design",
     "reason": "Transdirect accepts its own booking IDs and references issued by several partner couriers. Select it explicitly."
+  },
+  {
+    "carrier": "translink-shipping",
+    "kind": "open",
+    "reason": "The guest history confirms the whole house bill. The adapter is explicitly selected."
   },
   {
     "carrier": "trendyol-express",

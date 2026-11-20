@@ -1,0 +1,149 @@
+{
+  "carrier": "translink-shipping",
+  "entries": [
+    {
+      "wording": "Unloaded From Vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Carrier and Customs Released",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Customs Release",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Carrier Release",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Available for Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Full Container Loaded on Board",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "In Gate",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Empty Container Returned to Carrier at Destination",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Picked up at Final Destination for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Unloaded From Rail",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at facility",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Rail Arrival at Destination Intermodal Ramp",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Intermodal Departure from Last Port of Discharge",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrival at Intermodal Hub by Rail",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded on Rail",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Rail Departure from Origin Intermodal Ramp",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Transhipment Vessel Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded at Port of Transhipment",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Discharged at Port of Transhipment",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Transhipment Vessel Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out Gate to Consignee",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Empty Equipment Dispatched",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    }
+  ]
+}

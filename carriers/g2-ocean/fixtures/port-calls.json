@@ -1,0 +1,51 @@
+{
+  "data": {
+    "bolInformation": {
+      "bolName": "AME38005Q"
+    },
+    "portsAndDates": [
+      {
+        "name": "Mumbai",
+        "type": "L",
+        "arrivalDate": {
+          "date": "23 Jul 2026, 22:30",
+          "happened": true
+        },
+        "berthedDate": {
+          "date": "2 Aug 2026, 18:00",
+          "happened": true
+        },
+        "departureDate": {
+          "date": "26 Aug 2026, 00:00",
+          "happened": true
+        }
+      },
+      {
+        "name": "Camden",
+        "date": "8 Oct 2026, 08:30",
+        "status": "departed"
+      },
+      {
+        "name": "Theodore",
+        "date": "19 Oct 2026, 05:00",
+        "status": "departed"
+      },
+      {
+        "name": "Houston",
+        "type": "D",
+        "arrivalDate": {
+          "date": "23 Oct 2026, 06:00",
+          "happened": true
+        },
+        "berthedDate": {
+          "date": "25 Oct 2026, 01:30",
+          "happened": true
+        },
+        "departureDate": {
+          "date": "8 Nov 2026, 06:06",
+          "happened": true
+        }
+      }
+    ]
+  }
+}

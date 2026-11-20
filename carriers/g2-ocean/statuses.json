@@ -1,0 +1,26 @@
+{
+  "carrier": "g2-ocean",
+  "entries": [
+    {
+      "wording": "Arrived",
+      "stage": "in_transit",
+      "note": "At a discharge port.",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "Berthed",
+      "stage": "in_transit",
+      "note": "At a discharge port.",
+      "language": "en",
+      "confirmedBy": "bundle"
+    },
+    {
+      "wording": "Departed",
+      "stage": "in_transit",
+      "note": "From a loading port.",
+      "language": "en",
+      "confirmedBy": "bundle"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "success": true,
+  "message": null,
+  "searchList": [
+    {
+      "blNo": "CSX26NSADPW030890",
+      "noOfCon": 1,
+      "containerStatusCode": "RVC",
+      "containerStatusDescription": "Delivered"
+    }
+  ],
+  "conListList": [
+    {
+      "dhfDate": "04/10/2026 04:19",
+      "stcDate": "08/10/2026 01:29",
+      "rvcDate": "08/10/2026 06:10"
+    }
+  ]
+}

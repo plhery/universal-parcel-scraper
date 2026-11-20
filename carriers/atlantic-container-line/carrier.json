@@ -1,0 +1,58 @@
+{
+  "id": "atlantic-container-line",
+  "displayName": "Atlantic Container Line",
+  "aliases": [
+    "ACL Cargo",
+    "Atlantic Container Line AB",
+    "ACLU"
+  ],
+  "region": {
+    "countries": [
+      "SE",
+      "GB",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#004b86"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "atlantic-container-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.aclcargo.com/track-trace/",
+    "searchUrl": "https://www.aclcargo.com/track-trace/",
+    "canaryUrl": "https://www.aclcargo.com/track-trace/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "ACL Track & Trace"
+  },
+  "links": [],
+  "detection": []
+}

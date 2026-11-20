@@ -1,0 +1,93 @@
+{
+  "success": true,
+  "msg": "success",
+  "type": "info",
+  "data": {
+    "containerTabVos": [
+      {
+        "ctnNo": "CAIU6519422"
+      }
+    ],
+    "containerStatusDetail": {
+      "CAIU6519422": [
+        {
+          "statusCode": "DS_TM_TK_ECTN_RETURN",
+          "statusName": "EMPTY RETURN",
+          "statusTime": "2026-11-18 00:00:00",
+          "estStatusTime": null,
+          "locationName": "CHICAGO, US, BNSF - LPC (404)"
+        },
+        {
+          "statusCode": "DS_DOOR_DELIVERY",
+          "statusName": "Delivery Date",
+          "statusTime": null,
+          "estStatusTime": null,
+          "locationName": null
+        },
+        {
+          "statusCode": "DS_CC_RELEASE",
+          "statusName": "DS Customs Released",
+          "statusTime": null,
+          "estStatusTime": null,
+          "locationName": null
+        },
+        {
+          "statusCode": "MF_PLD_ARRIVAL",
+          "statusName": "PLACE OF DELIVERY ARRIVAL",
+          "statusTime": "2026-11-14 00:00:00",
+          "estStatusTime": null,
+          "locationName": "CHICAGO, US"
+        },
+        {
+          "statusCode": "DS_RAIL_POD_DEPARTURE",
+          "statusName": "INBOUND RAIL DEPARTURE",
+          "statusTime": "2026-11-09 00:00:00",
+          "estStatusTime": null,
+          "locationName": "LONG BEACH, US, LONG BEACH PIER T TERMINAL"
+        },
+        {
+          "statusCode": "MF_POD_DISCHARGE",
+          "statusName": "DISCHARGE",
+          "statusTime": "2026-10-29 00:00:00",
+          "estStatusTime": null,
+          "locationName": "LONG BEACH, US, LONG BEACH PIER T TERMINAL"
+        },
+        {
+          "statusCode": "MF_POD_ARRIVAL",
+          "statusName": "Arrive At POD",
+          "statusTime": "2026-10-29 00:00:00",
+          "estStatusTime": "2026-10-26 00:00:00",
+          "locationName": "LONG BEACH, US"
+        },
+        {
+          "statusCode": "MF_POL_DEPARTURE",
+          "statusName": "DEPART AT LOADING PORT",
+          "statusTime": "2026-10-10 14:11:00",
+          "estStatusTime": "2026-10-10 00:00:00",
+          "locationName": "XIAMEN, CN"
+        },
+        {
+          "statusCode": "MF_POL_ARRIVAL",
+          "statusName": "ON BOARD",
+          "statusTime": "2026-10-09 00:00:00",
+          "estStatusTime": null,
+          "locationName": "XIAMEN, CN, XIAMEN HAITONG CONTAINER TERMINAL"
+        },
+        {
+          "statusCode": "TM_TK_FCTN_IN_PORT",
+          "statusName": "GATE IN",
+          "statusTime": "2026-09-30 00:00:00",
+          "estStatusTime": null,
+          "locationName": "XIAMEN, CN, XIAMEN HAITONG CONTAINER TERMINAL"
+        },
+        {
+          "statusCode": "TM_TK_ECTN_OUT_PORT",
+          "statusName": "GATE OUT EMPTY",
+          "statusTime": "2026-09-27 00:00:00",
+          "estStatusTime": null,
+          "locationName": "XIAMEN, CN, XIAMEN CIMCHT MEDLOG CONTAINER SERVICE CO LTD"
+        }
+      ]
+    }
+  }
+}

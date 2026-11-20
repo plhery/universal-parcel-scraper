@@ -1,0 +1,68 @@
+{
+  "carrier": "dongjin-shipping",
+  "entries": [
+    {
+      "wording": "Empty Container Release to Shipper",
+      "code": "TDOYOM",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Gate In to Outbound Terminal",
+      "code": "TAOMDF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded on 'EASLINE KWANGYANG 2644W' at Port of Loading",
+      "code": "VLLMOF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'EASLINE KWANGYANG 2644W' Departure from Port of Loading",
+      "code": "VDLMOF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'EASLINE KWANGYANG 2644W' Arrival at Port of Discharging",
+      "code": "VAUMDF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "'EASLINE KWANGYANG 2644W' POD Berthing Destination",
+      "code": "VBUMDF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Unloaded from 'EASLINE KWANGYANG 2644W' at Port of Discharging",
+      "code": "VUUMDF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Gate Out from Inbound Terminal for Delivery to Consignee (or Port Shuttle)",
+      "code": "TDIMOF",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Empty Container Returned from Customer",
+      "code": "TAIYDM",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    }
+  ]
+}

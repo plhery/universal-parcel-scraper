@@ -1,0 +1,59 @@
+{
+  "carrier": "salam-pacific-indonesia-lines",
+  "entries": [
+    {
+      "wording": "Container Discharge from Vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Berthing",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Container on Board",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trucking back to Depo / CY",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trucking finish stuffing",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trucking arrive at Warehouse",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Pick up Container at Depot",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Booking Requested",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    }
+  ]
+}

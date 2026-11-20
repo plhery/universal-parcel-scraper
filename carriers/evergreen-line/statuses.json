@@ -1,0 +1,13 @@
+{
+  "carrier": "evergreen-line",
+  "entries": [
+    { "wording": "Empty pick-up by merchant haulage", "language": "en", "stage": null, "confirmedBy": "live", "note": "The merchant collected empty equipment before tendering freight." },
+    { "wording": "Received (FCL)", "language": "en", "stage": "accepted", "confirmedBy": "live" },
+    { "wording": "Loaded (FCL) on vessel", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "wording": "Discharged and waiting for transshipping", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "wording": "Transship container loaded on vessel", "language": "en", "stage": "in_transit", "confirmedBy": "live" },
+    { "wording": "Discharged (FCL)", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "Discharge alone does not establish cargo release." },
+    { "wording": "Pick-up by merchant haulage", "language": "en", "stage": "delivered", "confirmedBy": "live", "note": "Handover of the laden container to the merchant's haulier, ending Evergreen's carriage." },
+    { "wording": "Empty container returned", "language": "en", "stage": null, "confirmedBy": "live", "note": "Return of empty equipment after the cargo handover." }
+  ]
+}

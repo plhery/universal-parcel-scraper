@@ -1,0 +1,29 @@
+{
+  "carrier": "eimskip",
+  "entries": [
+    {
+      "wording": "Booked",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Discharged from vessel",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "carrier": "pacific-international-lines",
+  "entries": [
+    {
+      "wording": "O/B Empty Container Released",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Truck Gate In to O/B Terminal",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Vessel Discharge",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Truck Gate Out from I/B Terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "I/B Empty Container Returned",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "carrier": "hecny-shipping",
+  "records": [
+    {
+      "number": "HYSLFTAO10260472",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/keen-and-clear-corp",
+        "date": "2026-11-12",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest identifies Hecny as house bill issuer and WHSU8088606 as its container. The guest tracker returned the same house bill without its SCAC prefix and the same container."
+    },
+    {
+      "number": "HYSLXBKK09260443",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/yang-ming-int-l-corp",
+        "date": "2026-10-25",
+        "dateKind": "shipment_arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "house bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest identifies Hecny as house bill issuer and MRSU8196344 as its container. The guest tracker returned the same house bill without its SCAC prefix and the same container."
+    }
+  ]
+}

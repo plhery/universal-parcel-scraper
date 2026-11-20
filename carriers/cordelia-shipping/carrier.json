@@ -1,0 +1,55 @@
+{
+  "id": "cordelia-shipping",
+  "displayName": "Cordelia Container Shipping Line",
+  "aliases": [
+    "Cordelia Shipping",
+    "Cordelia Line",
+    "CCSL"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#003e80"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cordelia-shipping",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://cordelialine.com/",
+    "searchUrl": "https://cordelialine.com/",
+    "canaryUrl": "https://cordelialine.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "scraped": [
+      "history",
+      "status"
+    ],
+    "discarded": [
+      "location",
+      "vessel",
+      "eta"
+    ],
+    "unavailable": [],
+    "siteName": "Cordelia Track Shipment"
+  },
+  "links": [],
+  "detection": []
+}
