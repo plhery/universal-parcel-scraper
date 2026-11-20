@@ -1,0 +1,56 @@
+{
+  "id": "global-express-logistics-tanzania",
+  "displayName": "Global Express Logistics Tanzania",
+  "aliases": [
+    "Global Express Tanzania",
+    "Global Express Logistics TZ"
+  ],
+  "region": {
+    "countries": [
+      "TZ"
+    ]
+  },
+  "brand": {
+    "color": "#1C4A94"
+  },
+  "selectable": true,
+  "timezone": "Africa/Dar_es_Salaam",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "global-express-logistics-tanzania",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://globalexpress.co.tz/tracking?number={trackingNumber}",
+    "searchUrl": "https://globalexpress.co.tz/tracking",
+    "canaryUrl": "https://globalexpress.co.tz/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "origin",
+      "destination",
+      "recipient_name",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

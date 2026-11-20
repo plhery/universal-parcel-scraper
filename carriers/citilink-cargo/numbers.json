@@ -1,0 +1,37 @@
+{
+  "carrier": "citilink-cargo",
+  "records": [
+    {
+      "number": "888-84379245",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://eprints2.undip.ac.id/id/eprint/40825/1/TA_MAL_CHEVA%20RAFFY%20MAULANA.pdf",
+        "access": "full_page",
+        "date": "2025-05-26",
+        "dateKind": "recorded departure"
+      },
+      "context": {
+        "reportedRole": "The published university appendix reproduces a Citilink-issued domestic master waybill. The native iCMS result matches the serial and records receipt from the flight at BDJ.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dpd-ro",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

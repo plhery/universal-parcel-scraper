@@ -1,0 +1,65 @@
+{
+  "id": "citilink-cargo",
+  "displayName": "Citilink Cargo",
+  "aliases": [
+    "Citilink Indonesia Cargo",
+    "PT Citilink Indonesia Cargo"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#36853B"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "citilink-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://cargo.garuda-indonesia.com/Search",
+    "searchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "parcel_count",
+      "weight",
+      "flight_schedule",
+      "customer_reference"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

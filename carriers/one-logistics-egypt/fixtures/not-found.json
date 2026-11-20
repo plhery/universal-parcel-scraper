@@ -1,0 +1,7 @@
+{
+  "success": true,
+  "data": {
+    "status": "error",
+    "message": "Shipment not found"
+  }
+}

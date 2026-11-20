@@ -1,0 +1,24 @@
+{
+  "carrier": "pacific-air-cargo",
+  "records": [
+    {
+      "number": "5YR-92203705",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.pactracking.com/track/?AwbPrefix=5YR&awb=92203705",
+        "access": "full_page",
+        "date": "2022-05-04",
+        "dateKind": "shipment acceptance"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "The publicly indexed carrier tracking URL resolves to the requested 5YR waybill with dated receipt, departure and arrival events."
+      },
+      "expect": {
+        "carrier": "wedo",
+        "confidence": "high"
+      }
+    }
+  ]
+}

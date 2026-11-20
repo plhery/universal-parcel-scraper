@@ -1,0 +1,66 @@
+{
+  "Table0": [
+    {
+      "AWBNo": "90464441",
+      "AWBStatus": "DLV"
+    }
+  ],
+  "Table1": [
+    {
+      "AWBNo": "90464441",
+      "Action": "DLV",
+      "Station": "CGK",
+      "createdon": "30-Nov-2025 11:49"
+    }
+  ],
+  "Table3": [
+    {
+      "AWBNo": "90464441",
+      "Action": "BKD",
+      "Station": "SIN",
+      "createdon": "07-Nov-2025 17:32"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "EXE",
+      "Station": "SIN",
+      "createdon": "28-Nov-2025 18:06"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "RCS",
+      "Station": "SIN",
+      "createdon": "30-Nov-2025 01:44"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "ARR",
+      "Station": "CGK",
+      "createdon": "30-Nov-2025 08:50"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "MAN",
+      "Station": "SIN",
+      "createdon": "30-Nov-2025 09:50"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "DEP",
+      "Station": "SIN",
+      "createdon": "30-Nov-2025 09:50"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "RCF",
+      "Station": "CGK",
+      "createdon": "30-Nov-2025 11:49"
+    },
+    {
+      "AWBNo": "90464441",
+      "Action": "DLV",
+      "Station": "CGK",
+      "createdon": "30-Nov-2025 11:49"
+    }
+  ]
+}

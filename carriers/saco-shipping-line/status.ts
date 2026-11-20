@@ -1,0 +1,28 @@
+import type { Stage } from '../../core/status/index.js';
+
+export const stages = new Map<number, Stage>([
+  [10, 'registered'],
+  [20, 'accepted'],
+  [30, 'in_transit'],
+  [40, 'in_transit'],
+  [61, 'in_transit'],
+  [62, 'in_transit'],
+  [64, 'in_transit'],
+  [68, 'in_transit'],
+  [70, 'ready_for_pickup'],
+  [81, 'delivered'],
+  [83, 'delivered'],
+  [101, 'in_transit'],
+  [805, 'in_transit'],
+  [807, 'in_transit'],
+  [810, 'in_transit'],
+  [811, 'in_transit'],
+  [813, 'in_transit'],
+  [820, 'customs'],
+  [821, 'in_transit'],
+  [822, 'in_transit'],
+  [823, 'in_transit'],
+  [828, 'in_transit'],
+  [829, 'in_transit'],
+  [874, 'out_for_delivery'],
+]);

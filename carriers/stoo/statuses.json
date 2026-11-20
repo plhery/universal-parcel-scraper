@@ -1,0 +1,60 @@
+{
+  "carrier": "stoo",
+  "entries": [
+    {
+      "wording": "주문접수",
+      "language": "ko",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Code 10. Order received."
+    },
+    {
+      "wording": "입고완료",
+      "language": "ko",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Code 11. Received at the warehouse."
+    },
+    {
+      "wording": "3PL작업",
+      "language": "ko",
+      "confirmedBy": "live",
+      "note": "Code 20. Warehouse processing."
+    },
+    {
+      "wording": "[창고→공항] 출고",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Code 30. Dispatched from the warehouse to the airport."
+    },
+    {
+      "wording": "항공기 출발",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Code 100. Flight departed."
+    },
+    {
+      "wording": "항공기 도착",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Code 200. Flight arrived."
+    },
+    {
+      "wording": "통관 완료",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Code 400. Customs clearance completed."
+    },
+    {
+      "wording": "배송 완료",
+      "language": "ko",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Code 700. Delivery completed."
+    }
+  ]
+}

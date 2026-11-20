@@ -1,0 +1,114 @@
+{
+  "Table0": [
+    {
+      "AWBNo": "87809422",
+      "AWBStatus": "RCF"
+    }
+  ],
+  "Table1": [
+    {
+      "AWBNo": "87809422",
+      "Action": "RCF",
+      "Station": "PNK",
+      "createdon": "08-Sep-2025 14:40"
+    }
+  ],
+  "Table3": [
+    {
+      "AWBNo": "87809422",
+      "Action": "BKD",
+      "Station": "CGK",
+      "createdon": "03-Sep-2025 19:27"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "BKD",
+      "Station": "DPS",
+      "createdon": "03-Sep-2025 20:27"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "EXE",
+      "Station": "CGK",
+      "createdon": "03-Sep-2025 19:27"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "RCS",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 03:06"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "EXE",
+      "Station": "DPS",
+      "createdon": "03-Sep-2025 20:27"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "RCS",
+      "Station": "DPS",
+      "createdon": "08-Sep-2025 04:06"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "PRE",
+      "Station": "DPS",
+      "createdon": "08-Sep-2025 04:51"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "MAN",
+      "Station": "DPS",
+      "createdon": "08-Sep-2025 06:45"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "DEP",
+      "Station": "DPS",
+      "createdon": "08-Sep-2025 06:45"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "ARR",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 05:45"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "RCF",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 09:07"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "PRE",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 09:37"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "MAN",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 12:20"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "DEP",
+      "Station": "CGK",
+      "createdon": "08-Sep-2025 12:20"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "ARR",
+      "Station": "PNK",
+      "createdon": "08-Sep-2025 12:20"
+    },
+    {
+      "AWBNo": "87809422",
+      "Action": "RCF",
+      "Station": "PNK",
+      "createdon": "08-Sep-2025 14:40"
+    }
+  ]
+}

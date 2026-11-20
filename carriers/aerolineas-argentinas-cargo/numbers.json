@@ -1,0 +1,60 @@
+{
+  "carrier": "aerolineas-argentinas-cargo",
+  "records": [
+    {
+      "number": "044-33256462",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/1075497243/044-33256462-20260721051333",
+        "access": "indexed_excerpt",
+        "date": "2026-07-21",
+        "dateKind": "waybill issuance"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "The dated air waybill names Aerolíneas Argentinas. The linked SmartKargo tracker confirms the exact number with booking, acceptance, flight and delivery scans."
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      }
+    },
+    {
+      "number": "044-36348933",
+      "role": "negative",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://fallos.diprargentina.com/2007/11/aerolneas-argentinas-c-trade-baires.html",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The court decision identifies the waybill, and the public tracker now renders a blank result for it."
+    }
+  ]
+}

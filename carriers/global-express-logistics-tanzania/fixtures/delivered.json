@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "parcel": {
+    "trackingNumber": "GEL-2026-000001",
+    "status": "delivered",
+    "statusLabel": "Delivered",
+    "history": [
+      {
+        "status": "pending",
+        "timestamp": "2026-08-07T08:28:04.000000Z"
+      },
+      {
+        "status": "assigned",
+        "timestamp": "2026-08-07T08:33:15.000000Z"
+      },
+      {
+        "status": "picked_up",
+        "timestamp": "2026-08-07T08:36:42.000000Z"
+      },
+      {
+        "status": "in_transit",
+        "timestamp": "2026-08-07T08:51:52.000000Z"
+      },
+      {
+        "status": "delivered",
+        "timestamp": "2026-08-07T08:53:34.000000Z"
+      },
+      {
+        "status": "confirmed",
+        "timestamp": "2026-08-07T08:55:36.000000Z"
+      }
+    ]
+  }
+}

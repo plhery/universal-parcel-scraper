@@ -1,0 +1,23 @@
+{
+  "carrier": "stoo",
+  "records": [
+    {
+      "number": "ST230047655JP",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://stline.stload.com/tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The public form shows this example in its tracking field. The carrier lookup echoes the exact reference and returns eight dated events.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The native history follows a South Korea to Japan shipment through warehouse receipt, air transport, customs clearance and delivery."
+    }
+  ]
+}

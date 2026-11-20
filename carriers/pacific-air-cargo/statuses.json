@@ -1,0 +1,33 @@
+{
+  "carrier": "pacific-air-cargo",
+  "entries": [
+    {
+      "wording": "Shipment Received",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The native tracker records the tendered cargo at the shipment origin."
+    },
+    {
+      "wording": "Flight Departed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "An InAir flight record confirms departure of an assigned leg."
+    },
+    {
+      "wording": "Flight Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "A Landed flight record confirms arrival at the next airport."
+    },
+    {
+      "wording": "Shipment Recovered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "official-doc",
+      "note": "The carrier tracker displays this wording for cargo collected at destination. The adapter requires the full tendered piece count."
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "carrier": "garuda-indonesia-cargo",
+  "records": [
+    {
+      "number": "126-90464441",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/960397122/Soft-Copy-Do-Hawb-Sav55226970-2",
+        "access": "indexed_excerpt",
+        "date": "2025-11-29",
+        "dateKind": "shipment document date"
+      },
+      "context": {
+        "reportedRole": "The published Singapore export document contains the issued Garuda master air waybill. The native portal returned the same waybill and recorded delivery at CGK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      }
+    },
+    {
+      "number": "126-87809422",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://id.scribd.com/document/912777275/LOE-feri-1",
+        "access": "indexed_excerpt",
+        "date": "2025-09-08",
+        "dateKind": "shipment document date"
+      },
+      "context": {
+        "reportedRole": "The published shipment declaration identifies the Garuda air waybill. The native portal returned the same waybill with receipt from the flight at PNK.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "blue-dart",
+          "japan-post",
+          "aramex",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      }
+    }
+  ]
+}

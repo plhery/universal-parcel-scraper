@@ -1,0 +1,37 @@
+{
+  "carrier": "bermuda-container-line",
+  "entries": [
+    {
+      "wording": "In-Gate (322)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "accepted"
+    },
+    {
+      "wording": "Loaded on Vessel",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Unloaded From Vessel",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit",
+      "note": "Vessel discharge is a terminal movement."
+    },
+    {
+      "wording": "Out-Gate",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit",
+      "note": "The laden equipment left the terminal."
+    },
+    {
+      "wording": "In-Gate",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The latest movement returned the empty container to the terminal. There is no cargo delivery scan."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "bermuda-container-line",
+  "displayName": "Bermuda Container Line",
+  "aliases": [
+    "Neptune Bermuda Container Line",
+    "Bermuda Container Line Ltd"
+  ],
+  "region": {
+    "countries": [
+      "BM",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#253F60"
+  },
+  "selectable": true,
+  "timezone": "Atlantic/Bermuda",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bermuda-container-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://neptunebermuda.com/track-shipment/",
+    "searchUrl": "https://neptunebermuda.com/track-shipment/",
+    "canaryUrl": "https://neptunebermuda.com/track-shipment/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

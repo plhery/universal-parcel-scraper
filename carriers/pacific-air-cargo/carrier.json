@@ -1,0 +1,62 @@
+{
+  "id": "pacific-air-cargo",
+  "displayName": "Pacific Air Cargo",
+  "aliases": [
+    "Pacific Air Cargo Hawaii",
+    "PACTRAK"
+  ],
+  "region": {
+    "countries": [
+      "US",
+      "AS",
+      "GU"
+    ]
+  },
+  "brand": {
+    "color": "#006B9B"
+  },
+  "selectable": true,
+  "timezone": "Pacific/Honolulu",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pacific-air-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.pactracking.com/track/",
+    "searchUrl": "https://www.pactracking.com/track/",
+    "canaryUrl": "https://www.pactracking.com/track/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

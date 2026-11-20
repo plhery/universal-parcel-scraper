@@ -1,0 +1,46 @@
+{
+  "id": "one-logistics-egypt",
+  "displayName": "ONE Logistics Egypt",
+  "aliases": [
+    "One Logistics EG",
+    "One Logistics for Logistics Services"
+  ],
+  "region": {
+    "countries": [
+      "EG"
+    ]
+  },
+  "brand": {
+    "color": "#093387"
+  },
+  "selectable": true,
+  "timezone": "Africa/Cairo",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "one-logistics-egypt",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [],
+  "portal": {
+    "url": "https://onelogisticseg.com/ar/",
+    "searchUrl": "https://onelogisticseg.com/ar/",
+    "canaryUrl": "https://onelogisticseg.com/ar/",
+    "shows": [
+      "status",
+      "last_update",
+      "location"
+    ],
+    "scraped": [
+      "status"
+    ],
+    "discarded": [
+      "last_update",
+      "location"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

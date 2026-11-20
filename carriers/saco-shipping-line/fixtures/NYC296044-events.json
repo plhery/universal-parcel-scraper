@@ -1,0 +1,175 @@
+{
+  "success": true,
+  "data": [
+    {
+      "status_code": 83,
+      "status_name": "CFS Pick-Up By Customer",
+      "un_code": "USNYC",
+      "date_time": "2026-10-12 09:29:00"
+    },
+    {
+      "status_code": 70,
+      "status_name": "Freight Available",
+      "un_code": "USNYC",
+      "date_time": "2026-10-09 05:00:00"
+    },
+    {
+      "status_code": 62,
+      "status_name": "Container Devanned at deconsolidation CFS",
+      "un_code": "USNYC",
+      "date_time": "2026-10-09 05:00:00"
+    },
+    {
+      "status_code": 75,
+      "status_name": "Discharge Port ETA updated",
+      "un_code": "USNYC",
+      "date_time": "2026-10-08 21:39:00"
+    },
+    {
+      "status_code": 813,
+      "status_name": "Full OutGate from Ocean Terminal at Port of Discharge",
+      "un_code": "USNYC",
+      "date_time": "2026-10-08 20:05:00"
+    },
+    {
+      "status_code": 874,
+      "status_name": "Picked up at Final Destination for Delivery",
+      "un_code": "USNYC",
+      "date_time": "2026-10-08 19:09:00"
+    },
+    {
+      "status_code": 61,
+      "status_name": "Arrived at deconsolidation CFS",
+      "un_code": "USNYC",
+      "date_time": "2026-10-08 15:58:00"
+    },
+    {
+      "status_code": 828,
+      "status_name": "Available for delivery",
+      "un_code": "USNYC",
+      "date_time": "2026-10-06 06:06:00"
+    },
+    {
+      "status_code": 811,
+      "status_name": "Full container unloaded from vessel at port of discharge",
+      "un_code": "USNYC",
+      "date_time": "2026-10-06 02:06:00"
+    },
+    {
+      "status_code": 843,
+      "status_name": "Estimated Time of Cargo Delivery",
+      "un_code": "USNYC",
+      "date_time": "2026-10-04 12:56:00"
+    },
+    {
+      "status_code": 829,
+      "status_name": "Vessel arrived at port of discharge",
+      "un_code": "USNYC",
+      "date_time": "2026-10-04 09:42:00"
+    },
+    {
+      "status_code": 71,
+      "status_name": "Delivery/Release Order Issued",
+      "un_code": "USNYC",
+      "date_time": "2026-10-02 15:12:00"
+    },
+    {
+      "status_code": 849,
+      "status_name": "Carrier and Customers Released",
+      "un_code": "USNYC",
+      "date_time": "2026-09-28 14:10:00"
+    },
+    {
+      "status_code": 821,
+      "status_name": "Customs released",
+      "un_code": "USNYC",
+      "date_time": "2026-09-28 14:10:00"
+    },
+    {
+      "status_code": 60,
+      "status_name": "Arrival Notice Issued",
+      "un_code": "USNYC",
+      "date_time": "2026-09-25 13:06:00"
+    },
+    {
+      "status_code": 50,
+      "status_name": "Bill of Lading Printed",
+      "un_code": "CZPRG",
+      "date_time": "2026-09-21 09:23:55"
+    },
+    {
+      "status_code": 823,
+      "status_name": "Vessel departed from port of loading",
+      "un_code": "DEBRV",
+      "date_time": "2026-09-21 08:52:00"
+    },
+    {
+      "status_code": 822,
+      "status_name": "Carrier released",
+      "un_code": "USNYC",
+      "date_time": "2026-09-21 08:10:00"
+    },
+    {
+      "status_code": 30,
+      "status_name": "Container Loaded And Sealed",
+      "un_code": "CZPRG",
+      "date_time": "2026-09-21 04:00:00"
+    },
+    {
+      "status_code": 40,
+      "status_name": "Confirmed On Board",
+      "un_code": "CZPRG",
+      "date_time": "2026-09-21 04:00:00"
+    },
+    {
+      "status_code": 810,
+      "status_name": "Loaded on vessel port of loading",
+      "un_code": "DEBRV",
+      "date_time": "2026-09-19 15:07:00"
+    },
+    {
+      "status_code": 807,
+      "status_name": "Full ingate at place of receipt",
+      "un_code": "DEBRV",
+      "date_time": "2026-09-15 08:13:00"
+    },
+    {
+      "status_code": 813,
+      "status_name": "Full OutGate from Ocean Terminal at Port of Discharge",
+      "un_code": "DEBRV",
+      "date_time": "2026-09-15 07:06:00"
+    },
+    {
+      "status_code": 805,
+      "status_name": "Full ingate at ocean terminal port of loading",
+      "un_code": "DEBRV",
+      "date_time": "2026-09-15 07:06:00"
+    },
+    {
+      "status_code": 820,
+      "status_name": "Customs hold at port of discharge",
+      "un_code": "USNYC",
+      "date_time": "2026-09-14 12:28:00"
+    },
+    {
+      "status_code": 850,
+      "status_name": "Empty Container Picked Up",
+      "un_code": "CZPRG",
+      "date_time": "2026-09-14 06:26:00"
+    },
+    {
+      "status_code": 49,
+      "status_name": "Preliminary Bill Of Lading Printed",
+      "un_code": "CZPRG",
+      "date_time": "2026-08-21 08:28:19"
+    },
+    {
+      "status_code": 10,
+      "status_name": "Booking Confirmed",
+      "un_code": "CZPRG",
+      "date_time": "2026-08-20 07:57:57"
+    }
+  ],
+  "count": 28,
+  "shipment_id": "1"
+}

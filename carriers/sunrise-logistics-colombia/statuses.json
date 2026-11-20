@@ -1,0 +1,12 @@
+{
+  "carrier": "sunrise-logistics-colombia",
+  "entries": [
+    {
+      "wording": "CONFIRMACION DE RESERVA",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The carrier recorded a freight booking. The example record is historical and cannot establish the current stage."
+    }
+  ]
+}

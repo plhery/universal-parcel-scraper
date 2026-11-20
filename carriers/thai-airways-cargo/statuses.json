@@ -1,0 +1,68 @@
+{
+  "carrier": "thai-airways-cargo",
+  "entries": [
+    {
+      "wording": "Booking Confirmed",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The carrier recorded a booking."
+    },
+    {
+      "wording": "Received from Shipper",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The carrier accepted cargo from the shipper."
+    },
+    {
+      "wording": "Manifested",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The cargo was added to a flight manifest."
+    },
+    {
+      "wording": "Departed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier recorded flight departure."
+    },
+    {
+      "wording": "Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier recorded arrival at the next station."
+    },
+    {
+      "wording": "Received from Flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The arrival station received the cargo."
+    },
+    {
+      "wording": "Notified",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier recorded a notification at the station."
+    },
+    {
+      "wording": "Documents Delivered",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier handed over shipping documents."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Destination deliveries must account for the full waybill piece count before the shipment is delivered."
+    }
+  ]
+}

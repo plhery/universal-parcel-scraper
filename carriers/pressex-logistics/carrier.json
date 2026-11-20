@@ -1,0 +1,48 @@
+{
+  "id": "pressex-logistics",
+  "displayName": "PressEx Logistics",
+  "aliases": [
+    "PressEx Courier",
+    "PressEx Colombia",
+    "Pressex Courier SAS"
+  ],
+  "region": {
+    "countries": [
+      "CO",
+      "US"
+    ]
+  },
+  "brand": {
+    "color": "#E56124"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "pressex-logistics",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "searchUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "canaryUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

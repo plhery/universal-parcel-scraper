@@ -1,0 +1,8 @@
+import type { Stage } from '../../core/status/index.js';
+
+export const stages = new Map<string, Stage>([
+  ['manifested', 'in_transit'],
+  ['departed', 'in_transit'],
+  ['arrived', 'in_transit'],
+  ['delivered', 'delivered'],
+]);

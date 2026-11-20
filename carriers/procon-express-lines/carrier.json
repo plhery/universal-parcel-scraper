@@ -1,0 +1,54 @@
+{
+  "id": "procon-express-lines",
+  "displayName": "Procon Express Lines",
+  "aliases": [
+    "Procon Express Lines (CMS)",
+    "PCXS",
+    "Cargo Marketing Services"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#293B6D"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "procon-express-lines",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://cmsfreight.com/tracking/public-tracking/",
+    "searchUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "canaryUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "location",
+      "origin",
+      "destination"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

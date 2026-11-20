@@ -1,0 +1,33 @@
+{
+  "carrier": "volaris-cargo",
+  "entries": [
+    {
+      "wording": "Manifested",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cargo appears on the carrier manifest."
+    },
+    {
+      "wording": "Departed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The flight departed."
+    },
+    {
+      "wording": "Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The flight reached its next station."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The carrier recorded delivery."
+    }
+  ]
+}

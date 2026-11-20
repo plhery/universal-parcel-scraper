@@ -8937,6 +8937,28 @@
     ]
   },
   {
+    "input": "036-18709025",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
     "input": "036-25917183",
     "carrier": "unknown",
     "confidence": "low",
@@ -9293,6 +9315,50 @@
       "dpd-nl",
       "dpd-de",
       "chronopost"
+    ]
+  },
+  {
+    "input": "044-33256462",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "044-36348933",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
     ]
   },
   {
@@ -13651,6 +13717,12 @@
     "candidates": [
       "fm-transportes"
     ]
+  },
+  {
+    "input": "101038384",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "1010855902",
@@ -18984,6 +19056,56 @@
     "candidates": []
   },
   {
+    "input": "126-87809422",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
+    "input": "126-90464441",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
+    ]
+  },
+  {
     "input": "126000411094",
     "carrier": "unknown",
     "confidence": "low",
@@ -20468,6 +20590,28 @@
       "gls-fr",
       "gls-de",
       "gls-ch"
+    ]
+  },
+  {
+    "input": "139-43814223",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics"
     ]
   },
   {
@@ -22558,6 +22702,32 @@
     ]
   },
   {
+    "input": "155411113354",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpd-fr",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "metropolitan-warehouse"
+    ]
+  },
+  {
     "input": "155518030762",
     "carrier": "unknown",
     "confidence": "low",
@@ -24643,6 +24813,16 @@
       "colis-prive",
       "j-and-t",
       "metropolitan-warehouse"
+    ]
+  },
+  {
+    "input": "17441392",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
     ]
   },
   {
@@ -31462,6 +31642,60 @@
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
+  },
+  {
+    "input": "217-04563042",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress",
+      "ppl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics",
+      "ppl"
+    ]
+  },
+  {
+    "input": "217-09058722",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "blue-dart",
+      "japan-post",
+      "aramex",
+      "coordinadora",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress",
+      "ppl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics",
+      "ppl"
+    ]
   },
   {
     "input": "217016062936",
@@ -57253,6 +57487,14 @@
     ]
   },
   {
+    "input": "5YR-92203705",
+    "carrier": "wedo",
+    "confidence": "high",
+    "candidates": [
+      "wedo"
+    ]
+  },
+  {
     "input": "6 352 932 558 1",
     "carrier": "unknown",
     "confidence": "low",
@@ -73420,6 +73662,31 @@
     ]
   },
   {
+    "input": "888-84379245",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "postlogistics",
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "coordinadora",
+      "dpd-ro",
+      "gls-at",
+      "gls-pl",
+      "mainfreight",
+      "paquetexpress",
+      "ppl"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch",
+      "postlogistics",
+      "ppl"
+    ]
+  },
+  {
     "input": "888000453402",
     "carrier": "unknown",
     "confidence": "low",
@@ -81632,6 +81899,30 @@
     ]
   },
   {
+    "input": "ALRB260708460281",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "ALRB260908460344",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "ALRB260908460495",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "ALRB261013270093",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "AM010404344",
     "carrier": "unknown",
     "confidence": "low",
@@ -83368,6 +83659,18 @@
     ]
   },
   {
+    "input": "BCLU2388WBC86217",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "BCLU8009690",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "BCMIG00461881",
     "carrier": "citymail",
     "confidence": "high",
@@ -83708,6 +84011,18 @@
     "asked": [
       "colis-prive"
     ]
+  },
+  {
+    "input": "BOG-110491",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "BOG00100600000409",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "BOK2023192",
@@ -88562,6 +88877,12 @@
     ]
   },
   {
+    "input": "DDX178722",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "DE0032063021",
     "carrier": "amazon-logistics",
     "confidence": "high",
@@ -88821,6 +89142,17 @@
       "colis-prive",
       "tnt-au",
       "purolator"
+    ]
+  },
+  {
+    "input": "DO-2025-0087",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt-it"
+    ],
+    "asked": [
+      "tnt-it"
     ]
   },
   {
@@ -92698,6 +93030,12 @@
     "candidates": []
   },
   {
+    "input": "Freight/2025/158",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "G0000512000433544",
     "carrier": "unknown",
     "confidence": "low",
@@ -93044,6 +93382,12 @@
   },
   {
     "input": "GE123456789WW",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "GEL-2026-000001",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -95553,6 +95897,12 @@
     "candidates": [
       "imile"
     ]
+  },
+  {
+    "input": "IM09189",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "IN20260609105455253",
@@ -101083,6 +101433,12 @@
     ]
   },
   {
+    "input": "MIN203130",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "MKRI260070952",
     "carrier": "unknown",
     "confidence": "none",
@@ -102170,6 +102526,23 @@
     "asked": [
       "tnt-it",
       "dhl-ecommerce-es"
+    ]
+  },
+  {
+    "input": "NET-98214",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
     ]
   },
   {
@@ -103984,6 +104357,18 @@
   },
   {
     "input": "PCIU6051366",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "PCXS2EM26080098",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "PCXS2ET26090083",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
@@ -105844,6 +106229,23 @@
     ]
   },
   {
+    "input": "QS207431",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-ch",
+      "gls-fr",
+      "gls-de",
+      "gls-nl",
+      "loggi"
+    ],
+    "asked": [
+      "gls-fr",
+      "gls-de",
+      "gls-ch"
+    ]
+  },
+  {
     "input": "QS416938",
     "carrier": "unknown",
     "confidence": "low",
@@ -105859,6 +106261,12 @@
       "gls-de",
       "gls-ch"
     ]
+  },
+  {
+    "input": "QS570719299745",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "QSP147827798",
@@ -111269,12 +111677,51 @@
     ]
   },
   {
+    "input": "SSLLCHS246914",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
+    "input": "SSLLCLE207043",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
+    "input": "SSLLNYC296044",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fermopoint"
+    ],
+    "asked": [
+      "fermopoint"
+    ]
+  },
+  {
     "input": "ST2273888401000960300",
     "carrier": "australia-post",
     "confidence": "high",
     "candidates": [
       "australia-post"
     ]
+  },
+  {
+    "input": "ST230047655JP",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "STR059449783",
@@ -114220,6 +114667,14 @@
   },
   {
     "input": "UUS61T1260957452967",
+    "carrier": "uniuni",
+    "confidence": "high",
+    "candidates": [
+      "uniuni"
+    ]
+  },
+  {
+    "input": "UUS63D1260298065799",
     "carrier": "uniuni",
     "confidence": "high",
     "candidates": [

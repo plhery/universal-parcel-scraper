@@ -1,0 +1,40 @@
+{
+  "carrier": "sunrise-logistics-colombia",
+  "records": [
+    {
+      "number": "BOG-110491",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://tracking.sunriselg.com/es",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed",
+        "reportedRole": "The carrier publishes the complete house air waybill in its own search box. The air shipment endpoint echoes the waybill and returns a booking confirmation record."
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The returned confirmation is historical. Its movement date is the portal’s year-0001 placeholder."
+    },
+    {
+      "number": "DO-2025-0087",
+      "role": "negative",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://tracking.sunriselg.com/es",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt-it"
+        ]
+      },
+      "note": "The tracker’s air waybill endpoint reports this published example missing."
+    }
+  ]
+}

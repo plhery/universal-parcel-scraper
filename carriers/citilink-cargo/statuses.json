@@ -1,0 +1,109 @@
+{
+  "carrier": "citilink-cargo",
+  "entries": [
+    {
+      "code": "BKD",
+      "wording": "Booking confirmed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "EXE",
+      "wording": "Booking executed",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RCS",
+      "wording": "Shipment accepted",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "REPLAN",
+      "wording": "Shipment re-planned",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    },
+    {
+      "code": "RCT",
+      "wording": "Shipment transferred",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    },
+    {
+      "code": "PRE",
+      "wording": "Pre-manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "MAN",
+      "wording": "Manifested",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DEP",
+      "wording": "Departed",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ARR",
+      "wording": "AWB Arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RCF",
+      "wording": "Received from flight",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "TFD",
+      "wording": "Shipment transferred",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    },
+    {
+      "code": "AWD",
+      "wording": "Document arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    },
+    {
+      "code": "NFD",
+      "wording": "Ready for pick-up",
+      "stage": "ready_for_pickup",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    },
+    {
+      "code": "DLV",
+      "wording": "Delivered",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "official-doc",
+      "sourceUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html"
+    }
+  ]
+}

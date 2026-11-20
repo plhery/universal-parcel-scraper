@@ -1,0 +1,45 @@
+{
+  "id": "aeromexico-cargo",
+  "displayName": "Aeroméxico Cargo",
+  "aliases": [
+    "Aeromexico Cargo",
+    "AM Cargo"
+  ],
+  "region": {
+    "countries": [
+      "MX"
+    ]
+  },
+  "brand": {
+    "color": "#182843"
+  },
+  "selectable": true,
+  "timezone": "America/Mexico_City",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "aeromexico-cargo",
+    "steps": [
+      "direct"
+    ]
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://amcargo.aeromexico.com/track/",
+    "searchUrl": "https://amcargo.aeromexico.com/track/",
+    "canaryUrl": "https://amcargo.aeromexico.com/track/",
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

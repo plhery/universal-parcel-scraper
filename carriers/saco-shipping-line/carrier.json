@@ -1,0 +1,57 @@
+{
+  "id": "saco-shipping-line",
+  "displayName": "SACO Shipping Line",
+  "aliases": [
+    "SACO Shipping GmbH",
+    "SACO Shipping Line Limited",
+    "SSLL"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#043C70"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "saco-shipping-line",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://sacoshipping.com/track/",
+    "searchUrl": "https://sacoshipping.com/track/",
+    "canaryUrl": "https://sacoshipping.com/track/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

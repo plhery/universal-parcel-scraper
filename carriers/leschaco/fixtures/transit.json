@@ -1,0 +1,92 @@
+[
+  {
+    "shipmentHeaderDto": {
+      "shipmentNumber": "261013270093",
+      "status": 1,
+      "statusName": "In Transit"
+    },
+    "shipmentEventsDto": [
+      {
+        "eventTypeId": 73,
+        "eventTypeName": "Gate In CFS",
+        "date": "2026-10-21T10:50:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-11-04T23:00:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 21,
+        "eventTypeName": "Departure",
+        "date": "2026-11-05T00:00:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": true
+      },
+      {
+        "eventTypeId": 26,
+        "eventTypeName": "Arrival",
+        "date": "2026-11-18T00:00:00",
+        "location": "New York",
+        "locationUnLocode": "USNYC",
+        "hasActual": false,
+        "isLatestActual": false
+      }
+    ]
+  },
+  {
+    "shipmentHeaderDto": {
+      "shipmentNumber": "[other shipment]",
+      "status": 1,
+      "statusName": "In Transit"
+    },
+    "shipmentEventsDto": [
+      {
+        "eventTypeId": 73,
+        "eventTypeName": "Gate In CFS",
+        "date": "2026-10-21T10:50:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-11-04T23:00:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 21,
+        "eventTypeName": "Departure",
+        "date": "2026-11-05T00:00:00",
+        "location": "Antwerpen",
+        "locationUnLocode": "BEANR",
+        "hasActual": true,
+        "isLatestActual": true
+      },
+      {
+        "eventTypeId": 26,
+        "eventTypeName": "Arrival",
+        "date": "2026-11-18T00:00:00",
+        "location": "New York",
+        "locationUnLocode": "USNYC",
+        "hasActual": false,
+        "isLatestActual": false
+      }
+    ]
+  }
+]

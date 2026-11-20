@@ -1,0 +1,109 @@
+{
+  "carrier": "saco-shipping-line",
+  "records": [
+    {
+      "number": "SSLLNYC296044",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/andritz-slovakia-s-r-o",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published bill or manifest identifies the shipment issued by SACO Shipping Line.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fermopoint"
+        ]
+      },
+      "note": "Customer collected the freight at the destination CFS."
+    },
+    {
+      "number": "SSLLCHS246914",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/american-truetzschler",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published bill or manifest identifies the shipment issued by SACO Shipping Line.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fermopoint"
+        ]
+      },
+      "note": "The event history shows freight available at its destination CFS."
+    },
+    {
+      "number": "SSLLCLE207043",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/bekaert-hlohovec-a-s",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published bill or manifest identifies the shipment issued by SACO Shipping Line.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fermopoint"
+        ]
+      },
+      "note": "The destination CFS has the shipment available for pickup."
+    },
+    {
+      "number": "MIN203130",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/technocompound-gmbh",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published bill or manifest identifies the shipment issued by SACO Shipping Line.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A completed delivery is present in the history."
+    },
+    {
+      "number": "17441392",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/999019319/SKVQHR-BOL-17441392-120260211103020",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published bill or manifest identifies the shipment issued by SACO Shipping Line.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The issued bill confirms the unprefixed numeric format and the native reply includes a customer pickup."
+    }
+  ]
+}

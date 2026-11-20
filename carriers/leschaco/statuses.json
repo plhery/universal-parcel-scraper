@@ -1,0 +1,69 @@
+{
+  "carrier": "leschaco",
+  "entries": [
+    {
+      "code": "11",
+      "wording": "Gate Out empty",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "16",
+      "wording": "Gate In Full",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "17",
+      "wording": "Loaded",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "21",
+      "wording": "Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "26",
+      "wording": "Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "27",
+      "wording": "Discharged",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "36",
+      "wording": "Gate Out Full",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "41",
+      "wording": "Gate In Empty",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Empty equipment returned. The carrier labels the shipment finished without a consignee delivery scan."
+    },
+    {
+      "code": "73",
+      "wording": "Gate In CFS",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    }
+  ]
+}

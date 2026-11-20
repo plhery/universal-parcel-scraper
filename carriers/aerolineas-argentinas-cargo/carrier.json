@@ -1,0 +1,61 @@
+{
+  "id": "aerolineas-argentinas-cargo",
+  "displayName": "Aerolíneas Argentinas Cargo",
+  "aliases": [
+    "Aerolineas Argentinas Air Cargo",
+    "Aerolíneas Cargo",
+    "Aerolineas Cargo"
+  ],
+  "region": {
+    "countries": [
+      "AR"
+    ]
+  },
+  "brand": {
+    "color": "#009ADE"
+  },
+  "selectable": true,
+  "timezone": "America/Argentina/Buenos_Aires",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "aerolineas-argentinas-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "searchUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "canaryUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "flight",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -1,0 +1,64 @@
+{
+  "isSuccess": true,
+  "status": 200,
+  "data": {
+    "regNo": "ST230047655JP",
+    "currentStatus": {
+      "code": 700,
+      "description": "배송 완료",
+      "phase": "TERMINAL",
+      "isCompleted": true
+    },
+    "trackingHistory": [
+      {
+        "status": 10,
+        "statusDesc": "주문접수",
+        "dateTime": "2026-01-16T09:08:32",
+        "isPassed": true
+      },
+      {
+        "status": 11,
+        "statusDesc": "입고완료",
+        "dateTime": "2026-01-16T14:16:08",
+        "isPassed": true
+      },
+      {
+        "status": 20,
+        "statusDesc": "3PL작업",
+        "dateTime": "2026-01-17T12:51:01",
+        "isPassed": true
+      },
+      {
+        "status": 30,
+        "statusDesc": "[창고→공항] 출고",
+        "dateTime": "2026-01-17T15:30:00",
+        "isPassed": true
+      },
+      {
+        "status": 100,
+        "statusDesc": "항공기 출발",
+        "dateTime": "2026-01-18T08:45:00",
+        "isPassed": true
+      },
+      {
+        "status": 200,
+        "statusDesc": "항공기 도착",
+        "dateTime": "2026-01-18T11:20:00",
+        "isPassed": true
+      },
+      {
+        "status": 400,
+        "statusDesc": "통관 완료",
+        "dateTime": "2026-01-19T07:23:00",
+        "isPassed": true
+      },
+      {
+        "status": 700,
+        "statusDesc": "배송 완료",
+        "dateTime": "2026-01-22T12:09:00",
+        "isPassed": true
+      }
+    ],
+    "estimatedDelivery": null
+  }
+}

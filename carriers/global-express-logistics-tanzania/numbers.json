@@ -1,0 +1,23 @@
+{
+  "carrier": "global-express-logistics-tanzania",
+  "records": [
+    {
+      "number": "GEL-2026-000001",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://globalexpress.co.tz/tracking",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier publishes this reference in its public form. The numbered lookup confirms the reference and six dated events.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The result includes order creation, pickup, transit, delivery and a later confirmation."
+    }
+  ]
+}
