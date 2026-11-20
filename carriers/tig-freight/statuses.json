@@ -1,4 +1,53 @@
 {
   "carrier": "tig-freight",
-  "entries": []
+  "entries": [
+    {
+      "wording": "manifested",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "registered"
+    },
+    {
+      "wording": "Picked Up",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "accepted"
+    },
+    {
+      "wording": "In Transit",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "In Transit - Linehaul",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "On For Delivery",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "out_for_delivery"
+    },
+    {
+      "wording": "Onboard for delivery",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "out_for_delivery"
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "delivered"
+    },
+    {
+      "wording": "Delivered - ATL",
+      "language": "en",
+      "confirmedBy": "source",
+      "stage": "delivered"
+    }
+  ]
 }

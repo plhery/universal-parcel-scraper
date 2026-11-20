@@ -49566,7 +49566,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Chicago",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rocket-shipping"
     },
     "canaryUrl": "https://tracking.rocketshipping.io/",
     "trackingUrlTemplate": "https://tracking.rocketshipping.io/track/{trackingNumber}",
@@ -51960,11 +51960,21 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Los_Angeles",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "shipgce",
+      "localClocks": true
     },
-    "canaryUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "trackingSearchUrl": "https://ebuy.shipgce.com/listSubOrder.aspx",
-    "linkRules": [],
+    "canaryUrl": "https://express.shipgce.com/postcheck.htm",
+    "trackingUrlTemplate": "https://express.shipgce.com/postcheck.htm?checkvalue={trackingNumber}&type=identity",
+    "trackingSearchUrl": "https://express.shipgce.com/postcheck.htm",
+    "linkRules": [
+      {
+        "domains": [
+          "express.shipgce.com"
+        ],
+        "pathPattern": "^/postcheck\\.htm$",
+        "query": "^(?=(?:.*&)?type=identity(?:&|$))(?:.*&)?checkvalue=([^&]+)(?=&|$)"
+      }
+    ],
     "detectionRules": []
   },
   "shipglobal-in": {
@@ -56948,7 +56958,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Australia/Melbourne",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "tig-freight",
+      "localClocks": true
     },
     "canaryUrl": "https://tigfreight.com/",
     "trackingUrlTemplate": "https://tracking.open360.com/tracking/{trackingNumber}",

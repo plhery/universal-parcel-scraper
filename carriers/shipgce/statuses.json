@@ -1,4 +1,101 @@
 {
   "carrier": "shipgce",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "delivered"
+    },
+    {
+      "wording": "CHINADelivered[Your item was delivered in CHINA at 9:37 am on April 29, 2019.]",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "delivered"
+    },
+    {
+      "wording": "CHINAArrival at Post Office",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "BEIJING, CHINAProcessed through Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "CHINAProcessed Through Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "BEIJING, CHINADeparted",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "LOS ANGELES, UNITED STATESDeparted",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "LOS ANGELES, UNITED STATESArrived",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "LOS ANGELES, CA 90009Shipment Received, Package Acceptance Pending",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "LOS ANGELES CA INTERNATIONAL DISTRIBUTION CENTERProcessed Through Regional Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "LOS ANGELES CA INTERNATIONAL DISTRIBUTION CENTERArrived at Regional Facility",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Pre-Shipment Info Sent to USPS, USPS Awaiting Item",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "wording": "货物已转运，USPS转运单号:CY042948626US",
+      "language": "zh",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Processed Through Regional Facility LOS ANGELES INTERNATIONAL DISTRIBUTION CENTER",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Arrived at Regional Facility LOS ANGELES INTERNATIONAL DISTRIBUTION CENTER",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Shipping label has been created",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    }
+  ]
 }

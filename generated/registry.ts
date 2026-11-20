@@ -643,6 +643,7 @@ import { adapter as rivigo } from '../carriers/rivigo/adapter.js';
 import { adapter as rlCarriers } from '../carriers/rl-carriers/adapter.js';
 import { adapter as roadie } from '../carriers/roadie/adapter.js';
 import { adapter as roadrunner } from '../carriers/roadrunner/adapter.js';
+import { adapter as rocketShipping } from '../carriers/rocket-shipping/adapter.js';
 import { adapter as rohligSuus } from '../carriers/rohlig-suus/adapter.js';
 import { adapter as royalExpressMm } from '../carriers/royal-express-mm/adapter.js';
 import { adapter as royalMail } from '../carriers/royal-mail/adapter.js';
@@ -677,6 +678,7 @@ import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
 import { adapter as shipblu } from '../carriers/shipblu/adapter.js';
 import { adapter as shipentegra } from '../carriers/shipentegra/adapter.js';
+import { adapter as shipgce } from '../carriers/shipgce/adapter.js';
 import { adapter as shipglobalIn } from '../carriers/shipglobal-in/adapter.js';
 import { adapter as shipglobalUs } from '../carriers/shipglobal-us/adapter.js';
 import { adapter as shiprocket } from '../carriers/shiprocket/adapter.js';
@@ -762,6 +764,7 @@ import { adapter as thailandPost } from '../carriers/thailand-post/adapter.js';
 import { adapter as theCourierGuy } from '../carriers/the-courier-guy/adapter.js';
 import { adapter as theDeliveryGroup } from '../carriers/the-delivery-group/adapter.js';
 import { adapter as thhy } from '../carriers/thhy/adapter.js';
+import { adapter as tigFreight } from '../carriers/tig-freight/adapter.js';
 import { adapter as tiki } from '../carriers/tiki/adapter.js';
 import { adapter as timeMatters } from '../carriers/time-matters/adapter.js';
 import { adapter as timelyTitan } from '../carriers/timely-titan/adapter.js';
@@ -1515,6 +1518,7 @@ export const REGISTRY: RegistryDefinition = {
     "rl-carriers": rlCarriers,
     "roadie": roadie,
     "roadrunner": roadrunner,
+    "rocket-shipping": rocketShipping,
     "rohlig-suus": rohligSuus,
     "royal-express-mm": royalExpressMm,
     "royal-mail": royalMail,
@@ -1549,6 +1553,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipa": shipa,
     "shipblu": shipblu,
     "shipentegra": shipentegra,
+    "shipgce": shipgce,
     "shipglobal-in": shipglobalIn,
     "shipglobal-us": shipglobalUs,
     "shiprocket": shiprocket,
@@ -1634,6 +1639,7 @@ export const REGISTRY: RegistryDefinition = {
     "the-courier-guy": theCourierGuy,
     "the-delivery-group": theDeliveryGroup,
     "thhy": thhy,
+    "tig-freight": tigFreight,
     "tiki": tiki,
     "time-matters": timeMatters,
     "timely-titan": timelyTitan,
@@ -3108,7 +3114,7 @@ export const REGISTRY: RegistryDefinition = {
     "rl-carriers": "rl-carriers",
     "roadie": "roadie",
     "roadrunner": "roadrunner",
-    "rocket-shipping": "universal",
+    "rocket-shipping": "rocket-shipping",
     "rodonaves": "universal",
     "rohlig": "universal",
     "rohlig-suus": "rohlig-suus",
@@ -3183,7 +3189,7 @@ export const REGISTRY: RegistryDefinition = {
     "shipa": "shipa",
     "shipblu": "shipblu",
     "shipentegra": "shipentegra",
-    "shipgce": "universal",
+    "shipgce": "shipgce",
     "shipglobal-in": "shipglobal-in",
     "shipglobal-us": "shipglobal-us",
     "shiplowcost": "universal",
@@ -3334,7 +3340,7 @@ export const REGISTRY: RegistryDefinition = {
     "the-human-express": "universal",
     "thelorry": "universal",
     "thhy": "thhy",
-    "tig-freight": "universal",
+    "tig-freight": "tig-freight",
     "tiki": "tiki",
     "time-critical-line": "universal",
     "time-matters": "time-matters",

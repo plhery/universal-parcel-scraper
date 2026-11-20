@@ -1,4 +1,7 @@
 {
   "carrier": "rocket-shipping",
-  "entries": []
+  "entries": [
+    { "wording": "Picked Up", "stage": "accepted", "language": "en", "confirmedBy": "live" },
+    { "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" }
+  ]
 }
