@@ -37933,6 +37933,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "livra-lynx": {
+    "displayName": "Livra Lynx",
+    "color": "#143D31",
+    "aliases": [
+      "Livra Lynx Tunisie",
+      "ليفرا لينكس"
+    ],
+    "countries": [
+      "TN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Tunis",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "livra-lynx"
+    },
+    "canaryUrl": "https://livra.tn/suivi/",
+    "trackingUrlTemplate": "https://livra.tn/suivi/",
+    "trackingSearchUrl": "https://livra.tn/suivi/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ljx-express": {
     "displayName": "LJX Express",
     "color": "#d2001f",
@@ -66985,6 +67007,7 @@ export const CARRIER_IDS = [
   "lionwheel",
   "litexpress",
   "liuchen",
+  "livra-lynx",
   "ljx-express",
   "lm-parcel",
   "loadmaster-no",
@@ -68876,6 +68899,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lionwheel": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],
+  "livra-lynx": [],
   "ljx-express": [],
   "lm-parcel": ["lm-parcel-1"],
   "loadmaster-no": [],

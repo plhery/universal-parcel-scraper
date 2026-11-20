@@ -488,6 +488,7 @@ import { adapter as lingdong } from '../carriers/lingdong/adapter.js';
 import { adapter as linhan } from '../carriers/linhan/adapter.js';
 import { adapter as lionParcel } from '../carriers/lion-parcel/adapter.js';
 import { adapter as liuchen } from '../carriers/liuchen/adapter.js';
+import { adapter as livraLynx } from '../carriers/livra-lynx/adapter.js';
 import { adapter as lmParcel } from '../carriers/lm-parcel/adapter.js';
 import { adapter as logen } from '../carriers/logen/adapter.js';
 import { adapter as logeximExpress } from '../carriers/logexim-express/adapter.js';
@@ -1406,6 +1407,7 @@ export const REGISTRY: RegistryDefinition = {
     "linhan": linhan,
     "lion-parcel": lionParcel,
     "liuchen": liuchen,
+    "livra-lynx": livraLynx,
     "lm-parcel": lmParcel,
     "logen": logen,
     "logexim-express": logeximExpress,
@@ -2838,6 +2840,7 @@ export const REGISTRY: RegistryDefinition = {
     "lionwheel": "universal",
     "litexpress": "universal",
     "liuchen": "liuchen",
+    "livra-lynx": "livra-lynx",
     "ljx-express": "universal",
     "lm-parcel": "lm-parcel",
     "loadmaster-no": "universal",

@@ -5642,5 +5642,10 @@
     "kind": "open",
     "carrier": "tradiva-logistics",
     "reason": "The public tracker confirms a labelled Tradiva demo under its own reference and container aliases. Explicit selection is available while issued number formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "livra-lynx",
+    "reason": "The native tracker confirms its public numeric parcel example. Explicit selection is available while issuance and numeric overlaps remain open."
   }
 ]

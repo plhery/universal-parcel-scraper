@@ -1,0 +1,13 @@
+{
+  "carrier": "livra-lynx",
+  "entries": [
+    { "code": "created", "wording": "Commande enregistrée", "stage": "registered", "language": "fr", "confirmedBy": "live" },
+    { "code": "picked_up", "wording": "Colis récupéré", "stage": "accepted", "language": "fr", "confirmedBy": "portal" },
+    { "code": "in_transit", "wording": "En transit", "stage": "in_transit", "language": "fr", "confirmedBy": "live" },
+    { "code": "out_for_delivery", "wording": "En cours de livraison", "stage": "out_for_delivery", "language": "fr", "confirmedBy": "live" },
+    { "code": "delivered", "wording": "Livré", "stage": "delivered", "language": "fr", "confirmedBy": "live" },
+    { "code": "unreachable", "wording": "Destinataire injoignable", "stage": "failed_attempt", "language": "fr", "confirmedBy": "portal" },
+    { "code": "returned", "wording": "Retourné à l’expéditeur", "stage": "returned", "language": "fr", "confirmedBy": "portal" },
+    { "code": "cancelled", "wording": "Annulé", "stage": "exception", "language": "fr", "confirmedBy": "portal" }
+  ]
+}

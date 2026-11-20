@@ -37929,6 +37929,28 @@
       }
     ]
   },
+  "livra-lynx": {
+    "displayName": "Livra Lynx",
+    "color": "#143D31",
+    "aliases": [
+      "Livra Lynx Tunisie",
+      "ليفرا لينكس"
+    ],
+    "countries": [
+      "TN"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Tunis",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "livra-lynx"
+    },
+    "canaryUrl": "https://livra.tn/suivi/",
+    "trackingUrlTemplate": "https://livra.tn/suivi/",
+    "trackingSearchUrl": "https://livra.tn/suivi/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ljx-express": {
     "displayName": "LJX Express",
     "color": "#d2001f",
