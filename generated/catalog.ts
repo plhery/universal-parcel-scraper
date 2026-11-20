@@ -6967,6 +6967,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "aerolineas-argentinas-cargo": {
+    "displayName": "Aerolíneas Argentinas Cargo",
+    "color": "#009ADE",
+    "aliases": [
+      "Aerolineas Argentinas Air Cargo",
+      "Aerolíneas Cargo",
+      "Aerolineas Cargo"
+    ],
+    "countries": [
+      "AR"
+    ],
+    "selectable": true,
+    "timezone": "America/Argentina/Buenos_Aires",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aerolineas-argentinas-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://aerolineas.smartkargo.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",
@@ -67625,6 +67649,7 @@ export const CARRIER_IDS = [
   "ader",
   "adex-al",
   "ads-intl",
+  "aerolineas-argentinas-cargo",
   "aeronet",
   "aeropaq",
   "aeropost",
@@ -69579,6 +69604,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ader": [],
   "adex-al": [],
   "ads-intl": [],
+  "aerolineas-argentinas-cargo": [],
   "aeronet": [],
   "aeropaq": [],
   "aeropost": ["aeropost-1"],

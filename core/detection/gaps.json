@@ -5944,5 +5944,10 @@
     "carrier": "one-logistics-egypt",
     "kind": "open",
     "reason": "The published Odoo freight reference uses a generic Freight prefix and does not establish a carrier-specific family. Select ONE Logistics Egypt explicitly."
+  },
+  {
+    "carrier": "aerolineas-argentinas-cargo",
+    "kind": "open",
+    "reason": "The airline-issued AWB begins with 044, while existing generic rules offer other candidates. Select Aerolíneas Argentinas Cargo explicitly."
   }
 ]

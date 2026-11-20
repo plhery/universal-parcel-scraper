@@ -1,0 +1,40 @@
+{
+  "carrier": "aerolineas-argentinas-cargo",
+  "entries": [
+    {
+      "wording": "Booked",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "Carrier booking was recorded."
+    },
+    {
+      "wording": "Accepted",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "Cargo was accepted at the origin station."
+    },
+    {
+      "wording": "Departed",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Cargo departed on the flight."
+    },
+    {
+      "wording": "Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The flight arrived at the destination station."
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Carrier confirmed delivery."
+    }
+  ]
+}
