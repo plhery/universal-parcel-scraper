@@ -1,5 +1,47 @@
 {
   "carrier": "red-star-express",
-  "gap": "No public page shows a Red Star Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "068119",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.nairaland.com/1901777/what-experience-shoptomydoor/6",
+        "date": "2015-08-17",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Nigeria last-mile delivery",
+        "reportedRole": "Waybill Number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A recipient reproduces their Red Star shipment number and a contemporaneous sort-facility scan. The current official tracking page returned HTTP 406 before a query could be made."
+    },
+    {
+      "number": "072054",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.nairaland.com/1901777/what-experience-shoptomydoor/12",
+        "date": "2015-09-29",
+        "dateKind": "forum post",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Nigeria last-mile delivery",
+        "reportedRole": "Tracking Number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The recipient republishes a dispatch notification naming Red Star Express and showing the complete tracking number. The official tracking page returned HTTP 406 before a query could be made."
+    }
+  ]
 }
