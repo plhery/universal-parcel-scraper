@@ -85,6 +85,18 @@
     ]
   },
   {
+    "input": "000.003.472",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "000.003.596",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "00000000000000000000000000",
     "carrier": "unknown",
     "confidence": "none",
