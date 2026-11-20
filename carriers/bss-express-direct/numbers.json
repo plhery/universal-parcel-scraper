@@ -1,0 +1,14 @@
+{
+  "carrier": "bss-express-direct",
+  "records": [
+    {
+      "number": "BSS-RC-10001",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": { "url": "https://www.bssexpressdirect.com/track", "access": "full_page" },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "none" },
+      "note": "The public form publishes this receipt example. The anonymous shipment lookup returns its dated October 2026 collection."
+    }
+  ]
+}

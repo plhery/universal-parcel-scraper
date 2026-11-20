@@ -96,6 +96,7 @@ import { adapter as bpost } from '../carriers/bpost/adapter.js';
 import { adapter as bringPosten } from '../carriers/bring-posten/adapter.js';
 import { adapter as bringerParcel } from '../carriers/bringer-parcel/adapter.js';
 import { adapter as brt } from '../carriers/brt/adapter.js';
+import { adapter as bssExpressDirect } from '../carriers/bss-express-direct/adapter.js';
 import { adapter as bulgarianPosts } from '../carriers/bulgarian-posts/adapter.js';
 import { adapter as burdDelivery } from '../carriers/burd-delivery/adapter.js';
 import { adapter as bussgods } from '../carriers/bussgods/adapter.js';
@@ -1007,6 +1008,7 @@ export const REGISTRY: RegistryDefinition = {
     "bring-posten": bringPosten,
     "bringer-parcel": bringerParcel,
     "brt": brt,
+    "bss-express-direct": bssExpressDirect,
     "bulgarian-posts": bulgarianPosts,
     "burd-delivery": burdDelivery,
     "bussgods": bussgods,
@@ -2043,6 +2045,7 @@ export const REGISTRY: RegistryDefinition = {
     "bringer-parcel": "bringer-parcel",
     "brink-transport": "universal",
     "brt": "brt",
+    "bss-express-direct": "bss-express-direct",
     "btc-logistic": "universal",
     "btd": "universal",
     "bts-uz": "universal",

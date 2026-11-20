@@ -5607,5 +5607,10 @@
     "kind": "open",
     "carrier": "d-jesu-comer",
     "reason": "The published DJC guide returns its tracking milestones. Explicit selection is available while issued formats and overlaps remain open."
+  },
+  {
+    "kind": "open",
+    "carrier": "bss-express-direct",
+    "reason": "The site confirms the published BSS receipt. Explicit selection is available while receipt families and overlaps remain open."
   }
 ]

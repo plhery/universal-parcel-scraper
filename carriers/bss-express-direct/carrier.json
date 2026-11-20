@@ -1,0 +1,26 @@
+{
+  "id": "bss-express-direct",
+  "displayName": "BSS Express Direct",
+  "aliases": ["BSS Express"],
+  "region": { "countries": ["HT", "US"] },
+  "brand": { "color": "#132747" },
+  "selectable": true,
+  "timezone": "America/Port-au-Prince",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bss-express-direct",
+    "steps": ["direct"]
+  },
+  "capabilities": ["history", "provider_code"],
+  "portal": {
+    "url": "https://www.bssexpressdirect.com/track/{trackingNumber}",
+    "searchUrl": "https://www.bssexpressdirect.com/track",
+    "canaryUrl": "https://www.bssexpressdirect.com/track",
+    "shows": ["status", "history", "shipment_details", "inventory", "event_locations"],
+    "scraped": ["status", "history", "provider_code"],
+    "discarded": ["shipment_details", "inventory", "event_locations"],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -12763,6 +12763,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bss-express-direct": {
+    "displayName": "BSS Express Direct",
+    "color": "#132747",
+    "aliases": [
+      "BSS Express"
+    ],
+    "countries": [
+      "HT",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Port-au-Prince",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bss-express-direct"
+    },
+    "canaryUrl": "https://www.bssexpressdirect.com/track",
+    "trackingUrlTemplate": "https://www.bssexpressdirect.com/track/{trackingNumber}",
+    "trackingSearchUrl": "https://www.bssexpressdirect.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "btc-logistic": {
     "displayName": "BTC Logistics",
     "color": "#b7a758",
@@ -66084,6 +66106,7 @@ export const CARRIER_IDS = [
   "bridge-intl",
   "bringer-parcel",
   "brink-transport",
+  "bss-express-direct",
   "btc-logistic",
   "btd",
   "bts-uz",
@@ -67968,6 +67991,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bridge-intl": [],
   "bringer-parcel": ["bringer-parcel-1"],
   "brink-transport": [],
+  "bss-express-direct": [],
   "btc-logistic": [],
   "btd": [],
   "bts-uz": [],
