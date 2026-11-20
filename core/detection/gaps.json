@@ -542,6 +542,36 @@
     "reason": "Campos & Cadilhe's OTM results show a PRZ service prefix, a two-digit year and a six-digit reference, with dots between the parts. Detection does not offer the carrier."
   },
   {
+    "carrier": "cargox",
+    "pattern": "^KAR\\d{7}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Amazon shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported parcel reported out for delivery reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{13}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Gratis shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^MB\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Modamizbir shipment reference."
+  },
+  {
+    "carrier": "cargox",
+    "pattern": "^\\d{20}$",
+    "kind": "open",
+    "reason": "Detection does not suggest Cargo X for the reported Zara shipment reference."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

@@ -1,5 +1,137 @@
 {
   "carrier": "cargox",
-  "gap": "No public page shows a whole Cargo X number.",
-  "records": []
+  "records": [
+    {
+      "number": "KAR2662560",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/cargo-x/teslim-edilmeyen-8000-tllik-siparis-ve-kargo-xin-iletisimsiz-yaklasimi",
+        "date": "2026-09-23",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Amazon shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post",
+          "kargoist"
+        ]
+      },
+      "note": "The customer gives this as the Cargo X tracking number. The carrier's public result displayed the same identifier and delivery history."
+    },
+    {
+      "number": "2460020806",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/cargo-x/cargox-teslim-edilmedi-personel-cay-iciyor",
+        "date": "2026-11-07",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "parcel reported out for delivery",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The customer gives this as the Cargo X tracking number. The carrier's public result displayed the same identifier and delivery history."
+    },
+    {
+      "number": "3000035364945",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/cargo-x/kargox-teslimat-gecikmesi-ve-celiskili-takip-bilgileri",
+        "date": "2026-11-05",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Gratis shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "imile",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The customer gives this as the Cargo X tracking number. The carrier's public result displayed the same identifier and delivery history."
+    },
+    {
+      "number": "MB10629632",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/cargo-x/kuryenin-kaba-ifadesi-ve-10-gun-suren-teslimat-beklemesi",
+        "date": "2026-09-19",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Modamizbir shipment",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt-it"
+        ]
+      },
+      "note": "The customer gives this as the Cargo X tracking number. The carrier's public result displayed the same identifier and delivery history."
+    },
+    {
+      "number": "23513915967600100099",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/cargo-x/cargox-kargosunun-teslim-edildigi-gorunmesine-ragmen-aliciya-ulasmamasi",
+        "date": "2025-12-31",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Zara shipment",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "The customer gives this as the Cargo X tracking number for a Zara order. The current carrier tracker returned no shipment page."
+    }
+  ]
 }
