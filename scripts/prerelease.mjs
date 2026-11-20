@@ -11,7 +11,9 @@ import { parseArgs } from 'node:util';
 // By default it plans the prerelease of HEAD, `<base>-main.<commit count>`
 // under the `next` tag, and publishes only when the files a consumer would
 // install differ from the newest version on npm. With `--stable` it plans the
-// release of the package.json version under `latest`.
+// release of the package.json version under `latest`, and with `--weekly` the
+// same release only when npm lacks that version and the package differs from
+// the newest stable release.
 //
 // The plan is printed, and written to GITHUB_OUTPUT and GITHUB_STEP_SUMMARY
 // when they are set. Nothing is published here.
@@ -151,6 +153,23 @@ export function planStable(packageVersion, published, count) {
   return { version: packageVersion, publish: true, published: false, notify: true, reason: 'not on npm yet' };
 }
 
+/**
+ * The weekly stable release of the package.json version. A version npm already
+ * has needs none: the package changes only with a raised version. Otherwise it
+ * carries the newest stable release as the baseline to compare with.
+ * @param {string} packageVersion
+ * @param {string[]} published
+ * @param {number} count
+ * @param {string | undefined} latest The version under npm's `latest` tag.
+ */
+export function planWeekly(packageVersion, published, count, latest) {
+  if (published.includes(packageVersion)) {
+    return { version: packageVersion, publish: false, published: true, notify: false, reason: 'already on npm' };
+  }
+  const plan = planStable(packageVersion, published, count);
+  return latest ? { version: plan.version, published: false, baseline: latest } : plan;
+}
+
 function comparable(file, bytes) {
   if (file !== 'package.json') return bytes;
   try {
@@ -239,6 +258,18 @@ function publishedVersions(name) {
   }
 }
 
+/** The version under npm's `latest` tag, when there is one. */
+function latestVersion(name) {
+  try {
+    return [JSON.parse(run('npm', ['view', name, 'dist-tags.latest', '--json']))].flat()[0] || undefined;
+  } catch (error) {
+    let code;
+    try { code = JSON.parse(error.stdout).error.code; } catch { /* Not an npm error report. */ }
+    if (code === 'E404') return undefined;
+    throw error;
+  }
+}
+
 /** The commit npm recorded for a published version, when it recorded one. */
 function publishedCommit(name, version) {
   try {
@@ -305,7 +336,9 @@ export async function awaitVersion(version, listed, { attempts = 360, pauseMs = 
 }
 
 async function main() {
-  const { values } = parseArgs({ options: { stable: { type: 'boolean', default: false }, await: { type: 'string' } } });
+  const { values } = parseArgs({
+    options: { stable: { type: 'boolean', default: false }, weekly: { type: 'boolean', default: false }, await: { type: 'string' } },
+  });
   const manifest = JSON.parse(readFileSync(path.join(root, 'package.json'), 'utf8'));
   if (values.await !== undefined) {
     if (!parseVersion(values.await)) throw new Error(`--await needs a version, not ${JSON.stringify(values.await)}`);
@@ -315,8 +348,10 @@ async function main() {
   const count = commitCount();
   if (values.stable) return report(planStable(manifest.version, published, count));
 
-  const plan = planPrerelease(manifest.version, published, count);
-  if (plan.published && plan.notify) {
+  const plan = values.weekly
+    ? planWeekly(manifest.version, published, count, latestVersion(manifest.name))
+    : planPrerelease(manifest.version, published, count);
+  if (!values.weekly && plan.published && plan.notify) {
     assertPublishedFrom(plan.version, publishedCommit(manifest.name, plan.version), run('git', ['rev-parse', 'HEAD']).trim());
   }
   if (!plan.baseline) return report(plan);

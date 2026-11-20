@@ -1,0 +1,50 @@
+name: Weekly release
+# Every Monday at 08:00 UTC this starts the Release workflow for main's
+# package.json version, which publishes it under npm's `latest` tag with its
+# container image, git tag and GitHub release once CI and secret scanning have
+# passed on that commit. A week whose version npm already has, or whose package
+# equals the newest stable release, starts nothing.
+on:
+  schedule:
+    - cron: '0 8 * * 1'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: weekly-release
+  cancel-in-progress: false
+jobs:
+  plan:
+    name: Plan the stable release
+    if: ${{ github.repository == 'plhery/universal-parcel-scraper' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 26
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - name: Plan the release
+        id: plan
+        run: node scripts/prerelease.mjs --weekly
+      # The Release workflow checks that main's package.json still names this
+      # version, so a push meanwhile that raises it stops the release instead
+      # of publishing another commit under this plan.
+      - name: Start the Release workflow
+        if: ${{ steps.plan.outputs.publish == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_VERSION: ${{ steps.plan.outputs.version }}
+        run: gh workflow run release.yml --ref main -f version="$RELEASE_VERSION" -f publish_npm=true -f publish_trawl=false

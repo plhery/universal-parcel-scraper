@@ -5,7 +5,7 @@ import path from 'node:path';
 import test from 'node:test';
 import {
   assertPublishedFrom, awaitVersion, baseVersion, compareTrees, compareVersions, entryPoints, laterPrerelease, newestVersion,
-  parseVersion, planPrerelease, planStable, prereleaseVersion, readTree, report, settlePlan,
+  parseVersion, planPrerelease, planStable, planWeekly, prereleaseVersion, readTree, report, settlePlan,
 } from './prerelease.mjs';
 
 const tree = (files) => new Map(Object.entries(files).map(([file, text]) => [file, Buffer.from(text)]));
@@ -161,6 +161,20 @@ test('plans a stable release once, and never behind a published prerelease', () 
   assert.equal(planStable('0.3.0', ['0.3.0', '0.3.1-main.291'], 290).notify, false);
   assert.throws(() => planStable('0.3.0', ['0.2.0', '0.3.0-main.291'], 290), /0\.3\.0-main\.291 is already published from a later commit/);
   assert.throws(() => planStable('0.3.0-rc.1', [], 290), /X\.Y\.Z/);
+});
+
+test('plans the weekly stable release only for a version npm lacks, against the newest stable release', () => {
+  assert.deepEqual(planWeekly('0.3.0', ['0.2.0', '0.3.0-main.290'], 290, '0.2.0'), { version: '0.3.0', published: false, baseline: '0.2.0' });
+  assert.deepEqual(planWeekly('0.3.0', ['0.2.0', '0.3.0-main.290', '0.3.0'], 290, '0.3.0'), {
+    version: '0.3.0', publish: false, published: true, notify: false, reason: 'already on npm',
+  });
+  assert.deepEqual(planWeekly('0.3.0', [], 290, undefined), {
+    version: '0.3.0', publish: true, published: false, notify: true, reason: 'not on npm yet',
+  });
+  assert.throws(() => planWeekly('0.3.0', ['0.2.0', '0.3.0-main.291'], 290, '0.2.0'), /0\.3\.0-main\.291 is already published from a later commit/);
+  assert.deepEqual(settlePlan({ version: '0.3.0', baseline: '0.2.0' }, () => []), {
+    version: '0.3.0', publish: false, published: false, notify: false, reason: 'the package is identical to 0.2.0',
+  });
 });
 
 test('treats packages that differ only by README, version and devDependencies as identical', () => {
