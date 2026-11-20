@@ -41339,7 +41339,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Toronto",
     "tracking": {
       "mode": "automatic",
-      "adapter": "neighbour-express"
+      "adapter": "neighbour-express",
+      "browser": true
     },
     "canaryUrl": "https://neighbourexpress.com/track",
     "trackingUrlTemplate": "https://neighbourexpress.com/track?no={trackingNumber}",

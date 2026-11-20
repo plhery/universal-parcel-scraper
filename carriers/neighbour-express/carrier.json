@@ -19,7 +19,8 @@
     "adapter": "neighbour-express",
     "steps": [
       "trawl"
-    ]
+    ],
+    "browser": true
   },
   "capabilities": [
     "history"

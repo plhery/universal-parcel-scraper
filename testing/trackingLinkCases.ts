@@ -2450,6 +2450,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'neighbour-express': 'The return tracker needs a fresh guest reCAPTCHA token before its lookup; native retrieval captures that whole-reference request in a scoped browser helper.',
   'the-delivery-group': 'The known parcel can need its delivery postcode; a number-only empty reply is inconclusive, and no rendered-page control was completed for this link.',
   flechacarga: 'The receipt link needs separate letter, branch and serial parameters; the catalog opens the public search form without a single-reference link.',
   tramaco: 'The page sends guia to its lookup, then clears the input. An unknown guide leaves no visible number or specific missing notice, so the DOM-only daily check cannot verify forwarding.',
