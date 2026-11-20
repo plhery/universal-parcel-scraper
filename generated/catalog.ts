@@ -7182,6 +7182,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ag-cargo-india": {
+    "displayName": "AG Cargo",
+    "color": "#183D5F",
+    "aliases": [
+      "AG Cargo India"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ag-cargo-india",
+      "localClocks": true
+    },
+    "canaryUrl": "https://agcargo.in/Home/AWBTrack",
+    "trackingUrlTemplate": "https://agcargo.in/Home/AWBTrack",
+    "trackingSearchUrl": "https://agcargo.in/Home/AWBTrack",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "agt-kurye": {
     "displayName": "AGT Kurye",
     "color": "#2e2d2d",
@@ -67370,6 +67392,7 @@ export const CARRIER_IDS = [
   "aex-paraguay",
   "afghan-post",
   "afimex",
+  "ag-cargo-india",
   "agt-kurye",
   "ahamove",
   "ahl-courier",
@@ -69313,6 +69336,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aex-paraguay": [],
   "afghan-post": [],
   "afimex": [],
+  "ag-cargo-india": [],
   "agt-kurye": [],
   "ahamove": [],
   "ahl-courier": [],

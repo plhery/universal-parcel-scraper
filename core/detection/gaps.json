@@ -5889,5 +5889,10 @@
     "carrier": "nacionales-delivery-services",
     "kind": "open",
     "reason": "One Nexgo reference does not establish the scope of the NX prefix. Select Nacionales Delivery Services explicitly."
+  },
+  {
+    "carrier": "ag-cargo-india",
+    "kind": "open",
+    "reason": "The AG Cargo LR sample uses nine generic digits. Select AG Cargo explicitly."
   }
 ]

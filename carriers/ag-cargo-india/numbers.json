@@ -1,0 +1,23 @@
+{
+  "carrier": "ag-cargo-india",
+  "records": [
+    {
+      "number": "312850305",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://agcargo.in/Home/AWBTrack",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The carrier publishes this exact LR in its public tracking form. The native reply confirms the reference and a completed delivery.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier returns a delivered movement timestamp and a facility in Bihar."
+    }
+  ]
+}
