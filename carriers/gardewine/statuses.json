@@ -1,0 +1,59 @@
+{
+  "carrier": "gardewine",
+  "entries": [
+    {
+      "wording": "DELIVERED; THANK YOU FOR USING GARDEWINE",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out For Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Manifested",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trailer Arrived",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trailer Departed For Thunder Bay Terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trailer Departed For Hearst Terminal",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Trailer Departed For New Liskeard",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Picked Up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Pickup Request Received",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    }
+  ]
+}

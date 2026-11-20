@@ -1,0 +1,55 @@
+{
+  "id": "gardewine",
+  "displayName": "Gardewine",
+  "aliases": [
+    "Gardewine Group",
+    "Gardewine General Freight"
+  ],
+  "region": {
+    "countries": [
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#ce1738"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "gardewine",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "searchUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "canaryUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "proofOfDelivery",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "proofOfDelivery",
+      "weight"
+    ],
+    "unavailable": [],
+    "siteName": "Gardewine Online Shipment Tracking"
+  },
+  "links": [],
+  "detection": []
+}

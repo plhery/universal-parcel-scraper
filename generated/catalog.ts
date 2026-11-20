@@ -27098,6 +27098,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "gardewine": {
+    "displayName": "Gardewine",
+    "color": "#ce1738",
+    "aliases": [
+      "Gardewine Group",
+      "Gardewine General Freight"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gardewine",
+      "localClocks": true
+    },
+    "canaryUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm",
+    "trackingUrlTemplate": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "trackingSearchUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "trackingSiteName": "Gardewine Online Shipment Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "garudavega": {
     "displayName": "Garudavega",
     "color": "#114172",
@@ -66602,6 +66626,7 @@ export const CARRIER_IDS = [
   "gaash",
   "gaaubesi",
   "garantpost",
+  "gardewine",
   "garudavega",
   "gati",
   "gbs-broker",
@@ -68489,6 +68514,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gaash": [],
   "gaaubesi": [],
   "garantpost": [],
+  "gardewine": [],
   "garudavega": [],
   "gati": [],
   "gbs-broker": ["gbs-broker-1"],

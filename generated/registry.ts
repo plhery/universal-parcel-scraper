@@ -317,6 +317,7 @@ import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
 import { adapter as g2Ocean } from '../carriers/g2-ocean/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
+import { adapter as gardewine } from '../carriers/gardewine/adapter.js';
 import { adapter as garudavega } from '../carriers/garudavega/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
 import { adapter as gbsBroker } from '../carriers/gbs-broker/adapter.js';
@@ -1232,6 +1233,7 @@ export const REGISTRY: RegistryDefinition = {
     "fxdc-post": fxdcPost,
     "g2-ocean": g2Ocean,
     "gaash": gaash,
+    "gardewine": gardewine,
     "garudavega": garudavega,
     "gati": gati,
     "gbs-broker": gbsBroker,
@@ -2494,6 +2496,7 @@ export const REGISTRY: RegistryDefinition = {
     "gaash": "gaash",
     "gaaubesi": "universal",
     "garantpost": "universal",
+    "gardewine": "gardewine",
     "garudavega": "garudavega",
     "gati": "gati",
     "gbs-broker": "gbs-broker",

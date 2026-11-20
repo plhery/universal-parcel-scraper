@@ -27094,6 +27094,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "gardewine": {
+    "displayName": "Gardewine",
+    "color": "#ce1738",
+    "aliases": [
+      "Gardewine Group",
+      "Gardewine General Freight"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "gardewine",
+      "localClocks": true
+    },
+    "canaryUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm",
+    "trackingUrlTemplate": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "trackingSearchUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
+    "trackingSiteName": "Gardewine Online Shipment Tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "garudavega": {
     "displayName": "Garudavega",
     "color": "#114172",
