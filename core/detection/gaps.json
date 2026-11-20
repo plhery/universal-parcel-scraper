@@ -232,6 +232,12 @@
     "reason": "One archived guía is too few to tie the IDTS layout to Grupo ampm alone."
   },
   {
+    "carrier": "ambro-express",
+    "pattern": "^2\\d{12}$",
+    "kind": "open",
+    "reason": "Confirmed Ambro Express waybills start with 2 and have thirteen digits. The current results offer several carriers without including Ambro Express."
+  },
+  {
     "carrier": "anousith",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
