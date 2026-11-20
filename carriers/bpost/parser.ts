@@ -89,6 +89,8 @@ function brusselsTime(local: string): string {
  * data, and the sorting line "PSM IN PARCELS". bpost's own tracker shows no place for any scan.
  */
 const NOT_PLACES: ReadonlySet<string> = new Set(['LCI', 'PSM IN PARCELS']);
+/** The announcement of a parcel, Landmark Global's among them. */
+const ANNOUNCEMENT = /^item is announced\b/i;
 
 /** A location name bpost's feed gives, or nothing when it is no place. */
 export const bpostPlaceName = (name: string): string => (NOT_PLACES.has(name.replace(/\s+/g, ' ').trim().toUpperCase()) ? '' : name);
@@ -151,8 +153,17 @@ export function parseBpost(payload: unknown, number: string): CarrierResult {
       ...(stage ? { stage } : {}), ...(item.retourOrBackToSender === true ? { provider_leg: 'return' } : {}) });
   }
   if (!events.length) throw new IndeterminateError('bpost', 'bpost returned no parcel history');
+  // Landmark Global's announcement of a parcel from abroad can come with arrivals at the same minute, written with its
+  // data while the parcel is still at the sender's end: they move nothing and name no place the parcel has been.
+  const announced = new Set(events.filter((event) => ANNOUNCEMENT.test(event.description!)).map((event) => event.time ?? event.local_time));
+  for (const event of events) {
+    if (event.stage !== 'in_transit' || !announced.has(event.time ?? event.local_time)) continue;
+    delete event.location;
+    Object.assign(event, { stage: 'registered', stage_source: 'none' });
+  }
   const latest = events[0]!;
-  const mapped = classifyBpostStatus(latest.description!);
+  const notice = latest.stage_source === 'none';
+  const mapped = notice ? { status: 'pending' as const, stage: 'registered' as const } : classifyBpostStatus(latest.description!);
   const current = returnDelivery && mapped?.stage === 'delivered' ? { status: 'exception' as const, stage: 'returned' as const } : mapped;
   // The delivery point is the pickup point itself, apart from the receiver: bpost's
   // tracker shows it with opening hours and directions from its own coordinates.

@@ -166,6 +166,24 @@ describe('bpost direct history', () => {
     expect(policy.matches!(incoming[3]!, { ...stored[3]!, location: 'Example sorting centre' })).toBe(false);
   });
 
+  it("keeps arrivals written at the minute of Landmark Global's announcement as notices without a place", () => {
+    const announced = payload();
+    const scan = (time: string, description: string, location?: Record<string, string>) => ({ date: '2026-01-01', time, key: { EN: { description } }, ...(location ? { location } : {}) });
+    announced.items[0].events = [
+      scan('20:39', 'Departure to country of destination'),
+      scan('13:25', 'Arrival at international depot', { countryCode: 'BE' }),
+      scan('13:25', 'Arrival at facilities', { locationName: 'Example', countryCode: 'BE' }),
+      scan('13:25', 'Item is announced / Landmark Global (bpost) received the information', { countryCode: 'BE' }),
+    ];
+    const events = parseBpost(announced, NUMBER).events ?? [];
+    expect(events.map((event) => [event.stage, event.stage_source ?? ''])).toEqual([
+      ['in_transit', ''], ['registered', 'none'], ['registered', 'none'], ['registered', '']]);
+    expect(events.slice(1, 3).some((event) => event.location)).toBe(false);
+    // Alone, the arrival heads nothing: the parcel is announced.
+    announced.items[0].events.shift();
+    expect(parseBpost(announced, NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+  });
+
   it('keeps pickup availability, unrecognized scans and return delivery distinct', () => {
     const pickup = payload(); pickup.items[0].events.shift();
     expect(parseBpost(pickup, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', pickup_point: POINT });
