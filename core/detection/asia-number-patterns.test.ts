@@ -1697,3 +1697,14 @@ describe('Deppon DPK waybills', () => {
     }
   });
 });
+
+describe('Xinghe Freight waybills typed without their last letter', () => {
+  it('names Xinghe for GZXH, ten digits and Y, and only that layout', () => {
+    for (const number of ['GZXH9999999980Y', 'GZXH9999999980YQ']) {
+      expect(detectCarrierMatch(number), number).toMatchObject({ carrier: 'xinghe-freight', confidence: 'high' });
+    }
+    for (const number of ['GZXH999999998Y', 'GZXH99999999800Y', 'GZXH9999999980Q', 'GZXY9999999980Y']) {
+      expect(detectCarrierMatch(number).candidates ?? [], number).not.toContain('xinghe-freight');
+    }
+  });
+});

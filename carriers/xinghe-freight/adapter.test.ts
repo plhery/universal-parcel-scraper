@@ -5,7 +5,7 @@ import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { GZYL_ORIGIN } from '../gzyl/parser.js';
-import { adapter, XingheFreightTracker } from './adapter.js';
+import { adapter, XingheFreightTracker, xingheFreightNumber } from './adapter.js';
 import carrier from './carrier.json' with { type: 'json' };
 import { statusMap } from './status.js';
 import statuses from './statuses.json' with { type: 'json' };
@@ -37,6 +37,14 @@ describe('Xinghe Freight tracking adapter', () => {
     } finally {
       vi.useRealTimers();
     }
+  });
+
+  it('asks for a number typed without its last letter with the Q back, and leaves other numbers as typed', async () => {
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(json(fixture('track.json')));
+    await expect(adapter(environment(fetcher)).track({ number: NUMBER.slice(0, -1) })).resolves.toMatchObject({ current_stage: 'customs' });
+    expect(String(fetcher.mock.calls[0]![0])).toBe(`${GZYL_ORIGIN}/selectTrack.htm?documentCode=${NUMBER}`);
+    expect(xingheFreightNumber('gzxh 9999999980 y')).toBe(NUMBER);
+    for (const number of [NUMBER, 'GZXH999999998Y', 'GZXH9999999980X']) expect(xingheFreightNumber(number), number).toBe(number);
   });
 
   it('settles the interface’s no-row answer with the page', async () => {

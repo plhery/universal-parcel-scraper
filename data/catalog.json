@@ -63088,6 +63088,10 @@
       {
         "pattern": "^GZXH\\d{10}YQ$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^GZXH\\d{10}Y$",
+        "confidence": "high"
       }
     ]
   },

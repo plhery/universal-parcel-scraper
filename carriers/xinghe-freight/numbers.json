@@ -13,6 +13,18 @@
         "confidence": "high"
       },
       "note": "Made-up number in the shape of a parcel the app tracked, which a universal provider filed under GZXH. Its serial sits far beyond the range in use."
+    },
+    {
+      "number": "GZXH9999999980Y",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "xinghe-freight",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the layout of a waybill a reader typed without its last letter, which Xinghe Freight's tracker answered once the Q was back. Its serial sits far beyond the range in use."
     }
   ]
 }

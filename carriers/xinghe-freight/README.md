@@ -36,7 +36,9 @@ No public source shows a whole Xinghe Freight number. A parcel a universal provi
 GZXH has `GZXH`, ten digits and `YQ`, the layout of forwarders on the Hualei platform, which
 open their waybills with their own code; the corpus holds a made-up number in that shape. `GZXH`
 is the company's code, the one universal providers file it under, so the rule names Xinghe
-Freight with high confidence.
+Freight with high confidence. Readers also type the waybill without its final `Q`:
+`xinghe-freight-truncated` names Xinghe for `GZXH`, ten digits and `Y`, and the adapter asks
+with the `Q` back.
 
 ## Links
 

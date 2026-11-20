@@ -63092,6 +63092,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       {
         "pattern": "^GZXH\\d{10}YQ$",
         "confidence": "high"
+      },
+      {
+        "pattern": "^GZXH\\d{10}Y$",
+        "confidence": "high"
       }
     ]
   },
@@ -68764,7 +68768,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "xdp": ["xdp-1"],
   "xgs": [],
   "xindus": [],
-  "xinghe-freight": ["xinghe-freight-1"],
+  "xinghe-freight": ["xinghe-freight-1","xinghe-freight-truncated"],
   "xingyunyi": [],
   "xinsu": [],
   "xlcourier": ["xlcourier-1"],
