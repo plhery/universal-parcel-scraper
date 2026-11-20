@@ -1,5 +1,29 @@
 {
   "carrier": "xd-express",
-  "gap": "No public page shows an XD Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "XD91510978AU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.tmdqq.com/XD91510978AU.html",
+        "date": "2025-10-13",
+        "dateKind": "last reported scan",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Australia to China",
+        "reportedRole": "waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The public tracking history identifies XD Express and includes its Australia export and China arrival scans before domestic delivery. The carrier tracker currently reports no tracking information."
+    }
+  ]
 }
