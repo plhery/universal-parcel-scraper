@@ -2382,6 +2382,12 @@
     "reason": "Maruti Air document numbers are plain runs of eight to ten digits, a shape many carriers share."
   },
   {
+    "carrier": "matson",
+    "pattern": "^MATS\\d{10}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for two public Matson ocean master bills that start with its MATS carrier code."
+  },
+  {
     "carrier": "mds-collivery",
     "pattern": "^\\d{7}$",
     "kind": "by_design",
