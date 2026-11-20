@@ -234,6 +234,7 @@ describe('Chronopost direct tracking', () => {
     ['EA', "Colis faisant partie d'une expédition groupée", 'registered'],
     ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
     ['DY', 'Colis enregistré par le bureau de poste', 'accepted'],
+    ['DV', 'Colis déposé en point de vente Chronopost', 'accepted'],
     ['EC', "Tri effectué dans l'agence de départ", 'in_transit'],
     ['T', "Entrée dans l'agence", 'in_transit'],
     ['TT', 'Colis remis par le relais Pickup au chauffeur', 'accepted'],
@@ -374,6 +375,10 @@ describe('Chronopost direct tracking', () => {
     const dropped = scan('DB', '2026-06-27T08:00:00+02:00', "Colis déposé par l'expéditeur");
     expect(parseChronopostTrackingXml(history(prepared, dropped, sorted('SC', '2026-06-27T08:46:52+02:00')), number))
       .toMatchObject({ current_stage: 'in_transit' });
+    // So after a drop-off at a Chronopost counter.
+    const counter = scan('DV', '2026-06-27T08:00:00+02:00', 'Colis déposé en point de vente Chronopost');
+    expect(parseChronopostTrackingXml(history(prepared, counter, sorted('SC', '2026-06-27T08:46:52+02:00')), number).events
+      ?.map(event => [event.provider_code, event.stage])).toEqual([['SC', 'in_transit'], ['DV', 'accepted'], ['DC', 'registered']]);
   });
 
   it('reads a delivery after the parcel started back to the sender as returned', () => {

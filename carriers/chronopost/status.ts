@@ -14,6 +14,8 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['DB', "Colis déposé par l'expéditeur", 'accepted'],
   // The post office counter that takes in a parcel the sender drops there, seconds before the drop itself (DB).
   ['DY', 'Colis enregistré par le bureau de poste', 'accepted'],
+  // The sender's drop-off at a Chronopost counter, before the departure agency's sort.
+  ['DV', 'Colis déposé en point de vente Chronopost', 'accepted'],
   // The courier takes over a parcel dropped at a pickup point, right after the point hands it over.
   ['PC', 'Colis pris en charge par le transporteur', 'accepted'],
   // The first depot's sort, under either code, as it takes the parcel over.

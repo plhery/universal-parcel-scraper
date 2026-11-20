@@ -77,6 +77,15 @@
       "language": "fr"
     },
     {
+      "code": "DV",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. The sender's drop-off at a Chronopost counter, hours before the departure agency's sort.",
+      "wording": "Colis déposé en point de vente Chronopost",
+      "language": "fr"
+    },
+    {
       "code": "PC",
       "stage": "accepted",
       "confirmedBy": "live",
