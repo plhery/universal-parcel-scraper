@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { MATKAHUOLTO_MAX_BYTES, normalizeMatkahuoltoNumber, normalizeMatkahuoltoRecognitionNumber, parseMatkahuolto, PROVIDER } from './parser.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 // The service the tracking page on matkahuolto.fi asks for a number.
 export const MATKAHUOLTO_ENDPOINT = 'https://wwwservice.matkahuolto.fi/search/trackingInfo';
@@ -33,8 +34,8 @@ export class MatkahuoltoTracker {
       } }, { provider: PROVIDER, timeoutMs: Math.max(1, Math.floor(timeoutMs)), maxBytes: MATKAHUOLTO_MAX_BYTES,
         redirect: 'manual', allowHttpStatuses: [...REDIRECTS, ...MISSING], fetcher: this.options.fetcher });
       const text = decodeText(bytes).replace(/^\uFEFF/, '').trim();
-      if (response.status !== 200 || response.headers.get('x-amzn-waf-action')) {
-        if (response.headers.get('x-amzn-waf-action') || CHALLENGE.test(text.slice(0, 64_000))) throw new ChallengeError(PROVIDER);
+      if (response.status !== 200 || awsWafAction(response.headers)) {
+        if (awsWafAction(response.headers) || CHALLENGE.test(text.slice(0, 64_000))) throw new ChallengeError(PROVIDER);
         if (MISSING.includes(response.status) || REDIRECTS.includes(response.status)) {
           throw new TransportError(PROVIDER, 'Matkahuolto tracking service is unavailable');
         }

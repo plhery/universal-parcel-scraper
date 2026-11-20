@@ -9,6 +9,7 @@ import { fastTrackerConsignment, fastTrackerItemUrl, fastTrackerResult, fastTrac
   parseFastTrackerSearch, TGE_NZ_MAX_BYTES, type FastTrackerItemPage } from './fastTracker.js';
 import { normalizeTeamGlobalExpressNumber, parseTeamGlobalExpressDetails, parseTeamGlobalExpressSearch, PROVIDER, teamGlobalExpressDetailsUrl,
   teamGlobalExpressSearchUrl, TGE_DETAILS_MAX_BYTES, TGE_SEARCH_MAX_BYTES } from './parser.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 export { TGE_DETAILS, TGE_SEARCH } from './parser.js';
 export { TGE_NZ_TRACKER } from './fastTracker.js';
@@ -43,7 +44,7 @@ export class TeamGlobalExpressTracker {
           throw new RateLimitedError(PROVIDER, undefined, 'Team Global Express asked for a CAPTCHA after too many lookups', { status: 405 });
         }
         if (response.status === 403) throw new ChallengeError(PROVIDER, 'Team Global Express refused the lookup', { status: 403 });
-        if (response.headers.get('x-amzn-waf-action')) throw new ChallengeError(PROVIDER, 'Team Global Express answered with a browser check');
+        if (awsWafAction(response.headers)) throw new ChallengeError(PROVIDER, 'Team Global Express answered with a browser check');
         return decodeText(bytes);
       };
       if (consignment) {

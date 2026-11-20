@@ -6,6 +6,7 @@ import { firstAttemptMs, networkRetryStep } from '../../core/runner/networkRetry
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/index.js';
 import { normalizeProshipsNumber, parseProships, parseProshipsNonce, PROSHIPS_MAX_BYTES, PROSHIPS_PAGE_MAX_BYTES, PROVIDER } from './parser.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 /** The tracking page, whose script looks up the number in its address with a nonce. */
 export const PROSHIPS_PAGE = 'https://proships.com/tracking/';
@@ -20,7 +21,7 @@ const CHALLENGE = /_cf_chl_opt|cf-turnstile|challenge-platform|<title>\s*(?:Just
 const NONCE_REFUSED = /^(?:Error de seguridad|-1)$/;
 
 function assertTrackingResponse(response: Response, phase: 'page' | 'lookup'): void {
-  if (response.status === 202 && response.headers.get('x-amzn-waf-action') === 'challenge') {
+  if (response.status === 202 && awsWafAction(response.headers) === 'challenge') {
     throw new ChallengeError(PROVIDER, 'ProShips requires browser verification', { status: response.status });
   }
   if (response.status !== 200) throw new TransportError(PROVIDER, `ProShips tracking ${phase} is unavailable`);

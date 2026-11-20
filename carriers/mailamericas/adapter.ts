@@ -8,6 +8,7 @@ import { decodeText, fetchBounded, userAgentOf } from '../../core/transport/inde
 import type { TrawlClient } from '../../core/transport/trawl.js';
 import { MAILAMERICAS_MAX_BYTES, normalizeMailamericasNumber, parseMailamericas, PROVIDER } from './parser.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 /** The lookup the tracking page on mailamericas.com makes for the number typed in. */
 export const MAILAMERICAS_API = 'https://mailamericas.com/api/tracking';
@@ -41,7 +42,7 @@ export class MailamericasTracker {
     const replies = page.capturedResponses.filter(entry => entry.url === MAILAMERICAS_API && entry.trackingNumberSubmitted === number);
     const reply = replies.at(-1);
     if (!reply) throw new ChallengeError(PROVIDER, 'MailAmericas browser verification did not yield a bound tracking reply', { reason: 'verification_unfinished' });
-    if (reply.headers['x-amzn-waf-action'] || [202, 403, 405].includes(reply.status)) {
+    if (awsWafAction(reply.headers) || [202, 403, 405].includes(reply.status)) {
       throw new ChallengeError(PROVIDER, 'MailAmericas browser verification remained blocked', { status: reply.status, reason: 'verification_refused' });
     }
     if (reply.status === 429 || reply.status >= 500) {
@@ -75,7 +76,7 @@ export class MailamericasTracker {
         throw new ChallengeError(PROVIDER, 'MailAmericas refused the lookup', { status: 403 });
       }
       // AWS's firewall holds a request it wants a browser to verify with an empty 202 (`x-amzn-waf-action`).
-      if (response.headers.has('x-amzn-waf-action') || (response.status === 202 && !bytes.byteLength)) {
+      if (awsWafAction(response.headers) !== null || (response.status === 202 && !bytes.byteLength)) {
         throw new ChallengeError(PROVIDER, 'MailAmericas held the lookup for a browser check', { status: response.status });
       }
       return parseMailamericas(json(decodeText(bytes)), number);

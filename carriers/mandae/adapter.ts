@@ -8,6 +8,7 @@ import type { StepRecorder } from '../../core/telemetry/index.js';
 import { TRAWL_TRANSPORT_ALLOWANCE_MS, TrawlClient } from '../../core/transport/index.js';
 import { normalizeMandaeNumber, parseMandae, PROVIDER } from './parser.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 export { normalizeMandaeNumber, parseMandae } from './parser.js';
 
@@ -51,7 +52,7 @@ export class MandaeTracker {
         if (![2, 3].includes(page.tier) || page.statusCode !== 200) throw new TransportError(PROVIDER, 'The browser service did not load Rastreaê');
         // AWS WAF answers the page's first call with a challenge (202); the page's script solves it and asks again.
         const captures = page.capturedResponses.filter((capture) => matchesCapture(capture.url, number)
-          && !(capture.status === 202 && capture.headers['x-amzn-waf-action'] === 'challenge'));
+          && !(capture.status === 202 && awsWafAction(capture.headers) === 'challenge'));
         if (!captures.length) throw new ChallengeError(PROVIDER, 'Rastreaê\'s page sent no answered tracking request; AWS WAF\'s check did not pass');
         if (captures.length > 10) throw new SchemaError(PROVIDER, 'Mandaê returned too many tracking responses');
         const capture = captures[captures.length - 1]!;
@@ -59,7 +60,7 @@ export class MandaeTracker {
           throw new RateLimitedError(PROVIDER, retryAfterMs(capture.headers['retry-after'], { dates: false }));
         }
         // 405 is AWS WAF's picture CAPTCHA, 403 its block.
-        if ([401, 403, 405].includes(capture.status) || capture.headers['x-amzn-waf-action']) throw new ChallengeError(PROVIDER);
+        if ([401, 403, 405].includes(capture.status) || awsWafAction(capture.headers)) throw new ChallengeError(PROVIDER);
         // The page reads a 404 as a code Rastreaê does not know.
         if (capture.status === 404) throw new NoHistoryError(PROVIDER, 'Mandaê holds no record of the code', { reason: 'portal_not_found' });
         if (capture.status >= 400) throw new UpstreamHttpError(PROVIDER, capture.status);

@@ -5,6 +5,7 @@ import { isRecord } from '../../core/types.js';
 import { EVRI_UK_UNCONFIRMED, EVRI_UK_UNKNOWN } from './mobile.js';
 import { evriUkTrackingUrl, parseEvriUk } from './parser.js';
 import { retryAfterMs } from '../../core/transport/retryAfter.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 const SEARCH = 'https://api.evri.com/customer-tracking/v1/search/';
 const HISTORY = 'https://tracking.platform-apis.evri.com/v1/parcels';
@@ -74,7 +75,7 @@ export async function readEvriUkTrawl(number: string, trawl: TrawlClient, option
     result = undefined;
     if (search) parcelId = undefined;
     if (entry.status !== 200) { failure = httpFailure(entry.status, entry.headers['retry-after']); continue; }
-    if (entry.headers['x-amzn-waf-action'] || entry.error === 'verification-required') { failure = new ChallengeError('Evri UK'); continue; }
+    if (awsWafAction(entry.headers) || entry.error === 'verification-required') { failure = new ChallengeError('Evri UK'); continue; }
     if (entry.truncated || entry.error || entry.base64Encoded || typeof entry.body !== 'string'
       || new TextEncoder().encode(entry.body).byteLength > (search ? 200_000 : 2_000_000)) {
       throw new SchemaError('Evri UK', 'Evri UK returned unreadable tracking data');

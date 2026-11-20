@@ -4,6 +4,7 @@ import { runSteps } from '../../core/runner/index.js';
 import { NOOP_RECORDER, type StepRecorder } from '../../core/telemetry/index.js';
 import { fetchBounded, parseJsonBytes } from '../../core/transport/index.js';
 import { normalizePurolatorNumber, parsePurolator } from './parser.js';
+import { awsWafAction } from '../../core/transport/awsWaf.js';
 
 const ENDPOINT = 'https://public-tracking.purolator.com/tracking/data';
 // Public anonymous client configuration, not an account/API credential:
@@ -24,7 +25,7 @@ export class PurolatorTracker {
         body: JSON.stringify({ search: [{ trackingId: number, sequenceId: 1, eventSortOrder: 'd' }], language: 'en' }),
       }, { provider: 'Purolator', timeoutMs: Math.max(1, Math.floor(remainingMs)), maxBytes: 1_000_000,
         allowHttpStatuses: [404, 405, 410], fetcher: this.options.fetcher });
-      if ([202, 405].includes(response.status) && ['captcha', 'challenge'].includes(response.headers.get('x-amzn-waf-action') ?? '')) {
+      if ([202, 405].includes(response.status) && ['captcha', 'challenge'].includes(awsWafAction(response.headers) ?? '')) {
         throw new ChallengeError('Purolator', 'Purolator requires an AWS WAF challenge');
       }
       if (response.status !== 200) throw new IndeterminateError('Purolator', 'Purolator returned an unrecognized tracking response');

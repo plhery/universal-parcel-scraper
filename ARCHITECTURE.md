@@ -128,6 +128,8 @@ at once with its kind and `Retry-After` window, rather than when the budget runs
 An adapter reads a `Retry-After` header with [retryAfterMs](core/transport/retryAfter.ts):
 whole seconds, or an HTTP date unless the carrier only sends seconds, with a digit cap where it
 has one. An adapter whose wait has its own cap, floor or default keeps its own reading.
+An adapter reads AWS WAF's action on a reply with [awsWafAction](core/transport/awsWaf.ts) and
+decides itself which actions and statuses are its challenge.
 A direct step that a check only a browser passes refuses, such as Correios's Turnstile page,
 can rest through [DirectRest](core/runner/directRest.ts): the carrier's lookups with a browser
 service then skip it for a few hours, and the next one after that asks it again. Only that
