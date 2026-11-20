@@ -4796,5 +4796,11 @@
     "pattern": "^7377\\d{9}$",
     "kind": "open",
     "reason": "The TIG webinar shows its tracking portal recognizing a thirteen-digit Toll consignment with this prefix. Detection lists other carriers and omits TIG for that reference."
+  },
+  {
+    "carrier": "suning-logistics",
+    "pattern": "^000\\d{13}$",
+    "kind": "open",
+    "reason": "A public Chinese court decision identifies a sixteen-digit Suning Express waybill with leading zeroes. Detection suggests other carriers."
   }
 ]
