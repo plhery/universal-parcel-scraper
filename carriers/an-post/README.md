@@ -54,7 +54,8 @@ guest tracking client. It is included with the maintainer's approval.
   hold out-for-delivery and collection codes, so their wording may narrow them; its
   return-to-sender codes include returns still under way, which wording narrows to an
   exception. A code seen live outranks its category: 66, filed under customs, is the local
-  delivery provider's sorting abroad, in transit. Codes neither knows take their stage, current one included, from the shared
+  delivery provider's sorting abroad, in transit. The mail centre's receipt (48) after the
+  post office's hand-in (15) or another scan that moved the item is in transit. Codes neither knows take their stage, current one included, from the shared
   wording rules. A summary ahead of the history has no code; it is staged as the scan whose
   live wording it repeats, else from the shared wording rules. Aggregators relay the scans'
   sentences without their codes, and the universal providers' map stages those the same way. `statusMap` in

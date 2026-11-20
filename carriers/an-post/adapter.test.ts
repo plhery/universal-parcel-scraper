@@ -71,7 +71,8 @@ describe('An Post guest history', () => {
       ['2026-03-12T05:30:00', '4', 'out_for_delivery'],
       ['2026-03-11T14:01:00', '67', 'in_transit'],
       ['2026-03-09T07:49:00', '49', 'in_transit'],
-      ['2026-03-05T16:03:38', '48', 'accepted'],
+      // The mail centre takes in the item handed in at the post office: on its way.
+      ['2026-03-05T16:03:38', '48', 'in_transit'],
       ['2026-03-04T14:37:34', '15', 'accepted'],
       ['2026-03-02T20:12:39', '35', 'registered'],
     ]);

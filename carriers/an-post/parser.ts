@@ -17,6 +17,8 @@ const ZONE = 'Europe/Dublin';
  * delivery partner relays its scans (40, 49, 67, 68), in whole minutes.
  */
 const ABROAD = new Set([5, 40, 49, 67, 68]);
+/** The mail centre taking the item in ("We have your item and will process it for delivery"). */
+const MAIL_CENTRE_RECEIPT = 48;
 
 /** The item's identity and current status from GetItemSummary or GetCustItemSummary. The sender's reference is never kept. */
 export interface AnPostSummary {
@@ -218,6 +220,16 @@ export function parseAnPostEvents(payload: unknown, summary: AnPostSummary): Car
     if (seen.has(key)) continue;
     seen.add(key);
     scans.push({ event, code, activity, stage, text: description, local, ...(office ? { office } : {}) });
+  }
+  // The mail centre's "We have your item" (48) after the post office's hand-in (15), or any scan that moved the
+  // item, takes it in on its way: in transit.
+  let taken = false;
+  for (const scan of [...scans].reverse()) {
+    if (scan.code === MAIL_CENTRE_RECEIPT && scan.event.stage === 'accepted' && taken) {
+      scan.stage = { stage: 'in_transit', source: scan.stage!.source };
+      scan.event = { ...scan.event, stage: 'in_transit' };
+    }
+    if (scan.event.stage && scan.event.stage !== 'registered' && scan.event.stage !== 'pending') taken = true;
   }
   // The scans until an outbound item's dispatch abroad, or before the partner's
   // first relayed scan, are An Post's own, on Irish time. Later ones may keep
