@@ -376,6 +376,10 @@ describe('DHL public tracking normalization', () => {
     ['The recipient could not be found at the address on the shipment.', 'failed_attempt', 'exception'],
     ['The shipment has been delivered', 'delivered', 'delivered'],
     ['Die Sendung wurde erfolgreich zugestellt.', 'delivered', 'delivered'],
+    // A day-dated history's delivery and the round before it.
+    ['Die Sendung wurde am 18.11.2026 ausgeliefert.', 'delivered', 'delivered'],
+    ['Die Sendung befindet sich in der Zustellung.', 'out_for_delivery', 'out_for_delivery'],
+    ['Die Sendung wurde am 18.11.2026 nicht ausgeliefert.', 'in_transit', 'in_transit'],
   ])('maps %s without confusing future or failed delivery with delivery', (text, stage, status) => {
     const result = parseDHLTrackingResponse(shipment({
       sendungsverlauf: { status: text, fortschritt: 4, events: [{ status: text, datum: '2026-08-10T10:00:00Z' }] },

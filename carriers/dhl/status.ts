@@ -118,8 +118,10 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   if (translated) return translated;
   if (/ready for (?:pickup|collection)|ready to (?:collect|pick up)|awaiting collection|abholbereit|zur abholung bereit|liegt zur abholung\b[^.]*\bbereit/.test(value)) return 'ready_for_pickup';
   // "Abholung aus Packstation": the recipient took the parcel out of the Packstation, as DHL's delivered flag says.
-  if (/has been delivered|was delivered|successfully delivered|^delivered\b|erfolgreich zugestellt|wurde.*zugestellt|^abholung aus (?:der )?packstation\b/.test(value)) return 'delivered';
-  if (/^being delivered[.!]?$|out for delivery|loaded (?:into|onto).*delivery vehicle|in das zustellfahrzeug geladen|in zustellung/.test(value)) return 'out_for_delivery';
+  // A day-dated history words the delivery "Die Sendung wurde am <day> ausgeliefert.", and the round before it
+  // "Die Sendung befindet sich in der Zustellung.".
+  if (/has been delivered|was delivered|successfully delivered|^delivered\b|erfolgreich zugestellt|wurde.*zugestellt|^abholung aus (?:der )?packstation\b|\bwurde\b(?!(?:[^.]|\.\d)*\bnicht\b)(?:[^.]|\.\d)*\bausgeliefert\b/.test(value)) return 'delivered';
+  if (/^being delivered[.!]?$|out for delivery|loaded (?:into|onto).*delivery vehicle|in das zustellfahrzeug geladen|in zustellung|befindet sich in der zustellung\b/.test(value)) return 'out_for_delivery';
   if (/customs clearance process\b[^.]*\bhas been completed\b/.test(value)) return 'in_transit';
   if (/customs|zoll/.test(value)) return 'customs';
   if (/electronically|elektronisch|label created|shipment information|instruction data/.test(value)) return 'registered';
