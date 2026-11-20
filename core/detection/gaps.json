@@ -5102,5 +5102,11 @@
     "pattern": "^3514785[0-9]{5}$",
     "kind": "open",
     "reason": "Fast Express carrier archives confirm these numeric consignments. Detection does not offer Fast Express."
+  },
+  {
+    "carrier": "fan-courier-md",
+    "pattern": "^FAN[0-9]{7}$",
+    "kind": "open",
+    "reason": "An archived link to the Moldovan carrier's tracking tenant includes this AWB. Detection does not offer FAN Courier Moldova."
   }
 ]
