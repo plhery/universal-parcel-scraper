@@ -1,0 +1,103 @@
+{
+  "resultCode": 200,
+  "resultMessage": null,
+  "payload": {
+    "shipmentId": "26315638889445",
+    "eventDetailList": [
+      {
+        "timeStamp": "2026-07-28T09:09:04.915Z",
+        "legacySystemShortEventCode": "DELY",
+        "description": "The shipment has been delivered.",
+        "eventType": "Delivered",
+        "eventLocation": {
+          "hubId": "137",
+          "city": null,
+          "country": "191",
+          "zipCode": "10362"
+        },
+        "hubName": "OSE Sesvete (Central)"
+      },
+      {
+        "timeStamp": "2026-07-28T06:03:28.24Z",
+        "legacySystemShortEventCode": "TOUR",
+        "description": "The shipment has been loaded into the delivery vehicle.",
+        "eventType": "CourierLeftFromBranch",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": "10362"
+        },
+        "hubName": "OSE Sesvete (Central)"
+      },
+      {
+        "timeStamp": "2026-07-28T05:20:10.907Z",
+        "legacySystemShortEventCode": "IMPA",
+        "description": "The package exceeds the size limit for a parcel shop. Arrange delivery to another address.",
+        "eventType": "PickupFailed",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": "10362"
+        },
+        "hubName": "OSE Sesvete (Central)"
+      },
+      {
+        "timeStamp": "2026-07-28T04:54:30.996Z",
+        "legacySystemShortEventCode": "ENTY",
+        "description": "The shipment has arrived at the delivery center.",
+        "eventType": "LegacySystemInfo",
+        "eventLocation": {
+          "hubId": "137",
+          "city": "",
+          "country": "191",
+          "zipCode": "10362"
+        },
+        "hubName": "OSE Sesvete (Central)"
+      },
+      {
+        "timeStamp": "2026-07-27T15:31:32.224Z",
+        "legacySystemShortEventCode": "INIT",
+        "description": "The shipment has been weighed and will be sent to the destination delivery center.",
+        "eventType": "UnloadAtPickupHub",
+        "eventLocation": {
+          "hubId": "10",
+          "city": "HRVATSKI LESKOVAC",
+          "country": "191",
+          "zipCode": "10251"
+        },
+        "hubName": "OSE Zagreb (Central)"
+      },
+      {
+        "timeStamp": "2026-07-22T05:38:45.111Z",
+        "legacySystemShortEventCode": "DDEF",
+        "description": "Shipment announcement received. The delivery date is currently unknown because the shipment has not yet been handed over for transport.",
+        "eventType": "SaveShipment",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": null
+        },
+        "hubName": "OSE Zagreb (Central)"
+      }
+    ],
+    "shipmentDetails": {
+      "shipmentId": "26315638889445",
+      "externalId": "26315638889445",
+      "legacySystemCargoId": "1910051849795713",
+      "createdAt": "2026-07-22T05:38:45.099Z",
+      "shipmentStatus": "Delivered",
+      "shipmentType": "Standard",
+      "parcelCount": 1,
+      "isExport": false,
+      "isImport": false,
+      "parcels": [
+        {
+          "legacySystemShortBarcode": "1910051849795713"
+        }
+      ]
+    }
+  }
+}

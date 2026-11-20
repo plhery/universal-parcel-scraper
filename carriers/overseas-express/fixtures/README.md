@@ -1,0 +1,1 @@
+`delivered.json` and `delivered-2.json` are the guest lookup's English answers for the public samples in `numbers.json`, without the sender, the recipient, the services, the partner references, the parcel shop's address, the long parcel barcodes and the scans' coordinates. `not-found.json` is its answer for an impossible code.

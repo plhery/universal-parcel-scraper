@@ -1,38 +1,52 @@
 # Overseas Express
 
-Overseas Express parcels use enabled universal providers. There is no dedicated adapter.
+Overseas Express is a Croatian parcel carrier. Its tracker, I-NET on `inet.overseas.hr`, is Aras
+Kargo's platform.
+
+## How it works
+
+The adapter does what I-NET's guest tracking page does, over plain HTTP and without a login. It
+posts `{"Platform":201,"Reference":"{number}"}` to
+`inetapi.overseas.hr/NesyIntegration/GetGuestShipmentDetails` with `Accept-Language: en-US`, and
+reads the shipment's scans. A fourteen-digit shipment number goes as `ExternalId` first, then as
+`Reference`, as on the page. Without a language the service writes each scan's code where its
+wording belongs.
+
+The scans carry UTC instants and the hub that made them. Each has the former system's four-letter
+code beside I-NET's own scan type; the status map reads the code first, then the scan type, then the
+English wording. The reply names the shipment number and the parcel number, which bind it to the
+number asked.
 
 ## Numbers
 
-Overseas Express asks for the eight-digit parcel number. Its former tracker explained that the
-whole barcode reads as three digits, three digits, the eight-digit number and two more digits,
-and that only the eight digits are entered. Archived lookups on its trackers carry those eight
-digits. Eight digits are shared with other carriers, so no rule claims them.
+Customers enter the eight-digit parcel code. The whole parcel number reads as three digits, three
+digits, those eight digits and two more, and the lookup takes it too, as it takes the shipment
+number. Eight digits are shared with other carriers, so no rule claims them.
+
+## Limitations
+
+- An unknown code is a `resultCode` 400 inside an HTTP 200; any other refusal is reported as
+  indeterminate.
+- The lookup has no history for the older archived samples in `numbers.json`.
+- Both hosts sit behind an Azure application gateway that refuses some addresses with HTTP 403, a
+  real browser on them included, and answers others over plain HTTP. A refusal is a transport
+  failure, never a missing parcel.
+- The reply's sender and recipient come masked; the adapter keeps neither, nor the parcel shop's
+  address or the delivery coordinates.
 
 ## Links
 
-The header form on `www.overseas.hr` sends the number as `trackingid` to
-`inet.overseas.hr/auth`. Archived lookups use `is.overseas.hr/tracking/?trackingid={number}`,
+The header form on `www.overseas.hr` sends the number as `trackingid` to `inet.overseas.hr/auth`.
+Archived lookups use `is.overseas.hr/tracking/?trackingid={number}`, which forwards there,
 `is.overseas.hr/track-and-trace/{number}` and, on the former site,
-`www.overseas.hr/Tracking/Package/{number}`. `inet.overseas.hr/{number}` runs the lookup (see
-Retrieval), but the gateway refused a desktop Chrome too, so the catalog has no parcel link.
-
-## Retrieval
-
-I-NET, the tracker on `inet.overseas.hr`, looks a code up with
-`POST inetapi.overseas.hr/NesyIntegration/GetGuestShipmentDetails` and
-`{"Platform":201,"Reference":"{number}"}`, or `ExternalId` for a 14-digit shipment number. Both
-hosts sit behind an Azure application gateway that answers HTTP 403 to plain HTTP clients; the
-TRAWL browser loads them. Opening `inet.overseas.hr/{number}` forwards to `/auth?id={number}`,
-whose guest panel runs that lookup itself, so a TRAWL capture can read the reply once the page
-settles. An unknown code answers HTTP 200 with `resultCode` 400 and "Barkodovi nisu pronađeni".
-
-## Why there is no adapter
-
-The newest public sample answers as an unknown code, so no reply has shown a held shipment's
-fields. An adapter needs one found reply.
+`www.overseas.hr/Tracking/Package/{number}`. The gateway refuses some addresses, so the catalog has
+no parcel link.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+npx vitest run --config vitest.carriers-live.config.ts carriers/overseas-express
+```
+
+`OVERSEAS_EXPRESS_TRACKING_NUMBER` overrides the public sample. Run it from an address the gateway
+admits.

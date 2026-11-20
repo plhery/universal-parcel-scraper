@@ -43497,7 +43497,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Zagreb",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "overseas-express"
     },
     "canaryUrl": "https://www.overseas.hr/hr",
     "trackingSearchUrl": "https://www.overseas.hr/hr",

@@ -241,6 +241,54 @@
         ]
       },
       "note": "Looked up on Overseas Express's own tracker, as an archived address shows; the opened capture holds only the search form, which the page fills by script."
+    },
+    {
+      "number": "14294365",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260217154057/https://is.overseas.hr/tracking/?trackingid=14294365",
+        "date": "2026-02-17",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived tracking link on Overseas Express's tracker; the archive kept only the gateway's refusal, and I-NET's guest lookup answers with the parcel's history through delivery."
+    },
+    {
+      "number": "18497957",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260725093630/https://is.overseas.hr/tracking/?trackingid=18497957",
+        "date": "2026-07-25",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "An archived tracking link on Overseas Express's tracker; the archive kept only the gateway's refusal, and I-NET's guest lookup answers with the parcel's history through delivery."
     }
   ]
 }

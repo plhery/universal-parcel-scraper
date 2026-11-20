@@ -1,0 +1,77 @@
+{
+  "resultCode": 200,
+  "resultMessage": null,
+  "payload": {
+    "shipmentId": "49774883725080",
+    "eventDetailList": [
+      {
+        "timeStamp": "2026-02-18T10:16:58.361Z",
+        "legacySystemShortEventCode": "DELY",
+        "description": "The shipment has been delivered.",
+        "eventType": "Delivered",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": "10251"
+        },
+        "hubName": "OSE Zagreb (Central)"
+      },
+      {
+        "timeStamp": "2026-02-18T07:14:53.532Z",
+        "legacySystemShortEventCode": "TOUR",
+        "description": "The shipment has been loaded into the delivery vehicle.",
+        "eventType": "CourierLeftFromBranch",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": "10251"
+        },
+        "hubName": "OSE Zagreb (Central)"
+      },
+      {
+        "timeStamp": "2026-02-17T16:57:17.81Z",
+        "legacySystemShortEventCode": "INIT",
+        "description": "The shipment has been weighed and will be sent to the destination delivery center.",
+        "eventType": "UnloadAtPickupHub",
+        "eventLocation": {
+          "hubId": "10",
+          "city": "HRVATSKI LESKOVAC",
+          "country": "191",
+          "zipCode": "10251"
+        },
+        "hubName": "OSE Zagreb (Central)"
+      },
+      {
+        "timeStamp": "2026-02-16T10:24:56.192Z",
+        "legacySystemShortEventCode": "DDEF",
+        "description": "Shipment announcement received. The delivery date is currently unknown because the shipment has not yet been handed over for transport.",
+        "eventType": "SaveShipment",
+        "eventLocation": {
+          "hubId": "10",
+          "city": null,
+          "country": "191",
+          "zipCode": null
+        },
+        "hubName": "OSE Zagreb (Central)"
+      }
+    ],
+    "shipmentDetails": {
+      "shipmentId": "49774883725080",
+      "externalId": "49774883725080",
+      "legacySystemCargoId": "1910051429436517",
+      "createdAt": "2026-02-16T10:24:56.179Z",
+      "shipmentStatus": "Delivered",
+      "shipmentType": "Standard",
+      "parcelCount": 1,
+      "isExport": false,
+      "isImport": false,
+      "parcels": [
+        {
+          "legacySystemShortBarcode": "1910051429436517"
+        }
+      ]
+    }
+  }
+}
