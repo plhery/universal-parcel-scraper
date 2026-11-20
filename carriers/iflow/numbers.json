@@ -1,5 +1,26 @@
 {
   "carrier": "iflow",
-  "gap": "No public page shows an iFLOW number.",
-  "records": []
+  "records": [
+    {
+      "number": "TRI0000001337139",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/558527769/iFlow-Tracking-softlight",
+        "date": "2021-07-12",
+        "dateKind": "shipment event",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Argentina retail delivery",
+        "reportedRole": "iFLOW tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The saved iFLOW tracking result shows this exact number with dated collection and transit events. A fresh lookup could not reach the public tracking endpoint."
+    }
+  ]
 }
