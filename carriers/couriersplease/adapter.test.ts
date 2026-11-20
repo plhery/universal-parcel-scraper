@@ -328,5 +328,15 @@ describe('CouriersPlease status vocabulary', () => {
       expect(statusMapAnswer({ carrier: 'couriersplease', providerCode: 'status', description: wording }), wording).toMatchObject({ kind: 'intentional_gap' });
     }
     expect(couriersPleaseStage('offboard-depot', 'Delivery rescheduled for next business day')).toEqual({ stage: 'failed_attempt', source: 'carrier_map' });
+    // In the history the notice keeps the stage of the scan before it, so the parcel does not read as moving.
+    const body = changed('delivered', (entry) => {
+      const rows = entry.trakingInfo[0]!.tracker.track!;
+      rows.splice(2, rows.length - 2, { date: '19 Nov 2026', time: '8:06 am', action: 'Delivery instructions - Rescheduled for 19 Nov 2026',
+        nodeType: 'status', contractor: null, stateName: null, datetime: null });
+    });
+    const result = parseCouriersPlease(body, DELIVERED);
+    expect(result.events!.map((event) => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['status', 'registered', 'none'], ['manifest', 'registered', 'carrier_map']]);
+    expect(result).toMatchObject({ current_stage: 'registered', current_stage_source: 'carrier_map' });
   });
 });

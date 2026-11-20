@@ -5,7 +5,7 @@ import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { clean, textFromHtml } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
-import { couriersPleaseStage } from './status.js';
+import { couriersPleaseStage, isCouriersPleaseNotice } from './status.js';
 
 export const PROVIDER = 'CouriersPlease';
 // A consignment of several items is a few kilobytes per item.
@@ -194,9 +194,16 @@ export function parseCouriersPlease(payload: unknown, raw: string): CarrierResul
   // Newest first; each item lists its scans oldest first.
   scans.sort((a, b) => (a.wall === b.wall ? b.order - a.order : a.wall < b.wall ? 1 : -1));
   const events = scans.map((scan) => scan.event);
+  // A notice, such as a new delivery date, keeps the stage of the scan before it, with no source of its own.
+  let previous: string | undefined;
+  for (const event of [...events].reverse()) {
+    if (isCouriersPleaseNotice(event.description!)) {
+      if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
+    } else if (event.stage) previous = event.stage;
+  }
 
   const newest = events[0]!;
-  const current = events.find((event) => event.stage);
+  const current = events.find((event) => event.stage && event.stage_source !== 'none');
   const stage = current?.stage as Stage | undefined;
   // The page shows the estimate as still to be confirmed while the sender's
   // details are all there is.

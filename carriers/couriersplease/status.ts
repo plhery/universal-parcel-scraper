@@ -85,6 +85,9 @@ const NOTES: ReadonlyMap<string, string> = new Map(NOTICES.map(([wording, note])
 const NEW_DAY = /\s+for\s+\d{1,2}\s+[a-z]{3,9}\.?\s+\d{4}$/i;
 const noticeKey = (wording: string): string => key(wording).replace(NEW_DAY, '');
 
+/** Whether a row is a notice the help centre lists, which keeps the stage of the scan before it. */
+export const isCouriersPleaseNotice = (wording: string): boolean => NOTES.has(noticeKey(wording));
+
 /** The stage CouriersPlease's vocabulary gives a row's wording, else its kind. */
 export function couriersPleaseMappedStage(code: string | null, wording: string): Stage | undefined {
   return WORDINGS.get(key(wording)) ?? (code ? CODES.get(code.toLowerCase()) : undefined);
