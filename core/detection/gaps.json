@@ -500,6 +500,12 @@
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
   },
   {
+    "carrier": "cargo-expreso",
+    "pattern": "^A\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Cargo Expreso for the A-prefixed shipment number published with its Guatemala tracking history."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
@@ -788,6 +794,12 @@
     "reason": "CSE numbers written in three hyphenated groups become fifteen or sixteen digits after normalization, a shape many carriers share."
   },
   {
+    "carrier": "cupost",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Detection does not offer CUpost for the twelve-digit waybill returned by its domestic tracking page."
+  },
+  {
     "carrier": "custom-companies",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -853,6 +865,12 @@
     "reason": "Eleven digits, the zero-padded barcode form of a Dayton Freight PRO, are shared by several carriers and nothing else in the number points to Dayton Freight."
   },
   {
+    "carrier": "delivery-auto",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Delivery for ten-digit receipt numbers reported by its Ukrainian customers."
+  },
+  {
     "carrier": "dellin",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
@@ -875,6 +893,12 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to Deprisa."
+  },
+  {
+    "carrier": "der-kurier",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer DER KURIER for the eleven-digit parcel number in a customer report with dated tracking history."
   },
   {
     "carrier": "dhl",
@@ -979,6 +1003,12 @@
     "reason": "International numbers in the UPU S10 layout that DHLink's line providers issue belong to postal detection even when the check digit fails, and do not point to DHLink."
   },
   {
+    "carrier": "dialogo-logistica",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Detection does not offer Diálogo Logística for the twelve-digit tracking code reported with its dated delivery attempts."
+  },
+  {
     "carrier": "direct-freight-express",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
@@ -1001,6 +1031,12 @@
     "pattern": "^01[678]\\d{9}$",
     "kind": "by_design",
     "reason": "Domain Logistics numbers are bare twelve-digit runs that many carriers share, so no rule claims them."
+  },
+  {
+    "carrier": "domesa",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "Detection does not offer Domesa Venezuela for the nine-digit waybills that customers reported after a forwarding handoff."
   },
   {
     "carrier": "domex",
@@ -1278,6 +1314,12 @@
     "reason": "Express One Bulgaria's package barcodes are twenty-four digits ending in the destination's postcode, as Express One Hungary's, bpost's, Ciblex's and InPost's are, so the shape cannot name it."
   },
   {
+    "carrier": "famiport",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer FamilyMart Taiwan for the eleven-digit store-to-store number shown in the SmilePay integration guide."
+  },
+  {
     "carrier": "fargo-uz",
     "pattern": "^(?:\\d{9}|\\d{14}|TEZ\\d{6})$",
     "kind": "by_design",
@@ -1294,6 +1336,18 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Fastfrate probill numbers are ten bare digits that many carriers share."
+  },
+  {
+    "carrier": "fastship-th",
+    "pattern": "^FDA\\d{9}CA$",
+    "kind": "open",
+    "reason": "Detection does not offer FastShip for the FDA-prefixed number its archived tracker returned with dated events."
+  },
+  {
+    "carrier": "fastway-za",
+    "pattern": "^(?:B1|D6)\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Fastway South Africa for the B1 and D6 labels its own tracker returned with dated shipment history."
   },
   {
     "carrier": "fedex-freight",
@@ -1518,6 +1572,12 @@
     "reason": "The eight-character Track ID is the GLS group's, which other GLS networks issue and their low rules suggest."
   },
   {
+    "carrier": "gls-ca",
+    "pattern": "^W\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not offer GLS Canada for the W-prefixed tracking numbers shown on created shipments in its Shopify manual."
+  },
+  {
     "carrier": "gls-hu",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -1588,6 +1648,12 @@
     "pattern": "^YT\\d{16}$",
     "kind": "by_design",
     "reason": "YunExpress numbers that GOFO delivers in the US under the same number. GOFO's tracker answers for them, but they are YunExpress's own, so detection reads them as YunExpress; the GOFO adapter takes them when the user picks GOFO or opens a GOFO link."
+  },
+  {
+    "carrier": "gollog",
+    "pattern": "^127\\d{8}$",
+    "kind": "open",
+    "reason": "Detection does not offer GOLLOG for the airline's 127-prefixed air waybill published in a public filing."
   },
   {
     "carrier": "goodluck-courier",
@@ -1854,6 +1920,12 @@
     "reason": "Ilyang Logis waybills are bare digit runs with a mod-7 check digit, which other carriers' numbers of the same length also pass, so nothing in the number points to Ilyang Logis."
   },
   {
+    "carrier": "indopaket",
+    "pattern": "^(?:IP|SP)\\d{13}$",
+    "kind": "open",
+    "reason": "Detection does not offer Indopaket for the IP receipt numbers or the SP waybill reported for its Shopee return service."
+  },
+  {
     "carrier": "inpost",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -1990,6 +2062,12 @@
     "pattern": "^(?:\\d{9}|\\d{12}|\\d{16}|\\d{19,20})$",
     "kind": "by_design",
     "reason": "Kargoist tracks parcels by the shop's barcode, bare digit runs of many lengths that other carriers print too."
+  },
+  {
+    "carrier": "kerry-express-tw",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer Kerry Express Taiwan for the eleven-digit waybill on the public Shopee shipping label."
   },
   {
     "carrier": "kerry-tj",
@@ -2140,6 +2218,12 @@
     "pattern": "^[A-Z]{2}\\d{9,10}$",
     "kind": "by_design",
     "reason": "Two letters and nine or ten digits are printed by several carriers and no known check sets Leopards apart."
+  },
+  {
+    "carrier": "lex-th",
+    "pattern": "^LEXDO\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer LEX Thailand for the LEXDO-prefixed parcel number reported by a Lazada Thailand buyer."
   },
   {
     "carrier": "libanpost",
@@ -3202,6 +3286,12 @@
     "reason": "Sendle's order numbers are a short counter that other carriers' rules share; the QSS tracking number under the label's barcode names Sendle."
   },
   {
+    "carrier": "sentral-cargo",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer Sentral Cargo for the eleven-digit domestic receipt number its tracker returned with shipment history."
+  },
+  {
     "carrier": "servientrega",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -3792,6 +3882,12 @@
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "TufesaPack's shipment numbers are a plain sequence of digits, without a prefix or check, in a length many carriers print."
+  },
+  {
+    "carrier": "tuffnells",
+    "pattern": "^\\d{16}$",
+    "kind": "open",
+    "reason": "Detection does not offer Tuffnells for the sixteen-digit URN returned by its archived tracking page."
   },
   {
     "carrier": "tws-express",

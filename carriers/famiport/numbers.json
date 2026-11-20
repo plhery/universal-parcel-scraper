@@ -1,5 +1,35 @@
 {
   "carrier": "famiport",
-  "gap": "No public page shows a FamilyMart Taiwan number.",
-  "records": []
+  "records": [
+    {
+      "number": "08978922954",
+      "role": "shipment",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://www.smilepay.net/FAQ/C2C_Print_F.asp",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "FamilyMart Taiwan C2C store-to-store",
+        "reportedRole": "store-to-store shipment number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "SmilePay's FamilyMart C2C printing guide shows this value below the barcode labelled as the store-to-store shipment number."
+    }
+  ]
 }

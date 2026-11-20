@@ -1,5 +1,96 @@
 {
   "carrier": "delivery-auto",
-  "gap": "No public page shows a whole Delivery receipt number.",
-  "records": []
+  "records": [
+    {
+      "number": "0580422728",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://vidstezhyty.com.ua/couriers/delivery/reviews",
+        "date": "2026-08-25",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Delivery domestic parcel",
+        "reportedRole": "parcel number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The reviewer posts the parcel number for a Delivery shipment from Zaporizhzhia to Chernivtsi."
+    },
+    {
+      "number": "235031 4453",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://vidstezhyty.com.ua/couriers/delivery/reviews",
+        "date": "2026-10-31",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Delivery domestic parcel",
+        "reportedRole": "parcel number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The reviewer posts the number for a parcel sent from Chernivtsi that reached Kyiv and was sent back. The space is as published."
+    },
+    {
+      "number": "4710016450",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://vidstezhyty.com.ua/couriers/delivery/reviews",
+        "date": "2026-09-08",
+        "dateKind": "review publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Delivery domestic parcel",
+        "reportedRole": "parcel number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The reviewer gives this as the number for a Delivery parcel that the company asked them to collect."
+    }
+  ]
 }

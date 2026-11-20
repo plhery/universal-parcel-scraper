@@ -1,5 +1,38 @@
 {
   "carrier": "sentral-cargo",
-  "gap": "No public page shows a Sentral Cargo receipt number its tracker answers.",
-  "records": []
+  "records": [
+    {
+      "number": "00058020178",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2023/10/10/surat-pembaca/sebagian-paket-kiriman-di-sentral-cargo-tidak-kunjung-datang",
+        "date": "2023-10-10",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Sentral Cargo domestic freight",
+        "reportedRole": "tracking receipt number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The sender reports this receipt number for a two-piece shipment. The carrier's public tracker returned depot and delivery scans for the full number."
+    }
+  ]
 }

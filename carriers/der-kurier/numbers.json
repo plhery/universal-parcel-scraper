@@ -1,5 +1,37 @@
 {
   "carrier": "der-kurier",
-  "gap": "No public page shows a whole DER KURIER number.",
-  "records": []
+  "records": [
+    {
+      "number": "02060111854",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://de.trustpilot.com/review/hamburg-derkurier.de",
+        "date": "2019-08-24",
+        "dateKind": "review update",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Hamburg DER KURIER with GLS final delivery",
+        "reportedRole": "shipment number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The buyer names Hamburg DER KURIER as the shipping service and posts its tracking history with this shipment number. The review identifies GLS as the delivery partner."
+    }
+  ]
 }

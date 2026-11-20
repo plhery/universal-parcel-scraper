@@ -1,5 +1,38 @@
 {
   "carrier": "kerry-express-tw",
-  "gap": "No public page shows a KE 嘉里快遞 waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "40508784474",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/1000237559/a1f4acc7-8ba4-45de-ac65-a3a3721bf180",
+        "date": "2025-11-10",
+        "dateKind": "label date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Shopee Taiwan delivery by KE 嘉里快遞",
+        "reportedRole": "waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      },
+      "note": "The publicly posted Shopee shipping label names KE 嘉里快遞 and prints this value in its waybill field."
+    }
+  ]
 }

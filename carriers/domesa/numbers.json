@@ -1,5 +1,68 @@
 {
   "carrier": "domesa",
-  "gap": "No public page shows a Domesa guía.",
-  "records": []
+  "records": [
+    {
+      "number": "509206348",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ve.imigra.net/distrito_capital/caracas/agentes_de_aduana/98ab32/seravila_ca",
+        "date": "2014-08-22",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domesa Venezuela delivery after a forwarding handoff",
+        "reportedRole": "Domesa waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The commenter labels this the Domesa waybill and reports that Domesa's Coro office traced the parcel to Valencia."
+    },
+    {
+      "number": "509395381",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ve.imigra.net/distrito_capital/caracas/agentes_de_aduana/98ab32/seravila_ca",
+        "date": "2014-08-22",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domesa Venezuela delivery after a forwarding handoff",
+        "reportedRole": "Domesa waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The same commenter gives this as the Domesa waybill for a second parcel that Domesa's Coro office traced to Caracas."
+    },
+    {
+      "number": "509528291",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://ve.imigra.net/distrito_capital/caracas/agentes_de_aduana/98ab32/seravila_ca",
+        "date": "2015-02-18",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domesa Venezuela delivery after a forwarding handoff",
+        "reportedRole": "Domesa waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Another customer names this as the Domesa waybill for a separate parcel whose loss they reported after the forwarding handoff."
+    }
+  ]
 }
