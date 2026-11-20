@@ -1,5 +1,55 @@
 {
   "carrier": "m24-logistics",
-  "gap": "No public page shows an M24 Logistics parcel or shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "o1983692063",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260408091616id_/https://lms.m24logistics.com/track-my-order//o1983692063",
+        "date": "2026-04-08",
+        "dateKind": "capture",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "South Africa retail fulfilment",
+        "reportedRole": "order tracking reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fercam",
+          "gls-it"
+        ]
+      },
+      "note": "The Wayback index preserves this exact lowercase reference in an M24 order link. The live HTML embeds the reference in its application data without a shipment history."
+    },
+    {
+      "number": "o2001531786",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260507163942id_/https://lms.m24logistics.com/track-my-order/o2001531786",
+        "date": "2026-05-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "South Africa retail fulfilment",
+        "reportedRole": "order tracking reference",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fercam",
+          "gls-it"
+        ]
+      },
+      "note": "The archived and live M24 pages carry the identical lowercase order reference in their application data. Their returned HTML contains no shipment history."
+    }
+  ]
 }
