@@ -327,6 +327,18 @@ describe('JS Express tracking adapter', () => {
     expect(announced.events?.map((event) => [event.stage, event.stage_source])).toEqual([[undefined, undefined], ['customs', 'carrier_map']]);
   });
 
+  it.each([
+    'Your package is being prepared by the sender and will be handed over to us soon',
+    'Your parcel will soon be handed over to us! It is being prepared by the sender.',
+    'PRE-ADVICE',
+  ])("leaves a partner's pre-advice %s, coded like the scans, without a stage", (wording) => {
+    const advised = parseJsExpress(withList([{ ...row('2026-05-03 10:00:00', '', wording), code: 'OIT' } as Row,
+      row('2026-05-02 09:00:00', 'Sample Center', 'Item has been collected')]), DELIVERED);
+    expect(advised).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(advised.events?.[0]?.stage).toBeUndefined();
+    expect(statusMap.stage('OIT', normalizeStatusWording(wording))).toBeUndefined();
+  });
+
   it('shows its own status in Chinese in English, staged as the Chinese, and the map stages the English too', () => {
     const waiting = parseJsExpress(withList([row('2026-05-03 09:00:00', 'FR', '到达待取')]), DELIVERED);
     expect(waiting).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup', last_status_text: 'Arrived, awaiting collection' });
