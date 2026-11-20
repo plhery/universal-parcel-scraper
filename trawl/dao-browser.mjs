@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 export const DAO_API = 'https://dao.as/wp-json/dao-wp/v1/track-parcel';
 export const DAO_CAPTURE_BYTES = 256000;
 const PAGE = 'https://dao.as/en/track-your-parcel/';
@@ -57,29 +59,19 @@ export async function runDaoBrowser({ url, capture, handle, tier, maxTimeout, si
   signal?.throwIfAborted();
   const start = Date.now(), reserve = Math.min(2000, Math.max(25, Math.floor(maxTimeout / 10)));
   const deadline = start + maxTimeout - reserve;
-  let context, page, timer, abort, onResponse, opening = false, accepting = true, expired = false, finish;
+  let page, onResponse, accepting = true, expired = false, finish;
   let pageStatus = 0, requests = 0, responses = 0, clicks = 0, lastClick = 0, totalBytes = 0;
   let runtimeFailed = false, nativeCode = null, interactiveSeen = false, completed = false, consentAttempts = 0;
-  const rows = [], pending = new Set(), closing = new WeakMap();
+  const rows = [], pending = new Set();
   const left = (cap = 60000) => { signal?.throwIfAborted(); const ms = Math.min(cap, deadline - Date.now());
     if (expired || ms <= 0) throw new Error('DAO browser deadline'); return ms; };
-  const close = target => {
-    if (closing.has(target)) return closing.get(target);
-    const task = (async () => { let closed = false, t;
-      try { await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { t = setTimeout(resolve, Math.max(1, Math.min(1500, reserve))); })]); }
-      finally { clearTimeout(t); if (!closed) handle.requestBrowserReplacement?.('DAO context cleanup failed'); }
-    })(); closing.set(target, task); return task;
-  };
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url,
     statusCode: pageStatus, html: '', body: new Uint8Array(), cookies: [], capturedResponses: rows,
     reason: rows.length ? 'dao-reply' : runtimeFailed ? 'dao-runtime' : requests ? 'dao-capture_missing'
       : nativeCode ? `dao-verification_${nativeCode}` : 'dao-verification_unfinished' });
-  const work = async () => {
-    left(); opening = true; const created = await handle.browser.newContext(); opening = false; handle.noteTemporaryContext?.();
-    if (expired) { await close(created); throw new Error('DAO context arrived late'); }
-    context = created; page = await context.newPage(); left();
-    await installPolicy?.(page); left(); await page.addInitScript(installDaoNativeBridge); left();
+  const work = async run => {
+    page = run.page;
+    await page.addInitScript(installDaoNativeBridge); left();
     const terminal = new Promise(resolve => { finish = resolve; });
     await page.route(/^https:\/\/dao\.as\/wp-json\/dao-wp\/v1\/track-parcel(?:\?|$)/, async route => {
       if (!accepting || expired || !boundDaoRequest(route.request(), number, page) || ++requests > 2) return route.abort();
@@ -143,21 +135,19 @@ export async function runDaoBrowser({ url, capture, handle, tier, maxTimeout, si
   };
   try {
     if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || deadline <= start) { runtimeFailed = true; return result(); }
-    const stopped = new Promise((_, reject) => {
-      timer = setTimeout(() => { expired = true; reject(new Error('DAO browser deadline')); }, Math.max(1, deadline - Date.now()));
-      abort = () => { expired = true; if (context) void close(context); reject(signal.reason ?? new DOMException('Aborted', 'AbortError')); };
-      signal?.addEventListener('abort', abort, { once: true });
-    });
-    return await Promise.race([work(), stopped]);
-  } catch {
-    if (signal?.aborted) signal.throwIfAborted();
-    if (!pageStatus) runtimeFailed = true;
-    return result();
+    return await withHelperContext({ handle, label: 'DAO', timeoutMs: Math.max(1, deadline - Date.now()), signal, installPolicy,
+      cleanupMs: Math.min(1500, reserve), check: () => left(), closeOnAbort: true, replaceOpening: true,
+      onExpire: () => { expired = true; },
+      onFailure: () => {
+        if (signal?.aborted) signal.throwIfAborted();
+        if (!pageStatus) runtimeFailed = true;
+        return result();
+      },
+      onStop: () => {
+        accepting = false; expired = true;
+        if (page && onResponse) page.off('response', onResponse);
+      } }, work);
   } finally {
-    accepting = false; expired = true; clearTimeout(timer); if (abort) signal?.removeEventListener('abort', abort);
-    if (page && onResponse) page.off('response', onResponse);
-    if (opening) handle.requestBrowserReplacement?.('DAO context arrived after its deadline');
-    if (context) await close(context);
     for (const row of rows) if (row.status === 200 && row.body === null && !row.error && !row.truncated) row.error = 'capture-incomplete';
     console.warn(JSON.stringify({ level: 'warn', event: 'dao.verification', interactive: interactiveSeen, completed, clicks,
       requests, responses, consentAttempts, nativeCode, reason: result().reason }));

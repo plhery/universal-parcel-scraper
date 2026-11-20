@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 export const ROHLIG_SUUS_ORIGIN = 'https://portal.suus.com';
 export const ROHLIG_SUUS_CAPTURE_BYTES = 256000;
 const NUMBER = /^[A-Z0-9]{6,30}$/;
@@ -51,27 +53,16 @@ export async function runRohligSuusBrowser({ url, capture, handle, tier, maxTime
   signal?.throwIfAborted();
   const start = Date.now(), reserve = Math.min(2000, Math.max(25, Math.floor(maxTimeout / 10)));
   const deadline = start + maxTimeout - reserve, orders = rohligSuusOrdersUrl(number);
-  let context, page, timer, abort, onResponse, opening = false, accepting = true, expired = false, finish;
+  let page, onResponse, accepting = true, expired = false, finish;
   let pageStatus = 0, lookups = 0, runtimeFailed = false;
-  const rows = [], pending = new Set(), closing = new WeakMap();
+  const rows = [], pending = new Set();
   const left = (cap = 60000) => { signal?.throwIfAborted(); const ms = Math.min(cap, deadline - Date.now());
     if (expired || ms <= 0) throw new Error('Rohlig SUUS browser deadline'); return ms; };
-  const close = target => {
-    if (closing.has(target)) return closing.get(target);
-    const task = (async () => { let closed = false, t;
-      try { await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { t = setTimeout(resolve, Math.max(1, Math.min(1500, reserve))); })]); }
-      finally { clearTimeout(t); if (!closed) handle.requestBrowserReplacement?.('Rohlig SUUS context cleanup failed'); }
-    })(); closing.set(target, task); return task;
-  };
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url,
     statusCode: pageStatus, html: '', body: new Uint8Array(), cookies: [], capturedResponses: rows,
     reason: rows.length ? 'rohlig-suus-reply' : runtimeFailed ? 'rohlig-suus-runtime' : 'rohlig-suus-capture_missing' });
-  const work = async () => {
-    left(); opening = true; const created = await handle.browser.newContext(); opening = false; handle.noteTemporaryContext?.();
-    if (expired) { await close(created); throw new Error('Rohlig SUUS context arrived late'); }
-    context = created; page = await context.newPage(); left();
-    await installPolicy?.(page); left();
+  const work = async run => {
+    page = run.page;
     let terminal = new Promise(resolve => { finish = resolve; });
     // Only this number's lookup goes out; the order's contact box and other numbers do not.
     await page.route(/^https:\/\/portal\.suus\.com\/api\/parcel\/guest\/tracking\/orders(?:[/?]|$)/, async route => {
@@ -128,21 +119,19 @@ export async function runRohligSuusBrowser({ url, capture, handle, tier, maxTime
   };
   try {
     if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || deadline <= start) { runtimeFailed = true; return result(); }
-    const stopped = new Promise((_, reject) => {
-      timer = setTimeout(() => { expired = true; reject(new Error('Rohlig SUUS browser deadline')); }, Math.max(1, deadline - Date.now()));
-      abort = () => { expired = true; if (context) void close(context); reject(signal.reason ?? new DOMException('Aborted', 'AbortError')); };
-      signal?.addEventListener('abort', abort, { once: true });
-    });
-    return await Promise.race([work(), stopped]);
-  } catch {
-    if (signal?.aborted) signal.throwIfAborted();
-    if (!pageStatus) runtimeFailed = true;
-    return result();
+    return await withHelperContext({ handle, label: 'Rohlig SUUS', timeoutMs: Math.max(1, deadline - Date.now()), signal, installPolicy,
+      cleanupMs: Math.min(1500, reserve), check: () => left(), closeOnAbort: true, replaceOpening: true,
+      onExpire: () => { expired = true; },
+      onFailure: () => {
+        if (signal?.aborted) signal.throwIfAborted();
+        if (!pageStatus) runtimeFailed = true;
+        return result();
+      },
+      onStop: () => {
+        accepting = false; expired = true;
+        if (page && onResponse) page.off('response', onResponse);
+      } }, work);
   } finally {
-    accepting = false; expired = true; clearTimeout(timer); if (abort) signal?.removeEventListener('abort', abort);
-    if (page && onResponse) page.off('response', onResponse);
-    if (opening) handle.requestBrowserReplacement?.('Rohlig SUUS context arrived after its deadline');
-    if (context) await close(context);
     for (const row of rows) if (row.status === 200 && row.body === null && !row.error && !row.truncated) row.error = 'capture-incomplete';
     console.warn(JSON.stringify({ level: 'warn', event: 'rohlig-suus.lookup', lookups, status: rows.at(-1)?.status ?? 0,
       reason: result().reason }));

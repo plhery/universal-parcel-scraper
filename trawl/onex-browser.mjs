@@ -1,3 +1,5 @@
+import { withHelperContext } from './helper-context.mjs';
+
 export const ONEX_ORIGIN = 'https://onex.am';
 export const ONEX_CAPTURE_BYTES = 256000;
 const NUMBER = /^[A-Z0-9]{6,40}$/;
@@ -55,27 +57,16 @@ export async function runOnexBrowser({ url, capture, handle, tier, maxTimeout, s
   signal?.throwIfAborted();
   const start = Date.now(), reserve = Math.min(2000, Math.max(25, Math.floor(maxTimeout / 10)));
   const deadline = start + maxTimeout - reserve, lookup = onexLookupUrl();
-  let context, page, timer, abort, onResponse, opening = false, accepting = true, expired = false, finish;
+  let page, onResponse, accepting = true, expired = false, finish;
   let pageStatus = 0, lookups = 0, runtimeFailed = false;
-  const rows = [], pending = new Set(), closing = new WeakMap();
+  const rows = [], pending = new Set();
   const left = (cap = 60000) => { signal?.throwIfAborted(); const ms = Math.min(cap, deadline - Date.now());
     if (expired || ms <= 0) throw new Error('Onex browser deadline'); return ms; };
-  const close = target => {
-    if (closing.has(target)) return closing.get(target);
-    const task = (async () => { let closed = false, t;
-      try { await Promise.race([Promise.resolve().then(() => target.close()).then(() => { closed = true; }).catch(() => {}),
-        new Promise(resolve => { t = setTimeout(resolve, Math.max(1, Math.min(1500, reserve))); })]); }
-      finally { clearTimeout(t); if (!closed) handle.requestBrowserReplacement?.('Onex context cleanup failed'); }
-    })(); closing.set(target, task); return task;
-  };
   const result = () => ({ tier, status: 'success', durationMs: Date.now() - start, effectiveUrl: url,
     statusCode: pageStatus, html: '', body: new Uint8Array(), cookies: [], capturedResponses: rows,
     reason: rows.length ? 'onex-reply' : runtimeFailed ? 'onex-runtime' : 'onex-capture_missing' });
-  const work = async () => {
-    left(); opening = true; const created = await handle.browser.newContext(); opening = false; handle.noteTemporaryContext?.();
-    if (expired) { await close(created); throw new Error('Onex context arrived late'); }
-    context = created; page = await context.newPage(); left();
-    await installPolicy?.(page); left();
+  const work = async run => {
+    page = run.page;
     const terminal = new Promise(resolve => { finish = resolve; });
     // Only this number's lookup goes out.
     await page.route(/^https:\/\/onex\.am\/(?:[a-z]{2}\/)?onextrack\/findtrackingcode/, async route => {
@@ -116,21 +107,19 @@ export async function runOnexBrowser({ url, capture, handle, tier, maxTimeout, s
   };
   try {
     if (!Number.isFinite(maxTimeout) || maxTimeout < 1 || deadline <= start) { runtimeFailed = true; return result(); }
-    const stopped = new Promise((_, reject) => {
-      timer = setTimeout(() => { expired = true; reject(new Error('Onex browser deadline')); }, Math.max(1, deadline - Date.now()));
-      abort = () => { expired = true; if (context) void close(context); reject(signal.reason ?? new DOMException('Aborted', 'AbortError')); };
-      signal?.addEventListener('abort', abort, { once: true });
-    });
-    return await Promise.race([work(), stopped]);
-  } catch {
-    if (signal?.aborted) signal.throwIfAborted();
-    if (!pageStatus) runtimeFailed = true;
-    return result();
+    return await withHelperContext({ handle, label: 'Onex', timeoutMs: Math.max(1, deadline - Date.now()), signal, installPolicy,
+      cleanupMs: Math.min(1500, reserve), check: () => left(), closeOnAbort: true, replaceOpening: true,
+      onExpire: () => { expired = true; },
+      onFailure: () => {
+        if (signal?.aborted) signal.throwIfAborted();
+        if (!pageStatus) runtimeFailed = true;
+        return result();
+      },
+      onStop: () => {
+        accepting = false; expired = true;
+        if (page && onResponse) page.off('response', onResponse);
+      } }, work);
   } finally {
-    accepting = false; expired = true; clearTimeout(timer); if (abort) signal?.removeEventListener('abort', abort);
-    if (page && onResponse) page.off('response', onResponse);
-    if (opening) handle.requestBrowserReplacement?.('Onex context arrived after its deadline');
-    if (context) await close(context);
     for (const row of rows) if (row.status === 200 && row.body === null && !row.error && !row.truncated) row.error = 'capture-incomplete';
     console.warn(JSON.stringify({ level: 'warn', event: 'onex.lookup', lookups, page: pageStatus, status: rows.at(-1)?.status ?? 0,
       reason: result().reason }));
