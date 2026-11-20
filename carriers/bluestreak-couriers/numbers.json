@@ -1,5 +1,36 @@
 {
   "carrier": "bluestreak-couriers",
-  "gap": "No public page shows a Blue Streak Couriers order tracking id.",
-  "records": []
+  "records": [
+    {
+      "number": "1119.042522",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Appendix_C-_Screening_Level_Ecological_Risk_Assessment_%28SLERA%29_of_the_planned_treatment_of_C-43_west_basin_storage_reservoir_surface_water_with_alum%2C_Formation_Environmental%2C_LLC%2C_September_2022_-_USACE-p16021coll7-24959.pdf#page=114",
+        "date": "2022-04-26",
+        "dateKind": "shipment date",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipper's tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "box-now",
+          "cargus",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "gls-es"
+        ]
+      },
+      "note": "The signed chain-of-custody form lists Blue Streak Couriers and gives this value in the shipper's tracking-number field. Lookup blocked by verification. Blue Streak Quick Track requires the order's access key."
+    }
+  ]
 }

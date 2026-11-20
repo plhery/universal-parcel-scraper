@@ -418,6 +418,12 @@
     "reason": "Ten digits are shared by many carriers and no known prefix or check digit sets BlueEX apart."
   },
   {
+    "carrier": "bluestreak-couriers",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "The published Blue Streak shipping form prints the tracking ID as four digits, a dot and six digits. Normalized detection does not offer Blue Streak."
+  },
+  {
     "carrier": "bolt-kargo",
     "pattern": "^\\d{7}$",
     "kind": "open",
