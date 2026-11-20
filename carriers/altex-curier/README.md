@@ -1,25 +1,19 @@
 # Altex Curier
 
-Altex Curier parcels use enabled universal providers. There is no dedicated adapter.
+The adapter reads the carrier's anonymous AWB result at `curier.altex.ro`.
+It binds the returned heading to the whole AWB and parses the native JSON event
+assignment without executing its script. Only the exact AWB-bound missing-result
+object is not found; empty, conflicting and verification replies stay distinct.
 
-Altex Curier is the in-house courier of Altex Romania, the Romanian electronics retailer. Sellers
-on Altex's marketplace can ship through it too, and recipients track its parcels by AWB without a
-shop account.
+Scans contain calendar days without clock times. The adapter keeps that precision
+and does not infer a delivery instant. An undelivered scan is an exception; it
+does not establish that a delivery was attempted. Unknown wordings remain unmapped.
 
-## Numbers
+The existing carrier selection supports these lookups. Shared numeric formats do
+not establish Altex ownership, so there is no automatic number rule.
 
-Its tracker takes an AWB number. No public page shows one, so there is no rule.
+Run a live check with a reference supplied outside Git:
 
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-The tracker is a form that posts the AWB to `curier.altex.ro`, so no address opens one shipment
-and the catalog sends people to the tracking page.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+```sh
+ALTEX_CURIER_NUMBER=... npx vitest run carriers/altex-curier/adapter.live.test.ts
+```

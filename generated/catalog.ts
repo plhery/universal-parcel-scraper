@@ -8298,7 +8298,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Bucharest",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "altex-curier",
+      "localClocks": true
     },
     "canaryUrl": "https://curier.altex.ro/",
     "trackingSearchUrl": "https://curier.altex.ro/",

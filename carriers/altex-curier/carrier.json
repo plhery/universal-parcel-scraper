@@ -16,17 +16,33 @@
   "timezone": "Europe/Bucharest",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "altex-curier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "searchUrl": "https://curier.altex.ro/",
     "canaryUrl": "https://curier.altex.ro/",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "AWB reference",
+      "Shipment milestones",
+      "Calendar dates"
+    ],
+    "scraped": [
+      "AWB reference",
+      "Shipment milestones",
+      "Calendar dates"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "Scan clock times",
+      "Expected delivery"
+    ]
   },
   "links": [],
   "detection": []

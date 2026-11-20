@@ -1,4 +1,11 @@
 {
   "carrier": "altex-curier",
-  "entries": []
+  "entries": [
+    { "wording": "Comanda este plasata", "stage": "registered", "language": "ro", "confirmedBy": "live" },
+    { "wording": "Expedierea este in tranzit", "stage": "in_transit", "language": "ro", "confirmedBy": "live" },
+    { "wording": "Expedierea este in depozitul curierului", "stage": "in_transit", "language": "ro", "confirmedBy": "live" },
+    { "wording": "Expediere este in livrare", "stage": "out_for_delivery", "language": "ro", "confirmedBy": "live" },
+    { "wording": "Expedierea este nelivrata", "stage": "exception", "language": "ro", "confirmedBy": "live", "note": "Not delivered; this wording does not itself establish a delivery attempt." },
+    { "wording": "Expedierea a fost livrata", "stage": "delivered", "language": "ro", "confirmedBy": "live" }
+  ]
 }

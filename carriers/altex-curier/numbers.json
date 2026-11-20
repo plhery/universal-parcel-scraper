@@ -12,7 +12,7 @@
       "context": {
         "service": "Romanian parcel delivery",
         "reportedRole": "air waybill tracking number",
-        "assessment": "candidate"
+        "assessment": "confirmed"
       },
       "expect": {
         "carrier": "unknown",
@@ -33,7 +33,7 @@
           "sending"
         ]
       },
-      "note": "Altex Curier's indexed tracking result displays an AWB details heading with the exact number. The accessible result supplies no dated tracking events."
+      "note": "The carrier result identifies the exact AWB and returns dated native shipment events. The public tracker reads calendar days without scan times."
     }
   ]
 }
