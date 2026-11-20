@@ -39,8 +39,10 @@ cookies or the rendered page. Ozon Rocket references are outside that helper's s
 USPS also captures its tracking request's redirect to the official outage page.
 That redirect can leave the verification wrapper blank; retaining it lets the
 adapter distinguish temporary unavailability from an unresolved challenge.
-A session USPS sent there is dropped instead of replayed, and a fresh browser sent
-there saves none ([usps-tracking.mjs](usps-tracking.mjs)).
+A cookie session USPS sent there is dropped instead of replayed, and a fresh browser sent
+there saves none ([usps-tracking.mjs](usps-tracking.mjs)). USPS sends the first read of every
+browser session there, so tracking reads without a proxy of their own go one at a time through
+one of TRAWL's named sessions (see Sessions).
 
 Spee-Dee also uses the service's HTTP tier after a refused direct connection; the benefit
 is the service's network, and no browser is launched. MTCaptcha (Hongkong Post)
@@ -85,6 +87,14 @@ cheap per-browser figure. Recovery replacements, TRAWL's memory pressure check a
 browsers keep TRAWL's policy. The constants are in [fedex-session.mjs](fedex-session.mjs).
 A `fedex.browser-hold` warning records each hold that starts, ends or is declined, with
 its reason, browser slot, lookups, age and memory share.
+
+USPS keeps one named TRAWL session, `usps-tracking-<n>`, which keeps its context and its
+browser. USPS refuses each session's first read and lets only some sessions through, whatever
+the browser or address; one it lets through keeps loading tracking. A new session gets three
+reads, ten seconds apart, before it is replaced; one USPS has let through is replaced after two
+refusals in a row, after two hours, or when its browser goes. Reads wait their turn within their
+own budget. Without room for a session, a read uses a fresh context as before. A `usps.session`
+warning records each session created, let through and ended, with its reason, reads and age.
 
 Australia Post, DHL Express, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta and ZTO use fresh contexts.
 Australia Post also uses its capture helper through a request's proxy, keeping that route's
