@@ -52270,6 +52270,16 @@
     ]
   },
   {
+    "input": "524100334574062301",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "bpost",
+      "ecoscooting",
+      "gls-es"
+    ]
+  },
+  {
     "input": "52490878996",
     "carrier": "unknown",
     "confidence": "low",
