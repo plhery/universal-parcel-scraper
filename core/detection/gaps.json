@@ -500,6 +500,12 @@
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
   },
   {
+    "carrier": "cargo-expreso",
+    "pattern": "^A\\d{10}$",
+    "kind": "open",
+    "reason": "Detection does not offer Cargo Expreso for the A-prefixed shipment number published with its Guatemala tracking history."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",

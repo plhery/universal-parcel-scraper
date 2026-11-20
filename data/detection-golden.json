@@ -77687,6 +77687,17 @@
     ]
   },
   {
+    "input": "A219410813-1",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "A234FJI900746",
     "carrier": "unknown",
     "confidence": "low",

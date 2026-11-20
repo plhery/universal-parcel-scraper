@@ -1,5 +1,27 @@
 {
   "carrier": "cargo-expreso",
-  "gap": "No public page shows a Cargo Expreso guide number.",
-  "records": []
+  "records": [
+    {
+      "number": "A219410813-1",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/659669115/Tracking-Cargo-Expreso",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Cargo Expreso Guatemala",
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "The publicly posted copy of the carrier tracking result shows the whole number alongside timed transit and delivery events."
+    }
+  ]
 }
