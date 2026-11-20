@@ -366,6 +366,8 @@ describe('Raben status vocabulary', () => {
     }
     expect(statusMapAnswer({ carrier: 'raben', providerCode: 'E99', description: 'sample status' })).toEqual({ kind: 'unknown' });
     expect(rabenStage('e03', 'delivered')).toEqual({ stage: 'delivered', source: 'carrier_map' });
+    // A data mismatch recorded at a hub at night is no round at the door.
+    expect(rabenStage('E54', 'not delivered - wrong parameters')).toEqual({ stage: 'exception', source: 'carrier_map' });
     for (const code of ['constructor', 'toString', 'E3', '']) expect(rabenMappedStage(code), code).toBeUndefined();
   });
 });

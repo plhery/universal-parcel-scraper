@@ -35,8 +35,9 @@ across Central and Eastern Europe. Tracked through the lookup its myRaben tracki
 - A status is a key such as `E03_The_shipment_delivered`, captioned in the language the link
   asks for. The `E03` is the provider code and sets the stage; the caption is the description.
   A new delivery or collection day, a booked collection and updated shipment data move nothing.
-  A failed delivery at the address is a failed attempt; a failed collection, or a delay on the
-  road, is an exception.
+  A failed delivery at the address is a failed attempt; a failed collection, a delay on the
+  road, or shipment data that does not match the shipment (`E54`, recorded at a hub), is an
+  exception.
 - Self collection (`E07`) is ready for pickup: Raben's key says the shipment awaits the
   recipient's own pick-up, and its short status in German calls it ready for collection. A
   delivery round after it is a change of plan, staged by its own rows.

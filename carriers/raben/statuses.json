@@ -57,7 +57,7 @@
     {"code": "E51", "wording": "not delivered - breakdown lorry", "stage": "exception", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
     {"code": "E52", "wording": "not delivered - customs clearnance", "stage": "customs", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
     {"code": "E53", "wording": "not delivered - shipment not ordered", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
-    {"code": "E54", "wording": "not delivered - wrong parameters", "stage": "failed_attempt", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
+    {"code": "E54", "wording": "not delivered - wrong parameters", "stage": "exception", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-17", "note": "From the tracking page's own list of statuses. Seen at a hub at night between the loading and the next step: the shipment's data does not match it, no delivery round."},
     {"code": "E55", "wording": "new delivery date agreed with consignee", "language": "en", "confirmedBy": "portal", "unmapped": true, "note": "A new delivery day agreed with the recipient; the goods have not moved."},
     {"code": "E56", "wording": "arrived to the delivery place", "stage": "out_for_delivery", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},
     {"code": "E57", "wording": "arrived to the pick-up place", "stage": "registered", "language": "en", "confirmedBy": "portal", "note": "From the tracking page's own list of statuses."},

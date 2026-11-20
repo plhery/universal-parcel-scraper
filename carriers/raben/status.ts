@@ -61,12 +61,13 @@ const CODES: ReadonlyMap<string, Stage> = new Map([
   ['E20', 'failed_attempt'],
   ['E42', 'failed_attempt'],
   ['E53', 'failed_attempt'],
-  ['E54', 'failed_attempt'],
   // Not delivered for a cause on the road: weather, a strike, a broken-down truck.
   ['E12', 'exception'],
   ['E17', 'exception'],
   ['E51', 'exception'],
   ['E72', 'exception'], // Held for the sender's instructions.
+  // The shipment's data does not match it, recorded at a hub at night: no round, and it goes on.
+  ['E54', 'exception'],
   ['E23', 'exception'], // Cancelled.
   // Not collected from the sender, for one reason or another.
   ['E01', 'exception'],
