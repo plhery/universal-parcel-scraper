@@ -4922,5 +4922,11 @@
     "pattern": "^\\d{9}(?:\\d{2})?$",
     "kind": "open",
     "reason": "Published Ondot complaint titles show nine- and eleven-digit shipment references. Detection omits Ondot."
+  },
+  {
+    "carrier": "neighbour-express",
+    "pattern": "^NR\\d{10}$",
+    "kind": "open",
+    "reason": "A Temu customer gives a complete Neighbour Express return number in this family. Detection offers other carriers."
   }
 ]
