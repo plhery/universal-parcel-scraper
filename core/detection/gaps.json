@@ -5969,5 +5969,10 @@
     "carrier": "sfl-worldwide",
     "kind": "open",
     "reason": "The confirmed SFL shipment uses a shared numeric shape. Select SFL Worldwide explicitly."
+  },
+  {
+    "carrier": "aeromexico-cargo",
+    "kind": "open",
+    "reason": "The carrier-issued AWB starts with 139. Numeric shapes overlap other carriers, so select Aeroméxico Cargo explicitly."
   }
 ]

@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'aeromexico-cargo', number: '139-43814223',
+    route: /^https:\/\/amcargo\.aeromexico\.com\/(?:track|seguimiento)\/?$/,
+    marker: /Air Waybill Tracking|Track your shipment|Rastrea tu gu[ií]a|Rastreo de Gu[ií]a/iu,
+    forwarding: 'none', renderTimeoutMs: 12000 },
   { carrier: 'sfl-worldwide', number: '155411113354',
     route: /^https:\/\/track\.sflworldwide\.com\/?$/,
     marker: /Track Your Shipment|Tracking ID|Track Shipment/i, forwarding: 'none', renderTimeoutMs: 10000 },

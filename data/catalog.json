@@ -6987,6 +6987,28 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "aeromexico-cargo": {
+    "displayName": "Aeroméxico Cargo",
+    "color": "#182843",
+    "aliases": [
+      "Aeromexico Cargo",
+      "AM Cargo"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aeromexico-cargo"
+    },
+    "canaryUrl": "https://amcargo.aeromexico.com/track/",
+    "trackingUrlTemplate": "https://amcargo.aeromexico.com/track/",
+    "trackingSearchUrl": "https://amcargo.aeromexico.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",

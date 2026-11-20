@@ -6991,6 +6991,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "aeromexico-cargo": {
+    "displayName": "Aeroméxico Cargo",
+    "color": "#182843",
+    "aliases": [
+      "Aeromexico Cargo",
+      "AM Cargo"
+    ],
+    "countries": [
+      "MX"
+    ],
+    "selectable": true,
+    "timezone": "America/Mexico_City",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "aeromexico-cargo"
+    },
+    "canaryUrl": "https://amcargo.aeromexico.com/track/",
+    "trackingUrlTemplate": "https://amcargo.aeromexico.com/track/",
+    "trackingSearchUrl": "https://amcargo.aeromexico.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "aeronet": {
     "displayName": "Aeronet Worldwide",
     "color": "#00529b",
@@ -67746,6 +67768,7 @@ export const CARRIER_IDS = [
   "adex-al",
   "ads-intl",
   "aerolineas-argentinas-cargo",
+  "aeromexico-cargo",
   "aeronet",
   "aeropaq",
   "aeropost",
@@ -69705,6 +69728,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "adex-al": [],
   "ads-intl": [],
   "aerolineas-argentinas-cargo": [],
+  "aeromexico-cargo": [],
   "aeronet": [],
   "aeropaq": [],
   "aeropost": ["aeropost-1"],
