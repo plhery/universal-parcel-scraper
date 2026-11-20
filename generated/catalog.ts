@@ -13539,7 +13539,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "cargox"
     },
     "canaryUrl": "https://www.cargox.com.tr/",
     "trackingUrlTemplate": "https://t.cargox.com.tr/getlink.php?barcode={trackingNumber}",
