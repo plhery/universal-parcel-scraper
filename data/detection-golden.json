@@ -104190,6 +104190,17 @@
     ]
   },
   {
+    "input": "RR 000010008 WS",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR000083193BO",
     "carrier": "unknown",
     "confidence": "none",
