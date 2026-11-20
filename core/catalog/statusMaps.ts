@@ -1,3 +1,4 @@
+import { statusMap as parcel2go } from '../../carriers/parcel2go/status.js';
 import { statusMap as altexCurier } from '../../carriers/altex-curier/status.js';
 import { statusMap as bmCargo } from '../../carriers/bm-cargo/status.js';
 import { statusMap as cargoX } from '../../carriers/cargox/status.js';
@@ -901,6 +902,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'altex-curier': altexCurier,
   'bm-cargo': bmCargo,
+  parcel2go,
   'cargox': cargoX,
   'bh-posta': bhPosta,
   'hellmann': hellmannStatus,

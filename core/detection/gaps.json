@@ -5504,5 +5504,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "parcel2go",
+    "pattern": "^P2G\\d{9}$",
+    "kind": "open",
+    "reason": "Parcel2Go’s guest tracking confirms a P2G reference with nine digits. The adapter is available by explicit selection."
   }
 ]

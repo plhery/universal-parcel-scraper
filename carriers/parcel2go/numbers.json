@@ -1,0 +1,28 @@
+{
+  "carrier": "parcel2go",
+  "records": [
+    {
+      "number": "P2G118684634",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://br.trustpilot.com/review/www.parcel2go.com",
+        "date": "2023-11-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Parcel2Go tracking reference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The recipient published the P2G reference. Parcel2Go’s public tracker returned the matching order line and dated UK-to-Brazil scans."
+    }
+  ]
+}
