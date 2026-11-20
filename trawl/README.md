@@ -303,6 +303,11 @@ TRAWL interrupts them. It exits by force 30 seconds after the drain, so give the
 stop timeout of the drain plus 30 seconds, or the supervisor kills it mid-drain. `GET /metrics`
 reports the browser pool to Prometheus.
 
+The image sets `BROWSER_BLOCK_ADS=false`. TRAWL's bundled uBlock Origin compiles its filter lists
+in every browser the pool starts and updates them soon after, and page requests wait behind that
+work for seconds. Carrier pages weigh the same with or without it. FedEx's browsers, which stay
+open between lookups, keep it. `BROWSER_BLOCK_ADS=true` turns it back on.
+
 The image sets `LOG_LEVEL=warn`. TRAWL's request log includes the page path, where some
 carriers put the parcel number; `LOG_LEVEL=info` turns that log on. Each tier that fails, is
 blocked or times out logs a `tier.failure` warning with the page's host, its status, the page's HTTP status and
