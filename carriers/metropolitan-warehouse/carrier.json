@@ -23,7 +23,8 @@
       "retry"
     ],
     "recognition": {
-      "rank": 8
+      "rank": 8,
+      "servedCountriesOnly": true
     },
     "localClocks": true
   },
