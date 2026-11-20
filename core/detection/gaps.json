@@ -4778,5 +4778,11 @@
     "pattern": "^(?:\\d{6}|TRIERAA\\d{5})$",
     "kind": "open",
     "reason": "Public court records name these numeric and shipper-prefixed Transpress waybills. Detection leaves Transpress out for both."
+  },
+  {
+    "carrier": "tramaco",
+    "pattern": "^031\\d{12}$",
+    "kind": "open",
+    "reason": "A published account of an Ecuadorian customs inspection identifies a Tramaco Express parcel guide with this prefix and length. Detection offers other carriers."
   }
 ]
