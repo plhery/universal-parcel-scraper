@@ -15260,6 +15260,29 @@
     ],
     "detectionRules": []
   },
+  "citilink-cargo": {
+    "displayName": "Citilink Cargo",
+    "color": "#36853B",
+    "aliases": [
+      "Citilink Indonesia Cargo",
+      "PT Citilink Indonesia Cargo"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "citilink-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
+    "trackingUrlTemplate": "https://cargo.garuda-indonesia.com/Search",
+    "trackingSearchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "citilogistics": {
     "displayName": "Citilogistics",
     "color": "#ed1b2e",

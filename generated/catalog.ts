@@ -15264,6 +15264,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "citilink-cargo": {
+    "displayName": "Citilink Cargo",
+    "color": "#36853B",
+    "aliases": [
+      "Citilink Indonesia Cargo",
+      "PT Citilink Indonesia Cargo"
+    ],
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "citilink-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://icms.garuda-indonesia.com/HtmlFiles/AWBTracking/AWBTracking.html",
+    "trackingUrlTemplate": "https://cargo.garuda-indonesia.com/Search",
+    "trackingSearchUrl": "https://cargo.garuda-indonesia.com/Search",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "citilogistics": {
     "displayName": "Citilogistics",
     "color": "#ed1b2e",
@@ -68111,6 +68134,7 @@ export const CARRIER_IDS = [
   "chunghwa-post",
   "chunil",
   "citi-sprint",
+  "citilink-cargo",
   "citilogistics",
   "cititrans",
   "city-air-express",
@@ -70075,6 +70099,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "chunghwa-post": ["chunghwa-post-1","chunghwa-post-2"],
   "chunil": [],
   "citi-sprint": [],
+  "citilink-cargo": [],
   "citilogistics": [],
   "cititrans": [],
   "city-air-express": ["city-air-express-1"],

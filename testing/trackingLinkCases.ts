@@ -2604,6 +2604,7 @@ export const trackingLinkCases: TrackingLinkCase[] = [
  * tracking comes from shared providers, not the page the link opens.
  */
 export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
+  'citilink-cargo': 'The public iCMS form posts the Citilink prefix and serial separately and embeds the result.',
   'garuda-indonesia-cargo': 'Garuda’s public form posts the airline prefix and serial separately and embeds the iCMS result.',
   'thai-airways-cargo': 'The public THAI Cargo form posts the prefix and serial, so the tracking link opens the form.',
   flashpy: 'The verified marketplace reference opens Amazon in the parcel link resolver. Flashpy’s own numbered page was verified directly.',

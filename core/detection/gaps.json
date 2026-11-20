@@ -5994,5 +5994,10 @@
     "carrier": "garuda-indonesia-cargo",
     "kind": "open",
     "reason": "Issued Garuda Cargo waybills use prefix 126 and overlap generic numeric shapes. Select Garuda Indonesia Cargo explicitly."
+  },
+  {
+    "carrier": "citilink-cargo",
+    "kind": "open",
+    "reason": "The trackable Citilink domestic 888 waybill is numeric and does not establish an exclusive number range. Select Citilink Cargo explicitly."
   }
 ]
