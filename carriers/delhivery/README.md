@@ -24,6 +24,8 @@ reports it at the same instant; its timestamp is never assigned to an undated sc
 other scans could repeat. Anonymous tracking shows only the latest scan, undated, and the
 status as a bare token ("IN_TRANSIT"). When a reply holds that one scan and nothing else, in
 the status's stage and leg, the scan is the status: the snapshot takes its words and place.
+Otherwise a token reads as its words, "Waiting pickup" for `WAITING_PICKUP`, which the status
+map still classifies.
 The parcel app's identity policy then lets the placed snapshot take over the placeless row of
 its stage stored at that instant.
 Freight (B2B) replies date each reached milestone instead of its scans, and a pickup

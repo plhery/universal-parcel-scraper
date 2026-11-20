@@ -60,6 +60,8 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   // The separate shipment status establishes movement or completed delivery.
   const snapshotDescription = returning && description.toUpperCase() === 'RETURNED'
     ? clean(item.hqStatus, 200) : description;
+  // A status token reads as its words, "WAITING_PICKUP" as "Waiting pickup", which the map still classifies.
+  const snapshotWords = statusWords(snapshotDescription);
   const current = classifyDelhiveryStatus(snapshotDescription);
   const mapped = returning && current?.stage === 'delivered'
     ? classifyDelhiveryStatus('RTO DELIVERED') : current;
@@ -127,9 +129,9 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   // delivered milestone already records the delivery the status repeats.
   const deliveryRecorded = mapped?.stage === 'delivered' && deliveredAt !== null;
   if (snapshotDescription && !latest && !deliveryRecorded && (!updated || !events.some(event => event.time && Date.parse(event.time) === updated.timestamp
-    && event.description?.toUpperCase() === snapshotDescription.toUpperCase() && event.stage === mapped?.stage
+    && event.description?.toUpperCase() === snapshotWords.toUpperCase() && event.stage === mapped?.stage
     && (!returning || event.provider_leg === 'return')))) {
-    events.unshift({ description: snapshotDescription, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
+    events.unshift({ description: snapshotWords, ...(updated ? { time: updated.iso } : currentTimeText ? { provider_time_text: currentTimeText } : {}),
       ...(mapped ? { stage: mapped.stage } : {}), ...(returning ? { provider_leg: 'return' } : {}), summary_snapshot: true });
   }
   const dated = events.filter(event => event.time);
@@ -140,7 +142,11 @@ export function parseDelhivery(payload: unknown, number: string): CarrierResult 
   // A freight status can date a later proof-of-delivery audit: its delivered milestone dates the delivery.
   const deliveryTime = deliveredAt ?? updated;
   return { status: mapped?.status ?? 'unknown', ...(mapped ? { current_stage: mapped.stage } : {}),
-    last_status_text: latest && !returning ? latest.description : description, last_update: updated?.iso ?? null, expected_delivery: null,
+    last_status_text: latest && !returning ? latest.description : statusWords(description), last_update: updated?.iso ?? null, expected_delivery: null,
     ...(mapped?.status === 'delivered' && deliveryTime ? { delivered_at: deliveryTime.iso } : {}),
     timezone: 'Asia/Kolkata', events: [...dated, ...undated].slice(0, 100) };
+}
+
+function statusWords(value: string): string {
+  return /^[A-Z]+(?:_[A-Z]+)+$/.test(value) ? value.charAt(0) + value.slice(1).toLowerCase().replaceAll('_', ' ') : value;
 }

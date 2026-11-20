@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { adapter, DelhiveryTracker } from './adapter.js';
 import { parseDelhivery } from './parser.js';
 import statuses from './statuses.json' with { type: 'json' };
-import { classifyDelhiveryStatus } from './status.js';
+import { classifyDelhiveryStatus, statusMap } from './status.js';
 import { resolveResult } from '../../core/result/resolve.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 
@@ -53,7 +53,15 @@ describe('Delhivery direct tracking', () => {
   });
   it('reads a current status given as a token like its words', () => {
     const value = payload(); value.data[0].status = { status: 'IN_TRANSIT', statusDateTime: '2026-01-03T14:00:00' };
-    expect(parseDelhivery(value, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    const result = parseDelhivery(value, NUMBER);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'In transit' });
+    expect(result.events?.[0]).toMatchObject({ description: 'In transit', stage: 'in_transit', summary_snapshot: true });
+    value.data[0].status = { status: 'WAITING_PICKUP', statusDateTime: '2026-01-03T14:00:00' };
+    value.data[0].trackingStates = [];
+    const waiting = parseDelhivery(value, NUMBER);
+    expect(waiting).toMatchObject({ status: 'pending', current_stage: 'registered', last_status_text: 'Waiting pickup' });
+    expect(waiting.events).toEqual([expect.objectContaining({ description: 'Waiting pickup', stage: 'registered' })]);
+    expect(statusMap.stage('', 'Waiting pickup')).toBe('registered');
   });
   it('words and places a status token by the latest scan when the reply shows that scan alone', () => {
     const latestOnly = (status: string, scan: string) => {
@@ -286,7 +294,7 @@ describe('Delhivery direct tracking', () => {
     value.data[0].trackingStates = [{ label: 'On the Way - Return', scans: [{ scan: 'In Transit', scanType: 'PU', scanDateTime: '', cityLocation: 'Example City' }] }];
     const result = parseDelhivery(value, NUMBER);
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
-    expect(result.events?.[0]).toMatchObject({ description: 'PROD_REPLACED', time: '2026-01-03T14:00:00+05:30', stage: 'accepted', provider_leg: 'return' });
+    expect(result.events?.[0]).toMatchObject({ description: 'Prod replaced', time: '2026-01-03T14:00:00+05:30', stage: 'accepted', provider_leg: 'return' });
   });
   it('passes the website headers and bounded cancellation into the public read', async () => {
     const fetcher = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify(payload())));
