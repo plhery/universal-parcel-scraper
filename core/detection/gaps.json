@@ -524,6 +524,12 @@
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
   },
   {
+    "carrier": "cargobus",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A Cargobus shipment code in a Lithuanian court record has nine digits. Detection only offers TNT for that sample."
+  },
+  {
     "carrier": "cargus",
     "pattern": "^\\d{9}$",
     "kind": "by_design",
