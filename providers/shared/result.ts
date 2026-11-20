@@ -288,6 +288,9 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // the way, after the courier's collection and again on each round trip, and its hand-over to the courier for delivery.
   if (/^accepted at the logistics cent(?:er|re)[.!]?$/i.test(description)) return 'in_transit';
   if (/^handed over for delivery[.!]?$/i.test(description)) return 'out_for_delivery';
+  // Deppon's handing to the courier who delivers it today, with the courier's contact, which 17TRACK files under its
+  // generic transit code: out for delivery, as Deppon's own map reads its delivery scan (SENT_SCAN).
+  if (/^快件交[给給][^，,。]{1,60}[，,] ?今日将?[为為]您派送(?:[，,。]|$)/.test(description)) return 'out_for_delivery';
   // DHL eCommerce Poland's sending terminal taking the parcel in, in 17TRACK's words, filed under its generic transit
   // code. DHL's own history reads reaching that terminal as the acceptance.
   if (/^shipment accepted at (?:the )?dhl shipping terminal[.!]?$/i.test(description)) return 'accepted';

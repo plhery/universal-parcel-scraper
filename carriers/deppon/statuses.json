@@ -5,6 +5,7 @@
     {"wording": "库存中", "stage": "in_transit", "language": "zh", "confirmedBy": "source", "note": "Quoted from Deppon tracking history in a customer review on TrackingMore's DEPPON page. Held in stock at the branch named in brackets before it."},
     {"wording": "清关中", "stage": "customs", "language": "zh", "confirmedBy": "source", "note": "Quoted from Deppon tracking history in a customer review on TrackingMore's DEPPON page. Customs clearance for a parcel to Taiwan."},
     {"wording": "已签收", "stage": "delivered", "language": "zh", "confirmedBy": "source", "note": "Quoted from Deppon tracking history in a customer review on TrackingMore's DEPPON page. Signed for; the event goes on to name who signed."},
-    {"wording": "代收点签收", "stage": "delivered", "language": "zh", "confirmedBy": "source", "note": "Quoted from Deppon tracking history in a customer review on TrackingMore's DEPPON page. Signer type in the signed-for event: a collection point signed for the parcel."}
+    {"wording": "代收点签收", "stage": "delivered", "language": "zh", "confirmedBy": "source", "note": "Quoted from Deppon tracking history in a customer review on TrackingMore's DEPPON page. Signer type in the signed-for event: a collection point signed for the parcel."},
+    {"wording": "快件交给…，今日将为您派送", "stage": "out_for_delivery", "language": "zh", "confirmedBy": "live", "firstSeen": "2026-11-17", "note": "Deppon handing the parcel to the courier who delivers it today, with the courier's contact, as 17TRACK relays it under its generic transit code. Deppon's own map reads its delivery scan (SENT_SCAN) as out for delivery."}
   ]
 }

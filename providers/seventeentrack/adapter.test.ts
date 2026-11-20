@@ -99,6 +99,12 @@ describe('17TRACK result parsing', () => {
     expect(result.events?.[0]).toMatchObject({ description: 'Mail notification', stage: 'pending', stage_source: 'none' });
   });
 
+  it("reads Deppon's handing to the courier who delivers today, filed under generic transit, as out for delivery", () => {
+    const description = '快件交给示例（电话:***********），今日将为您派送，可联系快递员将包裹放置指定地点';
+    expect(parse17TrackResponse(postalHistory([postalScan('InTransit_Other', description)]), number)).toMatchObject({
+      current_stage: 'out_for_delivery', events: [{ stage: 'out_for_delivery', provider_code: 'InTransit_Other' }] });
+  });
+
   it('refines Swiss Post vehicle loading without reclassifying other operators or future wording', () => {
     const payload = postalHistory([postalScan('InTransit_Other', 'Loading into delivery vehicle')]);
     const shipment = payload.shipments[0]!.shipment as { tracking: { providers: Array<{ provider: { name: string }; events: unknown[] }> } };
