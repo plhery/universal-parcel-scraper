@@ -275,6 +275,37 @@ const LINE_HAUL = /^\[[^\]]{1,64}\]\s*(unload(?:ing|ed)) at \[([^\]]{1,100})\]\s
 // A line haul leaving for a hub: "Pacote [TO…] está sendo transportado para [SoC_SP_Exemplo]".
 const TRANSFER_ID = /^(pacote) \[[^\]]{1,64}\]\s*/i;
 const NEXT_HUB = /\[((?:FM|LM) ?Hub_[^\]]{1,100}|SoC_[^\]]{1,100})\]$/i;
+// An SPX hub's code: its kind, a third party's mark at times, its state and its name, whose parts
+// underscores join, with a site number at times: "SoC_SP_Exemplo", "LM Hub_RJ_Porto Modelo_ Centro_02",
+// "FM Hub_3PL_PR_Exemplo_01", "SoC_SP_Exemplo_A1", "XPT_MA_Exemplo".
+const HUB_CODE = /^(?:(?:FM|LM|OF) ?Hub|SoC|XPT)_(?:3PL_)?([A-Z]{2})_(.{1,100})$/i;
+const STATES = new Set(['AC', 'AL', 'AM', 'AP', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MG', 'MS', 'MT', 'PA', 'PB', 'PE', 'PI', 'PR',
+  'RJ', 'RN', 'RO', 'RR', 'RS', 'SC', 'SE', 'SP', 'TO']);
+const SITE = /^(?:\d{1,3}|[A-Z]\d{1,3})$/;
+// A line naming a hub: a round opens with it, a line haul leaving ends with the hub it goes to.
+const ROUND_HUB = /^\[([^\]]{1,100})\]/;
+const NAMED_HUB = /(\bpara) \[?((?:(?:FM|LM|OF) ?Hub|SoC|XPT)_[^\]]{1,100}?)\]?$/i;
+
+/**
+ * The place an SPX hub's code names, "Cidade Exemplo, SP" for "SoC_SP_Cidade Exemplo": the hub's
+ * name, its parts joined by dashes and without a site number, then its state. Read as it stands,
+ * a code puts a hub's town in another country or none. Any other text stays as it is.
+ */
+export function spxBrHubPlace(code: string): string {
+  const match = HUB_CODE.exec(code.trim());
+  if (!match || !STATES.has(match[1]!)) return code;
+  const parts = match[2]!.replace(/-\d{1,3}$/, '').split('_').map((part) => part.replace(/\s+/g, ' ').trim()).filter(Boolean);
+  while (parts.length > 1 && SITE.test(parts.at(-1)!)) parts.pop();
+  const name = parts.join(' - ').replace(/[\s,-]+$/, '');
+  return /\p{L}/u.test(name) ? `${name}, ${match[1]}` : code;
+}
+
+/** A fleet line with the hub it names read as a place, as `spxBrHubPlace` reads it. */
+export function spxBrHubWording(line: string): string {
+  return line.replace(ROUND_HUB, (_, code: string) => `[${spxBrHubPlace(code)}]`)
+    .replace(NAMED_HUB, (_, to: string, code: string) => `${to} ${spxBrHubPlace(code)}`);
+}
+
 // The longest a hub's unloading runs before the hub's own scan takes the parcel in.
 const UNLOADING_MS = 24 * 60 * 60 * 1000;
 
@@ -297,12 +328,13 @@ function projectFleetRow(row: Record<string, unknown>): Scan {
   // A line haul's unloading keeps its verb, at the hub it names; the transfer and trip ids
   // leave, as does the transfer id of a line haul leaving for a hub.
   const haul = LINE_HAUL.exec(line);
-  const description = haul ? haul[1]!.charAt(0).toUpperCase() + haul[1]!.slice(1).toLowerCase()
+  // Hubs read as places, in the wording as in the place.
+  const description = spxBrHubWording(haul ? haul[1]!.charAt(0).toUpperCase() + haul[1]!.slice(1).toLowerCase()
     : hub ? line.slice(hub[0].length)
       : /^(?:DOP|3PL)_/i.test(code) ? line.replace(OPENING_NAME, '')
-        : /_LHTransporting$/i.test(code) ? line.replace(TRANSFER_ID, '$1 ').replace(NEXT_HUB, '$1') : line;
+        : /_LHTransporting$/i.test(code) ? line.replace(TRANSFER_ID, '$1 ').replace(NEXT_HUB, '$1') : line);
   if (!description) throw new SchemaError(PROVIDER, 'SPX Express Brazil returned a scan without wording');
-  const location = haul ? clean(haul[2], 120) : hub && /_Received$/i.test(code) ? clean(hub[1], 120) : '';
+  const location = spxBrHubPlace(haul ? clean(haul[2], 120) : hub && /_Received$/i.test(code) ? clean(hub[1], 120) : '');
   const clock = row.timestamp;
   const time = typeof clock === 'number' && Number.isSafeInteger(clock) && clock >= 1_000_000_000 && clock < 10_000_000_000
     ? epochSecondsTime(clock)?.iso : undefined;

@@ -94,6 +94,11 @@ label's first fifteen characters.
   takes the parcel in within a day after it, the unloading is left out, since that scan stands
   for the arrival. A line haul leaving names its next hub, which is not its place. A delivery
   line drops who took the parcel.
+- A hub's code gives its kind, sometimes a third party's mark, its state and its name, and
+  sometimes a site number: "SoC_SP_Cidade Exemplo_02". In places and wordings alike, a hub reads
+  as its name, then its state, "Cidade Exemplo, SP", with the parts of a longer name joined by
+  dashes. Read as written, the code can put the town in another country. A row stored with the
+  code keeps its row.
 - Tracking codes give the stages, and fleet statuses read like the order codes live parcels
   paired them with. A courier's hand-over at a service point ("Pacote entrege") is transit, as
   the page's milestones stay at sorting. Brazilian customs holding or inspecting a parcel is customs, its refusal to
