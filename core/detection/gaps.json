@@ -4976,5 +4976,11 @@
     "pattern": "^T[0-9A-F]{17}[BC]L$",
     "kind": "open",
     "reason": "Archived Liftit tracking URLs contain these exact prefixed references. Detection does not offer Liftit."
+  },
+  {
+    "carrier": "lafasta",
+    "pattern": "^[0-9]{8}$",
+    "kind": "open",
+    "reason": "A confirmed Lafasta shipment uses an eight-digit number shared with other carriers. Detection does not offer Lafasta."
   }
 ]
