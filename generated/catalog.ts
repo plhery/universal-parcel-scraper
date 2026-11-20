@@ -51220,6 +51220,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "sai-baba-transport": {
+    "displayName": "Sai Baba Transport",
+    "color": "#144436",
+    "aliases": [
+      "Saibaba Transport",
+      "Sai Baba Transports"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sai-baba-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.saibabatransport.com/track",
+    "trackingUrlTemplate": "https://www.saibabatransport.com/track?lr={trackingNumber}",
+    "trackingSearchUrl": "https://www.saibabatransport.com/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "saia": {
     "displayName": "Saia",
     "color": "#d52027",
@@ -67720,6 +67743,7 @@ export const CARRIER_IDS = [
   "sagawa",
   "sagawa-global",
   "sahara-express",
+  "sai-baba-transport",
   "saia",
   "sailpost",
   "salam-pacific-indonesia-lines",
@@ -69623,6 +69647,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sagawa": ["sagawa-waybill"],
   "sagawa-global": [],
   "sahara-express": [],
+  "sai-baba-transport": [],
   "saia": ["saia-1"],
   "sailpost": [],
   "salam-pacific-indonesia-lines": [],

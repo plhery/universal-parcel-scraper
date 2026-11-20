@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "data": {
+    "OpStatus": "SUCCEED",
+    "LRNumber": "40018310",
+    "LRDate": "11/07/2026",
+    "CurStatus": "DELIVERED BY SIWAN",
+    "TrackData": [
+      {
+        "OpDate": "14/07/2026",
+        "OpType": "TRANSIT",
+        "FromBranch": "SURAT",
+        "ToBranch": "SIWAN",
+        "Description": "On-Way Transit Toward SIWAN [Expected Delivery On 18/07/2026]"
+      },
+      {
+        "OpDate": "14/07/2026",
+        "OpType": "OUT",
+        "FromBranch": "SURAT",
+        "ToBranch": "SIWAN",
+        "Description": "Out From SURAT To SIWAN"
+      },
+      {
+        "OpDate": "18/07/2026",
+        "OpType": "IN",
+        "FromBranch": "SURAT",
+        "ToBranch": "SIWAN",
+        "Description": "Reach AT SIWAN"
+      },
+      {
+        "OpDate": "31/08/2026",
+        "OpType": "DELIVERY",
+        "FromBranch": "SIWAN",
+        "ToBranch": "",
+        "Description": "Delivered By SIWAN"
+      }
+    ]
+  }
+}

@@ -5694,5 +5694,10 @@
     "carrier": "flywing-cargo",
     "kind": "open",
     "reason": "An eight-digit goods receipt does not identify Flywing by itself. The carrier verifies the full receipt on explicit selection."
+  },
+  {
+    "carrier": "sai-baba-transport",
+    "kind": "open",
+    "reason": "Eight-digit lorry receipts overlap other networks. The guest lookup verifies the full number after explicit selection."
   }
 ]

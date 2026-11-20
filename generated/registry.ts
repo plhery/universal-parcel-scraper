@@ -696,6 +696,7 @@ import { adapter as safewayExpressCargo } from '../carriers/safeway-express-carg
 import { adapter as safexpress } from '../carriers/safexpress/adapter.js';
 import { adapter as sagawa } from '../carriers/sagawa/adapter.js';
 import { adapter as sagawaGlobal } from '../carriers/sagawa-global/adapter.js';
+import { adapter as saiBabaTransport } from '../carriers/sai-baba-transport/adapter.js';
 import { adapter as saia } from '../carriers/saia/adapter.js';
 import { adapter as sailpost } from '../carriers/sailpost/adapter.js';
 import { adapter as salamPacificIndonesiaLines } from '../carriers/salam-pacific-indonesia-lines/adapter.js';
@@ -1627,6 +1628,7 @@ export const REGISTRY: RegistryDefinition = {
     "safexpress": safexpress,
     "sagawa": sagawa,
     "sagawa-global": sagawaGlobal,
+    "sai-baba-transport": saiBabaTransport,
     "saia": saia,
     "sailpost": sailpost,
     "salam-pacific-indonesia-lines": salamPacificIndonesiaLines,
@@ -3282,6 +3284,7 @@ export const REGISTRY: RegistryDefinition = {
     "sagawa": "sagawa",
     "sagawa-global": "sagawa-global",
     "sahara-express": "universal",
+    "sai-baba-transport": "sai-baba-transport",
     "saia": "saia",
     "sailpost": "sailpost",
     "salam-pacific-indonesia-lines": "salam-pacific-indonesia-lines",
