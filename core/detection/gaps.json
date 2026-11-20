@@ -806,6 +806,12 @@
     "reason": "The one Connect Couriers number seen is eleven bare digits, a length other carriers share, so no rule claims it."
   },
   {
+    "carrier": "cope-sensitive-freight",
+    "pattern": "^BRU\\d{7}$",
+    "kind": "open",
+    "reason": "Two COPE eSmart consignment notes show the BRU customer prefix and seven digits. Detection does not offer COPE."
+  },
+  {
     "carrier": "correos-bolivia",
     "pattern": "^R[DR]\\d{9}BO$",
     "kind": "by_design",
