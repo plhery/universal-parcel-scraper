@@ -70,6 +70,8 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['the parcel has been successfully picked up and is being prepared for transportation.', 'in_transit'],
   ['the parcel is dispatched from the transit center to the next destination', 'in_transit'],
   ['the parcel arrives at the distribution center and is prepared for transport to the next destination.', 'in_transit'],
+  // iMile's run in Germany that ended before it reached the parcel: no door was tried, so a delay, not an attempt.
+  ['<route not completed>', 'in_transit'],
 ]);
 
 // Partners' lines WanbExpress files under a code their words contradict, by code and `normalizeStatusWording` wording:

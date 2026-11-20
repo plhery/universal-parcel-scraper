@@ -137,7 +137,7 @@ describe('WanbExpress', () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
 
-  it('stages the last-mile partner\'s scans by iMile\'s sentences, a run that did not deliver as a failed attempt', () => {
+  it('stages the last-mile partner\'s scans by iMile\'s sentences, a run that never reached the parcel as a delay', () => {
     const point = (Time: string, Content: string, Status: string | null = null) => ({ Time, TimeZone: 2, Content, Status, Location: '' });
     const result = parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null, Metadata: null, TrackPoints: [
       point('2031-04-20T09:00:00Z', '【Sample DC】Received.'),
@@ -148,11 +148,21 @@ describe('WanbExpress', () => {
       point('2031-04-21T19:36:00Z', '【Sample DS】 Back To DS.'),
       point('2031-04-21T19:46:00Z', 'Scheduled to <2031-04-23> .'),
     ] } }, number);
-    // The day booked for the next run moves nothing: the failed attempt stands.
-    expect(result.current_stage).toBe('failed_attempt');
+    // The run ended before it reached the parcel, so no door was tried, and the parcel is back at the station; the day
+    // booked for the next run moves nothing.
+    expect(result.current_stage).toBe('in_transit');
     expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
-      [undefined, undefined], ['failed_attempt', 'carrier'], ['failed_attempt', 'carrier'], ['out_for_delivery', 'carrier'],
+      [undefined, undefined], ['in_transit', 'carrier'], ['in_transit', 'carrier'], ['out_for_delivery', 'carrier'],
       ['in_transit', 'carrier'], ['in_transit', 'carrier'], ['in_transit', 'carrier'],
+    ]);
+    // After the driver's failed attempt, the return to the station is that attempt told again.
+    const attempted = parseWanb({ Succeeded: true, Data: { TrackingNumber: number, Match: 'ParcelId', Status: null, Metadata: null, TrackPoints: [
+      point('2031-04-21T12:59:00Z', '【Sample DS】Shipment out for delivery.', 'LastMileDeliveryReady'),
+      point('2031-04-21T18:48:00Z', 'User not at home'),
+      point('2031-04-21T19:36:00Z', '【Sample DS】 Back To DS.'),
+    ] } }, number);
+    expect(attempted.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', 'none'], ['failed_attempt', 'carrier'], ['out_for_delivery', 'carrier'],
     ]);
     // The app reviews stored wordings by the same map.
     expect(statusMap.stage(null, '【sample ds】 back to ds.')).toBe('failed_attempt');

@@ -362,16 +362,16 @@
     {
       "wording": "<Route not completed>",
       "language": "en",
-      "stage": "failed_attempt",
+      "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "The driver's run ended without the delivery; the parcel goes back to the station."
+      "note": "The driver's run ended before it reached the parcel, so no door was tried: a delay. The parcel goes back to the station."
     },
     {
       "wording": "【Sample DS】 Back To DS.",
       "language": "en",
       "stage": "failed_attempt",
       "confirmedBy": "live",
-      "note": "Back at the delivery station after a run that did not deliver it."
+      "note": "Back at the delivery station after a run that did not deliver it. After the driver's failed attempt it is that attempt told again, a notice; after a run that never reached the parcel, in transit."
     },
     {
       "wording": "Scheduled to <…> .",

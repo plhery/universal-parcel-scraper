@@ -43,7 +43,10 @@ courier's label ("SYSTEM"), or only a country on order
 data written before the parcel is handed over, such as a partner's note that the sender is still
 preparing it, which names the destination.
 The last-mile partner's scans, iMile's on a parcel to Germany, come in the partner's sentences
-and mostly without a code: they take the stage iMile's map gives those sentences. A sentence
+and mostly without a code: they take the stage iMile's map gives those sentences, except a run
+that ended before it reached the parcel ("<Route not completed>"), which tried no door and is a
+delay. The parcel back at the station ("Back To DS.") after the driver's failed attempt is that
+attempt told again, a notice, and after such a run, in transit. A sentence
 other trackers relay word for word, such as a partner's announcement that the sender is still
 preparing the parcel, takes the stage of the shared map (`SHARED_WORDINGS`). DHL's scans on a
 parcel it delivers in Germany come in DHL's English, some with their UTF-8 read as Latin-1
