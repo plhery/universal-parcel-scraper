@@ -4706,5 +4706,11 @@
     "pattern": "^00340355246\\d{9}$",
     "kind": "open",
     "reason": "Archived ZUFALL tracking pages recognize these 20-digit Colli references. The current rules offer Swiss Post Cargo, USPS and NZ Post for both references."
+  },
+  {
+    "carrier": "ziegler",
+    "pattern": "^\\d{19}$",
+    "kind": "open",
+    "reason": "Easytrack documents a 19-character tracking number and its archived road tracking link contains an all-digit example. Detection offers no carrier for that input."
   }
 ]
