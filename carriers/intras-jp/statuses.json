@@ -1,4 +1,99 @@
 {
   "carrier": "intras-jp",
-  "entries": []
+  "entries": [
+    {
+      "wording": "배송준비",
+      "language": "ko",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "발송완료",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "선적중",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "통관중",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "국내배송",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "배송완료",
+      "language": "ko",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "반출신고",
+      "language": "ko",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "수입신고수리",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "반입신고",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "수입(사용소비) 심사진행",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "수입신고",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "입항보고 수리",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "하선신고 수리",
+      "language": "ko",
+      "stage": "customs",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "입항적재화물목록 운항정보 정정",
+      "language": "ko",
+      "confirmedBy": "live",
+      "note": "A manifest correction does not establish shipment movement."
+    },
+    {
+      "wording": "입항적재화물목록 심사완료",
+      "language": "ko",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "입항적재화물목록 제출",
+      "language": "ko",
+      "confirmedBy": "live"
+    }
+  ]
 }
