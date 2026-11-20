@@ -1,0 +1,105 @@
+{
+ "hasError": false,
+ "httpStatus": "OK",
+ "errorMessages": null,
+ "payload": [
+  {
+   "bookingNo": "00000000000099999901",
+   "containerNo": "ZZZU0000001",
+   "pol": "SAMPLE PORT",
+   "pod": "OTHER PORT",
+   "polDepartureDate": "04.03.2026",
+   "podArrivalDate": "",
+   "podEstDate": "20.03.2026",
+   "lastEvent": "LDF",
+   "lastEventName": "FULL LOAD",
+   "events": [
+    {
+     "containerNo": "ZZZU0000001",
+     "eventCode": "GOE",
+     "eventName": "GATE OUT EMPTY",
+     "eventTarih": "01.03.2026",
+     "eventSaat": "08:00:00",
+     "eventLokasyon": "SAMPLE DEPOT, SAMPLE TOWN-TR",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "ZZZU0000001",
+     "eventCode": "GIF",
+     "eventName": "GATE IN FULL",
+     "eventTarih": "02.03.2026",
+     "eventSaat": "09:00:00",
+     "eventLokasyon": "SAMPLE PORT",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "ZZZU0000001",
+     "eventCode": "LDF",
+     "eventName": "FULL LOAD",
+     "eventTarih": "04.03.2026",
+     "eventSaat": "10:00:00",
+     "eventLokasyon": "SAMPLE PORT",
+     "ekVeri3": "2"
+    },
+    {
+     "containerNo": "ZZZU0000001",
+     "eventCode": "DCF",
+     "eventName": "FULL DISCHARGE",
+     "eventTarih": "20.03.2026",
+     "eventSaat": "",
+     "eventLokasyon": "OTHER PORT, OTHER TOWN - TR",
+     "ekVeri3": "3"
+    }
+   ]
+  },
+  {
+   "bookingNo": "00000000000099999901",
+   "containerNo": "ZZZU0000012",
+   "pol": "SAMPLE PORT",
+   "pod": "OTHER PORT",
+   "polDepartureDate": "04.03.2026",
+   "podArrivalDate": "",
+   "podEstDate": "20.03.2026",
+   "lastEvent": "LDF",
+   "lastEventName": "FULL LOAD",
+   "events": [
+    {
+     "containerNo": "ZZZU0000012",
+     "eventCode": "GOE",
+     "eventName": "GATE OUT EMPTY",
+     "eventTarih": "01.03.2026",
+     "eventSaat": "08:30:00",
+     "eventLokasyon": "SAMPLE DEPOT, SAMPLE TOWN-TR",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "ZZZU0000012",
+     "eventCode": "GIF",
+     "eventName": "GATE IN FULL",
+     "eventTarih": "02.03.2026",
+     "eventSaat": "11:00:00",
+     "eventLokasyon": "SAMPLE PORT",
+     "ekVeri3": "1"
+    },
+    {
+     "containerNo": "ZZZU0000012",
+     "eventCode": "LDF",
+     "eventName": "FULL LOAD",
+     "eventTarih": "04.03.2026",
+     "eventSaat": "10:00:00",
+     "eventLokasyon": "SAMPLE PORT",
+     "ekVeri3": "2"
+    },
+    {
+     "containerNo": "ZZZU0000012",
+     "eventCode": "DCF",
+     "eventName": "FULL DISCHARGE",
+     "eventTarih": "20.03.2026",
+     "eventSaat": "",
+     "eventLokasyon": "OTHER PORT, OTHER TOWN - TR",
+     "ekVeri3": "3"
+    }
+   ]
+  }
+ ]
+}

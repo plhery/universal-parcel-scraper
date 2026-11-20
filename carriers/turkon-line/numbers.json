@@ -1,0 +1,27 @@
+{
+  "carrier": "turkon-line",
+  "records": [
+    {
+      "number": "TRKU10186118",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/turkon-lojistik-a-s",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The U.S. import manifest lists this master bill under Turkon's TRKU carrier code. Turkon's tracker holds it under the booking that follows TRKU and returns its one container from Ambarli to New York, returned empty."
+    }
+  ]
+}

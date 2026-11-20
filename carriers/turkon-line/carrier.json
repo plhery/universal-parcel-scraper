@@ -1,0 +1,76 @@
+{
+  "id": "turkon-line",
+  "displayName": "Turkon Line",
+  "aliases": [
+    "Turkon"
+  ],
+  "region": {
+    "countries": [
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#264493"
+  },
+  "selectable": true,
+  "timezone": "Europe/Istanbul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "turkon-line",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://myturkonline.turkon.com/tracking",
+    "searchUrl": "https://myturkonline.turkon.com/tracking",
+    "canaryUrl": "https://myturkonline.turkon.com/tracking",
+    "shows": [
+      "status",
+      "milestones",
+      "history",
+      "location",
+      "future_milestones",
+      "origin",
+      "destination",
+      "departure_date",
+      "eta",
+      "vehicle",
+      "service_name",
+      "weight",
+      "dimensions"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "future_milestones"
+    ],
+    "discarded": [
+      "milestones",
+      "origin",
+      "destination",
+      "departure_date",
+      "eta",
+      "vehicle",
+      "service_name",
+      "weight",
+      "dimensions"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [],
+  "detection": []
+}
