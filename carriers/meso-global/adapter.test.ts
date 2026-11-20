@@ -78,6 +78,24 @@ describe('Meso-global tracking adapter', () => {
     ]);
   });
 
+  it("counts the destination post's short wording of DHL's delivery run and delivery once, in DHL's words", () => {
+    const payload = fixture('track') as { data: { trackDetails: Record<string, string>[] }[] }[];
+    const rows = payload[0]!.data[0]!.trackDetails;
+    const row = (content: string, date: string) => ({ ...rows[0], track_date: date, track_createdate: '2026-03-12 09:39:53',
+      track_location: 'AT', track_content: content });
+    rows.unshift(row('Item delivered', '2026-03-11 20:58:22'), row('The shipment has been successfully delivered', '2026-03-11 20:58:00'),
+      row('Item is out for delivery', '2026-03-11 14:15:57'), row('The shipment has been loaded onto the delivery vehicle', '2026-03-11 14:15:00'),
+      row('Item distributed', '2026-03-11 06:40:53'), row('The shipment has arrived at the parcel center', '2026-03-11 06:40:00'));
+    expect(parseMesoGlobalTrack(payload, NUMBER, READ_AT)!.events!.slice(0, 5).map(({ description }) => description)).toEqual([
+      'The shipment has been successfully delivered', 'The shipment has been loaded onto the delivery vehicle',
+      'Item distributed', 'The shipment has arrived at the parcel center', 'Connecting flight departed, not yet landed',
+    ]);
+    // A minute apart, the short wording is a scan of its own.
+    rows.splice(0, 2, row('Item delivered', '2026-03-11 20:59:22'), row('The shipment has been successfully delivered', '2026-03-11 20:58:00'));
+    expect(parseMesoGlobalTrack(payload, NUMBER, READ_AT)!.events!.slice(0, 2).map(({ description }) => description))
+      .toEqual(['Item delivered', 'The shipment has been successfully delivered']);
+  });
+
   it('holds back a row dated after the lookup', () => {
     const result = parseMesoGlobalTrack(fixture('track'), NUMBER, Date.parse('2026-03-08T00:00:00Z'))!;
     expect(result).toMatchObject({ last_status_text: 'First flight landed, connecting flight booked' });

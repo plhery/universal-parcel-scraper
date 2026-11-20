@@ -1,6 +1,6 @@
 import type { Stage } from '../../core/status/index.js';
 import { statusWordings } from '../../core/status/english.js';
-import type { CarrierStatusMap } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, type CarrierStatusMap } from '../../core/status/statusMap.js';
 import statuses from './statuses.json' with { type: 'json' };
 
 const WORDINGS = statusWordings(statuses.entries);
@@ -22,9 +22,20 @@ const LINK = /\s*\([^()]*https?:\/\/[^()]*\)$/;
 export const mesoGlobalScanKey = (wording: string): string => wording.replace(FLIGHT_DAY, '$1…$2').replace(HANDED_OVER_DAY, '…$1')
   .replace(LINK, '');
 
-/** DHL's row from the destination country written again with another tracking link: one scan. */
+// DHL relays the destination post's delivery run and delivery twice: in its own words to the minute, and
+// in the post's short words to the second.
+const SHORT_WORDINGS: ReadonlyMap<string, string> = new Map([
+  ['Item is out for delivery', 'The shipment has been loaded onto the delivery vehicle'],
+  ['Item delivered', 'The shipment has been successfully delivered'],
+].map(([short, long]) => [normalizeStatusWording(short!), normalizeStatusWording(long!)]));
+
+/**
+ * DHL's row from the destination country written again with another tracking link, or a scan in the
+ * destination post's short words beside DHL's own wording of it: one scan.
+ */
 export const repeatsMesoGlobalRow = (wording: string, other: string): boolean => wording !== other
-  && LINK.test(wording) && LINK.test(other) && wording.replace(LINK, '') === other.replace(LINK, '');
+  && ((LINK.test(wording) && LINK.test(other) && wording.replace(LINK, '') === other.replace(LINK, ''))
+    || SHORT_WORDINGS.get(normalizeStatusWording(wording)) === normalizeStatusWording(other));
 
 /**
  * The stage Meso-global's map gives a row, by its whole `normalizeStatusWording`

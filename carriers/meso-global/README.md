@@ -26,7 +26,9 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   whether it hands over the shipment or, with 全部, all of it.
 - DHL's row from the destination country ends with the destination post's tracking link. The
   tracker can write that row again with another link. That is one scan, and the copy the reply
-  lists as the older one stays.
+  lists as the older one stays. DHL also relays the delivery run and the delivery in the
+  destination post's short words ("Item delivered"), to the second, beside its own to the
+  minute; each pair is one scan, shown in DHL's words.
 - Scan times are wall clocks without an offset on the platform's Beijing clock and are read on
   it; a row dated after the lookup is held back. DHL's rows from Germany and Austria are on it
   too: the platform wrote some of them an hour after their clock, before that clock read on
