@@ -153,6 +153,22 @@ describe('DHL public tracking normalization', () => {
     expect(redirected.current_stage).toBe('in_transit');
   });
 
+  it("reads the courier's pickup after DHL took the parcel out of the sender's Packstation as that move", () => {
+    const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
+    const picked = 'Die Sendung wurde abgeholt.';
+    const payload = shipment({ sendungsverlauf: { ...timeline, status: picked, events: [
+      { datum: '2026-08-10T10:39:10+02:00', status: 'Die Sendung wurde vom Absender in die Packstation eingeliefert.' },
+      { datum: '2026-08-10T12:05:35+02:00', status: 'Die Sendung wurde zum Weitertransport aus der Packstation entnommen.' },
+      { datum: '2026-08-10T12:20:12+02:00', status: picked },
+    ] } });
+    const result = parseDHLTrackingResponse(payload, NUMBER);
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'accepted']);
+    expect(result).toMatchObject({ current_stage: 'in_transit' });
+    // The pickup that comes first is the acceptance.
+    const first = shipment({ sendungsverlauf: { ...timeline, status: picked, events: [{ datum: '2026-08-10T12:20:12+02:00', status: picked }] } });
+    expect(parseDHLTrackingResponse(first, NUMBER)).toMatchObject({ current_stage: 'accepted' });
+  });
+
   it("reads the recipient's collection from a Packstation as the delivery", () => {
     const timeline = shipment().sendungen[0]!.sendungsdetails.sendungsverlauf;
     const payload = shipment({ istZugestellt: true, sendungsverlauf: { ...timeline, status: 'Abholung aus Packstation' } });

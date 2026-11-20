@@ -139,6 +139,9 @@ how a consumer learns that DHL holds one behind a postcode.
   as the address ("auf dem Weg zur Packstation"): DHL writes it beside the loading onto the
   delivery vehicle, and also on a redirect to a Packstation, which
   [can take another day](https://www.paketda.de/status-dhl-sendung-unterwegs-packstation.html).
+- A second acceptance after the parcel moved on is that move: the courier's pickup ("Die
+  Sendung wurde abgeholt.") follows DHL taking the parcel out of the Packstation the sender
+  posted it in.
 - "Delivery not possible" is a failed attempt: it follows the loading onto the
   delivery vehicle, the parcel then waits at a retail outlet, and the partner
   posts' copies of the scan read it so. As the summary of a round whose newest scan

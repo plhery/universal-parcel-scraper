@@ -276,6 +276,15 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   });
   // The moves after DHL's latest return start carry the parcel back to the sender.
   for (const event of events.slice(0, returnTrip(events.map((event) => event.stage)))) event.stage = 'returned';
+  // A second acceptance after the parcel moved on, as the courier's pickup ("Die Sendung wurde abgeholt.") minutes after
+  // DHL took the parcel out of the Packstation the sender posted it in, is that move, not a step back.
+  let accepted = false;
+  let moved = false;
+  for (const event of [...events].reverse()) {
+    if (event.stage === 'accepted' && accepted && moved) event.stage = 'in_transit';
+    accepted ||= event.stage === 'accepted';
+    moved ||= accepted && event.stage === 'in_transit';
+  }
   const summary = withoutPartnerLink(clean(timeline.status));
   if (!events.length && !summary && details.istZugestellt !== true) {
     if (Object.values(missing).some((flag) => flag === true)) return noData();
@@ -291,7 +300,9 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   // A move on the way back, which DHL sums up as the move itself, keeps the return, without a delivery date.
   const latest = events[0]?.stage;
   const stage = (reported === 'failed_attempt' && (latest === 'exception' || latest === 'returned'))
-    || (latest === 'returned' && (reported === 'in_transit' || reported === 'customs')) ? latest : reported;
+    || (latest === 'returned' && (reported === 'in_transit' || reported === 'customs'))
+    // Nor does a second acceptance DHL sums up after the parcel moved on.
+    || (reported === 'accepted' && latest === 'in_transit' && moved) ? latest : reported;
   const delivery = isRecord(details.zustellung) ? details.zustellung : {};
   const window = ['delivered', 'returned'].includes(stage) ? {} : deliveryWindow(delivery);
   const stated = date(timeline.datumAktuellerStatus);
