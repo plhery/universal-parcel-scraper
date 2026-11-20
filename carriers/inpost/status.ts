@@ -31,7 +31,6 @@ const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
   'LMD.1001': { status: 'out_for_delivery', stage: 'out_for_delivery' },
   'LMD.1002': { status: 'in_transit', stage: 'in_transit' },
   'LMD.3006': { status: 'in_transit', stage: 'in_transit' },
-  'LMD.3014': { status: 'in_transit', stage: 'in_transit' },
   'LMD.1004': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   'LMD.1005': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
   'LMD.9001': { status: 'out_for_delivery', stage: 'ready_for_pickup' },
@@ -59,11 +58,11 @@ const TRACKING_STATUS: Record<string, ClassifiedStatus> = {
 
 /**
  * Codes that say nothing of how far the parcel got, so they keep the stage of
- * the event before it. LMD.3013 ("Paczka przekierowana") changes where it goes
+ * the event before it. LMD.3013 and LMD.3014 ("Paczka przekierowana") change where it goes
  * and comes straight after creation as well as later; INF.9001 ("Possible
  * delivery delay") is a notice between two moves.
  */
-const STAGE_KEEPERS = new Set(['LMD.3013', 'INF.9001']);
+const STAGE_KEEPERS = new Set(['LMD.3013', 'LMD.3014', 'INF.9001']);
 
 /** Whether an InPost hub status code keeps the stage the parcel had before it. */
 export function keepsInpostStage(code: string): boolean {
@@ -115,6 +114,7 @@ export const statusMap: CarrierStatusMap = {
   },
   gaps: [
     ...[...STAGE_KEEPERS].map((code) => ({ code, note: KEEPER_NOTES.get(code) ?? 'Takes the stage of the scan before it, which the stored scan does not keep.' })),
-    ...HUB_WORDINGS.filter(({ code }) => keepsInpostStage(code)).map(({ wording, note }) => ({ wording, note })),
+    // One wording comes under two redirect codes; it is one gap.
+    ...new Map(HUB_WORDINGS.filter(({ code }) => keepsInpostStage(code)).map(({ wording, note }) => [wording, { wording, note }])).values(),
   ],
 };

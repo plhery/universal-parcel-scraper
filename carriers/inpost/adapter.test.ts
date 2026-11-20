@@ -197,6 +197,11 @@ describe('InPost response parsing', () => {
     expect(afterHandover).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     expect(afterHandover.events?.map((event) => event.stage)).toEqual(['accepted', 'accepted', 'registered', 'registered']);
 
+    // LMD.3014 is the same redirect under another code.
+    const other = { ...redirect, status: 'LMD.3014' };
+    expect(parseInpostTrackingResponse(parcel({ status: 'LMD.3014', statusTitle: 'Paczka przekierowana', trackingDetails: [other, created] }),
+      TRACKING_NUMBER)).toMatchObject({ status: 'pending', current_stage: 'registered' });
+
     const alone = parseInpostTrackingResponse(parcel({ status: 'LMD.3013', trackingDetails: [redirect] }), TRACKING_NUMBER);
     expect(alone).toMatchObject({ status: 'unknown' });
     expect(alone.events?.[0]?.stage).toBeUndefined();

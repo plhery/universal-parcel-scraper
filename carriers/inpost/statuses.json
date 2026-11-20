@@ -12,7 +12,7 @@
     { "code": "LMD.1001", "language": "en", "wording": "Handed over for delivery", "stage": "out_for_delivery", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Handed to the courier for delivery, to the door or to a locker." },
     { "code": "LMD.1002", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "Last mile." },
     { "code": "LMD.3006", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "Last mile redirect." },
-    { "code": "LMD.3014", "language": "en", "stage": "in_transit", "confirmedBy": "prior-art", "firstSeen": "2026-08-31", "note": "Last mile redirect." },
+    { "code": "LMD.3014", "language": "pl", "wording": "Paczka przekierowana", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "Redirected to another pickup point like LMD.3013, mostly before the first scan: not a movement, so the parcel keeps the stage it had." },
     { "code": "LMD.3013", "language": "pl", "wording": "Paczka przekierowana", "confirmedBy": "live", "note": "Redirected to another pickup point, also right after the label is created: not a movement, so the parcel keeps the stage it had." },
     { "code": "INF.9001", "language": "en", "wording": "Possible delivery delay", "confirmedBy": "live", "note": "A notice between two moves at a logistics centre, followed by the next one: not a movement, so the parcel keeps the stage it had." },
     { "code": "LMD.1004", "language": "en", "wording": "Ready for collection", "stage": "ready_for_pickup", "confirmedBy": "live", "firstSeen": "2026-08-31", "note": "In the locker or pickup point." },
