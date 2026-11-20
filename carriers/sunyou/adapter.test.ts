@@ -7,6 +7,7 @@ import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { isValidS10TrackingNumber } from '../../core/detection/index.js';
 import { fetchSunYou, parseSunYouTrackingResponse, SunYouTracker } from './adapter.js';
+import { statusMap } from './status.js';
 
 const folder = path.dirname(fileURLToPath(import.meta.url));
 const carrier = JSON.parse(
@@ -274,6 +275,15 @@ describe('SunYou scan codes and last-mile handoff', () => {
     );
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'customs', events: [{ stage: 'customs' }] });
     expect(result.delivered_at).toBeUndefined();
+  });
+
+  it('reads the second delivery round as out for delivery', () => {
+    const result = parseSunYouTrackingResponse(
+      withItem({ displayStatus: '1', ...scan('OutForDelivery_Second', 'Delivery in progress, second attempt') }),
+      'SYGB000000001',
+    );
+    expect(result).toMatchObject({ current_stage: 'out_for_delivery', events: [{ provider_code: 'OutForDelivery_Second', stage: 'out_for_delivery' }] });
+    expect(statusMap.stage('OutForDelivery_Second', 'delivery in progress, second attempt')).toBe('out_for_delivery');
   });
 
   it('falls back to the display status for a code it does not know', () => {

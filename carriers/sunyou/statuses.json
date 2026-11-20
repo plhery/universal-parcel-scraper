@@ -157,6 +157,15 @@
       "firstSeen": "2026-10-10"
     },
     {
+      "code": "OutForDelivery_Second",
+      "wording": "Delivery in progress, second attempt",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The delivery round after a missed delivery."
+    },
+    {
       "code": "Delivered",
       "stage": "delivered",
       "confirmedBy": "live",

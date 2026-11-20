@@ -45,6 +45,8 @@ const EVENT_CODE = new Map<string, ClassifiedStatus>([
   ['DeliveryStationArrival', MOVING],
   ['DeliveryStationDepart', MOVING],
   ['OutForDelivery', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
+  // "Delivery in progress, second attempt": the round after a missed delivery.
+  ['OutForDelivery_Second', { status: 'out_for_delivery', stage: 'out_for_delivery' }],
   ['Delivered', DELIVERED],
   ['Delivered_Mailbox', DELIVERED],
   ['Delivered_Doorstep', DELIVERED],
