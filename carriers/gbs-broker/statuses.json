@@ -1,4 +1,41 @@
 {
   "carrier": "gbs-broker",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Убыло из таможни в стране получателя.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Выпущено таможенным органом с платежом.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "wording": "Прибыло на таможню в стране получателя.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "stage": "customs"
+    },
+    {
+      "wording": "Квитанция оплачена получателем.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "Payment does not itself release the parcel from customs."
+    },
+    {
+      "wording": "Квитанция выставлена таможенным органом.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "stage": "customs"
+    },
+    {
+      "wording": "Паспортные данные собраны.",
+      "language": "ru",
+      "confirmedBy": "live",
+      "note": "Collecting paperwork does not report parcel movement."
+    }
+  ]
 }
