@@ -64834,6 +64834,27 @@
       }
     ]
   },
+  "ywd": {
+    "displayName": "YWD",
+    "color": "#e8380d",
+    "aliases": [
+      "Yiwangda",
+      "易网达"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ywd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ywe": {
     "displayName": "YWE",
     "color": "#055aa1",

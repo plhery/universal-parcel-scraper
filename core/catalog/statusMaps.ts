@@ -66,6 +66,7 @@ import { statusMap as sfydExpress } from '../../carriers/sfyd-express/status.js'
 import { statusMap as dpdex } from '../../carriers/dpdex/status.js';
 import { statusMap as runforint } from '../../carriers/runforint/status.js';
 import { statusMap as hgd } from '../../carriers/hgd/status.js';
+import { statusMap as ywd } from '../../carriers/ywd/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -965,6 +966,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   dpdex,
   runforint,
   hgd,
+  ywd,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

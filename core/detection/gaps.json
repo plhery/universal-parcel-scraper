@@ -5553,5 +5553,10 @@
     "carrier": "hgd",
     "kind": "open",
     "reason": "Two public waybills, HGD, two letters, ten digits and YQ: too few to tell the series from the Hualei forwarders' numbers of the same layout"
+  },
+  {
+    "carrier": "ywd",
+    "kind": "open",
+    "reason": "One public waybill, YT, fourteen digits and YT: too few to tell the series from other carriers' numbers"
   }
 ]
