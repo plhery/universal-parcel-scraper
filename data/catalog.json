@@ -11913,6 +11913,34 @@
     ],
     "detectionRules": []
   },
+  "bob-go": {
+    "displayName": "Bob Go",
+    "color": "#139e83",
+    "aliases": [
+      "BobGo"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bob-go"
+    },
+    "canaryUrl": "https://track.bobgo.co.za/",
+    "trackingUrlTemplate": "https://track.bobgo.co.za/{trackingNumber}",
+    "trackingSearchUrl": "https://track.bobgo.co.za/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.bobgo.co.za"
+        ],
+        "path": "^/([A-Za-z0-9]{6,30})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "bolt-kargo": {
     "displayName": "BOLT Kargo",
     "color": "#fce029",

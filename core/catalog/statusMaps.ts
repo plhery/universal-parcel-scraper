@@ -128,6 +128,7 @@ import { statusMap as bjsHomeDelivery } from '../../carriers/bjs-home-delivery/s
 import { statusMap as blueDart } from '../../carriers/blue-dart/status.js';
 import { statusMap as blueExpress } from '../../carriers/blue-express/status.js';
 import { statusMap as blueex } from '../../carriers/blueex/status.js';
+import { statusMap as bobGo } from '../../carriers/bob-go/status.js';
 import { statusMap as bombino } from '../../carriers/bombino/status.js';
 import { statusMap as bookurier } from '../../carriers/bookurier/status.js';
 import { statusMap as borderExpress } from '../../carriers/border-express/status.js';
@@ -964,7 +965,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   andreani, anjun, anousith, anserx, anteraja, 'apc-overnight': apcOvernight, 'apc-postal-logistics': apcPostalLogistics,
   'apple-express': appleExpress, aquiline, aramex, 'aramex-au': aramexAu,
   'aramex-nz': aramexNz, 'aras-kargo': arasKargo, 'arrow-xl': arrowXl, asendia, 'asyad-express': asyadExpress, 'atlantic-courier': atlanticCourier, 'ats-healthcare': atsHealthcare, 'australia-post': australiaPost, 'austrian-post': austrianPost, averitt, aymakan, 'azul-cargo': azulCargo, 'bangladesh-post': bangladeshPost,
-  'barid-al-maghrib': baridAlMaghrib, belpost, 'best-express-th': bestExpressTh, 'best-express-vn': bestExpressVn, 'best-overnite-express': bestOverniteExpress, bestfulfill, 'better-trucks': betterTrucks, 'bex-express': bexExpress, 'bjs-home-delivery': bjsHomeDelivery, 'blue-dart': blueDart, 'blue-express': blueExpress, blueex, bombino,
+  'barid-al-maghrib': baridAlMaghrib, belpost, 'best-express-th': bestExpressTh, 'best-express-vn': bestExpressVn, 'best-overnite-express': bestOverniteExpress, bestfulfill, 'better-trucks': betterTrucks, 'bex-express': bexExpress, 'bjs-home-delivery': bjsHomeDelivery, 'blue-dart': blueDart, 'blue-express': blueExpress, blueex, 'bob-go': bobGo, bombino,
   bookurier, 'border-express': borderExpress, bosta, 'box-now': boxNow, boxtal, bpost, 'bring-posten': bringPosten, 'bringer-parcel': bringerParcel, brt, 'bulgarian-posts': bulgarianPosts, 'burd-delivery': burdDelivery, bussgods, byt,
   byhd, 'c-chez-vous': cChezVous, c3x, cacesa, 'canada-post': canadaPost, canpar, cargus, 'castle-parcels': castleParcels, castores, 'cbl-logistica': cblLogistica, ccfs, cdek, cdl, celeritas, celero,
   'central-transport': centralTransport, 'ceska-posta': ceskaPosta, 'ceva-logistics': cevaLogistics, chazki, chilexpress, 'china-post': chinaPost,

@@ -11917,6 +11917,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "bob-go": {
+    "displayName": "Bob Go",
+    "color": "#139e83",
+    "aliases": [
+      "BobGo"
+    ],
+    "countries": [
+      "ZA"
+    ],
+    "selectable": true,
+    "timezone": "Africa/Johannesburg",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "bob-go"
+    },
+    "canaryUrl": "https://track.bobgo.co.za/",
+    "trackingUrlTemplate": "https://track.bobgo.co.za/{trackingNumber}",
+    "trackingSearchUrl": "https://track.bobgo.co.za/",
+    "linkRules": [
+      {
+        "domains": [
+          "track.bobgo.co.za"
+        ],
+        "path": "^/([A-Za-z0-9]{6,30})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "bolt-kargo": {
     "displayName": "BOLT Kargo",
     "color": "#fce029",
@@ -65648,6 +65676,7 @@ export const CARRIER_IDS = [
   "bluesky-parcel",
   "bluestreak-couriers",
   "bm-cargo",
+  "bob-go",
   "bolt-kargo",
   "bombax",
   "bombino",
@@ -67515,6 +67544,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bluesky-parcel": [],
   "bluestreak-couriers": [],
   "bm-cargo": [],
+  "bob-go": [],
   "bolt-kargo": [],
   "bombax": [],
   "bombino": [],

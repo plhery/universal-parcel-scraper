@@ -1,0 +1,78 @@
+{
+  "id": "bob-go",
+  "displayName": "Bob Go",
+  "aliases": [
+    "BobGo"
+  ],
+  "region": {
+    "countries": [
+      "ZA"
+    ]
+  },
+  "brand": {
+    "color": "#139e83"
+  },
+  "selectable": true,
+  "timezone": "Africa/Johannesburg",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "bob-go",
+    "steps": [
+      "direct",
+      "retry"
+    ]
+  },
+  "capabilities": [
+    "history",
+    "provider_code",
+    "offset_timestamps",
+    "delivered_at",
+    "sender_name",
+    "service_name"
+  ],
+  "portal": {
+    "url": "https://track.bobgo.co.za/{trackingNumber}",
+    "searchUrl": "https://track.bobgo.co.za/",
+    "canaryUrl": "https://track.bobgo.co.za/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "sender_name",
+      "service_name",
+      "delivery_partner",
+      "eta",
+      "pickup_point"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "offset_timestamps",
+      "delivered_at",
+      "sender_name",
+      "service_name"
+    ],
+    "discarded": [
+      "location",
+      "delivery_partner",
+      "pickup_point"
+    ],
+    "unavailable": [
+      "weight",
+      "recipient_name",
+      "destination",
+      "destination_country",
+      "proof_of_delivery",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "track.bobgo.co.za"
+      ],
+      "path": "^/([A-Za-z0-9]{6,30})/?$"
+    }
+  ],
+  "detection": []
+}

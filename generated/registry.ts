@@ -83,6 +83,7 @@ import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
 import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
+import { adapter as bobGo } from '../carriers/bob-go/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
 import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
 import { adapter as borderExpress } from '../carriers/border-express/adapter.js';
@@ -974,6 +975,7 @@ export const REGISTRY: RegistryDefinition = {
     "blue-express": blueExpress,
     "blueex": blueex,
     "bm-cargo": bmCargo,
+    "bob-go": bobGo,
     "bombino": bombino,
     "bookurier": bookurier,
     "border-express": borderExpress,
@@ -1975,6 +1977,7 @@ export const REGISTRY: RegistryDefinition = {
     "bluesky-parcel": "universal",
     "bluestreak-couriers": "universal",
     "bm-cargo": "bm-cargo",
+    "bob-go": "bob-go",
     "bolt-kargo": "universal",
     "bombax": "universal",
     "bombino": "bombino",

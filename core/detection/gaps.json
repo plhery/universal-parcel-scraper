@@ -418,6 +418,12 @@
     "reason": "Ten digits are shared by many carriers and no known prefix or check digit sets BlueEX apart."
   },
   {
+    "carrier": "bob-go",
+    "pattern": "^UA[A-Z0-9]{6}$",
+    "kind": "by_design",
+    "reason": "Bob Go's references are short runs of capitals and digits, and a single public reference shows the layout."
+  },
+  {
     "carrier": "bombino",
     "pattern": "^\\d{7,10}$",
     "kind": "by_design",
