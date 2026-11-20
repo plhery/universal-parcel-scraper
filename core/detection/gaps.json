@@ -4916,5 +4916,11 @@
     "pattern": "^NR\\d{10}$",
     "kind": "open",
     "reason": "A Temu customer gives a complete Neighbour Express return number in this family. Detection offers other carriers."
+  },
+  {
+    "carrier": "navata",
+    "pattern": "^[PWY]\\d{6}$",
+    "kind": "open",
+    "reason": "Three public Navata reports identify lorry receipts with a leading letter and six digits. The tracker recognizes two, and detection omits Navata."
   }
 ]
