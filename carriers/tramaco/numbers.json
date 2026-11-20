@@ -1,5 +1,32 @@
 {
   "carrier": "tramaco",
-  "gap": "No public page shows a Tramaco number.",
-  "records": []
+  "records": [
+    {
+      "number": "031002004307073",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/848393097/VALORACION-ULTIMO-RECURSO-1-1",
+        "date": "2025-01-14",
+        "dateKind": "document date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ecuador domestic parcels",
+        "reportedRole": "guía de encomienda",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The Universidad UTE case write-up reproduces a guide number from a reported March 2023 customs inspection of a Tramaco Express parcel. The public tracking page returned its landing form without shipment history."
+    }
+  ]
 }
