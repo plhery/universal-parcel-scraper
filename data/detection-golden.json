@@ -19817,6 +19817,26 @@
     ]
   },
   {
+    "input": "13918033",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
+    "input": "13923987",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner"
+    ]
+  },
+  {
     "input": "1395-W2BK-8F7H",
     "carrier": "gogo-xpress",
     "confidence": "high",
@@ -20615,6 +20635,17 @@
       "dpd-nl",
       "dpd-de",
       "chronopost"
+    ]
+  },
+  {
+    "input": "14846123",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "mondial-relay",
+      "colisweb",
+      "heppner",
+      "tforce-freight"
     ]
   },
   {
@@ -60679,6 +60710,14 @@
       "dpd",
       "dpd-nl",
       "dpd-de"
+    ]
+  },
+  {
+    "input": "6702307",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "seur"
     ]
   },
   {

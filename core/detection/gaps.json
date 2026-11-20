@@ -5036,5 +5036,11 @@
     "pattern": "^TRI[0-9]{13}$",
     "kind": "open",
     "reason": "A published iFLOW tracking result displays this TRI-prefixed shipment number. Detection does not offer iFLOW."
+  },
+  {
+    "carrier": "hub-group-final-mile",
+    "pattern": "^[0-9]{7,8}$",
+    "kind": "open",
+    "reason": "NSD public tracking links and recipient reports use these seven- and eight-digit references. Detection does not offer Hub Group Final Mile."
   }
 ]
