@@ -117,12 +117,13 @@ describe('J&T Brazil guest history', () => {
     expect(JSON.parse(String(fetcher.mock.calls[1]![1]!.body)).maxTimeout).toBeGreaterThanOrEqual(40000);
     // A second refusal of the image ends the lookup as before.
     const twice = vi.fn<typeof fetch>().mockImplementation(async () => reply([], 'jt-br-ambiguous_image'));
-    await expect(tracker(twice).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+    await expect(tracker(twice).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'ambiguous_image' });
     expect(twice).toHaveBeenCalledTimes(2);
     // Without room for a solved run, or after a drag the puzzle refused, it asks once.
     for (const [reason, budgetMs] of [['jt-br-ambiguous_image', 50000], ['jt-br-verification_unfinished', undefined]] as const) {
       const once = vi.fn<typeof fetch>().mockImplementation(async () => reply([], reason));
-      await expect(tracker(once).fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+      await expect(tracker(once).fetch(NUMBER, { budgetMs })).rejects.toMatchObject({ kind: 'challenge',
+        reason: reason === 'jt-br-ambiguous_image' ? 'ambiguous_image' : 'verification_unfinished' });
       expect(once).toHaveBeenCalledTimes(1);
     }
     // A form sent without its reply coming back says so; a helper that failed to run does not.
@@ -132,6 +133,26 @@ describe('J&T Brazil guest history', () => {
     const failure: unknown = await tracker(broken).fetch(NUMBER).catch((error: unknown) => error);
     expect(failure).toMatchObject({ kind: 'transport' });
     expect(failure).not.toHaveProperty('reason', 'capture_missing');
+  });
+  it('reports the final helper abstention after a bounded retry without exposing arbitrary service reasons', async () => {
+    const reply = (reason: string) => new Response(JSON.stringify({ url: `${JT_BR_PAGE}?waybillNo=${NUMBER}`,
+      html: '', tier: 3, statusCode: 200, cookies: [], capturedResponses: [], timings: [{ reason }] }));
+    const fetcher = vi.fn<typeof fetch>().mockResolvedValueOnce(reply('jt-br-ambiguous_image'))
+      .mockResolvedValueOnce(reply('jt-br-stale_generation'));
+    const tracker = new JAndTBrTracker({ fetcher, recorder: NOOP_RECORDER, env: {}, browserExecutablePath: null, trawl: new TrawlClient(SERVICE) });
+    await expect(tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'stale_generation' });
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    const injected = 'jt-br-untrusted?number=' + NUMBER + '&token=SYNTHETIC';
+    const failure: unknown = await harness([], { timings: [{ reason: injected }] }).tracker.fetch(NUMBER).catch((e: unknown) => e);
+    expect(failure).toMatchObject({ kind: 'challenge', reason: 'verification_unfinished' });
+    expect(JSON.stringify(failure)).not.toContain(NUMBER);
+    expect(JSON.stringify(failure)).not.toContain('SYNTHETIC');
+  });
+  it('keeps captured success and upstream failures ahead of an abstention diagnostic', async () => {
+    const timings = [{ reason: 'jt-br-unsupported_drag_geometry' }];
+    await expect(harness([capture()], { timings }).tracker.fetch(NUMBER)).resolves.toMatchObject({ status: 'delivered' });
+    await expect(harness([], { timings, statusCode: 503 }).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'maintenance', status: 503 });
+    await expect(harness([], { timings }).tracker.fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge', reason: 'unsupported_drag_geometry' });
   });
   it('does not start I/O without a browser, sufficient budget or an active signal', async () => {
     await expect(new JAndTBrTracker({ env: {}, browserExecutablePath: null, recorder: NOOP_RECORDER, trawl: null }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'challenge' });

@@ -13,6 +13,8 @@ a solved run of about half a minute: the new context draws another image. No pro
 is asked about a J&T Brazil parcel ([COVERAGE.md](../../providers/COVERAGE.md)). Every answer
 costs a solved puzzle, about half a minute of browser time, so the catalog asks for a refresh
 at most every half hour, and an hour after a failed one, out for delivery included.
+Challenge diagnostics distinguish an uncertain image or a changed drag from verification
+that did not finish, using the final helper attempt's result.
 
 The request and positive reply must name the whole domestic waybill. A successful reply with
 an empty list, or with no data as for a waybill J&T has no record of yet, is no history rather

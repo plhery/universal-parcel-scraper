@@ -17,6 +17,12 @@ function lastReason(page: TrawlScrapeResponse): string {
 // the gap in. A new browser context draws another image, and a solved run takes about half a minute.
 const ABSTAINED = 'jt-br-ambiguous_image';
 const RETRY_MIN_MS = 40_000;
+const VERIFICATION_REASONS = new Map([
+  [ABSTAINED, 'ambiguous_image'],
+  ['jt-br-stale_generation', 'stale_generation'],
+  ['jt-br-unsupported_drag_geometry', 'unsupported_drag_geometry'],
+  ['jt-br-drag_outside_track', 'drag_outside_track'],
+]);
 export class JAndTBrTracker {
   constructor(private readonly environment: AdapterEnvironment) {}
   async fetch(raw: string, context: TrackingContext = {}): Promise<CarrierResult> {
@@ -79,7 +85,9 @@ export class JAndTBrTracker {
         throw new TransportError(PROVIDER, 'J&T Brazil could not complete its guest response capture',
           lastReason(page) === 'jt-br-capture_missing' ? { reason: 'capture_missing' } : undefined);
       }
-      throw new ChallengeError(PROVIDER, 'J&T Brazil returned no bound guest reply', { reason: 'verification_unfinished' });
+      throw new ChallengeError(PROVIDER, 'J&T Brazil returned no bound guest reply', {
+        reason: VERIFICATION_REASONS.get(lastReason(page)) ?? 'verification_unfinished',
+      });
     } }]);
   }
 }
