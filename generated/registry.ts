@@ -16,6 +16,7 @@ import { adapter as aaaCooper } from '../carriers/aaa-cooper/adapter.js';
 import { adapter as abCourier } from '../carriers/ab-courier/adapter.js';
 import { adapter as abfFreight } from '../carriers/abf-freight/adapter.js';
 import { adapter as aciExpressKr } from '../carriers/aci-express-kr/adapter.js';
+import { adapter as acplCargo } from '../carriers/acpl-cargo/adapter.js';
 import { adapter as acsCourier } from '../carriers/acs-courier/adapter.js';
 import { adapter as aerolineasArgentinasCargo } from '../carriers/aerolineas-argentinas-cargo/adapter.js';
 import { adapter as aeropost } from '../carriers/aeropost/adapter.js';
@@ -1032,6 +1033,7 @@ export const REGISTRY: RegistryDefinition = {
     "ab-courier": abCourier,
     "abf-freight": abfFreight,
     "aci-express-kr": aciExpressKr,
+    "acpl-cargo": acplCargo,
     "acs-courier": acsCourier,
     "aerolineas-argentinas-cargo": aerolineasArgentinasCargo,
     "aeropost": aeropost,
@@ -2064,6 +2066,7 @@ export const REGISTRY: RegistryDefinition = {
     "ace-lv": "universal",
     "acex": "universal",
     "aci-express-kr": "aci-express-kr",
+    "acpl-cargo": "acpl-cargo",
     "acs-courier": "acs-courier",
     "act-argos": "universal",
     "act-logistics": "universal",

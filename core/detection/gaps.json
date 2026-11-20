@@ -6118,5 +6118,11 @@
     "pattern": "^466[A-Z]{3}\\d{8}$",
     "kind": "open",
     "reason": "Air Inuit's waybills are its 466 prefix, the issuing station and an eight-digit serial; detection has no rule for them yet."
+  },
+  {
+    "carrier": "acpl-cargo",
+    "pattern": "^\\d{10}$",
+    "kind": "collision",
+    "reason": "Ten-digit ACPL Cargo GC numbers share their shape with many carriers' numeric waybills, so the shape cannot name ACPL Cargo."
   }
 ]

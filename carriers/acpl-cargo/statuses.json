@@ -1,0 +1,10 @@
+{
+  "carrier": "acpl-cargo",
+  "entries": [
+    {"code": "Booking GC", "wording": "Booking GC", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The origin branch booked the consignment and issued its GC."},
+    {"code": "Out for next station", "wording": "Out for next station", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The consignment left for the next branch or hub on its way."},
+    {"code": "Arrived", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The consignment arrived at a hub or at the destination branch."},
+    {"code": "Out for delivery", "wording": "Out for delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "bundle", "note": "The tracker's script looks for this movement to show the delivery run."},
+    {"code": "Delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The destination branch delivered the consignment."}
+  ]
+}
