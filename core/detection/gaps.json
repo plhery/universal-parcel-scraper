@@ -5084,5 +5084,11 @@
     "pattern": "^F[0-9]{11}$",
     "kind": "open",
     "reason": "A recipient names Furdeco as the carrier and publishes this F-prefixed tracking number. Detection does not offer Furdeco."
+  },
+  {
+    "carrier": "focus-logistics-il",
+    "pattern": "^[0-9]{7}$",
+    "kind": "open",
+    "reason": "The customer distinguishes this seven-digit Focus shipment reference from the merchant’s order reference. Detection does not offer Focus Logistics."
   }
 ]
