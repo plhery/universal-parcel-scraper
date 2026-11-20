@@ -1866,6 +1866,12 @@
     "reason": "Ilyang Logis waybills are bare digit runs with a mod-7 check digit, which other carriers' numbers of the same length also pass, so nothing in the number points to Ilyang Logis."
   },
   {
+    "carrier": "indopaket",
+    "pattern": "^(?:IP|SP)\\d{13}$",
+    "kind": "open",
+    "reason": "Detection does not offer Indopaket for the IP receipt numbers or the SP waybill reported for its Shopee return service."
+  },
+  {
     "carrier": "inpost",
     "pattern": "^\\d{8}$",
     "kind": "by_design",

@@ -1,5 +1,68 @@
 {
   "carrier": "indopaket",
-  "gap": "No public page shows an Indopaket receipt number.",
-  "records": []
+  "records": [
+    {
+      "number": "IP4241217085858",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2024/12/21/surat-pembaca/layanan-ekspedisi-indopaket-indomaret-sangat-mengecewakan",
+        "date": "2024-12-21",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indopaket pickup and delivery",
+        "reportedRole": "tracking receipt number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sender gives this as the receipt number generated in the Indopaket app and reports a dated pickup status."
+    },
+    {
+      "number": "IP4260320155440",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2026/04/14/tanggapan/tanggapan-perihal-kiriman-indopaket-ke-sesama-jakarta-sudah-2-minggu-tak-kunjung-sampai-dan-tanpa-kejelasan",
+        "date": "2026-04-14",
+        "dateKind": "carrier reply",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "Indopaket Jakarta delivery",
+        "reportedRole": "tracking receipt number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Indopaket's public response to the sender identifies this receipt number and reports the date and time the parcel was delivered."
+    },
+    {
+      "number": "SP3240913094734",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mediakonsumen.com/2024/10/20/surat-pembaca/paket-retur-oleh-indopaket-tidak-pernah-diterima-shopee-belum-memberikan-ganti-rugi-padahal-sudah-menyatakan-akan-diganti",
+        "date": "2024-10-20",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Indopaket Reverse for Shopee",
+        "reportedRole": "return waybill",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The Shopee seller identifies Indopaket Reverse, gives the return waybill and reports dated scans for it."
+    }
+  ]
 }
