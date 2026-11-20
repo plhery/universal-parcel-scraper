@@ -1,0 +1,35 @@
+{
+  "carrier": "apm-logistics",
+  "records": [
+    {
+      "number": "3000266983",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://apmlogistics.id/cek-resi",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Domestic freight",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The example APM Logistics's tracking form prints in its search box, also the deep link its site script gives as an example. The tracker answers it with a parcel received at its Medan branch and handed on to a partner for Jakarta."
+    }
+  ]
+}

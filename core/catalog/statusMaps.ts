@@ -24,6 +24,7 @@ import { statusMap as hellmannStatus } from '../../carriers/hellmann/status.js';
 import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
 import { statusMap as xlsFutarStatus } from '../../carriers/xls-futar/status.js';
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
+import { statusMap as apmLogistics } from '../../carriers/apm-logistics/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
 import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
 import { statusMap as laserLogistics } from '../../carriers/laser-logistics/status.js';
@@ -871,6 +872,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   libanpost,
   'om-logistics': omLogistics,
   'apd-parcel': apdParcel,
+  'apm-logistics': apmLogistics,
   'carrybee': carrybee,
   'huuneh': huuneh,
   'laser-logistics': laserLogistics,

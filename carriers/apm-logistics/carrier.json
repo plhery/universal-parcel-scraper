@@ -1,0 +1,87 @@
+{
+  "id": "apm-logistics",
+  "displayName": "APM Logistics",
+  "aliases": [
+    "PT APM Logistics"
+  ],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#132f5e"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "apm-logistics",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://apmlogistics.id/cek-resi?resi={trackingNumber}",
+    "searchUrl": "https://apmlogistics.id/cek-resi",
+    "canaryUrl": "https://apmlogistics.id/cek-resi",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "departure_date",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "delivered_at",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "delivered_at"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "departure_date",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "sender_name",
+      "recipient_name",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "apmlogistics.id"
+      ],
+      "pathPattern": "^/cek-resi/?$",
+      "params": [
+        "resi"
+      ]
+    }
+  ],
+  "detection": []
+}

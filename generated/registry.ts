@@ -48,6 +48,7 @@ import { adapter as apcOvernight } from '../carriers/apc-overnight/adapter.js';
 import { adapter as apcPostalLogistics } from '../carriers/apc-postal-logistics/adapter.js';
 import { adapter as apdParcel } from '../carriers/apd-parcel/adapter.js';
 import { adapter as apgEcommerce } from '../carriers/apg-ecommerce/adapter.js';
+import { adapter as apmLogistics } from '../carriers/apm-logistics/adapter.js';
 import { adapter as appleExpress } from '../carriers/apple-express/adapter.js';
 import { adapter as aquiline } from '../carriers/aquiline/adapter.js';
 import { adapter as aramex } from '../carriers/aramex/adapter.js';
@@ -936,6 +937,7 @@ export const REGISTRY: RegistryDefinition = {
     "apc-postal-logistics": apcPostalLogistics,
     "apd-parcel": apdParcel,
     "apg-ecommerce": apgEcommerce,
+    "apm-logistics": apmLogistics,
     "apple-express": appleExpress,
     "aquiline": aquiline,
     "aramex": aramex,
@@ -1889,6 +1891,7 @@ export const REGISTRY: RegistryDefinition = {
     "apd-parcel": "apd-parcel",
     "apg-ecommerce": "apg-ecommerce",
     "apg-global": "universal",
+    "apm-logistics": "apm-logistics",
     "apollo-budbiler": "universal",
     "apple-express": "apple-express",
     "apx-logistics": "universal",

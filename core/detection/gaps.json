@@ -5492,5 +5492,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "apm-logistics",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "APM Logistics' waybills are ten bare digits, a shape many carriers share; detection has no rule for them yet."
   }
 ]
