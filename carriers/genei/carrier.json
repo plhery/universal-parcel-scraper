@@ -52,7 +52,7 @@
         "www.genei.es",
         "genei.es"
       ],
-      "path": "^/seguimiento-envios/?$",
+      "pathPattern": "^/seguimiento-envios/?$",
       "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
       "detectFromNumber": false
     }

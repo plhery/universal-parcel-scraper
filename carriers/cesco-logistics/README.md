@@ -10,5 +10,5 @@ waybill. It keeps the completed milestones and their local scan times. The
 timeline supplies the shipment status. The delivery photo and recipient name
 are omitted.
 
-Set `CESCO_LOGISTICS_NUMBER` and run
+Set `CESCO_LOGISTICS_TRACKING_NUMBER` and run
 `npm run test:carriers:live -- carriers/cesco-logistics` to check a public sample.

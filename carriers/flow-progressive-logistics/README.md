@@ -10,5 +10,5 @@ Delivery scheduling and the short internal labels stay unstaged when the carrier
 gives no clear shipping milestone.
 
 The tracker renders the result after a form POST. The public link opens the form
-for manual entry. Run the live test with `FLOW_PROGRESSIVE_LOGISTICS_NUMBER` set
+for manual entry. Run the live test with `FLOW_PROGRESSIVE_LOGISTICS_TRACKING_NUMBER` set
 and `npm run test:carriers:live -- carriers/flow-progressive-logistics`.

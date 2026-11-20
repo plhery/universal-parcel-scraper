@@ -16,4 +16,4 @@ PaqMex, also known as Autolíneas Villarreal, offers domestic parcel and freight
 
 ## Testing
 
-Run `npm exec vitest -- run carriers/paqmex/adapter.test.ts`. Set `PAQMEX_NUMBER` and run `npm run test:carriers:live -- carriers/paqmex` to query the native tracker.
+Run `npm exec vitest -- run carriers/paqmex/adapter.test.ts`. Set `PAQMEX_TRACKING_NUMBER` and run `npm run test:carriers:live -- carriers/paqmex` to query the native tracker.

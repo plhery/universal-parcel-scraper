@@ -10,5 +10,5 @@ reported message. It reads the dated booking and departure messages with their a
 clock precision. Flight schedules, unsigned template rows, cancelled messages and package
 details stay out of the events.
 
-Set `ASTRAL_AVIATION_NUMBER` and run
+Set `ASTRAL_AVIATION_TRACKING_NUMBER` and run
 `npm run test:carriers:live -- carriers/astral-aviation` to verify a sample.

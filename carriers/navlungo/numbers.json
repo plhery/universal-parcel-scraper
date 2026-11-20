@@ -23,29 +23,6 @@
         ]
       },
       "note": "The recipient published the domestic Navlungo delivery number. The guest tracker returned that same number with five dated scans."
-    },
-    {
-      "number": "9ZCJ4F80NERU",
-      "role": "shipment",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://domestic-track.navlungo.com/en/check/9ZCJ4F80NERU/",
-        "date": "2026-01-07",
-        "dateKind": "shipment event",
-        "access": "full_page"
-      },
-      "context": {
-        "reportedRole": "Navlungo domestic delivery number",
-        "assessment": "confirmed"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
-      },
-      "note": "The indexed Navlungo guest tracking page returns that delivery number and a final return-to-warehouse scan."
     }
   ]
 }

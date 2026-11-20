@@ -184,11 +184,6 @@
     "reason": "Eight digits are printed by many carriers and nothing in the number points to Alem TAT."
   },
   {
-    "kind": "open",
-    "carrier": "alhosary-shipping",
-    "reason": "The two public AHS examples return freight histories. The carrier remains selectable while issued format and overlaps are unconfirmed."
-  },
-  {
     "carrier": "allegro-one",
     "pattern": "^ALE\\d{12}$",
     "kind": "by_design",
@@ -211,11 +206,6 @@
     "pattern": "^AM\\d{9}$",
     "kind": "by_design",
     "reason": "One archived lookup on AM Home Delivery's tracking page shows AM and nine digits; a single sample is too thin to claim the prefix."
-  },
-  {
-    "kind": "open",
-    "carrier": "amanat-logistics-af",
-    "reason": "The carrier confirms one published tracking number. Explicit selection is available while issued formats and overlaps remain open."
   },
   {
     "carrier": "amazon-logistics",
@@ -444,11 +434,6 @@
     "reason": "An alternative tracking number that Big Smart's tracker accepts beside its own; its shape comes from one shipper's system, so no rule claims it."
   },
   {
-    "kind": "open",
-    "carrier": "bja-logistic",
-    "reason": "BJA publishes and confirms short numeric shipment references. Explicit selection is available while issuance and numeric overlaps remain open."
-  },
-  {
     "carrier": "blitznow",
     "pattern": "^GS\\d{10}$",
     "kind": "open",
@@ -501,11 +486,6 @@
     "pattern": "^\\d{7,10}$",
     "kind": "by_design",
     "reason": "Bosta's seven- to ten-digit shipment numbers are a bare digit run many carriers share."
-  },
-  {
-    "kind": "open",
-    "carrier": "bss-express-direct",
-    "reason": "The site confirms the published BSS receipt. Explicit selection is available while receipt families and overlaps remain open."
   },
   {
     "carrier": "bts-uz",
@@ -827,11 +807,6 @@
     "reason": "Twelve characters are a shape several carriers print, and nothing in the number points to CouriersPlease."
   },
   {
-    "kind": "open",
-    "carrier": "cpx-guatemala",
-    "reason": "CPX confirms its one published FGUA reference. Explicit selection is available while issuance, printed segments and overlaps remain open."
-  },
-  {
     "carrier": "credifin",
     "pattern": "^\\d{18}$",
     "kind": "collision",
@@ -890,11 +865,6 @@
     "pattern": "^[A-Z]{2}\\d{10}$",
     "kind": "by_design",
     "reason": "Two letters and ten digits are printed by other carriers too, and the letters vary by D Express sender."
-  },
-  {
-    "kind": "open",
-    "carrier": "d-jesu-comer",
-    "reason": "The published DJC guide returns its tracking milestones. Explicit selection is available while issued formats and overlaps remain open."
   },
   {
     "carrier": "dachser",
@@ -1393,11 +1363,6 @@
     "reason": "One number from EWE's older tracker has this layout; a single sample is too thin to claim it."
   },
   {
-    "kind": "open",
-    "carrier": "ewl-costa-rica",
-    "reason": "The guest tracker confirms its one public guide. Explicit selection is available while guide issuance and overlaps remain open."
-  },
-  {
     "carrier": "exline-kz",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
@@ -1486,11 +1451,6 @@
     "pattern": "^(?:SON1\\d{10}|IND\\d{13})$",
     "kind": "by_design",
     "reason": "Retailers' own package IDs that FleetOptics tracks as given; their prefixes name the shipper, not the carrier."
-  },
-  {
-    "kind": "open",
-    "carrier": "fletes-del-sur",
-    "reason": "Both published PFS guides share a seven-digit shape with other carriers. The native adapter is available by explicit selection."
   },
   {
     "carrier": "flickpost",
@@ -2196,21 +2156,10 @@
     "reason": "Fifteen- and sixteen-digit resi numbers carry no JNE marker and other carriers print the same lengths."
   },
   {
-    "carrier": "joma-logistics",
-    "pattern": "^JL[0-9]{13}$",
-    "kind": "open",
-    "reason": "The carrier's public invoice example returns a dated departure history. Detection does not offer JOMA for the normalized departure reference."
-  },
-  {
     "carrier": "jrs-express",
     "pattern": "^\\d{6}(?:\\d{3,4})?$",
     "kind": "by_design",
     "reason": "A JRS airbill is a short receipt number that only identifies a parcel together with the branch code, alone or followed by it, so its digits cannot point to JRS."
-  },
-  {
-    "kind": "open",
-    "carrier": "jyldam-logistics",
-    "reason": "The native tracker confirms one full JL reference. Explicit selection is available while issued formats and overlaps remain open."
   },
   {
     "carrier": "kargoist",
@@ -2416,21 +2365,10 @@
     "reason": "Linear Logistics numbers are DX's ten-digit secure-delivery references, and ten digits are shared by many carriers, so no rule claims them."
   },
   {
-    "kind": "open",
-    "carrier": "livra-lynx",
-    "reason": "The native tracker confirms its public numeric parcel example. Explicit selection is available while issuance and numeric overlaps remain open."
-  },
-  {
     "carrier": "logen",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
     "reason": "Eleven digits with a mod-7 check digit are shared with Japan Post and several other carriers, and nothing in the number points to Logen."
-  },
-  {
-    "carrier": "logexim-express",
-    "number": "903088",
-    "kind": "by_design",
-    "reason": "A numeric freight waybill does not establish ownership. Use explicit selection."
   },
   {
     "carrier": "logisimple",
@@ -2558,11 +2496,6 @@
     "reason": "Maruti Air document numbers are plain runs of eight to ten digits, a shape many carriers share."
   },
   {
-    "kind": "open",
-    "carrier": "mbg-africa",
-    "reason": "The guest tracker confirms the carrier's public demo reference. Issued consignment formats and overlaps remain open."
-  },
-  {
     "carrier": "mds-collivery",
     "pattern": "^\\d{7}$",
     "kind": "by_design",
@@ -2657,12 +2590,6 @@
     "pattern": "^[A-Z0-9]{12}$",
     "kind": "open",
     "reason": "Navlungo’s domestic tracker confirms both 12-character delivery numbers. Select Navlungo explicitly for this shared shape."
-  },
-  {
-    "carrier": "ncm-capar",
-    "pattern": "^NCM-?\\d{9}$",
-    "kind": "open",
-    "reason": "The carrier documents the NCM prefix and its public example resolves through explicit selection."
   },
   {
     "carrier": "ncs-courier",
@@ -2815,11 +2742,6 @@
     "reason": "Eight digits are shared by several carriers, and Oak Harbor's PROs carry no check digit that could point to it."
   },
   {
-    "kind": "open",
-    "carrier": "obana-logistics",
-    "reason": "The public tracker confirms one published OBN reference. Explicit selection is available while issued formats and overlaps remain open."
-  },
-  {
     "carrier": "ocasa",
     "pattern": "^\\d{11}$",
     "kind": "collision",
@@ -2921,11 +2843,6 @@
     "reason": "Paack identifiers are retailer order numbers with no stable shape, so one can match another carrier's rule."
   },
   {
-    "kind": "open",
-    "carrier": "pack-express-gt",
-    "reason": "The guest tracker confirms the published PE guide. Explicit selection is available while issuance and overlaps remain open."
-  },
-  {
     "carrier": "pack-man",
     "pattern": "^A\\d{8}$",
     "kind": "by_design",
@@ -2964,12 +2881,6 @@
     "carrier": "paqueteria-vencedor",
     "kind": "open",
     "reason": "Vencedor's guest tracker confirms these ten-digit guides. Several other carriers share the shape, so Vencedor is offered through explicit selection."
-  },
-  {
-    "carrier": "paquetex",
-    "number": "46086",
-    "kind": "by_design",
-    "reason": "PaquetEx box numbers overlap other carriers' references. Use explicit selection."
   },
   {
     "carrier": "parcel2go",
@@ -3130,12 +3041,6 @@
     "pattern": "^\\d{12}[A-Z]\\d{4}$",
     "kind": "by_design",
     "reason": "The only PMM number seen is an example in its help chat, too little to claim the layout."
-  },
-  {
-    "carrier": "pochtai-asr",
-    "pattern": "^ASR[0-9]{5}$",
-    "kind": "open",
-    "reason": "Pochtai Asr's public tracking example returns its own history. Detection currently offers other carriers for the normalized number."
   },
   {
     "carrier": "pony-express",
@@ -3838,12 +3743,6 @@
     "reason": "Fourteen digits are shared by several carriers and nothing in the number points to Sürat Kargo."
   },
   {
-    "carrier": "swift-drop-ae",
-    "pattern": "^SDDEMO$",
-    "kind": "by_design",
-    "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
-  },
-  {
     "carrier": "swiss-post-cargo",
     "kind": "by_design",
     "reason": "The shipment number goes with a company number; eight digits alone are generic."
@@ -4017,11 +3916,6 @@
     "reason": "Retailers' own package IDs, which TForce Logistics tracks as given; their prefixes name the shipper, not the carrier."
   },
   {
-    "kind": "open",
-    "carrier": "thai-nexus",
-    "reason": "The carrier confirms its published TNX waybill and separate demo. Explicit selection is available while issuance, suffix lengths, and overlaps remain open."
-  },
-  {
     "carrier": "the-courier-guy",
     "pattern": "^[A-Z0-9]{5,6}$",
     "kind": "by_design",
@@ -4122,11 +4016,6 @@
     "pattern": "^JP\\d{7}$",
     "kind": "by_design",
     "reason": "Qxpress lookups for JP and seven digits show no history, so nothing tells who issues them or whether they are tracking numbers."
-  },
-  {
-    "kind": "open",
-    "carrier": "tradiva-logistics",
-    "reason": "The public tracker confirms a labelled Tradiva demo under its own reference and container aliases. Explicit selection is available while issued number formats and overlaps remain open."
   },
   {
     "carrier": "trans-o-flex",

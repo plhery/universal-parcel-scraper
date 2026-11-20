@@ -1,39 +1,18 @@
-import { statusMap as mbgAfrica } from '../../carriers/mbg-africa/status.js';
-import { statusMap as obanaLogistics } from '../../carriers/obana-logistics/status.js';
-import { statusMap as packExpressGt } from '../../carriers/pack-express-gt/status.js';
-import { statusMap as amanatLogisticsAf } from '../../carriers/amanat-logistics-af/status.js';
-import { statusMap as livraLynx } from '../../carriers/livra-lynx/status.js';
-import { statusMap as tradivaLogistics } from '../../carriers/tradiva-logistics/status.js';
-import { statusMap as cpxGuatemala } from '../../carriers/cpx-guatemala/status.js';
-import { statusMap as ewlCostaRica } from '../../carriers/ewl-costa-rica/status.js';
-import { statusMap as bjaLogistic } from '../../carriers/bja-logistic/status.js';
 import { statusMap as cescoLogistics } from '../../carriers/cesco-logistics/status.js';
 import { statusMap as rosaliaExpress } from '../../carriers/rosalia-express/status.js';
-import { statusMap as bssExpressDirect } from '../../carriers/bss-express-direct/status.js';
-import { statusMap as dJesuComer } from '../../carriers/d-jesu-comer/status.js';
 import { statusMap as icasaCargo } from '../../carriers/icasa-cargo/status.js';
-import { statusMap as thaiNexus } from '../../carriers/thai-nexus/status.js';
 import { statusMap as flowProgressiveLogistics } from '../../carriers/flow-progressive-logistics/status.js';
-import { statusMap as jyldamLogistics } from '../../carriers/jyldam-logistics/status.js';
-import { statusMap as alhosaryShipping } from '../../carriers/alhosary-shipping/status.js';
 import { statusMap as astralAviation } from '../../carriers/astral-aviation/status.js';
 import { statusMap as paqmex } from '../../carriers/paqmex/status.js';
 import { statusMap as parcelninja } from '../../carriers/parcelninja/status.js';
-import { statusMap as fletesDelSur } from '../../carriers/fletes-del-sur/status.js';
 import { statusMap as cootranstame } from '../../carriers/cootranstame/status.js';
 import { statusMap as ibexExpressBo } from '../../carriers/ibex-express-bo/status.js';
 import { statusMap as redecarga } from '../../carriers/redecarga/status.js';
-import { statusMap as logeximExpress } from '../../carriers/logexim-express/status.js';
-import { statusMap as paquetEx } from '../../carriers/paquetex/status.js';
-import { statusMap as jomaLogistics } from '../../carriers/joma-logistics/status.js';
-import { statusMap as pochtaiAsr } from '../../carriers/pochtai-asr/status.js';
 import { statusMap as paqueteriaVencedor } from '../../carriers/paqueteria-vencedor/status.js';
-import { statusMap as swiftDropAe } from '../../carriers/swift-drop-ae/status.js';
 import { statusMap as aHartrodt } from '../../carriers/a-hartrodt/status.js';
 import { statusMap as airEuropaCargo } from '../../carriers/air-europa-cargo/status.js';
 import { statusMap as navlungo } from '../../carriers/navlungo/status.js';
 import { statusMap as genei } from '../../carriers/genei/status.js';
-import { statusMap as ncmCapar } from '../../carriers/ncm-capar/status.js';
 import { statusMap as otsAstracon } from '../../carriers/ots-astracon/status.js';
 import { statusMap as parcel2go } from '../../carriers/parcel2go/status.js';
 import { statusMap as bobGo } from '../../carriers/bob-go/status.js';
@@ -1115,8 +1094,8 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   yalidine, yamato, yanwen, 'ycs-logistics': ycsLogistics, ydh, 'yilong-logistics': yilongLogistics, yto, yunexpress, yunda, yusuda, ywbz, ywe, yypost, zto, 'zto-international': ztoInternational,
   'yurtici-kargo': yurticiKargo, zajil, zecheng, zeleris, 'zoom-ve': zoomVe, 'zr-express': zrExpress,
   'bob-go': bobGo, dypaq, navex,
-  'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ncm-capar': ncmCapar, 'ots-astracon': otsAstracon,
-  'mbg-africa': mbgAfrica, 'obana-logistics': obanaLogistics, 'pack-express-gt': packExpressGt, 'amanat-logistics-af': amanatLogisticsAf, 'livra-lynx': livraLynx, 'tradiva-logistics': tradivaLogistics, 'cpx-guatemala': cpxGuatemala, 'ewl-costa-rica': ewlCostaRica, 'bja-logistic': bjaLogistic, 'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'bss-express-direct': bssExpressDirect, 'd-jesu-comer': dJesuComer, 'icasa-cargo': icasaCargo, 'thai-nexus': thaiNexus, 'flow-progressive-logistics': flowProgressiveLogistics, 'jyldam-logistics': jyldamLogistics, 'alhosary-shipping': alhosaryShipping, 'fletes-del-sur': fletesDelSur, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'logexim-express': logeximExpress, paquetex: paquetEx, 'joma-logistics': jomaLogistics, 'pochtai-asr': pochtaiAsr, 'paqueteria-vencedor': paqueteriaVencedor, 'swift-drop-ae': swiftDropAe,
+  'a-hartrodt': aHartrodt, 'air-europa-cargo': airEuropaCargo, navlungo, genei, parcel2go, 'ots-astracon': otsAstracon,
+  'cesco-logistics': cescoLogistics, 'rosalia-express': rosaliaExpress, 'icasa-cargo': icasaCargo, 'flow-progressive-logistics': flowProgressiveLogistics, parcelninja, cootranstame, paqmex, 'astral-aviation': astralAviation, 'ibex-express-bo': ibexExpressBo, redecarga, 'paqueteria-vencedor': paqueteriaVencedor,
 };
 
 /** The carrier the app files the universal providers' scans under. */

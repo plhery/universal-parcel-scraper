@@ -10,5 +10,5 @@ The adapter keeps station labels where the tracker identifies a station.
 The carrier uses the same short status for travel and the local delivery run.
 The longer delivery wording identifies the latter.
 
-Run the live test with `ROSALIA_EXPRESS_NUMBER` set and
+Run the live test with `ROSALIA_EXPRESS_TRACKING_NUMBER` set and
 `npm run test:carriers:live -- carriers/rosalia-express`.

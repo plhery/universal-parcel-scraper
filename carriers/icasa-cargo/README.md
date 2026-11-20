@@ -10,5 +10,5 @@ contribute their own events. A departure uses the carrier's explicit Partió sca
 Movement events keep their airport codes and the local date and minute from the
 page. The fixtures retain the fields used by the adapter.
 
-Run the live test with `ICASA_CARGO_NUMBER` set and
+Run the live test with `ICASA_CARGO_TRACKING_NUMBER` set and
 `npm run test:carriers:live -- carriers/icasa-cargo`.

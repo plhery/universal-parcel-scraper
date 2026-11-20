@@ -10,5 +10,5 @@ delivery separately from the scan log. When the summary says delivered, the adap
 that observed timestamp alongside the history. The delivery estimate, parcel contents,
 personal details and proof of delivery are outside its scope.
 
-Set `IBEX_EXPRESS_BO_NUMBER` and run
+Set `IBEX_EXPRESS_BO_TRACKING_NUMBER` and run
 `npm run test:carriers:live -- carriers/ibex-express-bo` to verify a sample.

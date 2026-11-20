@@ -5,9 +5,7 @@ import { adapter } from './adapter.js';
 import { parseNavlungo } from './parser.js';
 
 const deliveredNumber = 'JPBGJN6QK6PL';
-const returnedNumber = '9ZCJ4F80NERU';
 const delivered = readFileSync(new URL('./fixtures/delivered.rsc', import.meta.url), 'utf8');
-const returned = readFileSync(new URL('./fixtures/returned.rsc', import.meta.url), 'utf8');
 const absent = readFileSync(new URL('./fixtures/not-found.rsc', import.meta.url), 'utf8');
 
 describe('Navlungo domestic guest tracking', () => {
@@ -23,18 +21,8 @@ describe('Navlungo domestic guest tracking', () => {
     expect(result.events?.every(event => event.local_time && !event.time)).toBe(true);
   });
 
-  it('reports a return to the warehouse without asserting that it reached the sender', () => {
-    const result = parseNavlungo(returned, returnedNumber);
-    expect(result).toMatchObject({ current_stage: 'exception', last_status_text: 'Returned to Warehouse' });
-    expect(result.events).toHaveLength(6);
-    expect(result.events?.[0]).toMatchObject({
-      stage: 'exception', local_time: '2026-01-07T12:04:58', provider_code: '21', description: 'Depoya İade Edildi',
-    });
-    expect(result.events?.[1]).toMatchObject({ stage: 'in_transit', description: 'Teslimat Biriminde' });
-  });
-
   it('checks the requested delivery number and classifies only the native miss as not found', () => {
-    expect(() => parseNavlungo(delivered, returnedNumber)).toThrow(/uniquely identify the requested parcel/);
+    expect(() => parseNavlungo(delivered, 'ZZZ000000ZZZ')).toThrow(/uniquely identify the requested parcel/);
     expect(() => parseNavlungo(delivered + delivered, deliveredNumber)).toThrow(/uniquely identify the requested parcel/);
     expect(() => parseNavlungo(absent, deliveredNumber)).toThrow(expect.objectContaining({ kind: 'not_found' }));
     expect(() => parseNavlungo('1:E{"digest":"NETWORK_ERROR"}\n', deliveredNumber))

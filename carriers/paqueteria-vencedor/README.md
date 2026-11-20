@@ -9,5 +9,5 @@ Events keep the office name and local wall clock shown by the carrier. The porta
 state a time zone for each scan. The tracking link opens the search form because the results
 depend on the form submission.
 
-Run the live test with `PAQUETERIA_VENCEDOR_NUMBER` supplied in the environment and
+Run the live test with `PAQUETERIA_VENCEDOR_TRACKING_NUMBER` supplied in the environment and
 `npm run test:carriers:live -- carriers/paqueteria-vencedor`.

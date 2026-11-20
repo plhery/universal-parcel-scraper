@@ -11,3 +11,5 @@ same timeline. The document links and supplementary details are outside this ada
 
 The [Colombia Compra Eficiente procurement record](https://operaciones.colombiacompra.gov.co/sites/cce_public/files/documentos_adicionales_oc/cuenta_no.1_6.pdf)
 publishes two guides. They returned nine and two dated events. Select Redecarga explicitly.
+
+Set `REDECARGA_TRACKING_NUMBER` and run `npm run test:carriers:live -- carriers/redecarga`.

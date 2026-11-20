@@ -8117,28 +8117,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "alhosary-shipping": {
-    "displayName": "Alhosary International Shipping",
-    "color": "#1a3668",
-    "aliases": [
-      "Alhosary Shipping",
-      "الحصري للشحن الدولي"
-    ],
-    "countries": [
-      "EG"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Cairo",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "alhosary-shipping"
-    },
-    "canaryUrl": "https://alhosaryshipping.com/tracking",
-    "trackingUrlTemplate": "https://alhosaryshipping.com/tracking",
-    "trackingSearchUrl": "https://alhosaryshipping.com/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "alil-post": {
     "displayName": "Alil Post",
     "color": "#f68c1e",
@@ -8500,32 +8478,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "amanat-logistics-af": {
-    "displayName": "Amanat Logistics",
-    "color": "#542146",
-    "aliases": [
-      "Amanat Logistics Kandahar",
-      "Amanat Logistics Afghanistan"
-    ],
-    "countries": [
-      "AF",
-      "UZ",
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kabul",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "amanat-logistics-af",
-      "localClocks": true,
-      "dateOnlyScans": true
-    },
-    "canaryUrl": "https://www.amanatlogistics.com/tracking/orders",
-    "trackingUrlTemplate": "https://www.amanatlogistics.com/tracking/orders?lang=en&code={trackingNumber}",
-    "trackingSearchUrl": "https://www.amanatlogistics.com/tracking/orders",
-    "linkRules": [],
     "detectionRules": []
   },
   "amazon-order": {
@@ -11788,28 +11740,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "bja-logistic": {
-    "displayName": "BJA Logistic",
-    "color": "#cc1f2a",
-    "aliases": [
-      "BJA Logistics"
-    ],
-    "countries": [
-      "ID"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Jakarta",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "bja-logistic",
-      "localClocks": true
-    },
-    "canaryUrl": "https://bjalogistic.id/cek-resi",
-    "trackingUrlTemplate": "https://bjalogistic.id/cek-resi?resi={trackingNumber}",
-    "trackingSearchUrl": "https://bjalogistic.id/cek-resi",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "bjs-home-delivery": {
     "displayName": "BJS Home Delivery",
     "color": "#feba30",
@@ -12949,28 +12879,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "bss-express-direct": {
-    "displayName": "BSS Express Direct",
-    "color": "#132747",
-    "aliases": [
-      "BSS Express"
-    ],
-    "countries": [
-      "HT",
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/Port-au-Prince",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "bss-express-direct"
-    },
-    "canaryUrl": "https://www.bssexpressdirect.com/track",
-    "trackingUrlTemplate": "https://www.bssexpressdirect.com/track/{trackingNumber}",
-    "trackingSearchUrl": "https://www.bssexpressdirect.com/track",
-    "linkRules": [],
     "detectionRules": []
   },
   "btc-logistic": {
@@ -17249,33 +17157,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "cpx-guatemala": {
-    "displayName": "CPX Guatemala",
-    "color": "#a3312b",
-    "aliases": [
-      "CPX",
-      "CPXBOX",
-      "CPX Box",
-      "Pio Tracking"
-    ],
-    "countries": [
-      "GT",
-      "US",
-      "ES"
-    ],
-    "selectable": true,
-    "timezone": "America/Guatemala",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "cpx-guatemala",
-      "localClocks": true
-    },
-    "canaryUrl": "https://tracking.cpxbox.com/",
-    "trackingUrlTemplate": "https://tracking.cpxbox.com/wr/{trackingNumber}",
-    "trackingSearchUrl": "https://tracking.cpxbox.com/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "crane-worldwide": {
     "displayName": "Crane Worldwide",
     "color": "#273572",
@@ -18006,31 +17887,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/(?:rs/pracenje-posiljaka|en/track-and-trace)/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "d-jesu-comer": {
-    "displayName": "D'Jesu COMER",
-    "color": "#3b235d",
-    "aliases": [
-      "D’Jesu Comer",
-      "Jesu Comer Paquetería"
-    ],
-    "countries": [
-      "MX",
-      "CU"
-    ],
-    "selectable": true,
-    "timezone": "America/Mexico_City",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "d-jesu-comer",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.jesucomer.com/rastreo-envio/",
-    "trackingUrlTemplate": "https://www.jesucomer.com/rastreo-envio/?orden={trackingNumber}",
-    "trackingSearchUrl": "https://www.jesucomer.com/rastreo-envio/",
-    "helpUrl": "https://www.jesucomer.com/paqueteria/",
-    "linkRules": [],
     "detectionRules": []
   },
   "dac-uy": {
@@ -24133,29 +23989,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "ewl-costa-rica": {
-    "displayName": "EWL Costa Rica",
-    "color": "#1563c0",
-    "aliases": [
-      "EWL",
-      "EWL Ecommerce WareHouse Logistic"
-    ],
-    "countries": [
-      "CR"
-    ],
-    "selectable": true,
-    "timezone": "America/Costa_Rica",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ewl-costa-rica",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ewl-cr.com/",
-    "trackingUrlTemplate": "https://ewl-cr.com/?guia={trackingNumber}",
-    "trackingSearchUrl": "https://ewl-cr.com/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "exelot": {
     "displayName": "Exelot",
     "color": "#2e00ab",
@@ -26275,30 +26108,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "fletes-del-sur": {
-    "displayName": "Paquetería y Fletes del Sur",
-    "color": "#eb2539",
-    "aliases": [
-      "PFS",
-      "Paqueteria y Fletes del Sur",
-      "Paquetería y Fletes del Sur S.A. de C.V."
-    ],
-    "countries": [
-      "MX"
-    ],
-    "selectable": true,
-    "timezone": "America/Mexico_City",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "fletes-del-sur",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.fletesdelsur.com/rastreo",
-    "trackingUrlTemplate": "https://www.fletesdelsur.com/rastreo/{trackingNumber}",
-    "trackingSearchUrl": "https://www.fletesdelsur.com/rastreo",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "flickpost": {
     "displayName": "Flickpost",
     "color": "#19c2e8",
@@ -27790,7 +27599,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.genei.es",
           "genei.es"
         ],
-        "path": "^/seguimiento-envios/?$",
+        "pathPattern": "^/seguimiento-envios/?$",
         "query": "(?:^|&)tracking=([A-Z0-9]{8})(?:&|$)",
         "detectFromNumber": false
       }
@@ -35013,30 +34822,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "joma-logistics": {
-    "displayName": "JOMA Logistics NYC",
-    "color": "#07364a",
-    "aliases": [
-      "JOMA Logistics"
-    ],
-    "countries": [
-      "TJ",
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "joma-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://jomalogisticsnyc.com/track",
-    "trackingUrlTemplate": "https://jomalogisticsnyc.com/track",
-    "trackingSearchUrl": "https://jomalogisticsnyc.com/track",
-    "helpUrl": "https://jomalogisticsnyc.com/rules",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "joom-logistics": {
     "displayName": "Joom Logistics",
     "color": "#2d2f43",
@@ -35472,29 +35257,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://jieyou.nextsls.com/tracking/app",
     "trackingSearchUrl": "https://jieyou.nextsls.com/tracking/app#/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "jyldam-logistics": {
-    "displayName": "Jyldam Logistics",
-    "color": "#118449",
-    "aliases": [
-      "JYLDAM",
-      "Жылдам Логистик"
-    ],
-    "countries": [
-      "KZ"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Almaty",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "jyldam-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://jyldam-logistics.kz/site/",
-    "trackingUrlTemplate": "https://jyldam-logistics.kz/site/",
-    "trackingSearchUrl": "https://jyldam-logistics.kz/site/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -38423,28 +38185,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "livra-lynx": {
-    "displayName": "Livra Lynx",
-    "color": "#143D31",
-    "aliases": [
-      "Livra Lynx Tunisie",
-      "ليفرا لينكس"
-    ],
-    "countries": [
-      "TN"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Tunis",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "livra-lynx"
-    },
-    "canaryUrl": "https://livra.tn/suivi/",
-    "trackingUrlTemplate": "https://livra.tn/suivi/",
-    "trackingSearchUrl": "https://livra.tn/suivi/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "ljx-express": {
     "displayName": "LJX Express",
     "color": "#d2001f",
@@ -38591,28 +38331,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "logexim-express": {
-    "displayName": "Logexim Express",
-    "color": "#d0171c",
-    "aliases": [
-      "LogExim Express Kazakhstan"
-    ],
-    "countries": [
-      "KZ"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Almaty",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "logexim-express",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.logeximexpress.kz/nayti-posylku",
-    "trackingUrlTemplate": "https://www.logeximexpress.kz/nayti-posylku",
-    "trackingSearchUrl": "https://www.logeximexpress.kz/nayti-posylku",
-    "linkRules": [],
     "detectionRules": []
   },
   "loggi": {
@@ -40491,29 +40209,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "mbg-africa": {
-    "displayName": "MBG-Africa",
-    "color": "#0B2A52",
-    "aliases": [
-      "MBG Africa",
-      "Muremera Business Group"
-    ],
-    "countries": [
-      "BI"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Bujumbura",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "mbg-africa",
-      "localClocks": true
-    },
-    "canaryUrl": "https://mbg-africa.com/track.php",
-    "trackingUrlTemplate": "https://mbg-africa.com/track.php?tn={trackingNumber}&lang=en",
-    "trackingSearchUrl": "https://mbg-africa.com/track.php",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "mds-collivery": {
     "displayName": "MDS Collivery",
     "color": "#00823d",
@@ -42290,28 +41985,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "ncm-capar": {
-    "displayName": "NCM Çapar",
-    "color": "#1663e0",
-    "aliases": [
-      "NCM Capar",
-      "NCM Çapar Kuryer"
-    ],
-    "countries": [
-      "AZ"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Baku",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ncm-capar",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ncmcapar.az/az/tracking",
-    "trackingSearchUrl": "https://ncmcapar.az/az/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "ncs-courier": {
     "displayName": "NCS Kurir",
     "color": "#243f80",
@@ -43455,28 +43128,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/quicktrace&[Pp][Rr][Oo]=([^/?#&]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "obana-logistics": {
-    "displayName": "Obana Logistics",
-    "color": "#1B3B5F",
-    "aliases": [
-      "Obana Africa",
-      "Obana.Africa"
-    ],
-    "countries": [
-      "NG"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Lagos",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "obana-logistics"
-    },
-    "canaryUrl": "https://logistics.obana.africa/",
-    "trackingUrlTemplate": "https://logistics.obana.africa/?track={trackingNumber}",
-    "trackingSearchUrl": "https://logistics.obana.africa/",
-    "linkRules": [],
     "detectionRules": []
   },
   "obibox": {
@@ -44744,29 +44395,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "pack-express-gt": {
-    "displayName": "Pack Express Guatemala",
-    "color": "#0C2340",
-    "aliases": [
-      "Pack Express",
-      "PackExpress GT"
-    ],
-    "countries": [
-      "GT"
-    ],
-    "selectable": true,
-    "timezone": "America/Guatemala",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pack-express-gt",
-      "localClocks": true
-    },
-    "canaryUrl": "https://packexpress.com.gt/rastreo-de-envios/",
-    "trackingUrlTemplate": "https://packexpress.com.gt/rastreo-de-envios/?guia={trackingNumber}",
-    "trackingSearchUrl": "https://packexpress.com.gt/rastreo-de-envios/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "pack-man": {
     "displayName": "Pack-Man",
     "color": "#06377b",
@@ -45482,32 +45110,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "canaryUrl": "https://www.grupovencedor.com/paqueteria",
     "trackingUrlTemplate": "https://www.grupovencedor.com/paqueteria",
     "trackingSearchUrl": "https://www.grupovencedor.com/paqueteria",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "paquetex": {
-    "displayName": "PaquetEx",
-    "color": "#003893",
-    "aliases": [
-      "Jump Express LLC"
-    ],
-    "countries": [
-      "GT",
-      "HN",
-      "MX",
-      "NI",
-      "SV",
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "paquetex"
-    },
-    "canaryUrl": "https://paquetex.net/tracking",
-    "trackingUrlTemplate": "https://paquetex.net/tracking?q={trackingNumber}",
-    "trackingSearchUrl": "https://paquetex.net/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -47518,35 +47120,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
           "www.pmm.com.mx"
         ],
         "path": "^/rastreo/([^/?#]+)/?$"
-      }
-    ],
-    "detectionRules": []
-  },
-  "pochtai-asr": {
-    "displayName": "Pochtai Asr",
-    "color": "#a62445",
-    "aliases": [
-      "Почтаи Аср"
-    ],
-    "countries": [
-      "TJ"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Dushanbe",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "pochtai-asr"
-    },
-    "canaryUrl": "https://apost.tj/en/tracking",
-    "trackingUrlTemplate": "https://apost.tj/en/tracking",
-    "trackingSearchUrl": "https://apost.tj/en/tracking",
-    "helpUrl": "https://apost.tj/en/help",
-    "linkRules": [
-      {
-        "domains": [
-          "apost.tj"
-        ],
-        "path": "^/(?:en/|ru/|tj/)?tracking/(ASR-\\d{5,29})/?$"
       }
     ],
     "detectionRules": []
@@ -56908,36 +56481,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "swift-drop-ae": {
-    "displayName": "Swift Drop",
-    "color": "#0a0a0a",
-    "aliases": [
-      "SwiftDrop",
-      "Swift Drop Express Delivery"
-    ],
-    "countries": [
-      "AE"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Dubai",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "swift-drop-ae"
-    },
-    "canaryUrl": "https://swiftdrop.ae/track",
-    "trackingUrlTemplate": "https://swiftdrop.ae/track",
-    "trackingSearchUrl": "https://swiftdrop.ae/track",
-    "helpUrl": "https://swiftdrop.ae/contact",
-    "linkRules": [
-      {
-        "domains": [
-          "swiftdrop.ae"
-        ],
-        "path": "^/track/(SD-[A-Z0-9]+)/?$"
-      }
-    ],
-    "detectionRules": []
-  },
   "swiftx": {
     "displayName": "SwiftX",
     "color": "#5e51d3",
@@ -58319,30 +57862,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/track-shipment/([^/?#]+)/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "thai-nexus": {
-    "displayName": "Thai Nexus",
-    "color": "#182e58",
-    "aliases": [
-      "Thai Nexus Express",
-      "Thai Nexus Logistics",
-      "Thai Nexus Point"
-    ],
-    "countries": [
-      "TH"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Bangkok",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "thai-nexus"
-    },
-    "canaryUrl": "https://tracking.thainexus.co.th/",
-    "trackingUrlTemplate": "https://tracking.thainexus.co.th/track/{trackingNumber}",
-    "trackingSearchUrl": "https://tracking.thainexus.co.th/",
-    "helpUrl": "https://thainexus.co.th/en/shipment-tracking",
-    "linkRules": [],
     "detectionRules": []
   },
   "the-delivery-group": {
@@ -59827,30 +59346,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "high"
       }
     ]
-  },
-  "tradiva-logistics": {
-    "displayName": "Tradiva Logistics",
-    "color": "#183553",
-    "aliases": [
-      "Tradiva",
-      "تراديفا للخدمات اللوجستية",
-      "تراديفا"
-    ],
-    "countries": [
-      "EG"
-    ],
-    "selectable": true,
-    "timezone": "Africa/Cairo",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "tradiva-logistics",
-      "localClocks": true
-    },
-    "canaryUrl": "https://tradivalogistics.com/tracking-1/",
-    "trackingUrlTemplate": "https://tradivalogistics.com/tracking-1/",
-    "trackingSearchUrl": "https://tradivalogistics.com/tracking-1/",
-    "linkRules": [],
-    "detectionRules": []
   },
   "tramaco": {
     "displayName": "Tramaco Express",
@@ -67142,7 +66637,6 @@ export const CARRIER_IDS = [
   "alfa-transportes",
   "alfta-frakt",
   "algerie-poste",
-  "alhosary-shipping",
   "alil-post",
   "allegro-one",
   "alliance-air-freight",
@@ -67155,7 +66649,6 @@ export const CARRIER_IDS = [
   "altex-curier",
   "am-home-delivery",
   "amalgamated-distribution",
-  "amanat-logistics-af",
   "amazon-order",
   "ambro-express",
   "ameex",
@@ -67251,7 +66744,6 @@ export const CARRIER_IDS = [
   "bigpost",
   "bir-gunde-kargo",
   "biz-courier",
-  "bja-logistic",
   "bjs-home-delivery",
   "bla-kurer",
   "blitznow",
@@ -67284,7 +66776,6 @@ export const CARRIER_IDS = [
   "bridge-intl",
   "bringer-parcel",
   "brink-transport",
-  "bss-express-direct",
   "btc-logistic",
   "btd",
   "bts-uz",
@@ -67412,7 +66903,6 @@ export const CARRIER_IDS = [
   "couriersplease",
   "cps-lastmile",
   "cpszy",
-  "cpx-guatemala",
   "crane-worldwide",
   "crc-post",
   "credifin",
@@ -67436,7 +66926,6 @@ export const CARRIER_IDS = [
   "cyprus-post",
   "czl-express",
   "d-express",
-  "d-jesu-comer",
   "dac-uy",
   "daewoo-fastex",
   "dago-express",
@@ -67603,7 +67092,6 @@ export const CARRIER_IDS = [
   "evri-uk",
   "evropat",
   "ewe",
-  "ewl-costa-rica",
   "exelot",
   "exline-kz",
   "exmate",
@@ -67667,7 +67155,6 @@ export const CARRIER_IDS = [
   "flechacarga",
   "fleetex",
   "fleetoptics",
-  "fletes-del-sur",
   "flickpost",
   "flight-logistics",
   "flippost",
@@ -67927,7 +67414,6 @@ export const CARRIER_IDS = [
   "jiufang",
   "jlog",
   "jne",
-  "joma-logistics",
   "joom-logistics",
   "jordan-post",
   "jp-home",
@@ -67940,7 +67426,6 @@ export const CARRIER_IDS = [
   "junfeng-international",
   "juxi-express",
   "jy-express",
-  "jyldam-logistics",
   "kaizen-express",
   "kakao-t-same-day",
   "kanga-services",
@@ -68030,12 +67515,10 @@ export const CARRIER_IDS = [
   "lionwheel",
   "litexpress",
   "liuchen",
-  "livra-lynx",
   "ljx-express",
   "lm-parcel",
   "loadmaster-no",
   "logen",
-  "logexim-express",
   "loggi",
   "logisimple",
   "logista-parcel",
@@ -68094,7 +67577,6 @@ export const CARRIER_IDS = [
   "mayiyinfu",
   "maystro-delivery",
   "mazet",
-  "mbg-africa",
   "mds-collivery",
   "mebel-taxi",
   "meest",
@@ -68156,7 +67638,6 @@ export const CARRIER_IDS = [
   "navata",
   "navex",
   "navlungo",
-  "ncm-capar",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -68188,7 +67669,6 @@ export const CARRIER_IDS = [
   "ntc-express",
   "nz-couriers",
   "oak-harbor",
-  "obana-logistics",
   "obibox",
   "oca",
   "ocasa",
@@ -68224,7 +67704,6 @@ export const CARRIER_IDS = [
   "oxperta-express",
   "ozon-express-ma",
   "ozon-logistics",
-  "pack-express-gt",
   "pack-man",
   "packli-punkt",
   "packlink",
@@ -68248,7 +67727,6 @@ export const CARRIER_IDS = [
   "paqline",
   "paqmex",
   "paqueteria-vencedor",
-  "paquetex",
   "paquetexpress",
   "paquexpress-urgente",
   "parcel-one",
@@ -68304,7 +67782,6 @@ export const CARRIER_IDS = [
   "plycon",
   "pml-tw",
   "pmm",
-  "pochtai-asr",
   "pointpack",
   "polaris-transport",
   "polonez",
@@ -68577,7 +68054,6 @@ export const CARRIER_IDS = [
   "svuum",
   "sway",
   "swftbox",
-  "swift-drop-ae",
   "swiftx",
   "swissconnect",
   "sxjd-freight",
@@ -68618,7 +68094,6 @@ export const CARRIER_IDS = [
   "tforce-integrated-solutions",
   "tforce-logistics",
   "thabit-logistics",
-  "thai-nexus",
   "the-delivery-group",
   "the-human-express",
   "thelorry",
@@ -68664,7 +68139,6 @@ export const CARRIER_IDS = [
   "trackon",
   "tracopa",
   "tracx-logis",
-  "tradiva-logistics",
   "tramaco",
   "trans-express-lk",
   "trans-o-flex",
@@ -69073,7 +68547,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "alfa-transportes": [],
   "alfta-frakt": [],
   "algerie-poste": ["algerie-poste-1","algerie-poste-s10","algerie-poste-ey"],
-  "alhosary-shipping": [],
   "alil-post": [],
   "allegro-one": ["allegro-one-1","allegro-one-2"],
   "alliance-air-freight": [],
@@ -69086,7 +68559,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "altex-curier": [],
   "am-home-delivery": [],
   "amalgamated-distribution": [],
-  "amanat-logistics-af": [],
   "amazon-order": [],
   "ambro-express": [],
   "ameex": [],
@@ -69182,7 +68654,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bigpost": [],
   "bir-gunde-kargo": [],
   "biz-courier": ["biz-courier-1"],
-  "bja-logistic": [],
   "bjs-home-delivery": ["bjs-home-delivery-1"],
   "bla-kurer": [],
   "blitznow": [],
@@ -69215,7 +68686,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bridge-intl": [],
   "bringer-parcel": ["bringer-parcel-1"],
   "brink-transport": [],
-  "bss-express-direct": [],
   "btc-logistic": [],
   "btd": [],
   "bts-uz": [],
@@ -69343,7 +68813,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "couriersplease": ["couriersplease-1"],
   "cps-lastmile": [],
   "cpszy": [],
-  "cpx-guatemala": [],
   "crane-worldwide": [],
   "crc-post": [],
   "credifin": [],
@@ -69367,7 +68836,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "cyprus-post": ["cyprus-post-s10"],
   "czl-express": [],
   "d-express": [],
-  "d-jesu-comer": [],
   "dac-uy": [],
   "daewoo-fastex": [],
   "dago-express": [],
@@ -69534,7 +69002,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "evri-uk": ["evri-uk-domestic","evri-uk-1","evri-uk-2","evri-uk-3"],
   "evropat": [],
   "ewe": [],
-  "ewl-costa-rica": [],
   "exelot": ["exelot-1"],
   "exline-kz": [],
   "exmate": ["exmate-1"],
@@ -69598,7 +69065,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flechacarga": [],
   "fleetex": [],
   "fleetoptics": ["fleetoptics-1"],
-  "fletes-del-sur": [],
   "flickpost": [],
   "flight-logistics": [],
   "flippost": [],
@@ -69858,7 +69324,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jiufang": [],
   "jlog": [],
   "jne": ["jne-1"],
-  "joma-logistics": [],
   "joom-logistics": [],
   "jordan-post": ["jordan-post-s10"],
   "jp-home": [],
@@ -69871,7 +69336,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "junfeng-international": [],
   "juxi-express": ["juxi-express-1","juxi-express-2"],
   "jy-express": [],
-  "jyldam-logistics": [],
   "kaizen-express": [],
   "kakao-t-same-day": [],
   "kanga-services": [],
@@ -69961,12 +69425,10 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lionwheel": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],
-  "livra-lynx": [],
   "ljx-express": [],
   "lm-parcel": ["lm-parcel-1"],
   "loadmaster-no": [],
   "logen": [],
-  "logexim-express": [],
   "loggi": ["loggi-1"],
   "logisimple": [],
   "logista-parcel": [],
@@ -70025,7 +69487,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "mayiyinfu": ["mayiyinfu-1","mayiyinfu-2"],
   "maystro-delivery": [],
   "mazet": [],
-  "mbg-africa": [],
   "mds-collivery": [],
   "mebel-taxi": [],
   "meest": ["meest-1","meest-2","meest-3"],
@@ -70087,7 +69548,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "navata": [],
   "navex": [],
   "navlungo": [],
-  "ncm-capar": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],
@@ -70119,7 +69579,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ntc-express": [],
   "nz-couriers": [],
   "oak-harbor": [],
-  "obana-logistics": [],
   "obibox": ["obibox-1"],
   "oca": ["oca-1"],
   "ocasa": ["ocasa-1"],
@@ -70155,7 +69614,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "oxperta-express": [],
   "ozon-express-ma": [],
   "ozon-logistics": ["ozon-logistics-1","ozon-logistics-2","ozon-logistics-3"],
-  "pack-express-gt": [],
   "pack-man": [],
   "packli-punkt": [],
   "packlink": ["packlink-1"],
@@ -70179,7 +69637,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "paqline": [],
   "paqmex": [],
   "paqueteria-vencedor": [],
-  "paquetex": [],
   "paquetexpress": ["paquetexpress-1","paquetexpress-2"],
   "paquexpress-urgente": [],
   "parcel-one": [],
@@ -70235,7 +69692,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "plycon": [],
   "pml-tw": [],
   "pmm": [],
-  "pochtai-asr": [],
   "pointpack": [],
   "polaris-transport": ["polaris-transport-1"],
   "polonez": ["polonez-1"],
@@ -70508,7 +69964,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "svuum": [],
   "sway": [],
   "swftbox": [],
-  "swift-drop-ae": [],
   "swiftx": ["swiftx-1"],
   "swissconnect": [],
   "sxjd-freight": [],
@@ -70549,7 +70004,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "tforce-integrated-solutions": [],
   "tforce-logistics": ["tforce-logistics-1"],
   "thabit-logistics": [],
-  "thai-nexus": [],
   "the-delivery-group": [],
   "the-human-express": ["the-human-express-1"],
   "thelorry": ["thelorry-1"],
@@ -70595,7 +70049,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "trackon": [],
   "tracopa": [],
   "tracx-logis": ["tracx-logis-1"],
-  "tradiva-logistics": [],
   "tramaco": [],
   "trans-express-lk": [],
   "trans-o-flex": [],

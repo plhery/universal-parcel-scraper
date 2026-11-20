@@ -1,8 +1,0 @@
-{
-  "carrier": "joma-logistics",
-  "entries": [
-    { "code": "received", "wording": "Received at our New York office", "stage": "accepted", "language": "en", "confirmedBy": "live" },
-    { "code": "departed", "wording": "Departed New York", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
-    { "code": "arrived", "wording": "Arrived in Dushanbe", "stage": "in_transit", "language": "en", "confirmedBy": "documentation", "note": "The public milestone refers to the freight departure’s arrival in Dushanbe." }
-  ]
-}

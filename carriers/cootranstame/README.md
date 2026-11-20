@@ -16,4 +16,4 @@ CootransTame, the Cooperativa de Transportadores de Tame, delivers freight and p
 
 ## Testing
 
-Run `npm exec vitest -- run carriers/cootranstame/adapter.test.ts`. Set `COOTRANSTAME_NUMBER` and run `npm run test:carriers:live -- carriers/cootranstame` for the native check.
+Run `npm exec vitest -- run carriers/cootranstame/adapter.test.ts`. Set `COOTRANSTAME_TRACKING_NUMBER` and run `npm run test:carriers:live -- carriers/cootranstame` for the native check.
