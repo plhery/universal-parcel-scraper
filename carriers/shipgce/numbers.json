@@ -1,5 +1,26 @@
 {
   "carrier": "shipgce",
-  "gap": "No public page shows a Feiyang GCEx number.",
-  "records": []
+  "records": [
+    {
+      "number": "gc512271603us",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://express.shipgce.com/postcheck.htm?checkvalue=gc512271603us&type=identity",
+        "date": "2019-04-29",
+        "dateKind": "carrier delivery scan",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "US to China parcel forwarding",
+        "reportedRole": "Global Courier Express courier bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier’s indexable public tracking URL publishes the input in lowercase. Its tracking response gives a matching courier bill and dated movement through delivery."
+    }
+  ]
 }
