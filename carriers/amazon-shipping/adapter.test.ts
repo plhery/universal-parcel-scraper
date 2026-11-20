@@ -299,6 +299,24 @@ describe('Amazon Shipping France response normalization', () => {
     expect(delayed(['CreationConfirmed', 'PickupDone'])).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', last_status_text: 'Delivery delayed' });
   });
 
+  it("reads the sorting center's receipt right after the label as the acceptance", () => {
+    const parcel = (eventCodes: string[]) => {
+      const value = deliveredFixture();
+      value.progressTracker = JSON.stringify({
+        summary: { status: 'InTransit', metadata: { trackingStatus: { stringValue: 'IN_TRANSIT' } } }, trackerSource: 'SWA',
+      });
+      value.eventHistory = JSON.stringify({ trackerSource: 'SWA', eventHistory: eventCodes.map((eventCode, index) => ({
+        eventCode, statusSummary: {}, eventTime: `Aug ${7 + index}, 2026, 11:51:15 PM`, location: {},
+      })) });
+      return parseAmazonShippingTrackingResponse(value);
+    };
+    expect(parcel(['CreationConfirmed', 'Received'])).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(parcel(['CreationConfirmed', 'Received', 'Departed']).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    // After a pickup, or with no label before it, the receipt is on the way.
+    expect(parcel(['CreationConfirmed', 'PickupDone', 'Received']).events?.map((event) => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
+    expect(parcel(['Received'])).toMatchObject({ current_stage: 'in_transit' });
+  });
+
   it('uses event history when the summary status is absent', () => {
     const fixtureWithoutSummary = deliveredFixture();
     fixtureWithoutSummary.progressTracker = JSON.stringify({

@@ -211,6 +211,20 @@ function restageVanDepartures(events: ParsedEvent[]): void {
   }
 }
 
+/**
+ * A parcel its seller brings to a sorting center has no pickup scan: the center's receipt
+ * (`Received`) right after the label is the acceptance. Returns that scan when it is the one.
+ */
+function readSortingCenterIntake(events: ParsedEvent[]): ParsedEvent | undefined {
+  const oldestFirst = [...events].reverse();
+  const moved = oldestFirst.findIndex((item) => item.classified.stage && item.classified.stage !== 'registered');
+  const first = moved > 0 && oldestFirst.slice(0, moved).some((item) => item.classified.stage === 'registered') ? oldestFirst[moved] : undefined;
+  if (first?.event.provider_code !== 'Received' || first.classified.stage !== 'in_transit') return undefined;
+  first.classified = { ...first.classified, stage: 'accepted' };
+  first.event.stage = 'accepted';
+  return first;
+}
+
 function metadataValue(metadata: JsonObject, field: string): unknown {
   const value = metadata[field];
   if (!isRecord(value)) return value;
@@ -276,6 +290,7 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
   if (listsNewestFirst(parsedEvents.map(({ event }) => event)) === false) parsedEvents.reverse();
   parsedEvents.sort((left, right) => right.timestamp - left.timestamp);
   restageVanDepartures(parsedEvents);
+  const intake = readSortingCenterIntake(parsedEvents);
   const events = parsedEvents.slice(0, MAX_EVENTS_TO_RETURN).map(({ event }) => event);
 
   const summary = isRecord(progress.summary) ? progress.summary : {};
@@ -297,8 +312,10 @@ export function parseAmazonShippingTrackingResponse(payload: unknown, zone: stri
     && !parsedEvents.some((item) => item.classified.stage === 'delivered');
   // A delay moves nothing: a parcel whose scans show only its label keeps that stage, with the delay as its text.
   const unmovedDelay = current === DELAYED && latestKnown?.classified.stage === 'registered';
+  // Nor does a summary in transit over that intake, the newest scan.
+  const intakeNewest = intake !== undefined && intake === latestKnown && current.stage === 'in_transit';
   const active = unmovedDelay ? { ...latestKnown.classified, description: DELAYED.description }
-    : current.status !== 'unknown' && !echoesNewest && !unscannedDelivery ? current : latestKnown?.classified;
+    : current.status !== 'unknown' && !echoesNewest && !unscannedDelivery && !intakeNewest ? current : latestKnown?.classified;
   if (!active) {
     throw new SchemaError(PROVIDER, 'Amazon Shipping returned incomplete tracking details');
   }

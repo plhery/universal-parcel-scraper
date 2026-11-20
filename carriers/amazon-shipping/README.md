@@ -72,6 +72,9 @@ Checks, before any history is read:
   `status` repeating the newest scan's event code defers to that scan. So does a summary
   saying delivered when no scan does: the tracker said so of parcels that had just left their
   pickup site and were scanned in transit for another day before their delivery scan.
+- A parcel its seller brings to a sorting center or delivery station has no pickup scan: the
+  receipt there (`Received`) right after the label is the acceptance, and a summary in transit
+  over it defers to it.
 - No universal-provider fallback: Amazon is the only source for these numbers.
 
 ## Limitations
