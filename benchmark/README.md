@@ -53,10 +53,10 @@ as no history, not a prompt. Four numbers got one on 2026-10-10: DPD France
 postcode if one turns up: `node scripts/benchmark.mjs probe --carriers
 dpd-fr,geodis,the-courier-guy --sources 17TRACK`.
 
-A number listed with its postcode fails at 17TRACK as `postcode_not_submitted` when 17TRACK
-shows no postcode form for it: the browser service had nowhere to enter the postcode, so the
-answer is not read as a negative. Those numbers were asked again without the postcode, and
-17TRACK's no history from that lookup is what the tables show.
+A number listed with its postcode fails at 17TRACK as `postcode_not_submitted` only when
+17TRACK's form asks for a postcode the browser service did not enter, so that answer is not
+read as a negative. When 17TRACK's reply has no postcode field for the number, there was nothing
+to enter, and its no history stands.
 
 ## Running it
 
