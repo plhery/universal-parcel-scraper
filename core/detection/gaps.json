@@ -5789,5 +5789,10 @@
     "carrier": "pronto-envios",
     "kind": "open",
     "reason": "The published guides are numeric and their observed length is shared by several carriers. Keep the native tracker explicitly selectable."
+  },
+  {
+    "carrier": "cadena-courier",
+    "kind": "open",
+    "reason": "The court-published numeric guide is shared in length with other carriers. The carrier is explicitly selectable."
   }
 ]

@@ -13333,6 +13333,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "cadena-courier": {
+    "displayName": "Cadena Courier",
+    "color": "#006b59",
+    "aliases": [
+      "Cadena Courrier",
+      "Cadena Courier S.A.",
+      "Cadena Courrier S.A."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cadena-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "trackingUrlTemplate": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "trackingSearchUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "calidex-courier": {
     "displayName": "Calidex Courier",
     "color": "#15235a",
@@ -67068,6 +67092,7 @@ export const CARRIER_IDS = [
   "c3x",
   "c807-xpress",
   "cacesa",
+  "cadena-courier",
   "calidex-courier",
   "campos-cadilhe",
   "campost",
@@ -68990,6 +69015,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "c3x": [],
   "c807-xpress": [],
   "cacesa": [],
+  "cadena-courier": [],
   "calidex-courier": [],
   "campos-cadilhe": [],
   "campost": [],

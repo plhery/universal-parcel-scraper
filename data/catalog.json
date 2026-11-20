@@ -13329,6 +13329,30 @@
     ],
     "detectionRules": []
   },
+  "cadena-courier": {
+    "displayName": "Cadena Courier",
+    "color": "#006b59",
+    "aliases": [
+      "Cadena Courrier",
+      "Cadena Courier S.A.",
+      "Cadena Courrier S.A."
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "cadena-courier",
+      "localClocks": true
+    },
+    "canaryUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "trackingUrlTemplate": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "trackingSearchUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "calidex-courier": {
     "displayName": "Calidex Courier",
     "color": "#15235a",

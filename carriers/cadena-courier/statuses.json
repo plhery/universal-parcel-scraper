@@ -1,0 +1,18 @@
+{
+  "carrier": "cadena-courier",
+  "entries": [
+    {
+      "wording": "CREACION GUIA",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The carrier created a guide in its system."
+    },
+    {
+      "wording": "ALISTAMIENTO",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The listing describes preparation. The dated movement history provides the registration event."
+    }
+  ]
+}

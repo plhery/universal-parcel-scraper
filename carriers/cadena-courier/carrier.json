@@ -1,0 +1,59 @@
+{
+  "id": "cadena-courier",
+  "displayName": "Cadena Courier",
+  "aliases": [
+    "Cadena Courrier",
+    "Cadena Courier S.A.",
+    "Cadena Courrier S.A."
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#006b59"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cadena-courier",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "searchUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "canaryUrl": "https://guias.cadena.com.co/tracking/consulta.aspx",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

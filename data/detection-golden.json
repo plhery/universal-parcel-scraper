@@ -31202,6 +31202,25 @@
     ]
   },
   {
+    "input": "2161247895151",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "correos-chile",
+      "delhivery",
+      "yunda",
+      "korea-post",
+      "econt",
+      "fan-courier",
+      "ozon-logistics",
+      "paquetexpress"
+    ],
+    "asked": [
+      "delhivery",
+      "fan-courier"
+    ]
+  },
+  {
     "input": "216312354",
     "carrier": "unknown",
     "confidence": "none",
