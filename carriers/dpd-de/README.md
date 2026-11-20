@@ -64,8 +64,10 @@ country.
 - Each answer comes from one service, so a consumer can store one parcel's
   scans from both. The app service dates a scan to the minute, the guest API
   to the second, up to a minute apart, in other words, and only the guest
-  API's scans carry DPD's code. The identity policy (`identity.ts`) lets a scan
-  from one service take over the other's stored row for it: the same stage,
+  API's scans carry DPD's code. DPD Austria's, read abroad, carry myDPD's name
+  for their state and can repeat a scan the guest API gave before the parcel
+  left Germany. The identity policy (`identity.ts`) lets a scan
+  from one service take over another's stored row for it: the same stage,
   less than a minute apart, the same place or none, and the match unique both
   ways. The guest API's hand-over, "Parcel handed to DPD", is the first
   depot's scan the app calls "In transit.", and the two match whatever stage

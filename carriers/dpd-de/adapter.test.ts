@@ -215,6 +215,19 @@ describe('DPD Germany scan identity', () => {
     )).toBe(true);
   });
 
+  it("lets DPD Austria's scan, read abroad, take over the guest API's or the app's row for it", () => {
+    // The guest API dated a hub scan to the second with no place; DPD Austria the same scan to the minute, placed.
+    const austria = { stage: 'in_transit', description: 'Parcel on the way', location: 'Musterstadt, DE', providerCode: 'ON_THE_WAY' };
+    const onItsWay = { stage: 'in_transit', description: 'Your parcel is on its way', location: '', providerCode: 'IN_TRANSIT' };
+    expect(matches(austria, onItsWay)).toBe(true);
+    expect(matches(onItsWay, austria)).toBe(true);
+    expect(matches(austria, { ...app, description: 'In transit.' })).toBe(true);
+    // A code both name stays the guest API's; DPD Austria's own scans and other stages stay apart.
+    expect(matches({ ...austria, stage: 'delivered', providerCode: 'DELIVERED' }, { ...onItsWay, stage: 'delivered', providerCode: 'DELIVERED' })).toBe(false);
+    expect(matches(austria, { ...austria, providerCode: 'IN_DEPOT' })).toBe(false);
+    expect(matches({ ...austria, stage: 'out_for_delivery', providerCode: 'IN_DELIVERY' }, onItsWay)).toBe(false);
+  });
+
   it("matches the guest API's hand-over with the app's first depot scan, which it stages apart", () => {
     const depot = { ...app, description: 'In transit.' };
     const handed = { stage: 'accepted', description: 'Parcel handed to DPD', location: '', providerCode: 'PARCEL_HANDED' };
