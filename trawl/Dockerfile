@@ -41,6 +41,7 @@ COPY jd-icon.py /app/packages/tiers/src/utils/jd-icon.py
 COPY asendia-browser.mjs /app/packages/tiers/src/utils/asendia-browser.mjs
 COPY correos-costa-rica-browser.mjs /app/packages/tiers/src/utils/correos-costa-rica-browser.mjs
 COPY pasarex-browser.mjs /app/packages/tiers/src/utils/pasarex-browser.mjs
+COPY freight-aero-browser.mjs /app/packages/tiers/src/utils/freight-aero-browser.mjs
 COPY correios-browser.mjs /app/packages/tiers/src/utils/correios-browser.mjs
 COPY dao-browser.mjs /app/packages/tiers/src/utils/dao-browser.mjs
 COPY peddler-browser.mjs /app/packages/tiers/src/utils/peddler-browser.mjs

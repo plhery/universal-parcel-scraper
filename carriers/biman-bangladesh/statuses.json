@@ -1,0 +1,15 @@
+{
+  "carrier": "biman-bangladesh",
+  "entries": [
+    {"code": "Booked", "wording": "Booked", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "Once the shipment has been received, a booking moves pieces onto a flight: the parser files it accepted before the first departure and in transit after."},
+    {"code": "Received from shipper", "wording": "Received from shipper", "stage": "accepted", "language": "en", "confirmedBy": "live"},
+    {"code": "Pre-manifested on flight", "wording": "Pre-manifested on flight", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Manifested", "wording": "Manifested", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Departed", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Arrived", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Received from flight", "wording": "Received from flight", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Consignee/agent notified of arrival", "wording": "Consignee/agent notified of arrival", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The consignee or its agent collects the shipment from the cargo terminal."},
+    {"code": "Arrival documentation delivered", "wording": "Arrival documentation delivered", "stage": "ready_for_pickup", "language": "en", "confirmedBy": "live", "note": "The papers are handed over; the goods wait for collection."},
+    {"code": "Delivered", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "A part's delivery delivers the waybill only once all its pieces are delivered."}
+  ]
+}

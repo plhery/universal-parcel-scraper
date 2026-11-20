@@ -1,0 +1,370 @@
+[
+  {
+    "responseCode": "OK",
+    "awbNumber": "997-67220602",
+    "carrier": "BG",
+    "origin": "Dhaka Hazrat Shahjalal (DAC)",
+    "destination": "Toronto (YYZ)",
+    "totalPieces": 1228,
+    "status": "Delivered",
+    "events": [
+      {
+        "eventSequenceNumber": 1,
+        "status": "Booked",
+        "detail": "Part shipment of 0 piece at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "11-Jan-2026 19:24",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 2,
+        "status": "Booked",
+        "detail": "Part shipment of 0 piece at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 12:50",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 3,
+        "status": "Booked",
+        "detail": "Part shipment of 0 piece at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 14:51",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 4,
+        "status": "Booked",
+        "detail": "Part shipment of 0 piece at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 16:07",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 5,
+        "status": "Booked",
+        "detail": "Part shipment of 0 piece at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 16:09",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 6,
+        "status": "Booked",
+        "detail": "Total shipment of 1228 pieces at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 16:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 7,
+        "status": "Booked",
+        "detail": "Total shipment of 1228 pieces at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 16:56",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 8,
+        "status": "Received from shipper",
+        "detail": "Total shipment of 1228 pieces at 2396.0 KG <b>received</b> from <b>shipper</b>.",
+        "eventTime": "12-Jan-2026 16:56",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 9,
+        "status": "Booked",
+        "detail": "Total shipment of 1228 pieces at 2396.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 16:56",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 10,
+        "status": "Pre-manifested on flight",
+        "detail": "Total shipment of 1228 pieces at 2396.0 KG <b>pre-manifested</b> on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 19:46",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 11,
+        "status": "Manifested",
+        "detail": "Part shipment of 690 pieces at 1346.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 19:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 12,
+        "status": "Manifested",
+        "detail": "Part shipment of 527 pieces at 1028.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 19:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 13,
+        "status": "Manifested",
+        "detail": "Part shipment of 11 pieces at 22.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>13JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "12-Jan-2026 19:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 14,
+        "status": "Departed",
+        "detail": "Part shipment of 393 pieces at 704.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>13JAN26</b>.",
+        "eventTime": "13-Jan-2026 03:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 15,
+        "status": "Departed",
+        "detail": "Part shipment of 393 pieces at 704.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>13JAN26</b>.",
+        "eventTime": "13-Jan-2026 06:50",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 16,
+        "status": "Departed",
+        "detail": "Part shipment of 393 pieces at 704.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>13JAN26</b>.",
+        "eventTime": "13-Jan-2026 20:50",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 17,
+        "status": "Booked",
+        "detail": "Part shipment of 835 pieces at 1692.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "13-Jan-2026 20:50",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 18,
+        "status": "Arrived",
+        "detail": "Part shipment of 393 pieces at 704.0 KG <b>arrived</b> on flight <b>BG305</b> / <b>13JAN26</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "13-Jan-2026 13:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 19,
+        "status": "Received from flight",
+        "detail": "Part shipment of 393 pieces at 704.0 KG <b>physically received</b> from flight <b>BG305</b> / <b>13JAN26</b></b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "13-Jan-2026 14:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 20,
+        "status": "Consignee/agent notified of arrival",
+        "detail": "Consignee is <b>notified</b> for the arrival of Part shipment of 393 pieces at 704.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "13-Jan-2026 17:06",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 21,
+        "status": "Booked",
+        "detail": "Part shipment of 835 pieces at 1692.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 10:48",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 22,
+        "status": "Booked",
+        "detail": "Part shipment of 835 pieces at 1692.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 10:49",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 23,
+        "status": "Booked",
+        "detail": "Part shipment of 835 pieces at 1692.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 10:49",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 24,
+        "status": "Pre-manifested on flight",
+        "detail": "Part shipment of 690 pieces at 1346.0 KG <b>pre-manifested</b> on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 20:21",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 25,
+        "status": "Pre-manifested on flight",
+        "detail": "Part shipment of 145 pieces at 346.0 KG <b>pre-manifested</b> on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 20:21",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 26,
+        "status": "Manifested",
+        "detail": "Part shipment of 690 pieces at 1346.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 20:35",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 27,
+        "status": "Manifested",
+        "detail": "Part shipment of 145 pieces at 346.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>15JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "14-Jan-2026 20:35",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 28,
+        "status": "Departed",
+        "detail": "Part shipment of 707 pieces at 1474.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>15JAN26</b>.",
+        "eventTime": "15-Jan-2026 03:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 29,
+        "status": "Departed",
+        "detail": "Part shipment of 707 pieces at 1474.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>15JAN26</b>.",
+        "eventTime": "15-Jan-2026 06:00",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 30,
+        "status": "Departed",
+        "detail": "Part shipment of 707 pieces at 1474.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>15JAN26</b>.",
+        "eventTime": "15-Jan-2026 18:44",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 31,
+        "status": "Booked",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>booked</b>  on flight <b>BG305</b> / <b>17JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "15-Jan-2026 18:44",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 32,
+        "status": "Arrived",
+        "detail": "Part shipment of 707 pieces at 1474.0 KG <b>arrived</b> on flight <b>BG305</b> / <b>15JAN26</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "15-Jan-2026 13:23",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 33,
+        "status": "Received from flight",
+        "detail": "Part shipment of 707 pieces at 1474.0 KG <b>physically received</b> from flight <b>BG305</b> / <b>15JAN26</b></b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "15-Jan-2026 14:30",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 34,
+        "status": "Consignee/agent notified of arrival",
+        "detail": "Consignee is <b>notified</b> for the arrival of Part shipment of 707 pieces at 1474.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "15-Jan-2026 16:07",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 35,
+        "status": "Consignee/agent notified of arrival",
+        "detail": "Consignee is <b>notified</b> for the arrival of Part shipment of 707 pieces at 1476.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 01:36",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 36,
+        "status": "Pre-manifested on flight",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>pre-manifested</b> on flight <b>BG305</b> / <b>17JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 19:11",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 37,
+        "status": "Manifested",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>manifested</b> on flight <b>BG305</b> / <b>17JAN26</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 19:11",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 38,
+        "status": "Arrival documentation delivered",
+        "detail": "<b>Arrival documentation delivered</b> for Part shipment of 393 pieces at 704.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 16:25",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 39,
+        "status": "Delivered",
+        "detail": "Part shipment of 393 pieces at 704.0 KG has been <b>delivered</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 16:25",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 40,
+        "status": "Arrival documentation delivered",
+        "detail": "<b>Arrival documentation delivered</b> for Part shipment of 707 pieces at 1476.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 16:26",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 41,
+        "status": "Delivered",
+        "detail": "Part shipment of 707 pieces at 1476.0 KG has been <b>delivered</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "16-Jan-2026 16:26",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 42,
+        "status": "Departed",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>17JAN26</b>.",
+        "eventTime": "17-Jan-2026 03:55",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 43,
+        "status": "Departed",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>departed</b> from <b>Dhaka Hazrat Shahjalal (DAC)</b> to <b>Toronto (YYZ)</b> on flight <b>BG305</b> / <b>17JAN26</b>.",
+        "eventTime": "17-Jan-2026 09:18",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 44,
+        "status": "Arrived",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>arrived</b> on flight <b>BG305</b> / <b>17JAN26</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 17:39",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 45,
+        "status": "Received from flight",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>physically received</b> from flight <b>BG305</b> / <b>17JAN26</b></b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 17:57",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 46,
+        "status": "Consignee/agent notified of arrival",
+        "detail": "Consignee is <b>notified</b> for the arrival of Part shipment of 128 pieces at 218.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 18:55",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 47,
+        "status": "Arrived",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>arrived</b> on flight <b>BG305</b> / <b>17JAN26</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 17:50",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 48,
+        "status": "Received from flight",
+        "detail": "Part shipment of 128 pieces at 218.0 KG <b>physically received</b> from flight <b>BG305</b> / <b>17JAN26</b></b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 19:07",
+        "flightNumber": "BG305"
+      },
+      {
+        "eventSequenceNumber": 49,
+        "status": "Consignee/agent notified of arrival",
+        "detail": "Consignee is <b>notified</b> for the arrival of Part shipment of 128 pieces at 218.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "17-Jan-2026 22:43",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 50,
+        "status": "Arrival documentation delivered",
+        "detail": "<b>Arrival documentation delivered</b> for Part shipment of 128 pieces at 218.0 KG at <b>Toronto (YYZ)</b>.",
+        "eventTime": "19-Jan-2026 16:05",
+        "flightNumber": ""
+      },
+      {
+        "eventSequenceNumber": 51,
+        "status": "Delivered",
+        "detail": "Part shipment of 128 pieces at 218.0 KG has been <b>delivered</b> at <b>Toronto (YYZ)</b>.",
+        "eventTime": "19-Jan-2026 16:06",
+        "flightNumber": ""
+      }
+    ]
+  }
+]

@@ -5960,6 +5960,12 @@
     "reason": "Seven-digit Big Post numbers share their shape with other carriers' numeric numbers, so the shape cannot name Big Post."
   },
   {
+    "carrier": "biman-bangladesh",
+    "pattern": "^997\\d{8}$",
+    "kind": "by_design",
+    "reason": "Biman's air waybills are its prefix 997 and eight digits ending in a mod-7 check digit, the format every airline's waybills share; the prefix names the airline but detection keeps no air waybill rule. Biman's tracker returns the sample's events."
+  },
+  {
     "carrier": "cargobus",
     "pattern": "^\\d{9}$",
     "kind": "collision",
