@@ -392,6 +392,15 @@
       "note": "Given overnight after a delivery round that ended without F980 or F650; the parcel went out again the next day."
     },
     {
+      "code": "F653",
+      "wording": "Insucesso na entrega por endereço incorreto. Realizaremos a nova tentativa de entrega no próximo dia útil.",
+      "language": "pt",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Minutes after the parcel came back to the hub from a round with a failed attempt: the address was wrong, and the carrier promises another attempt the next working day."
+    },
+    {
       "code": "F980",
       "wording": "Pedido entregue",
       "language": "pt",

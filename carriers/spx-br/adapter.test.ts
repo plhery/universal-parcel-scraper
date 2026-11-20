@@ -591,6 +591,8 @@ describe('SPX Express Brazil status vocabulary', () => {
       .toEqual({ kind: 'mapped', stage: 'out_for_delivery' });
     expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'F650', description: 'Houve um imprevisto durante a entrega do seu pedido' }))
       .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
+    expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'F653', description: 'Insucesso na entrega por endereço incorreto.' }))
+      .toEqual({ kind: 'mapped', stage: 'failed_attempt' });
     expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'F777', description: 'Aviso sintético' })).toEqual({ kind: 'unknown' });
     // A sorting centre's pickup at the drop-off point is the parcel's collection, as a first-mile hub's.
     expect(statusMapAnswer({ carrier: 'spx-br', providerCode: 'SOC_Pickup_Done', description: 'Seu pacote foi coletado' }))
