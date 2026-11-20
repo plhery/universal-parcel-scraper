@@ -171,6 +171,10 @@ how a consumer learns that DHL holds one behind a postcode.
   DHL can list such a scan again without its place: a scan without a place between
   scans in one other country, or older than them on a parcel not bound there, keeps
   its wall clock too.
+  Some histories DHL dates by the day alone: each row comes at midnight in Germany, and
+  rows name their day ("Die Sendung wurde am <day> ausgeliefert."). When a row at midnight
+  names its own day, every row at midnight keeps its day alone (`local_time` without a
+  time), so no midnight scan is shown.
   The delivery window (`zustellzeitfensterVon` to `…Bis`) keeps both clocks when
   they fall on one day; otherwise it is that day, or the days it spans.
 - A single unambiguous link to a known carrier portal in an arrival event (such

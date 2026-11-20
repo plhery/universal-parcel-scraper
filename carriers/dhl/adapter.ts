@@ -139,6 +139,25 @@ function clock(time: string, country: string | null | undefined): Pick<CarrierEv
   return { local_time: stated.toFormat("yyyy-MM-dd'T'HH:mm:ss") };
 }
 
+/** The German day of a time at German midnight, the time DHL gives a row it dates by its day alone. */
+function midnightDay(time: string): string | null {
+  const parsed = isoTime(time, TIMEZONE);
+  if (!parsed) return null;
+  const local = DateTime.fromMillis(parsed.timestamp, { zone: TIMEZONE });
+  return local.toFormat('HH:mm:ss.SSS') === '00:00:00.000' ? local.toISODate() : null;
+}
+
+/**
+ * Whether DHL dates the history by the day alone: a row at German midnight names that day in its
+ * words, as "Die Sendung wurde am 18.11.2026 ausgeliefert." does.
+ */
+function datedByDay(scans: readonly { time: string; description: string }[]): boolean {
+  return scans.some(({ time, description }) => {
+    const named = /\bam (\d{2})\.(\d{2})\.(\d{4})\b/.exec(description);
+    return named !== null && midnightDay(time) === `${named[3]}-${named[2]}-${named[1]}`;
+  });
+}
+
 /**
  * The country of each scan's clock, newest first: the one its place names. DHL can list a scan
  * abroad again without its place, at the same wall clock, as it did a parcel's arrival at its
@@ -267,7 +286,12 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   const kept = scans.filter((scan) => !(scan.time && preAdvice(scan.description) && millis(scan.time) > firstMove))
     .sort((left, right) => millis(right.time) - millis(left.time)).slice(0, 100);
   const countries = clockCountries(kept.map((scan) => scan.location), destination(details).destination_country);
-  const events: CarrierEvent[] = kept.map(({ time, ...event }, index) => ({ ...event, ...clock(time, countries[index]) }));
+  // In a history DHL dates by the day, a row at midnight keeps its day alone, not a midnight scan.
+  const byDay = datedByDay(kept);
+  const events: CarrierEvent[] = kept.map(({ time, ...event }, index) => {
+    const day = byDay ? midnightDay(time) : null;
+    return { ...event, ...(day ? { local_time: day } : clock(time, countries[index])) };
+  });
   // A refused redirect or a Packstation as the address is a notice: it keeps the stage of the scan before it.
   events.forEach((event, index) => {
     if (keepsStage(event.description ?? '')) {
@@ -312,8 +336,10 @@ export function parseDHLTrackingResponse(payload: unknown, trackingNumber: strin
   const window = ['delivered', 'returned'].includes(stage) ? {} : deliveryWindow(delivery);
   const stated = date(timeline.datumAktuellerStatus);
   const newest = events[0];
-  // The status DHL dates as its newest scan abroad keeps that scan's wall clock.
-  const local = newest?.local_time && (!stated || clock(stated, countries[0]).local_time === newest.local_time)
+  // The status DHL dates as its newest scan abroad keeps that scan's wall clock, and in a history dated
+  // by the day, that scan's day.
+  const local = newest?.local_time && (!stated || clock(stated, countries[0]).local_time === newest.local_time
+    || (byDay && midnightDay(stated) === newest.local_time))
     ? newest.local_time : undefined;
   return {
     status: statusForStage(stage), current_stage: stage,

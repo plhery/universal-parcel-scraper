@@ -320,6 +320,36 @@ describe('DHL public tracking normalization', () => {
     expect(parsed.events?.[1]?.description).toBe('Die Sendung ist im Zielland/Zielgebiet eingetroffen.');
   });
 
+  it('keeps the day alone of each row in a history DHL dates by the day, which it gives at midnight', () => {
+    const payload = shipment();
+    const timeline = payload.sendungen[0]!.sendungsdetails.sendungsverlauf;
+    timeline.status = 'Die Sendung wurde am 18.11.2026 ausgeliefert.';
+    timeline.datumAktuellerStatus = '2026-11-18T00:00:00+01:00';
+    timeline.events = [
+      { datum: '2026-11-17T00:00:00+01:00', status: 'Die Sendung wurde am 17.11.2026 eingeliefert.' },
+      { datum: '2026-11-17T00:00:00+01:00', status: 'Ihre Sendung wurde am 17.11.2026 im Briefzentrum bearbeitet.' },
+      { datum: '2026-11-18T00:00:00+01:00', status: 'Die Sendung befindet sich in der Zustellung.' },
+      { datum: '2026-11-18T00:00:00+01:00', status: 'Die Sendung wurde am 18.11.2026 ausgeliefert.' },
+    ];
+    const parsed = parseDHLTrackingResponse(payload, NUMBER);
+    expect(parsed).toMatchObject({ current_stage: 'delivered', last_update: null, last_update_local: '2026-11-18' });
+    expect(parsed.events?.map(({ stage, time, local_time }) => [stage, time ?? local_time])).toEqual([
+      ['delivered', '2026-11-18'],
+      ['out_for_delivery', '2026-11-18'],
+      ['in_transit', '2026-11-17'],
+      ['accepted', '2026-11-17'],
+    ]);
+    expect(parsed.events?.some((event) => event.time)).toBe(false);
+    // A history with clocks keeps them, a scan at midnight too, though a row names its day.
+    timeline.events = [
+      { datum: '2026-11-17T00:00:00+01:00', status: 'Die Sendung wurde im Paketzentrum bearbeitet.' },
+      { datum: '2026-11-18T10:12:00+01:00', status: 'Die Sendung wurde am 18.11.2026 ausgeliefert.' },
+    ];
+    timeline.datumAktuellerStatus = '2026-11-18T10:12:00+01:00';
+    expect(parseDHLTrackingResponse(payload, NUMBER).events?.map(({ time, local_time }) => time ?? local_time))
+      .toEqual(['2026-11-18T10:12:00+01:00', '2026-11-17T00:00:00+01:00']);
+  });
+
   it('produces every capability declared in carrier.json', () => {
     const checks: Record<string, (result: CarrierResult) => unknown> = {
       history: (result) => result.events?.length,
