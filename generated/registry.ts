@@ -679,6 +679,7 @@ import { adapter as postnord } from '../carriers/postnord/adapter.js';
 import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
+import { adapter as pressexLogistics } from '../carriers/pressex-logistics/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
 import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
@@ -1663,6 +1664,7 @@ export const REGISTRY: RegistryDefinition = {
     "posturinn": posturinn,
     "ppl": ppl,
     "precision-deliveries": precisionDeliveries,
+    "pressex-logistics": pressexLogistics,
     "pro-carrier": proCarrier,
     "procon-express-lines": proconExpressLines,
     "profit-fields": profitFields,
@@ -3322,6 +3324,7 @@ export const REGISTRY: RegistryDefinition = {
     "precision-deliveries": "precision-deliveries",
     "premier-deliveries-uk": "universal",
     "premo": "universal",
+    "pressex-logistics": "pressex-logistics",
     "primewell": "universal",
     "princesa-dos-campos": "universal",
     "prisma-courier": "universal",

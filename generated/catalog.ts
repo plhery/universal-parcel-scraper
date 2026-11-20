@@ -48987,6 +48987,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "pressex-logistics": {
+    "displayName": "PressEx Logistics",
+    "color": "#E56124",
+    "aliases": [
+      "PressEx Courier",
+      "PressEx Colombia",
+      "Pressex Courier SAS"
+    ],
+    "countries": [
+      "CO",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "pressex-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "trackingUrlTemplate": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "trackingSearchUrl": "https://plataforma.nuvix.co/auth/rastreoGuia/pressex",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "primewell": {
     "displayName": "Primewell",
     "color": "#ff5d15",
@@ -68914,6 +68939,7 @@ export const CARRIER_IDS = [
   "precision-deliveries",
   "premier-deliveries-uk",
   "premo",
+  "pressex-logistics",
   "primewell",
   "princesa-dos-campos",
   "prisma-courier",
@@ -70870,6 +70896,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "precision-deliveries": ["precision-deliveries-1"],
   "premier-deliveries-uk": [],
   "premo": [],
+  "pressex-logistics": [],
   "primewell": [],
   "princesa-dos-campos": [],
   "prisma-courier": [],

@@ -5954,5 +5954,10 @@
     "carrier": "sunrise-logistics-colombia",
     "kind": "open",
     "reason": "One published Sunrise house air waybill does not establish a unique carrier range. Select Sunrise Logistics Group explicitly."
+  },
+  {
+    "carrier": "pressex-logistics",
+    "kind": "open",
+    "reason": "One published PressEx guide does not establish a carrier-specific range. Select PressEx Logistics explicitly."
   }
 ]

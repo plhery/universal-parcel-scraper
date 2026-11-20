@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'pressex-logistics', number: 'BOG00100600000409',
+    route: /^https:\/\/plataforma\.nuvix\.co\/auth\/rastreoGuia\/pressex\/?$/,
+    marker: /Rastrear mi envio|Numero de guía o remesa/iu, forwarding: 'none', renderTimeoutMs: 12000 },
   { carrier: 'sunrise-logistics-colombia', number: 'BOG-110491',
     route: /^https:\/\/tracking\.sunriselg\.com\/(?:es|en)\/?$/,
     marker: /Rastreo de Envíos|Buscar Envío|Shipment Tracking|Track Shipment/iu, forwarding: 'none' },
