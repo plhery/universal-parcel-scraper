@@ -1,5 +1,32 @@
 {
   "carrier": "treggo",
-  "gap": "No public page shows a Treggo number.",
-  "records": []
+  "records": [
+    {
+      "number": "1055511715209-01",
+      "role": "order_reference",
+      "evidence": "merchant_published_example",
+      "source": {
+        "url": "https://ri.unsam.edu.ar/bitstream/123456789/1414/1/TFPP%20EEYN%202021%20PS.pdf",
+        "date": "2020-08-20",
+        "dateKind": "shipment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Equus motorcycle delivery",
+        "reportedRole": "Pedido",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd-fr",
+          "brt",
+          "yunda",
+          "ozon-logistics"
+        ]
+      },
+      "note": "The public Equus case study shows the exact order reference on a dispatched motorcycle delivery and identifies Treggo as the carrier for that service. Treggo accepts order references, and the current lookup redirected without returning shipment history."
+    }
+  ]
 }
