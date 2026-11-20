@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'akasa-air-cargo', number: '51699000008',
+    route: /^https:\/\/cargo\.akasaair\.com\/FrmAWBTracking\.aspx$/,
+    marker: /Track Air Waybill/i, forwarding: 'none' },
   { carrier: 'transdirect', number: 'ZZZ_TRANSDIRECT_INVALID_REFERENCE',
     route: /^https:\/\/www\.transdirect\.com\.au\/education\/tracking\/\?reference=ZZZ_TRANSDIRECT_INVALID_REFERENCE$/,
     marker: /How to Track Your Consignment/i },

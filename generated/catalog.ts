@@ -7681,6 +7681,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "akasa-air-cargo": {
+    "displayName": "Akasa Air Cargo",
+    "color": "#ff5b19",
+    "aliases": [
+      "Akasa Air",
+      "QP Cargo"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "akasa-air-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingUrlTemplate": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "trackingSearchUrl": "https://cargo.akasaair.com/FrmAWBTracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "akash-ganga": {
     "displayName": "Akash Ganga Courier",
     "color": "#024182",
@@ -65509,6 +65532,7 @@ export const CARRIER_IDS = [
   "ait-home-delivery",
   "ait-worldwide",
   "ajex",
+  "akasa-air-cargo",
   "akash-ganga",
   "akis-express",
   "akropost",
@@ -67375,6 +67399,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ait-home-delivery": [],
   "ait-worldwide": [],
   "ajex": ["ajex-1"],
+  "akasa-air-cargo": [],
   "akash-ganga": [],
   "akis-express": [],
   "akropost": [],

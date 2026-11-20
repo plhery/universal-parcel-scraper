@@ -5509,5 +5509,10 @@
     "carrier": "transdirect",
     "kind": "by_design",
     "reason": "Transdirect accepts its own booking IDs and references issued by several partner couriers. Select it explicitly."
+  },
+  {
+    "carrier": "akasa-air-cargo",
+    "kind": "open",
+    "reason": "Select Akasa Air Cargo for its master air waybills. The two public air waybills have IATA prefix 516."
   }
 ]

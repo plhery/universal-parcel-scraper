@@ -1,0 +1,64 @@
+{
+  "carrier": "akasa-air-cargo",
+  "records": [
+    {
+      "number": "51650024855",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://mumbaicustomszone3.gov.in/Content/writereaddata/Portal/Document/1083_1_1_merged-PN-and-annexures.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Akasa Air waybill listed by Mumbai Customs in Annexure A",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    },
+    {
+      "number": "51650000226",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.mumbaicustomszone3.gov.in/Content/writereaddata/Portal/Document/120_1_1_PN_No._54-2024_EXPORT.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "Akasa Air waybill listed by Mumbai Customs in Public Notice 54/2024",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "dhl-ecommerce-pl",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress",
+          "ppl"
+        ]
+      }
+    }
+  ]
+}

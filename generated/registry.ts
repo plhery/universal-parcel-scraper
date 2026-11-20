@@ -23,6 +23,7 @@ import { adapter as airspeed } from '../carriers/airspeed/adapter.js';
 import { adapter as airwaysCourierIn } from '../carriers/airways-courier-in/adapter.js';
 import { adapter as aitWorldwide } from '../carriers/ait-worldwide/adapter.js';
 import { adapter as ajex } from '../carriers/ajex/adapter.js';
+import { adapter as akasaAirCargo } from '../carriers/akasa-air-cargo/adapter.js';
 import { adapter as akisExpress } from '../carriers/akis-express/adapter.js';
 import { adapter as algeriePoste } from '../carriers/algerie-poste/adapter.js';
 import { adapter as aliexpress } from '../carriers/aliexpress/adapter.js';
@@ -917,6 +918,7 @@ export const REGISTRY: RegistryDefinition = {
     "airways-courier-in": airwaysCourierIn,
     "ait-worldwide": aitWorldwide,
     "ajex": ajex,
+    "akasa-air-cargo": akasaAirCargo,
     "akis-express": akisExpress,
     "algerie-poste": algeriePoste,
     "aliexpress": aliexpress,
@@ -1848,6 +1850,7 @@ export const REGISTRY: RegistryDefinition = {
     "ait-home-delivery": "universal",
     "ait-worldwide": "ait-worldwide",
     "ajex": "ajex",
+    "akasa-air-cargo": "akasa-air-cargo",
     "akash-ganga": "universal",
     "akis-express": "akis-express",
     "akropost": "universal",
