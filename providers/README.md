@@ -108,6 +108,10 @@ and [the benchmark](../benchmark/README.md) holds what was measured.
   collection, before one it is the sender's drop-off. [status.ts](status.ts) declares it,
   with 17TRACK's sub-statuses, as the status map `statusMapAnswer()` asks for the scans the
   parcel app files under the carrier `unknown`.
+- An acceptance in the words of an older scan, after a scan moved the parcel, is that scan
+  made again, such as a misrouted parcel sorted a second time at its parcel center of origin,
+  which 17TRACK files under its pick-up code each time. It reads as transit. A delivery or a
+  return ends a journey, so a parcel posted again is accepted again.
 - English return instructions and a return in progress remain exceptions. Completed
   return wording can mark sender delivery; starting the return cannot complete it.
 - An exactly worded voided label ("Parcel Void", "Shipment voided") is an exception even

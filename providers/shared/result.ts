@@ -1033,6 +1033,30 @@ function keepStages(events: CarrierEvent[]): void {
   }
 }
 
+/**
+ * An acceptance in the words of an older row, after the parcel moved, is that scan made again, such as DHL's
+ * parcel center of origin sorting a misrouted parcel a second time, which 17TRACK files under its pick-up code as
+ * it did the first: transit. A delivery or a return ends a journey, so a parcel posted again is accepted again.
+ */
+function repeatedAcceptances(events: CarrierEvent[]): void {
+  const said = new Map<string, number>();
+  let moved = Infinity;
+  for (let index = events.length - 1; index >= 0; index--) {
+    const event = events[index]!;
+    const at = instantOf(event);
+    if (at === null) continue;
+    const wording = (event.description ?? '').trim().replace(/\s+/g, ' ').toLowerCase();
+    if (event.stage === 'accepted' && moved < at && (said.get(wording) ?? Infinity) < at) event.stage = 'in_transit';
+    if (event.stage === 'delivered' || event.stage === 'returned') {
+      said.clear();
+      moved = Infinity;
+      continue;
+    }
+    if (!said.has(wording)) said.set(wording, at);
+    if (event.stage && !['pending', 'registered', 'accepted'].includes(event.stage)) moved = Math.min(moved, at);
+  }
+}
+
 /** The stage a row's wording or code gave it; `pending` by no rule is none. */
 const readStage = (value: CarrierEvent): string | undefined =>
   value.stage && !(value.stage === 'pending' && (value.stage_source ?? 'none') === 'none') ? value.stage : undefined;
@@ -1115,6 +1139,7 @@ export function result(events: CarrierEvent[], source: UniversalSource, preserve
   const ordered = (preserveOrder ? kept : newestFirst(kept)).slice(0, 100);
   const unique = ordered.map((event) => parcelShopScan(event, ordered));
   keepStages(unique);
+  repeatedAcceptances(unique);
   if (!unique.length && written.size) {
     throw new NoHistoryError(source, `${source} relays only a timeline written to a schedule`, { reason: 'written_ahead' });
   }

@@ -54,6 +54,26 @@ describe('shared provider result', () => {
     expect(result(daily, '17TRACK').events).toHaveLength(5);
   });
 
+  it("reads an acceptance repeated in an older row's words after the parcel moved as transit", () => {
+    const sorted = 'The shipment has been processed in the parcel center of origin';
+    const relayed = result([
+      event('2030-01-05T17:50:00Z', sorted, 'accepted')!,
+      event('2030-01-05T08:01:00Z', 'The shipment was misrouted.', 'exception')!,
+      event('2030-01-03T22:58:00Z', sorted, 'in_transit')!,
+      event('2030-01-02T16:41:00Z', sorted, 'accepted')!,
+    ], '17TRACK');
+    expect(relayed.events?.map(({ stage }) => stage)).toEqual(['in_transit', 'exception', 'in_transit', 'accepted']);
+    // Before anything moved the parcel, or once it came back, the words accept it again.
+    const again = result([
+      event('2030-02-05T10:00:00Z', 'Accepted at the post office', 'accepted')!,
+      event('2030-02-04T10:00:00Z', 'Returned to the sender', 'returned')!,
+      event('2030-02-02T10:00:00Z', 'Departed the sorting center', 'in_transit')!,
+      event('2030-01-02T12:00:00Z', 'Accepted at the post office', 'accepted')!,
+      event('2030-01-02T10:00:00Z', 'Accepted at the post office', 'accepted')!,
+    ], '17TRACK');
+    expect(again.events?.map(({ stage }) => stage)).toEqual(['accepted', 'returned', 'in_transit', 'accepted', 'accepted']);
+  });
+
   it('drops a generic "On the way" beside a specific scan at its instant and place, as FedEx writes it', () => {
     const at = (time: string, description: string, location: string) => ({ ...event(time, description)!, location });
     const relayed = result([
