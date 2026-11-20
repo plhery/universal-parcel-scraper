@@ -17,18 +17,55 @@
   "timezone": "Europe/Istanbul",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "yol-kargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "receiver_name",
+    "signed_by",
+    "delivery_carrier",
+    "delivery_tracking_number"
+  ],
   "portal": {
     "url": "https://yolkargo.com.tr/kargo.php?q={trackingNumber}",
     "searchUrl": "https://yolkargo.com.tr/",
     "canaryUrl": "https://yolkargo.com.tr/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "recipient_name",
+      "signatory",
+      "goods_description",
+      "proof_of_delivery",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "recipient_name",
+      "signatory",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "goods_description",
+      "proof_of_delivery"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
   "links": [
     {

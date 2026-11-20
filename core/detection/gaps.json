@@ -4712,5 +4712,11 @@
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",
     "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits, and SUUS's guest tracker shows each one. Detection does not offer Rohlig SUUS."
+  },
+  {
+    "carrier": "yol-kargo",
+    "pattern": "^950\\d{6}$",
+    "kind": "open",
+    "reason": "Two public shipment reports give nine-digit Yol Kargo numbers beginning with 950, and Yol Kargo's lookup returns both. Detection does not offer Yol Kargo for either number."
   }
 ]

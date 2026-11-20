@@ -1,5 +1,50 @@
 {
   "carrier": "yol-kargo",
-  "gap": "No public page shows a Yol Kargo number.",
-  "records": []
+  "records": [
+    {
+      "number": "950568090",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/yol-kargo?page=7",
+        "date": "2025-05-15",
+        "dateKind": "publication",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "shipment barcode",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A Şikayetvar customer quotes a Yol Kargo dispatch text with the shipment barcode and the carrier’s tracking link. Yol Kargo’s lookup hands it to Aras Kargo, whose tracker returns the shipment."
+    },
+    {
+      "number": "950443351",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.sikayetvar.com/yol-kargo?page=7",
+        "date": "2025-04-24",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "A Şikayetvar customer names Yol Kargo and gives the shipment number when reporting a delay. Yol Kargo’s own shipment page returns its movements."
+    }
+  ]
 }

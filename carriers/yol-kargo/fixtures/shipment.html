@@ -1,0 +1,695 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+
+
+<SCRIPT TYPE="text/javascript">
+<!--
+var message="Sorry, right-click has been disabled";
+///////////////////////////////////
+function clickIE() {if (document.all) {(message);return false;}}
+function clickNS(e) {if
+(document.layers||(document.getElementById&&!document.all)) {
+if (e.which==2||e.which==3) {(message);return false;}}}
+if (document.layers)
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+document.oncontextmenu=new Function("return false")
+
+// -->
+</SCRIPT> 
+
+<head id="Head1"><title>
+	Gönderi Sorgulama Ekranı
+</title><link href="./Css/Stil.css" rel="stylesheet" type="text/css" /><link href="./Css/LWG.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="./Js/General.js"></script>
+    <script type="text/javascript" src="./Js/jsencryption.js"></script>
+
+    <script language="javascript" type="text/javascript" src="./Js/dateus.js" charset="windows-1254"></script> 
+    
+<style type="text/css">
+TD.baslik
+{
+background-color:#2874A6;
+color:#fff;
+font-weight:bold;
+font-size:11px;
+font-family:Verdana;
+height:24px;
+cursor:hand;
+border-bottom:solid 2px #fff;
+border-top:solid 2px #fff;
+border-left: solid 2px #fff;
+border-right: solid 2px #fff;
+}
+
+.PrintRenk 
+{
+	font-size: medium;
+	font-weight: bold;
+	font-family: Consolas;
+	color: #0000FF;
+}
+</style>
+
+<SCRIPT TYPE="text/javascript">
+<!--
+//Disable right click script
+//visit http://www.rainbow.arch.scriptmania.com/scripts/
+var message="Sorry, right-click has been disabled";
+///////////////////////////////////
+function clickIE() {if (document.all) {(message);return false;}}
+function clickNS(e) {if
+(document.layers||(document.getElementById&&!document.all)) {
+if (e.which==2||e.which==3) {(message);return false;}}}
+if (document.layers)
+{document.captureEvents(Event.MOUSEDOWN);document.onmousedown=clickNS;}
+else{document.onmouseup=clickNS;document.oncontextmenu=clickIE;}
+document.oncontextmenu=new Function("return false")
+// -->
+</SCRIPT>
+        
+</head>
+
+<body>
+
+    <form name="form1" method="post" action="KargoSorgulaDetay.aspx?Guid=8C34DC7EC3474DB38721877971F18F09" id="form1">
+<div>
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="" />
+</div>
+
+<div>
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="1104483F" />
+</div>
+  
+    <div align="center">
+        <table id="tblTable" border="0" cellpadding="0" cellspacing="0" style="width: 236px; height: 500px;">
+          <colgroup>
+  <col width="20%">
+  <col width="30%">
+  <col width="50%">
+  </colgroup>
+            <tr>
+                <td class="baslik" align="left" colspan="8" style="border-top-width: 2px; border-right: #687787 2px solid;
+                    border-left: #687787 2px solid; border-top-color: #687787; border-bottom: #687787 2px solid;
+                    ">
+                    <div  id="Arama">
+                                                            <table id="TableDetay" cellpadding="0" cellspacing="1" style="width: 730px">
+                                                                <td class="baslik" colspan="2" style="width: 226px; text-align: center; height: 59px;
+                                                                    font-size: xx-large; font-family: Consolas;">
+                                                                    <span id="LBL_KARGO_HEADER" style="display:inline-block;color:White;font-size:XX-Large;font-weight:bold;width:735px;text-align: center">YOL KARGO ÜZERİNDE KARGO HAREKETLERİ</span></td>                                                                                                            <tr>
+                                                                    <td  colspan="2" style="width: 226px; text-align: center; height: 59px; font-size: xx-large; font-family: Consolas;" class="baslik">
+                    <span id="lblYetkiliMail" style="display:inline-block;color:White;font-size:XX-Large;font-weight:bold;width:735px;text-align: center"></span></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="baslik" colspan="2" style="width: 226px; text-align: center; height: 29px;
+                                                                        font-size: medium; font-family: Consolas;">
+                                                                    <div>
+	<table cellspacing="0" cellpadding="3" rules="cols" border="1" id="GridTarihce" style="color:Black;background-color:White;border-color:#999999;border-width:1px;border-style:Solid;font-family:Tahoma;font-size:X-Large;width:100%;border-collapse:collapse;">
+		<tr style="color:White;background-color:SteelBlue;font-weight:bold;">
+			<th scope="col">BARKOD_NO</th><th scope="col">ISLEM</th><th scope="col">TARIH</th><th scope="col">SAAT</th>
+		</tr><tr>
+			<td>950443351</td><td>KARGO YOLA &#199;IKTI</td><td>21.04.2025</td><td>12:55:04</td>
+		</tr><tr style="background-color:#CCCCCC;">
+			<td>950443351</td><td>KARGO YOLA &#199;IKTI</td><td>22.04.2025</td><td>19:16:12</td>
+		</tr><tr>
+			<td>950443351</td><td>TESLİMAT ŞUBESİNDE</td><td>23.04.2025</td><td>09:00:22</td>
+		</tr><tr style="background-color:#CCCCCC;">
+			<td>950443351</td><td>DAĞITIMA &#199;IKTI</td><td>25.04.2025</td><td>14:35:08</td>
+		</tr><tr>
+			<td>950443351</td><td>TESLİM GİRİŞİ</td><td>25.04.2025</td><td>14:35:20</td>
+		</tr>
+	</table>
+</div>
+                                                                      
+                                                                        </td>
+                                                                </tr>                                                                
+                                                                <tr>
+                                                                    <td  style="text-align: center; height: 34px; font-size: xx-large; font-family: Consolas;" class="baslik">
+                                                                        BARKOD NO</td>
+                                                                    <td style=" text-align: left; height: 34px; padding-left: 4px;" class="baslik">
+                                                                        <span id="lblBarkodNo" style="display:inline-block;color:White;font-family:Consolas;font-size:XX-Large;font-weight:bold;width:442px;text-align: center">950443351</span></td>
+                                                     
+                                            
+                                                                </tr>
+
+                                                                <tr>
+                                                                    <td style="text-align: center; height: 25px; font-size: xx-large; font-family: Consolas;" class="baslik">
+                                                                        ÜRÜN ADI</td>
+                                                                    <td colspan="2" style=" text-align: left; height: 25px; padding-left: 4px;" class="baslik">
+                                                                        <textarea name="TXT_URUN_ADI" rows="2" cols="20" readonly="readonly" id="TXT_URUN_ADI" style="color:White;background-color:Transparent;border-style:None;font-family:Consolas;font-size:XX-Large;font-weight:bold;height:144px;width:100%;">PLAKA</textarea></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td style="text-align: center; height: 25px; font-size: xx-large; font-family: Consolas;" class="baslik">
+                                                                        ALICI İSİM</td>
+                                                                    <td colspan="2" style=" text-align: left; height: 25px; padding-left: 4px;" class="baslik">
+                                                                        <span id="lblAliciIsim" style="display:inline-block;color:White;font-family:Consolas;font-size:XX-Large;font-weight:bold;width:442px;text-align: center">Mur** TAÇ******</span></td>                                                                </tr>
+                                                                <tr>
+                                                                    <td  colspan="2" style="width: 226px; text-align: center; height: 59px; font-size: xx-large; font-family: Consolas;" class="baslik">
+                                                                        &nbsp;<img id="TESLIM_KANIT_RESIM" src="" style="width:100%;border-width:0px;" /></td>
+
+
+                                                            </table>
+                                                         
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+   </div>
+ 
+    </form>
+                                                       
+</body>
+</html>
+
+<script type="text/javascript">
+
+/***********************************************
+* Highlight Table Cells Script- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* Visit http://www.dynamicDrive.com for hundreds of DHTML scripts
+* This notice must stay intact for legal use
+***********************************************/
+
+//Specify highlight behavior. "TD" to highlight table cells, "TR" to highlight the entire row:
+var highlightbehavior="TD"
+
+var ns6=document.getElementById&&!document.all
+var ie=document.all
+
+function changeto(e,highlightcolor){
+source=ie? event.srcElement : e.target
+if (source.tagName=="TABLE")
+return
+while(source.tagName!=highlightbehavior && source.tagName!="HTML")
+source=ns6? source.parentNode : source.parentElement
+if (source.style.backgroundColor!=highlightcolor&&source.id!="ignore")
+source.style.backgroundColor=highlightcolor
+}
+
+function contains_ns6(master, slave) { //check if slave is contained by master
+while (slave.parentNode)
+if ((slave = slave.parentNode) == master)
+return true;
+return false;
+}
+
+function changeback(e,originalcolor){
+if (ie&&(event.fromElement.contains(event.toElement)||source.contains(event.toElement)||source.id=="ignore")||source.tagName=="TABLE")
+return
+else if (ns6&&(contains_ns6(source, e.relatedTarget)||source.id=="ignore"))
+return
+if (ie&&event.toElement!=source||ns6&&e.relatedTarget!=source)
+source.style.backgroundColor=originalcolor
+}
+
+</script>
+
+<script type="text/javascript" language="javascript">
+
+function KayitAramaKayitlariGetir()
+{   
+        
+    var BarkodNo = degerOku("txtBarkodNo");       
+    var YetkiliMail = degerOku("txtHiddenYetkiliMail");     
+
+    if(YetkiliMail==""){alert("YETKİLİ MAİL BOŞ OLAMAZ!");return;}
+    if(BarkodNo==""){alert("BARKODNO BOŞ OLAMAZ!");return;}
+    if(BarkodNo.length<7){alert("BARKODNO ENA AZ 7 HANELİ OLMALI!");return;}
+        
+    document.form1.BTN_KAYIT_ARAMA_NEW.disabled = true;
+    WebServiceZimmet.KayitAramaBarkoddanKayitlariGetir(YetkiliMail,BarkodNo,OnComplete_KayitAramaKayitlariGetir, OnTimeOut, OnError);
+                
+}
+
+function OnComplete_KayitAramaKayitlariGetir(arg)
+{
+
+    if(arg=="<HATAOLUSTU></HATAOLUSTU>")
+    {
+        alert("KAYIT SORGULANIRKEN HATA OLUŞTU");
+        clearForm();
+        document.form1.BTN_KAYIT_ARAMA_NEW.disabled = false;
+        return; 
+    }
+    
+    if(arg=="<KAYITARAMA></KAYITARAMA>")
+    {
+        alert("BELİRTMİŞ OLDUĞUNUZ KRITERLERE UYGUN KAYIT BULUNAMADI!");
+        clearForm();
+        document.form1.BTN_KAYIT_ARAMA_NEW.disabled = false;
+        return; 
+    }
+    else
+    {
+
+        var xmlg;
+
+        xmlg = CreateXml(arg);
+        clearForm();
+
+        var UrunAdi = xmlg.documentElement.childNodes[0].text; 
+        var UrunAdet = xmlg.documentElement.childNodes[1].text; 
+        var EvrakUcreti = xmlg.documentElement.childNodes[2].text; 
+        var AliciIsim = xmlg.documentElement.childNodes[3].text; 
+        var AliciTelefon = xmlg.documentElement.childNodes[4].text; 
+        var AliciSemt = xmlg.documentElement.childNodes[5].text; 
+        var AliciSehir = xmlg.documentElement.childNodes[6].text; 
+        var AliciAdres = xmlg.documentElement.childNodes[7].text; 
+        var TeslimAciklama = xmlg.documentElement.childNodes[8].text; 
+        var TeslimDurumu = xmlg.documentElement.childNodes[9].text;                
+        var TeslimBilgisi  = xmlg.documentElement.childNodes[10].text;  
+        var TeslimTarihi = xmlg.documentElement.childNodes[11].text;  
+        var IadeAciklama = xmlg.documentElement.childNodes[12].text;  
+        var IndirimAciklama = xmlg.documentElement.childNodes[13].text;  
+        var DevirAciklama = xmlg.documentElement.childNodes[14].text;  
+        var TahsilatDurumu = xmlg.documentElement.childNodes[15].text;  
+ 
+        var mytable=document.getElementById("TableDetay");   
+     
+        mytable.rows(3).cells(1).innerHTML = UrunAdi ;
+        mytable.rows(4).cells(1).innerHTML = UrunAdet ;
+        mytable.rows(5).cells(1).innerHTML = EvrakUcreti ;
+        mytable.rows(6).cells(1).innerHTML = AliciIsim ;
+        mytable.rows(7).cells(1).innerHTML = AliciTelefon ;
+        mytable.rows(8).cells(1).innerHTML = AliciSemt ;
+        mytable.rows(9).cells(1).innerHTML = AliciSehir ;
+        mytable.rows(10).cells(1).innerHTML = AliciAdres ;
+        mytable.rows(11).cells(1).innerHTML = TeslimAciklama ;
+        mytable.rows(12).cells(1).innerHTML = TeslimDurumu ;
+        mytable.rows(13).cells(1).innerHTML = TeslimBilgisi ;
+        mytable.rows(14).cells(1).innerHTML = TeslimTarihi ;
+        mytable.rows(15).cells(1).innerHTML = IadeAciklama ;
+        mytable.rows(16).cells(1).innerHTML = IndirimAciklama ;
+        mytable.rows(17).cells(1).innerHTML = DevirAciklama ;
+        mytable.rows(18).cells(1).innerHTML = TahsilatDurumu ;        
+ 
+        document.form1.BTN_KAYIT_ARAMA_NEW.disabled = false;
+
+    }
+
+}
+
+function SiparisAramaKayitlariGetir()
+{   
+        
+    var SiparisNo = degerOku("txtSiparisNo");       
+    var YetkiliMail = degerOku("txtHiddenYetkiliMail");     
+
+    if(YetkiliMail==""){alert("YETKİLİ MAİL BOŞ OLAMAZ!");return;}
+    if(SiparisNo==""){alert("SİPARİŞNO BOŞ OLAMAZ!");return;}
+        
+    document.form1.BTN_SIPARIS_ARAMA_NEW.disabled = true;
+    WebServiceZimmet.KayitAramaSiparisNodanKayitlariGetir(YetkiliMail,SiparisNo,OnComplete_SiparisAramaKayitlariGetir, OnTimeOut, OnError);
+                
+}
+
+function OnComplete_SiparisAramaKayitlariGetir(arg)
+{
+
+    if(arg=="<HATAOLUSTU></HATAOLUSTU>")
+    {
+        alert("KAYIT SORGULANIRKEN HATA OLUŞTU");
+        clearForm();
+        document.form1.BTN_SIPARIS_ARAMA_NEW.disabled = false;
+        return; 
+    }
+    
+    if(arg=="<KAYITARAMA></KAYITARAMA>")
+    {
+        alert("BELİRTMİŞ OLDUĞUNUZ KRITERLERE UYGUN KAYIT BULUNAMADI!");
+        clearForm();
+        document.form1.BTN_SIPARIS_ARAMA_NEW.disabled = false;
+        return; 
+    }
+    else
+    {
+
+        var xmlg;
+
+        xmlg = CreateXml(arg);
+        clearForm();
+
+        var UrunAdi = xmlg.documentElement.childNodes[0].text; 
+        var UrunAdet = xmlg.documentElement.childNodes[1].text; 
+        var EvrakUcreti = xmlg.documentElement.childNodes[2].text; 
+        var AliciIsim = xmlg.documentElement.childNodes[3].text; 
+        var AliciTelefon = xmlg.documentElement.childNodes[4].text; 
+        var AliciSemt = xmlg.documentElement.childNodes[5].text; 
+        var AliciSehir = xmlg.documentElement.childNodes[6].text; 
+        var AliciAdres = xmlg.documentElement.childNodes[7].text; 
+        var TeslimAciklama = xmlg.documentElement.childNodes[8].text; 
+        var TeslimDurumu = xmlg.documentElement.childNodes[9].text;                
+        var TeslimBilgisi  = xmlg.documentElement.childNodes[10].text;  
+        var TeslimTarihi = xmlg.documentElement.childNodes[11].text;  
+        var IadeAciklama = xmlg.documentElement.childNodes[12].text;  
+        var IndirimAciklama = xmlg.documentElement.childNodes[13].text;  
+        var DevirAciklama = xmlg.documentElement.childNodes[14].text;  
+        var TahsilatDurumu = xmlg.documentElement.childNodes[15].text;  
+ 
+        var mytable=document.getElementById("TableDetay");   
+     
+        mytable.rows(3).cells(1).innerHTML = UrunAdi ;
+        mytable.rows(4).cells(1).innerHTML = UrunAdet ;
+        mytable.rows(5).cells(1).innerHTML = EvrakUcreti ;
+        mytable.rows(6).cells(1).innerHTML = AliciIsim ;
+        mytable.rows(7).cells(1).innerHTML = AliciTelefon ;
+        mytable.rows(8).cells(1).innerHTML = AliciSemt ;
+        mytable.rows(9).cells(1).innerHTML = AliciSehir ;
+        mytable.rows(10).cells(1).innerHTML = AliciAdres ;
+        mytable.rows(11).cells(1).innerHTML = TeslimAciklama ;
+        mytable.rows(12).cells(1).innerHTML = TeslimDurumu ;
+        mytable.rows(13).cells(1).innerHTML = TeslimBilgisi ;
+        mytable.rows(14).cells(1).innerHTML = TeslimTarihi ;
+        mytable.rows(15).cells(1).innerHTML = IadeAciklama ;
+        mytable.rows(16).cells(1).innerHTML = IndirimAciklama ;
+        mytable.rows(17).cells(1).innerHTML = DevirAciklama ;
+        mytable.rows(18).cells(1).innerHTML = TahsilatDurumu ;        
+ 
+        document.form1.BTN_SIPARIS_ARAMA_NEW.disabled = false;
+
+    }
+
+}
+
+function AddRow(BarkodNo,Yetkili,UrunAdi,AliciIsim,AliciTelefon,AliciAdres,AliciSemt,GirisTarihi,KuryeUcreti,EvrakUcreti,IndirimUcreti,IndirimAciklama,EvrakUcretiNakit,EvrakUcretiKKarti,EvrakUcretiIade,IadeAciklama,TahsilEdilecekTutar,DevirAciklama,TeslimTarihi,TeslimBilgisi,TeslimAlan)
+
+{  
+    
+    var mytable=document.getElementById("TGrid");
+    var rindex=mytable.rows.length;
+    
+    var cls;
+    //if((rindex%2)==0) cls="LWGSRow"; else cls="LWGSAlternateRow";
+    cls="LWGSRow";
+        
+    var myNewRow = mytable.insertRow(rindex);
+    myNewRow.className=cls;  
+    
+    var myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="37px";
+    myNewCell.innerHTML=BarkodNo;
+ 
+    var myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.style.textAlign="center"; 
+    myNewCell.style.width="70px";
+    myNewCell.innerHTML=Yetkili;
+    
+    var myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.style.textAlign="center"; 
+    myNewCell.style.width="100px";
+    myNewCell.innerHTML=UrunAdi;
+    
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=AliciIsim;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="100px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=AliciTelefon;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="100px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=AliciAdres;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="400px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=AliciSemt;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="120px";
+    
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=GirisTarihi;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="120px";
+               
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=KuryeUcreti ;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="127px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=EvrakUcreti ;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="127px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=IndirimUcreti ;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="100px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=IndirimAciklama ;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="170px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=EvrakUcretiNakit;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="130px";
+    
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=EvrakUcretiKKarti;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="130px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=EvrakUcretiIade;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="130px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=IadeAciklama;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="170px";
+    
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=TahsilEdilecekTutar;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="130px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=DevirAciklama;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="170px";
+    
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=TeslimTarihi;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="160px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=TeslimBilgisi;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="180px";
+
+    myNewCell = mytable.rows(rindex).insertCell(mytable.rows(rindex).children.length);
+    myNewCell.innerHTML=TeslimAlan;
+    myNewCell.style.textAlign="center";
+    myNewCell.style.width="180px";
+          
+}
+
+function KayitSil(GonderiID)
+{
+
+ 	var answer = confirm(GonderiID +" | GÖNDERİNO'LU KAYIT İPTAL EDİLSİNMİ?")
+	if (answer)
+	{
+      WebServiceZimmet.GonderiSil(GonderiID,OnComplete_GonderiSil, OnTimeOut, OnError);    
+	}
+
+}
+
+function OnComplete_GonderiSil(arg)
+{
+    
+    if(arg=="<HATAOLUSTU></HATAOLUSTU>")
+    {
+        alert("KAYIT EDİLİRKEN HATA OLUŞTU");return; 
+    }
+    
+    if(arg=="<KURYEUZERINDE></KURYEUZERINDE>")
+    {
+        alert("SİLMEK İSTEDİĞİNİZ KAYIT KURYE ÜZERİNE ZİMMETLENMİŞ!\nBU DURUMDA KAYDI SİLEMEZSİNİZ!\nMYCKURYE İLE İRTİBATA GEÇİNİZ!");return; 
+    }
+        
+    if(arg=="<KAYITBULUNAMADI></KAYITBULUNAMADI>")
+    {
+        alert("SİLMEK İSTEDİĞİNİZ KAYIT SİSTEMDE BULUNAMADI!");return; 
+    }
+    else
+    {
+    
+        arg="mb_" + arg;
+
+        var index=0;
+        var mytable=document.getElementById("TGrid");
+		var oRD= mytable.getElementsByTagName("INPUT");
+		for(var i=0;i<oRD.length;i++)
+		{
+		    index++;
+			if(oRD[i].id==arg)
+			{
+			    mytable.deleteRow(index);
+			    break;
+			}
+		}
+    }
+}
+
+function clearForm()
+{   
+    var mytable=document.getElementById("TableDetay");    
+    rCount=mytable.rows.length;
+    for(var i=3;i<parseInt(rCount);i++) 
+    {  mytable.rows(i).cells(1).innerHTML=""; }     
+}
+
+function Left(str, n){
+	if (n <= 0)
+	    return "";
+	else if (n > String(str).length)
+	    return str;
+	else
+	    return String(str).substring(0,n);
+}
+
+function Right(str, n){
+    if (n <= 0)
+       return "";
+    else if (n > String(str).length)
+       return str;
+    else {
+       var iLen = String(str).length;
+       return String(str).substring(iLen, iLen - n);
+    }
+}
+        
+function degerAta(cID,svalue)
+{
+    document.getElementById(cID).value=svalue;
+}
+
+function AlanBoyu(cID)
+{
+    var lvalue=document.getElementById(cID).attributes.length;
+    return lvalue    
+}
+
+function degerOku(cID)
+{
+    var svalue=document.getElementById(cID).value;
+    return svalue;
+}
+
+function icerikAta(cID,svalue)
+{
+
+    document.getElementById(cID).innerText=svalue;
+}
+
+function icerikOku(cID)
+{
+    var svalue=document.getElementById(cID).innerText;
+    return svalue;
+}
+
+function CreateXml(strtext)
+{    
+    try{
+    var parser=new DOMParser();
+    var doc=parser.parseFromString(strtext,"text/xml");
+    }
+    catch (e){}
+
+    try
+    {
+    var doc = new ActiveXObject('Microsoft.XMLDOM');
+    doc.loadXML(strtext);
+    }
+    catch (e){}    
+    return doc;
+}
+
+function OnError(arg) {alert("HATA OLUŞTU!")}
+function OnTimeOut(arg) {alert("SERVERLA BAGLANTI KURULAMADI!")}
+
+function allownumbers(e)
+{ 
+    var key = window.event ? e.keyCode : e.which;
+    var keychar = String.fromCharCode(key);
+    var reg = new RegExp("[0-9]")
+    
+    if (key == 58)
+    {
+     return;
+    }
+    if (key == 8)
+    {
+     keychar = String.fromCharCode(key);
+    }
+    if (key == 13)
+    {
+     key=8;
+     keychar = String.fromCharCode(key);     
+    }
+    if (reg.test(keychar)==false)
+    { e.keyCode=0; }
+}
+
+function ExceleAktar()
+  {
+
+    var AliciIsim = degerOku("txtAlici");       
+    var YetkiliMail = degerOku("txtHiddenYetkiliMail");       
+    
+    var obj  = document.getElementById("ddlYetkili");
+    var obj2 = document.getElementById("ddlGirisTarihiBaslangic"); 
+    var obj3 = document.getElementById("ddlGirisTarihiBitis"); 
+    var obj4 = document.getElementById("ddlTeslimTarihiBaslangic"); 
+    var obj5 = document.getElementById("ddlTeslimTarihiBitis"); 
+    var obj6 = document.getElementById("ddlKuryeZimmetDurumu"); 
+    var obj7 = document.getElementById("ddlTeslimBilgisiDurumu");
+    var obj8 = document.getElementById("ddlSiralama");
+              
+    var YetkiliAdi            = obj[obj.selectedIndex].text;   
+    var GirisTarihiBaslangic  = obj2[obj2.selectedIndex].value;
+    var GirisTarihiBitis      = obj3[obj3.selectedIndex].value;
+    var TeslimTarihiBaslangic = obj4[obj4.selectedIndex].value;
+    var TeslimTarihiBitis     = obj5[obj5.selectedIndex].value;
+    var KuryeZimmetDurumu     = obj6[obj6.selectedIndex].value;
+    var TeslimBilgisiDurumu   = obj7[obj7.selectedIndex].value;
+    var Siralama              = obj8[obj8.selectedIndex].value;
+
+    if(AliciIsim=="")
+      {if(YetkiliAdi=="HEPSİ")
+        {if(GirisTarihiBaslangic==0)
+          {if(GirisTarihiBitis==0)
+            {if(TeslimTarihiBaslangic==0)
+              {if(TeslimTarihiBitis==0)
+                {if(KuryeZimmetDurumu==0)
+                  {if(TeslimBilgisiDurumu==0)
+                    {alert("EN AZ BIR ALANI SECMENIZ GEREKIYOR!");return;}
+                  }
+                }exce
+              }
+            }
+          }
+        }
+      }
+    
+      document.form1.action="KayitAramaExceleAktar.aspx?YetkiliAdi="+ YetkiliAdi + "&YetkiliMail=" + YetkiliMail + "&AliciIsim=" + AliciIsim + "&GirisTarihiBaslangic=" + GirisTarihiBaslangic + "&GirisTarihiBitis=" + GirisTarihiBitis + "&TeslimTarihiBaslangic=" + TeslimTarihiBaslangic + "&TeslimTarihiBitis=" + TeslimTarihiBitis + "&KuryeZimmetDurumu=" + KuryeZimmetDurumu + "&TeslimBilgisiDurumu=" + TeslimBilgisiDurumu + "&Siralama=" + Siralama; 
+      document.form1.submit();   
+	  
+  }
+
+</script>
+

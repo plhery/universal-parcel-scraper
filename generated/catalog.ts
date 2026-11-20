@@ -64116,7 +64116,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Istanbul",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "yol-kargo",
+      "localClocks": true
     },
     "canaryUrl": "https://yolkargo.com.tr/",
     "trackingUrlTemplate": "https://yolkargo.com.tr/kargo.php?q={trackingNumber}",
