@@ -696,6 +696,7 @@ import { adapter as qtExpress } from '../carriers/qt-express/adapter.js';
 import { adapter as quantiumSolutions } from '../carriers/quantium-solutions/adapter.js';
 import { adapter as quickFort } from '../carriers/quick-fort/adapter.js';
 import { adapter as quickRabbit } from '../carriers/quick-rabbit/adapter.js';
+import { adapter as quickshipCanada } from '../carriers/quickship-canada/adapter.js';
 import { adapter as quicksilverSa } from '../carriers/quicksilver-sa/adapter.js';
 import { adapter as quiqup } from '../carriers/quiqup/adapter.js';
 import { adapter as qwintry } from '../carriers/qwintry/adapter.js';
@@ -1676,6 +1677,7 @@ export const REGISTRY: RegistryDefinition = {
     "quantium-solutions": quantiumSolutions,
     "quick-fort": quickFort,
     "quick-rabbit": quickRabbit,
+    "quickship-canada": quickshipCanada,
     "quicksilver-sa": quicksilverSa,
     "quiqup": quiqup,
     "qwintry": qwintry,
@@ -3346,6 +3348,7 @@ export const REGISTRY: RegistryDefinition = {
     "quick-transport": "universal",
     "quickbox-kg": "universal",
     "quickpac": "planzer",
+    "quickship-canada": "quickship-canada",
     "quicksilver-sa": "quicksilver-sa",
     "quiqup": "quiqup",
     "quriers": "universal",

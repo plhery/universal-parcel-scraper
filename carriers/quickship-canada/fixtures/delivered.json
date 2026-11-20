@@ -1,0 +1,153 @@
+{
+  "success": true,
+  "data": [
+    {
+      "statusCode": "407",
+      "status": "Delivered",
+      "deliveryDate": "2026-05-29T05:31:30.000Z",
+      "awb": "QS207431",
+      "events": [
+        {
+          "statusCode": "309",
+          "eventDate": "08-06-2026 08:40 AM",
+          "statusRemark": "Flight Arrived at Destination (M)"
+        },
+        {
+          "statusCode": "407",
+          "eventDate": "29-05-2026 11:01 AM",
+          "statusRemark": "Delivered "
+        },
+        {
+          "statusCode": "406",
+          "eventDate": "29-05-2026 08:04 AM",
+          "statusRemark": "Out for delivery to consignee "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "29-05-2026 04:50 AM",
+          "statusRemark": "In Transit at destination "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "29-05-2026 04:38 AM",
+          "statusRemark": "In Transit at destination "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "29-05-2026 01:13 AM",
+          "statusRemark": "Arrived at Terminal Location "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "28-05-2026 10:08 PM",
+          "statusRemark": "Departed Terminal Location "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "28-05-2026 09:17 PM",
+          "statusRemark": "In Transit at destination "
+        },
+        {
+          "statusCode": "401",
+          "eventDate": "28-05-2026 09:16 PM",
+          "statusRemark": "In Transit at destination "
+        },
+        {
+          "statusCode": "304",
+          "eventDate": "28-05-2026 09:15 PM",
+          "statusRemark": "Handed over to last mile partner "
+        },
+        {
+          "statusCode": "302",
+          "eventDate": "27-05-2026 10:05 PM",
+          "statusRemark": "Customs Released/Cleared "
+        },
+        {
+          "statusCode": "302",
+          "eventDate": "27-05-2026 10:04 PM",
+          "statusRemark": "Customs Released/Cleared "
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "27-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "310",
+          "eventDate": "22-05-2026 02:00 AM",
+          "statusRemark": "Under Custom Examination (M)"
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "19-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "10-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "10-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "09-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "301",
+          "eventDate": "09-05-2026 12:00 PM",
+          "statusRemark": "Customs Clearance at Destination (M)"
+        },
+        {
+          "statusCode": "308",
+          "eventDate": "08-05-2026 08:00 PM",
+          "statusRemark": "Expected Flight Arrival (M)"
+        },
+        {
+          "statusCode": "217",
+          "eventDate": "06-05-2026 06:40 PM",
+          "statusRemark": "In-Transit from India "
+        },
+        {
+          "statusCode": "216",
+          "eventDate": "06-05-2026 05:40 PM",
+          "statusRemark": "Handed over to Airline "
+        },
+        {
+          "statusCode": "217",
+          "eventDate": "06-05-2026 11:10 AM",
+          "statusRemark": "In-Transit from India (M)"
+        },
+        {
+          "statusCode": "216",
+          "eventDate": "06-05-2026 11:09 AM",
+          "statusRemark": "Handed over to Airline (M)"
+        },
+        {
+          "statusCode": "203",
+          "eventDate": "05-05-2026 03:07 PM",
+          "statusRemark": "Master Assigned, Ready for connection "
+        },
+        {
+          "statusCode": "202",
+          "eventDate": "04-05-2026 04:20 PM",
+          "statusRemark": "Bagging Completed "
+        },
+        {
+          "statusCode": "112",
+          "eventDate": "29-04-2026 02:02 PM",
+          "statusRemark": "InScan at Origin hub "
+        },
+        {
+          "statusCode": "101",
+          "eventDate": "29-04-2026 02:02 PM",
+          "statusRemark": "Shipment Booked "
+        }
+      ]
+    }
+  ]
+}

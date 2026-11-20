@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'quickship-canada', number: 'QS207431',
+    route: /^https:\/\/track\.quickshipnow\.com\/\?awb=QS207431$/,
+    marker: /Track Your Order|Tracking History/i, renderTimeoutMs: 10000 },
   { carrier: 'stoo', number: 'ST230047655JP',
     route: /^https:\/\/stline\.stload\.com\/tracking\/ST230047655JP$/,
     marker: /배송\s*추적|配送追跡|Shipment Tracking|Tracking/iu, renderTimeoutMs: 10000 },

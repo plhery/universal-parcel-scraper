@@ -49944,6 +49944,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "quickship-canada": {
+    "displayName": "QuickShip",
+    "color": "#EA580C",
+    "aliases": [
+      "QuickShip Now",
+      "QuickShip International",
+      "QuickShip Canada"
+    ],
+    "countries": [
+      "IN",
+      "CA",
+      "US",
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "quickship-canada",
+      "localClocks": true
+    },
+    "canaryUrl": "https://track.quickshipnow.com/",
+    "trackingUrlTemplate": "https://track.quickshipnow.com/?awb={trackingNumber}",
+    "trackingSearchUrl": "https://track.quickshipnow.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "quicksilver-sa": {
     "displayName": "Quicksilver",
     "color": "#805fa4",
@@ -68848,6 +68875,7 @@ export const CARRIER_IDS = [
   "quick-rabbit",
   "quick-transport",
   "quickbox-kg",
+  "quickship-canada",
   "quicksilver-sa",
   "quiqup",
   "quriers",
@@ -70800,6 +70828,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "quick-rabbit": ["quick-rabbit-1","quick-rabbit-2","quick-rabbit-3"],
   "quick-transport": [],
   "quickbox-kg": [],
+  "quickship-canada": [],
   "quicksilver-sa": ["quicksilver-sa-1"],
   "quiqup": [],
   "quriers": [],

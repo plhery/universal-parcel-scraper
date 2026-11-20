@@ -1,0 +1,60 @@
+{
+  "carrier": "quickship-canada",
+  "records": [
+    {
+      "number": "QS207431",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://track.quickshipnow.com/?awb=QS207431",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The indexed official tracker URL includes this exact QuickShip AWB. The guest endpoint echoes it and returns dated scans from booking through delivery.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      }
+    },
+    {
+      "number": "UUS63D1260298065799",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://quickshipnow.ca/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The official site publishes the complete last-mile AWB. The international guest endpoint echoes the same handoff AWB and returns QuickShip’s shipment history.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "uniuni",
+        "confidence": "high"
+      }
+    },
+    {
+      "number": "QS570719299745",
+      "role": "negative",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://track.quickshipnow.com/",
+        "access": "full_page"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published example received the carrier’s exact no-tracking-information response."
+    }
+  ]
+}

@@ -5934,5 +5934,10 @@
     "carrier": "stoo",
     "kind": "open",
     "reason": "One published reception number does not establish a carrier-specific format. Select STOO explicitly."
+  },
+  {
+    "carrier": "quickship-canada",
+    "kind": "open",
+    "reason": "The verified QuickShip AWB overlaps GLS and Loggi candidates. The second reference belongs to the last-mile carrier. Select QuickShip explicitly."
   }
 ]
