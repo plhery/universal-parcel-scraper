@@ -39,6 +39,7 @@ COPY pasarex-browser.mjs /app/packages/tiers/src/utils/pasarex-browser.mjs
 COPY correios-browser.mjs /app/packages/tiers/src/utils/correios-browser.mjs
 COPY dao-browser.mjs /app/packages/tiers/src/utils/dao-browser.mjs
 COPY peddler-browser.mjs /app/packages/tiers/src/utils/peddler-browser.mjs
+COPY rohlig-suus-browser.mjs /app/packages/tiers/src/utils/rohlig-suus-browser.mjs
 COPY onlog-express-browser.mjs /app/packages/tiers/src/utils/onlog-express-browser.mjs
 COPY flash-courier-guest.mjs /app/packages/tiers/src/utils/flash-courier-guest.mjs
 COPY flash-courier-guest.py /app/packages/tiers/src/utils/flash-courier-guest.py

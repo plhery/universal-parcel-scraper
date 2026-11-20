@@ -4706,5 +4706,11 @@
     "pattern": "^\\d{13}$",
     "kind": "by_design",
     "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
+  },
+  {
+    "carrier": "rohlig-suus",
+    "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
+    "kind": "open",
+    "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits, and SUUS's guest tracker shows each one. Detection does not offer Rohlig SUUS."
   }
 ]

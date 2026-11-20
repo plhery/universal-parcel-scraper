@@ -1,0 +1,64 @@
+{
+  "parcelNumber": "MKRI260070952",
+  "statusId": 39,
+  "stageId": 6,
+  "location": "KTW",
+  "collectDate": "2026-07-20T00:00:00",
+  "deliveryDate": "2026-07-21T00:00:00",
+  "transportType": "road",
+  "isAnomaly": false,
+  "origins": [
+    {
+      "country": "PL"
+    }
+  ],
+  "destinations": [
+    {
+      "country": "PL"
+    }
+  ],
+  "events": [
+    {
+      "statusId": 53,
+      "created": "2026-07-28T02:37:01.32",
+      "location": "KTW",
+      "speedCode": "ZAFF",
+      "eventNote": null
+    },
+    {
+      "statusId": 39,
+      "created": "2026-07-21T12:36:58",
+      "location": "PIE",
+      "speedCode": "UNLO",
+      "eventNote": null
+    },
+    {
+      "statusId": 36,
+      "created": "2026-07-21T04:17:19",
+      "location": "PIE",
+      "speedCode": "ROZ",
+      "eventNote": null
+    },
+    {
+      "statusId": 36,
+      "created": "2026-07-20T15:13:02",
+      "location": "KTW",
+      "speedCode": "ROZ",
+      "eventNote": null
+    },
+    {
+      "statusId": 34,
+      "created": "2026-07-20T13:38:03",
+      "location": "KTW",
+      "speedCode": "LOAD",
+      "eventNote": null
+    },
+    {
+      "statusId": 32,
+      "created": "2026-07-17T14:48:53.513333",
+      "location": "KTW",
+      "speedCode": "J_CR",
+      "eventNote": null
+    }
+  ]
+}

@@ -18,18 +18,69 @@
   "timezone": "Europe/Warsaw",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "rohlig-suus",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta",
+    "destination_country"
+  ],
   "portal": {
     "url": "https://portal.suus.com/order-details/{trackingNumber}",
     "searchUrl": "https://portal.suus.com/visibility",
     "canaryUrl": "https://portal.suus.com/visibility",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "eta",
+      "departure_date",
+      "origin",
+      "destination",
+      "destination_country",
+      "recipient_name",
+      "weight",
+      "volume",
+      "parcel_count",
+      "customer_reference",
+      "service_name",
+      "delivery_options"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "destination_country"
+    ],
+    "discarded": [
+      "progress_rail",
+      "departure_date",
+      "origin",
+      "destination",
+      "recipient_name",
+      "weight",
+      "volume",
+      "parcel_count",
+      "customer_reference",
+      "service_name",
+      "delivery_options"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "delivered_at",
+      "sender_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

@@ -1,5 +1,68 @@
 {
   "carrier": "rohlig-suus",
-  "gap": "No public page shows a Rohlig SUUS Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "LKRC 240028939",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-rohlig-suus",
+        "date": "2025-03-06",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Polish domestic delivery",
+        "reportedRole": "numer przesyłki",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The customer’s review of a completed SUUS delivery gives this shipment number with a space. SUUS’s guest tracker, asked without the space, shows it from its order to its delivery."
+    },
+    {
+      "number": "MKRI260070952",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-rohlig-suus",
+        "date": "2026-07-21",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Polish domestic delivery",
+        "reportedRole": "numer przesyłki",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The customer publishes this shipment number in a review of their SUUS delivery. SUUS’s guest tracker shows it from its order through two depots to its delivery."
+    },
+    {
+      "number": "WKRW260048622",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.globkurier.pl/opinie-rohlig-suus",
+        "date": "2026-07-21",
+        "dateKind": "customer review",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Polish domestic delivery",
+        "reportedRole": "numer przesyłki",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The customer gives this shipment number in a review of their SUUS furniture delivery. SUUS’s guest tracker shows a failed attempt, a second round and the delivery."
+    }
+  ]
 }

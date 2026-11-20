@@ -1,0 +1,99 @@
+{
+  "parcelNumber": "WKRW260048622",
+  "statusId": 39,
+  "stageId": 6,
+  "location": "KAL",
+  "collectDate": "2026-07-17T00:00:00",
+  "deliveryDate": "2026-07-24T00:00:00",
+  "transportType": "road",
+  "isAnomaly": false,
+  "origins": [
+    {
+      "country": "PL"
+    }
+  ],
+  "destinations": [
+    {
+      "country": "PL"
+    }
+  ],
+  "events": [
+    {
+      "statusId": 53,
+      "created": "2026-08-04T04:31:24.26",
+      "location": "KAL",
+      "speedCode": "ZAFF",
+      "eventNote": null
+    },
+    {
+      "statusId": 39,
+      "created": "2026-07-21T14:44:46",
+      "location": "GDY",
+      "speedCode": "UNLO",
+      "eventNote": null
+    },
+    {
+      "statusId": 37,
+      "created": "2026-07-21T13:18:10",
+      "location": "GDY",
+      "speedCode": "ZAL",
+      "eventNote": null
+    },
+    {
+      "statusId": 134,
+      "created": "2026-07-20T14:39:55.65",
+      "location": "WRO",
+      "speedCode": "PDST",
+      "eventNote": null
+    },
+    {
+      "statusId": 73,
+      "created": "2026-07-20T14:35:10",
+      "location": "GDY",
+      "speedCode": "ZWRO",
+      "eventNote": null
+    },
+    {
+      "statusId": 37,
+      "created": "2026-07-20T12:01:22",
+      "location": "GDY",
+      "speedCode": "ZAL",
+      "eventNote": null
+    },
+    {
+      "statusId": 36,
+      "created": "2026-07-20T06:27:36",
+      "location": "GDY",
+      "speedCode": "ROZ",
+      "eventNote": null
+    },
+    {
+      "statusId": 36,
+      "created": "2026-07-17T22:32:21",
+      "location": "BYD",
+      "speedCode": "ROZ",
+      "eventNote": null
+    },
+    {
+      "statusId": 35,
+      "created": "2026-07-17T18:07:26",
+      "location": "KAL",
+      "speedCode": "ZALI",
+      "eventNote": null
+    },
+    {
+      "statusId": 34,
+      "created": "2026-07-17T12:18:44",
+      "location": "KAL",
+      "speedCode": "LOAD",
+      "eventNote": null
+    },
+    {
+      "statusId": 32,
+      "created": "2026-07-16T12:07:07.98",
+      "location": "WRO",
+      "speedCode": "J_CR",
+      "eventNote": null
+    }
+  ]
+}

@@ -49610,7 +49610,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Warsaw",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rohlig-suus",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://portal.suus.com/visibility",
     "trackingUrlTemplate": "https://portal.suus.com/order-details/{trackingNumber}",
