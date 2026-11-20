@@ -10121,6 +10121,33 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "atlantic-container-line": {
+    "displayName": "Atlantic Container Line",
+    "color": "#004b86",
+    "aliases": [
+      "ACL Cargo",
+      "Atlantic Container Line AB",
+      "ACLU"
+    ],
+    "countries": [
+      "SE",
+      "GB",
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "atlantic-container-line",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.aclcargo.com/track-trace/",
+    "trackingUrlTemplate": "https://www.aclcargo.com/track-trace/",
+    "trackingSearchUrl": "https://www.aclcargo.com/track-trace/",
+    "trackingSiteName": "ACL Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "atlantic-courier": {
     "displayName": "Atlantic International Express",
     "color": "#e31e24",
@@ -65628,6 +65655,7 @@ export const CARRIER_IDS = [
   "atc-express",
   "athinaiki",
   "ativa-logistica",
+  "atlantic-container-line",
   "atlantic-courier",
   "ats-healthcare",
   "atual-cargas",
@@ -67496,6 +67524,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "atc-express": [],
   "athinaiki": [],
   "ativa-logistica": [],
+  "atlantic-container-line": [],
   "atlantic-courier": [],
   "ats-healthcare": [],
   "atual-cargas": [],

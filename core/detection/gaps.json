@@ -5519,5 +5519,10 @@
     "carrier": "hecny-shipping",
     "kind": "open",
     "reason": "Hecny confirms a whole house bill through its guest search. The bare format is shared."
+  },
+  {
+    "carrier": "atlantic-container-line",
+    "kind": "open",
+    "reason": "The public tracker confirms a whole shipment number. The adapter is explicitly selected."
   }
 ]

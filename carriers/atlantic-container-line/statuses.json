@@ -1,0 +1,49 @@
+{
+  "carrier": "atlantic-container-line",
+  "entries": [
+    {
+      "wording": "Received Empty",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Movement of empty equipment."
+    },
+    {
+      "wording": "Departed  from",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Received for Import",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Discharged Full From Vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Loaded Full on Vessel",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Received for Export",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Out Empty to Customer",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "Movement of empty equipment."
+    }
+  ]
+}
