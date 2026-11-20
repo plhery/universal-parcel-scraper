@@ -3244,6 +3244,12 @@
     "reason": "Sendle's order numbers are a short counter that other carriers' rules share; the QSS tracking number under the label's barcode names Sendle."
   },
   {
+    "carrier": "sentral-cargo",
+    "pattern": "^\\d{11}$",
+    "kind": "open",
+    "reason": "Detection does not offer Sentral Cargo for the eleven-digit domestic receipt number its tracker returned with shipment history."
+  },
+  {
     "carrier": "servientrega",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
