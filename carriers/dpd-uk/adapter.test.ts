@@ -20,7 +20,7 @@ describe('DPD UK public history projection', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered',
       last_update: '2026-01-06T08:15:00+00:00', delivered_at: '2026-01-06T08:15:00+00:00' });
     expect(result.last_update_local).toBeUndefined();
-    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'registered']);
+    expect(result.events?.map(event => event.stage)).toEqual(['delivered', 'out_for_delivery', 'in_transit', 'accepted', 'registered']);
     expect(result.events?.map(event => event.time)).toEqual(['2026-01-06T08:15:00+00:00', '2026-01-06T06:59:00+00:00',
       '2026-01-06T02:49:00+00:00', '2026-01-05T20:22:00+00:00', '2026-01-05T12:38:00+00:00']);
     expect(result.events?.some(event => event.local_time !== undefined)).toBe(false);
@@ -109,6 +109,13 @@ describe('DPD UK public history projection', () => {
     expect(project(payload)).toHaveProperty('sender_name', null);
     payload.history.data.splice(-2, 1);
     expect(project(payload).sender_name).toBe('Example Merchant');
+  });
+
+  it("reads the driver's collection as the acceptance, and the collection from a Pickup shop as on its way", () => {
+    const payload = fixture();
+    expect(project(payload).events?.at(-2)).toMatchObject({ stage: 'accepted', stage_source: 'carrier_map' });
+    payload.history.data.splice(-1, 0, { eventDate: '2026-01-05 16:54:00', eventLocation: 'DPD', eventText: 'Your parcel has been dropped off at a DPD Pickup Shop' });
+    expect(project(payload).events?.slice(-3).map(event => event.stage)).toEqual(['in_transit', 'accepted', 'registered']);
   });
 
   it('reads a handed-in label on its way "back to the sender" before any depot as on its way, and a return after one as a return', () => {

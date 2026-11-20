@@ -91,6 +91,9 @@ const HANDED_IN = new Set([
 // before a depot has the parcel, its way "back to the sender" is its way there.
 const BACK_TO_SENDER = "we have your parcel and it's on its way back to the sender";
 const BEFORE_DEPOT: ReadonlySet<string | undefined> = new Set([undefined, 'registered', 'accepted']);
+// DPD's first custody: the driver's collection from the sender. After a drop-off at a Pickup shop it is the
+// collection from the shop, on the way.
+const TO_DEPOT = "we have your parcel and it's on its way to our depot";
 
 // A round that missed the recipient, with the day of the next one.
 const MISSED = /^we missed you\. your driver won't be back today but we'll be back [a-z]{3} \d{1,2} [a-z]+ with your parcel$/;
@@ -173,13 +176,18 @@ export function parseDpdUkHistory(detailPayload: unknown, historyPayload: unknow
   });
   let handedIn = false;
   let outbound = false;
+  let received = false;
   for (const event of [...events].reverse()) {
     const wording = dpdUkWording(event.description!);
     if (handedIn && wording === BACK_TO_SENDER) {
       Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
       outbound = true;
+    } else if (wording === TO_DEPOT && !received) {
+      Object.assign(event, { stage: 'accepted', stage_source: 'carrier_map' });
+      break;
     } else if (!BEFORE_DEPOT.has(event.stage)) break;
     handedIn ||= HANDED_IN.has(wording);
+    received ||= event.stage === 'accepted';
   }
   const seen = new Set<string>();
   const retained = events.filter(event => {
