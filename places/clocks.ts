@@ -32,6 +32,20 @@ const landed = (event: CarrierEvent): boolean => {
   const description = text(event.description);
   return LANDED.test(description) && !NOT_LANDED.test(description);
 };
+// An export's clearance done, after which a customs scan is the importing country's, as Evri's
+// "In customs" and "Customs cleared" after its "Export Customs Clearance Complete".
+const EXPORT_CLEARED = /\bexport\b.*\b(?:complete|completed|cleared)\b/i;
+const CUSTOMS = /\bcustoms\b/i;
+/** Whether each scan, oldest first, says the parcel came off a crossing: a landing, or customs after the export's clearance. */
+function crossings(scans: readonly CarrierEvent[]): boolean[] {
+  let exported = false;
+  return scans.map((event) => {
+    const description = text(event.description);
+    const crossed = landed(event) || (exported && CUSTOMS.test(description) && !NOT_LANDED.test(description));
+    exported ||= EXPORT_CLEARED.test(description);
+    return crossed;
+  });
+}
 
 function instant(value: unknown): number | null {
   const raw = text(value);
@@ -86,7 +100,7 @@ function destinationZone(carrier: string, country: string, home: string | null):
  * code alone names; a scan filed away from the parcel takes the clock of the
  * office that filed it and lends it to no other; else from the leg the parcel was on: the last scan before
  * it with a zone of its own, or, once a scan since says the parcel landed or
- * reached its destination, the next one after, else the destination's clock unless
+ * reached its destination, or is a customs scan after the export's clearance, the next one after, else the destination's clock unless
  * the last one is on a clock the destination keeps; or with none before, the next
  * one unless the parcel lands on the way there; else from the destination, if the carrier
  * delivers there; else from the carrier's home clock. A place that names only
@@ -127,6 +141,7 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
   // A scan's own zone: its place's, or an airport's its code alone names.
   const own = places.map((place, at) => place ? zoneOf(place) : airportTimeZone(text(scans[at]!.location)));
   const neighbour = (zone: string | null | undefined): Zoned | null => zone ? { zone, basis: 'neighbour' } : null;
+  const crossed = crossings(scans);
   const country = reading.destinationCountry;
   // Landed with no zoned scan since: the last zoned scan's clock if the destination keeps it,
   // else the destination's own, not the clock of the country the parcel left.
@@ -136,7 +151,7 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     return landing ? { zone: landing, basis: 'destination' } : neighbour(zone);
   };
   // The zone of the leg the parcel was on: the last scan before with a zone of its own,
-  // or once a scan since says the parcel landed, the next one after, else what `landing`
+  // or once a scan since says the parcel landed (`crossed`), the next one after, else what `landing`
   // makes of the last one. With none before, the next one, unless the parcel lands on the way there.
   const leg = (at: number, fits: (place: EventPlace | null) => boolean,
     landing: (before: number) => Zoned | null = (before) => neighbour(own[before])): Zoned | null => {
@@ -145,8 +160,8 @@ export function dateLocalClocks(carrier: string, result: CarrierResult, readAt?:
     while (before >= 0 && !zoned(before)) before -= 1;
     let after = at + 1;
     while (after < scans.length && !zoned(after)) after += 1;
-    if (scans.slice(before + 1, at + 1).some(landed)) return neighbour(own[after]) ?? landing(before);
-    return neighbour(own[before]) ?? (scans.slice(at + 1, after).some(landed) ? null : neighbour(own[after]));
+    if (crossed.slice(before + 1, at + 1).includes(true)) return neighbour(own[after]) ?? landing(before);
+    return neighbour(own[before]) ?? (crossed.slice(at + 1, after).includes(true) ? null : neighbour(own[after]));
   };
   const home = carrierHomeZone(carrier, result);
   const destination = destinationZone(carrier, country ?? '', home);

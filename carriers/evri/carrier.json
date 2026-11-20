@@ -30,7 +30,8 @@
   "capabilities": [
     "history",
     "location",
-    "weight"
+    "weight",
+    "destination_country"
   ],
   "portal": {
     "url": "https://globaleco.app/track",
@@ -43,6 +44,7 @@
       "weight",
       "sender_name",
       "destination",
+      "destination_country",
       "comments",
       "tracking_alias"
     ],
@@ -50,7 +52,8 @@
       "status",
       "history",
       "location",
-      "weight"
+      "weight",
+      "destination_country"
     ],
     "discarded": [
       "sender_name",

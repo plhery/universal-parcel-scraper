@@ -202,6 +202,34 @@ describe('dateLocalClocks', () => {
     expect(scans().map((event) => event![1])).toEqual(['Asia/Shanghai', 'Asia/Shanghai', 'Asia/Shanghai']);
   });
 
+  it('dates customs after the export\'s clearance, and the scans after it, on the destination\'s clock', () => {
+    // Evri's own wording, a synthetic history: export cleared in the Netherlands, customs and delivery in the UK.
+    const scans = (destination_country?: string) => dateLocalClocks('evri', { status: 'delivered', destination_country, events: [
+      { local_time: '2026-11-17T10:49:00', description: 'Delivered' },
+      { local_time: '2026-11-15T11:39:00', description: 'At the local depot' },
+      { local_time: '2026-11-14T16:43:13', description: 'Customs cleared' },
+      { local_time: '2026-11-14T16:27:00', description: 'In customs' },
+      { local_time: '2026-11-13T18:54:32', description: 'Export Customs Clearance Complete' },
+      { local_time: '2026-11-13T16:25:46', description: 'Consolidated', location: 'Utrecht, NL' },
+    ] }).events!.map(dated);
+    expect(scans('GB')).toEqual([
+      ['2026-11-17T10:49:00+00:00', 'Europe/London', 'destination'],
+      ['2026-11-15T11:39:00+00:00', 'Europe/London', 'destination'],
+      ['2026-11-14T16:43:13+00:00', 'Europe/London', 'destination'],
+      ['2026-11-14T16:27:00+00:00', 'Europe/London', 'destination'],
+      ['2026-11-13T18:54:32+01:00', 'Europe/Amsterdam', 'neighbour'],
+      ['2026-11-13T16:25:46+01:00', 'Europe/Amsterdam', 'place'],
+    ]);
+    // Without a destination, nothing tells where the parcel crossed to.
+    expect(scans().map((event) => event![1])).toEqual(Array(6).fill('Europe/Amsterdam'));
+    // Customs before the export's clearance is still the origin's.
+    const origin = dateLocalClocks('evri', { status: 'in_transit', destination_country: 'GB', events: [
+      { local_time: '2026-11-13T18:54:32', description: 'In customs' },
+      { local_time: '2026-11-13T16:25:46', description: 'Consolidated', location: 'Utrecht, NL' },
+    ] }).events!.map(dated);
+    expect(origin[0]).toEqual(['2026-11-13T18:54:32+01:00', 'Europe/Amsterdam', 'neighbour']);
+  });
+
   it('keeps a flight that took off and awaits its arrival on the clock of the leg it left', () => {
     // HuaHan's US line in its words, a synthetic history: the takeoff is no landing; the arrival is.
     const result = dateLocalClocks('huahan', { status: 'in_transit', destination_country: 'US', events: [

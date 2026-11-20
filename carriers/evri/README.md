@@ -49,6 +49,10 @@ International first for a `C` in the sixth place.
   the portal's newest-first order; `events[].time` is omitted and `last_update`
   is null, so the host never reads them as UTC. Clocks aren't sorted across
   legs.
+- The Destination field ends with the recipient's country code after their town. Only
+  the code is read, as `destination_country`: the scans after the export's clearance,
+  which name no place, are the destination's ("In customs", "At the local depot"), and
+  the host dates them on its clock rather than the origin's.
 - Paack's scans are the exception. When the Carrier field names Paack, its
   scans from "Arrived In Country" on carry the digits of Paack's own UTC
   instants to the second, so they become instants and the newest gives
@@ -67,8 +71,8 @@ International first for a `C` in the sixth place.
 ## Limitations
 
 - International only; domestic UK numbers use the Evri UK adapter.
-- Sender names, destination and outbound links are never read, nor is anything
-  in a comment but a delivery estimate.
+- Sender names, the destination's town and outbound links are never read, nor is
+  anything in a comment but a delivery estimate.
 
 ## Testing
 

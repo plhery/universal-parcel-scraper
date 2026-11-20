@@ -32,8 +32,9 @@ describe('Evri International parser', () => {
   });
 
   it('exercises every declared capability', () => {
-    expect(capabilities).toEqual(['history', 'location', 'weight']);
+    expect(capabilities).toEqual(['history', 'location', 'weight', 'destination_country']);
     const result = parse(html, NUMBER);
+    expect(result.destination_country).toBe('ET');
     expect(result.events?.length).toBeGreaterThan(0);
     expect(result.events?.[0]?.location).toBe('ET');
     expect(result.weight_kg).toBe(1.95);
@@ -111,6 +112,14 @@ describe('Evri International parser', () => {
     }
     // A delivered parcel has no estimate.
     expect(estimated('Estimated delivery date is: 10-30-2026', html.replaceAll('Delivery Attempted', 'Delivered')).expected_delivery).toBeNull();
+  });
+
+  it('reads the country the Destination field ends with, and nothing else of it', () => {
+    const to = (destination: string) => parse(html.replace('Example Town, ET', destination), NUMBER).destination_country;
+    expect(to('Example Town, GB')).toBe('GB');
+    for (const destination of ['Example Town', 'Example Town, Example County']) {
+      expect(to(destination)).toBeUndefined();
+    }
   });
 
   it('does not claim malformed or nonpositive weights', () => {

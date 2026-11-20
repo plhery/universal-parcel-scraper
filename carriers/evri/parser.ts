@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { detectCarrierMatch } from '../../core/detection/index.js';
 import { ChallengeError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { countryCode } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { evriStatus } from './status.js';
 
@@ -148,15 +149,26 @@ export function parseEvriInternational(html: string, requested: string): EvriInt
   const finished = ['delivered', 'returned'].includes(status?.stage ?? '') || ['delivered', 'returned'].includes(latest.stage ?? '');
   const weightKg = weight ? Number(weight[1]) : NaN;
   const carrierLabel = fields.get('Carrier:') ?? '';
+  const destination = destinationCountry(fields.get('Destination:') ?? '');
   const result: CarrierResult = {
     status: status?.status ?? 'unknown', ...(status ? { current_stage: status.stage } : {}),
     last_status_text: description, last_update: null, last_update_local: latest.local_time,
     expected_delivery: finished ? null : estimate,
     ...(Number.isFinite(weightKg) && weightKg > 0 ? { weight_kg: weightKg } : {}),
+    ...(destination ? { destination_country: destination } : {}),
     events,
   };
   const dated = evriPartner(carrierLabel) === 'paack' ? paackLegInstants(result) : result;
   return { system, carrierTracking, carrierLabel, result: { ...dated, events: dated.events!.slice(0, 100) } };
+}
+
+/**
+ * The country the Destination field ends with, by its two-letter code after the
+ * recipient's town ("Town, GB"). The town is never read.
+ */
+function destinationCountry(field: string): string | null {
+  const code = /,\s*([A-Z]{2})$/.exec(field)?.[1];
+  return code ? countryCode(code) : null;
 }
 
 /**

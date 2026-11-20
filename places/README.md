@@ -217,7 +217,8 @@ zone (`local_time`). The zone comes from the scan's place, read with the scans a
 filed away from the parcel is on the clock of the office that filed it, which it lends to no other
 scan; else from the leg the parcel was on: the last scan before it with a zone of its own (a town, a state,
 a country of one clock or an airport), or once a scan since says the parcel landed or reached its
-destination (a flight that took off and awaits its arrival has not), the next one after, so later scans do not move it, or with none, the destination's
+destination (a flight that took off and awaits its arrival has not), or is a customs scan after the
+export's clearance, the next one after, so later scans do not move it, or with none, the destination's
 clock, unless the last one is on a clock the destination keeps. With none before, it is the next
 one, unless the parcel lands on the way there; else from the parcel's
 destination, when the carrier delivers there; else from the carrier's home clock: its catalog
