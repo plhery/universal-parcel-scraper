@@ -1,0 +1,59 @@
+{
+  "id": "air-europa-cargo",
+  "displayName": "Air Europa Cargo",
+  "aliases": [
+    "Air Europa Air Cargo",
+    "Air Europa Líneas Aéreas Cargo",
+    "UX Cargo"
+  ],
+  "region": {
+    "countries": [
+      "ES"
+    ]
+  },
+  "brand": {
+    "color": "#005699"
+  },
+  "selectable": true,
+  "timezone": "Europe/Madrid",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "air-europa-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code"
+  ],
+  "portal": {
+    "searchUrl": "https://www.uxtracking.com/tracking.asp",
+    "canaryUrl": "https://www.uxtracking.com/tracking.asp",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "flight_bookings",
+      "pieces",
+      "weight",
+      "provider_code"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code"
+    ],
+    "discarded": [
+      "flight_bookings",
+      "pieces",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
