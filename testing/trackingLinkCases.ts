@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'sunrise-logistics-colombia', number: 'BOG-110491',
+    route: /^https:\/\/tracking\.sunriselg\.com\/(?:es|en)\/?$/,
+    marker: /Rastreo de Envíos|Buscar Envío|Shipment Tracking|Track Shipment/iu, forwarding: 'none' },
   { carrier: 'aerolineas-argentinas-cargo', number: '044-33256462',
     route: /^https:\/\/aerolineas\.smartkargo\.com\/FrmAWBTracking\.aspx$/,
     marker: /Track Air Waybill|AWB Numbers|AWB Prefix/iu, forwarding: 'none' },

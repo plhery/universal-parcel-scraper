@@ -83496,6 +83496,12 @@
     ]
   },
   {
+    "input": "BOG-110491",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "BOK2023192",
     "carrier": "bookurier",
     "confidence": "high",
@@ -88644,6 +88650,17 @@
       "colis-prive",
       "tnt-au",
       "purolator"
+    ]
+  },
+  {
+    "input": "DO-2025-0087",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "tnt-it"
+    ],
+    "asked": [
+      "tnt-it"
     ]
   },
   {

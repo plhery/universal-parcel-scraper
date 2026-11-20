@@ -5949,5 +5949,10 @@
     "carrier": "aerolineas-argentinas-cargo",
     "kind": "open",
     "reason": "The airline-issued AWB begins with 044, while existing generic rules offer other candidates. Select Aerolíneas Argentinas Cargo explicitly."
+  },
+  {
+    "carrier": "sunrise-logistics-colombia",
+    "kind": "open",
+    "reason": "One published Sunrise house air waybill does not establish a unique carrier range. Select Sunrise Logistics Group explicitly."
   }
 ]

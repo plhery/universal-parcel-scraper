@@ -57178,6 +57178,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sunrise-logistics-colombia": {
+    "displayName": "Sunrise Logistics Group",
+    "color": "#163F73",
+    "aliases": [
+      "Sunrise Logistics Colombia",
+      "Sunrise Cargo Colombia"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sunrise-logistics-colombia",
+      "localClocks": true
+    },
+    "canaryUrl": "https://tracking.sunriselg.com/es",
+    "trackingUrlTemplate": "https://tracking.sunriselg.com/es",
+    "trackingSearchUrl": "https://tracking.sunriselg.com/es",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "super-parcel-track": {
     "displayName": "Super Parcel Track",
     "color": "#d71920",
@@ -69138,6 +69161,7 @@ export const CARRIER_IDS = [
   "sun-logistics",
   "sundarban-courier",
   "suning-logistics",
+  "sunrise-logistics-colombia",
   "super-parcel-track",
   "superb-express",
   "surat-kargo",
@@ -71093,6 +71117,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sun-logistics": [],
   "sundarban-courier": [],
   "suning-logistics": [],
+  "sunrise-logistics-colombia": [],
   "super-parcel-track": [],
   "superb-express": [],
   "surat-kargo": [],
