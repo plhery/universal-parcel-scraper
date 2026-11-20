@@ -1,0 +1,9 @@
+{
+  "carrier": "astral-aviation",
+  "entries": [
+    { "code": "FSUBKD", "wording": "Shipment booked on a specific flight", "stage": "registered", "language": "en",
+      "confirmedBy": "live", "note": "The air shipment was booked with a flight." },
+    { "code": "FSUDEP", "wording": "Goods departed", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "code": null, "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live" }
+  ]
+}

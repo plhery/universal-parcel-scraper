@@ -10007,6 +10007,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "astral-aviation": {
+    "displayName": "Astral Aviation Cargo",
+    "color": "#09518b",
+    "aliases": [
+      "Astral Aviation",
+      "Astral Aviation Limited",
+      "8V Cargo"
+    ],
+    "countries": [
+      "KE",
+      "AE"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "astral-aviation",
+      "localClocks": true
+    },
+    "canaryUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "trackingUrlTemplate": "https://astral.fr8booking.com/trackAndTrace",
+    "trackingSearchUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "asyad-express": {
     "displayName": "Asyad Express",
     "color": "#221a37",
@@ -65741,6 +65766,7 @@ export const CARRIER_IDS = [
   "asiafly",
   "asigna",
   "asl-asia",
+  "astral-aviation",
   "asyad-express",
   "atc-express",
   "athinaiki",
@@ -67614,6 +67640,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "asiafly": [],
   "asigna": [],
   "asl-asia": [],
+  "astral-aviation": [],
   "asyad-express": [],
   "atc-express": [],
   "athinaiki": [],

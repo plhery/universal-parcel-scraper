@@ -5506,6 +5506,12 @@
     "reason": "Swift Drop publishes a demo order. It confirms the tracking route and does not establish an issued number range."
   },
   {
+    "carrier": "astral-aviation",
+    "number": "48504606350",
+    "kind": "open",
+    "reason": "Astral Cargo is available by explicit selection. Review the IATA issuer prefix and check digit before offering automatic recognition."
+  },
+  {
     "carrier": "ibex-express-bo",
     "number": "1980894",
     "kind": "by_design",

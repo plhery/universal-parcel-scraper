@@ -1,0 +1,42 @@
+{
+  "awbNo": "48504606350",
+  "status": "Departed",
+  "messageDetails": [
+    {
+      "awbno": null,
+      "isCancelled": null,
+      "messageType": "FSUBKD",
+      "statusdesc": "Shipment booked on a specific flight",
+      "actionDate": null,
+      "messageDate": null,
+      "origin": "DWC"
+    },
+    {
+      "awbno": "48504606350",
+      "isCancelled": "N",
+      "messageType": "FSUBKD",
+      "statusdesc": "Shipment booked on a specific flight",
+      "actionDate": null,
+      "messageDate": "2023-05-25",
+      "origin": "DWC"
+    },
+    {
+      "awbno": "48504606350",
+      "isCancelled": "N",
+      "messageType": "FSUDEP",
+      "statusdesc": "Goods departed",
+      "actionDate": "2023-05-25T09:10:30.275+00:00",
+      "messageDate": "2023-05-25",
+      "origin": "DWC"
+    },
+    {
+      "awbno": "48504606350",
+      "isCancelled": "N",
+      "messageType": "FSUDEP",
+      "statusdesc": "Goods departed",
+      "actionDate": "2023-05-26T09:00:31.166+00:00",
+      "messageDate": "2023-05-26",
+      "origin": "DWC"
+    }
+  ]
+}

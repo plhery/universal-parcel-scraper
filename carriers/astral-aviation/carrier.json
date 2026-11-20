@@ -1,0 +1,22 @@
+{
+  "id": "astral-aviation",
+  "displayName": "Astral Aviation Cargo",
+  "aliases": ["Astral Aviation", "Astral Aviation Limited", "8V Cargo"],
+  "region": { "countries": ["KE", "AE"] },
+  "brand": { "color": "#09518b" },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": { "mode": "automatic", "adapter": "astral-aviation", "steps": ["direct"], "localClocks": true },
+  "capabilities": ["history", "provider_code"],
+  "portal": {
+    "url": "https://astral.fr8booking.com/trackAndTrace",
+    "searchUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "canaryUrl": "https://astral.fr8booking.com/trackAndTrace",
+    "shows": ["status", "history", "flight_and_routing", "goods_and_package_details"],
+    "scraped": ["status", "history", "provider_code"],
+    "discarded": ["flight_and_routing", "goods_and_package_details"],
+    "unavailable": ["booking_clock_time"]
+  },
+  "links": [],
+  "detection": []
+}
