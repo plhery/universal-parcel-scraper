@@ -40737,6 +40737,37 @@
     ],
     "detectionRules": []
   },
+  "move-cargo": {
+    "displayName": "Move Cargo",
+    "color": "#ff4d1c",
+    "aliases": [
+      "Move Cargo Inc"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "move-cargo"
+    },
+    "canaryUrl": "https://movecargo.ca/track",
+    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://movecargo.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "movecargo.ca"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "movicarga": {
     "displayName": "Movicarga",
     "color": "#002e87",

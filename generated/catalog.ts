@@ -40741,6 +40741,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "move-cargo": {
+    "displayName": "Move Cargo",
+    "color": "#ff4d1c",
+    "aliases": [
+      "Move Cargo Inc"
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Edmonton",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "move-cargo"
+    },
+    "canaryUrl": "https://movecargo.ca/track",
+    "trackingUrlTemplate": "https://movecargo.ca/track?tracking_number={trackingNumber}",
+    "trackingSearchUrl": "https://movecargo.ca/track",
+    "linkRules": [
+      {
+        "domains": [
+          "movecargo.ca"
+        ],
+        "pathPattern": "^/track/?$",
+        "params": [
+          "tracking_number"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "movicarga": {
     "displayName": "Movicarga",
     "color": "#002e87",
@@ -66524,6 +66555,7 @@ export const CARRIER_IDS = [
   "morning-global",
   "motorex",
   "mountain-movers",
+  "move-cargo",
   "movicarga",
   "movin",
   "movvi",
@@ -68392,6 +68424,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "morning-global": ["morning-global-1"],
   "motorex": [],
   "mountain-movers": [],
+  "move-cargo": [],
   "movicarga": [],
   "movin": [],
   "movvi": [],

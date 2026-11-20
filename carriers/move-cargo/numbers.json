@@ -1,0 +1,77 @@
+{
+  "carrier": "move-cargo",
+  "records": [
+    {
+      "number": "MC-100188",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://movecargo.ca/track",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Carrier-published freight tracking demo",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      }
+    },
+    {
+      "number": "MC-100245",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://movecargo.ca/track",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Carrier-published hot shot tracking demo",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      }
+    },
+    {
+      "number": "MC-100302",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://movecargo.ca/track",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Carrier-published parcel tracking demo",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "gls-nl",
+          "loggi"
+        ]
+      }
+    }
+  ]
+}

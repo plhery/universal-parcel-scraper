@@ -5519,5 +5519,10 @@
     "carrier": "indigo-cargo",
     "kind": "open",
     "reason": "Select IndiGo CarGo for its master air waybills. The two public air waybills have IATA prefix 312."
+  },
+  {
+    "carrier": "move-cargo",
+    "kind": "by_design",
+    "reason": "Move Cargo publishes MC-prefixed demo references. Select the carrier explicitly until the issued number format is documented."
   }
 ]
