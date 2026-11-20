@@ -16,6 +16,15 @@
       "confirmedBy": "live"
     },
     {
+      "code": "206",
+      "wording": "Livraison échouée, motif : Destinataire injoignable / Point de livraison inaccessible",
+      "language": "fr",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-16",
+      "note": "The round could not reach the recipient or the delivery point; the next round delivered the parcel."
+    },
+    {
       "code": "208",
       "wording": "Le chauffeur est en route pour la livraison",
       "language": "fr",
