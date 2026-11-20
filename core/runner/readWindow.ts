@@ -18,7 +18,15 @@ const kept = new HoldKind('read-window', (key, until, value) => {
   const now = Date.now();
   const saved = value.filter((sent): sent is number => typeof sent === 'number' && Number.isFinite(sent) && sent <= now && sent <= until);
   const sent = windowOf(key);
-  const merged = [...new Set([...sent, ...saved])].sort((a, b) => a - b).slice(-KEPT_READS);
+  // Concurrent reads can go out in one millisecond, so a time stands for as many reads as it is listed.
+  // The saved list may hold reads this process already counts: each time keeps the larger count.
+  const counts = new Map<number, number>();
+  for (const list of [sent, saved]) {
+    const own = new Map<number, number>();
+    for (const at of list) own.set(at, (own.get(at) ?? 0) + 1);
+    for (const [at, count] of own) counts.set(at, Math.max(counts.get(at) ?? 0, count));
+  }
+  const merged = [...counts].sort(([a], [b]) => a - b).flatMap(([at, count]) => Array<number>(count).fill(at)).slice(-KEPT_READS);
   sent.splice(0, sent.length, ...merged);
 });
 

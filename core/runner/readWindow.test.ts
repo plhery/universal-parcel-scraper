@@ -38,6 +38,27 @@ describe('ReadWindow', () => {
     }
   });
 
+  it('counts each read a saved window took in the same millisecond, once', async () => {
+    try {
+      // Correios's seven browser reads in a minute, all sent in one millisecond before a restart.
+      const at = Date.now();
+      await keepAdapterHolds({ load: async () => [{ key: 'read-window/example same ms', until: at + 60_000, value: Array<number>(7).fill(at) }],
+        save: async () => undefined });
+      await expect(new ReadWindow('Example', 'example same ms', 7, 60_000).take(1_000)).rejects.toMatchObject({ kind: 'rate_limited' });
+      // Loaded again over the reads the process already counts, the same reads are not counted twice.
+      const saved: AdapterHold[] = [];
+      await keepAdapterHolds({ load: async () => [], save: async (hold) => { saved.push(hold); } });
+      const live = new ReadWindow('Example', 'example overlap', 3, 60_000);
+      await Promise.all([live.take(1_000), live.take(1_000)]);
+      const last = saved.at(-1)!;
+      await keepAdapterHolds({ load: async () => [last], save: async () => undefined });
+      await expect(live.take(1_000)).resolves.toBeUndefined();
+      await expect(live.take(1_000)).rejects.toMatchObject({ kind: 'rate_limited' });
+    } finally {
+      resetAdapterHolds();
+    }
+  });
+
   it('releases an aborted wait and caps concurrent reads when the window opens', async () => {
     vi.useFakeTimers();
     const window = () => new ReadWindow('Example', 'example abort', 1, 10_000);
