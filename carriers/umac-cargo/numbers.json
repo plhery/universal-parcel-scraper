@@ -1,0 +1,41 @@
+{
+  "carrier": "umac-cargo",
+  "records": [
+    {
+      "number": "UMTC461625",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://carriagetracking.com/umac-tracking-number/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "UMAC Balikbayan box number published in a tracking guide.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier’s embedded service echoes the exact box and shows 11 actual dated milestones ending in delivery on 2025-10-20."
+    },
+    {
+      "number": "UMTC458065",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://umactracking.org/umac-tracking-number/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "UMAC Balikbayan box number published in a tracking guide.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier’s embedded service echoes the exact box and shows 11 actual dated milestones ending in delivery on 2025-09-19."
+    }
+  ]
+}

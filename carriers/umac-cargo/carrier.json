@@ -1,0 +1,60 @@
+{
+  "id": "umac-cargo",
+  "displayName": "UMAC Forwarders Express",
+  "aliases": [
+    "UMAC Cargo",
+    "UMAC Forwarders Express Inc.",
+    "UMAC Balikbayan Box"
+  ],
+  "region": {
+    "countries": [
+      "PH",
+      "US",
+      "CA"
+    ]
+  },
+  "brand": {
+    "color": "#ce392b"
+  },
+  "selectable": true,
+  "timezone": "Asia/Manila",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "umac-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.umaccargo.net/track-your-box-new.html",
+    "searchUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "canaryUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "recipient_name",
+      "recipient_address",
+      "eta"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

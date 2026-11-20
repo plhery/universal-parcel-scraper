@@ -5799,5 +5799,10 @@
     "carrier": "conexiones-empresariales",
     "kind": "open",
     "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."
+  },
+  {
+    "carrier": "umac-cargo",
+    "kind": "open",
+    "reason": "The confirmed boxes share a UMTC prefix. Other UMAC box series and collisions need review before detection is assigned."
   }
 ]

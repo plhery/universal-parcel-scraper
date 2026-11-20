@@ -61452,6 +61452,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "umac-cargo": {
+    "displayName": "UMAC Forwarders Express",
+    "color": "#ce392b",
+    "aliases": [
+      "UMAC Cargo",
+      "UMAC Forwarders Express Inc.",
+      "UMAC Balikbayan Box"
+    ],
+    "countries": [
+      "PH",
+      "US",
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Manila",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "umac-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "trackingUrlTemplate": "https://www.umaccargo.net/track-your-box-new.html",
+    "trackingSearchUrl": "https://www.umaccargo.net/track-your-box-new.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "union-express": {
     "displayName": "Union Express",
     "color": "#f82626",
@@ -68536,6 +68562,7 @@ export const CARRIER_IDS = [
   "uello",
   "ues-uy",
   "ukp-worldwide",
+  "umac-cargo",
   "union-express",
   "unipost-express",
   "united-africa-feeder-line",
@@ -70460,6 +70487,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "uello": [],
   "ues-uy": ["ues-uy-1"],
   "ukp-worldwide": ["ukp-worldwide-1"],
+  "umac-cargo": [],
   "union-express": [],
   "unipost-express": [],
   "united-africa-feeder-line": [],
