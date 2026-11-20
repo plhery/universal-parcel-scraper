@@ -1,4 +1,84 @@
 {
   "carrier": "fastway-za",
-  "entries": []
+  "entries": [
+    {
+      "code": "C47",
+      "wording": "We have been notified of your order.",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "CIP",
+      "wording": "Payment has been received for your customs invoice.",
+      "stage": "customs",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ADD",
+      "wording": "Your parcel arrived at OR Tambo Airport.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RAW",
+      "wording": "Your parcel has been received at the distribution depot.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "PPP",
+      "wording": "Your parcel was picked up.",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "A pickup after earlier scans at a hub or airport is another handoff in transit."
+    },
+    {
+      "code": "H15",
+      "wording": "Your parcel is currently at our Sorting HUB in Johannesburg and will depart to the delivery destination on the next available linehaul.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "C05",
+      "wording": "The parcel has been left in the South Bay 4 and will be delivered on the next scheduled delivery.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "A31",
+      "wording": "The parcel has been left in the South Bay 3 and will be delivered on the next scheduled delivery.",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ONB",
+      "wording": "Onboard - the parcel is onboard the Courier vehicle.",
+      "stage": "out_for_delivery",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "FD3",
+      "wording": "The courier attempted delivery but was unable to locate the consignee.",
+      "stage": "failed_attempt",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "YES",
+      "wording": "Your parcel has been delivered and signed for.",
+      "stage": "delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "With the explicit delivered wording. The carrier says a regional signature alone may be an on-forwarder handoff."
+    }
+  ]
 }

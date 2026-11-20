@@ -256,6 +256,7 @@ import { adapter as fastbox } from '../carriers/fastbox/adapter.js';
 import { adapter as fastdrop } from '../carriers/fastdrop/adapter.js';
 import { adapter as fasterShipe } from '../carriers/faster-shipe/adapter.js';
 import { adapter as fastfrate } from '../carriers/fastfrate/adapter.js';
+import { adapter as fastwayZa } from '../carriers/fastway-za/adapter.js';
 import { adapter as fedex } from '../carriers/fedex/adapter.js';
 import { adapter as fedexFreight } from '../carriers/fedex-freight/adapter.js';
 import { adapter as fedexInternationalConnect } from '../carriers/fedex-international-connect/adapter.js';
@@ -1087,6 +1088,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastdrop": fastdrop,
     "faster-shipe": fasterShipe,
     "fastfrate": fastfrate,
+    "fastway-za": fastwayZa,
     "fedex": fedex,
     "fedex-freight": fedexFreight,
     "fedex-international-connect": fedexInternationalConnect,
@@ -2251,7 +2253,7 @@ export const REGISTRY: RegistryDefinition = {
     "fastgo": "universal",
     "fastship-th": "universal",
     "fasttrack-ar": "universal",
-    "fastway-za": "universal",
+    "fastway-za": "fastway-za",
     "fastwl": "universal",
     "favorita-transportes": "universal",
     "fedex": "fedex",

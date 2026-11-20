@@ -1,28 +1,19 @@
 # Fastway South Africa
 
-Fastway South Africa parcels use enabled universal providers. There is no dedicated adapter.
+The adapter covers the South African franchise's public label lookup when Fastway South Africa
+is selected. Calling-card references that resolve to a different label require a verified alias.
 
-Fastway South Africa is a franchise courier network, the South African master franchise of Fastway.
-It still trades as Fastway, while Fastway in Australia and New Zealand now trades as Aramex, and it
-runs its own tracker.
+## Retrieval
 
-## Numbers
+The public tracking page uses `/tracking-api21/`. Its JSONP envelope carries server-rendered scan
+rows. The adapter reads the envelope as data and checks the complete label in the result heading.
+The separate customer reference in the header is left out.
 
-Its tracker takes a label number of up to 25 characters. No public page shows a Fastway South Africa
-number, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-`fastway.co.za/our-services/track-your-parcel/?l=<number>` looks one number up, as does the home
-page's form at `/tools/track?l=<number>`, and the library reads the number from either address.
-Without a number the second address answers with a server error, so the health check reads the
-first.
+Scans keep the franchise's local clock, code, wording and location. A second pickup after a depot
+scan is a handoff in transit. A signature can be from a regional on-forwarder, so the delivered
+stage also requires the explicit delivery wording. The tracker uses the same no-scans reply for
+unknown labels and labels still awaiting their first scan.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`FASTWAY_ZA_TRACKING_NUMBER=… FASTWAY_ZA_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/fastway-za`

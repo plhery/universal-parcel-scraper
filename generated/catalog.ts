@@ -24767,7 +24767,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Africa/Johannesburg",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "fastway-za",
+      "localClocks": true
     },
     "canaryUrl": "https://www.fastway.co.za/our-services/track-your-parcel/",
     "trackingUrlTemplate": "https://www.fastway.co.za/our-services/track-your-parcel/?l={trackingNumber}",
