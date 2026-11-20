@@ -10525,6 +10525,12 @@
     "candidates": []
   },
   {
+    "input": "068119",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "068940159593",
     "carrier": "unknown",
     "confidence": "low",
@@ -10710,6 +10716,12 @@
     "candidates": [
       "ozon-logistics"
     ]
+  },
+  {
+    "input": "072054",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "07209562763",

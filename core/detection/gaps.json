@@ -4856,5 +4856,11 @@
     "pattern": "^24VJWD\\d{7}$",
     "kind": "open",
     "reason": "Relay Express’s guest tracker recognizes a docket number with this prefix and length. Detection does not offer Relay Express."
+  },
+  {
+    "carrier": "red-star-express",
+    "pattern": "^0\\d{5}$",
+    "kind": "open",
+    "reason": "A Nigerian parcel recipient reports two six-digit Red Star waybills beginning with zero. Detection does not offer Red Star Express."
   }
 ]
