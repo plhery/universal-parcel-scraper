@@ -71,6 +71,7 @@ const ENVIRONMENTS: Readonly<Record<string, Browsers>> = {
 const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   'correos-costa-rica': ['service'],
   pasarex: ['service'],
+  peddler: ['service'],
   'onlog-express': ['service'],
   'jumppoint-international': ['service'],
   'flash-courier': ['service'],
