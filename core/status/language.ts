@@ -239,6 +239,22 @@ function chineseCustomsHold(text: string): boolean {
   return (/海关|清关|报关/.test(text) && /查验|扣留|扣押|扣件/.test(text)) || /(?:海关|清关)滞留|(?:清关|报关)(?:异常|失败)|海关退运/.test(text);
 }
 
+/** An inspection ended or a release in Chinese ("查验完成", "已放行"), not one still to come ("暂未放行", "待放行"). */
+const CHINESE_CUSTOMS_RELEASE = /查验(?:已)?(?:完成|完毕|结束|通过)|(?<![未不待])放行/g;
+/** An inspection under way, a detention, a failed clearance or a release still to come in Chinese. */
+const CHINESE_CUSTOMS_HELD = /查验(?!(?:已)?(?:完成|完毕|结束|通过))|扣留|扣押|扣件|滞留|(?:清关|报关)(?:异常|失败)|退运|[未不待]放行/g;
+
+/**
+ * Whether a Chinese customs line's last word on the parcel is its release or the end of its
+ * inspection: "海关已放行，后被海关扣留" says customs released it and then detained it.
+ */
+function chineseCustomsReleasedLast(text: string): boolean {
+  const released = [...text.matchAll(CHINESE_CUSTOMS_RELEASE)].at(-1);
+  if (!released) return false;
+  const held = [...text.matchAll(CHINESE_CUSTOMS_HELD)].at(-1);
+  return !held || held.index < released.index;
+}
+
 function customsReleased(text: string): boolean {
   const last = [...text.matchAll(CUSTOMS_RELEASES)].at(-1);
   return last !== undefined && !CUSTOMS_CHECK_PENDING.test(text.slice(last.index + last[0].length));
@@ -617,7 +633,7 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Customs inspecting or holding a parcel in Chinese ("海关查验", "被海关扣留", "清关异常"), after a clearance
   // completed too, stays with customs until the inspection ends or customs releases it ("查验完成", "已放行", not
   // "暂未放行"). An inspection names customs: a warehouse's goods check (仓内货物查验) is no customs step.
-  if (chineseCustomsHold(text)) return /查验(?:已)?(?:完成|完毕|结束|通过)|(?<![未不待])放行/.test(text) ? 'in_transit' : 'customs';
+  if (chineseCustomsHold(text)) return chineseCustomsReleasedLast(text) ? 'in_transit' : 'customs';
   if (/(?:国内|出口|进口|目的国)?清关中/.test(text)) return 'customs';
   // A clearance completed in Chinese, as a provider relays "目的国清关完成" with the place in 【】, unless customs then holds the parcel.
   if (/清关(?:已)?(?:完成|完毕|成功)|清关放行/.test(text) && !EXPORT_HOLD.test(text)) return 'in_transit';
