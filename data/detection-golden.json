@@ -81154,6 +81154,14 @@
     ]
   },
   {
+    "input": "C240129142515376136497",
+    "carrier": "canpar",
+    "confidence": "high",
+    "candidates": [
+      "canpar"
+    ]
+  },
+  {
     "input": "C24110206842444",
     "carrier": "unknown",
     "confidence": "low",

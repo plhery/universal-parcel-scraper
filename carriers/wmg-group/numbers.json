@@ -1,5 +1,24 @@
 {
   "carrier": "wmg-group",
-  "gap": "No public page shows a WMG number.",
-  "records": []
+  "records": [
+    {
+      "number": "C240129142515376136497",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://docs.ng.wmgdelivery.com/wmg-postal-api-docs/api/query-status.html",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "WMG Postal",
+        "reportedRole": "consignment number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "canpar",
+        "confidence": "high"
+      },
+      "note": "WMG publishes this consignment number in the successful status-response example with a data-received event. The guest form requires reCAPTCHA, so lookup blocked by verification."
+    }
+  ]
 }
