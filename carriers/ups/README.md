@@ -92,7 +92,8 @@ rendered status, after that wait.
   The receiver's delivery instructions (`L0` or `L8`) are a notice, not a scan: the scan before
   them decides, so a parcel UPS has only the label for does not read in transit, and one out for
   delivery stays so. The warehouse scan (`WH`), minutes after a customs hold, is one too: the
-  held parcel stays held. A request right after the label, such as a service upgrade
+  held parcel stays held. So is the label (`MP`) UPS writes hours after the pickup: the label
+  told late, so the origin scan after it is no step back. A request right after the label, such as a service upgrade
   (`ZA`), keeps the label's stage: the origin scan after it is no step back. The receiver's
   delivery change that sends the parcel back (`ZC`, "will be returned to the sender") is an
   exception, a return set up; so is the final attempt under `49` that says UPS is returning the

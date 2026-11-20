@@ -4,6 +4,7 @@ import { deliveryHandoff } from '../../core/catalog/handoff.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { IndeterminateError, InvalidInputError, NotFoundError } from '../../core/errors/index.js';
 import { resolveResult } from '../../core/result/resolve.js';
+import { readLateRegistrations } from '../../core/result/registration.js';
 import type { StepRecorder } from '../../core/telemetry/index.js';
 import { TrawlClient } from '../../core/transport/index.js';
 import { STATUS_HOLD_MS, UPSStatusHeldError, UPSTracker, parseUPSTrackingHtml, parseUPSTrackingResponse, upsTrackingUrl } from './adapter.js';
@@ -342,6 +343,16 @@ describe('UPS structured response', () => {
     expect(upgraded([request, label]).events?.[0]).toMatchObject({ provider_code: 'ZA', stage: 'registered', stage_source: 'carrier_map' });
     expect(upgraded([scan('OR', 'Arrived at Facility', '20261116 12:56:52'), request, label]).events?.map((event) => event.stage))
       .toEqual(['accepted', 'registered', 'registered']);
+    // The label UPS writes hours after the pickup is the label told late: a notice on the pickup, so the origin scan
+    // after it is no step back.
+    const late = upgraded([scan('OR', 'Arrived at Facility', '20261114 21:00:00'),
+      scan('MP', 'Shipper created a label, UPS has not received the package yet. ', '20261114 17:30:00', 'United States'),
+      scan('PU', 'Pickup Scan', '20261114 14:00:00')]);
+    expect(late.events?.map((event) => [event.provider_code, event.stage, event.stage_source]))
+      .toEqual([['OR', 'accepted', 'carrier_map'], ['MP', 'accepted', 'none'], ['PU', 'accepted', 'carrier_map']]);
+    expect(readLateRegistrations(late).events?.[1]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
+    expect(upgraded([scan('MP', 'Shipper created a label, UPS has not received the package yet. ', '20261114 17:30:00', 'United States'),
+      scan('PU', 'Pickup Scan', '20261114 14:00:00')])).toMatchObject({ current_stage: 'accepted', last_status_text: 'Pickup Scan' });
     // Once UPS has the parcel, the request keeps it in transit.
     expect(upgraded([request, scan('AR', 'Arrived at Facility', '20261114 10:00:00')]).events?.[0])
       .toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });

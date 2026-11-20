@@ -356,10 +356,15 @@ function returnLeg(events: CarrierEvent[]): void {
   }
 }
 
+/**
+ * A notice keeps the stage of the scan before it. So does the label (MP) UPS writes after the parcel moved, hours
+ * after its pickup: the label told late, no step forward and no step back. Events are newest first.
+ */
 function keepNoticeStages(events: CarrierEvent[]): void {
   let previous: string | undefined;
   for (const event of [...events].reverse()) {
-    if (isUpsNotice(event.provider_code)) {
+    const lateLabel = (event.provider_code ?? '').trim().toUpperCase() === 'MP' && previous !== undefined && previous !== 'registered';
+    if (isUpsNotice(event.provider_code) || lateLabel) {
       if (previous) Object.assign(event, { stage: previous, stage_source: 'none' });
     } else if (event.stage) {
       previous = event.stage;
@@ -611,7 +616,7 @@ export function parseUPSTrackingResponse(
   const newest = events[0];
   // UPS lists the newest scan first. Its code outranks the coarse progress
   // token, which reads Exception for a mere delay. A notice is no scan.
-  const decider = events.find((event) => !isUpsNotice(event.provider_code)) ?? newest;
+  const decider = events.find((event) => !isUpsNotice(event.provider_code) && event.stage_source !== 'none') ?? newest;
   const stage = decider?.stage as Stage | undefined;
   const currentName = isRecord(detail.currentMilestone) ? text(detail.currentMilestone.name) : '';
   const statusText = decider?.description
@@ -828,7 +833,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
   keepNoticeStages(events);
   // The API lists the newest scan first; its code outranks the status type. A notice is no scan.
   const newest = events[0];
-  const decider = events.find((event) => !isUpsNotice(event.provider_code)) ?? newest;
+  const decider = events.find((event) => !isUpsNotice(event.provider_code) && event.stage_source !== 'none') ?? newest;
   const stage = decider?.stage as Stage | undefined;
   const current = isRecord(detail.currentStatus) ? detail.currentStatus : {};
   const statusText = decider?.description
