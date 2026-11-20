@@ -51832,7 +51832,8 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sfyd-express",
+      "localClocks": true
     },
     "canaryUrl": "https://sfydexpress.com/tracking.html",
     "trackingUrlTemplate": "https://sfydexpress.com/tracking.html?c={trackingNumber}",

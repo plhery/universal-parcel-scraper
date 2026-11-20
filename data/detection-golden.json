@@ -108536,6 +108536,12 @@
     ]
   },
   {
+    "input": "SFYD26099215028",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SG267869138712R",
     "carrier": "unknown",
     "confidence": "low",

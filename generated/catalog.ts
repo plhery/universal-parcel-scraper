@@ -51836,7 +51836,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sfyd-express",
+      "localClocks": true
     },
     "canaryUrl": "https://sfydexpress.com/tracking.html",
     "trackingUrlTemplate": "https://sfydexpress.com/tracking.html?c={trackingNumber}",

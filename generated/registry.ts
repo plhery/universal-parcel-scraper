@@ -691,6 +691,7 @@ import { adapter as servientrega } from '../carriers/servientrega/adapter.js';
 import { adapter as seur } from '../carriers/seur/adapter.js';
 import { adapter as sfExpress } from '../carriers/sf-express/adapter.js';
 import { adapter as sfc } from '../carriers/sfc/adapter.js';
+import { adapter as sfydExpress } from '../carriers/sfyd-express/adapter.js';
 import { adapter as shadowfax } from '../carriers/shadowfax/adapter.js';
 import { adapter as sheensync } from '../carriers/sheensync/adapter.js';
 import { adapter as shipa } from '../carriers/shipa/adapter.js';
@@ -1591,6 +1592,7 @@ export const REGISTRY: RegistryDefinition = {
     "seur": seur,
     "sf-express": sfExpress,
     "sfc": sfc,
+    "sfyd-express": sfydExpress,
     "shadowfax": shadowfax,
     "sheensync": sheensync,
     "shipa": shipa,
@@ -3234,7 +3236,7 @@ export const REGISTRY: RegistryDefinition = {
     "seven-eleven-tw": "universal",
     "sf-express": "sf-express",
     "sfc": "sfc",
-    "sfyd-express": "universal",
+    "sfyd-express": "sfyd-express",
     "sgk-home-delivery": "universal",
     "sgxpress": "universal",
     "shadowfax": "shadowfax",

@@ -5538,5 +5538,10 @@
     "carrier": "benben",
     "kind": "open",
     "reason": "Benben numbers are BEN, eight digits and BEN; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "sfyd-express",
+    "kind": "open",
+    "reason": "SFYD Express waybills are SFYD and digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
   }
 ]

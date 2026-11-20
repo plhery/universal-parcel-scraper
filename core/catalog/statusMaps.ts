@@ -62,6 +62,7 @@ import { statusMap as tuomeida } from '../../carriers/tuomeida/status.js';
 import { statusMap as huaExpress } from '../../carriers/hua-express/status.js';
 import { statusMap as rmLogistics } from '../../carriers/rm-logistics/status.js';
 import { statusMap as benben } from '../../carriers/benben/status.js';
+import { statusMap as sfydExpress } from '../../carriers/sfyd-express/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -957,6 +958,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'hua-express': huaExpress,
   'rm-logistics': rmLogistics,
   benben,
+  'sfyd-express': sfydExpress,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

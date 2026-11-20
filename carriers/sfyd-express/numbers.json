@@ -1,5 +1,24 @@
 {
   "carrier": "sfyd-express",
-  "gap": "No public page shows an SFYD Express waybill number.",
-  "records": []
+  "records": [
+    {
+      "number": "SFYD26099215028",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/sfydexpress/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number on a tracking directory's SFYD Express page. SFYD's lookup answers it with a parcel from Shenzhen handed to USPS in the United States."
+    }
+  ]
 }

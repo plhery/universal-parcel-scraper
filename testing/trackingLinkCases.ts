@@ -1653,6 +1653,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'sheensync', number: 'SS000000000000',
     route: /^https:\/\/sheen-sync\.com\/track\.html\?c=SS000000000000$/,
     marker: /查询不到|Not Found|运单号/ },
+  // The page fills its box from `c` and looks the number up; an unknown one shows 数据获取失败.
+  { carrier: 'sfyd-express', number: 'SFYD00000000000',
+    route: /^https:\/\/sfydexpress\.com\/tracking\.html\?c=SFYD00000000000$/,
+    marker: /数据获取失败|物流查询|运单号/ },
   { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
     route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
     marker: /Track My Shipment/ },

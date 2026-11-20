@@ -1,4 +1,50 @@
 {
   "carrier": "sfyd-express",
-  "entries": []
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Shipment information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The waybill's information reached SFYD, before it has the parcel."
+    },
+    {
+      "code": "AF",
+      "wording": "Shipment arrived at facility",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The first scan in China, whose other wording reads \"We have your Package, Arrived at Facility\"."
+    },
+    {
+      "code": "DF",
+      "wording": "Shipment departed from facility",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Sent on from the first facility in China."
+    },
+    {
+      "wording": "Shipment arrived",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "At SFYD's warehouse in Shenzhen."
+    },
+    {
+      "wording": "Packaged",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Packed at the warehouse in Shenzhen for the line haul."
+    },
+    {
+      "wording": "Forwarded",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "USPS's scan after a round: sent on to the address the recipient forwards mail to."
+    }
+  ]
 }
