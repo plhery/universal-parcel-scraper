@@ -1,0 +1,64 @@
+{
+  "id": "navlungo",
+  "displayName": "Navlungo",
+  "aliases": [
+    "Navlungo Domestic",
+    "Navlungo Yurtiçi"
+  ],
+  "region": {
+    "countries": [
+      "TR"
+    ]
+  },
+  "brand": {
+    "color": "#1925a8"
+  },
+  "selectable": true,
+  "timezone": "Europe/Istanbul",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "navlungo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "provider_code"
+  ],
+  "portal": {
+    "url": "https://domestic-track.navlungo.com/en/check/{trackingNumber}/",
+    "searchUrl": "https://domestic-track.navlungo.com/en/",
+    "canaryUrl": "https://domestic-track.navlungo.com/en/",
+    "shows": [
+      "status",
+      "history",
+      "provider_code",
+      "parcel_count",
+      "weight",
+      "progress_rail"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "progress_rail"
+    ],
+    "unavailable": []
+  },
+  "links": [
+    {
+      "domains": [
+        "domestic-track.navlungo.com"
+      ],
+      "path": "^/(?:en|tr)/check/([A-Z0-9]{12})/?$",
+      "detectFromNumber": false
+    }
+  ],
+  "detection": []
+}
