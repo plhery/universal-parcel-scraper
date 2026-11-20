@@ -6,7 +6,7 @@ import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, 
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { normalizeStatusWording } from '../../core/status/statusMap.js';
-import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime } from '../../core/time/index.js';
+import { calendarDay, canadaProvinceTimeZone, countryCode, isoTime, usStateTimeZone } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { hasSeveralClocks, mainZone } from '../../places/zones.js';
@@ -14,6 +14,7 @@ import { jsExpressChinaClock } from './clock.js';
 import { imileReceiver } from '../imile/parser.js';
 import { IMILE_RECEIVER, LIST_PLACE, RECEIVER } from './identity.js';
 import { isJsExpressDepotReceipt, jsExpressEnglish, jsExpressStage } from './status.js';
+import { uspsScanZone } from '../usps/clock.js';
 import { isUspsRedeliveryReminder } from '../usps/status.js';
 
 export const PROVIDER = 'JS Express';
@@ -55,14 +56,18 @@ const STRAIGHTSHIP = /straightship/i;
 const STRAIGHTSHIP_RECORD = /^package information is created in the system$/i;
 // A town and the code of its province or state, as a courier's wording ends with them.
 const PROVINCE = /,\s*([A-Z]{2})$/;
-// USPS's scans, relayed from two feeds: to the minute with the town, state and postal code, on the town's clock, or to
-// the second on UTC's.
+// USPS's scans, relayed from three feeds: to the minute with the town, state and postal code, on the town's clock, to
+// the second on UTC's, or to the second at towns written "Town,ST", on their places' clocks.
 const USPS = /\busps\b/i;
 // USPS's rows that do not name it: its label, the delivering office's arrival, its transit between facilities, the
 // round, the delivery, a missed delivery's notice and the reminder that follows it.
 const USPS_WORDING = /^(?:shipping label created|arrived at post office|in transit to next facility|out for delivery|delivered\b|notice left\b|delivery attempted\b|available for pickup|reminder to schedule redelivery)/i;
 // A town and its state, with or without the postal code, as USPS's feed to the minute writes its places.
 const STATE = /,\s*[A-Z]{2}(?:\s+\d{5}(?:-\d{4})?)?$/;
+// A town and its state without a space or postal code, as the feed to the second on its places' clocks writes them.
+const TOWN_STATE = /^[^,]+,([A-Z]{2})$/;
+// USPS's label rows, which that feed dates on UTC, as USPS dates a mailer's label.
+const USPS_LABEL = /^shipping label created\b/i;
 // The offset a row states, as "+02:00".
 const OFFSET = /^[+-]\d{2}:\d{2}$/;
 // J&T Express Germany's rows in German, as the destination courier: its scans opening with the district in 【】, its
@@ -151,17 +156,24 @@ function canadianTown(location: string, label: string): boolean {
  * that has them, so are USPS's other rows given to the second or at a place
  * without a state: the delivering office's arrival, the round, the delivery
  * and the rest that do not name USPS, and those that came on a whole minute.
+ * In a history whose USPS scans to the second name their towns "Town,ST", USPS's
+ * rows are on their place's clock instead, and only its labels on UTC.
  * Null otherwise: airports' codes, other rows without a place and other
  * couriers' rows.
  */
-function scanZone(local: string, description: string, location: string, label: string, straightship: boolean, utcFeed: boolean): string | null {
+function scanZone(local: string, description: string, location: string, label: string, straightship: boolean, uspsFeed: UspsFeed): string | null {
   if (straightship && (STRAIGHTSHIP.test(description) || canadianTown(location, label)
     || (!location && STRAIGHTSHIP_RECORD.test(description)))) return 'UTC';
+  const usps = USPS.test(description) || USPS_WORDING.test(description);
+  if (uspsFeed === 'town' && usps) return USPS_LABEL.test(description) ? 'UTC' : uspsScanZone(location) ?? jsExpressChinaClock(description, location) ?? null;
   const seconds = !local.endsWith(':00');
   if (USPS.test(description) && seconds) return 'UTC';
-  if (utcFeed && (USPS.test(description) || USPS_WORDING.test(description)) && (seconds || !STATE.test(location))) return 'UTC';
+  if (uspsFeed === 'utc' && usps && (seconds || !STATE.test(location))) return 'UTC';
   return jsExpressChinaClock(description, location) ?? null;
 }
+
+/** USPS's feed to the second in a history: on UTC, or on the clocks of the towns it writes "Town,ST". */
+type UspsFeed = 'utc' | 'town' | null;
 
 /**
  * The destination's clock for a row without a place, when the destination
@@ -311,12 +323,14 @@ export function parseJsExpress(payload: unknown, rawNumber: string): CarrierResu
   }
 
   const straightship = scans.some((scan) => STRAIGHTSHIP.test(scan.description));
-  // USPS's feed on UTC, which gives its scans to the second.
-  const utcFeed = scans.some((scan) => USPS.test(scan.description) && !scan.local.endsWith(':00'));
+  // USPS's feed to the second: on its towns' clocks when it writes them "Town,ST", else on UTC.
+  const seconds = scans.filter((scan) => USPS.test(scan.description) && !scan.local.endsWith(':00'));
+  const uspsFeed: UspsFeed = seconds.some((scan) => usStateTimeZone(TOWN_STATE.exec(scan.location)?.[1])) ? 'town'
+    : seconds.length ? 'utc' : null;
   const receivers = new Map<CarrierEvent, string>();
   const events = scans.map(({ local, label, description, whole, location, offset, code }): CarrierEvent => {
     const stated = statedInstant(local, offset, description);
-    const zone = stated ? null : scanZone(local, description, location, label, straightship, utcFeed);
+    const zone = stated ? null : scanZone(local, description, location, label, straightship, uspsFeed);
     const time = stated ?? (zone ? isoTime(local, zone)?.iso : !location ? destinationInstant(local, offset, country) : undefined);
     const staged = jsExpressStage(description, code);
     const event: CarrierEvent = {

@@ -63,14 +63,17 @@ list names it "JS" (the js-exp.com entry), so that name is an alias.
   Straightship's record of the parcel's data comes within a minute of the Chinese warehouse's
   inbound scan only when the one is read on UTC and the other on Beijing time, and its
   deliveries then come before the 9 pm its round promises.
-- USPS's scans come from two feeds. Those to the minute, with the town, state and postal code,
+- USPS's scans come from three feeds. Those to the minute, with the town, state and postal code,
   are on the town's clock, as USPS's own delivery at the same minute shows. Those to the second,
   such as "Arrived at USPS Facility" at a distribution centre, are on UTC: a copy of USPS's label
   came at the instant USPS gave it read on UTC, and an arrival read on Chicago's clock would have
   come hours before it happened. In a history with those, USPS's rows that do not name it, such
   as the post office's arrival, the round and the delivery at a bare town, are on UTC too, and so
   are its rows on a whole minute without a state: each lands on the minute USPS's own tracker
-  gives, while the town's clock would put it hours later.
+  gives, while the town's clock would put it hours later. The third, also to the second, writes
+  its towns "Town,ST", without a space or postal code: its scans are on their place's clock, as
+  USPS's own tracker gives the same acceptance and arrival to the minute, and only its labels are
+  on UTC, as USPS dates a mailer's label.
 - Each row also carries an offset, often another place's: Straightship's rows carry China's,
   Amsterdam's carry its winter offset in summer, and Gatwick's and Singapore's others. A row
   without a place is read on the destination's clock when the destination keeps one clock and the
