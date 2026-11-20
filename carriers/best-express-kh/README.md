@@ -11,8 +11,9 @@ No public page shows a BEST Express Cambodia waybill, so there is no rule.
 
 ## Why there is no adapter
 
-The tracker shows BEST's own captcha before it answers, as on the Malaysian and Vietnamese
-sites, so BEST Express Cambodia stays on universal providers.
+The tracker asks for BEST's rotate picture before it answers, as the Vietnamese and Thai ones
+do, and [BEST Express Vietnam](../best-express-vn/README.md)'s `BestTracker` answers it. With no
+public waybill to prove a lookup, BEST Express Cambodia stays on universal providers.
 
 ## Links
 

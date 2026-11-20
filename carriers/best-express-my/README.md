@@ -20,15 +20,18 @@ tracking form builds that address, and archived lookups use it.
 
 ## Why there is no adapter
 
-The tracker posts waybills to `www.best-inc.my/express-cc/express/expresslistinfo`.
-Its gateway can answer `risk_001` before verification. The web client selects Cloudflare
-Turnstile, Aliyun CAPTCHA or BEST's picture slider from its runtime configuration, and can
-move to another verifier when one cannot start. Opening the page or completing a checkbox
-does not establish that the gateway accepted the tracking request.
+The tracker posts waybills to `www.best-inc.my/express-cc/express/expresslistinfo`, which
+answers `risk_001` until it gets a verification. Its runtime configuration chooses Cloudflare
+Turnstile: the page then repeats the lookup with `captchaProvider=cloudflare` and the Turnstile
+token. BEST's own picture verification no longer passes for this tracker. An ordinary browser
+gets the token without a challenge, and a made-up waybill then gets a clean empty history, but
+the archived public waybill gets a server error (`NULL_POINTER_EXCEPTION`) rather than a
+history. Without a public waybill the tracker reads, an adapter cannot be proven; the reply has
+[BEST Express Vietnam](../best-express-vn/README.md)'s shape.
 
 The official [BEST Express MY Android app](https://play.google.com/store/apps/details?id=com.best.android.malaysiauser)
-is another endpoint lead. Its guest tracking flow uses the same lookup and BEST's picture
-verification, rather than a separate tracking API.
+is another endpoint lead. Its guest tracking flow uses the same lookup rather than a separate
+tracking API.
 
 ## Testing
 
