@@ -1,0 +1,387 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <input type="hidden" name="orderNum" value="RU000000017" id="hiddenOrderNum"/>
+
+    
+
+
+
+
+<div class="trackLine">
+    
+        <div class="step  past">
+            <span>Заказ оформлен</span>
+            
+        </div>
+    
+        <div class="step  past">
+            <span>Принято у отправителя</span>
+            
+        </div>
+    
+        <div class="step  past">
+            <span>Осуществляется перевозка</span>
+            
+        </div>
+    
+        <div class="step last present">
+            <span>Отправка доставлена</span>
+            
+                <div class="doneImg">
+                    <img src="/img/doneImg.png" width="20" height="20">
+                </div>
+            
+        </div>
+    
+    <div class="clear"></div>
+</div>
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="modul_head_hd">Текущее состояние</div>
+<table class="module_table">
+    
+        <tr>
+            <td class="current-status">
+                
+                    Доставлен (Казань).&nbsp;
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                        
+                    
+                
+            </td>
+        </tr>
+    
+    
+        <tr>
+            <td class="current-status">Возврат отправителю.</td>
+        </tr>
+    
+</table>
+
+<table class="module_table hide" id="orderFeedbackTable">
+    <tr class="modul_head_hd">
+        <td colspan="2">Задать вопрос по заказу RU000000017</td>
+    </tr>
+    <tr>
+        <td><label for="mail_text">Текст вопроса</label></td>
+        <td class="mailTextareaLabel">
+            <textarea id="mail_text" class="mailTextarea" maxlength="5000"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="mail_phone">Контактный телефон:</label></td>
+        <td>
+            <input type="text" class="txt" maxlength="25" size="50" id="mail_phone"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label for="mail_address">e-mail:</label></td>
+        <td>
+            <input type="text" class="txt" maxlength="100" size="50" id="mail_address"/>
+        </td>
+    </tr>
+</table>
+
+<table class="hide" id="orderFeedbackSubmit">
+    <tr>
+        <td class="body_left_btn" id="sendOrderQuestion">
+            <a href="#"><img src="/template/images/button_submit.gif" class="btn">Отправить</a>
+        </td>
+        <td class="body_right_btn" id="cancelOrderQuestion">
+            <a href="#"><img src="/template/images/button_back.gif" class="btn">Отменить</a>
+        </td>
+    </tr>
+</table>
+
+
+    <table class="module_table">
+        <tr class="table_colour_five height21">
+            <td>Количество мест</td>
+            <td>Состояние</td>
+            <td>Дата/время получения</td>
+            <td>Получатель</td>
+        </tr>
+        
+            
+                
+                
+                    
+                
+            
+            <tr class="table_colour_five height21">
+                <td>1</td>
+                <td>Доставлено</td>
+                <td>02.11.2026 15:13
+                <td>А*******</td>
+            </tr>
+        
+    </table>
+
+
+<div class="traceTitle hide" id="historyTitle">История состояний</div>
+<table class="module_table hide" id="trackHistory">
+    <tr class="table_colour_six height21">
+        <td>Дата</td>
+        <td>Состояние</td>
+    </tr>
+    
+        
+            
+            
+                
+            
+        
+        <tr class="table_colour_five height21">
+            <td>23.10.2026
+            <td>Заказ создан, ожидаем груз от отправителя</td>
+        </tr>
+    
+        
+            
+                
+            
+            
+        
+        <tr class="table_colour_four height21">
+            <td>23.10.2026
+            <td>Принят у отправителя</td>
+        </tr>
+    
+        
+            
+            
+                
+            
+        
+        <tr class="table_colour_five height21">
+            <td>28.10.2026
+            <td>Прибыл в сортировочный центр доставки (Казань)</td>
+        </tr>
+    
+        
+            
+                
+            
+            
+        
+        <tr class="table_colour_four height21">
+            <td>29.10.2026
+            <td>Доставка получателю (Казань)</td>
+        </tr>
+    
+        
+            
+            
+                
+            
+        
+        <tr class="table_colour_five height21">
+            <td>29.10.2026
+            <td>Возврат с маршрута в связи с отказом получателя (Казань)</td>
+        </tr>
+    
+        
+            
+                
+            
+            
+        
+        <tr class="table_colour_four height21">
+            <td>30.10.2026
+            <td>В сортировочном центре отправления (Казань)</td>
+        </tr>
+    
+        
+            
+            
+                
+            
+        
+        <tr class="table_colour_five height21">
+            <td>02.11.2026
+            <td>Доставка получателю (Казань)</td>
+        </tr>
+    
+        
+            
+                
+            
+            
+        
+        <tr class="table_colour_four height21">
+            <td>02.11.2026
+            <td>Доставлен (Казань)</td>
+        </tr>
+    
+</table>
+
+
+
+<table class="module_table">
+    <tr>
+        
+        <td>
+            <div class="body_left_btn">
+                <a id="showHistory" href="#">
+                    <img src="/ols2/trace2/img/button-plus.gif" class="btn">История состояний
+                </a>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+
+    
+
+    <div class="modul_head_hd">Информация по отправке</div>
+    <table class="module_table" id="tracing_table">
+        <tbody>
+        <tr>
+            <td>Номер отправки</td>
+            <td>RU000000017</td>
+        </tr>
+        <tr>
+            <td>Вариант доставки</td>
+            <td>
+                
+                
+                    до двери
+                
+            </td>
+        </tr>
+        <tr>
+            <td>Услуга</td>
+            <td>DPD Оптимум</td>
+        </tr>
+        <tr>
+            <td>Номер заказа Клиента</td>
+            <td>000-0000000</td>
+        </tr>
+        
+        
+        <tr>
+            <td>Дата приема отправки</td>
+            <td>23.10.2026</td>
+        </tr>
+        <tr>
+            <td>Пункт отправления</td>
+            <td>Казань</td>
+        </tr>
+        <tr class="table_colour_four height21">
+            <td>Пункт назначения</td>
+            <td>Казань</td>
+        </tr>
+        <tr>
+            <td>Дата доставки</td>
+            <td>
+                
+                    02.11.2026
+                
+                
+            </td>
+        </tr>
+        <tr>
+            <td>Дата окончания бесплатного хранения</td>
+            <td>02.11.2026</td>
+        </tr>
+        <tr>
+            <td>Количество мест (шт)</td>
+            <td id="parcelCount">1</td>
+        </tr>
+        <tr>
+            <td>Физический вес (кг)</td>
+            <td>43.5</td>
+        </tr>
+        <tr>
+            <td>Платный вес (кг)</td>
+            <td>44</td>
+        </tr>
+        <tr>
+            <td>Объем (м3)</td>
+            <td>0.151</td>
+        </tr>
+        <tr>
+            <td>Вес самой тяжелой посылки (кг)</td>
+            <td>16</td>
+        </tr>
+        
+
+
+
+
+
+
+
+
+<tr>
+    <td>Опции</td>
+    <td>
+        <ul class="arrow">
+            
+                
+            
+                
+                    <li>
+                        <a href="http://www.dpd.kz/ru/tariffs/options/page7722/" target="_blank">Проверка комплектности</a>
+                    </li>
+                
+            
+        </ul>
+        <ul>
+            
+                
+            
+                
+            
+        </ul>
+        
+    </td>
+</tr>
+
+        </tbody>
+    </table>
+    
+    
+
+    
+
+
+

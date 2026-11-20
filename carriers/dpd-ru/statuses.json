@@ -1,0 +1,16 @@
+{
+  "carrier": "dpd-ru",
+  "entries": [
+    {"wording": "Заказ создан, ожидаем груз от отправителя", "stage": "registered", "language": "ru", "confirmedBy": "live", "note": "The sender entered the order; DPD does not have the parcel yet."},
+    {"wording": "Назначен курьер для приема заказа", "stage": "registered", "language": "ru", "confirmedBy": "live", "note": "A courier is booked to collect the parcel from the sender."},
+    {"wording": "Принят у отправителя", "stage": "accepted", "language": "ru", "confirmedBy": "live"},
+    {"wording": "В сортировочном центре отправления", "stage": "in_transit", "language": "ru", "confirmedBy": "live", "note": "At the sending terminal; the town follows in parentheses."},
+    {"wording": "Принят на транзитном терминале", "stage": "in_transit", "language": "ru", "confirmedBy": "live"},
+    {"wording": "Покинул транзитный терминал", "stage": "in_transit", "language": "ru", "confirmedBy": "live"},
+    {"wording": "Прибыл в сортировочный центр доставки", "stage": "in_transit", "language": "ru", "confirmedBy": "live", "note": "At the delivering terminal."},
+    {"wording": "Доставка получателю", "stage": "out_for_delivery", "language": "ru", "confirmedBy": "live"},
+    {"wording": "Возврат с маршрута в связи с отказом получателя", "stage": "failed_attempt", "language": "ru", "confirmedBy": "live", "note": "The courier came back with the parcel because the recipient refused it."},
+    {"wording": "Доставка по другому заказу", "stage": "exception", "language": "ru", "confirmedBy": "live", "note": "The parcel goes on under another order, which the tracker names: a return to the sender or a new address."},
+    {"wording": "Доставлен", "stage": "delivered", "language": "ru", "confirmedBy": "live"}
+  ]
+}

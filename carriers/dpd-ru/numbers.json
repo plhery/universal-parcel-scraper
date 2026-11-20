@@ -1,0 +1,25 @@
+{
+  "carrier": "dpd-ru",
+  "records": [
+    {
+      "number": "RU122966215",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://2gis.ru/novokuznetsk/firm/844953211232453/tab/reviews",
+        "date": "2026-10-23"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-it"
+        ]
+      },
+      "note": "Quoted in a public 2GIS review of DPD's Novokuznetsk terminal; the tracker answers it with the order's history, handed on to a return."
+    }
+  ]
+}

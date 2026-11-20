@@ -213,6 +213,7 @@ import { adapter as dpdNl } from '../carriers/dpd-nl/adapter.js';
 import { adapter as dpdPl } from '../carriers/dpd-pl/adapter.js';
 import { adapter as dpdPt } from '../carriers/dpd-pt/adapter.js';
 import { adapter as dpdRo } from '../carriers/dpd-ro/adapter.js';
+import { adapter as dpdRu } from '../carriers/dpd-ru/adapter.js';
 import { adapter as dpdUk } from '../carriers/dpd-uk/adapter.js';
 import { adapter as dpdZa } from '../carriers/dpd-za/adapter.js';
 import { adapter as dpex } from '../carriers/dpex/adapter.js';
@@ -1106,6 +1107,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-pl": dpdPl,
     "dpd-pt": dpdPt,
     "dpd-ro": dpdRo,
+    "dpd-ru": dpdRu,
     "dpd-uk": dpdUk,
     "dpd-za": dpdZa,
     "dpex": dpex,
@@ -2241,6 +2243,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd": "dpd",
     "dpd-at": "dpd-at",
     "dpd-be": "dpd-be",
+    "dpd-by": "dpd-ru",
     "dpd-de": "dpd-de",
     "dpd-fr": "dpd-fr",
     "dpd-gr": "universal",
@@ -2251,6 +2254,7 @@ export const REGISTRY: RegistryDefinition = {
     "dpd-pl": "dpd-pl",
     "dpd-pt": "dpd-pt",
     "dpd-ro": "dpd-ro",
+    "dpd-ru": "dpd-ru",
     "dpd-uk": "dpd-uk",
     "dpd-za": "dpd-za",
     "dpdex": "universal",

@@ -877,6 +877,13 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'dpd-pl', number: '9999999999999U',
     route: /^https:\/\/tracktrace\.dpd\.com\.pl\/EN\/parcelDetails\?/,
     marker: /There is no trace for this parcel|Parcel history/ },
+  // The page fills its search field from the address and searches on load.
+  { carrier: 'dpd-ru', number: 'RU999999990',
+    route: /^https:\/\/mydpd\.dpd\.kz\/ols\/trace2\/standard\.do2\?orderNum=RU999999990$/,
+    marker: /Информация по вашему запросу не найдена/ },
+  { carrier: 'dpd-by', number: 'BY999999990',
+    route: /^https:\/\/mydpd\.dpd\.by\/ols\/trace2\/standard\.do2\?orderNum=BY999999990$/,
+    marker: /Информация по вашему запросу не найдена/ },
   // The page frames the tracker app, which looks the waybill up from its address.
   { carrier: 'dpd-za', number: 'ZZ9999999980',
     route: /^https:\/\/www\.dpd\.com\/za\/en\/receiving-parcels\/track-my-parcel\/tracking-details\/\?ZZ9999999980$/,

@@ -82964,6 +82964,17 @@
     ]
   },
   {
+    "input": "BY123186908",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "BY19999999999980CN",
     "carrier": "unknown",
     "confidence": "low",
@@ -107642,6 +107653,17 @@
     ],
     "asked": [
       "aliexpress"
+    ]
+  },
+  {
+    "input": "RU122966215",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
     ]
   },
   {
