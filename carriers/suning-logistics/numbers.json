@@ -1,5 +1,30 @@
 {
   "carrier": "suning-logistics",
-  "gap": "No public page shows a Suning Logistics number.",
-  "records": []
+  "records": [
+    {
+      "number": "0003855860820101",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cn.govopendata.com/caipanwenshu/2017/01/22/d57ce362-3921-4228-8ef6-da5bac990afb/",
+        "date": "2017-01-22",
+        "dateKind": "court decision",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Suning Express retail parcel shipping",
+        "reportedRole": "运单号",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-ecommerce",
+          "tnt"
+        ]
+      },
+      "note": "The published consumer case identifies Suning Express as the carrier and prints the complete waybill with its leading zeroes. Lookup blocked by verification. The official form requires a slider CAPTCHA."
+    }
+  ]
 }
