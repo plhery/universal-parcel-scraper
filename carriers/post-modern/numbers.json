@@ -1,5 +1,27 @@
 {
   "carrier": "post-modern",
-  "gap": "No public page shows a PostModern number.",
-  "records": []
+  "records": [
+    {
+      "number": "2298",
+      "role": "quarantined",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://formodesign.de/arge/files/2025/03/MB_150.pdf#page=25",
+        "date": "2003-07-25",
+        "dateKind": "carrier mark on cover",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "Historical Dresden registered mail",
+        "reportedRole": "Sendungsnummer",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published firsthand account shows a registered cover and explicitly identifies this number stamped by PostModern. It comes from the carrier’s 2003 paper service, and its scope on the current tracker remains unresolved."
+    }
+  ]
 }
