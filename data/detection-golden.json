@@ -105924,6 +105924,17 @@
     ]
   },
   {
+    "input": "RR927248745AW",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR932776400MA",
     "carrier": "intl-post",
     "confidence": "high",

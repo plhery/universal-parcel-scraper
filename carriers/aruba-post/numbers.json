@@ -1,5 +1,26 @@
 {
   "carrier": "aruba-post",
-  "gap": "No public page shows a Post Aruba number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR927248745AW",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://cds.postaruba.com/ipswt/IPSWeb_item_events.aspx?itemid=rr927248745aw",
+        "date": "2025-06-19",
+        "dateKind": "tracking event date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Aruba registered outbound post",
+        "reportedRole": "UPU S10 registered item number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "Post Aruba's official results display the uppercase identifier and dated outbound acceptance and dispatch events."
+    }
+  ]
 }
