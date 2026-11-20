@@ -1,5 +1,26 @@
 {
   "carrier": "shiplowcost",
-  "gap": "No public page shows a ShipLowCost number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "132981",
+      "role": "order_reference",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://themalteseherald.com/wp-content/uploads/2024/05/04_07_2023-123_2020-139964.pdf",
+        "date": "2023-07-04",
+        "dateKind": "court decision",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "ShipLowCost forwarding to Malta",
+        "reportedRole": "SLC Ref and tracking ID",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published court decision distinguishes this delivery reference on the ShipLowCost parcel label from the customer account and partner waybills. The carrier’s guest tracker returned not found."
+    }
+  ]
 }
