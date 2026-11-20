@@ -25,6 +25,12 @@ by the number asked. This route is
 separate from the authenticated
 [developer API](https://developer.bring.com/api/tracking/).
 
+The JSON route answers NOT FOUND for some parcels the tracking page shows, such
+as one delivered in Sweden. After that answer the adapter asks the page's own
+data route (`/sporing/{number}.data`, limited to the tracking route's loader),
+which React Router streams as turbo-stream: the same consignment, read by the
+same parser. Its not-found is a thrown 404 named `NOT_FOUND`.
+
 ## Notes
 
 Current progress follows the latest significant scan identified by the portal,
@@ -52,8 +58,8 @@ Status wording comes from public event and cause codes. Free-text descriptions,
 addresses, pickup codes and proof images are excluded. Weight and dimensions have
 explicit units. The consumer's negative response does not name the number, so
 it remains inconclusive; the portal's not-found answer, JSON or the bare text
-`NOT FOUND`, carries the reason `portal_not_found`, so a consumer can tell it
-from an outage.
+`NOT FOUND` and then the tracking page's own, carries the reason
+`portal_not_found`, so a consumer can tell it from an outage.
 
 ## Live test
 

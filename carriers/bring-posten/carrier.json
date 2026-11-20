@@ -23,7 +23,8 @@
     "mode": "automatic",
     "adapter": "bring-posten",
     "steps": [
-      "direct"
+      "direct",
+      "website"
     ],
     "recognition": {
       "rank": 205

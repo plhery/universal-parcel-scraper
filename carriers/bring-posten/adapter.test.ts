@@ -4,6 +4,7 @@ import { normalizeCarrierResult } from '../../core/result/index.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, BringTracker } from './adapter.js';
 import { normalizeBringNumber, parseBring } from './parser.js';
+import { decodePageStream, PAGE_ROUTE } from './page.js';
 import { bringStatus } from './status.js';
 import { InvalidInputError } from '../../core/errors/index.js';
 
@@ -31,6 +32,26 @@ const waiting = (pickup: Record<string, unknown> = { expectedPickupUnitName: 'Ex
     latestSignificantEvent: { ...parcel(value).eventSet[0] } });
   return parseBring(value, NUMBER);
 };
+
+/** Route data as the tracking page streams it: values flattened, objects naming their keys and members by index. */
+const pageStream = (route: Record<string, unknown>): string => {
+  const values: unknown[] = [];
+  const add = (value: unknown): number => {
+    if (value === null) return -5;
+    if (value === undefined) return -7;
+    const index = values.push(undefined) - 1;
+    values[index] = Array.isArray(value) ? value.map(add) : typeof value === 'object'
+      ? Object.fromEntries(Object.entries(value).map(([key, member]) => [`_${add(key)}`, add(member)])) : value;
+    return index;
+  };
+  add({ [PAGE_ROUTE]: route });
+  // A deferred value the loader resolves later, on a line of its own.
+  return `${JSON.stringify(values)}\nP1:[{"_2":3},"faq",[]]\n`;
+};
+const PAGE_NOT_FOUND = '[{"_1":2},"routes/$sporing.$trackingNumber",{"_3":4},"error",["ErrorResponse",5,6,7],"NOT_FOUND",404,""]';
+const JSON_NOT_FOUND = () => new Response('NOT FOUND', { status: 404, headers: { 'Content-Type': 'text/plain;charset=UTF-8' } });
+/** The JSON route's reply, then the tracking page's. */
+const routes = (json: () => Response, page: () => Response) => vi.fn<typeof fetch>(async url => (String(url).includes('/json/') ? json() : page()));
 
 describe('Bring consumer parcel projection', () => {
   it('binds both consignment and S10 queries, preserves units and excludes personal fields', () => {
@@ -235,11 +256,47 @@ describe('Bring bounded anonymous retrieval', () => {
   });
 
   it('marks the portal\'s own not-found answer, which stays inconclusive', async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }));
+    const page = () => new Response(PAGE_NOT_FOUND, { status: 404, headers: { 'Content-Type': 'text/x-script; charset=utf-8' } });
+    const fetcher = routes(() => Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }), page);
     await expect(new BringTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
     // The same answer as plain text.
-    fetcher.mockResolvedValue(new Response('NOT FOUND', { status: 404, headers: { 'Content-Type': 'text/plain;charset=UTF-8' } }));
-    await expect(new BringTracker({ fetcher }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    const text = routes(JSON_NOT_FOUND, page);
+    await expect(new BringTracker({ fetcher: text }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate', reason: 'portal_not_found' });
+    // The tracking page was asked too, and its 404 names no parcel unless it is its own not-found.
+    expect(text).toHaveBeenCalledTimes(2);
+    const other = routes(JSON_NOT_FOUND, () => new Response(PAGE_NOT_FOUND.replace('NOT_FOUND', 'GONE'), { status: 404 }));
+    await expect(new BringTracker({ fetcher: other }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    await expect(new BringTracker({ fetcher: other }).fetch(NUMBER)).rejects.not.toMatchObject({ reason: 'portal_not_found' });
+  });
+
+  it('asks the tracking page for a parcel the JSON route answers NOT FOUND for', async () => {
+    const value = payload();
+    const fetcher = routes(JSON_NOT_FOUND, () => new Response(pageStream({ data: { _type: 'SINGLE_CONSIGNMENT', trackingNumber: NUMBER,
+      consignment: value.consignmentWithDomainAsync } })));
+    await expect(new BringTracker({ fetcher }).fetch(NUMBER)).resolves.toEqual(parseBring(value, NUMBER));
+    expect(String(fetcher.mock.calls[1]![0])).toBe(`https://sporing.bring.no/sporing/${NUMBER}.data?lang=en&_routes=routes%2F%24sporing.%24trackingNumber`);
+    expect(new Headers(fetcher.mock.calls[1]![1]?.headers).has('Cookie')).toBe(false);
+    // Several consignments under one reference are inconclusive, and a page without the route's data has changed.
+    const several = routes(JSON_NOT_FOUND, () => new Response(pageStream({ data: { _type: 'MULTIPLE_CONSIGNMENTS', consignments: [] } })));
+    await expect(new BringTracker({ fetcher: several }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'indeterminate' });
+    for (const body of [pageStream({ data: { _type: 'OTHER' } }), '{"error":"NOT_FOUND"}', 'NOT FOUND']) {
+      const changed = routes(JSON_NOT_FOUND, () => new Response(body));
+      await expect(new BringTracker({ fetcher: changed }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'schema' });
+    }
+    // Other inconclusive answers and outages on the JSON route are not a reason to ask again.
+    const outage = routes(() => new Response('Unavailable', { status: 503 }), () => new Response(pageStream({ data: {} })));
+    await expect(new BringTracker({ fetcher: outage }).fetch(NUMBER)).rejects.toMatchObject({ kind: 'maintenance' }); expect(outage).toHaveBeenCalledOnce();
+  });
+
+  it('decodes the tracking page stream within bounds', () => {
+    expect(decodePageStream('[{"_1":2,"_3":-5,"_4":5},"a",[6,-7,7],"b","c",["D",0],1,"x"]\nP1:[]')).toEqual(
+      { a: [1, undefined, 'x'], b: null, c: { $type: 'D' } });
+    for (const stream of ['', '{}', '[]', '[{"_1":5},"a"]', '[{"_1":-9},"a"]', '[{"_1":2},"a",[1.5]]', '[{"_1":0},"a"]', '[{"_9":1},"a"]', '[{"x":1},"a"]', '[[0]]']) {
+      expect(() => decodePageStream(stream), stream).toThrowError(expect.objectContaining({ kind: 'schema' }));
+    }
+    // A member shared by several objects is read once, and keeps its value in each.
+    const shared = `[{"_1":2,"_3":2},"a",{"_4":5},"b","c",1]`;
+    expect(decodePageStream(shared)).toEqual({ a: { c: 1 }, b: { c: 1 } });
   });
 
   it('asks about S10 mail from abroad and recognizes the numbers its lookup takes', async () => {
@@ -255,7 +312,8 @@ describe('Bring bounded anonymous retrieval', () => {
     await expect(tracker.recognize!('RR000000005DE', {})).resolves.toMatchObject({ known: true, lastActivityAt: '2026-01-06T11:00:00.000Z' });
     fetcher.mockClear();
     await expect(tracker.recognize!('RR000000004DE', {})).resolves.toEqual({ known: false }); expect(fetcher).not.toHaveBeenCalled();
-    fetcher.mockImplementation(async () => Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }));
+    fetcher.mockImplementation(async url => (String(url).includes('/json/')
+      ? Response.json({ error: 'No shipments found', errorState: 'NOT_FOUND' }, { status: 404 }) : new Response(PAGE_NOT_FOUND, { status: 404 })));
     await expect(tracker.recognize!('370000000000000001', {})).rejects.toMatchObject({ reason: 'portal_not_found' });
   });
 
