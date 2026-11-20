@@ -17,16 +17,26 @@
   "timezone": "Europe/Athens",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "biz-courier",
+    "steps": [
+      "direct"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
     "searchUrl": "https://trackit.bizcourier.eu/app/en",
     "canaryUrl": "https://trackit.bizcourier.eu/app/en",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
     "unavailable": []
   },
