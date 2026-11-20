@@ -1,0 +1,45 @@
+{
+  "carrier": "21-express-id",
+  "records": [
+    {
+      "number": "105400058018",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cekidot.id/cek-resi/21-express",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd-fr", "mondial-relay", "colis-prive", "mrw", "brt", "sf-express", "sto", "zto", "j-and-t", "lbc-express", "metropolitan-warehouse", "paquetexpress", "sending"]
+      },
+      "note": "Cekidot's 21 Express tracking page offers it as the waybill to try. 21 Express's tracker answers it with a parcel picked up at Bekasi and received in Banjarnegara."
+    },
+    {
+      "number": "100700345592",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cekidot.id/cek-resi",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": ["dpd-fr", "mondial-relay", "colis-prive", "mrw", "brt", "sf-express", "sto", "zto", "j-and-t", "lbc-express", "metropolitan-warehouse", "paquetexpress", "sending"]
+      },
+      "note": "Cekidot's courier directory gives it in the 21 Express row. 21 Express's tracker answers it with a parcel picked up at Yogyakarta, a missed delivery and three delivery rounds before it was received near Bogor."
+    }
+  ]
+}

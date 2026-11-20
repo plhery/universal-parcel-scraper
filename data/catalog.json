@@ -5727,6 +5727,25 @@
       }
     ]
   },
+  "21-express-id": {
+    "displayName": "21 Express",
+    "color": "#DC4B57",
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "21-express-id",
+      "localClocks": true
+    },
+    "canaryUrl": "https://21express.co.id/track",
+    "trackingUrlTemplate": "https://21express.co.id/track",
+    "trackingSearchUrl": "https://21express.co.id/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "247express": {
     "displayName": "247Express",
     "color": "#ed1f24",

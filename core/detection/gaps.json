@@ -5498,5 +5498,11 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "21-express-id",
+    "pattern": "^\\d{12}$",
+    "kind": "collision",
+    "reason": "Twelve-digit 21 Express waybills share their shape with many carriers' numeric waybills, so the shape cannot name 21 Express."
   }
 ]

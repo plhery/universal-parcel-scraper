@@ -1,0 +1,13 @@
+{
+  "carrier": "21-express-id",
+  "entries": [
+    {"code": "PICK UP", "wording": "PICK UP", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "A courier picked the parcel up from the shipper; written with the acceptance at the same minute."},
+    {"code": "ACCEPTANCE", "wording": "ACCEPTANCE", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The origin branch took the parcel in."},
+    {"code": "MANIFESTED", "wording": "MANIFESTED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The parcel was put on a manifest to leave the origin branch."},
+    {"code": "WAYBILLED", "wording": "WAYBILLED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The manifest was put on a line haul, minutes or hours after the manifest."},
+    {"code": "INCOMING", "wording": "INCOMING", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The destination branch received the parcel."},
+    {"code": "DELIVERY", "wording": "DELIVERY", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "A courier took the parcel out; written again for each attempt."},
+    {"code": "MISSED-DELIVERY", "wording": "MISSED-DELIVERY", "stage": "failed_attempt", "language": "en", "confirmedBy": "live", "note": "The courier came back without delivering the parcel; another DELIVERY row follows."},
+    {"code": "RECEIVED", "wording": "RECEIVED", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "Someone took the parcel; the row names them, and the adapter leaves the name out."}
+  ]
+}

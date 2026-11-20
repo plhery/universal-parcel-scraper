@@ -181,6 +181,8 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'tamex', number: '30000000000000',
     route: /^https:\/\/tamex\.com\.sa\/track\/30000000000000$/,
     marker: /لايتوفر سجل للشحنة/ },
+  // The tracker reads waybills from its form only, behind a reCAPTCHA on its button.
+  { carrier: '21-express-id', number: '999999999999', route: /^https:\/\/21express\.co\.id\/track$/, marker: /Tracking POD/, forwarding: 'none' },
   { carrier: '360lion', number: 'WSHAR0000000199YQ',
     route: /^https:\/\/toms\.360lion\.com\/track\?trackNumber=WSHAR0000000199YQ$/,
     marker: /Enter tracking number\(s\) here/ },

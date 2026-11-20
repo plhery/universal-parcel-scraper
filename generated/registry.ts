@@ -2,6 +2,7 @@
 
 import type { RegistryDefinition } from '../core/adapter/index.js';
 import { adapter as carrier17feia } from '../carriers/17feia/adapter.js';
+import { adapter as carrier21ExpressId } from '../carriers/21-express-id/adapter.js';
 import { adapter as carrier2go } from '../carriers/2go/adapter.js';
 import { adapter as carrier360lion } from '../carriers/360lion/adapter.js';
 import { adapter as carrier472 } from '../carriers/4-72/adapter.js';
@@ -894,6 +895,7 @@ import { adapter as ztoInternational } from '../carriers/zto-international/adapt
 export const REGISTRY: RegistryDefinition = {
   factories: {
     "17feia": carrier17feia,
+    "21-express-id": carrier21ExpressId,
     "2go": carrier2go,
     "360lion": carrier360lion,
     "4-72": carrier472,
@@ -1786,6 +1788,7 @@ export const REGISTRY: RegistryDefinition = {
   carriers: {
     "139express": "universal",
     "17feia": "17feia",
+    "21-express-id": "21-express-id",
     "247express": "universal",
     "24curier": "universal",
     "2ebox": "universal",

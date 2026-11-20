@@ -1,0 +1,62 @@
+{
+  "id": "21-express-id",
+  "displayName": "21 Express",
+  "aliases": [],
+  "region": {
+    "countries": [
+      "ID"
+    ]
+  },
+  "brand": {
+    "color": "#DC4B57"
+  },
+  "selectable": true,
+  "timezone": "Asia/Jakarta",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "21-express-id",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://21express.co.id/track",
+    "searchUrl": "https://21express.co.id/track",
+    "canaryUrl": "https://21express.co.id/track",
+    "shows": [
+      "status",
+      "history",
+      "progress_rail",
+      "provider_code",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "provider_code",
+      "signatory"
+    ],
+    "discarded": [
+      "progress_rail",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

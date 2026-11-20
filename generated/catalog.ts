@@ -5731,6 +5731,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "21-express-id": {
+    "displayName": "21 Express",
+    "color": "#DC4B57",
+    "countries": [
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Jakarta",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "21-express-id",
+      "localClocks": true
+    },
+    "canaryUrl": "https://21express.co.id/track",
+    "trackingUrlTemplate": "https://21express.co.id/track",
+    "trackingSearchUrl": "https://21express.co.id/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "247express": {
     "displayName": "247Express",
     "color": "#ed1f24",
@@ -65418,6 +65437,7 @@ export const CARRIER_IDS = [
   "ems",
   "139express",
   "17feia",
+  "21-express-id",
   "247express",
   "24curier",
   "2ebox",
@@ -67283,6 +67303,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "ems": [],
   "139express": [],
   "17feia": ["17feia-1","17feia-2"],
+  "21-express-id": [],
   "247express": [],
   "24curier": [],
   "2ebox": [],
