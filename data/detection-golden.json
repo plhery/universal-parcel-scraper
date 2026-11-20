@@ -82457,6 +82457,12 @@
     ]
   },
   {
+    "input": "BEN25250914BEN",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "BERO405129959",
     "carrier": "unknown",
     "confidence": "none",
@@ -87739,6 +87745,14 @@
     ]
   },
   {
+    "input": "DPE00019908940",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dpdex"
+    ]
+  },
+  {
     "input": "DPE99999999990",
     "carrier": "unknown",
     "confidence": "low",
@@ -91158,6 +91172,12 @@
     ]
   },
   {
+    "input": "FK0000000668246TM",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "FKS08VTSC6GOY",
     "carrier": "cycloon",
     "confidence": "high",
@@ -93692,6 +93712,18 @@
     ]
   },
   {
+    "input": "HGDGY1910830544YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "HGDGY1910856105YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "HHWAB9999999980YQ",
     "carrier": "huahan",
     "confidence": "high",
@@ -93971,6 +94003,12 @@
       "aramex-au",
       "aramex-nz"
     ]
+  },
+  {
+    "input": "HUA005816254YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "HV520454959JF",
@@ -104752,6 +104790,12 @@
     ]
   },
   {
+    "input": "R230199787761A",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "R3J6E5S56N",
     "carrier": "unknown",
     "confidence": "low",
@@ -105667,6 +105711,18 @@
     "candidates": [
       "bpost"
     ]
+  },
+  {
+    "input": "RF100500604428",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "RF100500604555",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "RF101270452CH",
@@ -108650,6 +108706,12 @@
     ]
   },
   {
+    "input": "SFYD26099215028",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SG267869138712R",
     "carrier": "unknown",
     "confidence": "low",
@@ -109798,6 +109860,12 @@
     ]
   },
   {
+    "input": "SS202600000371",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SS643530608AZ",
     "carrier": "intl-post",
     "confidence": "high",
@@ -110783,6 +110851,12 @@
     "candidates": []
   },
   {
+    "input": "TDOXP3121520012YQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "TDT1999999980CN",
     "carrier": "unknown",
     "confidence": "low",
@@ -111248,6 +111322,12 @@
     "asked": [
       "australia-post"
     ]
+  },
+  {
+    "input": "TM0000003945802",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "TM800329354AM",
@@ -114562,6 +114642,12 @@
     ]
   },
   {
+    "input": "XY2422647257PQ",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "XY252584055RV",
     "carrier": "chronopost",
     "confidence": "high",
@@ -114647,6 +114733,12 @@
     "asked": [
       "chit-chats"
     ]
+  },
+  {
+    "input": "Y890911042243T",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "YAM0063108320",
@@ -114891,6 +114983,12 @@
     ]
   },
   {
+    "input": "YP0168865416KD",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "YR0931885",
     "carrier": "unknown",
     "confidence": "low",
@@ -114900,6 +114998,12 @@
     "asked": [
       "rl-carriers"
     ]
+  },
+  {
+    "input": "YT20260000014144YT",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
   },
   {
     "input": "YT2508501277000294",

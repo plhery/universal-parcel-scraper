@@ -1663,6 +1663,22 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'ydh', number: 'YDH0000000017YQ',
     route: /^https:\/\/track\.ydhex\.com\/track_query\.aspx\?track_number=YDH0000000017YQ$/,
     marker: /暂无记录|目的国家/ },
+  // The page fills its box from `c` and looks the number up; an unknown one shows 查询不到 or Not Found.
+  { carrier: 'sheensync', number: 'SS000000000000',
+    route: /^https:\/\/sheen-sync\.com\/track\.html\?c=SS000000000000$/,
+    marker: /查询不到|Not Found|运单号/ },
+  // The page fills its box from `c` and looks the number up; an unknown one shows 数据获取失败.
+  { carrier: 'sfyd-express', number: 'SFYD00000000000',
+    route: /^https:\/\/sfydexpress\.com\/tracking\.html\?c=SFYD00000000000$/,
+    marker: /数据获取失败|物流查询|运单号/ },
+  // The page fills its box from `track_number` and looks the number up on load.
+  { carrier: 'dpdex', number: 'DPE99999999999',
+    route: /^https:\/\/client\.duopudaexpress\.com\/track_query\.aspx\?track_number=DPE99999999999$/,
+    marker: /输入查询单号|一次支持30条/ },
+  // The page reads `key` and looks the number up; an unknown one gets 暂不支持查询此单号.
+  { carrier: 'runforint', number: 'RF999999999999',
+    route: /^https:\/\/www\.runforint\.com\/index\.php\?m=home&c=Lists&a=index&tid=137&key=RF999999999999$/,
+    marker: /暂不支持查询此单号|单号不能为空|运单号/ },
   { carrier: 'dealersend', number: 'DSLAF9000000001YQ',
     route: /^https:\/\/dealer-send\.com\/en-US\/track-my-shipment\?trackingNumber=DSLAF9000000001YQ$/,
     marker: /Track My Shipment/ },

@@ -1,0 +1,36 @@
+{
+  "carrier": "ywd",
+  "entries": [
+    {
+      "code": "IR",
+      "wording": "Parcel information received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The waybill's information reached YWD, before it has the parcel."
+    },
+    {
+      "code": "AF",
+      "wording": "Shipment Arrived At Distribution Center",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The first scan, at YWD's site in Shanghai."
+    },
+    {
+      "code": "DF",
+      "wording": "Start Site Transport Shipment",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The parcel leaves YWD's site."
+    },
+    {
+      "wording": "Parcel Infomation Received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The line's own copy of the information, spelled so, without a code; it can come after the first scan."
+    }
+  ]
+}

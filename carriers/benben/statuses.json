@@ -1,0 +1,7 @@
+{
+  "carrier": "benben",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arrive at the delivery point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The warehouse's receipt; the delivery point is where the shipper hands the parcel over, not the recipient's."},
+    {"code": "SHIPMENT", "wording": "Cargo leaving the operation center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The warehouse's departure."}
+  ]
+}

@@ -5534,5 +5534,75 @@
     "pattern": "^9999\\d{10}$",
     "kind": "open",
     "reason": "Detection offers several carriers for a marketplace number reported on Unitrade's customs tracking service without offering Unitrade."
+  },
+  {
+    "carrier": "whwdt",
+    "kind": "open",
+    "reason": "One confirmed waybill, a letter, twelve digits and a letter, is too few to tell its series from other carriers' numbers. The ITDIDA lookup supports explicit selection."
+  },
+  {
+    "carrier": "lerdex",
+    "kind": "open",
+    "reason": "One confirmed number, letters, digits and YQ, is too few to tell its series from other forwarders' numbers. The tracking page's lookup supports explicit selection."
+  },
+  {
+    "carrier": "sheensync",
+    "kind": "open",
+    "reason": "SheenSync waybills are SS and twelve digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "yuanpeng",
+    "kind": "open",
+    "reason": "Yuanpeng numbers are YP, ten digits and two letters; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "tuomeida",
+    "kind": "open",
+    "reason": "Tuomeida numbers are TM and thirteen digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "hua-express",
+    "kind": "open",
+    "reason": "HUA Express numbers are HUA, nine digits and two letters; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "rm-logistics",
+    "kind": "open",
+    "reason": "RM Logistics numbers seen carry a customer's prefix, thirteen digits and TM; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "benben",
+    "kind": "open",
+    "reason": "Benben numbers are BEN, eight digits and BEN; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "sfyd-express",
+    "kind": "open",
+    "reason": "SFYD Express waybills are SFYD and digits; one public sample is too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "runforint",
+    "kind": "open",
+    "reason": "Runforint waybills are RF and twelve digits; two public samples from one series are too few to claim the shape from other carriers' numbers, so the adapter answers explicit selection."
+  },
+  {
+    "carrier": "hgd",
+    "kind": "open",
+    "reason": "Two public waybills, HGD, two letters, ten digits and YQ: too few to tell the series from the Hualei forwarders' numbers of the same layout"
+  },
+  {
+    "carrier": "ywd",
+    "kind": "open",
+    "reason": "One public waybill, YT, fourteen digits and YT: too few to tell the series from other carriers' numbers"
+  },
+  {
+    "carrier": "xingyou",
+    "kind": "open",
+    "reason": "One public waybill, XY, ten digits and PQ: too few to tell the series from other carriers' numbers"
+  },
+  {
+    "carrier": "yitu",
+    "kind": "open",
+    "reason": "One public waybill, Y, twelve digits and T: too few to tell the series from other carriers' numbers"
   }
 ]

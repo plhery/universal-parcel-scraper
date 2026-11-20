@@ -1,4 +1,21 @@
 {
   "carrier": "runforint",
-  "entries": []
+  "entries": [
+    {
+      "code": "300",
+      "wording": "Parcel data received",
+      "stage": "registered",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The waybill's information reached Runforint, before it has the parcel."
+    },
+    {
+      "code": "500",
+      "wording": "Package Picked up",
+      "stage": "accepted",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Collected from the seller, at Runforint's site in Guangzhou."
+    }
+  ]
 }

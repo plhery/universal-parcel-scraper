@@ -1,0 +1,159 @@
+{
+  "code": 200,
+  "msg": "SUCCESS",
+  "data": [
+    {
+      "number": "TDOXP3121520012YQ",
+      "oriChannel": "YunExpress",
+      "oriNumber": "YT2534600711134963",
+      "oriCountry": "China",
+      "destCountry": "United States",
+      "inDate": "2025-12-13",
+      "status": "3",
+      "events": [
+        {
+          "time": "2025-12-31 11:02:00",
+          "location": null,
+          "content": "DELANO, MN 55328,Delivered, Front Door/Porch"
+        },
+        {
+          "time": "2025-12-31 08:08:00",
+          "location": null,
+          "content": "DELANO, MN 55328,Out for Delivery"
+        },
+        {
+          "time": "2025-12-31 07:57:00",
+          "location": null,
+          "content": "DELANO, MN 55328,Arrived at Post Office"
+        },
+        {
+          "time": "2025-12-31 05:00:00",
+          "location": null,
+          "content": "MINNEAPOLIS MN DISTRIBUTION CENTER,Departed USPS Regional Facility"
+        },
+        {
+          "time": "2025-12-30 23:12:00",
+          "location": null,
+          "content": "MINNEAPOLIS MN DISTRIBUTION CENTER,Accepted at USPS Regional Destination Facility"
+        },
+        {
+          "time": "2025-12-30 21:01:00",
+          "location": null,
+          "content": "SAINT PAUL, MN 55131,Departed USPS Facility"
+        },
+        {
+          "time": "2025-12-30 19:16:00",
+          "location": null,
+          "content": "MINNEAPOLIS MN DISTRIBUTION CENTER,Arrived at USPS Regional Facility"
+        },
+        {
+          "time": "2025-12-30 07:35:00",
+          "location": null,
+          "content": "SAINT PAUL, MN 55131,Arrived at USPS Facility"
+        },
+        {
+          "time": "2025-12-29 16:00:00",
+          "location": null,
+          "content": "GLENDALE HEIGHTS, IL 60139,Departed Shipping Partner Facility, USPS Awaiting Item"
+        },
+        {
+          "time": "2025-12-28 19:35:00",
+          "location": null,
+          "content": "GLENDALE HEIGHTS, IL 60139,Arrived Shipping Partner Facility, USPS Awaiting Item"
+        },
+        {
+          "time": "2025-12-27 20:12:00",
+          "location": null,
+          "content": "Delivered to local carrier"
+        },
+        {
+          "time": "2025-12-26 19:22:00",
+          "location": null,
+          "content": "Clearance processing completed - Import"
+        },
+        {
+          "time": "2025-12-26 18:16:00",
+          "location": null,
+          "content": "In clearance processing - Import"
+        },
+        {
+          "time": "2025-12-21 21:38:00",
+          "location": null,
+          "content": "US,International flight has arrived"
+        },
+        {
+          "time": "2025-12-21 16:23:00",
+          "location": null,
+          "content": "International flight has departed"
+        },
+        {
+          "time": "2025-12-19 00:12:00",
+          "location": null,
+          "content": "CN,Arrived at the origin international airport"
+        },
+        {
+          "time": "2025-12-18 20:42:00",
+          "location": null,
+          "content": "Mainland China, CN,Shipment is in transit to next facility"
+        },
+        {
+          "time": "2025-12-17 03:46:00",
+          "location": null,
+          "content": "Mainland China, CN,Departed from sort facility"
+        },
+        {
+          "time": "2025-12-17 03:43:00",
+          "location": null,
+          "content": "Mainland China, CN,Arrived at origin facility"
+        },
+        {
+          "time": "2025-12-12 22:34:00",
+          "location": null,
+          "content": "Shipment information received"
+        },
+        {
+          "time": "2025-12-15 19:02:34",
+          "location": null,
+          "content": "shipping Information Received."
+        },
+        {
+          "time": "2025-12-15 17:38:18",
+          "location": null,
+          "content": "weighed At Warehouse."
+        },
+        {
+          "time": "2025-12-15 12:44:37",
+          "location": null,
+          "content": "received Shipment."
+        },
+        {
+          "time": "2025-12-15 03:20:38",
+          "location": null,
+          "content": "processed At Origin Hub."
+        },
+        {
+          "time": "2025-12-14 14:10:14",
+          "location": null,
+          "content": "logistics Provider Picked Up Shipment."
+        },
+        {
+          "time": "2025-12-14 00:01:47",
+          "location": null,
+          "content": "item Despatched To Transshipment Hub."
+        },
+        {
+          "time": "2025-12-13 13:27:09",
+          "location": null,
+          "content": "depart From Facility To Service Provider."
+        },
+        {
+          "time": "2025-12-13 01:30:00",
+          "location": "",
+          "content": "Label created. Warehouse is processing this order. Please wait in patience."
+        }
+      ],
+      "miscInfo": null
+    }
+  ],
+  "extendData": null
+}

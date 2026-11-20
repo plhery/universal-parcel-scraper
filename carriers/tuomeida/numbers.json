@@ -1,0 +1,24 @@
+{
+  "carrier": "tuomeida",
+  "records": [
+    {
+      "number": "TM0000003945802",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/tuomeida-logistics/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample a tracking directory's Tuomeida page gives. Tuomeida's tracker answers it with a parcel from Shenzhen that USPS returned to its sender in the United States."
+    }
+  ]
+}

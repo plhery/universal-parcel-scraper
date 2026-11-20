@@ -1,0 +1,9 @@
+{
+  "carrier": "whwdt",
+  "entries": [
+    {"wording": "已预报", "stage": "registered", "language": "zh", "confirmedBy": "live", "note": "Pre-advised: the shipper sent the waybill before handing the parcel over."},
+    {"wording": "收货扫描", "stage": "accepted", "language": "zh", "confirmedBy": "live", "note": "Received scan at the forwarder's warehouse in Shenzhen."},
+    {"wording": "离开扫描", "stage": "in_transit", "language": "zh", "confirmedBy": "live", "note": "Departure scan from the forwarder's warehouse."},
+    {"wording": "Packaged", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Packed at the forwarder's warehouse in Shenzhen for the line haul."}
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "carrier": "hgd",
+  "records": [
+    {
+      "number": "HGDGY1910830544YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hgd/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example tracking number a tracking directory's HGD page showed earlier the same day. HGD's tracker answers it with a parcel for the United Kingdom, in transit."
+    },
+    {
+      "number": "HGDGY1910856105YQ",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/hgd/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example the same page showed later; the page's sample rotates. HGD's tracker answers it with a parcel for the United States, handed to the airline."
+    }
+  ]
+}

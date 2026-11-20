@@ -57,6 +57,21 @@ import { statusMap as westernBid } from '../../carriers/western-bid/status.js';
 import { statusMap as libanpost } from '../../carriers/libanpost/status.js';
 import { statusMap as omLogistics } from '../../carriers/om-logistics/status.js';
 import { statusMap as zesExpress } from '../../carriers/zes-express/status.js';
+import { statusMap as whwdt } from '../../carriers/whwdt/status.js';
+import { statusMap as lerdex } from '../../carriers/lerdex/status.js';
+import { statusMap as sheensync } from '../../carriers/sheensync/status.js';
+import { statusMap as yuanpeng } from '../../carriers/yuanpeng/status.js';
+import { statusMap as tuomeida } from '../../carriers/tuomeida/status.js';
+import { statusMap as huaExpress } from '../../carriers/hua-express/status.js';
+import { statusMap as rmLogistics } from '../../carriers/rm-logistics/status.js';
+import { statusMap as benben } from '../../carriers/benben/status.js';
+import { statusMap as sfydExpress } from '../../carriers/sfyd-express/status.js';
+import { statusMap as dpdex } from '../../carriers/dpdex/status.js';
+import { statusMap as runforint } from '../../carriers/runforint/status.js';
+import { statusMap as hgd } from '../../carriers/hgd/status.js';
+import { statusMap as ywd } from '../../carriers/ywd/status.js';
+import { statusMap as xingyou } from '../../carriers/xingyou/status.js';
+import { statusMap as yitu } from '../../carriers/yitu/status.js';
 import { statusMap as sengiExpress } from '../../carriers/sengi-express/status.js';
 import { statusMap as seventeenFeia } from '../../carriers/17feia/status.js';
 import { statusMap as twoGo } from '../../carriers/2go/status.js';
@@ -946,6 +961,21 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'memphis-courier': memphisCourier,
   'xpress-logistics-lu': xpressLogisticsLu,
   'zes-express': zesExpress,
+  whwdt,
+  lerdex,
+  sheensync,
+  yuanpeng,
+  tuomeida,
+  'hua-express': huaExpress,
+  'rm-logistics': rmLogistics,
+  benben,
+  'sfyd-express': sfydExpress,
+  dpdex,
+  runforint,
+  hgd,
+  ywd,
+  xingyou,
+  yitu,
   'j-and-t-br': jAndTBr,
   zheldor,
   'costco-logistics': costcoLogistics,

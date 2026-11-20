@@ -1,0 +1,24 @@
+{
+  "carrier": "rm-logistics",
+  "records": [
+    {
+      "number": "FK0000000668246TM",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/rm-logistics/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample a tracking directory's RM Logistics page gives. RM Logistics's tracker answers it with a parcel from Yiwu delivered in Virginia."
+    }
+  ]
+}

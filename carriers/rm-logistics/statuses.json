@@ -1,0 +1,8 @@
+{
+  "carrier": "rm-logistics",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "到达收货点", "language": "zh", "stage": "accepted", "confirmedBy": "live", "note": "The Yiwu warehouse's receipt: arrived at the receiving point."},
+    {"wording": "The shipment is being transshipped via the hub", "language": "en", "stage": "in_transit", "confirmedBy": "live"},
+    {"wording": "Warehouse pickup", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The US warehouse collected the parcel after import clearance."}
+  ]
+}

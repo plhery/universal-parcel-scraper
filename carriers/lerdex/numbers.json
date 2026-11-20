@@ -1,0 +1,24 @@
+{
+  "carrier": "lerdex",
+  "records": [
+    {
+      "number": "TDOXP3121520012YQ",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://website.bestdealer.com/tracking.html",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The example the tracking page prints in its search box. The tracker answers it with a parcel carried by YunExpress and delivered by USPS in Minnesota."
+    }
+  ]
+}

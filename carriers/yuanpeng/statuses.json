@@ -1,0 +1,8 @@
+{
+  "carrier": "yuanpeng",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arriving at the receiving point", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt."},
+    {"code": "SHIPMENT", "wording": "Goods leaving the processing center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Shenzhen warehouse's departure."},
+    {"wording": "Pre-Shipment Info Sent to USPS", "language": "en", "stage": "registered", "confirmedBy": "live", "note": "USPS has the label's data but not yet the parcel."}
+  ]
+}

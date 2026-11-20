@@ -1,0 +1,8 @@
+{
+  "carrier": "tuomeida",
+  "entries": [
+    {"code": "ARRIVAL", "wording": "Arrival at the collection center", "language": "en", "stage": "accepted", "confirmedBy": "live", "note": "The Shenzhen warehouse's receipt."},
+    {"code": "SHIPMENT", "wording": "Package has left the operations center", "language": "en", "stage": "in_transit", "confirmedBy": "live", "note": "The Shenzhen warehouse's departure."},
+    {"wording": "No Such Number", "language": "en", "stage": "exception", "confirmedBy": "live", "note": "Copied from USPS: the carrier found no such house number at the address, so the parcel was not delivered."}
+  ]
+}

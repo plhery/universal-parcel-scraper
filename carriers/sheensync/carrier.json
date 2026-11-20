@@ -1,0 +1,77 @@
+{
+  "id": "sheensync",
+  "displayName": "SheenSync",
+  "aliases": [
+    "鲜行供应链",
+    "鲜行",
+    "杭州鲜行供应链管理有限公司"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#8e8e93"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "sheensync",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "delivery_tracking_number",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://sheen-sync.com/track.html?c={trackingNumber}",
+    "searchUrl": "https://sheen-sync.com/track.html",
+    "canaryUrl": "https://sheen-sync.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "delivery_tracking_number",
+      "customer_reference",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "destination_country",
+      "delivery_tracking_number"
+    ],
+    "discarded": [
+      "customer_reference",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "weight",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "sheen-sync.com"
+      ],
+      "pathPattern": "^/track\\.html$",
+      "params": [
+        "c"
+      ]
+    }
+  ],
+  "detection": []
+}

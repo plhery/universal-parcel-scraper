@@ -1,0 +1,19 @@
+{
+  "carrier": "hgd",
+  "entries": [
+    {
+      "wording": "已入库，到达收货点",
+      "stage": "accepted",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"Stored, arrived at the receiving point\": the parcel reached the forwarder's warehouse."
+    },
+    {
+      "wording": "快件出仓",
+      "stage": "in_transit",
+      "language": "zh",
+      "confirmedBy": "live",
+      "note": "\"The parcel leaves the warehouse\", for export."
+    }
+  ]
+}

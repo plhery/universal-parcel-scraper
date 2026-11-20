@@ -1,0 +1,24 @@
+{
+  "carrier": "benben",
+  "records": [
+    {
+      "number": "BEN25250914BEN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/benben/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The sample a tracking directory's Benben page gives. Benben's tracker answers it with a parcel in transit in the United States after customs."
+    }
+  ]
+}

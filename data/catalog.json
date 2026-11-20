@@ -10899,6 +10899,28 @@
       }
     ]
   },
+  "benben": {
+    "displayName": "Benben International",
+    "color": "#8e8e93",
+    "aliases": [
+      "犇犇",
+      "犇犇国际",
+      "犇犇国际物流"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "benben",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "bergen-transport-sentral": {
     "displayName": "Bergen Transport Sentral",
     "color": "#ff230f",
@@ -20817,11 +20839,23 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "dpdex",
+      "localClocks": true
     },
     "canaryUrl": "https://www.duopudaexpress.com/",
-    "trackingSearchUrl": "https://www.duopudaexpress.com/",
-    "linkRules": [],
+    "trackingUrlTemplate": "https://client.duopudaexpress.com/track_query.aspx?track_number={trackingNumber}",
+    "trackingSearchUrl": "https://client.duopudaexpress.com/track_query.aspx",
+    "linkRules": [
+      {
+        "domains": [
+          "client.duopudaexpress.com"
+        ],
+        "pathPattern": "^/track_query\\.aspx$",
+        "params": [
+          "track_number"
+        ]
+      }
+    ],
     "detectionRules": [
       {
         "pattern": "^DPE\\d{11}$",
@@ -30080,6 +30114,30 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "hgd": {
+    "displayName": "HGD International",
+    "color": "#1f5fa8",
+    "aliases": [
+      "HGD",
+      "Hengguangda",
+      "恒广达国际",
+      "恒广达",
+      "恒广达（深圳）供应链科技有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hgd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hi-trans": {
     "displayName": "Hi-Trans Express",
     "color": "#c82027",
@@ -30821,6 +30879,28 @@
     },
     "canaryUrl": "https://httlogistics.com/",
     "trackingSearchUrl": "https://tracking.httlogistics.com/tracking.aspx",
+    "linkRules": [],
+    "detectionRules": []
+  },
+  "hua-express": {
+    "displayName": "HUA Express",
+    "color": "#8e8e93",
+    "aliases": [
+      "HUAEXPRESS",
+      "华联万通",
+      "华联万通国际供应链(深圳)有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hua-express",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
     "linkRules": [],
     "detectionRules": []
   },
@@ -36833,6 +36913,28 @@
         ]
       }
     ],
+    "detectionRules": []
+  },
+  "lerdex": {
+    "displayName": "Lerdex",
+    "color": "#8e8e93",
+    "aliases": [
+      "LERDEX",
+      "乐易汇"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lerdex",
+      "localClocks": true
+    },
+    "canaryUrl": "https://website.bestdealer.com/tracking.html",
+    "trackingSearchUrl": "https://website.bestdealer.com/tracking.html",
+    "linkRules": [],
     "detectionRules": []
   },
   "letter-track": {
@@ -49712,6 +49814,28 @@
       }
     ]
   },
+  "rm-logistics": {
+    "displayName": "RM Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "荣贸",
+      "荣贸供应链",
+      "金华市荣贸供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "rm-logistics",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "roadie": {
     "displayName": "Roadie",
     "color": "#76cccd",
@@ -50303,7 +50427,8 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "runforint",
+      "localClocks": true
     },
     "canaryUrl": "https://www.runforint.com/",
     "trackingUrlTemplate": "https://www.runforint.com/index.php?m=home&c=Lists&a=index&tid=137&key={trackingNumber}",
@@ -51897,7 +52022,8 @@
     "timezone": "Asia/Shanghai",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "sfyd-express",
+      "localClocks": true
     },
     "canaryUrl": "https://sfydexpress.com/tracking.html",
     "trackingUrlTemplate": "https://sfydexpress.com/tracking.html?c={trackingNumber}",
@@ -52051,6 +52177,40 @@
           "envia.holasharf.com"
         ],
         "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
+  "sheensync": {
+    "displayName": "SheenSync",
+    "color": "#8e8e93",
+    "aliases": [
+      "鲜行供应链",
+      "鲜行",
+      "杭州鲜行供应链管理有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sheensync",
+      "localClocks": true
+    },
+    "canaryUrl": "https://sheen-sync.com/",
+    "trackingUrlTemplate": "https://sheen-sync.com/track.html?c={trackingNumber}",
+    "trackingSearchUrl": "https://sheen-sync.com/track.html",
+    "linkRules": [
+      {
+        "domains": [
+          "sheen-sync.com"
+        ],
+        "pathPattern": "^/track\\.html$",
+        "params": [
+          "c"
+        ]
       }
     ],
     "detectionRules": []
@@ -59698,6 +59858,28 @@
       }
     ]
   },
+  "tuomeida": {
+    "displayName": "Tuomeida Logistics",
+    "color": "#8e8e93",
+    "aliases": [
+      "拓美达",
+      "拓美达国际物流",
+      "深圳市拓美达国际物流有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "tuomeida",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "tupaq": {
     "displayName": "Tupaq Courier",
     "color": "#00005b",
@@ -62641,6 +62823,30 @@
       }
     ]
   },
+  "whwdt": {
+    "displayName": "Wuhan Wodetong",
+    "color": "#8e8e93",
+    "aliases": [
+      "WHWDT",
+      "武汉沃德通",
+      "Wuhan Wodetong Supply Chain Technology",
+      "沃德通"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "whwdt",
+      "localClocks": true
+    },
+    "canaryUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "trackingSearchUrl": "https://hyd.itdida.com/itdida-flash/website/landing",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "widect": {
     "displayName": "Widect",
     "color": "#e2001b",
@@ -63427,6 +63633,30 @@
         "confidence": "high"
       }
     ]
+  },
+  "xingyou": {
+    "displayName": "Xingyou International",
+    "color": "#1e4c9a",
+    "aliases": [
+      "Xingyou",
+      "星邮国际",
+      "星邮",
+      "上海星邮供应链有限公司",
+      "Shanghai Xingyou Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "xingyou",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "xingyunyi": {
     "displayName": "XingYunYi",
@@ -64428,6 +64658,30 @@
     ],
     "detectionRules": []
   },
+  "yitu": {
+    "displayName": "YITU",
+    "color": "#ff613e",
+    "aliases": [
+      "Yitu",
+      "义途",
+      "义途供应链",
+      "义乌市义途供应链管理有限公司",
+      "Yiwu Yitu Supply Chain"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yitu",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yol-kargo": {
     "displayName": "Yol Kargo",
     "color": "#f66814",
@@ -64610,6 +64864,28 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "yuanpeng": {
+    "displayName": "Yuanpeng Supply Chain",
+    "color": "#8e8e93",
+    "aliases": [
+      "远朋",
+      "远朋跨境",
+      "深圳市远朋跨境供应链有限公司"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yuanpeng",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "yuema-express": {
     "displayName": "Yuema Express",
     "color": "#a81d30",
@@ -64762,6 +65038,27 @@
         "confidence": "high"
       }
     ]
+  },
+  "ywd": {
+    "displayName": "YWD",
+    "color": "#e8380d",
+    "aliases": [
+      "Yiwangda",
+      "易网达"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ywd",
+      "localClocks": true
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [],
+    "detectionRules": []
   },
   "ywe": {
     "displayName": "YWE",

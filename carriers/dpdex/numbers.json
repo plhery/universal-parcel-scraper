@@ -2,6 +2,28 @@
   "carrier": "dpdex",
   "records": [
     {
+      "number": "DPE00019908940",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.cwill.com/carriers/dpdex/",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpdex"
+        ]
+      },
+      "note": "The example tracking number on a tracking directory's DpdEx page. DpdEx's lookup answers it with a parcel from Shenzhen flown to the United Kingdom for Evri."
+    },
+    {
       "number": "DPE99999999990",
       "role": "shipment",
       "evidence": "synthetic",
