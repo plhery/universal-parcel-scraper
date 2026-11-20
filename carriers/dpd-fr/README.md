@@ -71,9 +71,9 @@ non-2xx statuses are indeterminate.
   The notice of the delivery's current step ("… de l'étape actuelle de sa livraison") names no
   step, so it also keeps the stage of the scan before it, as does the notice asking the recipient
   to book the delivery again ("… de la nécessité de reprogrammer sa livraison"), which follows the
-  round that did not deliver. The notice that the delivery is put off
-  ("… du report de sa livraison") names no reason, so it reads `in_transit`: the parcel waits in the
-  network for its new day.
+  round that did not deliver. The notice that the delivery is put off ("… du report de sa
+  livraison") comes during the round, before the round's own failed attempt, so it keeps the stage of
+  the scan before it too.
 - A round that found the recipient absent and left the parcel at a Pickup point ("Le destinataire
   était absent lors du passage de notre livreur, nous avons déposé votre colis en point Pickup")
   reads `failed_attempt`; the Pickup point's own row follows. The notices that the parcel waits

@@ -233,13 +233,21 @@ describe('DPD France rendered tracking', () => {
     expect(statusMap.gapNote?.(null, shipment)).toMatch(/on its way.*keeps the stage/);
   });
 
-  it('reads the notice of a put-off delivery as the parcel waiting in the network for its new day', () => {
-    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: [
-      ['05/03/2026', '18:10', 'Le destinataire est informé par SMS du report de sa livraison', ''],
+  it('keeps the round\'s stage on the notice of a put-off delivery, until the round\'s own failed attempt', () => {
+    const rows: [string, string, string, string][] = [
+      ['05/03/2026', '16:32', "Votre colis n'a pas pu être livré, car le destinataire était absent : reprogrammez votre livraison maintenant", 'Agence DPD de Exemple (998)'],
+      ['05/03/2026', '13:15', 'Le destinataire est informé par e-mail du report de sa livraison', ''],
+      ['05/03/2026', '12:41', 'Le destinataire est informé par SMS du report de sa livraison', ''],
       ['05/03/2026', '06:58', 'Votre colis est en cours de livraison', 'Agence DPD de Exemple (998)'],
-    ] }), TEST_TRACKING_NUMBER);
-    expect(result.status).toBe('in_transit');
-    expect(statusMap.stage(null, normalizeStatusWording('Le destinataire est informé par SMS du report de sa livraison'))).toBe('in_transit');
+    ];
+    const result = parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: rows }), TEST_TRACKING_NUMBER);
+    expect(result.events?.map((event) => [event.stage, event.stage_source])).toEqual([
+      ['failed_attempt', undefined], ['out_for_delivery', 'none'], ['out_for_delivery', 'none'], ['out_for_delivery', undefined],
+    ]);
+    expect(parseDPDFranceTrackingHtml(trackingFixture({ outboundRows: rows.slice(1) }), TEST_TRACKING_NUMBER).current_stage).toBe('out_for_delivery');
+    const notice = normalizeStatusWording('Le destinataire est informé par SMS du report de sa livraison');
+    expect(statusMap.stage(null, notice)).toBeUndefined();
+    expect(statusMap.gapNote?.(null, notice)).toMatch(/put off.*keeps the stage/);
   });
 
   it('reads a round that did not deliver, the notice to book again and the booked day', () => {

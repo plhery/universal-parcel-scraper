@@ -58,6 +58,11 @@ function isRebookNotice(value: string): boolean {
   return value.includes('de la necessite de reprogrammer sa livraison');
 }
 
+/** The notice that the recipient was told the delivery is put off, by its `comparableText` form. */
+function isPostponementNotice(value: string): boolean {
+  return value.includes('du report de sa livraison');
+}
+
 /** The recipient's booking of a new day, by its `comparableText` form. */
 export function isRebooking(value: string): boolean {
   return value.includes('a programme une nouvelle livraison');
@@ -65,11 +70,13 @@ export function isRebooking(value: string): boolean {
 
 /**
  * A notice to the recipient that names no step of its own: of the acceptance, of the parcel on its way (which can
- * come during the round), of the delivery's current step, or that the delivery must be booked again, which follows
- * the scan of the round that did not deliver.
+ * come during the round), of the delivery's current step, that the delivery is put off, which comes during the round
+ * before its own scan, or that the delivery must be booked again, which follows the scan of the round that did not
+ * deliver.
  */
 export function isRecipientNotice(value: string): boolean {
-  return isAcceptanceNotice(value) || isShipmentNotice(value) || isStepNotice(value) || isRebookNotice(value);
+  return isAcceptanceNotice(value) || isShipmentNotice(value) || isStepNotice(value) || isRebookNotice(value)
+    || isPostponementNotice(value);
 }
 
 export function classifyStatus(description: string): ClassifiedStatus {
@@ -171,9 +178,6 @@ export function classifyStatus(description: string): ClassifiedStatus {
     // adapter reads as the expected delivery.
     'suite a une prise de rendez vous',
     'a programme une nouvelle livraison',
-    // The recipient told the delivery is put off, which names no reason, the recipient's own booking or a round
-    // that could not deliver: either way the parcel waits in the network for its new day.
-    'du report de sa livraison',
   ])) return { status: 'in_transit', stage: 'in_transit' };
 
   // Wording this map does not recognize keeps the row visible without claiming
@@ -200,6 +204,7 @@ export const statusMap: CarrierStatusMap = {
     if (isAcceptanceNotice(value)) return 'The recipient told of the acceptance, which can come after the parcel moved on: it keeps the stage it had.';
     if (isShipmentNotice(value)) return 'The recipient told the parcel is on its way, which can come during the round: it keeps the stage it had.';
     if (isRebookNotice(value)) return 'The recipient asked to book the delivery again, after the round that did not deliver: it keeps the stage it had.';
+    if (isPostponementNotice(value)) return 'The recipient told the delivery is put off, during the round whose own scan follows: it keeps the stage it had.';
     return isStepNotice(value) ? "The recipient told of the delivery's current step, during the round: it keeps the stage it had." : undefined;
   },
 };

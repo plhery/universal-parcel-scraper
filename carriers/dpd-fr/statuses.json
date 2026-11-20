@@ -428,10 +428,10 @@
     {
       "wording": "du report de sa livraison",
       "language": "fr",
-      "stage": "in_transit",
+      "stage": null,
       "confirmedBy": "live",
       "firstSeen": "2026-11-17",
-      "note": "\"Le destinataire est informé par SMS (or par e-mail) du report de sa livraison\", hours after the round's scan: the delivery is put off, without saying whether the recipient asked or the round failed, so the parcel waits in the network."
+      "note": "\"Le destinataire est informé par SMS (or par e-mail) du report de sa livraison\", hours after the round's scan and before the round's own failed attempt: a notice to the recipient that names no step. It keeps the stage of the scan before it."
     },
     {
       "wording": "n a pas pu etre realisee",
