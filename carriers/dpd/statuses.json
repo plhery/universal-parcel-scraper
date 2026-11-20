@@ -200,7 +200,7 @@
       "stage": "accepted",
       "confirmedBy": "live",
       "firstSeen": "2026-10-16",
-      "note": "Scan code, the driver's pickup from the sender, seen on a German parcel between ENA and the origin depot."
+      "note": "Scan code, the driver's pickup from the sender, seen on a German parcel between ENA and the origin depot. After the sender's hand-in at a pickup point and DODEH, it is the driver's collection there and the adapter reads it as transit."
     },
     {
       "code": "SPX",

@@ -73,6 +73,8 @@ signal.
   exchange inside DPD's systems seen before the parcel reached the origin depot.
 - `CRY` confirms a collection the sender booked. The parcel is not with DPD yet, so it reads
   as registered.
+- `PKY`, the driver's collection, reads as accepted. After the sender's hand-in at a pickup
+  point (`DOPKY`) and `DODEH`, it is the same collection from the point and reads as transit.
 - `DLW` holds the parcel at the delivery depot, and its label gives the reason.
   Closed premises make it a failed round. Labelled like `DLQ`, the parcel waits
   for a round, with none tried before it, and reads as in transit.

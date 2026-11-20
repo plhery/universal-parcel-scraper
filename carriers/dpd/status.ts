@@ -102,7 +102,8 @@ export function apiStage(description: unknown): Stage | null {
  * exchange ends and the parcel reaches the origin depot. A German parcel the
  * sender left at a pickup point opens with CNP, DPD receiving its label data,
  * then DOPKY for the hand-in at the point, DODEH when the driver collects it
- * there, and ORS, worded like HUS, as the origin depot sends it on.
+ * there, and ORS, worded like HUS, as the origin depot sends it on. A PKY after
+ * DODEH is the same collection and the adapter reads it as transit.
  * LHI, worded like IN_TRANSIT, comes between the hub and the delivery depot;
  * DEXD is a round that ended at a pickup point with no space for the parcel.
  * ORI ("Origin depot - In") stays unmapped like its twin PARCEL_HANDED: the

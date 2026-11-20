@@ -652,6 +652,22 @@ describe('DPD unverified guest payload', () => {
     expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([['DOPKY', 'accepted']]);
   });
 
+  it('reads the collection scan after the driver took the parcel from the point as transit', () => {
+    const result = parseDPDTrackingApi({
+      parcelNumber: TRACKING_NUMBER,
+      parcelHistory: [],
+      parcelEvents: [
+        { date: '2026-11-18', time: '10:32:31', city: 'Example', country: 'DE', eventType: 'DOPKY', translation: 'Your parcel has been dropped off in the retrieval point' },
+        { date: '2026-11-19', time: '11:13:16', city: 'Example', country: 'DE', eventType: 'DODEH', translation: 'Your parcel has been collected by the driver from the retrieval point' },
+        { date: '2026-11-19', time: '11:13:46', city: 'Example', country: 'DE', eventType: 'PKY', translation: 'We have collected your parcel' },
+      ],
+    }, TRACKING_NUMBER, true);
+    expect(result.events?.map((event) => [event.provider_code, event.stage])).toEqual([
+      ['PKY', 'in_transit'], ['DODEH', 'in_transit'], ['DOPKY', 'accepted'],
+    ]);
+    expect(result.current_stage).toBe('in_transit');
+  });
+
   it('reads no movement into the catch-all before a hand-over', () => {
     const result = parseDPDTrackingApi({
       parcelNumber: TRACKING_NUMBER,
