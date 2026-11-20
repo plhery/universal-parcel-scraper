@@ -675,6 +675,7 @@ import { adapter as pengyou } from '../carriers/pengyou/adapter.js';
 import { adapter as peninsulaTruckLines } from '../carriers/peninsula-truck-lines/adapter.js';
 import { adapter as pfcExpress } from '../carriers/pfc-express/adapter.js';
 import { adapter as pflogistics } from '../carriers/pflogistics/adapter.js';
+import { adapter as phantomCouriers } from '../carriers/phantom-couriers/adapter.js';
 import { adapter as phlpost } from '../carriers/phlpost/adapter.js';
 import { adapter as pigeonship } from '../carriers/pigeonship/adapter.js';
 import { adapter as pilotFreight } from '../carriers/pilot-freight/adapter.js';
@@ -1700,6 +1701,7 @@ export const REGISTRY: RegistryDefinition = {
     "peninsula-truck-lines": peninsulaTruckLines,
     "pfc-express": pfcExpress,
     "pflogistics": pflogistics,
+    "phantom-couriers": phantomCouriers,
     "phlpost": phlpost,
     "pigeonship": pigeonship,
     "pilot-freight": pilotFreight,
@@ -3367,6 +3369,7 @@ export const REGISTRY: RegistryDefinition = {
     "peshkariki": "universal",
     "pfc-express": "pfc-express",
     "pflogistics": "pflogistics",
+    "phantom-couriers": "phantom-couriers",
     "phlpost": "phlpost",
     "pickit": "universal",
     "pickup-mtaani": "universal",

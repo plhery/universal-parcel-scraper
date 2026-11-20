@@ -2091,6 +2091,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'pfc-express', number: 'R1000002912230003',
     route: /^https:\/\/www\.pfctrack\.com\/\?nums=R1000002912230003(?:,|%2C)?$/,
     marker: /Not Found|Powered by PFCEXPRESS/ },
+  // Courie's portal looks the order up from the query and says an unknown one is invalid.
+  { carrier: 'phantom-couriers', number: 'ZZ000000',
+    route: /^https:\/\/portal\.courie\.ai\/phantom\/trackshipment\?trackingNumber=ZZ000000$/,
+    marker: /Invalid Tracking Number|No Order found/ },
   // The server looks the numbers in the query up and names an unknown one in its notice.
   { carrier: 'seko', number: 'ZZ0000000000',
     route: /^https:\/\/www\.sekologistics\.com\/en\/track\/\?trackingNumbers=ZZ0000000000$/,

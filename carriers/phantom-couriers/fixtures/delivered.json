@@ -1,0 +1,38 @@
+{
+  "data": {
+    "shipmentByTrackingNumber": {
+      "trackingNumber": "445009",
+      "status": "COMPLETED",
+      "completionReason": null,
+      "holdStatus": "NONE",
+      "createdAt": "1733186702",
+      "assignedAt": "1733238586",
+      "stops": [
+        {
+          "type": "PICK_UP",
+          "city": "Vancouver",
+          "state": "BC",
+          "completedAt": "1733246764",
+          "completionReason": null,
+          "tasks": [
+            {
+              "sequenceNumber": 20241203000054
+            }
+          ]
+        },
+        {
+          "type": "DROP_OFF",
+          "city": "Vancouver",
+          "state": "BC",
+          "completedAt": "1733246859",
+          "completionReason": null,
+          "tasks": [
+            {
+              "sequenceNumber": 20241203000067
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

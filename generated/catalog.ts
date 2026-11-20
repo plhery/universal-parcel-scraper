@@ -47683,6 +47683,40 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "phantom-couriers": {
+    "displayName": "Phantom Couriers",
+    "color": "#ff5c00",
+    "aliases": [
+      "Phantom Courier",
+      "Phantom Couriers Ltd."
+    ],
+    "countries": [
+      "CA"
+    ],
+    "selectable": true,
+    "timezone": "America/Vancouver",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "phantom-couriers"
+    },
+    "canaryUrl": "https://portal.courie.ai/phantom/trackshipment",
+    "trackingUrlTemplate": "https://portal.courie.ai/phantom/trackshipment?trackingNumber={trackingNumber}",
+    "trackingSearchUrl": "https://portal.courie.ai/phantom/trackshipment",
+    "trackingSiteName": "Courie",
+    "helpUrl": "https://phantomcouriers.com/contact/",
+    "linkRules": [
+      {
+        "domains": [
+          "portal.courie.ai"
+        ],
+        "pathPattern": "^/phantom/trackshipment/?$",
+        "params": [
+          "trackingNumber"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "phlpost": {
     "displayName": "PHLPost",
     "color": "#9e0000",
@@ -69631,6 +69665,7 @@ export const CARRIER_IDS = [
   "peshkariki",
   "pfc-express",
   "pflogistics",
+  "phantom-couriers",
   "phlpost",
   "pickit",
   "pickup-mtaani",
@@ -71612,6 +71647,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "peshkariki": [],
   "pfc-express": ["pfc-express-1"],
   "pflogistics": ["pflogistics-1"],
+  "phantom-couriers": [],
   "phlpost": ["phlpost-s10"],
   "pickit": [],
   "pickup-mtaani": [],

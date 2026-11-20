@@ -1,0 +1,11 @@
+{
+  "carrier": "phantom-couriers",
+  "entries": [
+    {"code": "CREATED", "wording": "Order created", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The adapter's label for the order's createdAt. The portal shows \"Your order is pending…\" until a driver takes the order."},
+    {"code": "ASSIGNED", "wording": "Assigned to a driver", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The adapter's label for the order's assignedAt. The portal shows \"Your order is assigned to\" and the driver's first name, which the adapter does not ask for."},
+    {"code": "PICK_UP", "wording": "Picked up", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "A pick-up stop's completedAt. The portal shows \"Your order has been picked up at\" and the clock."},
+    {"code": "DROP_OFF", "wording": "Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "A drop-off stop's completedAt. The portal shows \"Your order is delivered at\" and the clock."},
+    {"code": "DROP_OFF", "wording": "Delivery attempted", "stage": "failed_attempt", "language": "en", "confirmedBy": "bundle", "note": "A drop-off stop completed with the reason ATTEMPTED. The portal's script shows \"Delivery was attempted at\" and the clock, and the status \"Attempted\"."},
+    {"code": "RETURN", "wording": "Returned", "stage": "returned", "language": "en", "confirmedBy": "bundle", "note": "A return stop's completedAt. The portal's script labels the stop \"Return\"."}
+  ]
+}
