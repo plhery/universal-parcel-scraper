@@ -1,0 +1,17 @@
+{
+  "carrier": "ibex-express-bo",
+  "records": [
+    {
+      "number": "1980894",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://es.scribd.com/document/1062788932/Fact-10345-Cta-Val",
+        "access": "full_page"
+      },
+      "context": { "assessment": "confirmed" },
+      "expect": { "carrier": "unknown", "confidence": "low", "candidates": ["seur"] },
+      "note": "The publicly posted June 2026 IBEX freight invoice identifies this guide. The official tracker returned the same guide with dated events and an actual delivery date."
+    }
+  ]
+}

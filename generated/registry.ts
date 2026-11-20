@@ -378,6 +378,7 @@ import { adapter as huayaExpress } from '../carriers/huaya-express/adapter.js';
 import { adapter as hunterExpress } from '../carriers/hunter-express/adapter.js';
 import { adapter as huuneh } from '../carriers/huuneh/adapter.js';
 import { adapter as hywl } from '../carriers/hywl/adapter.js';
+import { adapter as ibexExpressBo } from '../carriers/ibex-express-bo/adapter.js';
 import { adapter as iccWorldwide } from '../carriers/icc-worldwide/adapter.js';
 import { adapter as icsCourier } from '../carriers/ics-courier/adapter.js';
 import { adapter as idsLogistik } from '../carriers/ids-logistik/adapter.js';
@@ -1277,6 +1278,7 @@ export const REGISTRY: RegistryDefinition = {
     "hunter-express": hunterExpress,
     "huuneh": huuneh,
     "hywl": hywl,
+    "ibex-express-bo": ibexExpressBo,
     "icc-worldwide": iccWorldwide,
     "ics-courier": icsCourier,
     "ids-logistik": idsLogistik,
@@ -2584,6 +2586,7 @@ export const REGISTRY: RegistryDefinition = {
     "hye": "universal",
     "hywl": "hywl",
     "hzt": "universal",
+    "ibex-express-bo": "ibex-express-bo",
     "icc-courier-gr": "universal",
     "icc-worldwide": "icc-worldwide",
     "icl-express": "universal",

@@ -1,0 +1,61 @@
+{
+  "success": true,
+  "data": [
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-18 10:13:11",
+      "descripcion": "Preparado para despacho de SCZ a LPB",
+      "ubicacion": "Line Santa Cruz"
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-19 17:14:00",
+      "descripcion": "Envío despachado de SCZ a LPB",
+      "ubicacion": "Line Santa Cruz"
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-23 11:34:33",
+      "descripcion": "Preparado para despacho de SCZ a LPB",
+      "ubicacion": "Line Santa Cruz"
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-23 11:34:00",
+      "descripcion": "Envío despachado de SCZ a LPB",
+      "ubicacion": "Line Santa Cruz"
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-24 12:44:00",
+      "descripcion": "Carga arribada a destino en LPB",
+      "ubicacion": "Line La Paz"
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-24 13:14:00",
+      "descripcion": "Envío arribado a destino",
+      "ubicacion": " Line   La Paz "
+    },
+    {
+      "guia": "1980894",
+      "estado_guia": "ENTREGADO",
+      "fecha_entrega_real": "2026-06-30 00:01:04",
+      "fecha_bit": "2026-06-24 13:15:45",
+      "descripcion": "Envío en poder del Cartero [courier]",
+      "ubicacion": " Line   La Paz "
+    }
+  ]
+}

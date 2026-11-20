@@ -31066,6 +31066,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ibex-express-bo": {
+    "displayName": "IBEX Express",
+    "color": "#d51a2d",
+    "aliases": [
+      "IBEX Express Ltda."
+    ],
+    "countries": [
+      "BO"
+    ],
+    "selectable": true,
+    "timezone": "America/La_Paz",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ibex-express-bo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.ibex.com.bo/",
+    "trackingUrlTemplate": "https://www.ibex.com.bo/",
+    "trackingSearchUrl": "https://www.ibex.com.bo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "icc-courier-gr": {
     "displayName": "ICC Courier",
     "color": "#dc2626",
@@ -66329,6 +66351,7 @@ export const CARRIER_IDS = [
   "hye",
   "hywl",
   "hzt",
+  "ibex-express-bo",
   "icc-courier-gr",
   "icc-worldwide",
   "icl-express",
@@ -68201,6 +68224,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "hye": [],
   "hywl": ["hywl-1","hywl-2"],
   "hzt": [],
+  "ibex-express-bo": [],
   "icc-courier-gr": [],
   "icc-worldwide": [],
   "icl-express": [],
