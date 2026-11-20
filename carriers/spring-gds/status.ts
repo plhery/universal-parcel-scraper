@@ -63,12 +63,15 @@ const LABEL_STATUS = new Map<string, ReadonlyMap<string, ClassifiedStatus>>([
 ]);
 
 /**
- * PostNL's acceptance scans by status number, whatever their wording: 173 is the acceptance
- * centre's receipt and 3116 the bulk handover, and a universal provider relays 3116 as "Arrive at
- * transit country or district".
+ * Scans their status number stages, whatever their wording. PostNL's acceptance: 173 is the
+ * acceptance centre's receipt and 3116 the bulk handover, and a universal provider relays 3116 as
+ * "Arrive at transit country or district". Under Preparing, whose other statuses come before PostNL
+ * has the item, 3179 ("Item is being processed") is the sorting centre's step after the acceptance,
+ * seconds before 3178 bags the item.
  */
 const CODE_STATUS = new Map<string, ReadonlyMap<string, ClassifiedStatus>>([
   ['transit', new Map(['173', '3116'].map((code): [string, ClassifiedStatus] => [code, { status: 'in_transit', stage: 'accepted' }]))],
+  ['preparing', new Map([['3179', IN_TRANSIT]])],
 ]);
 
 /** A category as the maps key it: trimmed, in lower case. */

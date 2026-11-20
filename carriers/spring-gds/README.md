@@ -99,7 +99,9 @@ it; everything user-facing says PostNL.
   within `Transit`, customs release within `Customs`, and a completed return
   within `Undelivered` ("will be returned" can still end in a new delivery attempt).
   PostNL's acceptance statuses 173 and 3116 read as acceptance whatever their wording, since a
-  universal provider rewords 3116 ("Arrive at transit country or district").
+  universal provider rewords 3116 ("Arrive at transit country or district"). `Preparing` is the
+  item before PostNL has it, except status 3179 ("Item is being processed"): the sorting centre's
+  step after the acceptance, just before the item is bagged, so it reads as in transit.
   Unknown categories leave the event unstaged and the shipment status unknown.
 - Each scan keeps its numeric `status`, a slash and its category, trimmed and in lower case, as
   its `provider_code` (`37/delivered`); a scan without a category keeps its number alone. The

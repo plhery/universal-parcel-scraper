@@ -803,6 +803,13 @@ describe('PostNL domestic tracker', () => {
     expect(postNLStatus('Transit', 'Synthetic relayed wording', '3116')).toEqual({ status: 'in_transit', stage: 'accepted' });
   });
 
+  it('reads the sorting centre\'s processing under Preparing as in transit, and the category\'s other statuses as registered', () => {
+    expect(statusMap.stage('3179/preparing', 'Item is being processed')).toBe('in_transit');
+    expect(postNLStatus('Preparing', 'Item is being processed', '3179')).toEqual({ status: 'in_transit', stage: 'in_transit' });
+    expect(statusMap.stage('1239/preparing', 'The item is ready for shipment')).toBe('registered');
+    expect(statusMap.stage('2004/preparing', 'The Item is at the shippers warehouse')).toBe('registered');
+  });
+
   it('dates the delivery the observations leave out, and only when PostNL says it happened', () => {
     const delivered = parsePostNLDomesticResponse(reply(collo({
       isDelivered: true, deliveryDate: '2026-05-12T11:21:20+02:00', statusPhase: { index: 4, message: 'Shipment in letterbox' },
