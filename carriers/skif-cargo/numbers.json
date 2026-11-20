@@ -1,5 +1,52 @@
 {
   "carrier": "skif-cargo",
-  "gap": "No public page shows a Skif-Cargo number or its layout.",
-  "records": []
+  "records": [
+    {
+      "number": "16168-3384",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sudact.ru/arbitral/doc/rWBfTbPAelYL/",
+        "date": "2023-02-15",
+        "dateKind": "court decision",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Russian road freight",
+        "reportedRole": "Заявка and экспедиторская расписка",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "The arbitral decision names Skif-Cargo as the freight forwarder and identifies this application and its receipt for accepted freight. Skif-Cargo's tracker knows the shipment, from the collection to its issue to the consignee."
+    },
+    {
+      "number": "94664-2412",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://sudact.ru/arbitral/doc/rWBfTbPAelYL/",
+        "date": "2023-02-15",
+        "dateKind": "court decision",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Russian road freight",
+        "reportedRole": "Заявка and экспедиторская расписка",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The arbitral decision ties this separate application and freight receipt to carriage accepted by Skif-Cargo. Skif-Cargo's tracker knows the shipment, from the collection to its issue to the consignee."
+    }
+  ]
 }

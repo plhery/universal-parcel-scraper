@@ -4742,5 +4742,11 @@
     "pattern": "^YHC\\d{12}CN$",
     "kind": "open",
     "reason": "One public sample and an aggregator's carrier hint show YHC, twelve digits and CN; TipTop has no tracker of its own to confirm the family."
+  },
+  {
+    "carrier": "skif-cargo",
+    "pattern": "^\\d{9}$",
+    "kind": "open",
+    "reason": "A public court decision gives two Skif-Cargo application numbers, five digits, a dash and four digits, which its tracker finds by their nine digits. Nine digits are shared by many carriers, so detection omits Skif-Cargo."
   }
 ]

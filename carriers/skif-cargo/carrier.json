@@ -17,18 +17,69 @@
   "timezone": "Europe/Moscow",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "skif-cargo",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true,
+    "dateOnlyScans": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "weight"
+  ],
   "portal": {
+    "url": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
     "searchUrl": "https://www.skif-cargo.ru/tracking/",
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at",
+      "origin",
+      "destination",
+      "weight",
+      "volume",
+      "parcel_count",
+      "order_contents",
+      "payment_details",
+      "sender_name",
+      "recipient_name"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "delivered_at",
+      "weight"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "volume",
+      "parcel_count",
+      "order_contents",
+      "payment_details",
+      "sender_name",
+      "recipient_name"
+    ],
+    "unavailable": [
+      "offset_timestamps"
+    ]
   },
-  "links": [],
+  "links": [
+    {
+      "domains": [
+        "skif-cargo.ru"
+      ],
+      "path": "^/tracking/([^/?#]+)/?$"
+    }
+  ],
   "detection": []
 }

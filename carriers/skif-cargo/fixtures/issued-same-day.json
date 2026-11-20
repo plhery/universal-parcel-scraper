@@ -1,0 +1,51 @@
+{
+  "order_tracking": {
+    "OrderNo": 390552412,
+    "OrderShortNo": "94664 - 2412",
+    "CrtDate": "26.01.2022",
+    "SenderTownName": "Обухово п.г.т",
+    "RecipTownName": "Санкт-Петербург",
+    "FactWeight": 1008.0,
+    "FactVolume": 8.2,
+    "FactPlace": 5,
+    "CargoContent": "Хозтовары849,848/5",
+    "TransCost": 15996.0,
+    "CurrCargoState": "Груз выдан получателю.",
+    "PayerName": "ООО \"Импэкс\" (РЦ)",
+    "SenderName": "ООО \"Импэкс\"",
+    "RecipName": "АО \"ЭКО-Балт\" (РЦ, ГПМ)",
+    "CompleteDate": "31.01.2022 12:00:51",
+    "PayState": "Оплачена",
+    "Points": "[0,2,Обухово п.г.т,27.01.2022][1,2,Москва,27.01.2022][1,2,Санкт-Петербург,31.01.2022][0,1,Санкт-Петербург,31.01.2022]"
+  },
+  "points": [
+    {
+      "point_type": 0,
+      "point_status": 2,
+      "city_name": "Обухово п.г.т",
+      "point_date": "2022-01-27",
+      "point_message": "Забор груза у отправителя"
+    },
+    {
+      "point_type": 1,
+      "point_status": 2,
+      "city_name": "Москва",
+      "point_date": "2022-01-27",
+      "point_message": "Обработка на складе"
+    },
+    {
+      "point_type": 1,
+      "point_status": 2,
+      "city_name": "Санкт-Петербург",
+      "point_date": "2022-01-31",
+      "point_message": "Обработка на складе"
+    },
+    {
+      "point_type": 0,
+      "point_status": 1,
+      "city_name": "Санкт-Петербург",
+      "point_date": "2022-01-31",
+      "point_message": "Доставка груза получателю"
+    }
+  ]
+}

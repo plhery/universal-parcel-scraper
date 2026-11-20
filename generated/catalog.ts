@@ -52740,11 +52740,21 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "skif-cargo",
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.skif-cargo.ru/tracking/",
+    "trackingUrlTemplate": "https://www.skif-cargo.ru/tracking/{trackingNumber}",
     "trackingSearchUrl": "https://www.skif-cargo.ru/tracking/",
-    "linkRules": [],
+    "linkRules": [
+      {
+        "domains": [
+          "skif-cargo.ru"
+        ],
+        "path": "^/tracking/([^/?#]+)/?$"
+      }
+    ],
     "detectionRules": []
   },
   "skladusa": {

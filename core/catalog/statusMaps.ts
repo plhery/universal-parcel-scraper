@@ -663,6 +663,7 @@ import { statusMap as shouwu } from '../../carriers/shouwu/status.js';
 import { statusMap as shreeAnjani } from '../../carriers/shree-anjani/status.js';
 import { statusMap as shreeMaruti } from '../../carriers/shree-maruti/status.js';
 import { statusMap as singaporePost } from '../../carriers/singapore-post/status.js';
+import { statusMap as skifCargo } from '../../carriers/skif-cargo/status.js';
 import { statusMap as skroutzLastMile } from '../../carriers/skroutz-last-mile/status.js';
 import { statusMap as skybox } from '../../carriers/skybox/status.js';
 import { statusMap as skyking } from '../../carriers/skyking/status.js';
@@ -961,7 +962,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   rincos, rivigo, 'rl-carriers': rlCarriers, roadrunner, 'rohlig-suus': rohligSuus, 'rozetka-delivery': rozetkaDelivery, 'royal-express-mm': royalExpressMm, 'royal-mail': royalMail,
   'rpx-indonesia': rpxIndonesia, 'safeway-express-cargo': safewayExpressCargo, sagawa, safexpress, 'sagawa-global': sagawaGlobal, saia, sailpost, sameday, 'sapx-express': sapxExpress,
   'sat-ukraine': satUkraine, 'saudi-post': saudiPost, seino, seko, sendex, sendle, sending, 'sengi-express': sengiExpress, serpost, servientrega, seur, 'sf-express': sfExpress, sfc, shadowfax, shipa, shipblu, shipentegra, shiprocket, 'shipglobal-in': shipglobalIn, shipter, shouwu,
-  'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skroutz-last-mile': skroutzLastMile,
+  'shree-anjani': shreeAnjani, 'shree-maruti': shreeMaruti, 'singapore-post': singaporePost, 'skif-cargo': skifCargo, 'skroutz-last-mile': skroutzLastMile,
   skybox, skyking, 'skynet-sa': skynetSa, 'skynet-worldwide': skynetWorldwide, skypostal, slgtrax,
   'slovak-parcel-service': slovakParcelService,
   'slovenska-posta': slovenskaPosta, 'smsa-express': smsaExpress, 'south-african-post-office': southAfricanPost,
