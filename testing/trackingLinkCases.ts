@@ -2566,6 +2566,7 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'team-express-ae': 'the page answers a number it does not hold with its empty tracking form, without the number or a notice, so only a real shipment verifies the link',
   'thailand-post': 'some of the tracker\'s servers stall on its script bundles, so the page often stays empty past the render window',
   'today-kr': 'a synthetic waybill may belong to a real parcel, whose page names its sender and recipient, so only a known waybill verifies the link',
+  topparcel: 'the tracker takes a number only in a form posted with its session token, so the link opens the form alone',
   'azul-cargo': 'Akamai refuses plain HTTP clients every page of azullogistica.com.br, so number forwarding cannot be verified daily; the server renders the card of the AWB the link names',
   'total-express': 'totalconecta.totalexpress.com.br answers many networks with an Akamai Access Denied page, so number forwarding cannot be verified daily; the page puts the number from its address in its search field',
   trackon: 'the page answers an unknown number with its empty search form, without the number or a notice, and shows only consignments of the last 75 days, so only a recent real consignment verifies the link',

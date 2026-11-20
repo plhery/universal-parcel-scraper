@@ -1,0 +1,65 @@
+{
+  "id": "topparcel",
+  "displayName": "Topparcel",
+  "aliases": [
+    "Topparcel.com"
+  ],
+  "region": {
+    "countries": [
+      "GB",
+      "IT",
+      "FR",
+      "ES",
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#F2590C"
+  },
+  "selectable": true,
+  "timezone": "Europe/London",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "topparcel",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "destination_country"
+  ],
+  "portal": {
+    "url": "https://topparcel.com/parcels/tracking",
+    "searchUrl": "https://topparcel.com/parcels/tracking",
+    "canaryUrl": "https://topparcel.com/parcels/tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "destination_country",
+      "weight",
+      "remarks"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "destination_country"
+    ],
+    "discarded": [
+      "weight",
+      "remarks"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "eta",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

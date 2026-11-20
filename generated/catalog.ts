@@ -57891,6 +57891,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "topparcel": {
+    "displayName": "Topparcel",
+    "color": "#F2590C",
+    "aliases": [
+      "Topparcel.com"
+    ],
+    "countries": [
+      "GB",
+      "IT",
+      "FR",
+      "ES",
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "topparcel",
+      "localClocks": true
+    },
+    "canaryUrl": "https://topparcel.com/parcels/tracking",
+    "trackingUrlTemplate": "https://topparcel.com/parcels/tracking",
+    "trackingSearchUrl": "https://topparcel.com/parcels/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "toptrans": {
     "displayName": "TOPTRANS",
     "color": "#005daa",
@@ -66946,6 +66972,7 @@ export const CARRIER_IDS = [
   "topdelivery",
   "topex-logistics",
   "topnic",
+  "topparcel",
   "toptrans",
   "topyou",
   "torrestir",
@@ -68811,6 +68838,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "topdelivery": [],
   "topex-logistics": [],
   "topnic": [],
+  "topparcel": [],
   "toptrans": [],
   "topyou": ["topyou-1","topyou-2"],
   "torrestir": ["torrestir-1"],

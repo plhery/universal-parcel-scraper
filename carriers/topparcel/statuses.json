@@ -1,0 +1,105 @@
+{
+  "carrier": "topparcel",
+  "entries": [
+    {
+      "wording": "Accepted",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Topparcel's own row for the booking it accepted, written when the booked carrier received the shipment's data and before the courier collected the parcel."
+    },
+    {
+      "wording": "Collected",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Topparcel's own row for the courier's collection from the sender."
+    },
+    {
+      "wording": "In transit EU",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20"
+    },
+    {
+      "wording": "Acceptance",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "A post's acceptance, relayed: the post took over a parcel the courier had already collected."
+    },
+    {
+      "wording": "Registration",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post's registration at the delivery office, relayed, before its arrival there."
+    },
+    {
+      "wording": "Import of international mail, Поступило приписано",
+      "language": "ru",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post's import, the item listed in the dispatch it came in."
+    },
+    {
+      "wording": "Processing, Awaiting courier delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post's delivery office holds the parcel for its courier, who has not taken it out yet."
+    },
+    {
+      "wording": "Redispatching, By request of the user",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post forwards the parcel to another office, as the recipient asked."
+    },
+    {
+      "wording": "Delivery, Delivery to the addressee",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post handed the parcel to the addressee. Its delivery to the sender is a return, so the category alone stages nothing."
+    },
+    {
+      "wording": "Delivery, Адресату по QR коду",
+      "language": "ru",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post handed the parcel to the addressee, who showed a QR code."
+    },
+    {
+      "wording": "Бронирование интервала доставки, Назначен интервал доставки при поступлении в место вручения",
+      "language": "ru",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post booked a delivery slot when the parcel reached the delivery office; the booking moves nothing."
+    },
+    {
+      "wording": "Отказ от бронирования интервала доставки, Техническая причина",
+      "language": "ru",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Russian Post cancelled a delivery slot for a technical reason; the cancellation moves nothing."
+    }
+  ]
+}
