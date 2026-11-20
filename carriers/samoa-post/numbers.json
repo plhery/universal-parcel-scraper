@@ -1,5 +1,26 @@
 {
   "carrier": "samoa-post",
-  "gap": "No public page shows a Samoa Post number.",
-  "records": []
+  "records": [
+    {
+      "number": "RR 000010008 WS",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://arge-r-v-zettel.de/files/2025/03/MBM_28.pdf#page=27",
+        "date": "2007-08-29",
+        "dateKind": "postmark",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Registered international mail",
+        "reportedRole": "Samoa registered-mail label number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "The postal collectors’ journal reproduces a postmarked Samoa cover bearing this exact spaced registered-mail number and a separate New Zealand transit label. Lookup blocked by verification. Samoa Post embeds a UPU tracking form that requires a CAPTCHA."
+    }
+  ]
 }
