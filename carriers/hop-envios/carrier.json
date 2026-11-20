@@ -16,16 +16,27 @@
   "timezone": "America/Argentina/Buenos_Aires",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "hop-envios",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history"
+  ],
   "portal": {
     "url": "https://hopenvios.com.ar/segui-tu-envio?c={trackingNumber}",
     "searchUrl": "https://hopenvios.com.ar/segui-tu-envio",
     "canaryUrl": "https://hopenvios.com.ar/segui-tu-envio",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
     "discarded": [],
     "unavailable": []
   },

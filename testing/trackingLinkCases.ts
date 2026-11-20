@@ -29,6 +29,10 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'hop-envios', number: '399999939991791',
+    route: /^https:\/\/hopenvios\.com\.ar\/segui-tu-envio\?c=399999939991791$/,
+    marker: /Código no encontrado/,
+    forwarding: { notFound: /Código no encontrado/ } },
   { carrier: 'gbs-broker', number: 'RLAI99999999',
     route: /^https:\/\/gbs\.ru\/track\/\?numbers=RLAI99999999$/,
     marker: /По вашему запросу ничего не найдено/ },
