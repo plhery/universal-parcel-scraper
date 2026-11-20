@@ -1,4 +1,41 @@
 {
   "carrier": "king-kong-express",
-  "entries": []
+  "entries": [
+    {
+      "wording": "快件在【遂溪站】被签收",
+      "language": "zh",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达【遂溪站】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "派件中【遂溪站】",
+      "language": "zh",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "离开【虎门分拨中心】发往【遂溪站】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "到达【虎门分拨中心】",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "已收件，到达【梅州兴宁】",
+      "language": "zh",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    }
+  ]
 }

@@ -1,4 +1,110 @@
 {
   "carrier": "jas-worldwide",
-  "entries": []
+  "entries": [
+    {
+      "code": "PUP",
+      "wording": "Container Pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "accepted"
+    },
+    {
+      "code": "GIN",
+      "wording": "Container Receipt (Gate In)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "DSN",
+      "wording": "ISF Sent",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "ISF transmission is a filing notice."
+    },
+    {
+      "code": "FLO",
+      "wording": "Shipped On Board",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "FUL",
+      "wording": "Container Unloaded at Destination",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "DLV",
+      "wording": "Container Delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "ADD",
+      "wording": "Shipment Created",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "code": "ATC",
+      "wording": "Booked With Carrier",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "registered"
+    },
+    {
+      "code": "PCF",
+      "wording": "Pickup",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "accepted"
+    },
+    {
+      "code": "IRP",
+      "wording": "Received at Terminal/CFS",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "DEP",
+      "wording": "Departure SEA Antwerpen (BEANR)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "ARV",
+      "wording": "Arrival SEA Freeport, Grand Bahama (BSFPO)",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "in_transit"
+    },
+    {
+      "code": "DDV",
+      "wording": "Document Turnover",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "Document turnover does not establish freight movement."
+    },
+    {
+      "code": "CCR",
+      "wording": "Customs Clearance Confirmation Received",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The public sample shows it as a pending milestone."
+    },
+    {
+      "code": "DCF",
+      "wording": "Delivered",
+      "language": "en",
+      "confirmedBy": "live",
+      "stage": "delivered"
+    }
+  ]
 }

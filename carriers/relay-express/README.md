@@ -1,31 +1,11 @@
 # Relay Express
 
-Relay Express parcels use enabled universal providers. There is no dedicated adapter.
+Select Relay Express to track an Indian freight docket. The public guest form requests one
+docket's journey as an HTML fragment. Its empty CAPTCHA fields follow the form. A proof label
+can confirm the docket number when present. The adapter leaves the attachment unopened.
 
-Relay Express, of Ahmedabad, carries cargo across India from more than 145 locations and runs
-warehousing and distribution. Its site is relayexpress.in. Relay, the British delivery company, is a
-different carrier.
+The journey shows local scan clocks and facility names. The adapter skips the undated
+proof label and keeps the dated delivery event.
 
-## Numbers
-
-Its tracker takes a docket number. No public page shows one, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Leads
-
-The tracker on `scm.relayexpress.in/DocketTrack` loads its answer by script, as an HTML fragment,
-from `GET /CustomerDocketTrack/CustomerTrackkNew` with the number as `DocketNumber`. The request also
-carries `Captcha` and `CaptchaHash` fields for an image CAPTCHA, which the page leaves empty because
-it shows none.
-
-## Links
-
-The tracker reads no number from its address, so there are no tracking links.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `RELAY_EXPRESS_TRACKING_NUMBER` and run
+`npm run test:carriers:live -- carriers/relay-express`.

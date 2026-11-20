@@ -7511,7 +7511,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "airways-courier-in",
+      "localClocks": true
     },
     "canaryUrl": "https://airwayscourier.co.in/Tracking_new.aspx",
     "trackingUrlTemplate": "https://airwayscourier.co.in/Tracking_new.aspx?awb_no={trackingNumber}&type=w",
@@ -9803,7 +9804,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Aruba",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "aruba-post",
+      "localClocks": true
     },
     "canaryUrl": "https://www.postaruba.com/",
     "trackingUrlTemplate": "https://cds.postaruba.com/ipswt/IPSWeb_item_events.aspx?itemid={trackingNumber}",
@@ -11554,7 +11556,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Athens",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "biz-courier"
     },
     "canaryUrl": "https://trackit.bizcourier.eu/app/en",
     "trackingUrlTemplate": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
@@ -26886,7 +26888,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "gbs-broker"
     },
     "canaryUrl": "https://gbs.ru/track/",
     "trackingUrlTemplate": "https://gbs.ru/track/?numbers={trackingNumber}",
@@ -29834,7 +29836,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "herona-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.heronaexpress.co.id/",
     "trackingSearchUrl": "https://tracking.heronaexpress.co.id/lacak.php",
@@ -30253,7 +30256,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Argentina/Buenos_Aires",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "hop-envios",
+      "localClocks": true
     },
     "canaryUrl": "https://hopenvios.com.ar/segui-tu-envio",
     "trackingUrlTemplate": "https://hopenvios.com.ar/segui-tu-envio?c={trackingNumber}",
@@ -32265,7 +32269,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Tokyo",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "intras-jp",
+      "localClocks": true
     },
     "canaryUrl": "https://intras.co.jp/",
     "trackingUrlTemplate": "https://intras.co.jp/delivery/tracking?number={trackingNumber}",
@@ -33283,7 +33288,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jas-worldwide",
+      "localClocks": true
     },
     "canaryUrl": "https://myjas.com/public/shipments",
     "trackingUrlTemplate": "https://myjas.com/public/shipments?shipmentNumber={trackingNumber}",
@@ -35215,7 +35221,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "king-kong-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.kke.com.hk/home/index/que",
     "trackingSearchUrl": "https://www.kke.com.hk/home/index/que",
@@ -36323,7 +36330,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Riyadh",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "lafasta",
+      "localClocks": true
     },
     "canaryUrl": "https://c.lafasta.sa.com/Track/",
     "trackingUrlTemplate": "https://c.lafasta.sa.com/Track/{trackingNumber}",
@@ -48820,7 +48828,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Jakarta",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "rayspeed",
+      "localClocks": true
     },
     "canaryUrl": "https://rayspeed.com/en/track",
     "trackingSearchUrl": "https://rayspeed.com/en/track",
@@ -49080,7 +49089,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Kolkata",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "relay-express",
+      "localClocks": true
     },
     "canaryUrl": "https://scm.relayexpress.in/DocketTrack",
     "trackingSearchUrl": "https://scm.relayexpress.in/DocketTrack",
