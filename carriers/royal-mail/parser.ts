@@ -21,6 +21,8 @@ const MAX_EVENTS_TO_INSPECT = 500;
 const MAX_EVENTS_TO_RETURN = 100;
 // A parcel hub's or a mail centre's receipt, without an acceptance before it.
 const FIRST_RECEIPTS = new Set(['EVBAH', 'EVDAC', 'EVDAV']);
+// Stages a scan reaches only once the item has moved.
+const MOVED = new Set<string>(['in_transit', 'customs', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup']);
 // A Customer Service Point's collection, which can be the recipient's or the delivery office's.
 const COLLECTIONS = new Set(['EVNSC', 'EVNCE']);
 /** A Parcelforce parcel: PB, its consignment number and the parcel's place in it. */
@@ -271,6 +273,13 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
       first.stage = 'accepted';
       receiptAccepted = true;
     }
+  }
+  // A receipt worded as an acceptance after a scan that moved the item is the item going on: a post
+  // abroad telling its lodging again after the item left, or an office abroad receiving it.
+  let moved = false;
+  for (const event of listsNewestFirst(events) === false ? events : [...events].reverse()) {
+    if (moved && event.stage === 'accepted' && !event.stage_source) event.stage = 'in_transit';
+    else if (event.stage && MOVED.has(event.stage)) moved = true;
   }
   const trimmed = events.slice(0, MAX_EVENTS_TO_RETURN);
   const summaryCategory = cleanScalar(summary.statusCategory);

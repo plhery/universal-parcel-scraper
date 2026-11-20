@@ -44,6 +44,8 @@ answers are not retried. An unavailable browser fails fast.
   none, so that first receipt is its acceptance, as the summary's "We've got
   it" says. A
   first receipt elsewhere keeps its in-transit stage, as the summary does.
+  A receipt worded as an acceptance after a scan that moved the item, such as
+  a post abroad telling its lodging again after the item left, is in transit.
   A category groups several scans: "Ready for Delivery" covers the delivery
   office's receipt and the day's round, and "We've got it" covers the
   acceptance and the mail centre's receipt after a Post Office, locker or

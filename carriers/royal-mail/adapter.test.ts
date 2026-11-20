@@ -595,6 +595,22 @@ describe('Royal Mail structured response', () => {
     ]);
   });
 
+  it('reads a receipt worded as an acceptance after the item moved as transit', () => {
+    // Shape of a parcel from Australia whose post tells its lodging again the day after the item left.
+    const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'In transit', statusDescription: 'In transit', destinationCountryCode: 'GB' },
+      events: [
+        { eventCode: 'EVJOE', eventName: 'Item Received', eventDateTime: '2026-11-16T13:55:39+00:00', locationName: 'Example INT Hub' },
+        { eventCode: 'EVOAC', eventName: 'Item received at', eventDateTime: '2026-11-12T04:46:00+00:00', locationName: 'Australia' },
+        { eventCode: 'EVHOE', eventName: 'Item Leaving overseas', eventDateTime: '2026-11-11T11:01:00+00:00', locationName: 'Australia' },
+        { eventCode: 'EVOAC', eventName: 'Item received at', eventDateTime: '2026-11-11T09:03:00+00:00', locationName: 'EXAMPLE EMS' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(result.events?.map(event => [event.provider_code, event.stage])).toEqual([
+      ['EVJOE', 'in_transit'], ['EVOAC', 'in_transit'], ['EVHOE', 'in_transit'], ['EVOAC', 'accepted'],
+    ]);
+  });
+
   it('dates a summary-only delivery from its last event and ignores an unusable destination', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: { mailPieceId: DELIVERED_NUMBER, summary: {
       statusCategory: 'Delivered', statusDescription: 'Delivered', lastEventCode: 'EVKOP', lastEventDateTime: '2026-01-03T09:56:31+00:00',

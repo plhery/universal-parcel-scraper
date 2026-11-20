@@ -278,6 +278,15 @@ describe('Australia Post status codes and places', () => {
     expect(journey('AU', [received, arrived], 'In transit').events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit']);
   });
 
+  it('reads a lodging told again after the parcel left as transit', () => {
+    const lodged = scan('INT-2144', 'Item lodged', 'EXAMPLETOWN QLD', '2026-11-11T17:33:45+10:00');
+    const departing = scan('INT-0008', 'Cleared and awaiting international departure', 'EXAMPLETOWN QLD', '2026-11-11T20:31:48+10:00');
+    const again = scan('AFC-ER36', 'Lodged by Sender', 'EXAMPLE CITY QLD', '2026-11-12T14:16:18+10:00');
+    const result = journey('GB', [again, departing, lodged], "It's on its way");
+    expect(result.events?.map((event) => event.stage)).toEqual(['in_transit', 'in_transit', 'accepted']);
+    expect(result).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+  });
+
   it('expects the parcel on the days the reply gives, else by the day it names, until it is delivered', () => {
     const departed = scan('AA-0001', 'Item processed at facility', 'MELBOURNE VIC', '2026-06-06T17:41:25+10:00');
     const range = { estimatedDeliveryDateRange: { fromDate: '2026-06-09', toDate: '2026-06-10' }, deliveredByDateISO: '2026-06-10' };

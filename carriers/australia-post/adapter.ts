@@ -22,6 +22,8 @@ import { australiaPostCode, australiaPostCodeParts, australiaPostStatus } from '
 const PROVIDER = 'Australia Post';
 const DETAIL = 'https://auspost.com.au/mypost/track/details/';
 const ENDED = new Set(['delivered', 'returned', 'ready_for_pickup']);
+// Stages a scan reaches only once the parcel has moved.
+const MOVED = new Set<string>(['in_transit', 'customs', 'out_for_delivery', 'failed_attempt', 'ready_for_pickup']);
 const API = 'https://digitalapi.auspost.com.au/shipments-gateway/v1/watchlist/shipments';
 const MAX_BYTES = 1_000_000;
 const DIRECT_TIMEOUT_MS = 10_000;
@@ -277,6 +279,14 @@ function articleResult(selected: Record<string, unknown>, consignmentId: string)
   if (firstMove && australiaPostCodeParts(String(firstMove.event.provider_code ?? '')).code === 'DOM-0046') {
     firstMove.classified = { stage: 'accepted', status: 'in_transit' };
     firstMove.event.stage = 'accepted';
+  }
+  // A lodging told again after a scan moved the parcel, a day after it left Australia, is the parcel going on.
+  let moved = false;
+  for (const entry of [...events].reverse()) {
+    if (moved && entry.classified?.stage === 'accepted') {
+      entry.classified = { stage: 'in_transit', status: 'in_transit' };
+      entry.event.stage = 'in_transit';
+    } else if (entry.classified && MOVED.has(entry.classified.stage)) moved = true;
   }
   const summary = clean(selected.trackStatusOfArticle)
     || (isRecord(selected.status) ? clean(selected.status.statusAttributeValue) : '');
