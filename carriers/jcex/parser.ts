@@ -22,6 +22,8 @@ const OFFSET = /^[+-]\d{2}:\d{2}$/;
 // JCEX works on Hangzhou's clock and writes its own rows on it; a row kept as
 // a wall clock is read in it only to set aside future rows and its timeline.
 const HOME_ZONE = 'Asia/Shanghai';
+/** JCEX's code for its order notice, the order data it files under neither a country nor a place. */
+const ORDER_NOTICE = 'InfoReceived';
 const HOME_OFFSET = '+08:00';
 // A US place as USPS writes it: "TOWN, ST 00000", or a facility naming its state before its kind.
 const US_STATE = /,\s*([A-Z]{2})\b/;
@@ -204,17 +206,34 @@ function rewordedCopies(rows: readonly Row[]): Set<Row> {
 }
 
 /**
+ * The one clock the places a reply names in each country keep, for that
+ * country's rows filed without a place of their own: a country of several
+ * clocks, such as the United States, does not say which is theirs.
+ */
+function placedClocks(rows: readonly Row[]): Map<string, string> {
+  const zones = new Map<string, Set<string>>();
+  for (const row of rows) {
+    const zone = row.country && row.location && !/^[A-Z]{2}$/.test(row.location) ? placeZone(row.location, row.country, row.written) : null;
+    if (zone) zones.set(row.country, (zones.get(row.country) ?? new Set()).add(zone));
+  }
+  return new Map([...zones].filter(([, kept]) => kept.size === 1).map(([country, kept]) => [country, [...kept][0]!]));
+}
+
+/**
  * A row's clock. A row filed under neither a country nor a place is JCEX's
  * own order data, on Beijing's clock whatever offset it carries. A row under
  * a relaying source's offset keeps it. Others take their instant where their
  * place settles it, else keep their wall clock.
  */
-function clockOf(row: Row, offsets: ReadonlySet<string>): { clock: { time: string } | { local_time: string }; at: number; order: number } {
+function clockOf(row: Row, offsets: ReadonlySet<string>, clocks: ReadonlyMap<string, string>): { clock: { time: string } | { local_time: string }; at: number; order: number } {
   const time = !row.country && !row.location ? labelledTime(row.local, HOME_OFFSET)
     : offsets.has(row.label) ? labelledTime(row.local, row.label) : placedTime(row.local, row.label, row.location, row.country, row.written);
   if (time) return { clock: { time: time.iso }, at: time.timestamp, order: time.timestamp };
-  // A wall clock is ordered on its place's clock where the place keeps one.
-  const zone = placeZone(row.location, row.country, row.written);
+  // A wall clock is ordered on its place's clock where the place keeps one, and a row filed under its
+  // country alone on the clock the reply's places there keep: an import clearance after a landing
+  // in California is not ordered on China's clock, before the landing.
+  const own = !row.location || row.location === row.country;
+  const zone = placeZone(row.location, row.country, row.written) ?? (own ? clocks.get(row.country) ?? null : null);
   const placed = zone ? firstOccurrence(DateTime.fromISO(row.local, { zone })) : null;
   return { clock: { local_time: row.local }, at: row.home, order: placed?.isValid ? placed.toMillis() : row.home };
 }
@@ -226,8 +245,8 @@ function stageOf(code: string, description: string): { stage: Stage; source: str
   return worded.source === 'none' ? undefined : { stage: worded.stage, source: worded.source };
 }
 
-function projectRow(row: Row, offsets: ReadonlySet<string>): { at: number; order: number; index: number; event: CarrierEvent } {
-  const { clock, at, order } = clockOf(row, offsets);
+function projectRow(row: Row, offsets: ReadonlySet<string>, clocks: ReadonlyMap<string, string>): { at: number; order: number; index: number; event: CarrierEvent } {
+  const { clock, at, order } = clockOf(row, offsets, clocks);
   const staged = stageOf(row.code, row.description);
   const event: CarrierEvent = {
     ...clock,
@@ -305,15 +324,23 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
   if (!own.includes(number)) throw new IndeterminateError(PROVIDER, 'JCEX answered for another shipment');
 
   const seen = new Set<string>();
+  // JCEX can list its order notice twice at one second in two wordings ("Shipment order info received",
+  // "The order information has been sent"): one notice, of which the first listed stays.
+  const notices = new Set<string>();
   const listed = rows.map(rowOf).filter((row): row is Row => {
     const key = row && JSON.stringify([row.local, row.label, row.code, row.description, row.location, row.written?.offset]);
     if (!key || seen.has(key)) return false;
     seen.add(key);
+    if (row.code !== ORDER_NOTICE || row.location || row.country) return true;
+    const notice = JSON.stringify([row.local, row.label]);
+    if (notices.has(notice)) return false;
+    notices.add(notice);
     return true;
   });
   const { copies, offsets } = relayedCopies(listed);
   const reworded = rewordedCopies(listed);
-  const projected = listed.filter((row) => !copies.has(row) && !reworded.has(row)).map((row) => projectRow(row, offsets));
+  const clocks = placedClocks(listed);
+  const projected = listed.filter((row) => !copies.has(row) && !reworded.has(row)).map((row) => projectRow(row, offsets, clocks));
   // Neither a row dated after the read nor a row of the timeline JCEX writes is a scan.
   const written = timeline(projected.map(({ at }) => at));
   const ahead = projected.filter(({ at }) => at > readAt || written.has(at));
