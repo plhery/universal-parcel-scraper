@@ -44,5 +44,16 @@
       ]
     }
   ],
-  "detection": []
+  "detection": [
+    {
+      "id": "bfe-express-1",
+      "pattern": "^CK(?:54\\d{12,13}|512\\d{12}|598\\d{12})$",
+      "confidence": "low"
+    },
+    {
+      "id": "bfe-express-2",
+      "pattern": "^WYB\\d{9}$",
+      "confidence": "low"
+    }
+  ]
 }

@@ -7,9 +7,11 @@ Peru, Uruguay and the United States. Its site is bfeexpress.com.
 
 ## Numbers
 
-Its contact form checks numbers by country: CK, the country's calling code and twelve or thirteen
-digits in Peru, Uruguay and Argentina, WYB and nine digits in Peru, and two nineteen-digit series
-in Argentina. No public number has been found to test them with, so there is no rule.
+Its contact form checks numbers by country: CK54 and twelve or thirteen digits in Argentina, CK512
+and twelve digits in Peru, CK598 and twelve digits in Uruguay, WYB and nine digits in Peru, and two
+nineteen-digit series in Argentina. Rules `bfe-express-1` and `bfe-express-2` suggest BFE Express
+for the CK and WYB layouts; a universal provider named BFE Express for a CK54 parcel. Other
+carriers print nineteen plain digits too, so nothing suggests BFE Express for those series.
 
 ## Why there is no adapter
 

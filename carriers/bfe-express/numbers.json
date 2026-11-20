@@ -1,5 +1,86 @@
 {
   "carrier": "bfe-express",
-  "gap": "No public page shows a BFE Express tracking number.",
-  "records": []
+  "records": [
+    {
+      "number": "CK54907315264839",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bfe-express"
+        ]
+      },
+      "note": "Made-up number in the layout BFE Express's contact form accepts for Argentina: CK, 54 and twelve digits. A parcel for Argentina that the app tracked had this layout, and a universal provider named BFE Express for it."
+    },
+    {
+      "number": "CK546183027495316",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "bfe-express"
+        ]
+      },
+      "note": "Made-up number in the other layout BFE Express's contact form accepts for Argentina: CK, 54 and thirteen digits."
+    },
+    {
+      "number": "CK512604827391546",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "bfe-express"
+        ]
+      },
+      "note": "Made-up number in the layout BFE Express's contact form accepts for Peru: CK, 512 and twelve digits."
+    },
+    {
+      "number": "CK598381950627413",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "bfe-express"
+        ]
+      },
+      "note": "Made-up number in the layout BFE Express's contact form accepts for Uruguay: CK, 598 and twelve digits."
+    },
+    {
+      "number": "WYB704286159",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "official_shape",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "bfe-express",
+          "tnt-au"
+        ]
+      },
+      "note": "Made-up number in the WYB layout BFE Express's contact form accepts for Peru: WYB and nine digits."
+    }
+  ]
 }

@@ -1151,6 +1151,24 @@
     "reason": "Purolator's lettered PINs and TNT Australia's domestic consignments both print three letters and nine digits, and Colis Privé accepts any 12-character alphanumeric, so no rule decides; recognition asks them in turn. TNT Australia's own tracker answers its consignments; TNT is not offered, because tnt.com refuses them."
   },
   {
+    "shape": "WYB followed by nine digits",
+    "carriers": [
+      "colis-prive",
+      "purolator",
+      "tnt-au",
+      "bfe-express"
+    ],
+    "reason": "BFE Express's contact form gives Peru's waybills WYB and nine digits, which Purolator's lettered PINs and TNT Australia's domestic consignments share, and Colis Privé accepts any 12-character alphanumeric, so no rule decides."
+  },
+  {
+    "shape": "CK followed by fifteen digits ending in a French postcode range",
+    "carriers": [
+      "bfe-express",
+      "colis-prive"
+    ],
+    "reason": "Colis Privé accepts generic seventeen-character composites; BFE Express's CK layouts are low suggestions too, so neither rule decides."
+  },
+  {
     "shape": "TBR followed by nine digits",
     "carriers": [
       "colis-prive",

@@ -294,6 +294,10 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       },
       {
+        "pattern": "^CN\\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\\d|3[01])\\d{6}$",
+        "confidence": "low"
+      },
+      {
         "pattern": "^GFUS\\d{14}$",
         "confidence": "low"
       },
@@ -4287,7 +4291,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "displayName": "NZ Post",
     "color": "#d8291c",
     "aliases": [
-      "New Zealand Post"
+      "New Zealand Post",
+      "NZ Post (New Zealand Post)"
     ],
     "countries": [
       "NZ"
@@ -11376,7 +11381,16 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
+    "detectionRules": [
+      {
+        "pattern": "^CK(?:54\\d{12,13}|512\\d{12}|598\\d{12})$",
+        "confidence": "low"
+      },
+      {
+        "pattern": "^WYB\\d{9}$",
+        "confidence": "low"
+      }
+    ]
   },
   "bft-logistik": {
     "displayName": "BFT Logistik",
@@ -67158,7 +67172,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "swiss-post-cargo": ["swiss-post-cargo-sscc","swiss-post-cargo-pl-reference"],
   "quickpac": ["quickpac-1"],
   "planzer": ["planzer-1","planzer-2"],
-  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
+  "aliexpress": ["aliexpress-1","aliexpress-cnfr","aliexpress-2","aliexpress-maersk","aliexpress-lp-reference","aliexpress-lp-17","aliexpress-ap-reference","aliexpress-cnbr","aliexpress-cnmex","aliexpress-cnusup","aliexpress-cacainiao","aliexpress-rl","aliexpress-jncn","aliexpress-cn-dated","aliexpress-gfus","aliexpress-uusc","aliexpress-hrbc","aliexpress-ecsc-aaro","aliexpress-sk0sczd","aliexpress-pa","aliexpress-f","aliexpress-9c-i","aliexpress-9c-j","aliexpress-rtz","aliexpress-fmp","aliexpress-sda-waybill","aliexpress-ty","aliexpress-mi","aliexpress-xx","aliexpress-go"],
   "sunyou": ["sunyou-1","sunyou-2","sunyou-3"],
   "hermes": ["hermes-delivery-note"],
   "spring-gds": ["spring-gds-1","spring-gds-2","spring-gds-3","spring-gds-1810"],
@@ -67426,7 +67440,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "bestfulfill": ["bestfulfill-1"],
   "better-trucks": ["better-trucks-1"],
   "bex-express": [],
-  "bfe-express": [],
+  "bfe-express": ["bfe-express-1","bfe-express-2"],
   "bft-logistik": [],
   "bh-posta": [],
   "bhs-logistics": [],
