@@ -422,6 +422,11 @@ describe('classifyWording', () => {
     expect(wordingStage('Handed over to the customs')).toBe('customs');
   });
 
+  it('reads a parcel made ready for customs as transit, before customs has it', () => {
+    expect(classifyWording('Preparing for customs handover', 'pending')).toEqual({ stage: 'in_transit', source: 'wording:language' });
+    expect(wordingStage('Preparing for customs clearance')).toBe('customs');
+  });
+
   it('reads import charges the recipient still owes as customs', () => {
     for (const wording of [
       // UPS's OQ activity, as universal providers relay it, and cut short.

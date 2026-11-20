@@ -639,6 +639,9 @@ export function trackingLanguageStage(description: string): Stage | undefined {
   // Correos de México's outward office of exchange, which names the destination's customs ahead of it ("En zona de
   // intercambio int. hacia el país destino, previo Aduana"), as ParcelsApp words it: in transit, as its own map reads it.
   if (/^in the international exchange area towards the destination country,? prior to customs$/.test(text)) return 'in_transit';
+  // The parcel made ready for customs ("Preparing for customs handover"), as Nova Poshta Global words it at its warehouse
+  // before the export flight: customs does not have it yet.
+  if (/^preparing for (?:the )?customs hand-?over$/.test(text)) return 'in_transit';
 
   // A completed clearance or release moves the parcel on; holds, inspections,
   // submissions and clearance still pending or negated stay with customs.
