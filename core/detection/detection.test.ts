@@ -736,6 +736,9 @@ describe('the detection engine', () => {
       expect(keywordNumberInText(text), text).toBeUndefined();
     }
     expect(keywordNumberInText('Service de suivi : 1234567899')).toBe('1234567899');
+    // Synthetic numbers. A phone number ends no search: a later label's number is read.
+    expect(keywordNumberInText('Votre colis : 01 23 45 67 89\nTracking number: 1234567')).toBe('1234567');
+    expect(parseTrackingInput('Votre colis : 01.23.45.67.89\nTracking number: 1234567')).toMatchObject({ trackingNumber: '1234567', source: 'text' });
   });
 
   it('reads the groups a number prints apart in a message', () => {

@@ -189,7 +189,8 @@ export function keywordNumberInText(raw: string): string | undefined {
     const datePrefix = YEAR_OF_DATE.exec(after)?.[0] ?? '';
     if (!claimed && (isDateToken(groups.join('.')) || isDateToken(/^\S*/.exec(after)![0]) || isDateToken(datePrefix)
       || MARKED_YEAR.test(after))) continue;
-    if (!claimed && PHONE.test(groups.join(' ').replace(/[.-]+$/, ''))) return undefined;
+    // A phone number is no tracking number either, and a later label may still introduce one.
+    if (!claimed && PHONE.test(groups.join(' ').replace(/[.-]+$/, ''))) continue;
     const grouped = groups.length > 1 && groups.every((group) => group.length <= 6) && joins.at(-1)!.length >= 8
       ? joins.at(-1) : undefined;
     const candidate = claimed ?? grouped ?? joins[0]!;
