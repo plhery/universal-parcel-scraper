@@ -5072,5 +5072,11 @@
     "pattern": "^(?:GCX)?SN[0-9]{7}$",
     "kind": "open",
     "reason": "GCX customer reports publish the SN family both with and without the carrier prefix. Detection does not offer GCX."
+  },
+  {
+    "carrier": "gbs-broker",
+    "pattern": "^RLAI[0-9]{8}$",
+    "kind": "open",
+    "reason": "GBS’s public tracker returns customs events for this marketplace reference. Detection does not offer GBS."
   }
 ]
