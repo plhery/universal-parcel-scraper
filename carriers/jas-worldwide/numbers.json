@@ -1,5 +1,100 @@
 {
   "carrier": "jas-worldwide",
-  "gap": "No public page shows a JAS Worldwide shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "SHA104946569",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://importkey.com/i/jas-as-agent-for-blue-worldline",
+        "date": "2021-08-26",
+        "dateKind": "manifest listing date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "JAS ocean freight through Blue World Line",
+        "reportedRole": "House Bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "purolator",
+          "tnt-au"
+        ]
+      },
+      "note": "The manifest lists this exact house bill under JAS as agent for Blue World Line. MyJAS returned a matching row which labels the value as Housebill Number."
+    },
+    {
+      "number": "ANR10415172",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/blue-world-line",
+        "date": "2026-11-08",
+        "dateKind": "manifest listing date",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "service": "JAS ocean freight through Blue World Line",
+        "reportedRole": "house-bill filing reference",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public manifest index gives this exact Blue World Line filing reference. MyJAS returned a matching row which labels it as Housebill Number."
+    },
+    {
+      "number": "S104946569",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://myjas.com/public/shipments?shipmentNumber=SHA104946569",
+        "date": "2026-11-20",
+        "dateKind": "carrier lookup",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "JAS ocean freight through Blue World Line",
+        "reportedRole": "Shipment Number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The public MyJAS result for the cited house bill displays this exact value in the Shipment Number column."
+    },
+    {
+      "number": "S610415172",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://myjas.com/public/shipments?shipmentNumber=ANR10415172",
+        "date": "2026-11-20",
+        "dateKind": "carrier lookup",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "JAS ocean freight through Blue World Line",
+        "reportedRole": "Shipment Number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "australia-post"
+        ]
+      },
+      "note": "The public MyJAS result for the cited house bill displays this exact value in the Shipment Number column."
+    }
+  ]
 }
