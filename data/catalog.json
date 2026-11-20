@@ -55471,6 +55471,25 @@
     ],
     "detectionRules": []
   },
+  "speedex-fast-cargo": {
+    "displayName": "Speedex Fast Cargo",
+    "color": "#12306a",
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "speedex-fast-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://speedexfastcargo.com/",
+    "trackingUrlTemplate": "https://speedexfastcargo.com/track.php?awb={trackingNumber}",
+    "trackingSearchUrl": "https://speedexfastcargo.com/#smart-track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "speedpak": {
     "displayName": "SpeedPAK",
     "color": "#ee7532",

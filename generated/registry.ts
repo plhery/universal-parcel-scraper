@@ -781,6 +781,7 @@ import { adapter as speeDee } from '../carriers/spee-dee/adapter.js';
 import { adapter as speedAndSafe } from '../carriers/speed-and-safe/adapter.js';
 import { adapter as speedaf } from '../carriers/speedaf/adapter.js';
 import { adapter as speedex } from '../carriers/speedex/adapter.js';
+import { adapter as speedexFastCargo } from '../carriers/speedex-fast-cargo/adapter.js';
 import { adapter as speedpak } from '../carriers/speedpak/adapter.js';
 import { adapter as speedx } from '../carriers/speedx/adapter.js';
 import { adapter as speedy } from '../carriers/speedy/adapter.js';
@@ -1741,6 +1742,7 @@ export const REGISTRY: RegistryDefinition = {
     "speed-and-safe": speedAndSafe,
     "speedaf": speedaf,
     "speedex": speedex,
+    "speedex-fast-cargo": speedexFastCargo,
     "speedpak": speedpak,
     "speedx": speedx,
     "speedy": speedy,
@@ -3478,6 +3480,7 @@ export const REGISTRY: RegistryDefinition = {
     "speed-and-safe": "speed-and-safe",
     "speedaf": "speedaf",
     "speedex": "speedex",
+    "speedex-fast-cargo": "speedex-fast-cargo",
     "speedpak": "speedpak",
     "speedx": "speedx",
     "speedy": "speedy",

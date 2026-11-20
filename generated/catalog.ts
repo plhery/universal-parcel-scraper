@@ -55475,6 +55475,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "speedex-fast-cargo": {
+    "displayName": "Speedex Fast Cargo",
+    "color": "#12306a",
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "speedex-fast-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://speedexfastcargo.com/",
+    "trackingUrlTemplate": "https://speedexfastcargo.com/track.php?awb={trackingNumber}",
+    "trackingSearchUrl": "https://speedexfastcargo.com/#smart-track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "speedpak": {
     "displayName": "SpeedPAK",
     "color": "#ee7532",
@@ -68552,6 +68571,7 @@ export const CARRIER_IDS = [
   "speed-and-safe",
   "speedaf",
   "speedex",
+  "speedex-fast-cargo",
   "speedpak",
   "speedy",
   "spfly",
@@ -70484,6 +70504,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "speed-and-safe": [],
   "speedaf": ["speedaf-12","speedaf-r"],
   "speedex": [],
+  "speedex-fast-cargo": [],
   "speedpak": ["speedpak-1"],
   "speedy": ["speedy-1","speedy-2"],
   "spfly": [],

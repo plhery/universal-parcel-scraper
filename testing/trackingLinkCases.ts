@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'speedex-fast-cargo', number: '359769',
+    route: /^https:\/\/speedexfastcargo\.com\/track\.php\?awb=359769$/,
+    marker: /Booking Tracking Details|Tracking Timeline/i },
   { carrier: 'certipostal', number: '4083638600015',
     route: /^https:\/\/certipostal\.fivesoftcolombia\.com\/tag_detail_v1\.html\?d=4083638600015$/,
     marker: /ENTREGA SIN IMAGEN|N[uú]mero de Gu[ií]a/i },

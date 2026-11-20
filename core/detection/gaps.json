@@ -5834,5 +5834,10 @@
     "carrier": "certipostal",
     "kind": "open",
     "reason": "The physical guides use a numeric shape already shared by other carriers. The native tracker is explicitly selectable."
+  },
+  {
+    "carrier": "speedex-fast-cargo",
+    "kind": "open",
+    "reason": "One published numeric docket establishes explicit tracking. It does not establish a distinctive detection rule."
   }
 ]
