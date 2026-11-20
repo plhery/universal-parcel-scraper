@@ -19162,7 +19162,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "駝飛俠",
       "XZG",
       "QYEXP",
-      "Asus International"
+      "Asus International",
+      "YLE"
     ],
     "countries": [
       "CN"
@@ -38414,7 +38415,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       "Maersk Parcel",
       "B2C Europe",
       "InterPost",
-      "Maersk E-Delivery"
+      "Maersk E-Delivery",
+      "TrackYourParcel"
     ],
     "countries": [
       "US"

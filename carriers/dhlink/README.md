@@ -31,8 +31,9 @@ page makes.
   line to Switzerland. Juxi Express's waybills on four of its lines, `JXC`, `YI`, `ZO`, `US` or `ZI`,
   ten digits and `YQ`, are numbers DHLink's tracker knows when it carries the parcel, so that rule is preferred and DHLink
   is asked and named first; the tracker does not know Juxi's other lines. Their rules are low confidence, so
-  DHLink is asked before it is named. Providers name XZG, QYEXP and Asus International for their
-  numbers, so they are aliases and their hint asks DHLink.
+  DHLink is asked before it is named. Providers name XZG, QYEXP, Asus International and YLE for their
+  numbers, so they are aliases and their hint asks DHLink. The two letters `YF` are too thin a mark of a
+  company to be one.
 - The parcel counts only when the number asked is its tracking number or its DHLink number:
   the search can find a parcel by its other numbers.
 - An empty parcel with state 1 is the unknown-number answer. For a DHLink number or a last

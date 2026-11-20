@@ -3,7 +3,9 @@
 Maersk eCommerce is Maersk's parcel business, built on Visible SCM in the United States and B2C
 Europe. It sorts parcels for online shops and marketplaces and hands each to a last-mile carrier.
 Its numbers are `1M`, the client's seven-character code and ten digits. The adapter reads Maersk's
-parcel tracker. Maersk's freight network is [Pilot Freight Services](../pilot-freight/README.md).
+parcel tracker. B2C Europe's own tracker, [TrackYourParcel](https://trackyourparcel.eu/), which
+providers name as the carrier, asks for the delivery country and postcode beside the number. Maersk's freight network is
+[Pilot Freight Services](../pilot-freight/README.md).
 
 ## How it works
 

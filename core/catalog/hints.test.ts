@@ -28,6 +28,10 @@ describe('brand networks', () => {
     expect(carrierIdFromName('XZG')).toBe('dhlink');
     expect(carrierIdFromName('QYEXP')).toBe('dhlink');
     expect(carrierIdFromName('Asus International')).toBe('dhlink');
+    expect(carrierIdFromName('YLE')).toBe('dhlink');
+    expect(carrierIdFromName('YF')).toBeUndefined();
+    // Providers name B2C Europe's own tracker as Maersk eCommerce's parcels' carrier.
+    expect(carrierIdFromName('TrackYourParcel')).toBe('maersk-ecommerce');
     // 17TRACK's names for Team Global Express, and the ones readers give it, which name a multi-zone country or not its home.
     for (const name of ['Team Global Express (MyTeamGE)', 'Team Global Express(NZ)', 'Team Global Express Australia', 'Team Global Express New Zealand']) {
       expect(carrierIdFromName(name), name).toBe('team-global-express');
