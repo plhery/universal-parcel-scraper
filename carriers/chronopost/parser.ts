@@ -153,6 +153,8 @@ function nextMonday(code: string, description: string, event: CarrierEvent): str
 const ONGOING = new Set<Stage>(['pending', 'registered', 'accepted', 'in_transit', 'customs', 'out_for_delivery']);
 /** How soon a scan written again is the same scan. */
 const REPEAT_MS = 2 * 60_000;
+// A failed attempt told again for the same round comes within minutes of the first.
+const SAME_ATTEMPT_MS = 30 * 60_000;
 
 /**
  * Keep operational places, never the delivery-point address or shop contact block,
@@ -255,11 +257,17 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
   let pickupPoint = '';
   let deliveredAt: string | undefined;
   let returning = false;
+  let attemptAt: number | undefined;
   for (const scan of projected) {
+    // A failed attempt minutes after another, with no round between, is that attempt told again, as the
+    // courier records the reason the recipient's instruction asks for ("changement d'adresse nécessaire").
+    const at = explicitOffsetTime(scan.event.time)?.timestamp;
+    const retold = scan.mapped.stage === 'failed_attempt' && stage === 'failed_attempt' && attemptAt !== undefined && at !== undefined
+      && at - attemptAt >= 0 && at - attemptAt <= SAME_ATTEMPT_MS;
     // An alert or an instruction records activity, but does not regress delivery or prove
     // movement. Nor does a drop-off scan that follows the round carrying the parcel to its
     // pickup point, or the point's arrival scan.
-    const kept = scan.notification || (scan.dropOff && DROP_OFF_KEEPS.has(stage));
+    const kept = scan.notification || retold || (scan.dropOff && DROP_OFF_KEEPS.has(stage));
     // Once the parcel starts back to the sender, the scans that follow are the return's,
     // and a delivery reaches the sender.
     returning ||= scan.returnStart;
@@ -274,6 +282,7 @@ export function parseChronopostTrackingXml(xml: string, rawNumber: string): Carr
       stageSource = mapped.source;
       pickupPoint = stage === 'ready_for_pickup' ? scan.pickup : '';
       if (stage === 'delivered') deliveredAt = scan.event.time;
+      if (stage === 'failed_attempt') attemptAt = at;
     }
     scan.event.stage = kept ? stage : mapped.stage;
     scan.event.stage_source = kept ? 'none' : mapped.source;

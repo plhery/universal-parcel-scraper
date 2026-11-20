@@ -66,7 +66,8 @@ describe('Chronopost direct tracking', () => {
       ['Colis non livré : entreprise fermée', 'failed_attempt', 'carrier_map'],
       ['Colis non livré : client absent', 'failed_attempt', 'carrier_map'],
       ['Livraison reportée', 'in_transit', 'carrier_map'],
-      ["Colis non livré : changement d'adresse nécessaire", 'failed_attempt', 'carrier_map'],
+      // Two minutes after the first, past the recipient's instruction: the same attempt told again.
+      ["Colis non livré : changement d'adresse nécessaire", 'failed_attempt', 'none'],
       ['Colis non livré', 'failed_attempt', 'carrier_map'],
     ]);
     // A reason not seen yet, which may be no attempt (a refusal, a damaged parcel), is left to review.
@@ -522,6 +523,24 @@ describe('Chronopost direct tracking', () => {
     const later = parseChronopostTrackingXml(history(prepared, attempt('Colis non livré : client absent'),
       scan('N', '2026-06-27T18:32:36+02:00', 'Colis non livré')), number);
     expect(later.events).toHaveLength(3);
+  });
+
+  it('reads a failed attempt told again minutes later, after the recipient\'s instruction, as the same attempt', () => {
+    const result = parseChronopostTrackingXml(history(prepared,
+      scan('TA', '2026-06-27T18:30:33+02:00', 'Colis en cours de livraison'),
+      scan('N', '2026-06-27T18:32:35+02:00', 'Colis non livré : client absent'),
+      scan('CL', '2026-06-27T18:32:40+02:00', 'Instruction de livraison reçue'),
+      scan('N', '2026-06-27T18:34:34+02:00', "Colis non livré : changement d'adresse nécessaire"),
+      scan('N', '2026-06-27T19:07:19+02:00', 'Livraison reportée')), number);
+    expect(result.events?.map(event => [event.provider_code, event.stage, event.stage_source])).toEqual([
+      ['N', 'in_transit', 'carrier_map'], ['N', 'failed_attempt', 'none'], ['CL', 'failed_attempt', 'none'],
+      ['N', 'failed_attempt', 'carrier_map'], ['TA', 'out_for_delivery', 'carrier_map'], ['DC', expect.any(String), expect.any(String)],
+    ]);
+    // A failed attempt the next day, even with no round scanned before it, is another.
+    const nextDay = parseChronopostTrackingXml(history(prepared,
+      scan('N', '2026-06-27T18:32:35+02:00', 'Colis non livré : client absent'),
+      scan('N', '2026-06-28T11:02:00+02:00', 'Colis non livré : entreprise fermée')), number);
+    expect(nextDay.events?.[0]).toMatchObject({ stage: 'failed_attempt', stage_source: 'carrier_map' });
   });
 
   it('preserves local and invalid clocks without inventing instants', () => {
