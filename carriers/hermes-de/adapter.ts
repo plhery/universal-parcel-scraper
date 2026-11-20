@@ -13,7 +13,7 @@ import { clean, fetchBounded, parseJsonBytes, userAgentOf } from '../../core/tra
 import { isRecord } from '../../core/types.js';
 import {
   COLLECTED_AT_PARCELSHOP, DELIVERED_ABROAD, hermesGermanyMilestone, IGNORED_BOOKING_STATUS, IN_PARCELBOX, type Milestone,
-  NOT_COLLECTED_ABROAD, RETURN_HANDOVER,
+  NOT_COLLECTED_ABROAD, RETURN_HANDOVER, RETURN_SORTED, SENT_BACK,
 } from './status.js';
 
 // Public recipient protocol inspected 2026-09-08:
@@ -223,12 +223,14 @@ export function parseHermesGermanyResponse(payload: unknown, trackingNumber: str
   if (listsNewestFirst(events.map(({ event }) => event)) === false) events.reverse();
   events.sort((a, b) => b.timestamp - a.timestamp);
   let uncollected = false;
+  let sentBack = false;
   for (const entry of [...events].reverse()) {
     if (entry.event.provider_code === NOT_COLLECTED_ABROAD) uncollected = true;
-    else if (uncollected && entry.event.provider_code === DELIVERED_ABROAD) {
+    else if ((uncollected && entry.event.provider_code === DELIVERED_ABROAD) || (sentBack && entry.event.provider_code === RETURN_SORTED)) {
       entry.metadata = RETURN_HANDOVER;
       entry.event.stage = RETURN_HANDOVER.stage;
     }
+    sentBack ||= SENT_BACK.has(entry.metadata?.stage ?? '');
   }
   const latest = events[0];
   if (!latest) throw new HermesGermanyTrackingError();

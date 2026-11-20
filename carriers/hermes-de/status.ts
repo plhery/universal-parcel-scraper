@@ -92,8 +92,9 @@ export const STATUSES: Record<string, Milestone> = {
   RETURN_DELIVERED_TO_SENDER: milestone('returned', 'exception', 'Returned to sender'),
   RETURN: milestone('exception', 'exception', 'Returning to sender'),
   RETOURE_DELIVERED: milestone('returned', 'exception', 'Returned to sender'),
-  // The return prepared at a hub for its way back, "Die Retoure wurde in … für den Weiterversand vorbereitet".
-  RETOURE_SORTED: milestone('exception', 'exception', 'Return sorted on its way to the sender'),
+  // A return parcel prepared at a hub, "Die Retoure wurde in … für den Weiterversand vorbereitet": a customer's own
+  // return, dropped off at a ParcelShop, on its way to the merchant. After a failed delivery it is an exception.
+  RETOURE_SORTED: milestone('in_transit', 'in_transit', 'Return sorted on its way to the sender'),
 };
 
 // Delivery preference bookings (a safe place, a ParcelShop, a delivery day) record the
@@ -107,6 +108,10 @@ export const IGNORED_BOOKING_STATUS = new Set(['EDL_BOOKED_DROPOFF', 'EDL_BOOKED
 export const NOT_COLLECTED_ABROAD = 'INTERNATIONAL_PUDO_NOT_COLLECTED';
 export const DELIVERED_ABROAD = 'INTERNATIONAL_DELIVERED';
 export const RETURN_HANDOVER = milestone('exception', 'exception', 'Returning to sender');
+
+/** A return parcel's sorting, and the stages that make it a parcel sent back rather than a customer's own return. */
+export const RETURN_SORTED = 'RETOURE_SORTED';
+export const SENT_BACK: ReadonlySet<string> = new Set<Stage>(['failed_attempt', 'exception', 'returned']);
 
 /** The code for a parcel put into a Hermes Box, which waits there for its recipient. */
 export const IN_PARCELBOX = 'DELIVERED_PARCELBOX';

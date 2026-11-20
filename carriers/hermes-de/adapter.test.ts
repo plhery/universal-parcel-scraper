@@ -160,13 +160,23 @@ describe('Hermes Germany', () => {
       .toEqual(['DELIVERY_TOUR_STARTED', 'HANDED_OVER', 'SORTED']);
   });
 
+  it("reads a customer's own return on its way to the merchant, and a return after a failed delivery as an exception", () => {
+    const progress = (...codes: string[]) => [{ barcode: NUMBER,
+      parcelProgress: codes.map((parcelStatus, index) => ({ parcelStatus, timestamp: `2026-09-0${index + 1}T09:00:00Z` })) }];
+    expect(parseHermesGermanyResponse(progress('PARCELSHOP_DROP_OFF', 'PARCELSHOP_COLLECTED_BY_DRIVER', 'RETOURE_SORTED'), NUMBER))
+      .toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    const back = parseHermesGermanyResponse(progress('HANDED_OVER', 'DELIVERY_FAILED_NOT_MET_4X', 'RETOURE_SORTED'), NUMBER);
+    expect(back).toMatchObject({ status: 'exception', current_stage: 'exception' });
+    expect(back.events?.map((event) => event.stage)).toEqual(['exception', 'failed_attempt', 'accepted']);
+  });
+
   it.each([
     ['ATG_OUT_OF_WAREHOUSE', 'registered'],
     ['PARCELSHOP_DROP_OFF', 'accepted'],
     ['RETURN_TO_SENDER', 'exception'],
     ['RETURN_DELIVERED_TO_SENDER', 'returned'],
     ['RETOURE_DELIVERED', 'returned'],
-    ['RETOURE_SORTED', 'exception'],
+    ['RETOURE_SORTED', 'in_transit'],
     ['DELIVERY_FAILED', 'failed_attempt'],
     ['READY_FOR_PICKUP', 'ready_for_pickup'],
   ])('does not confuse %s with delivery', (code, stage) => {

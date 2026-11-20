@@ -310,10 +310,10 @@
     },
     {
       "code": "RETOURE_SORTED",
-      "stage": "exception",
+      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-11-16",
-      "note": "The return prepared at a hub for its way back to the sender (Die Retoure wurde in … für den Weiterversand vorbereitet)."
+      "note": "A return parcel prepared at a hub (Die Retoure wurde in … für den Weiterversand vorbereitet): a customer's own return, dropped off at a ParcelShop, on its way to the merchant. After a failed delivery or a return to the sender, the adapter reads it as an exception."
     },
     {
       "code": "EDL_BOOKED_DROPOFF",

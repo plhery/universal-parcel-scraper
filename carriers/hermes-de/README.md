@@ -83,6 +83,9 @@ tracking page shows them in the visitor's zone like Hermes's own.
   (`INTERNATIONAL_PUDO_NOT_COLLECTED`) goes back to the sender. A later
   `INTERNATIONAL_DELIVERED` records a hand-over on that return journey. The shipment stays
   at the exception stage until the sender receives it.
+- `RETOURE_SORTED` is a return parcel sorted at a hub. On a customer's own return,
+  dropped off at a ParcelShop, it is the parcel on its way to the merchant, in transit;
+  after a failed delivery or a return to the sender, an exception.
 - Abroad, a partner such as PostNord, InPost or Correos delivers the parcel.
   The tracking page links the partner's tracking page as the international
   delivery partner (`viewParameters.internationalTrackingLink`). When the
