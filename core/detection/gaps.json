@@ -4700,5 +4700,11 @@
     "pattern": "^\\d{13}$",
     "kind": "by_design",
     "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
+  },
+  {
+    "carrier": "zufall",
+    "pattern": "^00340355246\\d{9}$",
+    "kind": "open",
+    "reason": "Archived ZUFALL tracking pages recognize these 20-digit Colli references. The current rules offer Swiss Post Cargo, USPS and NZ Post for both references."
   }
 ]
