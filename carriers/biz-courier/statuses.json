@@ -1,4 +1,83 @@
 {
   "carrier": "biz-courier",
-  "entries": []
+  "entries": [
+    {
+      "code": "DLIVRD",
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "INDEL",
+      "wording": "Assigned to Courier",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ONTOU",
+      "wording": "Assigned to Courier",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ARRDEP",
+      "wording": "Pending For Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DEPDEP",
+      "wording": "Pending For Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "INO",
+      "wording": "Pending For Delivery",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Arrived at HUB",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Awaiting Pick Up",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Assigned to the Responsible Associate",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "An assignment does not report physical movement."
+    },
+    {
+      "wording": "Assigned to Courier",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The partner code distinguishes a delivery assignment from other transport."
+    },
+    {
+      "wording": "Pending For Delivery",
+      "language": "en",
+      "confirmedBy": "live",
+      "note": "The partner code distinguishes depot movements from other pending states."
+    }
+  ]
 }

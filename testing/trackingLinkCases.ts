@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'biz-courier', number: 'SWS99999999',
+    route: /^https:\/\/trackit\.bizcourier\.eu\/app\/en\/SWS99999999$/,
+    marker: /No tracking results found/ },
   { carrier: 'jas-worldwide', number: 'ANR99999999',
     route: /^https:\/\/myjas\.com\/public\/shipments\?shipmentNumber=ANR99999999$/,
     marker: /Housebill Number/ },

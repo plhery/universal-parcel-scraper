@@ -11553,7 +11553,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Athens",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "biz-courier"
     },
     "canaryUrl": "https://trackit.bizcourier.eu/app/en",
     "trackingUrlTemplate": "https://trackit.bizcourier.eu/app/en/{trackingNumber}",
