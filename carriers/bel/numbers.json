@@ -25,30 +25,6 @@
         ]
       },
       "note": "A customer posted the shipment tracking number on the BEL carrier page. Lookup blocked by verification (HTTP 403 from the BEL tracking portal)."
-    },
-    {
-      "number": "BEL4000167CN",
-      "role": "quarantined",
-      "evidence": "public_shipment_report",
-      "source": {
-        "url": "https://www.trackru.ru/couriers/8256ru",
-        "date": "2021-12-14",
-        "dateKind": "comment publication",
-        "access": "full_page"
-      },
-      "quarantine": true,
-      "context": {
-        "reportedRole": "tracking number",
-        "assessment": "review"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "low",
-        "candidates": [
-          "colis-prive"
-        ]
-      },
-      "note": "An Ozon customer posted the tracking number on the BEL carrier page and asked which company would deliver it. Lookup blocked by verification (HTTP 403 from the BEL tracking portal)."
     }
   ]
 }
