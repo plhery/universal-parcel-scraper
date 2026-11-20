@@ -27403,6 +27403,14 @@
     ]
   },
   {
+    "input": "1Z745Y070492136215",
+    "carrier": "ups",
+    "confidence": "high",
+    "candidates": [
+      "ups"
+    ]
+  },
+  {
     "input": "1Z749EF46815786810",
     "carrier": "ups",
     "confidence": "high",
@@ -41163,6 +41171,34 @@
       "brt",
       "colis-prive",
       "j-and-t"
+    ]
+  },
+  {
+    "input": "3216443672",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-express",
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "estafeta",
+      "packeta",
+      "acs-courier",
+      "box-now",
+      "dhl-ecommerce-es",
+      "dhl-freight",
+      "geniki-taxydromiki"
+    ],
+    "preferred": [
+      "dhl-express"
+    ],
+    "asked": [
+      "dhl-express",
+      "acs-courier",
+      "geniki-taxydromiki",
+      "packeta",
+      "dhl-ecommerce-es"
     ]
   },
   {
@@ -72473,6 +72509,35 @@
     ]
   },
   {
+    "input": "873448721673",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "fedex",
+      "mondial-relay",
+      "colis-prive",
+      "mrw",
+      "brt",
+      "sf-express",
+      "sto",
+      "zto",
+      "j-and-t",
+      "lbc-express",
+      "metropolitan-warehouse",
+      "paquetexpress",
+      "sending"
+    ],
+    "preferred": [
+      "fedex"
+    ],
+    "asked": [
+      "brt",
+      "colis-prive",
+      "j-and-t",
+      "metropolitan-warehouse"
+    ]
+  },
+  {
     "input": "873970594430",
     "carrier": "unknown",
     "confidence": "low",
@@ -84153,6 +84218,18 @@
     ]
   },
   {
+    "input": "CA004332034KG",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "kyrgyz-post",
+      "chronopost"
+    ]
+  },
+  {
     "input": "CA017252768SK",
     "carrier": "slovenska-posta",
     "confidence": "high",
@@ -84628,6 +84705,14 @@
     ],
     "asked": [
       "tnt-it"
+    ]
+  },
+  {
+    "input": "CD173638573DE",
+    "carrier": "dhl",
+    "confidence": "high",
+    "candidates": [
+      "dhl"
     ]
   },
   {
@@ -85389,6 +85474,14 @@
     ]
   },
   {
+    "input": "CJ106266962RU",
+    "carrier": "russian-post",
+    "confidence": "high",
+    "candidates": [
+      "russian-post"
+    ]
+  },
+  {
     "input": "CJ158165955US",
     "carrier": "usps",
     "confidence": "high",
@@ -85410,6 +85503,14 @@
     "confidence": "high",
     "candidates": [
       "usps"
+    ]
+  },
+  {
+    "input": "CJ233408380RU",
+    "carrier": "russian-post",
+    "confidence": "high",
+    "candidates": [
+      "russian-post"
     ]
   },
   {
@@ -88915,6 +89016,18 @@
     "candidates": []
   },
   {
+    "input": "EA001319688KG",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "kyrgyz-post",
+      "chronopost"
+    ]
+  },
+  {
     "input": "EA003204665TN",
     "carrier": "intl-post",
     "confidence": "high",
@@ -90136,6 +90249,14 @@
     "confidence": "high",
     "candidates": [
       "australia-post"
+    ]
+  },
+  {
+    "input": "EJ229926771RU",
+    "carrier": "russian-post",
+    "confidence": "high",
+    "candidates": [
+      "russian-post"
     ]
   },
   {

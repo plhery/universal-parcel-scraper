@@ -1,0 +1,204 @@
+{
+  "carrier": "topparcel",
+  "records": [
+    {
+      "number": "CA004332034KG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with Topparcel's own steps in Italy, then Kyrgyz Post's and Russian Post's to a delivery in Russia."
+    },
+    {
+      "number": "EA001319688KG",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "intl-post",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with Topparcel's own steps in Spain, then the posts' to a delivery in Russia after a failed courier round."
+    },
+    {
+      "number": "873448721673",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fedex",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with Topparcel's own steps in France, then FedEx's to a delivery in Italy."
+    },
+    {
+      "number": "1Z745Y070492136215",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "ups",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with a UPS parcel from Britain delivered in the United States."
+    },
+    {
+      "number": "CJ106266962RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with a parcel from Britain delivered in Russia."
+    },
+    {
+      "number": "EJ229926771RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A customer asks in a review on Topparcel's site where this parcel is; Topparcel's tracker now answers it as delivered in Russia."
+    },
+    {
+      "number": "CD173638573DE",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "dhl",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with a parcel from Germany delivered in Sweden."
+    },
+    {
+      "number": "3216443672",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl-express",
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "acs-courier",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight",
+          "geniki-taxydromiki"
+        ]
+      },
+      "note": "A customer asks in a review on Topparcel's site for help printing this parcel's documents; Topparcel's tracker answers it as a parcel from Italy delivered in the Czech Republic."
+    },
+    {
+      "number": "CJ233408380RU",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://topparcel.com/reviews/page-2",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "russian-post",
+        "confidence": "high"
+      },
+      "note": "A customer's review on Topparcel's site links this number to its tracker, which answers with a parcel from Spain delivered in Russia."
+    }
+  ]
+}

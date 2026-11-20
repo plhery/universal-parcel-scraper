@@ -60367,6 +60367,32 @@
     ],
     "detectionRules": []
   },
+  "topparcel": {
+    "displayName": "Topparcel",
+    "color": "#F2590C",
+    "aliases": [
+      "Topparcel.com"
+    ],
+    "countries": [
+      "GB",
+      "IT",
+      "FR",
+      "ES",
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "topparcel",
+      "localClocks": true
+    },
+    "canaryUrl": "https://topparcel.com/parcels/tracking",
+    "trackingUrlTemplate": "https://topparcel.com/parcels/tracking",
+    "trackingSearchUrl": "https://topparcel.com/parcels/tracking",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "toptrans": {
     "displayName": "TOPTRANS",
     "color": "#005daa",

@@ -902,6 +902,7 @@ import { adapter as tntIt } from '../carriers/tnt-it/adapter.js';
 import { adapter as todayKr } from '../carriers/today-kr/adapter.js';
 import { adapter as tonami } from '../carriers/tonami/adapter.js';
 import { adapter as topdelivery } from '../carriers/topdelivery/adapter.js';
+import { adapter as topparcel } from '../carriers/topparcel/adapter.js';
 import { adapter as toptrans } from '../carriers/toptrans/adapter.js';
 import { adapter as topyou } from '../carriers/topyou/adapter.js';
 import { adapter as torrestir } from '../carriers/torrestir/adapter.js';
@@ -1925,6 +1926,7 @@ export const REGISTRY: RegistryDefinition = {
     "today-kr": todayKr,
     "tonami": tonami,
     "topdelivery": topdelivery,
+    "topparcel": topparcel,
     "toptrans": toptrans,
     "topyou": topyou,
     "torrestir": torrestir,
@@ -3763,6 +3765,7 @@ export const REGISTRY: RegistryDefinition = {
     "topdelivery": "topdelivery",
     "topex-logistics": "universal",
     "topnic": "universal",
+    "topparcel": "topparcel",
     "toptrans": "toptrans",
     "topyou": "topyou",
     "torrestir": "torrestir",

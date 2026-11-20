@@ -4232,6 +4232,11 @@
     "reason": "To-Day waybills are bare twelve-digit numbers, a shape many carriers' rules already suggest."
   },
   {
+    "carrier": "topparcel",
+    "kind": "by_design",
+    "reason": "Topparcel tracks a parcel by the number of the courier or post it booked, so the number names that carrier, not Topparcel."
+  },
+  {
     "carrier": "toptrans",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

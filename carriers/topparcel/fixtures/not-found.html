@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Track Your Package — Topparcel</title>
+</head>
+<body>
+<div class="site-container py-12 lg:py-16">
+  <div class="-mt-6 mb-10 lg:-mt-10">
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://topparcel.com/"},{"@type":"ListItem","position":2,"name":"Track Your Package"}]}</script>
+<nav aria-label="Breadcrumb" class="flex">
+  <ol role="list" class="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+    <li>
+      <a href="/" class="text-gray-400 hover:text-gray-500">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-5 shrink-0"><path d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" fill-rule="evenodd"/></svg>
+        <span class="sr-only">Home</span>
+      </a>
+    </li>
+          <li class="flex items-center gap-x-1.5">
+        <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" class="size-4 shrink-0 text-gray-500"><path d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" fill-rule="evenodd"/></svg>                  <span aria-current="page" class="text-sm font-medium text-gray-900">Track Your Package</span>
+              </li>
+      </ol>
+</nav>
+</div>
+
+<header class="hero-heading mx-auto max-w-4xl mb-12">
+      <p class="hero-eyebrow">
+      <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+      Tracking    </p>
+    <h1>Track Your Package</h1>
+      <p class="hero-lead">Keep track of your package delivery with timeline and tracking details</p>
+  </header>
+
+  <div class="mx-auto max-w-xl">
+          <p class="mb-4 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-800">Parcel not found</p>
+    
+    <div class="panel-gray">
+      <form id="parcel-tracking-form" action="/parcels/tracking/preload" method="post">
+<input type="hidden" value="U1lOVEhFVElDLVRPS0VOLUZPUi1UT1BQQVJDRUwtVEVTVFM=" name="TOPPARCEL_CSRF_TOKEN" />        <label class="form-label" for="Shipment_track">
+          Tracking number        </label>
+        <div class="flex flex-col gap-3 sm:flex-row">
+          <input class="form-input" placeholder="Tracking number" autocomplete="off" name="Shipment[track]" id="Shipment_track" type="text" />          <button type="submit" name="track" value="track" class="btn btn-primary shrink-0 sm:px-8">
+            Track          </button>
+        </div>
+              </form>
+</body>
+</html>
