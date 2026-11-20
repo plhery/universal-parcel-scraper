@@ -238,6 +238,7 @@ import { adapter as egxpress } from '../carriers/egxpress/adapter.js';
 import { adapter as egyptPost } from '../carriers/egypt-post/adapter.js';
 import { adapter as eimskip } from '../carriers/eimskip/adapter.js';
 import { adapter as ekart } from '../carriers/ekart/adapter.js';
+import { adapter as ellermanCityLiners } from '../carriers/ellerman-city-liners/adapter.js';
 import { adapter as elta } from '../carriers/elta/adapter.js';
 import { adapter as emile } from '../carriers/emile/adapter.js';
 import { adapter as emiratesPost } from '../carriers/emirates-post/adapter.js';
@@ -1144,6 +1145,7 @@ export const REGISTRY: RegistryDefinition = {
     "egypt-post": egyptPost,
     "eimskip": eimskip,
     "ekart": ekart,
+    "ellerman-city-liners": ellermanCityLiners,
     "elta": elta,
     "emile": emile,
     "emirates-post": emiratesPost,
@@ -2326,6 +2328,7 @@ export const REGISTRY: RegistryDefinition = {
     "elianpost": "universal",
     "elit-post": "universal",
     "elite-post-al": "universal",
+    "ellerman-city-liners": "ellerman-city-liners",
     "elog-luxembourg": "universal",
     "elta": "elta",
     "em-distribusjon": "universal",

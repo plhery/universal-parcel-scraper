@@ -1,0 +1,56 @@
+{
+  "id": "ellerman-city-liners",
+  "displayName": "Ellerman City Liners",
+  "aliases": [
+    "Ellerman Lines",
+    "Ellerman City Liners Ltd",
+    "ECLK"
+  ],
+  "region": {
+    "countries": [
+      "GB"
+    ]
+  },
+  "brand": {
+    "color": "#132f59"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "ellerman-city-liners",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://ellerman.orcapayments.app/container-tracking/",
+    "searchUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "canaryUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "vessel"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "eta",
+      "vessel"
+    ],
+    "unavailable": [],
+    "siteName": "Ellerman Container Track & Trace"
+  },
+  "links": [],
+  "detection": []
+}

@@ -22244,6 +22244,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "ellerman-city-liners": {
+    "displayName": "Ellerman City Liners",
+    "color": "#132f59",
+    "aliases": [
+      "Ellerman Lines",
+      "Ellerman City Liners Ltd",
+      "ECLK"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ellerman-city-liners",
+      "localClocks": true
+    },
+    "canaryUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingUrlTemplate": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingSearchUrl": "https://ellerman.orcapayments.app/container-tracking/",
+    "trackingSiteName": "Ellerman Container Track & Trace",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "elog-luxembourg": {
     "displayName": "eLOG Luxembourg",
     "color": "#ffdd00",
@@ -66231,6 +66256,7 @@ export const CARRIER_IDS = [
   "elianpost",
   "elit-post",
   "elite-post-al",
+  "ellerman-city-liners",
   "elog-luxembourg",
   "elta",
   "em-distribusjon",
@@ -68109,6 +68135,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "elianpost": [],
   "elit-post": [],
   "elite-post-al": [],
+  "ellerman-city-liners": [],
   "elog-luxembourg": [],
   "elta": ["elta-s10"],
   "em-distribusjon": [],

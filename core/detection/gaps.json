@@ -5569,5 +5569,10 @@
     "carrier": "tanto-intim-line",
     "kind": "open",
     "reason": "The guest form uses container numbers, and equipment ownership does not identify the shipment carrier."
+  },
+  {
+    "carrier": "ellerman-city-liners",
+    "kind": "open",
+    "reason": "Ellerman’s lookup uses equipment identifiers shared across carriers and sailings."
   }
 ]

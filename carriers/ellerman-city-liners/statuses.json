@@ -1,0 +1,33 @@
+{
+  "carrier": "ellerman-city-liners",
+  "entries": [
+    {
+      "code": "VESS",
+      "wording": "On Vessel",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DISC",
+      "wording": "Discharged",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "OUTG",
+      "wording": "Out Gated",
+      "stage": "in_transit",
+      "language": "en",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ERET",
+      "wording": "Empty container returned",
+      "stage": null,
+      "language": "en",
+      "confirmedBy": "live"
+    }
+  ]
+}

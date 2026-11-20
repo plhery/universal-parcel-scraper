@@ -1,0 +1,23 @@
+{
+  "carrier": "ellerman-city-liners",
+  "records": [
+    {
+      "number": "UNSU0214328",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/ellerman-city-liners-ltd",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean freight container number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The public Ellerman manifest lists this container. The carrier widget returned the same equipment number and actual movements from a different sailing."
+    }
+  ]
+}
