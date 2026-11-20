@@ -77,6 +77,7 @@ import { adapter as bjsHomeDelivery } from '../carriers/bjs-home-delivery/adapte
 import { adapter as blueDart } from '../carriers/blue-dart/adapter.js';
 import { adapter as blueExpress } from '../carriers/blue-express/adapter.js';
 import { adapter as blueex } from '../carriers/blueex/adapter.js';
+import { adapter as bmCargo } from '../carriers/bm-cargo/adapter.js';
 import { adapter as bombino } from '../carriers/bombino/adapter.js';
 import { adapter as bookurier } from '../carriers/bookurier/adapter.js';
 import { adapter as borderExpress } from '../carriers/border-express/adapter.js';
@@ -98,6 +99,7 @@ import { adapter as c3x } from '../carriers/c3x/adapter.js';
 import { adapter as cacesa } from '../carriers/cacesa/adapter.js';
 import { adapter as canadaPost } from '../carriers/canada-post/adapter.js';
 import { adapter as canpar } from '../carriers/canpar/adapter.js';
+import { adapter as cargox } from '../carriers/cargox/adapter.js';
 import { adapter as cargus } from '../carriers/cargus/adapter.js';
 import { adapter as carrybee } from '../carriers/carrybee/adapter.js';
 import { adapter as castleParcels } from '../carriers/castle-parcels/adapter.js';
@@ -933,6 +935,7 @@ export const REGISTRY: RegistryDefinition = {
     "blue-dart": blueDart,
     "blue-express": blueExpress,
     "blueex": blueex,
+    "bm-cargo": bmCargo,
     "bombino": bombino,
     "bookurier": bookurier,
     "border-express": borderExpress,
@@ -954,6 +957,7 @@ export const REGISTRY: RegistryDefinition = {
     "cacesa": cacesa,
     "canada-post": canadaPost,
     "canpar": canpar,
+    "cargox": cargox,
     "cargus": cargus,
     "carrybee": carrybee,
     "castle-parcels": castleParcels,
@@ -1904,7 +1908,7 @@ export const REGISTRY: RegistryDefinition = {
     "blueex": "blueex",
     "bluesky-parcel": "universal",
     "bluestreak-couriers": "universal",
-    "bm-cargo": "universal",
+    "bm-cargo": "bm-cargo",
     "bolt-kargo": "universal",
     "bombax": "universal",
     "bombino": "bombino",
@@ -1962,7 +1966,7 @@ export const REGISTRY: RegistryDefinition = {
     "cargobus": "universal",
     "cargoline": "universal",
     "cargomini": "universal",
-    "cargox": "universal",
+    "cargox": "cargox",
     "cargus": "cargus",
     "caribe-pack": "universal",
     "carry-flap": "universal",

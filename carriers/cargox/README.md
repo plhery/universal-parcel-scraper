@@ -1,27 +1,19 @@
 # Cargo X
 
-Cargo X parcels use enabled universal providers. There is no dedicated adapter.
+Cargo X is an e-commerce parcel carrier in Turkey. Earlier Scotty courier parcels use
+[Kargoist](../kargoist/README.md). Select Cargo X explicitly to track a merchant's shipment number.
 
-Cargo X is an e-commerce parcel carrier based in Esenler, Istanbul, with branches across Turkey.
-Its licence was issued to Scotty Kargo A.Ş., the company's former name; parcels from the earlier
-Scotty courier are tracked at [Kargoist](../kargoist/README.md), so that name is not an alias here.
+## Retrieval
 
-## Numbers
+The [public form](https://www.cargox.com.tr/) sends the shipment number as a barcode
+to the Cargo X tracking host. The adapter follows one redirect on that host and requires
+the shipment page and the piece history to name the requested number. The tracking host's
+shipment-not-found page identifies an unknown number.
 
-The tracker takes the shop's shipment number. No public page shows a whole Cargo X number, so
-there is no rule.
-
-## Why there is no adapter
-
-The tracking form opens `t.cargox.com.tr/getlink.php?barcode=<number>`, which leads to the
-shipment's page on Cargo X's tracking panel. No public number is known to check its replies
-against.
-
-## Links
-
-The catalog reads the number from `barcode` on `t.cargox.com.tr/getlink.php`.
+The scan table gives Turkish status wordings, branch names and local clocks in Turkey's
+time zone. The adapter reads the history for the matching piece. A shipment with separate
+piece numbers can be tracked using the number on each piece.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`CARGOX_TRACKING_NUMBER=… CARGOX_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/cargox`

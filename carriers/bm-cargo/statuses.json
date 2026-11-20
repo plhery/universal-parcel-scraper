@@ -1,4 +1,59 @@
 {
   "carrier": "bm-cargo",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Recibido en Miami",
+      "stage": "accepted",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Empacado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Entregado Linea Aerea",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Embarcado",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Recibido AILA",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "En ruta a Sucursal",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Recibido en Sucursal",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Disponible",
+      "stage": "ready_for_pickup",
+      "language": "es",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Entregado",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "portal"
+    }
+  ]
 }

@@ -46,6 +46,27 @@
         ]
       },
       "note": "The archived BM Cargo tracking result shows this warehouse-receipt number and scans for receipt in Miami and handoff to the airline."
+    },
+    {
+      "number": "WR01-025968312",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/719681077/factura-bmcargo-paquete-fundas-plasticas",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "warehouse receipt",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "la-poste"
+        ]
+      },
+      "note": "A published BM Cargo invoice lists this warehouse receipt. The public carrier tracker displayed the matching receipt and a dated delivery history."
     }
   ]
 }

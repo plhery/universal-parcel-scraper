@@ -1,4 +1,47 @@
 {
   "carrier": "cargox",
-  "entries": []
+  "entries": [
+    {
+      "wording": "Kabul Bekliyor",
+      "stage": "registered",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Kabul Edildi",
+      "stage": "accepted",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Yönlendirmede",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Yolda",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Teslimat Şubesinde",
+      "stage": "in_transit",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Dağıtımda",
+      "stage": "out_for_delivery",
+      "language": "tr",
+      "confirmedBy": "portal"
+    },
+    {
+      "wording": "Teslim Edildi",
+      "stage": "delivered",
+      "language": "tr",
+      "confirmedBy": "portal"
+    }
+  ]
 }
