@@ -1,5 +1,31 @@
 {
   "carrier": "neighbour-express",
-  "gap": "No public page shows a whole Neighbour Express tracking number; its own pages mask them.",
-  "records": []
+  "records": [
+    {
+      "number": "NR2600321923",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.bbb.org/us/ma/boston/profile/online-shopping/temucom-0021-553943/complaints?page=85",
+        "date": "2026-04-27",
+        "dateKind": "customer complaint",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Temu return shipment in Canada",
+        "reportedRole": "return tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive",
+          "aramex-au",
+          "aramex-nz"
+        ]
+      },
+      "note": "The customer names Neighbour Express and reproduces this exact return tracking reference in their BBB complaint. The current lookup route for this form of reference requires a postcode, which the report does not give."
+    }
+  ]
 }
