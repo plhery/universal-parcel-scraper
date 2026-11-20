@@ -418,6 +418,18 @@
     "reason": "Ten digits are shared by many carriers and no known prefix or check digit sets BlueEX apart."
   },
   {
+    "carrier": "bolt-kargo",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "Recipient reports identify seven-digit shipment references in Bolt Kargo tracking or notifications, and detection does not offer Bolt Kargo."
+  },
+  {
+    "carrier": "bolt-kargo",
+    "pattern": "^\\d{10}$",
+    "kind": "open",
+    "reason": "A recipient reports a ten-digit shipment reference in Bolt Kargo tracking, and detection does not offer Bolt Kargo."
+  },
+  {
     "carrier": "bombino",
     "pattern": "^\\d{7,10}$",
     "kind": "by_design",
