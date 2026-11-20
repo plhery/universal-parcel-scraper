@@ -441,6 +441,7 @@ import { adapter as jch } from '../carriers/jch/adapter.js';
 import { adapter as jdLogistics } from '../carriers/jd-logistics/adapter.js';
 import { adapter as jeebly } from '../carriers/jeebly/adapter.js';
 import { adapter as jerseyPost } from '../carriers/jersey-post/adapter.js';
+import { adapter as jetDelivery } from '../carriers/jet-delivery/adapter.js';
 import { adapter as jetLogistic } from '../carriers/jet-logistic/adapter.js';
 import { adapter as jetizz } from '../carriers/jetizz/adapter.js';
 import { adapter as jetlineCouriers } from '../carriers/jetline-couriers/adapter.js';
@@ -1380,6 +1381,7 @@ export const REGISTRY: RegistryDefinition = {
     "jd-logistics": jdLogistics,
     "jeebly": jeebly,
     "jersey-post": jerseyPost,
+    "jet-delivery": jetDelivery,
     "jet-logistic": jetLogistic,
     "jetizz": jetizz,
     "jetline-couriers": jetlineCouriers,
@@ -2768,6 +2770,7 @@ export const REGISTRY: RegistryDefinition = {
     "jdiex": "universal",
     "jeebly": "jeebly",
     "jersey-post": "jersey-post",
+    "jet-delivery": "jet-delivery",
     "jet-dp": "universal",
     "jet-express-ee": "universal",
     "jet-global": "universal",

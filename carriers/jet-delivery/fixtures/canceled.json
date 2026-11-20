@@ -1,0 +1,23 @@
+{
+  "error": null,
+  "data": {
+    "track_no": "3766585",
+    "status_code": "99",
+    "status_description": "Canceled",
+    "status_datetime": "2026-02-28T22:00:06-08:00",
+    "events": [
+      {
+        "datetime": "2026-02-28T09:28:00-08:00",
+        "description": "Order scheduled via telephone"
+      },
+      {
+        "datetime": "2026-02-28T09:28:55-08:00",
+        "description": "Driver dispatched to La Verne, CA 91750"
+      },
+      {
+        "datetime": "2026-02-28T22:00:06-08:00",
+        "description": "Shipment acknowledged as canceled."
+      }
+    ]
+  }
+}

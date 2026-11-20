@@ -34265,6 +34265,28 @@
       }
     ]
   },
+  "jet-delivery": {
+    "displayName": "Jet Delivery",
+    "color": "#1d5192",
+    "aliases": [
+      "Jet Delivery Inc.",
+      "Jet Delivery USA"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jet-delivery"
+    },
+    "canaryUrl": "https://www.jetdelivery.com/track/",
+    "trackingUrlTemplate": "https://www.jetdelivery.com/track/?idx={trackingNumber}",
+    "trackingSearchUrl": "https://www.jetdelivery.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jet-dp": {
     "displayName": "JET DP",
     "color": "#3b5159",

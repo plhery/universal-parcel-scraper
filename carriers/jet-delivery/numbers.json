@@ -1,0 +1,47 @@
+{
+  "carrier": "jet-delivery",
+  "records": [
+    {
+      "number": "3765352",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.jetdelivery.com/developer/guides/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "complete shipment number in the carrier’s public tracking API response example",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The live anonymous lookup returned the full number, four dated events and delivery in Brentwood."
+    },
+    {
+      "number": "3766585",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.jetdelivery.com/developer/guides/tracking/",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "complete shipment number in the carrier’s public tracking API response example",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The live anonymous lookup returned the full number, three dated events and a cancellation that occurred after the documentation example."
+    }
+  ]
+}

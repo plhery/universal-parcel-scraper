@@ -34269,6 +34269,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "jet-delivery": {
+    "displayName": "Jet Delivery",
+    "color": "#1d5192",
+    "aliases": [
+      "Jet Delivery Inc.",
+      "Jet Delivery USA"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "America/Los_Angeles",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jet-delivery"
+    },
+    "canaryUrl": "https://www.jetdelivery.com/track/",
+    "trackingUrlTemplate": "https://www.jetdelivery.com/track/?idx={trackingNumber}",
+    "trackingSearchUrl": "https://www.jetdelivery.com/track/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "jet-dp": {
     "displayName": "JET DP",
     "color": "#3b5159",
@@ -67407,6 +67429,7 @@ export const CARRIER_IDS = [
   "jdiex",
   "jeebly",
   "jersey-post",
+  "jet-delivery",
   "jet-dp",
   "jet-express-ee",
   "jet-global",
@@ -69318,6 +69341,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jdiex": [],
   "jeebly": ["jeebly-1"],
   "jersey-post": ["jersey-post-s10"],
+  "jet-delivery": [],
   "jet-dp": [],
   "jet-express-ee": [],
   "jet-global": [],

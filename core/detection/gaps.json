@@ -5734,5 +5734,10 @@
     "carrier": "cotaxi",
     "kind": "open",
     "reason": "The confirmed guide prefixes vary by branch. COTAXI remains an explicit selection while those prefixes are documented."
+  },
+  {
+    "carrier": "jet-delivery",
+    "kind": "open",
+    "reason": "Jet Delivery's published examples are seven digits, a shape shared with other carriers. The adapter is explicitly selectable."
   }
 ]
