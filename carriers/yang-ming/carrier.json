@@ -1,0 +1,73 @@
+{
+  "id": "yang-ming",
+  "displayName": "Yang Ming",
+  "aliases": [
+    "Yang Ming Marine Transport",
+    "Yang Ming Marine Transport Corporation",
+    "YML"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#e60012"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "yang-ming",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "canaryUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery",
+      "weight"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "www.yangming.com",
+        "yangming.com"
+      ],
+      "pathPattern": "^/(?:en|zh|zh-Hant)/ebusiness/tracking/cargo_tracking_detail/?$",
+      "params": [
+        "trackNo"
+      ]
+    }
+  ],
+  "detection": []
+}

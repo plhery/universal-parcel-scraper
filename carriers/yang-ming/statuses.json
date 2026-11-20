@@ -1,0 +1,14 @@
+{
+  "carrier": "yang-ming",
+  "entries": [
+    {"wording": "Gate out of Empty Equipment by Truck at Depot", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with Yang Ming."},
+    {"wording": "Gate out of Empty Equipment by Truck at Port terminal", "stage": "registered", "language": "en", "confirmedBy": "live"},
+    {"wording": "Gate in of Laden Equipment by Truck at Port terminal", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading."},
+    {"wording": "Load of Laden Equipment onto Vessel at Port terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Departure by Vessel at Port terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Arrival by Vessel at Port terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Discharge of Laden Equipment from Vessel at Port terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At a transshipment port as at the port of discharge."},
+    {"wording": "Gate out of Laden Equipment by Truck at Port terminal", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The loaded container leaves the port by truck for the consignee."},
+    {"wording": "Gate in of Empty Equipment by Truck at Port terminal", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee returns the unloaded container. Before the container moved, it is an unused one returned."}
+  ]
+}

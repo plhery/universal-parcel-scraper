@@ -66547,6 +66547,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "yang-ming": {
+    "displayName": "Yang Ming",
+    "color": "#e60012",
+    "aliases": [
+      "Yang Ming Marine Transport",
+      "Yang Ming Marine Transport Corporation",
+      "YML"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "yang-ming",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "trackingSearchUrl": "https://www.yangming.com/en/ebusiness/cargo_tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "www.yangming.com",
+          "yangming.com"
+        ],
+        "pathPattern": "^/(?:en|zh|zh-Hant)/ebusiness/tracking/cargo_tracking_detail/?$",
+        "params": [
+          "trackNo"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "yc-delivery": {
     "displayName": "YC Delivery",
     "color": "#004092",
@@ -69874,6 +69905,7 @@ export const CARRIER_IDS = [
   "yalidine",
   "yamato-america",
   "yandex-delivery",
+  "yang-ming",
   "yc-delivery",
   "ycs-logistics",
   "ydh",
@@ -71842,6 +71874,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "yalidine": ["yalidine-1"],
   "yamato-america": [],
   "yandex-delivery": [],
+  "yang-ming": [],
   "yc-delivery": [],
   "ycs-logistics": [],
   "ydh": ["ydh-1"],
