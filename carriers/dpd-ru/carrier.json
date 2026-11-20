@@ -1,0 +1,91 @@
+{
+  "id": "dpd-ru",
+  "displayName": "DPD Russia",
+  "aliases": [
+    "DPD в России",
+    "DPD Россия",
+    "DPD RU",
+    "ДПД"
+  ],
+  "region": {
+    "countries": [
+      "RU"
+    ]
+  },
+  "brand": {
+    "color": "#dc0032"
+  },
+  "selectable": true,
+  "timezone": "Europe/Moscow",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "dpd-ru",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "eta",
+    "weight",
+    "service_name",
+    "receiver_address"
+  ],
+  "portal": {
+    "url": "https://mydpd.dpd.kz/ols/trace2/standard.do2?orderNum={trackingNumber}",
+    "searchUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "canaryUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "origin",
+      "destination",
+      "recipient_name",
+      "customer_reference"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "weight",
+      "service_name",
+      "destination"
+    ],
+    "discarded": [
+      "origin",
+      "recipient_name",
+      "customer_reference"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "delivered_at",
+      "sender_name",
+      "pickup_point",
+      "proof_of_delivery",
+      "delivery_partner",
+      "delivery_tracking_number"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "mydpd.dpd.kz",
+        "www.dpd.ru",
+        "dpd.ru"
+      ],
+      "pathPattern": "^/ols/trace2/standard\\.do2$",
+      "params": [
+        "orderNum"
+      ]
+    }
+  ],
+  "detection": []
+}

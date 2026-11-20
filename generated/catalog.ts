@@ -20153,6 +20153,39 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "dpd-by": {
+    "displayName": "DPD Belarus",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD Беларусь",
+      "DPD BY"
+    ],
+    "countries": [
+      "BY"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Minsk",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-ru",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mydpd.dpd.by/ols/trace2/standard.do2",
+    "trackingUrlTemplate": "https://mydpd.dpd.by/ols/trace2/standard.do2?orderNum={trackingNumber}",
+    "trackingSearchUrl": "https://mydpd.dpd.by/ols/trace2/standard.do2",
+    "linkRules": [
+      {
+        "domains": [
+          "mydpd.dpd.by"
+        ],
+        "pathPattern": "^/ols/trace2/standard\\.do2$",
+        "params": [
+          "orderNum"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dpd-de": {
     "displayName": "DPD Germany",
     "color": "#dc0032",
@@ -20615,6 +20648,43 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "confidence": "low"
       }
     ]
+  },
+  "dpd-ru": {
+    "displayName": "DPD Russia",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD в России",
+      "DPD Россия",
+      "DPD RU",
+      "ДПД"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-ru",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "trackingUrlTemplate": "https://mydpd.dpd.kz/ols/trace2/standard.do2?orderNum={trackingNumber}",
+    "trackingSearchUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "linkRules": [
+      {
+        "domains": [
+          "mydpd.dpd.kz",
+          "www.dpd.ru",
+          "dpd.ru"
+        ],
+        "pathPattern": "^/ols/trace2/standard\\.do2$",
+        "params": [
+          "orderNum"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "dpd-uk": {
     "displayName": "DPD UK",
@@ -65927,6 +65997,7 @@ export const CARRIER_IDS = [
   "doora-logistics",
   "dpd-at",
   "dpd-be",
+  "dpd-by",
   "dpd-de",
   "dpd-gr",
   "dpd-hk",
@@ -65936,6 +66007,7 @@ export const CARRIER_IDS = [
   "dpd-pl",
   "dpd-pt",
   "dpd-ro",
+  "dpd-ru",
   "dpd-uk",
   "dpd-za",
   "dpdex",
@@ -67795,6 +67867,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "doora-logistics": [],
   "dpd-at": ["dpd-at-1"],
   "dpd-be": ["dpd-be-1"],
+  "dpd-by": [],
   "dpd-de": ["dpd-de-3","dpd-de-4","dpd-de-1","dpd-de-2"],
   "dpd-gr": [],
   "dpd-hk": [],
@@ -67804,6 +67877,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpd-pl": ["dpd-pl-1","dpd-pl-2","dpd-pl-3"],
   "dpd-pt": ["dpd-pt-1","dpd-pt-2","dpd-pt-3","dpd-pt-4"],
   "dpd-ro": ["dpd-ro-1"],
+  "dpd-ru": [],
   "dpd-uk": ["dpd-uk-3","dpd-uk-4","dpd-uk-1","dpd-uk-2"],
   "dpd-za": [],
   "dpdex": ["dpdex-1"],

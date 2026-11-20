@@ -251,6 +251,7 @@ import { statusMap as dpdNl } from '../../carriers/dpd-nl/status.js';
 import { statusMap as dpdPl } from '../../carriers/dpd-pl/status.js';
 import { statusMap as dpdPt } from '../../carriers/dpd-pt/status.js';
 import { statusMap as dpdRo } from '../../carriers/dpd-ro/status.js';
+import { statusMap as dpdRu } from '../../carriers/dpd-ru/status.js';
 import { statusMap as dpdUk } from '../../carriers/dpd-uk/status.js';
 import { statusMap as dpdZa } from '../../carriers/dpd-za/status.js';
 import { statusMap as dpex } from '../../carriers/dpex/status.js';
@@ -982,7 +983,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   dayone, 'daylight-transport': daylightTransport, 'dayton-freight': daytonFreight, dealersend, delhivery, dellin, delnext, deppon, 'dex-pk': dexPk, dhl, 'dhl-ecommerce': dhlEcommerce, 'dhl-ecommerce-es': dhlEcommerceEs, 'dhl-ecommerce-nl': dhlEcommerceNl, 'dhl-ecommerce-pl': dhlEcommercePl, 'dhl-ecommerce-uk': dhlEcommerceUk, 'dhl-express': dhlExpress,
   'dhl-freight': dhlFreight, dhlink, direx, dobropost, 'dohrn-transfer': dohrnTransfer, 'domain-logistics': domainLogistics, domex, dongdu, dpd,
   'dpd-at': dpdAt, 'dpd-be': dpdBe, 'dpd-de': dpdDe, 'dpd-fr': dpdFr, 'dpd-hu': dpdHu, 'dpd-ie': dpdIe,
-  'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
+  'dpd-nl': dpdNl, 'dpd-pl': dpdPl, 'dpd-pt': dpdPt, 'dpd-ro': dpdRo, 'dpd-ru': dpdRu, 'dpd-uk': dpdUk, 'dpd-za': dpdZa, dpex, 'dragon-star-curier': dragonStarCurier, drop2shop, dropp, dsv, dtdc, dx, dynalogic,
   'e-commerce-international': eCommerceInternational, 'early-bird': earlyBird, 'easy-mail': easyMail,
   'ecms-express': ecmsExpress, 'ecom-logistics': ecomLogistics, econt, ecoscooting, ecourier, 'egypt-post': egyptPost, egxpress, ekart, elta, emile, 'emirates-post': emiratesPost, ems, 'ems-vietnam': emsVietnam, 'energia-tk': energiaTk, 'envia-colombia': enviaColombia,
   envialia, 'eparcel-kr': eparcelKr, 'epost-global': epostGlobal, equick, estafeta, estes, 'estes-forwarding': estesForwarding, etomars, 'ets-express': etsExpress, eurodis, 'euroexpress-ba': euroexpressBa, europochta, eushipments,

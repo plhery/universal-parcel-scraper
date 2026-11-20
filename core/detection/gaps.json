@@ -1075,6 +1075,18 @@
     "reason": "Ten digits are shared by several carriers and nothing in the number points to DPD Ireland."
   },
   {
+    "carrier": "dpd-ru",
+    "pattern": "^(?:RU|KZ)\\d{9}$",
+    "kind": "by_design",
+    "reason": "Explicit selection: two country letters and nine digits are also GLS Italy's depot-code layout, and one public DPD Russia number does not settle the family."
+  },
+  {
+    "carrier": "dpd-by",
+    "pattern": "^BY\\d{9}$",
+    "kind": "by_design",
+    "reason": "Explicit selection: two country letters and nine digits are also GLS Italy's depot-code layout, and one public DPD Belarus number does not settle the family."
+  },
+  {
     "carrier": "dpd-za",
     "pattern": "^[A-Z]{2,3}\\d{5,11}$",
     "kind": "by_design",

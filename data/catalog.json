@@ -20149,6 +20149,39 @@
       }
     ]
   },
+  "dpd-by": {
+    "displayName": "DPD Belarus",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD Беларусь",
+      "DPD BY"
+    ],
+    "countries": [
+      "BY"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Minsk",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-ru",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mydpd.dpd.by/ols/trace2/standard.do2",
+    "trackingUrlTemplate": "https://mydpd.dpd.by/ols/trace2/standard.do2?orderNum={trackingNumber}",
+    "trackingSearchUrl": "https://mydpd.dpd.by/ols/trace2/standard.do2",
+    "linkRules": [
+      {
+        "domains": [
+          "mydpd.dpd.by"
+        ],
+        "pathPattern": "^/ols/trace2/standard\\.do2$",
+        "params": [
+          "orderNum"
+        ]
+      }
+    ],
+    "detectionRules": []
+  },
   "dpd-de": {
     "displayName": "DPD Germany",
     "color": "#dc0032",
@@ -20611,6 +20644,43 @@
         "confidence": "low"
       }
     ]
+  },
+  "dpd-ru": {
+    "displayName": "DPD Russia",
+    "color": "#dc0032",
+    "aliases": [
+      "DPD в России",
+      "DPD Россия",
+      "DPD RU",
+      "ДПД"
+    ],
+    "countries": [
+      "RU"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Moscow",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "dpd-ru",
+      "localClocks": true
+    },
+    "canaryUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "trackingUrlTemplate": "https://mydpd.dpd.kz/ols/trace2/standard.do2?orderNum={trackingNumber}",
+    "trackingSearchUrl": "https://mydpd.dpd.kz/ols/trace2/standard.do2",
+    "linkRules": [
+      {
+        "domains": [
+          "mydpd.dpd.kz",
+          "www.dpd.ru",
+          "dpd.ru"
+        ],
+        "pathPattern": "^/ols/trace2/standard\\.do2$",
+        "params": [
+          "orderNum"
+        ]
+      }
+    ],
+    "detectionRules": []
   },
   "dpd-uk": {
     "displayName": "DPD UK",
