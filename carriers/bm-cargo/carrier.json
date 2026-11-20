@@ -16,18 +16,35 @@
   "timezone": "America/Santo_Domingo",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "bm-cargo",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "url": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id={trackingNumber}",
     "searchUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
     "canaryUrl": "https://bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
-    "unavailable": []
+    "unavailable": [
+      "offset_timestamps",
+      "provider_code"
+    ]
   },
   "links": [
     {

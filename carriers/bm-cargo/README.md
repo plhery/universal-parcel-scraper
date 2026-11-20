@@ -1,25 +1,20 @@
 # BM Cargo
 
-BM Cargo parcels use enabled universal providers. There is no dedicated adapter.
+BM Cargo forwards purchases to the Dominican Republic. Select BM Cargo explicitly and
+enter its warehouse receipt number. The adapter restores the hyphen printed on the receipt.
 
-BM Cargo is a Dominican courier with more than seventy branches. It receives purchases at addresses
-in Miami, Madrid and Bogotá and delivers them in the Dominican Republic.
+## Retrieval
 
-## Numbers
+The [public form](https://www.bmcargo.com/) opens the iPlus status page with the receipt in
+its query. The adapter reads the displayed receipt number and its dated scan table.
+An empty tracking form gives no result and cannot distinguish an expired receipt from an
+unknown one. Store-issued tracking numbers can return a different warehouse receipt, so the
+adapter accepts only a BM Cargo receipt.
 
-Its tracker takes its own number or the shop's tracking number. No public page shows a BM Cargo
-number, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-The site opens `bmcargo-online.iplus.com.do/lg-es/ut/Estatus.aspx?id=<number>`, a page on the iPlus
-courier platform, and the library reads the number from that address.
+The timeline has Spanish status wordings and the scanning locations. Its clocks have no
+offset and span multiple countries, so the adapter keeps them as local times. It reads
+the dated rows and skips the progress bar's labels, which include unreached milestones.
 
 ## Testing
 
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+`BM_CARGO_TRACKING_NUMBER=… BM_CARGO_UNKNOWN_NUMBER=… npm run test:carriers:live -- carriers/bm-cargo`
