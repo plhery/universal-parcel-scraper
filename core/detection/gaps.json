@@ -4910,5 +4910,11 @@
     "pattern": "^[0-9A-F]{32}$",
     "kind": "open",
     "reason": "Archived PDS Direct tracking links use UUID-shaped shipment references. Detection does not offer PDS Direct for those references."
+  },
+  {
+    "carrier": "pamukkale-kargo",
+    "pattern": "^20\\d{7}$",
+    "kind": "open",
+    "reason": "Turkish customers publish Pamukkale tracking numbers in this nine-digit family. Detection omits Pamukkale Kargo."
   }
 ]
