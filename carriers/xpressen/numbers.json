@@ -1,5 +1,32 @@
 {
   "carrier": "xpressen",
-  "gap": "No public page shows an Xpressen parcel number.",
-  "records": []
+  "records": [
+    {
+      "number": "00370730259112316891",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20231128113312id_/https://portal.xpressen.dk/track-trace/00370730259112316891",
+        "date": "2023-11-28",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "package number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bring-posten",
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "Xpressen’s archived guest tracker names the whole package number in the page title and shows a delivery event for it."
+    }
+  ]
 }
