@@ -104296,6 +104296,17 @@
     ]
   },
   {
+    "input": "RR 000337331 TG",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "chronopost"
+    ]
+  },
+  {
     "input": "RR000083193BO",
     "carrier": "unknown",
     "confidence": "none",
