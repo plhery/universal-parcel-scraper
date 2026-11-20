@@ -77,7 +77,7 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
   if (!returned) throw new SchemaError('InPost', 'InPost did not return a shipment identifier');
   if (returned !== requested) throw new SchemaError('InPost', 'InPost returned a different shipment');
   const code = statusCode(payload.status);
-  const classified = classifyInpostStatus(code);
+  const classified = classifyInpostStatus(code, clean(payload.statusTitle, 500));
   const rawDetails = payload.trackingDetails;
   if (rawDetails !== undefined && !Array.isArray(rawDetails)) {
     throw new SchemaError('InPost', 'InPost returned invalid tracking history');
@@ -86,7 +86,7 @@ export function parseInpostTrackingResponse(payload: unknown, trackingNumber: st
   const seen = new Set<string>();
   (Array.isArray(rawDetails) ? rawDetails : []).filter(isRecord).slice(0, 500).forEach((rawEvent) => {
     const eventCode = statusCode(rawEvent.status);
-    const eventClassified = classifyInpostStatus(eventCode);
+    const eventClassified = classifyInpostStatus(eventCode, clean(rawEvent.statusTitle, 500));
     // Observed event datetimes carry explicit offsets; require them rather than
     // assigning a zone to a multi-country lane (PL/IT/PT/GB hubs share this API).
     const time = inpostClock(rawEvent.datetime);

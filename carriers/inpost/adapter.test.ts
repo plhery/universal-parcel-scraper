@@ -10,7 +10,8 @@ import {
   InpostTracker,
   adapter,
 } from './adapter.js';
-import { classifyInpostStatus } from './status.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { classifyInpostStatus, statusMap } from './status.js';
 import { parseInpostPickup } from './pickup.js';
 
 // All identifiers and timestamps below are synthetic. Status codes and the
@@ -148,6 +149,21 @@ describe('InPost response parsing', () => {
       const result = parseInpostTrackingResponse(parcel({ status: code, trackingDetails: [] }), TRACKING_NUMBER);
       expect(result).toMatchObject({ status, current_stage: stage });
     }
+  });
+
+  it('reads a courier collection booked under FMD.1001 as registered, until the courier collects the parcel', () => {
+    const booked = { status: 'FMD.1001', statusTitle: 'We will collect it soon', datetime: '2026-05-01T14:00:00+02:00', place: 'Exampletown (IT)' };
+    const waiting = parseInpostTrackingResponse(parcel({ status: 'FMD.1001', statusTitle: 'We will collect it soon', trackingDetails: [
+      { status: 'CRE.1001', statusTitle: 'Parcel created', datetime: '2026-05-01T08:00:00+02:00' }, booked] }), TRACKING_NUMBER);
+    expect(waiting).toMatchObject({ status: 'pending', current_stage: 'registered' });
+    expect(waiting.events?.map((event) => event.stage)).toEqual(['registered', 'registered']);
+    const collected = parseInpostTrackingResponse(parcel({ status: 'FMD.1002', statusTitle: 'Parcel collected', trackingDetails: [booked,
+      { status: 'FMD.1002', statusTitle: 'Parcel collected', datetime: '2026-05-02T10:00:00+02:00', place: 'Exampletown (IT)' }] }), TRACKING_NUMBER);
+    expect(collected).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
+    expect(collected.events?.map((event) => event.stage)).toEqual(['accepted', 'registered']);
+    expect(statusMap.stage('FMD.1001', normalizeStatusWording('We will collect it soon'))).toBe('registered');
+    expect(statusMap.stage('FMD.1001', normalizeStatusWording('Sent through Parcel Locker/Parcel Point'))).toBe('accepted');
+    expect(statusMap.stage(null, normalizeStatusWording('We will collect it soon'))).toBe('registered');
   });
 
   it('reports unmapped codes as unknown with their raw wording preserved', () => {

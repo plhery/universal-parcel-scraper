@@ -70,9 +70,18 @@ export function keepsInpostStage(code: string): boolean {
   return STAGE_KEEPERS.has(code);
 }
 
-/** The stage and status for an InPost hub status code, or undefined when unmapped. */
-export function classifyInpostStatus(code: string): ClassifiedStatus | undefined {
-  return TRACKING_STATUS[code];
+/**
+ * Wordings that give a code another stage. FMD.1001 is a posting at a locker or pickup point,
+ * except when the hub words it as a courier collection booked from the sender: the courier's
+ * collection (FMD.1002) follows.
+ */
+const STATUS_BY_WORDING = new Map<string, ClassifiedStatus>([
+  [`FMD.1001\u0000${normalizeStatusWording('We will collect it soon')}`, { status: 'pending', stage: 'registered' }],
+]);
+
+/** The stage and status for an InPost hub status code and its wording, or undefined when unmapped. */
+export function classifyInpostStatus(code: string, wording = ''): ClassifiedStatus | undefined {
+  return STATUS_BY_WORDING.get(`${code}\u0000${normalizeStatusWording(wording)}`) ?? TRACKING_STATUS[code];
 }
 
 /** A hub status code. ShipX's statuses give a summary, never a scan. */
@@ -86,7 +95,7 @@ const HUB_WORDINGS = statuses.entries.flatMap((entry) => (entry.wording && HUB_C
 /** The stage of a hub wording through the codes it comes with: none when they disagree or one has none. */
 const STAGE_BY_WORDING = new Map<string, Stage | undefined>();
 for (const { code, wording } of HUB_WORDINGS) {
-  const stage = classifyInpostStatus(code)?.stage;
+  const stage = classifyInpostStatus(code, wording)?.stage;
   STAGE_BY_WORDING.set(wording, STAGE_BY_WORDING.has(wording) && STAGE_BY_WORDING.get(wording) !== stage ? undefined : stage);
 }
 
@@ -102,7 +111,7 @@ const KEEPER_NOTES = new Map(HUB_WORDINGS.filter(({ code }) => keepsInpostStage(
 export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     const hubCode = (code && HUB_CODE.test(code) ? code : wording).toLocaleUpperCase('en-US');
-    return HUB_CODE.test(hubCode) ? classifyInpostStatus(hubCode)?.stage : STAGE_BY_WORDING.get(wording);
+    return HUB_CODE.test(hubCode) ? classifyInpostStatus(hubCode, wording)?.stage : STAGE_BY_WORDING.get(wording);
   },
   gaps: [
     ...[...STAGE_KEEPERS].map((code) => ({ code, note: KEEPER_NOTES.get(code) ?? 'Takes the stage of the scan before it, which the stored scan does not keep.' })),
