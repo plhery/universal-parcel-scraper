@@ -302,6 +302,8 @@ function sourceEventStage(description: string, includeBroadMovement = true): Sta
   // An item from abroad is first "sent to the destination country", the day the sending post dispatches it.
   if (/^receipt of data about consignment[.!]?$/i.test(description)) return 'registered';
   if (/^the consignment was sent for transportation[.!]?$/i.test(description)) return 'accepted';
+  // The office of exchange taking in an item on its way abroad or from abroad, after its posting: in transit.
+  if (/^the consignment was accepted by (?:the )?post office of exchange[.!]?$/i.test(description)) return 'in_transit';
   if (/^the consignment (?:left the logistics hub|is being prepared for delivery|was sent to the destination country)[.!]?$/i.test(description)) return 'in_transit';
   if (/^the consignment was deposited(?: - addressee not at home| to balíkovna)[.!]?$/iu.test(description)) return 'ready_for_pickup';
   if (/^the consignment was sent back(?: to the sender)? - the consignment was not picked up by the addressee\b/i.test(description)) return 'exception';
@@ -766,6 +768,9 @@ const DPD_DELAY_NOTICE = /^there has been a delay with your delivery[.!]?$/i;
 // consignment was sent for transportation."): a message, not a movement, as Česká pošta's own map reads its codes
 // 42 and 43. The event it names has its own row.
 const ADDRESSEE_ALERT = /^(?:sms|e-?mail) alert for the addressee\b/i;
+// Its record of the courier's position at a delivery attempt (code QB): no movement, as its own map reads it. The
+// attempt's outcome, such as the item left at the post office, has its own row.
+const ATTEMPT_POSITION = /^geographical data from the delivery attempt[.!]?$/i;
 // China Post's notice that weather or another cause may stretch the item's delivery time ("受台风天气影响，邮件时限可能有所
 // 延长…"): a message dated when it was sent, not a scan, which 17TRACK files under generic transit.
 const DELAY_MESSAGE = /^受[^，,。]{1,30}影响[，,]\s*邮件(?:投递)?时限可能(?:有所)?延长/;
@@ -780,7 +785,8 @@ const CUSTOMS_REFUSAL = /\brefusal\b|\bfailed to clear\b|\breturn allowed\b/i;
 /** A message the shared rules give no stage, whatever code a provider files it under. */
 export function isMessageRow(description: string): boolean {
   const wording = description.trim();
-  return DPD_DELAY_NOTICE.test(wording) || ADDRESSEE_ALERT.test(wording) || DELAY_MESSAGE.test(wording) || DPD_PL_NOTICE.test(wording);
+  return DPD_DELAY_NOTICE.test(wording) || ADDRESSEE_ALERT.test(wording) || ATTEMPT_POSITION.test(wording) || DELAY_MESSAGE.test(wording)
+    || DPD_PL_NOTICE.test(wording);
 }
 
 /** Retain the decision before delivery wording is redacted or a stage is projected. */

@@ -237,6 +237,10 @@ describe('shared provider result', () => {
       expect(event('2026-01-07T12:45:00+01:00', alert), alert).toMatchObject({ description: alert, stage: 'pending', stage_source: 'none' });
     }
     expect(event('2026-01-07T12:45:00+01:00', 'The consignment was sent for transportation.')?.stage_source).not.toBe('none');
+    // Its record of the courier's position at an attempt is no step either; the attempt's outcome has its own row.
+    expect(event('2026-01-07T12:45:00+01:00', 'Geographical data from the delivery attempt.')).toMatchObject({ stage: 'pending', stage_source: 'none' });
+    // The office of exchange takes the item in after its posting: in transit, not a second acceptance.
+    expect(event('2026-01-07T12:45:00+01:00', 'The consignment was accepted by post office of exchange.')).toMatchObject({ stage: 'in_transit' });
   });
 
   it("reads DPD Poland's notices to the recipient as messages, whatever code they are filed under", () => {
