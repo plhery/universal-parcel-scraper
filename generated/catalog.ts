@@ -47712,7 +47712,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "aliases": [
       "Posta Moldovei",
       "Moldova Post",
-      "Post of Moldova"
+      "Post of Moldova",
+      "Moldavia Post"
     ],
     "countries": [
       "MD"
