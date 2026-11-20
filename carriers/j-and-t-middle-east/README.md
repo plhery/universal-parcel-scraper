@@ -36,6 +36,8 @@ lookup its tracking page makes.
   the shared wording rules. The delivery is labelled `Signed`, under the code of the transit labels.
 - A pickup after a scan that moved the parcel, as an import's clearance and transit at the
   gateway branch, is J&T collecting it for the last mile, so it reads as in transit.
+- `Abnormal Parcel`, J&T's problem parcel, is an exception. Right after the courier's round
+  (`Delivering`) it is that round failing, a failed attempt.
 - A scan's location is its branch's town and province. The sentence under each label
   (`customerTracking`) is free text with, as in J&T's other trackers, the courier's name and
   phone. It is not read, nor are the fields for the courier, the signer and the branch's

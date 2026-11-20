@@ -3,6 +3,7 @@ import { normalizeTrackingNumber } from '../../core/detection/index.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
 import { languageStageStatus, type Stage } from '../../core/status/index.js';
+import { normalizeStatusWording } from '../../core/status/statusMap.js';
 import { firstOccurrence } from '../../core/time/index.js';
 import { clean, cleanScalar, textFromHtml } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
@@ -31,6 +32,7 @@ const THROTTLED = /too many|too frequent|frequently|rate limit|请求(?:过于)?
 const IDENTITY = ['waybillNo', 'billCode', 'keyword'] as const;
 const MAX_ROWS = 500;
 const MAX_EVENTS = 100;
+const PROBLEM_PARCEL = normalizeStatusWording('Abnormal Parcel');
 
 /** A waybill for J&T Express Middle East's tracker, in upper case; anything else is not one it issues. */
 export function normalizeJAndTMiddleEastNumber(raw: string): string {
@@ -144,10 +146,16 @@ export function parseJAndTMiddleEast(payload: unknown, raw: string): CarrierResu
   const newestFirst = scans.sort((a, b) => b.timestamp - a.timestamp || a.index - b.index).map(({ event }) => event);
   // An import's pickup comes after its clearance and transit at the gateway branch: J&T
   // collecting it for the last mile, not the sender handing it over.
+  // J&T's problem parcel right after the courier's round is that round failing at the door: a failed attempt.
   let moved = false;
+  let previous: Stage | undefined;
   for (const event of [...newestFirst].reverse()) {
     if (event.stage === 'accepted' && moved) event.stage = 'in_transit';
+    if (event.stage === 'exception' && previous === 'out_for_delivery' && normalizeStatusWording(event.description ?? '') === PROBLEM_PARCEL) {
+      event.stage = 'failed_attempt';
+    }
     if (event.stage && event.stage !== 'registered') moved = true;
+    if (event.stage) previous = event.stage as Stage;
   }
 
   const newest = newestFirst[0]!;
