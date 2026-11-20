@@ -21,18 +21,47 @@
   "timezone": "Asia/Shanghai",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "wangjing-3cq",
+    "steps": [
+      "direct",
+      "retry"
+    ]
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "offset_timestamps",
+    "delivered_at"
+  ],
   "portal": {
     "url": "https://track.wjdrop.com/tracking/index?nums={trackingNumber}",
     "searchUrl": "https://track.wjdrop.com/tracking/index",
     "canaryUrl": "https://track.wjdrop.com/tracking/index",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "progress_rail",
+      "transit_time"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "progress_rail",
+      "transit_time"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "weight",
+      "eta",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {

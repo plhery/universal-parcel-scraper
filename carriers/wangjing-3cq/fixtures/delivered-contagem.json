@@ -1,0 +1,371 @@
+{
+  "data": [
+    {
+      "trackingNumber": "888002598569574",
+      "trackingItems": [
+        {
+          "time": "2026-11-09T19:12:15+08:00",
+          "location": "JDI-MG",
+          "description": "【Contagem】Recceived！Recceived by【Assinar pelo próprio】，In case of doubt, please contact：08000550050，If there is any excption or complaint, please contact the network：08000550050",
+          "status": 4,
+          "source": "Package",
+          "scanCode": "100",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-09T17:37:13+08:00",
+          "location": "JDI-MG",
+          "description": "【Contagem】【JDI-MG】J&T courierEXAMPLE COURIERDelivering，If there is any excption or complaint, please contact the network: 08000550050 ",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "94",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-09T17:01:27+08:00",
+          "location": "JDI-MG",
+          "description": "【Contagem】Arrival【JDI-MG】",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "92",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-09T12:17:50+08:00",
+          "location": "MG CGE",
+          "description": "【Contagem】Departed【MG CGE】Shipped for【JDI-MG】",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "50",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-09T04:29:34+08:00",
+          "location": "MG CGE",
+          "description": "【Contagem】Arrival【MG CGE】",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "90",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-08T04:16:03+08:00",
+          "location": "MG CHV",
+          "description": "【Contagem】Arrival【MG CHV】",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "90",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-08T00:39:45+08:00",
+          "location": "MG CGE",
+          "description": "【Contagem】Departed【MG CGE】Shipped for【MG CHV】",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "50",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T20:43:51+08:00",
+          "location": "MG CGE",
+          "description": "【Contagem】Arrival【MG CGE】",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "90",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T02:03:32+08:00",
+          "location": "SP GRU",
+          "description": "【Guarulhos】Departed【SP GRU】Shipped for【MG CGE】",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "50",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T01:56:20+08:00",
+          "location": "SP GRU",
+          "description": "【Guarulhos】Arrival【SP GRU】",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "90",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T01:53:27+08:00",
+          "location": "SP GRU",
+          "description": "【Guarulhos】Arrival【SP GRU】",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "90",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T01:53:25+08:00",
+          "location": "PA AEROGRU-SP",
+          "description": "【Guarulhos】Departed【PA AEROGRU-SP】Shipped for【SP GRU】",
+          "status": 1,
+          "source": "Package",
+          "scanCode": "50",
+          "problemType": ""
+        },
+        {
+          "time": "2026-11-07T01:53:17+08:00",
+          "location": "PA AEROGRU-SP",
+          "description": "【Guarulhos】【PA AEROGRU-SP】Your J&T CourierEXAMPLE COURIERPicked up。If there is any excption or complaint, please contact the network: 08000550050",
+          "status": 0,
+          "source": "Package",
+          "scanCode": "10",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-28T04:42:00+08:00",
+          "location": "HQ",
+          "description": "A remessa foi desembaraçada pela aduana",
+          "status": 2,
+          "source": "Package",
+          "scanCode": "630",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-28T04:41:00+08:00",
+          "location": "HQ",
+          "description": "Remessa liberada pela aduana",
+          "status": 2,
+          "source": "Package",
+          "scanCode": "630",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-07T02:20:20+08:00",
+          "location": "HQ",
+          "description": "Package present in Brazil",
+          "status": 3,
+          "source": "Package",
+          "scanCode": "680",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-06T23:59:48.081847+08:00",
+          "location": "Brazil",
+          "description": "Análise concluída - importação autorizada A autorização poderá ser revista pela autoridade aduaneira ou pelos órgãos anuentes. ",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-05T01:11:00+08:00",
+          "location": "GRU",
+          "description": "Received in GRU",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-05T00:20:00+08:00",
+          "location": "GRU",
+          "description": "Arrived in GRU  on  QR 8174/04-Oct-2026",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-04T06:41:00+08:00",
+          "location": "DOH",
+          "description": "Departed from DOH on QR8174/04-Oct-2026",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-03T12:20:00+08:00",
+          "location": "DOH",
+          "description": "Received in DOH",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-03T11:36:00+08:00",
+          "location": "DOH",
+          "description": "Arrived in DOH  on  QR 8421/03-Oct-2026",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-03T03:18:00+08:00",
+          "location": "HKG",
+          "description": "Departed from HKG on QR8421/03-Oct-2026",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-03T02:30:00+08:00",
+          "location": "HQ",
+          "description": "Remessa retida pela Receita Federal. Instruções serão enviadas por email para o remetente e/ou destinatario",
+          "status": 2,
+          "source": "Package",
+          "scanCode": "620",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-03T02:29:57+08:00",
+          "location": "HQ",
+          "description": "Remessa esta sendo inspecionada pela aduana",
+          "status": 0,
+          "source": "Package",
+          "scanCode": "610",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-02T18:51:00+08:00",
+          "location": "HQ",
+          "description": "Iniciado o processo de desembaraço aduaneiro",
+          "status": 0,
+          "source": "Package",
+          "scanCode": "608",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-02T17:45:09.585951+08:00",
+          "location": "Brazil",
+          "description": "Informações enviadas para análise da autoridade aduaneira/órgãos anuentes.",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-02T16:45:09.585951+08:00",
+          "location": "",
+          "description": "Objeto postado",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-10-02T14:56:11+08:00",
+          "location": "HQ",
+          "description": "Pacote pre alertado para o destino",
+          "status": 0,
+          "source": "Package",
+          "scanCode": "610",
+          "problemType": ""
+        },
+        {
+          "time": "2026-10-01T15:33:00+08:00",
+          "location": "HKG",
+          "description": "Received from shipper in HKG",
+          "status": 1,
+          "source": "AWB",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-30T16:04:15.906+08:00",
+          "location": "HK",
+          "description": "Goods en route via Mainland-Hong Kong Customs, currently under ULD palletizing at build-up warehouse",
+          "status": 1,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-28T12:15:33.516+08:00",
+          "location": "CN-HK",
+          "description": "En route to customs clearance at Mainland-Hong Kong Customs",
+          "status": 1,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-27T18:59:04.386351+08:00",
+          "location": "Shenzhen",
+          "description": "Departed from origin country.",
+          "status": 1,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-26T15:58:46.280159+08:00",
+          "location": "Shenzhen",
+          "description": "Ready for dispatch.",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-25T17:35:00.106691+08:00",
+          "location": "Shenzhen",
+          "description": "Arrived at the transit depot.",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-25T14:36:19+08:00",
+          "location": "China",
+          "description": "Consolidation Center Receiving",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-24T14:36:19+08:00",
+          "location": "China",
+          "description": "Goods shipped to the consolidation center",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-23T14:12:19+08:00",
+          "location": "China",
+          "description": "The warehouse is packing goods.",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-22T14:29:19+08:00",
+          "location": "China",
+          "description": "The warehouse is verifying the goods.",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        },
+        {
+          "time": "2026-09-21T17:06:19+08:00",
+          "location": "China",
+          "description": "As informações sobre a encomenda foram recebidas\t",
+          "status": 0,
+          "source": "Package",
+          "scanCode": null,
+          "problemType": null
+        }
+      ]
+    }
+  ],
+  "resultCode": 0,
+  "resultMsg": "OK"
+}

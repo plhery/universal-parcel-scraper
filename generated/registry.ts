@@ -785,6 +785,7 @@ import { adapter as vrlLogistics } from '../carriers/vrl-logistics/adapter.js';
 import { adapter as wahana } from '../carriers/wahana/adapter.js';
 import { adapter as walkerLogistics } from '../carriers/walker-logistics/adapter.js';
 import { adapter as wanbexpress } from '../carriers/wanbexpress/adapter.js';
+import { adapter as wangjing3cq } from '../carriers/wangjing-3cq/adapter.js';
 import { adapter as weWorldExpress } from '../carriers/we-world-express/adapter.js';
 import { adapter as wedo } from '../carriers/wedo/adapter.js';
 import { adapter as westernBid } from '../carriers/western-bid/adapter.js';
@@ -1617,6 +1618,7 @@ export const REGISTRY: RegistryDefinition = {
     "wahana": wahana,
     "walker-logistics": walkerLogistics,
     "wanbexpress": wanbexpress,
+    "wangjing-3cq": wangjing3cq,
     "we-world-express": weWorldExpress,
     "wedo": wedo,
     "western-bid": westernBid,
@@ -3415,7 +3417,7 @@ export const REGISTRY: RegistryDefinition = {
     "walker-logistics": "walker-logistics",
     "walkers-transport": "universal",
     "wanbexpress": "wanbexpress",
-    "wangjing-3cq": "universal",
+    "wangjing-3cq": "wangjing-3cq",
     "ward-trucking": "universal",
     "wassel": "universal",
     "we-world-express": "we-world-express",
