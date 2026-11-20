@@ -1,0 +1,181 @@
+{
+  "groups": [
+    {
+      "containerNumber": "ZZZU0000001",
+      "events": [
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Gated out",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-02",
+          "eventTime": "08:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Gated in",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-03",
+          "eventTime": "10:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Loaded",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-05",
+          "eventTime": "14:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel departed",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-06",
+          "eventTime": "02:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel arrived",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-18",
+          "eventTime": "06:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Discharged",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-18",
+          "eventTime": "20:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Gated out",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-20",
+          "eventTime": "09:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000001",
+          "eventDescription": "Gated in",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-24",
+          "eventTime": "15:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        }
+      ]
+    },
+    {
+      "containerNumber": "ZZZU0000012",
+      "events": [
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated out",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-02",
+          "eventTime": "09:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated in",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-03",
+          "eventTime": "11:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Loaded",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-05",
+          "eventTime": "15:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel departed",
+          "eventLocation": "HAMBURG",
+          "eventDate": "2026-03-06",
+          "eventTime": "02:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel arrived",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-18",
+          "eventTime": "06:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Discharged",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-18",
+          "eventTime": "21:00",
+          "eventTransport": "EXAMPLE EXPRESS",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated out",
+          "eventLocation": "NEW YORK, NY",
+          "eventDate": "2026-03-19",
+          "eventTime": "12:00",
+          "eventTransport": "Rail",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Arrival in",
+          "eventLocation": "CHICAGO, IL",
+          "eventDate": "2026-03-22",
+          "eventTime": "07:00",
+          "eventTransport": "Rail",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated in",
+          "eventLocation": "CHICAGO, IL",
+          "eventDate": "2026-03-22",
+          "eventTime": "09:00",
+          "eventTransport": "Rail",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated out",
+          "eventLocation": "CHICAGO, IL",
+          "eventDate": "2026-03-25",
+          "eventTime": "10:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000012",
+          "eventDescription": "Gated in",
+          "eventLocation": "CHICAGO, IL",
+          "eventDate": "2026-03-27",
+          "eventTime": "00:00",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Planned"
+        }
+      ]
+    }
+  ]
+}

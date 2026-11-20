@@ -1,0 +1,113 @@
+{
+  "groups": [
+    {
+      "containerNumber": "ZZZU0000023",
+      "events": [
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Gated out",
+          "eventLocation": "BREMERHAVEN",
+          "eventDate": "2026-01-05",
+          "eventTime": "08:10",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Gated in",
+          "eventLocation": "BREMERHAVEN",
+          "eventDate": "2026-01-07",
+          "eventTime": "13:40",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Loaded",
+          "eventLocation": "BREMERHAVEN",
+          "eventDate": "2026-01-09",
+          "eventTime": "22:15",
+          "eventTransport": "EXAMPLE STAR",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel departed",
+          "eventLocation": "BREMERHAVEN",
+          "eventDate": "2026-01-10",
+          "eventTime": "04:30",
+          "eventTransport": "EXAMPLE STAR",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel arrived",
+          "eventLocation": "ALGECIRAS",
+          "eventDate": "2026-01-15",
+          "eventTime": "11:00",
+          "eventTransport": "EXAMPLE STAR",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Discharged",
+          "eventLocation": "ALGECIRAS",
+          "eventDate": "2026-01-15",
+          "eventTime": "19:45",
+          "eventTransport": "EXAMPLE STAR",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Loaded",
+          "eventLocation": "ALGECIRAS",
+          "eventDate": "2026-01-19",
+          "eventTime": "07:20",
+          "eventTransport": "EXAMPLE SKY",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel departed",
+          "eventLocation": "ALGECIRAS",
+          "eventDate": "2026-01-19",
+          "eventTime": "16:00",
+          "eventTransport": "EXAMPLE SKY",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "eventDescription": "Vessel arrived",
+          "eventLocation": "SANTOS",
+          "eventDate": "2026-02-02",
+          "eventTime": "09:30",
+          "eventTransport": "EXAMPLE SKY",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Discharged",
+          "eventLocation": "SANTOS",
+          "eventDate": "2026-02-02",
+          "eventTime": "21:05",
+          "eventTransport": "EXAMPLE SKY",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Gated out",
+          "eventLocation": "SANTOS",
+          "eventDate": "2026-02-06",
+          "eventTime": "10:50",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        },
+        {
+          "containerNumber": "ZZZU0000023",
+          "eventDescription": "Gated in",
+          "eventLocation": "SANTOS",
+          "eventDate": "2026-02-11",
+          "eventTime": "14:20",
+          "eventTransport": "Truck",
+          "eventClassifierCode": "Actual"
+        }
+      ]
+    }
+  ]
+}

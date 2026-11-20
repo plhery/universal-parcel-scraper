@@ -1740,6 +1740,12 @@
     "reason": "Ten digits are shared by many carriers and nothing in the number points to Hanjin."
   },
   {
+    "carrier": "hapag-lloyd",
+    "pattern": "^HAMU\\d{7}$",
+    "kind": "open",
+    "reason": "HAMU is one of the owner codes of Hapag-Lloyd's own containers, whose ISO 6346 numbers end in a check digit; Hapag-Lloyd's tracker returns the sample container's moves. Detection does not offer Hapag-Lloyd."
+  },
+  {
     "carrier": "hapdong",
     "pattern": "^\\d{10}$",
     "kind": "by_design",

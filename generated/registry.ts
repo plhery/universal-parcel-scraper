@@ -355,6 +355,7 @@ import { adapter as gtlGoto } from '../carriers/gtl-goto/adapter.js';
 import { adapter as guatex } from '../carriers/guatex/adapter.js';
 import { adapter as gzyl } from '../carriers/gzyl/adapter.js';
 import { adapter as hanjin } from '../carriers/hanjin/adapter.js';
+import { adapter as hapagLloyd } from '../carriers/hapag-lloyd/adapter.js';
 import { adapter as happyPost } from '../carriers/happy-post/adapter.js';
 import { adapter as haypost } from '../carriers/haypost/adapter.js';
 import { adapter as hctLogistics } from '../carriers/hct-logistics/adapter.js';
@@ -1267,6 +1268,7 @@ export const REGISTRY: RegistryDefinition = {
     "guatex": guatex,
     "gzyl": gzyl,
     "hanjin": hanjin,
+    "hapag-lloyd": hapagLloyd,
     "happy-post": happyPost,
     "haypost": haypost,
     "hct-logistics": hctLogistics,
@@ -2560,6 +2562,7 @@ export const REGISTRY: RegistryDefinition = {
     "gzyl": "gzyl",
     "hadeland-bud": "universal",
     "hanjin": "hanjin",
+    "hapag-lloyd": "hapag-lloyd",
     "hapdong": "universal",
     "happy-courier-gr": "universal",
     "happy-post": "happy-post",

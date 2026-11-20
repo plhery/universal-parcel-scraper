@@ -2,7 +2,7 @@
 
 Some carriers and universal providers only answer a full browser session. This image extends
 [TRAWL](https://github.com/germondai/trawl) with identity-bound capture for DHL Express, FedEx, UPS, USPS, Royal Mail,
-Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express and Magic Trans. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Hapag-Lloyd. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -41,6 +41,13 @@ number with the token back to the same address. The helper aborts other lookups 
 maps and analytics, captures that lookup alone, and passes on the status, the dated rows, the
 transport and delivery kinds and the terminals' cities from the answered page, without weights,
 cargo names, payment, addresses or phones.
+
+Hapag-Lloyd opens its tracking page with the whole reference in the page's route. Cloudflare's
+check and then the page's own Turnstile may each show their checkbox; the helper clicks one only
+when nothing covers it, at most three times. The page then asks the tracking service for the
+reference's moves with its Turnstile token. Only that request for the whole reference goes out, at
+most twice, and the helper passes on the containers' moves, places and means of transport, or the
+error key of a refusal, without container types, weights or voyages.
 
 Neighbour Express opens the return-label guest page in a fresh context and lets its native
 reCAPTCHA v3 callback submit the whole reference. The helper captures that single POST and

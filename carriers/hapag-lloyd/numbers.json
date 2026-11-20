@@ -1,0 +1,24 @@
+{
+  "carrier": "hapag-lloyd",
+  "records": [
+    {
+      "number": "HAMU3647973",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/hapag-lloyd-china-shipping-ltd",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "container",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A U.S. import manifest lists this empty Hapag-Lloyd container on a bill that stays on board through a U.S. port. Hapag-Lloyd's tracker answers the container with its latest booking, an earlier loaded voyage, so its reply is not kept as a fixture."
+    }
+  ]
+}

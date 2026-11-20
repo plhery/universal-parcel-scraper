@@ -1,0 +1,64 @@
+{
+  "id": "hapag-lloyd",
+  "displayName": "Hapag-Lloyd",
+  "aliases": [
+    "Hapag Lloyd",
+    "HLAG"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#FF6600"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "hapag-lloyd",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.hapag-lloyd.com/solutions/tracking/#/{trackingNumber}",
+    "searchUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "canaryUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "future_milestones",
+      "vehicle",
+      "weight",
+      "dimensions"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "future_milestones"
+    ],
+    "discarded": [
+      "vehicle",
+      "weight",
+      "dimensions"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "proof_of_delivery",
+      "recipient_name",
+      "sender_name"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

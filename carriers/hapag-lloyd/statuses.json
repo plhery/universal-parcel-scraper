@@ -1,0 +1,22 @@
+{
+  "carrier": "hapag-lloyd",
+  "entries": [
+    {"wording": "Gated out", "language": "en", "confirmedBy": "live", "note": "A container leaving a terminal or depot. Its place among the moves decides: before any gate-in it is the empty container released to the shipper, the first truck gate-out after the last discharge is out for delivery, any other is transit."},
+    {"wording": "Gated in", "language": "en", "confirmedBy": "live", "note": "A container entering a terminal or depot. Its place among the moves decides: the first before loading is the cargo accepted, the one after the gate-out for delivery is the empty container's return and the delivery, any other is transit."},
+    {"wording": "Loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on a vessel, a barge or a train."},
+    {"wording": "Vessel departed", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Vessel arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Discharged", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a port of transshipment or discharge."},
+    {"wording": "Vessel departure", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Vessel arrival", "stage": "in_transit", "language": "en", "confirmedBy": "bundle"},
+    {"wording": "Departure from", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A train's, barge's or truck's departure."},
+    {"wording": "Arrival in", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "A train's, barge's or truck's arrival."},
+    {"wording": "Stuffed", "language": "en", "confirmedBy": "bundle", "note": "The cargo packed into the container, usually at the shipper's or a warehouse before the gate-in."},
+    {"wording": "Stripped", "language": "en", "confirmedBy": "bundle", "note": "The cargo unpacked from the container, which may be a stop before delivery or the delivery itself."},
+    {"wording": "Pick-up", "language": "en", "confirmedBy": "bundle", "note": "The container collected at a customer's site, the shipper's or the consignee's; the wording does not say whose."},
+    {"wording": "Drop-off", "language": "en", "confirmedBy": "bundle", "note": "The container left at a customer's site, the shipper's or the consignee's; the wording does not say whose."},
+    {"wording": "Inspected", "language": "en", "confirmedBy": "bundle", "note": "An inspection of the container, which does not move it on."},
+    {"wording": "Resealed", "language": "en", "confirmedBy": "bundle", "note": "A new seal on the container, usually after an inspection."},
+    {"wording": "Removed", "language": "en", "confirmedBy": "bundle", "note": "The wording does not say what was removed or from where."}
+  ]
+}
