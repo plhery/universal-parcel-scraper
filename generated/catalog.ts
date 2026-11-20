@@ -39896,6 +39896,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "maersk": {
+    "displayName": "Maersk",
+    "color": "#42b0d5",
+    "aliases": [
+      "Maersk Line",
+      "A.P. Moller - Maersk"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "maersk",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.maersk.com/tracking/",
+    "trackingUrlTemplate": "https://www.maersk.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.maersk.com/tracking/",
+    "linkRules": [
+      {
+        "domains": [
+          "www.maersk.com"
+        ],
+        "path": "^/tracking/([A-Za-z0-9]{9}|[A-Za-z]{3}[UJZujz]\\d{7})/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "maersk-ecommerce": {
     "displayName": "Maersk eCommerce",
     "color": "#42b0d5",
@@ -68992,6 +69020,7 @@ export const CARRIER_IDS = [
   "maam-envios",
   "macau-post",
   "madhur-courier",
+  "maersk",
   "maersk-ecommerce",
   "magic-trans",
   "magnit-post",
@@ -70957,6 +70986,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maam-envios": [],
   "macau-post": [],
   "madhur-courier": [],
+  "maersk": [],
   "maersk-ecommerce": ["maersk-ecommerce-1"],
   "magic-trans": [],
   "magnit-post": [],

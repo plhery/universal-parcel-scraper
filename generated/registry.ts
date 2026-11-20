@@ -549,6 +549,7 @@ import { adapter as mAndP } from '../carriers/m-and-p/adapter.js';
 import { adapter as mOne } from '../carriers/m-one/adapter.js';
 import { adapter as m24Logistics } from '../carriers/m24-logistics/adapter.js';
 import { adapter as madhurCourier } from '../carriers/madhur-courier/adapter.js';
+import { adapter as maersk } from '../carriers/maersk/adapter.js';
 import { adapter as maerskEcommerce } from '../carriers/maersk-ecommerce/adapter.js';
 import { adapter as magicTrans } from '../carriers/magic-trans/adapter.js';
 import { adapter as magyarPosta } from '../carriers/magyar-posta/adapter.js';
@@ -1558,6 +1559,7 @@ export const REGISTRY: RegistryDefinition = {
     "m-one": mOne,
     "m24-logistics": m24Logistics,
     "madhur-courier": madhurCourier,
+    "maersk": maersk,
     "maersk-ecommerce": maerskEcommerce,
     "magic-trans": magicTrans,
     "magyar-posta": magyarPosta,
@@ -3088,6 +3090,7 @@ export const REGISTRY: RegistryDefinition = {
     "maam-envios": "universal",
     "macau-post": "universal",
     "madhur-courier": "madhur-courier",
+    "maersk": "maersk",
     "maersk-ecommerce": "maersk-ecommerce",
     "magic-trans": "magic-trans",
     "magnit-post": "universal",
