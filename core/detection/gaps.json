@@ -4844,5 +4844,11 @@
     "pattern": "^GC\\d{9}US$",
     "kind": "open",
     "reason": "The carrier’s public tracker recognizes a GC-prefixed US-suffix waybill. The input does not validate as S10, and detection omits Feiyang GCEx."
+  },
+  {
+    "carrier": "scan-global-logistics",
+    "pattern": "^UCI\\d{8}$",
+    "kind": "open",
+    "reason": "A public air waybill issued on behalf of Scan Global Logistics uses the UCI prefix and eight digits. Detection omits Scan Global Logistics."
   }
 ]
