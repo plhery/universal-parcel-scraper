@@ -20,7 +20,7 @@ describe('CTT Express direct tracking', () => {
     const result = normalizeCarrierResult(parseCttExpress(fixture, NUMBER));
     expect(result).toMatchObject({ status: 'in_transit', current_stage: 'ready_for_pickup', last_status_text: 'Disponible en Punto Collectt Express', last_update: '2026-01-04T10:00:00Z', expected_delivery: null });
     expect(result.events).toHaveLength(7);
-    expect(result.events?.map((event) => event.stage)).toEqual(['ready_for_pickup', 'out_for_delivery', 'out_for_delivery', 'exception', 'out_for_delivery', 'in_transit', 'registered']);
+    expect(result.events?.map((event) => event.stage)).toEqual(['ready_for_pickup', 'in_transit', 'in_transit', 'exception', 'out_for_delivery', 'in_transit', 'registered']);
     expect(result.events?.[1]!.time).toBe('2026-01-03T12:00:01.017Z');
     expect(result.events?.[2]!.time).toBe('2026-01-03T12:00:00.970Z');
     expect(result.delivered_at).toBeUndefined();
@@ -181,7 +181,7 @@ describe('CTT Express direct tracking', () => {
   it.each([
     ['1000', 'in_transit', 'in_transit'],
     ['1500', 'out_for_delivery', 'out_for_delivery'],
-    ['2400', 'out_for_delivery', 'out_for_delivery'],
+    ['2400', 'in_transit', 'in_transit'],
     ['2310', 'in_transit', 'ready_for_pickup'],
     ['2100', 'exception', 'returned'],
     ['2110', 'exception', 'returned'],
@@ -333,7 +333,8 @@ describe('CTT Express direct tracking', () => {
       ['1500', 'out_for_delivery'], ['3900', 'registered'], ['0500', 'accepted'], ['0000', 'registered']]);
     expect(JSON.stringify(held)).not.toContain('PRIVATE_SYNTHETIC');
     payload.data.shipping_history.events.push(scan('2400', 'Nuevo reparto', '2026-01-05T08:00:00Z') as never);
-    expect(parseCttExpress(payload, NUMBER)).toMatchObject({ status: 'out_for_delivery', expected_delivery: '2026-01-06' });
+    // A new round planned: the parcel waits at the depot for it.
+    expect(parseCttExpress(payload, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit', expected_delivery: '2026-01-06' });
     // Another post's number names no CTT Portugal leg.
     Object.assign(payload.data, { prime_shipping_code: 'RR123456785CN' });
     expect(parseCttExpress(payload, NUMBER)).toMatchObject({ international_tracking_number: 'RR123456785CN' });

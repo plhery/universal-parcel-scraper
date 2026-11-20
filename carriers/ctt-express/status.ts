@@ -15,8 +15,9 @@ const codes: Record<string, ClassifiedStatus> = {
   '1600': { status: 'exception', stage: 'exception' },
   // Held at the depot after a failed delivery, until a new round or a return.
   '1700': { status: 'exception', stage: 'exception' },
-  // Actual "Nuevo reparto" scan, grouped with 1500 by the official widget.
-  '2400': { status: 'out_for_delivery', stage: 'out_for_delivery' },
+  // "Nuevo reparto": a new round planned, which the official widget groups with 1500. The parcel waits at the depot:
+  // the round itself (1500) follows an hour or more later, after a failed attempt the next day.
+  '2400': { status: 'in_transit', stage: 'in_transit' },
   '2310': { status: 'in_transit', stage: 'ready_for_pickup' },
   // "Recogerán en Delegación": the delivery failed and the recipient is to collect the parcel
   // from the delivery office. It comes at the delivery partner's failed attempt, before the

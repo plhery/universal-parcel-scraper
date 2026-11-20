@@ -48,6 +48,8 @@ CTT Express relays from CTT Portugal (out for delivery, a failed attempt, the de
 availability at a pickup point) carry Lisbon's wall clock with Madrid's offset: CTT Portugal's
 own rows of the same scans are an hour later to the second. Those steps are read on Lisbon's
 clock. CTT Express's own scans before the hand-over keep the instant it gives.
+A new round planned (2400, "Nuevo reparto"), which the official widget groups with the round,
+reads as in transit: the round itself (1500) follows an hour or more later.
 Customer service cases are skipped: they are not scans and carry the
 recipient's contact details. Other measurements, contact information and
 free-form delivery comments are excluded.
