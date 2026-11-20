@@ -41312,6 +41312,37 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "navlungo": {
+    "displayName": "Navlungo",
+    "color": "#1925a8",
+    "aliases": [
+      "Navlungo Domestic",
+      "Navlungo Yurtiçi"
+    ],
+    "countries": [
+      "TR"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Istanbul",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "navlungo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://domestic-track.navlungo.com/en/",
+    "trackingUrlTemplate": "https://domestic-track.navlungo.com/en/check/{trackingNumber}/",
+    "trackingSearchUrl": "https://domestic-track.navlungo.com/en/",
+    "linkRules": [
+      {
+        "domains": [
+          "domestic-track.navlungo.com"
+        ],
+        "path": "^/(?:en|tr)/check/([A-Z0-9]{12})/?$",
+        "detectFromNumber": false
+      }
+    ],
+    "detectionRules": []
+  },
   "ncs-courier": {
     "displayName": "NCS Kurir",
     "color": "#243f80",
@@ -66532,6 +66563,7 @@ export const CARRIER_IDS = [
   "national-delivery-systems",
   "nationex",
   "navata",
+  "navlungo",
   "ncs-courier",
   "nege",
   "neighbour-express",
@@ -68399,6 +68431,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "national-delivery-systems": [],
   "nationex": [],
   "navata": [],
+  "navlungo": [],
   "ncs-courier": [],
   "nege": [],
   "neighbour-express": [],

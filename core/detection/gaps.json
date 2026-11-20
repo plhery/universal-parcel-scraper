@@ -5516,5 +5516,11 @@
     "pattern": "^[A-Z0-9]{8}$",
     "kind": "open",
     "reason": "Genei’s guest API confirms two eight-character references. The shape is shared and Genei is available by explicit selection."
+  },
+  {
+    "carrier": "navlungo",
+    "pattern": "^[A-Z0-9]{12}$",
+    "kind": "open",
+    "reason": "Navlungo’s domestic tracker confirms both 12-character delivery numbers. Select Navlungo explicitly for this shared shape."
   }
 ]
