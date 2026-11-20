@@ -72,12 +72,13 @@ const SUFFIXED_WALL_CLOCKS: ReadonlySet<string> = new Set(['russian-post']);
 const UTC_SUFFIX = /(?:Z|[+-]00:?00)$/i;
 
 /**
- * DHL Germany's copies of the postal union's records at a European office,
- * which name it by its UPU code: their `dt` is the office's wall clock read on
- * Berlin's and written in UTC. Royal Mail's customs scans in Milan at 00:01
- * and 23:06 came at 22:01 and 21:06, its departure from Belfast at 00:11
- * British summer time at 22:11, and Swiss Post's posting at 10:05 Zurich time
- * at 08:05.
+ * DHL Germany's scans: their `dt` is the office's wall clock read on Berlin's
+ * and written in UTC, wherever the office is. Royal Mail's customs scans in
+ * Milan at 00:01 and 23:06 came at 22:01 and 21:06, its departure from Belfast
+ * at 00:11 British summer time at 22:11, Swiss Post's posting at 10:05 Zurich
+ * time at 08:05; an Australian office's departure and DHL's own scans in
+ * Germany, read on Berlin's clock, came an hour early. A copy of the postal
+ * union's records names its office by UPU code.
  */
 const BERLIN_UTC_COPIES = 'DHL Germany';
 const BERLIN = 'Europe/Berlin';
@@ -131,21 +132,19 @@ export function royalMailAustralianWall(service: string, dt: string, leftForAust
   return shown.isValid ? shown.setZone(ROYAL_MAIL_AUSTRALIA_LABEL).toFormat("yyyy-MM-dd'T'HH:mm:ss") : null;
 }
 
-/** The zone of the European office a scan of DHL Germany's copies names. */
+/** The zone of the office a scan of DHL Germany's copies names by UPU code. */
 function berlinCopyZone(service: string, location: string): string | null {
-  const zone = service === BERLIN_UTC_COPIES ? postalOfficeZone(location) : null;
-  return zone?.startsWith('Europe/') ? zone : null;
+  return service === BERLIN_UTC_COPIES ? postalOfficeZone(location) : null;
 }
 
 /**
  * A scan's `dt` as its service's wall clock: without the UTC suffix Postal
- * Ninja writes on some, DHL Germany's copies at a European office back on
- * that office's clock, and PostNL's local scans through Spring GDS back in
- * UTC; the `dt` itself otherwise. A PostNL customs stamp on a Spring GDS
+ * Ninja writes on some, DHL Germany's back on Berlin's clock, and PostNL's
+ * local scans through Spring GDS back in UTC; the `dt` itself otherwise. A PostNL customs stamp on a Spring GDS
  * item is its UTC instant instead.
  */
 export function wallClock(service: string, dt: string, location = '', description = '', carrier: string | null = null): string {
-  if (berlinCopyZone(service, location)) {
+  if (service === BERLIN_UTC_COPIES) {
     const written = DateTime.fromISO(dt, { zone: 'UTC' });
     if (written.isValid) return written.setZone(BERLIN).toFormat("yyyy-MM-dd'T'HH:mm:ss");
   }
@@ -305,7 +304,7 @@ export function lendsZone({ service, description }: Pick<Scan, 'service' | 'desc
 /**
  * The established zone of a scan's wall time, from the service that reported
  * it: the destination post's clock for a scan Swiss Post relays from it, the
- * office's for DHL Germany's copies at a European one, a UTC
+ * office's for DHL Germany's copies that name one, a UTC
  * post's or the origin's that an S10 suffix names for its copies, its fixed
  * or network clock in any history (Beijing's for DHLink's beside GOFO's), China's for Cainiao's steps in China, the
  * facility's for USPS's scans that name its state, else

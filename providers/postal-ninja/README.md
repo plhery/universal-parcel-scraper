@@ -95,12 +95,15 @@ capture failure.
   Correos de España's copies of an origin post's scans are at that post's clock too
   ([Correos](../../carriers/correos-spain/README.md)), but Postal Ninja translates their
   wording, so they cannot be told apart and are read like its own scans.
-  DHL Germany's copies of the postal union's records at a European office, which name it by its
-  UPU code (`ITMILR`), give the office's wall clock read on Berlin's and written in UTC: Royal
+  DHL Germany gives each scan's office wall clock read on Berlin's and written in UTC: Royal
   Mail's customs scans in Milan at 00:01 and 23:06 came at 22:01 and 21:06, its departure from
   Belfast at 00:11 British summer time at 22:11, and Swiss Post's posting at 10:05 Zurich time at
-  08:05. They are placed on the office's clock in any history. Read on a carrier's zone they
-  borrowed, Royal Mail's London time, they came hours early and showed beside Royal Mail's own.
+  08:05; an Australian office's departure and DHL's own scans in Germany fit the same reading.
+  Its scans are read back on Berlin's clock. Its copies of
+  the postal union's records, which name the office by its UPU code (`ITMILR`), are placed on
+  that office's clock in any history; a scan that names none borrows a zone like any other.
+  Read on a carrier's zone they borrowed, Royal Mail's London time, the copies came hours early
+  and showed beside Royal Mail's own, and DHL's scans in Germany an hour early on Berlin's.
   On an item bound for Australia, Royal Mail's scans after the one leaving the UK are the
   Australian post's. Royal Mail labels an Australian office's wall clock with central Australia's
   offset, +09:30 ([Royal Mail](../../carriers/royal-mail/README.md)), and Postal Ninja gives that

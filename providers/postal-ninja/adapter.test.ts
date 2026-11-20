@@ -173,13 +173,14 @@ describe('Postal Ninja result parsing', () => {
     ]);
     const unplaced = parsePostalNinjaResponse(reply, item);
     expect(times(unplaced)).toEqual(['local 2026-08-16T21:30:00', '2026-08-16T21:30:00.000Z',
-      '2026-08-12T08:05:00.000Z', 'local 2026-08-12T08:05:00']);
+      '2026-08-12T08:05:00.000Z', 'local 2026-08-12T10:05:00']);
     // The newest scan has no instant, so an older one does not stand in for it.
     expect(unplaced.last_update).toBeNull();
     // With the carrier's zone, the others' scans borrow it: a guess, two hours
-    // early for DHL Germany's here.
+    // early for the other post's here, and right for DHL Germany's, written in
+    // UTC from Berlin's clock.
     expect(times(parsePostalNinjaResponse(reply, item, 'Europe/Zurich'))).toEqual(['2026-08-16T21:30:00.000Z', '2026-08-16T19:30:00.000Z',
-      '2026-08-12T08:05:00.000Z', '2026-08-12T06:05:00.000Z']);
+      '2026-08-12T08:05:00.000Z', '2026-08-12T08:05:00.000Z']);
     // A destination on several clocks leaves Swiss Post's relays on Zurich time, the last guess.
     const delivered = (destCn: string) => parsePostalNinjaResponse(postal(item, destCn, [{ ds: 'Swiss Post', dt: '2026-08-17T11:17:00', dsc: 'Delivered' }]),
       item).last_update;
@@ -207,7 +208,7 @@ describe('Postal Ninja result parsing', () => {
     ]), us, 'America/New_York'))).toEqual(['2026-09-24T21:30:17.000Z', '2026-09-03T16:20:00.000Z']);
   });
 
-  it('reads DHL Germany\'s copies at a European office as its wall clock written in UTC on Berlin\'s clock', () => {
+  it('reads DHL Germany\'s scans as the office\'s wall clock read on Berlin\'s and written in UTC', () => {
     // Royal Mail's own scans: leaving Belfast at 00:11 summer time, with customs in Milan at 00:01 and 23:06.
     const item = 'RR123456785GB';
     const reply = postal(item, 'IT', [
@@ -220,9 +221,14 @@ describe('Postal Ninja result parsing', () => {
       expect(times(parsePostalNinjaResponse(reply, item, zone))).toEqual(['2026-10-14T21:06:00.000Z',
         '2026-10-12T22:01:00.000Z', '2026-10-05T23:11:00.000Z']);
     }
-    // An office outside Europe, or a copy that names none, is not placed this way.
-    const abroad = postal(item, 'IT', [{ ds: 'DHL Germany', dt: '2026-10-05T22:11:00', dsc: 'Departure from outward office of exchange', loc: 'CNBJSA' }]);
-    expect(times(parsePostalNinjaResponse(abroad, item))).toEqual(['local 2026-10-05T22:11:00']);
+    // An office outside Europe is on its clock too; a scan that names none keeps that wall clock, or borrows a zone.
+    const abroad = (loc: string) => postal(item, 'IT', [{ ds: 'DHL Germany', dt: '2026-10-05T22:11:00', dsc: 'Departure from outward office of exchange', loc }]);
+    expect(times(parsePostalNinjaResponse(abroad('CNBJSA'), item))).toEqual(['2026-10-05T16:11:00.000Z']);
+    expect(times(parsePostalNinjaResponse(abroad(''), item))).toEqual(['local 2026-10-06T00:11:00']);
+    // DHL's own scans in Germany, unplaced, are at their UTC digits: an arrival at 10:40 Berlin time comes at 09:40.
+    const german = 'RR123456785AU';
+    expect(times(parsePostalNinjaResponse(postal(german, 'DE', [{ ds: 'DHL Germany', dt: '2026-11-05T09:40:00', dsc: 'Item at sorting centre' }]),
+      german, 'Europe/Berlin'))).toEqual(['2026-11-05T09:40:00.000Z']);
   });
 
   it('gives Royal Mail\'s Australian scans, after it leaves the UK, the wall clock under Royal Mail\'s label', () => {
@@ -427,10 +433,10 @@ describe('Postal Ninja result parsing', () => {
   });
 
   it('reads local clocks beside other services, or for a postal item that crosses a border, only in the carrier\'s zone', () => {
-    // DHL Germany repeats the origin post's scans at the origin's clock.
+    // DHL Germany repeats the origin post's scans at the origin's clock, read on Berlin's and written in UTC.
     const relayed = withEvents([
       { ds: 'Example Post', dt: '2026-08-12T20:05:00', dsc: 'Posting/Collection' },
-      { ds: 'DHL Germany', dt: '2026-08-12T20:05:00', dsc: 'Posting/Collection' },
+      { ds: 'DHL Germany', dt: '2026-08-12T18:05:00', dsc: 'Posting/Collection' },
       { ds: 'An Post Ireland', dt: '2026-08-17T11:17:00', dsc: 'Delivered' },
     ]);
     const unplaced = parsePostalNinjaResponse(relayed, number);
