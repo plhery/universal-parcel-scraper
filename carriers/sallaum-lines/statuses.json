@@ -1,0 +1,24 @@
+{
+  "carrier": "sallaum-lines",
+  "entries": [
+    {
+      "wording": "Unit received",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Unit shipped",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Unit discharged",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The recorded milestone is unloading from the vessel at the destination port."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "carrier": "xanh-thl",
+  "entries": [
+    {
+      "wording": "Shipment picked up",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Delivery in progress",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The observed scan is at the sending office shortly after pickup."
+    }
+  ]
+}

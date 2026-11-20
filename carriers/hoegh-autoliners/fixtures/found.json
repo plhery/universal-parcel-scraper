@@ -1,0 +1,68 @@
+[
+  {
+    "bol_number": "HOEG7L177KSX0008",
+    "status_code": "Discharged",
+    "routes": [
+      {
+        "portLoad": "CNTAC",
+        "portNameLoad": "Taicang",
+        "loadDate": "2026-09-04T00:00:00.000+00:00",
+        "recievedDate": "2026-09-04T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-09-29T04:00:00.000+00:00",
+        "departure_date_load": "2026-09-04T17:00:00.000+00:00"
+      },
+      {
+        "portLoad": "JMKIN",
+        "portNameLoad": "Kingston (Jam)",
+        "loadDate": "2026-11-05T00:00:00.000+00:00",
+        "recievedDate": "2026-11-05T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-11-11T08:00:00.000+00:00",
+        "departure_date_load": "2026-11-05T12:00:00.000+00:00"
+      }
+    ]
+  },
+  {
+    "bol_number": "HOEG7L177KSX0008",
+    "status_code": "Discharged",
+    "routes": [
+      {
+        "portLoad": "CNTAC",
+        "portNameLoad": "Taicang",
+        "loadDate": "2026-09-04T00:00:00.000+00:00",
+        "recievedDate": "2026-09-04T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-09-29T04:00:00.000+00:00",
+        "departure_date_load": "2026-09-04T17:00:00.000+00:00"
+      },
+      {
+        "portLoad": "JMKIN",
+        "portNameLoad": "Kingston (Jam)",
+        "loadDate": "2026-11-05T00:00:00.000+00:00",
+        "recievedDate": "2026-11-05T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-11-11T08:00:00.000+00:00",
+        "departure_date_load": "2026-11-05T12:00:00.000+00:00"
+      }
+    ]
+  },
+  {
+    "bol_number": "HOEG7L177KSX0008",
+    "status_code": "Discharged",
+    "routes": [
+      {
+        "portLoad": "CNTAC",
+        "portNameLoad": "Taicang",
+        "loadDate": "2026-09-04T00:00:00.000+00:00",
+        "recievedDate": "2026-09-04T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-09-29T04:00:00.000+00:00",
+        "departure_date_load": "2026-09-04T17:00:00.000+00:00"
+      },
+      {
+        "portLoad": "JMKIN",
+        "portNameLoad": "Kingston (Jam)",
+        "loadDate": "2026-11-05T00:00:00.000+00:00",
+        "recievedDate": "2026-11-05T00:00:00.000+00:00",
+        "arrival_date_disc": "2026-11-11T08:00:00.000+00:00",
+        "departure_date_load": "2026-11-05T12:00:00.000+00:00"
+      }
+    ]
+  }
+]

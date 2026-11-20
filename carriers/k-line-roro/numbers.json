@@ -1,0 +1,51 @@
+{
+  "carrier": "k-line-roro",
+  "records": [
+    {
+      "number": "KKLUSOU012222",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/mclaren-automotive-limited",
+        "access": "full_page",
+        "date": "2026-11-09",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "full Kawasaki Kisen Kaisha bill of lading from a public ocean manifest",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fermopoint"
+        ]
+      },
+      "note": "The official RoRo tracker returned the complete bill with actual vessel departure and arrival."
+    },
+    {
+      "number": "KKLUSOU012307",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/rollers-r-us",
+        "access": "full_page",
+        "date": "2026-11-06",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "full Kawasaki Kisen Kaisha bill of lading from a public ocean manifest",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "fermopoint"
+        ]
+      },
+      "note": "The official RoRo tracker returned the complete bill with actual vessel departure and arrival."
+    }
+  ]
+}

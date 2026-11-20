@@ -1,0 +1,111 @@
+{
+  "carrier": "pronto-envios",
+  "records": [
+    {
+      "number": "666174400825",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=5ce0e920-b232-7827-6864-16840856e450",
+        "access": "full_page",
+        "date": "2026-11-11",
+        "dateKind": "publication"
+      },
+      "context": {
+        "reportedRole": "The official postal label in the docket confirms the guide and the unsuccessful delivery.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "mondial-relay",
+          "gls-fr",
+          "colis-prive",
+          "gls-de",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "gls-at",
+          "gls-nl",
+          "gls-pl",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The native history confirms origin acceptance, distribution and an unsuccessful delivery."
+    },
+    {
+      "number": "603973900825",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=a5468953-4dd2-495d-51c8-8048e7fb5cf5",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The court identifies the original physical-mail guide and its carrier certificate.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The native history includes the carrier’s completed delivery scan."
+    },
+    {
+      "number": "659204500865",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=35f75888-9255-01ec-46ce-7d617f174b76",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The court names the provider, guide number and unsuccessful physical delivery attempts.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The native history confirms the same guide with dated distribution and handling events."
+    }
+  ]
+}

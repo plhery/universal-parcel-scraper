@@ -1,0 +1,29 @@
+{
+  "carrier": "epex-colombia",
+  "entries": [
+    {
+      "wording": "Registrado",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Despachado",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Descargado",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Incidencia",
+      "language": "es",
+      "stage": "exception",
+      "confirmedBy": "live"
+    }
+  ]
+}

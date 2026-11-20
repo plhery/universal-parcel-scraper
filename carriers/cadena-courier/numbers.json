@@ -1,0 +1,33 @@
+{
+  "carrier": "cadena-courier",
+  "records": [
+    {
+      "number": "2161247895151",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://publicacionesprocesales.ramajudicial.gov.co/c/document_library/get_file?groupId=6098902&uuid=8a01df36-b310-e453-eb4b-39003f552edd",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Physical postal label and Cadena Courier tracker screenshot in a Colombian court publication.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The carrier’s guest result and detail view both identify the same guide. The live history shows a dated creation event."
+    }
+  ]
+}

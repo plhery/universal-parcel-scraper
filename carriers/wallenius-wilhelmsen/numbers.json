@@ -1,0 +1,25 @@
+{
+  "carrier": "wallenius-wilhelmsen",
+  "records": [
+    {
+      "number": "WLWHGB2582814",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/auto-europe",
+        "access": "full_page",
+        "date": "2026-11-06",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "carrier-prefixed bill of lading in a public ocean manifest",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier’s own BOL field takes GB2582814. It returned the exact bill, timed vessel departure and actual discharge."
+    }
+  ]
+}

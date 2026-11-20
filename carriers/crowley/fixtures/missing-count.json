@@ -1,0 +1,14 @@
+{
+  "actions": [
+    {
+      "state": "SUCCESS",
+      "returnValue": {
+        "returnValue": {
+          "countOfErroredEvents": 0,
+          "Data": 0,
+          "DataObj": []
+        }
+      }
+    }
+  ]
+}

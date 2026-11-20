@@ -1,0 +1,74 @@
+{
+  "success": true,
+  "data": {
+    "tagid": 7749120505
+  },
+  "data_track": [
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-04-01 12:25:42",
+      "type_state_name": "PREFACTURA",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-31 09:01:04",
+      "type_state_name": "GUIA DIGITALIZADA",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-27 17:03:30",
+      "type_state_name": "PREFACTURA",
+      "city_name": "MAICAO"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-27 16:14:49",
+      "type_state_name": "ENTREGA SIN IMAGEN",
+      "city_name": "MAICAO"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-27 12:42:31",
+      "type_state_name": "EN DISTRIBUCION",
+      "city_name": "MAICAO"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-27 11:05:58",
+      "type_state_name": "EN BODEGA DESTINO",
+      "city_name": "MAICAO"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-27 00:45:16",
+      "type_state_name": "RUTA NACIONAL",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-26 22:12:56",
+      "type_state_name": "EN BODEGA",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-26 22:08:58",
+      "type_state_name": "PLANILLADA A CENTRO DE ACOPIO DESDE POS",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-26 21:36:41",
+      "type_state_name": "INGRESADO",
+      "city_name": "BARRANQUILLA"
+    },
+    {
+      "tagid": 7749120505,
+      "dete_time": "2025-03-26 21:36:41",
+      "type_state_name": "INGRESADO",
+      "city_name": "BARRANQUILLA"
+    }
+  ]
+}

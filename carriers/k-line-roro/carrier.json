@@ -1,0 +1,61 @@
+{
+  "id": "k-line-roro",
+  "displayName": "K Line Global RoRo",
+  "aliases": [
+    "K Line RoRo",
+    "K Line",
+    "Kawasaki Kisen Kaisha",
+    "Kawasaki Kisen Kaisha Ltd.",
+    "KKLU"
+  ],
+  "region": {
+    "countries": [
+      "JP"
+    ]
+  },
+  "brand": {
+    "color": "#bd212a"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "k-line-roro",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://apps.klineglobalroro.com/tracking/search?q={trackingNumber}",
+    "searchUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "canaryUrl": "https://apps.klineglobalroro.com/tracking/search",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "delivery_date",
+      "customs"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "delivery_date",
+      "customs"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

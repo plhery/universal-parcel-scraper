@@ -1,0 +1,51 @@
+{
+  "carrier": "sallaum-lines",
+  "records": [
+    {
+      "number": "4T1BF3EK0BU179179",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/931436067/Invoice-Standard-V8-180090",
+        "access": "full_page",
+        "date": "2025-10-02",
+        "dateKind": "invoice"
+      },
+      "context": {
+        "reportedRole": "full vehicle serial on a public freight invoice naming Sallaum Lines as the carrier",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The first-party tracker returned the exact VIN, intake, vessel shipment and timed discharge in Lagos."
+    },
+    {
+      "number": "4T1BE46K77U557013",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.scribd.com/document/931436067/Invoice-Standard-V8-180090",
+        "access": "full_page",
+        "date": "2025-10-02",
+        "dateKind": "invoice"
+      },
+      "context": {
+        "reportedRole": "full vehicle serial on a public freight invoice naming Sallaum Lines as the carrier",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "colis-prive"
+        ]
+      },
+      "note": "The first-party tracker returned the exact VIN, intake and vessel shipment."
+    }
+  ]
+}

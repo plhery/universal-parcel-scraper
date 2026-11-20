@@ -1,0 +1,82 @@
+{
+  "carrier": "umac-cargo",
+  "entries": [
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Carrier movement field Manifest_ABLDRLine::DateDelivered."
+    },
+    {
+      "wording": "Out for Delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "Carrier movement field Manifest_ABLDRLine::OutForDelivDate."
+    },
+    {
+      "wording": "Unloaded from the container at Marikina Warehouse",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateUnloaded."
+    },
+    {
+      "wording": "Container released from the Customs & for transport to Marikina Warehouse",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateReleased."
+    },
+    {
+      "wording": "Container discharged from shipping vessel, & awaiting Customs clearance",
+      "language": "en",
+      "stage": "customs",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateActDischarge."
+    },
+    {
+      "wording": "Arrival at Philippine ​port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateArrived."
+    },
+    {
+      "wording": "Shipping vessel departed from Asia Transhipment Port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateActDepAsiaPort."
+    },
+    {
+      "wording": "Arrived at Asia Transhipment Port",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateArrTranship."
+    },
+    {
+      "wording": "Shipping vessel departed from port of loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateShipped."
+    },
+    {
+      "wording": "Container arrived at port of loading",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateArvlPortOrigin."
+    },
+    {
+      "wording": "Container departed from Origin Warehouse",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Carrier movement field DateDepUnitWH."
+    }
+  ]
+}

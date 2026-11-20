@@ -1,0 +1,27 @@
+{
+  "carrier": "confirmed-freight",
+  "records": [
+    {
+      "number": "SAMPLE",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.confirmedfreight.com/services/tracking.htm",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "shipment reference in the carrier’s linked tracking demonstration",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "gls-ch",
+          "gls-de"
+        ]
+      },
+      "note": "The official guest tracking flow displayed this reference and its dated movement history. The positive result covers the carrier’s public demonstration."
+    }
+  ]
+}

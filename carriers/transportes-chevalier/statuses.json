@@ -1,0 +1,41 @@
+{
+  "carrier": "transportes-chevalier",
+  "entries": [
+    {
+      "wording": "INGRESADO",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN BODEGA",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "RUTA NACIONAL",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN BODEGA DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "EN DISTRIBUCION",
+      "language": "es",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "ENTREGA SIN IMAGEN",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

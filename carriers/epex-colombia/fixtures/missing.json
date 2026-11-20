@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "parsed": {
+    "ERROR": {
+      "CODIGO": "400",
+      "MENSAJE": "La ExpediciÃ³n con nÃºmero '000000000000' no existe ",
+      "NUMEROREGISTRO": "1",
+      "REFERENCIA": []
+    }
+  }
+}

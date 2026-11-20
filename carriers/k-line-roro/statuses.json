@@ -1,0 +1,17 @@
+{
+  "carrier": "k-line-roro",
+  "entries": [
+    {
+      "wording": "Actual Departure",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Actual Arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    }
+  ]
+}

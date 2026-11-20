@@ -1,0 +1,65 @@
+{
+  "carrier": "crowley",
+  "records": [
+    {
+      "number": "CLAMCWPN26201624",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/gildan-mayan-textile-s-de-rl",
+        "access": "full_page",
+        "date": "2026-11-16",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "Master bill of lading in a public manifest naming Crowley Latin America Services as carrier.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The guest bill search accepts the value without the SCAC and returns the manifest equipment CMCU4571153 with dated movements."
+    },
+    {
+      "number": "CWLQCWPS26270874",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/c-f-auto-care",
+        "access": "full_page",
+        "date": "2026-11-11",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "Master bill of lading in a public manifest naming Crowley Caribbean Services as carrier.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The guest bill search accepts the value without the SCAC and returns the manifest equipment CMCU4335564 with dated movements."
+    },
+    {
+      "number": "CLAMCWPN26172288",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/ulua-textiles",
+        "access": "full_page",
+        "date": "2026-07-13",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "Master bill of lading in a public manifest naming Crowley Latin America Services as carrier.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The guest service returns manifest equipment and a paginated history across multiple containers."
+    }
+  ]
+}

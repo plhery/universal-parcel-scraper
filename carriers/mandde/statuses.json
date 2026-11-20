@@ -1,0 +1,47 @@
+{
+  "carrier": "mandde",
+  "entries": [
+    {
+      "code": "USA",
+      "wording": "USADA",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ICA",
+      "wording": "INGRESO CENTRO ACOPIO",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DRD",
+      "wording": "DESPACHADA REG DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "RRD",
+      "wording": "RECIBIDA REGIONAL DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "REP",
+      "wording": "REPARTO",
+      "language": "es",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ENT",
+      "wording": "ENTREGADO",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

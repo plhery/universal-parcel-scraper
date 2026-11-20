@@ -1,0 +1,26 @@
+{
+  "carrier": "hoegh-autoliners",
+  "entries": [
+    {
+      "wording": "Discharged",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Physical unloading from the carrier’s vessel."
+    },
+    {
+      "wording": "Loaded",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The carrier reports a dated load at the departure port."
+    },
+    {
+      "wording": "Received",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The received date records physical intake at the loading port."
+    }
+  ]
+}

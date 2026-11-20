@@ -1,0 +1,61 @@
+{
+  "id": "wallenius-wilhelmsen",
+  "displayName": "Wallenius Wilhelmsen",
+  "aliases": [
+    "Wallenius Wilhelmsen Ocean",
+    "Wallenius Wilhelmsen Logistics",
+    "WWL"
+  ],
+  "region": {
+    "countries": [
+      "NO",
+      "SE"
+    ]
+  },
+  "brand": {
+    "color": "#144f73"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "wallenius-wilhelmsen",
+    "steps": [
+      "browser"
+    ],
+    "browser": true,
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://www.walleniuswilhelmsen.com/track-trace",
+    "searchUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "canaryUrl": "https://www.walleniuswilhelmsen.com/track-trace",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "delivery_date",
+      "coordinates"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "delivery_date",
+      "coordinates"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

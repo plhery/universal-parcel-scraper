@@ -1,0 +1,19 @@
+{
+  "carrier": "enviamos-comunicaciones",
+  "entries": [
+    {
+      "wording": "Certificado. La persona a notificar si reside o labora en esta dirección",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Both native examples have this exact wording and both court orders independently identify those physical mailings as successfully delivered."
+    },
+    {
+      "wording": "Fecha ingreso oficina",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live",
+      "note": "The dated office intake field records the first physical receipt."
+    }
+  ]
+}

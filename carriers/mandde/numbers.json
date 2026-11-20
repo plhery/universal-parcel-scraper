@@ -1,0 +1,33 @@
+{
+  "carrier": "mandde",
+  "records": [
+    {
+      "number": "4000030219752",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://mandde.com.co/puntosges/Manual_ALQUIMIA_CLIENTES_2025_Gui%CC%81a_Sticker.pdf",
+        "access": "indexed_excerpt"
+      },
+      "context": {
+        "reportedRole": "complete MANDDE guide in section 3.3 of the official Alquimia client manual",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "correos-chile",
+          "delhivery",
+          "yunda",
+          "korea-post",
+          "econt",
+          "fan-courier",
+          "ozon-logistics",
+          "paquetexpress"
+        ]
+      },
+      "note": "The official guest service returned this exact MANDDE guide and six dated movements."
+    }
+  ]
+}

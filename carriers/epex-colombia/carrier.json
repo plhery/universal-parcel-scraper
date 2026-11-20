@@ -1,0 +1,60 @@
+{
+  "id": "epex-colombia",
+  "displayName": "EPEX Colombia",
+  "aliases": [
+    "EPEX",
+    "Expreso Palmira Encomiendas",
+    "EPEX Expreso Palmira"
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#da291c"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "epex-colombia",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://epex.com.co/rastrea/?id={trackingNumber}",
+    "searchUrl": "https://epex.com.co/rastrea/",
+    "canaryUrl": "https://epex.com.co/rastrea/",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination",
+      "recipient_address",
+      "sender_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "recipient_address",
+      "sender_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

@@ -131,6 +131,11 @@
     "reason": "Nine digits are printed by many carriers and nothing in the number points to Air Star Xpress."
   },
   {
+    "carrier": "airbaltic-cargo",
+    "kind": "open",
+    "reason": "The full air waybill identifies airBaltic in its own lookup. Eleven-digit numbers overlap other carriers and are kept explicit pending review."
+  },
+  {
     "carrier": "airpak-express",
     "pattern": "^\\d{12}$",
     "kind": "by_design",
@@ -550,6 +555,11 @@
     "reason": "CACESA clears parcels through customs under the numbers of the platforms and carriers it works for, so it has no number format of its own. Cainiao's Spanish and Portuguese numbers belong to Ecoscooting, which delivers them."
   },
   {
+    "carrier": "cadena-courier",
+    "kind": "open",
+    "reason": "The court-published numeric guide is shared in length with other carriers. The carrier is explicitly selectable."
+  },
+  {
     "carrier": "calidex-courier",
     "kind": "open",
     "reason": "Published Calidex guides use location prefixes in a shared format. The guest lookup confirms the complete guide on explicit selection."
@@ -776,6 +786,16 @@
     "reason": "Closer Logistics' twelve-digit numbers share their length with many carriers and carry no known check, so no rule claims them."
   },
   {
+    "carrier": "conexiones-empresariales",
+    "kind": "open",
+    "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."
+  },
+  {
+    "carrier": "confirmed-freight",
+    "kind": "open",
+    "reason": "The public shipment demonstration does not establish the carrier's customer reference formats."
+  },
+  {
     "carrier": "connect-couriers",
     "pattern": "^\\d{11}$",
     "kind": "by_design",
@@ -796,6 +816,11 @@
     "pattern": "^R[DR]\\d{9}BO$",
     "kind": "by_design",
     "reason": "AGBC issues some registered numbers in the S10 layout whose check digit does not validate; generic postal detection skips them and national posts get no S10 rule."
+  },
+  {
+    "carrier": "cotaxi",
+    "kind": "open",
+    "reason": "The confirmed guide prefixes vary by branch. COTAXI remains an explicit selection while those prefixes are documented."
   },
   {
     "carrier": "courier-center",
@@ -837,6 +862,11 @@
     "pattern": "^\\d{15}$",
     "kind": "collision",
     "reason": "Credifin's fifteen-digit package labels are a bare digit run that many carriers' numbers share, so the shape cannot name Credifin."
+  },
+  {
+    "carrier": "crowley",
+    "kind": "open",
+    "reason": "SCAC-qualified bills match the carrier's native search. The manifest patterns need a collision review before automatic detection."
   },
   {
     "carrier": "cruz-del-sur",
@@ -1318,6 +1348,16 @@
     "pattern": "^\\d{10}$",
     "kind": "by_design",
     "reason": "Ten digits are shared by several carriers and nothing in the number points to Envialia."
+  },
+  {
+    "carrier": "enviamos-comunicaciones",
+    "kind": "open",
+    "reason": "The full numeric guides work in the carrier's own tracker. Length and prefix overlap other carriers and do not establish a unique format."
+  },
+  {
+    "carrier": "epex-colombia",
+    "kind": "open",
+    "reason": "The EPEX lookup confirms its published numeric guide. Numeric guides overlap other carriers and are kept explicit."
   },
   {
     "carrier": "equick",
@@ -1989,6 +2029,11 @@
     "reason": "NT numbers are the barcodes of council notifications Hispapost delivers. One public sample does not show that Hispapost issues the shape rather than the notifying administration, so no rule claims it."
   },
   {
+    "carrier": "hoegh-autoliners",
+    "kind": "open",
+    "reason": "The native service confirms the full HOEG-prefixed bills. The carrier remains explicitly selectable pending a detection review."
+  },
+  {
     "carrier": "honour-lane-shipping",
     "kind": "open",
     "reason": "The guest lookup uses equipment identifiers shared across shipping lines and voyages."
@@ -2190,6 +2235,11 @@
     "reason": "Jeebly's six-digit JB and JBP numbers appear only as documentation examples, and short two- or three-letter composites are shared by many carriers."
   },
   {
+    "carrier": "jet-delivery",
+    "kind": "open",
+    "reason": "Jet Delivery's published examples are seven digits, a shape shared with other carriers. The adapter is explicitly selectable."
+  },
+  {
     "carrier": "jet-logistic",
     "pattern": "^\\d{12}$",
     "kind": "collision",
@@ -2230,6 +2280,11 @@
     "pattern": "^\\d{6}(?:\\d{3,4})?$",
     "kind": "by_design",
     "reason": "A JRS airbill is a short receipt number that only identifies a parcel together with the branch code, alone or followed by it, so its digits cannot point to JRS."
+  },
+  {
+    "carrier": "k-line-roro",
+    "kind": "open",
+    "reason": "The carrier confirms its KKLU-prefixed RoRo bills. A detection rule is pending review of other bill formats and collisions."
   },
   {
     "carrier": "kargoist",
@@ -2554,6 +2609,11 @@
     "reason": "A bare nine-digit code is a generic numeric shape."
   },
   {
+    "carrier": "mandde",
+    "kind": "open",
+    "reason": "The carrier confirms its published numeric guide. More samples and a collision review are needed to establish a detection rule."
+  },
+  {
     "carrier": "maritime-ontario",
     "pattern": "^F\\d{7}$",
     "kind": "open",
@@ -2617,6 +2677,11 @@
     "pattern": "^\\d{12}$",
     "kind": "by_design",
     "reason": "Twelve digits are shared by several carriers and nothing in the number points to DHL eCommerce Türkiye."
+  },
+  {
+    "carrier": "mol-ace",
+    "kind": "open",
+    "reason": "The MOLU-prefixed manifest bills match the carrier's numeric form. Detection is pending a review of historical and current MOL formats."
   },
   {
     "carrier": "morning-global",
@@ -3225,6 +3290,11 @@
     "reason": "Complaints give Prompt Xpress numbers as SP and eight digits, while its former tracking page gave SP and nine; the tracker no longer holds those parcels, so the layout is not established."
   },
   {
+    "carrier": "pronto-envios",
+    "kind": "open",
+    "reason": "The published guides are numeric and their observed length is shared by several carriers. Keep the native tracker explicitly selectable."
+  },
+  {
     "carrier": "pronto-lanka",
     "pattern": "^\\d{8}$",
     "kind": "by_design",
@@ -3474,6 +3544,11 @@
     "reason": "The adapter uses shared shipping container identifiers and is selected explicitly."
   },
   {
+    "carrier": "sallaum-lines",
+    "kind": "open",
+    "reason": "The official tracker uses vehicle VINs, which identify vehicles across carriers rather than the operator."
+  },
+  {
     "carrier": "sapx-express",
     "pattern": "^[A-Z]{3}\\d{11}(?:\\d{2})?$",
     "kind": "by_design",
@@ -3537,6 +3612,11 @@
     "pattern": "^\\d{9}$",
     "kind": "by_design",
     "reason": "Nine digits are printed by many carriers and nothing in the number points to SEKO."
+  },
+  {
+    "carrier": "sendbox-argentina",
+    "kind": "open",
+    "reason": "The two guide components identify shipments in the selected SendBox tracker. The numeric components also fit other carriers."
   },
   {
     "carrier": "sendex",
@@ -4150,6 +4230,11 @@
     "reason": "The guest history confirms the whole house bill. The adapter is explicitly selected."
   },
   {
+    "carrier": "transportes-chevalier",
+    "kind": "open",
+    "reason": "The native portal confirms the full numeric guide. Its length is shared by other carriers and remains an explicit choice."
+  },
+  {
     "carrier": "trendyol-express",
     "pattern": "^\\d{16}$",
     "kind": "by_design",
@@ -4202,6 +4287,11 @@
     "pattern": "^\\d{16}$",
     "kind": "by_design",
     "reason": "Sixteen digits are shared by several carriers and nothing in the number points to UBI Smart Parcel."
+  },
+  {
+    "carrier": "umac-cargo",
+    "kind": "open",
+    "reason": "The confirmed boxes share a UMTC prefix. Other UMAC box series and collisions need review before detection is assigned."
   },
   {
     "carrier": "united-africa-feeder-line",
@@ -4347,6 +4437,11 @@
     "reason": "Wahana resi numbers are eight random digits and capital letters, a shape too short and generic to point to Wahana alone."
   },
   {
+    "carrier": "wallenius-wilhelmsen",
+    "kind": "open",
+    "reason": "The WLWH-qualified manifest sample matches after removing its SCAC. A larger published bill sample is needed for a detection rule."
+  },
+  {
     "carrier": "wanbexpress",
     "pattern": "^\\d{20}$",
     "kind": "collision",
@@ -4403,6 +4498,11 @@
     "pattern": "^\\d{8}$",
     "kind": "by_design",
     "reason": "Eight bare digits are printed by many carriers."
+  },
+  {
+    "carrier": "xanh-thl",
+    "kind": "open",
+    "reason": "The carrier publishes one live X-prefixed guide. Similar layouts occur across multiple carrier catalogs and need review."
   },
   {
     "carrier": "xde-logistics",

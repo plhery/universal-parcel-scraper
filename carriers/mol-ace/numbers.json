@@ -1,0 +1,45 @@
+{
+  "carrier": "mol-ace",
+  "records": [
+    {
+      "number": "MOLU18009522892",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/suppliers/mitsui-o-s-k-lines-japan-ltd",
+        "access": "full_page",
+        "date": "2026-11-10",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "full MOL bill of lading in an ocean manifest identifying Mitsui O.S.K. Lines as carrier",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The official MOL ACE form accepts the numeric portion and returns the exact bill with two timed port movements."
+    },
+    {
+      "number": "MOLU18009458031",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/amanda-barcsansky",
+        "access": "full_page",
+        "date": "2026-10-23",
+        "dateKind": "arrival"
+      },
+      "context": {
+        "reportedRole": "full MOL bill of lading in an ocean manifest identifying Mitsui O.S.K. Lines as carrier",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The official MOL ACE form accepts the numeric portion and returns the exact bill with two timed port movements."
+    }
+  ]
+}

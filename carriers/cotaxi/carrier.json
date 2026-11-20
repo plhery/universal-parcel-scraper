@@ -1,0 +1,51 @@
+{
+  "id": "cotaxi",
+  "displayName": "COTAXI",
+  "aliases": [
+    "Cotaxi Colombia",
+    "Cooperativa Multiactiva de Taxistas y Transportadores Unidos"
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#e45a2a"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "cotaxi",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history"
+  ],
+  "portal": {
+    "url": "https://www.cotaxi.com.co/",
+    "searchUrl": "https://www.cotaxi.com.co/",
+    "canaryUrl": "https://www.cotaxi.com.co/",
+    "shows": [
+      "status",
+      "history",
+      "origin",
+      "destination"
+    ],
+    "scraped": [
+      "status",
+      "history"
+    ],
+    "discarded": [
+      "origin",
+      "destination"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}
