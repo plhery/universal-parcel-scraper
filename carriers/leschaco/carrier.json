@@ -1,0 +1,59 @@
+{
+  "id": "leschaco",
+  "displayName": "Leschaco",
+  "aliases": [
+    "Lexzau Scharbau",
+    "Anker Leschaco",
+    "Leschaco Visible",
+    "AC Container Line",
+    "ALRB"
+  ],
+  "region": {
+    "countries": [
+      "DE"
+    ]
+  },
+  "brand": {
+    "color": "#1D535E"
+  },
+  "selectable": true,
+  "timezone": "Europe/Berlin",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "leschaco",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://visible.leschaco.com/?forwarderRef={trackingNumber}",
+    "searchUrl": "https://visible.leschaco.com/",
+    "canaryUrl": "https://visible.leschaco.com/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "eta"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "eta"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

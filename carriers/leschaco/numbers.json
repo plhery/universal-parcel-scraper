@@ -1,0 +1,77 @@
+{
+  "carrier": "leschaco",
+  "records": [
+    {
+      "number": "ALRB261013270093",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/evonik-corporation",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published ocean manifest attributes this house bill to the Leschaco freight network.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The latest actual movement is vessel departure. The scheduled arrival appears separately."
+    },
+    {
+      "number": "ALRB260908460495",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/distribution-technology",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published ocean manifest attributes this house bill to the Leschaco freight network.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Actual history through a final empty equipment gate-in."
+    },
+    {
+      "number": "ALRB260908460344",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importgenius.com/importers/sfl-hawaii",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published ocean manifest attributes this house bill to the Leschaco freight network.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "Actual freight movements through Newark and Kansas City."
+    },
+    {
+      "number": "ALRB260708460281",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/cabb-trading-north-america",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "The published ocean manifest attributes this house bill to the Leschaco freight network.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The carrier returns a dated history for this exact house bill."
+    }
+  ]
+}

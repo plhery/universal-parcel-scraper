@@ -5924,5 +5924,10 @@
     "carrier": "saco-shipping-line",
     "kind": "open",
     "reason": "Published SACO house bills include multiple layouts and can carry the SSLL carrier code. Select SACO Shipping Line explicitly."
+  },
+  {
+    "carrier": "leschaco",
+    "kind": "open",
+    "reason": "Published Leschaco house bills use the ALRB carrier code, while the public tracker also accepts the underlying shipment reference. Select Leschaco explicitly."
   }
 ]

@@ -37820,6 +37820,32 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "leschaco": {
+    "displayName": "Leschaco",
+    "color": "#1D535E",
+    "aliases": [
+      "Lexzau Scharbau",
+      "Anker Leschaco",
+      "Leschaco Visible",
+      "AC Container Line",
+      "ALRB"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "leschaco",
+      "localClocks": true
+    },
+    "canaryUrl": "https://visible.leschaco.com/",
+    "trackingUrlTemplate": "https://visible.leschaco.com/?forwarderRef={trackingNumber}",
+    "trackingSearchUrl": "https://visible.leschaco.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "letter-track": {
     "displayName": "LetterTrack",
     "color": "#6c9dce",
@@ -68436,6 +68462,7 @@ export const CARRIER_IDS = [
   "lbtx",
   "leman",
   "leopards-courier",
+  "leschaco",
   "letter-track",
   "lex-id",
   "lex-my",
@@ -70386,6 +70413,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "lbtx": [],
   "leman": [],
   "leopards-courier": [],
+  "leschaco": [],
   "letter-track": [],
   "lex-id": ["lex-id-1"],
   "lex-my": ["lex-my-1"],

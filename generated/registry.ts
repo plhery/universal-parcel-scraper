@@ -505,6 +505,7 @@ import { adapter as lastOneMileCoop } from '../carriers/last-one-mile-coop/adapt
 import { adapter as latvijasPasts } from '../carriers/latvijas-pasts/adapter.js';
 import { adapter as lbcExpress } from '../carriers/lbc-express/adapter.js';
 import { adapter as leopardsCourier } from '../carriers/leopards-courier/adapter.js';
+import { adapter as leschaco } from '../carriers/leschaco/adapter.js';
 import { adapter as lexId } from '../carriers/lex-id/adapter.js';
 import { adapter as lexMy } from '../carriers/lex-my/adapter.js';
 import { adapter as lexTh } from '../carriers/lex-th/adapter.js';
@@ -1483,6 +1484,7 @@ export const REGISTRY: RegistryDefinition = {
     "latvijas-pasts": latvijasPasts,
     "lbc-express": lbcExpress,
     "leopards-courier": leopardsCourier,
+    "leschaco": leschaco,
     "lex-id": lexId,
     "lex-my": lexMy,
     "lex-th": lexTh,
@@ -2963,6 +2965,7 @@ export const REGISTRY: RegistryDefinition = {
     "lbtx": "universal",
     "leman": "universal",
     "leopards-courier": "leopards-courier",
+    "leschaco": "leschaco",
     "letter-track": "universal",
     "lex-id": "lex-id",
     "lex-my": "lex-my",

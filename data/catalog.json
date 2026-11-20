@@ -37816,6 +37816,32 @@
     ],
     "detectionRules": []
   },
+  "leschaco": {
+    "displayName": "Leschaco",
+    "color": "#1D535E",
+    "aliases": [
+      "Lexzau Scharbau",
+      "Anker Leschaco",
+      "Leschaco Visible",
+      "AC Container Line",
+      "ALRB"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "leschaco",
+      "localClocks": true
+    },
+    "canaryUrl": "https://visible.leschaco.com/",
+    "trackingUrlTemplate": "https://visible.leschaco.com/?forwarderRef={trackingNumber}",
+    "trackingSearchUrl": "https://visible.leschaco.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "letter-track": {
     "displayName": "LetterTrack",
     "color": "#6c9dce",

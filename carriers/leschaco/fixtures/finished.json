@@ -1,0 +1,254 @@
+[
+  {
+    "shipmentHeaderDto": {
+      "shipmentNumber": "260908460495",
+      "status": 2,
+      "statusName": "Finished"
+    },
+    "shipmentEventsDto": [
+      {
+        "eventTypeId": 13,
+        "eventTypeName": "Loading Start",
+        "date": "2026-09-24T10:30:00",
+        "location": "Hurth",
+        "locationUnLocode": "DEHUE",
+        "hasActual": false,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 11,
+        "eventTypeName": "Gate Out empty",
+        "date": "2026-09-24T11:34:00",
+        "location": "Neuss",
+        "locationUnLocode": "DENSS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 16,
+        "eventTypeName": "Gate In Full",
+        "date": "2026-09-25T08:01:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-09-30T04:39:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 21,
+        "eventTypeName": "Departure",
+        "date": "2026-09-30T09:07:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 26,
+        "eventTypeName": "Arrival",
+        "date": "2026-10-15T16:50:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 27,
+        "eventTypeName": "Discharged",
+        "date": "2026-10-16T11:16:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 36,
+        "eventTypeName": "Gate Out Full",
+        "date": "2026-10-19T12:05:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 16,
+        "eventTypeName": "Gate In Full",
+        "date": "2026-10-19T12:33:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-10-20T11:36:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 27,
+        "eventTypeName": "Discharged",
+        "date": "2026-10-21T08:19:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 36,
+        "eventTypeName": "Gate Out Full",
+        "date": "2026-10-23T07:04:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 41,
+        "eventTypeName": "Gate In Empty",
+        "date": "2026-10-23T11:31:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": true
+      }
+    ]
+  },
+  {
+    "shipmentHeaderDto": {
+      "shipmentNumber": "[other shipment]",
+      "status": 2,
+      "statusName": "Finished"
+    },
+    "shipmentEventsDto": [
+      {
+        "eventTypeId": 13,
+        "eventTypeName": "Loading Start",
+        "date": "2026-09-24T10:30:00",
+        "location": "Hurth",
+        "locationUnLocode": "DEHUE",
+        "hasActual": false,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 11,
+        "eventTypeName": "Gate Out empty",
+        "date": "2026-09-24T11:34:00",
+        "location": "Neuss",
+        "locationUnLocode": "DENSS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 16,
+        "eventTypeName": "Gate In Full",
+        "date": "2026-09-25T08:01:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-09-30T04:39:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 21,
+        "eventTypeName": "Departure",
+        "date": "2026-09-30T09:07:00",
+        "location": "Rotterdam",
+        "locationUnLocode": "NLRTM",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 26,
+        "eventTypeName": "Arrival",
+        "date": "2026-10-15T16:50:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 27,
+        "eventTypeName": "Discharged",
+        "date": "2026-10-16T11:16:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 36,
+        "eventTypeName": "Gate Out Full",
+        "date": "2026-10-19T12:05:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 16,
+        "eventTypeName": "Gate In Full",
+        "date": "2026-10-19T12:33:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 17,
+        "eventTypeName": "Loaded",
+        "date": "2026-10-20T11:36:00",
+        "location": "Charleston",
+        "locationUnLocode": "USCHS",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 27,
+        "eventTypeName": "Discharged",
+        "date": "2026-10-21T08:19:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 36,
+        "eventTypeName": "Gate Out Full",
+        "date": "2026-10-23T07:04:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": false
+      },
+      {
+        "eventTypeId": 41,
+        "eventTypeName": "Gate In Empty",
+        "date": "2026-10-23T11:31:00",
+        "location": "Charlotte",
+        "locationUnLocode": "USCLT",
+        "hasActual": true,
+        "isLatestActual": true
+      }
+    ]
+  }
+]
