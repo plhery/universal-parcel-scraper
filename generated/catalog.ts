@@ -30751,6 +30751,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "hapag-lloyd": {
+    "displayName": "Hapag-Lloyd",
+    "color": "#FF6600",
+    "aliases": [
+      "Hapag Lloyd",
+      "HLAG"
+    ],
+    "countries": [
+      "DE"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Berlin",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "hapag-lloyd",
+      "localClocks": true,
+      "browser": true
+    },
+    "canaryUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "trackingUrlTemplate": "https://www.hapag-lloyd.com/solutions/tracking/#/{trackingNumber}",
+    "trackingSearchUrl": "https://www.hapag-lloyd.com/solutions/tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "hapdong": {
     "displayName": "Hapdong Express",
     "color": "#0460af",
@@ -69437,6 +69461,7 @@ export const CARRIER_IDS = [
   "gzyl",
   "hadeland-bud",
   "hanjin",
+  "hapag-lloyd",
   "hapdong",
   "happy-courier-gr",
   "happy-post",
@@ -71430,6 +71455,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gzyl": ["gzyl-1","gzyl-2"],
   "hadeland-bud": [],
   "hanjin": [],
+  "hapag-lloyd": [],
   "hapdong": [],
   "happy-courier-gr": [],
   "happy-post": [],

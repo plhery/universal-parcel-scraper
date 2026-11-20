@@ -52,6 +52,7 @@ COPY magic-trans-browser.mjs /app/packages/tiers/src/utils/magic-trans-browser.m
 COPY gintracom-browser.mjs /app/packages/tiers/src/utils/gintracom-browser.mjs
 COPY transglobal-express-browser.mjs /app/packages/tiers/src/utils/transglobal-express-browser.mjs
 COPY turkon-line-browser.mjs /app/packages/tiers/src/utils/turkon-line-browser.mjs
+COPY hapag-lloyd-browser.mjs /app/packages/tiers/src/utils/hapag-lloyd-browser.mjs
 COPY onlog-express-browser.mjs /app/packages/tiers/src/utils/onlog-express-browser.mjs
 COPY flash-courier-guest.mjs /app/packages/tiers/src/utils/flash-courier-guest.mjs
 COPY flash-courier-guest.py /app/packages/tiers/src/utils/flash-courier-guest.py

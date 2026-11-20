@@ -7,6 +7,7 @@ Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Corr
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Gintracom. The adapter checks the captured response against
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Transglobal Express. The adapter checks the captured response against
 Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Turkon Line. The adapter checks the captured response against
+Australia Post, YunExpress, 17TRACK, SF Express, WanbExpress, XPO, Asendia, Correios Brazil, DHL Poland, Magyar Posta, Poste Italiane, SwiftX, China Post, JD Logistics, Ozon, MailAmericas, LBC Express, Evri UK, J&T Express Brazil, Onlog Express, Viettel Post, ZTO, HuaHan, Correos de Costa Rica, DAO, PasarEX, Peddler, Rohlig SUUS Logistics, Onex, Neighbour Express, Magic Trans and Hapag-Lloyd. The adapter checks the captured response against
 the requested parcel. A solved challenge alone is not tracking history.
 
 MailAmericas lets the official page complete its AWS check in a fresh context, then captures
@@ -70,6 +71,12 @@ the page's search box and presses Enter. The page then asks for the booking's mi
 each container's moves, as a guest. The helper lets only those two lookups for the whole number
 out, captures the containers' moves, and passes on the events and ports without weights,
 dangerous goods, reefer settings, vessels or voyages.
+Hapag-Lloyd opens its tracking page with the whole reference in the page's route. Cloudflare's
+check and then the page's own Turnstile may each show their checkbox; the helper clicks one only
+when nothing covers it, at most three times. The page then asks the tracking service for the
+reference's moves with its Turnstile token. Only that request for the whole reference goes out, at
+most twice, and the helper passes on the containers' moves, places and means of transport, or the
+error key of a refusal, without container types, weights or voyages.
 
 Neighbour Express opens the return-label guest page in a fresh context and lets its native
 reCAPTCHA v3 callback submit the whole reference. The helper captures that single POST and

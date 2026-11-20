@@ -76,6 +76,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && transglobalBrowserNumber(url, capture)) return await runTransglobalBrowser({ ...carrierRun, signal: budget.signal,
     waitCloudflare: waitPaxelCloudflare })
   if (carrierPage && turkonBrowserNumber(url, capture)) return await runTurkonBrowser({ ...carrierRun, signal: budget.signal })
+  if (carrierPage && hapagBrowserNumber(url, capture)) return await runHapagBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && onlogExpressBrowserNumber(url, capture)) return await runOnlogExpressBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && flashCourierRequest(url, capture)) return await runFlashCourierGuest({ ...carrierRun, signal: budget.signal, validateTarget: validateOutboundUrl ? address => budget.run(() => validateOutboundUrl(address)) : undefined })
   if (carrierPage && paxelBrowserNumber(url, capture)) return await runPaxelBrowser({ ...carrierRun, signal: budget.signal,
@@ -171,6 +172,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { gintracomBrowserNumber, runGintracomBrowser } from "../utils/gintracom-browser.mjs"\n'
     + 'import { transglobalBrowserNumber, runTransglobalBrowser } from "../utils/transglobal-express-browser.mjs"\n'
     + 'import { turkonBrowserNumber, runTurkonBrowser } from "../utils/turkon-line-browser.mjs"\n'
+    + 'import { hapagBrowserNumber, runHapagBrowser } from "../utils/hapag-lloyd-browser.mjs"\n'
     + 'import { onlogExpressBrowserNumber, runOnlogExpressBrowser } from "../utils/onlog-express-browser.mjs"\n'
     + 'import { flashCourierRequest, runFlashCourierGuest } from "../utils/flash-courier-guest.mjs"\n'
     + 'import { paxelBrowserNumber, runPaxelBrowser } from "../utils/paxel-browser.mjs"\n'
