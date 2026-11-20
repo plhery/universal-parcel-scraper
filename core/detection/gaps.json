@@ -3172,6 +3172,18 @@
     "reason": "Nine digits are shared by several carriers and nothing in the number points to Roadrunner."
   },
   {
+    "carrier": "rohlig",
+    "pattern": "^RLUSS\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a public Röhlig house bill with its RLUS carrier code."
+  },
+  {
+    "carrier": "rohlig",
+    "pattern": "^S\\d{8}$",
+    "kind": "open",
+    "reason": "Detection returns no carrier for a public Röhlig house bill printed separately from the RLUS carrier code."
+  },
+  {
     "carrier": "royal-express-mm",
     "pattern": "^[A-Z]{3}\\d{11}[A-Z]{3}$",
     "kind": "by_design",
