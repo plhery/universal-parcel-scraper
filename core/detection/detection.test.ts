@@ -579,6 +579,19 @@ describe('the detection engine', () => {
       .toBe('99 60 123456 12345678');
   });
 
+  it('keeps a percent escape apart from the characters after it', () => {
+    // Read raw, "%3D201234567" would be WeDo's "3D201234567".
+    for (const input of ['https://shop.example/help?nodeId%3D201234567',
+      'https://shop.example/help?nodeId%2F201234567',
+      'https://shop.example/r?u=https%3A%2F%2Fshop.example%2Fhelp%3Fx%3D1%26nodeId%3D201234567%26qid%3D9',
+      'shop.example/help?nodeId%3D201234567',
+      'Your parcel https://shop.example/help?tracking%3D201234567 is on its way']) {
+      expect(parseTrackingInput(input), input).toMatchObject({ trackingNumber: '', carrier: 'unknown', source: 'none' });
+    }
+    expect(parseTrackingInput('https://shop.example/track/RA123456785IR%E0%A4%A'))
+      .toMatchObject({ trackingNumber: 'RA123456785IR', source: 'text' });
+  });
+
   it('reads the links Transpress and CVC tracking forms open', () => {
     for (const link of ['https://transpress.bg/bg/prosledjavane?track-number=123456789',
       'https://www.transpress.bg/en/prosledjavane/?track-number=123456789']) {

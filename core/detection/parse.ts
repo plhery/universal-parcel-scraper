@@ -250,7 +250,9 @@ export function parseTrackingInput(raw: string): TrackingInputMatch {
     }
   }
 
-  const recognized = recognizedNumberInScan(input, scan);
+  // A link was read decoded above. Read raw, a percent escape would run into what follows it,
+  // "%3D201234567" into "3D201234567", so escapes are set apart, in a link and in prose alike.
+  const recognized = recognizedNumberInScan(input.replace(/%[0-9A-F]{2}/gi, ' '), scan);
   if (recognized) {
     return trackingMatch(recognized, input === recognized ? 'number' : 'text');
   }
