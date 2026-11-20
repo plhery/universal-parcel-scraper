@@ -15945,6 +15945,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "confirmed-freight": {
+    "displayName": "Confirmed Freight",
+    "color": "#267ca8",
+    "aliases": [
+      "Confirmed Freight LLC",
+      "Confirmed Freight, LLC"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "confirmed-freight",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.confirmedfreight.com/services/tracking.htm",
+    "trackingUrlTemplate": "https://www.confirmedfreight.com/track/{trackingNumber}/",
+    "trackingSearchUrl": "https://www.confirmedfreight.com/services/tracking.htm",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "connect-couriers": {
     "displayName": "Connect Couriers",
     "color": "#9c231b",
@@ -66830,6 +66853,7 @@ export const CARRIER_IDS = [
   "colis-gros-volume",
   "collicare",
   "comone-express",
+  "confirmed-freight",
   "connect-couriers",
   "consegnia",
   "conveyor-uni-express",
@@ -68739,6 +68763,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "colis-gros-volume": [],
   "collicare": [],
   "comone-express": [],
+  "confirmed-freight": [],
   "connect-couriers": [],
   "consegnia": ["consegnia-1"],
   "conveyor-uni-express": [],

@@ -5724,5 +5724,10 @@
     "carrier": "epex-colombia",
     "kind": "open",
     "reason": "The EPEX lookup confirms its published numeric guide. Numeric guides overlap other carriers and are kept explicit."
+  },
+  {
+    "carrier": "confirmed-freight",
+    "kind": "open",
+    "reason": "The public shipment demonstration does not establish the carrier's customer reference formats."
   }
 ]
