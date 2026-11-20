@@ -617,6 +617,7 @@ import { statusMap as pecom } from '../../carriers/pecom/status.js';
 import { statusMap as pengyou } from '../../carriers/pengyou/status.js';
 import { statusMap as peninsulaTruckLines } from '../../carriers/peninsula-truck-lines/status.js';
 import { statusMap as pfcExpress } from '../../carriers/pfc-express/status.js';
+import { statusMap as phantomCouriers } from '../../carriers/phantom-couriers/status.js';
 import { statusMap as phlpost } from '../../carriers/phlpost/status.js';
 import { statusMap as pflogistics } from '../../carriers/pflogistics/status.js';
 import { statusMap as pilotFreight } from '../../carriers/pilot-freight/status.js';
@@ -1067,7 +1068,7 @@ export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'one-world-express': oneWorldExpress, onex, ontrac, 'optima-overnight': optimaOvernight, 'orlen-paczka': orlenPaczka, 'osm-worldwide': osmWorldwide, 'overseas-express': overseasExpress, 'ozon-logistics': ozonLogistics, paack, 'pack-man': packMan, packeta, packlink, packs, pactic,
   'pakistan-post': pakistanPost, palletways, 'pandu-logistics': panduLogistics, paperfly, paquetexpress, parcelabc, parcelpoint, passport,
   'pathao-courier': pathaoCourier, pbt, 'pcp-express': pcpExpress, 'pcs-logistics-vn': pcsLogisticsVn, 'pdn-express': pdnExpress, peddler,
-  'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
+  'pdq-chile': pdqChile, pecom, pengyou, 'peninsula-truck-lines': peninsulaTruckLines, 'pfc-express': pfcExpress, 'phantom-couriers': phantomCouriers, phlpost, pflogistics, 'pilot-freight': pilotFreight, 'pin-ag': pinAg,
   'pitney-bowes': pitneyBowes, 'pitt-ohio': pittOhio, planzer, 'poczta-polska': pocztaPolska, 'pos-indonesia': posIndonesia,
   'pos-malaysia': posMalaysia, 'post-haste': postHaste, 'post-luxembourg': postLuxembourg, 'posta-faroe': postaFaroe, 'posta-kenya': postaKenya, 'posta-moldovei': postaMoldovei, 'posta-north-macedonia': postaNorthMacedonia, 'posta-romana': postaRomana,
   'posta-shqiptare': postaShqiptare,

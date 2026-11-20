@@ -3163,6 +3163,12 @@
     "reason": "A five-digit account and a one-digit serial make a thirteen-character PFC order number, which La Poste's rule for two characters and eleven digits also takes. PFC's rule starts at fourteen characters, so these need PFC chosen or its tracking link."
   },
   {
+    "carrier": "phantom-couriers",
+    "pattern": "^\\d{6}$",
+    "kind": "by_design",
+    "reason": "Phantom numbers its orders with a bare six-digit counter many carriers print, and nothing in the number points to Phantom."
+  },
+  {
     "carrier": "pigeon-express",
     "pattern": "^\\d{12}$",
     "kind": "by_design",

@@ -1,0 +1,81 @@
+{
+  "carrier": "phantom-couriers",
+  "records": [
+    {
+      "number": "445009",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.insolvencies.deloitte.ca/en-ca/Documents/San%20Group/Tab%202%202024-12-04%20Affidavit%202%20%20of%20Kimberly%20Lopez.pdf",
+        "date": "2024-12-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of Phantom's delivery notices from noreply@courie.ai, filed as an exhibit of an affidavit in a public insolvency proceeding. Phantom's tracker on Courie returns the order, delivered on the day the notice gives."
+    },
+    {
+      "number": "132300",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.insolvencies.deloitte.ca/en-ca/Documents/San%20Group/Tab%202%202024-12-04%20Affidavit%202%20%20of%20Kimberly%20Lopez.pdf",
+        "date": "2024-12-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of Phantom's delivery notices from noreply@courie.ai, filed as an exhibit of an affidavit in a public insolvency proceeding. Phantom's tracker on Courie returns the order, delivered on the day the notice gives."
+    },
+    {
+      "number": "307589",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.insolvencies.deloitte.ca/en-ca/Documents/San%20Group/Tab%202%202024-12-04%20Affidavit%202%20%20of%20Kimberly%20Lopez.pdf",
+        "date": "2024-12-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of Phantom's delivery notices from noreply@courie.ai, filed as an exhibit of an affidavit in a public insolvency proceeding. Phantom's tracker on Courie returns the order, delivered on the day the notice gives."
+    },
+    {
+      "number": "854571",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.insolvencies.deloitte.ca/en-ca/Documents/San%20Group/Tab%202%202024-12-04%20Affidavit%202%20%20of%20Kimberly%20Lopez.pdf",
+        "date": "2024-12-04",
+        "dateKind": "publication",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "One of Phantom's delivery notices from noreply@courie.ai, filed as an exhibit of an affidavit in a public insolvency proceeding. Phantom's tracker on Courie returns the order, delivered on the day the notice gives."
+    }
+  ]
+}
