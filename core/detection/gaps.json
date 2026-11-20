@@ -542,6 +542,12 @@
     "reason": "Campos & Cadilhe's OTM results show a PRZ service prefix, a two-digit year and a six-digit reference, with dots between the parts. Detection does not offer the carrier."
   },
   {
+    "carrier": "cargoline",
+    "pattern": "^\\d{8}$",
+    "kind": "open",
+    "reason": "CargoLine's CEPRA manual displays an eight-digit shipment number. Detection does not offer CargoLine for that reference."
+  },
+  {
     "carrier": "cargox",
     "pattern": "^KAR\\d{7}$",
     "kind": "open",
