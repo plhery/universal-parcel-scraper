@@ -1,5 +1,108 @@
 {
   "carrier": "hub-group-final-mile",
-  "gap": "Its tracker needs the delivery ZIP code with the number, so no public number can be checked.",
-  "records": []
+  "records": [
+    {
+      "number": "14846123",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking-status.com/nsd-delivery-tracking-online/",
+        "date": "2022-06-13",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "large-item home delivery for Home Depot",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner",
+          "tforce-freight"
+        ]
+      },
+      "note": "The recipient quotes this exact tracking number in the NonstopDelivery discussion. The carrier's public tracking form returned HTTP 403. Lookup blocked by verification."
+    },
+    {
+      "number": "6702307",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://tracking-status.com/nsd-delivery-tracking-online/",
+        "date": "2022-08-23",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "large-item home delivery for Amazon",
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "seur"
+        ]
+      },
+      "note": "The recipient quotes this exact tracking number in the NonstopDelivery discussion. The carrier's public tracking form returned HTTP 403. Lookup blocked by verification."
+    },
+    {
+      "number": "13918033",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20230529130121id_/https://tracking.shipnsd.com/?trace_number=13918033",
+        "date": "2023-05-29",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "NSD US large-item delivery",
+        "reportedRole": "trace number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The archived original NSD tracking form preserves this trace number in the URL without shipment history. The current public form returned HTTP 403. Lookup blocked by verification."
+    },
+    {
+      "number": "13923987",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251023044636id_/https://tracking.shipnsd.com/?trace_number=13923987",
+        "date": "2025-10-23",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "NSD US large-item delivery",
+        "reportedRole": "trace number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colisweb",
+          "heppner"
+        ]
+      },
+      "note": "The archived original NSD tracking form preserves this trace number in the URL without shipment history. The current public form returned HTTP 403. Lookup blocked by verification."
+    }
+  ]
 }
