@@ -16,10 +16,12 @@ it, so `post.plus/?tracking={number}` opens one parcel.
 
 ## Why there is no adapter
 
-The tracking form posts `parcel` to `wp-content/themes/postplus/parcel-request.php` with a
-reCAPTCHA v3 token. Without a token, an unknown number gets "We were unable to find a shipment
-with this reference or barcode."; whether a known one needs the token is unverified, as no
-public page shows a number PostPlus tracks.
+The tracking page asks `post.plus/api/tracking/search?code={number}` over plain HTTP, without a
+verification; the service refuses a request that does not come from its own pages, which a
+same-origin `Referer` or `Sec-Fetch-Site` header satisfies. It answers a list of parcels, each
+with its numbers, destination country, delivery carrier and events, and `[]` for a number it does
+not know. No public page shows a number PostPlus tracks, so the shape of a known parcel's events
+is unverified.
 
 ## Testing
 
