@@ -1,0 +1,56 @@
+{
+  "id": "lalji-mulji-transport",
+  "displayName": "Lalji Mulji Transport",
+  "aliases": [
+    "Lalji Mulji Transport Company",
+    "Lalji Mulji Transport Co.",
+    "LMTCO"
+  ],
+  "region": {
+    "countries": [
+      "IN"
+    ]
+  },
+  "brand": {
+    "color": "#d2272d"
+  },
+  "selectable": true,
+  "timezone": "Asia/Kolkata",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "lalji-mulji-transport",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "weight"
+  ],
+  "portal": {
+    "url": "https://lmtco.com/tracking-serices.html",
+    "searchUrl": "https://lmtco.com/tracking-serices.html",
+    "canaryUrl": "https://lmtco.com/tracking-serices.html",
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "provider_code",
+      "weight"
+    ],
+    "discarded": [],
+    "unavailable": [
+      "offset_timestamps"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

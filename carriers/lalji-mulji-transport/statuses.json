@@ -1,0 +1,8 @@
+{
+  "carrier": "lalji-mulji-transport",
+  "entries": [
+    {"code": "BOOKED", "wording": "BOOKED", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The original lorry receipt booking."},
+    {"code": "DISPATCHED", "wording": "DISPATCHED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "The carrier shows the dispatch branch."},
+    {"code": "RECEIVED", "wording": "RECEIVED", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Receipt at a named branch does not confirm delivery to the consignee."}
+  ]
+}

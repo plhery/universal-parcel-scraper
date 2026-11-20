@@ -36509,6 +36509,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lalji-mulji-transport": {
+    "displayName": "Lalji Mulji Transport",
+    "color": "#d2272d",
+    "aliases": [
+      "Lalji Mulji Transport Company",
+      "Lalji Mulji Transport Co.",
+      "LMTCO"
+    ],
+    "countries": [
+      "IN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kolkata",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lalji-mulji-transport",
+      "localClocks": true
+    },
+    "canaryUrl": "https://lmtco.com/tracking-serices.html",
+    "trackingUrlTemplate": "https://lmtco.com/tracking-serices.html",
+    "trackingSearchUrl": "https://lmtco.com/tracking-serices.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "lao-post": {
     "displayName": "Lao Post",
     "color": "#f6871f",
@@ -66495,6 +66519,7 @@ export const CARRIER_IDS = [
   "laar-courier",
   "labaih",
   "lafasta",
+  "lalji-mulji-transport",
   "lao-post",
   "laser-logistics",
   "last-one-mile-coop",
@@ -68367,6 +68392,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "laar-courier": [],
   "labaih": [],
   "lafasta": [],
+  "lalji-mulji-transport": [],
   "lao-post": [],
   "laser-logistics": [],
   "last-one-mile-coop": [],

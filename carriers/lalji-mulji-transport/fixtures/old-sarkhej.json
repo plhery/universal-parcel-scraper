@@ -1,0 +1,25 @@
+{
+  "serviceResult": [
+    {
+      "status": "BOOKED",
+      "waybillNumber": "22175325",
+      "branchName": "TARAPUR",
+      "dateTime": "Wed, 19 Nov 2014 10:06:57",
+      "actualWeight": 1500.0
+    },
+    {
+      "status": "DISPATCHED",
+      "waybillNumber": "22175325",
+      "branchName": "SARKHEJ GDWN 05",
+      "dateTime": "Sat, 13 Dec 2014 19:49:17",
+      "actualWeight": 1500.0
+    },
+    {
+      "status": "RECEIVED",
+      "waybillNumber": "22175325",
+      "branchName": "Old Sarkhej",
+      "dateTime": "Tue, 10 Feb 2015 16:22:44",
+      "actualWeight": 1500.0
+    }
+  ]
+}

@@ -5539,5 +5539,10 @@
     "carrier": "freight-club",
     "kind": "by_design",
     "reason": "Freight Club accepts its own booking references and delivery partners’ references. Select it explicitly."
+  },
+  {
+    "carrier": "lalji-mulji-transport",
+    "kind": "by_design",
+    "reason": "The two published Lalji Mulji lorry receipts are numeric. Select the carrier explicitly."
   }
 ]
