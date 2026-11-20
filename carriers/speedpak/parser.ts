@@ -2,11 +2,12 @@ import { carrierIdFromPartner } from '../../core/catalog/hints.js';
 import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detection/index.js';
 import { IndeterminateError, InvalidInputError, NotFoundError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
+import { languageStageStatus, type Stage } from '../../core/status/index.js';
 import { countryCode, epochMillisTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { brandCarrierForNumber } from '../../providers/shared/hints.js';
-import { HANDOFF, speedpakEnglish, speedpakScanStatus, withoutHandoffReference } from './status.js';
+import { HANDOFF, speedpakEnglish, speedpakNotice, speedpakScanStatus, withoutHandoffReference } from './status.js';
 import { speedpakPlace, withoutRoutingPrefix } from './wording.js';
 
 const PROVIDER = 'SpeedPAK';
@@ -55,11 +56,21 @@ export function parseSpeedpak(payload: unknown, rawNumber: string): CarrierResul
       ...(location ? { location } : {}), ...(mapped ? { stage: mapped.stage, stage_source: 'carrier_map' } : {}) };
     if (!events.some(previous => JSON.stringify(previous) === JSON.stringify(event))) events.push(event);
   }
+  // SpeedPAK's record of the last-mile carrier moves nothing: it keeps the stage of the scan before it.
+  let before: Stage | undefined;
+  for (const event of [...events].reverse()) {
+    if (speedpakNotice(event.description!)) Object.assign(event, before ? { stage: before, stage_source: 'none' } : { stage_source: 'none' });
+    else if (event.stage) before = event.stage as Stage;
+  }
   // The website's trace array is already newest first. Keep undated scans in
   // that order rather than borrowing an older timestamp for the summary.
   const summary = withoutRoutingPrefix(clean(shipment.lastStatus));
   const wording = (summary && (speedpakEnglish(summary) ?? summary)) || events[0]!.description!;
-  const mapped = speedpakScanStatus(wording, clean(shipment.lastStatusCn));
+  // A summary that is the record of the last-mile carrier leaves the parcel where the newest scan put it.
+  const staged = events.find(event => event.stage && event.stage_source !== 'none');
+  const mapped = speedpakNotice(wording, clean(shipment.lastStatusCn))
+    ? (staged ? { status: languageStageStatus(staged.stage as Stage), stage: staged.stage as Stage } : null)
+    : speedpakScanStatus(wording, clean(shipment.lastStatusCn));
   const latest = events[0]!;
   const output: CarrierResult = { status: mapped?.status ?? 'unknown', last_status_text: withoutHandoffReference(wording), last_update: latest.time ?? null,
     ...(mapped ? { current_stage: mapped.stage, current_stage_source: 'carrier_map' } : {}),

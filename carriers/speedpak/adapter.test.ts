@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { sameInstantIdentityPolicy } from '../../core/catalog/eventIdentity.js';
 import { statusMapAnswer } from '../../core/catalog/statusMaps.js';
 import { detectCarrierMatch } from '../../core/detection/index.js';
-import { normalizeStatusWording } from '../../core/status/statusMap.js';
+import { normalizeStatusWording, statusGapNote } from '../../core/status/statusMap.js';
 import { NOOP_RECORDER } from '../../core/telemetry/index.js';
 import { adapter, SpeedpakTracker } from './adapter.js';
 import { normalizeSpeedpakNumber, parseSpeedpak } from './parser.js';
@@ -75,8 +75,10 @@ describe('SpeedPAK response projection', () => {
     expect(result).toMatchObject({ status: 'delivered', current_stage: 'delivered', delivered_at: '2026-10-03T14:42:25Z',
       delivery_carrier: 'usps', delivery_tracking_number: '9214490000000000000003' });
     expect(result.events?.map(event => event.stage)).toEqual([
-      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'in_transit', 'accepted', 'registered',
+      'delivered', 'out_for_delivery', 'in_transit', 'in_transit', 'accepted', 'accepted', 'registered',
     ]);
+    // The record of the last-mile carrier keeps the pick-up's stage as a notice.
+    expect(result.events?.[4]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
   });
 
   it("reads SpeedX's attempt relayed without SpeedPAK's label as a failed attempt", () => {
@@ -233,15 +235,16 @@ describe('SpeedPAK hand-off wording', () => {
     expect(JSON.stringify(result)).not.toContain('42000000');
   });
 
-  it('reads the hand-off line as a movement without SpeedPAK\'s label, in English or Chinese', () => {
+  it('reads the hand-off line as a notice on the stage of the scan before it, in English or Chinese', () => {
+    // SpeedPAK records the last-mile carrier at the second of a scan in the origin country, days before the hand-over.
     const payload = fixture();
-    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
     payload.result.waybills[0].traces[2] = { eventDesc: '尾程供应商:[Uni Uni] , 尾程跟踪号：[UUS00T0000000000000]', oprTimestamp: 1767362400000 };
-    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ stage: 'in_transit' });
-    // As the summary, it is the parcel's stage until a later scan.
+    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ stage: 'accepted', stage_source: 'none' });
+    // As the summary, it leaves the parcel where the scan before it put it.
     payload.result.waybills[0].traces.splice(0, 2);
     payload.result.waybills[0].lastStatus = trimmed;
-    expect(parseSpeedpak(payload, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'in_transit' });
+    expect(parseSpeedpak(payload, NUMBER)).toMatchObject({ status: 'in_transit', current_stage: 'accepted' });
     // A line without its reference names no hand-off.
     payload.result.waybills[0].traces[0].eventDesc = 'LM Carrier: [Uni Uni] , LM tracking No.: []';
     payload.result.waybills[0].lastStatus = 'LM Carrier: [Uni Uni] , LM tracking No.: []';
@@ -264,16 +267,17 @@ describe('SpeedPAK hand-off wording', () => {
     const payload = fixture();
     payload.result.waybills[0].traces[2] = { eventDesc: trimmed, eventDescCn: '尾程供应商信息', oprTimestamp: 1767362400000 };
     const result = parseSpeedpak(payload, NUMBER);
-    expect(result.events?.[2]).toMatchObject({ description: shown, stage: 'in_transit', stage_source: 'carrier_map' });
+    expect(result.events?.[2]).toMatchObject({ description: shown, stage: 'accepted', stage_source: 'none' });
     expect(result.delivery_tracking_number).toBe('9214490000000000000003');
     expect(JSON.stringify(result.events)).not.toContain('9214490000000000000003');
     // In Chinese too; a line without a reference stays as written.
     payload.result.waybills[0].traces[2] = { eventDesc: '尾程供应商:[Uni Uni] , 尾程跟踪号：[UUS00T0000000000000]', oprTimestamp: 1767362400000 };
-    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ description: '尾程供应商:[Uni Uni]', stage: 'in_transit' });
+    expect(parseSpeedpak(payload, NUMBER).events?.[2]).toMatchObject({ description: '尾程供应商:[Uni Uni]', stage: 'accepted' });
     expect(withoutHandoffReference('LM Carrier: [Uni Uni] , LM tracking No.: []')).toBe('LM Carrier: [Uni Uni] , LM tracking No.: []');
     expect(withoutHandoffReference('Package Received')).toBe('Package Received');
-    // The map reads the line as shown.
-    expect(statusMap.stage(null, normalizeStatusWording(shown))).toBe('in_transit');
+    // The map leaves the line as shown to the stage before it, on purpose.
+    expect(statusMap.stage(null, normalizeStatusWording(shown))).toBeUndefined();
+    expect(statusGapNote(statusMap, null, normalizeStatusWording(shown))).toMatch(/keeps the stage/);
     const policy = sameInstantIdentityPolicy('speedpak', { supportsScanMatching: true });
     const incoming = { stage: 'in_transit', description: shown, location: '', providerCode: '' };
     for (const description of [trimmed, routed]) expect(policy?.matches?.(incoming, { ...incoming, description })).toBe(true);

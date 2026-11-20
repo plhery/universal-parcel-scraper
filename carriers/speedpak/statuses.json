@@ -152,10 +152,9 @@
     {
       "wording": "LM Carrier: [<carrier>] , LM tracking No.: [<reference>]",
       "language": "en",
-      "stage": "in_transit",
       "confirmedBy": "live",
       "firstSeen": "2026-10-20",
-      "note": "The line naming the last-mile carrier and its reference, also written in Chinese. SpeedPAK files it under its label 同步尾程供应商, the hand-over to that carrier. It is shown without the reference, which the hand-off carries."
+      "note": "The line naming the last-mile carrier and its reference, also written in Chinese. SpeedPAK files it under its label 同步尾程供应商, its record of the carrier chosen, made at the second of a scan in the origin country days before the hand-over: a notice that keeps the stage of the scan before it. It is shown without the reference, which the hand-off carries."
     },
     {
       "wording": "订单接受",
@@ -300,9 +299,8 @@
     {
       "wording": "同步尾程供应商",
       "language": "zh",
-      "stage": "in_transit",
       "confirmedBy": "live",
-      "note": "SpeedPAK's own label (eventDescCn), also beside a last-mile carrier's wording."
+      "note": "SpeedPAK's own label (eventDescCn) for its record of the last-mile carrier: a notice that keeps the stage of the scan before it."
     },
     {
       "wording": "尾程转运中",

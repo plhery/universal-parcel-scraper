@@ -790,11 +790,12 @@ describe('status map answers', () => {
     expect(answer('yanwen', 'XX10', 'Synthetic scan')).toEqual(unknown);
   });
 
-  it('answers SpeedPAK by its English wording, the hand-off to the last-mile carrier included', () => {
-    expect(answer('speedpak', null, 'LM Carrier: [Example Post] , LM tracking No.: [EXAMPLE0000000]')).toEqual(mapped('in_transit'));
-    expect(answer('speedpak', null, '尾程供应商:[Example Post] , 尾程跟踪号：[EXAMPLE0000000]')).toEqual(mapped('in_transit'));
-    // The line as shown, without the reference the hand-off carries.
-    expect(answer('speedpak', null, 'LM Carrier: [Example Post]')).toEqual(mapped('in_transit'));
+  it('answers SpeedPAK by its English wording, the record of the last-mile carrier a notice', () => {
+    for (const wording of ['LM Carrier: [Example Post] , LM tracking No.: [EXAMPLE0000000]', '尾程供应商:[Example Post] , 尾程跟踪号：[EXAMPLE0000000]',
+      // The line as shown, without the reference the hand-off carries.
+      'LM Carrier: [Example Post]']) {
+      expect(answer('speedpak', null, wording)).toMatchObject({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage/) });
+    }
     expect(answer('speedpak', null, "Delivered. (Recipient's front door)")).toEqual(mapped('delivered'));
     expect(answer('speedpak', null, 'Package Received')).toEqual(mapped('accepted'));
     expect(answer('speedpak', null, 'Shipment Data Received')).toEqual(mapped('registered'));

@@ -61,7 +61,6 @@ const LABELS: Readonly<Record<string, ClassifiedStatus>> = {
   到达站点: MOVING,
   离开站点: MOVING,
   站点扫描: MOVING,
-  同步尾程供应商: MOVING,
   尾程转运中: MOVING,
   离开分拨站点: MOVING,
   目的国小包收货确认: MOVING,
@@ -91,7 +90,8 @@ export const speedpakEnglish = (wording: string): string | undefined => (Object.
 /**
  * The line naming the last-mile carrier and its reference, in English or
  * Chinese, with a full- or half-width colon. SpeedPAK files it under
- * 同步尾程供应商, the hand-over to that carrier, so it is a movement.
+ * 同步尾程供应商, its record of the carrier chosen for the last mile, made at
+ * the second of a scan in the origin country days before the hand-over.
  */
 export const HANDOFF = /^(?:LM Carrier|尾程供应商)\s*[:：]\s*\[([^\]]+)\]\s*,\s*(?:LM tracking No[.．]?|尾程跟踪号)\s*[:：]\s*\[([A-Z0-9]{4,40})\]$/;
 
@@ -102,14 +102,21 @@ const REFERENCE = /\s*,\s*(?:LM tracking No[.．]?|尾程跟踪号)\s*[:：]\s*\
 /** A hand-off line without its reference; any other wording as it is. */
 export const withoutHandoffReference = (wording: string): string => (HANDOFF.test(wording) ? wording.replace(REFERENCE, '') : wording);
 
+/** SpeedPAK's label for its record of the last-mile carrier. */
+const NOTICE_LABEL = '同步尾程供应商';
+
+/** Whether a scan is SpeedPAK's record of the last-mile carrier: a notice that keeps the stage of the scan before it. */
+export const speedpakNotice = (wording: string, label = ''): boolean => HANDOFF.test(wording) || HANDOFF_SHOWN.test(wording) || label === NOTICE_LABEL;
+
 export function speedpakStatus(wording: string): ClassifiedStatus | null {
   if (DELIVERED.test(wording)) return { status: 'delivered', stage: 'delivered' };
-  if (HANDOFF.test(wording) || HANDOFF_SHOWN.test(wording)) return MOVING;
+  if (speedpakNotice(wording)) return null;
   return Object.hasOwn(MAP, wording) ? MAP[wording]! : null;
 }
 
-/** The English wording's status, else the Chinese label's. */
+/** The English wording's status, else the Chinese label's; none for a notice. */
 export function speedpakScanStatus(wording: string, label: string): ClassifiedStatus | null {
+  if (speedpakNotice(wording, label)) return null;
   return speedpakStatus(wording) ?? (Object.hasOwn(LABELS, label) ? LABELS[label]! : null);
 }
 
@@ -126,8 +133,11 @@ export const statusMap: CarrierStatusMap = {
   stage: (code, wording) => {
     if (code) return undefined;
     if (DELIVERED_WORDING.test(wording)) return 'delivered';
-    if (HANDOFF_WORDING.test(wording)) return MOVING.stage;
+    if (HANDOFF_WORDING.test(wording)) return undefined;
     return STAGE_BY_WORDING.get(wording);
   },
   gaps: [],
+  gapNote: (code, wording) => (!code && HANDOFF_WORDING.test(wording)
+    ? "SpeedPAK's record of the last-mile carrier, made at the second of a scan in the origin country days before the hand-over: not a scan, so it keeps the stage of the scan before it."
+    : undefined),
 };
