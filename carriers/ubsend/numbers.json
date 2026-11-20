@@ -1,5 +1,34 @@
 {
   "carrier": "ubsend",
-  "gap": "No public page shows a UBsend number.",
-  "records": []
+  "records": [
+    {
+      "number": "00370720684126597722",
+      "role": "quarantined",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://portal.ubsend.com/documentation/track-and-trace-api",
+        "date": "2017-09-14",
+        "dateKind": "carrier reply",
+        "access": "full_page"
+      },
+      "quarantine": true,
+      "context": {
+        "service": "PostNord Return Pickup",
+        "reportedRole": "shipment AWB and customer reference",
+        "assessment": "scope_review"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "bring-posten",
+          "swiss-post-cargo",
+          "postnord",
+          "usps",
+          "nz-post"
+        ]
+      },
+      "note": "UBsend’s API documentation uses this barcode in a request and matching successful response and names PostNord as the source for the return shipment."
+    }
+  ]
 }
