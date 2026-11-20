@@ -39296,6 +39296,19 @@
     ]
   },
   {
+    "input": "3126111397344310",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl-ecommerce",
+      "tnt"
+    ],
+    "asked": [
+      "tnt",
+      "dhl-ecommerce"
+    ]
+  },
+  {
     "input": "31286979",
     "carrier": "unknown",
     "confidence": "low",
@@ -114706,6 +114719,17 @@
     ]
   },
   {
+    "input": "b101873107",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "australia-post"
+    ],
+    "asked": [
+      "australia-post"
+    ]
+  },
+  {
     "input": "b4107d80-6f20-4771-adf0-f4481f7bf430",
     "carrier": "unknown",
     "confidence": "none",
@@ -114713,6 +114737,12 @@
   },
   {
     "input": "b47ca126-7149-4b37-9ef6-c9db4d467965",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "bgk03965617",
     "carrier": "unknown",
     "confidence": "none",
     "candidates": []
