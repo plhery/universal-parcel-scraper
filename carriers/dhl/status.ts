@@ -87,7 +87,8 @@ export function stageForText(text: string, fallback = 'in_transit'): string {
   // A return still to come, such as a parcel left uncollected past its storage period: the parcel
   // has not started back yet, so it is an exception, never its acceptance or the return itself.
   if (nonterminalEnglishReturn(text) || /\bwill be (?:returned|sent back)\b|\bnot (?:been )?picked up\b|\bwird\b[^.]*\bzurück|auf dem weg zurück|\bnicht\b[^.]*\babgeholt\b/.test(value)) return 'exception';
-  if (/returned to (?:the )?sender|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
+  // "Shipment returned - storage period exceeded.": the return after an uncollected parcel's storage period started.
+  if (/returned to (?:the )?sender|^shipment returned\b|zurück.*absender|rücksendung|retour/.test(value)) return 'returned';
   // A round that did not reach the parcel for DHL's own reasons ("wegen unerwarteter Umstände wie z.B. Krankheit,
   // Unfall, Arbeitszeitüberschreitung", "due to unexpected circumstances such as illness, accident, or overtime"): a
   // delay, not an attempt at the door, and a new round follows the next working day.

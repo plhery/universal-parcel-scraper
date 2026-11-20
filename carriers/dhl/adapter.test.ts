@@ -369,6 +369,7 @@ describe('DHL public tracking normalization', () => {
     ['Aufgrund einer Beschädigung der Umverpackung wurde die Sendung von DHL nachverpackt und befindet sich jetzt auf dem Weg zum Absender.', 'returned', 'exception'],
     ['The shipment will be returned.', 'exception', 'exception'],
     ['The shipment has been returned to the sender', 'returned', 'exception'],
+    ['Shipment returned - storage period exceeded.', 'returned', 'exception'],
     // The English of "wird an den Absender zurückgesandt", after a failed round: the return starts.
     ['Unfortunately delivery of the shipment was not possible. The shipment is returned to the sender.', 'returned', 'exception'],
     ['Die Zustellung war nicht möglich. Die Sendung wird an den Absender zurückgesandt.', 'returned', 'exception'],
