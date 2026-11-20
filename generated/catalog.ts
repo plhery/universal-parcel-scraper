@@ -34819,6 +34819,38 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "jpi-jakarta-cargo": {
+    "displayName": "JPI Jakarta Cargo",
+    "color": "#e62028",
+    "aliases": [
+      "JPI Cargo",
+      "Jakarta Cargo (M) Sdn Bhd"
+    ],
+    "countries": [
+      "MY",
+      "ID"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Kuala_Lumpur",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "jpi-jakarta-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.jpicargo.com/tracking",
+    "trackingUrlTemplate": "https://www.jpicargo.com/tracking/{trackingNumber}",
+    "trackingSearchUrl": "https://www.jpicargo.com/tracking",
+    "trackingSiteName": "JPI Jakarta Cargo Tracking",
+    "linkRules": [
+      {
+        "domains": [
+          "jpicargo.com"
+        ],
+        "path": "^/tracking/([A-Za-z0-9-]+)/?$"
+      }
+    ],
+    "detectionRules": []
+  },
   "jrs-express": {
     "displayName": "JRS Express",
     "color": "#046a38",
@@ -66972,6 +67004,7 @@ export const CARRIER_IDS = [
   "jordan-post",
   "jp-home",
   "jp-logistics",
+  "jpi-jakarta-cargo",
   "jrs-express",
   "jrt",
   "js-express",
@@ -68865,6 +68898,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jordan-post": ["jordan-post-s10"],
   "jp-home": [],
   "jp-logistics": [],
+  "jpi-jakarta-cargo": [],
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1","js-express-jch"],

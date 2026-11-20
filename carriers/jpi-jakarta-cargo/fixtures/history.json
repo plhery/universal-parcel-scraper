@@ -1,0 +1,54 @@
+{
+  "success": true,
+  "data": {
+    "no_resi": "KJ2510090481",
+    "id": 1,
+    "resi_tracking": [
+      {
+        "resi_id": 1,
+        "status": "PICKUP",
+        "datetime": "2025-10-09 18:20:20"
+      },
+      {
+        "resi_id": 1,
+        "status": "JPI CHECKING",
+        "datetime": "2025-10-10 10:08:59"
+      },
+      {
+        "resi_id": 1,
+        "status": "RECEIVED JPI",
+        "datetime": "2025-10-10 10:09:17"
+      },
+      {
+        "resi_id": 1,
+        "status": "ON SHIPPING",
+        "datetime": "2025-10-12 11:06:06"
+      },
+      {
+        "resi_id": 1,
+        "status": "UNLOADING OFFICE HQ",
+        "datetime": "2025-10-24 06:28:35"
+      },
+      {
+        "resi_id": 1,
+        "status": "ON SHIPPING TO BRANCH",
+        "datetime": "2025-10-27 01:43:23"
+      },
+      {
+        "resi_id": 1,
+        "status": "UNLOADING OFFICE BRANCH",
+        "datetime": "2025-10-27 01:43:30"
+      },
+      {
+        "resi_id": 1,
+        "status": "UNLOADING OFFICE HQ",
+        "datetime": "2025-11-13 21:38:56"
+      },
+      {
+        "resi_id": 1,
+        "status": "DELIVERED",
+        "datetime": "2025-11-19 14:45:31"
+      }
+    ]
+  }
+}

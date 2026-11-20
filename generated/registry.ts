@@ -441,6 +441,7 @@ import { adapter as jifan } from '../carriers/jifan/adapter.js';
 import { adapter as jitsu } from '../carriers/jitsu/adapter.js';
 import { adapter as jne } from '../carriers/jne/adapter.js';
 import { adapter as jordanPost } from '../carriers/jordan-post/adapter.js';
+import { adapter as jpiJakartaCargo } from '../carriers/jpi-jakarta-cargo/adapter.js';
 import { adapter as jrt } from '../carriers/jrt/adapter.js';
 import { adapter as jsExpress } from '../carriers/js-express/adapter.js';
 import { adapter as jumppoint } from '../carriers/jumppoint/adapter.js';
@@ -1362,6 +1363,7 @@ export const REGISTRY: RegistryDefinition = {
     "jitsu": jitsu,
     "jne": jne,
     "jordan-post": jordanPost,
+    "jpi-jakarta-cargo": jpiJakartaCargo,
     "jrt": jrt,
     "js-express": jsExpress,
     "jumppoint": jumppoint,
@@ -2747,6 +2749,7 @@ export const REGISTRY: RegistryDefinition = {
     "jordan-post": "jordan-post",
     "jp-home": "universal",
     "jp-logistics": "universal",
+    "jpi-jakarta-cargo": "jpi-jakarta-cargo",
     "jrs-express": "universal",
     "jrt": "jrt",
     "js-express": "js-express",

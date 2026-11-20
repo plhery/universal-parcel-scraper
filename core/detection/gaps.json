@@ -5644,5 +5644,10 @@
     "carrier": "dps-cargo",
     "kind": "open",
     "reason": "The public portal confirms the full DPS shipment number. The adapter accepts it through explicit carrier selection."
+  },
+  {
+    "carrier": "jpi-jakarta-cargo",
+    "kind": "open",
+    "reason": "A public form example confirms a JPI shipment beginning with KJ, and the carrier lookup binds its full number. The prefix scope remains open."
   }
 ]
