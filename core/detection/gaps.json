@@ -4994,5 +4994,11 @@
     "pattern": "^[0-9]{10}$",
     "kind": "open",
     "reason": "Chinese judgments name 京廣速遞 on these ten-digit waybills, and its carrier tracker recognized two. Detection does not offer King Kong Express."
+  },
+  {
+    "carrier": "jetizz",
+    "pattern": "^26[0-9]{8}$",
+    "kind": "open",
+    "reason": "Jetizz customers report this family of ten-digit waybills. Other carriers share the numeric length and detection does not offer Jetizz."
   }
 ]
