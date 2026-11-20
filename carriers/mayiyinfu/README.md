@@ -31,6 +31,10 @@ The tracker answers plain HTTP only. No account, key, cookie, CAPTCHA or browser
   same instant and place ([identity.ts](identity.ts)).
   `货物已交机场` is a hand-over to the airport and stays in transit, though its translation
   reads "delivered".
+- Other rows end with their English after a semicolon, and the map reads that English where the
+  Chinese varies: "After customs clearance" is the release, in transit. The warehouse entry with
+  its planned time and the estimated loading flight time are what the forwarder plans or expects,
+  so they move nothing.
 - Rows coded `CO_C_CR` come from a scripted track: they can report the departure, the arrival
   and the clearance before the forwarder's own rows have the parcel at the airport. They are no
   scans and are held back, as on every tenant ([GZYL](../gzyl/README.md)).

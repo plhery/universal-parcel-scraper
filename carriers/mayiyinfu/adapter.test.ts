@@ -193,6 +193,15 @@ describe('Mayi Yinfu tracking adapter', () => {
     expect(answer('The shipment has arrived in the destination country/destination area. (Homepage / online shipment tracking: https://example.test/?id=1)'))
       .toEqual({ kind: 'mapped', stage: 'in_transit' });
     expect(answer('合成的记录')).toEqual({ kind: 'unknown' });
+    // The origin flight's departure, and a release after clearance read by its English.
+    expect(answer('航班已起飞,The flight has taken off from the origin')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    expect(answer('合成放行；After customs clearance')).toEqual({ kind: 'mapped', stage: 'in_transit' });
+    // What the forwarder plans or expects moves nothing.
+    for (const forecast of ['合成时间：2026年12月3日（计划：09时00分）；Warehouse entry time:2026-12-03（plan: 09:00）',
+      '预计合成航班时间：12-04；estimated loading flight time:12-04']) {
+      expect(statusMap.stage(null, normalizeStatusWording(forecast)), forecast).toBeUndefined();
+      expect(answer(forecast), forecast).toMatchObject({ kind: 'intentional_gap' });
+    }
     expect(carrier.portal).not.toHaveProperty('url');
     expect(carrier.portal).not.toHaveProperty('searchUrl');
     expect(detectCarrierMatch(NUMBER)).toMatchObject({ carrier: 'mayiyinfu', confidence: 'high' });

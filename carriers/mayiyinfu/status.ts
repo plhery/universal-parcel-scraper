@@ -13,13 +13,24 @@ export const FLIGHT_BOOKED = /^已排航班$/u;
 // The day a flight row expects the next flight or landing: "，预计6号的航班", "，二程预计8号的航班", "，预计8号落地".
 const EXPECTED_DAY = /^(\p{Script=Han}+)[，,]\p{Script=Han}*预计\d{1,2}号/u;
 
+// Rows that end with their English after a semicolon, read by that English where the Chinese varies:
+// the release once customs cleared the parcel, and two notices of what the forwarder plans or expects,
+// the parcel's entry into the warehouse with its planned time and the flight it expects to load it on.
+const RELEASED = /[；;]\s*after customs clearance$/;
+const FORECASTS: readonly (readonly [RegExp, string])[] = [
+  [/[；;]\s*warehouse entry time:/, 'The parcel\'s entry into the warehouse with the time planned for it: a plan, not a scan.'],
+  [/[；;]\s*estimated [a-z]+ flight time:/, 'The flight time the forwarder expects: still to come.'],
+];
+
 /**
  * The stage Mayi Yinfu's map gives a row, by its `normalizeStatusWording`
  * wording, else by that wording without the partner's link, else by the step
- * it leads with. A row's kind code groups many wordings and decides nothing.
+ * it leads with, else by the English it ends with. A row's kind code groups
+ * many wordings and decides nothing.
  */
 export function mayiyinfuStage(_code: string | null, wording: string): Stage | undefined {
-  return WORDINGS.stage(wording) ?? WORDINGS.stage(wording.replace(LINK, '')) ?? WORDINGS.stage(STEP.exec(wording)?.[1] ?? '');
+  return WORDINGS.stage(wording) ?? WORDINGS.stage(wording.replace(LINK, '')) ?? WORDINGS.stage(STEP.exec(wording)?.[1] ?? '')
+    ?? (RELEASED.test(wording) ? 'in_transit' : undefined);
 }
 
 /**
@@ -31,4 +42,8 @@ export function mayiyinfuEnglish(_code: string | null, wording: string): string 
   return step ? WORDINGS.english(step) : undefined;
 }
 
-export const statusMap: CarrierStatusMap = { stage: mayiyinfuStage, gaps: [] };
+export const statusMap: CarrierStatusMap = {
+  stage: mayiyinfuStage,
+  gaps: [],
+  gapNote: (_code, wording) => FORECASTS.find(([pattern]) => pattern.test(wording))?.[1],
+};

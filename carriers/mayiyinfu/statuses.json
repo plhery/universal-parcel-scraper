@@ -17,6 +17,7 @@
     {"wording": "头程落地，二程预计8号的航班The first leg has arrived. The second leg is expected to depart on the 8th.", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The first flight has landed and the connecting one is booked."},
     {"wording": "二程起飞", "language": "zh", "english": "The second leg has departed", "stage": "in_transit", "confirmedBy": "live", "note": "The step the connecting flight's departure leads with. The English is a plain rendering."},
     {"wording": "二程起飞，预计9号落地Flight 202 is taking off and is expected to land on the 9th.", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The connecting flight has left. The translation reads the second leg (二程) as a flight number."},
+    {"wording": "航班已起飞", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "The step the flight's departure from the origin leads with, before its English (\"The flight has taken off from the origin\")."},
     {"wording": "航班落地", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The step the landing in the destination region leads with."},
     {"wording": "航班落地，拆板清关The flight landed, and the board was dismantled and cleared", "language": "zh", "stage": "customs", "confirmedBy": "live", "note": "Landed; the pallets are broken down for import clearance, which is under way."},
     {"code": "CO_C_CR", "wording": "起运地航班起飞", "language": "zh", "stage": "in_transit", "confirmedBy": "live", "note": "The flight has left the origin."},
