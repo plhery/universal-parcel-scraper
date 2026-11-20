@@ -108529,6 +108529,24 @@
     "candidates": []
   },
   {
+    "input": "SWS43517107",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "SWS43517108",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
+    "input": "SWS43560315",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "SWX039330000187892873",
     "carrier": "swiftx",
     "confidence": "high",
