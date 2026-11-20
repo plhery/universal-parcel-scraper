@@ -215,6 +215,20 @@ describe('Royal Mail structured response', () => {
     expect(result).not.toHaveProperty('delivered_at');
   });
 
+  it('reads a missed delivery as kept for collection when the summary repeats the scan that says so', () => {
+    const attempted = (lastEventCode: string) => parseRoyalMailTrackingResponse({ mailPieces: {
+      mailPieceId: IN_TRANSIT_NUMBER,
+      summary: { statusCategory: 'Delivery attempted', statusDescription: 'We tried to deliver your item', lastEventCode },
+      events: [
+        { eventCode: 'EVNAE', eventName: '**Available for Redelivery or Collection**', eventDateTime: '2026-01-14T09:21:00+00:00', locationName: 'Example DO' },
+        { eventCode: 'EVKPD', eventName: '**Due to be delivered today**', eventDateTime: '2026-01-14T07:25:00+00:00', locationName: 'Example DO' },
+      ],
+    } }, IN_TRANSIT_NUMBER);
+    expect(attempted('EVNAE')).toMatchObject({ status: 'out_for_delivery', current_stage: 'ready_for_pickup' });
+    // A summary written for an older scan keeps its own stage.
+    expect(attempted('EVKPD')).toMatchObject({ status: 'exception', current_stage: 'failed_attempt' });
+  });
+
   it('places a customs release and the redelivery after a missed delivery by their codes', () => {
     const result = parseRoyalMailTrackingResponse({ mailPieces: {
       mailPieceId: IN_TRANSIT_NUMBER,

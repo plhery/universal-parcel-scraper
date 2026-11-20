@@ -10,6 +10,7 @@ import { isRecord } from '../../core/types.js';
 import { isRoyalMailDomesticReference } from '../../core/detection/royalMail.js';
 import { isValidS10TrackingNumber } from '../../core/detection/s10.js';
 import { furtherAlong } from '../../core/status/progress.js';
+import type { Stage } from '../../core/status/index.js';
 import { royalMailEventStage, royalMailScanStage, royalMailSummaryStage, statusForStage } from './status.js';
 
 /** Read the response produced by Royal Mail's form and hCaptcha callback. */
@@ -288,7 +289,9 @@ export function parseRoyalMailTrackingResponse(payload: unknown, trackingNumber:
   const repeated = newest?.stage_source === 'carrier_map' && !(receiptAccepted && newest.stage === 'in_transit')
     && (Boolean(lastTime) && lastTime === newest.time
       || events.every(event => event.time) && cleanScalar(summary.lastEventCode, 64) === newest.provider_code);
-  const stage = repeated && furtherAlong(summaryStage, newest.stage) ? newest.stage : summaryStage;
+  // "Delivery attempted" also covers the item then kept for collection or redelivery, which the scan says.
+  const kept = summaryStage === 'failed_attempt' && newest?.stage === 'ready_for_pickup';
+  const stage = repeated && (kept || furtherAlong(summaryStage, newest.stage)) ? newest.stage as Stage : summaryStage;
   const delivered = stage === 'delivered';
   // A summary that calls the item collected or delivered on a Customer Service Point's collection
   // makes that collection the recipient's: the delivery.

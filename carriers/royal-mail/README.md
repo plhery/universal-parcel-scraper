@@ -50,7 +50,9 @@ answers are not retried. An unavailable browser fails fast.
   postbox drop-off. When the summary repeats the newest scan and that scan's
   code places the parcel further along (the receipt after a drop-off, the
   round, customs), the code's stage stands. Receipts after a first receipt,
-  the acceptance itself, stay under "We've got it".
+  the acceptance itself, stay under "We've got it". "Delivery attempted"
+  repeating a scan that keeps the item for collection or redelivery reads
+  as ready for pickup.
 - An item sent to a Post Office for collection gets the delivery office's delivery scan, then
   "Delivered to your collection point" (`EVKLC`), then the branch's "Available for collection".
   The first two are the way to the branch and read as transit.
