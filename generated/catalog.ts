@@ -26886,6 +26886,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "g2-ocean": {
+    "displayName": "G2 Ocean",
+    "color": "#233e72",
+    "aliases": [
+      "G2 Ocean AS",
+      "GSSW"
+    ],
+    "countries": [
+      "NO"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "g2-ocean",
+      "localClocks": true
+    },
+    "canaryUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingUrlTemplate": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingSearchUrl": "https://myg2.g2ocean.com/cargo-tracking",
+    "trackingSiteName": "MyG2 Cargo Tracker",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "g4s-kenya": {
     "displayName": "G4S Courier Kenya",
     "color": "#ef3e42",
@@ -66418,6 +66442,7 @@ export const CARRIER_IDS = [
   "furniture-logis",
   "fxdc-post",
   "fynex",
+  "g2-ocean",
   "g4s-kenya",
   "gaash",
   "gaaubesi",
@@ -68298,6 +68323,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "furniture-logis": [],
   "fxdc-post": [],
   "fynex": [],
+  "g2-ocean": [],
   "g4s-kenya": [],
   "gaash": [],
   "gaaubesi": [],

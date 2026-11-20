@@ -1,0 +1,23 @@
+{
+  "carrier": "g2-ocean",
+  "records": [
+    {
+      "number": "GSSWAME38005Q",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/gvn-fuels-limited-gvn-fuels-limited",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "ocean bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The published manifest lists G2 Ocean and the GSSW-prefixed bill. MyG2 Cargo Tracker returned the matching bare bill and actual port times."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "message": "The selected bol name is invalid.",
+  "errors": {
+    "bol_name": [
+      "The selected bol name is invalid."
+    ]
+  }
+}

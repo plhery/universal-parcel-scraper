@@ -92624,6 +92624,12 @@
     ]
   },
   {
+    "input": "GSSWAME38005Q",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "GTG0406055",
     "carrier": "unknown",
     "confidence": "low",

@@ -5579,5 +5579,10 @@
     "carrier": "salam-pacific-indonesia-lines",
     "kind": "open",
     "reason": "The adapter uses shared shipping container identifiers and is selected explicitly."
+  },
+  {
+    "carrier": "g2-ocean",
+    "kind": "open",
+    "reason": "The public search accepts the bare bill reference. Select G2 Ocean explicitly."
   }
 ]

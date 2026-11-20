@@ -312,6 +312,7 @@ import { adapter as frontierCa } from '../carriers/frontier-ca/adapter.js';
 import { adapter as ftdNz } from '../carriers/ftd-nz/adapter.js';
 import { adapter as fukuyama } from '../carriers/fukuyama/adapter.js';
 import { adapter as fxdcPost } from '../carriers/fxdc-post/adapter.js';
+import { adapter as g2Ocean } from '../carriers/g2-ocean/adapter.js';
 import { adapter as gaash } from '../carriers/gaash/adapter.js';
 import { adapter as garudavega } from '../carriers/garudavega/adapter.js';
 import { adapter as gati } from '../carriers/gati/adapter.js';
@@ -1220,6 +1221,7 @@ export const REGISTRY: RegistryDefinition = {
     "ftd-nz": ftdNz,
     "fukuyama": fukuyama,
     "fxdc-post": fxdcPost,
+    "g2-ocean": g2Ocean,
     "gaash": gaash,
     "garudavega": garudavega,
     "gati": gati,
@@ -2472,6 +2474,7 @@ export const REGISTRY: RegistryDefinition = {
     "furniture-logis": "universal",
     "fxdc-post": "fxdc-post",
     "fynex": "universal",
+    "g2-ocean": "g2-ocean",
     "g4s-kenya": "universal",
     "gaash": "gaash",
     "gaaubesi": "universal",
