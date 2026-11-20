@@ -91,6 +91,18 @@ callback in a tagged client envelope, without a tracking number or cookies. The 
 it once through its own supplied HTTP transport for the whole-waybill app lookup. This
 bootstrap output is separate from a captured tracking reply.
 
+## Fresh contexts
+
+Helpers that read one lookup in one fresh context share its lifecycle through
+[helper-context.mjs](helper-context.mjs): it opens the context, through the request's proxy
+when one is given, creates the page, installs the outbound policy, runs the carrier's steps
+against the deadline and the request's signal, and closes the context within a cleanup
+window, asking for a new browser when the close does not finish. A context that arrives late
+is closed on arrival. The carrier keeps its own capture, observes before navigating, and
+builds its reply on failure before cleanup, so a challenge seen at the deadline is kept. A new
+helper of that shape should use it. Helpers that keep a session or page, reopen contexts or
+pages within a lookup, or prepare the context before its page keep their own lifecycle.
+
 ## Sessions
 
 The service reuses browser sessions, never parcel responses. FedEx keeps one verified context

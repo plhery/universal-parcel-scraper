@@ -61,3 +61,16 @@ test('source decoding rejects malformed alphabets and length mismatches', () => 
     assert.deepEqual(decodeSource(encodeSource(input), size, alphabet), input);
   }
 });
+
+test('every relative import of an installed source is installed beside it', () => {
+  const dockerfile = readFileSync(new URL('./Dockerfile', import.meta.url), 'utf8');
+  const copies = [...dockerfile.matchAll(/^COPY (\S+) (\S+)$/gm)];
+  const targets = new Set(copies.map(([, , target]) => target));
+  for (const [, file, target] of copies) {
+    if (!file.endsWith('.mjs')) continue;
+    const source = readFileSync(new URL(file, import.meta.url), 'utf8');
+    for (const [, name] of source.matchAll(/^import [^;]*? from '\.\/([^']+)';$/gm)) {
+      assert.ok(targets.has(new URL(name, `file://${target}`).pathname), `${file} imports ${name}, which the Dockerfile does not copy`);
+    }
+  }
+});
