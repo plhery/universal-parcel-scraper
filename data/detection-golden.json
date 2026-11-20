@@ -3528,6 +3528,24 @@
     ]
   },
   {
+    "input": "0070-300729",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dhl",
+      "mondial-relay",
+      "relais-colis",
+      "estafeta",
+      "box-now",
+      "dhl-ecommerce-es",
+      "dhl-freight"
+    ],
+    "asked": [
+      "dhl-ecommerce-es",
+      "box-now"
+    ]
+  },
+  {
     "input": "00724945748383",
     "carrier": "unknown",
     "confidence": "low",
@@ -110406,6 +110424,18 @@
     ],
     "asked": [
       "2go"
+    ]
+  },
+  {
+    "input": "V080-0660391",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "dtdc",
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
     ]
   },
   {
