@@ -8,7 +8,7 @@ import { countryTimeZone, firstOccurrence, usStateTimeZone, type ParsedTime } fr
 import { cleanScalar } from '../../core/transport/index.js';
 import { isRecord } from '../../core/types.js';
 import { SEVENTEENFEIA_HOME_ZONE } from './clock.js';
-import { BROKER_LABEL, CLEARED_LABEL, DELAY_LABEL, ESTIMATE_LABEL, seventeenFeiaStage } from './status.js';
+import { BROKER_LABEL, CLEARED_LABEL, DELAY_LABEL, ESTIMATE_LABELS, seventeenFeiaStage } from './status.js';
 
 export const PROVIDER = '17FEIA';
 // A long history is a few dozen kilobytes.
@@ -103,7 +103,7 @@ function projectRow(row: unknown, readAt: number): { key: string; event: Carrier
   if (!isRecord(row)) throw new SchemaError(PROVIDER, '17FEIA returned an invalid scan');
   const label = text(row, 'status', 64);
   const description = text(row, 'description');
-  if (!description || label === ESTIMATE_LABEL) return null;
+  if (!description || ESTIMATE_LABELS.has(label)) return null;
   const stamp = text(row, 'createTime', 64);
   const country = text(row, 'country', 8).toUpperCase();
   // A US row's state is read only for its clock.

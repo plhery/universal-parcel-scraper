@@ -88,6 +88,8 @@ describe('17FEIA HTTP adapter', () => {
         row('2026-02-08 20:00:00', '卡车到达哈萨克斯坦', 'Arrived in Kazakhstan'),
         row('2026-02-08 17:18:00', '卡车已出境', 'Truck has departed the country.'),
         row('2026-02-08 14:34:00', '出口报关放行', 'Export cleared & released. 2026-02-08 14:34:00'),
+        // An estimated sailing, written with an export declaration: no scan.
+        row('2026-02-08 10:12:00', '预计开船时间', 'Estimated sail date: 2026-02-12 00:00:00'),
         row('2026-02-07 14:30:00', '到达出境口岸', 'Arrived at exit port.'),
         row('2026-02-05 19:05:33', '国内运输中，预计到达出境口岸时间', 'Domestic transit in progress; estimated arrival at exit port on: 2026-02-07 18:00:00'));
     }), WAREHOUSE, LATER);
