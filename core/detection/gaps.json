@@ -4862,5 +4862,11 @@
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",
     "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits. Detection does not offer Rohlig SUUS."
+  },
+  {
+    "carrier": "relay-express",
+    "pattern": "^24VJWD\\d{7}$",
+    "kind": "open",
+    "reason": "Relay Express’s guest tracker recognizes a docket number with this prefix and length. Detection does not offer Relay Express."
   }
 ]
