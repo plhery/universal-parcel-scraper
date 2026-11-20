@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { classifyEvent, event, localEvent, result } from './result.js';
 import { statusMap } from '../status.js';
+import { hasPrivateDeliveryDetails } from '../../core/status/index.js';
 
 describe('shared provider result', () => {
   it("reads DHL's \"Available for pickup shortly\" relayed by a provider as on its way to the outlet, as DHL does", () => {
@@ -451,5 +452,14 @@ describe('shared provider result', () => {
       expect(classifyEvent(wording), wording).toEqual({ stage: 'in_transit', stage_source: 'wording:provider' });
     }
     expect(classifyEvent('Returns').stage_source).toBe('none');
+  });
+
+  it('keeps a pickup code in traditional or simplified characters where the privacy check finds it', () => {
+    // Synthetic rows: a provider's event keeps the code in its wording, and hosts hide it by this check.
+    for (const wording of ['快件已到達驛站，取件碼：12-3-4567', '快件已到达驿站，取件码：12-3-4567']) {
+      const scan = event('2026-11-03T10:21:00Z', wording);
+      expect(scan?.description).toContain('4567');
+      expect(hasPrivateDeliveryDetails(scan?.description ?? '')).toBe(true);
+    }
   });
 });
