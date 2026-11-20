@@ -52,6 +52,7 @@ import { adapter as aramexAu } from '../carriers/aramex-au/adapter.js';
 import { adapter as aramexNz } from '../carriers/aramex-nz/adapter.js';
 import { adapter as arasKargo } from '../carriers/aras-kargo/adapter.js';
 import { adapter as arrowXl } from '../carriers/arrow-xl/adapter.js';
+import { adapter as arubaPost } from '../carriers/aruba-post/adapter.js';
 import { adapter as asendia } from '../carriers/asendia/adapter.js';
 import { adapter as asyadExpress } from '../carriers/asyad-express/adapter.js';
 import { adapter as atlanticCourier } from '../carriers/atlantic-courier/adapter.js';
@@ -894,6 +895,7 @@ export const REGISTRY: RegistryDefinition = {
     "aramex-nz": aramexNz,
     "aras-kargo": arasKargo,
     "arrow-xl": arrowXl,
+    "aruba-post": arubaPost,
     "asendia": asendia,
     "asyad-express": asyadExpress,
     "atlantic-courier": atlanticCourier,
@@ -1810,7 +1812,7 @@ export const REGISTRY: RegistryDefinition = {
     "ark-express": "universal",
     "arrow-express": "universal",
     "arrow-xl": "arrow-xl",
-    "aruba-post": "universal",
+    "aruba-post": "aruba-post",
     "asap-couriers": "universal",
     "ase-express": "universal",
     "asendia": "asendia",

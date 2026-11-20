@@ -9803,7 +9803,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/Aruba",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "aruba-post",
+      "localClocks": true
     },
     "canaryUrl": "https://www.postaruba.com/",
     "trackingUrlTemplate": "https://cds.postaruba.com/ipswt/IPSWeb_item_events.aspx?itemid={trackingNumber}",
