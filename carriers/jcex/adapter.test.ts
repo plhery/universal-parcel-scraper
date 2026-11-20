@@ -253,6 +253,16 @@ describe('JCEX HTTP adapter', () => {
     expect(descriptions).not.toContain('Synthetic reworded scan');
   });
 
+  it('reads a receipt at a transit point as the acceptance when no scan moved the parcel before it', () => {
+    const result = parseJcex(changed('relayed', (content) => {
+      const departure = content.trackDetails.find((row) => row.eventDetailEn === 'Port of departure - Departure')!;
+      content.trackDetails.push({ ...departure, eventTime: '2026-09-17 08:00:00', platformEventCode: 'InTransit_PickedUp',
+        eventDetailEn: 'Consignment Received At Transit Point', eventDetailCn: 'Consignment Received At Transit Point', location: 'DONGGUAN' });
+    }), RELAYED, Date.parse('2026-10-01T00:00:00Z'));
+    const receipts = result.events!.filter((event) => event.description === 'Consignment Received At Transit Point');
+    expect(receipts.map((event) => [event.location, event.stage])).toEqual([[expect.not.stringMatching(/DONGGUAN/), 'in_transit'], ['DONGGUAN', 'accepted']]);
+  });
+
   it("keeps the delivering partner's scan in its fuller words when JCEX lists it twice at one clock and place", () => {
     const result = parseJcex(changed('relayed', (content) => {
       const delivered = content.trackDetails.find((row) => row.eventDetailEn === 'Delivered')!;

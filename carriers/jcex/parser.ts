@@ -320,6 +320,11 @@ export function parseJcex(payload: unknown, raw: string, readAt = Date.now()): C
       : { reason: 'listed' });
   }
 
+  // The delivering partner's receipts at its depots carry the pickup code long after JCEX took the parcel in, so the
+  // code reads as transit; on the first scan, before anything moved the parcel, it is the receipt in China: the acceptance.
+  const first = [...events].reverse().find((event) => event.stage && event.stage !== 'registered' && event.stage !== 'pending');
+  if (first?.provider_code === 'InTransit_PickedUp' && first.stage === 'in_transit') first.stage = 'accepted';
+
   const newest = events[0]!;
   const current = events.find((event) => event.stage);
   const stage = current?.stage as Stage | undefined;
