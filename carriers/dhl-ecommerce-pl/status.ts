@@ -79,7 +79,7 @@ const SCAN_STAGES: readonly [RegExp, Stage][] = [
   [/^The recipient was informed about the date of delivery\.$/i, 'pending'],
   [/^The shipment (?:has been|was) delivered to the recipient\.$/i, 'delivered'],
   // The destination's notice that a wrong address stopped the delivery: the parcel goes back to its sender.
-  [/^The shipment couldn['’]t be delivered because of bad\/incorrect address and will be returned to the sender\.$/i, 'returned'],
+  [/^The shipment couldn['’]t be delivered because of bad\/incorrect address and will be returned to the sender\.$/i, 'exception'],
   // On the way from the delivery depot to the DHL BOX locker or DHL POP point that will hold the parcel.
   [/^Delivery in the way to the DHL Point\.?$/i, 'in_transit'],
   // The DHL BOX locker or DHL POP point holding the parcel for its recipient, with its address and hours.

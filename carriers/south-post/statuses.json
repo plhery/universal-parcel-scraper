@@ -261,7 +261,7 @@
     },
     {
       "wording": "retornando a casa central",
-      "stage": "returned",
+      "stage": "exception",
       "language": "es",
       "confirmedBy": "bundle"
     },

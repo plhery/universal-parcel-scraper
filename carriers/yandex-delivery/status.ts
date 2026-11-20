@@ -22,8 +22,8 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
   ['Доставлено', 'delivered'],
   // The parcel's storage ran out: the order is cancelled and goes back.
   ['Отменен', 'exception'],
-  ['Возвращается в пункт выдачи', 'returned'],
-  ['Возвращается отправителю', 'returned'],
+  ['Возвращается в пункт выдачи', 'exception'],
+  ['Возвращается отправителю', 'exception'],
   ['Возврат принят пунктом приема', 'returned'],
   // Back at the point it was dropped at, waiting for the sender.
   ['Ждёт вручения в пункте приема', 'returned'],

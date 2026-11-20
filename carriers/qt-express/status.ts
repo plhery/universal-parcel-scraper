@@ -18,7 +18,7 @@ const STATUSES: ReadonlyMap<string, QtStatus> = new Map<string, QtStatus>([
   ['LAST MILE DELIVERY PROCESSING', { en: 'Last mile delivery processing', hu: 'Kézbesítés folyamatban', stage: 'out_for_delivery' }],
   ['WAITING FOR CUSTOMER PICKUP', { en: 'Waiting for customer pickup', hu: 'Ügyfél általi átvételre vár', stage: 'ready_for_pickup' }],
   ['DELIVERED', { en: 'Delivered', hu: 'Kézbesítve', stage: 'delivered' }],
-  ['RETURNED TO DEPOT', { en: 'Returned to depot', hu: 'Visszaküldve a raktárba', stage: 'returned' }],
+  ['RETURNED TO DEPOT', { en: 'Returned to depot', hu: 'Visszaküldve a raktárba', stage: 'exception' }],
   ['RETURNED TO SENDER', { en: 'Returned to sender', hu: 'Visszaküldve a feladónak', stage: 'returned' }],
   ['DELIVERY FAILED', { en: 'Delivery failed', hu: 'Sikertelen kézbesítés', stage: 'failed_attempt' }],
   ['DAMAGED', { en: 'Damaged', hu: 'Sérült', stage: 'exception' }],

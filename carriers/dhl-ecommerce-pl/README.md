@@ -45,7 +45,7 @@ parcel a DHL BOX locker or DHL POP point holds stays on the step "For
 delivery"; its Polish sentence, "Przesyłka czeka na odbiór", reads as waiting
 for pickup.
 
-A return DHL announces after a wrong address abroad is not always the end:
+A return DHL announces after a wrong address abroad is an exception, not the end:
 DHL can withdraw it, and the API's status then goes back to `Route`, with the
 parcel on its way to the recipient.
 

@@ -24,9 +24,9 @@ const BILL_WORDINGS: ReadonlyMap<string, Stage> = new Map([
   ['không phát được', 'failed_attempt'],
   ['sự cố giao hàng', 'exception'],
   ['hủy', 'exception'],
-  ['đang chuyển hoàn', 'returned'],
+  ['đang chuyển hoàn', 'exception'],
   ['đã chuyển hoàn', 'returned'],
-  ['đang giao hàng hoàn', 'returned'],
+  ['đang giao hàng hoàn', 'exception'],
 ]);
 
 /**

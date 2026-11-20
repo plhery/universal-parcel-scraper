@@ -94,7 +94,7 @@
     {
       "code": "RETURNED TO DEPOT",
       "wording": "Returned to depot",
-      "stage": "returned",
+      "stage": "exception",
       "language": "en",
       "confirmedBy": "bundle",
       "note": "A parcel that is not delivered again and waits at the depot for its return to the sender."
@@ -102,7 +102,7 @@
     {
       "code": "RETURNED TO DEPOT",
       "wording": "Visszaküldve a raktárba",
-      "stage": "returned",
+      "stage": "exception",
       "language": "hu",
       "confirmedBy": "bundle",
       "note": "A parcel that is not delivered again and waits at the depot for its return to the sender."
@@ -113,7 +113,7 @@
       "stage": "returned",
       "language": "en",
       "confirmedBy": "bundle",
-      "note": "The parcel is on its way back to its sender."
+      "note": "The script's last return step; nothing follows it."
     },
     {
       "code": "RETURNED TO SENDER",
@@ -121,7 +121,7 @@
       "stage": "returned",
       "language": "hu",
       "confirmedBy": "bundle",
-      "note": "The parcel is on its way back to its sender."
+      "note": "The script's last return step; nothing follows it."
     },
     {
       "code": "DELIVERY FAILED",

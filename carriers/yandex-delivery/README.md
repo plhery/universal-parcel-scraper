@@ -36,7 +36,8 @@ pickup deadline.
 
 The map follows the page's scan wordings and the statuses its "Что значат статусы доставки"
 section explains. A parcel left uncollected is cancelled, then goes back through the point it was
-dropped at and waits there for the sender, which is a return; a disposed order is an exception.
+dropped at and waits there for the sender, which is a return; on its way there it is an
+exception, as is a disposed order.
 Changes of the storage deadline or return date, and a delayed delivery, keep the stage before
 them. Other wordings go to the shared wording rules.
 

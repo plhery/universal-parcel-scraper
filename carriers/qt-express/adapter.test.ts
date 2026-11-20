@@ -92,7 +92,7 @@ describe('QT Express guest adapter', () => {
     expect(delivered).toMatchObject({ status: languageStageStatus('delivered'), current_stage: 'delivered', last_status_text: 'Kézbesítve',
       last_update: '2026-03-04T08:30:00+01:00', delivered_at: '2026-03-04T08:30:00+01:00' });
     expect(delivered.events).toHaveLength(5);
-    for (const [title, stage] of [['Waiting for customer pickup', 'ready_for_pickup'], ['Returned to depot', 'returned'], ['Returned to sender', 'returned'],
+    for (const [title, stage] of [['Waiting for customer pickup', 'ready_for_pickup'], ['Returned to depot', 'exception'], ['Returned to sender', 'returned'],
       ['Damaged', 'exception'], ['Lost', 'exception'], ['Destroyed in transport', 'exception'], ['Cancelled', 'exception']] as const) {
       const result = parseQt(then(title), NUMBER);
       expect(result).toMatchObject({ status: languageStageStatus(stage), current_stage: stage, last_status_text: title });

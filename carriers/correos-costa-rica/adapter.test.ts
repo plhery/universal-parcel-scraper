@@ -20,6 +20,10 @@ describe('Costa Rica public guest tracking',()=>{
     expect(r.events).toHaveLength(2);expect(r.events?.[1]?.local_time).toBe('2026-03-03T00:01');expect(r.events?.every(e=>!e.time)).toBe(true);
   });
   it.each(statuses.entries)('maps the real wording $wording',entry=>expect(costaRicaStage(entry.wording)).toBe(entry.stage));
+  it('keeps a return in progress open',()=>{
+    const r=parseCostaRica({...fixture,events:[{...fixture.events[0],description:'Tu envío se encuentra en proceso de devolución.'},...fixture.events.slice(1)]},NUMBER);
+    expect(r).toMatchObject({current_stage:'exception'});expect(r.delivered_at).toBeUndefined();
+  });
   it('rejects wrong identity, empty history and malformed clocks',()=>{
     expect(()=>parseCostaRica({...fixture,number:'RR999999995CR'},NUMBER)).toThrow();
     expect(()=>parseCostaRica({...fixture,events:[]},NUMBER)).toThrow(expect.objectContaining({kind:'indeterminate',name:'NoHistoryError'}));

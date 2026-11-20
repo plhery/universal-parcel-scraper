@@ -93,7 +93,7 @@ describe('Yandex Delivery page parser', () => {
         // The page shows this scan without a clock; it keeps its place.
         { description: 'Возврат принят пунктом приема', location: 'Новинский бульвар 8, Москва', ...staged('returned') },
         { local_time: '2026-05-16T08:57', description: 'Изменена дата возврата' },
-        { local_time: '2026-05-14T21:18', description: 'Возвращается в пункт выдачи', location: 'улица Архитектора Щусева 4 к1, Москва', ...staged('returned') },
+        { local_time: '2026-05-14T21:18', description: 'Возвращается в пункт выдачи', location: 'улица Архитектора Щусева 4 к1, Москва', ...staged('exception') },
         { local_time: '2026-05-14T21:18', description: 'Отменен', ...staged('exception') },
         { local_time: '2026-05-03T17:08', description: 'Изменён срок хранения в пункте выдачи' },
         { local_time: '2026-04-30T16:12', description: 'Ждёт вручения в пункте выдачи', ...staged('ready_for_pickup') },

@@ -23,8 +23,8 @@ A failed delivery is worded with its reason as the page words it: by the event's
 else by the service's English text for one, else the text as written. A reason the courier
 typed is left out, as the Hungarian page leaves it out.
 
-A parcel sent back to the depot is not delivered again and waits there for its return, so it
-reads as returned.
+A parcel sent back to the depot is not delivered again and waits there for its return. The
+return has not started, so it is an exception; "Returned to sender" is the return.
 
 Event clocks are read only with the offset the service states; a clock without one is rejected
 instead of being given a zone.

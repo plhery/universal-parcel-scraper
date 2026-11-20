@@ -74,7 +74,7 @@
     },
     {
       "wording": "Tu envío se encuentra en proceso de devolución.",
-      "stage": "returned",
+      "stage": "exception",
       "language": "es",
       "confirmedBy": "live"
     },

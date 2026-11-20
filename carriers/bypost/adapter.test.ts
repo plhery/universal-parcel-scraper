@@ -95,6 +95,12 @@ describe('Bypost guest adapter', () => {
     expect(parseBypost(detailed, NUMBER)).toMatchObject({ signed_by: 'Synthetic Detail Signer' });
   });
 
+  it('keeps a package on its way back open and closes it once returned', () => {
+    const back = (code: string) => parseBypost(changed(d => { d.packages[0].events.push(scan(code, '2026-03-05T09:00:00+01:00')); }), NUMBER);
+    expect(back('RETURNING_TO_SENDER')).toMatchObject({ current_stage: 'exception', last_status_text: 'På vei tilbake til avsender' });
+    expect(back('RETURNED_TO_SENDER')).toMatchObject({ current_stage: 'returned' });
+  });
+
   it('reads a registered shipment without scans as a summary, and a cancelled one or one with an exception as stopped', () => {
     const registered = changed(d => { d.status = 'PREPARING'; d.packages[0].events = []; delete d.packages[0].detail; });
     expect(parseBypost(registered, NUMBER)).toEqual({ status: expect.any(String), current_stage: 'registered', current_stage_source: 'carrier_map',

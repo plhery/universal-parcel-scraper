@@ -60,9 +60,10 @@ describe('DHL Poland browser history', () => {
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[3]?.description).toBe('The shipment has reached DHL terminal.');
     payload.events[0]!.description = 'The shipment has arrived at delivery depot.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('in_transit');
-    // A wrong address abroad sends the parcel back, and it leaves a gateway hours later.
+    // A wrong address abroad sends the parcel back, and it leaves a gateway hours later: the return
+    // is announced, not done, so the parcel stays open.
     payload.events[0]!.description = "The shipment couldn't be delivered because of bad/incorrect address and will be returned to the sender.";
-    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('returned');
+    expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('exception');
     payload.events[0]!.description = 'The shipment has left the gateway in origin country.';
     expect(parseDhlPolandHistory(payload, WAYBILL).events?.[0]?.stage).toBe('in_transit');
     // The page now words the delivery so; rows stored with the older wording keep it.

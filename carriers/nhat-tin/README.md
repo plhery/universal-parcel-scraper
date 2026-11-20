@@ -39,7 +39,8 @@ link builds.
 ## Notes
 
 - The bill's status code and wording give its stage; a code that is not mapped falls back to its
-  wording, then to the newest scan.
+  wording, then to the newest scan. A return on its way is an exception; "Đã chuyển hoàn", the
+  completed return, is the return.
 - Scans are wall clocks to the minute, with no zone, and stay in `local_time`. The place is the
   scan's district and city.
 - The expected date's day is kept while the bill is on its way.

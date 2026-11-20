@@ -88,7 +88,7 @@
     {
       "code": "RETURNING_TO_SENDER",
       "wording": "På vei tilbake til avsender",
-      "stage": "returned",
+      "stage": "exception",
       "language": "nb",
       "confirmedBy": "bundle"
     },

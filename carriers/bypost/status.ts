@@ -22,7 +22,7 @@ const CODES: ReadonlyMap<string, BypostCode> = new Map<string, BypostCode>([
   ['OUT_FOR_DELIVERY', { wording: 'Ut for levering', stage: 'out_for_delivery' }],
   ['DELIVERY_ATTEMPTED', { wording: 'Leveringsforsøk', stage: 'failed_attempt' }],
   ['DELIVERED', { wording: 'Levert', stage: 'delivered' }],
-  ['RETURNING_TO_SENDER', { wording: 'På vei tilbake til avsender', stage: 'returned' }],
+  ['RETURNING_TO_SENDER', { wording: 'På vei tilbake til avsender', stage: 'exception' }],
   ['RETURNED_TO_SENDER', { wording: 'Returnert til avsender', stage: 'returned' }],
   ['DELAYED', { wording: 'Mulig forsinkelse' }],
   ['DELIVERY_RESCHEDULED', { wording: 'Leveringsdato endret' }],

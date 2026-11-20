@@ -42,7 +42,7 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map(([
     'visitas reiteradas', 'zona peligrosa', 'datos confusos',
   ].map(wording => [wording, 'exception'] as const),
   ['anulado', 'exception'],
-  ['retornando a casa central', 'returned'],
+  ['retornando a casa central', 'exception'],
   ['devolución recibida', 'returned'],
   ['devuelto al remitente', 'returned'],
 ] as const).map(([wording, stage]) => [normalizeStatusWording(wording), stage]));

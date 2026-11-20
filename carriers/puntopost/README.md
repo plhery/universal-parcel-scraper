@@ -34,7 +34,8 @@ limits and changed replies keep their own failure kinds.
 The status codes and the Spanish wording the page shows for each come from the tracker's
 script; the map is in [status.ts](status.ts). Parcels go from the shop to a depot and on to a
 pickup point, where `in_destination_point` waits for collection and `delivered` is the
-collection. Every `return_*` code is the way back to the sender, and the page words every
+collection. Every `return_*` code is the way back to the sender. The return is under way, an
+exception, until it is back at its origin point or handed over; the page words every
 `return_fail*` code as a return to the sender, showing nothing after
 `return_fail_in_origin_point`; the adapter does the same. The parcel's own status gives the
 stage, as on the page's badge.

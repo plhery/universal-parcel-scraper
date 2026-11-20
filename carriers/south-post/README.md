@@ -32,7 +32,8 @@ The details beside a status are left out.
 The page's script reads each `estado` in lower case and groups the wordings into its rail:
 preparing the order, ready to deliver, on the way, delivered. The map follows those steps and
 stages the problems the page explains: missed visits, a parcel held for collection, delivery
-problems, a cancelled order and returns. A visit put off for technical problems keeps the stage
+problems, a cancelled order and returns. A return on its way to the central hub is an exception
+until it is received or back with the sender. A visit put off for technical problems keeps the stage
 before it. The page's exchange and recovery wordings, the collection of a product to go back to
 the shop and its request to contact customer care stay without a stage. A wording the map does
 not list goes to the shared wording rules.

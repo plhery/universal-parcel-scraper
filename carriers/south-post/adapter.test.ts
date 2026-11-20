@@ -84,6 +84,8 @@ describe('South Post guest adapter', () => {
     expect(parseSouthPost(then('1° visita no responde.'), NUMBER)).toMatchObject({ current_stage: 'failed_attempt', last_status_text: '1° visita no responde.' });
     expect(parseSouthPost(then('DOMICILIO INCOMPLETO'), NUMBER)).toMatchObject({ current_stage: 'exception' });
     expect(parseSouthPost(then('Devuelto al remitente'), NUMBER)).toMatchObject({ current_stage: 'returned' });
+    // On its way back to the central hub, the return is not done yet.
+    expect(parseSouthPost(then('retornando a casa central'), NUMBER)).toMatchObject({ current_stage: 'exception' });
     const later = parseSouthPost(then('Retiro efectuado'), NUMBER);
     expect(later.events![0]).toEqual({ time: '2020-11-26T10:30:00-03:00', description: 'Retiro efectuado', provider_code: '999' });
     // A delivery under a newer unstaged status may have been undone.

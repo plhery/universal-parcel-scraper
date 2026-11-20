@@ -15,7 +15,7 @@ own number and events. The shipment's number reads every package; a package's ow
 reads that package. A shipment of several packages counts as delivered once each package is.
 A cancelled shipment is stopped whatever its events say. No event code states an exception
 ("Avvik"), so a shipment's exception stands over its events unless they end in a delivery or a
-return.
+return. A package on its way back to its sender is an exception until it is returned.
 
 An event keeps its code as `provider_code` and the label the service gives it, else the page's
 wording for the code. A code the page does not list is kept without a stage, as are the four

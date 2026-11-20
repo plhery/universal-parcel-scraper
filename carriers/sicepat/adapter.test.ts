@@ -41,6 +41,15 @@ describe('SiCepat app history', () => {
     expect(result.events!.at(-1)!.location).toBeUndefined();
   });
 
+  it('keeps the return open until the shipper receives it', () => {
+    const history = (p: ReturnType<typeof fixture>) => p.data.sicepat.result.track_history as { status: string }[];
+    const carried = parseSicepat(changed(p => { history(p).pop(); }), NUMBER);
+    expect(carried).toMatchObject({ current_stage: 'exception', last_update_local: '2026-11-10T11:10' });
+    expect(carried.events![0]).toMatchObject({ provider_code: 'ANT_RETUR', stage: 'exception' });
+    const hub = parseSicepat(changed(p => { history(p).pop(); history(p).at(-1)!.status = 'RETUR PUSAT'; }), NUMBER);
+    expect(hub).toMatchObject({ current_stage: 'exception' });
+  });
+
   it('rejects shortened, numeric, other and absent response identities', () => {
     for (const id of [undefined, NUMBER.slice(1), Number(NUMBER), '003179246086']) {
       expect(() => parseSicepat(changed(p => { p.data.sicepat.result.waybill_number = id; }), NUMBER)).toThrowError(expect.objectContaining({ kind: 'schema' }));

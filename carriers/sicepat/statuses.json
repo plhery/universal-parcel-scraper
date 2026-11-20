@@ -159,7 +159,7 @@
     {
       "code": "RETUR PUSAT",
       "wording": "Retur Pusat",
-      "stage": "returned",
+      "stage": "exception",
       "language": "id",
       "confirmedBy": "source",
       "note": "Official app guest track_history code and wording; full public shipment provenance is in numbers.json."
@@ -167,7 +167,7 @@
     {
       "code": "ANT_RETUR",
       "wording": "Paket Retur dibawa [SIGESIT]",
-      "stage": "returned",
+      "stage": "exception",
       "language": "id",
       "confirmedBy": "source",
       "note": "Official app guest track_history code and wording; full public shipment provenance is in numbers.json."

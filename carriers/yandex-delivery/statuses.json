@@ -66,7 +66,7 @@
     },
     {
       "wording": "Возвращается в пункт выдачи",
-      "stage": "returned",
+      "stage": "exception",
       "language": "ru",
       "confirmedBy": "live",
       "note": "In the public sample's page, with the cancellation."
@@ -143,7 +143,7 @@
     },
     {
       "wording": "Возвращается отправителю",
-      "stage": "returned",
+      "stage": "exception",
       "language": "ru",
       "confirmedBy": "portal",
       "note": "Explained in the tracking page's \"Что значат статусы доставки\" section."

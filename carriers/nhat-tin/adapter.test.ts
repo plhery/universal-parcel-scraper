@@ -206,7 +206,10 @@ describe('Nhat Tin Logistics status vocabulary', () => {
     expect(statusMap.stage(null, 'xuất kho trả hàng: ***')).toBe('out_for_delivery');
     expect(statusMap.stage(null, 'trả vận đơn cho ***')).toBe('delivered');
     expect(statusMap.stage(null, 'trả vận đơn chobits')).toBeUndefined();
-    expect(statusMap.stage(null, 'đang giao hàng hoàn')).toBe('returned');
+    // A return on its way stays open; only the completed return closes the bill.
+    expect(statusMap.stage(null, 'đang giao hàng hoàn')).toBe('exception');
+    expect(statusMap.stage(null, 'đang chuyển hoàn')).toBe('exception');
+    expect(statusMap.stage(null, 'đã chuyển hoàn')).toBe('returned');
     expect(nhatTinStage('Synthetic note')).toBeNull();
     expect(nhatTinStage('')).toBeNull();
   });

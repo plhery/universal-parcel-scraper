@@ -94,7 +94,12 @@ describe('PuntoPost tracking service', () => {
     for (const value of ['0000016G39', 'MX12', `${LABEL},${TRACKING}`, 'MX0000016G39/..']) {
       expect(() => normalizePuntopostNumber(value)).toThrow(expect.objectContaining({ kind: 'invalid_input' }));
     }
-    expect(puntopostStage('return_in_depot')).toBe('returned');
+    // A return on its way stays open; back at its origin point or handed over, it is done.
+    for (const code of ['return_in_destination_point', 'return_in_transit_depot', 'return_in_depot', 'return_in_transit_origin', 'return_in_rerouted_point']) {
+      expect(puntopostStage(code), code).toBe('exception');
+    }
+    expect(puntopostStage('return_in_origin_point')).toBe('returned');
+    expect(puntopostStage('return_delivered')).toBe('returned');
     expect(puntopostStage('lost')).toBe('exception');
     expect(puntopostWording('return_fail_in_origin_point')).toBe('Devolución al remitente');
     expect(statusMap.stage('delivered', 'entregado')).toBe('delivered');
