@@ -22,6 +22,8 @@ const labels: Record<string, ClassifiedStatus> = {
   // instructions are still to come; the next scan makes it available.
   'ENTREGADO EN PUNTO DE CONVENIENCIA': { status: 'in_transit', stage: 'in_transit' },
   'DISPONIBLE EN PUNTO DE CONVENIENCIA': { status: 'in_transit', stage: 'ready_for_pickup' },
+  // Left at a pickup point agreed with the recipient, whose explanation says it is there to collect.
+  'ENTREGADO EN PUNTO CONCERTADO': { status: 'in_transit', stage: 'ready_for_pickup' },
   ENTREGADO: { status: 'delivered', stage: 'delivered' },
   DEVUELTO: { status: 'exception', stage: 'returned' },
   'EN ALMACEN': { status: 'exception', stage: 'exception' },

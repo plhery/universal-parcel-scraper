@@ -173,6 +173,9 @@ describe('Correos Express direct tracking', () => {
   it('keeps only the fixed sentences that open an explanation', () => {
     expect(fixedExplanation(' Su envío se encuentra en el punto de conveniencia seleccionado y en breve recibirá las instrucciones para recogerlo.PRIVATE_SYNTHETIC_POINT. 1 PRIVATE_SYNTHETIC_STREET'))
       .toBe('Su envío se encuentra en el punto de conveniencia seleccionado y en breve recibirá las instrucciones para recogerlo.');
+    expect(fixedExplanation('Tu envío está disponible para que lo recojas en el punto indicado. PRIVATE_SYNTHETIC_POINT'))
+      .toBe('Tu envío está disponible para que lo recojas en el punto indicado.');
+    expect(classifyCorreosExpressStatus('ENTREGADO EN PUNTO CONCERTADO')).toEqual({ status: 'in_transit', stage: 'ready_for_pickup' });
     expect(fixedExplanation('Su envío está en uno de nuestros vehí­culos  siendo transportado a la localidad de destino.'))
       .toBe('Su envío está en uno de nuestros vehículos siendo transportado a la localidad de destino.');
     expect(fixedExplanation('. Su envío  no ha podido ser entregado por una incidencia logística en nuestro reparto. Ya hemos gestionado su envío y lo recibirá en la fecha de entrega prevista'))

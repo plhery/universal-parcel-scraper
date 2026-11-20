@@ -79,6 +79,7 @@ const EXPLANATIONS: readonly string[] = [
   'Su envío se encuentra en el punto de conveniencia seleccionado y en breve recibirá las instrucciones para recogerlo',
   'Su envío ya está disponible en el punto de conveniencia seleccionado para poder ser recogido',
   'Tiempo de recogida finalizado en Punto de Conveniencia',
+  'Tu envío está disponible para que lo recojas en el punto indicado',
   // The Portuguese form's.
   'Já recebemos as informações do seu envio, em breve teremos a sua mercadoria na nossa posse',
   'Se precisar de informações adicionais, entre em contato com o expedidor',
