@@ -4070,6 +4070,12 @@
     "reason": "Wahana resi numbers are eight random digits and capital letters, a shape too short and generic to point to Wahana alone."
   },
   {
+    "carrier": "wan-hai",
+    "pattern": "^(?:WHLC)?\\d{3}[A-Z][A-Z\\d]\\d{5}$",
+    "kind": "open",
+    "reason": "Wan Hai's bookings and bills are three digits for the office, a letter, a letter or digit and five digits, after its SCAC in import records; detection has no rule for them yet."
+  },
+  {
     "carrier": "wanbexpress",
     "pattern": "^\\d{20}$",
     "kind": "collision",

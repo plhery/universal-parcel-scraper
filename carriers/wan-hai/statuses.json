@@ -1,0 +1,14 @@
+{
+  "carrier": "wan-hai",
+  "entries": [
+    {"wording": "Empty Container Released To Shipper From Pier/Terminal/Off-Dock Depot", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper collects an empty container to load it; the cargo is not yet with Wan Hai."},
+    {"wording": "Outbound Full Container Gate In To Peir/Terminal(Fcl)", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal at the port of loading. After the container moved, a further gate in is transit."},
+    {"wording": "Inbound/Outbound Laden Ctnr Move From One Pier/Terminal To Another One By Trucker/Rail.", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Full Or Empty Container Loaded On Board Feeder'S Vessel Or Other Liner'S Vessel With No Fixed Slot", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A booking's own container, loaded on a feeder."},
+    {"wording": "Laden Ctnr Loaded On Board Vessel.(Mother Vessel,Fixed Slot Charter/Joint Venture Vessel)", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"wording": "Laden Or Empty Transit Container Discharged From Own Or Feeder Vessel At Pier/Terminal Awaiting For", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a transshipment port for its next vessel."},
+    {"wording": "Full Container(Fcl) Discharged From Vessel Or Gate In To Pier/Terminal", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "At the port of discharge."},
+    {"wording": "Full Container Withdrawn By Consignee From Pier/Terminal", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee takes the loaded container from the port."},
+    {"wording": "Empty Container Discharged From Vessel Or Gate In To Pier/Terminal/Off-Dock Depot (Empty Available)", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee returns the unloaded container. Before the container moved, it is an empty container returned unused."}
+  ]
+}

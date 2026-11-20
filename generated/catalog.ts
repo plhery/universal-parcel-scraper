@@ -61859,6 +61859,25 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "wan-hai": {
+    "displayName": "Wan Hai",
+    "color": "#00449e",
+    "aliases": [
+      "Wan Hai Lines",
+      "WHL"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wan-hai",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "trackingSearchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wanbexpress": {
     "displayName": "WanbExpress",
     "color": "#da381b",
@@ -66982,6 +67001,7 @@ export const CARRIER_IDS = [
   "wakilni",
   "walker-logistics",
   "walkers-transport",
+  "wan-hai",
   "wanbexpress",
   "wangjing-3cq",
   "ward-trucking",
@@ -68847,6 +68867,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "wakilni": [],
   "walker-logistics": [],
   "walkers-transport": [],
+  "wan-hai": [],
   "wanbexpress": ["wanbexpress-1"],
   "wangjing-3cq": [],
   "ward-trucking": [],

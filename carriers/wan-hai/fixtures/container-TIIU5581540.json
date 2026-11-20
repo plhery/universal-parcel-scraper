@@ -1,0 +1,123 @@
+{
+ "result": {
+  "title_label": "Ctnr No :",
+  "title_label_color": "#000000",
+  "title": "TIIU5581540",
+  "title_color": "#000000",
+  "description_label": "通知 :",
+  "description_label_color": "#000000",
+  "description": "預訂資訊僅供參考，如有疑問請聯絡當地萬海辦事處，謝謝。",
+  "description_color": "#8E8E8E",
+  "warning": "系統轉運路線資料僅供貨物到達目的地前參考。如有其他情況，請進一步與 WHL PIC 聯繫以取得確認。",
+  "warning_color": "#8E8E8E",
+  "ref_no": "025G831033",
+  "bottom_notice_label": "",
+  "bottom_notice_label_color": "#FF1211",
+  "bottom_notice": "",
+  "bottom_notice_color": "#FF1211",
+  "information_list": [
+   {
+    "key": "日期 :",
+    "key_color": "#000000",
+    "value": "20261117 16:55",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "櫃場名稱 :",
+    "key_color": "#000000",
+    "value": "OAKLAND INTERNATIONAL CONTAINER TERMINAL; OICT (BERTH 57-59) ; SSA MARINE",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "狀態 :",
+    "key_color": "#000000",
+    "value": "Empty Container Discharged From Vessel Or Gate In To Pier/Terminal/Off-Dock Depot (Empty Available)",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "狀態 :",
+     "key_color": "#000000",
+     "content": "Empty Container Discharged From Vessel Or Gate In To Pier/Terminal/Off-Dock Depot (Empty Available)",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "航次 :",
+    "key_color": "#000000",
+    "value": "",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "船名 :",
+    "key_color": "#000000",
+    "value": "",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "明細查詢 :",
+    "key_color": "#000000",
+    "value": "Booking Data-025G831033",
+    "value_color": "#007AFF",
+    "action_url": "https://whlapiv2.wanhai.com/shipping/rest/eshipping/skd/cargo-tracking/booking-detail",
+    "segment_layout": "booking_page",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "明細查詢 :",
+    "key_color": "#000000",
+    "value": "BL Data-025G831033",
+    "value_color": "#007AFF",
+    "action_url": "https://whlapiv2.wanhai.com/shipping/rest/eshipping/skd/cargo-tracking/bl-detail",
+    "segment_layout": "bl_page",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   }
+  ]
+ },
+ "status": "0000",
+ "message": "操作成功",
+ "timestamp": "2026-11-20T22:37:56.228",
+ "error": ""
+}

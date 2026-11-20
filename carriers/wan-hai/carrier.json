@@ -1,0 +1,62 @@
+{
+  "id": "wan-hai",
+  "displayName": "Wan Hai",
+  "aliases": [
+    "Wan Hai Lines",
+    "WHL"
+  ],
+  "region": {
+    "countries": []
+  },
+  "brand": {
+    "color": "#00449e"
+  },
+  "selectable": true,
+  "timezone": "UTC",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "wan-hai",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "searchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "vehicle",
+      "eta",
+      "weight"
+    ],
+    "unavailable": [
+      "sender_name",
+      "recipient_name",
+      "proof_of_delivery"
+    ]
+  },
+  "links": [],
+  "detection": []
+}

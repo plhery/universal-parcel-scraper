@@ -61855,6 +61855,25 @@
     "linkRules": [],
     "detectionRules": []
   },
+  "wan-hai": {
+    "displayName": "Wan Hai",
+    "color": "#00449e",
+    "aliases": [
+      "Wan Hai Lines",
+      "WHL"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "wan-hai",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "trackingSearchUrl": "https://www.wanhai.com/views/cargoTrack/CargoTrack.xhtml",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "wanbexpress": {
     "displayName": "WanbExpress",
     "color": "#da381b",

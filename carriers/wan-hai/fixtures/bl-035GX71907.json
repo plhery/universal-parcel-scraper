@@ -1,0 +1,234 @@
+{
+ "result": {
+  "title_label": "B/L Data - ",
+  "title_label_color": "#000000",
+  "title": "035GX71907",
+  "title_color": "#000000",
+  "description_label": "通知 :",
+  "description_label_color": "#000000",
+  "description": "此資訊僅供參考。如有任何疑問，請聯絡您當地的萬海辦事處，謝謝。",
+  "description_color": "#8E8E8E",
+  "warning": "貨物未到達目的港前，如有轉船資料，抵達日期僅供參考或請與業務確認",
+  "warning_color": "#8E8E8E",
+  "bl_total_quantity_label": "B/L Total Quantity :",
+  "bl_total_quantity_label_color": "#FFFFFF",
+  "bl_total_quantity": "7PKG(S)",
+  "bl_total_quantity_color": "#FFFFFF",
+  "bl_weight_label": "B/L Weight :",
+  "bl_weight_label_color": "#FFFFFF",
+  "bl_weight": "26400(KGM)",
+  "bl_weight_color": "#FFFFFF",
+  "basic_list": [
+   {
+    "key": "B/L Issue Date :",
+    "key_color": "#000000",
+    "value": "2026/10/17 00:00:00",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "B/L Type :",
+    "key_color": "#000000",
+    "value": "Telex Release",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "船名 :",
+    "key_color": "#000000",
+    "value": "WAN HAI 176",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "航次 :",
+    "key_color": "#000000",
+    "value": "N113",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Gate-in Date Of the last Container :",
+    "key_color": "#000000",
+    "value": "2026/10/14",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Place of Receipt & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "LAEM CHABANG (TH)-2026/10/17",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "LAEM CHABANG (TH) → LAEM CHABANG (TH)",
+     "key_color": "#000000",
+     "content": "WAN HAI 176 / N113",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Port of Loading & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "LAEM CHABANG (TH)-2026/10/17",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "LAEM CHABANG (TH) → TAIPEI (TW)",
+     "key_color": "#000000",
+     "content": "WAN HAI 176 / N113",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "T/S Port & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "TAIPEI (TW)-2026/10/27",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "LAEM CHABANG (TH) → TAIPEI (TW)",
+     "key_color": "#000000",
+     "content": "WAN HAI 176 / N113",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "T/S Port & Estimated Departure Date",
+    "key_color": "#000000",
+    "value": "TAIPEI (TW)-2026/10/30",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "TAIPEI (TW) → NORFOLK,VA (US)",
+     "key_color": "#000000",
+     "content": "CAUTIN / E519",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Port of Discharging & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "NORFOLK,VA (US)-2026/12/22",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "TAIPEI (TW) → NORFOLK,VA (US)",
+     "key_color": "#000000",
+     "content": "CAUTIN / E519",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Place of Delivery & Estimated Arrival Date",
+    "key_color": "#000000",
+    "value": "NORFOLK,VA (US)-2026/12/22",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "alert",
+    "alertModel": {
+     "title": "NORFOLK,VA (US) → NORFOLK,VA (US)",
+     "key_color": "#000000",
+     "content": "CAUTIN / E519",
+     "content_color": "#8E8E8E"
+    }
+   },
+   {
+    "key": "Final Destination",
+    "key_color": "#000000",
+    "value": "-",
+    "value_color": "#007AFF",
+    "action_url": "",
+    "segment_layout": "",
+    "alertModel": {
+     "title": "",
+     "key_color": "#000000",
+     "content": "",
+     "content_color": "#8E8E8E"
+    }
+   }
+  ],
+  "container_list": [
+   {
+    "ctnr_no_label": "貨櫃號碼 :",
+    "ctnr_no_label_color": "#007AFF",
+    "ctnr_no": "WHSU2069337",
+    "ctnr_no_color": "#007AFF",
+    "container_label": "貨櫃類型/貨櫃尺寸/貨櫃高度 :",
+    "container_label_color": "#8E8E8E",
+    "container": "DRY STEEL / 20' / 8'6\"",
+    "container_color": "#8E8E8E",
+    "seal_no_label": "封條號碼 :",
+    "seal_no_label_color": "#8E8E8E",
+    "seal_no": "WHLT378965",
+    "seal_no_color": "#8E8E8E",
+    "current_status_label": "Current Status :",
+    "cutrrent_status_label_color": "#007AFF",
+    "current_status": "Laden Ctnr Loaded On Board Vessel.(Mother Vessel,Fixed Slot Charter/Joint Venture Vessel)",
+    "current_status_color": "#007AFF",
+    "status_date_label": "Status Date :",
+    "status_date_label_color": "#007AFF",
+    "status_date": "2026/10/30 10:48",
+    "status_date_color": "#007AFF",
+    "gross_weight_label": "總重 (含空櫃重) (KG/LB) :",
+    "gross_weight_label_color": "#8E8E8E",
+    "gross_weight": "30480 / 67197",
+    "gross_weight_color": "#8E8E8E",
+    "net_weight_label": "最大貨物重量 (KG/LB) :",
+    "net_weight_label_color": "#8E8E8E",
+    "net_weight": "28240 / 62259",
+    "net_weight_color": "#8E8E8E",
+    "ctnr_pkg_label": "貨櫃包裝/提單貨物重量 in B/L :",
+    "ctnr_pkg_label_color": "#8E8E8E",
+    "ctnr_pkg": "7 PKG(S) / 26400(KG)",
+    "ctnr_pkg_color": "#8E8E8E",
+    "action_url": "https://whlapiv2.wanhai.com/shipping/rest/eshipping/skd/cargo-tracking/movement",
+    "segment_layout": "movement_page"
+   }
+  ]
+ },
+ "status": "0000",
+ "message": "操作成功",
+ "timestamp": "2026-11-20T22:37:20.095",
+ "error": ""
+}

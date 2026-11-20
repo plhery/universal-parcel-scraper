@@ -50,6 +50,7 @@ const BROWSER_USER_AGENT = /^Mozilla\/5\.0 \((?!compatible;)/;
 const APP_USER_AGENT: Readonly<Record<string, string>> = {
   yalidine: 'Yalidine-App-Android',
   'australia-post': 'okhttp/4.12.0', 'egypt-post': 'Dart/3.9 (dart:io)', jne: 'okhttp/4.12.0', 'posta-slovenije': 'MojaPosta/2.5.0 (android)',
+  'wan-hai': 'okhttp/4.12.0',
 };
 const BROWSER_SERVICE = 'http://trawl.invalid';
 /** Recognition gets no postcode: Colis Privé recognizes a number only with its postcode at the end, which the corpus does not hold. */

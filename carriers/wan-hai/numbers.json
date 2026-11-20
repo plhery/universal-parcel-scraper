@@ -1,0 +1,215 @@
+{
+  "carrier": "wan-hai",
+  "records": [
+    {
+      "number": "WHLC025G831033",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a03/9935105",
+        "date": "2026-11-11",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9935105 lists this Wan Hai master bill, under the WHLC SCAC, for WAN HAI A03's call at Oakland. Wan Hai's app returns its one container from Shekou to Oakland, returned empty."
+    },
+    {
+      "number": "WHLC025G830413",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a03/9935105",
+        "date": "2026-11-11",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9935105 lists this Wan Hai master bill for WAN HAI A03's call at Oakland. Wan Hai's app returns its container returned empty."
+    },
+    {
+      "number": "WHLC025G830365",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a03/9935105",
+        "date": "2026-11-11",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9935105 lists this Wan Hai master bill for WAN HAI A03's call at Oakland. Wan Hai's app returns its container returned empty."
+    },
+    {
+      "number": "WHLC025G829951",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a03/9935105",
+        "date": "2026-11-11",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9935105 lists this Wan Hai master bill for WAN HAI A03's call at Oakland. Wan Hai's app returns its container returned empty."
+    },
+    {
+      "number": "WHLC035GX71907",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a08/9555101",
+        "date": "2026-10-31",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading beside a house bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9555101 lists this Wan Hai bill beside a house bill for WAN HAI A08's call at Norfolk. Wan Hai's app returns its container from Laem Chabang, transshipped at Taipei and on its way to Norfolk."
+    },
+    {
+      "number": "WHLC035GX71337",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a08/9555101",
+        "date": "2026-10-31",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading beside a house bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9555101 lists this Wan Hai bill beside a house bill for WAN HAI A08's call at Norfolk. Wan Hai's app returns its container loaded at Taipei."
+    },
+    {
+      "number": "WHLC035GX71339",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a08/9555101",
+        "date": "2026-10-31",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading beside a house bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9555101 lists this Wan Hai bill beside a house bill for WAN HAI A08's call at Norfolk. Wan Hai's app returns its container loaded at Taipei."
+    },
+    {
+      "number": "WHLC049GX12167",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-a08/9555101",
+        "date": "2026-10-31",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading beside a house bill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9555101 lists this Wan Hai bill beside a house bill from Jakarta for WAN HAI A08's call at Norfolk. Wan Hai's app returns its container on board."
+    },
+    {
+      "number": "WHLC034F542417",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/vessel/wan-hai-517/9457660",
+        "date": "2025-09-22",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "bill of lading beside house bills",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "importinfo's page for IMO 9457660 lists this Wan Hai bill beside house bills for WAN HAI 517's call at Savannah. Wan Hai's app returns its container from Qingdao through Shekou to Savannah, returned empty."
+    },
+    {
+      "number": "029G513767",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://apify.com/muhammetakkurtt/wanhai-cargo-tracking-scraper",
+        "date": "2026-11-20",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "booking and bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "A public scraper's example output gives this Wan Hai booking with its four containers. Wan Hai's app returns them from Beijiao through Shekou to Istanbul, returned empty."
+    }
+  ]
+}
