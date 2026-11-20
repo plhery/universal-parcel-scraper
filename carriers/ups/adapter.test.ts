@@ -115,9 +115,9 @@ afterEach(() => vi.restoreAllMocks());
 describe('UPS status vocabulary', () => {
   it('maps every activity code statuses.json records, and nothing else', () => {
     const codes = statuses.entries.flatMap((entry) => 'code' in entry && /^[0-9A-Z]{2}$/.test(entry.code ?? '')
-      ? [{ code: entry.code!, stage: entry.stage }] : []);
+      ? [{ code: entry.code!, stage: entry.stage, wording: 'wording' in entry ? entry.wording ?? '' : '' }] : []);
     expect(codes.length).toBeGreaterThan(30);
-    for (const { code, stage } of codes) expect(upsActivityStage(code), code).toBe(stage);
+    for (const { code, stage, wording } of codes) expect(upsActivityStage(code, wording), code).toBe(stage);
     for (const code of ['', 'XX', 'constructor', 'toString', '__proto__']) expect(upsActivityStage(code)).toBeUndefined();
   });
 
@@ -289,7 +289,12 @@ describe('UPS structured response', () => {
       scan('OF', 'Out For Delivery', '20260907 11:02:00'),
       scan('ZC', 'As requested, the UPS My Choice&#174; delivery change was completed. / The package will be returned to the sender.', '20260906 14:31:00'),
     ], { progressBarType: 'OutForDelivery' }), TRACKING_NUMBER, TODAY))
-      .toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map' });
+      .toMatchObject({ status: 'exception', current_stage: 'returned', current_stage_source: 'carrier_map',
+        events: [{ stage: 'returned' }, { stage: 'out_for_delivery' }, { stage: 'exception', provider_code: 'ZC' }] });
+    // The same request code for another change keeps the parcel going.
+    expect(statusMapAnswer({ carrier: 'ups', providerCode: 'ZC', description: 'As requested, the UPS My Choice® delivery change was completed. / The package will be returned to the sender.' }))
+      .toEqual({ kind: 'mapped', stage: 'exception' });
+    expect(upsActivityStage('ZC', 'The package will be delivered to the UPS Access Point™ location requested by the receiver.')).toBe('in_transit');
 
     // A code the map does not know leaves the stage to the shared classifier.
     const unmapped = parseUPSTrackingResponse(withScans([

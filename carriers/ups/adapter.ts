@@ -572,7 +572,7 @@ export function parseUPSTrackingResponse(
       }
       if (!description) continue;
       const code = cleanScalar(raw.actCode, 8).toUpperCase();
-      const stage = code ? upsActivityStage(code) : upsUncodedScanStage(description);
+      const stage = code ? upsActivityStage(code, description) : upsUncodedScanStage(description);
       const action = upsRecipientAction(code);
       events.push({
         ...activityClock(raw, text(raw.location)),
@@ -790,7 +790,7 @@ export function parseUPSApiResponse(payload: unknown, trackingNumber: string): C
     const description = text(scanStatus.description);
     if (!description) continue;
     const code = cleanScalar(scanStatus.code, 8).toUpperCase();
-    const stage = code ? upsActivityStage(code) : upsUncodedScanStage(description);
+    const stage = code ? upsActivityStage(code, description) : upsUncodedScanStage(description);
     const action = upsRecipientAction(code);
     events.push({
       ...apiActivityClock(raw),

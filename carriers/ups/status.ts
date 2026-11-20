@@ -146,9 +146,14 @@ export function upsRecipientAction(code: string): RecipientAction | undefined {
   return ACTION_CODES.get(code.trim().toUpperCase());
 }
 
+// The receiver's delivery change that sends the parcel back, as UPS words it under ZC: a return set up, not yet made.
+const RETURN_REQUESTED = /\bthe package will be returned to the sender\b/i;
+
 /** The stage a scan's `actCode` stands for, or undefined when the code is not mapped. */
-export function upsActivityStage(code: string): Stage | undefined {
-  return ACTIVITY_STAGES.get(code.trim().toUpperCase());
+export function upsActivityStage(code: string, description = ''): Stage | undefined {
+  const normalized = code.trim().toUpperCase();
+  if (normalized === 'ZC' && RETURN_REQUESTED.test(description)) return 'exception';
+  return ACTIVITY_STAGES.get(normalized);
 }
 
 /**
@@ -212,7 +217,7 @@ export function upsUncodedScanStage(text: string): Stage | undefined {
 
 /** What the map says about one scan: by its activity code, or by its wording without one. */
 export const statusMap: CarrierStatusMap = {
-  stage: (code, wording) => (code ? upsActivityStage(code) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
+  stage: (code, wording) => (code ? upsActivityStage(code, wording) : upsBannerStage(wording) ?? upsUncodedScanStage(wording)),
   gaps: [
     ...['L0', 'L8'].map((code) => ({ code, note: "The receiver's delivery instructions, a notice and no scan: it keeps the stage of the scan before it, and the newest other scan decides the parcel's." })),
     { code: 'WH', note: "A warehouse scan, minutes after a customs hold: the held parcel goes into UPS's warehouse and moves nothing, so it keeps the stage of the scan before it, and the newest other scan decides the parcel's." },
