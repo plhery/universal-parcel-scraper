@@ -42905,7 +42905,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Yerevan",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "onex",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://onex.am/",
     "trackingUrlTemplate": "https://onex.am/en/onextrack?track={trackingNumber}",

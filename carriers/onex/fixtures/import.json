@@ -1,0 +1,20 @@
+{
+  "status": 1,
+  "data": {
+    "import": {
+      "orderstatus": "in Armenia",
+      "estimateddate": "2026-01-20 00:00:00",
+      "estdate": "2026-01-19 00:00:00",
+      "estdateto": "2026-01-21 00:00:00",
+      "no_estimated_date": "0",
+      "wo_scanneddate": "2026-01-09 16:20:05",
+      "inusadate": "2026-01-10 09:14:41",
+      "inmywaydate": "2026-01-12 22:03:10",
+      "inarmeniadate": "2026-01-17 11:45:00",
+      "receiveddate": "0000-00-00 00:00:00"
+    },
+    "export": false,
+    "track": true,
+    "iherb": false
+  }
+}

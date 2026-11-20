@@ -1,4 +1,20 @@
 {
   "carrier": "onex",
-  "entries": []
+  "entries": [
+    { "wording": "International transit", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "An order shipped by the shop to Armenia, before Onex takes it." },
+    { "wording": "In Custom clearance", "stage": "customs", "language": "en", "confirmedBy": "live" },
+    { "wording": "Customs Cleared", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Armenian customs released the order, which moves on." },
+    { "wording": "The package arrived at the local distribution center", "stage": "in_transit", "language": "en", "confirmedBy": "live" },
+    { "wording": "Out for Delivery", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live" },
+    { "wording": "Order Delivered", "stage": "delivered", "language": "en", "confirmedBy": "live" },
+    { "code": "import-scanned", "wording": "Scanned", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the import's first date: Onex's warehouse abroad scanned the parcel before matching it to a customer's order." },
+    { "code": "import-identified", "wording": "The parcel has been identified", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the import's date at the warehouse abroad, once matched to an order." },
+    { "code": "import-departed", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the import's departure from the warehouse abroad." },
+    { "code": "import-in-armenia", "wording": "In Armenia", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the import's arrival in Armenia." },
+    { "code": "import-received", "wording": "Received", "stage": "delivered", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the import's last date, when the customer has the parcel." },
+    { "code": "export-received", "wording": "Received", "stage": "accepted", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the export's first date, when Onex's Yerevan head office takes the parcel." },
+    { "code": "export-departed", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the export's departure from Yerevan." },
+    { "code": "export-arrived", "wording": "Arrived at Onex foreign warehouse", "stage": "in_transit", "language": "en", "confirmedBy": "bundle" },
+    { "code": "export-posted", "wording": "Delivered to the postal service", "stage": "in_transit", "language": "en", "confirmedBy": "bundle", "note": "The page's caption for the export's last date: the destination's post carries the parcel on." }
+  ]
 }

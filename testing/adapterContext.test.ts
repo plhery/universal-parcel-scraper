@@ -73,6 +73,7 @@ const BROWSER_ONLY: Readonly<Record<string, readonly (keyof Browsers)[]>> = {
   pasarex: ['service'],
   peddler: ['service'],
   'rohlig-suus': ['service'],
+  onex: ['service'],
   'onlog-express': ['service'],
   'jumppoint-international': ['service'],
   'flash-courier': ['service'],

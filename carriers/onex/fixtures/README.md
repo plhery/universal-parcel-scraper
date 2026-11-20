@@ -1,0 +1,1 @@
+`delivered.json` is the tracker's English reply for a public sample in `numbers.json`, as the browser service passes it on. `import.json` and `export.json` are synthetic, shaped after the fields the tracker's page script reads.

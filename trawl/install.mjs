@@ -61,6 +61,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
   if (carrierPage && daoBrowserNumber(url, capture)) return await runDaoBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && peddlerBrowserNumber(url, capture)) return await runPeddlerBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && rohligSuusBrowserNumber(url, capture)) return await runRohligSuusBrowser({ ...carrierRun, signal: budget.signal })
+  if (carrierPage && onexBrowserNumber(url, capture)) return await runOnexBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && onlogExpressBrowserNumber(url, capture)) return await runOnlogExpressBrowser({ ...carrierRun, signal: budget.signal })
   if (carrierPage && flashCourierRequest(url, capture)) return await runFlashCourierGuest({ ...carrierRun, signal: budget.signal, validateTarget: validateOutboundUrl ? address => budget.run(() => validateOutboundUrl(address)) : undefined })
   if (carrierPage && paxelBrowserNumber(url, capture)) return await runPaxelBrowser({ ...carrierRun, signal: budget.signal,
@@ -148,6 +149,7 @@ for (const [file, tier, fresh] of [['2.ts', '2', false], ['browser.ts', 'tier', 
     + 'import { daoBrowserNumber, runDaoBrowser } from "../utils/dao-browser.mjs"\n'
     + 'import { peddlerBrowserNumber, runPeddlerBrowser } from "../utils/peddler-browser.mjs"\n'
     + 'import { rohligSuusBrowserNumber, runRohligSuusBrowser } from "../utils/rohlig-suus-browser.mjs"\n'
+    + 'import { onexBrowserNumber, runOnexBrowser } from "../utils/onex-browser.mjs"\n'
     + 'import { onlogExpressBrowserNumber, runOnlogExpressBrowser } from "../utils/onlog-express-browser.mjs"\n'
     + 'import { flashCourierRequest, runFlashCourierGuest } from "../utils/flash-courier-guest.mjs"\n'
     + 'import { paxelBrowserNumber, runPaxelBrowser } from "../utils/paxel-browser.mjs"\n'

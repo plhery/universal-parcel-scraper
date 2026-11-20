@@ -19,18 +19,59 @@
   "timezone": "Asia/Yerevan",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "onex",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta"
+  ],
   "portal": {
     "url": "https://onex.am/en/onextrack?track={trackingNumber}",
     "searchUrl": "https://onex.am/en/onextrack",
     "canaryUrl": "https://onex.am/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "eta",
+      "eta_window",
+      "weight",
+      "origin_country",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "progress_rail",
+      "eta_window",
+      "weight",
+      "origin_country",
+      "service_name",
+      "delivery_partner",
+      "delivery_tracking_number",
+      "payment_details"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "sender_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [],
   "detection": []
