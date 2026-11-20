@@ -60,6 +60,8 @@ approval.
   answer settles nothing else. Other `J` prefixes and twelve-digit numbers are answered as
   unknown without a request, so preflight leaves them to the other carriers and the
   universal providers.
+- The Indonesian website's tracker, `query/findTrack` on `jet.co.id/index/router/index.html`,
+  asks for the recipient's phone digits, so only the app's router is read.
 - The Philippine router answers code `500` and the Malaysian one `490`; Thailand and
   Vietnam need an account, and the websites ask for CAPTCHA or phone digits.
 - Singapore's tracker, `vipgw.jtexpress.sg/jtsvip/api/trackingList.do`, asks for a Tencent
