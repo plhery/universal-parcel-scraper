@@ -1,4 +1,44 @@
 {
   "carrier": "hop-envios",
-  "entries": []
+  "entries": [
+    {
+      "code": "ISU",
+      "wording": "Ingresado en Sucursal",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal",
+      "note": "Seen in the archived carrier reply."
+    },
+    {
+      "code": "ADESP",
+      "wording": "A Despachar",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal",
+      "note": "Seen in the archived carrier reply."
+    },
+    {
+      "code": "ICD",
+      "wording": "En centro de distribución",
+      "stage": "in_transit",
+      "language": "es",
+      "confirmedBy": "portal",
+      "note": "Seen in the archived carrier reply."
+    },
+    {
+      "code": "PENP",
+      "wording": "Pendiente de pickup",
+      "stage": "registered",
+      "language": "es",
+      "confirmedBy": "portal",
+      "note": "Seen in the archived carrier reply."
+    },
+    {
+      "code": "DEST",
+      "wording": "Entregado en destino",
+      "stage": "delivered",
+      "language": "es",
+      "confirmedBy": "bundle"
+    }
+  ]
 }

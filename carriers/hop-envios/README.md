@@ -1,24 +1,12 @@
 # HOP Envíos
 
-HOP Envíos parcels use enabled universal providers. There is no dedicated adapter.
+Select HOP Envíos to read the tracking history for an Argentine parcel. The public tracking
+page embeds the shipment and its scans. The adapter checks the submitted code and returned
+shipment number before using the history.
 
-HOP Envíos is an Argentine parcel network of drop-off and pickup points for online shops and private
-senders, based in Buenos Aires.
+The scan clocks stay local unless the page supplies an offset. The positive fixture comes
+from the carrier's archived tracking page. The live tracker reports that sample as missing.
 
-## Numbers
-
-No public page shows a HOP number, so there is no rule.
-
-## Why there is no adapter
-
-No public number is known to check its tracker's replies against.
-
-## Links
-
-`hopenvios.com.ar/segui-tu-envio?c=<number>` looks one number up, and the library reads the number
-from that address.
-
-## Testing
-
-Provider live-test inputs and commands are in the
-[provider READMEs](../../providers/README.md).
+Set `HOP_ENVIOS_TRACKING_NUMBER` to a current shipment or
+`HOP_ENVIOS_UNKNOWN_NUMBER` to check absence, then run
+`npm run test:carriers:live -- carriers/hop-envios`.
