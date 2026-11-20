@@ -1244,6 +1244,14 @@
       "note": "The destination's import clearance is done, before the delivering carrier's first scan, as a completed clearance reads."
     },
     {
+      "wording": "包裹交接给本地物流商处理/Received by local delivery company",
+      "language": "zh",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The hand-over to the delivering carrier after the import clearance, before its own scans, in the row with a slash."
+    },
+    {
       "wording": "Parcel data received",
       "language": "en",
       "stage": "registered",

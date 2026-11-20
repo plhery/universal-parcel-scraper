@@ -264,6 +264,7 @@ describe('Chronopost direct tracking', () => {
     ['P', "Echec de livraison suite à l'absence du destinataire.", 'failed_attempt'],
     ['SK', "Colis en attente d'informations complémentaires de votre part", 'exception'],
     ['S', 'Colis bloqué : colis endommagé ou emballage insuffisant', 'exception'],
+    ['S', 'Colis non connecté', 'in_transit'],
     ['R', 'Colis en retour expéditeur', 'exception'],
     ['RO', "Colis reconditionné pendant l'acheminement", 'in_transit'],
   ])('maps the observed %s scan when its wording agrees', (code, label, stage) => {
