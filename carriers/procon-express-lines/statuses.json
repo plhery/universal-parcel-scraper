@@ -1,0 +1,54 @@
+{
+  "carrier": "procon-express-lines",
+  "entries": [
+    {
+      "wording": "BOOKED DATE",
+      "language": "en",
+      "stage": "pending",
+      "confirmedBy": "live",
+      "note": "Booking entered."
+    },
+    {
+      "wording": "LOADED TO VESSEL",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container was loaded onto the vessel."
+    },
+    {
+      "wording": "VESSEL SAILED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The vessel departed."
+    },
+    {
+      "wording": "VESSEL ARRIVED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The vessel arrived at the port."
+    },
+    {
+      "wording": "CONTAINER DISCHARGED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "The container was unloaded from the vessel."
+    },
+    {
+      "wording": "CONTAINER OUTGATED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Gate exit records a container movement."
+    },
+    {
+      "wording": "LOADED CONTAINER INGATED",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live",
+      "note": "Gate entry records a container movement."
+    }
+  ]
+}

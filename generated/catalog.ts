@@ -49018,6 +49018,30 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "procon-express-lines": {
+    "displayName": "Procon Express Lines",
+    "color": "#293B6D",
+    "aliases": [
+      "Procon Express Lines (CMS)",
+      "PCXS",
+      "Cargo Marketing Services"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "procon-express-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "trackingUrlTemplate": "https://cmsfreight.com/tracking/public-tracking/",
+    "trackingSearchUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "product-care-group": {
     "displayName": "Product Care Group",
     "color": "#095497",
@@ -68719,6 +68743,7 @@ export const CARRIER_IDS = [
   "princesa-dos-campos",
   "prisma-courier",
   "pro-carrier",
+  "procon-express-lines",
   "product-care-group",
   "professional-couriers",
   "profit-fields",
@@ -70667,6 +70692,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "princesa-dos-campos": [],
   "prisma-courier": [],
   "pro-carrier": ["pro-carrier-1"],
+  "procon-express-lines": [],
   "product-care-group": [],
   "professional-couriers": [],
   "profit-fields": ["profit-fields-1","profit-fields-2"],

@@ -5914,5 +5914,10 @@
     "carrier": "global-express-logistics-tanzania",
     "kind": "open",
     "reason": "One published GEL reference is insufficient to establish a carrier-specific prefix rule. Select Global Express Logistics Tanzania explicitly."
+  },
+  {
+    "carrier": "procon-express-lines",
+    "kind": "open",
+    "reason": "Published house bills include the PCXS carrier code, but the official portal also uses unprefixed consignment references. Select Procon Express Lines explicitly."
   }
 ]

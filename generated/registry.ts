@@ -677,6 +677,7 @@ import { adapter as posturinn } from '../carriers/posturinn/adapter.js';
 import { adapter as ppl } from '../carriers/ppl/adapter.js';
 import { adapter as precisionDeliveries } from '../carriers/precision-deliveries/adapter.js';
 import { adapter as proCarrier } from '../carriers/pro-carrier/adapter.js';
+import { adapter as proconExpressLines } from '../carriers/procon-express-lines/adapter.js';
 import { adapter as profitFields } from '../carriers/profit-fields/adapter.js';
 import { adapter as promptXpress } from '../carriers/prompt-xpress/adapter.js';
 import { adapter as prontoEnvios } from '../carriers/pronto-envios/adapter.js';
@@ -1653,6 +1654,7 @@ export const REGISTRY: RegistryDefinition = {
     "ppl": ppl,
     "precision-deliveries": precisionDeliveries,
     "pro-carrier": proCarrier,
+    "procon-express-lines": proconExpressLines,
     "profit-fields": profitFields,
     "prompt-xpress": promptXpress,
     "pronto-envios": prontoEnvios,
@@ -3307,6 +3309,7 @@ export const REGISTRY: RegistryDefinition = {
     "princesa-dos-campos": "universal",
     "prisma-courier": "universal",
     "pro-carrier": "pro-carrier",
+    "procon-express-lines": "procon-express-lines",
     "product-care-group": "universal",
     "professional-couriers": "universal",
     "profit-fields": "profit-fields",

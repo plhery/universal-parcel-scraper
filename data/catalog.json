@@ -49014,6 +49014,30 @@
       }
     ]
   },
+  "procon-express-lines": {
+    "displayName": "Procon Express Lines",
+    "color": "#293B6D",
+    "aliases": [
+      "Procon Express Lines (CMS)",
+      "PCXS",
+      "Cargo Marketing Services"
+    ],
+    "countries": [
+      "GB"
+    ],
+    "selectable": true,
+    "timezone": "Europe/London",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "procon-express-lines",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "trackingUrlTemplate": "https://cmsfreight.com/tracking/public-tracking/",
+    "trackingSearchUrl": "https://cmsfreight.com/tracking/public-tracking/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "product-care-group": {
     "displayName": "Product Care Group",
     "color": "#095497",
