@@ -306,6 +306,15 @@
       "language": "fr"
     },
     {
+      "code": "N",
+      "stage": "failed_attempt",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "Chronopost trackSkybillV2; code mapping requires matching wording. A delivery partner's missed round at a recipient away on holiday, after the parcel's rounds in the delivery country.",
+      "wording": "Colis non livré : destinataire en congés",
+      "language": "fr"
+    },
+    {
       "code": "TA",
       "stage": "out_for_delivery",
       "confirmedBy": "live",

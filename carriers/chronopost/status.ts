@@ -54,6 +54,7 @@ const OBSERVED: ReadonlyArray<readonly [code: string, label: string, stage: Chro
   ['N', 'Colis non livré : client absent', 'failed_attempt'],
   ['N', "Colis non livré : changement d'adresse nécessaire", 'failed_attempt'],
   ['N', 'Colis non livré : entreprise fermée', 'failed_attempt'],
+  ['N', 'Colis non livré : destinataire en congés', 'failed_attempt'],
   // The round, the courier on the way to a pickup point and its arrival there. They come
   // within two minutes of the delivering partner's own scans, and La Poste's feed stages the
   // same scans alike as MD1, ET1 and AG1. After the round, the drop-off keeps its stage (see

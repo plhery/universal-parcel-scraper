@@ -251,6 +251,7 @@ describe('Chronopost direct tracking', () => {
     ['N', 'Colis non livré : client absent', 'failed_attempt'],
     ['N', "Colis non livré : changement d'adresse nécessaire", 'failed_attempt'],
     ['N', 'Colis non livré : entreprise fermée', 'failed_attempt'],
+    ['N', 'Colis non livré : destinataire en congés', 'failed_attempt'],
     ['TA', 'Colis en cours de livraison', 'out_for_delivery'],
     ['TA', 'Colis en cours de livraison par le livreur', 'out_for_delivery'],
     ['RB', 'Colis en cours de livraison au point de retrait', 'in_transit'],
