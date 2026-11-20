@@ -4730,5 +4730,11 @@
     "pattern": "^X\\d{9}$",
     "kind": "open",
     "reason": "A public Xindus Lite shipment report identifies air waybills with X followed by nine digits. Detection currently offers Australia Post for both inputs."
+  },
+  {
+    "carrier": "xd-express",
+    "pattern": "^XD\\d{8}AU$",
+    "kind": "open",
+    "reason": "A published shipment history identifies an XD Express waybill with an XD prefix and AU suffix. Detection offers Colis Privé for this input."
   }
 ]
