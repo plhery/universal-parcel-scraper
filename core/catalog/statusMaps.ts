@@ -13,6 +13,7 @@
 import { statusMap as tejCouriers } from '../../carriers/tej-couriers/status.js';
 import { statusMap as bhPosta } from '../../carriers/bh-posta/status.js';
 import { statusMap as honducorStatus } from '../../carriers/honducor/status.js';
+import { statusMap as xlsFutarStatus } from '../../carriers/xls-futar/status.js';
 import { statusMap as apdParcel } from '../../carriers/apd-parcel/status.js';
 import { statusMap as carrybee } from '../../carriers/carrybee/status.js';
 import { statusMap as huuneh } from '../../carriers/huuneh/status.js';
@@ -842,6 +843,7 @@ import { CARRIER_DEFINITIONS } from './definitions.js';
 export const STATUS_MAPS: Readonly<Record<string, CarrierStatusMap>> = {
   'bh-posta': bhPosta,
   'honducor': honducorStatus,
+  'xls-futar': xlsFutarStatus,
   'tej-couriers': tejCouriers,
   'correos-costa-rica': costaRica,
   aeropost,

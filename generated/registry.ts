@@ -810,6 +810,7 @@ import { adapter as xdp } from '../carriers/xdp/adapter.js';
 import { adapter as xgs } from '../carriers/xgs/adapter.js';
 import { adapter as xingheFreight } from '../carriers/xinghe-freight/adapter.js';
 import { adapter as xlcourier } from '../carriers/xlcourier/adapter.js';
+import { adapter as xlsFutar } from '../carriers/xls-futar/adapter.js';
 import { adapter as xpoLtl } from '../carriers/xpo-ltl/adapter.js';
 import { adapter as xpressLogisticsLu } from '../carriers/xpress-logistics-lu/adapter.js';
 import { adapter as xpressbees } from '../carriers/xpressbees/adapter.js';
@@ -1651,6 +1652,7 @@ export const REGISTRY: RegistryDefinition = {
     "xgs": xgs,
     "xinghe-freight": xingheFreight,
     "xlcourier": xlcourier,
+    "xls-futar": xlsFutar,
     "xpo-ltl": xpoLtl,
     "xpress-logistics-lu": xpressLogisticsLu,
     "xpressbees": xpressbees,
@@ -3477,7 +3479,7 @@ export const REGISTRY: RegistryDefinition = {
     "xinsu": "universal",
     "xlcourier": "xlcourier",
     "xlmiles": "universal",
-    "xls-futar": "universal",
+    "xls-futar": "xls-futar",
     "xp-courier": "universal",
     "xpect-same-day": "universal",
     "xpedist": "universal",

@@ -1,4 +1,10 @@
 {
   "carrier": "xls-futar",
-  "entries": []
+  "entries": [
+    { "wording": "Előrendelés", "stage": "registered", "language": "hu", "confirmedBy": "source" },
+    { "wording": "Új rendelés", "stage": "registered", "language": "hu", "confirmedBy": "source" },
+    { "wording": "Szállítás alatt", "stage": "in_transit", "language": "hu", "confirmedBy": "source" },
+    { "wording": "Futárnál", "stage": "out_for_delivery", "language": "hu", "confirmedBy": "source" },
+    { "wording": "Kézbesítve", "stage": "delivered", "language": "hu", "confirmedBy": "live" }
+  ]
 }

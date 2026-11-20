@@ -4712,5 +4712,11 @@
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",
     "reason": "Polish customers report these three Rohlig SUUS prefixes on parcel numbers with nine digits, and SUUS's guest tracker shows each one. Detection does not offer Rohlig SUUS."
+  },
+  {
+    "carrier": "xls-futar",
+    "pattern": "^\\d{7}$",
+    "kind": "open",
+    "reason": "The public guest summary confirms a parcel, but this shared numeric shape supplies no unique ownership evidence. Number recognition remains open."
   }
 ]

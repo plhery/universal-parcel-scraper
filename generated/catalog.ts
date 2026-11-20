@@ -63286,7 +63286,7 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Budapest",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "xls-futar"
     },
     "canaryUrl": "https://xlsfutar.hu/track",
     "trackingUrlTemplate": "https://xlsfutar.hu/track?id={trackingNumber}",
