@@ -33266,7 +33266,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "America/New_York",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "jas-worldwide",
+      "localClocks": true
     },
     "canaryUrl": "https://myjas.com/public/shipments",
     "trackingUrlTemplate": "https://myjas.com/public/shipments?shipmentNumber={trackingNumber}",
