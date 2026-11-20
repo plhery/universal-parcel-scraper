@@ -599,6 +599,14 @@
       "note": "The recipient's order to forward the shipment, not a movement: left without a stage so the shipment summary decides."
     },
     {
+      "code": "811",
+      "wording": "Import process cancelled in country of destination",
+      "language": "en",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-20",
+      "note": "The destination country's import process cancelled (Importprozess in Bestimmungsland abgebrochen): no source says whether the item goes on or its import failed, so it is left without a stage and the shipment summary decides."
+    },
+    {
       "code": "sub-event CAN1 or CANPDS",
       "wording": "Revocation",
       "language": "en",

@@ -112,7 +112,7 @@ describe('Swiss Post event codes', () => {
 
   it('leaves unknown codes, enquiry and delay notes and recipient orders to the wording', () => {
     expect(swissPostEventStage('PARCEL.*.1.1003')).toBe(EVENT_STAGE_BY_CODE['1003']);
-    for (const code of ['9999', '9112', '1800', '9224', 'LETTER.*.93.9112']) expect(swissPostEventStage(code)).toBeUndefined();
+    for (const code of ['9999', '9112', '1800', '9224', '811', 'LETTER.*.93.9112', 'LETTER.*.83.811']) expect(swissPostEventStage(code)).toBeUndefined();
   });
 
   it('reads a parcel held at a post office after a refusal as ready for collection', () => {

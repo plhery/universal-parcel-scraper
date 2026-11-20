@@ -173,5 +173,6 @@ export const statusMap: CarrierStatusMap = {
     { code: '9112', note: 'An enquiry note, not a movement: the shipment summary decides the stage.' },
     { code: '1800', note: 'A delay notice, not a movement: the shipment summary decides the stage.' },
     { code: '9224', note: "The recipient's order to forward the shipment, not a movement: the shipment summary decides the stage." },
+    { code: '811', note: "The destination country's import process cancelled: no source says whether the item goes on or its import failed, so the shipment summary decides the stage." },
   ],
 };

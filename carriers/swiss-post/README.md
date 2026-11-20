@@ -59,8 +59,8 @@ is revoked.
 - The newest event code overrides the summary's `status.status`, which lags: a
   MyPost24 locker deposit (`2102`) reads `DELIVERED` while the parcel still
   waits for pickup. When the newest scan has no stage (an enquiry or delay
-  note, a recipient's order, an unmapped code, no scans yet), the summary
-  gives it. `statusMap` in [status.ts](status.ts) lists the notes and orders
+  note, a recipient's order, an import process abroad cancelled with no
+  outcome stated, an unmapped code, no scans yet), the summary gives it. `statusMap` in [status.ts](status.ts) lists the notes and orders
   left without a stage on purpose. A pickup point may scan its own arrival
   (`1001`, `1100`) after the ready-for-pickup scan (`2101`, `2102`), and a post
   office its arrival after the pickup notice the round left (`910`, `2100`); the
