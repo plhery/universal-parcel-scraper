@@ -4958,5 +4958,11 @@
     "pattern": "^O\\d{10}$",
     "kind": "open",
     "reason": "Two archived M24 tracking links publish order references with O and ten digits. Detection offers other carriers."
+  },
+  {
+    "carrier": "lx-pantos",
+    "pattern": "^PSEAPNYC\\d{8}$",
+    "kind": "open",
+    "reason": "Public U.S. manifest records identify LX Pantos house bills with this prefix and length. Detection does not offer LX Pantos."
   }
 ]
