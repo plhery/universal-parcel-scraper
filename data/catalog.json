@@ -39829,6 +39829,29 @@
     ],
     "detectionRules": []
   },
+  "mandde": {
+    "displayName": "MANDDE",
+    "color": "#022f73",
+    "aliases": [
+      "MANDDE S.A.S.",
+      "MANDDE Colombia"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mandde",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.mandde.com.co/rastreo.html",
+    "trackingUrlTemplate": "https://www.mandde.com.co/rastreo.html",
+    "trackingSearchUrl": "https://www.mandde.com.co/rastreo.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maple-logistics": {
     "displayName": "Maple Logistics",
     "color": "#f42014",

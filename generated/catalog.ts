@@ -39833,6 +39833,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "mandde": {
+    "displayName": "MANDDE",
+    "color": "#022f73",
+    "aliases": [
+      "MANDDE S.A.S.",
+      "MANDDE Colombia"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "mandde",
+      "localClocks": true
+    },
+    "canaryUrl": "https://www.mandde.com.co/rastreo.html",
+    "trackingUrlTemplate": "https://www.mandde.com.co/rastreo.html",
+    "trackingSearchUrl": "https://www.mandde.com.co/rastreo.html",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "maple-logistics": {
     "displayName": "Maple Logistics",
     "color": "#f42014",
@@ -67597,6 +67620,7 @@ export const CARRIER_IDS = [
   "maldives-post",
   "maltapost",
   "mandae",
+  "mandde",
   "maple-logistics",
   "maraton",
   "maritime-ontario",
@@ -69509,6 +69533,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "maldives-post": [],
   "maltapost": ["maltapost-s10","maltapost-sengi"],
   "mandae": [],
+  "mandde": [],
   "maple-logistics": [],
   "maraton": [],
   "maritime-ontario": [],

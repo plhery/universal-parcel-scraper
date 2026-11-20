@@ -5739,5 +5739,10 @@
     "carrier": "jet-delivery",
     "kind": "open",
     "reason": "Jet Delivery's published examples are seven digits, a shape shared with other carriers. The adapter is explicitly selectable."
+  },
+  {
+    "carrier": "mandde",
+    "kind": "open",
+    "reason": "The carrier confirms its published numeric guide. More samples and a collision review are needed to establish a detection rule."
   }
 ]
