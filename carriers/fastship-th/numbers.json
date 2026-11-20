@@ -1,5 +1,26 @@
 {
   "carrier": "fastship-th",
-  "gap": "Only its tracker's placeholder shows its shape, FS, seven digits and TH, and no public page shows a FastShip number.",
-  "records": []
+  "records": [
+    {
+      "number": "FDA130288253CA",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250422193957/https://track.fastship.co/FDA130288253CA",
+        "date": "2025-04-22",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "FastShip international shipping",
+        "reportedRole": "tracking number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived FastShip result displays this full tracking number with dated events on successive days."
+    }
+  ]
 }

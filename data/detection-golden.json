@@ -88672,6 +88672,12 @@
     ]
   },
   {
+    "input": "FDA130288253CA",
+    "carrier": "unknown",
+    "confidence": "none",
+    "candidates": []
+  },
+  {
     "input": "FDAV2511000000254601",
     "carrier": "fleetoptics",
     "confidence": "high",

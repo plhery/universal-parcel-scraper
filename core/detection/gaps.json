@@ -1314,6 +1314,12 @@
     "reason": "Fastfrate probill numbers are ten bare digits that many carriers share."
   },
   {
+    "carrier": "fastship-th",
+    "pattern": "^FDA\\d{9}CA$",
+    "kind": "open",
+    "reason": "Detection does not offer FastShip for the FDA-prefixed number its archived tracker returned with dated events."
+  },
+  {
     "carrier": "fastway-za",
     "pattern": "^(?:B1|D6)\\d{10}$",
     "kind": "open",
