@@ -18590,6 +18590,34 @@
       }
     ]
   },
+  "danx": {
+    "displayName": "DANX",
+    "color": "#003D7D",
+    "aliases": [
+      "Danx A/S",
+      "DANX Carousel"
+    ],
+    "countries": [
+      "DK",
+      "SE",
+      "NO",
+      "FI",
+      "EE",
+      "LV"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Copenhagen",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "danx",
+      "localClocks": true
+    },
+    "canaryUrl": "https://login.danx.com/",
+    "trackingUrlTemplate": "https://login.danx.com/",
+    "trackingSearchUrl": "https://login.danx.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dao": {
     "displayName": "DAO",
     "color": "#e30613",

@@ -2818,4 +2818,5 @@ export const uncheckedTrackingLinks: Partial<Record<CarrierId, string>> = {
   'yol-kargo': 'yolkargo.com.tr sends a number it does not know to Ful Kargo\'s tracker, another network\'s page, and its shipment numbers run in sequence, so only a known shipment reaches Yol Kargo\'s own page',
   'quick-fort': 'An unknown number gets a notice that sends the browser back to the home page after three seconds, and no public number opens an order page.',
   pigeonship: 'An unknown number gets the site\'s general "Page not found" page, and no public number opens an order page.',
+  danx: 'the portal takes the number only in its form, and the tracker page the form opens names it in base64, so the link opens the portal alone; native retrieval asks the service behind the tracker page',
 };

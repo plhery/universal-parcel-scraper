@@ -18594,6 +18594,34 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "danx": {
+    "displayName": "DANX",
+    "color": "#003D7D",
+    "aliases": [
+      "Danx A/S",
+      "DANX Carousel"
+    ],
+    "countries": [
+      "DK",
+      "SE",
+      "NO",
+      "FI",
+      "EE",
+      "LV"
+    ],
+    "selectable": true,
+    "timezone": "Europe/Copenhagen",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "danx",
+      "localClocks": true
+    },
+    "canaryUrl": "https://login.danx.com/",
+    "trackingUrlTemplate": "https://login.danx.com/",
+    "trackingSearchUrl": "https://login.danx.com/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "dao": {
     "displayName": "DAO",
     "color": "#e30613",
@@ -68686,6 +68714,7 @@ export const CARRIER_IDS = [
   "dalli-service",
   "danniao",
   "danske-fragtmaend",
+  "danx",
   "dao",
   "day-ross",
   "daylight-transport",
@@ -70664,6 +70693,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dalli-service": [],
   "danniao": [],
   "danske-fragtmaend": ["danske-fragtmaend-1"],
+  "danx": [],
   "dao": ["dao-1"],
   "day-ross": ["day-ross-1"],
   "daylight-transport": [],
