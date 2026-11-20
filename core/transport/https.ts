@@ -11,9 +11,10 @@ const EMPTY = new Set([204, 205, 304]);
  * intermediate. Browsers fetch a missing intermediate themselves; Node refuses
  * the connection. The intermediates apply to this fetch only, never to the
  * process. It sends text bodies only, asks for no compression and follows no
- * redirect: a redirect is answered only to `redirect: 'manual'`.
+ * redirect: a redirect is answered only to `redirect: 'manual'`. `maxHeaderSize`
+ * reads replies whose headers pass Node's 16 KB limit.
  */
-export function fetchTrusting(intermediates: readonly string[]): typeof fetch {
+export function fetchTrusting(intermediates: readonly string[], options: { maxHeaderSize?: number } = {}): typeof fetch {
   const agent = new Agent({ ca: [...rootCertificates, ...intermediates] });
   return (input, init = {}) => new Promise<Response>((resolve, reject) => {
     const url = input instanceof Request ? input.url : String(input);
@@ -25,7 +26,8 @@ export function fetchTrusting(intermediates: readonly string[]): typeof fetch {
     const body = sent?.toString();
     const headers = Object.fromEntries(new Headers(init.headers));
     if (body !== undefined) headers['content-length'] = String(Buffer.byteLength(body));
-    const outgoing = request(url, { agent, method: init.method ?? 'GET', headers, signal: init.signal ?? undefined }, (incoming) => {
+    const outgoing = request(url, { agent, method: init.method ?? 'GET', headers, signal: init.signal ?? undefined,
+      ...(options.maxHeaderSize ? { maxHeaderSize: options.maxHeaderSize } : {}) }, (incoming) => {
       const status = incoming.statusCode ?? 0;
       if (REDIRECTS.has(status) && init.redirect !== 'manual') {
         incoming.destroy();

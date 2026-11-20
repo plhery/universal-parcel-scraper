@@ -4708,6 +4708,12 @@
     "reason": "Jetizz's tracker also takes the thirteen-digit number of partner Aras Kargo for a parcel Aras delivers. The number is Aras's, so detection offers Aras rather than Jetizz."
   },
   {
+    "carrier": "matson",
+    "pattern": "^MATS\\d{10}$",
+    "kind": "open",
+    "reason": "Two import manifests list Matson master bills as MATS, its carrier code, and ten digits, and Matson's tracker returns both. Detection does not offer Matson for either number."
+  },
+  {
     "carrier": "rohlig-suus",
     "pattern": "^(?:MKRI|WKRW|LKRC)\\d{9}$",
     "kind": "open",

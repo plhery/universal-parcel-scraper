@@ -39230,7 +39230,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Pacific/Honolulu",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "matson",
+      "localClocks": true
     },
     "canaryUrl": "https://www.matson.com/shipment-tracking.html",
     "trackingSearchUrl": "https://www.matson.com/shipment-tracking.html",

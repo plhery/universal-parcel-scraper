@@ -38,7 +38,14 @@ describe('fetch trusting extra intermediates', () => {
     expect(url).toBe(URL);
     expect(options).toMatchObject({ method: 'POST', headers: { accept: 'text/html', 'content-length': '11' } });
     expect(options.agent.options.ca).toEqual([...rootCertificates, INTERMEDIATE]);
+    expect(options).not.toHaveProperty('maxHeaderSize');
     expect(written).toEqual(['reference=0']);
+  });
+
+  it('reads headers past Node’s limit only when asked', async () => {
+    answer(200, ['Content-Type', 'text/html']);
+    await fetchTrusting([], { maxHeaderSize: 65_536 })(URL);
+    expect(vi.mocked(request).mock.calls[0]![1]).toMatchObject({ maxHeaderSize: 65_536 });
   });
 
   it('answers a redirect only to a manual redirect, and an empty reply without a body', async () => {

@@ -1,5 +1,47 @@
 {
   "carrier": "matson",
-  "gap": "Matson tracks containers and bookings by their own numbers; no public page shows one of its booking numbers.",
-  "records": []
+  "records": [
+    {
+      "number": "MATS2736295000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/ets-scm-us-inc",
+        "date": "2026-11-18",
+        "dateKind": "manifest run",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The import manifest lists this master bill under Matson's MATS carrier code. Matson's tracker returns its booking's one container from Shanghai to Long Beach."
+    },
+    {
+      "number": "MATS5850828000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importinfo.com/dhx-dependable-hawaiian-express",
+        "date": "2026-09-29",
+        "dateKind": "manifest run",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "The import manifest lists this master bill under Matson's MATS carrier code for a Guam to Honolulu shipment. Matson's tracker returns its booking's one container from Palau through Guam and Long Beach to Honolulu, returned empty from the consignee."
+    }
+  ]
 }
