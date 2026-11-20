@@ -129,6 +129,10 @@ capture failure.
   with the sorting centre's town in brackets before some, whatever the parcel's carrier: read on the Zurich clock routing passes for a Swiss Post
   item, they came six hours late. Its later scans, on the transit hub's or the
   destination's clock, borrow no zone from them.
+  4PX's scans in China are in UTC: its pickup at 21:08:31 on 4PX's own +08:00 came at
+  13:08:31, and read on the Berlin zone routing passes for the DHL Germany parcel it went on,
+  an hour early. They are placed by the country their location names, in any history, and its
+  scans that name no place, such as the order data received, borrow that clock.
 - A fixed or network clock places its service's scans in any history. A local clock
   places them only in a full history that service reports alone, and for an S10 item
   one whose origin is its destination (`destCn`): beside other services, a service relays
@@ -160,8 +164,8 @@ capture failure.
 - Known clocks that are not established: DHL Express keeps each facility's clock, but
   names its newest US and Canadian scans without their state ("MARSHALL-USA"); Australia
   Post, Canada Post and Correios do Brasil keep the scan's clock in countries with
-  several; New Zealand Post relays China Post's scans at Chinese time; 4PX gives Chinese
-  scans in UTC and US scans twelve hours early. Russian Post's scans come with a UTC
+  several; New Zealand Post relays China Post's scans at Chinese time; 4PX gives US scans
+  twelve hours early. Russian Post's scans come with a UTC
   suffix on the office's wall clock: an acceptance and a delivery ParcelsApp dates at
   +03:00 and +07:00 came at the same digits. The suffix is dropped, and the scans are read
   as those of an unknown clock, so an office east of Moscow is read on Moscow's.

@@ -167,6 +167,14 @@ export function wallClock(service: string, dt: string, location = '', descriptio
  */
 const CAINIAO = 'Cainiao';
 
+/**
+ * 4PX, whose scans in China Postal Ninja gives in UTC: its pickup at 21:08:31 on 4PX's own
+ * +08:00 came at 13:08:31. They are placed by the country their location names, in any
+ * history; its scans that name no place borrow from them, and those elsewhere have no
+ * established clock.
+ */
+const FOUR_PX = '4PX Express';
+
 /** Services with one clock per network, by the parcel's destination: GOFO's US network keeps Los Angeles time in New York. */
 const NETWORK_CLOCKS: ReadonlyMap<string, ReadonlyMap<string, string>> = new Map([
   ['GOFO Express', new Map([['US', 'America/Los_Angeles'], ['FR', 'Europe/Paris']])],
@@ -252,6 +260,18 @@ export function carrierHomeZone(carrier: string | null): string | null {
   return countries.length === 1 ? countryTimeZone(countries[0]) : null;
 }
 
+const locationParts = (location: string): string[] =>
+  location.split(',').map((part) => part.trim()).filter((part) => part && !POSTAL_CODE.test(part));
+
+/**
+ * The country a scan location ends with, after its town ("…, China"). A two-letter one
+ * other than the US's could be a state ("Chicago, IL"), so it names none.
+ */
+function locationCountry(parts: readonly string[]): string | null {
+  const last = parts.at(-1) ?? '';
+  return parts.length > 1 && (last.length > 2 || /^us$/i.test(last)) ? countryCode(last) : null;
+}
+
 /**
  * The clock of a scan location that ends with its country: a US state or
  * Canadian province before it ("Atlanta, GA, United States", "TACOMA, WA,
@@ -259,9 +279,8 @@ export function carrierHomeZone(carrier: string | null): string | null {
  * other than the US's could be a state ("Chicago, IL"), so it names none.
  */
 function locationZone(location: string): string | null {
-  const parts = location.split(',').map((part) => part.trim()).filter((part) => part && !POSTAL_CODE.test(part));
-  const last = parts.at(-1) ?? '';
-  const country = parts.length > 1 && (last.length > 2 || /^us$/i.test(last)) ? countryCode(last) : null;
+  const parts = locationParts(location);
+  const country = locationCountry(parts);
   if (country === 'US') return parts.length === 3 ? usStateTimeZone(parts[1]) : null;
   if (country === 'CA') return parts.length === 3 ? canadaProvinceTimeZone(parts[1]) : null;
   return countryTimeZone(country);
@@ -333,6 +352,7 @@ export function serviceZone(scan: Scan, journey: Journey): Zoned | null | false 
   if (fixed) return fixed;
   if (MIDNIGHT.test(wall) || (TWELVE_HOUR_CLOCKS.has(service) && wall.slice(11, 13) === '12' && !delivered)) return false;
   if (service === CAINIAO && originLeg(scan)) return at(CAINIAO_CHINA_ZONE, 'carrier');
+  if (service === FOUR_PX && locationCountry(locationParts(location)) === 'CN') return at('UTC', 'carrier');
   // A mailer writes its label on UTC, as USPS's adapter reads it (uspsRowZone).
   if (isUsps(service)) return uspsMailerLabel(description) ? at('UTC', 'carrier') : at(uspsScanZone(location) ?? locationZone(location), 'place');
   if (!journey.alone) return null;

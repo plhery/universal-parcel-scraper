@@ -319,6 +319,22 @@ describe('Postal Ninja result parsing', () => {
     ]);
   });
 
+  it('reads 4PX\'s scans in China in UTC, and lends that clock to its scans that name no place', () => {
+    // 4PX's own tracker dates the order data at 20:37:34 and the pickup at 21:08:31, both +08:00. Read on
+    // the Berlin zone routing passes for the DHL Germany parcel they continue on, they came an hour early.
+    const parcel = postal(number, 'FR', [
+      { ds: '4PX Express', dt: '2026-11-15T12:37:34', dsc: 'Parcel information received' },
+      { ds: '4PX Express', dt: '2026-11-15T13:08:31', dsc: 'Shipment picked up', loc: 'Example Warehouse, Guangdong, China' },
+      { ds: '4PX Express', dt: '2026-11-15T13:08:32', dsc: 'Depart from facility to service provider.', loc: 'Example Warehouse, Guangdong, China' },
+    ]);
+    const parsed = parsePostalNinjaResponse(parcel, number, 'Europe/Berlin', 'dhl');
+    expect(times(parsed)).toEqual(['2026-11-15T13:08:32.000Z', '2026-11-15T13:08:31.000Z', '2026-11-15T12:37:34.000Z']);
+    expect(parsed.events?.map((scan) => scan.time_zone ?? null)).toEqual([null, null, null]);
+    // Elsewhere its clock is not known, and its scans borrow the carrier's zone.
+    const abroad = postal(number, 'US', [{ ds: '4PX Express', dt: '2026-11-15T13:08:31', dsc: 'Shipment picked up', loc: 'Example, CA, United States' }]);
+    expect(times(parsePostalNinjaResponse(abroad, number, 'America/Los_Angeles'))).toEqual(['2026-11-15T21:08:31.000Z']);
+  });
+
   it('orders scans by instant once every one has one', () => {
     // Postal Ninja orders wall times: 10:30 UTC sorts after 11:00 Zurich time.
     const parsed = parsePostalNinjaResponse(withEvents([
