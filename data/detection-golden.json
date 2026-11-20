@@ -91885,6 +91885,25 @@
     "candidates": []
   },
   {
+    "input": "FM663550656CN",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "feima"
+    ],
+    "asked": [
+      "feima"
+    ]
+  },
+  {
+    "input": "FM9900000017CN",
+    "carrier": "feima",
+    "confidence": "high",
+    "candidates": [
+      "feima"
+    ]
+  },
+  {
     "input": "FMP1UW2ABCDEFGHI",
     "carrier": "unknown",
     "confidence": "low",

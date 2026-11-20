@@ -1,0 +1,108 @@
+{
+  "id": "feima",
+  "displayName": "Feima",
+  "aliases": [
+    "飞马物流",
+    "飛馬物流",
+    "FINMA PEGASUS",
+    "Finmaship"
+  ],
+  "region": {
+    "countries": [
+      "CN"
+    ]
+  },
+  "brand": {
+    "color": "#fe5624"
+  },
+  "selectable": true,
+  "timezone": "Asia/Shanghai",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "feima",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "recognition": {
+      "rank": 23,
+      "pattern": "^FM\\d{9}CN$"
+    }
+  },
+  "capabilities": [
+    "history",
+    "location",
+    "service_name",
+    "destination_country",
+    "canonical_tracking_number"
+  ],
+  "portal": {
+    "canaryUrl": "https://t.17track.net/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number",
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "service_name",
+      "destination_country",
+      "canonical_tracking_number"
+    ],
+    "discarded": [
+      "parcel_count",
+      "weight",
+      "customer_reference",
+      "recipient_name",
+      "recipient_address",
+      "postcodes",
+      "signatory",
+      "signature",
+      "proof_of_delivery",
+      "payment_details"
+    ],
+    "unavailable": [
+      "eta",
+      "delivered_at",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "47.111.22.87"
+      ],
+      "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+      "params": [
+        "documentCode"
+      ]
+    }
+  ],
+  "detection": [
+    {
+      "id": "feima-1",
+      "pattern": "^FM\\d{10}CN$",
+      "confidence": "high"
+    },
+    {
+      "id": "feima-2",
+      "pattern": "^FM\\d{9}CN$",
+      "confidence": "low"
+    }
+  ]
+}

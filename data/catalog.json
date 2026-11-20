@@ -25855,6 +25855,49 @@
       }
     ]
   },
+  "feima": {
+    "displayName": "Feima",
+    "color": "#fe5624",
+    "aliases": [
+      "飞马物流",
+      "飛馬物流",
+      "FINMA PEGASUS",
+      "Finmaship"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "feima",
+      "recognitionRank": 23,
+      "recognitionPattern": "^FM\\d{9}CN$"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "47.111.22.87"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^FM\\d{10}CN$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^FM\\d{9}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "fennoroad": {
     "displayName": "FennoRoad",
     "color": "#ba3733",

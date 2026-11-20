@@ -25859,6 +25859,49 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
+  "feima": {
+    "displayName": "Feima",
+    "color": "#fe5624",
+    "aliases": [
+      "飞马物流",
+      "飛馬物流",
+      "FINMA PEGASUS",
+      "Finmaship"
+    ],
+    "countries": [
+      "CN"
+    ],
+    "selectable": true,
+    "timezone": "Asia/Shanghai",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "feima",
+      "recognitionRank": 23,
+      "recognitionPattern": "^FM\\d{9}CN$"
+    },
+    "canaryUrl": "https://t.17track.net/",
+    "linkRules": [
+      {
+        "domains": [
+          "47.111.22.87"
+        ],
+        "pathPattern": "^/(?:en/)?trackIndex\\.htm$",
+        "params": [
+          "documentCode"
+        ]
+      }
+    ],
+    "detectionRules": [
+      {
+        "pattern": "^FM\\d{10}CN$",
+        "confidence": "high"
+      },
+      {
+        "pattern": "^FM\\d{9}CN$",
+        "confidence": "low"
+      }
+    ]
+  },
   "fennoroad": {
     "displayName": "FennoRoad",
     "color": "#ba3733",
@@ -68391,6 +68434,7 @@ export const CARRIER_IDS = [
   "fedex-freight",
   "fedex-international-connect",
   "fedex-pl",
+  "feima",
   "fennoroad",
   "fercam",
   "fermopoint",
@@ -70351,6 +70395,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "fedex-freight": [],
   "fedex-international-connect": ["fedex-international-connect-1"],
   "fedex-pl": ["fedex-pl-2","fedex-pl-1"],
+  "feima": ["feima-1","feima-2"],
   "fennoroad": [],
   "fercam": ["fercam-1"],
   "fermopoint": ["fermopoint-1"],

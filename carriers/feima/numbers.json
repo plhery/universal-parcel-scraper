@@ -1,0 +1,37 @@
+{
+  "carrier": "feima",
+  "records": [
+    {
+      "number": "FM9900000017CN",
+      "role": "shipment",
+      "evidence": "synthetic",
+      "derivedFrom": "donated_real",
+      "shapeConfirmed": "2026-11-20",
+      "expect": {
+        "carrier": "feima",
+        "confidence": "high"
+      },
+      "note": "Made-up number in the shape of a parcel Feima's tracker holds: FM, ten digits and CN. Its serial is invented."
+    },
+    {
+      "number": "FM663550656CN",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.justanswer.com/cell-phones/w4sy3-feima-delivery-tracking-nyah-west-victoria.html",
+        "access": "full_page"
+      },
+      "context": {
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "feima"
+        ]
+      },
+      "note": "A customer asking where this parcel is says the shipping company is FEIMA. Its check digit is not a UPU one. Feima's tracker no longer holds it, so the attribution is unconfirmed."
+    }
+  ]
+}
