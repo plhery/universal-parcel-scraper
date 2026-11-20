@@ -1,0 +1,33 @@
+{
+  "status": 1,
+  "data": [
+    {
+      "codigo_envio": "IRNCOI8G",
+      "fecha_hora_creacion": "2026-11-06T11:06:48.000Z",
+      "nombre_estado": "RECOGIDA FALLIDA",
+      "id_envios_historico_estados": 71735175,
+      "id_estado_genei": 9,
+      "descripcion_estado": "Z99 Incidencia Automática por Actuación",
+      "codigo_seguimiento": "0181588686"
+    },
+    {
+      "codigo_envio": "IRNCOI8G",
+      "fecha_hora_creacion": "2026-11-06T11:06:48.000Z",
+      "nombre_estado": "RECOGIDA FALLIDA",
+      "id_envios_historico_estados": 71735174,
+      "id_estado_genei": 9,
+      "descripcion_estado": "R01 Dirección Incorrecta",
+      "codigo_seguimiento": "0181588686"
+    },
+    {
+      "codigo_envio": "IRNCOI8G",
+      "fecha_hora_creacion": "2026-11-06T11:06:48.000Z",
+      "nombre_estado": "RECOGIDA FALLIDA",
+      "id_envios_historico_estados": 71735173,
+      "id_estado_genei": 9,
+      "descripcion_estado": "R01 Remitente Desconocido",
+      "codigo_seguimiento": "0181588686"
+    }
+  ],
+  "errors": []
+}

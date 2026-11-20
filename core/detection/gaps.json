@@ -5510,5 +5510,11 @@
     "pattern": "^P2G\\d{9}$",
     "kind": "open",
     "reason": "Parcel2Go’s guest tracking confirms a P2G reference with nine digits. The adapter is available by explicit selection."
+  },
+  {
+    "carrier": "genei",
+    "pattern": "^[A-Z0-9]{8}$",
+    "kind": "open",
+    "reason": "Genei’s guest API confirms two eight-character references. The shape is shared and Genei is available by explicit selection."
   }
 ]

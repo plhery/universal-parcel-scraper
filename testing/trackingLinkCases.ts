@@ -29,6 +29,9 @@ export interface TrackingLinkCase {
 // independently of the generated link templates, so a template that drifts
 // fails here instead of passing against itself.
 export const trackingLinkCases: TrackingLinkCase[] = [
+  { carrier: 'genei', number: '00000000',
+    route: /^https:\/\/www\.genei\.es\/seguimiento-envios\/\?tracking=00000000$/,
+    marker: /Código de envío de Genei/i },
   { carrier: 'parcel2go', number: 'P2G000000000',
     route: /^https:\/\/www\.parcel2go\.com\/tracking\/P2G000000000$/,
     marker: /We couldn't find any tracking for this order\./i },

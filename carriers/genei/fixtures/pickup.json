@@ -1,0 +1,132 @@
+{
+  "status": 1,
+  "data": [
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:22:13.000Z",
+      "nombre_estado": "DISPONIBLE EN OFICINA",
+      "id_envios_historico_estados": 72012310,
+      "id_estado_genei": 85,
+      "descripcion_estado": "ENTREGADO EN PARCELSHOP GLS",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:22:13.000Z",
+      "nombre_estado": "PAQUETE ENTREGADO",
+      "id_envios_historico_estados": 72012309,
+      "id_estado_genei": 3,
+      "descripcion_estado": "POD Anotado en DST",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:22:13.000Z",
+      "nombre_estado": "PAQUETE ENTREGADO",
+      "id_envios_historico_estados": 72012308,
+      "id_estado_genei": 3,
+      "descripcion_estado": "RECEPCIONADO EN PS GLS",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:22:13.000Z",
+      "nombre_estado": "PAQUETE ENTREGADO",
+      "id_envios_historico_estados": 72012307,
+      "id_estado_genei": 3,
+      "descripcion_estado": "ENTREGADO con tipo de Firma (Sin Firma) DNI: NOMBRE:PS 104952 - AGENCIA COLABORADORA 109 BARCELONA BAILEN",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:22:13.000Z",
+      "nombre_estado": "ENVIO EN REPARTO",
+      "id_envios_historico_estados": 72012306,
+      "id_estado_genei": 80,
+      "descripcion_estado": "EN REPARTO",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:01:00.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 72007579,
+      "id_estado_genei": 5,
+      "descripcion_estado": "Realizada con éxito",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:01:00.000Z",
+      "nombre_estado": "ENVIO EN REPARTO",
+      "id_envios_historico_estados": 72007578,
+      "id_estado_genei": 80,
+      "descripcion_estado": "Recogido en Cliente",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:01:00.000Z",
+      "nombre_estado": "ENVIO EN TRANSITO CON INCIDENCIA",
+      "id_envios_historico_estados": 72007577,
+      "id_estado_genei": 10,
+      "descripcion_estado": "Recibida",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T10:01:00.000Z",
+      "nombre_estado": "CONCERTADO PROXIMO REPARTO\r\n",
+      "id_envios_historico_estados": 72007576,
+      "id_estado_genei": 13,
+      "descripcion_estado": "Asignada",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-09T08:21:53.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 71986277,
+      "id_estado_genei": 5,
+      "descripcion_estado": "EN DELEGACION DESTINO",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-07T06:21:39.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 71798534,
+      "id_estado_genei": 5,
+      "descripcion_estado": "EN PLATAFORMA DE DESTINO",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-06T06:22:57.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 71696684,
+      "id_estado_genei": 5,
+      "descripcion_estado": "EN TRANSITO A DESTINO",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-05T14:23:14.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 71645466,
+      "id_estado_genei": 5,
+      "descripcion_estado": "FACILITADA SOLUCION POR EL CLIENTE -- Deriva",
+      "codigo_seguimiento": "41001374665309"
+    },
+    {
+      "codigo_envio": "93PUOHQK",
+      "fecha_hora_creacion": "2026-11-05T14:23:14.000Z",
+      "nombre_estado": "RECOGIDA EFECTUADA, ENVIO EN TRANSITO",
+      "id_envios_historico_estados": 71645465,
+      "id_estado_genei": 5,
+      "descripcion_estado": "SOLUCIONADA POR USUARIO",
+      "codigo_seguimiento": "41001374665309"
+    }
+  ],
+  "errors": []
+}
