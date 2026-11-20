@@ -334,9 +334,9 @@ describe('standalone tracker', () => {
   });
 
   it('asks the next five carriers only when none of the first five knows the number', async () => {
-    // A 14-digit number seven carriers can be asked about, best first.
+    // A 14-digit number six carriers can be asked about, best first; Delhivery is asked only in India.
     const number = '12340678901250';
-    const carriers = ['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'ciblex', 'delhivery'];
+    const carriers = ['hermes-de', 'dpd', 'dpd-de', 'seur', 'brt', 'ciblex'];
     const unknown = async () => ({ known: false });
     const knows = async () => ({ known: true });
     let tracker = createTracker({ providers: [], registry: recognizers({
