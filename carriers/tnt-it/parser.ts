@@ -26,6 +26,8 @@ const FEDEX = '40000';
 const MAX_SHIPMENTS = 20;
 const MAX_ROWS = 300;
 const MAX_EVENTS = 100;
+// Left the origin depot.
+const DEPARTED = '07';
 
 function children(node: XmlNode, name: string): XmlNode[] {
   return node.children.filter((child) => child.name === name && !child.uri);
@@ -104,6 +106,12 @@ export function parseTntItaly(xml: string, raw: string): CarrierResult {
   if (!scans.length) throw new NoHistoryError(PROVIDER, 'TNT Italy lists the shipment without scans', { reason: 'listed' });
 
   const events = scans.map(({ event }) => event);
+  // A courier's collection has no scan of its own: the origin depot's departure, with only the booking before it,
+  // is when FedEx took the parcel.
+  const oldestFirst = [...events].reverse();
+  const moved = oldestFirst.findIndex((event) => event.stage && event.stage !== 'registered');
+  const firstMove = moved > 0 && oldestFirst.slice(0, moved).some((event) => event.stage === 'registered') ? oldestFirst[moved] : undefined;
+  if (firstMove?.provider_code === DEPARTED && firstMove.stage === 'in_transit') firstMove.stage = 'accepted';
   const latest = events[0]!;
   const stage = events.find((event) => event.stage)?.stage as Stage | undefined;
   // The delivery's own clock, to the second; the delivery scan can be a minute apart.

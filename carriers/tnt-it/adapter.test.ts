@@ -52,6 +52,12 @@ describe('TNT Italy HTTP adapter', () => {
       { time: '2026-10-09T19:15:00+02:00', description: 'La spedizione e\' regolarmente partita', location: 'SAMPLETOWN', provider_code: '07',
         stage: 'in_transit', stage_source: 'carrier_map' },
     ]);
+    // After the booking alone, the origin depot's departure is when FedEx took the parcel; after a drop-off at a
+    // FedEx Location it is in transit.
+    const booking = '<StatusDetails><StatusCode><![CDATA[0]]></StatusCode><StatusDescription><![CDATA[Spedizione non ancora affidata a FedEx]]></StatusDescription>'
+      + '<StatusDate><![CDATA[8/10/2026]]></StatusDate><StatusTime><![CDATA[17:45]]></StatusTime><TrackingDisplayDepot><![CDATA[N]]></TrackingDisplayDepot></StatusDetails>';
+    const booked = parseTntItaly(fixture('in-transit').replace(/(<StatusDetails>(?:(?!<StatusDetails>)[\s\S])*?CDATA\[07\][\s\S]*?<\/StatusDetails>)/, `$1${booking}`), IN_TRANSIT);
+    expect(booked.events?.map((event) => [event.provider_code, event.stage])).toEqual([['12', 'in_transit'], ['XX', undefined], ['07', 'accepted'], ['0', 'registered']]);
     // Winter scans are an hour closer to UTC.
     const winter = parseTntItaly(fixture('in-transit').replaceAll('/10/2026', '/01/2027'), IN_TRANSIT);
     expect(winter.events!.map((event) => event.time)).toEqual(['2027-01-10T05:02:00+01:00', '2027-01-10T01:30:00+01:00', '2027-01-09T19:15:00+01:00']);

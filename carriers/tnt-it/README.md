@@ -30,6 +30,8 @@ consignments belong to [TNT](../tnt/README.md). Tracked through the lookup its t
   recent scan is the parcel.
 - A scan's depot is its location only where the reply marks it for display, as the page does. A
   parcel left at a FedEx Location has no depot until the courier collects it.
+- A courier's collection has no scan of its own. The origin depot's departure (`07`) right
+  after the booking is the acceptance; after a drop-off at a FedEx Location it is in transit.
 - Code `65` is a delay at the destination depot, not a delivery attempt, so it stays in transit.
 - The reply's sender, recipient, sender's reference, parcel count, weights and signatory are not
   kept.
