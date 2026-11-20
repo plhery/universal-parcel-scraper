@@ -1,5 +1,79 @@
 {
   "carrier": "fast-express-tr",
-  "gap": "No public page shows a Fast Express number.",
-  "records": []
+  "records": [
+    {
+      "number": "351478584984",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20160905010256id_/http://www.fast-express.com:80/en/action/tracking/351478584984",
+        "date": "2016-09-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish international express",
+        "reportedRole": "consignment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "japan-post",
+          "sf-express",
+          "sto",
+          "zto",
+          "yamato",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sagawa",
+          "sending"
+        ]
+      },
+      "note": "The archived official English consignment page displays this exact number and dated movement events. The public live request timed out."
+    },
+    {
+      "number": "351478558940",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20160505231804id_/http://www.fast-express.com:80/tr/action/tracking/351478558940",
+        "date": "2016-05-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Turkish international express",
+        "reportedRole": "consignment number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "mondial-relay",
+          "colis-prive",
+          "mrw",
+          "brt",
+          "purolator",
+          "sf-express",
+          "sto",
+          "zto",
+          "j-and-t",
+          "lbc-express",
+          "metropolitan-warehouse",
+          "paquetexpress",
+          "sending"
+        ]
+      },
+      "note": "The archived official Turkish consignment page displays this exact number and dated handling and delivery events."
+    }
+  ]
 }
