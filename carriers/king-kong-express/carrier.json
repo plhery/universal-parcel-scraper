@@ -2,8 +2,8 @@
   "id": "king-kong-express",
   "displayName": "King Kong Express",
   "aliases": [
-    "京廣速遞",
-    "京广速递",
+    "\u4eac\u5ee3\u901f\u905e",
+    "\u4eac\u5e7f\u901f\u9012",
     "KKE"
   ],
   "region": {
@@ -19,15 +19,29 @@
   "timezone": "Asia/Hong_Kong",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "king-kong-express",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location"
+  ],
   "portal": {
     "searchUrl": "https://www.kke.com.hk/home/index/que",
     "canaryUrl": "https://www.kke.com.hk/home/index/que",
-    "shows": [],
-    "scraped": [],
+    "shows": [
+      "status",
+      "history",
+      "location"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
     "discarded": [],
     "unavailable": []
   },

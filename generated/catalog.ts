@@ -35200,7 +35200,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Asia/Hong_Kong",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "king-kong-express",
+      "localClocks": true
     },
     "canaryUrl": "https://www.kke.com.hk/home/index/que",
     "trackingSearchUrl": "https://www.kke.com.hk/home/index/que",
