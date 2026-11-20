@@ -1,0 +1,59 @@
+{
+  "wrapper": true,
+  "captchaError": false,
+  "shown": true,
+  "dump": {
+    "TrackNumber": "TR021147139MT",
+    "DateTimeAct": "20.07.2025 19:37:34",
+    "ActNumber": "021147139",
+    "Status": "Груз выдан",
+    "CurrentLocation": "",
+    "DateDeparture": "20.07.2025",
+    "PlanArrivalDay": "22.07.2025",
+    "DateOfIssuanceOfCargo1": "23.07.2025",
+    "EstimatedDateOfReceiptOfShipment": "24.07.2025",
+    "DeliveryDate": "20.07.2025",
+    "DateOfIssue": "23.07.2025",
+    "TypeTransportation": "Автоперевозка",
+    "SenderWareHouse": "Москва Беседы",
+    "ReceiverWareHouse": "Пятигорск",
+    "DateDelivery": "01.01.0001",
+    "DateArrivalWarehouseRecipient": "22.07.2025",
+    "TypeDelivery": "До терминала"
+  },
+  "heading": "Статус груза 021147139",
+  "rows": [
+    {
+      "key": "Статус груза",
+      "value": "Груз выдан"
+    },
+    {
+      "key": "Дата сдачи груза",
+      "value": "20.07.2025"
+    },
+    {
+      "key": "Прибытие груза на терминал",
+      "value": "22.07.2025"
+    },
+    {
+      "key": "Ориентировочная дата выдачи",
+      "value": "24.07.2025"
+    },
+    {
+      "key": "Дата выдачи груза",
+      "value": "23.07.2025"
+    },
+    {
+      "key": "Вид перевозки",
+      "value": "Автоперевозка"
+    },
+    {
+      "key": "Код груза",
+      "value": "021147139"
+    },
+    {
+      "key": "Тип доставки",
+      "value": "До терминала"
+    }
+  ]
+}

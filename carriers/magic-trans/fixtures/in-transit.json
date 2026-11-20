@@ -1,0 +1,59 @@
+{
+  "wrapper": true,
+  "captchaError": false,
+  "shown": true,
+  "dump": {
+    "TrackNumber": "TR000000001MT",
+    "DateTimeAct": "10.01.2026 09:15:00",
+    "ActNumber": "000000001",
+    "Status": "Груз в пути",
+    "CurrentLocation": "",
+    "DateDeparture": "10.01.2026",
+    "DeliveryDate": "10.01.2026",
+    "PlanArrivalDay": "13.01.2026",
+    "DateArrivalWarehouseRecipient": "01.01.0001",
+    "EstimatedDateOfReceiptOfShipment": "14.01.2026",
+    "DateOfIssuanceOfCargo1": "01.01.0001",
+    "DateOfIssue": "01.01.0001",
+    "DateDelivery": "01.01.0001",
+    "TypeTransportation": "Автоперевозка",
+    "TypeDelivery": "До терминала",
+    "SenderWareHouse": "МОСКВА (Перово)",
+    "ReceiverWareHouse": "Пермь"
+  },
+  "heading": "Статус груза 000000001",
+  "rows": [
+    {
+      "key": "Статус груза",
+      "value": "Груз в пути"
+    },
+    {
+      "key": "Дата сдачи груза",
+      "value": "10.01.2026"
+    },
+    {
+      "key": "Прибытие груза на терминал",
+      "value": "13.01.2026"
+    },
+    {
+      "key": "Ориентировочная дата выдачи",
+      "value": "14.01.2026"
+    },
+    {
+      "key": "Дата выдачи груза",
+      "value": "Не выдан"
+    },
+    {
+      "key": "Вид перевозки",
+      "value": "Автоперевозка"
+    },
+    {
+      "key": "Код груза",
+      "value": "000000001"
+    },
+    {
+      "key": "Тип доставки",
+      "value": "До терминала"
+    }
+  ]
+}

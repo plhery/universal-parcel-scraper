@@ -1,0 +1,1 @@
+`delivered.json` is the tracker's answer for a public sample in `numbers.json`, and `unknown.json` its answer for an impossible act number, both as the browser service passes them on. `in-transit.json` is synthetic, shaped after the fields of those answers.

@@ -1,4 +1,9 @@
 {
   "carrier": "magic-trans",
-  "entries": []
+  "entries": [
+    { "wording": "Груз выдан", "stage": "delivered", "language": "ru", "confirmedBy": "live", "note": "The tracker's cargo status once the receiving terminal has issued the cargo." },
+    { "code": "handover", "wording": "Сдача груза", "stage": "accepted", "language": "ru", "confirmedBy": "live", "note": "The page's row \"Дата сдачи груза\": the day the sender handed the cargo in at the departure terminal." },
+    { "code": "arrival", "wording": "Прибытие груза на терминал", "stage": "in_transit", "language": "ru", "confirmedBy": "live", "note": "The page's row of that name, from the record's date of arrival at the receiving terminal; the cargo waits there for collection or for delivery to an address." },
+    { "code": "issue", "wording": "Выдача груза", "stage": "delivered", "language": "ru", "confirmedBy": "live", "note": "The page's row \"Дата выдачи груза\", which reads \"Не выдан\" until the receiving terminal issues the cargo." }
+  ]
 }

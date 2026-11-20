@@ -1,7 +1,179 @@
 {
   "carrier": "magic-trans",
-  "gap": "No public page shows a Magic Trans shipment number; its tracker's examples are a nine-digit act number, a shape other carriers' rules take, and TR…MT cargo codes left in the page's HTML comments.",
   "records": [
+    {
+      "number": "021147139",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260305000117id_/https://magic-trans.ru/otsledit-gruz/?id=021147139",
+        "date": "2026-03-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "021921541",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260207022802id_/https://magic-trans.ru/otsledit-gruz/?id=021921541",
+        "date": "2026-02-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "018031128",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260207022732id_/https://magic-trans.ru/otsledit-gruz/?id=018031128",
+        "date": "2026-02-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "015169000",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20260207022732id_/https://magic-trans.ru/otsledit-gruz/?id=015169000",
+        "date": "2026-02-07",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt",
+          "tforce-freight",
+          "xpo-ltl"
+        ]
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "020960507",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251205111520id_/https://magic-trans.ru/otsledit-gruz/?id=020960507",
+        "date": "2025-12-05",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "021161570",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20251119225103id_/https://magic-trans.ru/otsledit-gruz/?id=021161570",
+        "date": "2025-11-19",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "014886530",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20250808121237id_/https://magic-trans.ru/otsledit-gruz/?id=014886530",
+        "date": "2025-08-08",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
+    {
+      "number": "016095253",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://web.archive.org/web/20240924221115id_/https://magic-trans.ru/otsledit-gruz/?id=016095253",
+        "date": "2024-09-24",
+        "dateKind": "capture",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Magic Trans road freight between its terminals in Russia",
+        "reportedRole": "act number",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An archived direct link to Magic Trans' tracker for this act number. The tracker, past its slider check, shows the cargo handed in at one terminal and issued at another."
+    },
     {
       "number": "008654745",
       "role": "shipment",

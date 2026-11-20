@@ -38437,7 +38437,9 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "timezone": "Europe/Moscow",
     "tracking": {
       "mode": "automatic",
-      "adapter": "universal"
+      "adapter": "magic-trans",
+      "localClocks": true,
+      "browser": true
     },
     "canaryUrl": "https://magic-trans.ru/otsledit-gruz/",
     "trackingUrlTemplate": "https://magic-trans.ru/otsledit-gruz/?id={trackingNumber}",

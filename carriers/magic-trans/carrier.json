@@ -19,18 +19,68 @@
   "timezone": "Europe/Moscow",
   "tracking": {
     "mode": "automatic",
-    "adapter": "universal",
-    "steps": []
+    "adapter": "magic-trans",
+    "steps": [
+      "trawl"
+    ],
+    "browser": true,
+    "localClocks": true
   },
-  "capabilities": [],
+  "capabilities": [
+    "history",
+    "location",
+    "provider_code",
+    "eta"
+  ],
   "portal": {
     "url": "https://magic-trans.ru/otsledit-gruz/?id={trackingNumber}",
     "searchUrl": "https://magic-trans.ru/otsledit-gruz/",
     "canaryUrl": "https://magic-trans.ru/otsledit-gruz/",
-    "shows": [],
-    "scraped": [],
-    "discarded": [],
-    "unavailable": []
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "eta",
+      "origin",
+      "destination",
+      "weight",
+      "parcel_count",
+      "volume",
+      "order_contents",
+      "service_name",
+      "delivery_method",
+      "canonical_tracking_number",
+      "office_addresses",
+      "office_contact_details",
+      "office_opening_hours"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location",
+      "eta"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "weight",
+      "parcel_count",
+      "volume",
+      "order_contents",
+      "service_name",
+      "delivery_method",
+      "canonical_tracking_number",
+      "office_addresses",
+      "office_contact_details",
+      "office_opening_hours"
+    ],
+    "unavailable": [
+      "offset_timestamps",
+      "sender_name",
+      "recipient_name",
+      "signatory",
+      "proof_of_delivery"
+    ]
   },
   "links": [
     {
