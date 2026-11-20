@@ -943,6 +943,12 @@
     "reason": "Eleven digits, the zero-padded barcode form of a Dayton Freight PRO, are shared by several carriers and nothing else in the number points to Dayton Freight."
   },
   {
+    "carrier": "delibox",
+    "pattern": "^\\d{12}$",
+    "kind": "open",
+    "reason": "Delibox's archived tracker shows a twelve-digit shipment number. Detection offers other carriers for this input."
+  },
+  {
     "carrier": "dellin",
     "pattern": "^\\d{13}$",
     "kind": "by_design",
