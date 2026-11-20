@@ -1,5 +1,42 @@
 {
   "carrier": "cheetah-delivery",
-  "gap": "Cheetah Delivery's tracker opens from a text-message link or takes a shipment number with a phone number; no public page shows a shipment number.",
-  "records": []
+  "records": [
+    {
+      "number": "33521289507411",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://forum.trackchecker.ru/viewtopic.php?p=35236#p35236",
+        "date": "2020-10-21",
+        "dateKind": "comment publication",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "tracking number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dpd",
+          "chronopost",
+          "ciblex",
+          "seur",
+          "brt",
+          "delhivery",
+          "dhl-ecommerce-uk",
+          "dpd-be",
+          "dpd-de",
+          "dpd-hu",
+          "dpd-nl",
+          "dpd-pt",
+          "dpd-uk",
+          "gls-nl",
+          "jadlog"
+        ]
+      },
+      "note": "A TrackChecker user posted the number in the Chita tracking thread. Another user reported a successful lookup in 2020. The current carrier form requires the recipient phone number, which the post does not give."
+    }
+  ]
 }

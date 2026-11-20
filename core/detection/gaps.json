@@ -644,6 +644,12 @@
     "reason": "Chazki trackcodes of three letters and digits carry a prefix that varies by sender, and the nine-digit form falls inside Purolator's rule."
   },
   {
+    "carrier": "cheetah-delivery",
+    "pattern": "^\\d{14}$",
+    "kind": "open",
+    "reason": "A historical Cheetah Delivery tracking number had fourteen digits. The current detector offers several carriers for the sample without including Cheetah Delivery."
+  },
+  {
     "carrier": "chilexpress",
     "pattern": "^\\d{10}$",
     "kind": "by_design",
