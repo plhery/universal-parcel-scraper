@@ -64,6 +64,7 @@
     {"code": "OIT", "wording": "Accepted at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-11", "note": "USPS's first scan after the hand-off to the local courier, like its origin facility's acceptance; JS Express accepted the parcel in China."},
     {"wording": "Arrived at USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"code": "OIT", "wording": "Arrived at USPS Regional Origin Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-15", "note": "USPS's processing centre that serves the area where the local courier handed the parcel over."},
+    {"code": "OIT", "wording": "Arrived at USPS Regional Destination Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live", "firstSeen": "2026-11-20", "note": "USPS's processing centre that serves the delivery address's area."},
     {"wording": "Departed USPS Regional Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Arrived at USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
     {"wording": "Departed USPS Facility", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
