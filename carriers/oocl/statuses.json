@@ -1,0 +1,17 @@
+{
+  "carrier": "oocl",
+  "entries": [
+    {"code": "Empty Pick Up (Outbound)", "wording": "Empty Pick Up", "stage": "registered", "language": "en", "confirmedBy": "live", "note": "The shipper's trucker collects an empty container to load; the cargo is not yet with OOCL."},
+    {"code": "Gate In (Outbound)", "wording": "Gate In", "stage": "accepted", "language": "en", "confirmedBy": "live", "note": "The loaded container enters the terminal or depot at the place of receipt."},
+    {"code": "Departed (Outbound)", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A truck or train carries the loaded container towards the port of loading."},
+    {"code": "Arrived (Outbound)", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Loaded (Ocean)", "wording": "Loaded", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Loaded on a vessel or feeder at a port of loading or transshipment."},
+    {"code": "Departure (Ocean)", "wording": "Departure", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Arrival (Ocean)", "wording": "Arrival", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Discharged (Ocean)", "wording": "Discharged", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "Discharged at a port of transshipment or discharge."},
+    {"code": "Departed (Inbound)", "wording": "Departed", "stage": "in_transit", "language": "en", "confirmedBy": "live", "note": "A train carries the container inland from the port of discharge."},
+    {"code": "Arrived (Inbound)", "wording": "Arrived", "stage": "in_transit", "language": "en", "confirmedBy": "live"},
+    {"code": "Gate Out (Inbound)", "wording": "Gate Out", "stage": "out_for_delivery", "language": "en", "confirmedBy": "live", "note": "The consignee's trucker collects the loaded container at the final destination."},
+    {"code": "Empty Return (Inbound)", "wording": "Empty Return", "stage": "delivered", "language": "en", "confirmedBy": "live", "note": "The consignee has unloaded the container and returned it empty to OOCL's yard."}
+  ]
+}

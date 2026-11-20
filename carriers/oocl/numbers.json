@@ -1,0 +1,129 @@
+{
+  "carrier": "oocl",
+  "records": [
+    {
+      "number": "OOLU2333970780",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/supplier/raylight-technology",
+        "date": "2026-10-17",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Laem Chabang through Shanghai to Boston, its empty container returned."
+    },
+    {
+      "number": "OOLU2337137160",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/company/united-states-of-america/district/5272907-sheboygan-falls",
+        "date": "2026-10-29",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Laem Chabang through Los Angeles by rail to Chicago, its empty container returned."
+    },
+    {
+      "number": "OOLU2338049870",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/company/united-states-of-america/district/5272907-sheboygan-falls",
+        "date": "2026-10-29",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Laem Chabang through Los Angeles by rail to Chicago, its empty container returned."
+    },
+    {
+      "number": "OOLU2173257310",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/supplier/cambodia/8405251-srok-kandieng",
+        "date": "2026-10-17",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Phnom Penh by feeder through Cai Mep to New York, its empty container returned."
+    },
+    {
+      "number": "OOLU2328458870",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/supplier/united-states-of-america/district/5380184-oxnard",
+        "date": "2026-07-12",
+        "dateKind": "shipment arrival",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Taichung by truck to Kaohsiung and on to Long Beach, its empty container returned."
+    },
+    {
+      "number": "OOLU2339644520",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://www.importyeti.com/location/supplier/china/6567656-chong-an-qu",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "Ocean freight",
+        "reportedRole": "master bill of lading",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "none"
+      },
+      "note": "An import record lists this master bill under OOCL's OOLU carrier code. OOCL's tracker returns the bill from Xiamen to Long Beach, its empty container returned."
+    }
+  ]
+}
