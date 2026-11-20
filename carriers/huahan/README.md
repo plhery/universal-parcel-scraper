@@ -38,7 +38,9 @@ to the destination carrier's scans.
   HuaHan relays it so: when the reply holds Landmark's own words (`Shipment Data Uploaded`,
   its depot's incoming and outgoing scans), the scans after the hand-off and Landmark's
   uncoded record of the sender's data and its processing are read on Chicago's clock. Read
-  so, they fall at the instants bpost and Posta Romana give the same steps. HuaHan's own scans,
+  so, they fall at the instants bpost and Posta Romana give the same steps. Both name
+  Landmark's office, not a place the parcel has been, so they keep no place, and the
+  processing is a notice on the stage of the record before it. HuaHan's own scans,
   in China and at the destination airport, stay local times. CTT Express's notice of the parcel coming (`Pendiente de recepción en CTT
   Express`), relayed before the hand-off, is on CTT Express's own clock, Madrid's, on parcels
   bound for Portugal too: read so, it falls minutes after HuaHan's arrival scan in China, and
@@ -54,8 +56,8 @@ to the destination carrier's scans.
 - On the postal line the reply relays China Post's scans in Chinese, offices in 【】, and the
   destination post's as China Post copies them, some under `DR`, `IA` or `CA`. China Post's
   vocabulary reads them; its receipt after HuaHan's own acceptance is the hand-over, in transit.
-  A destination post's posting record after the hand-off (`Posting/collection`) is in transit
-  too, and its rounds that did not deliver come under `FI`, read by their words.
+  A destination post's posting record after the hand-off (`Posting/collection`), like any
+  acceptance after `JY`, is in transit too, and its rounds that did not deliver come under `FI`, read by their words.
 - USPS's facility scans come under `ND` and are read by their words. HuaHan also puts its
   out-for-delivery code `CB` on USPS's departure from a distribution centre, so under `CB`,
   `PB` and `CC` the words decide when the map knows them and the code otherwise. It puts `CB`

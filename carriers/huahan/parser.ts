@@ -4,11 +4,11 @@ import { detectCarrierMatch, normalizeTrackingNumber } from '../../core/detectio
 import { USPS_ROUTING_BARCODE, uspsPackageIdentifier } from '../../core/detection/usps.js';
 import { ChallengeError, IndeterminateError, InvalidInputError, NoHistoryError, NotFoundError, RateLimitedError, SchemaError } from '../../core/errors/index.js';
 import type { CarrierEvent, CarrierResult } from '../../core/result/index.js';
-import { languageStageStatus } from '../../core/status/index.js';
+import { languageStageStatus, type ClassifiedWording, type Stage } from '../../core/status/index.js';
 import { countryCode, countryTimeZone, isoTime } from '../../core/time/index.js';
 import { clean } from '../../core/transport/text.js';
 import { isRecord } from '../../core/types.js';
-import { huahanStage } from './status.js';
+import { huahanNotice, huahanStage } from './status.js';
 
 export const PROVIDER = 'HuaHan Logistics';
 
@@ -163,20 +163,42 @@ export function parseHuahan(payload: unknown, raw: string): CarrierResult {
     if (!description) throw new SchemaError(PROVIDER, 'HuaHan returned an empty scan');
     return { local_time: clock(text(scan, 'Occur_date', 32)), description, code: text(scan, 'Status', 32), location: text(scan, 'track_area', 200) };
   });
+  const landmark = scans.some((scan) => LANDMARK_OWN.has(scan.description.toLowerCase()));
   const events: CarrierEvent[] = withoutGenericCopies(scans).map(({ local_time, description, code, location }) => {
     const staged = huahanStage(code, description);
-    return { local_time, description, ...(code ? { provider_code: code } : {}), ...(location ? { location } : {}),
+    // Landmark Global's record of the sender's data names its own office, not a place the parcel has been.
+    const place = landmark && !code && LANDMARK_MANIFEST.has(description.toLowerCase()) ? '' : location;
+    return { local_time, description, ...(code ? { provider_code: code } : {}), ...(place ? { location: place } : {}),
       ...(staged ? { stage: staged.stage, stage_source: staged.source } : {}) };
   });
+  // Oldest first: a notice keeps the stage of the scan before it, and an acceptance after the hand-off to
+  // the destination carrier (JY), such as the post's posting of the parcel a partner handed it, is a
+  // hand-over on the way.
+  let handed = false;
+  let before: Stage | undefined;
+  for (const event of [...events].reverse()) {
+    if (huahanNotice(event.provider_code ?? '', event.description!)) {
+      Object.assign(event, before ? { stage: before, stage_source: 'none' } : { stage_source: 'none' });
+      continue;
+    }
+    if (event.stage === 'accepted' && handed) Object.assign(event, { stage: 'in_transit', stage_source: 'carrier_map' });
+    handed ||= event.provider_code === 'JY';
+    if (event.stage) before = event.stage as Stage;
+  }
   // The page renders Detail in server order, newest first. Clocks from different facilities cannot be sorted as instants.
   const newest = events[0]!;
-  const current = huahanStage(newest.provider_code ?? '', newest.description!) ?? huahanStage('', text(row, 'Status'));
+  // A notice leaves the parcel where the scan before it put it.
+  const staged = events.find((event) => event.stage && event.stage_source !== 'none');
+  const current: ClassifiedWording | null = newest.stage && newest.stage_source !== 'none'
+    ? { stage: newest.stage as Stage, source: newest.stage_source as ClassifiedWording['source'] }
+    : huahanNotice(newest.provider_code ?? '', newest.description!)
+      ? (staged ? { stage: staged.stage as Stage, source: staged.stage_source as ClassifiedWording['source'] } : null)
+      : huahanStage('', text(row, 'Status'));
   const country = countryCode(partnerText(row, 'Country_code')) ?? undefined;
   // The scans after the hand-off to the destination carrier (JY) relay that
   // carrier's own clock: a destination of one zone places them, Landmark
   // Global's relay its own. HuaHan's own scans keep their wall clocks.
   const handedOver = events.findIndex((event) => event.provider_code === 'JY');
-  const landmark = events.some((event) => LANDMARK_OWN.has(event.description!.toLowerCase()));
   const zone = landmark ? LANDMARK_ZONE : handedOver > 0 && country ? countryTimeZone(country) : null;
   const relayed = (event: CarrierEvent, index: number) => index < handedOver
     || (landmark && !event.provider_code && LANDMARK_MANIFEST.has(event.description!.toLowerCase()));

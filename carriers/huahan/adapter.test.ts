@@ -236,10 +236,34 @@ describe('HuaHan guest tracking', () => {
       '2026-11-09T16:03:00-06:00', '2026-11-09T15:57:00-06:00', '2026-11-09T15:25:38', '2026-11-07T13:16:44',
       '2026-11-01T04:39:00', '2026-10-31T08:25:00-05:00', '2026-10-31T08:25:00-05:00', '2026-10-29T16:04:16']);
     expect(result.events![0]).toMatchObject({ local_time: '2026-11-12T05:59:00', time_zone: 'America/Chicago', time_zone_basis: 'carrier' });
+    // Landmark's processing of the data, at the minute of its upload and before HuaHan's receipt, moves nothing,
+    // and neither row names a place the parcel has been.
+    expect(result.events!.slice(6, 8)).toEqual([
+      expect.objectContaining({ description: 'Processed', stage: 'registered', stage_source: 'none' }),
+      expect.objectContaining({ description: 'Shipment Data Uploaded', stage: 'registered', stage_source: 'carrier_map' }),
+    ]);
+    for (const event of result.events!.slice(6, 8)) expect(event).not.toHaveProperty('location');
     // Without Landmark's own words, a destination of one zone places the relayed scans, and nothing before the hand-off.
     relayed.data[0]!.Detail = relayed.data[0]!.Detail.filter(scan => !/scan at facility|data uploaded/i.test(scan.Comment));
     expect(parseHuahan(relayed, NUMBER).events!.map(event => event.time ?? event.local_time)).toEqual(['2026-11-12T05:59:00+01:00',
       '2026-11-09T15:25:38', '2026-11-07T13:16:44', '2026-11-01T04:39:00', '2026-10-31T08:25:00', '2026-10-29T16:04:16']);
+  });
+
+  it('reads the destination post\'s posting of the parcel after the hand-off as a hand-over on the way, not the acceptance', () => {
+    const posted = fixture();
+    Object.assign(posted.data[0]!, { Status: 'In transport', Local_Carrier: '', Local_Number: '', Country_code: 'PL' });
+    posted.data[0]!.Detail = [
+      { Occur_date: '2026-11-10 03:42:00', Status: 'CA', Comment: 'In transport', track_area: '' },
+      { Occur_date: '2026-11-09 20:41:00', Status: 'IA', Comment: 'Posting/collection', track_area: 'Exampletown' },
+      { Occur_date: '2026-11-07 07:10:52', Status: 'JY', Comment: 'Has been given to local carrier', track_area: 'NL' },
+      { Occur_date: '2026-11-06 14:27:30', Status: 'YG', Comment: 'Import Customs clearance completed', track_area: 'NL' },
+      { Occur_date: '2026-11-02 10:29:34', Status: 'DF', Comment: 'Departed from origin facility', track_area: 'SHENZHEN' },
+      { Occur_date: '2026-11-02 08:29:34', Status: 'AF', Comment: 'Arrived at origin facility', track_area: 'SHENZHEN' },
+    ];
+    const events = parseHuahan(posted, NUMBER).events!;
+    expect(events[1]).toMatchObject({ description: 'Posting/collection', stage: 'in_transit', stage_source: 'carrier_map' });
+    // HuaHan's own receipt before the hand-off stays its acceptance.
+    expect(events[5]).toMatchObject({ description: 'Arrived at origin facility', stage: 'accepted' });
   });
 
   it('reads CTT Express\'s relayed notice of the parcel coming on Madrid\'s clock, before the hand-off', () => {
@@ -445,7 +469,6 @@ describe('HuaHan status map', () => {
   it('reads Landmark Global\'s relayed depot scans by their words, its departure under CB as transit', () => {
     for (const [code, description, stage] of [
       [null, 'Shipment Data Uploaded', 'registered'],
-      [null, 'Processed', 'in_transit'],
       ['CA', 'Incoming scan at facility', 'in_transit'],
       // HuaHan puts its out-for-delivery code on the depot's departure, days before a round.
       ['CB', 'Outgoing scan at facility', 'in_transit'],
@@ -455,5 +478,9 @@ describe('HuaHan status map', () => {
       expect(statusMapAnswer({ carrier: 'huahan', providerCode: code, description }), description).toEqual({ kind: 'mapped', stage });
       expect(huahanStage(code ?? '', description), description).toEqual({ stage, source: 'carrier_map' });
     }
+    // Its processing of the sender's data at the minute of the upload is a notice.
+    expect(statusMapAnswer({ carrier: 'huahan', providerCode: null, description: 'Processed' }))
+      .toMatchObject({ kind: 'intentional_gap', note: expect.stringMatching(/keeps the stage/) });
+    expect(huahanStage('', 'Processed')).toBeNull();
   });
 });

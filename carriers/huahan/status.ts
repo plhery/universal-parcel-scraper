@@ -61,7 +61,6 @@ const WORDINGS: ReadonlyMap<string, Stage> = new Map([
   // depot's scans after the hand-off. The outgoing scan, which HuaHan puts under CB, sends the
   // parcel on to the destination network days before a delivery round.
   ['shipment data uploaded', 'registered'],
-  ['processed', 'in_transit'],
   ['incoming scan at facility', 'in_transit'],
   ['outgoing scan at facility', 'in_transit'],
   ['out for delivery (on the way)', 'out_for_delivery'],
@@ -119,9 +118,15 @@ const PATTERNS: ReadonlyArray<readonly [RegExp, Stage]> = [
 
 const GAPS = [{
   wording: 'the parcel was redirected. as soon as it is in the couriers possession, it will be processed as requested.',
-  note: "The destination carrier's record of the recipient's redirection, written while the parcel was still in China: it moves nothing.",
+  note: "The destination carrier's record of the recipient's redirection, written while the parcel was still in China: it moves nothing, so it keeps the stage of the scan before it.",
+}, {
+  wording: 'processed',
+  note: "Landmark Global's processing of the sender's data at the minute of its upload, relayed without a code before HuaHan's receipt in China: it moves nothing, so it keeps the stage of the scan before it and names no place.",
 }];
 const GAP_WORDINGS = new Set(GAPS.map((gap) => gap.wording));
+
+/** Whether a scan is a notice relayed without a code: it keeps the stage of the scan before it. */
+export const huahanNotice = (code: string, wording: string): boolean => !code && GAP_WORDINGS.has(normalizeStatusWording(wording));
 
 // HuaHan's own codes are two capitals; a provider relaying its scans puts its own code on them.
 const OWN_CODE = /^[A-Z]{2}$/;
