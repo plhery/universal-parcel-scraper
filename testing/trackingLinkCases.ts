@@ -1138,6 +1138,10 @@ export const trackingLinkCases: TrackingLinkCase[] = [
   { carrier: 'urbano', number: 'G00000000',
     route: /^https:\/\/www\.urbano\.com\.pe\/tracking\/G00000000$/,
     marker: /Rastrea tu env[íi]o/i },
+  // The page renders the guide in its address on the server; an unknown one is named in a notice that it does not exist.
+  { carrier: 'usend-chile', number: 'WB000000000',
+    route: /^https:\/\/portal\.usend\.cl\/rastrear-shipper\/WB000000000$/,
+    marker: /Detalle del Env[íi]o/i },
   // The page puts the CN number in its address into its form and looks it up on load; an unknown one gets an error notice.
   { carrier: 'sundarban-courier', number: '00000000000000',
     route: /^https:\/\/operation\.sundarbancourierltd\.com\/\?cnnumber=00000000000000$/,

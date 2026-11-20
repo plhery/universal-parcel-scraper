@@ -1,0 +1,92 @@
+{
+  "id": "usend-chile",
+  "displayName": "USEND Chile",
+  "aliases": [
+    "USEND",
+    "Usend Courier",
+    "Usend Logistics Chile"
+  ],
+  "region": {
+    "countries": [
+      "CL"
+    ]
+  },
+  "brand": {
+    "color": "#273BA5"
+  },
+  "selectable": true,
+  "timezone": "America/Santiago",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "usend-chile",
+    "steps": [
+      "direct",
+      "retry"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://portal.usend.cl/rastrear-shipper/{trackingNumber}",
+    "searchUrl": "https://usend.cl/",
+    "canaryUrl": "https://usend.cl/",
+    "shows": [
+      "status",
+      "progress_rail",
+      "history",
+      "location",
+      "weight",
+      "service_name",
+      "origin",
+      "destination",
+      "event_details",
+      "courier_name",
+      "recipient_name",
+      "recipient_id",
+      "recipient_address",
+      "sender_name",
+      "parcel_count",
+      "delivery_photos",
+      "coordinates",
+      "signatory"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "progress_rail",
+      "weight",
+      "service_name",
+      "origin",
+      "destination",
+      "event_details",
+      "courier_name",
+      "recipient_name",
+      "recipient_id",
+      "recipient_address",
+      "sender_name",
+      "parcel_count",
+      "delivery_photos",
+      "coordinates",
+      "signatory"
+    ],
+    "unavailable": [
+      "eta",
+      "offset_timestamps"
+    ]
+  },
+  "links": [
+    {
+      "domains": [
+        "portal.usend.cl"
+      ],
+      "path": "^/rastrear-shipper/([^/?#]+)/?$"
+    }
+  ],
+  "detection": []
+}

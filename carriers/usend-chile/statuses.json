@@ -1,0 +1,71 @@
+{
+  "carrier": "usend-chile",
+  "entries": [
+    {
+      "code": "SERVICIO CREADO",
+      "wording": "SERVICIO CREADO",
+      "language": "es",
+      "stage": "registered",
+      "confirmedBy": "live",
+      "note": "The guide created, often from a shipper's bulk upload, before USEND has the parcel."
+    },
+    {
+      "code": "RECIBIMOS EN ORIGEN",
+      "wording": "RECIBIMOS EN ORIGEN",
+      "language": "es",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "DESPACHAMOS A SU DESTINO",
+      "wording": "DESPACHAMOS A SU DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "ARRIBO EN CIUDAD DESTINO",
+      "wording": "ARRIBO EN CIUDAD DESTINO",
+      "language": "es",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "code": "SALIO A ENTREGARSE (PRIMERA VISITA)",
+      "wording": "SALIO A ENTREGARSE (Primera Visita)",
+      "language": "es",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "note": "The visit's number is in brackets; any visit stages the same."
+    },
+    {
+      "code": "ENTREGADO A TERCERO",
+      "wording": "ENTREGADO A TERCERO",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "Delivered to someone other than the addressee."
+    },
+    {
+      "code": "CARGO ENVIADO A ORIGEN",
+      "wording": "CARGO ENVIADO A ORIGEN",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The signed delivery receipt (cargo) sent back to the origin agency after the delivery; the parser leaves it out."
+    },
+    {
+      "code": "CARGO LLEGO A ORIGEN",
+      "wording": "CARGO LLEGO A ORIGEN",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The signed delivery receipt arrived at the origin agency; the parser leaves it out."
+    },
+    {
+      "code": "SE RETORNADO EL CARGO",
+      "wording": "SE RETORNADO EL CARGO",
+      "language": "es",
+      "confirmedBy": "live",
+      "note": "The signed delivery receipt returned to the shipper, not the parcel; the parser leaves it out."
+    }
+  ]
+}

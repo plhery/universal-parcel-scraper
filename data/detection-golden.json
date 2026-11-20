@@ -115229,6 +115229,17 @@
     ]
   },
   {
+    "input": "WB186756797",
+    "carrier": "unknown",
+    "confidence": "low",
+    "candidates": [
+      "gls-it"
+    ],
+    "asked": [
+      "gls-it"
+    ]
+  },
+  {
     "input": "WB371672691TH",
     "carrier": "thailand-post",
     "confidence": "high",
