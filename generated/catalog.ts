@@ -10036,30 +10036,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "asg-logistics": {
-    "displayName": "ASG Logistics",
-    "color": "#04477d",
-    "aliases": [
-      "ASGL",
-      "ALS Thai Nguyen",
-      "ALS Thái Nguyên",
-      "Công ty Cổ phần Logistics ASG"
-    ],
-    "countries": [
-      "VN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Ho_Chi_Minh",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "asg-logistics"
-    },
-    "canaryUrl": "https://www.asgl.vn/en/tracking",
-    "trackingUrlTemplate": "https://www.asgl.vn/en/tracking",
-    "trackingSearchUrl": "https://www.asgl.vn/en/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "asiafly": {
     "displayName": "Asiafly",
     "color": "#2d2f83",
@@ -21293,29 +21269,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "dps-cargo": {
-    "displayName": "DPS Cargo",
-    "color": "#0054aa",
-    "aliases": [
-      "DPS Cargo Indonesia",
-      "PT Tadulako Awal Kreasi"
-    ],
-    "countries": [
-      "ID"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Makassar",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "dps-cargo"
-    },
-    "canaryUrl": "https://dpscargo.co.id/lacak",
-    "trackingUrlTemplate": "https://dpscargo.co.id/lacak",
-    "trackingSearchUrl": "https://dpscargo.co.id/lacak",
-    "trackingSiteName": "DPS Cargo Lacak Kiriman",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "dpx-logistics": {
     "displayName": "DPX Logistics",
     "color": "#003b66",
@@ -26613,30 +26566,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "flywing-cargo": {
-    "displayName": "Flywing Cargo",
-    "color": "#1554a0",
-    "aliases": [
-      "Flywing Cargo Pvt Ltd",
-      "Fly Wing Cargo",
-      "Flywing Cargo Private Limited"
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "flywing-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://flywingcargo.com/tracking/",
-    "trackingUrlTemplate": "https://flywingcargo.com/tracking/?lr={trackingNumber}",
-    "trackingSearchUrl": "https://flywingcargo.com/tracking/",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "fm-transportes": {
     "displayName": "FM Transportes",
     "color": "#e52327",
@@ -27557,30 +27486,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://garantpost.ru/",
     "trackingSearchUrl": "https://garantpost.ru/tracking/",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "gardewine": {
-    "displayName": "Gardewine",
-    "color": "#ce1738",
-    "aliases": [
-      "Gardewine Group",
-      "Gardewine General Freight"
-    ],
-    "countries": [
-      "CA"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "gardewine",
-      "localClocks": true
-    },
-    "canaryUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm",
-    "trackingUrlTemplate": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
-    "trackingSearchUrl": "https://gardewineweb.gardewine.com/scripts/cgiip.exe/main-frame.htm?language=ENGLISH&nav=top",
-    "trackingSiteName": "Gardewine Online Shipment Tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -32345,31 +32250,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
       }
     ]
   },
-  "ignazio-messina": {
-    "displayName": "Ignazio Messina",
-    "color": "#e63027",
-    "aliases": [
-      "Messina Line",
-      "Linea Messina",
-      "Ignazio Messina & C."
-    ],
-    "countries": [
-      "IT"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ignazio-messina",
-      "localClocks": true
-    },
-    "canaryUrl": "https://messinaline.it/cntr-tracking/",
-    "trackingUrlTemplate": "https://messinaline.it/cntr-tracking/",
-    "trackingSearchUrl": "https://messinaline.it/cntr-tracking/",
-    "trackingSiteName": "Messina Line Container Tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "ilyang-logis": {
     "displayName": "Ilyang Logis",
     "color": "#003c83",
@@ -35453,38 +35333,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "jpi-jakarta-cargo": {
-    "displayName": "JPI Jakarta Cargo",
-    "color": "#e62028",
-    "aliases": [
-      "JPI Cargo",
-      "Jakarta Cargo (M) Sdn Bhd"
-    ],
-    "countries": [
-      "MY",
-      "ID"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kuala_Lumpur",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "jpi-jakarta-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.jpicargo.com/tracking",
-    "trackingUrlTemplate": "https://www.jpicargo.com/tracking/{trackingNumber}",
-    "trackingSearchUrl": "https://www.jpicargo.com/tracking",
-    "trackingSiteName": "JPI Jakarta Cargo Tracking",
-    "linkRules": [
-      {
-        "domains": [
-          "jpicargo.com"
-        ],
-        "path": "^/tracking/([A-Za-z0-9-]+)/?$"
-      }
-    ],
-    "detectionRules": []
-  },
   "jrs-express": {
     "displayName": "JRS Express",
     "color": "#046a38",
@@ -35947,30 +35795,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "karya-pratama-cargo": {
-    "displayName": "Karya Pratama Cargo",
-    "color": "#164c80",
-    "aliases": [
-      "KP Cargo",
-      "Karya Pratama Kargo"
-    ],
-    "countries": [
-      "ID"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Jakarta",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "karya-pratama-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://karyapratamacargo.co.id/cek-resi/",
-    "trackingUrlTemplate": "https://karyapratamacargo.co.id/cek-resi/",
-    "trackingSearchUrl": "https://karyapratamacargo.co.id/cek-resi/",
-    "trackingSiteName": "Karya Pratama Cargo Cek Resi",
-    "linkRules": [],
     "detectionRules": []
   },
   "kaukokiito": {
@@ -38674,30 +38498,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "litegua-cargo": {
-    "displayName": "Litegua Express",
-    "color": "#2776ab",
-    "aliases": [
-      "Litegua Cargo",
-      "Litegua Encomiendas"
-    ],
-    "countries": [
-      "GT"
-    ],
-    "selectable": true,
-    "timezone": "America/Guatemala",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "litegua-cargo",
-      "localClocks": true
-    },
-    "canaryUrl": "https://apps.litegua.com/rastreoweb/ge.php",
-    "trackingUrlTemplate": "https://apps.litegua.com/rastreoweb/ge.php",
-    "trackingSearchUrl": "https://apps.litegua.com/rastreoweb/ge.php",
-    "trackingSiteName": "Litegua Express Rastreo de Encomiendas",
-    "linkRules": [],
     "detectionRules": []
   },
   "litexpress": {
@@ -44769,34 +44569,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     },
     "canaryUrl": "https://www.otschile.cl/tracking",
     "trackingSearchUrl": "https://www.otschile.cl/tracking",
-    "linkRules": [],
-    "detectionRules": []
-  },
-  "ou-yi-hang": {
-    "displayName": "Ou Yi Hang International Logistics",
-    "color": "#1655ae",
-    "aliases": [
-      "Ou Yi Hang",
-      "Ouyihang International Logistics",
-      "OYH Logistics",
-      "欧易航国际物流"
-    ],
-    "countries": [
-      "CN",
-      "BE",
-      "GB",
-      "DE"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "ou-yi-hang",
-      "localClocks": true
-    },
-    "canaryUrl": "https://oyh-exp.com/en/tracking",
-    "trackingUrlTemplate": "https://oyh-exp.com/en/tracking",
-    "trackingSearchUrl": "https://oyh-exp.com/en/tracking",
     "linkRules": [],
     "detectionRules": []
   },
@@ -52093,29 +51865,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
-  "sai-baba-transport": {
-    "displayName": "Sai Baba Transport",
-    "color": "#144436",
-    "aliases": [
-      "Saibaba Transport",
-      "Sai Baba Transports"
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sai-baba-transport",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.saibabatransport.com/track",
-    "trackingUrlTemplate": "https://www.saibabatransport.com/track?lr={trackingNumber}",
-    "trackingSearchUrl": "https://www.saibabatransport.com/track",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "saia": {
     "displayName": "Saia",
     "color": "#d52027",
@@ -54487,31 +54236,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
-  "sinotrans-container-lines": {
-    "displayName": "Sinotrans Container Lines",
-    "color": "#00548d",
-    "aliases": [
-      "Sinolines",
-      "SNL Sinotrans Container Lines",
-      "中外运集装箱运输有限公司"
-    ],
-    "countries": [
-      "CN"
-    ],
-    "selectable": true,
-    "timezone": "UTC",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sinotrans-container-lines",
-      "localClocks": true
-    },
-    "canaryUrl": "https://ebusiness.sinolines.com.cn",
-    "trackingUrlTemplate": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
-    "trackingSearchUrl": "https://ebusiness.sinolines.com.cn/Ebusiness/EQUERY/TrackingCargoE.aspx?subject=BLNO",
-    "trackingSiteName": "Sinolines E-Business",
-    "linkRules": [],
-    "detectionRules": []
-  },
   "sitra-es": {
     "displayName": "SITRA",
     "color": "#009cf8",
@@ -54672,31 +54396,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         "path": "^/track/([A-Z0-9]{13})/?$"
       }
     ],
-    "detectionRules": []
-  },
-  "sky-courier-co": {
-    "displayName": "Sky Courier Colombia",
-    "color": "#dc2626",
-    "aliases": [
-      "Sky Courier Broker",
-      "Sky Courier Broker SAS",
-      "Sky Courier CO"
-    ],
-    "countries": [
-      "CO",
-      "US"
-    ],
-    "selectable": true,
-    "timezone": "America/Bogota",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "sky-courier-co"
-    },
-    "canaryUrl": "https://skycourier.com.co/rastrear/",
-    "trackingUrlTemplate": "https://casillero.skycourier.com.co/track",
-    "trackingSearchUrl": "https://casillero.skycourier.com.co/track",
-    "trackingSiteName": "Sky Courier Casillero",
-    "linkRules": [],
     "detectionRules": []
   },
   "skybox": {
@@ -62037,7 +61736,8 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "tracking": {
       "mode": "automatic",
       "adapter": "united-africa-feeder-line",
-      "localClocks": true
+      "localClocks": true,
+      "dateOnlyScans": true
     },
     "canaryUrl": "https://www.uaflshipping.com/Tracking",
     "trackingUrlTemplate": "https://www.uaflshipping.com/Tracking?BookingNo={trackingNumber}",
@@ -63292,30 +62992,6 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
         ]
       }
     ],
-    "detectionRules": []
-  },
-  "vidhi-transport": {
-    "displayName": "Vidhi Transport",
-    "color": "#003b70",
-    "aliases": [
-      "Vidhi Transport India",
-      "Vidhi Transport ERP"
-    ],
-    "countries": [
-      "IN"
-    ],
-    "selectable": true,
-    "timezone": "Asia/Kolkata",
-    "tracking": {
-      "mode": "automatic",
-      "adapter": "vidhi-transport",
-      "localClocks": true
-    },
-    "canaryUrl": "https://www.vidhitransport.com/lr-track.html",
-    "trackingUrlTemplate": "https://www.vidhitransport.com/lr-track.html",
-    "trackingSearchUrl": "https://www.vidhitransport.com/lr-track.html",
-    "trackingSiteName": "Vidhi Transport Track LR",
-    "linkRules": [],
     "detectionRules": []
   },
   "viet-an-express": {
@@ -67624,7 +67300,6 @@ export const CARRIER_IDS = [
   "aruba-post",
   "asap-couriers",
   "ase-express",
-  "asg-logistics",
   "asiafly",
   "asigna",
   "asl-asia",
@@ -67950,7 +67625,6 @@ export const CARRIER_IDS = [
   "dpdex",
   "dpe-express",
   "dpex",
-  "dps-cargo",
   "dpx-logistics",
   "dragon-star-curier",
   "drop2shop",
@@ -68107,7 +67781,6 @@ export const CARRIER_IDS = [
   "flow-progressive-logistics",
   "flyking",
   "flyt-express",
-  "flywing-cargo",
   "fm-transportes",
   "fmd-distribution",
   "fmx",
@@ -68137,7 +67810,6 @@ export const CARRIER_IDS = [
   "gaash",
   "gaaubesi",
   "garantpost",
-  "gardewine",
   "garudavega",
   "gati",
   "gbs-broker",
@@ -68279,7 +67951,6 @@ export const CARRIER_IDS = [
   "idexpress",
   "ids-logistik",
   "iflow",
-  "ignazio-messina",
   "ilyang-logis",
   "imile",
   "indah-logistik",
@@ -68370,7 +68041,6 @@ export const CARRIER_IDS = [
   "jordan-post",
   "jp-home",
   "jp-logistics",
-  "jpi-jakarta-cargo",
   "jrs-express",
   "jrt",
   "js-express",
@@ -68385,7 +68055,6 @@ export const CARRIER_IDS = [
   "kargoist",
   "kargoturk",
   "kart2door",
-  "karya-pratama-cargo",
   "kaukokiito",
   "kazpost",
   "kdz-express",
@@ -68468,7 +68137,6 @@ export const CARRIER_IDS = [
   "linhan",
   "lion-parcel",
   "lionwheel",
-  "litegua-cargo",
   "litexpress",
   "liuchen",
   "ljx-express",
@@ -68655,7 +68323,6 @@ export const CARRIER_IDS = [
   "osm-worldwide",
   "ots-astracon",
   "ots-chile",
-  "ou-yi-hang",
   "overnite",
   "overseas-express",
   "oxperta-express",
@@ -68870,7 +68537,6 @@ export const CARRIER_IDS = [
   "sagawa",
   "sagawa-global",
   "sahara-express",
-  "sai-baba-transport",
   "saia",
   "sailpost",
   "salam-pacific-indonesia-lines",
@@ -68942,14 +68608,12 @@ export const CARRIER_IDS = [
   "silpo-pack",
   "sinapseria",
   "sinokor-merchant-marine",
-  "sinotrans-container-lines",
   "sitra-es",
   "siuntos-autobusais",
   "sjl-express",
   "skif-cargo",
   "skladusa",
   "skroutz-last-mile",
-  "sky-courier-co",
   "skybox",
   "skyex-ae",
   "skyex-gr",
@@ -69206,7 +68870,6 @@ export const CARRIER_IDS = [
   "viaxpress",
   "vichare",
   "victorian-freight-specialists",
-  "vidhi-transport",
   "viet-an-express",
   "viettel-post",
   "vimenpaq",
@@ -69571,7 +69234,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "aruba-post": ["aruba-post-s10"],
   "asap-couriers": [],
   "ase-express": [],
-  "asg-logistics": [],
   "asiafly": [],
   "asigna": [],
   "asl-asia": [],
@@ -69897,7 +69559,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "dpdex": ["dpdex-1"],
   "dpe-express": [],
   "dpex": [],
-  "dps-cargo": [],
   "dpx-logistics": [],
   "dragon-star-curier": [],
   "drop2shop": ["drop2shop-1"],
@@ -70054,7 +69715,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "flow-progressive-logistics": [],
   "flyking": [],
   "flyt-express": [],
-  "flywing-cargo": [],
   "fm-transportes": ["fm-transportes-1"],
   "fmd-distribution": [],
   "fmx": ["fmx-1"],
@@ -70084,7 +69744,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "gaash": [],
   "gaaubesi": [],
   "garantpost": [],
-  "gardewine": [],
   "garudavega": [],
   "gati": [],
   "gbs-broker": ["gbs-broker-1"],
@@ -70226,7 +69885,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "idexpress": ["idexpress-1"],
   "ids-logistik": [],
   "iflow": ["iflow-1"],
-  "ignazio-messina": [],
   "ilyang-logis": [],
   "imile": ["imile-3","imile-1","imile-4","imile-5","imile-2"],
   "indah-logistik": ["indah-logistik-1"],
@@ -70317,7 +69975,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "jordan-post": ["jordan-post-s10"],
   "jp-home": [],
   "jp-logistics": [],
-  "jpi-jakarta-cargo": [],
   "jrs-express": [],
   "jrt": ["jrt-1","jrt-2"],
   "js-express": ["js-express-1","js-express-jch"],
@@ -70332,7 +69989,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "kargoist": ["kargoist-1"],
   "kargoturk": [],
   "kart2door": [],
-  "karya-pratama-cargo": [],
   "kaukokiito": [],
   "kazpost": ["kazpost-s10"],
   "kdz-express": [],
@@ -70415,7 +70071,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "linhan": ["linhan-1"],
   "lion-parcel": ["lion-parcel-1"],
   "lionwheel": [],
-  "litegua-cargo": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],
   "ljx-express": [],
@@ -70602,7 +70257,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "osm-worldwide": ["osm-worldwide-1","osm-worldwide-2"],
   "ots-astracon": [],
   "ots-chile": [],
-  "ou-yi-hang": [],
   "overnite": [],
   "overseas-express": [],
   "oxperta-express": [],
@@ -70817,7 +70471,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "sagawa": ["sagawa-waybill"],
   "sagawa-global": [],
   "sahara-express": [],
-  "sai-baba-transport": [],
   "saia": ["saia-1"],
   "sailpost": [],
   "salam-pacific-indonesia-lines": [],
@@ -70889,14 +70542,12 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "silpo-pack": [],
   "sinapseria": [],
   "sinokor-merchant-marine": [],
-  "sinotrans-container-lines": [],
   "sitra-es": [],
   "siuntos-autobusais": [],
   "sjl-express": [],
   "skif-cargo": [],
   "skladusa": ["skladusa-1"],
   "skroutz-last-mile": [],
-  "sky-courier-co": [],
   "skybox": [],
   "skyex-ae": [],
   "skyex-gr": [],
@@ -71153,7 +70804,6 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "viaxpress": [],
   "vichare": [],
   "victorian-freight-specialists": [],
-  "vidhi-transport": [],
   "viet-an-express": [],
   "viettel-post": ["viettel-post-1"],
   "vimenpaq": [],

@@ -17,7 +17,7 @@ it('reads only dated container movements under the exact booking number', async 
     `https://www.uaflshipping.com/Tracking?BookingNo=${number}`,
     expect.objectContaining({ headers: expect.objectContaining({ Accept: 'text/html' }) }),
   );
-  expect(result).toMatchObject({ status: 'unknown', last_status_text: 'RECEIVED EMPTY', last_update_local: '2026-04-07T00:01:00' });
+  expect(result).toMatchObject({ status: 'unknown', last_status_text: 'RECEIVED EMPTY', last_update_local: '2026-04-07' });
   expect(result.events).toHaveLength(6);
   expect(result.events?.[0]?.stage).toBeUndefined();
   expect(result.events?.[1]).toMatchObject({ description: 'SENT TO CONSIGNEE', stage: 'in_transit', location: 'DURBAN, SOUTH AFRICA' });

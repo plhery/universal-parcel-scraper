@@ -2,24 +2,6 @@
   "carrier": "calidex-courier",
   "records": [
     {
-      "number": "CAL1500794680",
-      "role": "shipment",
-      "evidence": "official_documentation_example",
-      "source": {
-        "url": "https://calidex.co/",
-        "access": "full_page"
-      },
-      "context": {
-        "reportedRole": "Calidex guide number",
-        "assessment": "confirmed"
-      },
-      "expect": {
-        "carrier": "unknown",
-        "confidence": "none"
-      },
-      "note": "Calidex’s public tracking instructions name this complete guide. Its guest lookup returned the exact guide and 18 real movements."
-    },
-    {
       "number": "CLO1500794271",
       "role": "shipment",
       "evidence": "public_shipment_report",

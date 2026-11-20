@@ -37,7 +37,7 @@ export function parseTracking(raw: string, number: string, httpStatus: number): 
       time: row.fechaUtc, description, provider_code: description,
       ...(stage && { stage, stage_source: 'carrier_map' }),
     }];
-  }).sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
+  }).reverse().sort((left, right) => Date.parse(right.time) - Date.parse(left.time));
 
   const wording = guide.estado.trim();
   const stage = scanStage(wording);

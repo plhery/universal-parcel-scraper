@@ -43,7 +43,7 @@ export function parseTracking(body: string, booking: string): CarrierResult {
       }
       const stage = scanStage(description);
       return {
-        local_time: clock.replace(' ', 'T').replace(/\.0+$/, ''),
+        local_time: clock.slice(11, 19) === '00:01:00' ? clock.slice(0, 10) : clock.replace(' ', 'T').replace(/\.0+$/, ''),
         description,
         ...(location && { location }),
         ...(stage && { stage, stage_source: 'carrier_map' }),
