@@ -14,8 +14,8 @@ Older links use `trackingnum` on `saee.sa/trackingpage`; the library reads both.
 
 ## Retrieval limits
 
-The public tracking form and legacy publisher host return HTTP 503. The former Android
-package `com.saee.customers` is now [HalaBag](https://play.google.com/store/apps/details?id=com.saee.customers),
+The public tracking form and legacy publisher host return HTTP 503. The Android
+package `com.saee.customers` is listed as [HalaBag](https://play.google.com/store/apps/details?id=com.saee.customers),
 a luggage service from BAGGAGE SOLUTIONS COMPANY. That listing does not establish coverage
 of Saee’s historical waybills. Other similarly named apps are not a supported source for
 this Saudi network.

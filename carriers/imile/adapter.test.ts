@@ -726,23 +726,36 @@ describe('Cainiao’s leg in front of iMile’s history', () => {
   });
 
   it('gives Cainiao half of the time iMile left, and nothing when that is too short to ask', async () => {
-    const hanging = vi.fn((_number: string, init?: RequestInit) => new Promise<Response>((_resolve, reject) => {
-      init?.signal?.addEventListener('abort', () => reject(init.signal!.reason), { once: true });
-    }));
-    const started = performance.now();
-    const slow = lookup(hanging, 600);
-    await expect(slow.result).resolves.toEqual(parseImile(fixture('delivered'), DELIVERED));
-    expect(performance.now() - started).toBeLessThan(600);
-    expect(hanging).toHaveBeenCalledTimes(1);
-    // A hang is a transport failure, as the runner records one, after about half of the budget.
-    expect(slow.step()).toMatchObject({ outcome: 'transport' });
-    expect(slow.step()!.durationMs).toBeLessThan(450);
+    // Advance the controlled clock once signing has finished and the mock
+    // request is ready.
+    vi.useFakeTimers({ toFake: ['performance', 'setTimeout', 'clearTimeout'] });
+    let requestStarted!: () => void;
+    const ready = new Promise<void>(resolve => { requestStarted = resolve; });
+    const hanging = vi.fn((_number: string, init?: RequestInit) => {
+      requestStarted();
+      return new Promise<Response>((_resolve, reject) => {
+        init?.signal?.addEventListener('abort', () => reject(init.signal!.reason), { once: true });
+      });
+    });
+    try {
+      const started = performance.now();
+      const slow = lookup(hanging, 600);
+      await ready;
+      await vi.advanceTimersByTimeAsync(300);
+      await expect(slow.result).resolves.toEqual(parseImile(fixture('delivered'), DELIVERED));
+      expect(performance.now() - started).toBe(300);
+      expect(hanging).toHaveBeenCalledTimes(1);
+      expect(slow.step()).toMatchObject({ outcome: 'transport' });
+      expect(slow.step()!.durationMs).toBe(300);
 
-    const unasked = vi.fn((number: string) => reply(cainiaoUnknown(number)));
-    const short = lookup(unasked, 300);
-    await expect(short.result).resolves.toEqual(parseImile(fixture('delivered'), DELIVERED));
-    expect(unasked).not.toHaveBeenCalled();
-    expect(short.step()).toMatchObject({ outcome: 'budget' });
+      const unasked = vi.fn((number: string) => reply(cainiaoUnknown(number)));
+      const short = lookup(unasked, 300);
+      await expect(short.result).resolves.toEqual(parseImile(fixture('delivered'), DELIVERED));
+      expect(unasked).not.toHaveBeenCalled();
+      expect(short.step()).toMatchObject({ outcome: 'budget' });
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('asks Cainiao only once iMile answered with scans', async () => {
