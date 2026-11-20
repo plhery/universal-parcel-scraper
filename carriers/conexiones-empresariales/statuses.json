@@ -1,0 +1,12 @@
+{
+  "carrier": "conexiones-empresariales",
+  "entries": [
+    {
+      "wording": "ENTREGADA",
+      "language": "es",
+      "stage": "delivered",
+      "confirmedBy": "live",
+      "note": "The carrier marks the guide delivered and shows the separate outcome date."
+    }
+  ]
+}

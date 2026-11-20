@@ -5794,5 +5794,10 @@
     "carrier": "cadena-courier",
     "kind": "open",
     "reason": "The court-published numeric guide is shared in length with other carriers. The carrier is explicitly selectable."
+  },
+  {
+    "carrier": "conexiones-empresariales",
+    "kind": "open",
+    "reason": "The court-published guides are short numeric references. The sample does not establish a unique detection rule."
   }
 ]

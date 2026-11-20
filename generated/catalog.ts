@@ -15969,6 +15969,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "conexiones-empresariales": {
+    "displayName": "Conexiones Empresariales",
+    "color": "#204a8e",
+    "aliases": [
+      "Conexiones Empresariales S.A.S.",
+      "Conexiones Empresariales Mensajería"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "conexiones-empresariales",
+      "localClocks": true
+    },
+    "canaryUrl": "https://app.conexionesempresariales.com/rastreo/",
+    "trackingUrlTemplate": "https://app.conexionesempresariales.com/rastreo/?txtguia={trackingNumber}",
+    "trackingSearchUrl": "https://app.conexionesempresariales.com/rastreo/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "confirmed-freight": {
     "displayName": "Confirmed Freight",
     "color": "#267ca8",
@@ -67169,6 +67192,7 @@ export const CARRIER_IDS = [
   "colis-gros-volume",
   "collicare",
   "comone-express",
+  "conexiones-empresariales",
   "confirmed-freight",
   "connect-couriers",
   "consegnia",
@@ -69092,6 +69116,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "colis-gros-volume": [],
   "collicare": [],
   "comone-express": [],
+  "conexiones-empresariales": [],
   "confirmed-freight": [],
   "connect-couriers": [],
   "consegnia": ["consegnia-1"],

@@ -150,6 +150,7 @@ import { adapter as closerLogistics } from '../carriers/closer-logistics/adapter
 import { adapter as cne } from '../carriers/cne/adapter.js';
 import { adapter as colisPrive } from '../carriers/colis-prive/adapter.js';
 import { adapter as colisweb } from '../carriers/colisweb/adapter.js';
+import { adapter as conexionesEmpresariales } from '../carriers/conexiones-empresariales/adapter.js';
 import { adapter as confirmedFreight } from '../carriers/confirmed-freight/adapter.js';
 import { adapter as connectCouriers } from '../carriers/connect-couriers/adapter.js';
 import { adapter as consegnia } from '../carriers/consegnia/adapter.js';
@@ -1101,6 +1102,7 @@ export const REGISTRY: RegistryDefinition = {
     "cne": cne,
     "colis-prive": colisPrive,
     "colisweb": colisweb,
+    "conexiones-empresariales": conexionesEmpresariales,
     "confirmed-freight": confirmedFreight,
     "connect-couriers": connectCouriers,
     "consegnia": consegnia,
@@ -2227,6 +2229,7 @@ export const REGISTRY: RegistryDefinition = {
     "colisweb": "colisweb",
     "collicare": "universal",
     "comone-express": "universal",
+    "conexiones-empresariales": "conexiones-empresariales",
     "confirmed-freight": "confirmed-freight",
     "connect-couriers": "connect-couriers",
     "consegnia": "consegnia",

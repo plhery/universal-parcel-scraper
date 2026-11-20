@@ -1,0 +1,61 @@
+{
+  "carrier": "conexiones-empresariales",
+  "records": [
+    {
+      "number": "3020123674",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portalhistorico.ramajudicial.gov.co/documents/36615547/67843800/10FalloTutela_derecho%2Bpeticion_no%2Btutela_hecho%2Bsuperado_petici%C3%B3n%2B%2Brespuesta%2Bfavorable%2Ba%2Bla%2Bsolicitud.pdf/390cef8c-689a-420f-a398-0be8554ceed8",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Certified physical-mail guide cited in a Colombian court decision.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The carrier returned the exact guide and a dated delivery outcome."
+    },
+    {
+      "number": "3020123666",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://portalhistorico.ramajudicial.gov.co/documents/36615547/67843800/10FalloTutela_derecho%2Bpeticion_no%2Btutela_hecho%2Bsuperado_petici%C3%B3n%2B%2Brespuesta%2Bfavorable%2Ba%2Bla%2Bsolicitud.pdf/390cef8c-689a-420f-a398-0be8554ceed8",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "Certified physical-mail guide cited in a Colombian court decision.",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "dhl",
+          "mondial-relay",
+          "relais-colis",
+          "estafeta",
+          "packeta",
+          "box-now",
+          "dhl-ecommerce-es",
+          "dhl-freight"
+        ]
+      },
+      "note": "The carrier returned the exact guide and a dated delivery outcome."
+    }
+  ]
+}
