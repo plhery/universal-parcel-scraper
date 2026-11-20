@@ -5156,5 +5156,11 @@
     "pattern": "^(?:278326[0-9]{7}|7000018[0-9]{6})$",
     "kind": "open",
     "reason": "Three independently published delivery complaints identify numeric AGT Kurye tracking numbers. Detection does not offer AGT Kurye."
+  },
+  {
+    "carrier": "aeronet",
+    "pattern": "^111[0-9]{6}$",
+    "kind": "open",
+    "reason": "A federal court opinion identifies this exact numeric Aeronet waybill. Detection does not offer Aeronet."
   }
 ]

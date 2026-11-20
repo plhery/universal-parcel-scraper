@@ -1,5 +1,29 @@
 {
   "carrier": "aeronet",
-  "gap": "No public page shows an Aeronet housebill or reference number.",
-  "records": []
+  "records": [
+    {
+      "number": "111102405",
+      "role": "shipment",
+      "evidence": "public_shipment_report",
+      "source": {
+        "url": "https://hallapproved.com/ny/cases/federal/district/2023/9849515/",
+        "date": "2023-10-10",
+        "dateKind": "judgment date",
+        "access": "full_page"
+      },
+      "context": {
+        "service": "United States domestic road freight",
+        "reportedRole": "Aeronet waybill number",
+        "assessment": "candidate"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "tnt"
+        ]
+      },
+      "note": "A United States district court opinion quotes the exact Aeronet waybill for a pallet shipment. Carrier lookup blocked by verification."
+    }
+  ]
 }
