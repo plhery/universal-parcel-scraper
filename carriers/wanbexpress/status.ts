@@ -72,14 +72,19 @@ const UNCODED: ReadonlyMap<string, Stage | null> = new Map<string, Stage | null>
   ['the parcel arrives at the distribution center and is prepared for transport to the next destination.', 'in_transit'],
 ]);
 
+// Partners' lines WanbExpress files under a code their words contradict, by code and `normalizeStatusWording` wording:
+// a round filed as waiting for collection, hours before its delivery.
+const CODED: ReadonlyMap<string, Stage> = new Map([[JSON.stringify(['LastMileWaitForCollection', 'out of delivery']), 'out_for_delivery']]);
+
 /**
  * A scan's stage by its code, else by the partners' sentences: the tracker relays the last-mile
  * partner's scans in the partner's words, iMile's on a parcel to Germany, most without a code.
  * Null marks a scan that moves nothing.
  */
 export function wanbStage(code: string | null, wording: string): Stage | null | undefined {
-  if (code && Object.hasOwn(STAGES, code)) return STAGES[code];
   const normalized = normalizeStatusWording(wording);
+  if (code && CODED.has(JSON.stringify([code, normalized]))) return CODED.get(JSON.stringify([code, normalized]));
+  if (code && Object.hasOwn(STAGES, code)) return STAGES[code];
   if (!code && UNCODED.has(normalized)) return UNCODED.get(normalized);
   return (code ? undefined : SHARED_WORDINGS.get(normalized)) ?? imileMappedStage('', wording);
 }

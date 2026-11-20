@@ -275,6 +275,15 @@
       "note": "The same partner leaving the parcel at a parcel shop or locker for the recipient, after the missed round."
     },
     {
+      "code": "LastMileWaitForCollection",
+      "wording": "Out of delivery",
+      "language": "en",
+      "stage": "out_for_delivery",
+      "confirmedBy": "live",
+      "firstSeen": "2026-11-18",
+      "note": "A partner's round, which WanbExpress files as waiting for collection; the delivery followed it within hours."
+    },
+    {
       "wording": "Shipment arrived to sorting centre / Shipment in the sorting centre",
       "language": "en",
       "stage": "in_transit",
