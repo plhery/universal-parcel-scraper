@@ -38429,6 +38429,28 @@
     ],
     "detectionRules": []
   },
+  "lisa-parcel": {
+    "displayName": "Lisa Parcel",
+    "color": "#20675d",
+    "aliases": [
+      "Lisa Parcel USA"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lisa-parcel",
+      "localClocks": true
+    },
+    "canaryUrl": "https://lisaparcel.com/en/track",
+    "trackingUrlTemplate": "https://lisaparcel.com/en/track/{trackingNumber}",
+    "trackingSearchUrl": "https://lisaparcel.com/en/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "litegua-cargo": {
     "displayName": "Litegua Express",
     "color": "#2776ab",

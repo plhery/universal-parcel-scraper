@@ -38433,6 +38433,28 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "lisa-parcel": {
+    "displayName": "Lisa Parcel",
+    "color": "#20675d",
+    "aliases": [
+      "Lisa Parcel USA"
+    ],
+    "countries": [
+      "US"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "lisa-parcel",
+      "localClocks": true
+    },
+    "canaryUrl": "https://lisaparcel.com/en/track",
+    "trackingUrlTemplate": "https://lisaparcel.com/en/track/{trackingNumber}",
+    "trackingSearchUrl": "https://lisaparcel.com/en/track",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "litegua-cargo": {
     "displayName": "Litegua Express",
     "color": "#2776ab",
@@ -67973,6 +67995,7 @@ export const CARRIER_IDS = [
   "linhan",
   "lion-parcel",
   "lionwheel",
+  "lisa-parcel",
   "litegua-cargo",
   "litexpress",
   "liuchen",
@@ -69902,6 +69925,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "linhan": ["linhan-1"],
   "lion-parcel": ["lion-parcel-1"],
   "lionwheel": [],
+  "lisa-parcel": [],
   "litegua-cargo": [],
   "litexpress": [],
   "liuchen": ["liuchen-1"],

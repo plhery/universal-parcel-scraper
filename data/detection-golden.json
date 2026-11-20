@@ -87213,6 +87213,18 @@
     ]
   },
   {
+    "input": "CT312474908UZ",
+    "carrier": "intl-post",
+    "confidence": "high",
+    "candidates": [
+      "intl-post"
+    ],
+    "asked": [
+      "uzbekistan-post",
+      "chronopost"
+    ]
+  },
+  {
     "input": "CT507133481DE",
     "carrier": "dhl",
     "confidence": "high",
