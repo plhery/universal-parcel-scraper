@@ -14401,6 +14401,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "certipostal": {
+    "displayName": "Certipostal",
+    "color": "#28377e",
+    "aliases": [
+      "Certipostal S.A.S.",
+      "Certipostal SAS"
+    ],
+    "countries": [
+      "CO"
+    ],
+    "selectable": true,
+    "timezone": "America/Bogota",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "certipostal",
+      "localClocks": true
+    },
+    "canaryUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "trackingUrlTemplate": "https://certipostal.fivesoftcolombia.com/tag_detail_v1.html?d={trackingNumber}",
+    "trackingSearchUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ceska-posta": {
     "displayName": "Česká pošta",
     "color": "#002776",
@@ -67315,6 +67338,7 @@ export const CARRIER_IDS = [
   "celero",
   "central-transport",
   "centurion-transport",
+  "certipostal",
   "ceska-posta",
   "ceva-logistics",
   "changjiang-express",
@@ -69246,6 +69270,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "celero": [],
   "central-transport": [],
   "centurion-transport": [],
+  "certipostal": [],
   "ceska-posta": ["ceska-posta-1","ceska-posta-s10"],
   "ceva-logistics": [],
   "changjiang-express": [],

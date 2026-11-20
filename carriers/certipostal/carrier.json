@@ -1,0 +1,64 @@
+{
+  "id": "certipostal",
+  "displayName": "Certipostal",
+  "aliases": [
+    "Certipostal S.A.S.",
+    "Certipostal SAS"
+  ],
+  "region": {
+    "countries": [
+      "CO"
+    ]
+  },
+  "brand": {
+    "color": "#28377e"
+  },
+  "selectable": true,
+  "timezone": "America/Bogota",
+  "tracking": {
+    "mode": "automatic",
+    "adapter": "certipostal",
+    "steps": [
+      "direct"
+    ],
+    "localClocks": true
+  },
+  "capabilities": [
+    "history",
+    "location"
+  ],
+  "portal": {
+    "url": "https://certipostal.fivesoftcolombia.com/tag_detail_v1.html?d={trackingNumber}",
+    "searchUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "canaryUrl": "https://certipostal.com/seguimientos/fivepostal/",
+    "shows": [
+      "status",
+      "history",
+      "location",
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "scraped": [
+      "status",
+      "history",
+      "location"
+    ],
+    "discarded": [
+      "origin",
+      "destination",
+      "sender_name",
+      "recipient_name",
+      "recipient_address",
+      "proof_of_delivery",
+      "weight"
+    ],
+    "unavailable": []
+  },
+  "links": [],
+  "detection": []
+}

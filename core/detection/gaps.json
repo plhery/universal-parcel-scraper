@@ -5829,5 +5829,10 @@
     "carrier": "flashpy",
     "kind": "open",
     "reason": "The live example is a marketplace number accepted by the forwarding tracker. It does not distinguish Flashpy ownership."
+  },
+  {
+    "carrier": "certipostal",
+    "kind": "open",
+    "reason": "The physical guides use a numeric shape already shared by other carriers. The native tracker is explicitly selectable."
   }
 ]
