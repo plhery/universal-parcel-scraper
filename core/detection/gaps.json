@@ -5604,5 +5604,10 @@
     "carrier": "cordelia-shipping",
     "kind": "open",
     "reason": "The guest form verifies Cordelia bills and shared equipment references. Select Cordelia explicitly."
+  },
+  {
+    "carrier": "ethiopian-cargo",
+    "kind": "open",
+    "reason": "The guest form confirms the Ethiopian Cargo master airway bill serial. Select Ethiopian Cargo explicitly."
   }
 ]

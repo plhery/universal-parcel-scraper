@@ -23346,6 +23346,31 @@
     ],
     "detectionRules": []
   },
+  "ethiopian-cargo": {
+    "displayName": "Ethiopian Cargo",
+    "color": "#168447",
+    "aliases": [
+      "Ethiopian Airlines Cargo",
+      "Ethiopian Cargo & Logistics Services",
+      "Ethiopian Cargo and Logistics Services"
+    ],
+    "countries": [
+      "ET"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ethiopian-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingUrlTemplate": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingSearchUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingSiteName": "Ethiopian Cargo Track Your Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ethiopian-post": {
     "displayName": "Ethiopian Postal Service",
     "color": "#f8ac19",

@@ -1,0 +1,48 @@
+{
+  "carrier": "ethiopian-cargo",
+  "entries": [
+    {
+      "wording": "Booked",
+      "language": "en",
+      "stage": "registered",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Received From Shipper",
+      "language": "en",
+      "stage": "accepted",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Manifested on Flight",
+      "language": "en",
+      "stage": null,
+      "confirmedBy": "live",
+      "note": "A flight manifest records assigned cargo. Its publication alone does not establish departure."
+    },
+    {
+      "wording": "Departed on Flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Received From Flight",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Consignee/Agent notified of arrival",
+      "language": "en",
+      "stage": "in_transit",
+      "confirmedBy": "live"
+    },
+    {
+      "wording": "Delivered",
+      "language": "en",
+      "stage": "delivered",
+      "confirmedBy": "live"
+    }
+  ]
+}

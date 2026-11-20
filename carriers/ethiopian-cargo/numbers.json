@@ -1,0 +1,63 @@
+{
+  "carrier": "ethiopian-cargo",
+  "records": [
+    {
+      "number": "071-30981683",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://customs.erca.gov.et/files/downloads/WFET-CMS-MAN-0002%20ERCA%20Trade%20Transactions%20Portal%20Introduction_V1.7.pdf",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "carrier master air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The Ethiopian customs user guide shows this airway bill. The carrier’s guest history confirmed its complete serial."
+    },
+    {
+      "number": "071-40264873",
+      "role": "shipment",
+      "evidence": "official_documentation_example",
+      "source": {
+        "url": "https://www.scribd.com/document/993132122/Ethiopian-Cargo-Documentation-Handling-Standard-Operating-Procedure",
+        "access": "full_page"
+      },
+      "context": {
+        "reportedRole": "carrier master air waybill",
+        "assessment": "confirmed"
+      },
+      "expect": {
+        "carrier": "unknown",
+        "confidence": "low",
+        "candidates": [
+          "postlogistics",
+          "gls-ch",
+          "gls-fr",
+          "gls-de",
+          "coordinadora",
+          "gls-at",
+          "gls-pl",
+          "mainfreight",
+          "paquetexpress"
+        ]
+      },
+      "note": "The published Ethiopian Cargo operating procedure shows this airway bill. The carrier’s guest history confirmed its serial and dated delivery."
+    }
+  ]
+}

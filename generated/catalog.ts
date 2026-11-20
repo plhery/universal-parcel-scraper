@@ -23350,6 +23350,31 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     ],
     "detectionRules": []
   },
+  "ethiopian-cargo": {
+    "displayName": "Ethiopian Cargo",
+    "color": "#168447",
+    "aliases": [
+      "Ethiopian Airlines Cargo",
+      "Ethiopian Cargo & Logistics Services",
+      "Ethiopian Cargo and Logistics Services"
+    ],
+    "countries": [
+      "ET"
+    ],
+    "selectable": true,
+    "timezone": "UTC",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "ethiopian-cargo",
+      "localClocks": true
+    },
+    "canaryUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingUrlTemplate": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingSearchUrl": "https://cargo.ethiopianairlines.com/my-cargo/track-your-shipment",
+    "trackingSiteName": "Ethiopian Cargo Track Your Shipment",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "ethiopian-post": {
     "displayName": "Ethiopian Postal Service",
     "color": "#f8ac19",
@@ -66439,6 +66464,7 @@ export const CARRIER_IDS = [
   "espoirer",
   "estes",
   "estes-forwarding",
+  "ethiopian-cargo",
   "ethiopian-post",
   "etkin-dagitim",
   "etomars",
@@ -68324,6 +68350,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "espoirer": [],
   "estes": [],
   "estes-forwarding": [],
+  "ethiopian-cargo": [],
   "ethiopian-post": [],
   "etkin-dagitim": [],
   "etomars": ["etomars-1"],
