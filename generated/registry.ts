@@ -710,6 +710,7 @@ import { adapter as seaLegendLine } from '../carriers/sea-legend-line/adapter.js
 import { adapter as seino } from '../carriers/seino/adapter.js';
 import { adapter as seinoSuperExpress } from '../carriers/seino-super-express/adapter.js';
 import { adapter as seko } from '../carriers/seko/adapter.js';
+import { adapter as sendboxArgentina } from '../carriers/sendbox-argentina/adapter.js';
 import { adapter as sendex } from '../carriers/sendex/adapter.js';
 import { adapter as sending } from '../carriers/sending/adapter.js';
 import { adapter as sendle } from '../carriers/sendle/adapter.js';
@@ -1644,6 +1645,7 @@ export const REGISTRY: RegistryDefinition = {
     "seino": seino,
     "seino-super-express": seinoSuperExpress,
     "seko": seko,
+    "sendbox-argentina": sendboxArgentina,
     "sendex": sendex,
     "sending": sending,
     "sendle": sendle,
@@ -3315,6 +3317,7 @@ export const REGISTRY: RegistryDefinition = {
     "seino-super-express": "seino-super-express",
     "seko": "seko",
     "senda-insular": "universal",
+    "sendbox-argentina": "sendbox-argentina",
     "sendex": "sendex",
     "sending": "sending",
     "sendle": "sendle",

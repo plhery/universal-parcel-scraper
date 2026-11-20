@@ -5709,5 +5709,10 @@
     "carrier": "airbaltic-cargo",
     "kind": "open",
     "reason": "The full air waybill identifies airBaltic in its own lookup. Eleven-digit numbers overlap other carriers and are kept explicit pending review."
+  },
+  {
+    "carrier": "sendbox-argentina",
+    "kind": "open",
+    "reason": "The two guide components identify shipments in the selected SendBox tracker. The numeric components also fit other carriers."
   }
 ]

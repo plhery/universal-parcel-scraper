@@ -52101,6 +52101,29 @@ export const CARRIER_CATALOG: Readonly<Record<CarrierId, CarrierDefinition>> = {
     "linkRules": [],
     "detectionRules": []
   },
+  "sendbox-argentina": {
+    "displayName": "SendBox Argentina",
+    "color": "#d82027",
+    "aliases": [
+      "SendBox",
+      "SendBox AR",
+      "Sedex Argentina"
+    ],
+    "countries": [
+      "AR"
+    ],
+    "selectable": true,
+    "timezone": "America/Argentina/Cordoba",
+    "tracking": {
+      "mode": "automatic",
+      "adapter": "sendbox-argentina"
+    },
+    "canaryUrl": "https://www.sendbox.com.ar/seguimiento/",
+    "trackingUrlTemplate": "https://www.sendbox.com.ar/seguimiento/",
+    "trackingSearchUrl": "https://www.sendbox.com.ar/seguimiento/",
+    "linkRules": [],
+    "detectionRules": []
+  },
   "sendex": {
     "displayName": "Sendex",
     "color": "#de172e",
@@ -67823,6 +67846,7 @@ export const CARRIER_IDS = [
   "seino-super-express",
   "seko",
   "senda-insular",
+  "sendbox-argentina",
   "sendex",
   "sending",
   "sendle",
@@ -69729,6 +69753,7 @@ export const DETECTION_RULE_IDS: Readonly<Record<CarrierId, readonly string[]>> 
   "seino-super-express": [],
   "seko": [],
   "senda-insular": [],
+  "sendbox-argentina": [],
   "sendex": [],
   "sending": ["sending-1"],
   "sendle": ["sendle-1"],
